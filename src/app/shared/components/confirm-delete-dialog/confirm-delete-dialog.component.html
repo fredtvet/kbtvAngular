@@ -1,0 +1,9 @@
+
+      <div mat-dialog-content>
+        Bekreft at du ønsker å slette
+      </div>
+      <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Avbryt</button>
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Slett</button>
+      </div>
+

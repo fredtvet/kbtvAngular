@@ -1,0 +1,19 @@
+
+
+
+<mat-toolbar #imageToolBar class="image_toolbar p-0" [@showHideToolbar]="toolbarHidden ? 'hide' : 'show'">
+    <button mat-icon-button aria-label="Lukk" color="primary" class="left_fab" (click)="onNoClick()">
+        <mat-icon class="icon_150">chevron_left</mat-icon>
+    </button>
+    <app-vert-menu class="right_fab" color="primary" [actions]="actions" (event)="handleEvent($event)"></app-vert-menu>
+
+</mat-toolbar>
+
+<img *ngIf="currentImage" (tap)="toggleToolBar()" (swiperight)="previousImage()" (swipeleft)="nextImage()" [src]="currentImage.fileURL" layout-fill/>
+
+<div class="page_counter" [@showHideCounter]="toolbarHidden ? 'hide' : 'show'">
+  <h5>{{ this.index + 1 }} / {{ this.images.length }}</h5>
+</div>
+
+
+

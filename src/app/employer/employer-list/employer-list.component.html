@@ -1,0 +1,34 @@
+<app-main-nav>
+
+  <mat-list *ngIf="employers">
+    <mat-list-item *ngFor="let employer of employers">
+      <mat-icon mat-list-icon>work</mat-icon>
+
+      <h4 mat-line><b>{{employer.name}}</b></h4>
+
+      <p mat-line>
+        <mat-icon class="icon_75">phone</mat-icon>
+        {{employer.phoneNumber || 'Ingen kontaktnummer' }}
+      </p>
+
+      <p mat-line>
+        <mat-icon class="icon_75">home</mat-icon>
+        {{employer.address|| 'Ingen addresse' }}
+      </p>
+      <button *ifRole="ROLES.Leder" (click)="openEditDialog(employer)" mat-icon-button aria-label="Rediger">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+
+  <button color="primary"
+      mat-mini-fab aria-label="ny"
+      class="action_fab"
+      *ifRole="[ROLES.Leder, ROLES.Mellomleder]"
+      (click)="openCreateDialog()">
+      <mat-icon color="accent">add</mat-icon>
+  </button>
+
+</app-main-nav>
+
+

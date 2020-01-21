@@ -1,0 +1,19 @@
+
+
+  <form *ngIf="reportForm" [formGroup]="reportForm" fxLayout="column" fxLayoutAlign="space-around-center">
+    <h4 class="text-center">Legg til rapport</h4>
+    <mat-form-field>
+      <mat-select formControlName="typeId" (change)="changeType($event)" placeholder="Velg type">
+              <mat-option *ngFor="let type of reportTypes" [value]="type.id">{{ type.name }}</mat-option>
+      </mat-select >
+    </mat-form-field>
+    <input (change)="changeFile($event)" type="file">
+    <br />
+    <button (click)="onSubmit()" [disabled]="this.reportForm.invalid || !this.files" mat-raised-button color="primary">
+      <mat-icon>cloud_upload</mat-icon>
+      Last opp
+    </button>
+  </form>
+
+
+

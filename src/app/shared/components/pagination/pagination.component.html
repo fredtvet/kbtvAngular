@@ -1,0 +1,13 @@
+<mat-toolbar color="primary" class="pagination_toolbar">
+    
+    <button (click)="previousPage()" mat-icon-button aria-label="Forrige side">
+            <mat-icon class="pagination_icon">chevron_left</mat-icon>
+    </button>
+
+    <span class="pagination_middle_text">Side {{ paginationInfo.actualPage + 1 }} av {{ paginationInfo.totalPages }}</span>
+
+    <button (click)="nextPage()" mat-icon-button aria-label="Neste side">
+            <mat-icon class="pagination_icon">chevron_right</mat-icon>
+    </button>
+
+</mat-toolbar>

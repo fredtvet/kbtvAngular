@@ -1,0 +1,17 @@
+<app-nested-nav *ngIf="note"
+    icon="edit"
+    title="{{ this.note.title || (this.note.createdAt | date: 'short') }}"
+    [actions]="this.navActions"
+    (event)="handleEvent($event)">
+
+  <div class="container">
+    <div class="row  p-3">
+    {{ this.note.content }}
+    </div>
+    <mat-divider></mat-divider>
+    <div class="row p-3">
+        {{ this.note.createdAt | date: 'short' }} av {{ this.note.createdBy || "Anonym" }}
+    </div>
+  </div>
+
+</app-nested-nav>

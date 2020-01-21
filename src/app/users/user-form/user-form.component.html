@@ -1,0 +1,59 @@
+<app-nested-nav
+      [icon]="this.isEditForm ? 'edit' : 'person_add'"
+      [title]="this.title"
+      [actions]="this.actions"
+      [botNavEnabled]="false"
+      (event)="handleEvent($event)">
+
+<form *ngIf="userForm" [formGroup]="userForm" class="app-form" fxLayout="column">
+
+  <mat-form-field>
+      <input matInput placeholder="Brukernavn"  formControlName="userName" required>
+      <mat-error *ngIf="this.userName.invalid">
+        Brukernavn er ett obligatorisk felt på minst 4 tegn.
+      </mat-error>
+  </mat-form-field>
+
+  <mat-form-field [ngClass]="{'hideInput': isEditForm}">
+    <input matInput placeholder="Passord"  formControlName="password" required>
+    <mat-error *ngIf="this.password.invalid">
+      Passord er ett obligatorisk felt på minst 7 tegn.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+      <input matInput placeholder="Fornavn"  formControlName="firstName" required>
+      <mat-error *ngIf="this.firstName.invalid">
+          Fornavn er ett obligatorisk felt på maks 100 tegn.
+      </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+      <input matInput placeholder="Etternavn"  formControlName="lastName" required>
+      <mat-error *ngIf="this.lastName.invalid">
+          Etternavn er ett obligatorisk felt på maks 100 tegn.
+      </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Rolle" (change)="changeRole($event)" formControlName="role" required>
+      <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+      <input matInput placeholder="Kontaktnummer"  formControlName="phoneNumber">
+      <mat-error *ngIf="this.phoneNumber.invalid">
+          Kontaktnummer må være mellom 4 og 12 siffer.
+      </mat-error>
+  </mat-form-field>
+
+
+
+  <button (click)="onSubmit()" [disabled]="this.userForm.invalid" mat-raised-button color="primary">Lagre</button>
+
+</form>
+
+</app-nested-nav>
+
+

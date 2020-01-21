@@ -1,0 +1,29 @@
+<mat-toolbar color="accent" class="bottom_toolbar p-0" [ngClass]="(isHandset$ | async) ? '' : 'bottom_toolbar_no_side'">
+
+        <button [routerLink]="['/oppdrag']" [routerLinkActive]="['activeIcon']"
+          class="bottom_toolbar_button" mat-icon-button aria-label="Neste side">
+
+          <mat-icon class="bottom_toolbar_icon">home_work</mat-icon>
+
+        </button>
+
+        <button [routerLink]="['/oppdragsgivere']" [routerLinkActive]="['activeIcon']"
+            class="bottom_toolbar_button" mat-icon-button aria-label="Neste side">
+
+            <mat-icon class="bottom_toolbar_icon">work</mat-icon>
+
+        </button>
+
+        <button [routerLink]="['/brukere']" [routerLinkActive]="['activeIcon']"
+            class="bottom_toolbar_button" mat-icon-button aria-label="Neste side">
+
+            <mat-icon class="bottom_toolbar_icon">people</mat-icon>
+
+        </button>
+        <button [routerLink]="['/brukere']" [routerLinkActive]="['activeIcon']"
+        class="bottom_toolbar_button" mat-icon-button aria-label="Neste side">
+
+        <mat-icon class="bottom_toolbar_icon">people</mat-icon>
+
+    </button>
+</mat-toolbar>

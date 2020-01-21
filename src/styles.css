@@ -1,1 +1,75 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body {  margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow:hidden;}
+
+.active{
+  background-color:#CCC;
+}
+
+.p-0{
+  padding:0 !important;
+}
+.hide{
+  display:none;
+}
+.app-form{
+  max-width:600px;
+  padding:20px;
+}
+
+.nav_button{
+  height:72px !important;
+  width:72px !important;
+}
+
+.action_fab{
+  position:fixed!important;
+  right:10px!important;
+  bottom:66px;
+  z-index:10;
+}
+
+.action_fab_2{
+  position:fixed!important;
+  right:10px!important;
+  bottom:116.31px;
+  z-index:10;
+}
+
+
+.activeIcon{
+  color: #FFAB00 !important;
+}
+
+.mat-icon {
+  vertical-align: middle!important;
+}
+.icon_150{
+  transform:scale(1.5);
+}
+
+.icon_75{
+  transform:scale(.75);
+}
+
+.image_viewer_dialog{
+  max-width:none!important;
+}
+
+.image_viewer_dialog .mat-dialog-container{
+  background:#282828!important;
+  padding:0!important;
+}
+
+.form_dialog{
+  max-width:none!important;
+}
+
+.form_dialog .mat-dialog-container{
+  padding:0!important;
+}
+
+.snackbar_margin{
+  margin-bottom:62px!important;
+}
