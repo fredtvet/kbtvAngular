@@ -19,8 +19,8 @@ export class ProfileComponent implements OnInit {
   public passwordStatus: string;
 
   ngOnInit() {
-    this.identityService.getCurrentUser()
-    .subscribe(data => this.user = data.user);
+    this.identityService.currentUser
+      .subscribe(user => this.user = user);
   }
 
   updateProfile(updatedUser){
@@ -28,7 +28,6 @@ export class ProfileComponent implements OnInit {
 
     this.identityService.updateCurrentUser(updatedUser).subscribe(
       result =>{
-        this.user = updatedUser;
         this.openSnackBar('Vellykket oppdatering!')
       },
       error => this.openSnackBar('Mislykket! Noe gikk feil.')
@@ -38,7 +37,7 @@ export class ProfileComponent implements OnInit {
   updatePassword(data: any){
     this.identityService.changePassword(data.oldPassword, data.password).subscribe(
       result => this.openSnackBar('Passord oppdatert!'),
-      error => this.passwordStatus = "Feil passord!",
+      error => this.passwordStatus = "Nåværende passord er feil!",
       () => this.passwordStatus = ""
     );
   }

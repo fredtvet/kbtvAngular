@@ -16,11 +16,12 @@ export class AuthGuard implements CanActivate {
   ): any {
 
     if(!this.identityService.hasValidToken()){
+        this.identityService.purgeAuth();
         return this.router.navigate(['/login']);
     }
 
     if(route.data['allowedRoles']){
-      if(!route.data['allowedRoles'].includes(this.identityService.getUserRole())){
+      if(!route.data['allowedRoles'].includes(this.identityService.getCurrentUser().role)){
         return this.router.navigate(['/login']); //Should navigate to a forbidden component
       }
     }

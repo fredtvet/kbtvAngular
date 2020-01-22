@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MissionType, Employer, Mission, ROLES } from 'src/app/shared';
-import { MissionTypesService, EmployersService } from 'src/app/core';
+import { MissionForm } from './mission-form.model';
 
 @Component({
   selector: 'app-mission-form',
@@ -11,7 +11,9 @@ import { MissionTypesService, EmployersService } from 'src/app/core';
 })
 
 export class MissionFormComponent implements OnInit {
+
   public ROLES = ROLES;
+
   missionForm: FormGroup;
 
   googleOptions = {
@@ -23,64 +25,55 @@ export class MissionFormComponent implements OnInit {
 
   public title: string = "Rediger oppdrag";
 
-  public missionTypes: MissionType[];
-
-  public employers: Employer[];
-
-  public isCreateForm: boolean = false;
-
   constructor(
-    private _missionTypesService: MissionTypesService,
-    private _employersService: EmployersService,
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<MissionFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public mission: Mission)  { }
+    @Inject(MAT_DIALOG_DATA) public data: MissionForm)  { }
 
   ngOnInit(){
-
-    if(this.mission == null){
-      this.isCreateForm = true;
+    console.log(this.data);
+    if(this.data.isCreateForm){
       this.title = 'Nytt oppdrag',
-      this.mission = new Mission();
+      this.data.mission = new Mission();
     }
 
     this.initalizeForm();
 
-    this._missionTypesService.getMissionTypes().subscribe(result => {
-      this.missionTypes = result;
-    });
+    let defaultEmployer = this.data.employers.find(x => x.id === this.data.mission.employerId);
+    let defaultType = this.data.missionTypes.find(x => x.id === this.data.mission.missionTypeId);
 
-    this._employersService.getEmployers().subscribe(result => {
-      this.employers = result;
-    });
+    if(defaultEmployer)
+      this.missionForm.get('employerName').setValue(defaultEmployer.name);
 
+    if(defaultType)
+      this.missionForm.get('missionTypeName').setValue(defaultType.name);
   }
 
   initalizeForm(){
     this.missionForm = this._formBuilder.group({
-      id: this.mission.id,
-      address: [this.mission.address, [
+      id: this.data.mission.id,
+      address: [this.data.mission.address, [
         Validators.required,
         Validators.maxLength(100)
       ]],
-      phoneNumber: [this.mission.phoneNumber, [
+      phoneNumber: [this.data.mission.phoneNumber, [
         Validators.minLength(4),
         Validators.maxLength(12)
       ]],
-      description: [this.mission.description, [
+      description: [this.data.mission.description, [
         Validators.maxLength(400)
       ]],
-      finished: [this.mission.finished],
-      employerName: [this.mission.employerName],
-      missionTypeName: [this.mission.missionTypeName],
-      employerId: [0],
-      missionTypeId: [0]
+      finished: [this.data.mission.finished],
+      employerName: [],
+      missionTypeName: [],
+      employerId: [null],
+      missionTypeId: [null]
     });
   }
 
   onSubmit(){
-    let existingType = this.missionTypes.find(x => x.name === this.missionTypeName.value);
-    let existingEmployee = this.missionTypes.find(x => x.name === this.employerName.value);
+    let existingType = this.data.missionTypes.find(x => x.name === this.missionTypeName.value);
+    let existingEmployee = this.data.employers.find(x => x.name === this.employerName.value);
 
     if(existingType){
       this.missionTypeId.setValue(existingType.id);
@@ -93,8 +86,9 @@ export class MissionFormComponent implements OnInit {
     }
 
     const {value, valid} = this.missionForm;
-    if(valid){
 
+    if(valid){
+      console.log(value);
       this.dialogRef.close(value);
     }
   }

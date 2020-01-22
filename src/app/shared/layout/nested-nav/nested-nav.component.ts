@@ -1,11 +1,12 @@
 import { Component,Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { NavAction } from '../../components/nav-action.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDrawer } from '@angular/material/sidenav';
 import { IdentityService } from 'src/app/core';
 import { Router } from '@angular/router';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-nested-nav',
@@ -24,6 +25,9 @@ export class NestedNavComponent {
 
   @Output() event = new EventEmitter();
 
+  public user: User;
+  private userSub: Subscription;
+
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
     map(result => result.matches),
@@ -37,6 +41,11 @@ export class NestedNavComponent {
     private identityService: IdentityService,
     private router: Router,) { }
 
+  ngOnInit(){
+    this.userSub = this.identityService.currentUser.subscribe(id => this.user = id.user);
+    console.log(this.user);
+  }
+
   ngOnChanges(){
     this.title = this.title.replace(/;/g, "<br />");
   }
@@ -44,5 +53,9 @@ export class NestedNavComponent {
   handleLogout(){
     this.identityService.purgeAuth();
     this.router.navigate(['/login']);
+  }
+
+  ngOnDestroy(){
+    this.userSub.unsubscribe();
   }
 }

@@ -26,7 +26,8 @@ import {
    MatSnackBarModule,
    MatCheckboxModule,
    MatDialogModule,
-   MatAutocompleteModule
+   MatAutocompleteModule,
+   MatProgressSpinnerModule
 
 } from '@angular/material';
 
@@ -57,7 +58,8 @@ import {
       MatSnackBarModule,
       MatCheckboxModule,
       MatDialogModule,
-      MatAutocompleteModule
+      MatAutocompleteModule,
+      MatProgressSpinnerModule
    ],
    exports: [
       MatButtonModule,
@@ -83,7 +85,8 @@ import {
       MatSnackBarModule,
       MatCheckboxModule,
       MatDialogModule,
-      MatAutocompleteModule
+      MatAutocompleteModule,
+      MatProgressSpinnerModule
    ],
    providers: [
       MatDatepickerModule

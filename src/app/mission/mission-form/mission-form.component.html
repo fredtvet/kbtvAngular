@@ -36,7 +36,7 @@
         <mat-form-field class="example-full-width">
           <input matInput placeholder="Oppdragsgiver" aria-label="Oppdragsgiver" [formControl]="employerName" [matAutocomplete]="auto1">
           <mat-autocomplete #auto1="matAutocomplete">
-            <mat-option *ngFor="let employer of employers" [value]="employer.name">
+            <mat-option *ngFor="let employer of data.employers" [value]="employer.name">
               {{employer.name}}
             </mat-option>
           </mat-autocomplete>
@@ -45,14 +45,14 @@
         <mat-form-field class="example-full-width">
           <input matInput placeholder="Oppdragstype" aria-label="Oppdragstype" [formControl]="missionTypeName" [matAutocomplete]="auto2">
           <mat-autocomplete #auto2="matAutocomplete">
-            <mat-option *ngFor="let type of missionTypes" [value]="type.name">
+            <mat-option *ngFor="let type of data.missionTypes" [value]="type.name">
               {{type.name}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
 
 
-        <mat-checkbox *ngIf="!isCreateForm" formControlName="finished">Er oppdraget ferdig?</mat-checkbox>
+        <mat-checkbox *ngIf="!data.isCreateForm" formControlName="finished">Er oppdraget ferdig?</mat-checkbox>
         <br />
         <button (click)="onSubmit()" [disabled]="this.missionForm.invalid" mat-raised-button color="primary">Lagre</button>
 

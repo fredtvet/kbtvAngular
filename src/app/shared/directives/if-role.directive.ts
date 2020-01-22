@@ -16,7 +16,7 @@ export class IfRoleDirective {
 
   @Input()
   set ifRole(roles: string[]) {
-    if(roles.includes(this.identityService.getUserRole())) {
+    if(roles.includes(this.identityService.getCurrentUser().role)) {
       this.viewContainer.createEmbeddedView(this.templateRef);
     } else {
       this.viewContainer.clear();

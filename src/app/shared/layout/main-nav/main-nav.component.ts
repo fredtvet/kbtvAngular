@@ -39,7 +39,6 @@ export class MainNavComponent {
   ngOnInit(){
     //Remove '/' and make first letter uppercase for title
     this.title = this.router.url.replace("/","").replace(/^\w/, c => c.toUpperCase())
-    if(this.title == "Hjem") this.title = "Bj Bygg & Eiendom";
   }
 
   toggleDrawer(){

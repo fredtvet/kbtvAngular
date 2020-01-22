@@ -8,6 +8,7 @@ import { MissionNoteDetailsComponent } from './mission-note-details/mission-note
 import { MissionNoteFormComponent } from './mission-note-form/mission-note-form.component';
 import { MissionReportFormComponent } from './mission-report-form/mission-report-form.component';
 import { SharedModule, ConfirmDeleteDialogComponent, ImageViewerDialogComponent } from '../shared';
+import { MissionDetailsViewComponent } from './components/mission-details-view/mission-details-view.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SharedModule, ConfirmDeleteDialogComponent, ImageViewerDialogComponent 
     MissionListComponent,
     MissionNoteDetailsComponent,
     MissionNoteFormComponent,
-    MissionReportFormComponent
+    MissionReportFormComponent,
+    MissionDetailsViewComponent
   ],
   entryComponents:[
     MissionFormComponent,

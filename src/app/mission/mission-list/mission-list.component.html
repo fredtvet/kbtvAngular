@@ -16,7 +16,7 @@
 
   </mat-nav-list>
 
-  <button (click)="createMission()" color="primary" *ifRole="[ROLES.Leder, ROLES.Mellomleder]"
+  <button (click)="openCreateMissionDialog()" color="primary" *ifRole="[ROLES.Leder, ROLES.Mellomleder]"
           mat-mini-fab aria-label="ny"
           class="action_fab"
           style="bottom:111px!important">

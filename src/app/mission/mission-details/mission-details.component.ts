@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NavAction, MissionDetails, ConfirmDeleteDialogComponent, ROLES } from 'src/app/shared';
-import { MissionsService, MissionImagesService, MissionNotesService, MissionReportsService } from 'src/app/core';
+import { NavAction, MissionDetails, ConfirmDeleteDialogComponent, ROLES, MissionNote } from 'src/app/shared';
+import { MissionsService, MissionImagesService, MissionNotesService, MissionReportsService, MissionTypesService, EmployersService } from 'src/app/core';
 import { MissionFormComponent } from '../mission-form/mission-form.component';
 import { MissionNoteFormComponent } from '../mission-note-form/mission-note-form.component';
 import { MissionReportFormComponent } from '../mission-report-form/mission-report-form.component';
+import { MissionForm } from '../mission-form/mission-form.model';
 
 @Component({
   selector: 'app-mission-details',
@@ -16,7 +17,9 @@ import { MissionReportFormComponent } from '../mission-report-form/mission-repor
 })
 
 export class MissionDetailsComponent {
+  loading:boolean = true;
   public ROLES = ROLES;
+
   imagesToUpload: FileList;
   reportToUpload: File;
 
@@ -42,6 +45,8 @@ export class MissionDetailsComponent {
     private _imagesService: MissionImagesService,
     private _missionNotesService: MissionNotesService,
     private _missionReportsService: MissionReportsService,
+    private _missionTypesService: MissionTypesService,
+    private _employersService: EmployersService,
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
@@ -54,18 +59,23 @@ export class MissionDetailsComponent {
       result => {
         this.mission = result;
         this.mission.address = this.mission.address.replace(", Norge","").replace(/,/g, ";");
+        this.loading = false;
       },
       error => console.log(error)
     );
   }
 
-
   uploadImages(files: FileList){
+
+    //Enable loading after 200ms delay if loading is not set
+    this.loading = true;
+
     this.imagesToUpload = files;
     this._imagesService.uploadImages(this.missionId, files).subscribe(
       result => {
         this.mission.missionImages = this.mission.missionImages.concat(result);
         this.openSnackBar(`Vellykket! ${result.length} ${result.length > 1 ? 'bilder' : 'bilde'} lastet opp.`)
+        this.loading = false;
       },
       error => this.openSnackBar('Mislykket! Noe gikk feil.')
       );
@@ -81,96 +91,48 @@ export class MissionDetailsComponent {
     );
   }
 
-  handleEvent(e){
+  handleNavEvents(e){
     switch(e){
       case "delete":{
-        this.openDeleteDialog();
+        this.openMissionDeleteDialog();
         break;
       }
       case "edit":{
         this.openEditDialog();
         break;
       }
-      case "back":{
-        this.onBack();
-        break;
-      }
       case "createReport":{
-        this.openCreateMissionReportDialog();
+        this.openCreateReportDialog();
         break;
       }
       case "createNote":{
-        this.createMissionNote();
+        this.openCreateNoteDialog();
+        break;
+      }
+      case "back":{
+        this.onBack();
         break;
       }
     }
   }
 
-
-
-  openDeleteDialog(){
-    const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-    deleteDialogRef.afterClosed().subscribe(() => this.deleteMission());
-  }
-
-
   openEditDialog(){
-    this._missionsService.getMission(this.missionId)
-      .subscribe(data => {
-        const dialogRef = this.dialog.open(MissionFormComponent, {
-          width: '100vw',
-          height: '100vh',
-          panelClass: 'form_dialog',
-          data: data,
-        });
 
-        dialogRef.afterClosed().subscribe(res => this.editMission(res));
+    let mission$ = this._missionsService.getMission(this.missionId);
+    let types$ = this._missionTypesService.getMissionTypes();
+    let employers$ = this._employersService.getEmployers();
+
+    forkJoin([mission$, types$, employers$]).subscribe(data => {
+      let formData = new MissionForm(data[0], data[1], data[2], false);
+      const dialogRef = this.dialog.open(MissionFormComponent, {
+        width: '100vw',
+        height: '100vh',
+        panelClass: 'form_dialog',
+        data: formData,
       });
-  }
 
-
-
-  createMissionNote(){
-    const dialogRef = this.dialog.open(MissionNoteFormComponent, {
-      width: '100vw',
-      height: '100vh',
-      panelClass: 'form_dialog',
-      data: { missionId: this.missionId }
-    });
-
-    dialogRef.afterClosed().subscribe(note => {
-      if(note){
-        this._missionNotesService.addNote(this.missionId, note)
-        .subscribe(id => this.router.navigate(['oppdrag', this.missionId, 'notater', id]));
-      }
-    });
-
-  }
-
-  openCreateMissionReportDialog(){
-    const deleteDialogRef = this.dialog.open(MissionReportFormComponent);
-    deleteDialogRef.afterClosed().subscribe(data => this.createMissionReport(data));
-  }
-
-  createMissionReport(data){
-    if(!data) return null;
-    this._missionReportsService.uploadReport(this.missionId, data.files, data.typeId).subscribe(res =>{
-      this.mission.missionReports = this.mission.missionReports.concat(res)
-    });
-  }
-
-  pinnedNotes(pinned: boolean){
-    return this.mission.missionNotes.filter(x => x.pinned == pinned);
-  }
-
-  deleteMission(){
-    this._missionsService.deleteMission(this.missionId).subscribe(
-      res => {
-        this.onBack();
-        this.openSnackBar('Vellykket! Oppdrag slettet.')
-      },
-      error => this.openSnackBar('Mislykket! Noe gikk feil.')
-    );
+      dialogRef.afterClosed().subscribe(res => this.editMission(res));
+    })
   }
 
   editMission(data: any){
@@ -188,16 +150,49 @@ export class MissionDetailsComponent {
     )
   }
 
-  onBack(){
-    this.router.navigate(['/oppdrag'])
+  openCreateNoteDialog(){
+    const dialogRef = this.dialog.open(MissionNoteFormComponent, {
+      width: '100vw',
+      height: '100vh',
+      panelClass: 'form_dialog',
+      data: { missionId: this.missionId }
+    });
+
+    dialogRef.afterClosed().subscribe(note => this.createMissionNote(note));
   }
 
-  ngOnDestroy() {
-    this.routeSub.unsubscribe();
+  createMissionNote(note: MissionNote){
+    if(note){
+      this._missionNotesService.addNote(this.missionId, note)
+      .subscribe(id => this.router.navigate(['oppdrag', this.missionId, 'notater', id]));
+    }
   }
 
-  trackByFn(index:number, missionImage:any): number {
-    return missionImage.id;
+  openCreateReportDialog(){
+    const deleteDialogRef = this.dialog.open(MissionReportFormComponent);
+    deleteDialogRef.afterClosed().subscribe(data => this.createMissionReport(data));
+  }
+
+  createMissionReport(data){
+    if(!data) return null;
+    this._missionReportsService.uploadReport(this.missionId, data.files, data.typeId).subscribe(res =>{
+      this.mission.missionReports = this.mission.missionReports.concat(res)
+    });
+  }
+
+  openMissionDeleteDialog(){
+    const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
+    deleteDialogRef.afterClosed().subscribe(() => this.deleteMission());
+  }
+
+  deleteMission(){
+    this._missionsService.deleteMission(this.missionId).subscribe(
+      res => {
+        this.onBack();
+        this.openSnackBar('Vellykket! Oppdrag slettet.')
+      },
+      error => this.openSnackBar('Mislykket! Noe gikk feil.')
+    );
   }
 
   openSnackBar(message: string){
@@ -207,4 +202,11 @@ export class MissionDetailsComponent {
     });
   }
 
+  onBack(){
+    this.router.navigate(['/oppdrag'])
+  }
+
+  ngOnDestroy() {
+    this.routeSub.unsubscribe();
+  }
 }

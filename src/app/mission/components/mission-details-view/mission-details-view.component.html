@@ -1,0 +1,60 @@
+<mat-tab-group mat-stretch-tabs color="primary" backgroundColor="accent" class="mission_tab">
+
+  <mat-tab label="Generelt">
+      <mat-nav-list class="p-0" *ngIf="mission">
+
+          <mat-list-item>
+            <mat-icon mat-list-icon>phone</mat-icon>
+            <a mat-line href="tel:{{ mission.phoneNumber }}">{{ mission.phoneNumber || 'N/A' }}</a>
+            <p mat-line>Trykk for å ringe </p>
+            <mat-icon>open_in_new</mat-icon>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon mat-list-icon>directions_car</mat-icon>
+            <a mat-line href="https://www.google.com/maps/dir/?api=1&destination={{ mission.address }}&travelmode=driving" target="_blank">Veibeskrivelse</a>
+            <p mat-line>Trykk for å åpne kart</p>
+            <mat-icon >open_in_new</mat-icon>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+
+          <mat-list-item *ngFor="let report of mission.missionReports">
+            <mat-icon mat-list-icon>description</mat-icon>
+          <a mat-line href="{{ report.fileURL }}">{{ report.missionReportTypeName }}</a>
+            <p mat-line>{{ report.createdAt | date }}</p>
+            <mat-icon>cloud_download</mat-icon>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+
+      </mat-nav-list>
+  </mat-tab>
+
+  <mat-tab label="Bilder"  *ngIf="mission">
+
+    <app-image-list [images]="mission.missionImages" (imageDeleted)="this.imageDeleted.emit($event)" ></app-image-list>
+
+  </mat-tab>
+
+  <mat-tab label="Notater">
+      <mat-nav-list class="p-0" *ngIf="mission">
+          <app-nav-list-item *ngFor="let note of pinnedNotes(true)"
+            name="{{ note.title || (note.createdAt | date: 'short')}}" icon="star" [routerLink]="['/oppdrag', mission.id, 'notater', note.id]">
+          </app-nav-list-item>
+          <app-nav-list-item *ngFor="let note of pinnedNotes(false)"
+          name="{{ note.title || (note.createdAt | date: 'short')}}" icon="note" [routerLink]="['/oppdrag', mission.id, 'notater', note.id]">
+        </app-nav-list-item>
+      </mat-nav-list>
+  </mat-tab>
+
+</mat-tab-group>
+
+<button color="primary"
+    *ifRole="[ROLES.Leder, ROLES.Ansatt, ROLES.Mellomleder]"
+    mat-mini-fab aria-label="ny"
+    class="action_fab"
+    (click)="imageInput.click()">
+    <mat-icon color="accent">camera_enhance</mat-icon>
+</button>
+
+<input type="file" style="display:none" multiple (change)="this.imagesUploaded.emit($event.target.files)" #imageInput>

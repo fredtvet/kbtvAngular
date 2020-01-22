@@ -5,12 +5,12 @@ import { Observable ,  BehaviorSubject ,  ReplaySubject } from 'rxjs';
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
 import { map ,  distinctUntilChanged } from 'rxjs/operators';
-import { Identity } from 'src/app/shared';
+import { Identity, User } from 'src/app/shared';
 
 
 @Injectable()
 export class IdentityService {
-  private currentUserSubject = new BehaviorSubject<Identity>({} as Identity);
+  private currentUserSubject = new BehaviorSubject<User>({} as User);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
 
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
@@ -23,12 +23,23 @@ export class IdentityService {
     private jwtService: JwtService
   ) {}
 
+  populate(){
+    if(this.jwtService.getToken()){
+      this.apiService.get('/auth')
+      .subscribe(
+        data => this.setAuth(data),
+        error => this.purgeAuth(),
+      );
+    }else
+      this.purgeAuth();
+  }
 
-  setAuth(user: Identity) {
+  setAuth(identity: Identity) {
     // Save JWT sent from server in localstorage
-    this.jwtService.saveToken(user.token.replace("Bearer ", ""));
+    this.jwtService.saveToken(identity.token.replace("Bearer ", ""));
     // Set current user data into observable
-    this.currentUserSubject.next(user);
+    this.currentUserSubject.next(identity.user);
+    console.log(this.currentUserSubject.value);
     // Set isAuthenticated to true
     this.isAuthenticatedSubject.next(true);
     this.isAuth = true;
@@ -38,7 +49,7 @@ export class IdentityService {
     // Remove JWT from localstorage
     this.jwtService.destroyToken();
     // Set current user to an empty object
-    this.currentUserSubject.next({} as Identity);
+    this.currentUserSubject.next({} as User);
     // Set auth status to false
     this.isAuthenticatedSubject.next(false);
     this.isAuth = false;
@@ -55,12 +66,8 @@ export class IdentityService {
     ));
   }
 
-  getCurrentUser(): any{
-    return this.apiService.get('/auth');
-  }
-
-  getUserRole():string{
-    return this.jwtService.getDecodedToken()['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+  getCurrentUser(): User{
+    return this.currentUserSubject.value;
   }
 
   hasValidToken(){
@@ -77,10 +84,16 @@ export class IdentityService {
     return true;
   }
 
-  updateCurrentUser(user: any)
-  {
+  // Update the user on the server (email, pass, etc)
+  updateCurrentUser(user): Observable<User> {
     return this.apiService
-    .put('/auth', user);
+    .put('/auth', user )
+    .pipe(map(data => {
+      // Update the currentUser observable
+      this.currentUserSubject.next(data);
+      console.log(data);
+      return data;
+    }));
   }
 
   changePassword(oldPw: string, newPw: string){
@@ -91,7 +104,7 @@ export class IdentityService {
     }
 
     return this.apiService
-    .put('/auth/changePassword', obj);
+      .put('/auth/changePassword', obj);
   }
 
 }
