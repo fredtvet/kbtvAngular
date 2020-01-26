@@ -1,4 +1,4 @@
-import { Pagination } from '..';
+import { Pagination } from './pagination.model';
 
 export class MissionList{
   missions: MissionListItem[];

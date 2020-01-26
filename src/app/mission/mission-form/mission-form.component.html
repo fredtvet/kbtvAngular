@@ -33,19 +33,19 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Oppdragsgiver" aria-label="Oppdragsgiver" [formControl]="employerName" [matAutocomplete]="auto1">
+        <mat-form-field formGroupName="employer">
+          <input matInput placeholder="Oppdragsgiver" aria-label="Oppdragsgiver" formControlName="name" [matAutocomplete]="auto1">
           <mat-autocomplete #auto1="matAutocomplete">
-            <mat-option *ngFor="let employer of data.employers" [value]="employer.name">
+            <mat-option *ngFor="let employer of employers" [value]="employer.name">
               {{employer.name}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
 
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Oppdragstype" aria-label="Oppdragstype" [formControl]="missionTypeName" [matAutocomplete]="auto2">
+        <mat-form-field formGroupName="missionType">
+          <input matInput placeholder="Oppdragstype" aria-label="Oppdragstype" formControlName="name" [matAutocomplete]="auto2">
           <mat-autocomplete #auto2="matAutocomplete">
-            <mat-option *ngFor="let type of data.missionTypes" [value]="type.name">
+            <mat-option *ngFor="let type of types" [value]="type.name">
               {{type.name}}
             </mat-option>
           </mat-autocomplete>

@@ -3,6 +3,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { MissionType } from 'src/app/shared';
+import { ApiService } from './api.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,41 +13,64 @@ import { MissionType } from 'src/app/shared';
 
 export class MissionTypesService {
 
-  uri : String;
+  uri : String = '/MissionTypes';
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) { this.uri = environment.apiUrl + '/MissionTypes'; }
+  private missionTypesSubject =
+          new BehaviorSubject<MissionType[]>([]);
 
-  addMissionType(Name: string)
+  private missionTypes$ = this.missionTypesSubject.asObservable();
+
+  constructor(private apiService: ApiService) {}
+
+  addMissionType(missionType: MissionType)
   {
-    const obj = {
-      Name
-    };
+    return this.apiService
+                .post(`${this.uri}`, missionType)
+                .pipe(map(data =>{
+                  this.addMissionTypeInSubject(data);
+                }));
 
-    return this
-            .http
-            .post(`${this.uri}`, obj);
   }
 
-  getMissionTypes() {
-       return this
-        .http
-        .get<MissionType[]>(`${this.uri}`);
+  getMissionTypes(): Observable<MissionType[]> {
+    if(this.missionTypesSubject.value === undefined || this.missionTypesSubject.value.length == 0){
+      this.apiService.get(`${this.uri}`)
+      .subscribe(data => {
+        this.missionTypesSubject.next(data);
+      });
+    }
+    return this.missionTypes$;
   }
 
-  updateMissionType(Name: string, id)
+  updateMissionType(missionType: MissionType)
   {
-    const obj = {
-      Name
-    };
-
-    return this
-            .http
-            .put(`${this.uri}/${id}`, obj);
+    return this.apiService.put(`${this.uri}/${missionType.id}`, missionType)
+      .pipe(map(e => this.updateMissionTypeInSubject(e)));
   }
 
-  deleteMissionType(id) {
+  deleteMissionType(id: number) {
     return this
-            .http
+            .apiService
             .delete(`${this.uri}/${id}`);
+  }
+
+  updateMissionTypeInSubject(missionType: MissionType){
+    this.missionTypesSubject.next(
+      this.missionTypesSubject.value.map(m => {
+        if(m.id !== missionType.id) return m;
+        else return missionType;
+      })
+    );
+  }
+
+  addMissionTypeInSubject(missionType: MissionType){
+    this.missionTypesSubject.value.push(missionType);
+  }
+
+  addOrUpdateInSubject(missionType: MissionType){
+    if(this.missionTypesSubject.value.find(type => type.id == missionType.id))
+      this.updateMissionTypeInSubject(missionType);
+    else
+      this.addMissionTypeInSubject(missionType);
   }
 }

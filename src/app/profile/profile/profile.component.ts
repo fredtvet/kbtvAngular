@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
   public passwordStatus: string;
 
   ngOnInit() {
-    this.identityService.currentUser
+    this.identityService.currentUser$
       .subscribe(user => this.user = user);
   }
 

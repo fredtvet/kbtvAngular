@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MissionNote, NavAction, ConfirmDeleteDialogComponent, ROLES } from 'src/app/shared';
-import { MissionNotesService } from 'src/app/core';
+import { MissionsService } from 'src/app/core';
 import { MissionNoteFormComponent } from '../mission-note-form/mission-note-form.component';
 
 @Component({
@@ -27,7 +27,7 @@ export class MissionNoteDetailsComponent implements OnInit {
   ];
 
   constructor(
-    private _notesService: MissionNotesService,
+    private _missionsService: MissionsService,
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
@@ -40,10 +40,9 @@ export class MissionNoteDetailsComponent implements OnInit {
       this.noteId = params['id']
     });
 
-    this._notesService.getNote(this.missionId, this.noteId).subscribe(result => {
-      this.note = result;
-    },
-      error => console.log(error)
+    this._missionsService.getMissionNoteDetails(this.missionId, this.noteId).subscribe(
+      result => this.note = result,
+      error => {console.log(error);this.openSnackBar('Mislykket! Noe gikk feil.')}
     );
 
   }
@@ -67,11 +66,11 @@ export class MissionNoteDetailsComponent implements OnInit {
 
   openDeleteDialog(){
     const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-    deleteDialogRef.afterClosed().subscribe(() => this.deleteMissionNote());
+    deleteDialogRef.afterClosed().subscribe(res => {if(res){this.deleteMissionNote()}});
   }
 
   openEditDialog(){
-    this._notesService.getNote(this.missionId, this.noteId)
+    this._missionsService.getMissionNoteDetails(this.missionId, this.noteId)
     .subscribe(res => {
       const dialogRef = this.dialog.open(MissionNoteFormComponent, {
         width: '100vw',
@@ -85,7 +84,7 @@ export class MissionNoteDetailsComponent implements OnInit {
   }
 
   deleteMissionNote(){
-    this._notesService.deleteNote(this.missionId, this.noteId).subscribe(
+    this._missionsService.deleteMissionNote(this.missionId, this.noteId).subscribe(
       res => {
         this.onBack();
         this.openSnackBar('Vellykket! Notat slettet.');
@@ -95,12 +94,9 @@ export class MissionNoteDetailsComponent implements OnInit {
 
   editMissionNote(data){
     if(!data) return null;
-    this._notesService.updateNote(this.missionId, data)
+    this._missionsService.updateMissionNote(this.missionId, data)
       .subscribe(
-        success => {
-          this.note = data;
-          this.openSnackBar('Vellykket oppdatering!');
-        },
+        success =>this.openSnackBar('Vellykket oppdatering!'),
         error => this.openSnackBar('Mislykket! Noe gikk feil.')
     );
   }

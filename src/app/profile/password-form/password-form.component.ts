@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-password-form',
@@ -24,9 +24,10 @@ export class PasswordFormComponent implements OnInit {
       this.passwordForm = this._formBuilder.group({
         oldPassword: ['', [Validators.required, Validators.minLength(7)]],
         password: ['', [Validators.required, Validators.minLength(7)]],
-        confirmPassword: ['', Validators.required]
+        confirmPassword: ['', Validators.required],
       });
     }
+
 
     onSubmit(){
       const {value, valid} = this.passwordForm;
@@ -37,10 +38,6 @@ export class PasswordFormComponent implements OnInit {
       }
       else if (this.password.value !== this.confirmPassword.value)
         this.error = "Passordene er ikke like";
-    }
-
-    ngOnDestroy() {
-
     }
 
     get oldPassword(){

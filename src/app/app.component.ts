@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IdentityService } from './core';
+import { IdentityService, LoadingService } from './core';
+import { take, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,10 @@ import { IdentityService } from './core';
 })
 export class AppComponent {
   title = 'kbtv-client';
-  constructor(private identityService: IdentityService){}
+
+  constructor(
+    private identityService: IdentityService,
+    public loadingService: LoadingService){}
 
   ngOnInit(){
     this.identityService.populate();

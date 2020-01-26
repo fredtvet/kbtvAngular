@@ -1,3 +1,3 @@
 export * from './core.module';
 export * from './services';
-export * from './http.token.interceptor';
+export * from './interceptors';

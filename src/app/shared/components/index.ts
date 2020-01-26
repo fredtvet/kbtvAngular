@@ -1,4 +1,3 @@
-export * from './pagination.model';
 export * from './nav-action.model';
 export * from './confirm-delete-dialog/confirm-delete-dialog.component';
 export * from './image-list/image-list.component';

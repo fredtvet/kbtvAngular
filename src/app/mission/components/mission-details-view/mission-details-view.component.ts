@@ -10,14 +10,14 @@ export class MissionDetailsViewComponent {
 
   public ROLES = ROLES;
 
-  @Input() mission: MissionDetails;
+  @Input() missionDetails: MissionDetails;
   @Output() imagesUploaded = new EventEmitter();
   @Output() imageDeleted = new EventEmitter();
 
   constructor() { }
 
   pinnedNotes(pinned: boolean){
-    return this.mission.missionNotes.filter(x => x.pinned == pinned);
+    return this.missionDetails.missionNotes.filter(x => x.pinned == pinned);
   }
 
 }

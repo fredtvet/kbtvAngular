@@ -10,10 +10,6 @@
           name="{{ mission.address }}" icon="home_work" [routerLink]="['/oppdrag', mission.id, 'detaljer']">
       </app-nav-list-item>
 
-      <app-nav-list-item *ngFor="let mission of missionList.missions"
-      name="{{ mission.address }}" icon="home_work" [routerLink]="['/oppdrag', mission.id, 'detaljer']">
-      </app-nav-list-item>
-
   </mat-nav-list>
 
   <button (click)="openCreateMissionDialog()" color="primary" *ifRole="[ROLES.Leder, ROLES.Mellomleder]"

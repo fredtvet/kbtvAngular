@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { MissionDetails, Mission } from 'src/app/shared';
+import { MissionDetails, Mission, MissionType, Employer, MissionImage, MissionReport, MissionNote  } from 'src/app/shared/models';
+import { ApiService } from './api.service';
+import { BehaviorSubject, pipe, Observable } from 'rxjs';
+import { map, filter, take } from 'rxjs/operators';
+import { MissionReportType } from 'src/app/shared/models/mission-report-type.model';
+import { MissionsSubject } from '../subjects/missions.subject';
 
 @Injectable({
   providedIn: 'root'
@@ -9,56 +14,155 @@ import { MissionDetails, Mission } from 'src/app/shared';
 
 export class MissionsService {
 
-  uri : String;
+  uri : String = "/Missions";
 
-  constructor(private http: HttpClient) {this.uri = environment.apiUrl + '/missions'}
+  constructor(
+    private apiService: ApiService,
+    private missionsSubject: MissionsSubject
+    ) {}
 
-  addMission(mission: any)
-  {
-    return this.http
-            .post<number>(`${this.uri}`, mission);
+  getMissionDetails(id:number): Observable<MissionDetails> {
+    let details = this.missionsSubject.getMissionDetails(id);
 
-  }
-
-  getMissionsPaginated(pageId: number = 0, searchString?: string) {
-    if(searchString == null || searchString.length == 0){
-      return this
-        .http
-        .get(`${this.uri}?pageId=${pageId}`);
-    }else{
-      return this
-      .http
-      .get(`${this.uri}?searchString=${searchString}&pageId=${pageId}`);
+    if(details == undefined){
+      this.apiService.get(`${this.uri}/${id}/Details`)
+        .subscribe(data => this.missionsSubject.addMissionDetails(data))
     }
+
+    return this.missionsSubject.getMissionDetails$(id);
   }
 
-  getMission(id) {
-    return this
-            .http
-            .get<Mission>(`${this.uri}/${id}`);
+  getMissionNoteDetails(missionId:number, noteId:number): Observable<MissionNote> {
+
+    return this.getMissionDetails(missionId).pipe(map(details => {
+      if(details){ //If mission  exist
+        console.log(details);
+        let note = details.missionNotes.find(x => x.id == noteId);
+        console.log(note);
+        if(note){ //If note exist in mission
+          if(note.content == null || note.content.length == 0){ //If note doesnt have content loaded (details)
+            this.apiService.get(`${this.uri}/${missionId}/MissionNotes/${noteId}`)
+              .subscribe(data => this.missionsSubject.updateMissionNote(missionId, data))
+          }
+        }
+      }
+
+      return this.missionsSubject.getMissionNoteDetails(missionId, noteId);
+    }));
   }
 
-  getMissionDetails(id) {
-    return this
-           .http
-           .get<MissionDetails>(`${this.uri}/${id}/Details`);
-  }
-
-  updateMission(mission: any)
+  addMission(mission: Mission): Observable<Mission>
   {
-    return this
-            .http
-            .put<boolean>(`${this.uri}/${mission.id}`, mission);
+    return this.apiService
+            .post(`${this.uri}`, mission)
+            .pipe(map(data =>{
+              this.missionsSubject.addMissionDetails(new MissionDetails(data));
+              return data;
+            }));
   }
 
-  toggleFinish(id){
-    return this.http
-      .get<number>(`${this.uri}/${id}/ToggleFinish`);
+  addMissionImages(missionId:number, files: FileList): Observable<MissionImage[]>{
+    const formData: FormData = new FormData();
+
+    for(let i = 0; i < files.length; i++){
+        formData.append('file', files[i], files[i].name);
+    }
+
+    return this
+            .apiService
+            .post(`${this.uri}/${missionId}/MissionImages`, formData)
+            .pipe(map(imgs =>{
+              this.missionsSubject.addMissionImages(missionId, imgs);
+              return imgs;
+            }));
   }
 
-  deleteMission(id) {
+  addMissionReport(missionId:number, reportType: MissionReportType, files: FileList): Observable<MissionReport>{
+
+    const formData: FormData = new FormData();
+    formData.append('file', files[0], files[0].name);
+    formData.append('MissionReportType',JSON.stringify(reportType));
     return this
-            .http
-            .delete(`${this.uri}/${id}`);
+            .apiService
+            .post(`${this.uri}/${missionId}/MissionReports`,formData)
+            .pipe(map(data =>{
+              this.missionsSubject.addMissionReport(missionId, data);
+              return data;
+            }));
   }
+
+  addMissionNote(missionId: number, note: MissionNote): Observable<MissionNote>{
+    return this.apiService
+            .post(`${this.uri}/${missionId}/MissionNotes`, note)
+            .pipe(map(data =>{
+              console.log(data);
+              this.missionsSubject.addMissionNote(missionId, data);
+              return data;
+            }));
+  }
+
+  updateMission(mission: Mission): Observable<Mission>{
+    return this
+            .apiService
+            .put(`${this.uri}/${mission.id}`, mission)
+            .pipe(map(data =>{
+              this.missionsSubject.updateMission(data);
+              return data;
+            }));
+  }
+
+  updateMissionNote(missionId: number, note: MissionNote): Observable<MissionNote>{
+    return this
+            .apiService
+            .put(`${this.uri}/${missionId}/MissionNotes/${note.id}`, note)
+            .pipe(map(data =>{
+              this.missionsSubject.updateMissionNote(missionId, data);
+              return data;
+            }));
+  }
+
+  deleteMission(id: number): Observable<boolean> {
+    return this
+            .apiService
+            .delete(`${this.uri}/${id}`)
+            .pipe(map(bool =>{
+              if(bool)
+                this.missionsSubject.removeMissionDetails(id);
+              return bool;
+          }));
+  }
+
+  deleteMissionImage(missionId: number, imageId: number){
+    return this
+    .apiService
+    .delete(`${this.uri}/${missionId}/MissionImages/${imageId}`)
+    .pipe(map(bool =>{
+      if(bool)
+        this.missionsSubject.removeMissionImage(missionId, imageId);
+
+      return bool;
+    }));
+  }
+
+  deleteMissionNote(missionId: number, noteId: number): Observable<boolean> {
+    return this
+            .apiService
+            .delete(`${this.uri}/${missionId}/MissionNotes/${noteId}`)
+            .pipe(map(bool =>{
+              if(bool)
+                this.missionsSubject.removeMissionNote(missionId, noteId);
+              return bool;
+          }));
+  }
+
+  toggleFinish(mission: Mission): Observable<Mission>{
+    return this.apiService
+      .get(`${this.uri}/${mission.id}/ToggleFinish`)
+      .pipe(map(bool =>{
+        mission.finished = bool;
+        this.missionsSubject.updateMission(mission);
+        return mission;
+    }));
+  }
+
 }

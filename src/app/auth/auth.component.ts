@@ -30,7 +30,7 @@ export class AuthComponent {
     this.error = null;
 
     this.identityService
-    .attemptAuth('login', this.authForm.value)
+    .attemptAuth(this.authForm.value)
     .subscribe(
       data => this.router.navigateByUrl('/'),
       err => {

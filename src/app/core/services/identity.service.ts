@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable ,  BehaviorSubject ,  ReplaySubject } from 'rxjs';
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
 import { map ,  distinctUntilChanged } from 'rxjs/operators';
-import { Identity, User } from 'src/app/shared';
+import { Identity, User } from 'src/app/shared/models';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
+
 export class IdentityService {
   private currentUserSubject = new BehaviorSubject<User>({} as User);
-  public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
+  public currentUser$ = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
 
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
@@ -19,7 +21,6 @@ export class IdentityService {
 
   constructor (
     private apiService: ApiService,
-    private http: HttpClient,
     private jwtService: JwtService
   ) {}
 
@@ -46,7 +47,6 @@ export class IdentityService {
   }
 
   purgeAuth() {
-    // Remove JWT from localstorage
     this.jwtService.destroyToken();
     // Set current user to an empty object
     this.currentUserSubject.next({} as User);
@@ -55,9 +55,8 @@ export class IdentityService {
     this.isAuth = false;
   }
 
-  attemptAuth(type, credentials): Observable<Identity> {
-    const route = (type === 'login') ? '/login' : '';
-    return this.apiService.post('/auth' + route, credentials)
+  attemptAuth(credentials): Observable<Identity> {
+    return this.apiService.post('/auth/login', credentials)
       .pipe(map(
       user => {
         this.setAuth(user);
@@ -72,37 +71,29 @@ export class IdentityService {
 
   hasValidToken(){
     let token = this.jwtService.getDecodedToken();
-    if(!token) {
-      return false;
-    };
 
-    let exp = token['exp'];
+    if(!token) return false;
 
-    if (Date.now() >= exp * 1000) {
+    if (Date.now() >= token['exp'] * 1000) {
         return false;
     }
     return true;
   }
 
-  // Update the user on the server (email, pass, etc)
-  updateCurrentUser(user): Observable<User> {
+  updateCurrentUser(user: User): Observable<User> {
     return this.apiService
-    .put('/auth', user )
+    .put('/auth', user)
     .pipe(map(data => {
-      // Update the currentUser observable
       this.currentUserSubject.next(data);
-      console.log(data);
       return data;
     }));
   }
 
   changePassword(oldPw: string, newPw: string){
-
     const obj = {
       OldPassword: oldPw,
       NewPassword: newPw
     }
-
     return this.apiService
       .put('/auth/changePassword', obj);
   }

@@ -14,7 +14,7 @@ export class SideNavHeaderComponent implements OnInit {
   constructor(private identityService: IdentityService) { }
 
   ngOnInit() {
-    this.identityService.currentUser
+    this.identityService.currentUser$
     .subscribe(user => this.user = user);
   }
 

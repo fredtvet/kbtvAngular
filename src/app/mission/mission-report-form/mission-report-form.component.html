@@ -2,11 +2,16 @@
 
   <form *ngIf="reportForm" [formGroup]="reportForm" fxLayout="column" fxLayoutAlign="space-around-center">
     <h4 class="text-center">Legg til rapport</h4>
-    <mat-form-field>
-      <mat-select formControlName="typeId" (change)="changeType($event)" placeholder="Velg type">
-              <mat-option *ngFor="let type of reportTypes" [value]="type.id">{{ type.name }}</mat-option>
-      </mat-select >
+
+    <mat-form-field formGroupName="reportType">
+      <input matInput placeholder="Type rapport" aria-label="Type rapport" formControlName="name" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let type of types" [value]="type.name">
+          {{type.name}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
+
     <input (change)="changeFile($event)" type="file">
     <br />
     <button (click)="onSubmit()" [disabled]="this.reportForm.invalid || !this.files" mat-raised-button color="primary">

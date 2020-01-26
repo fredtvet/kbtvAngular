@@ -42,7 +42,7 @@ export class NestedNavComponent {
     private router: Router,) { }
 
   ngOnInit(){
-    this.userSub = this.identityService.currentUser.subscribe(id => this.user = id.user);
+    this.userSub = this.identityService.currentUser$.subscribe(user => this.user = user);
     console.log(this.user);
   }
 

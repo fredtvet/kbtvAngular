@@ -14,7 +14,7 @@ export class ArraySlicePipe implements PipeTransform {
             if(sliced.length >= rowNr)
                 rowItems.push(sliced[rowNr - 1]);
         }
-        console.log(rowItems);
+
         return rowItems;
 
     }

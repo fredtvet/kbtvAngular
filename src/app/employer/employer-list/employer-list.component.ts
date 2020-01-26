@@ -45,12 +45,8 @@ export class EmployerListComponent implements OnInit {
 
   updateEmployer(employer: Employer){
     this.employersService.updateEmployer(employer)
-    .subscribe(success => {
-        this.employers = this.employers.map(e => {
-          if(e.id == employer.id) return employer;
-          else return e; });
-          this.openSnackBar('Vellykket oppdatering!')
-      },
+    .subscribe(
+      success => this.openSnackBar('Vellykket oppdatering!'),
       error => this.openSnackBar('Mislykket! Noe gikk feil.')
     );
   }
@@ -83,11 +79,7 @@ export class EmployerListComponent implements OnInit {
   createEmployer(employer: any){
     this.employersService.addEmployer(employer)
     .subscribe(
-      id => {
-        employer.id = id;
-        this.employers.push(employer);
-        this.openSnackBar('Vellykket! Ny arbeidsgiver registrert.')
-      },
+      data => this.openSnackBar('Vellykket! Ny arbeidsgiver registrert.'),
       error => this.openSnackBar('Mislykket! Noe gikk feil.')
     );
   }
