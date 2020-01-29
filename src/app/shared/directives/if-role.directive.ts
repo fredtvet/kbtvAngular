@@ -1,5 +1,6 @@
 import { Directive, Input, ElementRef, TemplateRef, ViewContainerRef } from '@angular/core';
-import { IdentityService } from 'src/app/core';
+import { skipWhile, take } from 'rxjs/operators';
+import { IdentityService } from 'src/app/core/services/identity.service';
 
 @Directive({
   selector: '[ifRole]'
@@ -16,12 +17,15 @@ export class IfRoleDirective {
 
   @Input()
   set ifRole(roles: string[]) {
-    if(roles.includes(this.identityService.getCurrentUser().role)) {
-      this.viewContainer.createEmbeddedView(this.templateRef);
-    } else {
-      this.viewContainer.clear();
-    }
-
+    this.identityService.currentUser$
+    .pipe(skipWhile( user => !user.role),take(1))
+    .subscribe(user =>{
+      if(roles.includes(user.role)) {
+        this.viewContainer.createEmbeddedView(this.templateRef);
+      } else {
+        this.viewContainer.clear();
+      }
+    });
   }
 
 

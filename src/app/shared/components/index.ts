@@ -7,3 +7,4 @@ export * from './pagination/pagination.component';
 export * from './vert-menu/vert-menu.component';
 export * from './search-bar/search-bar.component';
 export * from './loading.component';
+export * from './notification/notification.component';

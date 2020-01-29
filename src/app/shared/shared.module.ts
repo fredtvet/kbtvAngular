@@ -11,6 +11,7 @@ import { MainNavComponent, BottomNavComponent, NestedNavComponent } from './layo
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SideNavHeaderComponent } from './layout/side-nav-header/side-nav-header.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SideNavHeaderComponent } from './layout/side-nav-header/side-nav-header
     ArraySlicePipe,
     ThumbnailPipe,
     LoadingComponent,
-    SideNavHeaderComponent
+    SideNavHeaderComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,

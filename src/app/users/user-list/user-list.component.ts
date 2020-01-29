@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { UsersService } from 'src/app/core';
+import { UsersService, NotificationService } from 'src/app/core';
 import { User, ROLES } from 'src/app/shared';
 import { UserFormComponent } from '../user-form/user-form.component';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-list',
@@ -14,15 +14,13 @@ export class UserListComponent implements OnInit {
   public ROLES = ROLES;
   constructor(
     private usersService: UsersService,
-    public dialog: MatDialog,
-    private _snackBar: MatSnackBar) { }
+    private notificationService: NotificationService,
+    public dialog: MatDialog,) { }
 
   public users: User[];
 
   ngOnInit() {
-    this.usersService.getUsers().subscribe(response => {
-      this.users = response['result'];
-    })
+    this.usersService.getUsers().subscribe(response => this.users = response)
   }
 
   openEditDialog(user: User){
@@ -44,25 +42,12 @@ export class UserListComponent implements OnInit {
 
   updateUser(user: User){
     this.usersService.updateUser(user)
-    .subscribe(
-      success => {
-        this.users = this.users.map(e => {
-                  if(e.userName == user.userName) return user;
-                  else return e; })
-        this.openSnackBar('Vellykket oppdatering!')
-      },
-      error => this.openSnackBar('Mislykket! Noe gikk feil.')
-    );
+      .subscribe(success => this.notificationService.setNotification('Vellykket oppdatering!'));
   }
 
   deleteUser(username: string){
-    this.usersService.deleteUser(username).subscribe(
-      res => {
-        this.users = this.users.filter(x => x.userName !== username);
-        this.openSnackBar('Vellykket! Bruker slettet.')
-      },
-      error => this.openSnackBar('Mislykket! Noe gikk feil.')
-    );
+    this.usersService.deleteUser(username)
+      .subscribe(res => this.notificationService.setNotification('Vellykket! Bruker slettet.'));
   }
 
   openCreateDialog(){
@@ -79,20 +64,7 @@ export class UserListComponent implements OnInit {
 
   createUser(user: any){
     this.usersService.addUser(user)
-    .subscribe(
-      success => {
-        this.users.push(user);
-        this.openSnackBar('Vellykket! Ny bruker registrert.')
-      },
-      error => this.openSnackBar('Mislykket! Noe gikk feil.')
-    );
-  }
-
-  openSnackBar(message: string){
-    this._snackBar.open(message, 'lukk', {
-      duration: 2000,
-      panelClass: 'snackbar_margin'
-    });
+     .subscribe(success => this.notificationService.setNotification('Vellykket! Ny bruker registrert.'));
   }
 
 }

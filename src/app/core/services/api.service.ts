@@ -5,6 +5,7 @@ import { Observable ,  throwError } from 'rxjs';
 
 import { JwtService } from './jwt.service';
 import { catchError } from 'rxjs/operators';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ApiService {
   constructor(
     private http: HttpClient,
     private jwtService: JwtService
-  ) {}
+  ) { }
 
   private formatErrors(response: any) {
     return  throwError(response.error);

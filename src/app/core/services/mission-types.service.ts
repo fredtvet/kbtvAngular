@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { MissionType } from 'src/app/shared';
 import { ApiService } from './api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -34,12 +34,13 @@ export class MissionTypesService {
 
   getMissionTypes(): Observable<MissionType[]> {
     if(this.missionTypesSubject.value === undefined || this.missionTypesSubject.value.length == 0){
-      this.apiService.get(`${this.uri}`)
-      .subscribe(data => {
-        this.missionTypesSubject.next(data);
-      });
+      return this.apiService.get(`${this.uri}`)
+        .pipe(switchMap(data => {
+          this.missionTypesSubject.next(data);
+          return this.missionTypes$;
+        }));
     }
-    return this.missionTypes$;
+    else return this.missionTypes$;
   }
 
   updateMissionType(missionType: MissionType)
@@ -51,7 +52,20 @@ export class MissionTypesService {
   deleteMissionType(id: number) {
     return this
             .apiService
-            .delete(`${this.uri}/${id}`);
+            .delete(`${this.uri}/${id}`)
+            .pipe(map(bool =>{
+              if(bool)
+                this.removeMissionTypeInSubject(id);
+              return bool;
+            }));
+  }
+
+  removeMissionTypeInSubject(id: number){
+    this.missionTypesSubject.next(
+      this.missionTypesSubject.value.filter(d => {
+        return d.id !== id
+      })
+    );
   }
 
   updateMissionTypeInSubject(missionType: MissionType){
@@ -64,13 +78,9 @@ export class MissionTypesService {
   }
 
   addMissionTypeInSubject(missionType: MissionType){
-    this.missionTypesSubject.value.push(missionType);
-  }
+    if(!this.missionTypesSubject.value.find(type => type.id == missionType.id))
+      this.missionTypesSubject.value.push(missionType);
 
-  addOrUpdateInSubject(missionType: MissionType){
-    if(this.missionTypesSubject.value.find(type => type.id == missionType.id))
-      this.updateMissionTypeInSubject(missionType);
-    else
-      this.addMissionTypeInSubject(missionType);
+    console.log(this.missionTypesSubject.value);
   }
 }

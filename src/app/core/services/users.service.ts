@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { User } from 'src/app/shared';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ApiService } from './api.service';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,40 +12,73 @@ import { User } from 'src/app/shared';
 
 export class UsersService {
 
-  uri : String;
+  uri : String = "/Users";
 
-  constructor(private http: HttpClient) {this.uri = environment.apiUrl + '/Users'}
+  private usersSubject =
+          new BehaviorSubject<User[]>([]);
 
-  addUser(user: any)
+  private users$ = this.usersSubject.asObservable();
+
+  constructor(private apiService: ApiService) {}
+
+  addUser(user: User)
   {
-    return this
-            .http
-            .post(`${this.uri}`, user);
+    return this.apiService
+                .post(`${this.uri}`, user)
+                .pipe(map(data =>{
+                  console.log(data);
+                  this.addUserInSubject(data);
+                }));
   }
 
-  getUsers() {
-       return this
-        .http
-        .get(`${this.uri}`);
+  getUsers(): Observable<User[]> {
+    if(this.usersSubject.value === undefined || this.usersSubject.value.length == 0){
+      return this.apiService.get(`${this.uri}`)
+        .pipe(switchMap(data => {
+          this.usersSubject.next(data);
+          return this.users$;
+        }));
+    }
+    else return this.users$;
   }
 
-  getUser(username:string) {
-    return this
-     .http
-     .get<User>(`${this.uri}/${username}`);
-  }
-
-  updateUser(user: any)
+  updateUser(user: User)
   {
-    return this
-            .http
-            .put(`${this.uri}/${user.userName}`, user);
+    return this.apiService.put(`${this.uri}/${user.userName}`, user)
+      .pipe(map(e => this.updateUserInSubject(e)));
   }
 
   deleteUser(userName: string) {
     return this
-            .http
-            .delete(`${this.uri}/${userName}`);
+            .apiService
+            .delete(`${this.uri}/${userName}`)
+            .pipe(map(bool =>{
+              if(bool)
+                this.removeUserInSubject(userName);
+              return bool;
+            }));
+  }
+
+  removeUserInSubject(userName: string){
+    this.usersSubject.next(
+      this.usersSubject.value.filter(d => {
+        return d.userName !== userName
+      })
+    );
+  }
+
+  updateUserInSubject(user: User){
+    this.usersSubject.next(
+      this.usersSubject.value.map(e => {
+        if(e.userName !== user.userName) return e;
+        else return user;
+      })
+    );
+  }
+
+  addUserInSubject(user: User){
+    if(!this.usersSubject.value.find(e => e.userName == user.userName))
+      this.usersSubject.value.push(user);
   }
 
 }

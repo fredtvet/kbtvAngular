@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, forkJoin, combineLatest } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavAction, MissionDetails, ConfirmDeleteDialogComponent, ROLES, MissionNote, Mission, MissionReportType, MissionType, Employer } from 'src/app/shared';
-import { MissionsService, MissionTypesService, EmployersService, MissionReportTypesService } from 'src/app/core';
+import { MissionsService, MissionTypesService, EmployersService, MissionReportTypesService, NotificationService } from 'src/app/core';
 import { MissionFormComponent } from '../mission-form/mission-form.component';
 import { MissionNoteFormComponent } from '../mission-note-form/mission-note-form.component';
 import { MissionReportFormComponent } from '../mission-report-form/mission-report-form.component';
@@ -42,10 +41,10 @@ export class MissionDetailsComponent {
 
   constructor(
     private _missionsService: MissionsService,
+    private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog,
-    private _snackBar: MatSnackBar) {}
+    public dialog: MatDialog) {}
 
   ngOnInit(){
     this.routeSub = this.route.params.subscribe(params => this.missionId = params['id']);
@@ -56,27 +55,20 @@ export class MissionDetailsComponent {
           if(result == undefined) return null;
           this.missionDetails = result;
           this.missionDetails.mission.address = this.missionDetails.mission.address.replace(", Norge","").replace(/,/g, ";");
-        },
-      error => console.log(error)
+        }
     );
   }
 
   uploadImages(files: FileList){
 
     this.imagesToUpload = files;
-    this._missionsService.addMissionImages(this.missionId, files).subscribe(
-      result => this.openSnackBar(`Vellykket! ${result.length} ${result.length > 1 ? 'bilder' : 'bilde'} lastet opp.`),
-      error => this.openSnackBar('Mislykket! Noe gikk feil.')
-      );
+    this._missionsService.addMissionImages(this.missionId, files)
+      .subscribe(data => this.notificationService.setNotification(`Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`));
   }
 
   deleteImage(id){
-    this._missionsService.deleteMissionImage(this.missionId, id).subscribe(
-      res => {
-        this.openSnackBar('Vellykket! Bilde slettet');
-      },
-      error => this.openSnackBar('Mislykket! Noe gikk feil.')
-    );
+    this._missionsService.deleteMissionImage(this.missionId, id)
+      .subscribe(res =>  this.notificationService.setNotification('Vellykket! Bilde slettet'));
   }
 
   handleNavEvents(e){
@@ -120,10 +112,7 @@ export class MissionDetailsComponent {
   editMission(mission: Mission){
     if(!mission) return null;
     this._missionsService.updateMission(mission)
-    .subscribe(
-        success => this.openSnackBar('Vellykket oppdatering!'),
-        error => this.openSnackBar('Mislykket! Noe gikk feil.')
-    )
+      .subscribe(success => this.notificationService.setNotification('Vellykket oppdatering!'))
   }
 
   openCreateNoteDialog(){
@@ -151,9 +140,8 @@ export class MissionDetailsComponent {
 
   createMissionReport(data){
     if(!data) return null;
-    this._missionsService.addMissionReport(this.missionId, data.reportType, data.files).subscribe(
-      res => this.openSnackBar('Vellykket! Rapport lastet opp'),
-      error => this.openSnackBar('Mislykket! Noe gikk feil.'));
+    this._missionsService.addMissionReport(this.missionId, data.reportType, data.files)
+      .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport lastet opp'));
   }
 
   openMissionDeleteDialog(){
@@ -166,18 +154,10 @@ export class MissionDetailsComponent {
       res => {
         if(res){
           this.onBack();
-          this.openSnackBar('Vellykket! Oppdrag slettet.')
+          this.notificationService.setNotification('Vellykket! Oppdrag slettet.')
         }
-      },
-      error => this.openSnackBar('Mislykket! Noe gikk feil.')
+      }
     );
-  }
-
-  openSnackBar(message: string){
-    this._snackBar.open(message, 'lukk', {
-      duration: 2000,
-      panelClass: 'snackbar_margin'
-    });
   }
 
   onBack(){

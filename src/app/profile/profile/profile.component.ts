@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { IdentityService } from 'src/app/core';
+import { IdentityService, NotificationService } from 'src/app/core';
 import { User } from 'src/app/shared';
 
 @Component({
@@ -12,7 +11,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private identityService: IdentityService,
-    private _snackBar: MatSnackBar
+    private notificationService: NotificationService,
   ){ }
 
   public user: User;
@@ -26,27 +25,15 @@ export class ProfileComponent implements OnInit {
   updateProfile(updatedUser){
     updatedUser.userName = this.user.userName;
 
-    this.identityService.updateCurrentUser(updatedUser).subscribe(
-      result =>{
-        this.openSnackBar('Vellykket oppdatering!')
-      },
-      error => this.openSnackBar('Mislykket! Noe gikk feil.')
-    );
+    this.identityService.updateCurrentUser(updatedUser)
+      .subscribe(data => this.notificationService.setNotification('Vellykket oppdatering!'));
   }
 
   updatePassword(data: any){
     this.identityService.changePassword(data.oldPassword, data.password).subscribe(
-      result => this.openSnackBar('Passord oppdatert!'),
-      error => this.passwordStatus = "Nåværende passord er feil!",
+      data => this.notificationService.setNotification('Passord oppdatert!'),
       () => this.passwordStatus = ""
     );
-  }
-
-  openSnackBar(message: string){
-    this._snackBar.open(message, 'lukk', {
-      duration: 2000,
-      panelClass: 'snackbar_margin'
-    });
   }
 
 }

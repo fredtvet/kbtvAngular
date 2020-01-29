@@ -35,10 +35,10 @@ export class MissionsSubject {
     missions.push(details);
     this.missionsSubject.next(missions);
     //Update relating subjects
-    if(details.mission.missionType)
-      this.missionTypesService.addOrUpdateInSubject(details.mission.missionType);
-    if(details.mission.employer)
-      this.employersService.addOrUpdateInSubject(details.mission.employer);
+    if(details.mission.missionType && details.mission.missionType.id != 0)
+      this.missionTypesService.addMissionTypeInSubject(details.mission.missionType);
+    if(details.mission.employer && details.mission.employer.id != 0)
+      this.employersService.addEmployerInSubject(details.mission.employer);
   }
 
   removeMissionDetails(id: number){
@@ -95,7 +95,7 @@ export class MissionsSubject {
     );
 
     if(report.missionReportType)
-      this.missionReportTypesService.addOrUpdateInSubject(report.missionReportType);
+      this.missionReportTypesService.addMissionReportTypeInSubject(report.missionReportType);
   }
 
   removeMissionReport(missionId: number, reportId: number){

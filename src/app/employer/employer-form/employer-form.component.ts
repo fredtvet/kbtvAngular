@@ -19,7 +19,7 @@ export class EmployerFormComponent implements OnInit {
 
   employerForm: FormGroup;
 
-  public title: string = "Rediger arbeidsgiver";
+  public title: string = "Rediger oppdragsgiver";
 
   public isEditForm: boolean = true;
 
@@ -36,7 +36,7 @@ export class EmployerFormComponent implements OnInit {
     ngOnInit(){
       if(this.employer == null){
         this.isEditForm = false;
-        this.title = 'Ny arbeidsgiver',
+        this.title = 'Ny oppdragsgiver',
         this.employer = new Employer();
       }else
         this.actions.push(new NavAction("delete", "Slett", "delete_forever", [ROLES.Leder]));

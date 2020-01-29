@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { EmployersService } from 'src/app/core';
+import { EmployersService, NotificationService } from 'src/app/core';
 import { Employer, ROLES } from 'src/app/shared';
 import { EmployerFormComponent } from '../employer-form/employer-form.component';
 
@@ -15,13 +14,14 @@ export class EmployerListComponent implements OnInit {
 
   constructor(
     private employersService: EmployersService,
-    public dialog: MatDialog,
-    private _snackBar: MatSnackBar) { }
+    private notificationService: NotificationService,
+    public dialog: MatDialog) { }
 
   public employers: Employer[];
 
   ngOnInit() {
     this.employersService.getEmployers().subscribe(response => {
+      console.log(response);
       this.employers = response;
     })
   }
@@ -45,21 +45,12 @@ export class EmployerListComponent implements OnInit {
 
   updateEmployer(employer: Employer){
     this.employersService.updateEmployer(employer)
-    .subscribe(
-      success => this.openSnackBar('Vellykket oppdatering!'),
-      error => this.openSnackBar('Mislykket! Noe gikk feil.')
-    );
+      .subscribe(data => this.notificationService.setNotification('Vellykket oppdatering!'));
   }
 
   deleteEmployer(id: number){
-    this.employersService.deleteEmployer(id).subscribe(
-      res => {
-        this.employers = this.employers.filter(x => x.id !== id);
-        this.openSnackBar('Vellykket! Arbeidsgiver slettet.')
-      },
-      error => this.openSnackBar('Mislykket! Noe gikk feil.')
-    );
-
+    this.employersService.deleteEmployer(id)
+      .subscribe(data => this.notificationService.setNotification('Vellykket! Oppdragsgiver slettet.'));
   }
 
   openCreateDialog(){
@@ -78,16 +69,6 @@ export class EmployerListComponent implements OnInit {
 
   createEmployer(employer: any){
     this.employersService.addEmployer(employer)
-    .subscribe(
-      data => this.openSnackBar('Vellykket! Ny arbeidsgiver registrert.'),
-      error => this.openSnackBar('Mislykket! Noe gikk feil.')
-    );
-  }
-
-  openSnackBar(message: string){
-    this._snackBar.open(message, 'lukk', {
-      duration: 2000,
-      panelClass: 'snackbar_margin'
-    });
+      .subscribe(data => this.notificationService.setNotification('Vellykket! Ny oppdragsgiver registrert.'));
   }
 }

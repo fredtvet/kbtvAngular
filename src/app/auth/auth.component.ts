@@ -10,8 +10,6 @@ import { IdentityService } from '../core';
 })
 
 export class AuthComponent {
-  error: string;
-  isSubmitting = false;
   authForm: FormGroup;
 
   constructor(
@@ -26,17 +24,8 @@ export class AuthComponent {
   }
 
   submitForm() {
-    this.isSubmitting = true;
-    this.error = null;
-
     this.identityService
     .attemptAuth(this.authForm.value)
-    .subscribe(
-      data => this.router.navigateByUrl('/'),
-      err => {
-        this.error = err;
-        this.isSubmitting = false;
-      }
-    );
+    .subscribe(data => this.router.navigateByUrl('/'));
   }
 }

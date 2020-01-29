@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MissionNote, NavAction, ConfirmDeleteDialogComponent, ROLES } from 'src/app/shared';
-import { MissionsService } from 'src/app/core';
+import { MissionsService, NotificationService } from 'src/app/core';
 import { MissionNoteFormComponent } from '../mission-note-form/mission-note-form.component';
 
 @Component({
@@ -28,10 +27,10 @@ export class MissionNoteDetailsComponent implements OnInit {
 
   constructor(
     private _missionsService: MissionsService,
+    private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -40,10 +39,8 @@ export class MissionNoteDetailsComponent implements OnInit {
       this.noteId = params['id']
     });
 
-    this._missionsService.getMissionNoteDetails(this.missionId, this.noteId).subscribe(
-      result => this.note = result,
-      error => {console.log(error);this.openSnackBar('Mislykket! Noe gikk feil.')}
-    );
+    this._missionsService.getMissionNoteDetails(this.missionId, this.noteId)
+      .subscribe(result => this.note = result);
 
   }
 
@@ -70,24 +67,21 @@ export class MissionNoteDetailsComponent implements OnInit {
   }
 
   openEditDialog(){
-    this._missionsService.getMissionNoteDetails(this.missionId, this.noteId)
-    .subscribe(res => {
-      const dialogRef = this.dialog.open(MissionNoteFormComponent, {
-        width: '100vw',
-        height: '100vh',
-        panelClass: 'form_dialog',
-        data: { note: res, missionId: this.missionId },
-      });
-
-      dialogRef.afterClosed().subscribe(res => this.editMissionNote(res));
+    const dialogRef = this.dialog.open(MissionNoteFormComponent, {
+      width: '100vw',
+      height: '100vh',
+      panelClass: 'form_dialog',
+      data: { note: this.note, missionId: this.missionId },
     });
+
+    dialogRef.afterClosed().subscribe(res => this.editMissionNote(res));
   }
 
   deleteMissionNote(){
     this._missionsService.deleteMissionNote(this.missionId, this.noteId).subscribe(
       res => {
         this.onBack();
-        this.openSnackBar('Vellykket! Notat slettet.');
+        this.notificationService.setNotification('Vellykket! Notat slettet.');
       }
     );
   }
@@ -95,21 +89,11 @@ export class MissionNoteDetailsComponent implements OnInit {
   editMissionNote(data){
     if(!data) return null;
     this._missionsService.updateMissionNote(this.missionId, data)
-      .subscribe(
-        success =>this.openSnackBar('Vellykket oppdatering!'),
-        error => this.openSnackBar('Mislykket! Noe gikk feil.')
-    );
+      .subscribe(data =>this.notificationService.setNotification('Vellykket oppdatering!'));
   }
 
   onBack(){
     this.router.navigate(['/oppdrag', this.missionId, 'detaljer'])
-  }
-
-  openSnackBar(message: string){
-    this._snackBar.open(message, 'lukk', {
-      duration: 2000,
-      panelClass: 'snackbar_margin'
-    });
   }
 
   ngOnDestroy(){

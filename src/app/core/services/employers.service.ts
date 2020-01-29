@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Employer } from 'src/app/shared/models';
 import { ApiService } from './api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -30,27 +30,41 @@ export class EmployersService {
 
   getEmployers(): Observable<Employer[]> {
     if(this.employersSubject.value === undefined || this.employersSubject.value.length == 0){
-      this.apiService.get(`${this.uri}`)
-      .subscribe(data => {
-        this.employersSubject.next(data);
-      });
+      return this.apiService.get(`${this.uri}`)
+        .pipe(switchMap(data => {
+          this.employersSubject.next(data);
+          return this.employers$;
+        }));
     }
-    return this.employers$;
+    else return this.employers$;
   }
 
   updateEmployer(employer: Employer)
   {
     return this.apiService.put(`${this.uri}/${employer.id}`, employer)
-      .pipe(map(e => this.updateEmployersSubject(e)));
+      .pipe(map(e => this.updateEmployerInSubject(e)));
   }
 
   deleteEmployer(id: number) {
     return this
             .apiService
-            .delete(`${this.uri}/${id}`);
+            .delete(`${this.uri}/${id}`)
+            .pipe(map(bool =>{
+              if(bool)
+                this.removeEmployerInSubject(id);
+              return bool;
+            }));
   }
 
-  updateEmployersSubject(employer: Employer){
+  removeEmployerInSubject(id: number){
+    this.employersSubject.next(
+      this.employersSubject.value.filter(d => {
+        return d.id !== id
+      })
+    );
+  }
+
+  updateEmployerInSubject(employer: Employer){
     this.employersSubject.next(
       this.employersSubject.value.map(e => {
         if(e.id !== employer.id) return e;
@@ -60,14 +74,8 @@ export class EmployersService {
   }
 
   addEmployerInSubject(employer: Employer){
-    this.employersSubject.value.push(employer);
-  }
-
-  addOrUpdateInSubject(employer: Employer){
-    if(this.employersSubject.value.find(e => e.id == employer.id))
-      this.updateEmployersSubject(employer);
-    else
-      this.addEmployerInSubject(employer);
+    if(!this.employersSubject.value.find(e => e.id == employer.id))
+      this.employersSubject.value.push(employer);
   }
 
 }

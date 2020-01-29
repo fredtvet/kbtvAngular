@@ -29,7 +29,10 @@ export class MissionReportFormComponent implements OnInit {
     this.reportForm = this._formBuilder.group({
       reportType: this._formBuilder.group({
         id: [],
-        name: [],
+        name: [null, [
+          Validators.required,
+          Validators.maxLength(45)
+        ]],
       }),
     });
   }

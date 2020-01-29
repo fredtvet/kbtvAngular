@@ -33,7 +33,7 @@ export class UserFormComponent implements OnInit {
     ngOnInit(){
       this._rolesService.getRoles()
           .subscribe(result => {
-            this.roles = result.filter(x => x !== ROLES.Leder)
+            this.roles = result;
             if(!this.isEditForm)
               this.userForm.controls['role'].setValue(this.roles.find(x => ROLES.Ansatt), {onlySelf: true});
           });

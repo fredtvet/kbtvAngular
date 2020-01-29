@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { MissionType, MissionReportType } from 'src/app/shared';
 import { ApiService } from './api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -34,12 +34,13 @@ export class MissionReportTypesService {
 
   getMissionReportTypes(): Observable<MissionReportType[]> {
     if(this.missionReportTypesSubject.value === undefined || this.missionReportTypesSubject.value.length == 0){
-      this.apiService.get(`${this.uri}`)
-      .subscribe(data => {
-        this.missionReportTypesSubject.next(data);
-      });
+      return this.apiService.get(`${this.uri}`)
+        .pipe(switchMap(data => {
+          this.missionReportTypesSubject.next(data);
+          return this.missionReportTypes$;
+        }));
     }
-    return this.missionReportTypes$;
+    else return this.missionReportTypes$;
   }
 
   updateMissionReportType(missionReportType: MissionReportType)
@@ -51,7 +52,20 @@ export class MissionReportTypesService {
   deleteMissionReportType(id: number) {
     return this
             .apiService
-            .delete(`${this.uri}/${id}`);
+            .delete(`${this.uri}/${id}`)
+            .pipe(map(bool =>{
+              if(bool)
+                this.removeMissionReportTypeInSubject(id);
+              return bool;
+            }));
+  }
+
+  removeMissionReportTypeInSubject(id: number){
+    this.missionReportTypesSubject.next(
+      this.missionReportTypesSubject.value.filter(d => {
+        return d.id !== id
+      })
+    );
   }
 
   updateMissionReportTypeInSubject(missionReportType: MissionReportType){
@@ -64,13 +78,7 @@ export class MissionReportTypesService {
   }
 
   addMissionReportTypeInSubject(missionReportType: MissionReportType){
-    this.missionReportTypesSubject.value.push(missionReportType);
-  }
-
-  addOrUpdateInSubject(missionReportType: MissionReportType){
-    if(this.missionReportTypesSubject.value.find(type => type.id == missionReportType.id))
-      this.updateMissionReportTypeInSubject(missionReportType);
-    else
-      this.addMissionReportTypeInSubject(missionReportType);
+    if(!this.missionReportTypesSubject.value.find(type => type.id == missionReportType.id))
+      this.missionReportTypesSubject.value.push(missionReportType);
   }
 }

@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { MissionDetails, Mission, MissionType, Employer, MissionImage, MissionReport, MissionNote  } from 'src/app/shared/models';
 import { ApiService } from './api.service';
 import { BehaviorSubject, pipe, Observable } from 'rxjs';
-import { map, filter, take } from 'rxjs/operators';
+import { map, filter, take, switchMap } from 'rxjs/operators';
 import { MissionReportType } from 'src/app/shared/models/mission-report-type.model';
 import { MissionsSubject } from '../subjects/missions.subject';
 
@@ -25,38 +25,37 @@ export class MissionsService {
     let details = this.missionsSubject.getMissionDetails(id);
 
     if(details == undefined){
-      this.apiService.get(`${this.uri}/${id}/Details`)
-        .subscribe(data => this.missionsSubject.addMissionDetails(data))
+      return this.apiService.get(`${this.uri}/${id}/Details`)
+        .pipe(switchMap(data => {
+          this.missionsSubject.addMissionDetails(data)
+          return this.missionsSubject.getMissionDetails$(id);
+        }));
     }
-
-    return this.missionsSubject.getMissionDetails$(id);
+    else return this.missionsSubject.getMissionDetails$(id);
   }
 
   getMissionNoteDetails(missionId:number, noteId:number): Observable<MissionNote> {
-
-    return this.getMissionDetails(missionId).pipe(map(details => {
-      if(details){ //If mission  exist
-        console.log(details);
+    return this.getMissionDetails(missionId).pipe(switchMap(details => {
         let note = details.missionNotes.find(x => x.id == noteId);
-        console.log(note);
-        if(note){ //If note exist in mission
-          if(note.content == null || note.content.length == 0){ //If note doesnt have content loaded (details)
-            this.apiService.get(`${this.uri}/${missionId}/MissionNotes/${noteId}`)
-              .subscribe(data => this.missionsSubject.updateMissionNote(missionId, data))
-          }
+        if(note && (note.content == null || note.content.length == 0)){ //If note exist with content
+            return this.apiService.get(`${this.uri}/${missionId}/MissionNotes/${noteId}`)
+              .pipe(switchMap(data => {
+                this.missionsSubject.updateMissionNote(missionId, data);
+                return this.missionsSubject.getMissionNoteDetails$(missionId, noteId);
+              }));
         }
-      }
-
-      return this.missionsSubject.getMissionNoteDetails(missionId, noteId);
+        else return this.missionsSubject.getMissionNoteDetails$(missionId, noteId);
     }));
   }
 
   addMission(mission: Mission): Observable<Mission>
   {
+    console.log(mission);
     return this.apiService
             .post(`${this.uri}`, mission)
             .pipe(map(data =>{
               this.missionsSubject.addMissionDetails(new MissionDetails(data));
+              console.log(data);
               return data;
             }));
   }

@@ -37,7 +37,7 @@ export class MissionFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: MissionForm)  { }
 
   ngOnInit(){
-
+    console.log(this.data);
     this._missionTypesService.getMissionTypes().subscribe(data => this.types =  data);
     this._employersService.getEmployers().subscribe(data => this.employers = data);
 
@@ -65,11 +65,11 @@ export class MissionFormComponent implements OnInit {
       ]],
       finished: [this.data.mission.finished],
       employer: this._formBuilder.group({
-        id: [],
+        id: [null],
         name: [this.data.mission.employer ? this.data.mission.employer.name : null],
       }),
       missionType: this._formBuilder.group({
-        id: [],
+        id: [null],
         name: [this.data.mission.missionType ? this.data.mission.missionType.name : null],
       })
     });
@@ -82,17 +82,13 @@ export class MissionFormComponent implements OnInit {
     if(existingType)
       this.missionTypeId.setValue(existingType.id);
 
-    if(existingEmployee){
+    if(existingEmployee)
       this.employerId.setValue(existingEmployee.id);
-    }
-
 
     const {value, valid} = this.missionForm;
 
-    if(valid){
-      console.log(value);
+    if(valid)
       this.dialogRef.close(value);
-    }
   }
 
   onNoClick(): void {

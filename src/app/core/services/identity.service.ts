@@ -22,7 +22,9 @@ export class IdentityService {
   constructor (
     private apiService: ApiService,
     private jwtService: JwtService
-  ) {}
+  ) {
+    this.initalizeUserFromToken();
+  }
 
   populate(){
     if(this.jwtService.getToken()){
@@ -40,7 +42,6 @@ export class IdentityService {
     this.jwtService.saveToken(identity.token.replace("Bearer ", ""));
     // Set current user data into observable
     this.currentUserSubject.next(identity.user);
-    console.log(this.currentUserSubject.value);
     // Set isAuthenticated to true
     this.isAuthenticatedSubject.next(true);
     this.isAuth = true;
@@ -96,6 +97,15 @@ export class IdentityService {
     }
     return this.apiService
       .put('/auth/changePassword', obj);
+  }
+
+  private initalizeUserFromToken(){
+    let token = this.jwtService.getDecodedToken();
+    if(!token) return null;
+    let user = new User();
+    user.role = token['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+
+    this.currentUserSubject.next(user);
   }
 
 }
