@@ -3,6 +3,7 @@ import { Employer } from 'src/app/shared/models';
 import { ApiService } from './api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { EmployersSubject } from '../subjects/employers.subject';
 
 @Injectable({
   providedIn: 'root'
@@ -12,70 +13,49 @@ export class EmployersService {
 
   uri : String = "/Employers";
 
-  private employersSubject =
-          new BehaviorSubject<Employer[]>([]);
+  constructor(
+    private apiService: ApiService,
+    private employersSubject: EmployersSubject) {}
 
-  private employers$ = this.employersSubject.asObservable();
+  getAll$(): Observable<Employer[]> {
+    if(this.employersSubject.isEmpty()){
+      return this.apiService.get(`${this.uri}`)
+        .pipe(switchMap(data => {
+          this.employersSubject.populate(data);
+          return this.employersSubject.employers$;
+        }));
+    }
+    else return this.employersSubject.employers$;
+  }
 
-  constructor(private apiService: ApiService) {}
-
-  addEmployer(employer: Employer)
+  add$(employer: Employer): Observable<Employer>
   {
     return this.apiService
                 .post(`${this.uri}`, employer)
                 .pipe(map(data =>{
-                  this.addEmployerInSubject(data);
+                  this.employersSubject.add(data);
+                  return data;
                 }));
   }
 
-  getEmployers(): Observable<Employer[]> {
-    if(this.employersSubject.value === undefined || this.employersSubject.value.length == 0){
-      return this.apiService.get(`${this.uri}`)
-        .pipe(switchMap(data => {
-          this.employersSubject.next(data);
-          return this.employers$;
-        }));
-    }
-    else return this.employers$;
-  }
-
-  updateEmployer(employer: Employer)
+  update$(employer: Employer): Observable<Employer>
   {
     return this.apiService.put(`${this.uri}/${employer.id}`, employer)
-      .pipe(map(e => this.updateEmployerInSubject(e)));
+      .pipe(map(data => {
+        this.employersSubject.update(data);
+        return data;
+      }));
   }
 
-  deleteEmployer(id: number) {
+  delete$(id: number): Observable<boolean> {
     return this
             .apiService
             .delete(`${this.uri}/${id}`)
             .pipe(map(bool =>{
               if(bool)
-                this.removeEmployerInSubject(id);
+                this.employersSubject.delete(id);
               return bool;
             }));
-  }
-
-  removeEmployerInSubject(id: number){
-    this.employersSubject.next(
-      this.employersSubject.value.filter(d => {
-        return d.id !== id
-      })
-    );
-  }
-
-  updateEmployerInSubject(employer: Employer){
-    this.employersSubject.next(
-      this.employersSubject.value.map(e => {
-        if(e.id !== employer.id) return e;
-        else return employer;
-      })
-    );
-  }
-
-  addEmployerInSubject(employer: Employer){
-    if(!this.employersSubject.value.find(e => e.id == employer.id))
-      this.employersSubject.value.push(employer);
   }
 
 }

@@ -13,7 +13,7 @@ export class NotificationComponent implements OnInit {
     @Inject(MAT_SNACK_BAR_DATA) public data: any,
     private _snackRef: MatSnackBarRef<NotificationComponent>) { }
 
-  ngOnInit() {}
+  ngOnInit() {console.log(this.data)}
 
   onClick(){
     this._snackRef.dismiss();

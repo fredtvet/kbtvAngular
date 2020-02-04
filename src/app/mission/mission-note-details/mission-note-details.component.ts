@@ -2,36 +2,36 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
-import { MissionNote, NavAction, ConfirmDeleteDialogComponent, ROLES } from 'src/app/shared';
+import { MissionNote, NavAction, ConfirmDeleteDialogComponent, ROLES, VertMenuParentExtension } from 'src/app/shared';
 import { MissionsService, NotificationService } from 'src/app/core';
-import { MissionNoteFormComponent } from '../mission-note-form/mission-note-form.component';
+import { MissionNoteFormComponent } from '../components/mission-note-form/mission-note-form.component';
+import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-mission-note-details',
   templateUrl: './mission-note-details.component.html',
   styleUrls: ['./mission-note-details.component.css']
 })
-export class MissionNoteDetailsComponent implements OnInit {
-  public ROLES = ROLES;
-  public note: MissionNote;
+export class MissionNoteDetailsComponent extends VertMenuParentExtension {
+  ROLES = ROLES;
+  mainNavConfig = new MainNavConfig();
+
+  note: MissionNote;
 
   private routeSub: Subscription;
 
-  public missionId: number;
-  public noteId: number;
-
-  public navActions: NavAction[] = [
-    new NavAction("edit", "Rediger", "edit", [ROLES.Leder]),
-    new NavAction("delete", "Slett", "delete_forever", [ROLES.Leder])
-  ];
+  missionId: number;
+  noteId: number;
 
   constructor(
     private _missionsService: MissionsService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    private datePipe: DatePipe,
+  ) { super(); }
 
   ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
@@ -40,41 +40,27 @@ export class MissionNoteDetailsComponent implements OnInit {
     });
 
     this._missionsService.getMissionNoteDetails(this.missionId, this.noteId)
-      .subscribe(result => this.note = result);
+      .subscribe(result => {
+        this.note = result;
+        this.configure();
+      });
 
   }
 
-  handleEvent(e){
-    switch(e){
-      case "delete":{
-        this.openDeleteDialog();
-        break;
-      }
-      case "edit":{
-        this.openEditDialog();
-        break;
-      }
-      case "back":{
-        this.onBack();
-        break;
-      }
-    }
+  openDeleteDialog(e: string, ctx: any){
+    const deleteDialogRef = ctx.dialog.open(ConfirmDeleteDialogComponent);
+    deleteDialogRef.afterClosed().subscribe(res => {if(res){ctx.deleteMissionNote()}});
   }
 
-  openDeleteDialog(){
-    const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-    deleteDialogRef.afterClosed().subscribe(res => {if(res){this.deleteMissionNote()}});
-  }
-
-  openEditDialog(){
-    const dialogRef = this.dialog.open(MissionNoteFormComponent, {
+  openEditDialog(e: string, ctx: any){
+    const dialogRef = ctx.dialog.open(MissionNoteFormComponent, {
       width: '100vw',
       height: '100vh',
       panelClass: 'form_dialog',
-      data: { note: this.note, missionId: this.missionId },
+      data: { note: ctx.note, missionId: ctx.missionId },
     });
 
-    dialogRef.afterClosed().subscribe(res => this.editMissionNote(res));
+    dialogRef.afterClosed().subscribe(res => ctx.editMissionNote(res));
   }
 
   deleteMissionNote(){
@@ -86,10 +72,22 @@ export class MissionNoteDetailsComponent implements OnInit {
     );
   }
 
-  editMissionNote(data){
-    if(!data) return null;
-    this._missionsService.updateMissionNote(this.missionId, data)
+  editMissionNote(note: MissionNote){
+    if(!note) return null;
+    this._missionsService.updateMissionNote(this.missionId, note)
       .subscribe(data =>this.notificationService.setNotification('Vellykket oppdatering!'));
+  }
+
+  configure(){
+    this.vertActions = [
+      new NavAction("Rediger", "edit", "edit", this.openEditDialog, [ROLES.Leder]),
+      new NavAction("Slett", "delete_forever", "delete", this.openDeleteDialog, [ROLES.Leder])
+    ];
+
+    this.mainNavConfig.vertActions = this.vertActions;
+    this.mainNavConfig.altNav = true;
+    this.mainNavConfig.icon = "edit";
+    this.mainNavConfig.title = this.note.title || this.datePipe.transform(this.note.createdAt, 'short');
   }
 
   onBack(){

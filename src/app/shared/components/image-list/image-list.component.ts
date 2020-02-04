@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ImageViewerDialogComponent } from '../image-viewer-dialog/image-viewer-dialog.component';
 import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
+import { MissionImage } from '../../models/mission-image.model';
 
 @Component({
   selector: 'app-image-list',
@@ -9,7 +10,7 @@ import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-d
   styleUrls: ['./image-list.component.css']
 })
 export class ImageListComponent implements OnInit {
-  @Input() images: any[];
+  @Input() images: MissionImage[];
   @Output() imageDeleted = new EventEmitter();
 
   unloadedThumbnails: any[] = [];
@@ -22,24 +23,26 @@ export class ImageListComponent implements OnInit {
 
   }
 
-  //Reloads thumbnail (thumbnails made async)
+  //Reloads thumbnail (thumbnails made async) until no error
   unloadedThumbnail(img){
-
+    //Add image to array if no exist
     if(this.unloadedThumbnails.filter(val => val == img).length == 0){
       this.unloadedThumbnails.push(img);
     }
-
+    //Set reload interval if reload state is false
     if(!this.reloadThumbnailsState){
       this.reloadThumbnailsState = true;
-      this.reloadInterval = setInterval(() => this.reloadThumbnails(), 1000);
+      this.reloadInterval = setInterval(() => this.reloadThumbnails(), 1500);
     }
   }
 
   reloadThumbnails(){
+    //Reload image src to retry
     this.unloadedThumbnails.forEach((thumbnail) =>{
       thumbnail.src = thumbnail.src;
     });
 
+    //Remove interval & set state to false when no unloaded thumbnails to reset
     if(this.unloadedThumbnails.length == 0){
         clearInterval(this.reloadInterval);
         this.reloadThumbnailsState = false;

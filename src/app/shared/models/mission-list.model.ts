@@ -1,13 +1,7 @@
 import { Pagination } from './pagination.model';
+import { Mission } from './mission.model';
 
 export class MissionList{
-  missions: MissionListItem[];
+  missions: Mission[];
   paginationInfo: Pagination;
-}
-
-class MissionListItem{
-  id: number;
-  address: string;
-  createdAt: string;
-  finished: boolean;
 }

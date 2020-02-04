@@ -1,0 +1,9 @@
+<mat-nav-list *ngIf="missions" class="p-0">
+    <mat-list-item *ngIf="missions.length == 0">Fant ingen oppdrag</mat-list-item>
+
+    <app-nav-list-item *ngFor="let mission of missions; last as last"
+        [config]="{mainLine: mission.address, startIcon: 'home_work', endIcon: mission.finished ? 'check':'chevron_right'}"
+        [last]="last"
+        [routerLink]="['/oppdrag', mission.id, 'detaljer']">
+    </app-nav-list-item>
+</mat-nav-list>

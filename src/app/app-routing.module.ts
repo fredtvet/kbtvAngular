@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'hjem',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'hjem',
@@ -21,7 +21,7 @@ const routes: Routes = [
   {
     path: 'login',
     component: AuthComponent,
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
   {
     path: 'profil',

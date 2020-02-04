@@ -23,7 +23,7 @@ export class IdentityService {
     private apiService: ApiService,
     private jwtService: JwtService
   ) {
-    this.initalizeUserFromToken();
+    this.initalizeUserFromToken(); //Primarily to get role claim asap
   }
 
   populate(){

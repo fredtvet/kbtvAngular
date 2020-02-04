@@ -2,9 +2,10 @@ import { ROLES } from '../roles.enum';
 
 export class NavAction{
   constructor(
-    public event: string,
     public text: string,
     public icon: string,
+    public event: string,
+    public handle: any = null,
     public roles: string[] = [
       ROLES.Ansatt,
       ROLES.Mellomleder,

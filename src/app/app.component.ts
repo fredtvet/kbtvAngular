@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IdentityService, LoadingService, NotificationService } from './core';
-import { take, delay } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { IdentityService, LoadingService, NotificationService, MissionListService } from './core';
+import { slideInAnimation } from './route-animation';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  animations: [ slideInAnimation ]
 })
 export class AppComponent {
   title = 'kbtv-client';
@@ -14,15 +15,15 @@ export class AppComponent {
     private identityService: IdentityService,
     public loadingService: LoadingService,
     public notificationService: NotificationService,
-    private _snackBar: MatSnackBar){
-
+    private missionListService: MissionListService){
     }
 
   ngOnInit(){
-    this.identityService.populate(); //Mulig grunn til bug? Home er del av app module
+    this.identityService.populate();
 
+    if(this.identityService.hasValidToken()) //Initalize mission list if authenticated
+      this.missionListService.populateInitalList();
   }
-
 
 
 }

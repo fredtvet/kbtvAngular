@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 
 import { MissionRoutingModule } from './mission-routing.module';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
-import { MissionFormComponent } from './mission-form/mission-form.component';
+import { MissionFormComponent } from './components/mission-form/mission-form.component';
 import { MissionListComponent } from './mission-list/mission-list.component';
 import { MissionNoteDetailsComponent } from './mission-note-details/mission-note-details.component';
-import { MissionNoteFormComponent } from './mission-note-form/mission-note-form.component';
-import { MissionReportFormComponent } from './mission-report-form/mission-report-form.component';
+import { MissionNoteFormComponent } from './components/mission-note-form/mission-note-form.component';
+import { MissionReportFormComponent } from './components/mission-report-form/mission-report-form.component';
 import { SharedModule, ConfirmDeleteDialogComponent, ImageViewerDialogComponent } from '../shared';
 import { MissionDetailsViewComponent } from './components/mission-details-view/mission-details-view.component';
+import { MissionNoteListComponent } from './components/mission-note-list/mission-note-list.component';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -19,7 +21,11 @@ import { MissionDetailsViewComponent } from './components/mission-details-view/m
     MissionNoteDetailsComponent,
     MissionNoteFormComponent,
     MissionReportFormComponent,
-    MissionDetailsViewComponent
+    MissionDetailsViewComponent,
+    MissionNoteListComponent
+  ],
+  providers: [
+    DatePipe
   ],
   entryComponents:[
     MissionFormComponent,

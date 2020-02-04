@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ROLES } from '../../roles.enum';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-bottom-nav',
@@ -10,17 +8,13 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   styleUrls: ['./bottom-nav.component.css']
 })
 export class BottomNavComponent implements OnInit {
-  public ROLES = ROLES;
+  ROLES = ROLES;
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  @Input() isHandset$: Observable<boolean>;
+
+  constructor() { }
 
   ngOnInit() {
   }
-
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  .pipe(
-    map(result => result.matches),
-    shareReplay()
-  );
 
 }

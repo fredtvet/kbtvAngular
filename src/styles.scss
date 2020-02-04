@@ -1,0 +1,224 @@
+/* You can add global styles to this file, and also import other style files */
+@import './variables';
+
+html, body { height: 100%;}
+body {  margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow:hidden;}
+
+.item-margin{
+  margin:$item-margin * 1px !important;
+}
+.item{
+  width:$item-width!important;
+}
+
+.content-container{
+  width:$item-width!important;
+  margin:$item-margin  * 1px !important;
+  padding:$item-margin  * 1px !important;
+  background-color:mat-color($background,"app-bar")!important;
+  position: sticky;
+  z-index:80;
+  height:$content-container-height!important;
+  max-height:650px!important;
+  overflow:hidden;
+
+}
+
+.custom-container{
+  width:$item-width!important;
+  margin-left:$item-margin  * 1px !important;
+  margin-top:$item-margin  * 1px !important;
+  margin-bottom:$item-margin  * 1px !important;
+  padding:$item-margin  * 1px !important;
+  background-color:mat-color($background,"app-bar")!important;
+  position: sticky;
+  z-index:80;
+  max-height:650px!important;
+  overflow:hidden;
+
+}
+.basic-container{
+  width:$item-width!important;
+  margin-left:$item-margin  * 1px !important;
+  margin-top:$item-margin  * 1px !important;
+  margin-bottom:$item-margin  * 1px !important;
+  padding:$item-margin  * 1px !important;
+  background-color:mat-color($background,"app-bar")!important;
+}
+
+.image-container{
+  margin-top:($item-margin + $tab-header-height) * 1px !important;
+}
+
+.card-container{
+  width:$item-width!important;
+  margin-left:$item-margin  * 1px !important;
+  margin-top:($item-margin + $tab-header-height) * 1px !important;
+  margin-bottom:$item-margin  * 1px !important;
+  padding:$item-margin  * 1px !important;
+  background-color:mat-color($background,"app-bar")!important;
+}
+
+.content-child-container{
+  position: sticky;
+  z-index:70;
+  overflow:auto;
+}
+
+.mat-tab-header{
+  position:fixed!important;
+  width:100vw;
+  left:0;
+  z-index:90;
+}
+
+.content-container-title{ color: rgb(255, 255,255,0.7); font-weight: 500; font-size: 14px; margin-left:16px; }
+.form-title{ color: rgb(255, 255,255,1); font-weight: 500; font-size: 20px; }
+.active{
+  background-color:mat-color($background,"card")!important;
+  color: $primary !important;
+}
+.activeIcon{
+  color: $primary !important;
+}
+.p-0{
+  padding:0 !important;
+}
+.hide{
+  display:none;
+}
+
+.app-form{
+  max-width:600px;
+  padding:20px;
+  background-color:mat-color($background,"app-bar");
+  color:mat-color($foreground, "base");
+  height:auto;
+}
+.app-dialog{
+  padding:$item-margin  * 2px !important;;
+  background-color:mat-color($background,"unselected-chip");
+  color:mat-color($foreground, "base");
+  height:auto;
+}
+
+.nav_button{
+  height:72px !important;
+  width:72px !important;
+}
+
+.action_fab{
+  position:fixed!important;
+  right:10px!important;
+  bottom:($bottom-nav-height + 10) * 1px!important;
+  z-index:100;
+}
+
+
+
+.mat-icon {
+  vertical-align: middle!important;
+}
+
+.icon_150{
+  transform:scale(1.5);
+}
+.icon_125{
+  transform:scale(1.25);
+}
+.icon_75{
+  transform:scale(.75);
+}
+
+.image_viewer_dialog{
+  max-width:none!important;
+}
+
+.mat-dialog-container{
+  background-color:mat-color($background,"app-bar")!important;
+  padding:0!important;
+}
+
+.image_viewer_dialog .mat-dialog-container{
+  background-color:mat-color($background,"status-bar")!important;
+}
+
+.form_dialog{
+  max-width:none!important;
+}
+
+.form_dialog .mat-dialog-container{
+  padding:0!important;
+}
+
+.notification{
+  margin-bottom:62px!important;
+  background-color:mat-color($background,"unselected-chip");
+  color:mat-color($foreground, "base");
+}
+
+.notification-warn{
+  margin-bottom:62px!important;
+  background-color:$warn;
+  color:mat-color($background, "background");
+}
+
+.overlay{
+  position:fixed;
+  top:0;
+  height:100vh;
+  width:100vw;
+  background:rgba(0, 0, 0, .4);
+  z-index:100;
+}
+
+.auth-container{
+  background-color:mat-color($background,"app-bar");
+  height:100%;
+  color:mat-color($foreground, "base");
+}
+
+.bg-1{
+  background-color:mat-color($background,"status-bar");
+  color:mat-color($foreground, "base");
+}
+.bg-2{
+  background-color:mat-color($background,"app-bar");
+  color:mat-color($foreground, "base");
+}
+.bg-3{
+  background-color:mat-color($background,"background");
+  color:mat-color($foreground, "base");
+}
+.bg-4{
+  background-color:mat-color($background,"card");
+  color:mat-color($foreground, "base");
+}
+.bg-5{
+  background-color:mat-color($background,"unselected-chip");
+  color:mat-color($foreground, "base");
+}
+
+.bg-warn{
+  background-color:$warn;
+}
+.color-warn{
+  color:$warn;
+}
+.mat-tab-header{
+  background-color:mat-color($background,"card");
+}
+
+.color-primary{
+  color:$primary!important;
+}
+
+.color-green{
+  color:$green;
+}
+
+.ellipsis{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

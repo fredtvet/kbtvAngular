@@ -1,13 +1,13 @@
-<mat-toolbar color="primary" class="pagination_toolbar">
-    
+<mat-toolbar style="font-size:1rem;position:absolute;bottom:0"  fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+
     <button (click)="previousPage()" mat-icon-button aria-label="Forrige side">
-            <mat-icon class="pagination_icon">chevron_left</mat-icon>
+            <mat-icon class="icon_150">chevron_left</mat-icon>
     </button>
 
-    <span class="pagination_middle_text">Side {{ paginationInfo.actualPage + 1 }} av {{ paginationInfo.totalPages }}</span>
+    <span>{{ paginationInfo.actualPage + 1 }} av {{ paginationInfo.totalPages }} sider</span>
 
     <button (click)="nextPage()" mat-icon-button aria-label="Neste side">
-            <mat-icon class="pagination_icon">chevron_right</mat-icon>
+            <mat-icon class="icon_150">chevron_right</mat-icon>
     </button>
 
 </mat-toolbar>

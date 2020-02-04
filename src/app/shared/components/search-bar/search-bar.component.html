@@ -1,8 +1,6 @@
-<button (click)="toggleSearchBar()" class="nav_button" mat-icon-button aria-label="Cancel search" >
-    <mat-icon>search</mat-icon>
-</button>
 
-<mat-toolbar #searchToolBar class="search_toolbar p-0" color="accent" [@showHide]="isHidden ? 'hide' : 'show'">
+
+<mat-toolbar class="search_toolbar p-0 primary-darker" color="primary" [@showHide]="isHidden ? 'hide' : 'show'">
 
     <button (click)="handleSearch()" class="nav_button" mat-icon-button aria-label="Search">
         <mat-icon>search</mat-icon>
@@ -11,8 +9,8 @@
     <mat-form-field class="search_input" floatLabel=never color="primary">
         <input [(ngModel)]="searchInput" type="search" matInput placeholder="Søk" (keyup.enter)="handleSearch()" (keyup.escape)="searchInput='';">
     </mat-form-field>
-    
-    <button (click)="toggleSearchBar()" class="nav_button" mat-icon-button aria-label="Cancel search" >
+
+    <button (click)="hide.emit()" class="nav_button" mat-icon-button aria-label="Cancel search" >
         <mat-icon>clear</mat-icon>
     </button>
 

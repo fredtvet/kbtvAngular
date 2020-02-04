@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ROLES } from '../shared';
+import { ROLES, Mission } from '../shared';
+import { MissionListService } from '../core';
 
 @Component({
   selector: 'app-home',
@@ -8,8 +9,14 @@ import { ROLES } from '../shared';
 })
 export class HomeComponent implements OnInit {
   public ROLES = ROLES;
-  constructor() { }
+  constructor(private missionListService: MissionListService) { }
 
-  ngOnInit() { }
+  newestMissions: Mission[] = []
+
+  ngOnInit() {
+    this.missionListService
+      .getMissionsPaginated()
+      .subscribe(result => {if(result.missions){this.newestMissions = result.missions.slice(0, 5)}});
+  }
 
 }

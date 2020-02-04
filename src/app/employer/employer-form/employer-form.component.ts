@@ -1,29 +1,28 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material';
-import { Employer, NavAction, ConfirmDeleteDialogComponent, ROLES } from 'src/app/shared';
+import { Employer, ConfirmDeleteDialogComponent, ROLES } from 'src/app/shared';
 
 @Component({
   selector: 'app-employer-form',
   templateUrl: './employer-form.component.html'
 })
-export class EmployerFormComponent implements OnInit {
-  public ROLES = ROLES;
+
+export class EmployerFormComponent {
+  ROLES = ROLES;
 
   googleOptions = {
     types: ['geocode'],
     componentRestrictions: { country: "no" }
   }
 
-  public isStreetAddress = false;
+  isStreetAddress = false;
 
   employerForm: FormGroup;
 
-  public title: string = "Rediger oppdragsgiver";
-
-  public isEditForm: boolean = true;
-
-  public actions: NavAction[] = [];
+  isEditForm: boolean = true;
+  title: string;
+  icon: string;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -31,16 +30,8 @@ export class EmployerFormComponent implements OnInit {
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public employer: Employer){ }
 
-
-
     ngOnInit(){
-      if(this.employer == null){
-        this.isEditForm = false;
-        this.title = 'Ny oppdragsgiver',
-        this.employer = new Employer();
-      }else
-        this.actions.push(new NavAction("delete", "Slett", "delete_forever", [ROLES.Leder]));
-
+      this.configure();
       this.initalizeForm();
     }
 
@@ -67,26 +58,8 @@ export class EmployerFormComponent implements OnInit {
       }
     }
 
-    handleEvent(e){
-      switch(e){
-        case "delete":{
-          this.deleteEmployer();
-          break;
-        }
-        case "back":{
-          this.onNoClick();
-          break;
-        }
-      }
-    }
-
-    onNoClick(): void {
-      this.dialogRef.close();
-    }
-
-    deleteEmployer(){
+    openDeleteDialog(){
       const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-
       deleteDialogRef.afterClosed().subscribe(res => {
           if(res) this.dialogRef.close('deleted');
       });
@@ -95,6 +68,20 @@ export class EmployerFormComponent implements OnInit {
     handleAddressChange(googleAddress){
       this.employerForm.controls['address']
         .setValue(googleAddress.formatted_address);
+    }
+
+    configure(){
+      if(this.employer == null){
+        this.title = "Ny oppdragsgiver";
+        this.employer = new Employer();
+        this.isEditForm = false;
+      }else{
+        this.title = "Rediger oppdragsgiver";
+      }
+    }
+
+    onNoClick(): void {
+      this.dialogRef.close();
     }
 
     get name(){

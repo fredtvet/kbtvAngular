@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, forkJoin, combineLatest } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { NavAction, MissionDetails, ConfirmDeleteDialogComponent, ROLES, MissionNote, Mission, MissionReportType, MissionType, Employer } from 'src/app/shared';
-import { MissionsService, MissionTypesService, EmployersService, MissionReportTypesService, NotificationService } from 'src/app/core';
-import { MissionFormComponent } from '../mission-form/mission-form.component';
-import { MissionNoteFormComponent } from '../mission-note-form/mission-note-form.component';
-import { MissionReportFormComponent } from '../mission-report-form/mission-report-form.component';
-import { MissionForm } from '../mission-form/mission-form.model';
+import { NavAction, MissionDetails, ConfirmDeleteDialogComponent, ROLES, MissionNote, Mission, VertMenuParentExtension } from 'src/app/shared';
+import { MissionsService, NotificationService } from 'src/app/core';
+import { MissionFormComponent } from '../components/mission-form/mission-form.component';
+import { MissionNoteFormComponent } from '../components/mission-note-form/mission-note-form.component';
+import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
+import { take } from 'rxjs/operators';
+import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
 
 
 @Component({
@@ -16,23 +16,16 @@ import { MissionForm } from '../mission-form/mission-form.model';
   styleUrls: ['./mission-details.component.css']
 })
 
-export class MissionDetailsComponent {
-  public ROLES = ROLES;
+export class MissionDetailsComponent extends VertMenuParentExtension{
+  ROLES = ROLES;
 
-  imagesToUpload: FileList;
-  reportToUpload: File;
+  mainNavConfig = new MainNavConfig();
 
-  unloadedThumbnails: any[] = [];
-  reloadThumbnailsState: boolean = false;
-  reloadInterval: any;
+  missionDetails: MissionDetails;
 
-  public missionDetails: MissionDetails;
+  missionId: number;
 
-  private routeSub: Subscription;
-
-  public missionId: number;
-
-  public navActions: NavAction[] = [
+  navActions: NavAction[] = [
     new NavAction("createReport", "Legg til rapport", "note_add", [ROLES.Leder]),
     new NavAction("createNote", "Legg til notat", "add_comment"),
     new NavAction("edit", "Rediger", "edit", [ROLES.Leder]),
@@ -44,109 +37,22 @@ export class MissionDetailsComponent {
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog) {}
+    public dialog: MatDialog) { super(); }
 
   ngOnInit(){
-    this.routeSub = this.route.params.subscribe(params => this.missionId = params['id']);
+    this.route.params.pipe(take(1)).subscribe(params => this.missionId = params['id']);
 
     this._missionsService.getMissionDetails(this.missionId)
-      .subscribe(
-        result => {
-          if(result == undefined) return null;
-          this.missionDetails = result;
-          this.missionDetails.mission.address = this.missionDetails.mission.address.replace(", Norge","").replace(/,/g, ";");
-        }
-    );
-  }
-
-  uploadImages(files: FileList){
-
-    this.imagesToUpload = files;
-    this._missionsService.addMissionImages(this.missionId, files)
-      .subscribe(data => this.notificationService.setNotification(`Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`));
-  }
-
-  deleteImage(id){
-    this._missionsService.deleteMissionImage(this.missionId, id)
-      .subscribe(res =>  this.notificationService.setNotification('Vellykket! Bilde slettet'));
-  }
-
-  handleNavEvents(e){
-    switch(e){
-      case "delete":{
-        this.openMissionDeleteDialog();
-        break;
-      }
-      case "edit":{
-        this.openEditDialog();
-        break;
-      }
-      case "createReport":{
-        this.openCreateReportDialog();
-        break;
-      }
-      case "createNote":{
-        this.openCreateNoteDialog();
-        break;
-      }
-      case "back":{
-        this.onBack();
-        break;
-      }
-    }
-  }
-
-  openEditDialog(){
-    let formData = new MissionForm(this.missionDetails.mission, false);
-    const dialogRef = this.dialog.open(MissionFormComponent, {
-      width: '100vw',
-      height: '100vh',
-      panelClass: 'form_dialog',
-      data: formData,
-    });
-
-    dialogRef.afterClosed().subscribe(res => this.editMission(res));
-
+      .subscribe(result => {
+        this.missionDetails = result;
+        this.configure();
+      });
   }
 
   editMission(mission: Mission){
     if(!mission) return null;
     this._missionsService.updateMission(mission)
       .subscribe(success => this.notificationService.setNotification('Vellykket oppdatering!'))
-  }
-
-  openCreateNoteDialog(){
-    const dialogRef = this.dialog.open(MissionNoteFormComponent, {
-      width: '100vw',
-      height: '100vh',
-      panelClass: 'form_dialog',
-      data: { missionId: this.missionId }
-    });
-
-    dialogRef.afterClosed().subscribe(note => this.createMissionNote(note));
-  }
-
-  createMissionNote(note: MissionNote){
-    if(note){
-      this._missionsService.addMissionNote(this.missionId, note)
-      .subscribe(note => this.router.navigate(['oppdrag', this.missionId, 'notater', note.id]));
-    }
-  }
-
-  openCreateReportDialog(){
-    const deleteDialogRef = this.dialog.open(MissionReportFormComponent);
-    deleteDialogRef.afterClosed().subscribe(data => this.createMissionReport(data));
-  }
-
-  createMissionReport(data){
-    if(!data) return null;
-    this._missionsService.addMissionReport(this.missionId, data.reportType, data.files)
-      .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport lastet opp'));
-  }
-
-  openMissionDeleteDialog(){
-    const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-    deleteDialogRef.afterClosed().subscribe(confirmed => {if(confirmed)this.deleteMission()});
   }
 
   deleteMission(){
@@ -160,11 +66,97 @@ export class MissionDetailsComponent {
     );
   }
 
+  uploadImages(files: FileList)
+  {
+    this._missionsService.addMissionImages(this.missionId, files).pipe(take(1))
+      .subscribe(data => this.notificationService.setNotification(`Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`));
+  }
+
+  deleteImage(id:number){
+    this._missionsService.deleteMissionImage(this.missionId, id).pipe(take(1))
+      .subscribe(res =>  this.notificationService.setNotification('Vellykket! Bilde slettet'));
+  }
+
+  createNote(note: MissionNote){
+    if(note){
+      this._missionsService.addMissionNote(this.missionId, note)
+      .subscribe(note => this.router.navigate(['oppdrag', this.missionId, 'notater', note.id]));
+    }
+  }
+
+  editNote(note: MissionNote){
+    if(!note) return null;
+    this._missionsService.updateMissionNote(this.missionId, note)
+      .subscribe(data =>this.notificationService.setNotification('Vellykket oppdatering!'));
+  }
+
+  deleteNote(noteId: number){
+    this._missionsService.deleteMissionNote(this.missionId, noteId)
+      .subscribe(res => this.notificationService.setNotification('Vellykket! Notat slettet.'));
+  }
+
+  createReport(data){
+    if(!data) return null;
+    this._missionsService.addMissionReport(this.missionId, data.reportType, data.files)
+      .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport lastet opp'));
+  }
+
+  openEditDialog(e: string, ctx:any){
+    const dialogRef = ctx.dialog.open(MissionFormComponent, {
+      width: '80vw',
+      height: 'auto',
+      panelClass: 'form_dialog',
+      data: ctx.missionDetails.mission,
+    });
+
+    dialogRef.afterClosed().subscribe(res => ctx.editMission(res));
+  }
+
+  openCreateNoteDialog(e: string, ctx:any){
+    const dialogRef = ctx.dialog.open(MissionNoteFormComponent, {
+      width: '80vw',
+      height: 'auto',
+      panelClass: 'form_dialog',
+      data: { missionId: ctx.missionId }
+    });
+
+    dialogRef.afterClosed().subscribe(note => ctx.createNote(note));
+  }
+
+  openCreateReportDialog(e: string, ctx:any){
+    const deleteDialogRef = ctx.dialog.open(MissionReportFormComponent);
+    deleteDialogRef.afterClosed().subscribe(data => ctx.createReport(data));
+  }
+
+  openMissionDeleteDialog(e: string, ctx:any){
+    const deleteDialogRef = ctx.dialog.open(ConfirmDeleteDialogComponent);
+    deleteDialogRef.afterClosed().subscribe(confirmed => {if(confirmed)ctx.deleteMission()});
+  }
+
+  loadNoteDetails(noteId: number){
+    let note = this.missionDetails.missionNotes.find(x => x.id == noteId);
+    console.log(note);
+    if(note && (note.content == null || note.content.length == 0)){ //If note exist with content
+      this._missionsService.loadMissionNoteDetails(this.missionId, noteId);
+    }
+  }
+
+  configure(){
+    this.vertActions = [
+      new NavAction("Legg til rapport", "note_add","createReport", this.openCreateReportDialog, [ROLES.Leder]),
+      new NavAction("Legg til notat", "add_comment","createNote", this.openCreateNoteDialog),
+      new NavAction("Rediger", "edit","edit", this.openEditDialog, [ROLES.Leder]),
+      new NavAction("Slett", "delete_forever", "delete", this.openMissionDeleteDialog, [ROLES.Leder])
+    ];
+    this.mainNavConfig.vertActions = this.vertActions;
+    this.mainNavConfig.altNav = true;
+    this.mainNavConfig.title = this.missionDetails.mission.address.replace(", Norge","").replace(/,/g, ";");
+    this.mainNavConfig.subTitle = this.missionDetails.mission.finished ? 'Oppdrag ferdig!' : '';
+    this.mainNavConfig.subIcon = this.missionDetails.mission.finished ? 'check' : '';
+  }
+
   onBack(){
     this.router.navigate(['/oppdrag'])
   }
 
-  ngOnDestroy() {
-    this.routeSub.unsubscribe();
-  }
 }

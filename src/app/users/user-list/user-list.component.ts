@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { UsersService, NotificationService } from 'src/app/core';
+import { UsersService, NotificationService, IdentityService } from 'src/app/core';
 import { User, ROLES } from 'src/app/shared';
 import { UserFormComponent } from '../user-form/user-form.component';
-import { tap } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
@@ -14,19 +14,28 @@ export class UserListComponent implements OnInit {
   public ROLES = ROLES;
   constructor(
     private usersService: UsersService,
+    private identityService: IdentityService,
     private notificationService: NotificationService,
     public dialog: MatDialog,) { }
 
   public users: User[];
 
+  public currentUser: User;
+
   ngOnInit() {
-    this.usersService.getUsers().subscribe(response => this.users = response)
+    combineLatest(
+      this.usersService.getByRole$(ROLES.Leder),
+      this.usersService.getByRole$(ROLES.Mellomleder),
+      this.usersService.getByRole$(ROLES.Ansatt)
+    ).subscribe(([group1, group2, group3]) => {this.users = [...group1, ...group2, ...group3], console.log(this.users)});
+
+    this.identityService.currentUser$.subscribe(data => this.currentUser = data);
   }
 
   openEditDialog(user: User){
     const dialogRef = this.dialog.open(UserFormComponent, {
-      width: '100vw',
-      height: '100vh',
+      width: '80vw',
+      height: 'auto',
       panelClass: 'form_dialog',
       data: user,
     });
@@ -41,19 +50,19 @@ export class UserListComponent implements OnInit {
   }
 
   updateUser(user: User){
-    this.usersService.updateUser(user)
+    this.usersService.update$(user)
       .subscribe(success => this.notificationService.setNotification('Vellykket oppdatering!'));
   }
 
   deleteUser(username: string){
-    this.usersService.deleteUser(username)
+    this.usersService.delete$(username)
       .subscribe(res => this.notificationService.setNotification('Vellykket! Bruker slettet.'));
   }
 
   openCreateDialog(){
     const dialogRef = this.dialog.open(UserFormComponent, {
-      width: '100vw',
-      height: '100vh',
+      width: '80vw',
+      height: 'auto',
       panelClass: 'form_dialog'
     });
 
@@ -63,7 +72,7 @@ export class UserListComponent implements OnInit {
   }
 
   createUser(user: any){
-    this.usersService.addUser(user)
+    this.usersService.add$(user)
      .subscribe(success => this.notificationService.setNotification('Vellykket! Ny bruker registrert.'));
   }
 

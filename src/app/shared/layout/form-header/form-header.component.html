@@ -1,0 +1,21 @@
+<mat-toolbar class="p-0 bg-4 color-primary">
+
+  <mat-toolbar-row class="p-0" style="height:auto!important">
+
+      <span style="margin-right:auto;">
+        <button (click)="this.backEvent.emit(true)"
+         mat-icon-button aria-label="Tilbake">
+            <mat-icon class="icon_150">chevron_left</mat-icon>
+        </button>
+      </span>
+
+    <app-vert-menu [actions]="vertActions" (event)="this.vertEvent.emit($event)"></app-vert-menu>
+
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="alt_nav_row">
+    <mat-icon *ngIf="icon">{{ icon }}</mat-icon> &nbsp;
+    <span [innerHTML]="title"></span>
+  </mat-toolbar-row>
+
+</mat-toolbar>

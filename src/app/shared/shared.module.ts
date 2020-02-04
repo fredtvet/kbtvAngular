@@ -1,23 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConfirmDeleteDialogComponent, ImageListComponent, ImageViewerDialogComponent, NavListItemComponent, PaginationComponent, VertMenuComponent, SearchBarComponent, LoadingComponent} from './components'
+import { ConfirmDeleteDialogComponent, ImageListComponent, ImageViewerDialogComponent, NavListItemComponent, PaginationComponent, VertMenuComponent, SearchBarComponent, LoadingComponent, MissionListViewComponent} from './components'
 import { ArraySlicePipe, ThumbnailPipe } from './pipes'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
 import { IfRoleDirective } from './directives/if-role.directive';
-import { MainNavComponent, BottomNavComponent, NestedNavComponent } from './layout';
+import { MainNavComponent, BottomNavComponent } from './layout';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { SideNavHeaderComponent } from './layout/side-nav-header/side-nav-header.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { FormHeaderComponent } from './layout/form-header/form-header.component';
 
 @NgModule({
   declarations: [
     MainNavComponent,
     BottomNavComponent,
-    NestedNavComponent,
     ConfirmDeleteDialogComponent,
     ImageListComponent,
     ImageViewerDialogComponent,
@@ -29,8 +28,9 @@ import { NotificationComponent } from './components/notification/notification.co
     ArraySlicePipe,
     ThumbnailPipe,
     LoadingComponent,
-    SideNavHeaderComponent,
-    NotificationComponent
+    NotificationComponent,
+    FormHeaderComponent,
+    MissionListViewComponent
   ],
   imports: [
     CommonModule,
@@ -62,9 +62,10 @@ import { NotificationComponent } from './components/notification/notification.co
     ThumbnailPipe,
     MainNavComponent,
     BottomNavComponent,
-    NestedNavComponent,
     SearchBarComponent,
     LoadingComponent,
+    FormHeaderComponent,
+    MissionListViewComponent
   ]
 })
 export class SharedModule { }

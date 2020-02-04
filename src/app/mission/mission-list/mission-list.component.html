@@ -1,29 +1,31 @@
-<app-main-nav [searchBarEnabled]="true" (searchString)="searchMissionList($event)">
+<app-main-nav [config]="mainNavConfig" (vertEvent)="this.handleVertEvent($event)" (searchEvent)="this.searchMissionList($event)">
 
-  <p *ngIf="!missionList"><em>Laster inn oppdrag...</em></p>
+  <div class="content-container" fxLayout="column">
 
-  <mat-nav-list class="p-0" *ngIf="missionList.missions" >
+    <p *ngIf="!missionList"><em>Laster inn oppdrag...</em></p>
 
-      <mat-list-item *ngIf="missionList.missions.length == 0">Fant ingen oppdrag</mat-list-item>
+    <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center" >
+      <span class="content-container-title">Oppdrag</span>
+      <button (click)="openCreateMissionDialog()" color="primary" *ifRole="[ROLES.Leder, ROLES.Mellomleder]"
+        mat-icon-button aria-label="ny">
+        <mat-icon class="icon_125">add</mat-icon>
+      </button>
+    </div>
+    <mat-divider></mat-divider>
 
-      <app-nav-list-item *ngFor="let mission of missionList.missions"
-          name="{{ mission.address }}" icon="home_work" [routerLink]="['/oppdrag', mission.id, 'detaljer']">
-      </app-nav-list-item>
+    <div class="content-child-container" fxFlex="85">
+      <app-mission-list-view [missions]="missionList.missions"></app-mission-list-view>
+    </div>
 
-  </mat-nav-list>
+    <app-pagination  fxFlex="10"
+      *ngIf="missionList.paginationInfo"
+      [paginationInfo]="missionList.paginationInfo"
+      (pageChange)='changePage($event)'>
+    </app-pagination>
 
-  <button (click)="openCreateMissionDialog()" color="primary" *ifRole="[ROLES.Leder, ROLES.Mellomleder]"
-          mat-mini-fab aria-label="ny"
-          class="action_fab"
-          style="bottom:111px!important">
-          <mat-icon>add</mat-icon>
-  </button>
+  </div>
 
-  <app-pagination
-    *ngIf="missionList.paginationInfo"
-    [paginationInfo]="missionList.paginationInfo"
-    (pageChange)='changePage($event)'>
-  </app-pagination>
+
 
 </app-main-nav>
 

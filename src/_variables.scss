@@ -1,0 +1,25 @@
+// Import material theming functions
+@import '~@angular/material/theming';
+
+// Copy the palettes from your selected theme (usually theme.scss).
+$app-primary: mat-palette($mat-amber, A200, A150, A200);
+$app-accent:  mat-palette($mat-amber, A200, A150, A200);
+$app-warn:    mat-palette($mat-red, A200, A150, A100);
+// Create your Sass color vars (will be available in all the project)
+$primary: mat-color($app-primary);
+$accent: mat-color($app-accent);
+$warn: mat-color($app-warn);
+$green: mat-color($mat-green, 300);
+
+$kbtv-client-theme: mat-dark-theme($app-primary, $app-accent, $app-warn);
+
+$background: map-get($kbtv-client-theme, background);
+$foreground: map-get($kbtv-client-theme, foreground);
+$item-margin: 8;
+$item-width: calc(100% - (#{$item-margin} * 2 * 1px));
+$bottom-nav-height: 56;
+$main-nav-height: 72;
+$details-nav-height: 104;
+$tab-header-height: 48;
+$content-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$main-nav-height} + #{$item-margin * 2}) * 1px));
+$details-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$details-nav-height} + #{$tab-header-height} + #{$item-margin * 2}) * 1px));

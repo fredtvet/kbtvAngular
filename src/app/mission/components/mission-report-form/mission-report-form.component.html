@@ -1,0 +1,24 @@
+
+
+  <form *ngIf="reportForm" [formGroup]="reportForm" class="p-3 bg-5" fxLayout="column" fxLayoutAlign="space-around-center">
+    <h4 class="text-center">Legg til rapport</h4>
+
+    <mat-form-field formGroupName="reportType">
+      <input matInput placeholder="Type rapport" aria-label="Type rapport" formControlName="name" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let type of types" [value]="type.name">
+          {{type.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <input (change)="changeFile($event)" type="file">
+    <br />
+    <button (click)="onSubmit()" [disabled]="this.reportForm.invalid || !this.files" mat-raised-button color="primary">
+      <mat-icon>cloud_upload</mat-icon>
+      Last opp
+    </button>
+  </form>
+
+
+

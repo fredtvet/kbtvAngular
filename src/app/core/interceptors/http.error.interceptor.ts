@@ -4,14 +4,14 @@ import {
   HttpRequest,
   HttpHandler,
   HttpInterceptor,
-  HttpResponse,
   HttpEvent,
   HttpErrorResponse
 } from '@angular/common/http';
-import { tap, catchError } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
-import { LoadingService } from '../services/loading.service';
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { NotificationService } from '../services/notification.service';
+import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
+
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -38,7 +38,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             msg = "Feil brukernavn eller passord!"
             break;
         }
-        this.notificationService.setNotification(msg);
+        this.notificationService.setNotification(msg, NOTIFICATIONS.Error);
       }
     }));
   }

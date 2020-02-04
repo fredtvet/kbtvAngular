@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Inject } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { MissionType, MissionReportType } from 'src/app/shared';
+import { MissionReportType } from 'src/app/shared';
 import { ApiService } from './api.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { MissionReportTypesSubject } from '../subjects/mission-report-types.subject';
 
 @Injectable({
   providedIn: 'root'
@@ -15,70 +13,47 @@ export class MissionReportTypesService {
 
   uri : String = '/MissionReportTypes';
 
-  private missionReportTypesSubject =
-          new BehaviorSubject<MissionReportType[]>([]);
+  constructor(
+    private apiService: ApiService,
+    private missionReportTypesSubject: MissionReportTypesSubject) {}
 
-  private missionReportTypes$ = this.missionReportTypesSubject.asObservable();
+  getAll$(): Observable<MissionReportType[]> {
+      if(this.missionReportTypesSubject.isEmpty()){
+        return this.apiService.get(`${this.uri}`)
+          .pipe(switchMap(data => {
+            this.missionReportTypesSubject.populate(data);
+            return this.missionReportTypesSubject.missionReportTypes$;
+          }));
+      }
+      else return this.missionReportTypesSubject.missionReportTypes$;
+  }
 
-  constructor(private apiService: ApiService) {}
-
-  addMissionReportType(missionReportType: MissionReportType)
+  add$(missionReportType: MissionReportType): Observable<MissionReportType>
   {
     return this.apiService
-                .post(`${this.uri}`, missionReportType)
-                .pipe(map(data =>{
-                  this.addMissionReportTypeInSubject(data);
-                }));
-
+      .post(`${this.uri}`, missionReportType)
+      .pipe(map(data =>{
+        this.missionReportTypesSubject.add(data);
+        return data;
+      }));
   }
 
-  getMissionReportTypes(): Observable<MissionReportType[]> {
-    if(this.missionReportTypesSubject.value === undefined || this.missionReportTypesSubject.value.length == 0){
-      return this.apiService.get(`${this.uri}`)
-        .pipe(switchMap(data => {
-          this.missionReportTypesSubject.next(data);
-          return this.missionReportTypes$;
-        }));
-    }
-    else return this.missionReportTypes$;
-  }
-
-  updateMissionReportType(missionReportType: MissionReportType)
+  update$(missionReportType: MissionReportType): Observable<MissionReportType>
   {
     return this.apiService.put(`${this.uri}/${missionReportType.id}`, missionReportType)
-      .pipe(map(e => this.updateMissionReportTypeInSubject(e)));
+      .pipe(map(data => {
+        this.missionReportTypesSubject.update(data);
+        return data
+      }));
   }
 
-  deleteMissionReportType(id: number) {
+  delete$(id: number): Observable<boolean> {
     return this
-            .apiService
-            .delete(`${this.uri}/${id}`)
-            .pipe(map(bool =>{
-              if(bool)
-                this.removeMissionReportTypeInSubject(id);
-              return bool;
-            }));
-  }
-
-  removeMissionReportTypeInSubject(id: number){
-    this.missionReportTypesSubject.next(
-      this.missionReportTypesSubject.value.filter(d => {
-        return d.id !== id
-      })
-    );
-  }
-
-  updateMissionReportTypeInSubject(missionReportType: MissionReportType){
-    this.missionReportTypesSubject.next(
-      this.missionReportTypesSubject.value.map(m => {
-        if(m.id !== missionReportType.id) return m;
-        else return missionReportType;
-      })
-    );
-  }
-
-  addMissionReportTypeInSubject(missionReportType: MissionReportType){
-    if(!this.missionReportTypesSubject.value.find(type => type.id == missionReportType.id))
-      this.missionReportTypesSubject.value.push(missionReportType);
+      .apiService
+      .delete(`${this.uri}/${id}`)
+      .pipe(map(bool =>{
+        if(bool) this.missionReportTypesSubject.delete(id);
+        return bool;
+      }));
   }
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { EmployersService, NotificationService } from 'src/app/core';
-import { Employer, ROLES } from 'src/app/shared';
+import { EmployersService, NotificationService, IdentityService } from 'src/app/core';
+import { Employer, ROLES, User } from 'src/app/shared';
 import { EmployerFormComponent } from '../employer-form/employer-form.component';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-employer-list',
@@ -14,22 +15,23 @@ export class EmployerListComponent implements OnInit {
 
   constructor(
     private employersService: EmployersService,
+    private identityService: IdentityService,
     private notificationService: NotificationService,
     public dialog: MatDialog) { }
 
   public employers: Employer[];
 
+  public currentUser: User;
+
   ngOnInit() {
-    this.employersService.getEmployers().subscribe(response => {
-      console.log(response);
-      this.employers = response;
-    })
+    this.employersService.getAll$().subscribe(data => this.employers = data)
+    this.identityService.currentUser$.subscribe(data => this.currentUser = data);
   }
 
   openEditDialog(employer: Employer){
     const dialogRef = this.dialog.open(EmployerFormComponent, {
-      width: '100vw',
-      height: '100vh',
+      width: '80vw',
+      height: 'auto',
       panelClass: 'form_dialog',
       data: employer,
     });
@@ -44,19 +46,20 @@ export class EmployerListComponent implements OnInit {
   }
 
   updateEmployer(employer: Employer){
-    this.employersService.updateEmployer(employer)
+    this.employersService.update$(employer)
       .subscribe(data => this.notificationService.setNotification('Vellykket oppdatering!'));
   }
 
   deleteEmployer(id: number){
-    this.employersService.deleteEmployer(id)
+    console.log(id);
+    this.employersService.delete$(id)
       .subscribe(data => this.notificationService.setNotification('Vellykket! Oppdragsgiver slettet.'));
   }
 
   openCreateDialog(){
     const dialogRef = this.dialog.open(EmployerFormComponent, {
-      width: '100vw',
-      height: '100vh',
+      width: '80vw',
+      height: 'auto',
       panelClass: 'form_dialog'
     });
 
@@ -68,7 +71,7 @@ export class EmployerListComponent implements OnInit {
   }
 
   createEmployer(employer: any){
-    this.employersService.addEmployer(employer)
+    this.employersService.add$(employer)
       .subscribe(data => this.notificationService.setNotification('Vellykket! Ny oppdragsgiver registrert.'));
   }
 }

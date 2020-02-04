@@ -6,3 +6,4 @@ export * from './models';
 export * from './pipes';
 export * from './angular-material.module';
 export * from './roles.enum';
+export * from './notifications.enum';

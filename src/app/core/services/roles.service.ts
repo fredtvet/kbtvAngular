@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { ROLES } from 'src/app/shared/roles.enum';
 
@@ -19,7 +19,7 @@ export class RolesService {
 
   constructor(private apiService: ApiService) {}
 
-  getRoles() {
+  getAll$(): Observable<string[]> {
     if(this.rolesSubject.value === undefined || this.rolesSubject.value.length == 0){
       return this.apiService.get(`${this.uri}`)
         .pipe(switchMap(data => {

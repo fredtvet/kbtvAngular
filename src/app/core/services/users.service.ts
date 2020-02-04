@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { User } from 'src/app/shared';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from 'src/app/shared/models';
+import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { map, switchMap } from 'rxjs/operators';
+import { UsersSubject } from '../subjects/users.subject';
 
 @Injectable({
   providedIn: 'root'
@@ -14,71 +13,52 @@ export class UsersService {
 
   uri : String = "/Users";
 
-  private usersSubject =
-          new BehaviorSubject<User[]>([]);
+  constructor(
+    private apiService: ApiService,
+    private usersSubject: UsersSubject) {}
 
-  private users$ = this.usersSubject.asObservable();
-
-  constructor(private apiService: ApiService) {}
-
-  addUser(user: User)
-  {
-    return this.apiService
-                .post(`${this.uri}`, user)
-                .pipe(map(data =>{
-                  console.log(data);
-                  this.addUserInSubject(data);
-                }));
-  }
-
-  getUsers(): Observable<User[]> {
-    if(this.usersSubject.value === undefined || this.usersSubject.value.length == 0){
+  getAll$(): Observable<User[]> {
+    if(this.usersSubject.isEmpty()){
       return this.apiService.get(`${this.uri}`)
         .pipe(switchMap(data => {
-          this.usersSubject.next(data);
-          return this.users$;
+          this.usersSubject.populate(data);
+          return this.usersSubject.users$;
         }));
     }
-    else return this.users$;
+    else return this.usersSubject.users$;
   }
 
-  updateUser(user: User)
+  getByRole$(role: string): Observable<User[]>{
+    return this.getAll$().pipe(map(arr => arr.filter(u => u.role == role)));
+  }
+
+  add$(user: User): Observable<User>
+  {
+    return this.apiService
+      .post(`${this.uri}`, user)
+      .pipe(map(data => {
+        this.usersSubject.add(data);
+        return data;
+      }));
+  }
+
+  update$(user: User): Observable<User>
   {
     return this.apiService.put(`${this.uri}/${user.userName}`, user)
-      .pipe(map(e => this.updateUserInSubject(e)));
+      .pipe(map(data => {
+        this.usersSubject.update(data);
+        return data;
+      }));
   }
 
-  deleteUser(userName: string) {
+  delete$(userName: string): Observable<boolean> {
     return this
-            .apiService
-            .delete(`${this.uri}/${userName}`)
-            .pipe(map(bool =>{
-              if(bool)
-                this.removeUserInSubject(userName);
-              return bool;
-            }));
-  }
-
-  removeUserInSubject(userName: string){
-    this.usersSubject.next(
-      this.usersSubject.value.filter(d => {
-        return d.userName !== userName
-      })
-    );
-  }
-
-  updateUserInSubject(user: User){
-    this.usersSubject.next(
-      this.usersSubject.value.map(e => {
-        if(e.userName !== user.userName) return e;
-        else return user;
-      })
-    );
-  }
-
-  addUserInSubject(user: User){
-    if(!this.usersSubject.value.find(e => e.userName == user.userName))
-      this.usersSubject.value.push(user);
+      .apiService
+      .delete(`${this.uri}/${userName}`)
+      .pipe(map(bool =>{
+        if(bool) this.usersSubject.delete(userName);
+        return bool;
+      }));
   }
 
 }

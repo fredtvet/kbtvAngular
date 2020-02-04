@@ -1,10 +1,9 @@
-<app-nested-nav *ngIf="note"
-    icon="edit"
-    title="{{ this.note.title || (this.note.createdAt | date: 'short') }}"
-    [actions]="this.navActions"
-    (event)="handleEvent($event)">
+<app-main-nav *ngIf="note"
+    [config]="mainNavConfig"
+    (vertEvent)="handleVertEvent($event)"
+    (backEvent)="onBack()">
 
-  <div class="container">
+  <div class="container bg-2">
     <div class="row  p-3">
     {{ this.note.content }}
     </div>
@@ -14,4 +13,4 @@
     </div>
   </div>
 
-</app-nested-nav>
+</app-main-nav>

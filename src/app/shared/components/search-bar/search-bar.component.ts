@@ -26,11 +26,11 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class SearchBarComponent implements OnInit {
 
   @Input() inputPlaceholder: string = "Søk";
-  @Output() searchString = new EventEmitter();
+  @Input() isHidden: boolean = true;
+  @Output() searchEvent = new EventEmitter();
+  @Output() hide = new EventEmitter();
 
   private lastSearch: string = "";
-
-  isHidden = true;
 
   public searchInput: string = "";
 
@@ -42,10 +42,6 @@ export class SearchBarComponent implements OnInit {
   handleSearch(){
     if(this.lastSearch == this.searchInput) return false;
     this.lastSearch = this.searchInput;
-    this.searchString.emit(this.searchInput);
-  }
-
-  toggleSearchBar(){
-    this.isHidden = !this.isHidden;
+    this.searchEvent.emit(this.searchInput);
   }
 }

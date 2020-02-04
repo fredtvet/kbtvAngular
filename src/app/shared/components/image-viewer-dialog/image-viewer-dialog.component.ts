@@ -4,6 +4,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { MissionImage } from '../../models/mission-image.model';
 import { NavAction } from '../nav-action.model';
 import { ROLES } from '../../roles.enum';
+import { VertMenuParentExtension } from '../vert-menu/vert-menu-parent.extension';
 
 @Component({
   selector: 'app-image-viewer-dialog',
@@ -40,7 +41,7 @@ import { ROLES } from '../../roles.enum';
   templateUrl: './image-viewer-dialog.component.html',
   styleUrls: ['./image-viewer-dialog.component.css']
 })
-export class ImageViewerDialogComponent implements OnInit {
+export class ImageViewerDialogComponent extends VertMenuParentExtension {
   public ROLES = ROLES;
   toolbarHidden = false;
 
@@ -48,40 +49,20 @@ export class ImageViewerDialogComponent implements OnInit {
   public index: number;
   public images: MissionImage[];
 
-  public actions: NavAction[] = [
-    new NavAction("downloadImage", "Last ned bilde", "cloud_download"),
-    new NavAction("downloadImages", "Last ned alle", "cloud_download"),
-    new NavAction("delete", "Slett bilde", "delete_forever", [ROLES.Leder]),
-  ];
-
   constructor(
     public dialogRef: MatDialogRef<ImageViewerDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
+    @Inject(MAT_DIALOG_DATA) public data: any) { super(); }
 
   ngOnInit() {
     this.images = this.data.images;
     this.index = this.images.findIndex(x => x.id == this.data.imageId);
     this.currentImage = this.images[this.index];
-  }
 
-  handleEvent(e){
-    switch(e){
-      case "delete":{
-        this.dialogRef.close(this.currentImage.id);
-        break;
-      }
-      case "downloadImage":{
-        e.preventDefault();
-        window.open(this.currentImage.fileURL)
-        break;
-      }
-      case "downloadImages":{
-        this.images.forEach(x => {
-          window.open(x.fileURL)
-        });
-        break;
-      }
-    }
+    this.vertActions = [
+      new NavAction("Last ned bilde", "cloud_download", "downloadImage", this.downloadImage),
+      new NavAction("Last ned alle", "cloud_download", "downloadImages", this.downloadImages),
+      new NavAction("Slett bilde", "delete_forever", "delete", this.deleteImage, [ROLES.Leder]),
+    ];
   }
 
   nextImage(){
@@ -102,6 +83,20 @@ export class ImageViewerDialogComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  deleteImage(e:string, ctx:any){
+    ctx.dialogRef.close(ctx.currentImage.id);
+  }
+
+  downloadImage(e:string, ctx:any){
+    window.open(ctx.currentImage.fileURL)
+  }
+
+  downloadImages(e:string, ctx:any){
+    ctx.images.forEach(x => {
+      window.open(x.fileURL)
+    });
   }
 
 }

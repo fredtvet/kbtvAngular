@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { MissionDetails, Mission,MissionImage, MissionReport, MissionNote  } from 'src/app/shared/models';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MissionReportTypesService } from '../services/mission-report-types.service';
-import { MissionTypesService } from '../services/mission-types.service';
-import { EmployersService } from '../services/employers.service';
+import { EmployersSubject } from './employers.subject';
+import { MissionTypesSubject } from './mission-types.subject';
+import { MissionReportTypesSubject } from './mission-report-types.subject';
 
 @Injectable({
   providedIn: 'root'
@@ -18,35 +18,24 @@ export class MissionsSubject {
   public missions$ = this.missionsSubject.asObservable();
 
   constructor(
-    private missionTypesService: MissionTypesService,
-    private employersService: EmployersService,
-    private missionReportTypesService: MissionReportTypesService) {}
+    private missionTypesSubject: MissionTypesSubject,
+    private employersSubject: EmployersSubject,
+    private missionReportTypesSubject: MissionReportTypesSubject) {}
 
-  getMissionDetails(id:number): MissionDetails{
-    return this.missionsSubject.value.find(details => details.mission.id == id);
-  }
-
-  getMissionDetails$(id: number): Observable<MissionDetails>{
+  getDetails$(id: number): Observable<MissionDetails>{
     return this.missions$.pipe(map(arr => arr.find(details => details.mission.id == id)));
   }
 
-  addMissionDetails(details: MissionDetails){
+  addDetails(details: MissionDetails){
     let missions = this.missionsSubject.value;
     missions.push(details);
     this.missionsSubject.next(missions);
     //Update relating subjects
-    if(details.mission.missionType && details.mission.missionType.id != 0)
-      this.missionTypesService.addMissionTypeInSubject(details.mission.missionType);
-    if(details.mission.employer && details.mission.employer.id != 0)
-      this.employersService.addEmployerInSubject(details.mission.employer);
-  }
 
-  removeMissionDetails(id: number){
-    this.missionsSubject.next(
-      this.missionsSubject.value.filter(d => {
-        return d.mission.id !== id
-      })
-    );
+    if(details.mission.missionType && details.mission.missionType.id != 0)
+      this.missionTypesSubject.add(details.mission.missionType);
+    if(details.mission.employer && details.mission.employer.id != 0)
+      this.employersSubject.add(details.mission.employer);
   }
 
   updateMission(mission: Mission){
@@ -58,9 +47,28 @@ export class MissionsSubject {
         return d;
       })
     );
+
+    if(mission.missionType && mission.missionType.id != 0)
+      this.missionTypesSubject.add(mission.missionType);
+    if(mission.employer && mission.employer.id != 0)
+      this.employersSubject.add(mission.employer);
   }
 
-  addMissionImages(missionId:number, images: MissionImage[]){
+  removeDetails(id: number){
+    this.missionsSubject.next(
+      this.missionsSubject.value.filter(d => {
+        return d.mission.id !== id
+      })
+    );
+  }
+
+  hasDetails(id:number): boolean {
+    let details = this.missionsSubject.value.find(details => details.mission.id == id);
+    if(details == undefined) return false;
+    else return true;
+  }
+
+  addImages(missionId:number, images: MissionImage[]){
     this.missionsSubject.next(
       this.missionsSubject.value.map(d => {
         if(d.mission.id == missionId) {
@@ -71,7 +79,7 @@ export class MissionsSubject {
     );
   }
 
-  removeMissionImage(missionId: number, imageId: number){
+  deleteImage(missionId: number, imageId: number){
     this.missionsSubject.next(
       this.missionsSubject.value.map(d => {
         if(d.mission.id == missionId) {
@@ -84,7 +92,7 @@ export class MissionsSubject {
     );
   }
 
-  addMissionReport(missionId:number, report: MissionReport){
+  addReport(missionId:number, report: MissionReport){
     this.missionsSubject.next(
       this.missionsSubject.value.map(d => {
         if(d.mission.id == missionId) {
@@ -94,11 +102,11 @@ export class MissionsSubject {
       })
     );
 
-    if(report.missionReportType)
-      this.missionReportTypesService.addMissionReportTypeInSubject(report.missionReportType);
+    if(report.missionReportType && report.missionReportType.id != 0)
+      this.missionReportTypesSubject.add(report.missionReportType);
   }
 
-  removeMissionReport(missionId: number, reportId: number){
+  deleteReport(missionId: number, reportId: number){
     this.missionsSubject.next(
       this.missionsSubject.value.map(d => {
         if(d.mission.id == missionId) {
@@ -111,7 +119,15 @@ export class MissionsSubject {
     );
   }
 
-  addMissionNote(missionId:number, note: MissionNote){
+
+  getNoteDetails$(missionId:number, noteId:number): Observable<MissionNote>{
+    return this.missions$.pipe(map(missions => {
+        return missions.find(m => m.mission.id == missionId)
+                .missionNotes.find(m => m.id == noteId);
+    }));
+  }
+
+  addNote(missionId:number, note: MissionNote){
     this.missionsSubject.next(
       this.missionsSubject.value.map(d => {
         if(d.mission.id == missionId) d.missionNotes.push(note);
@@ -120,20 +136,7 @@ export class MissionsSubject {
     );
   }
 
-  removeMissionNote(missionId: number, noteId: number){
-    this.missionsSubject.next(
-      this.missionsSubject.value.map(d => {
-        if(d.mission.id == missionId) {
-          d.missionNotes = d.missionNotes.filter(i => {
-            return i.id != noteId
-          });
-        }
-        return d;
-      })
-    );
-  }
-
-  updateMissionNote(missionId: number, note: MissionNote){
+  updateNote(missionId: number, note: MissionNote){
     this.missionsSubject.next(
       this.missionsSubject.value.map(d => {
         if(d.mission.id == missionId) {
@@ -147,20 +150,20 @@ export class MissionsSubject {
     );
   }
 
-  getMissionNoteDetails(missionId:number, noteId:number): MissionNote{
-    let mission = this.missionsSubject.value.find(details => details.mission.id == missionId);
-    if(mission){
-      let note = mission.missionNotes.find(note => note.id == noteId);
-      if(note) return note;
-    }
-    return new MissionNote();
+  deleteNote(missionId: number, noteId: number){
+    this.missionsSubject.next(
+      this.missionsSubject.value.map(d => {
+        if(d.mission.id == missionId) {
+          d.missionNotes = d.missionNotes.filter(i => {
+            return i.id != noteId
+          });
+        }
+        return d;
+      })
+    );
   }
 
-  getMissionNoteDetails$(missionId:number, noteId:number): Observable<MissionNote>{
-    return this.missions$.pipe(map(missions => {
-        return missions.find(m => m.mission.id == missionId)
-                .missionNotes.find(m => m.id == noteId);
-    }));
-  }
+
+
 
 }

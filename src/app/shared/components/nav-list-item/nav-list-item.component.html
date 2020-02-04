@@ -1,5 +1,15 @@
-<mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-icon matListIcon>{{ icon }}</mat-icon>
-    <a href="{{ href }}"matLine>{{ name }}</a>
+<mat-list-item *ngIf="config" class="bg-2 p-0">
+
+    <mat-icon *ngIf="config.startIcon" mat-list-icon>{{ config.startIcon }}</mat-icon>
+
+    <span *ngIf="config.mainLine" mat-line>{{ config.mainLine }}</span>
+
+    <p mat-line *ngFor="let subLine of config.subLines">
+      <mat-icon class="icon_75">{{subLine.icon}}</mat-icon>
+      {{subLine.name}}
+    </p>
+
+  <mat-icon *ngIf="config.endIcon">{{ config.endIcon }}</mat-icon>
+  <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
 </mat-list-item>
+

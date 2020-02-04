@@ -1,12 +1,7 @@
-<app-nested-nav
-      [icon]="this.isEditForm ? 'edit' : 'add'"
-      [title]="this.title"
-      [actions]="this.actions"
-      [botNavEnabled]="false"
-      (event)="handleEvent($event)">
 
-  <form *ngIf="employerForm" [formGroup]="employerForm" class="app-form" fxLayout="column">
 
+<form *ngIf="employerForm" class="app-dialog" [formGroup]="employerForm"  fxLayout="column">
+  <span class="form-title text-center mb-2">{{ title }}</span>
     <mat-form-field>
         <input matInput placeholder="Navn"  formControlName="name" required>
         <mat-error *ngIf="this.name.invalid">
@@ -30,10 +25,10 @@
     </mat-form-field>
 
     <button (click)="onSubmit()" [disabled]="this.employerForm.invalid" mat-raised-button color="primary">Lagre</button>
+    <button (click)="openDeleteDialog()" *ngIf="isEditForm" mat-raised-button color="warn"  class="mt-3"><mat-icon>delete_forever</mat-icon></button>
+</form>
 
-  </form>
 
-</app-nested-nav>
 
 
 

@@ -1,29 +1,30 @@
 
+<div class="auth-container">
+  <form [formGroup]="authForm" (ngSubmit)="submitForm()" class="auth-form">
+    <img src="assets/android-chrome-144x144.png" class="m-4" style="width:120px;height:120px" />
 
-        <form [formGroup]="authForm" (ngSubmit)="submitForm()" class="auth-form">
-          <img src="assets/android-chrome-144x144.png" class="m-4" style="width:120px;height:120px" />
+    <fieldset>
+      <mat-form-field>
+        <mat-icon matSuffix color="primary">person</mat-icon>
+        <input matInput
+          formControlName="Username"
+          placeholder="Brukernavn"
+          type="text" />
+      </mat-form-field><br />
+      <mat-form-field>
+        <mat-icon matSuffix color="primary">vpn_key</mat-icon>
+        <input matInput
+          formControlName="Password"
+          placeholder="Passord"
+          type="password" />
+      </mat-form-field>
+    </fieldset>
+    <button mat-raised-button color="primary" [disabled]="!authForm.valid" type="submit">
+      <mat-icon>lock_open</mat-icon>
+      Logg inn
+    </button>
 
-          <fieldset>
-            <mat-form-field>
-              <mat-icon matSuffix color="primary">person</mat-icon>
-              <input matInput
-                formControlName="Username"
-                placeholder="Brukernavn"
-                type="text" />
-            </mat-form-field><br />
-            <mat-form-field>
-              <mat-icon matSuffix color="primary">vpn_key</mat-icon>
-              <input matInput
-                formControlName="Password"
-                placeholder="Passord"
-                type="password" />
-            </mat-form-field>
-          </fieldset>
-          <button mat-raised-button color="primary" [disabled]="!authForm.valid" type="submit">
-            <mat-icon>lock_open</mat-icon>
-            Logg inn
-          </button>
-
-        </form>
+  </form>
+</div>
 
 

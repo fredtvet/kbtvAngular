@@ -1,23 +1,33 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
+import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class NotificationService {
 
   constructor(private _snackBar: MatSnackBar) {}
 
-  setNotification(message: string){
-    this.openSnackBar(message);
+  setNotification(message: string, type: number = 0){
+    switch(type){
+      case NOTIFICATIONS.Success:
+        this.openSnackBar(message, 'check_circle', 2000, 'notification', 'color-green');
+        break;
+      case NOTIFICATIONS.Error:
+        this.openSnackBar(message, 'error', 3500, 'notification-warn');
+        break;
+    }
+
   }
 
-  openSnackBar(message: string){
+  openSnackBar(message: string, icon:string, duration: number, panelClass:string, colorClass:string = null){
     this._snackBar.openFromComponent(NotificationComponent, {
-      data : message,
-      duration: 2000,
-      panelClass: 'snackbar_margin'
+      data : { message, icon, colorClass },
+      duration: duration,
+      panelClass: panelClass
     })
   }
 

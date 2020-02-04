@@ -1,14 +1,16 @@
-<app-nested-nav
-    *ngIf="missionDetails"
-    [title]="this.missionDetails.mission.address"
-    [subTitle]="this.missionDetails.mission.finished ? 'Oppdrag ferdig!' : ''"
-    [subIcon]="this.missionDetails.mission.finished ? 'check' : ''"
-    [actions]="this.navActions"
-    (event)="handleNavEvents($event)">
+<app-main-nav *ngIf="missionDetails"
+  [config]="mainNavConfig"
+  (vertEvent)="handleVertEvent($event)"
+  (backEvent)="onBack()">
 
+  <app-mission-details-view *ngIf="missionDetails"
+    [missionDetails]="missionDetails"
+    (imagesUploaded)="uploadImages($event)"
+    (imageDeleted)="deleteImage($event)"
+    (loadNoteDetails)="loadNoteDetails($event)"
+    (deleteNote)="deleteNote($event)"
+    (editNote)="editNote($event)">
+  </app-mission-details-view>
 
-
-  <app-mission-details-view *ngIf="missionDetails" [missionDetails]="missionDetails" (imagesUploaded)="uploadImages($event)" (imageDeleted)="deleteImage($event)" ></app-mission-details-view>
-
-</app-nested-nav>
+</app-main-nav>
 

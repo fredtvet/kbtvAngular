@@ -1,11 +1,13 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import { Router, ActivatedRoute } from "@angular/router";
+import { map, shareReplay, take } from 'rxjs/operators';
+import { Router } from "@angular/router";
 import { IdentityService } from 'src/app/core';
 import { ROLES } from '../../roles.enum';
 import { MatDrawer } from '@angular/material';
+import { MainNavConfig } from './main-nav-config.model';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-main-nav',
@@ -16,13 +18,17 @@ export class MainNavComponent {
 
   @ViewChild('drawer', {static: true}) drawer:MatDrawer;
 
-  @Input() bottomNavEnabled: boolean = true;
-  @Input() searchBarEnabled: boolean = false;
-  @Output() searchString = new EventEmitter();
+  @Input() config: MainNavConfig = new MainNavConfig();
 
-  public ROLES = ROLES;
-  public title: string;
-  public routeSub: Subscription;
+  @Output() vertEvent = new EventEmitter();
+  @Output() searchEvent = new EventEmitter();
+  @Output() backEvent = new EventEmitter();
+
+  ROLES = ROLES;
+  routeSub: Subscription;
+  user: User;
+
+  searchBarHidden = true;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -33,20 +39,26 @@ export class MainNavComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private identityService: IdentityService,
-     private router: Router,
-     private route: ActivatedRoute) {}
+    private router: Router) {}
 
   ngOnInit(){
+    this.identityService.currentUser$
+      .subscribe(user => this.user = user);
     //Remove '/' and make first letter uppercase for title
-    this.title = this.router.url.replace("/","").replace(/^\w/, c => c.toUpperCase())
+    if(!this.config.title){
+      this.config.title = this.router.url.replace("/","").replace(/^\w/, c => c.toUpperCase())
+    }
+
   }
 
   toggleDrawer(){
-    this.isHandset$.subscribe(handset => {
-      if(handset){
-        this.drawer.toggle();
-      }
+    this.isHandset$.pipe(take(1)).subscribe(handset => {
+      if(handset) this.drawer.toggle();
     })
+  }
+
+  toggleSearchBar(){
+    this.searchBarHidden = !this.searchBarHidden;
   }
 
   handleLogout(){
@@ -54,4 +66,8 @@ export class MainNavComponent {
     this.router.navigate(['/login']);
   }
 
+  ngDoCheck(){
+    if(this.config.title)
+      this.config.title = this.config.title.replace(/;/g, "<br />");
+  }
 }

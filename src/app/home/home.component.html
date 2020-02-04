@@ -1,15 +1,38 @@
-<app-main-nav >
+<app-main-nav>
+  <mat-nav-list fxLayout="column" fxLayoutAlign="space-evenly center" fxLayoutGap="8px">
+    <mat-list-item class="bg-2 item" [routerLink]="['/oppdrag']">
+      <mat-icon mat-list-icon>view_list</mat-icon>
+      <span mat-line>Oppdrag</span>
+      <mat-icon>chevron_right</mat-icon>
+    </mat-list-item>
 
-  <mat-nav-list class="p-0">
-    <app-nav-list-item
-        name="Oppdrag" icon="view_list" [routerLink]="['/oppdrag']">
-    </app-nav-list-item>
-    <app-nav-list-item
-      name="Oppdragsgivere" icon="work" [routerLink]="['/oppdragsgivere']">
-    </app-nav-list-item>
-    <app-nav-list-item
-    name="Brukere" icon="people" [routerLink]="['/brukere']">
-  </app-nav-list-item>
+    <mat-list-item class="bg-2 item" [routerLink]="['/oppdragsgivere']">
+      <mat-icon mat-list-icon>work</mat-icon>
+      <span mat-line>Oppdragsgivere</span>
+      <mat-icon>chevron_right</mat-icon>
+    </mat-list-item>
+
+    <mat-list-item class="bg-2 item" [routerLink]="['/brukere']">
+      <mat-icon mat-list-icon>people</mat-icon>
+      <span mat-line>Brukere</span>
+      <mat-icon>chevron_right</mat-icon>
+    </mat-list-item>
+
   </mat-nav-list>
+
+  <div class="basic-container" fxLayout="column">
+
+    <p *ngIf="!newestMissions"><em>Laster inn oppdrag...</em></p>
+
+    <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="content-container-title">Nyeste oppdrag</span>
+    </div>
+
+    <div class="content-child-container" fxFlex="85">
+      <app-mission-list-view [missions]="newestMissions"></app-mission-list-view>
+    </div>
+
+  </div>
+
 
 </app-main-nav>

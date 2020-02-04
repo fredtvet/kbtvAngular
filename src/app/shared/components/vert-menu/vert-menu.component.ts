@@ -9,7 +9,6 @@ import { NavAction } from '..';
 export class VertMenuComponent implements OnInit {
 
   @Input() actions: NavAction[];
-  @Input() color: string = "secondary";
   @Output() event = new EventEmitter();
 
   public allActionRoles: string[] = [];

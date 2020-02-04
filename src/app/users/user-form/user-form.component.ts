@@ -1,53 +1,34 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material';
 import { RolesService } from 'src/app/core';
-import { User, NavAction, ConfirmDeleteDialogComponent, ROLES } from 'src/app/shared';
+import { User, ConfirmDeleteDialogComponent, ROLES, VertMenuParentExtension } from 'src/app/shared';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css']
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent  {
+
+  public ROLES = ROLES;
+  isEditForm = true;
+  userForm: FormGroup;
+  roles: any;
+  title: string;
+  icon: string;
 
   constructor(
     private _rolesService: RolesService,
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<UserFormComponent>,
     public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public user: User) { }
-
-    public ROLES = ROLES;
-
-    userForm: FormGroup;
-
-    public actions: NavAction[] = [];
-
-    public roles: any;
-
-    public title: string = "Rediger bruker";
-
-    public isEditForm: boolean = true;
+    @Inject(MAT_DIALOG_DATA) public user: User) {  }
 
     ngOnInit(){
-      this._rolesService.getRoles()
-          .subscribe(result => {
-            this.roles = result;
-            if(!this.isEditForm)
-              this.userForm.controls['role'].setValue(this.roles.find(x => ROLES.Ansatt), {onlySelf: true});
-          });
-
-      if(this.user == null){
-        this.isEditForm = false;
-        this.title = 'Ny bruker',
-        this.user = new User();
-      }else{
-        this.actions.push(new NavAction("delete", "Slett", "delete_forever", [ROLES.Leder]))
-      }
-
+      this.configure();
       this.initalizeForm();
-
+      this.fetchRoles();
     }
 
     initalizeForm(){
@@ -87,21 +68,12 @@ export class UserFormComponent implements OnInit {
       }
     }
 
-    handleEvent(e){
-      switch(e){
-        case "delete":{
-          this.deleteEmployee();
-          break;
-        }
-        case "back":{
-          this.onNoClick();
-          break;
-        }
-      }
-    }
+    openDeleteDialog(){
+      const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
 
-    onNoClick(): void {
-      this.dialogRef.close();
+      deleteDialogRef.afterClosed().subscribe(res => {
+          if(res) this.dialogRef.close('deleted');
+      });
     }
 
     changeRole(e){
@@ -111,12 +83,29 @@ export class UserFormComponent implements OnInit {
       );
     }
 
-    deleteEmployee(){
-      const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
+    fetchRoles(){
+      this._rolesService.getAll$()
+          .subscribe(result => {
+            this.roles = result;
+            if(!this.isEditForm)
+              this.userForm.controls['role'].setValue(this.roles.find(x => ROLES.Ansatt), {onlySelf: true});
+          });
+    }
 
-      deleteDialogRef.afterClosed().subscribe(res => {
-          if(res) this.dialogRef.close('deleted');
-      });
+    configure(){
+      if(this.user == null){
+        this.isEditForm = false;
+        this.title = "Ny bruker";
+        this.icon = 'person_add';
+        this.user = new User();
+      }else{
+        this.title = "Rediger bruker";
+        this.icon = 'edit';
+      }
+    }
+
+    onNoClick(): void {
+      this.dialogRef.close();
     }
 
     get userName(){

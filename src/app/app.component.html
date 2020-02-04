@@ -1,2 +1,6 @@
-<app-loading [loading]="loadingService.loading$ |  async"></app-loading>
-<router-outlet></router-outlet>
+
+  <app-loading [loading]="loadingService.loading$ |  async"></app-loading>
+
+  <div style="height:100vh">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </div>
