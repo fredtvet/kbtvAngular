@@ -9,7 +9,6 @@ export class PaginationComponent implements OnInit {
 
   @Input() paginationInfo: Pagination;
   @Output() pageChange = new EventEmitter();
-
   constructor() { }
 
   ngOnInit() {

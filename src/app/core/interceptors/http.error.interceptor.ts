@@ -11,6 +11,7 @@ import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { NotificationService } from '../services/notification.service';
 import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
+import { Router } from '@angular/router';
 
 
 @Injectable()
@@ -18,7 +19,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private notificationService: NotificationService,
-    private _location: Location
+    private router: Router
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -29,7 +30,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         switch(err.status){
           case 404: //NotFound
             msg = "Denne ressursen finnes ikke!"
-            this._location.back();
+            this.router.navigate(['/hjem'])
             break;
           case 403: //Forbidden
             msg = "Denne operasjonen er forbudt!"

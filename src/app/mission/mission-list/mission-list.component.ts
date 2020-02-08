@@ -1,18 +1,16 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component  } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { MissionList, ROLES, Mission, MissionType, NavAction, VertMenuParentExtension } from 'src/app/shared';
-import { MissionsService, MissionTypesService, EmployersService, NotificationService } from 'src/app/core';
-import { MissionFormComponent } from '../components/mission-form/mission-form.component';
-import { forkJoin, combineLatest, of, BehaviorSubject, Subscription } from 'rxjs';
+import { MissionList, ROLES, Mission, NavAction, VertMenuParentExtension } from 'src/app/shared';
+import { MissionsService} from 'src/app/core';
+import { BehaviorSubject} from 'rxjs';
 import { MissionListService } from 'src/app/core/services/mission-list.service';
-import { skip } from 'rxjs/operators';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
 
 @Component({
   selector: 'app-mission-list',
   templateUrl: './mission-list.component.html',
-  styleUrls: ['./mission-list.component.css']
+  styleUrls: ['./mission-list.component.scss']
 })
 
 export class MissionListComponent extends VertMenuParentExtension{
@@ -27,10 +25,9 @@ export class MissionListComponent extends VertMenuParentExtension{
   mainNavConfig = new MainNavConfig();
 
   constructor(
-    private _missionsService: MissionsService,
     private _missionListService: MissionListService,
     public dialog: MatDialog,
-    private _router: Router) {
+    private router: Router) {
       super();
       this.mainNavConfig.searchBarEnabled = true;
       this.mainNavConfig.vertActions = this.vertActions
@@ -43,11 +40,10 @@ export class MissionListComponent extends VertMenuParentExtension{
           .subscribe(result => this.missionList = result);
     })
 
-    let navAction =
-      new NavAction("Bare vis aktive oppdrag",
-                    "check_box",
-                    "toggleOnlyActiveMissions", this.toggleOnlyActiveMissions,
-                    [ROLES.Ansatt, ROLES.Leder, ROLES.Mellomleder, ROLES.Oppdragsgiver]);
+    let navAction = new NavAction("Bare vis aktive oppdrag",
+                      "check_box",
+                      "toggleOnlyActiveMissions", this.toggleOnlyActiveMissions,
+                      [ROLES.Ansatt, ROLES.Leder, ROLES.Mellomleder, ROLES.Oppdragsgiver]);
 
     this.vertActions.push(navAction);
   }
@@ -58,34 +54,22 @@ export class MissionListComponent extends VertMenuParentExtension{
     this.pageInfoSubject.next(this.pageInfo)
   }
 
-  openCreateMissionDialog(){
-    const dialogRef = this.dialog.open(MissionFormComponent, {
-      width: '80vw',
-      height: 'auto',
-      panelClass: 'form_dialog',
-      data: null,
-    });
-
-    dialogRef.afterClosed().subscribe(mission => this.createMission(mission));
+  createMission() {
+    this.router.navigate(['oppdrag/ny'])
   }
 
-  createMission(mission: Mission){
-    if(!mission) return null;
-    this._missionsService.addMission(mission)
-      .subscribe(mission => this._router.navigate(['oppdrag', mission.id, 'detaljer']));
-  }
 
-  toggleOnlyActiveMissions(event:string, ctx:any){
+  private toggleOnlyActiveMissions = (event:string) => {
 
-    ctx.pageInfo.onlyActiveMissions = !ctx.pageInfo.onlyActiveMissions;
-    ctx.pageInfo.pageId = 0;
-    ctx.pageInfoSubject.next(ctx.pageInfo);
+    this.pageInfo.onlyActiveMissions = !this.pageInfo.onlyActiveMissions;
+    this.pageInfo.pageId = 0;
+    this.pageInfoSubject.next(this.pageInfo);
 
     //Toggle icon on nav action
     let icon = "check_box_outline_blank";
-    if(ctx.pageInfo.onlyActiveMissions) icon = "check_box";
+    if(this.pageInfo.onlyActiveMissions) icon = "check_box";
 
-    ctx.vertActions.find(x => x.event == event).icon = icon;
+    this.vertActions.find(x => x.event == event).icon = icon;
   }
 
   changePage(pageId){

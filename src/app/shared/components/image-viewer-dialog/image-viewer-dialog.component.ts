@@ -85,16 +85,16 @@ export class ImageViewerDialogComponent extends VertMenuParentExtension {
     this.dialogRef.close();
   }
 
-  deleteImage(e:string, ctx:any){
-    ctx.dialogRef.close(ctx.currentImage.id);
+  private deleteImage = (e:string) => {
+    this.dialogRef.close(this.currentImage.id);
   }
 
-  downloadImage(e:string, ctx:any){
-    window.open(ctx.currentImage.fileURL)
+  private downloadImage = (e:string) => {
+    window.open(this.currentImage.fileURL)
   }
 
-  downloadImages(e:string, ctx:any){
-    ctx.images.forEach(x => {
+  private downloadImages = (e:string) => {
+    this.images.forEach(x => {
       window.open(x.fileURL)
     });
   }

@@ -5,8 +5,7 @@ import { ROLES, MissionReportType } from 'src/app/shared';
 import { MissionReportTypesService } from 'src/app/core';
 @Component({
   selector: 'app-mission-report-form',
-  templateUrl: './mission-report-form.component.html',
-  styleUrls: ['./mission-report-form.component.css']
+  templateUrl: './mission-report-form.component.html'
 })
 export class MissionReportFormComponent implements OnInit {
   public ROLES = ROLES;

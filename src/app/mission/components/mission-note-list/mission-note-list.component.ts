@@ -7,11 +7,10 @@ import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-mission-note-list',
-  templateUrl: './mission-note-list.component.html',
-  styleUrls: ['./mission-note-list.component.css']
+  templateUrl: './mission-note-list.component.html'
 })
 export class MissionNoteListComponent {
-  @ViewChildren('notePanel') notePanels !: QueryList<ElementRef<MatExpansionPanel>>;
+  @ViewChildren('notePanel') notePanels !: QueryList<MatExpansionPanel>;
 
   @Input() notes: MissionNote[] = [];
 

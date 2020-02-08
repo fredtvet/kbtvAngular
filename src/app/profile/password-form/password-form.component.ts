@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 
 @Component({
   selector: 'app-password-form',
-  templateUrl: './password-form.component.html',
-  styleUrls: ['./password-form.component.css']
+  templateUrl: './password-form.component.html'
 })
 export class PasswordFormComponent implements OnInit {
 

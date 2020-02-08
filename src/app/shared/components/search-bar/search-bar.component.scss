@@ -1,3 +1,4 @@
+@import '../../../../variables';
 
 .search_input{
     width:100%;
@@ -5,7 +6,7 @@
 
   .search_toolbar{
     font-size:1rem !important;
-    height:72px!important;
+    height:$main-nav-height * 1px!important;
     position: absolute;
     left:0px;
     z-index:1;

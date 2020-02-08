@@ -1,27 +1,27 @@
-<mat-toolbar class="bottom_toolbar p-0 bg-4" [ngClass]="(isHandset$ | async) ? '' : 'bottom_toolbar_no_side'">
+<mat-toolbar class="bottom_toolbar p-0" [ngClass]="(isHandset$ | async) ? '' : 'bottom_toolbar_no_side'">
 
-        <button [routerLink]="['/hjem']" [routerLinkActive]="['activeIcon']"
+        <button [routerLink]="['/hjem']" [routerLinkActive]="['active-icon']"
         class="bottom_toolbar_button" mat-icon-button aria-label="Neste side">
 
           <mat-icon>home</mat-icon>
 
         </button>
 
-        <button [routerLink]="['/oppdrag']" [routerLinkActive]="['activeIcon']"
+        <button [routerLink]="['/oppdrag']" [routerLinkActive]="['active-icon']"
           class="bottom_toolbar_button" mat-icon-button aria-label="Neste side">
 
           <mat-icon>view_list</mat-icon>
 
         </button>
 
-        <button *ifRole="[ROLES.Ansatt]" [routerLink]="['/profil']" [routerLinkActive]="['activeIcon']"
+        <button *ifRole="[ROLES.Ansatt]" [routerLink]="['/profil']" [routerLinkActive]="['active-icon']"
             class="bottom_toolbar_button" mat-icon-button aria-label="Neste side">
 
             <mat-icon>person</mat-icon>
 
         </button>
 
-        <button *ifRole="[ROLES.Leder, ROLES.Mellomleder]" [routerLink]="['/oppdragsgivere']" [routerLinkActive]="['activeIcon']"
+        <button *ifRole="[ROLES.Leder, ROLES.Mellomleder]" [routerLink]="['/oppdragsgivere']" [routerLinkActive]="['active-icon']"
             class="bottom_toolbar_button" mat-icon-button aria-label="Neste side">
 
             <mat-icon>work</mat-icon>

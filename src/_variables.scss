@@ -15,11 +15,39 @@ $kbtv-client-theme: mat-dark-theme($app-primary, $app-accent, $app-warn);
 
 $background: map-get($kbtv-client-theme, background);
 $foreground: map-get($kbtv-client-theme, foreground);
-$item-margin: 8;
-$item-width: calc(100% - (#{$item-margin} * 2 * 1px));
+
+$bg-black: mat-color($background,"status-bar");
+$bg-highlight:mat-color($background,"background");
+$bg-content: mat-color($background,"app-bar");
+$bg-card: mat-color($background,"card");
+$bg-app-bar: mat-color($background,"unselected-chip");
+
+$bg-dialog: mat-color($foreground);
+
+$content-margin: 8;
+$content-width: calc(100% - (#{$content-margin} * 2 * 1px));
 $bottom-nav-height: 56;
-$main-nav-height: 72;
-$details-nav-height: 104;
+$main-nav-height: 56;
+$alt-nav-height: $main-nav-height + 64;
 $tab-header-height: 48;
-$content-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$main-nav-height} + #{$item-margin * 2}) * 1px));
-$details-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$details-nav-height} + #{$tab-header-height} + #{$item-margin * 2}) * 1px));
+$sidenav-width: 200;
+$content-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$main-nav-height}) * 1px));
+$details-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$alt-nav-height} + #{$tab-header-height} + #{$content-margin * 2}) * 1px));
+$font-size-small:14px;
+
+@mixin full-page-container{
+  padding: $content-margin * 1px!important;
+  height:$content-container-height !important;
+  width:100%;
+}
+
+@mixin content-container{
+  margin: $content-margin * 1px!important;
+}
+
+@mixin small-header{
+  font-weight: 500;
+  font-size:$font-size-small;
+}
+
+

@@ -1,67 +1,79 @@
-<mat-sidenav-container class="sidenav-container bg-1">
+<mat-sidenav-container>
 
-  <mat-sidenav class="sidenav bg-2" fixedInViewport #drawer
+  <mat-sidenav fixedInViewport #drawer
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false">
 
-    <mat-toolbar style="height:72px;" class="bg-4 color-primary" fxLayout="column" fxLayoutAlign="center start">
-      <span>Meny</span>
-      <a style="font-size:.9rem">{{ user.firstName }} {{ user.lastName }}</a>
+    <mat-toolbar fxLayout="column" fxLayoutAlign="end start">
+      <span (click)="toggleDrawer()" [routerLink]="['/profil']">{{ user.firstName }} {{ user.lastName }}</span>
     </mat-toolbar>
 
-    <mat-nav-list class="bg-3" >
+    <mat-nav-list>
       <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/hjem']" [routerLinkActive]="['active']">
         <mat-icon mat-list-icon>home</mat-icon>
         <p mat-line>Hjem</p>
-        <mat-divider [inset]="true"></mat-divider>
       </a>
+      <mat-divider class="mid-divider"></mat-divider>
       <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/oppdrag']" [routerLinkActive]="['active']">
         <mat-icon mat-list-icon>view_list</mat-icon>
         <p mat-line>Oppdrag</p>
-        <mat-divider [inset]="true"></mat-divider>
       </a>
       <ng-container *ifRole="[ROLES.Leder, ROLES.Mellomleder]">
+        <mat-divider class="mid-divider"></mat-divider>
         <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/oppdragsgivere']" [routerLinkActive]="['active']">
           <mat-icon mat-list-icon>work</mat-icon>
           <p mat-line>Oppdragsgivere</p>
-          <mat-divider [inset]="true"></mat-divider>
         </a>
+        <mat-divider class="mid-divider"></mat-divider>
         <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/brukere']" [routerLinkActive]="['active']">
           <mat-icon mat-list-icon>people</mat-icon>
           <p mat-line>Brukere</p>
-          <mat-divider [inset]="true"></mat-divider>
         </a>
       </ng-container>
-      <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/profil']" [routerLinkActive]="['active']">
-        <mat-icon mat-list-icon>person</mat-icon>
-        <p mat-line>Profil</p>
-        <mat-divider [inset]="true"></mat-divider>
-      </a>
-      <a mat-list-item (click)="handleLogout()">
-        <mat-icon mat-list-icon>power_settings_new</mat-icon>
-        <p mat-line>Logg ut</p>
-      </a>
+      <mat-divider></mat-divider>
+      <span style="position: absolute;bottom:0;width:100%;">
+        <mat-divider></mat-divider>
+        <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/profil']" [routerLinkActive]="['active']">
+          <mat-icon mat-list-icon>person</mat-icon>
+          <p mat-line>Profil</p>
+        </a>
+        <mat-divider class="mid-divider"></mat-divider>
+        <a mat-list-item (click)="handleLogout()">
+          <mat-icon mat-list-icon>power_settings_new</mat-icon>
+          <p mat-line>Logg ut</p>
+        </a>
+      </span>
     </mat-nav-list>
 
   </mat-sidenav>
 
-  <mat-sidenav-content class="bg-1" >
+  <mat-sidenav-content>
 
-    <mat-toolbar  [ngClass]="config.altNav ? 'alt_nav' : 'main_nav'" class="p-0 bg-4 color-primary">
+    <mat-toolbar  [ngClass]="config.altNav ? 'alt_nav' : 'main_nav'">
 
-      <mat-toolbar-row class="p-0" style="height:auto!important">
+      <mat-toolbar-row class="p-0">
         <ng-container *ngIf="!config.altNav else altNav">
-          <button
-            class="nav_button"
-            type="button"
-            aria-label="Toggle sidenav"
-            mat-icon-button
-            (click)="toggleDrawer()"
-            *ngIf="isHandset$ | async">
-            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-          </button>
-          <span style="margin-right:auto" [ngClass]="(isHandset$ | async) ? '' : 'ml-3'" [routerLink]="['/hjem']">{{ this.config.title || 'Bj Bygg & Eiendom'}}</span>
+
+          <ng-container *ngIf="config.menuBtnEnabled else backBtn">
+            <button
+              type="button"
+              aria-label="Toggle sidenav"
+              mat-icon-button
+              (click)="toggleDrawer()"
+              *ngIf="isHandset$ | async">
+              <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+          </ng-container>
+
+          <ng-template #backBtn>
+            <button (click)="this.backEvent.emit(true)"
+             mat-icon-button aria-label="Tilbake">
+                <mat-icon class="icon_150">chevron_left</mat-icon>
+            </button>
+          </ng-template>
+
+          <span class="main-nav-title" [ngClass]="(isHandset$ | async) ? '' : 'ml-3'" [routerLink]="['/hjem']">{{ this.config.title || 'Bj Bygg & Eiendom'}}</span>
         </ng-container>
         <ng-template #altNav>
           <span style="margin-right:auto;">
@@ -81,7 +93,7 @@
 
 
         <ng-container *ngIf="config.searchBarEnabled">
-          <button (click)="toggleSearchBar()" mat-icon-button aria-label="Cancel search" >
+          <button (click)="toggleSearchBar()" mat-icon-button aria-label="Cancel search">
             <mat-icon>search</mat-icon>
           </button>
 
@@ -105,4 +117,5 @@
     <app-bottom-nav *ngIf="config.bottomNavEnabled" [isHandset$]="isHandset$"></app-bottom-nav>
 
   </mat-sidenav-content>
+
 </mat-sidenav-container>

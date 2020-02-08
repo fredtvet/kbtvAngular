@@ -1,21 +1,28 @@
-<app-main-nav [config]="mainNavConfig" (vertEvent)="this.handleVertEvent($event)" (searchEvent)="this.searchMissionList($event)">
+<app-main-nav
+[config]="mainNavConfig"
+(vertEvent)="this.handleVertEvent($event)"
+(searchEvent)="this.searchMissionList($event)">
 
-  <div class="content-container" fxLayout="column">
+  <div class="static-page-container" fxLayout="column" fxLayoutGap="8px">
 
-    <p *ngIf="!missionList"><em>Laster inn oppdrag...</em></p>
-
-    <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center" >
-      <span class="content-container-title">Oppdrag</span>
-      <button (click)="openCreateMissionDialog()" color="primary" *ifRole="[ROLES.Leder, ROLES.Mellomleder]"
-        mat-icon-button aria-label="ny">
-        <mat-icon class="icon_125">add</mat-icon>
-      </button>
+    <div  fxFlex="10" class="content-header">
+      <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+        <span>Oppdrag</span>
+        <button (click)="createMission()" color="primary" *ifRole="[ROLES.Leder, ROLES.Mellomleder]"
+          mat-icon-button aria-label="ny">
+          <mat-icon class="icon_125">add</mat-icon>
+        </button>
+      </div>
     </div>
+
     <mat-divider></mat-divider>
 
-    <div class="content-child-container" fxFlex="85">
+    <div class="static-page-content" fxFlex="80">
+      <p *ngIf="!missionList"><em>Laster inn oppdrag...</em></p>
       <app-mission-list-view [missions]="missionList.missions"></app-mission-list-view>
     </div>
+
+    <mat-divider></mat-divider>
 
     <app-pagination  fxFlex="10"
       *ngIf="missionList.paginationInfo"
@@ -24,8 +31,6 @@
     </app-pagination>
 
   </div>
-
-
 
 </app-main-nav>
 

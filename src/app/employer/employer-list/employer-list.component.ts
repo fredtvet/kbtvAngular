@@ -7,8 +7,7 @@ import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-employer-list',
-  templateUrl: './employer-list.component.html',
-  styleUrls: ['./employer-list.component.css']
+  templateUrl: './employer-list.component.html'
 })
 export class EmployerListComponent implements OnInit {
   public ROLES = ROLES;

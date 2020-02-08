@@ -1,12 +1,15 @@
+@import '../../../../variables';
+
 .bottom_toolbar{
     position:fixed;
     bottom:0px;
-    height:56px !important;
+    height:$bottom-nav-height * 1px !important;
+    background:$bg-app-bar;
     z-index:100;
 }
 
 .bottom_toolbar_no_side{
-  width:calc(100vw - 199px)
+  width:calc(100vw - ($sidenav-width * 1px) - 1px)
 }
 
 .bottom_toolbar_button{

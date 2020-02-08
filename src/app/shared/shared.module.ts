@@ -11,7 +11,6 @@ import { MainNavComponent, BottomNavComponent } from './layout';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NotificationComponent } from './components/notification/notification.component';
-import { FormHeaderComponent } from './layout/form-header/form-header.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,6 @@ import { FormHeaderComponent } from './layout/form-header/form-header.component'
     ThumbnailPipe,
     LoadingComponent,
     NotificationComponent,
-    FormHeaderComponent,
     MissionListViewComponent
   ],
   imports: [
@@ -64,7 +62,6 @@ import { FormHeaderComponent } from './layout/form-header/form-header.component'
     BottomNavComponent,
     SearchBarComponent,
     LoadingComponent,
-    FormHeaderComponent,
     MissionListViewComponent
   ]
 })

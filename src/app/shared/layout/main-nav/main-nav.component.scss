@@ -1,0 +1,63 @@
+@import '../../../../variables';
+
+@mixin nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color:$bg-app-bar;
+  padding:0 8px 0 8px !important;
+}
+
+.main-nav-title{
+  margin-right:auto;
+  margin-left:$content-margin * 1px;
+}
+
+mat-sidenav-container {
+  height: 100%;
+  padding-bottom:$bottom-nav-height * 1px;
+}
+
+mat-sidenav-container mat-sidenav {
+  width: $sidenav-width * 1px;
+  background-color:$bg-content;
+}
+
+mat-sidenav-container mat-sidenav mat-toolbar {
+  height:$main-nav-height * 1px!important;;
+  background-color:$bg-app-bar;
+  @include small-header;
+  color:$primary;
+}
+mat-sidenav-container mat-sidenav-content {
+  background:$bg-content!important;
+}
+mat-sidenav-container mat-sidenav-content mat-toolbar {
+  color:$primary;
+  padding:0;
+}
+
+.alt_nav{
+  @include nav;
+  height:$alt-nav-height * 1px!important;
+}
+
+.main_nav{
+  @include nav;
+  height:$main-nav-height * 1px!important;
+}
+
+.main_content{
+  position:sticky;
+  top:0;
+  z-index:90;
+  background:$bg-content;
+  overflow:auto;
+}
+
+.alt_nav_row{
+  height:auto!important;
+  padding-left:$content-margin * 4px;
+}
+
+

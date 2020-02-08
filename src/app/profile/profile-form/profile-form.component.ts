@@ -4,8 +4,7 @@ import { User } from 'src/app/shared';
 
 @Component({
   selector: 'app-profile-form',
-  templateUrl: './profile-form.component.html',
-  styleUrls: ['./profile-form.component.css']
+  templateUrl: './profile-form.component.html'
 })
 export class ProfileFormComponent implements OnInit {
 

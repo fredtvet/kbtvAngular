@@ -9,18 +9,18 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
         top:'0px'
       })),
       state('hide', style({
-        top:'-72px'
+        top:'-150px'
       })),
       transition('show => hide', [
-        animate('.1s ease-out')
+        animate('.085s ease-out')
       ]),
       transition('hide => show', [
-        animate('.1s ease-in',)
+        animate('.085s ease-in',)
       ]),
     ])
   ],
   templateUrl: './search-bar.component.html',
-  styleUrls: ['./search-bar.component.css']
+  styleUrls: ['./search-bar.component.scss']
 })
 
 export class SearchBarComponent implements OnInit {

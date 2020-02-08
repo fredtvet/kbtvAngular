@@ -1,27 +1,24 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
-import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MissionType, Employer, Mission, ROLES } from 'src/app/shared';
-import { MissionTypesService, EmployersService } from 'src/app/core';
-import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
 
 @Component({
-  selector: 'app-mission-form',
-  templateUrl: './mission-form.component.html',
-  styleUrls: ['./mission-form.component.css']
+  selector: 'app-mission-form-view',
+  templateUrl: './mission-form-view.component.html'
 })
 
-export class MissionFormComponent implements OnInit {
-
+export class MissionFormViewComponent implements OnInit {
   ROLES = ROLES;
+
+  @Input() mission: Mission = null;
+  @Input() missionTypes: MissionType[];
+  @Input() employers: Employer[];
+  @Output() submit = new EventEmitter();
 
   title: string;
   icon: string;
 
   missionForm: FormGroup;
-
-  types: MissionType[] = [];
-  employers: Employer[] = [];
 
   googleOptions = {
     types: ['geocode'],
@@ -32,18 +29,15 @@ export class MissionFormComponent implements OnInit {
   isCreateForm = false;
 
   constructor(
-    private _formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<MissionFormComponent>,
-    private _missionTypesService: MissionTypesService,
-    private _employersService: EmployersService,
-    @Inject(MAT_DIALOG_DATA) public mission: Mission)  { }
+    private _formBuilder: FormBuilder)  { }
 
   ngOnInit(){
     this.configure();
     this.initalizeForm();
+  }
 
-    this._missionTypesService.getAll$().subscribe(data => this.types =  data);
-    this._employersService.getAll$().subscribe(data => this.employers = data);
+  ngOnChanges(){
+    if(this.mission) this.initalizeForm();
   }
 
   initalizeForm(){
@@ -73,7 +67,7 @@ export class MissionFormComponent implements OnInit {
   }
 
   onSubmit(){
-    let existingType = this.types.find(x => x.name === this.missionTypeName.value);
+    let existingType = this.missionTypes.find(x => x.name === this.missionTypeName.value);
     let existingEmployee = this.employers.find(x => x.name === this.employerName.value);
 
     if(existingType)
@@ -84,8 +78,7 @@ export class MissionFormComponent implements OnInit {
 
     const {value, valid} = this.missionForm;
 
-    if(valid)
-      this.dialogRef.close(value);
+    if(valid) this.submit.emit(value);
   }
 
   handleAddressChange(googleAddress){
@@ -105,9 +98,7 @@ export class MissionFormComponent implements OnInit {
     }
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+
 
   get address(){
     return this.missionForm.get('address')

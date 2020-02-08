@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { NavAction, MissionDetails, ConfirmDeleteDialogComponent, ROLES, MissionNote, Mission, VertMenuParentExtension } from 'src/app/shared';
+import { NavAction, MissionDetails, ConfirmDeleteDialogComponent, ROLES, MissionNote, VertMenuParentExtension } from 'src/app/shared';
 import { MissionsService, NotificationService } from 'src/app/core';
-import { MissionFormComponent } from '../components/mission-form/mission-form.component';
 import { MissionNoteFormComponent } from '../components/mission-note-form/mission-note-form.component';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
 import { take } from 'rxjs/operators';
@@ -25,13 +24,6 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
 
   missionId: number;
 
-  navActions: NavAction[] = [
-    new NavAction("createReport", "Legg til rapport", "note_add", [ROLES.Leder]),
-    new NavAction("createNote", "Legg til notat", "add_comment"),
-    new NavAction("edit", "Rediger", "edit", [ROLES.Leder]),
-    new NavAction("delete", "Slett", "delete_forever", [ROLES.Leder])
-  ];;
-
   constructor(
     private _missionsService: MissionsService,
     private notificationService: NotificationService,
@@ -47,12 +39,6 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
         this.missionDetails = result;
         this.configure();
       });
-  }
-
-  editMission(mission: Mission){
-    if(!mission) return null;
-    this._missionsService.updateMission(mission)
-      .subscribe(success => this.notificationService.setNotification('Vellykket oppdatering!'))
   }
 
   deleteMission(){
@@ -101,53 +87,46 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
       .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport lastet opp'));
   }
 
-  openEditDialog(e: string, ctx:any){
-    const dialogRef = ctx.dialog.open(MissionFormComponent, {
-      width: '80vw',
-      height: 'auto',
-      panelClass: 'form_dialog',
-      data: ctx.missionDetails.mission,
-    });
-
-    dialogRef.afterClosed().subscribe(res => ctx.editMission(res));
-  }
-
-  openCreateNoteDialog(e: string, ctx:any){
-    const dialogRef = ctx.dialog.open(MissionNoteFormComponent, {
-      width: '80vw',
-      height: 'auto',
-      panelClass: 'form_dialog',
-      data: { missionId: ctx.missionId }
-    });
-
-    dialogRef.afterClosed().subscribe(note => ctx.createNote(note));
-  }
-
-  openCreateReportDialog(e: string, ctx:any){
-    const deleteDialogRef = ctx.dialog.open(MissionReportFormComponent);
-    deleteDialogRef.afterClosed().subscribe(data => ctx.createReport(data));
-  }
-
-  openMissionDeleteDialog(e: string, ctx:any){
-    const deleteDialogRef = ctx.dialog.open(ConfirmDeleteDialogComponent);
-    deleteDialogRef.afterClosed().subscribe(confirmed => {if(confirmed)ctx.deleteMission()});
-  }
-
   loadNoteDetails(noteId: number){
     let note = this.missionDetails.missionNotes.find(x => x.id == noteId);
-    console.log(note);
     if(note && (note.content == null || note.content.length == 0)){ //If note exist with content
       this._missionsService.loadMissionNoteDetails(this.missionId, noteId);
     }
+  }
+
+  private editMission = (e: string) => {
+    this.router.navigate(['oppdrag', this.missionId, 'rediger'])
+  }
+
+  private openCreateNoteDialog = (e: string) => {
+    const dialogRef = this.dialog.open(MissionNoteFormComponent, {
+      width: '80vw',
+      height: 'auto',
+      panelClass: 'form_dialog',
+      data: { missionId: this.missionId }
+    });
+
+    dialogRef.afterClosed().subscribe(note => this.createNote(note));
+  }
+
+  private  openCreateReportDialog = (e: string) => {
+    const deleteDialogRef = this.dialog.open(MissionReportFormComponent);
+    deleteDialogRef.afterClosed().subscribe(data => this.createReport(data));
+  }
+
+  private openMissionDeleteDialog = (e: string) => {
+    const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
+    deleteDialogRef.afterClosed().subscribe(confirmed => {if(confirmed)this.deleteMission()});
   }
 
   configure(){
     this.vertActions = [
       new NavAction("Legg til rapport", "note_add","createReport", this.openCreateReportDialog, [ROLES.Leder]),
       new NavAction("Legg til notat", "add_comment","createNote", this.openCreateNoteDialog),
-      new NavAction("Rediger", "edit","edit", this.openEditDialog, [ROLES.Leder]),
+      new NavAction("Rediger", "edit","edit", this.editMission, [ROLES.Leder]),
       new NavAction("Slett", "delete_forever", "delete", this.openMissionDeleteDialog, [ROLES.Leder])
     ];
+
     this.mainNavConfig.vertActions = this.vertActions;
     this.mainNavConfig.altNav = true;
     this.mainNavConfig.title = this.missionDetails.mission.address.replace(", Norge","").replace(/,/g, ";");

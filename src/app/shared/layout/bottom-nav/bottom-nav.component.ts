@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-bottom-nav',
   templateUrl: './bottom-nav.component.html',
-  styleUrls: ['./bottom-nav.component.css']
+  styleUrls: ['./bottom-nav.component.scss']
 })
 export class BottomNavComponent implements OnInit {
   ROLES = ROLES;

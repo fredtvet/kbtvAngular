@@ -1,38 +1,45 @@
 <app-main-nav>
-  <mat-nav-list fxLayout="column" fxLayoutAlign="space-evenly center" fxLayoutGap="8px">
-    <mat-list-item class="bg-2 item" [routerLink]="['/oppdrag']">
-      <mat-icon mat-list-icon>view_list</mat-icon>
-      <span mat-line>Oppdrag</span>
-      <mat-icon>chevron_right</mat-icon>
-    </mat-list-item>
 
-    <mat-list-item class="bg-2 item" [routerLink]="['/oppdragsgivere']">
-      <mat-icon mat-list-icon>work</mat-icon>
-      <span mat-line>Oppdragsgivere</span>
-      <mat-icon>chevron_right</mat-icon>
-    </mat-list-item>
+  <div class="content-container" fxLayout="column">
+    <mat-nav-list>
+        <mat-list-item [routerLink]="['/oppdrag']">
+          <mat-icon mat-list-icon>view_list</mat-icon>
+          <span mat-line>Oppdrag</span>
+          <mat-icon>chevron_right</mat-icon>
+        </mat-list-item>
+    </mat-nav-list>
+  </div>
 
-    <mat-list-item class="bg-2 item" [routerLink]="['/brukere']">
-      <mat-icon mat-list-icon>people</mat-icon>
-      <span mat-line>Brukere</span>
-      <mat-icon>chevron_right</mat-icon>
-    </mat-list-item>
+  <div class="content-container" fxLayout="column">
 
-  </mat-nav-list>
+    <mat-nav-list>
+      <mat-list-item [routerLink]="['/oppdragsgivere']">
+        <mat-icon mat-list-icon>work</mat-icon>
+        <span mat-line>Oppdragsgivere</span>
+        <mat-icon>chevron_right</mat-icon>
+        <mat-divider class="mid-divider"></mat-divider>
+      </mat-list-item>
 
-  <div class="basic-container" fxLayout="column">
+      <mat-list-item [routerLink]="['/brukere']">
+        <mat-icon mat-list-icon>people</mat-icon>
+        <span mat-line>Brukere</span>
+        <mat-icon>chevron_right</mat-icon>
+      </mat-list-item>
+    </mat-nav-list>
 
-    <p *ngIf="!newestMissions"><em>Laster inn oppdrag...</em></p>
+  </div>
+
+  <div class="content-container mission-card" fxLayout="column">
 
     <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
-      <span class="content-container-title">Nyeste oppdrag</span>
+      <span class="content-header">Mest besøkte oppdrag denne måneden</span>
     </div>
 
-    <div class="content-child-container" fxFlex="85">
+    <div class="static-page-content" fxFlex="80">
+      <p *ngIf="!newestMissions"><em>Laster inn oppdrag...</em></p>
       <app-mission-list-view [missions]="newestMissions"></app-mission-list-view>
     </div>
 
   </div>
-
 
 </app-main-nav>

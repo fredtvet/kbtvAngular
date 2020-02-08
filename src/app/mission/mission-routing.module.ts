@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MainNavComponent, BottomNavComponent, SearchBarComponent } from '../shared';
+import { ROLES } from '../shared';
 import { AuthGuard } from '../core';
 import { MissionListComponent } from './mission-list/mission-list.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
-import { MissionNoteDetailsComponent } from './mission-note-details/mission-note-details.component';
+import { MissionFormComponent } from './mission-form/mission-form.component';
 
 
 const routes: Routes = [
@@ -15,17 +15,25 @@ const routes: Routes = [
   canActivate: [AuthGuard],
 },
 {
+  path: 'ny',
+  component: MissionFormComponent,
+  pathMatch: 'full',
+  canActivate: [AuthGuard],
+  data: {allowedRoles: [ROLES.Leder, ROLES.Mellomleder]}
+},
+{
   path: ':id/detaljer',
   component: MissionDetailsComponent,
   pathMatch: 'full',
   canActivate: [AuthGuard],
 },
 {
-  path: ':missionId/notater/:id',
-  component: MissionNoteDetailsComponent,
+  path: ':id/rediger',
+  component: MissionFormComponent,
   pathMatch: 'full',
   canActivate: [AuthGuard],
-},
+  data: {allowedRoles: [ROLES.Leder]}
+}
 ];
 
 @NgModule({
