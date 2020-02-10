@@ -3,7 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay, take } from 'rxjs/operators';
 import { Router } from "@angular/router";
-import { IdentityService } from 'src/app/core';
+import { IdentityService, LoadingService } from 'src/app/core';
 import { ROLES } from '../../roles.enum';
 import { MatDrawer } from '@angular/material';
 import { MainNavConfig } from './main-nav-config.model';
@@ -39,6 +39,7 @@ export class MainNavComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private identityService: IdentityService,
+    public loadingService: LoadingService,
     private router: Router) {}
 
   ngOnInit(){

@@ -32,7 +32,11 @@ export class MissionFormViewComponent implements OnInit {
     private _formBuilder: FormBuilder)  { }
 
   ngOnInit(){
-    this.configure();
+    if(this.mission == null){
+      this.isCreateForm = true;
+      this.mission = new Mission();
+    }
+
     this.initalizeForm();
   }
 
@@ -85,19 +89,6 @@ export class MissionFormViewComponent implements OnInit {
     this.missionForm.controls['address']
       .setValue(googleAddress.formatted_address);
   }
-
-  configure(){
-    if(this.mission == null){
-      this.isCreateForm = true;
-      this.title = 'Nytt oppdrag',
-      this.icon = 'add';
-      this.mission = new Mission();
-    }else{
-      this.title = 'Rediger oppdrag',
-      this.icon = 'edit';
-    }
-  }
-
 
 
   get address(){

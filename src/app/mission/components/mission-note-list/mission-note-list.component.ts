@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewChil
 import { MissionNote, ConfirmDeleteDialogComponent } from 'src/app/shared';
 import { MatExpansionPanel } from '@angular/material/expansion/typings/expansion-panel';
 import { ROLES } from 'src/app/shared';
-import { MissionNoteFormComponent } from '../mission-note-form/mission-note-form.component';
+import { MissionNoteFormComponent } from '../../mission-note-form/mission-note-form.component';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -40,24 +40,12 @@ export class MissionNoteListComponent {
     });
   }
 
-  openEditDialog(noteId: number){
-    let note = this.notes.find(x => x.id == noteId);
-    const dialogRef = this.dialog.open(MissionNoteFormComponent, {
-      width: '80vw',
-      height: 'auto',
-      panelClass: 'form_dialog',
-      data: { note: note, missionId: this.missionId},
-    });
-
-    dialogRef.afterClosed().subscribe(note => this.editNote.emit(note));
-  }
-
   ngOnChanges(){
     this.sortNotes();
     if(this.notePanels && this.openPanelIndex >= 0){
       setTimeout(()=>{ //Using timeout as workaround, doesnt open when fired instantly
         this.notePanels.toArray()[this.openPanelIndex].open();
-      }, 25);
+      }, 100);
     }
 
   }
@@ -74,5 +62,9 @@ export class MissionNoteListComponent {
       // false values first
       // return (x === y)? 0 : x? 1 : -1;
      });
+  }
+
+  panelToggle(index: number){
+    this.notePanels.toArray()[index].toggle();
   }
 }

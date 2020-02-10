@@ -1,51 +1,14 @@
-<form *ngIf="userForm" [formGroup]="userForm" class="app-dialog" fxLayout="column">
-  <span class="form-title text-center mb-2">{{ title }}</span>
-  <mat-form-field>
-      <input matInput placeholder="Brukernavn"  formControlName="userName" required>
-      <mat-error *ngIf="this.userName.invalid">
-        Brukernavn er ett obligatorisk felt på minst 4 tegn.
-      </mat-error>
-  </mat-form-field>
+<app-main-nav
+  [config]="mainNavConfig"
+  (backEvent)="onBack()"
+  (vertEvent)="handleVertEvent($event)">
 
-  <mat-form-field [ngClass]="{'hideInput': isEditForm}">
-    <input matInput placeholder="Passord"  formControlName="password" required>
-    <mat-error *ngIf="this.password.invalid">
-      Passord er ett obligatorisk felt på minst 7 tegn.
-    </mat-error>
-  </mat-form-field>
-
-  <mat-form-field>
-      <input matInput placeholder="Fornavn"  formControlName="firstName" required>
-      <mat-error *ngIf="this.firstName.invalid">
-          Fornavn er ett obligatorisk felt på maks 100 tegn.
-      </mat-error>
-  </mat-form-field>
-
-  <mat-form-field>
-      <input matInput placeholder="Etternavn"  formControlName="lastName" required>
-      <mat-error *ngIf="this.lastName.invalid">
-          Etternavn er ett obligatorisk felt på maks 100 tegn.
-      </mat-error>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-select placeholder="Rolle" (change)="changeRole($event)" formControlName="role" required>
-      <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field>
-      <input matInput placeholder="Kontaktnummer"  formControlName="phoneNumber">
-      <mat-error *ngIf="this.phoneNumber.invalid">
-          Kontaktnummer må være mellom 4 og 12 siffer.
-      </mat-error>
-  </mat-form-field>
-
-  <button (click)="onSubmit()" [disabled]="this.userForm.invalid" mat-raised-button color="primary">Lagre</button>
-
-  <button (click)="openDeleteDialog()" *ngIf="isEditForm" mat-raised-button color="warn"  class="mt-3"><mat-icon>delete_forever</mat-icon></button>
-</form>
+  <app-user-form-view
+  [user]="user"
+  [roles]="roles"
+  (submit)="onSubmit($event)">
+  </app-user-form-view>
 
 
-
+</app-main-nav>
 

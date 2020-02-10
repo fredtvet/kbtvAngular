@@ -1,0 +1,25 @@
+<form *ngIf="employerForm" class="form-container" [formGroup]="employerForm"  fxLayout="column">
+    <mat-form-field>
+        <input matInput placeholder="Navn"  formControlName="name" required>
+        <mat-error *ngIf="this.name.invalid">
+          Navn er ett obligatorisk felt på maks 200 tegn.
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Kontaktnummer"  formControlName="phoneNumber">
+      <mat-error *ngIf="this.phoneNumber.invalid">
+          Kontaktnummer må være mellom 4 og 12 siffer.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input ngx-google-places-autocomplete [options]='googleOptions' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
+      matInput placeholder="Addresse" formControlName="address">
+      <mat-error *ngIf="this.address.invalid">
+        Addresse kan maks ha 100 tegn.
+      </mat-error>
+    </mat-form-field>
+
+    <button (click)="onSubmit()" [disabled]="this.employerForm.invalid" mat-raised-button color="primary">Lagre</button>
+</form>

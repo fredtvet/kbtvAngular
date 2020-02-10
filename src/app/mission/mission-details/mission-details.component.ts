@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NavAction, MissionDetails, ConfirmDeleteDialogComponent, ROLES, MissionNote, VertMenuParentExtension } from 'src/app/shared';
 import { MissionsService, NotificationService } from 'src/app/core';
-import { MissionNoteFormComponent } from '../components/mission-note-form/mission-note-form.component';
+import { MissionNoteFormComponent } from '../mission-note-form/mission-note-form.component';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
 import { take } from 'rxjs/operators';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
@@ -41,17 +41,6 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
       });
   }
 
-  deleteMission(){
-    this._missionsService.deleteMission(this.missionId).subscribe(
-      res => {
-        if(res){
-          this.onBack();
-          this.notificationService.setNotification('Vellykket! Oppdrag slettet.')
-        }
-      }
-    );
-  }
-
   uploadImages(files: FileList)
   {
     this._missionsService.addMissionImages(this.missionId, files).pipe(take(1))
@@ -63,17 +52,9 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
       .subscribe(res =>  this.notificationService.setNotification('Vellykket! Bilde slettet'));
   }
 
-  createNote(note: MissionNote){
-    if(note){
-      this._missionsService.addMissionNote(this.missionId, note)
-      .subscribe(note => this.router.navigate(['oppdrag', this.missionId, 'notater', note.id]));
-    }
-  }
-
   editNote(note: MissionNote){
-    if(!note) return null;
-    this._missionsService.updateMissionNote(this.missionId, note)
-      .subscribe(data =>this.notificationService.setNotification('Vellykket oppdatering!'));
+    console.log(note);
+    this.router.navigate(['oppdrag', this.missionId, 'notater', note.id, 'rediger'])
   }
 
   deleteNote(noteId: number){
@@ -94,19 +75,23 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
     }
   }
 
+  private deleteMission(){
+    this._missionsService.deleteMission(this.missionId).subscribe(
+      res => {
+        if(res){
+          this.onBack();
+          this.notificationService.setNotification('Vellykket! Oppdrag slettet.')
+        }
+      }
+    );
+  }
+
   private editMission = (e: string) => {
     this.router.navigate(['oppdrag', this.missionId, 'rediger'])
   }
 
-  private openCreateNoteDialog = (e: string) => {
-    const dialogRef = this.dialog.open(MissionNoteFormComponent, {
-      width: '80vw',
-      height: 'auto',
-      panelClass: 'form_dialog',
-      data: { missionId: this.missionId }
-    });
-
-    dialogRef.afterClosed().subscribe(note => this.createNote(note));
+  private createNote = (e: string) => {
+    this.router.navigate(['oppdrag', this.missionId, 'notater','ny'])
   }
 
   private  openCreateReportDialog = (e: string) => {
@@ -122,7 +107,7 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
   configure(){
     this.vertActions = [
       new NavAction("Legg til rapport", "note_add","createReport", this.openCreateReportDialog, [ROLES.Leder]),
-      new NavAction("Legg til notat", "add_comment","createNote", this.openCreateNoteDialog),
+      new NavAction("Legg til notat", "add_comment","createNote", this.createNote),
       new NavAction("Rediger", "edit","edit", this.editMission, [ROLES.Leder]),
       new NavAction("Slett", "delete_forever", "delete", this.openMissionDeleteDialog, [ROLES.Leder])
     ];

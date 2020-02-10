@@ -1,14 +1,17 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material';
-import { Employer, ConfirmDeleteDialogComponent, ROLES } from 'src/app/shared';
+import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { MatDialog} from '@angular/material';
+import { Employer, ConfirmDeleteDialogComponent, ROLES, VertMenuParentExtension, NavAction } from 'src/app/shared';
+import { EmployersService, NotificationService } from 'src/app/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
 
 @Component({
   selector: 'app-employer-form',
   templateUrl: './employer-form.component.html'
 })
 
-export class EmployerFormComponent {
+export class EmployerFormComponent extends VertMenuParentExtension {
   ROLES = ROLES;
 
   googleOptions = {
@@ -16,86 +19,83 @@ export class EmployerFormComponent {
     componentRestrictions: { country: "no" }
   }
 
-  isStreetAddress = false;
+  mainNavConfig: MainNavConfig = new MainNavConfig;
 
-  employerForm: FormGroup;
+  employer: Employer;
 
-  isEditForm: boolean = true;
-  title: string;
-  icon: string;
+  isCreateForm: boolean = false;
+
 
   constructor(
-    private _formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<EmployerFormComponent>,
-    public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public employer: Employer){ }
+    private employersService: EmployersService,
+    private notificationService: NotificationService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog
+  ){ super(); }
 
     ngOnInit(){
-      this.configure();
-      this.initalizeForm();
+      let id = this.route.snapshot.paramMap.get('id');
+
+      if(!id) this.isCreateForm = true;
+      else this.employersService.get$(+id)
+              .subscribe(result => this.employer = result);
+
+      this.configureMainNav();
     }
 
-    initalizeForm(){
-      this.employerForm = this._formBuilder.group({
-        name: [this.employer.name, [
-          Validators.required,
-          Validators.maxLength(200)
-        ]],
-        phoneNumber: [this.employer.phoneNumber, [
-          Validators.minLength(4),
-          Validators.maxLength(12)
-        ]],
-        address: [this.employer.address, [
-          Validators.maxLength(100)
-        ]]
-      });
+    onSubmit(result: Employer){
+      if(!result) this.onBack();
+      else if(!this.isCreateForm) this.updateEmployer(result);
+      else this.createEmployer(result);
     }
 
-    onSubmit(){
-      const {value, valid} = this.employerForm;
-      if(valid){
-          this.dialogRef.close(value);
-      }
-    }
-
-    openDeleteDialog(){
+    private openDeleteDialog = (e: string) => {
+      console.log(e);
       const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
       deleteDialogRef.afterClosed().subscribe(res => {
-          if(res) this.dialogRef.close('deleted');
+          if(res) this.deleteEmployer();
       });
     }
 
-    handleAddressChange(googleAddress){
-      this.employerForm.controls['address']
-        .setValue(googleAddress.formatted_address);
+    private deleteEmployer(){
+      this.employersService.delete$(this.employer.id)
+        .subscribe(data => {
+          this.notificationService.setNotification('Vellykket! Oppdragsgiver slettet.');
+          this.onBack();
+        });
     }
 
-    configure(){
-      if(this.employer == null){
-        this.title = "Ny oppdragsgiver";
-        this.employer = new Employer();
-        this.isEditForm = false;
-      }else{
-        this.title = "Rediger oppdragsgiver";
+    updateEmployer(employer: Employer){
+      console.log(employer);
+      this.employersService.update$(employer)
+        .subscribe(data => {
+          this.notificationService.setNotification('Vellykket oppdatering!');
+          this.onBack();
+        });
+    }
+
+    createEmployer(employer: any){
+      this.employersService.add$(employer)
+        .subscribe(data => {
+          this.notificationService.setNotification('Vellykket! Ny oppdragsgiver registrert.');
+          this.onBack();
+        });
+    }
+
+    configureMainNav(){
+      if(!this.isCreateForm){
+        this.vertActions = [new NavAction("Slett", "delete_forever", "delete", this.openDeleteDialog, [ROLES.Leder])];
+        this.mainNavConfig.vertActions = this.vertActions;
       }
+      this.mainNavConfig.title = this.isCreateForm ? 'Ny' : 'Rediger';
+      this.mainNavConfig.title+= ' oppdragsgiver';
+      this.mainNavConfig.menuBtnEnabled = false;
     }
 
-    onNoClick(): void {
-      this.dialogRef.close();
+    onBack(): void {
+      this.router.navigate(['oppdragsgivere'])
     }
-
-    get name(){
-      return this.employerForm.get('name')
-    }
-
-    get phoneNumber(){
-      return this.employerForm.get('phoneNumber')
-    }
-
-    get address(){
-      return this.employerForm.get('address')
-    }
-
 
 
 }

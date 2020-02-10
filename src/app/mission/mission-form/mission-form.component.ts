@@ -6,8 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-mission-form',
-  templateUrl: './mission-form.component.html',
-  styleUrls: ['./mission-form.component.scss']
+  templateUrl: './mission-form.component.html'
 })
 export class MissionFormComponent implements OnInit {
 
@@ -61,15 +60,15 @@ export class MissionFormComponent implements OnInit {
       })
   }
 
-  goToMission(id: number){
-    this.router.navigate(['oppdrag', id, 'detaljer'])
-  }
-
   configureMainNav(){
     if(this.isCreateForm) this.mainNavConfig.title = "Nytt oppdrag";
     else this.mainNavConfig.title = "Rediger oppdrag";
     this.mainNavConfig.altNav = false;
     this.mainNavConfig.menuBtnEnabled = false;
+  }
+
+  goToMission(id: number){
+    this.router.navigate(['oppdrag', id, 'detaljer'])
   }
 
   onBack(){

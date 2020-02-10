@@ -28,6 +28,10 @@ export class EmployersService {
     else return this.employersSubject.employers$;
   }
 
+  get$(id: number):Observable<Employer>{
+    return this.employersSubject.get$(id);
+  }
+
   add$(employer: Employer): Observable<Employer>
   {
     return this.apiService

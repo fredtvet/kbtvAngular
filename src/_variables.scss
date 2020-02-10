@@ -20,9 +20,9 @@ $bg-black: mat-color($background,"status-bar");
 $bg-highlight:mat-color($background,"background");
 $bg-content: mat-color($background,"app-bar");
 $bg-card: mat-color($background,"card");
-$bg-app-bar: mat-color($background,"unselected-chip");
+$bg-app-bar: mat-color($background,"card");
 
-$bg-dialog: mat-color($foreground);
+$bg-dialog: mat-color($background,"unselected-chip");
 
 $content-margin: 8;
 $content-width: calc(100% - (#{$content-margin} * 2 * 1px));

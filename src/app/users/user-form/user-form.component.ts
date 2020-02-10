@@ -1,137 +1,101 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material';
-import { RolesService } from 'src/app/core';
-import { User, ConfirmDeleteDialogComponent, ROLES, VertMenuParentExtension } from 'src/app/shared';
+import { RolesService, UsersService, NotificationService } from 'src/app/core';
+import { User, ConfirmDeleteDialogComponent, ROLES, VertMenuParentExtension, NavAction } from 'src/app/shared';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.css']
 })
-export class UserFormComponent  {
+
+export class UserFormComponent extends VertMenuParentExtension  {
 
   public ROLES = ROLES;
-  isEditForm = true;
-  userForm: FormGroup;
-  roles: any;
-  title: string;
-  icon: string;
+
+  isCreateForm = false;
+  mainNavConfig = new MainNavConfig();
+
+  user: User;
+  roles: string[];
+
 
   constructor(
+    private notificationService: NotificationService,
     private _rolesService: RolesService,
-    private _formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<UserFormComponent>,
-    public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public user: User) {  }
+    private _usersService: UsersService,
+    private _router: Router,
+    private _route: ActivatedRoute,
+    private _dialog: MatDialog) {  super() }
 
     ngOnInit(){
-      this.configure();
-      this.initalizeForm();
+      let userName = this._route.snapshot.paramMap.get('userName');
+
+      if(!userName) this.isCreateForm = true;
+      else this._usersService.get$(userName)
+              .subscribe(result => this.user = result);
+
+      this.configureMainNav();
       this.fetchRoles();
     }
 
-    initalizeForm(){
-      this.userForm = this._formBuilder.group({
-        userName: [{value: this.user.userName, disabled: this.isEditForm},[
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(100)
-        ]],
-        password: [{value: null, disabled: this.isEditForm},[
-          Validators.required,
-          Validators.minLength(7),
-          Validators.maxLength(100)
-        ]],
-        firstName: [this.user.firstName, [
-          Validators.required,
-          Validators.maxLength(100)
-        ]],
-        lastName: [this.user.lastName, [
-          Validators.required,
-          Validators.maxLength(100)
-        ]],
-        phoneNumber: [this.user.phoneNumber, [
-          Validators.minLength(4),
-          Validators.maxLength(12)
-        ]],
-        role: [this.user.role, [
-          Validators.required
-        ]]
-      });
+    onSubmit(result: User){
+      if(!result) this.onBack();
+      else if(!this.isCreateForm) this.updateUser(result);
+      else this.createUser(result);
     }
 
-    onSubmit(){
-      const {value, valid} = this.userForm;
-      if(valid){
-          this.dialogRef.close(value);
-      }
+    createUser(user: any){
+      this._usersService.add$(user)
+       .subscribe(success => {
+         this.notificationService.setNotification('Vellykket! Ny bruker registrert.');
+         this.onBack();
+        });
+    }
+
+    updateUser(user: User){
+      this._usersService.update$(user)
+        .subscribe(success => {
+          this.notificationService.setNotification('Vellykket oppdatering!');
+          this.onBack();
+        });
+    }
+
+    deleteUser(username: string){
+      this._usersService.delete$(username)
+        .subscribe(res => {
+          this.notificationService.setNotification('Vellykket! Bruker slettet.');
+          this.onBack();
+        });
     }
 
     openDeleteDialog(){
-      const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
+      const deleteDialogRef = this._dialog.open(ConfirmDeleteDialogComponent);
 
       deleteDialogRef.afterClosed().subscribe(res => {
-          if(res) this.dialogRef.close('deleted');
+          if(res) this.deleteUser(res);
       });
-    }
-
-    changeRole(e){
-      this.role.setValue(
-        e.target.value,
-        {onlySelf: true}
-      );
     }
 
     fetchRoles(){
       this._rolesService.getAll$()
-          .subscribe(result => {
-            this.roles = result;
-            if(!this.isEditForm)
-              this.userForm.controls['role'].setValue(this.roles.find(x => ROLES.Ansatt), {onlySelf: true});
-          });
+          .subscribe(result =>  this.roles = result);
     }
 
-    configure(){
-      if(this.user == null){
-        this.isEditForm = false;
-        this.title = "Ny bruker";
-        this.icon = 'person_add';
-        this.user = new User();
-      }else{
-        this.title = "Rediger bruker";
-        this.icon = 'edit';
+    configureMainNav(){
+      if(!this.isCreateForm){
+        this.vertActions = [new NavAction("Slett", "delete_forever", "delete", this.openDeleteDialog, [ROLES.Leder])];
+        this.mainNavConfig.vertActions = this.vertActions;
       }
+      this.mainNavConfig.title = this.isCreateForm ? 'Ny' : 'Rediger';
+      this.mainNavConfig.title+= ' bruker';
+      this.mainNavConfig.menuBtnEnabled = false;
     }
 
-    onNoClick(): void {
-      this.dialogRef.close();
+    onBack(): void {
+      this._router.navigate(['brukere'])
     }
-
-    get userName(){
-      return this.userForm.get('userName')
-    }
-
-    get password(){
-      return this.userForm.get('password')
-    }
-
-    get firstName(){
-      return this.userForm.get('firstName');
-    }
-
-    get lastName(){
-      return this.userForm.get('lastName')
-    }
-
-    get phoneNumber(){
-      return this.userForm.get('phoneNumber')
-    }
-
-    get role(){
-      return this.userForm.get('role')
-    }
-
-
 
 }

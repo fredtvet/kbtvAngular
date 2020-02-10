@@ -1,0 +1,12 @@
+<app-main-nav
+  [config]="mainNavConfig"
+  (backEvent)="onBack()">
+
+<app-mission-note-form-view
+    [note]="note"
+    [missionId]="missionId"
+    (submit)="onSubmit($event)">
+</app-mission-note-form-view>
+
+
+</app-main-nav>

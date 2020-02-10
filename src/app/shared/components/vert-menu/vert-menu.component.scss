@@ -1,0 +1,5 @@
+@import '../../../../variables';
+
+::ng-deep .mat-menu-content {
+  background-color:$bg-dialog!important;
+}

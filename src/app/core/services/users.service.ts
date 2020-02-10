@@ -32,6 +32,10 @@ export class UsersService {
     return this.getAll$().pipe(map(arr => arr.filter(u => u.role == role)));
   }
 
+  get$(userName: string):Observable<User>{
+    return this.usersSubject.get$(userName);
+  }
+
   add$(user: User): Observable<User>
   {
     return this.apiService

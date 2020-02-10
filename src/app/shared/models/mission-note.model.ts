@@ -5,7 +5,8 @@ export class MissionNote {
       public content: string = null,
       public createdAt: string = null,
       public createdBy: string = null,
-      public pinned: boolean = false
+      public pinned: boolean = false,
+      public missionId: number = null,
     ){};
 
   };

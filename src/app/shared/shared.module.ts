@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConfirmDeleteDialogComponent, ImageListComponent, ImageViewerDialogComponent, NavListItemComponent, PaginationComponent, VertMenuComponent, SearchBarComponent, LoadingComponent, MissionListViewComponent} from './components'
 import { ArraySlicePipe, ThumbnailPipe } from './pipes'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
@@ -10,7 +9,18 @@ import { IfRoleDirective } from './directives/if-role.directive';
 import { MainNavComponent, BottomNavComponent } from './layout';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { NotificationComponent } from './components/notification/notification.component';
+
+import {
+  ConfirmDeleteDialogComponent,
+  ImageListComponent,
+  ImageViewerDialogComponent,
+  NavListItemComponent,
+  PaginationComponent,
+  VertMenuComponent,
+  SearchBarComponent,
+  MissionListViewComponent,
+  NotificationComponent
+} from './components'
 
 @NgModule({
   declarations: [
@@ -26,7 +36,6 @@ import { NotificationComponent } from './components/notification/notification.co
     IfRoleDirective,
     ArraySlicePipe,
     ThumbnailPipe,
-    LoadingComponent,
     NotificationComponent,
     MissionListViewComponent
   ],
@@ -61,7 +70,6 @@ import { NotificationComponent } from './components/notification/notification.co
     MainNavComponent,
     BottomNavComponent,
     SearchBarComponent,
-    LoadingComponent,
     MissionListViewComponent
   ]
 })

@@ -55,7 +55,7 @@ export class MissionListComponent extends VertMenuParentExtension{
   }
 
   createMission() {
-    this.router.navigate(['oppdrag/ny'])
+    this.router.navigate(['oppdrag','ny'])
   }
 
 

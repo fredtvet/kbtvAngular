@@ -4,11 +4,13 @@ import { EmployerRoutingModule } from './employer-routing.module';
 import { EmployerFormComponent } from './employer-form/employer-form.component';
 import { EmployerListComponent } from './employer-list/employer-list.component';
 import { SharedModule, ConfirmDeleteDialogComponent } from '../shared';
+import { EmployerFormViewComponent } from './components/employer-form-view/employer-form-view.component';
 
 @NgModule({
   declarations: [
     EmployerFormComponent,
-    EmployerListComponent
+    EmployerListComponent,
+    EmployerFormViewComponent
   ],
   entryComponents:[
     EmployerFormComponent,

@@ -6,7 +6,6 @@ export * from './nav-list-item/nav-list-item.component';
 export * from './pagination/pagination.component';
 export * from './vert-menu/vert-menu.component';
 export * from './search-bar/search-bar.component';
-export * from './loading.component';
 export * from './notification/notification.component';
 export * from './vert-menu/vert-menu-parent.extension';
 export * from './mission-list-view/mission-list-view.component';

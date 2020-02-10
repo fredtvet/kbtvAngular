@@ -75,6 +75,7 @@
 
           <span class="main-nav-title" [ngClass]="(isHandset$ | async) ? '' : 'ml-3'" [routerLink]="['/hjem']">{{ this.config.title || 'Bj Bygg & Eiendom'}}</span>
         </ng-container>
+
         <ng-template #altNav>
           <span style="margin-right:auto;">
 
@@ -91,6 +92,7 @@
           </span>
         </ng-template>
 
+        <mat-spinner *ngIf="loadingService.loading$ |  async" diameter="24"></mat-spinner>
 
         <ng-container *ngIf="config.searchBarEnabled">
           <button (click)="toggleSearchBar()" mat-icon-button aria-label="Cancel search">

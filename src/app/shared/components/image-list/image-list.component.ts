@@ -26,9 +26,19 @@ export class ImageListComponent implements OnInit {
   //Reloads thumbnail (thumbnails made async) until no error
   unloadedThumbnail(img){
     //Add image to array if no exist
-    if(this.unloadedThumbnails.filter(val => val == img).length == 0){
-      this.unloadedThumbnails.push(img);
+    let existingImg = this.unloadedThumbnails.find(val => val.img == img);
+
+    if(!existingImg) this.unloadedThumbnails.push({img: img, retries: 1});
+    else if(existingImg.retries > 10) return null;
+    else{
+      this.unloadedThumbnails = this.unloadedThumbnails.map(val => {
+        if(val.img == img){
+          existingImg.retries++;
+          return existingImg
+        }else return val
+      })
     }
+
     //Set reload interval if reload state is false
     if(!this.reloadThumbnailsState){
       this.reloadThumbnailsState = true;
@@ -39,7 +49,7 @@ export class ImageListComponent implements OnInit {
   reloadThumbnails(){
     //Reload image src to retry
     this.unloadedThumbnails.forEach((thumbnail) =>{
-      thumbnail.src = thumbnail.src;
+      if(thumbnail.retries <= 10) thumbnail.img.src = thumbnail.img.src;
     });
 
     //Remove interval & set state to false when no unloaded thumbnails to reset
@@ -50,7 +60,7 @@ export class ImageListComponent implements OnInit {
   }
 
   loadedThumbnail(img){
-    this.unloadedThumbnails = this.unloadedThumbnails.filter(val => val != img);
+    this.unloadedThumbnails = this.unloadedThumbnails.filter(val => val.img != img);
   }
 
   openImageViewer(imageId: number){

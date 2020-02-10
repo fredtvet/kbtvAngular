@@ -1,32 +1,16 @@
 
 
-<form *ngIf="employerForm" class="app-dialog" [formGroup]="employerForm"  fxLayout="column">
-  <span class="form-title text-center mb-2">{{ title }}</span>
-    <mat-form-field>
-        <input matInput placeholder="Navn"  formControlName="name" required>
-        <mat-error *ngIf="this.name.invalid">
-          Navn er ett obligatorisk felt på maks 200 tegn.
-        </mat-error>
-    </mat-form-field>
+<app-main-nav
+  [config]="mainNavConfig"
+  (backEvent)="onBack()"
+  (vertEvent)="handleVertEvent($event)">
+<app-employer-form-view
+  [employer]="employer"
+  (submit)="onSubmit($event)">
+</app-employer-form-view>
 
-    <mat-form-field>
-      <input matInput placeholder="Kontaktnummer"  formControlName="phoneNumber">
-      <mat-error *ngIf="this.phoneNumber.invalid">
-          Kontaktnummer må være mellom 4 og 12 siffer.
-      </mat-error>
-    </mat-form-field>
 
-    <mat-form-field>
-      <input ngx-google-places-autocomplete [options]='googleOptions' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
-      matInput placeholder="Addresse" formControlName="address">
-      <mat-error *ngIf="this.address.invalid">
-        Addresse kan maks ha 100 tegn.
-      </mat-error>
-    </mat-form-field>
-
-    <button (click)="onSubmit()" [disabled]="this.employerForm.invalid" mat-raised-button color="primary">Lagre</button>
-    <button (click)="openDeleteDialog()" *ngIf="isEditForm" mat-raised-button color="warn"  class="mt-3"><mat-icon>delete_forever</mat-icon></button>
-</form>
+</app-main-nav>
 
 
 
