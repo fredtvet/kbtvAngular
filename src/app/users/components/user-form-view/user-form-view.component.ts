@@ -11,7 +11,7 @@ export class UserFormViewComponent implements OnInit {
 
   @Input() user: User;
   @Input() roles: any;
-  @Output() submit = new EventEmitter();
+  @Output() formSubmitted = new EventEmitter();
 
   isCreateForm = false;
   userForm: FormGroup;
@@ -59,7 +59,7 @@ export class UserFormViewComponent implements OnInit {
 
     onSubmit(){
       const {value, valid} = this.userForm;
-      if(valid) this.submit.emit(value);
+      if(valid) this.formSubmitted.emit(value);
     }
 
     changeRole(e){

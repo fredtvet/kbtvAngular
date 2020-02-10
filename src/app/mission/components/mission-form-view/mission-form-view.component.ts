@@ -13,7 +13,7 @@ export class MissionFormViewComponent implements OnInit {
   @Input() mission: Mission = null;
   @Input() missionTypes: MissionType[];
   @Input() employers: Employer[];
-  @Output() submit = new EventEmitter();
+  @Output() formSubmitted = new EventEmitter();
 
   title: string;
   icon: string;
@@ -82,7 +82,7 @@ export class MissionFormViewComponent implements OnInit {
 
     const {value, valid} = this.missionForm;
 
-    if(valid) this.submit.emit(value);
+    if(valid) this.formSubmitted.emit(value);
   }
 
   handleAddressChange(googleAddress){

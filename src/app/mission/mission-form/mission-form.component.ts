@@ -40,12 +40,14 @@ export class MissionFormComponent implements OnInit {
   }
 
   onSubmit(result: Mission){
+    console.log(result);
     if(!result) this.onBack();
     else if(!this.isCreateForm) this.editMission(result);
     else this.createMission(result);
   }
 
   createMission(mission: Mission){
+    console.log(mission);
     if(!mission) return null;
     this.missionsService.addMission(mission)
       .subscribe(res => this.goToMission(res.id));

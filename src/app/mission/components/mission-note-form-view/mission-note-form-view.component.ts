@@ -13,7 +13,7 @@ export class MissionNoteFormViewComponent {
 
   @Input() note: MissionNote = null;
   @Input() missionId: number = null;
-  @Output() submit = new EventEmitter();
+  @Output() formSubmitted = new EventEmitter();
 
   noteForm: FormGroup;
 
@@ -46,7 +46,7 @@ export class MissionNoteFormViewComponent {
 
   onSubmit(){
     const {value, valid} = this.noteForm;
-    if(valid) this.submit.emit(value);
+    if(valid) this.formSubmitted.emit(value);
   }
 
   get title(){

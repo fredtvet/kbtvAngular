@@ -10,7 +10,7 @@ import { Employer } from 'src/app/shared';
 export class EmployerFormViewComponent implements OnInit
 {
   @Input() employer: Employer;
-  @Output() submit = new EventEmitter();
+  @Output() formSubmitted = new EventEmitter();
 
   googleOptions = {
     types: ['geocode'],
@@ -51,7 +51,7 @@ export class EmployerFormViewComponent implements OnInit
 
     onSubmit(){
       const {value, valid} = this.employerForm;
-      if(valid) this.submit.emit(value);
+      if(valid) this.formSubmitted.emit(value);
     }
 
     handleAddressChange(googleAddress){
