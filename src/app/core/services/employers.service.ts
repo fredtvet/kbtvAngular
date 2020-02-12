@@ -4,6 +4,7 @@ import { ApiService } from './api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { EmployersSubject } from '../subjects/employers.subject';
+import { BaseSubject } from '../subjects/base.subject';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +16,19 @@ export class EmployersService {
 
   constructor(
     private apiService: ApiService,
-    private employersSubject: EmployersSubject) {}
+    private employersSubject: BaseSubject<Employer>) {}
 
   getAll$(): Observable<Employer[]> {
     if(this.employersSubject.isEmpty()){
+
       return this.apiService.get(`${this.uri}`)
         .pipe(switchMap(data => {
           this.employersSubject.populate(data);
-          return this.employersSubject.employers$;
+          return this.employersSubject.data$;
         }));
+
     }
-    else return this.employersSubject.employers$;
+    else return this.employersSubject.data$;
   }
 
   get$(id: number):Observable<Employer>{

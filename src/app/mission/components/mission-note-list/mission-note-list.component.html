@@ -2,7 +2,7 @@
   <span *ngIf="notes.length == 0">Ingen notater</span>
   <mat-accordion>
     <mat-expansion-panel *ngFor="let note of notes; index as i; last as last"
-      (opened)="loadDetails(note.id, i)" (closed)="closePanel()" [id]="note.id" #notePanel>
+      (opened)="loadDetails(note.id, i)" [id]="note.id" #notePanel>
 
         <mat-expansion-panel-header>
 

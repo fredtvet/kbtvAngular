@@ -1,8 +1,9 @@
-<app-main-nav *ngIf="missionDetails"
+<app-main-nav
   [config]="mainNavConfig"
   (vertEvent)="handleVertEvent($event)"
   (backEvent)="onBack()">
 
+  <mat-spinner *ngIf="!missionDetails" class="center-spinner"></mat-spinner>
   <app-mission-details-view *ngIf="missionDetails"
     [missionDetails]="missionDetails"
     (imagesUploaded)="uploadImages($event)"

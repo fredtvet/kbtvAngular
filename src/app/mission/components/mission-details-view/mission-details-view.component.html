@@ -2,9 +2,9 @@
 
   <mat-tab label="Generelt">
     <div class="card-container">
-      <mat-nav-list *ngIf="missionDetails" class="p-0">
+      <mat-nav-list class="p-0">
 
-        <h3 mat-subheader *ngIf="missionDetails.missionReports">Informasjon</h3>
+        <h3 mat-subheader>Informasjon</h3>
         <mat-list-item>
           <mat-icon mat-list-icon>phone</mat-icon>
           <a mat-line href="tel:{{ missionDetails.mission.phoneNumber }}">{{ missionDetails.mission.phoneNumber || 'Ingen telefonnummer' }}</a>
@@ -35,7 +35,7 @@
     </div>
   </mat-tab>
 
-  <mat-tab label="Bilder"  *ngIf="missionDetails">
+  <mat-tab label="Bilder">
     <div class="image-container">
       <app-image-list [images]="missionDetails.missionImages" (imageDeleted)="this.imageDeleted.emit($event)"></app-image-list>
     </div>

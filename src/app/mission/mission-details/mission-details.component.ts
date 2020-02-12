@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NavAction, MissionDetails, ConfirmDeleteDialogComponent, ROLES, MissionNote, VertMenuParentExtension } from 'src/app/shared';
 import { MissionsService, NotificationService } from 'src/app/core';
-import { MissionNoteFormComponent } from '../mission-note-form/mission-note-form.component';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
 import { take } from 'rxjs/operators';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
@@ -32,12 +31,15 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
     public dialog: MatDialog) { super(); }
 
   ngOnInit(){
+
     this.route.params.pipe(take(1)).subscribe(params => this.missionId = params['id']);
+
+    this.configureMainNav();
 
     this._missionsService.getMissionDetails(this.missionId)
       .subscribe(result => {
         this.missionDetails = result;
-        this.configure();
+        this.addMissionToMainNav();
       });
   }
 
@@ -104,16 +106,18 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
     deleteDialogRef.afterClosed().subscribe(confirmed => {if(confirmed)this.deleteMission()});
   }
 
-  configure(){
+  configureMainNav(){
     this.vertActions = [
       new NavAction("Legg til rapport", "note_add","createReport", this.openCreateReportDialog, [ROLES.Leder]),
       new NavAction("Legg til notat", "add_comment","createNote", this.createNote),
       new NavAction("Rediger", "edit","edit", this.editMission, [ROLES.Leder]),
       new NavAction("Slett", "delete_forever", "delete", this.openMissionDeleteDialog, [ROLES.Leder])
     ];
-
     this.mainNavConfig.vertActions = this.vertActions;
     this.mainNavConfig.altNav = true;
+  }
+
+  addMissionToMainNav(){
     this.mainNavConfig.title = this.missionDetails.mission.address.replace(", Norge","").replace(/,/g, ";");
     this.mainNavConfig.subTitle = this.missionDetails.mission.finished ? 'Oppdrag ferdig!' : '';
     this.mainNavConfig.subIcon = this.missionDetails.mission.finished ? 'check' : '';

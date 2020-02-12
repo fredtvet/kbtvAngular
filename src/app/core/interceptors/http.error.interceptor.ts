@@ -28,15 +28,24 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       if (err instanceof HttpErrorResponse) {
         let msg = "Noe gikk feil! Vennligst prøv igjen."
         switch(err.status){
+          case 401: //Unauthorized
+            msg = "Feil brukernavn eller passord."
+            break;
+          case 403: //Forbidden
+            msg = "Du har ikke tilgang til denne funksjonen."
+            break;
           case 404: //NotFound
             msg = "Denne ressursen finnes ikke!"
             this.router.navigate(['/hjem'])
             break;
-          case 403: //Forbidden
-            msg = "Denne operasjonen er forbudt!"
+          case 500:
+          case 501:
+          case 502:
+          case 503:
+          case 504:
+            msg = "Noe gikk feil på vår side. Prøv igjen senere eller ta kontakt."
             break;
-          case 401: //Unauthorized
-            msg = "Feil brukernavn eller passord!"
+          default:
             break;
         }
         this.notificationService.setNotification(msg, NOTIFICATIONS.Error);

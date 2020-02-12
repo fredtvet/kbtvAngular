@@ -20,14 +20,28 @@ export class RolesService {
   constructor(private apiService: ApiService) {}
 
   getAll$(): Observable<string[]> {
-    if(this.rolesSubject.value === undefined || this.rolesSubject.value.length == 0){
-      return this.apiService.get(`${this.uri}`)
+    if(this.rolesSubject.value === undefined || this.rolesSubject.value === null || this.rolesSubject.value.length == 0){ //Not in memory
+      let localRoles = this._getRolesFromLocal();
+      if(localRoles === undefined || localRoles === null || localRoles.length == 0){ //Not in local
+        return this.apiService.get(`${this.uri}`) //Fetch from api
         .pipe(switchMap(data => {
-          this.rolesSubject.next(data);
+          this.rolesSubject.next(data); //Save to memory
+          this._saveToLocal(data); //Save to local
           return this.roles$;
         }));
+      }
+      else this.rolesSubject.next(localRoles);
     }
-    else return this.roles$;
+
+    return this.roles$;
+  }
+
+  private _saveToLocal(roles: string[]){
+    window.localStorage.setItem('roles', JSON.stringify(roles))
+  }
+
+  private _getRolesFromLocal(): string[]{
+    return JSON.parse(window.localStorage.getItem('roles'));
   }
 
 }

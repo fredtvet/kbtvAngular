@@ -9,4 +9,5 @@ export * from './mission-report-type.model';
 export * from './mission-type.model';
 export * from './mission.model';
 export * from './user.model';
+export * from './base-entity.model';
 export * from './pagination.model';

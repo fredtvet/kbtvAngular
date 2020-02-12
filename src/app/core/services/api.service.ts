@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable ,  throwError } from 'rxjs';
-
-import { JwtService } from './jwt.service';
-import { catchError } from 'rxjs/operators';
-import { NotificationService } from './notification.service';
+import { catchError, delay } from 'rxjs/operators';
+import { BaseSubject } from '../subjects/base.subject';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +12,7 @@ import { NotificationService } from './notification.service';
 export class ApiService {
   constructor(
     private http: HttpClient,
-    private jwtService: JwtService
+    private baseSubject: BaseSubject,
   ) { }
 
   private formatErrors(response: any) {
@@ -23,7 +21,7 @@ export class ApiService {
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     return this.http.get(`${environment.apiUrl}${path}`, { params })
-      .pipe(catchError(this.formatErrors));
+      .pipe(catchError(this.formatErrors), delay(2000));
   }
 
   put(path: string, body: Object = {}): Observable<any> {

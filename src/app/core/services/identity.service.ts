@@ -31,7 +31,7 @@ export class IdentityService {
       this.apiService.get('/auth')
       .subscribe(
         data => this.setAuth(data),
-        error => this.purgeAuth(),
+        //error => this.purgeAuth(), //Prevents offline use
       );
     }else
       this.purgeAuth();

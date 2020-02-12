@@ -15,7 +15,7 @@
     <mat-divider></mat-divider>
 
     <div class="static-page-content" fxFlex="90">
-      <p *ngIf="!users"><em>Laster inn brukere...</em></p>
+      <mat-spinner *ngIf="!users" class="center-spinner"></mat-spinner>
       <mat-nav-list *ngIf="users" class="p-0">
         <app-nav-list-item
           *ngFor="let user of users; last as last" [last]="last"

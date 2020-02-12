@@ -40,19 +40,17 @@ export class MissionNoteListComponent {
     });
   }
 
-  ngOnChanges(){
-    this.sortNotes();
-    if(this.notePanels && this.openPanelIndex >= 0){
-      setTimeout(()=>{ //Using timeout as workaround, doesnt open when fired instantly
-        this.notePanels.toArray()[this.openPanelIndex].open();
-      }, 100);
+  ngOnChanges(changes: SimpleChanges){
+    for(let propName in changes){
+      if(propName == "notes"){
+        this.sortNotes();
+        if(this.notePanels && this.openPanelIndex >= 0){
+          setTimeout(()=>{ //Using timeout as workaround, doesnt open when fired instantly
+            this.notePanels.toArray()[this.openPanelIndex].open();
+          }, 25);
+        }
+      }
     }
-
-  }
-
-
-  closePanel(){
-    this.openPanelIndex = -1;
   }
 
   sortNotes(){
@@ -64,7 +62,4 @@ export class MissionNoteListComponent {
      });
   }
 
-  panelToggle(index: number){
-    this.notePanels.toArray()[index].toggle();
-  }
 }

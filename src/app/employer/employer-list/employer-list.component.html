@@ -15,7 +15,7 @@
     <mat-divider></mat-divider>
 
     <div class="static-page-content" fxFlex="90">
-      <p *ngIf="!employers"><em>Laster inn oppdragsgivere...</em></p>
+      <mat-spinner *ngIf="!employers" class="center-spinner"></mat-spinner>
       <mat-nav-list *ngIf="employers">
         <app-nav-list-item *ngFor="let employer of employers; last as last"
           (click)="(currentUser.role == ROLES.Leder) ? editEmployer(employer.id) : ''" [last]="last"

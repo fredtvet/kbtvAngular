@@ -46,7 +46,7 @@ export class MainNavComponent {
     this.identityService.currentUser$
       .subscribe(user => this.user = user);
     //Remove '/' and make first letter uppercase for title
-    if(!this.config.title){
+    if(!this.config.title && !this.config.altNav){
       this.config.title = this.router.url.replace("/","").replace(/^\w/, c => c.toUpperCase())
     }
 

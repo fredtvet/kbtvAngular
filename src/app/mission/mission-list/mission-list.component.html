@@ -18,7 +18,7 @@
     <mat-divider></mat-divider>
 
     <div class="static-page-content" fxFlex="80">
-      <p *ngIf="!missionList"><em>Laster inn oppdrag...</em></p>
+      <mat-spinner *ngIf="!missionList.missions" class="center-spinner"></mat-spinner>
       <app-mission-list-view [missions]="missionList.missions"></app-mission-list-view>
     </div>
 

@@ -10,7 +10,7 @@ export class MissionDetailsViewComponent {
 
   public ROLES = ROLES;
 
-  @Input() missionDetails: MissionDetails;
+  @Input() missionDetails: MissionDetails = new MissionDetails();
   @Output() imagesUploaded = new EventEmitter();
   @Output() imageDeleted = new EventEmitter();
   @Output() loadNoteDetails = new EventEmitter();
