@@ -47,7 +47,7 @@ export class MissionsService {
   }
 
   updateMission(mission: Mission): Observable<Mission>{
-    if(mission.phoneNumber.length == 0) mission.phoneNumber = null; //Workaround
+    if(mission.phoneNumber != null && mission.phoneNumber.length == 0) mission.phoneNumber = null; //Workaround
     return this
             .apiService
             .put(`${this.uri}/${mission.id}`, mission)

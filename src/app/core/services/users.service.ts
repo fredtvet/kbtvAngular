@@ -41,7 +41,7 @@ export class UsersService {
     return this.apiService
       .post(`${this.uri}`, user)
       .pipe(map(data => {
-        this.usersSubject.add(data);
+        this.usersSubject.addOrUpdate(data);
         return data;
       }));
   }

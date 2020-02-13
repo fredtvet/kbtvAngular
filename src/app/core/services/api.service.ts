@@ -3,7 +3,6 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable ,  throwError } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
-import { BaseSubject } from '../subjects/base.subject';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,6 @@ import { BaseSubject } from '../subjects/base.subject';
 export class ApiService {
   constructor(
     private http: HttpClient,
-    private baseSubject: BaseSubject,
   ) { }
 
   private formatErrors(response: any) {
