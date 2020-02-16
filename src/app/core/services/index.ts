@@ -5,10 +5,8 @@ export * from './connection.service';
 
 export * from './identity.service';
 
-export * from './users.service';
-export * from './missions.service';
-export * from './mission-list.service';
-export * from './roles.service';
+export * from './data/users.service';
+export * from './data/roles.service';
 
 export * from './loading.service';
 export * from './notification.service';

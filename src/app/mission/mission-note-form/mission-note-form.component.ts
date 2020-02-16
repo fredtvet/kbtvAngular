@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MissionNote } from 'src/app/shared';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
-import { MissionsService, NotificationService } from 'src/app/core';
+import { NotificationService, MissionNoteService } from 'src/app/core';
 import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-mission-note-form',
@@ -18,7 +18,7 @@ export class MissionNoteFormComponent {
   missionId: number = null;
 
   constructor(
-    private missionsService: MissionsService,
+    private missionNoteService: MissionNoteService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router)  { }
@@ -29,7 +29,7 @@ export class MissionNoteFormComponent {
     let id = +this.route.snapshot.paramMap.get('id');
 
     if(!id) this.isCreateForm = true;
-    else this.missionsService.getMissionNoteDetails(this.missionId, id)
+    else this.missionNoteService.getDetails$(id)
             .subscribe(result => this.note = result);
   }
 
@@ -41,7 +41,7 @@ export class MissionNoteFormComponent {
 
   createNote(note: MissionNote){
     if(note){
-      this.missionsService.addMissionNote(this.missionId, note)
+      this.missionNoteService.add$(note)
       .subscribe(note => {
         this.notificationService.setNotification('Vellykket! Notat opprettet.');
         this.onBack();
@@ -51,7 +51,7 @@ export class MissionNoteFormComponent {
 
   editNote(note: MissionNote){
     if(!note) return null;
-    this.missionsService.updateMissionNote(this.missionId, note)
+    this.missionNoteService.update$(note)
       .subscribe(data =>{
         this.notificationService.setNotification('Vellykket oppdatering!');
         this.onBack();

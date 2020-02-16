@@ -21,16 +21,12 @@ export class MissionImageService extends BaseMissionChildService<MissionImage> {
   }
 
   getByMissionId$(missionId: number):Observable<MissionImage[]>{
-    this.setUrl(missionId);
-    return super.getByMissionId$(missionId);
-  }
-
-  delete$(missionId: number): Observable<boolean> {
-    this.setUrl(missionId);
-    return super.delete$(missionId);
+    return super.getByMissionId$(missionId); //No http support
   }
 
   addImages$(missionId:number, files: FileList): Observable<MissionImage[]>{
+    if(!this.isOnline) return null;
+    this.setUrl(missionId);
     const formData: FormData = new FormData();
 
     for(let i = 0; i < files.length; i++){
@@ -40,13 +36,19 @@ export class MissionImageService extends BaseMissionChildService<MissionImage> {
     return this.apiService
                 .post(`${this.uri}`, formData)
                 .pipe(map(data =>{
-                  this.dataSubject.addRange(data);
+                  this.dataSubject.addOrUpdateRange(data);
                   return data;
                 }));
   }
 
-  setUrl(missionId: number): void{
-    this.uri = `/Missions/${missionId}/MissionImages`;
+  delete$(id: number): Observable<boolean> {
+    this.setUrl();
+    return super.delete$(id);
+  }
+
+  setUrl(missionId: number = null): void{
+    if(missionId !== null) this.uri = `/Missions/${missionId}/MissionImages`;
+    else this.uri = `/Missions/MissionImages/`;
   }
 
   getAll$(): Observable<MissionImage[]> {return undefined}

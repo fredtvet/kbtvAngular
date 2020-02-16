@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, shareReplay, take } from 'rxjs/operators';
 import { Router } from "@angular/router";
-import { IdentityService, LoadingService } from 'src/app/core';
+import { IdentityService, LoadingService, ConnectionService } from 'src/app/core';
 import { ROLES } from '../../roles.enum';
 import { MatDrawer } from '@angular/material';
 import { MainNavConfig } from './main-nav-config.model';
@@ -25,7 +25,7 @@ export class MainNavComponent {
   @Output() backEvent = new EventEmitter();
 
   ROLES = ROLES;
-  routeSub: Subscription;
+  conSub$:  Observable<boolean>;
   user: User;
 
   searchBarHidden = true;
@@ -40,9 +40,12 @@ export class MainNavComponent {
     private breakpointObserver: BreakpointObserver,
     private identityService: IdentityService,
     public loadingService: LoadingService,
-    private router: Router) {}
+    private router: Router,
+    private connectionService: ConnectionService) {}
 
   ngOnInit(){
+    this.conSub$ = this.connectionService.isOnline$;
+
     this.identityService.currentUser$
       .subscribe(user => this.user = user);
     //Remove '/' and make first letter uppercase for title

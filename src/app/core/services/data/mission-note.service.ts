@@ -11,6 +11,8 @@ import { ConnectionService } from '../connection.service';
 })
 export class MissionNoteService extends BaseMissionChildService<MissionNote> {
 
+  private detailsLoaded: number[] = [];
+
   constructor(
     apiService: ApiService,
     dataSubject: MissionNoteSubject,
@@ -20,21 +22,31 @@ export class MissionNoteService extends BaseMissionChildService<MissionNote> {
   }
 
   getByMissionId$(missionId: number):Observable<MissionNote[]>{
-    this.setUrl(missionId);
     return super.getByMissionId$(missionId);
   }
 
-  getDetails$(missionId: number, id: number):Observable<MissionNote>{
-    return null;
+  getDetails$(id: number):Observable<MissionNote>{
+    this.setUrl();
+    if(!this.hasDetailsLoaded(id))
+      super.get$(id).subscribe(x => this.detailsLoaded.push(x.id));
+
+    return this.dataSubject.get$(id);
   }
 
-  delete$(missionId: number): Observable<boolean> {
-    this.setUrl(missionId);
-    return super.delete$(missionId);
+  delete$(id: number): Observable<boolean> {
+    this.setUrl();
+    return super.delete$(id);
   }
 
-  setUrl(missionId: number): void{
-    this.uri = `/Missions/${missionId}/MissionNotes`;
+  setUrl(missionId: number = null): void{
+    if(missionId !== null) this.uri = `/Missions/${missionId}/MissionNotes`;
+    else this.uri = `/Missions/MissionNotes/`;
+  }
+
+  private hasDetailsLoaded(missionId:number): boolean{
+    let res = this.detailsLoaded.find(x => x == missionId);
+    if(res == undefined) return false;
+    else return true;
   }
 
   getAll$(): Observable<MissionNote[]> {return undefined}

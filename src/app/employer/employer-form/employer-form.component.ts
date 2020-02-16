@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { MatDialog} from '@angular/material';
 import { Employer, ConfirmDeleteDialogComponent, ROLES, VertMenuParentExtension, NavAction } from 'src/app/shared';
-import { EmployersService, NotificationService } from 'src/app/core';
+import { EmployerService, NotificationService } from 'src/app/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-employer-form',
@@ -25,9 +25,10 @@ export class EmployerFormComponent extends VertMenuParentExtension {
 
   isCreateForm: boolean = false;
 
+  private employerSub: Subscription = new Subscription();
 
   constructor(
-    private employersService: EmployersService,
+    private employerService: EmployerService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
@@ -38,7 +39,7 @@ export class EmployerFormComponent extends VertMenuParentExtension {
       let id = this.route.snapshot.paramMap.get('id');
 
       if(!id) this.isCreateForm = true;
-      else this.employersService.get$(+id)
+      else this.employerSub = this.employerService.get$(+id)
               .subscribe(result => this.employer = result);
 
       this.configureMainNav();
@@ -59,7 +60,7 @@ export class EmployerFormComponent extends VertMenuParentExtension {
     }
 
     private deleteEmployer(){
-      this.employersService.delete$(this.employer.id)
+      this.employerService.delete$(this.employer.id)
         .subscribe(data => {
           this.notificationService.setNotification('Vellykket! Oppdragsgiver slettet.');
           this.onBack();
@@ -67,8 +68,7 @@ export class EmployerFormComponent extends VertMenuParentExtension {
     }
 
     updateEmployer(employer: Employer){
-      console.log(employer);
-      this.employersService.update$(employer)
+      this.employerService.update$(employer)
         .subscribe(data => {
           this.notificationService.setNotification('Vellykket oppdatering!');
           this.onBack();
@@ -76,7 +76,7 @@ export class EmployerFormComponent extends VertMenuParentExtension {
     }
 
     createEmployer(employer: any){
-      this.employersService.add$(employer)
+      this.employerService.add$(employer)
         .subscribe(data => {
           this.notificationService.setNotification('Vellykket! Ny oppdragsgiver registrert.');
           this.onBack();
@@ -95,6 +95,10 @@ export class EmployerFormComponent extends VertMenuParentExtension {
 
     onBack(): void {
       this.router.navigate(['oppdragsgivere'])
+    }
+
+    ngOnDestroy(): void {
+      this.employerSub.unsubscribe();
     }
 
 

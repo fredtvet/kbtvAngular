@@ -17,18 +17,10 @@
 
     <mat-divider></mat-divider>
 
-    <div class="static-page-content" fxFlex="80">
-      <mat-spinner *ngIf="!missionList.missions" class="center-spinner"></mat-spinner>
-      <app-mission-list-view [missions]="missionList.missions"></app-mission-list-view>
+    <div class="static-page-content" fxFlex>
+      <mat-spinner *ngIf="!(missions$ | async)" class="center-spinner"></mat-spinner>
+      <app-mission-list-view [missions]="(missions$ | async)"></app-mission-list-view>
     </div>
-
-    <mat-divider></mat-divider>
-
-    <app-pagination  fxFlex="10"
-      *ngIf="missionList.paginationInfo"
-      [paginationInfo]="missionList.paginationInfo"
-      (pageChange)='changePage($event)'>
-    </app-pagination>
 
   </div>
 

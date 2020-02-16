@@ -3,9 +3,9 @@
   (backEvent)="onBack()">
 
 <app-mission-form-view
-    [mission]="mission"
-    [missionTypes]="missionTypes"
-    [employers]="employers"
+    [mission]="isCreateForm ? null : mission$ | async"
+    [missionTypes]="missionTypes$ | async"
+    [employers]="employers$ | async"
     (formSubmitted)="onSubmit($event)">
 </app-mission-form-view>
 

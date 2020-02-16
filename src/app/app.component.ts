@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IdentityService, LoadingService, NotificationService, MissionListService } from './core';
+import { IdentityService, LoadingService, NotificationService, MissionService } from './core';
 import { slideInAnimation } from './route-animation';
 import { RouterOutlet } from '@angular/router';
 
@@ -15,14 +15,14 @@ export class AppComponent {
     private identityService: IdentityService,
     public loadingService: LoadingService,
     public notificationService: NotificationService,
-    private missionListService: MissionListService){
+    private missionService: MissionService){
     }
 
   ngOnInit(){
     this.identityService.populate();
 
     if(this.identityService.hasValidToken()) //Initalize mission list if authenticated
-      this.missionListService.populateInitalList();
+      this.missionService.loadLatestMissions();
   }
 
 

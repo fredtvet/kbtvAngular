@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployersService, IdentityService } from 'src/app/core';
+import { IdentityService, EmployerService } from 'src/app/core';
 import { Employer, ROLES, User } from 'src/app/shared';
 import { Router } from '@angular/router';
 
@@ -11,7 +11,7 @@ export class EmployerListComponent implements OnInit {
   public ROLES = ROLES;
 
   constructor(
-    private employersService: EmployersService,
+    private employerService: EmployerService,
     private identityService: IdentityService,
     public router: Router) { }
 
@@ -20,7 +20,7 @@ export class EmployerListComponent implements OnInit {
   public currentUser: User;
 
   ngOnInit() {
-    this.employersService.getAll$().subscribe(data => this.employers = data)
+    this.employerService.getAll$().subscribe(data => this.employers = data)
     this.identityService.currentUser$.subscribe(data => this.currentUser = data);
   }
 

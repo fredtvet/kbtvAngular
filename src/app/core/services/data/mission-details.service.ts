@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
-import { MissionDetails } from 'src/app/shared';
 import { Observable, combineLatest } from 'rxjs';
-import { MissionService } from './mission.service';
-import { MissionImageService } from './mission-image.service';
-import { MissionNoteService } from './mission-note.service';
-import { MissionReportService } from './mission-report.service';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ApiService } from '../api.service';
 import { MissionImageSubject } from '../../subjects/mission-image.subject';
 import { MissionReportSubject } from '../../subjects/mission-report.subject';
 import { MissionNoteSubject } from '../../subjects/mission-note.subject';
 import { MissionSubject } from '../../subjects/mission.subject';
 import { ConnectionService } from '../connection.service';
+import { MissionDetails } from 'src/app/shared/models/mission-details.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +38,6 @@ export class MissionDetailsService {
   }
 
   private loadDetails$(id: number): void{
-    console.log('load');
     this.setUrl(id);
     this.apiService.get(`${this.uri}`)
       .subscribe(details => {
@@ -53,9 +48,9 @@ export class MissionDetailsService {
 
   private populateSubjects(details: MissionDetails){
     this.missionSubject.addOrUpdate(details.mission);
-    this.missionImageSubject.addRange(details.missionImages);
-    this.missionNoteSubject.addRange(details.missionNotes);
-    this.missionReportSubject.addRange(details.missionReports);
+    this.missionImageSubject.addOrUpdateRange(details.missionImages);
+    this.missionNoteSubject.addOrUpdateRange(details.missionNotes);
+    this.missionReportSubject.addOrUpdateRange(details.missionReports);
   }
 
   private combineDetails$(missionId: number):Observable<MissionDetails>{
@@ -66,7 +61,7 @@ export class MissionDetailsService {
 
     return combineLatest(missionSub, imageSub, noteSub, reportSub).pipe(map(
       ([mission, images, notes, reports]) => {
-             return new MissionDetails(mission, notes, images, reports);
+        return new MissionDetails(mission, notes, images, reports);
     }));
   }
 

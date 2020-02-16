@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ROLES, MissionReportType } from 'src/app/shared';
-import { MissionReportTypesService } from 'src/app/core';
+import { ReportTypeService } from 'src/app/core';
 @Component({
   selector: 'app-mission-report-form',
   templateUrl: './mission-report-form.component.html'
@@ -17,12 +17,12 @@ export class MissionReportFormComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<MissionReportFormComponent>,
     private _formBuilder: FormBuilder,
-    private _missionReportTypesService: MissionReportTypesService,
+    private reportTypeService: ReportTypeService,
     ) { }
 
   ngOnInit() {
 
-    this._missionReportTypesService.getAll$()
+    this.reportTypeService.getAll$()
       .subscribe(data => {this.types = data});
 
     this.reportForm = this._formBuilder.group({

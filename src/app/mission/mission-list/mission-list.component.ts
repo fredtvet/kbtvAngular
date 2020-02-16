@@ -1,11 +1,11 @@
 import { Component  } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { MissionList, ROLES, Mission, NavAction, VertMenuParentExtension } from 'src/app/shared';
-import { MissionsService} from 'src/app/core';
-import { BehaviorSubject} from 'rxjs';
-import { MissionListService } from 'src/app/core/services/mission-list.service';
+import { ROLES, NavAction, VertMenuParentExtension, Mission } from 'src/app/shared';
+import { BehaviorSubject, Observable} from 'rxjs';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
+import { switchMap } from 'rxjs/operators';
+import { MissionService } from 'src/app/core';
 
 @Component({
   selector: 'app-mission-list',
@@ -17,15 +17,15 @@ export class MissionListComponent extends VertMenuParentExtension{
 
   ROLES = ROLES;
 
-  private pageInfo = {searchString: "",pageId: 0, onlyActiveMissions: true}
+  private pageInfo = {searchString: "", onlyActiveMissions: true}
   private pageInfoSubject = new BehaviorSubject(this.pageInfo);
 
-  missionList: MissionList = new MissionList();
+  missions$: Observable<Mission[]>;
 
   mainNavConfig = new MainNavConfig();
 
   constructor(
-    private _missionListService: MissionListService,
+    private missionService: MissionService,
     public dialog: MatDialog,
     private router: Router) {
       super();
@@ -34,11 +34,10 @@ export class MissionListComponent extends VertMenuParentExtension{
     }
 
   ngOnInit(){
-    this.pageInfoSubject.subscribe(pageInfo => {
-        this._missionListService
-          .getMissionsPaginated(pageInfo.onlyActiveMissions, pageInfo.pageId, pageInfo.searchString)
-          .subscribe(result => this.missionList = result);
-    })
+    this.missions$ = this.pageInfoSubject.pipe(switchMap(pageInfo => {
+        return this.missionService
+          .getFiltered$(pageInfo.onlyActiveMissions, pageInfo.searchString)
+    }));
 
     let navAction = new NavAction("Bare vis aktive oppdrag",
                       "check_box",
@@ -48,9 +47,8 @@ export class MissionListComponent extends VertMenuParentExtension{
     this.vertActions.push(navAction);
   }
 
-  searchMissionList(searchString){
+  searchMissionList(searchString: string){
     this.pageInfo.searchString = searchString;
-    this.pageInfo.pageId = 0;
     this.pageInfoSubject.next(this.pageInfo)
   }
 
@@ -62,7 +60,6 @@ export class MissionListComponent extends VertMenuParentExtension{
   private toggleOnlyActiveMissions = (event:string) => {
 
     this.pageInfo.onlyActiveMissions = !this.pageInfo.onlyActiveMissions;
-    this.pageInfo.pageId = 0;
     this.pageInfoSubject.next(this.pageInfo);
 
     //Toggle icon on nav action
@@ -70,11 +67,6 @@ export class MissionListComponent extends VertMenuParentExtension{
     if(this.pageInfo.onlyActiveMissions) icon = "check_box";
 
     this.vertActions.find(x => x.event == event).icon = icon;
-  }
-
-  changePage(pageId){
-    this.pageInfo.pageId = pageId;
-    this.pageInfoSubject.next(this.pageInfo)
   }
 
 }

@@ -71,17 +71,17 @@ export class UserFormComponent extends VertMenuParentExtension  {
         });
     }
 
-    openDeleteDialog(){
-      const deleteDialogRef = this._dialog.open(ConfirmDeleteDialogComponent);
-
-      deleteDialogRef.afterClosed().subscribe(res => {
-          if(res) this.deleteUser(res);
-      });
-    }
-
     fetchRoles(){
       this._rolesService.getAll$()
           .subscribe(result =>  this.roles = result);
+    }
+
+    private openDeleteDialog = (e:string) => {
+      const deleteDialogRef = this._dialog.open(ConfirmDeleteDialogComponent);
+
+      deleteDialogRef.afterClosed().subscribe(res => {
+          if(res) this.deleteUser(this.user.userName);
+      });
     }
 
     configureMainNav(){

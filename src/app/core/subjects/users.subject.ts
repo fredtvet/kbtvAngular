@@ -22,9 +22,10 @@ export class UsersSubject {
     return this.users$.pipe(map(arr => arr.find(e => e.userName == userName)));
   }
 
-  add(user: User) {
+  addOrUpdate(user: User) {
     if (!this.usersSubject.value.find(e => e.userName == user.userName)) //Only add if user doesnt exist
       this.usersSubject.value.push(user);
+    else this.update(user);
   }
 
   update(user: User) {

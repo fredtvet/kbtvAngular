@@ -6,17 +6,16 @@ import { HttpTokenInterceptor, HttpLoadingInterceptor, HttpErrorInterceptor } fr
 import {
   AuthGuard,
   UsersService,
-  EmployersService,
   JwtService,
-  MissionTypesService,
-  MissionListService,
-  MissionsService,
   RolesService,
   ApiService,
   IdentityService,
   LoadingService,
-  MissionReportTypesService,
   NotificationService,
+  EmployerService,
+  MissionTypeService,
+  ReportTypeService,
+  ConnectionService,
 
 } from './services';
 import { NotificationComponent } from '../shared/components/notification/notification.component';
@@ -34,19 +33,18 @@ import { NotificationComponent } from '../shared/components/notification/notific
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpLoadingInterceptor, multi: true },
-    MissionsService,
-    MissionTypesService,
-    MissionReportTypesService,
-    EmployersService,
     UsersService,
-    MissionListService,
     RolesService,
     JwtService,
+    ConnectionService,
     IdentityService,
     AuthGuard,
     ApiService,
     LoadingService,
-    NotificationService
+    NotificationService,
+    EmployerService,
+    MissionTypeService,
+    ReportTypeService
   ]
 })
 export class CoreModule { }

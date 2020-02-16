@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IdentityService, MissionListService } from '../core';
+import { IdentityService, MissionService } from '../core';
 
 @Component({
   selector: 'app-auth-page',
@@ -15,7 +15,7 @@ export class AuthComponent {
   constructor(
     private router: Router,
     private identityService: IdentityService,
-    private missionListService: MissionListService,
+    private missionService: MissionService,
     private fb: FormBuilder
   ) {
     this.authForm = this.fb.group({
@@ -28,7 +28,7 @@ export class AuthComponent {
     this.identityService
     .attemptAuth(this.authForm.value)
     .subscribe(data => {
-      this.missionListService.populateInitalList(); //Populate mission list
+      this.missionService.loadLatestMissions();
       this.router.navigateByUrl('/')
     });
   }

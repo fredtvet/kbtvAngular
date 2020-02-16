@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/shared/models';
 import { Observable } from 'rxjs';
-import { ApiService } from './api.service';
+import { ApiService } from '../api.service';
 import { map, switchMap } from 'rxjs/operators';
-import { UsersSubject } from '../subjects/users.subject';
+import { UsersSubject } from '../../subjects/users.subject';
 
 @Injectable({
   providedIn: 'root'

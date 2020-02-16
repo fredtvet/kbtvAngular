@@ -1,14 +1,15 @@
-import { BaseEntity, Employer} from 'src/app/shared/models';
+import { BaseEntity } from 'src/app/shared/models';
 import { Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { BaseSubject } from '../../subjects/base.subject';
 import { ApiService } from '../api.service';
 import { ConnectionService } from '../connection.service';
 
 export abstract class BaseService<T extends BaseEntity>{
   public uri: string;
-  private httpLoaded: boolean = false;
-  private isOnline: boolean = false;
+  protected httpGetAllLoaded: boolean = false;
+  protected httpGetLoaded: boolean = false;
+  protected isOnline: boolean = false;
 
   constructor(
     protected apiService: ApiService,
@@ -19,24 +20,13 @@ export abstract class BaseService<T extends BaseEntity>{
     }
 
   getAll$(): Observable<T[]> {
-    return this.dataSubject.data$.pipe(tap(data =>{
-      if(!this.httpLoaded && this.isOnline){
-        this.apiService.get(`${this.uri}`)
-        .subscribe(data => {
-          this.httpLoaded = true;
-          this.dataSubject.populate(data);
-        });
-      }
-    }));
+    this.httpGetAllIfValid();
+    return this.dataSubject.data$;
   }
 
   get$(id: number):Observable<T>{
-    return this.dataSubject.get$(id).pipe(tap(data => {
-      if(data === undefined && this.isOnline){
-        this.apiService.get(`${this.uri}/${id}`)
-        .subscribe(data => this.dataSubject.addOrUpdate(data));
-      }
-    }));
+    this.httpGetIfValid(id);
+    return this.dataSubject.get$(id);
   }
 
   add$(entity: T): Observable<T>{
@@ -63,6 +53,7 @@ export abstract class BaseService<T extends BaseEntity>{
   }
 
   delete$(id: number): Observable<boolean> {
+
     if(!this.isOnline) return null;
 
     return this
@@ -71,6 +62,36 @@ export abstract class BaseService<T extends BaseEntity>{
             .pipe(tap(bool =>{
               if(bool) this.dataSubject.delete(id);
             }));
+  }
+
+  refreshLocal(): void{
+    this.dataSubject.populate([]);
+    this.httpGetAllLoaded = false;
+    this.httpGetLoaded = false;
+    this.httpGetAllIfValid();
+  }
+
+
+  private httpGetIfValid(id: number){
+    if(!this.httpGetAllLoaded && !this.httpGetLoaded && this.isOnline){
+      this.httpGetLoaded = true;
+      this.apiService.get(`${this.uri}/${id}`)
+        .subscribe(data => {
+          this.dataSubject.addOrUpdate(data);
+        },
+        error => {this.httpGetLoaded = false;});
+    }
+  }
+
+  private httpGetAllIfValid(){
+    if(!this.httpGetAllLoaded && this.isOnline){
+      this.httpGetAllLoaded = true;
+      this.apiService.get(`${this.uri}`)
+        .subscribe(res => {
+          this.dataSubject.populate(res);
+        },
+        error => {this.httpGetAllLoaded = false;});
+    }
   }
 
 }

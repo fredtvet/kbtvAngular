@@ -1,12 +1,14 @@
-export class MissionNote {
+import { MissionChild } from './mission-child.model';
+
+export class MissionNote extends MissionChild{
     constructor(
-      public id: number = null,
+      id: number = null,
+      missionId: number = null,
       public title: string = null,
       public content: string = null,
       public createdAt: string = null,
       public createdBy: string = null,
       public pinned: boolean = false,
-      public missionId: number = null,
-    ){};
+    ){ super(id, missionId)};
 
   };

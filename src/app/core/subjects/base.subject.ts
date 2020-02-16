@@ -1,52 +1,74 @@
-import { Injectable } from '@angular/core';
 import { BaseEntity  } from 'src/app/shared/models';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap, skip } from 'rxjs/operators';
+import { LocalStorageService } from '../services/local-storage.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+export abstract class BaseSubject<T extends BaseEntity> {
 
-export class BaseSubject<T extends BaseEntity> {
+  protected dataSubject: BehaviorSubject<T[]>;
 
-  private _dataSubject = new BehaviorSubject<T[]>([]);
+  public data$: Observable<T[]>;
 
-  public data$ = this._dataSubject.asObservable();
+  constructor(
+    protected localStorageService: LocalStorageService,
+    private storageKey:string) {
 
-  constructor() {}
+    this.dataSubject = new BehaviorSubject<T[]>(this.localStorageService.get(this.storageKey) || []);
+    this.data$ = this.dataSubject.asObservable();
 
-  populate(entities: T[]){
-    this._dataSubject.next(entities);
+    this.data$.pipe(skip(1)).subscribe(data => this.localStorageService.add(this.storageKey, data));
+  }
+
+  populate(entities: T[]): void{
+    this.dataSubject.next(entities);
   }
 
   get$(id: number): Observable<T>{
     return this.data$.pipe(map(arr => arr.find(e => e.id == id)));
   }
 
-  add(entity: T){
-    if(!this._dataSubject.value.find(e => e.id == entity.id)) //Only add if ID doesnt exist
-      this._dataSubject.value.push(entity);
+  getAll(): T[]{
+    return this.dataSubject.value;
   }
 
-  update(entity: T){
-    this._dataSubject.next(
-      this._dataSubject.value.map(e => {
+  addOrUpdate(entity: T): void{
+    if(this.dataSubject.value !== null && !this.dataSubject.value.find(e => e.id == entity.id)) {
+      this.dataSubject.value.unshift(entity);
+      this.dataSubject.next(this.dataSubject.value);
+    }
+    else this.update(entity);
+  }
+
+  addOrUpdateRange(entities: T[], keepOriginals = false): void{
+    let arr: T[];
+
+    if(keepOriginals) arr = [...this.dataSubject.value, ...entities];
+    else arr = [...entities, ...this.dataSubject.value];
+
+    arr = arr.filter((entity, index, self) => index === self.findIndex((e) => (e.id === entity.id)));
+    console.log(arr);
+    this.dataSubject.next(arr);
+  }
+
+  update(entity: T): void{
+    this.dataSubject.next(
+      this.dataSubject.value.map(e => {
         if(e.id !== entity.id) return e;
         else return entity;
       })
     );
   }
 
-  delete(id: number){
-    this._dataSubject.next(
-      this._dataSubject.value.filter(d => {
+  delete(id: number): void{
+    this.dataSubject.next(
+      this.dataSubject.value.filter(d => {
         return d.id !== id
       })
     );
   }
 
   isEmpty(): boolean{
-    return (this._dataSubject.value === undefined || this._dataSubject.value.length == 0)
+    return (this.dataSubject.value === undefined || this.dataSubject.value.length == 0)
   }
 
 }

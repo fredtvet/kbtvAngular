@@ -36,4 +36,11 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  confirmPurge(){
+    if(confirm('All data vil bli lastet inn på nytt neste gang du logger inn. Vær oppmerksom på at dette kan kreve mye mobildata om du ikke har Wi-Fi aktivert!')){
+      window.localStorage.clear();
+      location.reload();
+    }
+  }
+
 }

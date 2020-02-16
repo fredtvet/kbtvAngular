@@ -9,6 +9,7 @@ export class LocalStorageService {
   constructor() { }
 
   add(key:string, data: any){
+    console.log(data);
     window.localStorage.setItem(key, JSON.stringify(data))
   }
 

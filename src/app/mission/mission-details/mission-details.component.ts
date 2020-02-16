@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NavAction, MissionDetails, ConfirmDeleteDialogComponent, ROLES, MissionNote, VertMenuParentExtension } from 'src/app/shared';
-import { MissionsService, NotificationService } from 'src/app/core';
+import { NotificationService, MissionService, MissionDetailsService, MissionImageService, MissionReportService, MissionNoteService } from 'src/app/core';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
 import { take } from 'rxjs/operators';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
@@ -10,8 +10,7 @@ import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.mo
 
 @Component({
   selector: 'app-mission-details',
-  templateUrl: './mission-details.component.html',
-  styleUrls: ['./mission-details.component.css']
+  templateUrl: './mission-details.component.html'
 })
 
 export class MissionDetailsComponent extends VertMenuParentExtension{
@@ -24,7 +23,11 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
   missionId: number;
 
   constructor(
-    private _missionsService: MissionsService,
+    private missionService: MissionService,
+    private missionDetailsService: MissionDetailsService,
+    private missionImageService: MissionImageService,
+    private missionReportService: MissionReportService,
+    private missionNoteService: MissionNoteService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
@@ -36,7 +39,7 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
 
     this.configureMainNav();
 
-    this._missionsService.getMissionDetails(this.missionId)
+    this.missionDetailsService.getDetails$(this.missionId)
       .subscribe(result => {
         this.missionDetails = result;
         this.addMissionToMainNav();
@@ -45,13 +48,34 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
 
   uploadImages(files: FileList)
   {
-    this._missionsService.addMissionImages(this.missionId, files).pipe(take(1))
+    this.missionImageService.addImages$(this.missionId, files).pipe(take(1))
       .subscribe(data => this.notificationService.setNotification(`Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`));
   }
 
   deleteImage(id:number){
-    this._missionsService.deleteMissionImage(this.missionId, id).pipe(take(1))
+    this.missionImageService.delete$(id).pipe(take(1))
       .subscribe(res =>  this.notificationService.setNotification('Vellykket! Bilde slettet'));
+  }
+
+
+  deleteNote(id: number){
+    this.missionNoteService.delete$(id)
+      .subscribe(res => this.notificationService.setNotification('Vellykket! Notat slettet.'));
+  }
+
+  deleteReport(id: number){
+    this.missionReportService.delete$(id)
+      .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport slettet.'));
+  }
+
+  createReport(data){
+    if(!data) return null;
+    this.missionReportService.addReport$(this.missionId, data.reportType, data.files)
+      .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport lastet opp'));
+  }
+
+  loadNoteDetails(id: number){
+    this.missionNoteService.getDetails$(id);
   }
 
   editNote(note: MissionNote){
@@ -59,26 +83,8 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
     this.router.navigate(['oppdrag', this.missionId, 'notater', note.id, 'rediger'])
   }
 
-  deleteNote(noteId: number){
-    this._missionsService.deleteMissionNote(this.missionId, noteId)
-      .subscribe(res => this.notificationService.setNotification('Vellykket! Notat slettet.'));
-  }
-
-  createReport(data){
-    if(!data) return null;
-    this._missionsService.addMissionReport(this.missionId, data.reportType, data.files)
-      .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport lastet opp'));
-  }
-
-  loadNoteDetails(noteId: number){
-    let note = this.missionDetails.missionNotes.find(x => x.id == noteId);
-    if(note && (note.content == null || note.content.length == 0)){ //If note exist with content
-      this._missionsService.loadMissionNoteDetails(this.missionId, noteId);
-    }
-  }
-
   private deleteMission(){
-    this._missionsService.deleteMission(this.missionId).subscribe(
+    this.missionService.delete$(this.missionId).subscribe(
       res => {
         if(res){
           this.onBack();
@@ -118,7 +124,9 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
   }
 
   addMissionToMainNav(){
-    this.mainNavConfig.title = this.missionDetails.mission.address.replace(", Norge","").replace(/,/g, ";");
+    if(this.missionDetails.mission.address !== null){
+      this.mainNavConfig.title = this.missionDetails.mission.address.replace(", Norge","").replace(/,/g, ";");
+    }
     this.mainNavConfig.subTitle = this.missionDetails.mission.finished ? 'Oppdrag ferdig!' : '';
     this.mainNavConfig.subIcon = this.missionDetails.mission.finished ? 'check' : '';
   }

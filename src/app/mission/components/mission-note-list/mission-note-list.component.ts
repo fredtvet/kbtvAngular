@@ -25,9 +25,9 @@ export class MissionNoteListComponent {
 
   constructor(public dialog: MatDialog) { }
 
-  loadDetails(noteId:number, index:number){
+  loadDetails(id: number, index:number){
     this.openPanelIndex = index;
-    this.loadNoteDetails.emit(noteId);
+    this.loadNoteDetails.emit(id);
   }
 
   openDeleteDialog(noteId: number){

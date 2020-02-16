@@ -6,7 +6,13 @@
     [opened]="(isHandset$ | async) === false">
 
     <mat-toolbar fxLayout="column" fxLayoutAlign="end start">
-      <span (click)="toggleDrawer()" [routerLink]="['/profil']">{{ user.firstName }} {{ user.lastName }}</span>
+
+      <span style="line-height:1"
+        [ngClass]="(conSub$ | async) ? 'color-green' : 'color-warn'">
+        {{ (conSub$ | async) ? 'Tilkoblet internett' : 'Frakoblet internett' }}
+      </span>
+
+      <span>{{ user.firstName }} {{ user.lastName }}</span>
     </mat-toolbar>
 
     <mat-nav-list>

@@ -22,31 +22,33 @@ export class MissionReportService extends BaseMissionChildService<MissionReport>
   }
 
   getByMissionId$(missionId: number):Observable<MissionReport[]>{
-    this.setUrl(missionId);
     return super.getByMissionId$(missionId);
   }
 
-  delete$(missionId: number): Observable<boolean> {
-    this.setUrl(missionId);
-    return super.delete$(missionId);
+  delete$(id: number): Observable<boolean> {
+    this.setUrl();
+    return super.delete$(id);
   }
 
   addReport$(missionId:number, reportType: MissionReportType, files: FileList): Observable<MissionReport>{
+    if(!this.isOnline) return null;
+    this.setUrl(missionId);
     const formData: FormData = new FormData();
     formData.append('file', files[0], files[0].name);
     formData.append('MissionReportType',JSON.stringify(reportType));
 
     return this
             .apiService
-            .post(`${this.uri}/${missionId}/MissionReports`,formData)
+            .post(`${this.uri}`,formData)
             .pipe(map(data =>{
               this.dataSubject.addOrUpdate(data);
               return data;
             }));
   }
 
-  setUrl(missionId: number): void{
-    this.uri = `/Missions/${missionId}/MissionReports`;
+  setUrl(missionId: number = null): void{
+    if(missionId !== null) this.uri = `/Missions/${missionId}/MissionReports`;
+    else this.uri = `/Missions/MissionReports/`;
   }
 
   getAll$(): Observable<MissionReport[]> {return undefined}

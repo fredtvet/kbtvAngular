@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 
 export class ConnectionService {
 
-  constructor() {   }
+  constructor() { }
 
   isOnline$ = merge<boolean>(
       fromEvent(window, 'offline').pipe(map(() => false)),

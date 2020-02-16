@@ -18,8 +18,9 @@ export class ApiService {
   }
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
+    console.log(path);
     return this.http.get(`${environment.apiUrl}${path}`, { params })
-      .pipe(catchError(this.formatErrors), delay(2000));
+      .pipe(catchError(this.formatErrors));
   }
 
   put(path: string, body: Object = {}): Observable<any> {
@@ -34,7 +35,7 @@ export class ApiService {
     ).pipe(catchError(this.formatErrors));
   }
 
-  delete(path): Observable<any> {
+  delete(path: string): Observable<any> {
     return this.http.delete(
       `${environment.apiUrl}${path}`
     ).pipe(catchError(this.formatErrors));
