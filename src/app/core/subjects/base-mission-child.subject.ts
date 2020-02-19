@@ -15,4 +15,12 @@ export abstract class BaseMissionChildSubject<T extends MissionChild> extends Ba
     return this.data$.pipe(map(arr => arr.filter(e => e.missionId == missionId)));
   }
 
+  deleteByMissionId$(missionId: number): void{
+    this.dataSubject.next(
+      this.dataSubject.value.filter(d => {
+        return d.missionId !== missionId
+      })
+    );
+  }
+
 }

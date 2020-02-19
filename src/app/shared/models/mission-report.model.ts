@@ -5,8 +5,9 @@ export class MissionReport extends MissionChild{
   constructor(
       id: number = null,
       missionId: number = null,
-      public fileURL: string,
-      public createdAt: Date,
+      public fileURL: string = null,
+      public createdAt: Date = null,
+      public missionReportTypeId: number = null,
       public missionReportType: MissionReportType,
     ){ super(id, missionId)};
   }

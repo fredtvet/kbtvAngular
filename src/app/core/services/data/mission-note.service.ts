@@ -5,54 +5,26 @@ import { MissionNoteSubject } from '../../subjects/mission-note.subject';
 import { BaseMissionChildService } from './base-mission-child.service';
 import { Observable } from 'rxjs';
 import { ConnectionService } from '../connection.service';
+import { LocalStorageService } from '../local-storage.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MissionNoteService extends BaseMissionChildService<MissionNote> {
 
-  private detailsLoaded: number[] = [];
-
   constructor(
     apiService: ApiService,
     dataSubject: MissionNoteSubject,
     connectionService: ConnectionService,
+    localStorageService: LocalStorageService
   ){
-    super(apiService, dataSubject, connectionService);
+    super(apiService, dataSubject, connectionService, localStorageService, "/MissionNotes");
   }
 
   getByMissionId$(missionId: number):Observable<MissionNote[]>{
-    return super.getByMissionId$(missionId);
+    return super.getByMissionId$(missionId).pipe(map(notes => notes.sort(function(x, y) {
+      return (x.pinned === y.pinned)? 0 : x.pinned? -1 : 1;
+    })));;
   }
-
-  getDetails$(id: number):Observable<MissionNote>{
-    this.setUrl();
-    if(!this.hasDetailsLoaded(id))
-      super.get$(id).subscribe(x => this.detailsLoaded.push(x.id));
-
-    return this.dataSubject.get$(id);
-  }
-
-  delete$(id: number): Observable<boolean> {
-    this.setUrl();
-    return super.delete$(id);
-  }
-
-  setUrl(missionId: number = null): void{
-    if(missionId !== null) this.uri = `/Missions/${missionId}/MissionNotes`;
-    else this.uri = `/Missions/MissionNotes/`;
-  }
-
-  private hasDetailsLoaded(missionId:number): boolean{
-    let res = this.detailsLoaded.find(x => x == missionId);
-    if(res == undefined) return false;
-    else return true;
-  }
-
-  getAll$(): Observable<MissionNote[]> {return undefined}
-  get$(id: number):Observable<MissionNote> {return undefined}
-  add$(entity: MissionNote): Observable<MissionNote>{return undefined}
-  update$(entity: MissionNote): Observable<MissionNote>{return undefined}
-
-  //load details / full note func
 }

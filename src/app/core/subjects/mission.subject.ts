@@ -6,6 +6,9 @@ import { EmployerSubject } from './employer.subject';
 import { LocalStorageService } from '../services/local-storage.service';
 import { Observable, combineLatest, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
+import { MissionImageSubject } from './mission-image.subject';
+import { MissionReportSubject } from './mission-report.subject';
+import { MissionNoteSubject } from './mission-note.subject';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +18,9 @@ export class MissionSubject extends BaseSubject<Mission> {
   constructor(
     private missionTypeSubject: MissionTypeSubject,
     private employerSubject: EmployerSubject,
+    private missionImageSubject: MissionImageSubject,
+    private missionReportSubject: MissionReportSubject,
+    private missionNoteSubject: MissionNoteSubject,
     localStorageService: LocalStorageService
     ) {super(localStorageService, 'missions');}
 
@@ -22,15 +28,8 @@ export class MissionSubject extends BaseSubject<Mission> {
     return super.get$(id).pipe(switchMap(data => {
       if(data === undefined || data === null) return of(undefined);
 
-      let employerSub: Observable<Employer>;
-      if(data.employer !== null && data.employer !== undefined)
-        employerSub = this.employerSubject.get$(data.employer.id);
-      else employerSub = of(undefined);
-
-      let typeSub: Observable<MissionType>;
-      if(data.missionType !== null && data.missionType !== undefined)
-        typeSub = this.missionTypeSubject.get$(data.missionType.id);
-      else typeSub = of(undefined);
+      let employerSub = this.employerSubject.get$(data.employerId);
+      let  typeSub = this.missionTypeSubject.get$(data.missionTypeId);
 
       return combineLatest(employerSub, typeSub).pipe(map(([employer, type]) => {
           data.employer = employer;
@@ -38,23 +37,38 @@ export class MissionSubject extends BaseSubject<Mission> {
           return data;
       }));
 
-  }));
+    }));
   }
 
-  addOrUpdate(entity: Mission): void{
-    this.addNewForeigns(entity);
-    super.addOrUpdate(entity);
+  addOrReplace(entity: Mission): void{
+    let x = this.addForeigns(entity);
+    super.addOrReplace(x);
   }
 
   update(entity: Mission): void{
-    this.addNewForeigns(entity);
+    this.addForeigns(entity);
     super.update(entity);
   }
 
-  private addNewForeigns(entity: Mission): void{
-    if(entity.missionType && entity.missionType.id != 0)
-      this.missionTypeSubject.addOrUpdate(entity.missionType);
-    if(entity.employer && entity.employer.id != 0)
-      this.employerSubject.addOrUpdate(entity.employer);
+  delete(id: number): void{
+    super.delete(id);
+    this.missionImageSubject.deleteByMissionId$(id);
+    this.missionNoteSubject.deleteByMissionId$(id);
+    this.missionReportSubject.deleteByMissionId$(id);
+  }
+
+  private addForeigns(entity: Mission): Mission{
+    let e = entity;
+    if(e.missionType && e.missionType.id != 0){
+      this.missionTypeSubject.addOrReplace(e.missionType);
+      e.missionTypeId = e.missionType.id;
+      e.missionType = null; //Clean up
+    }
+    if(e.employer && e.employer.id != 0){
+      this.employerSubject.addOrReplace(e.employer);
+      e.employerId = e.employer.id;
+      e.employer = null;//Clean up
+    }
+    return e;
   }
 }

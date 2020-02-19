@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { MissionDetails, ROLES } from 'src/app/shared';
+import { MissionDetails, ROLES, Mission, MissionNote, MissionImage, MissionReport } from 'src/app/shared';
 
 @Component({
   selector: 'app-mission-details-view',
@@ -10,12 +10,15 @@ export class MissionDetailsViewComponent {
 
   public ROLES = ROLES;
 
-  @Input() missionDetails: MissionDetails = new MissionDetails();
+  @Input() mission: Mission = new Mission();
+  @Input() images: MissionImage[] = [];
+  @Input() notes: MissionNote[] = [];
+  @Input() reports: MissionReport[] = [];
+
   @Output() imagesUploaded = new EventEmitter();
   @Output() imageDeleted = new EventEmitter();
-  @Output() loadNoteDetails = new EventEmitter();
-  @Output() editNote = new EventEmitter();
-  @Output() deleteNote = new EventEmitter();
+  @Output() noteEdit = new EventEmitter();
+  @Output() noteDeleted = new EventEmitter();
 
   constructor() { }
 

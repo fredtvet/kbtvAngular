@@ -15,12 +15,9 @@ import { MissionDetails } from 'src/app/shared/models/mission-details.model';
 
 export class MissionDetailsService {
 
-  private detailsLoaded: number[] = [];
-  private uri: string;
   private isOnline: boolean = false;
 
   constructor(
-    private apiService: ApiService,
     private connectionService: ConnectionService,
     private missionImageSubject: MissionImageSubject,
     private missionNoteSubject: MissionNoteSubject,
@@ -31,29 +28,6 @@ export class MissionDetailsService {
   }
 
   getDetails$(missionId: number): Observable<MissionDetails>{
-    if(!this.hasDetailsLoaded(missionId) && this.isOnline)
-      this.loadDetails$(missionId);
-
-    return this.combineDetails$(missionId);
-  }
-
-  private loadDetails$(id: number): void{
-    this.setUrl(id);
-    this.apiService.get(`${this.uri}`)
-      .subscribe(details => {
-        this.populateSubjects(details);
-        this.detailsLoaded.push(details.mission.id);
-      });
-  }
-
-  private populateSubjects(details: MissionDetails){
-    this.missionSubject.addOrUpdate(details.mission);
-    this.missionImageSubject.addOrUpdateRange(details.missionImages);
-    this.missionNoteSubject.addOrUpdateRange(details.missionNotes);
-    this.missionReportSubject.addOrUpdateRange(details.missionReports);
-  }
-
-  private combineDetails$(missionId: number):Observable<MissionDetails>{
     let missionSub = this.missionSubject.get$(missionId);
     let imageSub = this.missionImageSubject.getByMissionId$(missionId);
     let noteSub = this.missionNoteSubject.getByMissionId$(missionId);
@@ -61,17 +35,9 @@ export class MissionDetailsService {
 
     return combineLatest(missionSub, imageSub, noteSub, reportSub).pipe(map(
       ([mission, images, notes, reports]) => {
+        console.log(new MissionDetails(mission, notes, images, reports));
         return new MissionDetails(mission, notes, images, reports);
     }));
   }
 
-  private hasDetailsLoaded(missionId:number): boolean{
-    let res = this.detailsLoaded.find(x => x == missionId);
-    if(res == undefined) return false;
-    else return true;
-  }
-
-  private setUrl(missionId: number): void{
-    this.uri = `/Missions/${missionId}/Details`;
-  }
 }

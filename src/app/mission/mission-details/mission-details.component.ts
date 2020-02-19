@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { NavAction, MissionDetails, ConfirmDeleteDialogComponent, ROLES, MissionNote, VertMenuParentExtension } from 'src/app/shared';
+import { NavAction, MissionDetails, ConfirmDeleteDialogComponent, ROLES, MissionNote, VertMenuParentExtension, Mission, MissionReport, MissionImage } from 'src/app/shared';
 import { NotificationService, MissionService, MissionDetailsService, MissionImageService, MissionReportService, MissionNoteService } from 'src/app/core';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
+import { Subscription, Observable } from 'rxjs';
 
 
 @Component({
@@ -18,13 +19,15 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
 
   mainNavConfig = new MainNavConfig();
 
-  missionDetails: MissionDetails;
-
   missionId: number;
+
+  mission$: Observable<Mission>;
+  images$: Observable<MissionImage[]>;
+  notes$: Observable<MissionNote[]>;
+  reports$: Observable<MissionReport[]>;
 
   constructor(
     private missionService: MissionService,
-    private missionDetailsService: MissionDetailsService,
     private missionImageService: MissionImageService,
     private missionReportService: MissionReportService,
     private missionNoteService: MissionNoteService,
@@ -37,13 +40,13 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
 
     this.route.params.pipe(take(1)).subscribe(params => this.missionId = params['id']);
 
-    this.configureMainNav();
+    this.mission$ = this.missionService.get$(this.missionId);
+    this.images$ = this.missionImageService.getByMissionId$(this.missionId);
+    this.reports$ = this.missionReportService.getByMissionId$(this.missionId);
 
-    this.missionDetailsService.getDetails$(this.missionId)
-      .subscribe(result => {
-        this.missionDetails = result;
-        this.addMissionToMainNav();
-      });
+    this.notes$ = this.missionNoteService.getByMissionId$(this.missionId);
+    this.configureMainNav()
+    this.mission$.subscribe(x => this.addMissionToMainNav(x));
   }
 
   uploadImages(files: FileList)
@@ -74,19 +77,14 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
       .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport lastet opp'));
   }
 
-  loadNoteDetails(id: number){
-    this.missionNoteService.getDetails$(id);
-  }
-
   editNote(note: MissionNote){
-    console.log(note);
-    this.router.navigate(['oppdrag', this.missionId, 'notater', note.id, 'rediger'])
+    this.router.navigate(['oppdrag', note.missionId, 'notater', note.id, 'rediger'])
   }
 
   private deleteMission(){
     this.missionService.delete$(this.missionId).subscribe(
-      res => {
-        if(res){
+      confirmed => {
+        if(confirmed){
           this.onBack();
           this.notificationService.setNotification('Vellykket! Oppdrag slettet.')
         }
@@ -123,12 +121,12 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
     this.mainNavConfig.altNav = true;
   }
 
-  addMissionToMainNav(){
-    if(this.missionDetails.mission.address !== null){
-      this.mainNavConfig.title = this.missionDetails.mission.address.replace(", Norge","").replace(/,/g, ";");
+  addMissionToMainNav(mission: Mission){
+    if(mission.address !== null){
+      this.mainNavConfig.title = mission.address.replace(", Norge","").replace(/,/g, ";");
     }
-    this.mainNavConfig.subTitle = this.missionDetails.mission.finished ? 'Oppdrag ferdig!' : '';
-    this.mainNavConfig.subIcon = this.missionDetails.mission.finished ? 'check' : '';
+    this.mainNavConfig.subTitle = mission.finished ? 'Oppdrag ferdig!' : '';
+    this.mainNavConfig.subIcon = mission.finished ? 'check' : '';
   }
 
   onBack(){

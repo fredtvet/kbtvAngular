@@ -12,7 +12,8 @@ export * from './loading.service';
 export * from './notification.service';
 
 export * from './data/base.service';
-export * from './data/base-mission-child.service'
+export * from './data/base-mission-child.service';
+export * from './data/data-sync.service';
 
 export * from './data/employer.service';
 export * from './data/mission-type.service';

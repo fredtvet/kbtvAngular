@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IdentityService, LoadingService, NotificationService, MissionService } from './core';
+import { IdentityService, LoadingService, NotificationService, DataSyncService } from './core';
 import { slideInAnimation } from './route-animation';
 import { RouterOutlet } from '@angular/router';
 
@@ -15,14 +15,15 @@ export class AppComponent {
     private identityService: IdentityService,
     public loadingService: LoadingService,
     public notificationService: NotificationService,
-    private missionService: MissionService){
+    private dataSyncService: DataSyncService){
     }
 
   ngOnInit(){
     this.identityService.populate();
 
     if(this.identityService.hasValidToken()) //Initalize mission list if authenticated
-      this.missionService.loadLatestMissions();
+      this.dataSyncService.syncAll().subscribe(x => this.notificationService.setNotification('Synkronisert!'));
+
   }
 
 

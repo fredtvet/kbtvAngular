@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IdentityService, MissionService } from '../core';
+import { IdentityService, DataSyncService } from '../core';
 
 @Component({
   selector: 'app-auth-page',
@@ -15,7 +15,7 @@ export class AuthComponent {
   constructor(
     private router: Router,
     private identityService: IdentityService,
-    private missionService: MissionService,
+    private dataSyncService: DataSyncService,
     private fb: FormBuilder
   ) {
     this.authForm = this.fb.group({
@@ -28,7 +28,7 @@ export class AuthComponent {
     this.identityService
     .attemptAuth(this.authForm.value)
     .subscribe(data => {
-      this.missionService.loadLatestMissions();
+      this.dataSyncService.syncAll();
       this.router.navigateByUrl('/')
     });
   }

@@ -16,6 +16,7 @@ import {
   MissionTypeService,
   ReportTypeService,
   ConnectionService,
+  DataSyncService,
 
 } from './services';
 import { NotificationComponent } from '../shared/components/notification/notification.component';
@@ -44,7 +45,8 @@ import { NotificationComponent } from '../shared/components/notification/notific
     NotificationService,
     EmployerService,
     MissionTypeService,
-    ReportTypeService
+    ReportTypeService,
+    DataSyncService,
   ]
 })
 export class CoreModule { }

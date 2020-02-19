@@ -1,8 +1,7 @@
 
   <span *ngIf="notes.length == 0">Ingen notater</span>
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let note of notes; index as i; last as last"
-      (opened)="loadDetails(note.id, i)" [id]="note.id" #notePanel>
+    <mat-expansion-panel *ngFor="let note of notes">
 
         <mat-expansion-panel-header>
 
@@ -10,10 +9,6 @@
             <mat-icon [color]="note.pinned ? 'primary' : ''">{{note.pinned ? 'star' : 'note'}}</mat-icon>
             <span class="ml-3 ellipsis">{{ note.title || (note.createdAt | date: 'short')}}</span>
           </mat-panel-title>
-
-          <mat-panel-description *ngIf="!note.content && openPanelIndex == i">
-            <mat-spinner diameter="20"></mat-spinner>
-          </mat-panel-description>
 
         </mat-expansion-panel-header>
 
@@ -27,7 +22,7 @@
           </span>
           <ng-container *ifRole="ROLES.Leder">
             <span class="w-100" fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="10px">
-              <button (click)="this.editNote.emit(note)" mat-icon-button color="primary" aria-label="Rediger notat"><mat-icon>edit</mat-icon></button>
+              <button (click)="this.noteEdit.emit(note)" mat-icon-button color="primary" aria-label="Rediger notat"><mat-icon>edit</mat-icon></button>
               <button (click)="openDeleteDialog(note.id)" mat-icon-button color="warn" aria-label="Slett notat"><mat-icon>delete</mat-icon></button>
             </span>
           </ng-container>

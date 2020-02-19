@@ -3,14 +3,16 @@
   (vertEvent)="handleVertEvent($event)"
   (backEvent)="onBack()">
 
-  <mat-spinner *ngIf="!missionDetails" class="center-spinner"></mat-spinner>
-  <app-mission-details-view *ngIf="missionDetails"
-    [missionDetails]="missionDetails"
+  <app-mission-details-view
+    [mission]="(mission$ | async)"
+    [images]="(images$ | async)"
+    [reports]="(reports$ | async)"
+    [notes]="(notes$ | async)"
+
     (imagesUploaded)="uploadImages($event)"
     (imageDeleted)="deleteImage($event)"
-    (loadNoteDetails)="loadNoteDetails($event)"
-    (deleteNote)="deleteNote($event)"
-    (editNote)="editNote($event)">
+    (noteDeleted)="deleteNote($event)"
+    (noteEdit)="editNote($event)">
   </app-mission-details-view>
 
 </app-main-nav>

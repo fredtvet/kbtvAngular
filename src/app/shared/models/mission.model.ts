@@ -9,6 +9,8 @@ export class Mission {
       public address: string = null,
       public finished: boolean = false,
       public createdAt: Date = null,
+      public employerId: number = null,
+      public missionTypeId: number = null,
       public employer: Employer = new Employer(),
       public missionType: MissionType = new MissionType(),
     ){};

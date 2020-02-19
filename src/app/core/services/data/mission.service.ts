@@ -6,6 +6,7 @@ import { ApiService } from '../api.service';
 import { ConnectionService } from '../connection.service';
 import { take, filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { LocalStorageService } from '../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,22 +18,9 @@ export class MissionService extends BaseService<Mission> {
     apiService: ApiService,
     dataSubject: MissionSubject,
     connectionService: ConnectionService,
+    localStorageService: LocalStorageService
   ){
-    super(apiService, dataSubject, connectionService);
-    this.uri = "/Missions";
-  }
-
-  loadLatestMissions(){ //Fetches missions newer than latest mission in cache
-    if(!this.isOnline) return null;
-    let missions = this.dataSubject.getAll();
-    let from: Date;
-
-    if(missions.length == 0) from = null;
-    else from = missions[0].createdAt;
-
-    this.apiService
-      .get(`${this.uri}/Range?FromDate=${from}`)
-      .subscribe(data => this.dataSubject.addOrUpdateRange(data, true));
+    super(apiService, dataSubject, connectionService, localStorageService, "/Missions");
   }
 
   getFiltered$(finished:boolean = false, searchString?: string): Observable<Mission[]>{

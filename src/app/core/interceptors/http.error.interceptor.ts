@@ -7,7 +7,7 @@ import {
   HttpEvent,
   HttpErrorResponse
 } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import { tap, distinctUntilChanged } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { NotificationService } from '../services/notification.service';
 import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
@@ -23,7 +23,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(request).pipe( tap(() => {},
+    return next.handle(request).pipe(tap(() => {},
       (err: any) => {
       if (err instanceof HttpErrorResponse) {
         let msg = "Noe gikk feil! Vennligst prøv igjen."

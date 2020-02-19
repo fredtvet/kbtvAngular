@@ -16,19 +16,32 @@ export class MissionReportSubject extends BaseMissionChildSubject<MissionReport>
     localStorageService: LocalStorageService
     ) { super(localStorageService, 'missionReports'); }
 
+  getByMissionId$(missionId: number): Observable<MissionReport[]>{
+    return super.getByMissionId$(missionId).pipe(switchMap(reports => {
+      return this.reportTypeSubject.data$.pipe(map(types => {
+        return reports.map(report => {
+          report.missionReportType = types.find(x => x.id === report.missionReportTypeId);
+          return report;
+        })
+      }))
+    }))
+  }
+
   get$(id: number):Observable<MissionReport>{
       return super.get$(id).pipe(switchMap(report => {
-        return this.reportTypeSubject.get$(report.missionReportType.id).pipe(map(type => {
+        return this.reportTypeSubject.get$(report.missionReportTypeId).pipe(map(type => {
           report.missionReportType = type;
           return report;
         }));
     }));
   }
 
-  addOrUpdate(entity: MissionReport): void{
-    if(entity.missionReportType && entity.missionReportType.id != 0)
-      this.reportTypeSubject.addOrUpdate(entity.missionReportType);
-
-    super.addOrUpdate(entity);
+  addOrReplace(entity: MissionReport): void{
+    if(entity.missionReportType && entity.missionReportType.id != 0){
+        this.reportTypeSubject.addOrReplace(entity.missionReportType);
+        entity.missionReportTypeId = entity.missionReportType.id;
+        entity.missionReportType = null; //Clean up
+    }
+    super.addOrReplace(entity);
   }
 }

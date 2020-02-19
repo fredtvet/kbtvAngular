@@ -6,6 +6,7 @@ import { MissionImage } from 'src/app/shared';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConnectionService } from '../connection.service';
+import { LocalStorageService } from '../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,17 +17,16 @@ export class MissionImageService extends BaseMissionChildService<MissionImage> {
     apiService: ApiService,
     dataSubject: MissionImageSubject,
     connectionService: ConnectionService,
+    localStorageService: LocalStorageService
   ){
-    super(apiService, dataSubject, connectionService);
+    super(apiService, dataSubject, connectionService, localStorageService, "/MissionImages");
   }
 
   getByMissionId$(missionId: number):Observable<MissionImage[]>{
-    return super.getByMissionId$(missionId); //No http support
+    return super.getByMissionId$(missionId);
   }
 
   addImages$(missionId:number, files: FileList): Observable<MissionImage[]>{
-    if(!this.isOnline) return null;
-    this.setUrl(missionId);
     const formData: FormData = new FormData();
 
     for(let i = 0; i < files.length; i++){
@@ -34,26 +34,12 @@ export class MissionImageService extends BaseMissionChildService<MissionImage> {
     }
 
     return this.apiService
-                .post(`${this.uri}`, formData)
+                .post(`${this.uri}/${missionId}`, formData)
                 .pipe(map(data =>{
-                  this.dataSubject.addOrUpdateRange(data);
+                  this.dataSubject.addOrReplaceRange(data);
                   return data;
                 }));
   }
-
-  delete$(id: number): Observable<boolean> {
-    this.setUrl();
-    return super.delete$(id);
-  }
-
-  setUrl(missionId: number = null): void{
-    if(missionId !== null) this.uri = `/Missions/${missionId}/MissionImages`;
-    else this.uri = `/Missions/MissionImages/`;
-  }
-
-  getAll$(): Observable<MissionImage[]> {return undefined}
-
-  get$(id: number):Observable<MissionImage> {return undefined}
 
   add$(entity: MissionImage): Observable<MissionImage>{return undefined}
 

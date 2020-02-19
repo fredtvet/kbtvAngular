@@ -29,7 +29,7 @@ export class MissionNoteFormComponent {
     let id = +this.route.snapshot.paramMap.get('id');
 
     if(!id) this.isCreateForm = true;
-    else this.missionNoteService.getDetails$(id)
+    else this.missionNoteService.get$(id)
             .subscribe(result => this.note = result);
   }
 

@@ -4,6 +4,7 @@ import { BaseService } from './base.service';
 import { ApiService } from '../api.service';
 import { EmployerSubject } from '../../subjects/employer.subject';
 import { ConnectionService } from '../connection.service';
+import { LocalStorageService } from '../local-storage.service';
 
 
 @Injectable({
@@ -16,9 +17,9 @@ export class EmployerService extends BaseService<Employer> {
     apiService: ApiService,
     dataSubject: EmployerSubject,
     connectionService: ConnectionService,
+    localStorageService: LocalStorageService
   ){
-    super(apiService, dataSubject, connectionService);
-    this.uri = "/Employers";
+    super(apiService, dataSubject, connectionService, localStorageService, "/Employers");
   }
 
 }
