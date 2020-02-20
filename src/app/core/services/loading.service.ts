@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, distinctUntilChanged } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +9,12 @@ import { delay } from 'rxjs/operators';
 export class LoadingService {
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  public loading$ = this.loadingSubject.asObservable().pipe(delay(10));
+  public loading$ = this.loadingSubject.asObservable().pipe(distinctUntilChanged());
 
   constructor() { }
 
   setLoading(loading: boolean){
+    console.log(loading);
     this.loadingSubject.next(loading);
   }
 }

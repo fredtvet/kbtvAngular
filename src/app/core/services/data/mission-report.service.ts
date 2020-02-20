@@ -3,10 +3,12 @@ import { MissionReport, MissionReportType } from 'src/app/shared';
 import { BaseMissionChildService } from './base-mission-child.service';
 import { MissionReportSubject } from '../../subjects/mission-report.subject';
 import { ApiService } from '../api.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { ConnectionService } from '../connection.service';
 import { LocalStorageService } from '../local-storage.service';
+import { NotificationService } from '../notification.service';
+import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +17,13 @@ import { LocalStorageService } from '../local-storage.service';
 export class MissionReportService extends BaseMissionChildService<MissionReport> {
 
   constructor(
+    notificationService: NotificationService,
     apiService: ApiService,
     dataSubject: MissionReportSubject,
     connectionService: ConnectionService,
     localStorageService: LocalStorageService
   ){
-    super(apiService, dataSubject, connectionService, localStorageService, "/MissionReports");
+    super(notificationService, apiService, dataSubject, connectionService, localStorageService, "/MissionReports");
   }
 
   getByMissionId$(missionId: number):Observable<MissionReport[]>{
@@ -28,6 +31,10 @@ export class MissionReportService extends BaseMissionChildService<MissionReport>
   }
 
   addReport$(missionId:number, reportType: MissionReportType, files: FileList): Observable<MissionReport>{
+    if(!this.isOnline)
+    return throwError('Du må være tilkoblet internett for å legge til rapporter.')
+            .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+
     const formData: FormData = new FormData();
     formData.append('file', files[0], files[0].name);
     formData.append('MissionReportType',JSON.stringify(reportType));

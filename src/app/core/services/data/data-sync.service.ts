@@ -16,7 +16,9 @@ import { MissionReportSubject } from '../../subjects/mission-report.subject';
 import { MissionSubject } from '../../subjects/mission.subject';
 import { ReportTypeSubject } from '../../subjects/report-type.subject';
 import { ApiService } from '../api.service';
-import { retry, tap } from 'rxjs/operators';
+import { retry, tap, catchError } from 'rxjs/operators';
+import { NotificationService } from '../notification.service';
+import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
 
 
 @Injectable({
@@ -34,6 +36,7 @@ export class DataSyncService {
   constructor(
     private apiService: ApiService,
     private connectionService: ConnectionService,
+    private notificationService: NotificationService,
     private employerService: EmployerService,
     private missionTypeService: MissionTypeService,
     private missionImageService: MissionImageService,
@@ -66,7 +69,7 @@ export class DataSyncService {
   }
 
   syncAll(): Observable<any>{
-
+    console.log('sync')
     let fromDate = this.missionSubject.getTimestamp(); //Should get earliest of all subjects
 
     return this.apiService
@@ -79,6 +82,10 @@ export class DataSyncService {
         this.missionNoteSubject.sync(data.missionNoteSync);
         this.missionReportSubject.sync(data.missionReportSync);
         this.reportTypeSubject.sync(data.missionReportTypeSync);
+        this.notificationService.setNotification('Synkronisert!')
+      }),catchError(err => {
+        this.notificationService.setNotification('Noe gikk feil med synkroniseringen!',NOTIFICATIONS.Error)
+        throw err;
       }))
   }
 

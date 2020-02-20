@@ -7,6 +7,7 @@ import { ConnectionService } from '../connection.service';
 import { take, filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '../local-storage.service';
+import { NotificationService } from '../notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,21 +16,30 @@ import { LocalStorageService } from '../local-storage.service';
 export class MissionService extends BaseService<Mission> {
 
   constructor(
+    notificationService: NotificationService,
     apiService: ApiService,
-    dataSubject: MissionSubject,
+    protected dataSubject: MissionSubject,
     connectionService: ConnectionService,
     localStorageService: LocalStorageService
   ){
-    super(apiService, dataSubject, connectionService, localStorageService, "/Missions");
+    super(notificationService, apiService, dataSubject, connectionService, localStorageService, "/Missions");
   }
 
-  getFiltered$(finished:boolean = false, searchString?: string): Observable<Mission[]>{
+  getFiltered$(onlyActiveMissions:boolean = true, searchString?: string): Observable<Mission[]>{
     return this.dataSubject.data$.pipe(map(arr => {
+
+      if(onlyActiveMissions)
+        arr = arr.filter(x => x.finished == false);
+
       if(searchString !== null)
-        return arr.filter(x => x.address.includes(searchString) && x.finished == !finished);
-      else
-        return arr.filter(x => x.finished == !finished);
+        arr = arr.filter(x => x.address.toLowerCase().includes(searchString.toLowerCase()));
+
+      return arr;
     }))
+  }
+
+  getHistory$(count: number = null){
+    return this.dataSubject.getHistory$(count);
   }
 
 }

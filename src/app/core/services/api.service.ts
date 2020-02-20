@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable ,  throwError } from 'rxjs';
 import { catchError, delay, tap } from 'rxjs/operators';
+import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,33 +12,46 @@ import { catchError, delay, tap } from 'rxjs/operators';
 export class ApiService {
   constructor(
     private http: HttpClient,
+    private loadingService: LoadingService
   ) { }
 
-  private formatErrors(response: any) {
+  private handleErrors(response: any) {
     return  throwError(response.error);
   }
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
+    this.loadingService.setLoading(true)
     return this.http.get(`${environment.apiUrl}${path}`, { params })
-      .pipe(catchError(this.formatErrors));
+      .pipe(
+        tap(x => this.loadingService.setLoading(false)),
+        catchError(this.handleErrors)
+      );
   }
 
   put(path: string, body: Object = {}): Observable<any> {
-    console.log(body);
-    return this.http.put(
-      `${environment.apiUrl}${path}`, body
-    ).pipe(catchError(this.formatErrors), tap(console.log));
+    this.loadingService.setLoading(true)
+    return this.http.put( `${environment.apiUrl}${path}`, body)
+      .pipe(
+        tap(x => this.loadingService.setLoading(false)),
+        catchError(this.handleErrors)
+      );
   }
 
   post(path: string, body: any): Observable<any> {
-    return this.http.post(
-      `${environment.apiUrl}${path}`, body
-    ).pipe(catchError(this.formatErrors));
+    this.loadingService.setLoading(true)
+    return this.http.post(`${environment.apiUrl}${path}`, body)
+      .pipe(
+        tap(x => this.loadingService.setLoading(false)),
+        catchError(this.handleErrors)
+      );
   }
 
   delete(path: string): Observable<any> {
-    return this.http.delete(
-      `${environment.apiUrl}${path}`
-    ).pipe(catchError(this.formatErrors));
+    this.loadingService.setLoading(true)
+    return this.http.delete( `${environment.apiUrl}${path}` )
+      .pipe(
+        tap(x => this.loadingService.setLoading(false)),
+        catchError(this.handleErrors)
+      );
   }
 }

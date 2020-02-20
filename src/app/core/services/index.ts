@@ -23,5 +23,4 @@ export * from './data/mission.service';
 export * from './data/mission-image.service';
 export * from './data/mission-note.service';
 export * from './data/mission-report.service';
-export * from './data/mission-details.service';
 

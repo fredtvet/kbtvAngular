@@ -5,6 +5,7 @@ import { ApiService } from '../api.service';
 import { ReportTypeSubject } from '../../subjects/report-type.subject';
 import { ConnectionService } from '../connection.service';
 import { LocalStorageService } from '../local-storage.service';
+import { NotificationService } from '../notification.service';
 
 
 @Injectable({
@@ -14,12 +15,13 @@ import { LocalStorageService } from '../local-storage.service';
 export class ReportTypeService extends BaseService<MissionReportType> {
 
   constructor(
+    notificationService: NotificationService,
     apiService: ApiService,
     dataSubject: ReportTypeSubject,
     connectionService: ConnectionService,
     localStorageService: LocalStorageService,
   ){
-    super(apiService, dataSubject, connectionService, localStorageService, "/MissionReportTypes");
+    super(notificationService, apiService, dataSubject, connectionService, localStorageService, "/MissionReportTypes");
   }
 
 }

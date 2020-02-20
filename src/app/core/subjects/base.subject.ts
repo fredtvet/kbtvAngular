@@ -1,6 +1,6 @@
 import { BaseEntity, DbSync  } from 'src/app/shared/models';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, tap, skip } from 'rxjs/operators';
+import { map, tap, skip, distinctUntilChanged, share, delay } from 'rxjs/operators';
 import { LocalStorageService } from '../services/local-storage.service';
 
 export abstract class BaseSubject<T extends BaseEntity> {
@@ -17,7 +17,7 @@ export abstract class BaseSubject<T extends BaseEntity> {
     this.timestampKey = this.storageKey.concat('/timestamp');
 
     this.dataSubject = new BehaviorSubject<T[]>(this.localStorageService.get(this.storageKey) || []);
-    this.data$ = this.dataSubject.asObservable();
+    this.data$ = this.dataSubject.asObservable().pipe(distinctUntilChanged());
 
     this.data$.pipe(skip(1)).subscribe(data => {
       this.localStorageService.add(this.storageKey, data);
@@ -35,6 +35,10 @@ export abstract class BaseSubject<T extends BaseEntity> {
 
   get$(id: number): Observable<T>{
     return this.data$.pipe(map(arr => arr.find(e => e.id == id)));
+  }
+
+  getRange$(ids: number[]): Observable<T[]>{
+    return this.data$.pipe(map(arr => arr.filter(d => ids.includes(d.id))));
   }
 
   addOrReplace(entity: T): void{
@@ -60,11 +64,7 @@ export abstract class BaseSubject<T extends BaseEntity> {
   }
 
   delete(id: number): void{
-    this.dataSubject.next(
-      this.dataSubject.value.filter(d => {
-        return d.id !== id
-      })
-    );
+    this.dataSubject.next(this.dataSubject.value.filter(d => d.id != id));
   }
 
   deleteRange(ids: number[]){
@@ -85,7 +85,6 @@ export abstract class BaseSubject<T extends BaseEntity> {
   }
 
   getTimestamp(): string{
-    console.log(this.localStorageService.get(this.timestampKey));
     return this.localStorageService.get(this.timestampKey);
   }
 

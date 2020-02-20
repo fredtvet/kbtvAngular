@@ -4,8 +4,8 @@ import { BaseSubject } from './base.subject';
 import { MissionTypeSubject } from './mission-type.subject';
 import { EmployerSubject } from './employer.subject';
 import { LocalStorageService } from '../services/local-storage.service';
-import { Observable, combineLatest, of } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { Observable, combineLatest, of, BehaviorSubject } from 'rxjs';
+import { switchMap, map, tap, distinctUntilChanged, skip } from 'rxjs/operators';
 import { MissionImageSubject } from './mission-image.subject';
 import { MissionReportSubject } from './mission-report.subject';
 import { MissionNoteSubject } from './mission-note.subject';
@@ -15,6 +15,13 @@ import { MissionNoteSubject } from './mission-note.subject';
 })
 
 export class MissionSubject extends BaseSubject<Mission> {
+
+  private historyKey: string = "missions/history"
+
+  private missionHistory: BehaviorSubject<number[]>;
+
+  private history$: Observable<number[]>;
+
   constructor(
     private missionTypeSubject: MissionTypeSubject,
     private employerSubject: EmployerSubject,
@@ -22,10 +29,22 @@ export class MissionSubject extends BaseSubject<Mission> {
     private missionReportSubject: MissionReportSubject,
     private missionNoteSubject: MissionNoteSubject,
     localStorageService: LocalStorageService
-    ) {super(localStorageService, 'missions');}
+    ) {
+      super(localStorageService, 'missions');
+
+      this.missionHistory = new BehaviorSubject<number[]>(this.localStorageService.get(this.historyKey) || []);
+      this.history$ = this.missionHistory.asObservable().pipe(distinctUntilChanged());
+
+      this.history$.pipe(skip(1)).subscribe(data => {
+        this.localStorageService.add(this.historyKey, data);
+      });
+
+    }
 
   get$(id: number):Observable<Mission>{
-    return super.get$(id).pipe(switchMap(data => {
+    return super.get$(id).pipe(
+      tap(x => this.addToHistory(x.id)),
+      switchMap(data => {
       if(data === undefined || data === null) return of(undefined);
 
       let employerSub = this.employerSubject.get$(data.employerId);
@@ -51,10 +70,27 @@ export class MissionSubject extends BaseSubject<Mission> {
   }
 
   delete(id: number): void{
+    console.log(id);
     super.delete(id);
     this.missionImageSubject.deleteByMissionId$(id);
     this.missionNoteSubject.deleteByMissionId$(id);
     this.missionReportSubject.deleteByMissionId$(id);
+  }
+
+  getHistory$(count: number = null){
+    return this.history$.pipe(switchMap(x => {
+      if(count == null) count = x.length - 1;
+      return this.getRange$(x.slice(0, count))
+    }))
+  }
+
+  private addToHistory(id: number){
+    let arr = this.missionHistory.value;
+
+    arr = arr.filter(x => x != id) //Remove id if already in array
+    console.log(arr);
+    arr.unshift(id); //Add id to start
+    this.missionHistory.next(arr);
   }
 
   private addForeigns(entity: Mission): Mission{

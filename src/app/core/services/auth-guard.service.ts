@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate {
     if(route.data['allowedRoles']){
       if(!route.data['allowedRoles'].includes(this.identityService.getCurrentUser().role)){
         this.notificaitonService.setNotification('Du mangler riktig autorisasjon for å gå inn på denne siden.',NOTIFICATIONS.Error)
-        return this.router.navigate(['/hjem']); //Should navigate to a forbidden component
+        return this.router.navigate(['/hjem']);
       }
     }
 

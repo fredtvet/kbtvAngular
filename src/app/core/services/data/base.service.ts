@@ -1,11 +1,12 @@
 import { BaseEntity } from 'src/app/shared/models';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, tap, retry } from 'rxjs/operators';
 import { BaseSubject } from '../../subjects/base.subject';
 import { ApiService } from '../api.service';
 import { ConnectionService } from '../connection.service';
 import { LocalStorageService } from '../local-storage.service';
-import { createOfflineCompileUrlResolver } from '@angular/compiler';
+import { NotificationService } from '../notification.service';
+import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
 
 export abstract class BaseService<T extends BaseEntity>{
 
@@ -13,7 +14,9 @@ export abstract class BaseService<T extends BaseEntity>{
   protected httpGetLoaded: boolean = false;
   protected isOnline: boolean = false;
 
+
   constructor(
+    protected notificationService: NotificationService,
     protected apiService: ApiService,
     protected dataSubject: BaseSubject<T>,
     protected connectionService: ConnectionService,
@@ -44,7 +47,8 @@ export abstract class BaseService<T extends BaseEntity>{
 
   add$(entity: T): Observable<T>{
 
-    if(!this.isOnline) return null;
+    if(!this.isOnline) return throwError('Du må være tilkoblet internett for å legge til ting.')
+      .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
 
     return this.apiService
                 .post(`${this.uri}`, entity)
@@ -57,7 +61,9 @@ export abstract class BaseService<T extends BaseEntity>{
 
   update$(entity: T): Observable<T>{
 
-    if(!this.isOnline) return null;
+    if(!this.isOnline)
+      return throwError('Du må være tilkoblet internett for å oppdatere ting.')
+              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
 
     return this.apiService.put(`${this.uri}/${entity.id}`, entity)
       .pipe(map(data => {
@@ -68,7 +74,9 @@ export abstract class BaseService<T extends BaseEntity>{
 
   delete$(id: number): Observable<boolean> {
 
-    if(!this.isOnline) return null;
+    if(!this.isOnline)
+      return throwError('Du må være tilkoblet internett for å slette ting.')
+              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
 
     return this
             .apiService

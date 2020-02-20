@@ -3,8 +3,9 @@ import { Observable ,  BehaviorSubject ,  ReplaySubject } from 'rxjs';
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
-import { map ,  distinctUntilChanged } from 'rxjs/operators';
+import { map ,  distinctUntilChanged, skip } from 'rxjs/operators';
 import { Identity, User } from 'src/app/shared/models';
+import { LocalStorageService } from './local-storage.service';
 
 
 @Injectable({
@@ -12,32 +13,36 @@ import { Identity, User } from 'src/app/shared/models';
 })
 
 export class IdentityService {
-  private currentUserSubject = new BehaviorSubject<User>({} as User);
-  public currentUser$ = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
-
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser$: Observable<User>;
+  private storageKey = "identity"
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
   public isAuth: boolean = false;
 
   constructor (
     private apiService: ApiService,
+    private localStorageService: LocalStorageService,
     private jwtService: JwtService
   ) {
-    this.initalizeUserFromToken(); //Primarily to get role claim asap
+    this.currentUserSubject = new BehaviorSubject<User>(this.localStorageService.get(this.storageKey) || new User());
+    this.currentUser$ =  this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
+
+    this.currentUser$.pipe(skip(1)).subscribe(data => {
+      this.localStorageService.add(this.storageKey, data); //Consider excluding username from localstorage
+    });
   }
 
   populate(){
     if(this.jwtService.getToken()){
       this.apiService.get('/auth')
-      .subscribe(
-        data => this.setAuth(data),
-        //error => this.purgeAuth(), //Prevents offline use
-      );
-    }else
-      this.purgeAuth();
+      .subscribe(data => this.setAuth(data));
+    }
+    else this.purgeAuth();
   }
 
   setAuth(identity: Identity) {
+    console.log('auth')
     // Save JWT sent from server in localstorage
     this.jwtService.saveToken(identity.token.replace("Bearer ", ""));
     // Set current user data into observable
@@ -60,6 +65,7 @@ export class IdentityService {
     return this.apiService.post('/auth/login', credentials)
       .pipe(map(
       user => {
+        console.log(user);
         this.setAuth(user);
         return user;
       }
@@ -82,6 +88,7 @@ export class IdentityService {
   }
 
   updateCurrentUser(user: User): Observable<User> {
+    user.role = this.currentUserSubject.value.role;
     return this.apiService
     .put('/auth', user)
     .pipe(map(data => {
@@ -97,15 +104,6 @@ export class IdentityService {
     }
     return this.apiService
       .put('/auth/changePassword', obj);
-  }
-
-  private initalizeUserFromToken(){
-    let token = this.jwtService.getDecodedToken();
-    if(!token) return null;
-    let user = new User();
-    user.role = token['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-
-    this.currentUserSubject.next(user);
   }
 
 }

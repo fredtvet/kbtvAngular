@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { ConnectionService } from '../connection.service';
 import { LocalStorageService } from '../local-storage.service';
 import { map } from 'rxjs/operators';
+import { NotificationService } from '../notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,13 @@ import { map } from 'rxjs/operators';
 export class MissionNoteService extends BaseMissionChildService<MissionNote> {
 
   constructor(
+    notificationService: NotificationService,
     apiService: ApiService,
     dataSubject: MissionNoteSubject,
     connectionService: ConnectionService,
     localStorageService: LocalStorageService
   ){
-    super(apiService, dataSubject, connectionService, localStorageService, "/MissionNotes");
+    super(notificationService, apiService, dataSubject, connectionService, localStorageService, "/MissionNotes");
   }
 
   getByMissionId$(missionId: number):Observable<MissionNote[]>{

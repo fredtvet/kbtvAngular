@@ -17,8 +17,10 @@ export class NotificationService {
         this.openSnackBar(message, 'check_circle', 2000, 'notification', 'color-green');
         break;
       case NOTIFICATIONS.Error:
-        this.openSnackBar(message, 'error', 3500, 'notification-warn');
+        this.openSnackBar(message, 'error', 3500, 'notification-error');
         break;
+      case NOTIFICATIONS.Warning:
+        this.openSnackBar(message, 'warning', 300500, 'notification', 'color-primary')
     }
 
   }
