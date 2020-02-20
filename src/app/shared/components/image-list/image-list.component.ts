@@ -87,6 +87,4 @@ export class ImageListComponent implements OnInit {
   trackById(index:number, image:any): number {
     return image.id;
   }
-
-  ngOnChanges(){console.log(this.images)}
 }

@@ -8,3 +8,5 @@ export * from './search-bar/search-bar.component';
 export * from './notification/notification.component';
 export * from './vert-menu/vert-menu-parent.extension';
 export * from './mission-list-view/mission-list-view.component';
+export * from './add-to-home-screen/add-to-home-screen.component';
+export * from './submit-button/submit-button.component';

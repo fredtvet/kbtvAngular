@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-bar',
@@ -30,18 +32,17 @@ export class SearchBarComponent implements OnInit {
   @Output() searchEvent = new EventEmitter();
   @Output() hide = new EventEmitter();
 
-  private lastSearch: string = "";
+  private searchUpdated: Subject<string> = new Subject();
 
-  public searchInput: string = "";
-
-  constructor() { }
+  constructor() {
+    this.searchUpdated.asObservable()
+      .pipe(debounceTime(200), distinctUntilChanged()).subscribe(data => this.searchEvent.emit(data));// accept only relevant chars
+  }
 
   ngOnInit() {
   }
 
-  handleSearch(){
-    if(this.lastSearch == this.searchInput) return false;
-    this.lastSearch = this.searchInput;
-    this.searchEvent.emit(this.searchInput);
+  onSearch(input: string){
+    this.searchUpdated.next(input)
   }
 }

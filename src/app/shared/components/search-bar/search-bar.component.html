@@ -2,12 +2,8 @@
 
 <mat-toolbar class="search_toolbar p-0 primary-darker" color="primary" [@showHide]="isHidden ? 'hide' : 'show'">
 
-    <button (click)="handleSearch()" mat-icon-button aria-label="Search">
-        <mat-icon>search</mat-icon>
-    </button>
-
-    <mat-form-field class="search_input" floatLabel=never color="primary">
-        <input [(ngModel)]="searchInput" type="search" matInput placeholder="Søk" (keyup.enter)="handleSearch()" (keyup.escape)="searchInput='';">
+    <mat-form-field class="search_input ml-3" floatLabel=never color="primary">
+        <input type="search" matInput placeholder="Søk" (keyup)="onSearch($event.target.value)">
     </mat-form-field>
 
     <button (click)="hide.emit()" mat-icon-button aria-label="Cancel search" >
