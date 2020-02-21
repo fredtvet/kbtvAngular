@@ -37,6 +37,7 @@ export class MissionReportFormComponent implements OnInit {
   }
 
   onSubmit(){
+
     let existingReportType =
         this.types.find(x => x.name === this.reportTypeName.value);
 
@@ -44,7 +45,8 @@ export class MissionReportFormComponent implements OnInit {
       this.reportTypeId.setValue(existingReportType.id);
 
     const value = { files: this.files, reportType: this.reportType.value };
-    this.dialogRef.close(value);
+    if(this.reportForm.dirty && this.files != null && this.files.length > 0)
+      this.dialogRef.close(value);
   }
 
   changeFile(e){

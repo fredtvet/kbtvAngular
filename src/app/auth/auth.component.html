@@ -1,7 +1,7 @@
 
 <div class="auth-container">
   <form [formGroup]="authForm" (ngSubmit)="submitForm()" class="auth-form">
-    <img src="assets/android-chrome-144x144.png" class="m-4" style="width:120px;height:120px" />
+    <img src="assets/icons/icon-144x144.png" class="m-4" style="width:120px;height:120px" />
 
     <fieldset>
       <mat-form-field>
@@ -19,12 +19,20 @@
           type="password" />
       </mat-form-field>
     </fieldset>
-    <button mat-raised-button color="primary" [disabled]="!authForm.valid" type="submit">
+    <button mat-raised-button color="primary"[disabled]="!authForm.valid" type="submit">
       <mat-icon>lock_open</mat-icon>
       Logg inn
     </button>
-
   </form>
+
+<div style="position:absolute;bottom:0;padding:16px;width:100%">
+  <app-add-to-home-screen ></app-add-to-home-screen>
 </div>
+
+
+
+
+</div>
+
 
 

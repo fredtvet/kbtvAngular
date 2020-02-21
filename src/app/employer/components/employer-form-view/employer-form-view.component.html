@@ -21,5 +21,8 @@
       </mat-error>
     </mat-form-field>
 
-    <button (click)="onSubmit()" [disabled]="this.employerForm.invalid" mat-raised-button color="primary">Lagre</button>
+    <app-submit-button
+      [disabled]="employerForm.invalid || employerForm.pristine"
+      (click)="onSubmit()">
+    </app-submit-button>
 </form>

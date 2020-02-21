@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
-import { EmployerService, NotificationService, MissionTypeService, MissionService } from 'src/app/core';
+import { EmployerService, NotificationService, MissionTypeService, MissionService, LoadingService } from 'src/app/core';
 import { Mission, MissionType, Employer } from 'src/app/shared';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -19,6 +19,8 @@ export class MissionFormComponent implements OnInit {
   mission$: Observable<Mission>;
   missionTypes$: Observable<MissionType[]>;
   employers$: Observable<Employer[]>;
+
+  loading$: Observable<boolean>;
 
   constructor(
     private employerService: EmployerService,

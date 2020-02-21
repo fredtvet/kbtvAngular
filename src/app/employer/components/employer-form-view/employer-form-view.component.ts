@@ -51,7 +51,7 @@ export class EmployerFormViewComponent implements OnInit
 
     onSubmit(){
       const {value, valid} = this.employerForm;
-      if(valid) this.formSubmitted.emit(value);
+      if(valid && this.employerForm.dirty) this.formSubmitted.emit(value);
     }
 
     handleAddressChange(googleAddress){

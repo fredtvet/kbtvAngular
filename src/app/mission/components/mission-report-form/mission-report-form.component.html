@@ -14,10 +14,11 @@
 
     <input (change)="changeFile($event)" type="file">
     <br />
-    <button (click)="onSubmit()" [disabled]="this.reportForm.invalid || !this.files" mat-raised-button color="primary">
-      <mat-icon>cloud_upload</mat-icon>
-      Last opp
-    </button>
+    <app-submit-button
+      icon="cloud_upload"
+      [disabled]="reportForm.invalid || reportForm.pristine || !this.files"
+      (click)="onSubmit()">
+    </app-submit-button>
   </form>
 
 

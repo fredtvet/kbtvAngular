@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { MissionDetails, ROLES, Mission, MissionNote, MissionImage, MissionReport } from 'src/app/shared';
+import { ROLES, Mission, MissionNote, MissionImage, MissionReport } from 'src/app/shared';
 
 @Component({
   selector: 'app-mission-details-view',

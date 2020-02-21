@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog} from '@angular/material';
 import { Employer, ConfirmDeleteDialogComponent, ROLES, VertMenuParentExtension, NavAction } from 'src/app/shared';
-import { EmployerService, NotificationService } from 'src/app/core';
+import { EmployerService, NotificationService, LoadingService } from 'src/app/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-employer-form',
@@ -23,6 +23,8 @@ export class EmployerFormComponent extends VertMenuParentExtension {
 
   employer: Employer;
 
+  loading$: Observable<boolean>;
+
   isCreateForm: boolean = false;
 
   private employerSub: Subscription = new Subscription();
@@ -33,7 +35,7 @@ export class EmployerFormComponent extends VertMenuParentExtension {
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog
-  ){ super(); }
+  ){super();}
 
     ngOnInit(){
       let id = this.route.snapshot.paramMap.get('id');

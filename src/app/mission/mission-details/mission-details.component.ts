@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { NavAction, MissionDetails, ConfirmDeleteDialogComponent, ROLES, MissionNote, VertMenuParentExtension, Mission, MissionReport, MissionImage } from 'src/app/shared';
-import { NotificationService, MissionService, MissionDetailsService, MissionImageService, MissionReportService, MissionNoteService } from 'src/app/core';
+import { NavAction, ConfirmDeleteDialogComponent, ROLES, MissionNote, VertMenuParentExtension, Mission, MissionReport, MissionImage, NOTIFICATIONS } from 'src/app/shared';
+import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, LoadingService } from 'src/app/core';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
 import { take, map } from 'rxjs/operators';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
@@ -19,12 +19,12 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
 
   mainNavConfig = new MainNavConfig();
 
-  missionId: number;
-
+  mission: Mission = new Mission();
   mission$: Observable<Mission>;
   images$: Observable<MissionImage[]>;
   notes$: Observable<MissionNote[]>;
   reports$: Observable<MissionReport[]>;
+  loading$: Observable<boolean>;
 
   constructor(
     private missionService: MissionService,
@@ -34,24 +34,27 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog) { super(); }
+    public dialog: MatDialog) {super();}
 
   ngOnInit(){
 
-    this.route.params.pipe(take(1)).subscribe(params => this.missionId = params['id']);
+    this.mission.id = +this.route.snapshot.paramMap.get('id');
 
-    this.mission$ = this.missionService.get$(this.missionId);
-    this.images$ = this.missionImageService.getByMissionId$(this.missionId);
-    this.reports$ = this.missionReportService.getByMissionId$(this.missionId);
+    this.mission$ = this.missionService.get$(this.mission.id);
+    this.images$ = this.missionImageService.getByMissionId$(this.mission.id);
+    this.reports$ = this.missionReportService.getByMissionId$(this.mission.id);
+    this.notes$ = this.missionNoteService.getByMissionId$(this.mission.id);
 
-    this.notes$ = this.missionNoteService.getByMissionId$(this.missionId);
     this.configureMainNav()
-    this.mission$.subscribe(x => this.addMissionToMainNav(x));
+    this.mission$.subscribe(x => {
+      this.mission = x;
+      this.addMissionToMainNav(x)
+    });
   }
 
   uploadImages(files: FileList)
   {
-    this.missionImageService.addImages$(this.missionId, files).pipe(take(1))
+    this.missionImageService.addImages$(this.mission.id, files).pipe(take(1))
       .subscribe(data => this.notificationService.setNotification(`Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`));
   }
 
@@ -73,7 +76,7 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
 
   createReport(data){
     if(!data) return null;
-    this.missionReportService.addReport$(this.missionId, data.reportType, data.files)
+    this.missionReportService.addReport$(this.mission.id, data.reportType, data.files)
       .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport lastet opp'));
   }
 
@@ -82,9 +85,9 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
   }
 
   private deleteMission(){
-    this.missionService.delete$(this.missionId).subscribe(
-      confirmed => {
-        if(confirmed){
+    this.missionService.delete$(this.mission.id).subscribe(
+      deleted => {
+        if(deleted){
           this.onBack();
           this.notificationService.setNotification('Vellykket! Oppdrag slettet.')
         }
@@ -93,11 +96,11 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
   }
 
   private editMission = (e: string) => {
-    this.router.navigate(['oppdrag', this.missionId, 'rediger'])
+    this.router.navigate(['oppdrag', this.mission.id, 'rediger'])
   }
 
   private createNote = (e: string) => {
-    this.router.navigate(['oppdrag', this.missionId, 'notater','ny'])
+    this.router.navigate(['oppdrag', this.mission.id, 'notater','ny'])
   }
 
   private  openCreateReportDialog = (e: string) => {
@@ -122,6 +125,7 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
   }
 
   addMissionToMainNav(mission: Mission){
+    if(mission == undefined) return null;
     if(mission.address !== null){
       this.mainNavConfig.title = mission.address.replace(", Norge","").replace(/,/g, ";");
     }

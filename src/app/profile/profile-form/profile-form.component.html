@@ -19,6 +19,9 @@
       </mat-error>
   </mat-form-field>
 
-  <button (click)="onSubmit()" [disabled]="this.profileForm.invalid" mat-raised-button color="primary">Lagre</button>
+  <app-submit-button
+    [disabled]="profileForm.invalid || profileForm.pristine"
+    (click)="onSubmit()"
+  ></app-submit-button>
 
 </form>

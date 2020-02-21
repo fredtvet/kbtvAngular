@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ROLES, Mission } from '../shared';
 import { MissionService } from '../core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -9,16 +10,15 @@ import { MissionService } from '../core';
 })
 export class HomeComponent implements OnInit {
   public ROLES = ROLES;
-  constructor(private missionService: MissionService) { }
 
   newestMissions: Mission[] = []
 
-  ngOnInit() {
-    this.missionService
-      .getFiltered$()
-      .subscribe(result => {
-        if(result){this.newestMissions = result.slice(0, 4)}
-      });
+  missionHistory$: Observable<Mission[]>;
+
+  constructor(private missionService: MissionService) {
+    this.missionHistory$ = this.missionService.getHistory$(5);
   }
+
+  ngOnInit() {}
 
 }

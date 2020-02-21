@@ -1,6 +1,8 @@
-export class MissionType {
+import { BaseEntity } from './base-entity.model';
+
+export class MissionType extends BaseEntity {
     constructor(
-      public id: number = null,
+      id: number = null,
       public name: string  = null,
-      ){}
+      ){ super(id) }
   };

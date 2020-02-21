@@ -1,6 +1,5 @@
 export * from './identity.model';
 export * from './employer.model';
-export * from './mission-details.model';
 export * from './mission-image.model';
 export * from './mission-note.model';
 export * from './mission-report.model';

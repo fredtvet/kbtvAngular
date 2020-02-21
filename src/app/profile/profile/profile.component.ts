@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { IdentityService, NotificationService } from 'src/app/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { IdentityService, NotificationService, LoadingService } from 'src/app/core';
 import { User } from 'src/app/shared';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -9,13 +10,15 @@ import { User } from 'src/app/shared';
 })
 export class ProfileComponent implements OnInit {
 
+  user: User;
+  passwordStatus: string;
+  loading$: Observable<boolean>;
+
   constructor(
     private identityService: IdentityService,
     private notificationService: NotificationService,
   ){ }
 
-  public user: User;
-  public passwordStatus: string;
 
   ngOnInit() {
     this.identityService.currentUser$

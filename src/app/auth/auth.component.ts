@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IdentityService, DataSyncService } from '../core';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-auth-page',
@@ -26,10 +27,9 @@ export class AuthComponent {
 
   submitForm() {
     this.identityService
-    .attemptAuth(this.authForm.value)
-    .subscribe(data => {
-      this.dataSyncService.syncAll();
+    .attemptAuth(this.authForm.value).pipe(switchMap(x => {
       this.router.navigateByUrl('/')
-    });
+      return this.dataSyncService.syncAll();
+    })).subscribe();
   }
 }

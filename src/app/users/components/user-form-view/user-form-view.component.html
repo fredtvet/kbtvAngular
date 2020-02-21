@@ -1,5 +1,5 @@
 <form *ngIf="userForm" [formGroup]="userForm" class="form-container" fxLayout="column">
-  <mat-form-field>
+  <mat-form-field *ngIf="this.isCreateForm">
       <input matInput placeholder="Brukernavn"  formControlName="userName" required>
       <mat-error *ngIf="this.userName.invalid">
         Brukernavn er ett obligatorisk felt på minst 4 tegn.
@@ -40,7 +40,10 @@
       </mat-error>
   </mat-form-field>
 
-  <button (click)="onSubmit()" [disabled]="this.userForm.invalid" mat-raised-button color="primary">Lagre</button>
+    <app-submit-button
+      [disabled]="userForm.invalid || userForm.pristine"
+      (click)="onSubmit()">
+    </app-submit-button>
 </form>
 
 

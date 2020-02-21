@@ -26,7 +26,12 @@
    <br />
    <mat-checkbox formControlName="pinned">Viktig?</mat-checkbox>
    <br />
-   <button (click)="onSubmit()" [disabled]="this.noteForm.invalid" mat-raised-button color="primary">Lagre</button>
+
+   <app-submit-button
+    [disabled]="noteForm.invalid || noteForm.pristine"
+    (click)="onSubmit()">
+   </app-submit-button>
+
 
  </form>
 

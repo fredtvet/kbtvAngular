@@ -48,7 +48,10 @@
 
         <mat-checkbox *ngIf="!isCreateForm" formControlName="finished">Er oppdraget ferdig?</mat-checkbox>
 
-        <button (click)="onSubmit()" [disabled]="this.missionForm.invalid" mat-raised-button color="primary">Lagre</button>
+        <app-submit-button
+          [disabled]="missionForm.invalid || missionForm.pristine"
+          (click)="onSubmit()">
+        </app-submit-button>
 
     </form>
 

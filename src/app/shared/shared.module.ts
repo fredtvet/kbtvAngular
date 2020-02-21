@@ -19,7 +19,9 @@ import {
   SearchBarComponent,
   MissionListViewComponent,
   NotificationComponent
-} from './components'
+} from './components';
+import { AddToHomeScreenComponent } from './components/add-to-home-screen/add-to-home-screen.component';
+import { SubmitButtonComponent } from './components/submit-button/submit-button.component'
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import {
     ArraySlicePipe,
     ThumbnailPipe,
     NotificationComponent,
-    MissionListViewComponent
+    MissionListViewComponent,
+    AddToHomeScreenComponent,
+    SubmitButtonComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +71,9 @@ import {
     MainNavComponent,
     BottomNavComponent,
     SearchBarComponent,
-    MissionListViewComponent
+    MissionListViewComponent,
+    AddToHomeScreenComponent,
+    SubmitButtonComponent
   ]
 })
 export class SharedModule { }

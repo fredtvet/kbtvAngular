@@ -18,8 +18,7 @@
     <mat-divider></mat-divider>
 
     <div class="static-page-content" fxFlex>
-      <mat-spinner *ngIf="!(missions$ | async)" class="center-spinner"></mat-spinner>
-      <app-mission-list-view [missions]="(missions$ | async)"></app-mission-list-view>
+      <app-mission-list-view [missions]="missions$ | async"></app-mission-list-view>
     </div>
 
   </div>

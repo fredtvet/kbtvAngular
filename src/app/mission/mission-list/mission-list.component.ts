@@ -34,7 +34,8 @@ export class MissionListComponent extends VertMenuParentExtension{
     }
 
   ngOnInit(){
-    this.missions$ = this.pageInfoSubject.pipe(switchMap(pageInfo => {
+
+    this.missions$ = this.pageInfoSubject.pipe(switchMap(pageInfo => {console.log(pageInfo)
         return this.missionService
           .getFiltered$(pageInfo.onlyActiveMissions, pageInfo.searchString)
     }));

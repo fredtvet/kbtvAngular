@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material';
-import { RolesService, UsersService, NotificationService } from 'src/app/core';
+import { RolesService, UsersService, NotificationService, LoadingService } from 'src/app/core';
 import { User, ConfirmDeleteDialogComponent, ROLES, VertMenuParentExtension, NavAction } from 'src/app/shared';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-form',
@@ -21,6 +22,7 @@ export class UserFormComponent extends VertMenuParentExtension  {
   user: User;
   roles: string[];
 
+  loading$: Observable<boolean>;
 
   constructor(
     private notificationService: NotificationService,
@@ -28,7 +30,7 @@ export class UserFormComponent extends VertMenuParentExtension  {
     private _usersService: UsersService,
     private _router: Router,
     private _route: ActivatedRoute,
-    private _dialog: MatDialog) {  super() }
+    private _dialog: MatDialog) { super();}
 
     ngOnInit(){
       let userName = this._route.snapshot.paramMap.get('userName');

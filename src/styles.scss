@@ -109,17 +109,16 @@ body {
 }
 
 .notification{
-  margin-bottom:62px!important;
+  margin-bottom:($bottom-nav-height + 10) * 1px!important;
   background-color:mat-color($background,"unselected-chip");
   color:mat-color($foreground, "base");
 }
 
-.notification-warn{
-  margin-bottom:62px!important;
-  background-color:$warn;
+.notification-error{
+  margin-bottom:($bottom-nav-height + 10) * 1px!important;
+  background-color:$warn !important;
   color:mat-color($background, "background");
 }
-
 
 .bg-0{
   background-color:mat-color($background,"status-bar");
@@ -199,5 +198,23 @@ body {
 }
 
 
+//Spinner primarily for buttons
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
 
-
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid $bg-dialog;
+  border-top-color: $primary;
+  animation: spinner .8s linear infinite;
+}

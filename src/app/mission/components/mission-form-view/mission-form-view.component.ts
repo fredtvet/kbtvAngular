@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MissionType, Employer, Mission, ROLES } from 'src/app/shared';
+import { LoadingService } from 'src/app/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-mission-form-view',
@@ -28,8 +30,7 @@ export class MissionFormViewComponent implements OnInit {
 
   isCreateForm = false;
 
-  constructor(
-    private _formBuilder: FormBuilder)  { }
+  constructor(private _formBuilder: FormBuilder) {}
 
   ngOnInit(){
     if(this.mission == null){
@@ -80,9 +81,10 @@ export class MissionFormViewComponent implements OnInit {
     if(existingEmployee)
       this.employerId.setValue(existingEmployee.id);
 
+
     const {value, valid} = this.missionForm;
 
-    if(valid) this.formSubmitted.emit(value);
+    if(valid && this.missionForm.dirty) this.formSubmitted.emit(value);
   }
 
   handleAddressChange(googleAddress){

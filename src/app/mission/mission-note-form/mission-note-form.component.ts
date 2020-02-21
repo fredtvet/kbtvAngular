@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { MissionNote } from 'src/app/shared';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
-import { NotificationService, MissionNoteService } from 'src/app/core';
+import { NotificationService, MissionNoteService, LoadingService } from 'src/app/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-mission-note-form',
   templateUrl: './mission-note-form.component.html'
@@ -17,11 +18,13 @@ export class MissionNoteFormComponent {
   note: MissionNote = null;
   missionId: number = null;
 
+  loading$: Observable<boolean>;
+
   constructor(
     private missionNoteService: MissionNoteService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
-    private router: Router)  { }
+    private router: Router)  {}
 
   ngOnInit(){
     this.configureMainNav();
