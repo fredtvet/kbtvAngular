@@ -14,7 +14,6 @@ import { UserFormViewComponent } from './components/user-form-view/user-form-vie
     UserFormViewComponent
   ],
   entryComponents:[
-    UserFormComponent,
     ConfirmDeleteDialogComponent
   ],
   imports: [

@@ -13,7 +13,6 @@ import { EmployerFormViewComponent } from './components/employer-form-view/emplo
     EmployerFormViewComponent
   ],
   entryComponents:[
-    EmployerFormComponent,
     ConfirmDeleteDialogComponent
   ],
   imports: [

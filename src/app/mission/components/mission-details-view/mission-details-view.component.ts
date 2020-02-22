@@ -22,4 +22,8 @@ export class MissionDetailsViewComponent {
 
   constructor() { }
 
+  ngOnChanges(): void {
+    console.log(this.reports)
+  }
+
 }

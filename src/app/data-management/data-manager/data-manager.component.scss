@@ -1,0 +1,22 @@
+@import '../../../variables';
+
+$select-height: 59.5;
+
+::ng-deep .mat-form-field-wrapper{
+  padding-bottom:0!important;
+
+}
+
+::ng-deep .mat-form-field-flex{
+  height:$select-height * 1px!important;
+}
+
+::ng-deep .mat-form-field-underline{
+  margin-bottom: -1.25em!important;
+}
+
+.data-container{
+  width:100%;
+  height:calc(100% - (#{$select-height} * 1px))!important;
+}
+

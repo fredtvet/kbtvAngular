@@ -25,7 +25,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(tap(() => {},
       (err: any) => {
-      if (err instanceof HttpErrorResponse && false) {
+      if (err instanceof HttpErrorResponse) {
         let msg = "Noe gikk feil! Vennligst prøv igjen."
         switch(err.status){
           case 401: //Unauthorized
@@ -36,7 +36,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             break;
           case 404: //NotFound
             msg = "Denne ressursen finnes ikke!"
-            this.router.navigate(['/hjem'])
             break;
           case 500:
           case 501:

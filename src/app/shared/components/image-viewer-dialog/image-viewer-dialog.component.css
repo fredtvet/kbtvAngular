@@ -5,12 +5,12 @@ img{
     transform: translatex(calc(50vw - 50%)) translatey(calc(50vh - 50%));
 }
 
-.left_fab{
+.top_left_fab{
     position:absolute;
     left:10px;
 }
 
-.right_fab{
+.top_right_fab{
     position:absolute;
     right:10px;
 }

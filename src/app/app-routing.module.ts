@@ -36,6 +36,10 @@ const routes: Routes = [
     loadChildren: './users/users.module#UsersModule'
   },
   {
+    path: 'data',
+    loadChildren: './data-management/data-management.module#DataManagementModule'
+  },
+  {
     path: 'oppdrag',
     data: {preload: true },
     loadChildren: './mission/mission.module#MissionModule'

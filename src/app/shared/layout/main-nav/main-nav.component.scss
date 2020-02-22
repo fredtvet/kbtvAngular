@@ -12,20 +12,24 @@
   margin-right:auto;
   margin-left:$content-margin * 1px;
 }
-
+.mat-drawer-container { //Fix for bug on iOs
+  position: unset!important;
+}
 mat-sidenav-container {
   height: 100%;
   padding-bottom:$bottom-nav-height * 1px;
+  z-index:1000;
 }
 
 mat-sidenav-container mat-sidenav {
   width: $sidenav-width * 1px;
-  background-color:$bg-content;
+  background-color:$bg-app-bar;
+  z-index:1000;
 }
 
 mat-sidenav-container mat-sidenav mat-toolbar {
-  height:$main-nav-height * 1px!important;;
-  background-color:$bg-app-bar;
+  height:$main-nav-height * 1px!important;
+  background-color:$bg-dialog;
   @include small-header;
   color:$primary;
 }
@@ -35,7 +39,6 @@ mat-sidenav-container mat-sidenav-content {
 mat-sidenav-container mat-sidenav-content mat-toolbar {
   color:$primary;
   padding:0;
-
 }
 
 .alt_nav{
@@ -45,7 +48,8 @@ mat-sidenav-container mat-sidenav-content mat-toolbar {
 
 .main_nav{
   @include nav;
-  height:$main-nav-height * 1px!important;
+  min-height:$main-nav-height * 1px!important;
+  max-height:$main-nav-height * 1px!important;
 }
 
 .main_content{

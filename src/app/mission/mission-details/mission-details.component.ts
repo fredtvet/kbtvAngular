@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NavAction, ConfirmDeleteDialogComponent, ROLES, MissionNote, VertMenuParentExtension, Mission, MissionReport, MissionImage, NOTIFICATIONS } from 'src/app/shared';
 import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, LoadingService } from 'src/app/core';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
-import { take, map } from 'rxjs/operators';
+import { take, map, tap } from 'rxjs/operators';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
 import { Subscription, Observable } from 'rxjs';
 
@@ -42,8 +42,8 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
 
     this.mission$ = this.missionService.get$(this.mission.id);
     this.images$ = this.missionImageService.getByMissionId$(this.mission.id);
-    this.reports$ = this.missionReportService.getByMissionId$(this.mission.id);
-    this.notes$ = this.missionNoteService.getByMissionId$(this.mission.id);
+    this.reports$ = this.missionReportService.getByMissionId$(this.mission.id).pipe(tap(console.log));
+    this.notes$ = this.missionNoteService.getByMissionId$(this.mission.id)
 
     this.configureMainNav()
     this.mission$.subscribe(x => {
@@ -104,8 +104,8 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
   }
 
   private  openCreateReportDialog = (e: string) => {
-    const deleteDialogRef = this.dialog.open(MissionReportFormComponent);
-    deleteDialogRef.afterClosed().subscribe(data => this.createReport(data));
+    const createDialogRef = this.dialog.open(MissionReportFormComponent);
+    createDialogRef.afterClosed().subscribe(data => this.createReport(data));
   }
 
   private openMissionDeleteDialog = (e: string) => {

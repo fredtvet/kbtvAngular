@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import './variables';
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham-dark.css";
 
 html, body { height: 100%;}
 body {
@@ -8,28 +10,21 @@ body {
   overflow:hidden;
   background-color:$bg-content!important;}
 
-.image-container{
-  margin-top:($content-margin + $tab-header-height) * 1px !important;
-}
-
 .card-container{
-  width:$content-width!important;
-  margin-left:$content-margin  * 1px !important;
-  margin-top:($content-margin + $tab-header-height) * 1px !important;
-  margin-bottom:$content-margin  * 1px !important;
-  padding:$content-margin  * 1px !important;
+  //width:$content-width!important;
+  overflow:auto;
+  position:sticky;
+  margin: $content-margin  * 1px !important;
   background-color:mat-color($background,"app-bar")!important;
 }
 
 .mat-tab-header{
   background-color:$bg-app-bar;
-  position:fixed!important;
-  width:100vw;
+  position:sticky!important;
+  width:100%;
   left:0;
   z-index:90;
 }
-
-.form-title{ color: rgb(255, 255,255,1); font-weight: 500; font-size: 20px; }
 
 .active{
   color: $primary !important;
@@ -49,29 +44,18 @@ body {
 
 .app-form{
   max-width:600px;
-  padding:20px;
+  padding:$content-margin * 1px;
   background-color:mat-color($background,"app-bar");
   color:mat-color($foreground, "base");
   height:auto;
 }
 
-.app-dialog{
-  padding:$content-margin  * 2px !important;;
-  background-color:mat-color($background,"unselected-chip");
-  color:mat-color($foreground, "base");
-  height:auto;
-}
-
-
-
 .action_fab{
-  position:fixed!important;
-  right:10px!important;
-  bottom:($bottom-nav-height + 10) * 1px!important;
+  position:absolute!important;
+  right: $content-margin * 1px!important;
+  bottom: $content-margin * 1px!important;
   z-index:100;
 }
-
-
 
 .mat-icon {
   vertical-align: middle!important;
@@ -98,14 +82,6 @@ body {
 
 .image_viewer_dialog .mat-dialog-container{
   background-color:mat-color($background,"status-bar")!important;
-}
-
-.form_dialog{
-  max-width:none!important;
-}
-
-.form_dialog .mat-dialog-container{
-  padding:0!important;
 }
 
 .notification{
@@ -175,7 +151,7 @@ body {
 .content-header{
   @include small-header;
   color: rgb(255, 255,255,0.7);
-  margin-left:$content-margin * 2px;
+  margin-left:$content-margin * 1px;
   margin-right:$content-margin * 1px;
 }
 

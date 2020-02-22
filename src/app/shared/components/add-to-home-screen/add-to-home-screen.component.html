@@ -1,1 +1,6 @@
-<button *ngIf="showButton" mat-raised-button color="primary" class="w-100">Legg til app</button>
+<button  mat-raised-button color="primary" class="w-100"
+*ngIf="showButton"
+(click)="addToHomeScreen()"
+>
+  Legg til app
+</button>

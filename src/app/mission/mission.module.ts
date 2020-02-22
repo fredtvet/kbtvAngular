@@ -30,10 +30,9 @@ import { MissionNoteFormViewComponent } from './components/mission-note-form-vie
     DatePipe
   ],
   entryComponents:[
-    MissionNoteFormComponent,
-    MissionReportFormComponent,
     ConfirmDeleteDialogComponent,
-    ImageViewerDialogComponent
+    ImageViewerDialogComponent,
+    MissionReportFormComponent
   ],
   imports: [
     SharedModule,

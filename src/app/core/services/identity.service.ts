@@ -88,10 +88,10 @@ export class IdentityService {
   }
 
   updateCurrentUser(user: User): Observable<User> {
-    user.role = this.currentUserSubject.value.role;
     return this.apiService
     .put('/auth', user)
     .pipe(map(data => {
+      data.role = this.currentUserSubject.value.role;
       this.currentUserSubject.next(data);
       return data;
     }));

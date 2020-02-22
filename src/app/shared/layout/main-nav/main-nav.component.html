@@ -100,21 +100,28 @@
 
         <mat-spinner *ngIf="loadingService.loading$ |  async" diameter="24"></mat-spinner>
 
+        <button *ngIf="config.deleteEnabled" (click)="this.deleteEvent.emit(true)" mat-icon-button aria-label="Slett" color="warn">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+
         <ng-container *ngIf="config.searchBarEnabled">
-          <button (click)="toggleSearchBar()" mat-icon-button aria-label="Cancel search">
+          <button (click)="toggleSearchBar()" mat-icon-button aria-label="Avbryt søk">
             <mat-icon>search</mat-icon>
           </button>
 
           <app-search-bar [isHidden]="searchBarHidden" (hide)="toggleSearchBar()" (searchEvent)="this.searchEvent.emit($event)"></app-search-bar>
         </ng-container>
 
+
         <app-vert-menu [actions]="config.vertActions" (event)="this.vertEvent.emit($event)"></app-vert-menu>
 
       </mat-toolbar-row>
+
       <mat-toolbar-row *ngIf="config.altNav"  class="alt_nav_row">
         <mat-icon *ngIf="config.icon">{{ config.icon }}</mat-icon>  &nbsp;
         <span [innerHTML]="config.title"></span>
       </mat-toolbar-row>
+
     </mat-toolbar>
 
     <div class="main_content">
@@ -122,8 +129,9 @@
     </div>
 
 
-    <app-bottom-nav *ngIf="config.bottomNavEnabled" [isHandset$]="isHandset$"></app-bottom-nav>
+
 
   </mat-sidenav-content>
 
 </mat-sidenav-container>
+<app-bottom-nav *ngIf="config.bottomNavEnabled" [isHandset$]="isHandset$"></app-bottom-nav>

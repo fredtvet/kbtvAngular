@@ -5,8 +5,7 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit {
 
@@ -35,12 +34,13 @@ export class ProfileComponent implements OnInit {
   updatePassword(data: any){
     this.identityService.changePassword(data.oldPassword, data.password).subscribe(
       data => this.notificationService.setNotification('Passord oppdatert!'),
+      error => this.passwordStatus = "Nåværende passord stemmer ikke",
       () => this.passwordStatus = ""
     );
   }
 
   confirmPurge(){
-    if(confirm('All data vil bli lastet inn på nytt neste gang du logger inn. Vær oppmerksom på at dette kan kreve mye mobildata om du ikke har Wi-Fi aktivert!')){
+    if(confirm('All data blir lastet inn på nytt neste gang du logger inn. Vær oppmerksom på at dette kan kreve mye mobildata om du ikke har Wi-Fi aktivert!')){
       window.localStorage.clear();
       location.reload();
     }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MainNavComponent, BottomNavComponent, ROLES } from '../shared';
+import { ROLES } from '../shared';
 import { AuthGuard } from '../core';
 import { EmployerListComponent } from './employer-list/employer-list.component';
 import { EmployerFormComponent } from './employer-form/employer-form.component';

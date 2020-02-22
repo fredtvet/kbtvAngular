@@ -2,10 +2,10 @@
 
 
 <mat-toolbar #imageToolBar class="image_toolbar p-0 color-primary" [@showHideToolbar]="toolbarHidden ? 'hide' : 'show'">
-    <button mat-icon-button aria-label="Lukk" class="left_fab" (click)="onNoClick()">
+    <button mat-icon-button aria-label="Lukk" class="top_left_fab" (click)="onNoClick()">
         <mat-icon class="icon_150">chevron_left</mat-icon>
     </button>
-    <app-vert-menu class="right_fab" [actions]="vertActions" (event)="handleVertEvent($event)"></app-vert-menu>
+    <app-vert-menu class="top_right_fab" [actions]="vertActions" (event)="handleVertEvent($event)"></app-vert-menu>
 
 </mat-toolbar>
 

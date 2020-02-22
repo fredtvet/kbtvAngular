@@ -1,0 +1,22 @@
+<app-main-nav [config]="mainNavConfig" (deleteEvent)="openDeleteDialog()">
+  <div class="static-page-container" fxLayout="column" fxLayoutGap="8px">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Velg</mat-label>
+      <mat-select [(ngModel)]="currentTable" (selectionChange)="changeTable()">
+        <mat-option *ngFor="let table of tables" value="{{ table }}">{{ table }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <ag-grid-angular #dataGrid
+      class="ag-theme-balham-dark data-container"
+      rowSelection="multiple"
+      suppressRowClickSelection="true"
+      overlayNoRowsTemplate="Tomt"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      (cellValueChanged)="editCell($event.data)">
+    </ag-grid-angular>
+
+  </div>
+</app-main-nav>

@@ -22,6 +22,7 @@ export class MainNavComponent {
 
   @Output() vertEvent = new EventEmitter();
   @Output() searchEvent = new EventEmitter();
+  @Output() deleteEvent = new EventEmitter();
   @Output() backEvent = new EventEmitter();
 
   ROLES = ROLES;

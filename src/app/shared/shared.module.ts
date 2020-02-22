@@ -9,6 +9,7 @@ import { IfRoleDirective } from './directives/if-role.directive';
 import { MainNavComponent, BottomNavComponent } from './layout';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AgGridModule } from 'ag-grid-angular';
 
 import {
   ConfirmDeleteDialogComponent,
@@ -49,7 +50,8 @@ import { SubmitButtonComponent } from './components/submit-button/submit-button.
     AngularMaterialModule,
     ReactiveFormsModule,
     GooglePlaceModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    AgGridModule.withComponents([]),
   ],
   exports: [
     CommonModule,
@@ -59,6 +61,7 @@ import { SubmitButtonComponent } from './components/submit-button/submit-button.
     AngularMaterialModule,
     ReactiveFormsModule,
     GooglePlaceModule,
+    AgGridModule,
     FlexLayoutModule,
     ConfirmDeleteDialogComponent,
     ImageListComponent,

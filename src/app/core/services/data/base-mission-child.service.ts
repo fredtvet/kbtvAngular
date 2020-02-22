@@ -30,7 +30,7 @@ export abstract class BaseMissionChildService<T extends MissionChild> extends Ba
   add$(entity: T): Observable<T>{
 
     if(!this.isOnline)
-      return throwError('Du må være tilkoblet internett for å legge til bilder.')
+      return throwError('Du må være tilkoblet internett for å legge til.')
               .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
 
     return this.apiService
