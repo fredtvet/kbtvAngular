@@ -41,6 +41,21 @@ export class MissionSubject extends BaseSubject<Mission> {
 
     }
 
+  getAll$(): Observable<Mission[]>{
+    let employerSub = this.employerSubject.getAll$();
+    let typeSub = this.missionTypeSubject.getAll$();
+
+    return combineLatest(employerSub, typeSub).pipe(switchMap(data => {
+      return super.getAll$().pipe(map(missions => {
+        return missions.map(mission => {
+          mission.employer = data[0].find(x => x.id == mission.employerId);
+          mission.missionType = data[1].find(x => x.id == mission.missionTypeId);
+          return mission;
+        })
+      }));
+    }));
+  }
+
   get$(id: number):Observable<Mission>{
     return super.get$(id).pipe(
       tap(x => this.addToHistory(x.id)),
@@ -78,21 +93,35 @@ export class MissionSubject extends BaseSubject<Mission> {
   }
 
   getHistory$(count: number = null){
-    return this.history$.pipe(switchMap(x => {
-      if(count == null) count = x.length - 1;
-      return this.getRange$(x.slice(0, count))
+    return this.history$.pipe(switchMap(ids => {
+      if(count == null) count = ids.length - 1;
+      return this.getRange$(ids.slice(0, count))
+        .pipe(map(data => this.sortHistory(data, ids)))
     }))
+  }
+
+  private sortHistory(missions: Mission[], ids: number[]){
+    let order = {};
+
+    ids.forEach(function (a, i) { order[a] = i; });
+
+    missions.sort(function (a, b) {
+      return order[a.id] - order[b.id];
+    });
+
+    return missions;
   }
 
   private addToHistory(id: number){
     let arr = this.missionHistory.value;
 
     arr = arr.filter(x => x != id) //Remove id if already in array
-    console.log(arr);
     arr.unshift(id); //Add id to start
+    console.log(arr);
     this.missionHistory.next(arr);
   }
 
+  //Add foreign objects to their subjects
   private addForeigns(entity: Mission): Mission{
     let e = entity;
     if(e.missionType && e.missionType.id != 0){

@@ -26,6 +26,8 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
   reports$: Observable<MissionReport[]>;
   loading$: Observable<boolean>;
 
+  missionSub: Subscription = new Subscription();
+
   constructor(
     private missionService: MissionService,
     private missionImageService: MissionImageService,
@@ -46,7 +48,7 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
     this.notes$ = this.missionNoteService.getByMissionId$(this.mission.id)
 
     this.configureMainNav()
-    this.mission$.subscribe(x => {
+    this.missionSub = this.mission$.subscribe(x => {
       this.mission = x;
       this.addMissionToMainNav(x)
     });
@@ -62,7 +64,6 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
     this.missionImageService.delete$(id).pipe(take(1))
       .subscribe(res =>  this.notificationService.setNotification('Vellykket! Bilde slettet'));
   }
-
 
   deleteNote(id: number){
     this.missionNoteService.delete$(id)
@@ -85,10 +86,10 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
   }
 
   private deleteMission(){
+    this.onBack();
     this.missionService.delete$(this.mission.id).subscribe(
       deleted => {
         if(deleted){
-          this.onBack();
           this.notificationService.setNotification('Vellykket! Oppdrag slettet.')
         }
       }
@@ -108,7 +109,7 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
     createDialogRef.afterClosed().subscribe(data => this.createReport(data));
   }
 
-  private openMissionDeleteDialog = (e: string) => {
+  private openDeleteMissionDialog = (e: string) => {
     const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
     deleteDialogRef.afterClosed().subscribe(confirmed => {if(confirmed)this.deleteMission()});
   }
@@ -118,7 +119,7 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
       new NavAction("Legg til rapport", "note_add","createReport", this.openCreateReportDialog, [ROLES.Leder]),
       new NavAction("Legg til notat", "add_comment","createNote", this.createNote),
       new NavAction("Rediger", "edit","edit", this.editMission, [ROLES.Leder]),
-      new NavAction("Slett", "delete_forever", "delete", this.openMissionDeleteDialog, [ROLES.Leder])
+      new NavAction("Slett", "delete_forever", "delete", this.openDeleteMissionDialog, [ROLES.Leder])
     ];
     this.mainNavConfig.vertActions = this.vertActions;
     this.mainNavConfig.altNav = true;
@@ -135,6 +136,10 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
 
   onBack(){
     this.router.navigate(['/oppdrag'])
+  }
+
+  ngOnDestroy(): void {
+    this.missionSub.unsubscribe();
   }
 
 }

@@ -2,26 +2,17 @@ import { BaseEntity, DbSync  } from 'src/app/shared/models';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap, skip, distinctUntilChanged, share, delay } from 'rxjs/operators';
 import { LocalStorageService } from '../services/local-storage.service';
+import { PersistentSubject } from './persistent.subject';
 
-export abstract class BaseSubject<T extends BaseEntity> {
-
-  protected dataSubject: BehaviorSubject<T[]>;
-
-  public data$: Observable<T[]>;
+export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubject<T[]>{
 
   private timestampKey: string;
 
   constructor(
-    protected localStorageService: LocalStorageService,
-    private storageKey:string) {
+    localStorageService: LocalStorageService,
+    storageKey:string) {
+    super(localStorageService, storageKey);
     this.timestampKey = this.storageKey.concat('/timestamp');
-
-    this.dataSubject = new BehaviorSubject<T[]>(this.localStorageService.get(this.storageKey) || []);
-    this.data$ = this.dataSubject.asObservable().pipe(distinctUntilChanged());
-
-    this.data$.pipe(skip(1)).subscribe(data => {
-      this.localStorageService.add(this.storageKey, data);
-    });
   }
 
   sync(dbSync: DbSync<T>){
@@ -33,16 +24,23 @@ export abstract class BaseSubject<T extends BaseEntity> {
     this.localStorageService.add(this.timestampKey, dbSync.timestamp)
   }
 
+  getAll$(): Observable<T[]>{
+    return this.data$.pipe(map(arr =>
+      {return arr === undefined ? [] : arr}));
+  }
+
   get$(id: number): Observable<T>{
-    return this.data$.pipe(map(arr => arr.find(e => e.id == id)));
+    return this.data$.pipe(map(arr =>
+      {return arr === undefined ? undefined : arr.find(e => e.id == id)}));
   }
 
   getRange$(ids: number[]): Observable<T[]>{
-    return this.data$.pipe(map(arr => arr.filter(d => ids.includes(d.id))));
+    return this.data$.pipe(map(arr =>
+      {return arr === undefined ? undefined : arr.filter(d => ids.includes(d.id))}));
   }
 
   addOrReplace(entity: T): void{
-    if(this.dataSubject.value !== null && !this.dataSubject.value.find(e => e.id == entity.id)) {
+    if(this.dataSubject.value !== undefined && !this.dataSubject.value.find(e => e.id == entity.id)) {
       this.dataSubject.value.unshift(entity);
       this.dataSubject.next(this.dataSubject.value);
     }
@@ -90,9 +88,9 @@ export abstract class BaseSubject<T extends BaseEntity> {
 
   private _addOrReplaceRange(entities: T[], keepOriginals = false): T[]{
     let arr: T[];
-
-    if(keepOriginals) arr = [...this.dataSubject.value, ...entities];
-    else arr = [...entities, ...this.dataSubject.value];
+    let originals = this.dataSubject.value === undefined ? [] : this.dataSubject.value;
+    if(keepOriginals) arr = [...originals, ...entities];
+    else arr = [...entities, ...originals];
 
     return arr.filter((entity, index, self) => index === self.findIndex((e) => (e.id === entity.id)));
   }

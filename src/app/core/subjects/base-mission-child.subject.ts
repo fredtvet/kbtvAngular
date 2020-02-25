@@ -12,7 +12,7 @@ export abstract class BaseMissionChildSubject<T extends MissionChild> extends Ba
     ) { super(localStorageService, storageKey); }
 
   getByMissionId$(missionId: number): Observable<T[]>{
-    return this.data$.pipe(map(arr => arr.filter(e => e.missionId == missionId)));
+    return this.getAll$().pipe(map(arr => arr.filter(e => e.missionId == missionId)));
   }
 
   deleteByMissionId$(missionId: number): void{

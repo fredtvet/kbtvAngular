@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay, take } from 'rxjs/operators';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { IdentityService, LoadingService, ConnectionService } from 'src/app/core';
 import { ROLES } from '../../roles.enum';
 import { MatDrawer } from '@angular/material';
@@ -22,7 +22,6 @@ export class MainNavComponent {
 
   @Output() vertEvent = new EventEmitter();
   @Output() searchEvent = new EventEmitter();
-  @Output() deleteEvent = new EventEmitter();
   @Output() backEvent = new EventEmitter();
 
   ROLES = ROLES;
@@ -42,6 +41,7 @@ export class MainNavComponent {
     private identityService: IdentityService,
     public loadingService: LoadingService,
     private router: Router,
+    private route: ActivatedRoute,
     private connectionService: ConnectionService) {}
 
   ngOnInit(){
@@ -51,7 +51,7 @@ export class MainNavComponent {
       .subscribe(user => this.user = user);
     //Remove '/' and make first letter uppercase for title
     if(!this.config.title && !this.config.altNav){
-      this.config.title = this.router.url.replace("/","").replace(/^\w/, c => c.toUpperCase())
+      this.config.title = this.router.url.split(';')[0].split('/')[1].replace(/^\w/, c => c.toUpperCase())
     }
 
   }

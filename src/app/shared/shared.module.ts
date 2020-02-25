@@ -22,7 +22,9 @@ import {
   NotificationComponent
 } from './components';
 import { AddToHomeScreenComponent } from './components/add-to-home-screen/add-to-home-screen.component';
-import { SubmitButtonComponent } from './components/submit-button/submit-button.component'
+import { SubmitButtonComponent } from './components/submit-button/submit-button.component';
+import { MissionTypeFormDialogComponent } from './components/mission-type-form-dialog/mission-type-form-dialog.component';
+import { ReportTypeFormDialogComponent } from './components/report-type-form-dialog/report-type-form-dialog.component'
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { SubmitButtonComponent } from './components/submit-button/submit-button.
     NotificationComponent,
     MissionListViewComponent,
     AddToHomeScreenComponent,
-    SubmitButtonComponent
+    SubmitButtonComponent,
+    MissionTypeFormDialogComponent,
+    ReportTypeFormDialogComponent
   ],
   imports: [
     CommonModule,
@@ -76,7 +80,9 @@ import { SubmitButtonComponent } from './components/submit-button/submit-button.
     SearchBarComponent,
     MissionListViewComponent,
     AddToHomeScreenComponent,
-    SubmitButtonComponent
+    SubmitButtonComponent,
+    MissionTypeFormDialogComponent,
+    ReportTypeFormDialogComponent
   ]
 })
 export class SharedModule { }

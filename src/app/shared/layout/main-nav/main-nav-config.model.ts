@@ -9,7 +9,6 @@ export class MainNavConfig {
     public subIcon: string = null,
     public bottomNavEnabled: boolean = true,
     public searchBarEnabled: boolean = false,
-    public deleteEnabled: boolean = false,
     public menuBtnEnabled: boolean = true,
     public vertActions: NavAction[] = [],
   ){}

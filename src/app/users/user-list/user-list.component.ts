@@ -20,11 +20,12 @@ export class UserListComponent implements OnInit {
   public currentUser: User;
 
   ngOnInit() {
-    combineLatest(
+    combineLatest( //Calling seperate to have them ordered correctly. Should be done more efficiently.
       this.usersService.getByRole$(ROLES.Leder),
       this.usersService.getByRole$(ROLES.Mellomleder),
-      this.usersService.getByRole$(ROLES.Ansatt)
-    ).subscribe(([group1, group2, group3]) => {this.users = [...group1, ...group2, ...group3], console.log(this.users)});
+      this.usersService.getByRole$(ROLES.Ansatt),
+      this.usersService.getByRole$(ROLES.Oppdragsgiver),
+    ).subscribe(([group1, group2, group3, group4]) => {this.users = [...group1, ...group2, ...group3, ...group4]});
 
     this.identityService.currentUser$.subscribe(data => this.currentUser = data);
   }

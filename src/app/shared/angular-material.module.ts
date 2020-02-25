@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 import {
    MatButtonModule,
@@ -59,7 +60,8 @@ import {
       MatCheckboxModule,
       MatDialogModule,
       MatAutocompleteModule,
-      MatProgressSpinnerModule
+      MatProgressSpinnerModule,
+      ScrollingModule
    ],
    exports: [
       MatButtonModule,
@@ -86,7 +88,8 @@ import {
       MatCheckboxModule,
       MatDialogModule,
       MatAutocompleteModule,
-      MatProgressSpinnerModule
+      MatProgressSpinnerModule,
+      ScrollingModule
    ],
    providers: [
       MatDatepickerModule

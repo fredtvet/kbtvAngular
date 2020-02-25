@@ -1,5 +1,6 @@
-<span class="content-header">Endre profil</span>
-<form *ngIf="profileForm && user" [formGroup]="profileForm" class="app-form" fxLayout="column" >
+
+<form *ngIf="profileForm && user" [formGroup]="profileForm" class="form-container" fxLayout="column">
+  <span class="form-header">Endre profil</span>
     <mat-form-field>
       <input matInput placeholder="Brukernavn" formControlName="userName" >
     </mat-form-field>

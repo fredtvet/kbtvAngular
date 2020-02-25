@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { ROLES, Mission, MissionNote, MissionImage, MissionReport } from 'src/app/shared';
+import { ROLES, Mission, MissionNote, MissionImage, MissionReport, ConfirmDeleteDialogComponent } from 'src/app/shared';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-mission-details-view',
@@ -19,11 +20,17 @@ export class MissionDetailsViewComponent {
   @Output() imageDeleted = new EventEmitter();
   @Output() noteEdit = new EventEmitter();
   @Output() noteDeleted = new EventEmitter();
+  @Output() reportDeleted = new EventEmitter();
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnChanges(): void {
     console.log(this.reports)
+  }
+
+  openDeleteReportDialog(id: number){
+    const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
+    deleteDialogRef.afterClosed().subscribe(confirmed => {if(confirmed)this.reportDeleted.emit(id)});
   }
 
 }

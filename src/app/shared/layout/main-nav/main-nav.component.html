@@ -1,4 +1,4 @@
-<mat-sidenav-container>
+<mat-sidenav-container [ngClass]="(isHandset$ | async) ? 'toolbar-padding' : ''">
 
   <mat-sidenav fixedInViewport #drawer
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
@@ -100,10 +100,6 @@
 
         <mat-spinner *ngIf="loadingService.loading$ |  async" diameter="24"></mat-spinner>
 
-        <button *ngIf="config.deleteEnabled" (click)="this.deleteEvent.emit(true)" mat-icon-button aria-label="Slett" color="warn">
-          <mat-icon>delete_forever</mat-icon>
-        </button>
-
         <ng-container *ngIf="config.searchBarEnabled">
           <button (click)="toggleSearchBar()" mat-icon-button aria-label="Avbryt søk">
             <mat-icon>search</mat-icon>
@@ -134,4 +130,4 @@
   </mat-sidenav-content>
 
 </mat-sidenav-container>
-<app-bottom-nav *ngIf="config.bottomNavEnabled" [isHandset$]="isHandset$"></app-bottom-nav>
+<app-bottom-nav *ngIf="config.bottomNavEnabled && (isHandset$ | async)"></app-bottom-nav>

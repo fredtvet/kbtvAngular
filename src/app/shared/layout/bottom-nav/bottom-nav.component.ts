@@ -10,8 +10,6 @@ import { Observable } from 'rxjs';
 export class BottomNavComponent implements OnInit {
   ROLES = ROLES;
 
-  @Input() isHandset$: Observable<boolean>;
-
   constructor() { }
 
   ngOnInit() {

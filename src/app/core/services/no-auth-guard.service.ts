@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { IdentityService } from './identity.service';
 
-import { map ,  take } from 'rxjs/operators';
-import { IdentityService } from '../core';
+@Injectable({
+  providedIn: 'root'
+})
 
-@Injectable()
 export class NoAuthGuard implements CanActivate {
   constructor(
     private router: Router,
@@ -15,9 +17,12 @@ export class NoAuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> {
+  ): boolean {
+    if(this.identityService.hasValidToken()){
+      this.router.navigate(['/hjem']);
+      return false;
+    }
 
-    return this.identityService.isAuthenticated.pipe(take(1), map(isAuth => !isAuth));
-
+    return true;
   }
 }

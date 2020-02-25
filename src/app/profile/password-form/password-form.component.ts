@@ -34,6 +34,7 @@ export class PasswordFormComponent implements OnInit {
       if(valid && this.password.value == this.confirmPassword.value)
       {
         this.passwordUpdated.emit(value);
+        this.passwordForm.reset();
       }
       else if (this.password.value !== this.confirmPassword.value)
         this.error = "Passordene er ikke like";

@@ -11,10 +11,11 @@ import { Observable } from 'rxjs';
 })
 export class MissionFormComponent implements OnInit {
 
-  isCreateForm: boolean = false;
-  private missionId: number;
-
   mainNavConfig = new MainNavConfig();
+  isCreateForm: boolean = false;
+
+  private returnRoute: string;
+  private missionId: number;
 
   mission$: Observable<Mission>;
   missionTypes$: Observable<MissionType[]>;
@@ -28,7 +29,9 @@ export class MissionFormComponent implements OnInit {
     private missionService: MissionService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {
+      this.returnRoute = this.route.snapshot.params['returnRoute'];
+    }
 
   ngOnInit() {
     this.missionId = +this.route.snapshot.paramMap.get('id');
@@ -47,7 +50,7 @@ export class MissionFormComponent implements OnInit {
   createMission(mission: Mission){
     if(!mission) return null;
     this.missionService.add$(mission)
-      .subscribe(res => this.goToMission(res.id));
+      .subscribe(res => this.onFinished(res.id));
   }
 
   editMission(mission: Mission){
@@ -55,7 +58,7 @@ export class MissionFormComponent implements OnInit {
     this.missionService.update$(mission)
       .subscribe(res => {
         this.notificationService.setNotification('Vellykket oppdatering!');
-        this.goToMission(res.id);
+        this.onFinished(res.id);
       })
   }
 
@@ -74,12 +77,14 @@ export class MissionFormComponent implements OnInit {
     this.mainNavConfig.menuBtnEnabled = false;
   }
 
-  goToMission(id: number){
+  private onFinished(id: number){
+    if(this.returnRoute != undefined) this.router.navigate([this.returnRoute])
     this.router.navigate(['oppdrag', id, 'detaljer'])
   }
 
   onBack(){
-    if(!this.isCreateForm) this.goToMission(this.missionId)
+    if(this.returnRoute != undefined) this.router.navigate([this.returnRoute])
+    else if(!this.isCreateForm) this.router.navigate(['oppdrag',this.missionId, 'detaljer'])
     else this.router.navigate(['oppdrag'])
   }
 

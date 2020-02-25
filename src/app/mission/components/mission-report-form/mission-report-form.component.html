@@ -1,7 +1,7 @@
 
 
-  <form *ngIf="reportForm" [formGroup]="reportForm" class="p-3 bg-5" fxLayout="column" fxLayoutAlign="space-around-center">
-    <h4 class="text-center">Legg til rapport</h4>
+  <form *ngIf="reportForm" [formGroup]="reportForm" class="form-container" fxLayout="column" fxLayoutAlign="space-around-center">
+    <h5 class="text-center">Legg til rapport</h5>
 
     <mat-form-field formGroupName="reportType">
       <input matInput placeholder="Type rapport" aria-label="Type rapport" formControlName="name" [matAutocomplete]="auto">

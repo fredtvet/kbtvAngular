@@ -6,7 +6,6 @@ import { Observable, throwError } from 'rxjs';
 import { MissionChild } from 'src/app/shared';
 import { ConnectionService } from '../connection.service';
 import { map, tap } from 'rxjs/operators';
-import { LocalStorageService } from '../local-storage.service';
 import { NotificationService } from '../notification.service';
 import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
 
@@ -17,10 +16,9 @@ export abstract class BaseMissionChildService<T extends MissionChild> extends Ba
     apiService: ApiService,
     @Inject(BaseMissionChildSubject) protected dataSubject: BaseMissionChildSubject<T>,
     connectionService: ConnectionService,
-    localStorageService: LocalStorageService,
     uri: string
   ){
-    super(notificationService, apiService, dataSubject, connectionService, localStorageService, uri);
+    super(notificationService, apiService, dataSubject, connectionService, uri);
   }
 
   getByMissionId$(missionId: number):Observable<T[]>{

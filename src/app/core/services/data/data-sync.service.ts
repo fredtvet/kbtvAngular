@@ -28,22 +28,11 @@ import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
 export class DataSyncService {
 
   private isOnline: boolean = true;
-  private syncedServices = 0;
-  private totalServices = 7;
-
-  private syncing: boolean = false;
 
   constructor(
     private apiService: ApiService,
     private connectionService: ConnectionService,
     private notificationService: NotificationService,
-    private employerService: EmployerService,
-    private missionTypeService: MissionTypeService,
-    private missionImageService: MissionImageService,
-    private missionNoteService: MissionNoteService,
-    private missionReportService: MissionReportService,
-    private missionService: MissionService,
-    private reportTypeService: ReportTypeService,
     private employerSubject: EmployerSubject,
     private missionTypeSubject: MissionTypeSubject,
     private missionImageSubject: MissionImageSubject,
@@ -55,24 +44,12 @@ export class DataSyncService {
     this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
   }
 
-  syncAllData(){
-    if(!this.syncing){
-      this.syncing = true;
-      this.employerService.dbSync().subscribe(res => this.syncDone());
-      this.missionTypeService.dbSync().subscribe(res => this.syncDone());
-      this.missionImageService.dbSync().subscribe(res => this.syncDone());
-      this.missionNoteService.dbSync().subscribe(res => this.syncDone());
-      this.missionReportService.dbSync().subscribe(res => this.syncDone());
-      this.missionService.dbSync().subscribe(res => this.syncDone());
-      this.reportTypeService.dbSync().subscribe(res => this.syncDone());
-    }
-  }
+  syncAll(){
+    if(!this.isOnline) return false;
 
-  syncAll(): Observable<any>{
-    console.log('sync')
-    let fromDate = this.missionSubject.getTimestamp(); //Should get earliest of all subjects
+    let fromDate = this.getEarliestTimestamp();
 
-    return this.apiService
+    this.apiService
       .post('/SyncAll',{ FromDate: fromDate })
       .pipe(retry(3), tap(data => {
         this.missionSubject.sync(data.missionSync);
@@ -82,20 +59,25 @@ export class DataSyncService {
         this.missionNoteSubject.sync(data.missionNoteSync);
         this.missionReportSubject.sync(data.missionReportSync);
         this.reportTypeSubject.sync(data.missionReportTypeSync);
-        this.notificationService.setNotification('Synkronisert!')
       }),catchError(err => {
-        this.notificationService.setNotification('Noe gikk feil med synkroniseringen!',NOTIFICATIONS.Error)
+        this.notificationService.setNotification('Noe gikk feil med synkroniseringen!' , NOTIFICATIONS.Error)
         throw err;
-      }))
+      })).subscribe();
   }
 
-  progress$(): Observable<number>{
-    return of(this.syncedServices / this.totalServices); //return progress
-  }
+  private getEarliestTimestamp(){
+    let timestamps = [];
+    timestamps.push(this.missionSubject.getTimestamp());
+    timestamps.push(this.employerSubject.getTimestamp());
+    timestamps.push(this.missionTypeSubject.getTimestamp());
+    timestamps.push(this.missionImageSubject.getTimestamp());
+    timestamps.push(this.missionNoteSubject.getTimestamp());
+    timestamps.push(this.missionReportSubject.getTimestamp());
+    timestamps.push(this.reportTypeSubject.getTimestamp());
 
-  private syncDone(){
-    this.syncedServices++;
-    if(this.syncedServices == this.totalServices) this.syncing = false;
+    return  timestamps.sort(function(a,b) {
+              return new Date(a).getTime() - new Date(b).getTime()
+            })[0]
   }
 
 }

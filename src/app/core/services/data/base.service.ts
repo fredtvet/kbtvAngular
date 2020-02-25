@@ -4,7 +4,6 @@ import { map, tap, retry } from 'rxjs/operators';
 import { BaseSubject } from '../../subjects/base.subject';
 import { ApiService } from '../api.service';
 import { ConnectionService } from '../connection.service';
-import { LocalStorageService } from '../local-storage.service';
 import { NotificationService } from '../notification.service';
 import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
 
@@ -20,7 +19,6 @@ export abstract class BaseService<T extends BaseEntity>{
     protected apiService: ApiService,
     protected dataSubject: BaseSubject<T>,
     protected connectionService: ConnectionService,
-    private localStorageService: LocalStorageService,
     protected readonly uri:string
     ) {
       this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
@@ -38,7 +36,7 @@ export abstract class BaseService<T extends BaseEntity>{
   }
 
   getAll$(): Observable<T[]> {
-    return this.dataSubject.data$;
+    return this.dataSubject.getAll$();
   }
 
   get$(id: number):Observable<T>{

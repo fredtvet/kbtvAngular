@@ -2,16 +2,11 @@
 
 $select-height: 59.5;
 
-::ng-deep .mat-form-field-wrapper{
-  padding-bottom:0!important;
-
-}
-
-::ng-deep .mat-form-field-flex{
+.data-picker .mat-form-field-flex{
   height:$select-height * 1px!important;
 }
 
-::ng-deep .mat-form-field-underline{
+.data-picker .mat-form-field-wrapper{
   margin-bottom: -1.25em!important;
 }
 

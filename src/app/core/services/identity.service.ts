@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Observable ,  BehaviorSubject ,  ReplaySubject } from 'rxjs';
+import { Observable ,  BehaviorSubject ,  ReplaySubject, throwError } from 'rxjs';
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
-import { map ,  distinctUntilChanged, skip } from 'rxjs/operators';
+import { map ,  distinctUntilChanged, skip, tap } from 'rxjs/operators';
 import { Identity, User } from 'src/app/shared/models';
 import { LocalStorageService } from './local-storage.service';
+import { ConnectionService } from './connection.service';
+import { NotificationService } from './notification.service';
+import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
 
 
 @Injectable({
@@ -13,17 +16,19 @@ import { LocalStorageService } from './local-storage.service';
 })
 
 export class IdentityService {
+  private storageKey = "identity"
+
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser$: Observable<User>;
-  private storageKey = "identity"
-  private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
-  public isAuthenticated = this.isAuthenticatedSubject.asObservable();
-  public isAuth: boolean = false;
+
+  private isOnline: boolean = true;
 
   constructor (
     private apiService: ApiService,
     private localStorageService: LocalStorageService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private connectionService: ConnectionService,
+    private notificationService: NotificationService
   ) {
     this.currentUserSubject = new BehaviorSubject<User>(this.localStorageService.get(this.storageKey) || new User());
     this.currentUser$ =  this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
@@ -31,37 +36,37 @@ export class IdentityService {
     this.currentUser$.pipe(skip(1)).subscribe(data => {
       this.localStorageService.add(this.storageKey, data); //Consider excluding username from localstorage
     });
+
+    this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
+
   }
 
   populate(){
     if(this.jwtService.getToken()){
-      this.apiService.get('/auth')
-      .subscribe(data => this.setAuth(data));
+      if(this.isOnline)
+        this.apiService.get('/auth')
+        .subscribe(data => this.currentUserSubject.next(data));
     }
     else this.purgeAuth();
   }
 
   setAuth(identity: Identity) {
-    console.log('auth')
     // Save JWT sent from server in localstorage
     this.jwtService.saveToken(identity.token.replace("Bearer ", ""));
     // Set current user data into observable
     this.currentUserSubject.next(identity.user);
-    // Set isAuthenticated to true
-    this.isAuthenticatedSubject.next(true);
-    this.isAuth = true;
   }
 
   purgeAuth() {
     this.jwtService.destroyToken();
     // Set current user to an empty object
     this.currentUserSubject.next({} as User);
-    // Set auth status to false
-    this.isAuthenticatedSubject.next(false);
-    this.isAuth = false;
   }
 
   attemptAuth(credentials): Observable<Identity> {
+    if(!this.isOnline) return throwError('Du må være tilkoblet internett for å logge inn.')
+    .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+
     return this.apiService.post('/auth/login', credentials)
       .pipe(map(
       user => {
@@ -88,6 +93,9 @@ export class IdentityService {
   }
 
   updateCurrentUser(user: User): Observable<User> {
+    if(!this.isOnline) return throwError('Du må være tilkoblet internett for å oppdatere profilen.')
+    .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+
     return this.apiService
     .put('/auth', user)
     .pipe(map(data => {
@@ -98,6 +106,9 @@ export class IdentityService {
   }
 
   changePassword(oldPw: string, newPw: string){
+    if(!this.isOnline) return throwError('Du må være tilkoblet internett for å endre passord.')
+    .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+
     const obj = {
       OldPassword: oldPw,
       NewPassword: newPw

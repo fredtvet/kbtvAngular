@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { AuthGuard } from './core';
+import { AuthGuard, NoAuthGuard } from './core';
 import { AuthComponent } from './auth/auth.component';
 import { CustomPreloadingService } from './custom-preloading.service';
-
 
 const routes: Routes = [
   {
@@ -21,7 +20,8 @@ const routes: Routes = [
   {
     path: 'login',
     component: AuthComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [NoAuthGuard]
   },
   {
     path: 'profil',

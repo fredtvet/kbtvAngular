@@ -1,9 +1,9 @@
 <app-main-nav [config]="mainNavConfig" (deleteEvent)="openDeleteDialog()">
   <div class="static-page-container" fxLayout="column" fxLayoutGap="8px">
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="data-picker">
       <mat-label>Velg</mat-label>
-      <mat-select [(ngModel)]="currentTable" (selectionChange)="changeTable()">
+      <mat-select [(ngModel)]="dataPageService.currentTable" (selectionChange)="loadTable()">
         <mat-option *ngFor="let table of tables" value="{{ table }}">{{ table }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -12,11 +12,23 @@
       class="ag-theme-balham-dark data-container"
       rowSelection="multiple"
       suppressRowClickSelection="true"
+      suppressColumnVirtualisation="true"
       overlayNoRowsTemplate="Tomt"
+      (modelUpdated)="autoSizeGrid()"
       [rowData]="rowData"
       [columnDefs]="columnDefs"
-      (cellValueChanged)="editCell($event.data)">
+      (cellValueChanged)="editCell($event)">
     </ag-grid-angular>
+
+    <span fxLayout="row" fxLayoutAlign="space-between none" >
+      <button mat-icon-button aria-label="Slett" color="warn" (click)="openDeleteDialog()">
+        <mat-icon>delete_forever</mat-icon>
+      </button>
+
+      <button mat-icon-button aria-label="Ny" color="primary" (click)="create()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </span>
 
   </div>
 </app-main-nav>

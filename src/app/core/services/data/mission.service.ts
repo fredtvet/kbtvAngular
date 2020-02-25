@@ -6,7 +6,6 @@ import { ApiService } from '../api.service';
 import { ConnectionService } from '../connection.service';
 import { take, filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { LocalStorageService } from '../local-storage.service';
 import { NotificationService } from '../notification.service';
 
 @Injectable({
@@ -19,14 +18,13 @@ export class MissionService extends BaseService<Mission> {
     notificationService: NotificationService,
     apiService: ApiService,
     protected dataSubject: MissionSubject,
-    connectionService: ConnectionService,
-    localStorageService: LocalStorageService
+    connectionService: ConnectionService
   ){
-    super(notificationService, apiService, dataSubject, connectionService, localStorageService, "/Missions");
+    super(notificationService, apiService, dataSubject, connectionService, "/Missions");
   }
 
   getFiltered$(onlyActiveMissions:boolean = true, searchString?: string): Observable<Mission[]>{
-    return this.dataSubject.data$.pipe(map(arr => {
+    return this.dataSubject.getAll$().pipe(map(arr => {
 
       if(onlyActiveMissions)
         arr = arr.filter(x => x.finished == false);

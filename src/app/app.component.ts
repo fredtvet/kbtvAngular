@@ -10,8 +10,11 @@ import { skip, skipWhile } from 'rxjs/operators';
   templateUrl: './app.component.html',
   animations: [ slideInAnimation ]
 })
+
 export class AppComponent {
   title = 'kbtv-client';
+
+  private syncAllowed: boolean = true;
 
   constructor(
     private identityService: IdentityService,
@@ -24,8 +27,11 @@ export class AppComponent {
   ngOnInit(){
     this.identityService.populate();
 
-    if(this.identityService.hasValidToken()) //Initalize mission list if authenticated
-      this.dataSyncService.syncAll().subscribe();
+    if(this.identityService.hasValidToken()){//Initalize data if authenticated
+      this.dataSyncService.syncAll();
+      this.hasSynced();
+    }
+
 
     this.connectionService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
       if(isOnline) this.notificationService.setNotification('Du er tilkoblet internett igjen!')
@@ -33,4 +39,20 @@ export class AppComponent {
     });
   }
 
+  @HostListener('document:visibilitychange') //Update data incase of long periods in background
+  dataSync() {
+    if(!this.syncAllowed) return null;
+
+    const state = document.visibilityState;
+
+    if(state == 'visible') {
+      this.dataSyncService.syncAll();
+      this.hasSynced();
+    };
+  }
+
+  private hasSynced(){
+    this.syncAllowed = false;
+    setTimeout(() => {this.syncAllowed = true}, 1000*60*60) //Only once per hour
+  }
 }

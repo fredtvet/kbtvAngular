@@ -15,10 +15,14 @@
 .mat-drawer-container { //Fix for bug on iOs
   position: unset!important;
 }
+
 mat-sidenav-container {
   height: 100%;
+  z-index:100;
+}
+
+.toolbar-padding{
   padding-bottom:$bottom-nav-height * 1px;
-  z-index:1000;
 }
 
 mat-sidenav-container mat-sidenav {

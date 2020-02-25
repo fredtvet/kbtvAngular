@@ -3,7 +3,7 @@ import { MissionNote } from 'src/app/shared';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
 import { NotificationService, MissionNoteService, LoadingService } from 'src/app/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-mission-note-form',
   templateUrl: './mission-note-form.component.html'
@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 export class MissionNoteFormComponent {
 
   private isCreateForm: boolean = false;
+  private noteSub: Subscription = new Subscription();
 
   mainNavConfig = new MainNavConfig();
 
@@ -32,7 +33,7 @@ export class MissionNoteFormComponent {
     let id = +this.route.snapshot.paramMap.get('id');
 
     if(!id) this.isCreateForm = true;
-    else this.missionNoteService.get$(id)
+    else this.noteSub = this.missionNoteService.get$(id)
             .subscribe(result => this.note = result);
   }
 
@@ -70,6 +71,10 @@ export class MissionNoteFormComponent {
 
   onBack(): void{
     this.router.navigate(['oppdrag', this.missionId, 'detaljer'])
+  }
+
+  ngOnDestroy(): void {
+    this.noteSub.unsubscribe();
   }
 
 }

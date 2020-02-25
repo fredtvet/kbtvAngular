@@ -3,22 +3,18 @@
   <mat-tab-group mat-stretch-tabs>
 
     <mat-tab label="Profil">
-      <div class="card-container">
-        <app-profile-form
+      <app-profile-form
           *ngIf="user"
           [user]="user"
           (profileUpdated)="updateProfile($event)">
       </app-profile-form>
-      </div>
     </mat-tab>
 
     <mat-tab label="Passord">
-      <div class="card-container">
-        <app-password-form
+      <app-password-form
           [error]="passwordStatus"
           (passwordUpdated)="updatePassword($event)">
       </app-password-form>
-      </div>
     </mat-tab>
 
     <mat-tab label="Annet">

@@ -19,17 +19,19 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): any {
+  ): boolean {
 
     if(!this.identityService.hasValidToken()){
         this.identityService.purgeAuth();
-        return this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
+        return false;
     }
 
     if(route.data['allowedRoles']){
       if(!route.data['allowedRoles'].includes(this.identityService.getCurrentUser().role)){
-        this.notificaitonService.setNotification('Du mangler riktig autorisasjon for å gå inn på denne siden.',NOTIFICATIONS.Error)
-        return this.router.navigate(['/hjem']);
+        this.notificaitonService.setNotification('Du mangler riktig autorisasjon for å gå inn på denne siden.',NOTIFICATIONS.Error);
+        this.router.navigate(['/hjem']);
+        return false;
       }
     }
 

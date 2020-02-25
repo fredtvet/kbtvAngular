@@ -20,13 +20,25 @@
         <mat-divider></mat-divider>
 
         <h3 mat-subheader *ngIf="reports && reports.length != 0">Rapporter</h3>
+
         <mat-list-item *ngFor="let report of reports; last as last">
+
           <mat-icon mat-list-icon>description</mat-icon>
           <a mat-line href="{{ report.fileURL }}">{{ report.missionReportType?.name }}</a>
           <p mat-line>{{ report.createdAt | date }}</p>
-          <mat-icon class="color-green">cloud_download</mat-icon>
+
+          <button *ifRole="[ROLES.Leder]" (click)="openDeleteReportDialog(report.id)" mat-icon-button color="warn">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+
+          <mat-icon *ifRole="[ROLES.Mellomleder, ROLES.Ansatt, ROLES.Oppdragsgiver]" class="color-green">
+            cloud_download
+          </mat-icon>
+
           <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+
         </mat-list-item>
+
         <mat-divider></mat-divider>
 
     </mat-nav-list>

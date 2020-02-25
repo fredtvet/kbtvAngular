@@ -5,7 +5,6 @@ import { MissionNoteSubject } from '../../subjects/mission-note.subject';
 import { BaseMissionChildService } from './base-mission-child.service';
 import { Observable } from 'rxjs';
 import { ConnectionService } from '../connection.service';
-import { LocalStorageService } from '../local-storage.service';
 import { map } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
 
@@ -18,10 +17,9 @@ export class MissionNoteService extends BaseMissionChildService<MissionNote> {
     notificationService: NotificationService,
     apiService: ApiService,
     dataSubject: MissionNoteSubject,
-    connectionService: ConnectionService,
-    localStorageService: LocalStorageService
+    connectionService: ConnectionService
   ){
-    super(notificationService, apiService, dataSubject, connectionService, localStorageService, "/MissionNotes");
+    super(notificationService, apiService, dataSubject, connectionService, "/MissionNotes");
   }
 
   getByMissionId$(missionId: number):Observable<MissionNote[]>{

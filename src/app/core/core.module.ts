@@ -5,6 +5,7 @@ import { HttpTokenInterceptor, HttpLoadingInterceptor, HttpErrorInterceptor } fr
 
 import {
   AuthGuard,
+  NoAuthGuard,
   UsersService,
   JwtService,
   RolesService,
@@ -17,6 +18,8 @@ import {
   ReportTypeService,
   ConnectionService,
   DataSyncService,
+  TranslationService,
+  DataPageService,
 
 } from './services';
 import { NotificationComponent } from '../shared/components/notification/notification.component';
@@ -40,6 +43,7 @@ import { NotificationComponent } from '../shared/components/notification/notific
     ConnectionService,
     IdentityService,
     AuthGuard,
+    NoAuthGuard,
     ApiService,
     LoadingService,
     NotificationService,
@@ -47,6 +51,8 @@ import { NotificationComponent } from '../shared/components/notification/notific
     MissionTypeService,
     ReportTypeService,
     DataSyncService,
+    TranslationService,
+    DataPageService
   ]
 })
 export class CoreModule { }

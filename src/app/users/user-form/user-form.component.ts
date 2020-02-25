@@ -5,7 +5,8 @@ import { RolesService, UsersService, NotificationService, LoadingService } from 
 import { User, ConfirmDeleteDialogComponent, ROLES, VertMenuParentExtension, NavAction } from 'src/app/shared';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-form',
@@ -19,9 +20,10 @@ export class UserFormComponent extends VertMenuParentExtension  {
   isCreateForm = false;
   mainNavConfig = new MainNavConfig();
 
-  user: User;
-  roles: string[];
+  user: User = new User();
+  userSub: Subscription = new Subscription();
 
+  roles$: Observable<string[]>;
   loading$: Observable<boolean>;
 
   constructor(
@@ -35,12 +37,16 @@ export class UserFormComponent extends VertMenuParentExtension  {
     ngOnInit(){
       let userName = this._route.snapshot.paramMap.get('userName');
 
-      if(!userName) this.isCreateForm = true;
-      else this._usersService.get$(userName)
+      this.roles$ =
+        this._rolesService.getAll$().pipe(map(arr => arr.filter(x => x != ROLES.Leder)))
+
+      if(!userName)
+        this.isCreateForm = true;
+      else
+        this.userSub = this._usersService.get$(userName)
               .subscribe(result => this.user = result);
 
       this.configureMainNav();
-      this.fetchRoles();
     }
 
     onSubmit(result: User){
@@ -66,16 +72,11 @@ export class UserFormComponent extends VertMenuParentExtension  {
     }
 
     deleteUser(username: string){
+      this.onBack();
       this._usersService.delete$(username)
         .subscribe(res => {
           this.notificationService.setNotification('Vellykket! Bruker slettet.');
-          this.onBack();
         });
-    }
-
-    fetchRoles(){
-      this._rolesService.getAll$()
-          .subscribe(result =>  this.roles = result);
     }
 
     private openDeleteDialog = (e:string) => {
@@ -98,6 +99,10 @@ export class UserFormComponent extends VertMenuParentExtension  {
 
     onBack(): void {
       this._router.navigate(['brukere'])
+    }
+
+    ngOnDestroy(): void {
+      this.userSub.unsubscribe();
     }
 
 }

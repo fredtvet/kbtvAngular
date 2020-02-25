@@ -18,7 +18,7 @@ export class MissionReportSubject extends BaseMissionChildSubject<MissionReport>
 
   getByMissionId$(missionId: number): Observable<MissionReport[]>{
     return super.getByMissionId$(missionId).pipe(switchMap(reports => {
-      return this.reportTypeSubject.data$.pipe(map(types => {
+      return this.reportTypeSubject.getAll$().pipe(map(types => {
         return reports.map(report => {
           report.missionReportType = types.find(x => x.id === report.missionReportTypeId);
           return report;

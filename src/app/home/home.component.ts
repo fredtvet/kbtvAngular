@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ROLES, Mission } from '../shared';
 import { MissionService } from '../core';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
   missionHistory$: Observable<Mission[]>;
 
   constructor(private missionService: MissionService) {
-    this.missionHistory$ = this.missionService.getHistory$(5);
+    this.missionHistory$ = this.missionService.getHistory$(4).pipe(tap(console.log));
   }
 
   ngOnInit() {}

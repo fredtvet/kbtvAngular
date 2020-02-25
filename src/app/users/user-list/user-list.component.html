@@ -22,7 +22,7 @@
           (click)="(currentUser.role == ROLES.Leder && user.role != ROLES.Leder) ? editUser(user.userName) : ''"
           [config]="{
             mainLine: (user.firstName + ' ' + user.lastName),
-            startIcon: 'person',
+            startIcon: (user.role == ROLES.Oppdragsgiver) ? 'work' : 'person',
             endIcon: (currentUser.role == ROLES.Leder && user.role != ROLES.Leder) ? 'edit' : '',
             subLines: [{name: user.phoneNumber || 'Ingen kontaktnummer', icon: 'phone'}]
           }">

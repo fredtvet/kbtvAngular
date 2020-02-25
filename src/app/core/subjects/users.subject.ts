@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { User } from 'src/app/shared/models';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { User } from 'src/app/shared/models';
 export class UsersSubject {
 
   private usersSubject = new BehaviorSubject<User[]>([]);
-  public users$ = this.usersSubject.asObservable();
+  public users$ = this.usersSubject.asObservable().pipe(tap(console.log));
 
   constructor() { }
 

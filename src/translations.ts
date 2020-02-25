@@ -1,0 +1,25 @@
+export const translations = {
+  modelProperties: [
+    {key: "name", value: "Navn"},
+    {key: "phonenumber", value: "Telefonnummer"},
+    {key: "address", value: "Addresse"},
+    {key: "user", value: "Bruker"},
+    {key: "title", value: "Tittel"},
+    {key: "content", value: "Innhold"},
+    {key: "createdAt", value: "Opprettet"},
+    {key: "createdBy", value: "Opprettet av"},
+    {key: "pinned", value: "Festet"},
+    {key: "fileURL", value: "Lenke"},
+    {key: "description", value: "Beskrivelse"},
+    {key: "finished", value: "Ferdig"},
+    {key: "employer", value: "Oppdragsgiver"},
+    {key: "missiontype", value: "Oppdragstype"},
+    {key: "missionreporttype", value: "Rapporttype"},
+    {key: "userName", value: "Brukernavn"},
+    {key: "firstName", value: "Fornavn"},
+    {key: "lastName", value: "Etternavn"},
+    {key: "email", value: "Epost"},
+    {key: "role", value: "Rolle"},
+  ],
+};
+

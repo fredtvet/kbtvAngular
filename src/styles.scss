@@ -42,14 +42,6 @@ body {
   display:none!important;
 }
 
-.app-form{
-  max-width:600px;
-  padding:$content-margin * 1px;
-  background-color:mat-color($background,"app-bar");
-  color:mat-color($foreground, "base");
-  height:auto;
-}
-
 .action_fab{
   position:absolute!important;
   right: $content-margin * 1px!important;
@@ -76,7 +68,7 @@ body {
 }
 
 .mat-dialog-container{
-  background-color:mat-color($background,"app-bar")!important;
+  background-color:$bg-dialog;
   padding:0!important;
 }
 
@@ -85,13 +77,13 @@ body {
 }
 
 .notification{
-  margin-bottom:($bottom-nav-height + 10) * 1px!important;
+  margin-bottom:($bottom-nav-height + $content-margin) * 1px!important;
   background-color:mat-color($background,"unselected-chip");
   color:mat-color($foreground, "base");
 }
 
 .notification-error{
-  margin-bottom:($bottom-nav-height + 10) * 1px!important;
+  margin-bottom:($bottom-nav-height + $content-margin) * 1px!important;
   background-color:$warn !important;
   color:mat-color($background, "background");
 }
@@ -117,8 +109,8 @@ body {
   background-color:mat-color($background,"unselected-chip");
   color:mat-color($foreground, "base");
 }
-.bg-5{
-  background-color:mat-color($background,"unselected-chip");
+.bg-dialog{
+  background-color:$bg-dialog;
   color:mat-color($foreground, "base");
 }
 
@@ -148,15 +140,28 @@ body {
   overflow:auto;
 }
 
+.form-header{
+  @include small-header;
+  color: rgb(255, 255,255,0.7);
+  margin-bottom:$content-margin * 1px;
+}
+
 .content-header{
   @include small-header;
   color: rgb(255, 255,255,0.7);
-  margin-left:$content-margin * 1px;
-  margin-right:$content-margin * 1px;
+  margin-left:$content-margin * 2px;
 }
 
 .content-container{
   @include content-container;
+}
+
+.app-form{
+  max-width:600px;
+  padding:$content-margin * 1px;
+  background-color:mat-color($background,"app-bar");
+  color:mat-color($foreground, "base");
+  height:auto;
 }
 
 .form-container{

@@ -21,7 +21,8 @@ export class EmployerFormComponent extends VertMenuParentExtension {
 
   mainNavConfig: MainNavConfig = new MainNavConfig;
 
-  employer: Employer;
+  employerId: number;
+  employer: Employer = new Employer();
 
   loading$: Observable<boolean>;
 
@@ -38,10 +39,10 @@ export class EmployerFormComponent extends VertMenuParentExtension {
   ){super();}
 
     ngOnInit(){
-      let id = this.route.snapshot.paramMap.get('id');
+      this.employerId = +this.route.snapshot.paramMap.get('id');
 
-      if(!id) this.isCreateForm = true;
-      else this.employerSub = this.employerService.get$(+id)
+      if(!this.employerId) this.isCreateForm = true;
+      else this.employerSub = this.employerService.get$(this.employerId)
               .subscribe(result => this.employer = result);
 
       this.configureMainNav();
@@ -62,7 +63,7 @@ export class EmployerFormComponent extends VertMenuParentExtension {
     }
 
     private deleteEmployer(){
-      this.employerService.delete$(this.employer.id)
+      this.employerService.delete$(this.employerId)
         .subscribe(data => {
           this.notificationService.setNotification('Vellykket! Oppdragsgiver slettet.');
           this.onBack();
@@ -96,7 +97,10 @@ export class EmployerFormComponent extends VertMenuParentExtension {
     }
 
     onBack(): void {
-      this.router.navigate(['oppdragsgivere'])
+      let returnRoute: string = this.route.snapshot.params['returnRoute'];
+
+      if(returnRoute != undefined) this.router.navigate([returnRoute])
+      else this.router.navigate(['oppdragsgivere'])
     }
 
     ngOnDestroy(): void {

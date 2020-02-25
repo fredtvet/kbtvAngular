@@ -20,7 +20,8 @@ export class UserFormViewComponent implements OnInit {
     private _formBuilder: FormBuilder,) {  }
 
     ngOnInit(){
-      if(this.user == null){
+      console.log(this.user);
+      if(this.user == undefined || this.user.userName == undefined){
         this.isCreateForm = true;
         this.user = new User();
       }
@@ -59,6 +60,7 @@ export class UserFormViewComponent implements OnInit {
 
     onSubmit(){
       const {value, valid} = this.userForm;
+      console.log(valid);
       if(valid && this.userForm.dirty) this.formSubmitted.emit(value);
     }
 

@@ -18,6 +18,10 @@ import { EmployerFormViewComponent } from './components/employer-form-view/emplo
   imports: [
     SharedModule,
     EmployerRoutingModule
+  ],
+  exports: [
+    EmployerFormComponent,
+    EmployerFormViewComponent
   ]
 })
 export class EmployerModule { }

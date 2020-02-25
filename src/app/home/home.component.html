@@ -37,12 +37,9 @@
   </div>
 
   <div class="content-container mission-card" fxLayout="column">
+    <span class="content-header">Sist besøkte oppdrag</span>
+    <div class="static-page-content" fxFill>
 
-    <div fxFlex="10" fxLayout="row" fxLayoutAlign="space-between center">
-      <span class="content-header">Sist besøkte oppdrag</span>
-    </div>
-
-    <div class="static-page-content" fxFlex="80">
       <p *ngIf="!newestMissions"><em>Laster inn oppdrag...</em></p>
       <app-mission-list-view [missions]="missionHistory$ | async"></app-mission-list-view>
     </div>

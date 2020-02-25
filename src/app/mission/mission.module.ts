@@ -37,6 +37,10 @@ import { MissionNoteFormViewComponent } from './components/mission-note-form-vie
   imports: [
     SharedModule,
     MissionRoutingModule
+  ],
+  exports: [
+    MissionFormComponent,
+    MissionFormViewComponent
   ]
 })
 export class MissionModule { }

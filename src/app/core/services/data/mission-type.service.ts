@@ -4,7 +4,6 @@ import { BaseService } from './base.service';
 import { ApiService } from '../api.service';
 import { MissionTypeSubject } from '../../subjects/mission-type.subject';
 import { ConnectionService } from '../connection.service';
-import { LocalStorageService } from '../local-storage.service';
 import { NotificationService } from '../notification.service';
 
 
@@ -18,10 +17,9 @@ export class MissionTypeService extends BaseService<MissionType> {
     notificationService: NotificationService,
     apiService: ApiService,
     dataSubject: MissionTypeSubject,
-    connectionService: ConnectionService,
-    localStorageService: LocalStorageService
+    connectionService: ConnectionService
   ){
-    super(notificationService, apiService, dataSubject, connectionService, localStorageService, "/MissionTypes");
+    super(notificationService, apiService, dataSubject, connectionService, "/MissionTypes");
   }
 
 }
