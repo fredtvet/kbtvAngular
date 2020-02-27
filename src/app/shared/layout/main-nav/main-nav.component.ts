@@ -1,37 +1,39 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay, take } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map, shareReplay, take, takeUntil, finalize } from 'rxjs/operators';
 import { Router, ActivatedRoute } from "@angular/router";
 import { IdentityService, LoadingService, ConnectionService } from 'src/app/core';
 import { ROLES } from '../../roles.enum';
 import { MatDrawer } from '@angular/material';
 import { MainNavConfig } from './main-nav-config.model';
 import { User } from '../../models/user.model';
+import { SubscriptionComponent } from 'src/app/subscription.component';
 
 @Component({
   selector: 'app-main-nav',
   templateUrl: './main-nav.component.html',
   styleUrls: ['./main-nav.component.scss']
 })
-export class MainNavComponent {
+export class MainNavComponent extends SubscriptionComponent {
 
   @ViewChild('drawer', {static: true}) drawer:MatDrawer;
 
   @Input() config: MainNavConfig = new MainNavConfig();
 
   @Output() vertEvent = new EventEmitter();
-  @Output() searchEvent = new EventEmitter();
-  @Output() backEvent = new EventEmitter();
+  @Output() search = new EventEmitter();
+  @Output() back = new EventEmitter();
 
   ROLES = ROLES;
-  conSub$:  Observable<boolean>;
-  user: User;
 
   searchBarHidden = true;
 
+  currentUser$:  Observable<User> = this.identityService.currentUser$.pipe(takeUntil(this.unsubscribe));
+  conSub$:  Observable<boolean> = this.connectionService.isOnline$.pipe(takeUntil(this.unsubscribe));
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
+      takeUntil(this.unsubscribe),
       map(result => result.matches),
       shareReplay()
     );
@@ -41,19 +43,13 @@ export class MainNavComponent {
     private identityService: IdentityService,
     public loadingService: LoadingService,
     private router: Router,
-    private route: ActivatedRoute,
-    private connectionService: ConnectionService) {}
+    private connectionService: ConnectionService) { super(); }
 
   ngOnInit(){
-    this.conSub$ = this.connectionService.isOnline$;
-
-    this.identityService.currentUser$
-      .subscribe(user => this.user = user);
-    //Remove '/' and make first letter uppercase for title
+    //Get route name and set as title if no input
     if(!this.config.title && !this.config.altNav){
       this.config.title = this.router.url.split(';')[0].split('/')[1].replace(/^\w/, c => c.toUpperCase())
     }
-
   }
 
   toggleDrawer(){

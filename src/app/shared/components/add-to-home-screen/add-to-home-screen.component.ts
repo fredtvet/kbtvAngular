@@ -2,9 +2,9 @@ import { Component, OnInit, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-add-to-home-screen',
-  templateUrl: './add-to-home-screen.component.html',
-  styleUrls: ['./add-to-home-screen.component.scss']
+  templateUrl: './add-to-home-screen.component.html'
 })
+
 export class AddToHomeScreenComponent implements OnInit {
 
   constructor() { }

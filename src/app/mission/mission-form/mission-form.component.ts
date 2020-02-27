@@ -4,12 +4,14 @@ import { EmployerService, NotificationService, MissionTypeService, MissionServic
 import { Mission, MissionType, Employer } from 'src/app/shared';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
+import { SubscriptionComponent } from 'src/app/subscription.component';
 
 @Component({
   selector: 'app-mission-form',
   templateUrl: './mission-form.component.html'
 })
-export class MissionFormComponent implements OnInit {
+export class MissionFormComponent extends SubscriptionComponent {
 
   mainNavConfig = new MainNavConfig();
   isCreateForm: boolean = false;
@@ -30,6 +32,7 @@ export class MissionFormComponent implements OnInit {
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router) {
+      super();
       this.returnRoute = this.route.snapshot.params['returnRoute'];
     }
 
@@ -49,13 +52,13 @@ export class MissionFormComponent implements OnInit {
 
   createMission(mission: Mission){
     if(!mission) return null;
-    this.missionService.add$(mission)
+    this.missionService.add$(mission).pipe(take(1))
       .subscribe(res => this.onFinished(res.id));
   }
 
   editMission(mission: Mission){
     if(!mission) return null;
-    this.missionService.update$(mission)
+    this.missionService.update$(mission).pipe(take(1))
       .subscribe(res => {
         this.notificationService.setNotification('Vellykket oppdatering!');
         this.onFinished(res.id);
@@ -64,10 +67,10 @@ export class MissionFormComponent implements OnInit {
 
   private configureForm(){
     if(!this.missionId) this.isCreateForm = true;
-    else this.mission$ = this.missionService.get$(this.missionId);
+    else this.mission$ = this.missionService.get$(this.missionId).pipe(takeUntil(this.unsubscribe));
 
-    this.missionTypes$ = this.missionTypeService.getAll$();
-    this.employers$ = this.employerService.getAll$();
+    this.missionTypes$ = this.missionTypeService.getAll$().pipe(takeUntil(this.unsubscribe));
+    this.employers$ = this.employerService.getAll$().pipe(takeUntil(this.unsubscribe));
   }
 
   private configureMainNav(){
@@ -79,7 +82,7 @@ export class MissionFormComponent implements OnInit {
 
   private onFinished(id: number){
     if(this.returnRoute != undefined) this.router.navigate([this.returnRoute])
-    this.router.navigate(['oppdrag', id, 'detaljer'])
+    else this.router.navigate(['oppdrag', id, 'detaljer'])
   }
 
   onBack(){

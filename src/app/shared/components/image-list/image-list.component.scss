@@ -1,10 +1,11 @@
+@import '../../../../variables';
+
  .img-row {
     display: -ms-flexbox; /* IE10 */
     display: flex;
     -ms-flex-wrap: wrap; /* IE10 */
     flex-wrap: wrap;
     max-width: 1000px;
-
   }
 
   /* Create four equal columns that sits next to each other */
@@ -15,7 +16,7 @@
   }
 
   .img-column img {
-    padding:4px;
+    padding:$content-margin * 0.5px;
     vertical-align: middle;
     width: 100%;
     -moz-box-sizing: border-box;

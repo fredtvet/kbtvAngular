@@ -3,8 +3,7 @@ import { NavAction } from '..';
 
 @Component({
   selector: 'app-vert-menu',
-  templateUrl: './vert-menu.component.html',
-  styleUrls: ['./vert-menu.component.scss']
+  templateUrl: './vert-menu.component.html'
 })
 export class VertMenuComponent implements OnInit {
 

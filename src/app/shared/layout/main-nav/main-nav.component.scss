@@ -3,7 +3,7 @@
 @mixin nav {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 2;
   background-color:$bg-app-bar;
   padding:0 8px 0 8px !important;
 }
@@ -18,7 +18,7 @@
 
 mat-sidenav-container {
   height: 100%;
-  z-index:100;
+  z-index:3;
 }
 
 .toolbar-padding{
@@ -28,7 +28,7 @@ mat-sidenav-container {
 mat-sidenav-container mat-sidenav {
   width: $sidenav-width * 1px;
   background-color:$bg-app-bar;
-  z-index:1000;
+  z-index:3;
 }
 
 mat-sidenav-container mat-sidenav mat-toolbar {
@@ -59,7 +59,7 @@ mat-sidenav-container mat-sidenav-content mat-toolbar {
 .main_content{
   position:sticky;
   top:0;
-  z-index:90;
+  z-index:1;
   background:$bg-content;
   overflow:auto;
 }

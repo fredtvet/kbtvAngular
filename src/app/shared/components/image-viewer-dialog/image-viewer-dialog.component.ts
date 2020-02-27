@@ -4,7 +4,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { MissionImage } from '../../models/mission-image.model';
 import { NavAction } from '../nav-action.model';
 import { ROLES } from '../../roles.enum';
-import { VertMenuParentExtension } from '../vert-menu/vert-menu-parent.extension';
+import { VertMenuParent } from '../vert-menu/vert-menu-parent.extension';
 
 @Component({
   selector: 'app-image-viewer-dialog',
@@ -39,9 +39,9 @@ import { VertMenuParentExtension } from '../vert-menu/vert-menu-parent.extension
     ])
   ],
   templateUrl: './image-viewer-dialog.component.html',
-  styleUrls: ['./image-viewer-dialog.component.css']
+  styleUrls: ['./image-viewer-dialog.component.scss']
 })
-export class ImageViewerDialogComponent extends VertMenuParentExtension {
+export class ImageViewerDialogComponent extends VertMenuParent {
   public ROLES = ROLES;
   toolbarHidden = false;
 

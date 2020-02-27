@@ -22,6 +22,8 @@ export class DataManagerComponent {
 
 mainNavConfig = new MainNavConfig();
 
+dataSub$ = new Subscription();
+
 columnDefs: any = [];
 
 rowData: any = [];
@@ -90,8 +92,10 @@ constructor(
   }
 
   loadTable(){
-    if(this.dataPageService.currentTable != undefined)
-      this.getCurrentService().getAll$().pipe(take(1)).subscribe(x => this.initNgGrid(x))
+    if(this.dataPageService.currentTable != undefined){
+      this.dataSub$.unsubscribe();
+      this.dataSub$ = this.getCurrentService().getAll$().subscribe(x => this.initNgGrid(x))
+    }
   }
 
   autoSizeGrid(){

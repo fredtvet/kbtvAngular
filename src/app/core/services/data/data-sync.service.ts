@@ -44,7 +44,7 @@ export class DataSyncService {
     this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
   }
 
-  syncAll(){
+  syncAll() : void{
     if(!this.isOnline) return false;
 
     let fromDate = this.getEarliestTimestamp();

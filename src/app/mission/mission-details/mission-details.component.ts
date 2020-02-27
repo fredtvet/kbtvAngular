@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { NavAction, ConfirmDeleteDialogComponent, ROLES, MissionNote, VertMenuParentExtension, Mission, MissionReport, MissionImage, NOTIFICATIONS } from 'src/app/shared';
+import { NavAction, ConfirmDeleteDialogComponent, ROLES, MissionNote, VertMenuParent, Mission, MissionReport, MissionImage, NOTIFICATIONS } from 'src/app/shared';
 import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, LoadingService } from 'src/app/core';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
-import { take, map, tap } from 'rxjs/operators';
+import { take, map, tap, takeUntil } from 'rxjs/operators';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
 import { Subscription, Observable } from 'rxjs';
 
@@ -14,7 +14,7 @@ import { Subscription, Observable } from 'rxjs';
   templateUrl: './mission-details.component.html'
 })
 
-export class MissionDetailsComponent extends VertMenuParentExtension{
+export class MissionDetailsComponent extends VertMenuParent{
   ROLES = ROLES;
 
   mainNavConfig = new MainNavConfig();
@@ -39,7 +39,6 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
     public dialog: MatDialog) {super();}
 
   ngOnInit(){
-
     this.mission.id = +this.route.snapshot.paramMap.get('id');
 
     this.mission$ = this.missionService.get$(this.mission.id);
@@ -48,7 +47,8 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
     this.notes$ = this.missionNoteService.getByMissionId$(this.mission.id)
 
     this.configureMainNav()
-    this.missionSub = this.mission$.subscribe(x => {
+
+    this.missionSub = this.mission$.pipe(takeUntil(this.unsubscribe)).subscribe(x => {
       this.mission = x;
       this.addMissionToMainNav(x)
     });
@@ -66,18 +66,18 @@ export class MissionDetailsComponent extends VertMenuParentExtension{
   }
 
   deleteNote(id: number){
-    this.missionNoteService.delete$(id)
+    this.missionNoteService.delete$(id).pipe(take(1))
       .subscribe(res => this.notificationService.setNotification('Vellykket! Notat slettet.'));
   }
 
   deleteReport(id: number){
-    this.missionReportService.delete$(id)
+    this.missionReportService.delete$(id).pipe(take(1))
       .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport slettet.'));
   }
 
   createReport(data){
     if(!data) return null;
-    this.missionReportService.addReport$(this.mission.id, data.reportType, data.files)
+    this.missionReportService.addReport$(this.mission.id, data.reportType, data.files).pipe(take(1))
       .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport lastet opp'));
   }
 

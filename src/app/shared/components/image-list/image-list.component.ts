@@ -3,13 +3,15 @@ import { MatDialog } from '@angular/material';
 import { ImageViewerDialogComponent } from '../image-viewer-dialog/image-viewer-dialog.component';
 import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
 import { MissionImage } from '../../models/mission-image.model';
+import { SubscriptionComponent } from 'src/app/subscription.component';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-image-list',
   templateUrl: './image-list.component.html',
-  styleUrls: ['./image-list.component.css']
+  styleUrls: ['./image-list.component.scss']
 })
-export class ImageListComponent implements OnInit {
+export class ImageListComponent extends SubscriptionComponent {
   @Input() images: MissionImage[];
   @Output() imageDeleted = new EventEmitter();
 
@@ -17,11 +19,7 @@ export class ImageListComponent implements OnInit {
   reloadThumbnailsState: boolean = false;
   reloadInterval: any;
 
-  constructor(public dialog: MatDialog) { }
-
-  ngOnInit() {
-
-  }
+  constructor(public dialog: MatDialog) { super() }
 
   //Reloads thumbnail (thumbnails made async) until no error
   unloadedThumbnail(img){
@@ -72,7 +70,7 @@ export class ImageListComponent implements OnInit {
       data: { imageId: imageId, images: this.images }
     });
 
-    dialogRef.afterClosed().subscribe(id => {
+    dialogRef.afterClosed().pipe(takeUntil(this.unsubscribe)).subscribe(id => {
       if(id > 0){
         const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
 

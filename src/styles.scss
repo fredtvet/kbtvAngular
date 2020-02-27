@@ -23,7 +23,7 @@ body {
   position:sticky!important;
   width:100%;
   left:0;
-  z-index:90;
+  z-index:2;
 }
 
 .active{
@@ -46,7 +46,7 @@ body {
   position:absolute!important;
   right: $content-margin * 1px!important;
   bottom: $content-margin * 1px!important;
-  z-index:100;
+  z-index:2;
 }
 
 .mat-icon {
@@ -178,6 +178,9 @@ body {
   margin:$content-margin * 2px auto;
 }
 
+.mat-menu-content {
+  background-color:$bg-dialog!important;
+}
 
 //Spinner primarily for buttons
 @keyframes spinner {

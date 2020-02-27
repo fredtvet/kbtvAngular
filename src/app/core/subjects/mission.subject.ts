@@ -100,11 +100,12 @@ export class MissionSubject extends BaseSubject<Mission> {
     }))
   }
 
-  private sortHistory(missions: Mission[], ids: number[]){
+  private sortHistory(missions: Mission[], ids: number[]): Mission[]{
     let order = {};
 
     ids.forEach(function (a, i) { order[a] = i; });
 
+    if(missions == undefined || missions.length == 0) return undefined;
     missions.sort(function (a, b) {
       return order[a.id] - order[b.id];
     });

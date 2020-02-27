@@ -1,6 +1,6 @@
 import { BaseEntity } from 'src/app/shared/models';
 import { Observable, throwError } from 'rxjs';
-import { map, tap, retry } from 'rxjs/operators';
+import { map, tap, retry, catchError } from 'rxjs/operators';
 import { BaseSubject } from '../../subjects/base.subject';
 import { ApiService } from '../api.service';
 import { ConnectionService } from '../connection.service';
@@ -9,10 +9,7 @@ import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
 
 export abstract class BaseService<T extends BaseEntity>{
 
-  protected httpGetAllLoaded: boolean = false;
-  protected httpGetLoaded: boolean = false;
   protected isOnline: boolean = false;
-
 
   constructor(
     protected notificationService: NotificationService,
@@ -24,15 +21,19 @@ export abstract class BaseService<T extends BaseEntity>{
       this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
     }
 
-  dbSync(): Observable<boolean>{
+  dbSync(): void{
     if(!this.isOnline) return null;
     let fromDate = this.dataSubject.getTimestamp();
 
-    return this.apiService
+    this.apiService
       .post(`${this.uri}/Sync`,{ FromDate: fromDate })
-      .pipe(retry(3), tap(data => {
-        this.dataSubject.sync(data);
-      }))
+      .pipe(
+        retry(3),
+        tap(this.dataSubject.sync),
+        catchError(err => {
+        this.notificationService.setNotification('Noe gikk feil med synkroniseringen!' , NOTIFICATIONS.Error)
+        throw err;})
+      )
   }
 
   getAll$(): Observable<T[]> {

@@ -3,7 +3,7 @@ import { Observable ,  BehaviorSubject ,  ReplaySubject, throwError } from 'rxjs
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
-import { map ,  distinctUntilChanged, skip, tap } from 'rxjs/operators';
+import { map ,  distinctUntilChanged, skip, tap, take } from 'rxjs/operators';
 import { Identity, User } from 'src/app/shared/models';
 import { LocalStorageService } from './local-storage.service';
 import { ConnectionService } from './connection.service';
@@ -65,7 +65,7 @@ export class IdentityService {
 
   attemptAuth(credentials): Observable<Identity> {
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å logge inn.')
-    .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+    .pipe(take(1), tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
 
     return this.apiService.post('/auth/login', credentials)
       .pipe(map(
@@ -94,7 +94,7 @@ export class IdentityService {
 
   updateCurrentUser(user: User): Observable<User> {
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å oppdatere profilen.')
-    .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+    .pipe(take(1), tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
 
     return this.apiService
     .put('/auth', user)
@@ -107,7 +107,7 @@ export class IdentityService {
 
   changePassword(oldPw: string, newPw: string){
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å endre passord.')
-    .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+    .pipe(take(1), tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
 
     const obj = {
       OldPassword: oldPw,

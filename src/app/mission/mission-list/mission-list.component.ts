@@ -1,7 +1,7 @@
 import { Component  } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { ROLES, NavAction, VertMenuParentExtension, Mission } from 'src/app/shared';
+import { ROLES, NavAction, VertMenuParent, Mission } from 'src/app/shared';
 import { BehaviorSubject, Observable} from 'rxjs';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
 import { switchMap } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { MissionService } from 'src/app/core';
   styleUrls: ['./mission-list.component.scss']
 })
 
-export class MissionListComponent extends VertMenuParentExtension{
+export class MissionListComponent extends VertMenuParent{
 
   ROLES = ROLES;
 

@@ -3,26 +3,31 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ROLES, MissionReportType } from 'src/app/shared';
 import { ReportTypeService } from 'src/app/core';
+import { SubscriptionComponent } from 'src/app/subscription.component';
+import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-mission-report-form',
   templateUrl: './mission-report-form.component.html'
 })
-export class MissionReportFormComponent implements OnInit {
+
+export class MissionReportFormComponent extends SubscriptionComponent {
   public ROLES = ROLES;
 
   reportForm: FormGroup;
 
   public files: FileList;
   public types: MissionReportType[]
+
   constructor(
     public dialogRef: MatDialogRef<MissionReportFormComponent>,
     private _formBuilder: FormBuilder,
     private reportTypeService: ReportTypeService,
-    ) { }
+    ) { super() }
 
   ngOnInit() {
 
     this.reportTypeService.getAll$()
+      .pipe(takeUntil(this.unsubscribe))
       .subscribe(data => {this.types = data});
 
     this.reportForm = this._formBuilder.group({

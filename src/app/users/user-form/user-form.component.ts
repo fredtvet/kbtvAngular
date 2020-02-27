@@ -2,29 +2,27 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material';
 import { RolesService, UsersService, NotificationService, LoadingService } from 'src/app/core';
-import { User, ConfirmDeleteDialogComponent, ROLES, VertMenuParentExtension, NavAction } from 'src/app/shared';
+import { User, ConfirmDeleteDialogComponent, ROLES, VertMenuParent, NavAction } from 'src/app/shared';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, takeUntil, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
 })
 
-export class UserFormComponent extends VertMenuParentExtension  {
-
-  public ROLES = ROLES;
+export class UserFormComponent extends VertMenuParent  {
+  ROLES = ROLES;
 
   isCreateForm = false;
+
   mainNavConfig = new MainNavConfig();
 
   user: User = new User();
-  userSub: Subscription = new Subscription();
 
   roles$: Observable<string[]>;
-  loading$: Observable<boolean>;
 
   constructor(
     private notificationService: NotificationService,
@@ -37,14 +35,15 @@ export class UserFormComponent extends VertMenuParentExtension  {
     ngOnInit(){
       let userName = this._route.snapshot.paramMap.get('userName');
 
-      this.roles$ =
-        this._rolesService.getAll$().pipe(map(arr => arr.filter(x => x != ROLES.Leder)))
+      this.roles$ = this._rolesService.getAll$().pipe(
+        takeUntil(this.unsubscribe),
+        map(arr => arr.filter(x => x != ROLES.Leder))
+      )
 
-      if(!userName)
-        this.isCreateForm = true;
+      if(!userName) this.isCreateForm = true;
       else
-        this.userSub = this._usersService.get$(userName)
-              .subscribe(result => this.user = result);
+        this._usersService.get$(userName).pipe(takeUntil(this.unsubscribe))
+        .subscribe(result => this.user = result);
 
       this.configureMainNav();
     }
@@ -56,7 +55,7 @@ export class UserFormComponent extends VertMenuParentExtension  {
     }
 
     createUser(user: any){
-      this._usersService.add$(user)
+      this._usersService.add$(user).pipe(take(1))
        .subscribe(success => {
          this.notificationService.setNotification('Vellykket! Ny bruker registrert.');
          this.onBack();
@@ -64,7 +63,7 @@ export class UserFormComponent extends VertMenuParentExtension  {
     }
 
     updateUser(user: User){
-      this._usersService.update$(user)
+      this._usersService.update$(user).pipe(take(1))
         .subscribe(success => {
           this.notificationService.setNotification('Vellykket oppdatering!');
           this.onBack();
@@ -73,7 +72,7 @@ export class UserFormComponent extends VertMenuParentExtension  {
 
     deleteUser(username: string){
       this.onBack();
-      this._usersService.delete$(username)
+      this._usersService.delete$(username).pipe(take(1))
         .subscribe(res => {
           this.notificationService.setNotification('Vellykket! Bruker slettet.');
         });
@@ -99,10 +98,6 @@ export class UserFormComponent extends VertMenuParentExtension  {
 
     onBack(): void {
       this._router.navigate(['brukere'])
-    }
-
-    ngOnDestroy(): void {
-      this.userSub.unsubscribe();
     }
 
 }

@@ -12,7 +12,7 @@
         {{ (conSub$ | async) ? 'Tilkoblet internett' : 'Frakoblet internett' }}
       </span>
 
-      <span>{{ user.firstName }} {{ user.lastName }}</span>
+      <span *ngIf="currentUser$ | async; let user">{{ user.firstName }} {{ user.lastName }}</span>
     </mat-toolbar>
 
     <mat-nav-list>
@@ -73,7 +73,7 @@
           </ng-container>
 
           <ng-template #backBtn>
-            <button (click)="this.backEvent.emit(true)"
+            <button (click)="this.back.emit(true)"
              mat-icon-button aria-label="Tilbake">
                 <mat-icon class="icon_150">chevron_left</mat-icon>
             </button>
@@ -85,7 +85,7 @@
         <ng-template #altNav>
           <span style="margin-right:auto;">
 
-            <button (click)="this.backEvent.emit(true)"
+            <button (click)="this.back.emit(true)"
              mat-icon-button aria-label="Tilbake">
                 <mat-icon class="icon_150">chevron_left</mat-icon>
             </button>
@@ -105,7 +105,7 @@
             <mat-icon>search</mat-icon>
           </button>
 
-          <app-search-bar [isHidden]="searchBarHidden" (hide)="toggleSearchBar()" (searchEvent)="this.searchEvent.emit($event)"></app-search-bar>
+          <app-search-bar [isHidden]="searchBarHidden" (hide)="toggleSearchBar()" (search)="this.search.emit($event)"></app-search-bar>
         </ng-container>
 
 

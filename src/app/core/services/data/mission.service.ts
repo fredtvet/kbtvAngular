@@ -29,7 +29,7 @@ export class MissionService extends BaseService<Mission> {
       if(onlyActiveMissions)
         arr = arr.filter(x => x.finished == false);
 
-      if(searchString !== null)
+      if(searchString !== null || searchString !== undefined)
         arr = arr.filter(x => x.address.toLowerCase().includes(searchString.toLowerCase()));
 
       return arr;

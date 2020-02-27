@@ -2,13 +2,13 @@
 
 <app-main-nav
   [config]="mainNavConfig"
-  (backEvent)="onBack()"
+  (back)="onBack()"
   (vertEvent)="handleVertEvent($event)">
-<app-employer-form-view
-  [employer]="employer"
-  (formSubmitted)="onSubmit($event)">
-</app-employer-form-view>
 
+  <app-employer-form-view
+    [employer]="employer"
+    (formSubmitted)="onSubmit($event)">
+  </app-employer-form-view>
 
 </app-main-nav>
 
