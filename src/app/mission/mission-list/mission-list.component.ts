@@ -17,7 +17,7 @@ export class MissionListComponent extends VertMenuParent{
 
   ROLES = ROLES;
 
-  private pageInfo = {searchString: "", onlyActiveMissions: true}
+  private pageInfo = {searchString: "", showFinishedMissions: false}
   private pageInfoSubject = new BehaviorSubject(this.pageInfo);
 
   missions$: Observable<Mission[]>;
@@ -37,12 +37,12 @@ export class MissionListComponent extends VertMenuParent{
 
     this.missions$ = this.pageInfoSubject.pipe(switchMap(pageInfo => {console.log(pageInfo)
         return this.missionService
-          .getFiltered$(pageInfo.onlyActiveMissions, pageInfo.searchString)
+          .getFiltered$(pageInfo.showFinishedMissions, pageInfo.searchString)
     }));
 
-    let navAction = new NavAction("Bare vis aktive oppdrag",
-                      "check_box",
-                      "toggleOnlyActiveMissions", this.toggleOnlyActiveMissions,
+    let navAction = new NavAction("Vis ferdige oppdrag",
+                      "check_box_outline_blank",
+                      "toggleFinishedMissions", this.toggleFinishedMissions,
                       [ROLES.Ansatt, ROLES.Leder, ROLES.Mellomleder, ROLES.Oppdragsgiver]);
 
     this.vertActions.push(navAction);
@@ -58,14 +58,13 @@ export class MissionListComponent extends VertMenuParent{
   }
 
 
-  private toggleOnlyActiveMissions = (event:string) => {
-
-    this.pageInfo.onlyActiveMissions = !this.pageInfo.onlyActiveMissions;
+  private toggleFinishedMissions = (event:string) => {
+    this.pageInfo.showFinishedMissions = !this.pageInfo.showFinishedMissions;
     this.pageInfoSubject.next(this.pageInfo);
 
     //Toggle icon on nav action
     let icon = "check_box_outline_blank";
-    if(this.pageInfo.onlyActiveMissions) icon = "check_box";
+    if(this.pageInfo.showFinishedMissions) icon = "check_box";
 
     this.vertActions.find(x => x.event == event).icon = icon;
   }

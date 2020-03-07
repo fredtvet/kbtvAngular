@@ -40,6 +40,10 @@ const routes: Routes = [
     loadChildren: './data-management/data-management.module#DataManagementModule'
   },
   {
+    path: 'timeliste',
+    loadChildren: './timesheet/timesheet.module#TimesheetModule'
+  },
+  {
     path: 'oppdrag',
     data: {preload: true },
     loadChildren: './mission/mission.module#MissionModule'

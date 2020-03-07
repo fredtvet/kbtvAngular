@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MissionService, BaseService, MissionTypeService, UsersService, ReportTypeService, EmployerService, TranslationService, DataPageService } from 'src/app/core';
 import { trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
-import { BaseEntity } from 'src/app/shared/models';
 import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ConfirmDeleteDialogComponent, MissionTypeFormDialogComponent, ReportTypeFormDialogComponent } from 'src/app/shared';
 import { MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { BaseEntity } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-data-manager',

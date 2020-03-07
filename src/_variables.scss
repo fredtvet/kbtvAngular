@@ -26,8 +26,8 @@ $bg-dialog: mat-color($background,"unselected-chip");
 
 $content-margin: 8;
 $content-width: calc(100% - (#{$content-margin} * 2 * 1px));
-$bottom-nav-height: 56;
-$main-nav-height: 56;
+$bottom-nav-height: 44;
+$main-nav-height: 44;
 $alt-nav-height: $main-nav-height + 64;
 $tab-header-height: 48;
 $sidenav-width: 200;

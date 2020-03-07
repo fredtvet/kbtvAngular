@@ -1,11 +1,10 @@
-import { BaseEntity } from './base-entity.model';
+import { BaseEntity } from '../interfaces';
 
-export class Employer extends BaseEntity {
+export class Employer implements BaseEntity {
   constructor(
-    id: number = null,
+    public id: number = null,
     public name: string = null,
     public phoneNumber: string = null,
     public address: string = null,
-  ){ super(id);}
-
+  ){}
   };

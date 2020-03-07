@@ -1,0 +1,41 @@
+<div class="form-container" fxLayout="column" fxLayoutAlign="start stretch">
+  <span class="form-header">Legg til timer</span>
+
+  <mat-form-field>
+    <input matInput placeholder="Oppdrag" aria-label="Velg oppdrag" [matAutocomplete]="auto1" [(ngModel)]="mission">
+    <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let mission of missions | async" [value]="mission">
+        {{ mission.address }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <label>
+    <mat-form-field class="w-100">
+        <input matInput placeholder="Dato" aria-label="Velg dato" [owlDateTimeTrigger]="d3" [owlDateTime]="d3" [(ngModel)]="date">
+    </mat-form-field>
+    <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" #d3></owl-date-time>
+  </label>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" >
+    <label fxFlex=46>
+      <mat-form-field class="time-field">
+        <input matInput  placeholder="Start" [owlDateTimeTrigger]="t1" [owlDateTime]="t1" [(ngModel)]="startTime">
+      </mat-form-field>
+      <owl-date-time [pickerMode]="'dialog'" [pickerType]="'timer'" #t1></owl-date-time>
+    </label>
+
+    <label fxFlex=46>
+      <mat-form-field class="time-field">
+        <input matInput  placeholder="Slutt" [owlDateTimeTrigger]="t2" [owlDateTime]="t2" [(ngModel)]="endTime">
+      </mat-form-field>
+      <owl-date-time [pickerMode]="'dialog'" [pickerType]="'timer'" #t2></owl-date-time>
+    </label>
+  </div>
+
+
+
+  <app-submit-button text="Legg til"
+    (click)="onSubmit()">
+  </app-submit-button>
+</div>

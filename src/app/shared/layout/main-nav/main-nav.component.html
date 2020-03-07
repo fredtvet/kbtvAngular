@@ -25,6 +25,11 @@
         <mat-icon mat-list-icon>view_list</mat-icon>
         <p mat-line>Oppdrag</p>
       </a>
+      <mat-divider class="mid-divider"></mat-divider>
+      <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/timeliste']" [routerLinkActive]="['active']">
+        <mat-icon mat-list-icon>timer</mat-icon>
+        <p mat-line>Timeliste</p>
+      </a>
       <ng-container *ifRole="[ROLES.Leder, ROLES.Mellomleder]">
         <mat-divider class="mid-divider"></mat-divider>
         <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/oppdragsgivere']" [routerLinkActive]="['active']">
@@ -108,8 +113,7 @@
           <app-search-bar [isHidden]="searchBarHidden" (hide)="toggleSearchBar()" (search)="this.search.emit($event)"></app-search-bar>
         </ng-container>
 
-
-        <app-vert-menu [actions]="config.vertActions" (event)="this.vertEvent.emit($event)"></app-vert-menu>
+        <app-vert-menu [actions]="config.vertActions" (event)="this.vertEvent.emit($event);"></app-vert-menu>
 
       </mat-toolbar-row>
 

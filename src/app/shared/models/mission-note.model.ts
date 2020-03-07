@@ -1,14 +1,14 @@
-import { MissionChild } from './mission-child.model';
+import { MissionChild } from '../interfaces';
 
-export class MissionNote extends MissionChild{
+export class MissionNote implements MissionChild{
     constructor(
-      id: number = null,
-      missionId: number = null,
+      public id: number = null,
+      public missionId: number = null,
       public title: string = null,
       public content: string = null,
       public createdAt: string = null,
       public createdBy: string = null,
       public pinned: boolean = false,
-    ){ super(id, missionId)};
+    ){};
 
   };

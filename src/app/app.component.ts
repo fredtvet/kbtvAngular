@@ -4,6 +4,9 @@ import { slideInAnimation } from './route-animation';
 import { RouterOutlet } from '@angular/router';
 import { NOTIFICATIONS } from './shared/notifications.enum';
 import { skip, skipWhile } from 'rxjs/operators';
+import { TimesheetSubject } from './core/subjects/timesheet.subject';
+import * as moment from 'moment';
+import { DateTimeAdapter } from 'ng-pick-datetime';
 
 @Component({
   selector: 'app-root',
@@ -21,10 +24,15 @@ export class AppComponent {
     public loadingService: LoadingService,
     private connectionService: ConnectionService,
     public notificationService: NotificationService,
-    private dataSyncService: DataSyncService){
+    private dataSyncService: DataSyncService,
+    private timesheetSubject: TimesheetSubject,
+    private dateTimeAdapter: DateTimeAdapter<any>){
     }
 
   ngOnInit(){
+    moment.locale('nb');
+    moment().startOf('isoWeek');
+
     this.identityService.populate();
 
     if(this.identityService.hasValidToken()){//Initalize data if authenticated
@@ -32,6 +40,7 @@ export class AppComponent {
       this.hasSynced();
     }
 
+    this.timesheetSubject.getAll$().subscribe(console.log)
 
     this.connectionService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
       if(isOnline) this.notificationService.setNotification('Du er tilkoblet internett igjen!')

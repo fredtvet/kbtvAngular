@@ -1,10 +1,10 @@
 import { MissionType } from './mission-type.model';
 import { Employer } from './employer.model';
-import { BaseEntity } from './base-entity.model';
+import { BaseEntity } from '../interfaces';
 
-export class Mission extends BaseEntity {
+export class Mission implements BaseEntity {
     constructor(
-      id: number = null,
+      public id: number = null,
       public phoneNumber: string = null,
       public description: string = null,
       public address: string = null,
@@ -14,6 +14,6 @@ export class Mission extends BaseEntity {
       public missionTypeId: number = null,
       public employer: Employer = new Employer(),
       public missionType: MissionType = new MissionType(),
-    ){ super(id) };
+    ){};
 
   };

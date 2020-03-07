@@ -1,4 +1,5 @@
-import { BaseEntity, DbSync  } from 'src/app/shared/models';
+import { DbSync  } from 'src/app/shared/models';
+import { BaseEntity } from 'src/app/shared/interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap, skip, distinctUntilChanged, share, delay } from 'rxjs/operators';
 import { LocalStorageService } from '../services/local-storage.service';
@@ -16,7 +17,6 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
   }
 
   sync(dbSync: DbSync<T>){
-    console.log(dbSync)
     let arr = this._addOrReplaceRange(dbSync.entities) //Add new or updated entities
     arr = arr.filter(d => !dbSync.deletedEntities.includes(d.id)) //Remove deleted entities
     this.dataSubject.next(arr);
@@ -37,6 +37,10 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
   getRange$(ids: number[]): Observable<T[]>{
     return this.data$.pipe(map(arr =>
       {return arr === undefined ? undefined : arr.filter(d => ids.includes(d.id))}));
+  }
+
+  getByProperty(property: string, value: any){
+    return this.getAll$().pipe(map(arr => arr.filter(e => e[property] == value)));
   }
 
   addOrReplace(entity: T): void{

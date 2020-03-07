@@ -20,10 +20,11 @@ import {
   DataSyncService,
   TranslationService,
   DataPageService,
+  TimesheetService,
+  TimesheetWeekService,
 
 } from './services';
 import { NotificationComponent } from '../shared/components/notification/notification.component';
-
 
 @NgModule({
   declarations: [],
@@ -50,6 +51,8 @@ import { NotificationComponent } from '../shared/components/notification/notific
     EmployerService,
     MissionTypeService,
     ReportTypeService,
+    TimesheetService,
+    TimesheetWeekService,
     DataSyncService,
     TranslationService,
     DataPageService

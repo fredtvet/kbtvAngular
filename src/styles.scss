@@ -2,13 +2,15 @@
 @import './variables';
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham-dark.css";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 
 html, body { height: 100%;}
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   overflow:hidden;
-  background-color:$bg-content!important;}
+  background-color:$bg-content!important;
+}
 
 .card-container{
   //width:$content-width!important;
@@ -180,6 +182,36 @@ body {
 
 .mat-menu-content {
   background-color:$bg-dialog!important;
+}
+
+.text-faded{
+  color: rgb(255, 255,255,0.7);
+}
+
+
+//Owl Date Time Picker Styling
+.owl-dt-dialog-container{
+  background:$bg-dialog;
+  .owl-dt-control-button{
+    color:#FFF;
+  }
+}
+.owl-dt-calendar-table{
+  .owl-dt-calendar-header{
+    color:#FFF;
+  }
+  .owl-dt-calendar-cell{
+    color:#FFF;
+    .owl-dt-calendar-cell-today{
+      border-color:$primary;
+      box-shadow: none!important;
+    }
+    .owl-dt-calendar-cell-selected{
+      background:$primary;
+      color:$bg-black;
+    }
+  }
+
 }
 
 //Spinner primarily for buttons

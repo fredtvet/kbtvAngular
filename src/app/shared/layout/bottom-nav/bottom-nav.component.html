@@ -8,23 +8,23 @@
         </button>
 
         <button [routerLink]="['/oppdrag']" [routerLinkActive]="['active-icon']"
-          class="bottom_toolbar_button" mat-icon-button aria-label="Neste side">
+          class="bottom_toolbar_button" mat-icon-button aria-label="Gå til oppdrag">
 
           <mat-icon>view_list</mat-icon>
 
         </button>
 
         <button *ifRole="[ROLES.Ansatt]" [routerLink]="['/profil']" [routerLinkActive]="['active-icon']"
-            class="bottom_toolbar_button" mat-icon-button aria-label="Neste side">
+            class="bottom_toolbar_button" mat-icon-button aria-label="Gå til profil">
 
             <mat-icon>person</mat-icon>
 
         </button>
 
-        <button *ifRole="[ROLES.Leder, ROLES.Mellomleder]" [routerLink]="['/oppdragsgivere']" [routerLinkActive]="['active-icon']"
-            class="bottom_toolbar_button" mat-icon-button aria-label="Neste side">
+        <button *ifRole="[ROLES.Leder, ROLES.Mellomleder]" [routerLink]="['/timeliste']" [routerLinkActive]="['active-icon']"
+            class="bottom_toolbar_button" mat-icon-button aria-label="Gå til timeliste">
 
-            <mat-icon>work</mat-icon>
+            <mat-icon>timer</mat-icon>
 
         </button>
 </mat-toolbar>

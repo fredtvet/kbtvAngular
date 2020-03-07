@@ -1,0 +1,19 @@
+@import '../../../../variables';
+
+.progress-bar{
+  height:50px;
+  min-width:25px;
+  max-width:100%;
+  background:$primary;
+  color:$bg-black;
+  text-align:center;
+}
+
+.inactive{
+  background:$bg-app-bar;
+  color:white;
+}
+
+.progress-bar::-webkit-progress-value {
+  transition: width 0.5s ease;
+}

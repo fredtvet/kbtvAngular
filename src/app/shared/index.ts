@@ -3,6 +3,7 @@ export * from './components';
 export * from './directives';
 export * from './layout';
 export * from './models';
+export * from './interfaces';
 export * from './pipes';
 export * from './angular-material.module';
 export * from './roles.enum';

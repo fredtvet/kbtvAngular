@@ -1,8 +1,8 @@
-import { BaseEntity } from './base-entity.model';
+import { BaseEntity } from '../interfaces';
 
-export class MissionReportType extends BaseEntity {
+export class MissionReportType implements BaseEntity {
     constructor(
-      id: number = null,
+      public id: number = null,
       public name: string  = null,
-      ){ super(id) }
+      ){}
   };

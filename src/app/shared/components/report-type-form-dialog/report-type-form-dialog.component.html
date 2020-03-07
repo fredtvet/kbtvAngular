@@ -1,6 +1,6 @@
 
     <form *ngIf="reportTypeForm" [formGroup]="reportTypeForm" class="form-container" fxLayout="column">
-      <h5 class="text-center">Legg til oppdragstype</h5>
+      <h5 class="text-center">Legg til rapporttype</h5>
       <mat-form-field>
           <input matInput placeholder="Navn"  formControlName="name">
           <mat-error *ngIf="this.name.invalid">

@@ -19,6 +19,8 @@ import { ApiService } from '../api.service';
 import { retry, tap, catchError } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
 import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
+import { TimesheetSubject } from '../../subjects/timesheet.subject';
+import { TimesheetWeekSubject } from '../../subjects/timesheet-week.subject';
 
 
 @Injectable({
@@ -39,16 +41,18 @@ export class DataSyncService {
     private missionNoteSubject: MissionNoteSubject,
     private missionReportSubject: MissionReportSubject,
     private missionSubject: MissionSubject,
-    private reportTypeSubject: ReportTypeSubject
+    private reportTypeSubject: ReportTypeSubject,
+    private timesheetSubject: TimesheetSubject,
+    private timesheetWeekSubject: TimesheetWeekSubject
   ){
     this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
   }
 
   syncAll() : void{
-    if(!this.isOnline) return false;
+    if(!this.isOnline) return undefined;
 
     let fromDate = this.getEarliestTimestamp();
-
+    console.log(fromDate);
     this.apiService
       .post('/SyncAll',{ FromDate: fromDate })
       .pipe(retry(3), tap(data => {
@@ -59,6 +63,8 @@ export class DataSyncService {
         this.missionNoteSubject.sync(data.missionNoteSync);
         this.missionReportSubject.sync(data.missionReportSync);
         this.reportTypeSubject.sync(data.missionReportTypeSync);
+        this.timesheetSubject.sync(data.timesheetSync);
+        this.timesheetWeekSubject.sync(data.timesheetWeekSync);
       }),catchError(err => {
         this.notificationService.setNotification('Noe gikk feil med synkroniseringen!' , NOTIFICATIONS.Error)
         throw err;
@@ -74,6 +80,8 @@ export class DataSyncService {
     timestamps.push(this.missionNoteSubject.getTimestamp());
     timestamps.push(this.missionReportSubject.getTimestamp());
     timestamps.push(this.reportTypeSubject.getTimestamp());
+    timestamps.push(this.timesheetSubject.getTimestamp());
+    timestamps.push(this.timesheetWeekSubject.getTimestamp());
 
     return  timestamps.sort(function(a,b) {
               return new Date(a).getTime() - new Date(b).getTime()

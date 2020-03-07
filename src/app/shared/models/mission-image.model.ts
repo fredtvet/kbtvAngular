@@ -1,10 +1,10 @@
-import { MissionChild } from './mission-child.model';
+import { MissionChild } from '../interfaces';
 
-export class MissionImage extends MissionChild{
+export class MissionImage implements MissionChild{
   constructor(
-    id: number = null,
-    missionId: number = null,
+    public id: number = null,
+    public missionId: number = null,
     public fileURL: string,
     public createdAt: Date,
-  ){ super(id, missionId)};
+  ){};
 }

@@ -1,0 +1,27 @@
+@import '../../../../variables';
+*{
+  line-height:4px;
+}
+
+.static-section{
+  background:$bg-app-bar;
+  width:100px;
+  height:50px;
+}
+
+.timesheet-bar{
+  margin:$content-margin * 1px;
+}
+
+.highlighted{
+  border:1px solid $primary;
+}
+
+.weekday{
+  font-size:24px;
+}
+
+.date{
+  font-size:14px;
+  margin:0;
+}

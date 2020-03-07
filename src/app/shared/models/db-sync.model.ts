@@ -1,4 +1,4 @@
-import { BaseEntity } from './base-entity.model';
+import { BaseEntity } from '../interfaces/base-entity.interface';
 
 export class DbSync<T extends BaseEntity> {
   constructor(

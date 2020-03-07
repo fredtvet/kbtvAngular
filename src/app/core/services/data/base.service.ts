@@ -1,4 +1,3 @@
-import { BaseEntity } from 'src/app/shared/models';
 import { Observable, throwError } from 'rxjs';
 import { map, tap, retry, catchError } from 'rxjs/operators';
 import { BaseSubject } from '../../subjects/base.subject';
@@ -6,6 +5,7 @@ import { ApiService } from '../api.service';
 import { ConnectionService } from '../connection.service';
 import { NotificationService } from '../notification.service';
 import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
+import { BaseEntity } from 'src/app/shared/interfaces';
 
 export abstract class BaseService<T extends BaseEntity>{
 

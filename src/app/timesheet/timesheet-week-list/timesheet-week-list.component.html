@@ -1,0 +1,42 @@
+<app-main-nav>
+  <div class="week-picker" fxLayout="row" fxLayoutAlign="space-around center" >
+
+    <span>
+      <button mat-icon-button (click)="changeYear(pageInfo.year - 1)"><mat-icon>chevron_left</mat-icon></button>
+      <span>År&nbsp;</span>
+      <mat-form-field class="year-field">
+        <input matAutosize=true matInput type="number"
+          [ngModel]="pageInfo.year"
+          (ngModelChange)="changeYear($event)">
+      </mat-form-field>
+      <button mat-icon-button (click)="changeYear(pageInfo.year + 1)"><mat-icon>chevron_right</mat-icon></button>
+    </span>
+
+    <span>
+      <button mat-icon-button (click)="changeWeek(pageInfo.weekNr - 1)"><mat-icon>chevron_left</mat-icon></button>
+      <span>Uke&nbsp;</span>
+      <mat-form-field class="week-field">
+        <input matAutosize=true matInput type="number"
+          [ngModel]="pageInfo.weekNr"
+          (ngModelChange)="changeWeek($event)">
+      </mat-form-field>
+
+      <button mat-icon-button (click)="changeWeek(pageInfo.weekNr + 1)"><mat-icon>chevron_right</mat-icon></button>
+    </span>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <ng-container *ngFor="let weekDay of [0,1,2,3,4,5,6]">
+    <app-timesheet-day-bar
+      [weekDay]="weekDay"
+      [weekNr]="pageInfo.weekNr"
+      [year]="pageInfo.year"
+      [status]="timesheetWeek.status"
+      [timesheets]="timesheetWeek.timesheets[weekDay]"
+      (addClick)="goToDetails(weekDay)"
+      (progressClick)="goToDetails(weekDay)">
+    </app-timesheet-day-bar>
+  </ng-container>
+
+</app-main-nav>

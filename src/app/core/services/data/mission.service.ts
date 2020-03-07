@@ -23,10 +23,10 @@ export class MissionService extends BaseService<Mission> {
     super(notificationService, apiService, dataSubject, connectionService, "/Missions");
   }
 
-  getFiltered$(onlyActiveMissions:boolean = true, searchString?: string): Observable<Mission[]>{
+  getFiltered$(showFinished:boolean = true, searchString?: string): Observable<Mission[]>{
     return this.dataSubject.getAll$().pipe(map(arr => {
 
-      if(onlyActiveMissions)
+      if(!showFinished)
         arr = arr.filter(x => x.finished == false);
 
       if(searchString !== null || searchString !== undefined)

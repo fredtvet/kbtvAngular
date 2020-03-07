@@ -1,6 +1,4 @@
-import { BaseEntity } from './base-entity.model';
-
-export class User extends BaseEntity {
+export class User {
   constructor(
     public userName: string = null,
     public firstName: string = null,
@@ -8,6 +6,5 @@ export class User extends BaseEntity {
     public phoneNumber: string = null,
     public email: string = null,
     public role: string = null
-  ){ super();}
-
+  ){}
   };

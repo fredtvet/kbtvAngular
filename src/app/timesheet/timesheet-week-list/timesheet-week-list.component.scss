@@ -1,0 +1,43 @@
+@import '../../../variables';
+
+.week-field {
+  width: 18px;
+
+  .mat-form-field-underline{
+    display:none;
+  }
+
+  .mat-form-field-wrapper{
+    margin-bottom: -1.25em!important;
+  }
+  .mat-form-field-infix{
+    margin-top: -0.4375em!important;
+  }
+}
+
+.year-field {
+  width: 36px;
+
+  .mat-form-field-underline{
+    display:none;
+  }
+
+  .mat-form-field-wrapper{
+    margin-bottom: -1.25em!important;
+  }
+  .mat-form-field-infix{
+    margin-top: -0.4375em!important;
+  }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance:textfield;
+}

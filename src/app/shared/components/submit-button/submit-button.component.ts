@@ -12,6 +12,7 @@ export class SubmitButtonComponent extends SubscriptionComponent {
 
   @Input() disabled: boolean;
   @Input() icon: string;
+  @Input() text: string = 'Lagre';
 
   loading$: Observable<boolean> = this.loadingService.loading$.pipe(takeUntil(this.unsubscribe));
   loading: boolean = false;

@@ -1,9 +1,8 @@
 
 import { BaseSubject } from './base.subject';
-import { MissionChild } from 'src/app/shared';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { LocalStorageService } from '../services/local-storage.service';
+import { MissionChild } from 'src/app/shared';
 
 export abstract class BaseMissionChildSubject<T extends MissionChild> extends BaseSubject<T> {
   constructor(
@@ -12,7 +11,7 @@ export abstract class BaseMissionChildSubject<T extends MissionChild> extends Ba
     ) { super(localStorageService, storageKey); }
 
   getByMissionId$(missionId: number): Observable<T[]>{
-    return this.getAll$().pipe(map(arr => arr.filter(e => e.missionId == missionId)));
+    return super.getByProperty('missionId', missionId);
   }
 
   deleteByMissionId$(missionId: number): void{

@@ -1,0 +1,33 @@
+<div class="timesheet-bar" fxLayout="row" fxLayoutAlign="start center">
+
+  <span class="static-section" fxLayout="row" fxLayoutAlign="start center">
+
+    <button mat-icon-button
+      (click)="this.addClick.emit()"
+      [color]="color">
+      <mat-icon class="icon_125">{{ icon }}</mat-icon>
+    </button>
+
+    <div>
+      <p class="weekday">
+        {{ this.date.format('ddd') }}
+      </p>
+
+      <p class="date">
+        {{ this.date.format('Do MMM') }}
+      </p>
+    </div>
+
+  </span>
+
+  <app-hour-progress-bar fxFlex
+    [hours]="totalHours"
+    (click)="this.progressClick.emit()">
+  </app-hour-progress-bar>
+
+</div>
+
+
+
+
+
