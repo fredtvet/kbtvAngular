@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Observable ,  BehaviorSubject ,  ReplaySubject, throwError } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
-import { map ,  distinctUntilChanged, skip, tap, take } from 'rxjs/operators';
+import { map, distinctUntilChanged, skip, tap, take } from 'rxjs/operators';
 import { Identity, User } from 'src/app/shared/models';
 import { LocalStorageService } from './local-storage.service';
 import { ConnectionService } from './connection.service';
 import { NotificationService } from './notification.service';
-import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
+import { Notifications } from 'src/app/shared/enums';
 
 
 @Injectable({
@@ -65,12 +65,11 @@ export class IdentityService {
 
   attemptAuth(credentials): Observable<Identity> {
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å logge inn.')
-    .pipe(take(1), tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+    .pipe(take(1), tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     return this.apiService.post('/auth/login', credentials)
       .pipe(map(
       user => {
-        console.log(user);
         this.setAuth(user);
         return user;
       }
@@ -94,7 +93,7 @@ export class IdentityService {
 
   updateCurrentUser(user: User): Observable<User> {
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å oppdatere profilen.')
-    .pipe(take(1), tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+    .pipe(take(1), tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     return this.apiService
     .put('/auth', user)
@@ -107,7 +106,7 @@ export class IdentityService {
 
   changePassword(oldPw: string, newPw: string){
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å endre passord.')
-    .pipe(take(1), tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+    .pipe(take(1), tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     const obj = {
       OldPassword: oldPw,

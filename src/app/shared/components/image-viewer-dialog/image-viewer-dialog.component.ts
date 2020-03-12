@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MissionImage } from '../../models/mission-image.model';
 import { NavAction } from '../nav-action.model';
-import { ROLES } from '../../roles.enum';
+import { Roles } from '../../enums/roles.enum';
 import { VertMenuParent } from '../vert-menu/vert-menu-parent.extension';
 
 @Component({
@@ -42,7 +42,7 @@ import { VertMenuParent } from '../vert-menu/vert-menu-parent.extension';
   styleUrls: ['./image-viewer-dialog.component.scss']
 })
 export class ImageViewerDialogComponent extends VertMenuParent {
-  public ROLES = ROLES;
+  public Roles = Roles;
   toolbarHidden = false;
 
   public currentImage: MissionImage;
@@ -61,7 +61,7 @@ export class ImageViewerDialogComponent extends VertMenuParent {
     this.vertActions = [
       new NavAction("Last ned bilde", "cloud_download", "downloadImage", this.downloadImage),
       new NavAction("Last ned alle", "cloud_download", "downloadImages", this.downloadImages),
-      new NavAction("Slett bilde", "delete_forever", "delete", this.deleteImage, [ROLES.Leder]),
+      new NavAction("Slett bilde", "delete_forever", "delete", this.deleteImage, [Roles.Leder]),
     ];
   }
 

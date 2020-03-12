@@ -2,7 +2,7 @@
   <span class="form-header">Legg til timer</span>
 
   <mat-form-field>
-    <input matInput placeholder="Oppdrag" aria-label="Velg oppdrag" [matAutocomplete]="auto1" [(ngModel)]="mission">
+    <input [disabled]="missionDisabled ? '' : null" matInput placeholder="Oppdrag" aria-label="Velg oppdrag" [matAutocomplete]="auto1" [(ngModel)]="mission">
     <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
       <mat-option *ngFor="let mission of missions | async" [value]="mission">
         {{ mission.address }}
@@ -10,26 +10,20 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <label>
-    <mat-form-field class="w-100">
-        <input matInput placeholder="Dato" aria-label="Velg dato" [owlDateTimeTrigger]="d3" [owlDateTime]="d3" [(ngModel)]="date">
-    </mat-form-field>
-    <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" #d3></owl-date-time>
-  </label>
-
   <div fxLayout="row" fxLayoutAlign="space-between center" >
+
     <label fxFlex=46>
-      <mat-form-field class="time-field">
-        <input matInput  placeholder="Start" [owlDateTimeTrigger]="t1" [owlDateTime]="t1" [(ngModel)]="startTime">
+      <mat-form-field class="w-100">
+          <input [disabled]="dateDisabled ? '' : null" matInput placeholder="Dato" aria-label="Velg dato" [owlDateTimeTrigger]="d3" [owlDateTime]="d3" [(ngModel)]="date" >
       </mat-form-field>
-      <owl-date-time [pickerMode]="'dialog'" [pickerType]="'timer'" #t1></owl-date-time>
+      <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" #d3></owl-date-time>
     </label>
 
     <label fxFlex=46>
-      <mat-form-field class="time-field">
-        <input matInput  placeholder="Slutt" [owlDateTimeTrigger]="t2" [owlDateTime]="t2" [(ngModel)]="endTime">
+      <mat-form-field class="w-100">
+        <input matInput  placeholder="Arbeidstid" selectMode="range" [owlDateTimeTrigger]="t1" [owlDateTime]="t1" [(ngModel)]="timeRange">
       </mat-form-field>
-      <owl-date-time [pickerMode]="'dialog'" [pickerType]="'timer'" #t2></owl-date-time>
+      <owl-date-time [pickerMode]="'dialog'" [pickerType]="'timer'" stepMinute="15" [startAt]="initTime" #t1></owl-date-time>
     </label>
   </div>
 

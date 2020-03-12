@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
-import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
+import { NotificationComponent } from 'src/app/shared/components';
+import { Notifications } from 'src/app/shared/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +13,13 @@ export class NotificationService {
 
   setNotification(message: string, type: number = 0){
     switch(type){
-      case NOTIFICATIONS.Success:
+      case Notifications.Success:
         this.openSnackBar(message, 'check_circle', 2000, 'notification', 'color-green');
         break;
-      case NOTIFICATIONS.Error:
+      case Notifications.Error:
         this.openSnackBar(message, 'error', 3500, 'notification-error');
         break;
-      case NOTIFICATIONS.Warning:
+      case Notifications.Warning:
         this.openSnackBar(message, 'warning', 300500, 'notification', 'color-primary')
     }
 

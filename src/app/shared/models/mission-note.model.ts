@@ -1,4 +1,4 @@
-import { MissionChild } from '../interfaces';
+import { MissionChild } from '../interfaces/mission-child.interface';
 
 export class MissionNote implements MissionChild{
     constructor(

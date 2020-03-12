@@ -13,3 +13,4 @@ export * from './submit-button/submit-button.component';
 export * from './report-type-form-dialog/report-type-form-dialog.component';
 export * from './mission-type-form-dialog/mission-type-form-dialog.component';
 export * from './hour-progress-bar/hour-progress-bar.component';
+export * from './week-picker/week-picker.component';

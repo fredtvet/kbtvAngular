@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ROLES } from '../shared';
-import { AuthGuard } from '../core';
+import { Roles } from '../shared/enums';
+import { AuthGuard } from '../core/services';
 import { MissionListComponent } from './mission-list/mission-list.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
 import { MissionFormComponent } from './mission-form/mission-form.component';
@@ -20,7 +20,7 @@ const routes: Routes = [
   component: MissionFormComponent,
   pathMatch: 'full',
   canActivate: [AuthGuard],
-  data: {allowedRoles: [ROLES.Leder, ROLES.Mellomleder]}
+  data: {allowedRoles: [Roles.Leder, Roles.Mellomleder]}
 },
 {
   path: ':id/detaljer',
@@ -33,7 +33,7 @@ const routes: Routes = [
   component: MissionFormComponent,
   pathMatch: 'full',
   canActivate: [AuthGuard],
-  data: {allowedRoles: [ROLES.Leder]}
+  data: {allowedRoles: [Roles.Leder]}
 },
 {
   path: ':missionId/notater/ny',
@@ -46,7 +46,7 @@ const routes: Routes = [
   component: MissionNoteFormComponent,
   pathMatch: 'full',
   canActivate: [AuthGuard],
-  data: {allowedRoles: [ROLES.Leder]}
+  data: {allowedRoles: [Roles.Leder]}
 }
 ];
 

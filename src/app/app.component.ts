@@ -1,12 +1,10 @@
 import { Component, HostListener } from '@angular/core';
-import { IdentityService, LoadingService, NotificationService, DataSyncService, ConnectionService } from './core';
-import { slideInAnimation } from './route-animation';
-import { RouterOutlet } from '@angular/router';
-import { NOTIFICATIONS } from './shared/notifications.enum';
-import { skip, skipWhile } from 'rxjs/operators';
+import { IdentityService, LoadingService, NotificationService, DataSyncService, ConnectionService } from './core/services';
+import { slideInAnimation } from './shared/animations/route-animation';
+import { skip } from 'rxjs/operators';
 import { TimesheetSubject } from './core/subjects/timesheet.subject';
 import * as moment from 'moment';
-import { DateTimeAdapter } from 'ng-pick-datetime';
+import { Notifications } from './shared/enums/notifications.enum';
 
 @Component({
   selector: 'app-root',
@@ -25,8 +23,7 @@ export class AppComponent {
     private connectionService: ConnectionService,
     public notificationService: NotificationService,
     private dataSyncService: DataSyncService,
-    private timesheetSubject: TimesheetSubject,
-    private dateTimeAdapter: DateTimeAdapter<any>){
+    private timesheetSubject: TimesheetSubject){
     }
 
   ngOnInit(){
@@ -40,11 +37,11 @@ export class AppComponent {
       this.hasSynced();
     }
 
-    this.timesheetSubject.getAll$().subscribe(console.log)
+    this.timesheetSubject.getAll$().subscribe()
 
     this.connectionService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
       if(isOnline) this.notificationService.setNotification('Du er tilkoblet internett igjen!')
-      else this.notificationService.setNotification('Du er nå i frakoblet modus. Det er kun mulig å lese data.', NOTIFICATIONS.Warning)
+      else this.notificationService.setNotification('Du er nå i frakoblet modus. Det er kun mulig å lese data.', Notifications.Warning)
     });
   }
 

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { UsersService, IdentityService } from 'src/app/core';
-import { User, ROLES } from 'src/app/shared';
+import { Component } from '@angular/core';
+import { UsersService, IdentityService } from 'src/app/core/services';
+import { User } from 'src/app/shared/models';
+import { Roles } from '../../shared/enums';
 import { combineLatest } from 'rxjs';
 import { Router } from '@angular/router';
 import { SubscriptionComponent } from 'src/app/subscription.component';
@@ -11,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './user-list.component.html'
 })
 export class UserListComponent extends SubscriptionComponent {
-  ROLES = ROLES;
+  Roles = Roles;
 
   users: User[];
   currentUser: User;
@@ -23,10 +24,10 @@ export class UserListComponent extends SubscriptionComponent {
 
   ngOnInit() {
     combineLatest( //Calling seperate to have them ordered correctly. Should be done more efficiently.
-      this.usersService.getByRole$(ROLES.Leder),
-      this.usersService.getByRole$(ROLES.Mellomleder),
-      this.usersService.getByRole$(ROLES.Ansatt),
-      this.usersService.getByRole$(ROLES.Oppdragsgiver),
+      this.usersService.getByRole$(Roles.Leder),
+      this.usersService.getByRole$(Roles.Mellomleder),
+      this.usersService.getByRole$(Roles.Ansatt),
+      this.usersService.getByRole$(Roles.Oppdragsgiver),
     )
     .pipe(takeUntil(this.unsubscribe))
     .subscribe(([group1, group2, group3, group4]) => {this.users = [...group1, ...group2, ...group3, ...group4]});

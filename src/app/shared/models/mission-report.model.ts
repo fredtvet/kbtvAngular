@@ -1,5 +1,5 @@
 import { MissionReportType } from './mission-report-type.model';
-import { MissionChild } from '../interfaces';
+import { MissionChild } from '../interfaces/mission-child.interface';
 
 export class MissionReport implements MissionChild{
   constructor(

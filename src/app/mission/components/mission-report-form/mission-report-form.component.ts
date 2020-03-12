@@ -1,17 +1,19 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatDialogRef} from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ROLES, MissionReportType } from 'src/app/shared';
-import { ReportTypeService } from 'src/app/core';
+import { MissionReportType } from 'src/app/shared/models';
+import { Roles } from 'src/app/shared/enums';
+import { ReportTypeService } from 'src/app/core/services';
 import { SubscriptionComponent } from 'src/app/subscription.component';
 import { takeUntil } from 'rxjs/operators';
+
 @Component({
   selector: 'app-mission-report-form',
   templateUrl: './mission-report-form.component.html'
 })
 
 export class MissionReportFormComponent extends SubscriptionComponent {
-  public ROLES = ROLES;
+  public Roles = Roles;
 
   reportForm: FormGroup;
 

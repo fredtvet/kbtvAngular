@@ -4,7 +4,7 @@ import { BaseSubject } from '../../subjects/base.subject';
 import { ApiService } from '../api.service';
 import { ConnectionService } from '../connection.service';
 import { NotificationService } from '../notification.service';
-import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
+import { Notifications } from 'src/app/shared/enums';
 import { BaseEntity } from 'src/app/shared/interfaces';
 
 export abstract class BaseService<T extends BaseEntity>{
@@ -31,7 +31,7 @@ export abstract class BaseService<T extends BaseEntity>{
         retry(3),
         tap(this.dataSubject.sync),
         catchError(err => {
-        this.notificationService.setNotification('Noe gikk feil med synkroniseringen!' , NOTIFICATIONS.Error)
+        this.notificationService.setNotification('Noe gikk feil med synkroniseringen!' , Notifications.Error)
         throw err;})
       )
   }
@@ -47,12 +47,11 @@ export abstract class BaseService<T extends BaseEntity>{
   add$(entity: T): Observable<T>{
 
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å legge til ting.')
-      .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+      .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     return this.apiService
                 .post(`${this.uri}`, entity)
                 .pipe(map(data =>{
-                  console.log(data);
                   this.dataSubject.addOrReplace(data);
                   return data;
                 }));
@@ -62,11 +61,10 @@ export abstract class BaseService<T extends BaseEntity>{
 
     if(!this.isOnline)
       return throwError('Du må være tilkoblet internett for å oppdatere ting.')
-              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
-    console.log(entity);
+              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
+
     return this.apiService.put(`${this.uri}/${entity.id}`, entity)
       .pipe(map(data => {
-        console.log(data);
         this.dataSubject.update(data);
         return data;
       }));
@@ -76,7 +74,7 @@ export abstract class BaseService<T extends BaseEntity>{
 
     if(!this.isOnline)
       return throwError('Du må være tilkoblet internett for å slette ting.')
-              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     return this
             .apiService
@@ -89,7 +87,7 @@ export abstract class BaseService<T extends BaseEntity>{
   deleteRange$(ids: number[]): Observable<boolean>{
     if(!this.isOnline)
     return throwError('Du må være tilkoblet internett for å slette ting.')
-            .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+            .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     return this
             .apiService

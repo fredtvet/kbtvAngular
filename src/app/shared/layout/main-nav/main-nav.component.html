@@ -5,14 +5,15 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false">
 
-    <mat-toolbar fxLayout="column" fxLayoutAlign="end start">
+    <mat-toolbar fxLayout="column" fxLayoutAlign="center start" style="line-height:1.3">
 
-      <span style="line-height:1"
+      <span
         [ngClass]="(conSub$ | async) ? 'color-green' : 'color-warn'">
         {{ (conSub$ | async) ? 'Tilkoblet internett' : 'Frakoblet internett' }}
       </span>
 
       <span *ngIf="currentUser$ | async; let user">{{ user.firstName }} {{ user.lastName }}</span>
+
     </mat-toolbar>
 
     <mat-nav-list>
@@ -30,7 +31,7 @@
         <mat-icon mat-list-icon>timer</mat-icon>
         <p mat-line>Timeliste</p>
       </a>
-      <ng-container *ifRole="[ROLES.Leder, ROLES.Mellomleder]">
+      <ng-container *ifRole="[Roles.Leder, Roles.Mellomleder]">
         <mat-divider class="mid-divider"></mat-divider>
         <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/oppdragsgivere']" [routerLinkActive]="['active']">
           <mat-icon mat-list-icon>work</mat-icon>

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { IdentityService, EmployerService } from 'src/app/core';
-import { Employer, ROLES, User } from 'src/app/shared';
+import { Component } from '@angular/core';
+import { IdentityService, EmployerService } from 'src/app/core/services';
+import { Employer, User } from 'src/app/shared/models';
+import { Roles } from '../../shared/enums';
 import { Router } from '@angular/router';
 import { SubscriptionComponent } from 'src/app/subscription.component';
 import { takeUntil } from 'rxjs/operators';
@@ -11,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 
 export class EmployerListComponent extends SubscriptionComponent {
-  public ROLES = ROLES;
+  public Roles = Roles;
 
   public employers: Employer[];
 

@@ -1,11 +1,12 @@
-import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material';
-import { RolesService, UsersService, NotificationService, LoadingService } from 'src/app/core';
-import { User, ConfirmDeleteDialogComponent, ROLES, VertMenuParent, NavAction } from 'src/app/shared';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { RolesService, UsersService, NotificationService } from 'src/app/core/services';
+import { ConfirmDeleteDialogComponent, VertMenuParent, NavAction } from 'src/app/shared/components';
+import { User } from 'src/app/shared/models';
+import { Roles } from '../../shared/enums';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
-import { Observable, Subscription } from 'rxjs';
+import { MainNavConfig } from 'src/app/shared/layout';
+import { Observable } from 'rxjs';
 import { map, takeUntil, take } from 'rxjs/operators';
 
 @Component({
@@ -14,7 +15,7 @@ import { map, takeUntil, take } from 'rxjs/operators';
 })
 
 export class UserFormComponent extends VertMenuParent  {
-  ROLES = ROLES;
+  Roles = Roles;
 
   isCreateForm = false;
 
@@ -37,7 +38,7 @@ export class UserFormComponent extends VertMenuParent  {
 
       this.roles$ = this._rolesService.getAll$().pipe(
         takeUntil(this.unsubscribe),
-        map(arr => arr.filter(x => x != ROLES.Leder))
+        map(arr => arr.filter(x => x != Roles.Leder))
       )
 
       if(!userName) this.isCreateForm = true;
@@ -88,7 +89,7 @@ export class UserFormComponent extends VertMenuParent  {
 
     configureMainNav(){
       if(!this.isCreateForm){
-        this.vertActions = [new NavAction("Slett", "delete_forever", "delete", this.openDeleteDialog, [ROLES.Leder])];
+        this.vertActions = [new NavAction("Slett", "delete_forever", "delete", this.openDeleteDialog, [Roles.Leder])];
         this.mainNavConfig.vertActions = this.vertActions;
       }
       this.mainNavConfig.title = this.isCreateForm ? 'Ny' : 'Rediger';

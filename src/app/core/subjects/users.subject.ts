@@ -10,7 +10,7 @@ import { User } from 'src/app/shared/models';
 export class UsersSubject {
 
   private usersSubject = new BehaviorSubject<User[]>([]);
-  public users$ = this.usersSubject.asObservable().pipe(tap(console.log));
+  public users$ = this.usersSubject.asObservable();
 
   constructor() { }
 

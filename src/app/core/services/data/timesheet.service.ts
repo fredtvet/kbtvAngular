@@ -1,14 +1,15 @@
-import { Timesheet } from 'src/app/shared';
+import { Timesheet, TimesheetInfo } from 'src/app/shared/models';
+import { TimesheetStatus, Notifications } from 'src/app/shared/enums';
 import { BaseService } from './base.service';
 import { NotificationService } from '../notification.service';
 import { ApiService } from '../api.service';
 import { TimesheetSubject } from '../../subjects/timesheet.subject';
 import { ConnectionService } from '../connection.service';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { TimesheetStatus } from 'src/app/shared/timesheet-status.enum';
-import { TimesheetWeekSubject } from '../../subjects/timesheet-week.subject';
+import { Observable, throwError } from 'rxjs';
+import * as moment from 'moment';
 import { tap, map } from 'rxjs/operators';
+import { DateParams } from 'src/app/shared/interfaces';
 
 
 @Injectable({
@@ -21,8 +22,7 @@ export class TimesheetService extends BaseService<Timesheet> {
     notificationService: NotificationService,
     apiService: ApiService,
     connectionService: ConnectionService,
-    protected dataSubject: TimesheetSubject,
-    private weekSubject: TimesheetWeekSubject
+    protected dataSubject: TimesheetSubject
   ){
     super(notificationService, apiService, dataSubject, connectionService, "/Timesheets");
   }
@@ -31,34 +31,40 @@ export class TimesheetService extends BaseService<Timesheet> {
     return this.dataSubject.getByMissionId$(missionId);
   }
 
-  getByUserName$(userName: string):Observable<Timesheet[]>{
+  getByUserName$(userName: string, groupByWeek: boolean = false):Observable<Timesheet[]>{
     return this.dataSubject.getByUserName$(userName);
   }
 
-  getByWeekId$(weekId: number){
-    return this.dataSubject.getByWeekId$(weekId);
+  getByUserNameAndWeekGrouped$(userName: string, dateParams: DateParams): Observable<TimesheetInfo[]>{
+    return this.dataSubject.getByUserNameAndWeekGrouped$(userName, dateParams);
   }
 
-  getByMomentAndUserName$(userName: string, year: number, weekNr: number, weekDay: number){
-    return this.dataSubject.getByMomentAndUserName$(userName, year, weekNr, weekDay);
+  getByMomentAndUserName$(date: moment.Moment, userName: string): Observable<TimesheetInfo>{
+    return this.dataSubject.getByMomentAndUserName$(date, userName);
   }
 
-  changeStatuses(ids: number[], status: TimesheetStatus): void{
-    this.dataSubject.changeStatuses(ids, status);
+  changeStatus$(id: number, status: TimesheetStatus): Observable<Timesheet>{
+    if(!this.isOnline)
+      return throwError('Du må være tilkoblet internett for å oppdatere ting.')
+            .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
+
+    return this.apiService.put(`${this.uri}/${id}/Status`, { id: id, status: status})
+      .pipe(map(data => {
+        this.dataSubject.update(data);
+        return data;
+      }));
   }
 
-  add$(entity: Timesheet): Observable<Timesheet>{
-    return super.add$(entity).pipe(map(this.addForeigns));
-  }
+  changeStatuses$(ids: number[], status: TimesheetStatus): Observable<Timesheet[]>{
+    if(!this.isOnline)
+      return throwError('Du må være tilkoblet internett for å oppdatere ting.')
+            .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
-  private addForeigns(entity: Timesheet): Timesheet{
-    let e = entity;
-    if(e.timesheetWeekId && e.timesheetWeek.id != 0){
-      this.weekSubject.addOrReplace(e.timesheetWeek);
-      e.timesheetWeekId = e.timesheetWeek.id;
-      e.timesheetWeek = null; //Clean up
-    }
-    return e;
+    return this.apiService.put(`${this.uri}/Status`, { ids: ids, status: status})
+      .pipe(map(data => {
+        this.dataSubject.addOrReplaceRange(data);
+        return data;
+      }));
   }
 
   update$(){return undefined}

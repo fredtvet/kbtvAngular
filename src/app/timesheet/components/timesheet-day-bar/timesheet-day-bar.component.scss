@@ -1,12 +1,15 @@
 @import '../../../../variables';
+
 *{
-  line-height:4px;
+  line-height:14.5px;
 }
 
 .static-section{
+  border-top-left-radius:4px;
+  border-bottom-left-radius:4px;
   background:$bg-app-bar;
-  width:100px;
-  height:50px;
+  width:110px;
+  height:$timesheet-weekday-height;
 }
 
 .timesheet-bar{
@@ -17,11 +20,3 @@
   border:1px solid $primary;
 }
 
-.weekday{
-  font-size:24px;
-}
-
-.date{
-  font-size:14px;
-  margin:0;
-}

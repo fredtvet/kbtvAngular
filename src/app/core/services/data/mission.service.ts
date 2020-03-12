@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { BaseService } from './base.service';
-import { Mission } from 'src/app/shared';
+import { Mission } from 'src/app/shared/models';
 import { MissionSubject } from '../../subjects/mission.subject';
 import { ApiService } from '../api.service';
 import { ConnectionService } from '../connection.service';

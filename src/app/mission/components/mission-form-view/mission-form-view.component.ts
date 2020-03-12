@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MissionType, Employer, Mission, ROLES } from 'src/app/shared';
-import { LoadingService } from 'src/app/core';
-import { Observable } from 'rxjs';
+import { MissionType, Employer, Mission } from 'src/app/shared/models';
+import { Roles } from '../../../shared/enums';
 
 @Component({
   selector: 'app-mission-form-view',
@@ -10,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 
 export class MissionFormViewComponent implements OnInit {
-  ROLES = ROLES;
+  Roles = Roles;
 
   @Input() mission: Mission = null;
   @Input() missionTypes: MissionType[];

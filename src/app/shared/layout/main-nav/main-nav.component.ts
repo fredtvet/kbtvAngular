@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, Subscription } from 'rxjs';
-import { map, shareReplay, take, takeUntil, finalize } from 'rxjs/operators';
-import { Router, ActivatedRoute } from "@angular/router";
-import { IdentityService, LoadingService, ConnectionService } from 'src/app/core';
-import { ROLES } from '../../roles.enum';
+import { Observable } from 'rxjs';
+import { map, shareReplay, take, takeUntil } from 'rxjs/operators';
+import { Router } from "@angular/router";
+import { IdentityService, LoadingService, ConnectionService } from 'src/app/core/services';
+import { Roles } from '../../enums/roles.enum';
 import { MatDrawer } from '@angular/material';
 import { MainNavConfig } from './main-nav-config.model';
 import { User } from '../../models/user.model';
@@ -25,7 +25,7 @@ export class MainNavComponent extends SubscriptionComponent {
   @Output() search = new EventEmitter();
   @Output() back = new EventEmitter();
 
-  ROLES = ROLES;
+  Roles = Roles;
 
   searchBarHidden = true;
 

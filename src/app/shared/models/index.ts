@@ -9,4 +9,4 @@ export * from './mission.model';
 export * from './user.model';
 export * from './db-sync.model';
 export * from './timesheet.model';
-export * from './timesheet-week.model';
+export * from './timesheet-info.model'

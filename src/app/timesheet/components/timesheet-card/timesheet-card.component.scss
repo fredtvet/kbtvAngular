@@ -1,0 +1,12 @@
+@import '../../../../variables';
+
+.timesheet-card{
+  padding:$content-margin * 1px;
+  background:$bg-card;
+  margin-top:$content-margin * 1px;
+  border-radius:4px;
+}
+
+.no-padding-top{
+  padding-top:0!important;
+}

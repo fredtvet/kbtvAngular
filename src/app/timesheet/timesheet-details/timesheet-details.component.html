@@ -1,6 +1,11 @@
 <app-main-nav [config]="mainCfg" (back)="onBack()">
 
-  <app-timesheet-details-view></app-timesheet-details-view>
+  <app-timesheet-details-view
+  [date]="date"
+  [timesheetInfo]="timesheetInfo$ | async"
+  (hasConfirmed)="confirmTimesheet($event)"
+  (allConfirmed)="confirmTimesheets($event)"
+  (hasDeleted)="deleteTimesheet($event)"></app-timesheet-details-view>
 
 </app-main-nav>
 

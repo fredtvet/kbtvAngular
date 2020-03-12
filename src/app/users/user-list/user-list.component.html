@@ -5,7 +5,7 @@
     <div  fxFlex="10" class="content-header">
       <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
         <span>Brukere</span>
-        <button (click)="createUser()" color="primary" *ifRole="[ROLES.Leder]"
+        <button (click)="createUser()" color="primary" *ifRole="[Roles.Leder]"
           mat-icon-button aria-label="ny">
           <mat-icon class="icon_125">person_add</mat-icon>
         </button>
@@ -19,11 +19,11 @@
       <mat-nav-list *ngIf="users" class="p-0">
         <app-nav-list-item
           *ngFor="let user of users; last as last" [last]="last"
-          (click)="(currentUser.role == ROLES.Leder && user.role != ROLES.Leder) ? editUser(user.userName) : ''"
+          (click)="(currentUser.role == Roles.Leder && user.role != Roles.Leder) ? editUser(user.userName) : ''"
           [config]="{
             mainLine: (user.firstName + ' ' + user.lastName),
-            startIcon: (user.role == ROLES.Oppdragsgiver) ? 'work' : 'person',
-            endIcon: (currentUser.role == ROLES.Leder && user.role != ROLES.Leder) ? 'edit' : '',
+            startIcon: (user.role == Roles.Oppdragsgiver) ? 'work' : 'person',
+            endIcon: (currentUser.role == Roles.Leder && user.role != Roles.Leder) ? 'edit' : '',
             subLines: [{name: user.phoneNumber || 'Ingen kontaktnummer', icon: 'phone'}]
           }">
         </app-nav-list-item>

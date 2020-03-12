@@ -1,4 +1,4 @@
-import { ROLES } from '../roles.enum';
+import { Roles } from '../enums/roles.enum';
 
 export class NavAction{
   constructor(
@@ -7,10 +7,10 @@ export class NavAction{
     public event: string,
     public handle: any = null,
     public roles: string[] = [
-      ROLES.Ansatt,
-      ROLES.Mellomleder,
-      ROLES.Leder,
-      ROLES.Oppdragsgiver
+      Roles.Ansatt,
+      Roles.Mellomleder,
+      Roles.Leder,
+      Roles.Oppdragsgiver
     ],
   ){};
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ROLES, Mission } from '../shared';
-import { MissionService } from '../core';
+import { Mission } from '../shared/models';
+import { Roles } from '../shared/enums';
+import { MissionService } from '../core/services';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -10,14 +11,14 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public ROLES = ROLES;
+  public Roles = Roles;
 
   newestMissions: Mission[] = []
 
   missionHistory$: Observable<Mission[]>;
 
   constructor(private missionService: MissionService) {
-    this.missionHistory$ = this.missionService.getHistory$(4).pipe(tap(console.log));
+    this.missionHistory$ = this.missionService.getHistory$(4);
   }
 
   ngOnInit() {}

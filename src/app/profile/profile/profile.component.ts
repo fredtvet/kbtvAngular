@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { IdentityService, NotificationService, LoadingService } from 'src/app/core';
-import { User } from 'src/app/shared';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
+import { IdentityService, NotificationService } from 'src/app/core/services';
+import { User } from 'src/app/shared/models';
 import { takeUntil, take } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/subscription.component';
 

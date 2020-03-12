@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 
 import { TimesheetRoutingModule } from './timesheet-routing.module';
 import { TimesheetWeekListComponent } from './timesheet-week-list/timesheet-week-list.component';
-import { SharedModule } from '../shared';
 import { TimesheetDayBarComponent } from './components/timesheet-day-bar/timesheet-day-bar.component';
 import { TimesheetDetailsComponent } from './timesheet-details/timesheet-details.component';
 import { TimesheetFormComponent } from './timesheet-form/timesheet-form.component';
 import { TimesheetDetailsViewComponent } from './components/timesheet-details-view/timesheet-details-view.component';
+import { TimesheetCardComponent } from './components/timesheet-card/timesheet-card.component';
+import { TimesheetWeekMenuComponent } from './components/timesheet-week-menu/timesheet-week-menu.component';
+
 
 
 @NgModule({
@@ -17,6 +19,8 @@ import { TimesheetDetailsViewComponent } from './components/timesheet-details-vi
     TimesheetDetailsComponent,
     TimesheetFormComponent,
     TimesheetDetailsViewComponent,
+    TimesheetCardComponent,
+    TimesheetWeekMenuComponent,
   ],
   entryComponents:[],
   imports: [

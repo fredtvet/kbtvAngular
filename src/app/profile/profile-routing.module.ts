@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MainNavComponent, BottomNavComponent } from '../shared';
-import { AuthGuard } from '../core';
+import { AuthGuard } from '../core/services';
 import { ProfileComponent } from './profile/profile.component';
 
 

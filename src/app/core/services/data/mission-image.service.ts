@@ -1,13 +1,13 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MissionImageSubject } from '../../subjects/mission-image.subject';
 import { ApiService } from '../api.service';
 import { BaseMissionChildService } from './base-mission-child.service';
-import { MissionImage } from 'src/app/shared';
+import { MissionImage } from 'src/app/shared/models';
+import { Notifications } from 'src/app/shared/enums';
 import { Observable, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { ConnectionService } from '../connection.service';
 import { NotificationService } from '../notification.service';
-import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class MissionImageService extends BaseMissionChildService<MissionImage> {
   addImages$(missionId:number, files: FileList): Observable<MissionImage[]>{
     if(!this.isOnline)
       return throwError('Du må være tilkoblet internett for å legge til bilder.')
-              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, NOTIFICATIONS.Error)));
+              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     const formData: FormData = new FormData();
 

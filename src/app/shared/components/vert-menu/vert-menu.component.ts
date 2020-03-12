@@ -20,7 +20,6 @@ export class VertMenuComponent implements OnInit {
   }
 
   handleEvent(e: string){
-    console.log(e);
     this.event.emit(e);
   }
 

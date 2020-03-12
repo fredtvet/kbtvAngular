@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TimesheetWeekListComponent } from './timesheet-week-list/timesheet-week-list.component';
-import { AuthGuard } from '../core';
-import { ROLES } from '../shared/roles.enum';
+import { AuthGuard } from '../core/services';
 import { TimesheetDetailsComponent } from './timesheet-details/timesheet-details.component';
+import { Roles } from '../shared/enums';
 
 
 const routes: Routes = [
@@ -12,14 +12,14 @@ const routes: Routes = [
     component: TimesheetWeekListComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
-    data: {allowedRoles: [ROLES.Leder, ROLES.Mellomleder, ROLES.Ansatt]}
+    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]}
   },
   {
     path: ':year/:weekNr/:weekDay/detaljer',
     component: TimesheetDetailsComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
-    data: {allowedRoles: [ROLES.Leder, ROLES.Mellomleder, ROLES.Ansatt]}
+    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]}
   }
 ];
 

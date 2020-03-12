@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ROLES } from '../../roles.enum';
+import { Roles } from '../../enums/roles.enum';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./bottom-nav.component.scss']
 })
 export class BottomNavComponent implements OnInit {
-  ROLES = ROLES;
+  Roles = Roles;
 
   constructor() { }
 

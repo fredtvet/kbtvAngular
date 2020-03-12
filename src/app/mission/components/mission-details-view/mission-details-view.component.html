@@ -27,11 +27,11 @@
           <a mat-line href="{{ report.fileURL }}">{{ report.missionReportType?.name }}</a>
           <p mat-line>{{ report.createdAt | date }}</p>
 
-          <button *ifRole="[ROLES.Leder]" (click)="openDeleteReportDialog(report.id)" mat-icon-button color="warn">
+          <button *ifRole="[Roles.Leder]" (click)="openDeleteReportDialog(report.id)" mat-icon-button color="warn">
             <mat-icon>delete_forever</mat-icon>
           </button>
 
-          <mat-icon *ifRole="[ROLES.Mellomleder, ROLES.Ansatt, ROLES.Oppdragsgiver]" class="color-green">
+          <mat-icon *ifRole="[Roles.Mellomleder, Roles.Ansatt, Roles.Oppdragsgiver]" class="color-green">
             cloud_download
           </mat-icon>
 
@@ -66,7 +66,7 @@
 </mat-tab-group>
 
 <button color="primary"
-    *ifRole="[ROLES.Leder, ROLES.Ansatt, ROLES.Mellomleder]"
+    *ifRole="[Roles.Leder, Roles.Ansatt, Roles.Mellomleder]"
     mat-mini-fab aria-label="ny"
     class="action_fab"
     (click)="imageInput.click()">

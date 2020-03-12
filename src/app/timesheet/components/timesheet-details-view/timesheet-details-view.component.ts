@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { TimesheetInfo } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-timesheet-details-view',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimesheetDetailsViewComponent implements OnInit {
 
+  @Input() timesheetInfo: TimesheetInfo = new TimesheetInfo();
+  @Input() date: Date;
+
+  @Output() allConfirmed = new EventEmitter();
+  @Output() hasConfirmed = new EventEmitter();
+  @Output() hasDeleted = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  confirmAll(){
+    this.allConfirmed.emit(this.timesheetInfo.openTimesheets.map(x => x.id));
   }
 
 }

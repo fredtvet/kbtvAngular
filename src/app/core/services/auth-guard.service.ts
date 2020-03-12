@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { IdentityService } from './identity.service';
 import { NotificationService } from './notification.service';
-import { NOTIFICATIONS } from '../../shared/notifications.enum'
-
+import { Notifications } from 'src/app/shared/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +15,7 @@ export class AuthGuard implements CanActivate {
     private notificaitonService: NotificationService
   ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
+  canActivate(route: ActivatedRouteSnapshot): boolean {
 
     if(!this.identityService.hasValidToken()){
         this.identityService.purgeAuth();
@@ -29,7 +25,7 @@ export class AuthGuard implements CanActivate {
 
     if(route.data['allowedRoles']){
       if(!route.data['allowedRoles'].includes(this.identityService.getCurrentUser().role)){
-        this.notificaitonService.setNotification('Du mangler riktig autorisasjon for å gå inn på denne siden.',NOTIFICATIONS.Error);
+        this.notificaitonService.setNotification('Du mangler riktig autorisasjon for å gå inn på denne siden.',Notifications.Error);
         this.router.navigate(['/hjem']);
         return false;
       }

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
-import { EmployerService, NotificationService, MissionTypeService, MissionService, LoadingService } from 'src/app/core';
-import { Mission, MissionType, Employer } from 'src/app/shared';
+import { Component } from '@angular/core';
+import { MainNavConfig } from 'src/app/shared/layout';
+import { EmployerService, NotificationService, MissionTypeService, MissionService } from 'src/app/core/services';
+import { Mission, MissionType, Employer } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';

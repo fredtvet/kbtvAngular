@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DataManagerComponent } from './data-manager/data-manager.component';
-import { AuthGuard } from '../core';
-import { ROLES } from '../shared';
+import { AuthGuard } from '../core/services';
+import { Roles } from '../shared/enums';
 
 
 const routes: Routes = [
@@ -11,7 +11,7 @@ const routes: Routes = [
     component: DataManagerComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
-    data: {allowedRoles: [ROLES.Leder]}
+    data: {allowedRoles: [Roles.Leder]}
   }
 ];
 

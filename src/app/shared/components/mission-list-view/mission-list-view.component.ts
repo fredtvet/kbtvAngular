@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Mission } from 'src/app/shared';
+import { Mission } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-mission-list-view',
@@ -7,11 +7,10 @@ import { Mission } from 'src/app/shared';
 })
 export class MissionListViewComponent implements OnInit {
 
-  @Input() missions: Mission[];
+  @Input() missions: Mission[] = [];
   @Input() title: string = "Oppdrag";
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

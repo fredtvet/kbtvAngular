@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
+import { SharedModule } from '../shared/shared.module';
 
 import { DataManagementRoutingModule } from './data-management-routing.module';
-
-
 import { DataManagerComponent } from './data-manager/data-manager.component';
+
 import {
-  SharedModule,
   ConfirmDeleteDialogComponent,
   MissionTypeFormDialogComponent,
   ReportTypeFormDialogComponent,
-} from '../shared';
+} from '../shared/components';
+
 
 @NgModule({
   declarations: [

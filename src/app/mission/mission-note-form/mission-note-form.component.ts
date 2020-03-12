@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { MissionNote } from 'src/app/shared';
-import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
-import { NotificationService, MissionNoteService, LoadingService } from 'src/app/core';
+import { MissionNote } from 'src/app/shared/models';
+import { MainNavConfig } from 'src/app/shared/layout';
+import { NotificationService, MissionNoteService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { SubscriptionComponent } from 'src/app/subscription.component';
 import { takeUntil, take } from 'rxjs/operators';
 

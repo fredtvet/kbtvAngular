@@ -1,17 +1,20 @@
-import * as moment from 'moment';
-import { BaseEntity, Duration } from '../interfaces';
-import { TimesheetStatus } from '../timesheet-status.enum';
-import { TimesheetWeek } from './timesheet-week.model';
+import { Duration } from '../interfaces/duration.interface';
+import { BaseEntity } from '../interfaces/base-entity.interface';
+import { TimesheetStatus } from '../enums/timesheet-status.enum';
+import { Mission } from './mission.model';
 
 export class Timesheet implements BaseEntity, Duration {
+
     constructor(
       public id: number = null,
       public userName: string = null,
       public missionId: number = null,
-      public timesheetWeekId: number = null,
-      public timesheetWeek: TimesheetWeek = null,
+      public status: TimesheetStatus = TimesheetStatus.Open,
       public startTime: Date = null,
       public endTime: Date = null,
-      public status: TimesheetStatus = TimesheetStatus.Open,
-    ){};
-  };
+      public totalHours: number = null,
+    ){ };
+
+    public mission: Mission = null;
+
+}

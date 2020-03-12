@@ -1,0 +1,41 @@
+<div fxLayout="column" fxLayoutAlign="space-between start" class="mat-elevation-z6 timesheet-card"
+  *ngIf="timesheet"
+  [ngClass]="timesheet.status == 0 ? 'no-padding-top' : ''">
+
+  <span fxLayout="row" fxLayoutAlign="start center" *ngIf="timesheet.status == 0" >
+
+    <span class="color-warn">Ubekreftet!</span>
+    <button mat-button color="primary" (click)="hasConfirmed.emit()">Trykk for å bekrefte</button>
+
+  </span>
+
+  <span fxLayout="row" fxLayoutAlign="space-between center" class="w-100" *ngIf="timesheet">
+
+    <span fxLayout="column" fxLayoutAlign="start start" >
+
+      <span class="mat-body-2">
+        {{ this.startDate.format("Do MMM") }}
+        {{ this.startDate.format("HH:mm") }} - {{ this.endDate.format("HH:mm") }}
+      </span>
+      <span class="mat-small">
+        {{ duration.hours() }} timer
+        {{ duration.minutes() }} minutter
+      </span>
+      <span class="mat-small" *ngIf="timesheet.mission">
+        {{ timesheet.mission.address }}
+      </span>
+
+    </span>
+    <mat-icon color="primary" style="margin-bottom:auto"
+      *ngIf="timesheet.status !== 0">
+      check
+    </mat-icon>
+
+    <button mat-icon-button color="warn" style="margin-top:auto"
+      *ngIf="timesheet.status === 0" (click)="hasDeleted.emit()">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
+
+  </span>
+
+</div>

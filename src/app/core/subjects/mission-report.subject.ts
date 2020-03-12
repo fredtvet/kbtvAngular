@@ -1,4 +1,4 @@
-import { MissionReport } from 'src/app/shared';
+import { MissionReport } from 'src/app/shared/models';
 import { Injectable } from '@angular/core';
 import { BaseMissionChildSubject } from './base-mission-child.subject';
 import { ReportTypeSubject } from './report-type.subject';

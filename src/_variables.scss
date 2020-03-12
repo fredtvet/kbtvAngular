@@ -35,6 +35,9 @@ $content-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$main-nav-he
 $details-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$alt-nav-height} + #{$tab-header-height} + #{$content-margin * 2}) * 1px));
 $font-size-small:14px;
 
+$timesheet-menu-height: 93;
+$timesheet-weekday-height:calc((100vh - ((#{$timesheet-menu-height} + #{$bottom-nav-height} + #{$main-nav-height} + (#{$content-margin} * 8)) * 1px)) * 1/7);
+
 @mixin full-page-container{
   padding: $content-margin * 1px!important;
   height:$content-container-height !important;

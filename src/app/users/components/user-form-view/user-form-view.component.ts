@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { User, ROLES } from 'src/app/shared';
+import { User } from 'src/app/shared/models';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -20,7 +20,6 @@ export class UserFormViewComponent implements OnInit {
     private _formBuilder: FormBuilder,) {  }
 
     ngOnInit(){
-      console.log(this.user);
       if(this.user == undefined || this.user.userName == undefined){
         this.isCreateForm = true;
         this.user = new User();
@@ -60,7 +59,7 @@ export class UserFormViewComponent implements OnInit {
 
     onSubmit(){
       const {value, valid} = this.userForm;
-      console.log(valid);
+
       if(valid && this.userForm.dirty) this.formSubmitted.emit(value);
     }
 

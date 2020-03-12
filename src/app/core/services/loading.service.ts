@@ -14,7 +14,6 @@ export class LoadingService {
   constructor() { }
 
   setLoading(loading: boolean){
-    console.log(loading);
     this.loadingSubject.next(loading);
   }
 }

@@ -21,10 +21,9 @@ import {
   TranslationService,
   DataPageService,
   TimesheetService,
-  TimesheetWeekService,
-
 } from './services';
-import { NotificationComponent } from '../shared/components/notification/notification.component';
+
+import { NotificationComponent } from '../shared/components';
 
 @NgModule({
   declarations: [],
@@ -52,7 +51,6 @@ import { NotificationComponent } from '../shared/components/notification/notific
     MissionTypeService,
     ReportTypeService,
     TimesheetService,
-    TimesheetWeekService,
     DataSyncService,
     TranslationService,
     DataPageService

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { AuthGuard, NoAuthGuard } from './core';
+import { AuthGuard, NoAuthGuard } from './core/services';
 import { AuthComponent } from './auth/auth.component';
 import { CustomPreloadingService } from './custom-preloading.service';
 

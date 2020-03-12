@@ -1,14 +1,14 @@
-import { Directive, Input, ElementRef, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 import { skipWhile, take } from 'rxjs/operators';
-import { IdentityService } from 'src/app/core/services/identity.service';
+import { IdentityService } from 'src/app/core/services';
 
 @Directive({
   selector: '[ifRole]'
 })
+
 export class IfRoleDirective {
 
   constructor(
-    private element: ElementRef,
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef,
     private identityService: IdentityService

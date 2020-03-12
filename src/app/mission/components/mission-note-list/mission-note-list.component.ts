@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewChildren, QueryList, ElementRef } from '@angular/core';
-import { MissionNote, ConfirmDeleteDialogComponent } from 'src/app/shared';
-import { MatExpansionPanel } from '@angular/material/expansion/typings/expansion-panel';
-import { ROLES } from 'src/app/shared';
-import { MissionNoteFormComponent } from '../../mission-note-form/mission-note-form.component';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { MissionNote } from 'src/app/shared/models';
+import { ConfirmDeleteDialogComponent } from 'src/app/shared/components';
+import { Roles } from '../../../shared/enums';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -18,7 +17,7 @@ export class MissionNoteListComponent {
   @Output() noteEdit = new EventEmitter();
   @Output() noteDeleted = new EventEmitter();
 
-  ROLES = ROLES;
+  Roles = Roles;
 
   constructor(public dialog: MatDialog) { }
 

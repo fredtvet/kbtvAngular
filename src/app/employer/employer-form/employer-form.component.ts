@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { MatDialog} from '@angular/material';
-import { Employer, ConfirmDeleteDialogComponent, ROLES, VertMenuParent, NavAction } from 'src/app/shared';
-import { EmployerService, NotificationService } from 'src/app/core';
+import { Employer } from 'src/app/shared/models';
+import { Roles } from '../../shared/enums';
+import { EmployerService, NotificationService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
-import { Subscription, Observable } from 'rxjs';
+import { MainNavConfig } from 'src/app/shared/layout';
 import { takeUntil } from 'rxjs/operators';
+import { VertMenuParent, ConfirmDeleteDialogComponent, NavAction } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-employer-form',
@@ -13,7 +14,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 
 export class EmployerFormComponent extends VertMenuParent {
-  ROLES = ROLES;
+  Roles = Roles;
 
   googleOptions = {
     types: ['geocode'],
@@ -52,7 +53,6 @@ export class EmployerFormComponent extends VertMenuParent {
     }
 
     private openDeleteDialog = (e: string) => {
-      console.log(e);
       const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
       deleteDialogRef.afterClosed().subscribe(res => {
           if(res) this.deleteEmployer();
@@ -85,7 +85,7 @@ export class EmployerFormComponent extends VertMenuParent {
 
     configureMainNav(){
       if(!this.isCreateForm){
-        this.vertActions = [new NavAction("Slett", "delete_forever", "delete", this.openDeleteDialog, [ROLES.Leder])];
+        this.vertActions = [new NavAction("Slett", "delete_forever", "delete", this.openDeleteDialog, [Roles.Leder])];
         this.mainNavConfig.vertActions = this.vertActions;
       }
       this.mainNavConfig.title = this.isCreateForm ? 'Ny' : 'Rediger';

@@ -12,6 +12,10 @@ body {
   background-color:$bg-content!important;
 }
 
+.primary-border{
+  border: 1px solid $primary!important;;
+}
+
 .card-container{
   //width:$content-width!important;
   overflow:auto;
@@ -192,10 +196,17 @@ body {
 //Owl Date Time Picker Styling
 .owl-dt-dialog-container{
   background:$bg-dialog;
+  .owl-dt-container-info{
+    color:#FFF;
+    .owl-dt-container-info-active{
+      color:$primary;
+    }
+  }
   .owl-dt-control-button{
     color:#FFF;
   }
 }
+
 .owl-dt-calendar-table{
   .owl-dt-calendar-header{
     color:#FFF;

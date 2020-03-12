@@ -85,7 +85,6 @@ export class MissionSubject extends BaseSubject<Mission> {
   }
 
   delete(id: number): void{
-    console.log(id);
     super.delete(id);
     this.missionImageSubject.deleteByMissionId$(id);
     this.missionNoteSubject.deleteByMissionId$(id);
@@ -118,7 +117,6 @@ export class MissionSubject extends BaseSubject<Mission> {
 
     arr = arr.filter(x => x != id) //Remove id if already in array
     arr.unshift(id); //Add id to start
-    console.log(arr);
     this.missionHistory.next(arr);
   }
 

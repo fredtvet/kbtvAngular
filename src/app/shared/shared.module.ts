@@ -11,11 +11,7 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AgGridModule } from 'ag-grid-angular';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
-import { AddToHomeScreenComponent } from './components/add-to-home-screen/add-to-home-screen.component';
-import { SubmitButtonComponent } from './components/submit-button/submit-button.component';
-import { MissionTypeFormDialogComponent } from './components/mission-type-form-dialog/mission-type-form-dialog.component';
-import { ReportTypeFormDialogComponent } from './components/report-type-form-dialog/report-type-form-dialog.component';
-import { HourProgressBarComponent } from './components/hour-progress-bar/hour-progress-bar.component';
+
 import {
   ConfirmDeleteDialogComponent,
   ImageListComponent,
@@ -24,8 +20,15 @@ import {
   VertMenuComponent,
   SearchBarComponent,
   MissionListViewComponent,
-  NotificationComponent
+  NotificationComponent,
+  HourProgressBarComponent,
+  ReportTypeFormDialogComponent,
+  MissionTypeFormDialogComponent,
+  SubmitButtonComponent,
+  AddToHomeScreenComponent,
+  WeekPickerComponent
 } from './components';
+
 import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
 import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date-time-formats';
 
@@ -49,6 +52,7 @@ import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date
     MissionTypeFormDialogComponent,
     ReportTypeFormDialogComponent,
     HourProgressBarComponent,
+    WeekPickerComponent,
   ],
   imports: [
     CommonModule,
@@ -97,6 +101,7 @@ import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date
     MissionTypeFormDialogComponent,
     ReportTypeFormDialogComponent,
     HourProgressBarComponent,
+    WeekPickerComponent
   ]
 })
 export class SharedModule { }

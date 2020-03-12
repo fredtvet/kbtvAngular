@@ -1,6 +1,6 @@
 import { MissionType } from './mission-type.model';
 import { Employer } from './employer.model';
-import { BaseEntity } from '../interfaces';
+import { BaseEntity } from '../interfaces/base-entity.interface';
 
 export class Mission implements BaseEntity {
     constructor(

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {Location} from '@angular/common';
 import {
   HttpRequest,
   HttpHandler,
@@ -7,20 +6,16 @@ import {
   HttpEvent,
   HttpErrorResponse
 } from '@angular/common/http';
-import { tap, distinctUntilChanged } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { NotificationService } from '../services/notification.service';
-import { NOTIFICATIONS } from 'src/app/shared/notifications.enum';
-import { Router } from '@angular/router';
+import { Notifications } from 'src/app/shared/enums';
 
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-  constructor(
-    private notificationService: NotificationService,
-    private router: Router
-  ) { }
+  constructor(private notificationService: NotificationService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(tap(() => {},
@@ -47,7 +42,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           default:
             break;
         }
-        this.notificationService.setNotification(msg, NOTIFICATIONS.Error);
+        this.notificationService.setNotification(msg, Notifications.Error);
       }
     }));
   }

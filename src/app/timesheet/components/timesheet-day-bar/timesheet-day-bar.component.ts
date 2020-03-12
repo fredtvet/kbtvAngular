@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, SimpleChanges, SimpleChange, Output, EventEmitter } from '@angular/core';
-import { TimesheetStatus } from '../../../shared/timesheet-status.enum';
-import { Timesheet } from '../../../shared/models/timesheet.model';
+import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
+import { TimesheetInfo } from 'src/app/shared/models';
+import { DateParams } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-timesheet-day-bar',
@@ -10,26 +10,22 @@ import * as moment from 'moment';
 })
 export class TimesheetDayBarComponent implements OnInit {
 
-  @Input() weekDay: number;
-  @Input() weekNr: number;
-  @Input() year: number;
-  @Input() status: TimesheetStatus;
-  @Input() timesheets: Timesheet[] = [];
+  @Input() dateParams: DateParams;
+  @Input() timesheetInfo: TimesheetInfo = new TimesheetInfo();
 
   @Output() progressClick = new EventEmitter();
   @Output() addClick = new EventEmitter();
 
-  color = 'primary';
-  icon = 'add';
   date: moment.Moment;
   today = moment();
-  totalHours = 0;
+  totalHoursOpen = 0;
+  totalHoursClosed = 0;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.switchState(this.status);
-    this.calcTotalHours();
+    this.totalHoursOpen = this.timesheetInfo.calcTotalHoursOpen();
+    this.totalHoursClosed = this.timesheetInfo.calcTotalHoursClosed();
     this.calcDate();
   }
 
@@ -37,11 +33,9 @@ export class TimesheetDayBarComponent implements OnInit {
     for (const propName in changes) {
       if (changes.hasOwnProperty(propName)) {
         switch (propName) {
-          case 'status': {
-            this.switchState(this.status)
-          }
-          case 'timesheets':{
-            this.calcTotalHours();
+          case 'timesheetInfo':{
+            this.totalHoursOpen = this.timesheetInfo.calcTotalHoursOpen();
+            this.totalHoursClosed = this.timesheetInfo.calcTotalHoursClosed();
           }
           case 'year':
           case 'weekNr':
@@ -53,34 +47,11 @@ export class TimesheetDayBarComponent implements OnInit {
     }
   }
 
-  switchState(status: TimesheetStatus): void{
-    switch(status){
-      case TimesheetStatus.Open:
-        this.color = 'primary';
-        this.icon = 'add';
-        break;
-      case TimesheetStatus.Confirming:
-        this.color = 'primary';
-        this.icon = 'update';
-        break;
-      case TimesheetStatus.Confirmed:
-        this.color = 'warn';
-        this.icon = 'locked';
-        break;
-    }
-  }
-
-  calcTotalHours(): void{
-    this.totalHours = 0; //reset
-    this.timesheets.forEach(x => {
-      let end = moment(x.endTime); //Consider initalizing moment globally with setter?
-      let start = moment(x.startTime);
-      this.totalHours += moment.duration(end.diff(start)).asHours()
-    })
-  }
-
   calcDate(): void{
-    this.date = moment().year(this.year).week(this.weekNr).day(this.weekDay);
+    this.date = moment()
+    .year(this.dateParams.year)
+    .week(this.dateParams.weekNr)
+    .isoWeekday(this.dateParams.weekDay);
   }
 
 

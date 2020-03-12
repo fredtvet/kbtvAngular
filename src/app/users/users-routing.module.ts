@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MainNavComponent, BottomNavComponent } from '../shared';
-import { AuthGuard } from '../core';
+import { AuthGuard } from '../core/services';
 import { UserListComponent } from './user-list/user-list.component';
-import { ROLES } from '../shared/roles.enum';
 import { UserFormComponent } from './user-form/user-form.component';
+import { Roles } from '../shared/enums';
 
 
 const routes: Routes = [
@@ -13,21 +12,21 @@ const routes: Routes = [
     component: UserListComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
-    data: {allowedRoles: [ROLES.Leder, ROLES.Mellomleder]}
+    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder]}
   },
   {
     path: 'ny',
     component: UserFormComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
-    data: {allowedRoles: [ROLES.Leder]}
+    data: {allowedRoles: [Roles.Leder]}
   },
   {
     path: ':userName/rediger',
     component: UserFormComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
-    data: {allowedRoles: [ROLES.Leder]}
+    data: {allowedRoles: [Roles.Leder]}
   },
 ];
 

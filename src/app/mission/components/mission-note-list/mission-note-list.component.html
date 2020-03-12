@@ -20,7 +20,7 @@
           <span>
               {{ this.note.createdAt | date: 'short' }} av {{ this.note.createdBy || "Anonym" }}
           </span>
-          <ng-container *ifRole="ROLES.Leder">
+          <ng-container *ifRole="Roles.Leder">
             <span class="w-100" fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="8px">
               <button (click)="this.noteEdit.emit(note)" mat-icon-button color="primary" aria-label="Rediger notat"><mat-icon>edit</mat-icon></button>
               <button (click)="openDeleteDialog(note.id)" mat-icon-button color="warn" aria-label="Slett notat"><mat-icon>delete</mat-icon></button>

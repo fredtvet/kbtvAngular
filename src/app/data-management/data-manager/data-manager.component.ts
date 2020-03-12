@@ -1,13 +1,11 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MissionService, BaseService, MissionTypeService, UsersService, ReportTypeService, EmployerService, TranslationService, DataPageService } from 'src/app/core';
-import { trigger } from '@angular/animations';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MissionService, BaseService, MissionTypeService, ReportTypeService, EmployerService, TranslationService, DataPageService } from 'src/app/core/services';
 import { Subscription } from 'rxjs';
-import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
+import { MainNavConfig } from 'src/app/shared/layout';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ConfirmDeleteDialogComponent, MissionTypeFormDialogComponent, ReportTypeFormDialogComponent } from 'src/app/shared';
+import { ConfirmDeleteDialogComponent, MissionTypeFormDialogComponent, ReportTypeFormDialogComponent } from 'src/app/shared/components';
 import { MatDialog } from '@angular/material';
-import { Router, ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { BaseEntity } from 'src/app/shared/interfaces';
 
 @Component({
@@ -68,7 +66,6 @@ constructor(
   }
 
   editCell(e: any){
-    console.log(e.data);
     if(e.oldValue != e.newValue)
       this.getCurrentService().update$(e.data).subscribe(x => {}, error => {
         e.node.setDataValue(e.column.colId, e.oldValue) //Reset value on error

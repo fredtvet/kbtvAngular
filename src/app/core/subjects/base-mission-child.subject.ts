@@ -2,7 +2,7 @@
 import { BaseSubject } from './base.subject';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '../services/local-storage.service';
-import { MissionChild } from 'src/app/shared';
+import { MissionChild } from 'src/app/shared/interfaces';
 
 export abstract class BaseMissionChildSubject<T extends MissionChild> extends BaseSubject<T> {
   constructor(

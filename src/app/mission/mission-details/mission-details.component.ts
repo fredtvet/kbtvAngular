@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { NavAction, ConfirmDeleteDialogComponent, ROLES, MissionNote, VertMenuParent, Mission, MissionReport, MissionImage, NOTIFICATIONS } from 'src/app/shared';
-import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, LoadingService } from 'src/app/core';
+import { Roles } from '../../shared/enums';
+import { MissionNote, Mission, MissionReport, MissionImage } from 'src/app/shared/models';
+import { NavAction, ConfirmDeleteDialogComponent, VertMenuParent } from 'src/app/shared/components';
+import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService } from 'src/app/core/services';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
-import { take, map, tap, takeUntil } from 'rxjs/operators';
-import { MainNavConfig } from 'src/app/shared/layout/main-nav/main-nav-config.model';
+import { take, tap, takeUntil } from 'rxjs/operators';
 import { Subscription, Observable } from 'rxjs';
-
+import { MainNavConfig } from 'src/app/shared/layout';
 
 @Component({
   selector: 'app-mission-details',
@@ -15,7 +16,7 @@ import { Subscription, Observable } from 'rxjs';
 })
 
 export class MissionDetailsComponent extends VertMenuParent{
-  ROLES = ROLES;
+  Roles = Roles;
 
   mainNavConfig = new MainNavConfig();
 
@@ -43,7 +44,7 @@ export class MissionDetailsComponent extends VertMenuParent{
 
     this.mission$ = this.missionService.get$(this.mission.id);
     this.images$ = this.missionImageService.getByMissionId$(this.mission.id);
-    this.reports$ = this.missionReportService.getByMissionId$(this.mission.id).pipe(tap(console.log));
+    this.reports$ = this.missionReportService.getByMissionId$(this.mission.id);
     this.notes$ = this.missionNoteService.getByMissionId$(this.mission.id)
 
     this.configureMainNav()
@@ -116,10 +117,10 @@ export class MissionDetailsComponent extends VertMenuParent{
 
   configureMainNav(){
     this.vertActions = [
-      new NavAction("Legg til rapport", "note_add","createReport", this.openCreateReportDialog, [ROLES.Leder]),
+      new NavAction("Legg til rapport", "note_add","createReport", this.openCreateReportDialog, [Roles.Leder]),
       new NavAction("Legg til notat", "add_comment","createNote", this.createNote),
-      new NavAction("Rediger", "edit","edit", this.editMission, [ROLES.Leder]),
-      new NavAction("Slett", "delete_forever", "delete", this.openDeleteMissionDialog, [ROLES.Leder])
+      new NavAction("Rediger", "edit","edit", this.editMission, [Roles.Leder]),
+      new NavAction("Slett", "delete_forever", "delete", this.openDeleteMissionDialog, [Roles.Leder])
     ];
     this.mainNavConfig.vertActions = this.vertActions;
     this.mainNavConfig.altNav = true;

@@ -1,4 +1,4 @@
-import { BaseEntity } from '../interfaces';
+import { BaseEntity } from '../interfaces/base-entity.interface';
 
 export class Employer implements BaseEntity {
   constructor(

@@ -5,7 +5,7 @@
     <div  fxFlex="10" class="content-header">
       <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
         <span>Oppdragsgivere</span>
-        <button (click)="createEmployer()" color="primary" *ifRole="[ROLES.Leder, ROLES.Mellomleder]"
+        <button (click)="createEmployer()" color="primary" *ifRole="[Roles.Leder, Roles.Mellomleder]"
           mat-icon-button aria-label="ny">
           <mat-icon class="icon_125">add</mat-icon>
         </button>
@@ -18,8 +18,8 @@
       <mat-spinner *ngIf="!employers" class="center-spinner"></mat-spinner>
       <mat-nav-list *ngIf="employers">
         <app-nav-list-item *ngFor="let employer of employers; last as last"
-          (click)="(currentUser.role == ROLES.Leder) ? editEmployer(employer.id) : ''" [last]="last"
-          [config]="{mainLine: employer.name, startIcon: 'work', endIcon: (currentUser.role == ROLES.Leder) ? 'edit' : '', subLines: [
+          (click)="(currentUser.role == Roles.Leder) ? editEmployer(employer.id) : ''" [last]="last"
+          [config]="{mainLine: employer.name, startIcon: 'work', endIcon: (currentUser.role == Roles.Leder) ? 'edit' : '', subLines: [
             {name: employer.phoneNumber || 'Ingen kontaktnummer', icon: 'phone'},
             {name: employer.address || 'Ingen addresse', icon: 'home'}
           ]}">

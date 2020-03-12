@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { fromEvent, of, Observable, merge, Observer } from 'rxjs';
+import { fromEvent, Observable, merge, Observer } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({

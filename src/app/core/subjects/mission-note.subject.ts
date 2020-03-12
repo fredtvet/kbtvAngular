@@ -1,4 +1,4 @@
-import { MissionNote } from 'src/app/shared';
+import { MissionNote } from 'src/app/shared/models';
 import { Injectable } from '@angular/core';
 import { BaseMissionChildSubject } from './base-mission-child.subject';
 import { LocalStorageService } from '../services/local-storage.service';

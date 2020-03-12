@@ -7,9 +7,7 @@ import { translations } from '../../../translations'
 
 export class TranslationService {
 
-  constructor() {
-    console.log(translations)
-  }
+  constructor() {}
 
   translateProperty(property: string): string{
     const hit = translations.modelProperties.find(x => x.key == property);

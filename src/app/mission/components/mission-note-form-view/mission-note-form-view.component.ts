@@ -1,7 +1,7 @@
-import { Component, Inject, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { MissionNote, ROLES } from 'src/app/shared';
+import { MissionNote } from 'src/app/shared/models';
+import { Roles } from '../../../shared/enums';
 
 @Component({
   selector: 'app-mission-note-form-view',
@@ -9,7 +9,7 @@ import { MissionNote, ROLES } from 'src/app/shared';
 })
 
 export class MissionNoteFormViewComponent {
-  ROLES = ROLES;
+  Roles = Roles;
 
   @Input() note: MissionNote = null;
   @Input() missionId: number = null;

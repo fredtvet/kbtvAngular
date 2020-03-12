@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IdentityService, DataSyncService } from '../core';
+import { IdentityService, DataSyncService } from '../core/services';
 import { switchMap, tap } from 'rxjs/operators';
 
 @Component({

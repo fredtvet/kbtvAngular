@@ -38,7 +38,6 @@ export class UsersService {
 
   add$(user: User): Observable<User>
   {
-    console.log(user);
     return this.apiService
       .post(`${this.uri}`, user)
       .pipe(map(data => {
@@ -49,7 +48,6 @@ export class UsersService {
 
   update$(user: User): Observable<User>
   {
-    console.log(user);
     return this.apiService
       .put(`${this.uri}/${user.userName}`, user)
       .pipe(map(data => {

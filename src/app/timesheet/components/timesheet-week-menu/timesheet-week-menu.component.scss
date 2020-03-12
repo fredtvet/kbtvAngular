@@ -1,0 +1,65 @@
+@import '../../../../variables';
+
+.week-field {
+  width: 22px;
+  margin-top:14px;
+  .mat-form-field-underline{
+    display:none;
+  }
+
+  .mat-form-field-wrapper{
+    margin-bottom: -1.25em!important;
+  }
+  .mat-form-field-infix{
+    border-top: 0.3375em solid transparent!important;
+  }
+  .mat-form-field-label{
+    top:26px!important;
+  }
+}
+
+.year-field {
+  width: 36px;
+  margin-top:14px;
+  margin-left:$content-margin*2px;
+  margin-right:$content-margin*2px;
+  .mat-form-field-underline{
+    display:none;
+  }
+
+  .mat-form-field-wrapper{
+    margin-bottom: -1.25em!important;
+  }
+  .mat-form-field-infix{
+    border-top: 0.3375em solid transparent!important;
+  }
+  .mat-form-field-label{
+    top:26px!important;
+  }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance:textfield;
+}
+
+.confirmed-box{
+  width:$content-margin*2px;
+  height:$content-margin*2px;
+  background:$primary;
+  border-radius:100%;
+}
+
+.unconfirmed-box{
+  width:$content-margin*2px;
+  height:$content-margin*2px;
+  background:$warn;
+  border-radius:100%;
+}
