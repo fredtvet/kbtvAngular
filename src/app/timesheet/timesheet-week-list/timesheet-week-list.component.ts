@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IdentityService, TimesheetService } from 'src/app/core/services';
 import { TimesheetInfo } from 'src/app/shared/models';
 import * as moment from 'moment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { SubscriptionComponent } from 'src/app/subscription.component';
-import { takeUntil, tap, switchMap, map } from 'rxjs/operators';
+import { takeUntil, tap, switchMap, map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TimesheetStatus } from 'src/app/shared/enums';
 import { DateParams } from 'src/app/shared/interfaces';
@@ -13,6 +13,7 @@ import { DateParams } from 'src/app/shared/interfaces';
   selector: 'app-timesheet-week-list',
   templateUrl: './timesheet-week-list.component.html',
   styleUrls: ['./timesheet-week-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimesheetWeekListComponent extends SubscriptionComponent {
 
@@ -22,6 +23,8 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
   dateParams: DateParams = { year: moment().year(), weekNr: moment().isoWeek() }
   dateParamsSubject = new BehaviorSubject(this.dateParams)
   dateParams$ = this.dateParamsSubject.asObservable();
+
+  timesheetDays$: Observable<TimesheetInfo[]>
 
   totalWeeks: number;
 
@@ -33,19 +36,17 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
     private router: Router) {
       super();
       this.userName = this.identityService.getCurrentUser().userName;
-    }
-
-  ngOnInit() {
-    this.dateParams$.pipe(
-      takeUntil(this.unsubscribe),
-      switchMap(x => this.timesheetService.getByUserNameAndWeekGrouped$(this.userName, x))
-      ).pipe(tap(console.log)).subscribe(data => this.timesheetDays = data)
   }
 
-  dateParamsWithWeekday(weekDay: number): DateParams{
-    const dp = this.dateParams;
-    dp.weekDay = weekDay;
-    return dp;
+  ngOnInit(){
+    this.timesheetDays$ = this.dateParams$.pipe(
+      takeUntil(this.unsubscribe),
+      switchMap(x => this.timesheetService.getByUserNameAndWeekGrouped$(this.userName, x))
+      ).pipe(shareReplay(), tap(x => console.log('init')));
+  }
+
+  dateParamsWithWeekday$(weekDay: number): Observable<DateParams>{
+    return this.dateParams$.pipe(map(x => { x.weekDay = weekDay; return x}))
   }
 
   confirmAllTimesheets(){
@@ -60,6 +61,7 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
   }
 
   dateParamsChange(dateParams: DateParams){
+    console.log('change')
     this.dateParamsSubject.next(dateParams);
   }
 }

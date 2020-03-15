@@ -10,8 +10,8 @@
 
   <ng-container *ngFor="let weekDay of [1,2,3,4,5,6,7]">
     <app-timesheet-day-bar
-      [dateParams]="dateParamsWithWeekday(weekDay)"
-      [timesheetInfo]="this.timesheetDays[weekDay]"
+      [dateParams]="dateParamsWithWeekday$(weekDay) | async"
+      [timesheetInfo]="(timesheetDays$ | async)[weekDay]"
       (addClick)="goToDetails(weekDay)"
       (progressClick)="goToDetails(weekDay)">
     </app-timesheet-day-bar>

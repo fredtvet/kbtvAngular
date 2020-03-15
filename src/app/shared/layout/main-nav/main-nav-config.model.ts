@@ -10,7 +10,8 @@ export class MainNavConfig {
     public bottomNavEnabled: boolean = true,
     public searchBarEnabled: boolean = false,
     public menuBtnEnabled: boolean = true,
-    public vertActions: NavAction[] = [],
+    public bottomSheetActions: NavAction[] = [],
+    public bottomSheetBtnEnabled: boolean = false,
   ){}
 
   };

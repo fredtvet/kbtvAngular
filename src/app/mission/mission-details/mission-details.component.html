@@ -1,6 +1,7 @@
 <app-main-nav
   [config]="mainNavConfig"
-  (vertEvent)="handleVertEvent($event)"
+  (bottomSheetEvent)="handleBottomSheetEvent($event)"
+  (bottomSheetOpened)="openBottomSheet()"
   (back)="onBack()">
 
   <app-mission-details-view

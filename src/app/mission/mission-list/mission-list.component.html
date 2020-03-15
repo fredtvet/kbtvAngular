@@ -1,7 +1,8 @@
 <app-main-nav
 [config]="mainNavConfig"
-(vertEvent)="this.handleVertEvent($event)"
-(search)="this.searchMissionList($event)">
+(bottomSheetEvent)="handleBottomSheetEvent($event)"
+(bottomSheetOpened)="openBottomSheet()"
+(search)="searchMissionList($event)">
 
   <div class="static-page-container" fxLayout="column" fxLayoutGap="8px">
 

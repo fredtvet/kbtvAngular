@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { MissionFormViewComponent } from './components/mission-form-view/mission-form-view.component';
 import { MissionFormComponent } from './mission-form/mission-form.component';
 import { MissionNoteFormViewComponent } from './components/mission-note-form-view/mission-note-form-view.component';
+import { BottomSheetComponent } from '../shared/layout';
 
 
 
@@ -31,6 +32,7 @@ import { MissionNoteFormViewComponent } from './components/mission-note-form-vie
     DatePipe
   ],
   entryComponents:[
+    BottomSheetComponent,
     ConfirmDeleteDialogComponent,
     ImageViewerDialogComponent,
     MissionReportFormComponent

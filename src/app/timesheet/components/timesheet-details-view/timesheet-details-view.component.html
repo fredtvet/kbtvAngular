@@ -1,10 +1,10 @@
 
-<app-timesheet-form [date]="date"></app-timesheet-form>
+<app-timesheet-form [date]="date" [mission]="mission"></app-timesheet-form>
 
 <mat-divider></mat-divider>
 
 <div class="form-container">
-  <span class="form-header">Registrerte timer for gitt dato</span>
+  <span class="form-header">Registrerte timer for {{ isDateView ? 'dato' : 'oppdrag' }}</span>
   <button mat-button color="primary" (click)="confirmAll()">Bekreft alle</button>
 
   <app-timesheet-card
@@ -13,6 +13,7 @@
     (hasConfirmed)="hasConfirmed.emit(timesheet.id)"
     (hasDeleted)="hasDeleted.emit(timesheet.id)">
   </app-timesheet-card>
+
   <app-timesheet-card
     *ngFor="let timesheet of timesheetInfo.closedTimesheets"
     [timesheet]="timesheet">

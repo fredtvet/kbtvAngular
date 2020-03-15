@@ -1,7 +1,8 @@
 <app-main-nav
   [config]="mainNavConfig"
   (back)="onBack()"
-  (vertEvent)="handleVertEvent($event)">
+  (bottomSheetEvent)="handleBottomSheetEvent($event)"
+  (bottomSheetOpened)="openBottomSheet()">
 
   <app-user-form-view
   [user]="user"

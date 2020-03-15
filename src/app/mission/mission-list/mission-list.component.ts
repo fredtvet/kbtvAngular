@@ -1,13 +1,13 @@
 import { Component  } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatBottomSheet } from '@angular/material';
 import { Router } from '@angular/router';
 import { Mission } from 'src/app/shared/models';
-import { NavAction, VertMenuParent } from 'src/app/shared/components';
+import { NavAction } from 'src/app/shared/components';
 import { Roles } from '../../shared/enums';
 import { BehaviorSubject, Observable} from 'rxjs';
-import { MainNavConfig } from 'src/app/shared/layout';
+import { MainNavConfig, BottomSheetParent } from 'src/app/shared/layout';
 import { switchMap } from 'rxjs/operators';
-import { MissionService } from 'src/app/core/services';
+import { MissionService, BottomSheetActionHubService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-mission-list',
@@ -15,7 +15,7 @@ import { MissionService } from 'src/app/core/services';
   styleUrls: ['./mission-list.component.scss']
 })
 
-export class MissionListComponent extends VertMenuParent{
+export class MissionListComponent extends BottomSheetParent{
 
   Roles = Roles;
 
@@ -29,14 +29,16 @@ export class MissionListComponent extends VertMenuParent{
   constructor(
     private missionService: MissionService,
     public dialog: MatDialog,
-    private router: Router) {
-      super();
+    private router: Router,
+    _bottomSheet: MatBottomSheet,
+    bottomSheetActionHub: BottomSheetActionHubService) {
+      super(bottomSheetActionHub, _bottomSheet);
       this.mainNavConfig.searchBarEnabled = true;
-      this.mainNavConfig.vertActions = this.vertActions
+      this.mainNavConfig.bottomSheetActions = this.bottomSheetActions
     }
 
   ngOnInit(){
-
+    super.ngOnInit();
     this.missions$ = this.pageInfoSubject.pipe(switchMap(pageInfo => {
         return this.missionService
           .getFiltered$(pageInfo.showFinishedMissions, pageInfo.searchString)
@@ -46,8 +48,9 @@ export class MissionListComponent extends VertMenuParent{
                       "check_box_outline_blank",
                       "toggleFinishedMissions", this.toggleFinishedMissions,
                       [Roles.Ansatt, Roles.Leder, Roles.Mellomleder, Roles.Oppdragsgiver]);
-
-    this.vertActions.push(navAction);
+                      
+    this.mainNavConfig.bottomSheetBtnEnabled = true;
+    this.bottomSheetActions.push(navAction);
   }
 
   searchMissionList(searchString: string){
@@ -64,11 +67,11 @@ export class MissionListComponent extends VertMenuParent{
     this.pageInfo.showFinishedMissions = !this.pageInfo.showFinishedMissions;
     this.pageInfoSubject.next(this.pageInfo);
 
-    //Toggle icon on nav action
+    //Toggle icon on nav action on bottom sheet
     let icon = "check_box_outline_blank";
     if(this.pageInfo.showFinishedMissions) icon = "check_box";
-
-    this.vertActions.find(x => x.event == event).icon = icon;
+    console.log(this.bottomSheetActions);
+    this.bottomSheetActions.find(x => x.event == event).icon = icon;
   }
 
 }

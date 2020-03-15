@@ -3,19 +3,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Roles } from '../../shared/enums';
 import { MissionNote, Mission, MissionReport, MissionImage } from 'src/app/shared/models';
-import { NavAction, ConfirmDeleteDialogComponent, VertMenuParent } from 'src/app/shared/components';
-import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService } from 'src/app/core/services';
+import { NavAction, ConfirmDeleteDialogComponent } from 'src/app/shared/components';
+import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, BottomSheetActionHubService } from 'src/app/core/services';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
 import { take, tap, takeUntil } from 'rxjs/operators';
 import { Subscription, Observable } from 'rxjs';
-import { MainNavConfig } from 'src/app/shared/layout';
+import { MainNavConfig, BottomSheetParent } from 'src/app/shared/layout';
+import { MatBottomSheet } from '@angular/material';
 
 @Component({
   selector: 'app-mission-details',
   templateUrl: './mission-details.component.html'
 })
 
-export class MissionDetailsComponent extends VertMenuParent{
+export class MissionDetailsComponent extends BottomSheetParent{
   Roles = Roles;
 
   mainNavConfig = new MainNavConfig();
@@ -37,9 +38,13 @@ export class MissionDetailsComponent extends VertMenuParent{
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog) {super();}
+    public dialog: MatDialog,   
+    _bottomSheet: MatBottomSheet,
+    bottomSheetActionHub: BottomSheetActionHubService,
+  ){ super(bottomSheetActionHub, _bottomSheet);}
 
   ngOnInit(){
+    super.ngOnInit();
     this.mission.id = +this.route.snapshot.paramMap.get('id');
 
     this.mission$ = this.missionService.get$(this.mission.id);
@@ -115,14 +120,19 @@ export class MissionDetailsComponent extends VertMenuParent{
     deleteDialogRef.afterClosed().subscribe(confirmed => {if(confirmed)this.deleteMission()});
   }
 
+  private goToTimesheets = (e: string) => 
+    this.router.navigate(['timeliste', this.mission.id, 'detaljer', {returnRoute: this.router.url}]);
+
   configureMainNav(){
-    this.vertActions = [
+    this.bottomSheetActions = [
+      new NavAction("Registrer timer", "timer","goToTimesheets", this.goToTimesheets),
       new NavAction("Legg til rapport", "note_add","createReport", this.openCreateReportDialog, [Roles.Leder]),
       new NavAction("Legg til notat", "add_comment","createNote", this.createNote),
       new NavAction("Rediger", "edit","edit", this.editMission, [Roles.Leder]),
       new NavAction("Slett", "delete_forever", "delete", this.openDeleteMissionDialog, [Roles.Leder])
     ];
-    this.mainNavConfig.vertActions = this.vertActions;
+    this.mainNavConfig.bottomSheetBtnEnabled = true;
+    this.mainNavConfig.bottomSheetActions = this.bottomSheetActions;
     this.mainNavConfig.altNav = true;
   }
 

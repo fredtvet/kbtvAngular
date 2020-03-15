@@ -21,7 +21,7 @@ export class MainNavComponent extends SubscriptionComponent {
 
   @Input() config: MainNavConfig = new MainNavConfig();
 
-  @Output() vertEvent = new EventEmitter();
+  @Output() bottomSheetOpened =  new EventEmitter();
   @Output() search = new EventEmitter();
   @Output() back = new EventEmitter();
 

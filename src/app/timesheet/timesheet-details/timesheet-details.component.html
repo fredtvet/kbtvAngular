@@ -2,6 +2,7 @@
 
   <app-timesheet-details-view
   [date]="date"
+  [mission]="mission$ | async"
   [timesheetInfo]="timesheetInfo$ | async"
   (hasConfirmed)="confirmTimesheet($event)"
   (allConfirmed)="confirmTimesheets($event)"

@@ -114,7 +114,7 @@
           <app-search-bar [isHidden]="searchBarHidden" (hide)="toggleSearchBar()" (search)="this.search.emit($event)"></app-search-bar>
         </ng-container>
 
-        <app-vert-menu [actions]="config.vertActions" (event)="this.vertEvent.emit($event);"></app-vert-menu>
+        <button mat-icon-button *ngIf="config.bottomSheetBtnEnabled" (click)="bottomSheetOpened.emit()"><mat-icon>more_vert</mat-icon></button>
 
       </mat-toolbar-row>
 

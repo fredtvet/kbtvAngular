@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MainNavConfig } from 'src/app/shared/layout';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
-import { TimesheetService, IdentityService } from 'src/app/core/services';
+import { TimesheetService, IdentityService, MissionService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
-import { Timesheet, User, TimesheetInfo } from 'src/app/shared/models';
+import { User, TimesheetInfo, Mission } from 'src/app/shared/models';
 import { TimesheetStatus } from 'src/app/shared/enums';
 
 @Component({
@@ -17,6 +17,7 @@ export class TimesheetDetailsComponent implements OnInit {
   mainCfg = new MainNavConfig();
   momentDate: moment.Moment;
   date: Date; //bad workaround, freeze when toDate used in template
+  mission$: Observable<Mission>;
   user: User;
 
   endTime: string;
@@ -27,6 +28,7 @@ export class TimesheetDetailsComponent implements OnInit {
   constructor(
     private timesheetService: TimesheetService,
     private identityService: IdentityService,
+    private missionService: MissionService,
     private route: ActivatedRoute,
     private router: Router) {
     this.mainCfg.menuBtnEnabled = false;
@@ -34,18 +36,32 @@ export class TimesheetDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.identityService.getCurrentUser();
+    this.configureForMissionRoute();
+    this.configureForDateRoute();
+  }
 
-    this.setDateWithRoute();
+  configureForDateRoute(): void{
+    let args = { 
+      weekDay: +this.route.snapshot.params['weekDay'], 
+      year: +this.route.snapshot.params['year'], 
+      week: +this.route.snapshot.params['weekNr']
+    };
+
+    if(isNaN(args.week) || isNaN(args.weekDay) || isNaN(args.year)) 
+      return undefined;
+
+    this.momentDate = moment().day(args.weekDay).year(args.year).isoWeek(args.week);
+    this.date = this.momentDate.toDate();
+
     this.timesheetInfo$ = this.timesheetService.getByMomentAndUserName$(this.momentDate, this.user.userName)
     this.mainCfg.title = this.momentDate.format('Do MMMM YYYY')
   }
 
-  setDateWithRoute(){
-    this.momentDate = moment()
-      .day(+this.route.snapshot.params['weekDay'])
-      .year(+this.route.snapshot.params['year'])
-      .isoWeek(+this.route.snapshot.params['weekNr']);
-    this.date = this.momentDate.toDate();
+  configureForMissionRoute(): void{
+    let missionId = +this.route.snapshot.params['missionId'];
+    if(isNaN(missionId)) return undefined;
+    this.mission$ = this.missionService.get$(+this.route.snapshot.params['missionId']);
+    this.timesheetInfo$ = this.timesheetService.getByMissionIdWithMission$(missionId);
   }
 
   deleteTimesheet(id: number){
@@ -61,9 +77,11 @@ export class TimesheetDetailsComponent implements OnInit {
     this.timesheetService.changeStatuses$(ids, TimesheetStatus.Confirmed).subscribe();
   }
 
-  onBack(){
-    this.router.navigate(['timeliste']);
-  }
+  onBack(): void {
+    let returnRoute: string = this.route.snapshot.params['returnRoute'];
 
+    if(returnRoute != undefined) this.router.navigate([returnRoute])
+    else this.router.navigate(['timeliste'])
+  }
 
 }

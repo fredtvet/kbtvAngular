@@ -1,10 +1,12 @@
-import { Component, OnInit, Inject, HostListener } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MissionImage } from '../../models/mission-image.model';
 import { NavAction } from '../nav-action.model';
 import { Roles } from '../../enums/roles.enum';
-import { VertMenuParent } from '../vert-menu/vert-menu-parent.extension';
+import { MatBottomSheet } from '@angular/material';
+import { BottomSheetParent } from '../../layout/bottom-sheet/bottom-sheet-parent.extension';
+import { BottomSheetActionHubService } from 'src/app/core/services/ui/bottom-sheet-action-hub.service';
 
 @Component({
   selector: 'app-image-viewer-dialog',
@@ -41,7 +43,7 @@ import { VertMenuParent } from '../vert-menu/vert-menu-parent.extension';
   templateUrl: './image-viewer-dialog.component.html',
   styleUrls: ['./image-viewer-dialog.component.scss']
 })
-export class ImageViewerDialogComponent extends VertMenuParent {
+export class ImageViewerDialogComponent extends BottomSheetParent {
   public Roles = Roles;
   toolbarHidden = false;
 
@@ -51,14 +53,18 @@ export class ImageViewerDialogComponent extends VertMenuParent {
 
   constructor(
     public dialogRef: MatDialogRef<ImageViewerDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { super(); }
+    @Inject(MAT_DIALOG_DATA) public data: any,   
+    _bottomSheet: MatBottomSheet,
+    bottomSheetActionHub: BottomSheetActionHubService,
+  ){ super(bottomSheetActionHub, _bottomSheet) };
 
   ngOnInit() {
+    super.ngOnInit();
     this.images = this.data.images;
     this.index = this.images.findIndex(x => x.id == this.data.imageId);
     this.currentImage = this.images[this.index];
 
-    this.vertActions = [
+    this.bottomSheetActions = [
       new NavAction("Last ned bilde", "cloud_download", "downloadImage", this.downloadImage),
       new NavAction("Last ned alle", "cloud_download", "downloadImages", this.downloadImages),
       new NavAction("Slett bilde", "delete_forever", "delete", this.deleteImage, [Roles.Leder]),

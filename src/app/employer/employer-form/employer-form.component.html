@@ -3,7 +3,8 @@
 <app-main-nav
   [config]="mainNavConfig"
   (back)="onBack()"
-  (vertEvent)="handleVertEvent($event)">
+  (bottomSheetEvent)="handleBottomSheetEvent($event)"
+  (bottomSheetOpened)="openBottomSheet()">
 
   <app-employer-form-view
     [employer]="employer"

@@ -31,6 +31,7 @@ import {
 
 import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
 import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date-time-formats';
+import { BottomSheetComponent } from './layout/bottom-sheet/bottom-sheet.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date
     ReportTypeFormDialogComponent,
     HourProgressBarComponent,
     WeekPickerComponent,
+    BottomSheetComponent,
   ],
   imports: [
     CommonModule,

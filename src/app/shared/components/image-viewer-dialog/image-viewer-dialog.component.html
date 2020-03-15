@@ -5,8 +5,7 @@
     <button mat-icon-button aria-label="Lukk" class="top_left_fab" (click)="onNoClick()">
         <mat-icon class="icon_150">chevron_left</mat-icon>
     </button>
-    <app-vert-menu class="top_right_fab" [actions]="vertActions" (event)="handleVertEvent($event)"></app-vert-menu>
-
+    <button mat-icon-button (click)="openBottomSheet()"><mat-icon>more_vert</mat-icon></button>
 </mat-toolbar>
 
 <img *ngIf="currentImage" (tap)="toggleToolBar()" (swiperight)="previousImage()" (swipeleft)="nextImage()" [src]="currentImage.fileURL" layout-fill/>

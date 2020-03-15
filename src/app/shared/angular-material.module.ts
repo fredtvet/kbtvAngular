@@ -30,7 +30,8 @@ import {
    MatAutocompleteModule,
    MatProgressSpinnerModule,
    MatProgressBarModule,
-   MatRippleModule
+   MatRippleModule,
+   MatBottomSheetModule
 
 } from '@angular/material';
 
@@ -65,7 +66,8 @@ import {
       MatProgressSpinnerModule,
       ScrollingModule,
       MatProgressBarModule,
-      MatRippleModule
+      MatRippleModule,
+      MatBottomSheetModule
    ],
    exports: [
       MatButtonModule,
@@ -95,7 +97,8 @@ import {
       MatProgressSpinnerModule,
       ScrollingModule,
       MatProgressBarModule,
-      MatRippleModule
+      MatRippleModule,
+      MatBottomSheetModule
    ],
    providers: [
       MatDatepickerModule

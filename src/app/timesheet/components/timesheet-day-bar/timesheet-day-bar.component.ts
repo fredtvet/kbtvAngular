@@ -24,9 +24,7 @@ export class TimesheetDayBarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.totalHoursOpen = this.timesheetInfo.calcTotalHoursOpen();
-    this.totalHoursClosed = this.timesheetInfo.calcTotalHoursClosed();
-    this.calcDate();
+    
   }
 
   ngOnChanges(changes: SimpleChanges): void{
@@ -37,9 +35,8 @@ export class TimesheetDayBarComponent implements OnInit {
             this.totalHoursOpen = this.timesheetInfo.calcTotalHoursOpen();
             this.totalHoursClosed = this.timesheetInfo.calcTotalHoursClosed();
           }
-          case 'year':
-          case 'weekNr':
-          case 'weekDay':{
+          case 'dateParams':{
+            console.log(changes);
             this.calcDate();
           }
         }
@@ -48,6 +45,7 @@ export class TimesheetDayBarComponent implements OnInit {
   }
 
   calcDate(): void{
+    console.log('calcDate');
     this.date = moment()
     .year(this.dateParams.year)
     .week(this.dateParams.weekNr)

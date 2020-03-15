@@ -20,6 +20,13 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate: [AuthGuard],
     data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]}
+  },
+  {
+    path: ':missionId/detaljer',
+    component: TimesheetDetailsComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]}
   }
 ];
 

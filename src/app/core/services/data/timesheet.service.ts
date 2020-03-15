@@ -31,6 +31,10 @@ export class TimesheetService extends BaseService<Timesheet> {
     return this.dataSubject.getByMissionId$(missionId);
   }
 
+  getByMissionIdWithMission$(missionId: number):Observable<TimesheetInfo>{
+    return this.dataSubject.getByMissionIdWithMission$(missionId);
+  }
+
   getByUserName$(userName: string, groupByWeek: boolean = false):Observable<Timesheet[]>{
     return this.dataSubject.getByUserName$(userName);
   }

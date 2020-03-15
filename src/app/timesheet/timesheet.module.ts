@@ -9,6 +9,7 @@ import { TimesheetFormComponent } from './timesheet-form/timesheet-form.componen
 import { TimesheetDetailsViewComponent } from './components/timesheet-details-view/timesheet-details-view.component';
 import { TimesheetCardComponent } from './components/timesheet-card/timesheet-card.component';
 import { TimesheetWeekMenuComponent } from './components/timesheet-week-menu/timesheet-week-menu.component';
+import { BottomSheetComponent } from '../shared/layout';
 
 
 
@@ -22,7 +23,9 @@ import { TimesheetWeekMenuComponent } from './components/timesheet-week-menu/tim
     TimesheetCardComponent,
     TimesheetWeekMenuComponent,
   ],
-  entryComponents:[],
+  entryComponents:[
+    BottomSheetComponent,
+  ],
   imports: [
     SharedModule,
     TimesheetRoutingModule

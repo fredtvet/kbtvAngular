@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
-import { MatDialog} from '@angular/material';
+import { MatDialog, MatBottomSheet} from '@angular/material';
 import { Employer } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
-import { EmployerService, NotificationService } from 'src/app/core/services';
+import { EmployerService, NotificationService, BottomSheetActionHubService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MainNavConfig } from 'src/app/shared/layout';
+import { MainNavConfig, BottomSheetParent } from 'src/app/shared/layout';
 import { takeUntil } from 'rxjs/operators';
-import { VertMenuParent, ConfirmDeleteDialogComponent, NavAction } from 'src/app/shared/components';
+import { ConfirmDeleteDialogComponent, NavAction } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-employer-form',
   templateUrl: './employer-form.component.html'
 })
 
-export class EmployerFormComponent extends VertMenuParent {
+export class EmployerFormComponent extends BottomSheetParent {
   Roles = Roles;
 
   googleOptions = {
@@ -32,10 +32,13 @@ export class EmployerFormComponent extends VertMenuParent {
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog
-  ){super();}
+    public dialog: MatDialog,
+    _bottomSheet: MatBottomSheet,
+    bottomSheetActionHub: BottomSheetActionHubService,
+  ){ super(bottomSheetActionHub, _bottomSheet); }
 
     ngOnInit(){
+      super.ngOnInit();
       this.employer.id = +this.route.snapshot.paramMap.get('id');
 
       if(!this.employer.id) this.isCreateForm = true;
@@ -85,8 +88,9 @@ export class EmployerFormComponent extends VertMenuParent {
 
     configureMainNav(){
       if(!this.isCreateForm){
-        this.vertActions = [new NavAction("Slett", "delete_forever", "delete", this.openDeleteDialog, [Roles.Leder])];
-        this.mainNavConfig.vertActions = this.vertActions;
+        this.bottomSheetActions = [new NavAction("Slett", "delete_forever", "delete", this.openDeleteDialog, [Roles.Leder])];
+        this.mainNavConfig.bottomSheetBtnEnabled = true;
+        this.mainNavConfig.bottomSheetActions = this.bottomSheetActions;
       }
       this.mainNavConfig.title = this.isCreateForm ? 'Ny' : 'Rediger';
       this.mainNavConfig.title+= ' oppdragsgiver';

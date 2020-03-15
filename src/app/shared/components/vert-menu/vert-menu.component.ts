@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NavAction } from '..';
+import { NavAction } from '../nav-action.model';
+
 
 @Component({
   selector: 'app-vert-menu',

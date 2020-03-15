@@ -6,6 +6,7 @@ import { EmployerFormComponent } from './employer-form/employer-form.component';
 import { EmployerListComponent } from './employer-list/employer-list.component';
 import { ConfirmDeleteDialogComponent } from '../shared/components';
 import { EmployerFormViewComponent } from './components/employer-form-view/employer-form-view.component';
+import { BottomSheetComponent } from '../shared/layout';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { EmployerFormViewComponent } from './components/employer-form-view/emplo
     EmployerFormViewComponent
   ],
   entryComponents:[
+    BottomSheetComponent,
     ConfirmDeleteDialogComponent
   ],
   imports: [

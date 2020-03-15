@@ -23,6 +23,22 @@ export class TimesheetSubject extends BaseSubject<Timesheet> {
       return super.getByProperty('missionId', missionId);
     }
 
+    getByMissionIdWithMission$(missionId: number): Observable<TimesheetInfo>{
+      return this.missionSubject.getAll$().pipe(switchMap(missions => {
+        return this.getByMissionId$(missionId).pipe(map(arr =>{
+          let timesheetInfo = new TimesheetInfo();
+          arr.forEach(x => {
+            x.mission = missions.find(y => y.id == x.missionId);
+            if(x.status == TimesheetStatus.Open)
+              timesheetInfo.openTimesheets.push(x);
+            else
+              timesheetInfo.closedTimesheets.push(x);
+          })
+          return timesheetInfo;
+        }))
+      }));
+    }
+
     getByUserName$(userName: string, groupByWeek: boolean = false): Observable<Timesheet[]>{
       return super.getByProperty('userName', userName);
     }
@@ -94,7 +110,7 @@ export class TimesheetSubject extends BaseSubject<Timesheet> {
       })
       return timesheetInfo;
     }
-
+    
     private includeMission(timesheets: Timesheet[], missions: Mission[]): Timesheet[]{
       timesheets.forEach(x => x.mission = missions.find(y => y.id == x.missionId)) //High complexity
       return timesheets;
