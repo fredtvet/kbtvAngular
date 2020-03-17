@@ -19,7 +19,6 @@ export class BottomSheetComponent {
     @Inject(MAT_BOTTOM_SHEET_DATA) public actions: NavAction[]) { }
 
   ngOnInit(){
-    console.log(this.actions);
   }
 
   handleAction(action: NavAction){

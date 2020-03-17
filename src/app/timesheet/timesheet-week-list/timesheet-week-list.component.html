@@ -5,15 +5,18 @@
     (dateParamsChanged)="dateParamsChange($event)"
     (allTimesheetsConfirmed)="confirmAllTimesheets()">
   </app-timesheet-week-menu>
-
   <mat-divider></mat-divider>
+  <div class="weekdays-container">
+    <ng-container *ngFor="let weekDay of [1,2,3,4,5,6,7]">
+      <app-timesheet-day-bar
+        [dateParams]="dateParamsWithWeekday$(weekDay) | async"
+        [timesheetInfo]="(timesheetDays$ | async)[weekDay]"
+        (addClick)="goToDetails(weekDay)"
+        (progressClick)="goToDetails(weekDay)">
+      </app-timesheet-day-bar>
+    </ng-container>
+  </div>
 
-  <ng-container *ngFor="let weekDay of [1,2,3,4,5,6,7]">
-    <app-timesheet-day-bar
-      [dateParams]="dateParamsWithWeekday$(weekDay) | async"
-      [timesheetInfo]="(timesheetDays$ | async)[weekDay]"
-      (addClick)="goToDetails(weekDay)"
-      (progressClick)="goToDetails(weekDay)">
-    </app-timesheet-day-bar>
-  </ng-container>
+  
+
 </app-main-nav>

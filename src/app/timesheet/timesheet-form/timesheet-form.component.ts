@@ -36,7 +36,6 @@ export class TimesheetFormComponent implements OnInit {
 
   ngOnInit(){
     this.missions = this._missionService.getAll$();
-    console.log(this.date);
     if(this.date !== undefined) this.dateDisabled = true;
     if(this.mission !== null && this.mission.id !== null) this.missionDisabled = true;
   }

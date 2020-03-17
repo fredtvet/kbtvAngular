@@ -8,7 +8,8 @@
   border-top-left-radius:4px;
   border-bottom-left-radius:4px;
   background:$bg-app-bar;
-  width:110px;
+  min-height:46px;
+  width:105px;
   height:$timesheet-weekday-height;
 }
 
@@ -16,7 +17,16 @@
   margin:$content-margin * 1px;
 }
 
+
 .highlighted{
   border:1px solid $primary;
 }
 
+
+.progress-bar-container{
+  height:$timesheet-weekday-height;
+  min-width:25px;
+  max-width:100%;
+  color:$bg-black;
+  position:relative;
+}

@@ -70,7 +70,6 @@ export class MissionListComponent extends BottomSheetParent{
     //Toggle icon on nav action on bottom sheet
     let icon = "check_box_outline_blank";
     if(this.pageInfo.showFinishedMissions) icon = "check_box";
-    console.log(this.bottomSheetActions);
     this.bottomSheetActions.find(x => x.event == event).icon = icon;
   }
 

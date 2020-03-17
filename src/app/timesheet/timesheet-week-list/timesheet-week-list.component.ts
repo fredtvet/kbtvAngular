@@ -42,7 +42,7 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
     this.timesheetDays$ = this.dateParams$.pipe(
       takeUntil(this.unsubscribe),
       switchMap(x => this.timesheetService.getByUserNameAndWeekGrouped$(this.userName, x))
-      ).pipe(shareReplay(), tap(x => console.log('init')));
+      ).pipe(shareReplay());
   }
 
   dateParamsWithWeekday$(weekDay: number): Observable<DateParams>{
@@ -61,7 +61,6 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
   }
 
   dateParamsChange(dateParams: DateParams){
-    console.log('change')
     this.dateParamsSubject.next(dateParams);
   }
 }

@@ -11,7 +11,7 @@ export class BottomSheetActionHubService {
 
   private eventHubSubject: Subject<NavAction> = new Subject();
 
-  eventHub$: Observable<NavAction> = this.eventHubSubject.asObservable().pipe(tap(console.log));
+  eventHub$: Observable<NavAction> = this.eventHubSubject.asObservable();
 
   constructor() { }
 

@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="space-between start" class="mat-elevation-z6 timesheet-card"
   *ngIf="timesheet"
-  [ngClass]="timesheet.status == 0 ? 'no-padding-top' : ''">
+  [ngClass]="{'no-padding-top': timesheet.status == 0, 'no-margin-top': inDialog}">
 
   <span fxLayout="row" fxLayoutAlign="start center" *ngIf="timesheet.status == 0" >
 

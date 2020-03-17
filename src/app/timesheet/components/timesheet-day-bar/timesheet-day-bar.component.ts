@@ -2,10 +2,12 @@ import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@
 import * as moment from 'moment';
 import { TimesheetInfo } from 'src/app/shared/models';
 import { DateParams } from 'src/app/shared/interfaces';
+import { listAnimation } from 'src/app/shared/animations/list.animation';
 
 @Component({
   selector: 'app-timesheet-day-bar',
   templateUrl: './timesheet-day-bar.component.html',
+  animations: [listAnimation],
   styleUrls: ['./timesheet-day-bar.component.scss']
 })
 export class TimesheetDayBarComponent implements OnInit {
@@ -36,7 +38,6 @@ export class TimesheetDayBarComponent implements OnInit {
             this.totalHoursClosed = this.timesheetInfo.calcTotalHoursClosed();
           }
           case 'dateParams':{
-            console.log(changes);
             this.calcDate();
           }
         }
@@ -45,7 +46,6 @@ export class TimesheetDayBarComponent implements OnInit {
   }
 
   calcDate(): void{
-    console.log('calcDate');
     this.date = moment()
     .year(this.dateParams.year)
     .week(this.dateParams.weekNr)

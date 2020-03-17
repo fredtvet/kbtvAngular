@@ -10,6 +10,8 @@ import { TimesheetDetailsViewComponent } from './components/timesheet-details-vi
 import { TimesheetCardComponent } from './components/timesheet-card/timesheet-card.component';
 import { TimesheetWeekMenuComponent } from './components/timesheet-week-menu/timesheet-week-menu.component';
 import { BottomSheetComponent } from '../shared/layout';
+import { TimesheetMissionBarComponent } from './components/timesheet-mission-bar/timesheet-mission-bar.component';
+import { TimesheetCardDialogWrapperComponent } from './components/timesheet-card-dialog-wrapper/timesheet-card-dialog-wrapper.component';
 
 
 
@@ -22,9 +24,12 @@ import { BottomSheetComponent } from '../shared/layout';
     TimesheetDetailsViewComponent,
     TimesheetCardComponent,
     TimesheetWeekMenuComponent,
+    TimesheetMissionBarComponent,
+    TimesheetCardDialogWrapperComponent,
   ],
   entryComponents:[
     BottomSheetComponent,
+    TimesheetCardDialogWrapperComponent,
   ],
   imports: [
     SharedModule,

@@ -9,7 +9,8 @@ import * as moment from 'moment';
 })
 export class TimesheetCardComponent implements OnInit {
 
-  @Input() timesheet: Timesheet;
+  @Input() timesheet: Timesheet = new Timesheet();
+  @Input() inDialog: boolean = false;
   @Output() hasConfirmed = new EventEmitter();
   @Output() hasDeleted = new EventEmitter();
 
@@ -23,6 +24,7 @@ export class TimesheetCardComponent implements OnInit {
     this.startDate = moment(this.timesheet.startTime);
     this.endDate = moment(this.timesheet.endTime);
     this.calcDifference();
+    console.log(this.inDialog)
   }
 
   calcDifference(){

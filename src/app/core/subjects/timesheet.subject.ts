@@ -53,21 +53,35 @@ export class TimesheetSubject extends BaseSubject<Timesheet> {
     }
 
     getByUserNameAndWeekGrouped$(userName: string, dateParams: DateParams, status?: TimesheetStatus): Observable<TimesheetInfo[]>{
-      return this.getByUserNameAndWeek$(userName, dateParams, status).pipe(map(this.groupByDayAndStatus));
+      return this.missionSubject.getAll$().pipe(switchMap(missions => {
+        return this.getByUserNameAndWeek$(userName, dateParams, status).pipe(map(x => this.groupByDayAndStatus(x, missions)));
+      }));
     }
 
     getByMomentAndUserName$(date: moment.Moment, userName: string, includeMission: boolean = true): Observable<TimesheetInfo>{
+      let timesheetInfo = new TimesheetInfo();
+   
       if(includeMission)
         return this.missionSubject.getAll$().pipe(switchMap(missions => {
           return this.data$.pipe(map(timesheets => {
-            let timesheetInfo = this.filterByMomentAndUser(timesheets, date, userName);
-            timesheetInfo.openTimesheets = this.includeMission(timesheetInfo.openTimesheets, missions);
-            timesheetInfo.closedTimesheets = this.includeMission(timesheetInfo.closedTimesheets, missions);
+            timesheets.forEach(timesheet => {
+              if(this.filterByMomentAndUser(timesheet, date, userName)){
+                timesheet.mission = missions.find(y => y.id == timesheet.missionId)
+                this.addToTimesheetInfo(timesheet, timesheetInfo);
+              }
+            })
             return timesheetInfo;
           }))
         }))
       else
-        return this.data$.pipe(map(arr => this.filterByMomentAndUser(arr, date, userName)))
+        return this.data$.pipe(map(arr => {
+          arr.forEach(x => {
+            if(this.filterByMomentAndUser(x, date, userName)){
+              this.addToTimesheetInfo(x, timesheetInfo);
+            }
+          });
+          return timesheetInfo;
+        }))
     }
 
     changeStatuses(ids: number[], status: TimesheetStatus): void{
@@ -79,41 +93,34 @@ export class TimesheetSubject extends BaseSubject<Timesheet> {
       );
     }
 
-    private groupByDayAndStatus(timesheets: Timesheet[]): TimesheetInfo[]{
+    private groupByDayAndStatus(timesheets: Timesheet[], missions: Mission[] = null): TimesheetInfo[]{
       let arr: TimesheetInfo[] = [];
       let i = 0;
       for(i = 0; i <= 7; i++){ //Add timesheet info for each weekday, leave 0 empty for ISO week 1-7
         arr.push(new TimesheetInfo())
       }
 
-      //Group timesheets by weekday using moment
+      //Group timesheets by weekday using moment, include mission if present
       timesheets.forEach(timesheet => {
+        if(missions !== null){
+          timesheet.mission = missions.find(y => y.id == timesheet.missionId)
+        }
         let weekday = moment(timesheet['startTime']).isoWeekday();
-        if(timesheet.status == TimesheetStatus.Open)
-          arr[weekday].openTimesheets.push(timesheet);
-        else
-          arr[weekday].closedTimesheets.push(timesheet);
+        this.addToTimesheetInfo(timesheet, arr[weekday])
       });
 
       return arr;
     }
 
-    private filterByMomentAndUser(timesheets: Timesheet[], date: moment.Moment, userName: string): TimesheetInfo{
-      let timesheetInfo = new TimesheetInfo();
-      timesheets.forEach(x => {
-          if(moment(x.startTime).isSame(date, 'day') && x.userName == userName){
-            if(x.status == TimesheetStatus.Open)
-              timesheetInfo.openTimesheets.push(x);
-            else
-              timesheetInfo.closedTimesheets.push(x);
-          }
-      })
-      return timesheetInfo;
+    private addToTimesheetInfo(timesheet: Timesheet, timesheetInfo: TimesheetInfo){
+      if(timesheet.status == TimesheetStatus.Open)
+        timesheetInfo.openTimesheets.push(timesheet);
+      else
+        timesheetInfo.closedTimesheets.push(timesheet);
     }
-    
-    private includeMission(timesheets: Timesheet[], missions: Mission[]): Timesheet[]{
-      timesheets.forEach(x => x.mission = missions.find(y => y.id == x.missionId)) //High complexity
-      return timesheets;
+
+    private filterByMomentAndUser(timesheet: Timesheet, date: moment.Moment, userName: string){
+      return moment(timesheet.startTime).isSame(date, 'day') && timesheet.userName == userName
     }
 
 }

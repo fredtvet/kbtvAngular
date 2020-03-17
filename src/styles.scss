@@ -94,6 +94,15 @@ body {
   color:mat-color($background, "background");
 }
 
+.bg-card{
+  background:$bg-card;
+}
+
+.bg-dialog{
+  background-color:$bg-dialog;
+  color:mat-color($foreground, "base");
+}
+
 .bg-0{
   background-color:mat-color($background,"status-bar");
   color:mat-color($foreground, "base");
@@ -115,9 +124,13 @@ body {
   background-color:mat-color($background,"unselected-chip");
   color:mat-color($foreground, "base");
 }
-.bg-dialog{
-  background-color:$bg-dialog;
-  color:mat-color($foreground, "base");
+
+
+.bg-primary{
+  background:$primary!important;
+}
+.bg-warn{
+  background:$warn!important;
 }
 
 .color-primary{
@@ -192,6 +205,9 @@ body {
   color: rgb(255, 255,255,0.7);
 }
 
+.timesheet-dialog-container{
+  background:$bg-card;
+}
 
 //Owl Date Time Picker Styling
 .owl-dt-dialog-container{

@@ -1,0 +1,12 @@
+<div class="mission-bar" 
+    [ngClass]="color == 'primary' ? 'bg-primary':'bg-warn'" 
+    (click)="openDialog()"
+    fxLayout="column" fxLayoutAlign="center stretch" matRipple #missionBar>
+    
+    <span class="ellipsis">
+        {{ timesheet.totalHours }} timer
+    </span>
+    <span class="mat-caption ellipsis" *ngIf="timesheet.mission">
+        {{ timesheet.mission.address }}
+    </span>
+</div>

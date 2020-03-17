@@ -28,10 +28,21 @@
 
   </span>
 
-  <app-hour-progress-bar fxFlex
-    [hours]="totalHoursClosed"
-    [invalidHours]="totalHoursOpen">
-  </app-hour-progress-bar>
+
+  <div class="progress-bar-container" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="2px" fxFlex
+  [@listAnimation]="timesheetInfo.closedTimesheets.length + timesheetInfo.openTimesheets.length">
+      <app-timesheet-mission-bar 
+        *ngFor="let timesheet of timesheetInfo.closedTimesheets" 
+        [timesheet]="timesheet"
+        [style.width.%]="(timesheet.totalHours / 16)*100">
+      </app-timesheet-mission-bar>
+      <app-timesheet-mission-bar 
+        *ngFor="let timesheet of timesheetInfo.openTimesheets" 
+        [timesheet]="timesheet"
+        [style.width.%]="(timesheet.totalHours / 16)*100"
+        color="warn">
+    </app-timesheet-mission-bar>
+  </div>
 
 </div>
 
