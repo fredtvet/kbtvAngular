@@ -19,24 +19,23 @@ export class TimesheetSubject extends BaseSubject<Timesheet> {
     private missionSubject: MissionSubject,
     ) { super(localStorageService, 'timesheets'); }
 
-    getByMissionId$(missionId: number): Observable<Timesheet[]>{
-      return super.getByProperty('missionId', missionId);
+    getWithMission$(id: number): Observable<Timesheet>{
+      return this.missionSubject.getAll$().pipe(switchMap(missions => {
+        return this.get$(id).pipe(map(x => {
+          if(x !== undefined)
+            x.mission = missions.find(y => y.id == x.missionId);
+          return x;
+        }))
+      }));   
     }
 
-    getByMissionIdWithMission$(missionId: number): Observable<TimesheetInfo>{
-      return this.missionSubject.getAll$().pipe(switchMap(missions => {
-        return this.getByMissionId$(missionId).pipe(map(arr =>{
+    getByMissionId$(missionId: number): Observable<TimesheetInfo>{
+      return super.getByProperty('missionId', missionId)
+        .pipe(map(arr =>{
           let timesheetInfo = new TimesheetInfo();
-          arr.forEach(x => {
-            x.mission = missions.find(y => y.id == x.missionId);
-            if(x.status == TimesheetStatus.Open)
-              timesheetInfo.openTimesheets.push(x);
-            else
-              timesheetInfo.closedTimesheets.push(x);
-          })
+          arr.forEach(x => this.addToTimesheetInfo(x, timesheetInfo));
           return timesheetInfo;
         }))
-      }));
     }
 
     getByUserName$(userName: string, groupByWeek: boolean = false): Observable<Timesheet[]>{
@@ -58,30 +57,18 @@ export class TimesheetSubject extends BaseSubject<Timesheet> {
       }));
     }
 
-    getByMomentAndUserName$(date: moment.Moment, userName: string, includeMission: boolean = true): Observable<TimesheetInfo>{
+    getByMomentAndUserName$(date: moment.Moment, userName: string): Observable<TimesheetInfo>{
       let timesheetInfo = new TimesheetInfo();
-   
-      if(includeMission)
-        return this.missionSubject.getAll$().pipe(switchMap(missions => {
-          return this.data$.pipe(map(timesheets => {
-            timesheets.forEach(timesheet => {
-              if(this.filterByMomentAndUser(timesheet, date, userName)){
-                timesheet.mission = missions.find(y => y.id == timesheet.missionId)
-                this.addToTimesheetInfo(timesheet, timesheetInfo);
-              }
-            })
-            return timesheetInfo;
-          }))
-        }))
-      else
-        return this.data$.pipe(map(arr => {
-          arr.forEach(x => {
-            if(this.filterByMomentAndUser(x, date, userName)){
-              this.addToTimesheetInfo(x, timesheetInfo);
-            }
-          });
-          return timesheetInfo;
-        }))
+ 
+      return this.data$.pipe(map(arr => {
+        arr.forEach(x => {
+          if(this.filterByMomentAndUser(x, date, userName)){
+            this.addToTimesheetInfo(x, timesheetInfo);
+          }
+        });
+        return timesheetInfo;
+      }))
+
     }
 
     changeStatuses(ids: number[], status: TimesheetStatus): void{
@@ -93,18 +80,15 @@ export class TimesheetSubject extends BaseSubject<Timesheet> {
       );
     }
 
-    private groupByDayAndStatus(timesheets: Timesheet[], missions: Mission[] = null): TimesheetInfo[]{
+    private groupByDayAndStatus(timesheets: Timesheet[]): TimesheetInfo[]{
       let arr: TimesheetInfo[] = [];
       let i = 0;
-      for(i = 0; i <= 7; i++){ //Add timesheet info for each weekday, leave 0 empty for ISO week 1-7
+      //Add timesheet info for each weekday, leave 0 empty for ISO week 1-7
+      for(i = 0; i <= 7; i++){ 
         arr.push(new TimesheetInfo())
       }
-
-      //Group timesheets by weekday using moment, include mission if present
+      //Group timesheets by weekday using moment
       timesheets.forEach(timesheet => {
-        if(missions !== null){
-          timesheet.mission = missions.find(y => y.id == timesheet.missionId)
-        }
         let weekday = moment(timesheet['startTime']).isoWeekday();
         this.addToTimesheetInfo(timesheet, arr[weekday])
       });

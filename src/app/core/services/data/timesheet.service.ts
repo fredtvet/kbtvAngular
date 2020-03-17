@@ -27,6 +27,10 @@ export class TimesheetService extends BaseService<Timesheet> {
     super(notificationService, apiService, dataSubject, connectionService, "/Timesheets");
   }
 
+  getWithMission$(id: number): Observable<Timesheet>{
+    return this.dataSubject.getWithMission$(id);
+  }
+
   getByMissionId$(missionId: number):Observable<Timesheet[]>{
     return this.dataSubject.getByMissionId$(missionId);
   }

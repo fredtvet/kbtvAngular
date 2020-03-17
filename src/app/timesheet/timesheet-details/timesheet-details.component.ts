@@ -63,15 +63,7 @@ export class TimesheetDetailsComponent implements OnInit {
     this.mission$ = this.missionService.get$(+this.route.snapshot.params['missionId']);
     this.timesheetInfo$ = this.timesheetService.getByMissionIdWithMission$(missionId);
   }
-
-  deleteTimesheet(id: number){
-     this.timesheetService.delete$(id).subscribe();
-  }
-
-  confirmTimesheet(id: number){
-    this.timesheetService.changeStatus$(id, TimesheetStatus.Confirmed).subscribe();
-  }
-
+  
   confirmTimesheets(ids: number[]){
     if(ids.length == 0) return null;
     this.timesheetService.changeStatuses$(ids, TimesheetStatus.Confirmed).subscribe();

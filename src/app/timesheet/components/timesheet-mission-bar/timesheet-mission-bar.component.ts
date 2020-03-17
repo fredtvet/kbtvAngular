@@ -19,12 +19,8 @@ export class TimesheetMissionBarComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(TimesheetCardDialogWrapperComponent, {
-      data: this.timesheet
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    this.dialog.open(TimesheetCardDialogWrapperComponent, {
+      data: this.timesheet.id
     });
   }
 

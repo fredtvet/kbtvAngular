@@ -36,7 +36,7 @@ $details-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$alt-nav-hei
 $font-size-small:14px;
 
 $timesheet-menu-height: 93;
-$timesheet-weekday-height:calc((100vh - ((#{$timesheet-menu-height} + #{$bottom-nav-height} + #{$main-nav-height} + (#{$content-margin} * 8)) * 1px)) * 1/7);
+$timesheet-weekday-height:calc((100vh - ((#{$timesheet-menu-height} + #{$bottom-nav-height} + #{$main-nav-height} + (#{$content-margin} * 4)) * 1px)) * 1/7);
 
 @mixin full-page-container{
   padding: $content-margin * 1px!important;

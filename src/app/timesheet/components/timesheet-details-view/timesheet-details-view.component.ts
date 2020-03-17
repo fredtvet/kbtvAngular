@@ -14,8 +14,6 @@ export class TimesheetDetailsViewComponent implements OnInit {
   @Input() mission: Mission;
 
   @Output() allConfirmed = new EventEmitter();
-  @Output() hasConfirmed = new EventEmitter();
-  @Output() hasDeleted = new EventEmitter();
 
   isDateView = false; //Switch between date and mission view
 

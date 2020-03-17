@@ -4,9 +4,7 @@
   [date]="date"
   [mission]="mission$ | async"
   [timesheetInfo]="timesheetInfo$ | async"
-  (hasConfirmed)="confirmTimesheet($event)"
-  (allConfirmed)="confirmTimesheets($event)"
-  (hasDeleted)="deleteTimesheet($event)"></app-timesheet-details-view>
+  (allConfirmed)="confirmTimesheets($event)"></app-timesheet-details-view>
 
 </app-main-nav>
 

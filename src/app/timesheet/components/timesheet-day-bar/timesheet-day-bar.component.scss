@@ -14,7 +14,7 @@
 }
 
 .timesheet-bar{
-  margin:$content-margin * 1px;
+  margin:$content-margin * .5px;
 }
 
 
@@ -25,8 +25,8 @@
 
 .progress-bar-container{
   height:$timesheet-weekday-height;
+  margin-left:2px;
   min-width:25px;
-  max-width:100%;
   color:$bg-black;
   position:relative;
 }
