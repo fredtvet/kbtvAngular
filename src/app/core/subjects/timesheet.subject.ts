@@ -33,7 +33,7 @@ export class TimesheetSubject extends BaseSubject<Timesheet> {
       return super.getByProperty('missionId', missionId)
         .pipe(map(arr =>{
           let timesheetInfo = new TimesheetInfo();
-          arr.forEach(x => this.addToTimesheetInfo(x, timesheetInfo));
+          arr.forEach(x => timesheetInfo.addTimesheet(x));
           return timesheetInfo;
         }))
     }
@@ -46,26 +46,24 @@ export class TimesheetSubject extends BaseSubject<Timesheet> {
       let date = moment().year(dateParams.year).week(dateParams.weekNr);
       return this.data$.pipe(map(arr => arr.filter(x => {
         let exp = moment(x.startTime).isSame(date, 'week') && x.userName == userName;
-        if(status != undefined) exp = exp && x.status == status;
-        return exp;
+        if(status == undefined) return exp;
+        return exp && x.status == status;
       })))
     }
 
     getByUserNameAndWeekGrouped$(userName: string, dateParams: DateParams, status?: TimesheetStatus): Observable<TimesheetInfo[]>{
-      return this.missionSubject.getAll$().pipe(switchMap(missions => {
-        return this.getByUserNameAndWeek$(userName, dateParams, status).pipe(map(x => this.groupByDayAndStatus(x, missions)));
-      }));
+      return this.getByUserNameAndWeek$(userName, dateParams, status).pipe(map(x => this.groupByDayAndStatus(x)));
     }
 
     getByMomentAndUserName$(date: moment.Moment, userName: string): Observable<TimesheetInfo>{
-      let timesheetInfo = new TimesheetInfo();
- 
       return this.data$.pipe(map(arr => {
+        let timesheetInfo = new TimesheetInfo();
         arr.forEach(x => {
           if(this.filterByMomentAndUser(x, date, userName)){
-            this.addToTimesheetInfo(x, timesheetInfo);
+            timesheetInfo.addTimesheet(x);
           }
         });
+        console.log(timesheetInfo);
         return timesheetInfo;
       }))
 
@@ -90,17 +88,10 @@ export class TimesheetSubject extends BaseSubject<Timesheet> {
       //Group timesheets by weekday using moment
       timesheets.forEach(timesheet => {
         let weekday = moment(timesheet['startTime']).isoWeekday();
-        this.addToTimesheetInfo(timesheet, arr[weekday])
+        arr[weekday].addTimesheet(timesheet);
       });
 
       return arr;
-    }
-
-    private addToTimesheetInfo(timesheet: Timesheet, timesheetInfo: TimesheetInfo){
-      if(timesheet.status == TimesheetStatus.Open)
-        timesheetInfo.openTimesheets.push(timesheet);
-      else
-        timesheetInfo.closedTimesheets.push(timesheet);
     }
 
     private filterByMomentAndUser(timesheet: Timesheet, date: moment.Moment, userName: string){

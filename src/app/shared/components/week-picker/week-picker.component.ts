@@ -15,6 +15,8 @@ export class WeekPickerComponent implements OnInit {
   //Array containing weeks currently displaying
   visibleWeeks: number[];
 
+  currentWeek = moment().week();
+
   private currentPage: number = 0;
 
   //Helpers for week picker

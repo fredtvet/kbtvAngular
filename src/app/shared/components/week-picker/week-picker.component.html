@@ -3,7 +3,7 @@
     <button mat-icon-button (click)="previousWeekPage()"><mat-icon>chevron_left</mat-icon></button>
     <ng-container *ngFor="let week of visibleWeeks">
       <button mat-button
-        [ngClass]="week == weekNr ? 'primary-border':''"
+        [ngClass]="{'primary-border': week == weekNr, 'color-primary': week == currentWeek}"
         (click)="this.weekSelected.emit(week)">
         {{ week }}
       </button>

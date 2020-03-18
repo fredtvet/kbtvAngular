@@ -3,6 +3,7 @@ import { IdentityService, NotificationService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
 import { takeUntil, take } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/subscription.component';
+import { MainNavConfig } from 'src/app/shared/layout';
 
 @Component({
   selector: 'app-profile',
@@ -12,16 +13,21 @@ export class ProfileComponent extends SubscriptionComponent {
 
   user: User;
   passwordStatus: string;
+  mainNavConfig = new MainNavConfig();
 
   constructor(
     private identityService: IdentityService,
     private notificationService: NotificationService,
-  ){ super() }
+  ){ 
+    super(); 
+    this.mainNavConfig.elevationEnabled = false; 
+  }
 
 
   ngOnInit() {
     this.identityService.currentUser$.pipe(takeUntil(this.unsubscribe))
       .subscribe(user => this.user = user);
+    
   }
 
   updateProfile(updatedUser){

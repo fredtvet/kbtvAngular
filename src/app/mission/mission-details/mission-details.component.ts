@@ -134,6 +134,7 @@ export class MissionDetailsComponent extends BottomSheetParent{
     this.mainNavConfig.bottomSheetBtnEnabled = true;
     this.mainNavConfig.bottomSheetActions = this.bottomSheetActions;
     this.mainNavConfig.altNav = true;
+    this.mainNavConfig.elevationEnabled = false;
   }
 
   addMissionToMainNav(mission: Mission){

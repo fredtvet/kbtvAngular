@@ -10,8 +10,8 @@ import { TimesheetCardDialogWrapperComponent } from '../timesheet-card-dialog-wr
 })
 export class TimesheetMissionBarComponent implements OnInit {
 
-  @Input() color: string = "primary";
   @Input() timesheet: Timesheet = new Timesheet();
+  @Input() isHandset: boolean = true;
 
   constructor(public dialog: MatDialog) { }
 

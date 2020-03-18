@@ -2,9 +2,9 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IdentityService, TimesheetService } from 'src/app/core/services';
 import { TimesheetInfo } from 'src/app/shared/models';
 import * as moment from 'moment';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { SubscriptionComponent } from 'src/app/subscription.component';
-import { takeUntil, tap, switchMap, map, shareReplay } from 'rxjs/operators';
+import { takeUntil, tap, switchMap, map, shareReplay, take, distinctUntilChanged, share, distinct, skip } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TimesheetStatus } from 'src/app/shared/enums';
 import { DateParams } from 'src/app/shared/interfaces';
@@ -20,7 +20,7 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
   date = new Date();
   userName: string;
 
-  dateParams: DateParams = { year: moment().year(), weekNr: moment().isoWeek() }
+  dateParams: DateParams = { year: moment().year(), weekNr: moment().week() }
   dateParamsSubject = new BehaviorSubject(this.dateParams)
   dateParams$ = this.dateParamsSubject.asObservable();
 
@@ -39,21 +39,26 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
   }
 
   ngOnInit(){
-    this.timesheetDays$ = this.dateParams$.pipe(
+    this.timesheetDays$ = this.dateParams$.pipe( 
       takeUntil(this.unsubscribe),
-      switchMap(x => this.timesheetService.getByUserNameAndWeekGrouped$(this.userName, x))
-      ).pipe(shareReplay());
+      switchMap(x => this.timesheetService.getByUserNameAndWeekGrouped$(this.userName, x)),
+    );
   }
 
-  dateParamsWithWeekday$(weekDay: number): Observable<DateParams>{
-    return this.dateParams$.pipe(map(x => { x.weekDay = weekDay; return x}))
+  dateParamsWithWeekday(weekDay: number): DateParams{
+    const dp = this.dateParams;
+    dp.weekDay = weekDay;
+    return dp;
   }
 
-  confirmAllTimesheets(){
-    let ids: number[] = [];
-    this.timesheetDays.forEach(x => ids = ids.concat(x.openTimesheets.map(x => x.id)))
-    if(ids.length == 0) return undefined;
-    this.timesheetService.changeStatuses$(ids, TimesheetStatus.Confirmed).subscribe();
+  confirmAllTimesheets(){ 
+    this.timesheetDays$.pipe(take(1),switchMap(arr => {
+      let ids: number[] = [];
+      arr.forEach(x => ids = ids.concat(x.openTimesheets.map(x => x.id)));
+      return this.timesheetService.changeStatuses$(ids, TimesheetStatus.Confirmed);
+    })).subscribe();
+
+
   }
 
   goToDetails(weekDay: number){

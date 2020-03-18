@@ -32,10 +32,15 @@
         <p mat-line>Timeliste</p>
       </a>
       <ng-container *ifRole="[Roles.Leder, Roles.Mellomleder]">
-        <mat-divider class="mid-divider"></mat-divider>
+        <!-- <mat-divider class="mid-divider"></mat-divider>
         <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/oppdragsgivere']" [routerLinkActive]="['active']">
           <mat-icon mat-list-icon>work</mat-icon>
           <p mat-line>Oppdragsgivere</p>
+        </a> -->
+        <mat-divider class="mid-divider"></mat-divider>
+        <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/data']" [routerLinkActive]="['active']">
+          <mat-icon mat-list-icon>dns</mat-icon>
+          <p mat-line>Data</p>
         </a>
         <mat-divider class="mid-divider"></mat-divider>
         <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/brukere']" [routerLinkActive]="['active']">
@@ -62,7 +67,8 @@
 
   <mat-sidenav-content>
 
-    <mat-toolbar  [ngClass]="config.altNav ? 'alt_nav' : 'main_nav'">
+    <mat-toolbar class="mat-elevation-z8" 
+      [ngClass]="{'alt_nav': config.altNav, 'main_nav': !config.altNav, 'mat-elevation-z8': config.elevationEnabled}">
 
       <mat-toolbar-row class="p-0">
         <ng-container *ngIf="!config.altNav else altNav">

@@ -21,24 +21,29 @@
   <div class="content-container mat-elevation-z6" fxLayout="column">
 
     <mat-nav-list>
-      <mat-list-item [routerLink]="['/oppdragsgivere']">
+      <!-- <mat-list-item [routerLink]="['/oppdragsgivere']">
         <mat-icon mat-list-icon>work</mat-icon>
         <span mat-line>Oppdragsgivere</span>
         <mat-icon>chevron_right</mat-icon>
         <mat-divider class="mid-divider"></mat-divider>
-      </mat-list-item>
-
-      <mat-list-item [routerLink]="['/brukere']">
-        <mat-icon mat-list-icon>people</mat-icon>
-        <span mat-line>Brukere</span>
-        <mat-icon>chevron_right</mat-icon>
-        <mat-divider class="mid-divider"></mat-divider>
-      </mat-list-item>
+      </mat-list-item> -->
 
       <mat-list-item [routerLink]="['/data']">
         <mat-icon mat-list-icon>dns</mat-icon>
         <span mat-line>Administrer data</span>
         <mat-icon>chevron_right</mat-icon>
+      </mat-list-item>
+      <mat-list-item [routerLink]="['/brukere']">
+        <mat-icon mat-list-icon>assessment</mat-icon>
+        <span mat-line>Timestatistikk</span>
+        <mat-icon>chevron_right</mat-icon>
+        <mat-divider class="mid-divider"></mat-divider>
+      </mat-list-item>
+      <mat-list-item [routerLink]="['/brukere']">
+        <mat-icon mat-list-icon>people</mat-icon>
+        <span mat-line>Brukere</span>
+        <mat-icon>chevron_right</mat-icon>
+        <mat-divider class="mid-divider"></mat-divider>
       </mat-list-item>
     </mat-nav-list>
 

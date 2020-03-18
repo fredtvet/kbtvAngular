@@ -21,7 +21,6 @@ import {
   SearchBarComponent,
   MissionListViewComponent,
   NotificationComponent,
-  HourProgressBarComponent,
   ReportTypeFormDialogComponent,
   MissionTypeFormDialogComponent,
   SubmitButtonComponent,
@@ -52,7 +51,6 @@ import { BottomSheetComponent } from './layout/bottom-sheet/bottom-sheet.compone
     SubmitButtonComponent,
     MissionTypeFormDialogComponent,
     ReportTypeFormDialogComponent,
-    HourProgressBarComponent,
     WeekPickerComponent,
     BottomSheetComponent,
   ],
@@ -102,7 +100,6 @@ import { BottomSheetComponent } from './layout/bottom-sheet/bottom-sheet.compone
     SubmitButtonComponent,
     MissionTypeFormDialogComponent,
     ReportTypeFormDialogComponent,
-    HourProgressBarComponent,
     WeekPickerComponent
   ]
 })

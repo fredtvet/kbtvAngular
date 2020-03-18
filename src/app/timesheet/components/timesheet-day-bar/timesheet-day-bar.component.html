@@ -1,12 +1,9 @@
-<div class="timesheet-bar" fxLayout="row" fxLayoutAlign="start center">
+<div class="timesheet-bar" fxLayout="column" fxLayoutAlign="start center"
+  [ngClass]="(isHandset$ | async) ? 'width-handset' : 'width-no-handset'">
 
-  <span class="static-section mat-elevation-z6" fxLayout="row" fxLayoutAlign="start center" (click)="this.addClick.emit()" matRipple>
+  <span class="static-section" fxLayout="column" fxLayoutAlign="start center" (click)="this.addClick.emit()" matRipple>
 
-    <button mat-icon-button color="primary" [disableRipple]="true">
-      <mat-icon class="icon_125">add</mat-icon>
-    </button>
-
-    <div fxLayout="column" fxLayoutAlign="center start">
+    <div fxLayout="column" fxLayoutAlign="center center">
       <span class="mat-title m-0">
         {{ this.date.format('ddd') }}
       </span>
@@ -14,35 +11,23 @@
       <span class="mat-small">
         {{ this.date.format('Do MMM') }}
       </span>
-      <span class="mat-small">
-        <span class="color-primary" *ngIf="this.totalHoursClosed > 0">
-          {{ this.totalHoursClosed.toFixed(1) }}t
-          <ng-container *ngIf="this.totalHoursOpen > 0">/</ng-container>
-        </span>
-        <span class="color-warn" *ngIf="this.totalHoursOpen > 0">
-          <ng-container *ngIf="this.totalHoursClosed > 0">/</ng-container>
-          {{ this.totalHoursOpen.toFixed(1) }}t
-        </span>
-      </span>
     </div>
+
+    <button mat-icon-button color="primary" [disableRipple]="true">
+      <mat-icon class="icon">add</mat-icon>Ny
+    </button>
 
   </span>
 
 
-  <div class="progress-bar-container" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="2px" fxFlex
+  <div class="progress-bar-container" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="1px" fxFlex
   [@listAnimation]="timesheetInfo.closedTimesheets.length + timesheetInfo.openTimesheets.length">
 
       <app-timesheet-mission-bar 
-        *ngFor="let timesheet of timesheetInfo.openTimesheets" 
+        *ngFor="let timesheet of sortByDate(timesheetInfo.closedTimesheets.concat(timesheetInfo.openTimesheets))" 
         [timesheet]="timesheet"
-        [style.width.%]="(timesheet.totalHours / 12)*100"
-        color="warn">
-      </app-timesheet-mission-bar>
-      
-      <app-timesheet-mission-bar 
-        *ngFor="let timesheet of timesheetInfo.closedTimesheets" 
-        [timesheet]="timesheet"
-        [style.width.%]="(timesheet.totalHours / 12)*100">
+        [isHandset]="isHandset$ | async"
+        [style.height.%]="(timesheet.totalHours / 14)*100">
       </app-timesheet-mission-bar>
 
   </div>

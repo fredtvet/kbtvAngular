@@ -6,15 +6,22 @@
     (allTimesheetsConfirmed)="confirmAllTimesheets()">
   </app-timesheet-week-menu>
   <mat-divider></mat-divider>
-  <div class="weekdays-container">
-    <ng-container *ngFor="let weekDay of [1,2,3,4,5,6,7]">
-      <app-timesheet-day-bar
-        [dateParams]="dateParamsWithWeekday$(weekDay) | async"
-        [timesheetInfo]="(timesheetDays$ | async)[weekDay]"
-        (addClick)="goToDetails(weekDay)"
-        (progressClick)="goToDetails(weekDay)">
-      </app-timesheet-day-bar>
+
+  <div class="weekdays-container  mat-elevation-z6"  fxLayout="row" fxLayoutAlign="start stretch" >
+
+    <ng-container *ngIf="timesheetDays$ | async; let timesheetDays">
+      <ng-container *ngFor="let weekDay of [1,2,3,4,5,6,7]">   
+        <app-timesheet-day-bar 
+          [dateParams]="dateParamsWithWeekday(weekDay)"
+          [timesheetInfo]="timesheetDays[weekDay]"
+          (addClick)="goToDetails(weekDay)"
+          (progressClick)="goToDetails(weekDay)">
+        </app-timesheet-day-bar>
+        <mat-divider vertical="true" *ngIf="weekDay !== 7"></mat-divider>
+      </ng-container>
     </ng-container>
+
+
   </div>
 
   

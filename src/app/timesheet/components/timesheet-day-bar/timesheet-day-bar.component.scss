@@ -1,32 +1,35 @@
 @import '../../../../variables';
 
 *{
-  line-height:14.5px;
+  line-height:16.5px;
 }
 
 .static-section{
-  border-top-left-radius:4px;
-  border-bottom-left-radius:4px;
   background:$bg-app-bar;
-  min-height:46px;
-  width:105px;
-  height:$timesheet-weekday-height;
+  width:100%;
+  padding-top:$content-margin*1px;
 }
 
 .timesheet-bar{
-  margin:$content-margin * .5px;
+  min-width:58px;
+  height:100%;
 }
 
+.width-no-handset{
+  width:calc(((100vw - #{$sidenav-width * 1px}) / 7) - 1px);
+}
+
+.width-handset{
+  width:calc((100vw / 5) - 1px);
+}
 
 .highlighted{
   border:1px solid $primary;
 }
 
-
 .progress-bar-container{
-  height:$timesheet-weekday-height;
-  margin-left:2px;
-  min-width:25px;
+  margin-top:1px;
+  min-height:25px;
   color:$bg-black;
   position:relative;
 }

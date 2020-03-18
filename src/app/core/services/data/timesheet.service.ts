@@ -31,12 +31,8 @@ export class TimesheetService extends BaseService<Timesheet> {
     return this.dataSubject.getWithMission$(id);
   }
 
-  getByMissionId$(missionId: number):Observable<Timesheet[]>{
+  getByMissionId$(missionId: number):Observable<TimesheetInfo>{
     return this.dataSubject.getByMissionId$(missionId);
-  }
-
-  getByMissionIdWithMission$(missionId: number):Observable<TimesheetInfo>{
-    return this.dataSubject.getByMissionIdWithMission$(missionId);
   }
 
   getByUserName$(userName: string, groupByWeek: boolean = false):Observable<Timesheet[]>{
@@ -67,6 +63,8 @@ export class TimesheetService extends BaseService<Timesheet> {
     if(!this.isOnline)
       return throwError('Du må være tilkoblet internett for å oppdatere ting.')
             .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
+
+    if(ids.length == 0) throwError('Ingen ubekreftede timer');
 
     return this.apiService.put(`${this.uri}/Status`, { ids: ids, status: status})
       .pipe(map(data => {

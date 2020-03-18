@@ -12,6 +12,7 @@ export class MainNavConfig {
     public menuBtnEnabled: boolean = true,
     public bottomSheetActions: NavAction[] = [],
     public bottomSheetBtnEnabled: boolean = false,
+    public elevationEnabled: boolean = true
   ){}
 
   };

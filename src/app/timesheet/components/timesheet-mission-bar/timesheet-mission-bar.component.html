@@ -1,10 +1,15 @@
-<div class="mission-bar" 
-    [ngClass]="color == 'primary' ? 'bg-primary':'bg-warn'" 
-    (click)="openDialog()"
-    fxLayout="column" fxLayoutAlign="center stretch" matRipple>
-    
-    <span class="ellipsis">
-        {{ timesheet.totalHours }} timer
+<div class="mission-bar mat-elevation-z6" fxLayout="column" fxLayoutAlign="center center" 
+    [ngClass]="{
+        'bg-primary': timesheet.status == 2, 
+        'bg-warn': timesheet.status == 0,
+        'width-no-handset': !isHandset,
+        'width-handset': isHandset
+    }"
+    (click)="openDialog()" matRipple>
+
+    <span class="mat-body-strong">
+        {{ timesheet.totalHours }}t
     </span>
+
 
 </div>

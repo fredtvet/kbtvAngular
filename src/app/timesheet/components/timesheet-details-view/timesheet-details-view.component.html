@@ -9,13 +9,13 @@
   <button mat-button color="primary" (click)="confirmAll()">Bekreft alle</button>
 
   <div  fxLayout="column" fxLayoutGap="8px">
-    <app-timesheet-card
+    <app-timesheet-card style="color:red!important"
       *ngFor="let timesheet of timesheetInfo.openTimesheets"
       [timesheetId]="timesheet.id">
     </app-timesheet-card>
 
     <app-timesheet-card
-      *ngFor="let timesheet of timesheetInfo.closedTimesheets"
+      *ngFor="let timesheet of sortByDate(timesheetInfo.closedTimesheets)"
       [timesheetId]="timesheet.id">
     </app-timesheet-card>
   </div>

@@ -2,9 +2,15 @@
 @import '../../../../variables';
 
 .mission-bar{
-    height:$timesheet-weekday-height;
-    padding:$content-margin * 0.5px;
+    height:100%;
+    padding:$content-margin * 0.5px;  
     text-align:center;
-  }
+}
 
+.width-no-handset{
+    width:calc(((100vw - #{$sidenav-width * 1px}) / 7) - 1px);
+}
 
+.width-handset{
+    width:calc((100vw / 5) - 1px);
+}
