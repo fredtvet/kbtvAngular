@@ -9,7 +9,7 @@
   <button mat-button color="primary" (click)="confirmAll()">Bekreft alle</button>
 
   <div  fxLayout="column" fxLayoutGap="8px">
-    <app-timesheet-card style="color:red!important"
+    <app-timesheet-card
       *ngFor="let timesheet of timesheetInfo.openTimesheets"
       [timesheetId]="timesheet.id">
     </app-timesheet-card>

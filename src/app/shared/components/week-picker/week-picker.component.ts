@@ -6,7 +6,7 @@ import * as moment from 'moment';
   templateUrl: './week-picker.component.html',
   styleUrls: ['./week-picker.component.scss']
 })
-export class WeekPickerComponent implements OnInit {
+export class WeekPickerComponent {
 
   @Input() totalWeeks: number;
   @Input() weekNr: number = 1;
@@ -21,24 +21,20 @@ export class WeekPickerComponent implements OnInit {
 
   //Helpers for week picker
   private screenWidth: number;
-  private weekItemWidth: number = 36;
-  private chevronWidth: number = 40;
+  private weekItemWidth: number = 36; //Currently static, needs to correspond with scss
+  private chevronWidth: number = 40; //Currently static, needs to correspond with scss
   private maxItems = 9; //Max items to accommodate for sidebar (lazy solution to prevent breaking ui)
 
   constructor() { this.setScreenWidth() }
 
-  ngOnInit() {
-    this.initWeekPicker();
-  }
-
   ngOnChanges(changes: SimpleChanges): void{
+    
     for (const propName in changes) {
       if (changes.hasOwnProperty(propName)) {
         switch (propName) {
-          case 'totalWeeks': {
-            this.initWeekPicker();
-          }
+          case 'totalWeeks':
           case 'weekNr': {
+            console.log(changes);
             this.initWeekPicker();
           }
         }
@@ -57,6 +53,7 @@ export class WeekPickerComponent implements OnInit {
   }
 
   private initWeekPicker(){
+    console.log('week-picker-init')
     this.currentPage = this.getPageByWeek(this.weekNr);
     this.setVisibleWeeks(this.currentPage);
   }
@@ -64,9 +61,12 @@ export class WeekPickerComponent implements OnInit {
   private setVisibleWeeks(page: number = 0): boolean{
     if(page < 0) return false;
 
+    //screen event func
     const availableSpace = this.screenWidth - (this.chevronWidth * 2);
     let weeksPerPage = Math.floor(availableSpace / this.weekItemWidth);
     if(weeksPerPage > this.maxItems) weeksPerPage = this.maxItems;
+    
+    //seperate func, called on totalweeks change & screen event func
     const totalPages = Math.ceil(this.totalWeeks / weeksPerPage);
 
     if(page >= totalPages) return false;

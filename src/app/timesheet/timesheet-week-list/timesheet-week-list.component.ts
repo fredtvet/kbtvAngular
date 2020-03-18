@@ -28,8 +28,6 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
 
   totalWeeks: number;
 
-  timesheetDays: TimesheetInfo[] = [];
-
   constructor(
     private identityService: IdentityService,
     private timesheetService: TimesheetService,

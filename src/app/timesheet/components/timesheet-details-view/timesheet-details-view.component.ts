@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges } from '@angular/core';
 import { TimesheetInfo, Mission, Timesheet } from 'src/app/shared/models';
 
 @Component({
@@ -21,7 +21,6 @@ export class TimesheetDetailsViewComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.date);
     if(this.date !== undefined) this.isDateView = true;
   }
 

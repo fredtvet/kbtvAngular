@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MainNavConfig } from 'src/app/shared/layout';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
@@ -11,7 +11,8 @@ import { tap } from 'rxjs/operators';
 @Component({
   selector: 'app-timesheet-details',
   templateUrl: './timesheet-details.component.html',
-  styleUrls: ['./timesheet-details.component.scss']
+  styleUrls: ['./timesheet-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimesheetDetailsComponent implements OnInit {
 
@@ -50,10 +51,10 @@ export class TimesheetDetailsComponent implements OnInit {
     
     if(isNaN(args.week) || isNaN(args.weekDay) || isNaN(args.year)) 
       return undefined;
-      console.log(args);
+
     this.momentDate = moment().year(args.year).week(args.week).isoWeekday(args.weekDay);
     this.date = this.momentDate.toDate();
-    console.log(this.date);
+
     this.timesheetInfo$ = this.timesheetService.getByMomentAndUserName$(this.momentDate, this.user.userName);
     this.mainCfg.title = this.momentDate.format('Do MMMM YYYY')
   }

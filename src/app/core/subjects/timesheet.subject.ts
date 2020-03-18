@@ -63,10 +63,8 @@ export class TimesheetSubject extends BaseSubject<Timesheet> {
             timesheetInfo.addTimesheet(x);
           }
         });
-        console.log(timesheetInfo);
         return timesheetInfo;
       }))
-
     }
 
     changeStatuses(ids: number[], status: TimesheetStatus): void{
