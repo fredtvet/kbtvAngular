@@ -1,5 +1,5 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MissionService, BaseService, MissionTypeService, ReportTypeService, EmployerService, TranslationService, DataPageService } from 'src/app/core/services';
+import { MissionService, BaseService, MissionTypeService, ReportTypeService, EmployerService, TranslationService, SessionService } from 'src/app/core/services';
 import { Subscription } from 'rxjs';
 import { MainNavConfig } from 'src/app/shared/layout';
 import { AgGridAngular } from 'ag-grid-angular';
@@ -37,7 +37,7 @@ booleanProperties = ['finished']
 objectProperties = ['missiontype', 'employer'];
 
 constructor(
-  public dataPageService: DataPageService,
+  public sessionService: SessionService,
   private translationService: TranslationService,
   private employerService: EmployerService,
   private missionTypeService: MissionTypeService,
@@ -89,7 +89,7 @@ constructor(
   }
 
   loadTable(){
-    if(this.dataPageService.currentTable != undefined){
+    if(this.sessionService.dataTable != undefined){
       this.dataSub$.unsubscribe();
       this.dataSub$ = this.getCurrentService().getAll$().subscribe(x => this.initNgGrid(x))
     }
@@ -153,7 +153,7 @@ constructor(
 
 
   private getCurrentService(): BaseService<BaseEntity>{
-    switch(this.dataPageService.currentTable){
+    switch(this.sessionService.dataTable){
       case "Oppdrag": return this.missionService;
       case "Oppdragstyper": return this.missionTypeService;
       case "Oppdragsgivere": return this.employerService;
@@ -162,7 +162,7 @@ constructor(
   }
 
   create() {
-    switch(this.dataPageService.currentTable){
+    switch(this.sessionService.dataTable){
       case "Oppdrag": this.createMission(); break;
       case "Oppdragstyper": this.createMissionType(); break;
       case "Oppdragsgivere": this.createEmployer(); break;

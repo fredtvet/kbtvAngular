@@ -8,21 +8,14 @@ import { Roles } from '../shared/enums';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'uker',
     component: TimesheetWeekListComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
     data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]}
   },
   {
-    path: ':year/:weekNr/:weekDay/detaljer',
-    component: TimesheetDetailsComponent,
-    pathMatch: 'full',
-    canActivate: [AuthGuard],
-    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]}
-  },
-  {
-    path: ':missionId/detaljer',
+    path: 'ny',
     component: TimesheetDetailsComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],

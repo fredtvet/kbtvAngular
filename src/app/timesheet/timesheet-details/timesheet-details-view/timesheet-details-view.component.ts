@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges } from '@angular/core';
-import { TimesheetInfo, Mission, Timesheet } from 'src/app/shared/models';
+import { Mission, Timesheet } from 'src/app/shared/models';
+import { TimesheetStatus } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-timesheet-details-view',
@@ -8,7 +9,7 @@ import { TimesheetInfo, Mission, Timesheet } from 'src/app/shared/models';
 })
 export class TimesheetDetailsViewComponent implements OnInit {
 
-  @Input() timesheetInfo: TimesheetInfo = new TimesheetInfo();
+  @Input() timesheets: Timesheet[];
 
   @Input() date: Date;
   @Input() mission: Mission;
@@ -24,14 +25,11 @@ export class TimesheetDetailsViewComponent implements OnInit {
     if(this.date !== undefined) this.isDateView = true;
   }
 
-  confirmAll(){
-    this.allConfirmed.emit(this.timesheetInfo.openTimesheets.map(x => x.id));
-  }
-  
-  sortByDate(timesheets: Timesheet[]){
-    const t = timesheets;
-    return t.sort((a: any, b: any) =>
-        new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
-    );
+  confirmAll(){ 
+    let ids = this.timesheets.reduce((acc, timesheet) => {
+      if(timesheet.status === TimesheetStatus.Open) acc.push(timesheet.id);
+      return acc;
+    }, []);
+    this.allConfirmed.emit(ids);
   }
 }

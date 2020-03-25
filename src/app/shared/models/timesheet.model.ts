@@ -2,8 +2,9 @@ import { Duration } from '../interfaces/duration.interface';
 import { BaseEntity } from '../interfaces/base-entity.interface';
 import { TimesheetStatus } from '../enums/timesheet-status.enum';
 import { Mission } from './mission.model';
+import { MissionChild } from '../interfaces/mission-child.interface';
 
-export class Timesheet implements BaseEntity, Duration {
+export class Timesheet implements Duration, MissionChild {
 
     constructor(
       public id: number = null,

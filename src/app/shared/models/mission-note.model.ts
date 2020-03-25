@@ -1,4 +1,5 @@
 import { MissionChild } from '../interfaces/mission-child.interface';
+import { Mission } from './mission.model';
 
 export class MissionNote implements MissionChild{
     constructor(
@@ -11,4 +12,5 @@ export class MissionNote implements MissionChild{
       public pinned: boolean = false,
     ){};
 
+    public mission: Mission = undefined;
   };

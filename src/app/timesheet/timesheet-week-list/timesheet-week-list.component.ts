@@ -1,13 +1,14 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { IdentityService, TimesheetService } from 'src/app/core/services';
-import { TimesheetInfo } from 'src/app/shared/models';
+import { IdentityService, TimesheetService, SessionService } from 'src/app/core/services';
+import { TimesheetInfo, Timesheet } from 'src/app/shared/models';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { SubscriptionComponent } from 'src/app/subscription.component';
-import { takeUntil, tap, switchMap, map, shareReplay, take, distinctUntilChanged, share, distinct, skip } from 'rxjs/operators';
+import { takeUntil, tap, switchMap, map, shareReplay, take, distinctUntilChanged, share, distinct, skip, delay } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { TimesheetStatus } from 'src/app/shared/enums';
+import { TimesheetStatus, TimesheetFilters } from 'src/app/shared/enums';
 import { DateParams } from 'src/app/shared/interfaces';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-timesheet-week-list',
@@ -20,50 +21,68 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
   date = new Date();
   userName: string;
 
-  dateParams: DateParams = { year: moment().year(), weekNr: moment().week() }
-  dateParamsSubject = new BehaviorSubject(this.dateParams)
-  dateParams$ = this.dateParamsSubject.asObservable();
+  dateParamsSubject = new BehaviorSubject<DateParams>({ year: moment().year(), weekNr: 5 })
+  dateParams$ = this.dateParamsSubject.asObservable().pipe(distinctUntilChanged());
 
-  timesheetDays$: Observable<TimesheetInfo[]>
+  timesheetDays$: Observable<Timesheet[][]> =  this.dateParams$.pipe(
+    switchMap(x => this.timesheetService.getByUserNameAndWeekGrouped$(this.userName, x)),
+    takeUntil(this.unsubscribe),
+  );
+
+  timesheetDays: Timesheet[][];
 
   totalWeeks: number;
 
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay(),
+      takeUntil(this.unsubscribe),
+    );
+
   constructor(
+    private sessionService: SessionService,
+    private breakpointObserver: BreakpointObserver,
     private identityService: IdentityService,
     private timesheetService: TimesheetService,
     private router: Router) {
       super();
       this.userName = this.identityService.getCurrentUser().userName;
+      console.time('init');
   }
 
   ngOnInit(){
-    this.timesheetDays$ = this.dateParams$.pipe( 
-      takeUntil(this.unsubscribe),
-      switchMap(x => this.timesheetService.getByUserNameAndWeekGrouped$(this.userName, x)),
-    );
+    this.timesheetDays$.subscribe(x => this.timesheetDays = x);
+  }
+
+  ngAfterViewInit(): void {
+    console.timeEnd('init');
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+ 
   }
 
   dateParamsWithWeekday(weekDay: number): DateParams{
-    const dp = this.dateParams;
-    dp.weekDay = weekDay;
-    return dp;
+    return {...this.dateParamsSubject.value, weekDay: weekDay};
+    //return this.dateParams$.pipe(map(x => ({...x, weekDay: weekDay})),tap(console.log))
   }
 
   confirmAllTimesheets(){ 
-    this.timesheetDays$.pipe(take(1),switchMap(arr => {
-      let ids: number[] = [];
-      arr.forEach(x => ids = ids.concat(x.openTimesheets.map(x => x.id)));
-      return this.timesheetService.changeStatuses$(ids, TimesheetStatus.Confirmed);
-    })).subscribe();
-
-
+    let ids = [].concat(...this.timesheetDays).reduce((acc, timesheet) => {
+      if(timesheet.status === TimesheetStatus.Open) acc.push(timesheet.id);
+      return acc;
+    }, []);
+    this.timesheetService.changeStatuses$(ids, TimesheetStatus.Confirmed).subscribe();
   }
 
   goToDetails(weekDay: number){
-    this.router.navigate(['timeliste', this.dateParams.year, this.dateParams.weekNr, weekDay, 'detaljer'])
+    this.sessionService.timesheetDateParams = {...this.dateParamsSubject.value};
+    this.sessionService.timesheetDateParams.weekDay = weekDay;
+    this.router.navigate(['timeliste/ny', {preset: TimesheetFilters.DateParams}])
   }
 
-  dateParamsChange(dateParams: DateParams){
+  changeDateParams(dateParams: DateParams){
     this.dateParamsSubject.next(dateParams);
   }
+  
 }

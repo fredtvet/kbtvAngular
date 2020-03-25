@@ -1,7 +1,7 @@
 <div class="week-picker" fxLayout="row" fxLayoutAlign="center center" >
   <span>
     <button mat-icon-button (click)="previousWeekPage()"><mat-icon>chevron_left</mat-icon></button>
-    <ng-container *ngFor="let week of visibleWeeks">
+    <ng-container *ngFor="let week of visibleWeeks$ | async">
       <button mat-button
         [ngClass]="{'primary-border': week == weekNr, 'color-primary': week == currentWeek}"
         (click)="this.weekSelected.emit(week)">

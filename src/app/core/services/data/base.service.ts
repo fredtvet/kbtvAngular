@@ -44,11 +44,15 @@ export abstract class BaseService<T extends BaseEntity>{
     return this.dataSubject.get$(id);
   }
 
+  getBy$(expression: (value: T, index?: number, Array?: any[]) => boolean): Observable<T[]>{
+    return this.dataSubject.getBy$(expression);
+  }
+
   add$(entity: T): Observable<T>{
 
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å legge til ting.')
       .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-      
+
     return this.apiService
                 .post(`${this.uri}`, entity)
                 .pipe(tap(data =>{

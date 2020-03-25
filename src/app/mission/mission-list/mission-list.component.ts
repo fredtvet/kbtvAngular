@@ -6,7 +6,7 @@ import { NavAction } from 'src/app/shared/components';
 import { Roles } from '../../shared/enums';
 import { BehaviorSubject, Observable} from 'rxjs';
 import { MainNavConfig, BottomSheetParent } from 'src/app/shared/layout';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { MissionService, BottomSheetActionHubService } from 'src/app/core/services';
 
 @Component({
@@ -39,10 +39,13 @@ export class MissionListComponent extends BottomSheetParent{
 
   ngOnInit(){
     super.ngOnInit();
-    this.missions$ = this.pageInfoSubject.pipe(switchMap(pageInfo => {
+    this.missions$ = this.pageInfoSubject.pipe(
+      switchMap(pageInfo => {
         return this.missionService
           .getFiltered$(pageInfo.showFinishedMissions, pageInfo.searchString)
-    }));
+      }), 
+      takeUntil(this.unsubscribe)
+    );
 
     let navAction = new NavAction("Vis ferdige oppdrag",
                       "check_box_outline_blank",

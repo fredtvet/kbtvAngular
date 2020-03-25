@@ -5,6 +5,7 @@ import { ReportTypeSubject } from './report-type.subject';
 import { LocalStorageService } from '../services/local-storage.service';
 import { Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
+import { MissionSubject } from './mission.subject';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,9 @@ import { switchMap, map } from 'rxjs/operators';
 export class MissionReportSubject extends BaseMissionChildSubject<MissionReport> {
   constructor(
     private reportTypeSubject: ReportTypeSubject,
-    localStorageService: LocalStorageService
-    ) { super(localStorageService, 'missionReports'); }
+    localStorageService: LocalStorageService,
+    missionSubject: MissionSubject
+    ) { super(missionSubject,localStorageService, 'missionReports'); }
 
   getByMissionId$(missionId: number): Observable<MissionReport[]>{
     return super.getByMissionId$(missionId).pipe(switchMap(reports => {

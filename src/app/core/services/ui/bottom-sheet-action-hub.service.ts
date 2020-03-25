@@ -19,6 +19,4 @@ export class BottomSheetActionHubService {
   addAction(action: NavAction){
     this.eventHubSubject.next(action);
   }
-
-
 }

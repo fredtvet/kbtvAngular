@@ -19,7 +19,7 @@ import {
   ConnectionService,
   DataSyncService,
   TranslationService,
-  DataPageService,
+  SessionService,
   TimesheetService,
   BottomSheetActionHubService,
 } from './services';
@@ -54,7 +54,7 @@ import { NotificationComponent } from '../shared/components';
     TimesheetService,
     DataSyncService,
     TranslationService,
-    DataPageService,
+    SessionService,
     BottomSheetActionHubService
   ]
 })

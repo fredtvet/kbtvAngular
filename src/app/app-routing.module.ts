@@ -41,6 +41,7 @@ const routes: Routes = [
   },
   {
     path: 'timeliste',
+    data: {preload: true },
     loadChildren: './timesheet/timesheet.module#TimesheetModule'
   },
   {

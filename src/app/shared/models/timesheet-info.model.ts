@@ -15,7 +15,7 @@ export class TimesheetInfo {
   calcTotalHoursOpen(): number{
     return this.openTimesheets.reduce((a, b) => a + (b['totalHours'] || 0), 0);
   }
-  
+
   addTimesheet(timesheet: Timesheet){
     if(timesheet.status == TimesheetStatus.Open)
       this.openTimesheets.push(timesheet);

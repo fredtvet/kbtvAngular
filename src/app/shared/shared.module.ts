@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ArraySlicePipe, ThumbnailPipe } from './pipes'
+import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe, SortByTimesheetStatusPipe } from './pipes'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -45,6 +45,8 @@ import { BottomSheetComponent } from './layout/bottom-sheet/bottom-sheet.compone
     IfRoleDirective,
     ArraySlicePipe,
     ThumbnailPipe,
+    SortByDatePipe,
+    SortByTimesheetStatusPipe,
     NotificationComponent,
     MissionListViewComponent,
     AddToHomeScreenComponent,
@@ -92,6 +94,8 @@ import { BottomSheetComponent } from './layout/bottom-sheet/bottom-sheet.compone
     IfRoleDirective,
     ArraySlicePipe,
     ThumbnailPipe,
+    SortByDatePipe,
+    SortByTimesheetStatusPipe,
     MainNavComponent,
     BottomNavComponent,
     SearchBarComponent,

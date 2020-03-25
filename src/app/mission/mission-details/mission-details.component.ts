@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Roles } from '../../shared/enums';
+import { Roles, TimesheetFilters } from '../../shared/enums';
 import { MissionNote, Mission, MissionReport, MissionImage } from 'src/app/shared/models';
 import { NavAction, ConfirmDeleteDialogComponent } from 'src/app/shared/components';
-import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, BottomSheetActionHubService } from 'src/app/core/services';
+import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, BottomSheetActionHubService, SessionService } from 'src/app/core/services';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
 import { take, tap, takeUntil } from 'rxjs/operators';
 import { Subscription, Observable } from 'rxjs';
@@ -31,6 +31,7 @@ export class MissionDetailsComponent extends BottomSheetParent{
   missionSub: Subscription = new Subscription();
 
   constructor(
+    private sessionService: SessionService,
     private missionService: MissionService,
     private missionImageService: MissionImageService,
     private missionReportService: MissionReportService,
@@ -120,8 +121,10 @@ export class MissionDetailsComponent extends BottomSheetParent{
     deleteDialogRef.afterClosed().subscribe(confirmed => {if(confirmed)this.deleteMission()});
   }
 
-  private goToTimesheets = (e: string) => 
-    this.router.navigate(['timeliste', this.mission.id, 'detaljer', {returnRoute: this.router.url}]);
+  private goToTimesheets = (e: string) => {
+    this.sessionService.missionId = this.mission.id;
+    this.router.navigate(['timeliste/ny', {returnRoute: this.router.url, preset: TimesheetFilters.Mission}]);
+  }
 
   configureMainNav(){
     this.bottomSheetActions = [

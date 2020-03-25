@@ -39,6 +39,11 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
       {return arr === undefined ? undefined : arr.filter(d => ids.includes(d.id))}));
   }
 
+  getBy$(expression: (value: T, index?: number, Array?: any[]) => boolean){
+    return this.data$.pipe(map(arr =>
+      {return arr === undefined ? undefined : arr.filter(expression)}));
+  }
+
   getByProperty(property: string, value: any){
     return this.getAll$().pipe(map(arr => arr.filter(e => e[property] == value)));
   }

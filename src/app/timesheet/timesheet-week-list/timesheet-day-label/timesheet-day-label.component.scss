@@ -1,0 +1,15 @@
+@import '../../../../variables';
+
+*{
+  line-height:16.5px;
+}
+
+.static-section{
+  background:$bg-app-bar;
+  width:100%;
+  padding-top:$content-margin*1px;
+}
+
+.highlighted{
+  border:1px solid $primary;
+}

@@ -2,23 +2,36 @@
 
   <app-timesheet-week-menu
     [dateParams]="dateParams$ | async"
-    (dateParamsChanged)="dateParamsChange($event)"
+    (dateParamsChanged)="changeDateParams($event)"
     (allTimesheetsConfirmed)="confirmAllTimesheets()">
   </app-timesheet-week-menu>
   <mat-divider></mat-divider>
 
   <div class="weekdays-container  mat-elevation-z6"  fxLayout="row" fxLayoutAlign="start stretch" >
 
-    <ng-container *ngIf="timesheetDays$ | async; let timesheetDays">
-      <ng-container *ngFor="let weekDay of [1,2,3,4,5,6,7]">   
-        <app-timesheet-day-bar 
-          [dateParams]="dateParamsWithWeekday(weekDay)"
-          [timesheetInfo]="timesheetDays[weekDay]"
-          (addClick)="goToDetails(weekDay)"
-          (progressClick)="goToDetails(weekDay)">
-        </app-timesheet-day-bar>
+    <ng-container *ngFor="let weekDay of [1,2,3,4,5,6,7]"> 
+
+        <div class="timesheet-bar" fxLayout="column" fxLayoutAlign="start center" 
+          [ngClass]="(isHandset$ | async) ? 'width-handset' : 'width-no-handset'">
+
+          <app-timesheet-day-label class="w-100"
+            [dateParams]="dateParamsWithWeekday(weekDay)"
+            (addClick)="goToDetails(weekDay)">
+          </app-timesheet-day-label>
+
+          <div class="progress-bar-container"
+            fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="4px" fxFlex>
+              <app-timesheet-mission-bar 
+                *ngFor="let timesheet of timesheetDays[weekDay] | sortByDate: 'startTime';" 
+                [timesheet]="timesheet"
+                [isHandset]="isHandset$ | async"
+                [style.height.%]="(timesheet.totalHours / 14)*100">
+              </app-timesheet-mission-bar>
+          </div>
+
+        </div>
+        
         <mat-divider vertical="true" *ngIf="weekDay !== 7"></mat-divider>
-      </ng-container>
     </ng-container>
 
 

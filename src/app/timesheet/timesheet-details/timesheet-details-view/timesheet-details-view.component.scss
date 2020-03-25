@@ -1,0 +1,13 @@
+@import '../../../../variables';
+
+$timesheet-list-header: 36 + $content-margin;
+$timesheet-list-height: calc(100vh - ((#{$bottom-nav-height} * 2) + #{$tab-header-height} + #{$timesheet-list-header})*1px);
+
+.timesheet-container{
+    margin: 0 $content-margin * 1px;
+    padding-top: $content-margin * 1px;
+}
+
+.timesheet-list-container{
+    height:$timesheet-list-height;
+}

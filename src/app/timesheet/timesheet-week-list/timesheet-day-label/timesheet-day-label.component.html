@@ -1,0 +1,23 @@
+<span class="static-section" fxLayout="column" fxLayoutAlign="start center" (click)="this.addClick.emit()" matRipple>
+
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <span class="mat-title m-0">
+        {{ this.date.format('ddd') }}
+      </span>
+
+      <span class="mat-small">
+        {{ this.date.format('Do MMM') }}
+      </span>
+    </div>
+
+    <button mat-icon-button color="primary" [disableRipple]="true">
+      <mat-icon class="icon">add</mat-icon>Ny
+    </button>
+
+</span>
+
+
+
+
+
+

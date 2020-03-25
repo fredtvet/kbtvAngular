@@ -2,10 +2,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MainNavConfig } from 'src/app/shared/layout';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
-import { TimesheetService, IdentityService, MissionService } from 'src/app/core/services';
+import { TimesheetService, IdentityService, MissionService, SessionService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
-import { User, TimesheetInfo, Mission } from 'src/app/shared/models';
-import { TimesheetStatus } from 'src/app/shared/enums';
+import { User, TimesheetInfo, Mission, Timesheet } from 'src/app/shared/models';
+import { TimesheetStatus, TimesheetFilters } from 'src/app/shared/enums';
 import { tap } from 'rxjs/operators';
 
 @Component({
@@ -25,9 +25,10 @@ export class TimesheetDetailsComponent implements OnInit {
   endTime: string;
   startTime: string;
 
-  timesheetInfo$: Observable<TimesheetInfo>;
+  timesheets$: Observable<Timesheet[]>;
 
   constructor(
+    private sessionService: SessionService,
     private timesheetService: TimesheetService,
     private identityService: IdentityService,
     private missionService: MissionService,
@@ -38,32 +39,32 @@ export class TimesheetDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.identityService.getCurrentUser();
-    this.configureForMissionRoute();
-    this.configureForDateRoute();
+    this.checkForPreset();
+  }
+
+  checkForPreset(){
+    let preset = this.route.snapshot.params['preset'] as TimesheetFilters;
+    if(preset == TimesheetFilters.Mission) this.configureForMissionRoute();
+    else if(preset == TimesheetFilters.DateParams) this.configureForDateRoute();
   }
 
   configureForDateRoute(): void{
-    let args = { 
-      weekDay: +this.route.snapshot.params['weekDay'], 
-      year: +this.route.snapshot.params['year'], 
-      week: +this.route.snapshot.params['weekNr']
-    };
-    
-    if(isNaN(args.week) || isNaN(args.weekDay) || isNaN(args.year)) 
-      return undefined;
+    const args = this.sessionService.timesheetDateParams; 
+    if(!args || !args.weekNr || !args.weekDay || !args.year) return undefined;
 
-    this.momentDate = moment().year(args.year).week(args.week).isoWeekday(args.weekDay);
+    this.momentDate = moment().year(args.year).week(args.weekNr).isoWeekday(args.weekDay);
     this.date = this.momentDate.toDate();
 
-    this.timesheetInfo$ = this.timesheetService.getByMomentAndUserName$(this.momentDate, this.user.userName);
+    this.timesheets$ = this.timesheetService.getBy$(x => x.status === TimesheetStatus.Open)
+    //this.timesheets$ = this.timesheetService.getByMomentAndUserName$(this.momentDate, this.user.userName);
     this.mainCfg.title = this.momentDate.format('Do MMMM YYYY')
   }
 
   configureForMissionRoute(): void{
-    let missionId = +this.route.snapshot.params['missionId'];
-    if(isNaN(missionId)) return undefined;
-    this.mission$ = this.missionService.get$(+this.route.snapshot.params['missionId']);
-    this.timesheetInfo$ = this.timesheetService.getByMissionId$(missionId);
+    let missionId = this.sessionService.missionId;
+    if(!missionId) return undefined;
+    this.mission$ = this.missionService.get$(missionId);
+    this.timesheets$ = this.timesheetService.getBy$(x => x.missionId == missionId).pipe(tap(console.log));
   }
 
   confirmTimesheets(ids: number[]){
@@ -74,7 +75,7 @@ export class TimesheetDetailsComponent implements OnInit {
   onBack(): void {
     let returnRoute: string = this.route.snapshot.params['returnRoute'];
     if(returnRoute != undefined) this.router.navigate([returnRoute])
-    else this.router.navigate(['timeliste'])
+    else this.router.navigate(['timeliste/uker'])
   }
 
 }

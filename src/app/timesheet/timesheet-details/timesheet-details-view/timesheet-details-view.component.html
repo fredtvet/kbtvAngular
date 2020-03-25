@@ -1,4 +1,5 @@
 
+
 <app-timesheet-form [date]="date" [mission]="mission"></app-timesheet-form>
 
 <mat-divider></mat-divider>
@@ -8,16 +9,10 @@
   <span class="form-header">Registrerte timer for {{ isDateView ? 'dato' : 'oppdrag' }}</span>
   <button mat-button color="primary" (click)="confirmAll()">Bekreft alle</button>
 
-  <div  fxLayout="column" fxLayoutGap="8px">
+  <cdk-virtual-scroll-viewport itemSize="3" style="height:240px">
     <app-timesheet-card
-      *ngFor="let timesheet of timesheetInfo.openTimesheets"
+      *cdkVirtualFor="let timesheet of timesheets | sortByDate: 'startTime' | sortByTimesheetStatus"
       [timesheetId]="timesheet.id">
     </app-timesheet-card>
-
-    <app-timesheet-card
-      *ngFor="let timesheet of sortByDate(timesheetInfo.closedTimesheets)"
-      [timesheetId]="timesheet.id">
-    </app-timesheet-card>
-  </div>
-
+  </cdk-virtual-scroll-viewport>
 </div>

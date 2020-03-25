@@ -7,6 +7,7 @@ export * from './translation.service';
 export * from './identity.service';
 export * from './loading.service';
 export * from './notification.service';
+export * from './session.service';
 
 export * from './data/users.service';
 export * from './data/roles.service';
@@ -24,7 +25,5 @@ export * from './data/mission-image.service';
 export * from './data/mission-note.service';
 export * from './data/mission-report.service';
 export * from './data/timesheet.service';
-
-export * from './ui/data-page.service';
 
 export * from './ui/bottom-sheet-action-hub.service';

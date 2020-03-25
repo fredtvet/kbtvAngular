@@ -24,10 +24,6 @@ export class MissionReportService extends BaseMissionChildService<MissionReport>
     super(notificationService, apiService, dataSubject, connectionService, "/MissionReports");
   }
 
-  getByMissionId$(missionId: number):Observable<MissionReport[]>{
-    return super.getByMissionId$(missionId);
-  }
-
   addReport$(missionId:number, reportType: MissionReportType, files: FileList): Observable<MissionReport>{
     if(!this.isOnline)
     return throwError('Du må være tilkoblet internett for å legge til rapporter.')

@@ -3,7 +3,7 @@
 
     <mat-form-field appearance="fill" class="data-picker">
       <mat-label>Velg</mat-label>
-      <mat-select [(ngModel)]="dataPageService.currentTable" (selectionChange)="loadTable()">
+      <mat-select [(ngModel)]="sessionService.dataTable" (selectionChange)="loadTable()">
         <mat-option *ngFor="let table of tables" value="{{ table }}">{{ table }}</mat-option>
       </mat-select>
     </mat-form-field>

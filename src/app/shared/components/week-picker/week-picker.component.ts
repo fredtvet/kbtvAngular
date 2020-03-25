@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, HostListener, EventEmitter, Output, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
+import { BehaviorSubject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { WeekPickerInfo } from '../../interfaces/week-picker-info.interface';
 
 @Component({
   selector: 'app-week-picker',
@@ -8,93 +11,125 @@ import * as moment from 'moment';
 })
 export class WeekPickerComponent {
 
-  @Input() totalWeeks: number;
+  @Input() totalWeeks: number = 52;
   @Input() weekNr: number = 1;
   @Output() weekSelected = new EventEmitter();
 
   //Array containing weeks currently displaying
-  visibleWeeks: number[];
-
+  weeks: number[] = [];
   currentWeek = moment().week();
+  totalPages: number;
 
-  private currentPage: number = 0;
+  private pickerInfoSubject = new BehaviorSubject<WeekPickerInfo>({ currentPage: 1, weeksPerPage: 6 });
+  pickerInfo$ = this.pickerInfoSubject.asObservable();
+  visibleWeeks$ = this.pickerInfo$.pipe(map(x => this.getCurrentWeeks()));
 
   //Helpers for week picker
   private screenWidth: number;
-  private weekItemWidth: number = 36; //Currently static, needs to correspond with scss
-  private chevronWidth: number = 40; //Currently static, needs to correspond with scss
-  private maxItems = 9; //Max items to accommodate for sidebar (lazy solution to prevent breaking ui)
+  private readonly weekItemWidth: number = 36; //Currently static, needs to correspond with scss
+  private readonly chevronWidth: number = 40; //Currently static, needs to correspond with scss
+  private readonly maxItems = 9; //Max items to accommodate for sidebar (lazy solution to prevent breaking ui)
 
-  constructor() { this.setScreenWidth() }
+  constructor() { }
+
+  ngOnInit(): void {
+    this.setScreenWidth();
+    this.setWeeksArray();
+    this.setCurrentPageByWeek();
+  }
 
   ngOnChanges(changes: SimpleChanges): void{
-    
     for (const propName in changes) {
       if (changes.hasOwnProperty(propName)) {
         switch (propName) {
-          case 'totalWeeks':
-          case 'weekNr': {
-            console.log(changes);
-            this.initWeekPicker();
+          case 'totalWeeks':{
+            if(!changes[propName].isFirstChange()){          
+              this.updateWeeksArray();
+              this.setTotalPages();
+            }
+          }
+          case 'weekNr': {  
+            if(!changes[propName].isFirstChange()){
+              this.setCurrentPageByWeek();
+            }
           }
         }
       }
     }
   }
 
-  nextWeekPage(){
-    if(this.setVisibleWeeks(this.currentPage + 1))
-      this.currentPage++;
+  getCurrentWeeks(){
+    const info = this.pickerInfoSubject.value;
+    const startIndex = info.currentPage * info.weeksPerPage;
+    return this.weeks.slice(startIndex, startIndex + info.weeksPerPage);
   }
 
-  previousWeekPage(){
-    if(this.setVisibleWeeks(this.currentPage - 1))
-      this.currentPage--;
+  nextWeekPage():boolean{
+    const info = this.pickerInfoSubject.value;
+    const page = info.currentPage + 1;
+    if(info.currentPage >= this.totalPages) return false;
+    else info.currentPage = page;
+    this.pickerInfoSubject.next(info);    
   }
 
-  private initWeekPicker(){
-    console.log('week-picker-init')
-    this.currentPage = this.getPageByWeek(this.weekNr);
-    this.setVisibleWeeks(this.currentPage);
-  }
-
-  private setVisibleWeeks(page: number = 0): boolean{
+  previousWeekPage():boolean{
+    const info = this.pickerInfoSubject.value;
+    const page = info.currentPage - 1;
     if(page < 0) return false;
-
-    //screen event func
-    const availableSpace = this.screenWidth - (this.chevronWidth * 2);
-    let weeksPerPage = Math.floor(availableSpace / this.weekItemWidth);
-    if(weeksPerPage > this.maxItems) weeksPerPage = this.maxItems;
-    
-    //seperate func, called on totalweeks change & screen event func
-    const totalPages = Math.ceil(this.totalWeeks / weeksPerPage);
-
-    if(page >= totalPages) return false;
-
-    let weeks = [];
-    let n = (weeksPerPage * page) + 1;
-    let exp = (weeksPerPage * (page +1));
-
-    if(exp > this.totalWeeks) exp = this.totalWeeks;
-
-    for(; n <= exp; n++){
-      weeks.push(n);
-    }
-
-    this.visibleWeeks = weeks;
-    return true;
-  }
-
-  private getPageByWeek(week: number): number{
-    const availableSpace = this.screenWidth - (this.chevronWidth * 2);
-    let weeksPerPage = Math.floor(availableSpace / this.weekItemWidth);
-    if(weeksPerPage > this.maxItems) weeksPerPage = this.maxItems;
-    return Math.floor((week - 1) / weeksPerPage);
+    else info.currentPage = page;
+    this.pickerInfoSubject.next(info);    
   }
 
   @HostListener('window:resize', ['$event'])
   setScreenWidth(event?) {
-        this.screenWidth = window.innerWidth;
-        this.initWeekPicker();
+        const newWidth = window.innerWidth;
+        if(newWidth !== this.screenWidth){
+          this.screenWidth = window.innerWidth;
+          this.setWeeksPerPage(this.screenWidth);
+        }
   }
+
+  private setCurrentPageByWeek(){
+    const info = this.pickerInfoSubject.value;
+    const currentPage = Math.floor((this.weekNr - 1) / info.weeksPerPage);
+    if(info.currentPage !== currentPage){
+      info.currentPage = currentPage;
+      this.pickerInfoSubject.next(info);
+    }   
+  }
+
+  private setWeeksPerPage(screenWidth: number){
+      const info = this.pickerInfoSubject.value;
+      const availableSpace = screenWidth - (this.chevronWidth * 2);
+
+      info.weeksPerPage = Math.floor(availableSpace / this.weekItemWidth);
+      if(info.weeksPerPage > this.maxItems) info.weeksPerPage = this.maxItems;
+
+      this.pickerInfoSubject.next(info);
+      this.setTotalPages();
+  }
+  
+  private setTotalPages(){
+    let info = this.pickerInfoSubject.value;
+    this.totalPages = Math.ceil(this.totalWeeks / info.weeksPerPage) - 1;
+    if(info.currentPage > this.totalPages){ 
+      info.currentPage = this.totalPages;
+      this.pickerInfoSubject.next(info);
+    }
+  }
+
+  private setWeeksArray(){
+    for(let n = 1; n <= this.totalWeeks; n++){
+      this.weeks.push(n);
+    }
+  }
+
+  private updateWeeksArray(){
+    const length = this.weeks.length;
+    if(this.totalWeeks > length) this.weeks.push(53);
+    else if(this.totalWeeks < length) this.weeks.pop();
+  }
+
+
+
 }

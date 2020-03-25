@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MainNavConfig } from 'src/app/shared/layout';
-import { EmployerService, NotificationService, MissionTypeService, MissionService } from 'src/app/core/services';
+import { EmployerService, NotificationService, MissionTypeService, MissionService, SessionService } from 'src/app/core/services';
 import { Mission, MissionType, Employer } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -26,6 +26,7 @@ export class MissionFormComponent extends SubscriptionComponent {
   loading$: Observable<boolean>;
 
   constructor(
+    private sessionService: SessionService,
     private employerService: EmployerService,
     private missionTypeService: MissionTypeService,
     private missionService: MissionService,
