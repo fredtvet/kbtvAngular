@@ -2,8 +2,12 @@
     [ngClass]="{
         'bg-primary': timesheet.status == 2, 
         'bg-warn': timesheet.status == 0,
-        'width-no-handset': !isHandset,
-        'width-handset': isHandset
+        'width-no-handset': true
+    }"
+    [ngClass.xs]="{
+        'bg-primary': timesheet.status == 2, 
+        'bg-warn': timesheet.status == 0,
+        'width-handset': true
     }"
     (click)="openDialog()" matRipple>
 

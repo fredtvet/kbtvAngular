@@ -1,10 +1,9 @@
-import { DbSync  } from 'src/app/shared/models';
+import { DbSync  } from 'src/app/shared/interfaces';
 import { BaseEntity } from 'src/app/shared/interfaces';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, tap, skip, distinctUntilChanged, share, delay } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { LocalStorageService } from '../services/local-storage.service';
 import { PersistentSubject } from './persistent.subject';
-
 export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubject<T[]>{
 
   private timestampKey: string;
@@ -20,13 +19,16 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
     let arr = this._addOrReplaceRange(dbSync.entities) //Add new or updated entities
     arr = arr.filter(d => !dbSync.deletedEntities.includes(d.id)) //Remove deleted entities
     this.dataSubject.next(arr);
-
-    this.localStorageService.add(this.timestampKey, dbSync.timestamp)
+    this.localStorageService.add(this.timestampKey, dbSync.timestamp)//Persist timestamp for next sync 
   }
 
   getAll$(): Observable<T[]>{
     return this.data$.pipe(map(arr =>
       {return arr === undefined ? [] : arr}));
+  }
+
+  getAllDetails$(): Observable<T[]>{
+    return this.getAll$();
   }
 
   get$(id: number): Observable<T>{
@@ -39,19 +41,15 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
       {return arr === undefined ? undefined : arr.filter(d => ids.includes(d.id))}));
   }
 
-  getBy$(expression: (value: T, index?: number, Array?: any[]) => boolean){
+  getBy$(expression: (value: T, index?: number, Array?: any[]) => boolean): Observable<T[]>{
     return this.data$.pipe(map(arr =>
       {return arr === undefined ? undefined : arr.filter(expression)}));
   }
 
-  getByProperty(property: string, value: any){
-    return this.getAll$().pipe(map(arr => arr.filter(e => e[property] == value)));
-  }
-
   addOrReplace(entity: T): void{
     if(this.dataSubject.value !== undefined && !this.dataSubject.value.find(e => e.id == entity.id)) {
-      this.dataSubject.value.unshift(entity);
-      this.dataSubject.next(this.dataSubject.value);
+      const arr = [entity, ...this.dataSubject.value]
+      this.dataSubject.next(arr);
     }
     else this.update(entity);
   }
@@ -62,28 +60,24 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
   }
 
   update(entity: T): void{
-    this.dataSubject.next(
-      this.dataSubject.value.map(e => {
-        if(e.id !== entity.id) return e;
-        else return entity;
-      })
-    );
+    let arr = [...this.dataSubject.value];
+    arr = arr.map(e => {
+      if(e.id !== entity.id) return e;
+      else return entity;
+    });
+    this.dataSubject.next(arr);
   }
 
   delete(id: number): void{
-    this.dataSubject.next(this.dataSubject.value.filter(d => d.id != id));
+    let arr = [...this.dataSubject.value];
+    arr = arr.filter(d => d.id != id);
+    this.dataSubject.next(arr);
   }
 
   deleteRange(ids: number[]){
-    this.dataSubject.next(
-      this.dataSubject.value.filter(d => {
-        return !ids.includes(d.id);
-      })
-    );
-  }
-
-  isEmpty(): boolean{
-    return (this.dataSubject.value === undefined || this.dataSubject.value.length == 0)
+    let arr = [...this.dataSubject.value];
+    arr = arr.filter(d => !ids.includes(d.id));
+    this.dataSubject.next(arr);
   }
 
   purge(){
@@ -93,6 +87,10 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
 
   getTimestamp(): string{
     return this.localStorageService.get(this.timestampKey);
+  }
+
+  get isEmpty(): boolean{
+    return (this.dataSubject.value === undefined || this.dataSubject.value.length == 0)
   }
 
   private _addOrReplaceRange(entities: T[], keepOriginals = false): T[]{

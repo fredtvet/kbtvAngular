@@ -65,6 +65,28 @@ constructor(
     this.rowData = data;
   }
 
+
+  loadTable(){
+    if(this.sessionService.dataTable != undefined){
+      this.dataSub$.unsubscribe();
+      this.dataSub$ = this.getCurrentService().getAllDetails$().subscribe(x => this.initNgGrid(x))
+    }
+  }
+
+  autoSizeGrid(){
+    let cols = this.dataGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
+    this.dataGrid.columnApi.autoSizeColumns(cols);
+  }
+
+  create() {
+    switch(this.sessionService.dataTable){
+      case "Oppdrag": this.createMission(); break;
+      case "Oppdragstyper": this.createMissionType(); break;
+      case "Oppdragsgivere": this.createEmployer(); break;
+      case "Rapporttyper": this.createReportType(); break;
+    }
+  }
+
   editCell(e: any){
     if(e.oldValue != e.newValue)
       this.getCurrentService().update$(e.data).subscribe(x => {}, error => {
@@ -88,23 +110,12 @@ constructor(
     this.getCurrentService().deleteRange$(ids).subscribe();
   }
 
-  loadTable(){
-    if(this.sessionService.dataTable != undefined){
-      this.dataSub$.unsubscribe();
-      this.dataSub$ = this.getCurrentService().getAll$().subscribe(x => this.initNgGrid(x))
-    }
-  }
-
-  autoSizeGrid(){
-    let cols = this.dataGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
-    this.dataGrid.columnApi.autoSizeColumns(cols);
-  }
-
   private addRow(data: BaseEntity){ //Manually adding as data binding did not work
     this.dataGrid.api.updateRowData({add: [data]})
   }
 
   private addColumnDef(name: string){
+
     let nameLower = name.toLowerCase();
 
     if(this.ignoredProperties.includes(nameLower)) return false; //Ignored properties
@@ -151,22 +162,12 @@ constructor(
     this.columnDefs.push(def);
   }
 
-
   private getCurrentService(): BaseService<BaseEntity>{
     switch(this.sessionService.dataTable){
       case "Oppdrag": return this.missionService;
       case "Oppdragstyper": return this.missionTypeService;
       case "Oppdragsgivere": return this.employerService;
       case "Rapporttyper": return this.reportTypeService;
-    }
-  }
-
-  create() {
-    switch(this.sessionService.dataTable){
-      case "Oppdrag": this.createMission(); break;
-      case "Oppdragstyper": this.createMissionType(); break;
-      case "Oppdragsgivere": this.createEmployer(); break;
-      case "Rapporttyper": this.createReportType(); break;
     }
   }
 

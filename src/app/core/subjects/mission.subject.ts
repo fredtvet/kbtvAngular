@@ -41,7 +41,7 @@ export class MissionSubject extends BaseSubject<Mission> {
 
     }
 
-  getAll$(): Observable<Mission[]>{
+  getAllDetails$(): Observable<Mission[]>{
     let employerSub = this.employerSubject.getAll$();
     let typeSub = this.missionTypeSubject.getAll$();
 
@@ -56,7 +56,7 @@ export class MissionSubject extends BaseSubject<Mission> {
     }));
   }
 
-  get$(id: number):Observable<Mission>{
+  getDetails$(id: number):Observable<Mission>{
     return super.get$(id).pipe(
       tap(x => this.addToHistory(x.id)),
       switchMap(data => {

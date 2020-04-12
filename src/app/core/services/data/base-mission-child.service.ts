@@ -2,12 +2,10 @@ import { Inject } from '@angular/core';
 import { BaseService } from './base.service';
 import { BaseMissionChildSubject } from '../../subjects/base-mission-child.subject';
 import { ApiService } from '../api.service';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MissionChild } from 'src/app/shared/interfaces';
 import { ConnectionService } from '../connection.service';
-import { map, tap } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
-import { Notifications } from 'src/app/shared/enums';
 
 export abstract class BaseMissionChildService<T extends MissionChild> extends BaseService<T>  {
 
@@ -23,20 +21,6 @@ export abstract class BaseMissionChildService<T extends MissionChild> extends Ba
 
   getByMissionId$(missionId: number):Observable<T[]>{
     return this.dataSubject.getByMissionId$(missionId);
-  }
-
-  add$(entity: T): Observable<T>{
-
-    if(!this.isOnline)
-      return throwError('Du må være tilkoblet internett for å legge til.')
-              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-
-    return this.apiService
-                .post(`${this.uri}/${entity.missionId}`, entity)
-                .pipe(map(data =>{
-                  this.dataSubject.addOrReplace(data);
-                  return data;
-                }));
   }
 
 }

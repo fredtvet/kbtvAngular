@@ -32,10 +32,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           case 404: //NotFound
             msg = "Denne ressursen finnes ikke!"
             break;
-          case 500:
-          case 501:
-          case 502:
-          case 503:
+          // case 500:
+          // case 501:
+          // case 502:
+          // case 503:
           case 504:
             msg = "Noe gikk feil på vår side. Prøv igjen senere eller ta kontakt."
             break;

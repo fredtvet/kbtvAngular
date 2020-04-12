@@ -1,42 +1,37 @@
-import { Timesheet, TimesheetInfo } from 'src/app/shared/models';
+import { Timesheet } from 'src/app/shared/models';
 import { TimesheetStatus, Notifications } from 'src/app/shared/enums';
-import { BaseService } from './base.service';
 import { NotificationService } from '../notification.service';
 import { ApiService } from '../api.service';
-import { TimesheetSubject } from '../../subjects/timesheet.subject';
+import { UserTimesheetSubject } from '../../subjects/user-timesheet.subject';
 import { ConnectionService } from '../connection.service';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import * as moment from 'moment';
 import { tap, map } from 'rxjs/operators';
 import { DateParams } from 'src/app/shared/interfaces';
+import { BaseMissionChildService } from './base-mission-child.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class TimesheetService extends BaseService<Timesheet> {
+export class UserTimesheetService extends BaseMissionChildService<Timesheet> {
 
   constructor(
     notificationService: NotificationService,
     apiService: ApiService,
     connectionService: ConnectionService,
-    protected dataSubject: TimesheetSubject
+    protected dataSubject: UserTimesheetSubject
   ){
     super(notificationService, apiService, dataSubject, connectionService, "/Timesheets");
   }
 
+  getByWeekGrouped$(dateParams: DateParams): Observable<Timesheet[][]>{
+    return this.dataSubject.getByWeekGrouped$(dateParams);
+  }
+
   getWithMission$(id: number): Observable<Timesheet>{
     return this.dataSubject.getWithMission$(id);
-  }
-
-  getByUserNameAndWeekGrouped$(userName: string, dateParams: DateParams): Observable<Timesheet[][]>{
-    return this.dataSubject.getByUserNameAndWeekGrouped$(userName, dateParams);
-  }
-
-  getByMomentAndUserName$(date: moment.Moment, userName: string): Observable<Timesheet[]>{
-    return this.dataSubject.getByMomentAndUserName$(date, userName);
   }
 
   changeStatus$(id: number, status: TimesheetStatus): Observable<Timesheet>{
@@ -63,6 +58,10 @@ export class TimesheetService extends BaseService<Timesheet> {
         this.dataSubject.addOrReplaceRange(data);
         return data;
       }));
+  }
+
+  getCount$(status: TimesheetStatus = undefined): Observable<number>{
+    return this.dataSubject.getCount$(status);
   }
 
   update$(){return undefined}

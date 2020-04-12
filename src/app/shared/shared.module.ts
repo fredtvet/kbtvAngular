@@ -9,7 +9,7 @@ import { IfRoleDirective } from './directives/if-role.directive';
 import { MainNavComponent, BottomNavComponent } from './layout';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AgGridModule } from 'ag-grid-angular';
+//import { AgGridModule } from 'ag-grid-angular';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 
 import {
@@ -31,6 +31,9 @@ import {
 import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
 import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date-time-formats';
 import { BottomSheetComponent } from './layout/bottom-sheet/bottom-sheet.component';
+import { DurationPipe } from './pipes/duration.pipe';
+import { GetDateByDateParamsPipe } from './pipes/get-date-by-date-params.pipe';
+import { SameDatePipe } from './pipes/same-date.pipe';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,9 @@ import { BottomSheetComponent } from './layout/bottom-sheet/bottom-sheet.compone
     ReportTypeFormDialogComponent,
     WeekPickerComponent,
     BottomSheetComponent,
+    DurationPipe,
+    GetDateByDateParamsPipe,
+    SameDatePipe,
   ],
   imports: [
     CommonModule,
@@ -67,7 +73,7 @@ import { BottomSheetComponent } from './layout/bottom-sheet/bottom-sheet.compone
     FlexLayoutModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    AgGridModule.withComponents([]),
+    //AgGridModule.withComponents([]),
   ],
   providers: [
     {provide: OwlDateTimeIntl, useClass: DefaultOwlDateTimeIntl},
@@ -82,7 +88,7 @@ import { BottomSheetComponent } from './layout/bottom-sheet/bottom-sheet.compone
     AngularMaterialModule,
     ReactiveFormsModule,
     GooglePlaceModule,
-    AgGridModule,
+    //AgGridModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     FlexLayoutModule,
@@ -95,6 +101,9 @@ import { BottomSheetComponent } from './layout/bottom-sheet/bottom-sheet.compone
     ArraySlicePipe,
     ThumbnailPipe,
     SortByDatePipe,
+    SameDatePipe,
+    DurationPipe,
+    GetDateByDateParamsPipe,
     SortByTimesheetStatusPipe,
     MainNavComponent,
     BottomNavComponent,

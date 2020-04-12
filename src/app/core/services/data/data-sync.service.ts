@@ -11,7 +11,9 @@ import { ApiService } from '../api.service';
 import { retry, tap, catchError } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
 import { Notifications } from 'src/app/shared/enums';
-import { TimesheetSubject } from '../../subjects/timesheet.subject';
+import { UserTimesheetSubject } from '../../subjects/user-timesheet.subject';
+import { LocalStorageService } from '../local-storage.service';
+import { Subject } from 'rxjs';
 
 
 @Injectable({
@@ -21,6 +23,7 @@ import { TimesheetSubject } from '../../subjects/timesheet.subject';
 export class DataSyncService {
 
   private isOnline: boolean = true;
+  private injectedSubjectKeys: string[];
 
   constructor(
     private apiService: ApiService,
@@ -33,9 +36,10 @@ export class DataSyncService {
     private missionReportSubject: MissionReportSubject,
     private missionSubject: MissionSubject,
     private reportTypeSubject: ReportTypeSubject,
-    private timesheetSubject: TimesheetSubject
+    private userTimesheetSubject: UserTimesheetSubject
   ){
-    this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
+    this.connectionService.isOnline$.subscribe(res =>this.isOnline = res);
+    this.injectedSubjectKeys = Object.getOwnPropertyNames(this).filter(x => x.includes('Subject'));
   }
 
   syncAll() : void{
@@ -52,7 +56,7 @@ export class DataSyncService {
         this.missionNoteSubject.sync(data.missionNoteSync);
         this.missionReportSubject.sync(data.missionReportSync);
         this.reportTypeSubject.sync(data.missionReportTypeSync);
-        this.timesheetSubject.sync(data.timesheetSync);
+        this.userTimesheetSubject.sync(data.userTimesheetSync);
       }),catchError(err => {
         this.notificationService.setNotification('Noe gikk feil med synkroniseringen!' , Notifications.Error)
         throw err;
@@ -60,15 +64,11 @@ export class DataSyncService {
   }
 
   private getEarliestTimestamp(){
-    let timestamps = [];
-    timestamps.push(this.missionSubject.getTimestamp());
-    timestamps.push(this.employerSubject.getTimestamp());
-    timestamps.push(this.missionTypeSubject.getTimestamp());
-    timestamps.push(this.missionImageSubject.getTimestamp());
-    timestamps.push(this.missionNoteSubject.getTimestamp());
-    timestamps.push(this.missionReportSubject.getTimestamp());
-    timestamps.push(this.reportTypeSubject.getTimestamp());
-    timestamps.push(this.timesheetSubject.getTimestamp());
+    // const timestamps = Object.keys(localStorage).reduce((acc, key) => {
+    //   if(key.includes('/timestamp')) acc.push(this.localStorageService.get(key))    
+    //   return acc;
+    // },[]);
+    const timestamps = this.injectedSubjectKeys.map(x => this[x].getTimestamp());
 
     return  timestamps.sort(function(a,b) {
               return new Date(a).getTime() - new Date(b).getTime()

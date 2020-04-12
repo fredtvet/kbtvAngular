@@ -103,6 +103,10 @@ body {
   color:mat-color($foreground, "base");
 }
 
+.bg-content{
+  background:$bg-content;
+}
+
 .bg-0{
   background-color:mat-color($background,"status-bar");
   color:mat-color($foreground, "base");
@@ -165,9 +169,12 @@ body {
   margin-bottom:$content-margin * 1px;
 }
 
+.faded-text{
+  color: rgb(255, 255,255,0.7);
+}
+
 .content-header{
   @include small-header;
-  color: rgb(255, 255,255,0.7);
   margin-left:$content-margin * 2px;
 }
 
@@ -184,8 +191,7 @@ body {
 }
 
 .form-container{
-  @include content-container;
-  padding: $content-margin * 1px!important;
+  padding: $content-margin * 2px!important;
 }
 
 .mid-divider{
@@ -238,7 +244,9 @@ body {
       color:$bg-black;
     }
   }
-
+  .owl-dt-calendar-cell-in-range{
+    background:rgba(235, 203, 22, 0.2)!important;
+  }
 }
 
 //Spinner primarily for buttons
@@ -261,3 +269,4 @@ body {
   border-top-color: $primary;
   animation: spinner .8s linear infinite;
 }
+

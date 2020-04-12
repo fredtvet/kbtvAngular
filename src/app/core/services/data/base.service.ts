@@ -21,7 +21,7 @@ export abstract class BaseService<T extends BaseEntity>{
       this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
     }
 
-  dbSync(): void{
+  sync(): void{
     if(!this.isOnline) return null;
     let fromDate = this.dataSubject.getTimestamp();
 
@@ -38,6 +38,10 @@ export abstract class BaseService<T extends BaseEntity>{
 
   getAll$(): Observable<T[]> {
     return this.dataSubject.getAll$();
+  }
+
+  getAllDetails$(): Observable<T[]> {
+    return this.dataSubject.getAllDetails$();
   }
 
   get$(id: number):Observable<T>{
@@ -103,7 +107,7 @@ export abstract class BaseService<T extends BaseEntity>{
 
   refreshLocal(): void{
     this.dataSubject.purge();
-    this.dbSync();
+    this.sync();
   }
 
 }

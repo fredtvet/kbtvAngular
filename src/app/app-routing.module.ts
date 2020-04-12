@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard, NoAuthGuard } from './core/services';
 import { AuthComponent } from './auth/auth.component';
@@ -40,13 +40,13 @@ const routes: Routes = [
     loadChildren: './data-management/data-management.module#DataManagementModule'
   },
   {
-    path: 'timeliste',
-    data: {preload: true },
+    path: 'timer',
+    //data: {preload: true },
     loadChildren: './timesheet/timesheet.module#TimesheetModule'
   },
   {
     path: 'oppdrag',
-    data: {preload: true },
+    //data: {preload: true },
     loadChildren: './mission/mission.module#MissionModule'
   }
 ];

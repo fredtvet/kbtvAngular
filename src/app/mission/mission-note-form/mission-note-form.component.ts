@@ -4,7 +4,7 @@ import { MainNavConfig } from 'src/app/shared/layout';
 import { NotificationService, MissionNoteService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SubscriptionComponent } from 'src/app/subscription.component';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { takeUntil, take } from 'rxjs/operators';
 
 @Component({

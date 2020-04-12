@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
+import { AgGridModule } from 'ag-grid-angular';
 
 import { DataManagementRoutingModule } from './data-management-routing.module';
 import { DataManagerComponent } from './data-manager/data-manager.component';
@@ -23,6 +24,7 @@ import {
   imports: [
     SharedModule,
     DataManagementRoutingModule,
+    AgGridModule.withComponents([]),
   ]
 })
 

@@ -58,7 +58,8 @@ export class IdentityService {
   }
 
   purgeAuth() {
-    this.jwtService.destroyToken();
+    window.localStorage.clear(); //Clearing entire storage on logout for now.
+    //this.jwtService.destroyToken();
     // Set current user to an empty object
     this.currentUserSubject.next({} as User);
   }

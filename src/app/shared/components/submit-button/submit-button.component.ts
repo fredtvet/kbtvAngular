@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { Observable } from 'rxjs';
-import { SubscriptionComponent } from 'src/app/subscription.component';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({

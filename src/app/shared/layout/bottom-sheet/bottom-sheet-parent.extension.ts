@@ -1,4 +1,4 @@
-import { SubscriptionComponent } from 'src/app/subscription.component';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { BottomSheetComponent } from './bottom-sheet.component';
 import { BottomSheetActionHubService } from 'src/app/core/services';

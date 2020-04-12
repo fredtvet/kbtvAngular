@@ -15,7 +15,6 @@ export class BottomSheetActionHubService {
 
   constructor() { }
 
-
   addAction(action: NavAction){
     this.eventHubSubject.next(action);
   }

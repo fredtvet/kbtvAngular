@@ -3,12 +3,13 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay, take, takeUntil } from 'rxjs/operators';
 import { Router } from "@angular/router";
-import { IdentityService, LoadingService, ConnectionService } from 'src/app/core/services';
+import { IdentityService, LoadingService, ConnectionService, UserTimesheetService } from 'src/app/core/services';
 import { Roles } from '../../enums/roles.enum';
 import { MatDrawer } from '@angular/material';
 import { MainNavConfig } from './main-nav-config.model';
 import { User } from '../../models/user.model';
-import { SubscriptionComponent } from 'src/app/subscription.component';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
+import { TimesheetStatus } from '../../enums/timesheet-status.enum';
 
 @Component({
   selector: 'app-main-nav',
@@ -24,14 +25,17 @@ export class MainNavComponent extends SubscriptionComponent {
   @Output() bottomSheetOpened =  new EventEmitter();
   @Output() search = new EventEmitter();
   @Output() back = new EventEmitter();
+  @Output() iconActionClicked = new EventEmitter();
 
   Roles = Roles;
 
   searchBarHidden = true;
 
+  openTimesheetCount$: Observable<number> = this.userTimesheetService.getCount$(TimesheetStatus.Open);
   currentUser$:  Observable<User> = this.identityService.currentUser$.pipe(takeUntil(this.unsubscribe));
   conSub$:  Observable<boolean> = this.connectionService.isOnline$.pipe(takeUntil(this.unsubscribe));
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+
+  isXs$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.XSmall)
     .pipe(
       takeUntil(this.unsubscribe),
       map(result => result.matches),
@@ -41,6 +45,7 @@ export class MainNavComponent extends SubscriptionComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private identityService: IdentityService,
+    private userTimesheetService: UserTimesheetService,
     public loadingService: LoadingService,
     private router: Router,
     private connectionService: ConnectionService) { super(); }
@@ -53,9 +58,7 @@ export class MainNavComponent extends SubscriptionComponent {
   }
 
   toggleDrawer(){
-    this.isHandset$.pipe(take(1)).subscribe(handset => {
-      if(handset) this.drawer.toggle();
-    })
+    this.isXs$.pipe(take(1)).subscribe(xs => {if(xs) this.drawer.toggle()})
   }
 
   toggleSearchBar(){
@@ -68,6 +71,7 @@ export class MainNavComponent extends SubscriptionComponent {
   }
 
   ngDoCheck(){
+    console.log('d')
     if(this.config.title)
       this.config.title = this.config.title.replace(/;/g, "<br />");
   }

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, HostListener, EventEmitter, Output, SimpleChanges } from '@angular/core';
-import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { WeekPickerInfo } from '../../interfaces/week-picker-info.interface';
+import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
 
 @Component({
   selector: 'app-week-picker',
@@ -17,12 +17,12 @@ export class WeekPickerComponent {
 
   //Array containing weeks currently displaying
   weeks: number[] = [];
-  currentWeek = moment().week();
+  currentWeek: number;
   totalPages: number;
 
   private pickerInfoSubject = new BehaviorSubject<WeekPickerInfo>({ currentPage: 1, weeksPerPage: 6 });
-  pickerInfo$ = this.pickerInfoSubject.asObservable();
-  visibleWeeks$ = this.pickerInfo$.pipe(map(x => this.getCurrentWeeks()));
+
+  visibleWeeks$ = this.pickerInfoSubject.asObservable().pipe(map(x => this.getVisibleWeeks(x)));
 
   //Helpers for week picker
   private screenWidth: number;
@@ -30,9 +30,10 @@ export class WeekPickerComponent {
   private readonly chevronWidth: number = 40; //Currently static, needs to correspond with scss
   private readonly maxItems = 9; //Max items to accommodate for sidebar (lazy solution to prevent breaking ui)
 
-  constructor() { }
+  constructor(private dateTimeService: DateTimeService) {}
 
   ngOnInit(): void {
+    this.currentWeek = this.dateTimeService.getWeekOfYear();
     this.setScreenWidth();
     this.setWeeksArray();
     this.setCurrentPageByWeek();
@@ -58,39 +59,38 @@ export class WeekPickerComponent {
     }
   }
 
-  getCurrentWeeks(){
-    const info = this.pickerInfoSubject.value;
-    const startIndex = info.currentPage * info.weeksPerPage;
-    return this.weeks.slice(startIndex, startIndex + info.weeksPerPage);
-  }
-
-  nextWeekPage():boolean{
-    const info = this.pickerInfoSubject.value;
+  nextWeekPage():void{
+    const info = {...this.pickerInfoSubject.value};
     const page = info.currentPage + 1;
-    if(info.currentPage >= this.totalPages) return false;
+    if(info.currentPage >= this.totalPages) return undefined;
     else info.currentPage = page;
     this.pickerInfoSubject.next(info);    
   }
 
-  previousWeekPage():boolean{
-    const info = this.pickerInfoSubject.value;
+  previousWeekPage():void{
+    const info = {...this.pickerInfoSubject.value};
     const page = info.currentPage - 1;
-    if(page < 0) return false;
+    if(page < 0) return undefined;
     else info.currentPage = page;
     this.pickerInfoSubject.next(info);    
   }
 
   @HostListener('window:resize', ['$event'])
-  setScreenWidth(event?) {
-        const newWidth = window.innerWidth;
-        if(newWidth !== this.screenWidth){
+  setScreenWidth(event?): void {
+        if(window.innerWidth !== this.screenWidth){
           this.screenWidth = window.innerWidth;
-          this.setWeeksPerPage(this.screenWidth);
+          this.setWeeksPerPage(this.screenWidth); //Adjust weeks per page as screen is resizing
         }
   }
 
+  private getVisibleWeeks(pickerInfo: WeekPickerInfo): number[]{
+    const info = {...pickerInfo};
+    const startIndex = info.currentPage * info.weeksPerPage;
+    return this.weeks.slice(startIndex, startIndex + info.weeksPerPage);
+  }
+
   private setCurrentPageByWeek(){
-    const info = this.pickerInfoSubject.value;
+    const info = {...this.pickerInfoSubject.value};
     const currentPage = Math.floor((this.weekNr - 1) / info.weeksPerPage);
     if(info.currentPage !== currentPage){
       info.currentPage = currentPage;
@@ -99,7 +99,7 @@ export class WeekPickerComponent {
   }
 
   private setWeeksPerPage(screenWidth: number){
-      const info = this.pickerInfoSubject.value;
+      const info = {...this.pickerInfoSubject.value};
       const availableSpace = screenWidth - (this.chevronWidth * 2);
 
       info.weeksPerPage = Math.floor(availableSpace / this.weekItemWidth);
@@ -110,7 +110,7 @@ export class WeekPickerComponent {
   }
   
   private setTotalPages(){
-    let info = this.pickerInfoSubject.value;
+    let info = {...this.pickerInfoSubject.value};
     this.totalPages = Math.ceil(this.totalWeeks / info.weeksPerPage) - 1;
     if(info.currentPage > this.totalPages){ 
       info.currentPage = this.totalPages;
@@ -129,7 +129,5 @@ export class WeekPickerComponent {
     if(this.totalWeeks > length) this.weeks.push(53);
     else if(this.totalWeeks < length) this.weeks.pop();
   }
-
-
 
 }

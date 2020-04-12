@@ -20,8 +20,9 @@ import {
   DataSyncService,
   TranslationService,
   SessionService,
-  TimesheetService,
+  UserTimesheetService,
   BottomSheetActionHubService,
+  DateTimeService,
 } from './services';
 
 import { NotificationComponent } from '../shared/components';
@@ -51,11 +52,12 @@ import { NotificationComponent } from '../shared/components';
     EmployerService,
     MissionTypeService,
     ReportTypeService,
-    TimesheetService,
+    UserTimesheetService,
     DataSyncService,
     TranslationService,
     SessionService,
-    BottomSheetActionHubService
+    BottomSheetActionHubService,
+    DateTimeService
   ]
 })
 export class CoreModule { }

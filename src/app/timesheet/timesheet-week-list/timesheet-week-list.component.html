@@ -1,9 +1,9 @@
-<app-main-nav>
+<app-main-nav [config]="mainNavConfig" (iconActionClicked)="goToTimesheetList($event)" *ngIf="vm$ | async; let vm">
 
   <app-timesheet-week-menu
-    [dateParams]="dateParams$ | async"
+    [dateParams]="vm.dateParams"
     (dateParamsChanged)="changeDateParams($event)"
-    (allTimesheetsConfirmed)="confirmAllTimesheets()">
+    (allTimesheetsConfirmed)="confirmWeek(vm.days)">
   </app-timesheet-week-menu>
   <mat-divider></mat-divider>
 
@@ -12,19 +12,18 @@
     <ng-container *ngFor="let weekDay of [1,2,3,4,5,6,7]"> 
 
         <div class="timesheet-bar" fxLayout="column" fxLayoutAlign="start center" 
-          [ngClass]="(isHandset$ | async) ? 'width-handset' : 'width-no-handset'">
+        ngClass.xs="width-handset" ngClass="width-no-handset">
 
           <app-timesheet-day-label class="w-100"
-            [dateParams]="dateParamsWithWeekday(weekDay)"
-            (addClick)="goToDetails(weekDay)">
+            [date]="vm.dateParams | getDateByDateParams : weekDay"
+            (labelClicked)="openTimesheetForm($event)">
           </app-timesheet-day-label>
 
           <div class="progress-bar-container"
             fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="4px" fxFlex>
               <app-timesheet-mission-bar 
-                *ngFor="let timesheet of timesheetDays[weekDay] | sortByDate: 'startTime';" 
+                *ngFor="let timesheet of vm.days[weekDay] | sortByDate: 'startTime';" 
                 [timesheet]="timesheet"
-                [isHandset]="isHandset$ | async"
                 [style.height.%]="(timesheet.totalHours / 14)*100">
               </app-timesheet-mission-bar>
           </div>
@@ -36,7 +35,5 @@
 
 
   </div>
-
-  
 
 </app-main-nav>

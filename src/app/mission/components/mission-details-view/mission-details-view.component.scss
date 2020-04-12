@@ -3,14 +3,11 @@
 .mat-tab-label {
   background-color:#FFF!important;
 }
-.mat-tab-groups {
-  height:100%;
-}
 
 ::ng-deep .mat-tab-body-wrapper{
   margin:0!important;
   position:sticky!important;
   overflow:auto!important;
-  height:calc(100vh - ((#{$bottom-nav-height} + #{$alt-nav-height} + #{$tab-header-height} + 1) * 1px))!important;
+  height:calc(100% - #{$tab-header-height} * 1px)!important;
 }
 

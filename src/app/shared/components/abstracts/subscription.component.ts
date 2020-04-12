@@ -1,4 +1,4 @@
-import { OnInit, OnDestroy } from '@angular/core';
+import { OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 
 export abstract class SubscriptionComponent implements OnDestroy {

@@ -1,5 +1,5 @@
 import { NavAction } from '../nav-action.model';
-import { SubscriptionComponent } from 'src/app/subscription.component';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
 export abstract class VertMenuParent extends SubscriptionComponent{
   public vertActions: NavAction[] = [];

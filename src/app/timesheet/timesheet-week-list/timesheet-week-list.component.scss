@@ -1,5 +1,10 @@
 @import '../../../variables';
 
+$timesheet-week-list-height:calc(100% - (#{$timesheet-menu-height} * 1px));
+
+$width-no-handset: calc(((100vw - #{$sidenav-width * 1px}) / 7) - 1px);
+$width-handset: calc((100vw / 5) - 1px);
+
 .weekdays-container{
     overflow-x: auto;
     white-space: nowrap;
@@ -7,11 +12,13 @@
 }
 
 .width-no-handset{
-  width:calc(((100vw - #{$sidenav-width * 1px}) / 7) - 1px);
+  width:$width-no-handset;
+  min-width:$width-no-handset;
 }
 
 .width-handset{
-  width:calc((100vw / 5) - 1px);
+  width:$width-handset;
+  min-width:$width-handset;
 }
 
 .progress-bar-container{
@@ -19,9 +26,9 @@
   min-height:25px;
   color:$bg-black;
   position:relative;
+  width:100%;
 }
 
 .timesheet-bar{
-    min-width:58px;
     height:100%; 
 }

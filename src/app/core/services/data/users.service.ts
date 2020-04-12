@@ -18,7 +18,7 @@ export class UsersService {
     private usersSubject: UsersSubject) {}
 
   getAll$(): Observable<User[]> {
-    if(this.usersSubject.isEmpty()){
+    if(this.usersSubject.isEmpty){
       return this.apiService.get(`${this.uri}`)
         .pipe(switchMap(data => {
           this.usersSubject.populate(data);

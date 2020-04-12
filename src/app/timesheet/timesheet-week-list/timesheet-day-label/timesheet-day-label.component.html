@@ -1,12 +1,14 @@
-<span class="static-section" fxLayout="column" fxLayoutAlign="start center" (click)="this.addClick.emit()" matRipple>
+<span class="static-section" fxLayout="column" fxLayoutAlign="start center" matRipple 
+  [ngClass]="{ 'highlighted' : date | sameDate : today }" 
+  (click)="labelClicked.emit(date)">
 
     <div fxLayout="column" fxLayoutAlign="center center">
       <span class="mat-title m-0">
-        {{ this.date.format('ddd') }}
+        {{ this.date | date : 'E' }}
       </span>
 
       <span class="mat-small">
-        {{ this.date.format('Do MMM') }}
+        {{ this.date | date : 'dd MMM' }}
       </span>
     </div>
 

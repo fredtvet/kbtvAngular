@@ -1,7 +1,6 @@
-import { Component, Input, SimpleChanges, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import * as moment from 'moment';
-import { DateParams } from 'src/app/shared/interfaces';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { listAnimation } from 'src/app/shared/animations/list.animation';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-timesheet-day-label',
@@ -13,33 +12,11 @@ import { listAnimation } from 'src/app/shared/animations/list.animation';
 
 export class TimesheetDayLabelComponent {
 
-  @Input() dateParams: DateParams;
+  @Input() date: Date;
+  @Output() labelClicked = new EventEmitter();
 
-  @Output() addClick = new EventEmitter();
+  today = new Date();
 
-    
-  date: moment.Moment;
-  today = moment();
-
-  constructor() {}
-
-  ngOnChanges(changes: SimpleChanges): void{
-    for (const propName in changes) {
-      if (changes.hasOwnProperty(propName)) {
-        switch (propName) {
-          case 'dateParams':{
-            this.setDate();
-          }
-        }
-      }
-    }
-  }
-
-  setDate(): void{
-    this.date = moment()
-    .year(this.dateParams.year)
-    .week(this.dateParams.weekNr)
-    .isoWeekday(this.dateParams.weekDay);
-  }
+  constructor(public dialog: MatDialog) {}
 
 }

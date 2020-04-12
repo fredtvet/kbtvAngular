@@ -23,15 +23,16 @@ export class MissionService extends BaseService<Mission> {
     super(notificationService, apiService, dataSubject, connectionService, "/Missions");
   }
 
+  getDetails$(id: number):Observable<Mission>{
+    return this.dataSubject.getDetails$(id);
+  }
+
   getFiltered$(showFinished:boolean = true, searchString?: string): Observable<Mission[]>{
     return this.dataSubject.getAll$().pipe(map(arr => {
-
       if(!showFinished)
         arr = arr.filter(x => x.finished == false);
-
       if(searchString !== null || searchString !== undefined)
         arr = arr.filter(x => x.address.toLowerCase().includes(searchString.toLowerCase()));
-
       return arr;
     }))
   }

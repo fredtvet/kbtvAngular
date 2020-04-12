@@ -2,8 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { IdentityService, LoadingService, NotificationService, DataSyncService, ConnectionService } from './core/services';
 import { slideInAnimation } from './shared/animations/route-animation';
 import { skip } from 'rxjs/operators';
-import { TimesheetSubject } from './core/subjects/timesheet.subject';
-import * as moment from 'moment';
+import { UserTimesheetSubject } from './core/subjects/user-timesheet.subject';
 import { Notifications } from './shared/enums/notifications.enum';
 
 @Component({
@@ -23,13 +22,10 @@ export class AppComponent {
     private connectionService: ConnectionService,
     public notificationService: NotificationService,
     private dataSyncService: DataSyncService,
-    private timesheetSubject: TimesheetSubject){
+    private userTimesheetSubject: UserTimesheetSubject){
     }
 
   ngOnInit(){
-    moment.locale('nb');
-    moment().startOf('isoWeek');
-
     this.identityService.populate();
 
     if(this.identityService.hasValidToken()){//Initalize data if authenticated
@@ -37,7 +33,7 @@ export class AppComponent {
       this.hasSynced();
     }
 
-    this.timesheetSubject.getAll$().subscribe()
+    this.userTimesheetSubject.getAll$().subscribe()
 
     this.connectionService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
       if(isOnline) this.notificationService.setNotification('Du er tilkoblet internett igjen!')

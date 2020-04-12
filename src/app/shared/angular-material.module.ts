@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ScrollingModule} from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import {
    MatButtonModule,
@@ -8,19 +8,13 @@ import {
    MatIconModule,
    MatBadgeModule,
    MatSidenavModule,
-   MatListModule,
-   MatGridListModule,
+   MatListModule, 
+   MatProgressSpinnerModule,
    MatFormFieldModule,
    MatInputModule,
    MatSelectModule,
    MatRadioModule,
-   MatDatepickerModule,
-   MatNativeDateModule,
-   MatChipsModule,
    MatTooltipModule,
-   MatTableModule,
-   MatPaginatorModule,
-   MatCardModule,
    MatExpansionModule,
    MatTabsModule,
    MatMenuModule,
@@ -28,10 +22,8 @@ import {
    MatCheckboxModule,
    MatDialogModule,
    MatAutocompleteModule,
-   MatProgressSpinnerModule,
-   MatProgressBarModule,
    MatRippleModule,
-   MatBottomSheetModule
+   MatBottomSheetModule,
 
 } from '@angular/material';
 
@@ -44,18 +36,11 @@ import {
       MatSidenavModule,
       MatBadgeModule,
       MatListModule,
-      MatGridListModule,
       MatFormFieldModule,
       MatInputModule,
       MatSelectModule,
       MatRadioModule,
-      MatDatepickerModule,
-      MatNativeDateModule,
-      MatChipsModule,
       MatTooltipModule,
-      MatTableModule,
-      MatPaginatorModule,
-      MatCardModule,
       MatExpansionModule,
       MatTabsModule,
       MatMenuModule,
@@ -63,11 +48,10 @@ import {
       MatCheckboxModule,
       MatDialogModule,
       MatAutocompleteModule,
+      ScrollingModule, 
       MatProgressSpinnerModule,
-      ScrollingModule,
-      MatProgressBarModule,
       MatRippleModule,
-      MatBottomSheetModule
+      MatBottomSheetModule,
    ],
    exports: [
       MatButtonModule,
@@ -76,17 +60,11 @@ import {
       MatSidenavModule,
       MatBadgeModule,
       MatListModule,
-      MatGridListModule,
       MatInputModule,
       MatFormFieldModule,
       MatSelectModule,
       MatRadioModule,
-      MatDatepickerModule,
-      MatChipsModule,
       MatTooltipModule,
-      MatTableModule,
-      MatPaginatorModule,
-      MatCardModule,
       MatExpansionModule,
       MatTabsModule,
       MatMenuModule,
@@ -94,15 +72,11 @@ import {
       MatCheckboxModule,
       MatDialogModule,
       MatAutocompleteModule,
+      ScrollingModule, 
       MatProgressSpinnerModule,
-      ScrollingModule,
-      MatProgressBarModule,
       MatRippleModule,
-      MatBottomSheetModule
+      MatBottomSheetModule,
    ],
-   providers: [
-      MatDatepickerModule
-   ]
 })
 
 export class AngularMaterialModule { }

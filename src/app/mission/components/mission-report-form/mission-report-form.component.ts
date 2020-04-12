@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MissionReportType } from 'src/app/shared/models';
 import { Roles } from 'src/app/shared/enums';
 import { ReportTypeService } from 'src/app/core/services';
-import { SubscriptionComponent } from 'src/app/subscription.component';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({

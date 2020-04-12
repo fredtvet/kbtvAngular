@@ -1,0 +1,67 @@
+<div fxLayout="column" fxLayoutAlign="space-around stretch">
+    <span class="mat-body-2">Velg filtre for timeliste</span>
+
+    <mat-form-field style="max-width:400px;">
+      <input matInput placeholder="Oppdrag" aria-label="Velg oppdrag" 
+      [matAutocomplete]="auto1" [(ngModel)]="filterPreset.mission">
+      <button mat-button *ngIf="filterPreset.mission" matSuffix mat-icon-button aria-label="Lukk" (click)="filterPreset.mission=null">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let mission of missions" [value]="mission">
+          {{ mission.address }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-divider class="mb-2"></mat-divider>
+
+    <label class="mat-caption">Velg tidsrom</label>
+    <mat-radio-group [ngModel]="filterPreset.dateRangePreset" (ngModelChange)="updateDateRangePreset($event)"  
+      fxLayoutGap="8px">
+      <mat-radio-button [value]="dateRangePresets.CurrentWeek">
+        Denne uken
+      </mat-radio-button>
+      <mat-radio-button [value]="dateRangePresets.CurrentMonth">
+        Denne måneden
+      </mat-radio-button>
+      <mat-radio-button [value]="dateRangePresets.CurrentYear">
+        Dette året
+      </mat-radio-button>     
+      <mat-radio-button [value]="dateRangePresets.Custom" #customDateRange>
+        Egendefinert
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field style="width:164px" [hidden]="!customDateRange.checked">
+      <input matInput  placeholder="Velg tidsrom" selectMode="range" 
+        [owlDateTimeTrigger]="t1" [owlDateTime]="t1" 
+        [(ngModel)]="filterPreset.dateRange">
+      <button mat-button *ngIf="filterPreset.dateRange" matSuffix mat-icon-button aria-label="Lukk" (click)="filterPreset.dateRange=null">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" #t1></owl-date-time>
+
+    <mat-divider class="mb-2"></mat-divider>
+
+    <label class="mat-caption">Velg status</label>
+    <mat-radio-group [(ngModel)]="filterPreset.status"  
+      fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+      <mat-radio-button [value]="timesheetStatus.Open" color="warn">
+          Ubekreftet
+      </mat-radio-button>
+      <mat-radio-button [value]="timesheetStatus.Confirmed">
+          Bekreftet
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <mat-divider class="mb-2"></mat-divider>
+
+    <span fxLayout="row" fxLayoutAlign="space-between center">
+      <button mat-button color="warn" (click)="close()">Avbryt</button>
+      <button mat-button color="primary" (click)="applyFilter()">Bruk</button>
+    </span>
+
+
+</div>

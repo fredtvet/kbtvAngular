@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { ImageViewerDialogComponent } from '../image-viewer-dialog/image-viewer-dialog.component';
 import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
 import { MissionImage } from '../../models/mission-image.model';
-import { SubscriptionComponent } from 'src/app/subscription.component';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({

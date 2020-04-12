@@ -5,7 +5,7 @@ import { Mission, MissionType, Employer } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-import { SubscriptionComponent } from 'src/app/subscription.component';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
 @Component({
   selector: 'app-mission-form',

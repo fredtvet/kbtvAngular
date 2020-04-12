@@ -3,8 +3,8 @@ import { IdentityService, EmployerService } from 'src/app/core/services';
 import { Employer, User } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
 import { Router } from '@angular/router';
-import { SubscriptionComponent } from 'src/app/subscription.component';
 import { takeUntil } from 'rxjs/operators';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
 @Component({
   selector: 'app-employer-list',

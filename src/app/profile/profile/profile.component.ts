@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IdentityService, NotificationService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
 import { takeUntil, take } from 'rxjs/operators';
-import { SubscriptionComponent } from 'src/app/subscription.component';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { MainNavConfig } from 'src/app/shared/layout';
 
 @Component({

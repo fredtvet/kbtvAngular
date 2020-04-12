@@ -43,7 +43,7 @@ export class UsersSubject {
     }));
   }
 
-  isEmpty(): boolean {
+  get isEmpty(): boolean {
     return (this.usersSubject.value === undefined || this.usersSubject.value.length == 0);
   }
 }

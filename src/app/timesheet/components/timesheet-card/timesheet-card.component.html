@@ -14,12 +14,11 @@
     <span fxLayout="column" fxLayoutAlign="start start" >
 
       <span class="mat-body-2">
-        {{ this.startDate.format("Do MMM YYYY") }}
-        {{ this.startDate.format("HH:mm") }} - {{ this.endDate.format("HH:mm") }}
+        {{ this.timesheet.startTime | date : 'longDate'}}
+        {{ this.timesheet.startTime | date : 'shortTime' }} - {{ this.timesheet.endTime | date : 'shortTime' }}
       </span>
       <span class="mat-small">
-        {{ duration.hours() }} timer
-        {{ duration.minutes() }} minutter
+        {{ this.timesheet.startTime | duration : this.timesheet.endTime }}
       </span>
       <span class="mat-small" *ngIf="timesheet.mission">
         {{ timesheet.mission.address }}

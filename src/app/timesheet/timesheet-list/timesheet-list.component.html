@@ -1,0 +1,29 @@
+<app-main-nav [config]="mainNavConfig" (back)="onBack()">
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="content-container mb-0 mt-0 h-100">
+        
+        <ng-container>
+            <app-timesheet-list-menu 
+                [filter]="getCurrentFilter()"
+                (filterClicked)="openBottomSheet()"
+                (statusChanged)="changeStatus($event)">
+            </app-timesheet-list-menu>
+
+            <button color="primary" mat-mini-fab aria-label="ny" class="action_fab"
+                (click)="openTimesheetForm(getCurrentFilter().mission)">
+                <mat-icon class="icon_125">add</mat-icon>
+            </button>
+        </ng-container>
+
+
+        <cdk-virtual-scroll-viewport itemSize="scrollStrategy" fxFlex>
+            <app-timesheet-card
+                *cdkVirtualFor="let timesheet of timesheets$ | async"
+                [timesheet]="timesheet"
+                (confirmed)="confirmTimesheet($event)"
+                (deleted)="deleteTimesheet($event)">
+            </app-timesheet-card>
+        </cdk-virtual-scroll-viewport>
+
+    </div>
+</app-main-nav>
+  

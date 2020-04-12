@@ -4,7 +4,7 @@ import { User } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
 import { combineLatest } from 'rxjs';
 import { Router } from '@angular/router';
-import { SubscriptionComponent } from 'src/app/subscription.component';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({

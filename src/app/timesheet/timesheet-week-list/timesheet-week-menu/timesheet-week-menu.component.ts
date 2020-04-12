@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
-import * as moment from 'moment';
 import { DateParams } from 'src/app/shared/interfaces';
+import { DateTimeService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-timesheet-week-menu',
@@ -17,10 +17,12 @@ export class TimesheetWeekMenuComponent implements OnInit {
   @Output() allTimesheetsConfirmed = new EventEmitter();
 
   totalWeeks: number;
+  now: Date;
 
-  constructor() {}
+  constructor(private dateTimeService: DateTimeService) {}
 
   ngOnInit() {
+    this.now = new Date();
     this.setWeeksPerYear(this.dateParams.year);
   }
 
@@ -36,7 +38,7 @@ export class TimesheetWeekMenuComponent implements OnInit {
     const dateParams = {...this.dateParams};
 
     if(year < 2000) dateParams.year = 2000;
-    if(year > moment().year()) dateParams.year = moment().year();
+    if(year > this.now.getFullYear()) dateParams.year = this.now.getFullYear();
     else dateParams.year = year;
 
     this.setWeeksPerYear(dateParams.year);
@@ -53,6 +55,6 @@ export class TimesheetWeekMenuComponent implements OnInit {
   }
 
   private setWeeksPerYear(year: number): void{
-    this.totalWeeks = moment(year.toString().concat("-12-28")).weeks();
+    this.totalWeeks = this.dateTimeService.getWeeksInYear(year);
   }
 }

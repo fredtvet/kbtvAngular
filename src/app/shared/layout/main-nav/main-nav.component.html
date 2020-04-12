@@ -1,9 +1,9 @@
-<mat-sidenav-container [ngClass]="(isHandset$ | async) ? 'toolbar-padding' : ''">
+<mat-sidenav-container ngClass.xs="toolbar-padding">
 
-  <mat-sidenav fixedInViewport #drawer
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false">
+  <mat-sidenav fixedInViewport #drawer class="mat-elevation-z8" 
+    [attr.role]="(isXs$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isXs$ | async) ? 'over' : 'side'"
+    [opened]="(isXs$ | async) === false">
 
     <mat-toolbar fxLayout="column" fxLayoutAlign="center start" style="line-height:1.3">
 
@@ -15,7 +15,7 @@
       <span *ngIf="currentUser$ | async; let user">{{ user.firstName }} {{ user.lastName }}</span>
 
     </mat-toolbar>
-
+    <mat-divider></mat-divider>
     <mat-nav-list>
       <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/hjem']" [routerLinkActive]="['active']">
         <mat-icon mat-list-icon>home</mat-icon>
@@ -27,7 +27,7 @@
         <p mat-line>Oppdrag</p>
       </a>
       <mat-divider class="mid-divider"></mat-divider>
-      <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/timeliste/uker']" [routerLinkActive]="['active']">
+      <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/timer']" [routerLinkActive]="['active']">
         <mat-icon mat-list-icon>timer</mat-icon>
         <p mat-line>Timeliste</p>
       </a>
@@ -79,7 +79,7 @@
               aria-label="Toggle sidenav"
               mat-icon-button
               (click)="toggleDrawer()"
-              *ngIf="isHandset$ | async">
+              fxHide fxShow.xs>
               <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
           </ng-container>
@@ -91,7 +91,7 @@
             </button>
           </ng-template>
 
-          <span class="main-nav-title" [ngClass]="(isHandset$ | async) ? '' : 'ml-3'" [routerLink]="['/hjem']">{{ this.config.title || 'Bj Bygg & Eiendom'}}</span>
+          <span class="main-nav-title" [routerLink]="['/hjem']">{{ this.config.title || 'Bj Bygg & Eiendom'}}</span>
         </ng-container>
 
         <ng-template #altNav>
@@ -112,6 +112,11 @@
 
         <mat-spinner *ngIf="loadingService.loading$ |  async" diameter="24"></mat-spinner>
 
+        <button (click)="iconActionClicked.emit()" mat-icon-button aria-label="Åpne timeliste" 
+          *ngIf="config.iconAction" [color]="config.iconAction.color">
+            <mat-icon>{{ config.iconAction.icon }}</mat-icon>
+        </button>
+
         <ng-container *ngIf="config.searchBarEnabled">
           <button (click)="toggleSearchBar()" mat-icon-button aria-label="Avbryt søk">
             <mat-icon>search</mat-icon>
@@ -120,7 +125,9 @@
           <app-search-bar [isHidden]="searchBarHidden" (hide)="toggleSearchBar()" (search)="this.search.emit($event)"></app-search-bar>
         </ng-container>
 
-        <button mat-icon-button *ngIf="config.bottomSheetBtnEnabled" (click)="bottomSheetOpened.emit()"><mat-icon>more_vert</mat-icon></button>
+        <button mat-icon-button *ngIf="config.bottomSheetBtnEnabled" (click)="bottomSheetOpened.emit()">
+          <mat-icon>more_vert</mat-icon>
+        </button>
 
       </mat-toolbar-row>
 
@@ -131,7 +138,7 @@
 
     </mat-toolbar>
 
-    <div class="main_content">
+    <div class="main_content" [ngClass]="config.altNav ? 'main_content_height_alt' : 'main_content_height_main'">
       <ng-content></ng-content>
     </div>
 
@@ -141,4 +148,4 @@
   </mat-sidenav-content>
 
 </mat-sidenav-container>
-<app-bottom-nav *ngIf="config.bottomNavEnabled && (isHandset$ | async)"></app-bottom-nav>
+<app-bottom-nav fxHide fxShow.xs [openTimesheetCount]="openTimesheetCount$ | async"></app-bottom-nav>

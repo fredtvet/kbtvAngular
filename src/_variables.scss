@@ -1,11 +1,9 @@
-// Import material theming functions
 @import '~@angular/material/theming';
 
-// Copy the palettes from your selected theme (usually theme.scss).
 $app-primary: mat-palette($mat-amber, A200, A150, A200);
 $app-accent:  mat-palette($mat-amber, A200, A150, A200);
 $app-warn:    mat-palette($mat-red, A200, A150, A100);
-// Create your Sass color vars (will be available in all the project)
+
 $primary: mat-color($app-primary);
 $accent: mat-color($app-accent);
 $warn: mat-color($app-warn);
@@ -32,20 +30,19 @@ $alt-nav-height: $main-nav-height + 64;
 $tab-header-height: 48;
 $sidenav-width: 200;
 $content-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$main-nav-height}) * 1px));
-$details-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$alt-nav-height} + #{$tab-header-height} + #{$content-margin * 2}) * 1px));
+$details-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$alt-nav-height}) * 1px));
 $font-size-small:14px;
 
 $timesheet-menu-height: 93;
-$timesheet-week-list-height:calc(100vh - ((#{$timesheet-menu-height} + #{$bottom-nav-height} + #{$main-nav-height}) * 1px));
 
 @mixin full-page-container{
   padding: $content-margin * 1px!important;
-  height:$content-container-height !important;
+  height:100% !important;
   width:100%;
 }
 
 @mixin content-container{
-  margin: $content-margin * 1px!important;
+  margin: $content-margin * 1px;
 }
 
 @mixin small-header{

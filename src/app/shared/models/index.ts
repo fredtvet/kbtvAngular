@@ -7,6 +7,6 @@ export * from './mission-report-type.model';
 export * from './mission-type.model';
 export * from './mission.model';
 export * from './user.model';
-export * from './db-sync.model';
 export * from './timesheet.model';
 export * from './timesheet-info.model'
+export * from './timesheet-list-filter.model';
