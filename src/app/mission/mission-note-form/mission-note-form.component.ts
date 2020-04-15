@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { MissionNote } from 'src/app/shared/models';
-import { MainNavConfig } from 'src/app/shared/layout';
-import { NotificationService, MissionNoteService } from 'src/app/core/services';
+import { NotificationService, MissionNoteService, MainNavService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { takeUntil, take } from 'rxjs/operators';
 
@@ -14,26 +12,26 @@ import { takeUntil, take } from 'rxjs/operators';
 export class MissionNoteFormComponent extends SubscriptionComponent {
 
   private isCreateForm: boolean = false;
-  private noteSub: Subscription = new Subscription();
-
-  mainNavConfig = new MainNavConfig();
 
   missionId: number = null;
   note: MissionNote = new MissionNote();
 
   constructor(
+    private mainNavService: MainNavService,
     private missionNoteService: MissionNoteService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
-    private router: Router)  {super()}
+    private router: Router)  {
+      super();
+      this.missionId = +this.route.snapshot.paramMap.get('missionId');
+      this.note.id = +this.route.snapshot.paramMap.get('id');
+      if(!this.note.id) this.isCreateForm = true;
+      this.configureMainNav();
+    }
 
   ngOnInit(){
-    this.configureMainNav();
-    this.missionId = +this.route.snapshot.paramMap.get('missionId');
-    this.note.id = +this.route.snapshot.paramMap.get('id');
-
-    if(!this.note.id) this.isCreateForm = true;
-    else this.noteSub = this.missionNoteService.get$(this.note.id)
+    if(!this.isCreateForm) 
+      this.missionNoteService.get$(this.note.id)
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(result => this.note = result);
   }
@@ -64,13 +62,14 @@ export class MissionNoteFormComponent extends SubscriptionComponent {
   }
 
   configureMainNav(){
-    if(this.isCreateForm) this.mainNavConfig.title = "Nytt notat";
-    else this.mainNavConfig.title = "Rediger notat";
-    this.mainNavConfig.altNav = false;
-    this.mainNavConfig.menuBtnEnabled = false;
+    let cfg = this.mainNavService.getDefaultConfig(); 
+    cfg.title = this.isCreateForm ? "Nytt notat" : "Rediger notat";
+    cfg.backFn = this.onBack;
+    cfg.menuBtnEnabled = false;
+    this.mainNavService.addConfig(cfg);
   }
 
-  onBack(): void{
+  private onBack = () => {
     this.router.navigate(['oppdrag', this.missionId, 'detaljer'])
   }
 

@@ -1,15 +1,8 @@
-<app-main-nav
-  [config]="mainNavConfig"
-  (back)="onBack()">
-
 <app-mission-form-view
     [mission]="isCreateForm ? null : mission$ | async"
     [missionTypes]="missionTypes$ | async"
     [employers]="employers$ | async"
     (formSubmitted)="onSubmit($event)">
 </app-mission-form-view>
-
-
-</app-main-nav>
 
 

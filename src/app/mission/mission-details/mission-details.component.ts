@@ -3,34 +3,32 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Roles } from '../../shared/enums';
 import { MissionNote, Mission, MissionReport, MissionImage } from 'src/app/shared/models';
-import { NavAction, ConfirmDeleteDialogComponent } from 'src/app/shared/components';
-import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, BottomSheetActionHubService} from 'src/app/core/services';
+import { ConfirmDeleteDialogComponent } from 'src/app/shared/components';
+import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, BottomSheetActionHubService, MainNavService} from 'src/app/core/services';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
-import { take, tap, takeUntil } from 'rxjs/operators';
-import { Subscription, Observable } from 'rxjs';
-import { MainNavConfig, BottomSheetParent } from 'src/app/shared/layout';
-import { MatBottomSheet } from '@angular/material';
+import { take, takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
 @Component({
   selector: 'app-mission-details',
   templateUrl: './mission-details.component.html'
 })
 
-export class MissionDetailsComponent extends BottomSheetParent{
+export class MissionDetailsComponent extends SubscriptionComponent{
   Roles = Roles;
-
-  mainNavConfig = new MainNavConfig();
 
   mission: Mission = new Mission();
   mission$: Observable<Mission>;
+
   images$: Observable<MissionImage[]>;
   notes$: Observable<MissionNote[]>;
   reports$: Observable<MissionReport[]>;
+
   loading$: Observable<boolean>;
 
-  missionSub: Subscription = new Subscription();
-
   constructor(
+    private mainNavService: MainNavService,
     private missionService: MissionService,
     private missionImageService: MissionImageService,
     private missionReportService: MissionReportService,
@@ -39,25 +37,29 @@ export class MissionDetailsComponent extends BottomSheetParent{
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,   
-    _bottomSheet: MatBottomSheet,
-    bottomSheetActionHub: BottomSheetActionHubService,
-  ){ super(bottomSheetActionHub, _bottomSheet);}
+  ){ 
+    super();
+    this.configureMainNav();
+  }
 
   ngOnInit(){
-    super.ngOnInit();
     this.mission.id = +this.route.snapshot.paramMap.get('id');
 
     this.mission$ = this.missionService.getDetails$(this.mission.id);
     this.images$ = this.missionImageService.getByMissionId$(this.mission.id);
     this.reports$ = this.missionReportService.getByMissionId$(this.mission.id);
-    this.notes$ = this.missionNoteService.getByMissionId$(this.mission.id)
-
-    this.configureMainNav()
-
-    this.missionSub = this.mission$.pipe(takeUntil(this.unsubscribe)).subscribe(x => {
+    this.notes$ = this.missionNoteService.getByMissionId$(this.mission.id);
+        
+    this.mission$.pipe(takeUntil(this.unsubscribe)).subscribe(x => {
       this.mission = x;
-      this.addMissionToMainNav(x)
+      this.updateMainNavWithMission(x)
     });
+  }
+
+  ngAfterContentInit(): void {
+    //Called after ngOnInit when the component's or directive's content has been initialized.
+    //Add 'implements AfterContentInit' to the class.
+
   }
 
   uploadImages(files: FileList)
@@ -124,35 +126,35 @@ export class MissionDetailsComponent extends BottomSheetParent{
     this.router.navigate(['timer/liste', {returnRoute: this.router.url, mission: JSON.stringify(this.mission)}]);
   }
 
-  configureMainNav(){
-    this.bottomSheetActions = [
-      new NavAction("Registrer timer", "timer","goToTimesheets", this.goToTimesheets),
-      new NavAction("Legg til rapport", "note_add","createReport", this.openCreateReportDialog, [Roles.Leder]),
-      new NavAction("Legg til notat", "add_comment","createNote", this.createNote),
-      new NavAction("Rediger", "edit","edit", this.editMission, [Roles.Leder]),
-      new NavAction("Slett", "delete_forever", "delete", this.openDeleteMissionDialog, [Roles.Leder])
+  private configureMainNav(){
+    let cfg = this.mainNavService.getDefaultConfig();
+    cfg.altNav = true;
+    cfg.elevationEnabled = false;
+    cfg.backFn = this.onBack;
+    
+    cfg.bottomSheetButtons = [
+      {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets},
+      {text: "Legg til rapport", icon: "note_add", callback: this.openCreateReportDialog, allowedRoles: [Roles.Leder]},
+      {text: "Legg til notat", icon: "add_comment", callback: this.createNote},
+      {text: "Rediger", icon: "edit", callback: this.editMission, allowedRoles: [Roles.Leder]},
+      {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, allowedRoles: [Roles.Leder]},
     ];
-    this.mainNavConfig.bottomSheetBtnEnabled = true;
-    this.mainNavConfig.bottomSheetActions = this.bottomSheetActions;
-    this.mainNavConfig.altNav = true;
-    this.mainNavConfig.elevationEnabled = false;
+
+    this.mainNavService.addConfig(cfg);
   }
 
-  addMissionToMainNav(mission: Mission){
+  private updateMainNavWithMission(mission: Mission){
     if(mission == undefined) return null;
-    if(mission.address !== null){
-      this.mainNavConfig.title = mission.address.replace(", Norge","").replace(/,/g, ";");
-    }
-    this.mainNavConfig.subTitle = mission.finished ? 'Oppdrag ferdig!' : '';
-    this.mainNavConfig.subIcon = mission.finished ? 'check' : '';
+    let cfg = this.mainNavService.getCurrentConfig();
+
+    if(mission.address)
+      cfg.title = mission.address.replace(", Norge","").replace(/,/g, "<br />");
+    
+    cfg.subTitle = mission.finished ? 'Oppdrag ferdig!' : '';
+    cfg.subIcon = mission.finished ? 'check' : '';
+    this.mainNavService.addConfig(cfg);
   }
 
-  onBack(){
-    this.router.navigate(['/oppdrag'])
-  }
-
-  ngOnDestroy(): void {
-    this.missionSub.unsubscribe();
-  }
-
+  private onBack = () => this.router.navigate(['/oppdrag'])
+  
 }

@@ -2,7 +2,8 @@ import { Component, ChangeDetectionStrategy } from "@angular/core";
 import {
   IdentityService,
   UserTimesheetService,
-  DateTimeService
+  DateTimeService,
+  MainNavService
 } from "src/app/core/services";
 import { Timesheet } from "src/app/shared/models";
 import { BehaviorSubject, Observable } from "rxjs";
@@ -10,17 +11,12 @@ import { SubscriptionComponent } from "src/app/shared/components/abstracts/subsc
 import {
   takeUntil,
   switchMap,
-  distinctUntilChanged,
-  take,
-  tap,
-  shareReplay,
   map
 } from "rxjs/operators";
-import { TimesheetStatus, DateRangePresets } from "src/app/shared/enums";
+import { TimesheetStatus } from "src/app/shared/enums";
 import { DateParams } from "src/app/shared/interfaces";
 import { MatDialog } from "@angular/material/dialog";
 import { TimesheetFormDialogWrapperComponent } from "../components/timesheet-form-dialog-wrapper.component";
-import { MainNavConfig } from "src/app/shared/layout";
 import { Router } from "@angular/router";
 
 @Component({
@@ -30,7 +26,7 @@ import { Router } from "@angular/router";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimesheetWeekListComponent extends SubscriptionComponent {
-  mainNavConfig = new MainNavConfig();
+
   date = new Date();
   userName: string;
 
@@ -46,6 +42,7 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
   totalWeeks: number;
 
   constructor(
+    private mainNavService: MainNavService,
     private router: Router,
     private dialog: MatDialog,
     private identityService: IdentityService,
@@ -53,20 +50,17 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
     private userTimesheetService: UserTimesheetService
   ) {
     super();
-    this.initalizeObservables();
-    this.userName = this.identityService.getCurrentUser().userName;
     console.time("init");
+    this.configureMainNav();
   }
 
-  ngOnInit() {
-    this.mainNavConfig.iconAction = { icon: "list", color: "primary" };
-    //this.timesheetDays$.subscribe(x => (this.timesheetDays = x));
+  ngOnInit() { 
+    this.initalizeObservables();
+    this.userName = this.identityService.getCurrentUser().userName;  
   }
 
   ngAfterViewInit(): void {
     console.timeEnd("init");
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
   }
 
   dateParamsWithWeekday(weekDay: number): DateParams {
@@ -93,7 +87,7 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
     });
   }
 
-  goToTimesheetList = (e: string) => {
+  private goToTimesheetList = () => {
       this.router.navigate([
         "timer/liste",
         {
@@ -121,5 +115,12 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
       }),
       takeUntil(this.unsubscribe)
     );
+  }
+
+  private configureMainNav(){
+    let cfg = this.mainNavService.getDefaultConfig();
+    cfg.title = "Timevisning";
+    cfg.buttons = [{icon: "list", color: "primary", callback: this.goToTimesheetList}];
+    this.mainNavService.addConfig(cfg);
   }
 }

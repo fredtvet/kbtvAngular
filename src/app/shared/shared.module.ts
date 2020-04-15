@@ -9,7 +9,6 @@ import { IfRoleDirective } from './directives/if-role.directive';
 import { MainNavComponent, BottomNavComponent } from './layout';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
-//import { AgGridModule } from 'ag-grid-angular';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 
 import {
@@ -25,7 +24,8 @@ import {
   MissionTypeFormDialogComponent,
   SubmitButtonComponent,
   AddToHomeScreenComponent,
-  WeekPickerComponent
+  WeekPickerComponent,
+  PageNotFoundComponent
 } from './components';
 
 import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
@@ -61,6 +61,7 @@ import { SameDatePipe } from './pipes/same-date.pipe';
     DurationPipe,
     GetDateByDateParamsPipe,
     SameDatePipe,
+    PageNotFoundComponent,
   ],
   imports: [
     CommonModule,
@@ -73,7 +74,9 @@ import { SameDatePipe } from './pipes/same-date.pipe';
     FlexLayoutModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    //AgGridModule.withComponents([]),
+  ],
+  entryComponents:[
+    BottomSheetComponent,
   ],
   providers: [
     {provide: OwlDateTimeIntl, useClass: DefaultOwlDateTimeIntl},
@@ -88,7 +91,6 @@ import { SameDatePipe } from './pipes/same-date.pipe';
     AngularMaterialModule,
     ReactiveFormsModule,
     GooglePlaceModule,
-    //AgGridModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     FlexLayoutModule,
@@ -113,7 +115,8 @@ import { SameDatePipe } from './pipes/same-date.pipe';
     SubmitButtonComponent,
     MissionTypeFormDialogComponent,
     ReportTypeFormDialogComponent,
-    WeekPickerComponent
+    WeekPickerComponent,
+    PageNotFoundComponent
   ]
 })
 export class SharedModule { }

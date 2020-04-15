@@ -27,5 +27,6 @@ export * from './data/mission-report.service';
 export * from './data/user-timesheet.service';
 
 export * from './ui/bottom-sheet-action-hub.service';
+export * from './ui/main-nav.service';
 
 export * from './utility/date-time.service';

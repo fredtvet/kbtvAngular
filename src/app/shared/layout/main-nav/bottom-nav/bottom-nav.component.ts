@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Roles } from '../../enums/roles.enum';
+import { Roles } from '../../../enums/roles.enum';
 
 @Component({
   selector: 'app-bottom-nav',

@@ -5,3 +5,7 @@ export * from './date-params.interface';
 export * from './week-picker-info.interface';
 export * from './db-sync.interface';
 export * from './colored-icon.interface';
+export * from './main-nav-config.interface';
+export * from './main-nav-event.interface';
+export * from './app-button.interface';
+export * from './app-action.interface';

@@ -65,7 +65,7 @@
 
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content *ngIf="config$ | async; let config">
 
     <mat-toolbar class="mat-elevation-z8" 
       [ngClass]="{'alt_nav': config.altNav, 'main_nav': !config.altNav, 'mat-elevation-z8': config.elevationEnabled}">
@@ -85,19 +85,19 @@
           </ng-container>
 
           <ng-template #backBtn>
-            <button (click)="this.back.emit(true)"
+            <button (click)="handleFn(config.backFn)"
              mat-icon-button aria-label="Tilbake">
                 <mat-icon class="icon_150">chevron_left</mat-icon>
             </button>
           </ng-template>
 
-          <span class="main-nav-title" [routerLink]="['/hjem']">{{ this.config.title || 'Bj Bygg & Eiendom'}}</span>
+          <span class="main-nav-title" [routerLink]="['/hjem']">{{ config.title }}</span>
         </ng-container>
 
         <ng-template #altNav>
           <span style="margin-right:auto;">
 
-            <button (click)="this.back.emit(true)"
+            <button (click)="handleFn(config.backFn)"
              mat-icon-button aria-label="Tilbake">
                 <mat-icon class="icon_150">chevron_left</mat-icon>
             </button>
@@ -110,22 +110,25 @@
           </span>
         </ng-template>
 
-        <mat-spinner *ngIf="loadingService.loading$ |  async" diameter="24"></mat-spinner>
+        <mat-spinner *ngIf="loading$ |  async" diameter="24"></mat-spinner>
 
-        <button (click)="iconActionClicked.emit()" mat-icon-button aria-label="Åpne timeliste" 
-          *ngIf="config.iconAction" [color]="config.iconAction.color">
-            <mat-icon>{{ config.iconAction.icon }}</mat-icon>
+
+        <button mat-icon-button aria-label="Åpne timeliste" 
+          *ngFor="let button of config.buttons" 
+          [color]="button.color"
+          (click)="handleFn(button.callback)">
+            <mat-icon>{{ button.icon }}</mat-icon>
         </button>
 
-        <ng-container *ngIf="config.searchBarEnabled">
+        <ng-container *ngIf="config.searchFn">
           <button (click)="toggleSearchBar()" mat-icon-button aria-label="Avbryt søk">
             <mat-icon>search</mat-icon>
           </button>
 
-          <app-search-bar [isHidden]="searchBarHidden" (hide)="toggleSearchBar()" (search)="this.search.emit($event)"></app-search-bar>
+          <app-search-bar [isHidden]="searchBarHidden" (hide)="toggleSearchBar()" (search)="handleFn(config.searchFn, $event, $event)"></app-search-bar>
         </ng-container>
 
-        <button mat-icon-button *ngIf="config.bottomSheetBtnEnabled" (click)="bottomSheetOpened.emit()">
+        <button mat-icon-button *ngIf="config.bottomSheetButtons?.length" (click)="openBottomSheet(config.bottomSheetButtons)">
           <mat-icon>more_vert</mat-icon>
         </button>
 
@@ -139,13 +142,11 @@
     </mat-toolbar>
 
     <div class="main_content" [ngClass]="config.altNav ? 'main_content_height_alt' : 'main_content_height_main'">
-      <ng-content></ng-content>
+      <router-outlet></router-outlet>
     </div>
-
-
-
 
   </mat-sidenav-content>
 
 </mat-sidenav-container>
+
 <app-bottom-nav fxHide fxShow.xs [openTimesheetCount]="openTimesheetCount$ | async"></app-bottom-nav>

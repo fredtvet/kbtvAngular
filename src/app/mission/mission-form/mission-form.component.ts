@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { MainNavConfig } from 'src/app/shared/layout';
-import { EmployerService, NotificationService, MissionTypeService, MissionService, SessionService } from 'src/app/core/services';
+import { EmployerService, NotificationService, MissionTypeService, MissionService, MainNavService } from 'src/app/core/services';
 import { Mission, MissionType, Employer } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -13,7 +12,6 @@ import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subsc
 })
 export class MissionFormComponent extends SubscriptionComponent {
 
-  mainNavConfig = new MainNavConfig();
   isCreateForm: boolean = false;
 
   private returnRoute: string;
@@ -26,7 +24,7 @@ export class MissionFormComponent extends SubscriptionComponent {
   loading$: Observable<boolean>;
 
   constructor(
-    private sessionService: SessionService,
+    private mainNavService: MainNavService,
     private employerService: EmployerService,
     private missionTypeService: MissionTypeService,
     private missionService: MissionService,
@@ -35,29 +33,28 @@ export class MissionFormComponent extends SubscriptionComponent {
     private router: Router) {
       super();
       this.returnRoute = this.route.snapshot.params['returnRoute'];
+      this.missionId = +this.route.snapshot.paramMap.get('id');
+      if(!this.missionId) this.isCreateForm = true;
+      this.configureMainNav();
     }
 
-  ngOnInit() {
-    this.missionId = +this.route.snapshot.paramMap.get('id');
-
-    this.configureForm();
-
-    this.configureMainNav();
+  ngOnInit(): void {
+    this.initalizeObservables();
   }
 
-  onSubmit(result: Mission){
+  onSubmit(result: Mission): void{
     if(!result) this.onBack();
     else if(!this.isCreateForm) this.editMission(result);
     else this.createMission(result);
   }
 
-  createMission(mission: Mission){
+  createMission(mission: Mission): void{
     if(!mission) return null;
     this.missionService.add$(mission).pipe(take(1))
       .subscribe(res => this.onFinished(res.id));
   }
 
-  editMission(mission: Mission){
+  editMission(mission: Mission): void{
     if(!mission) return null;
     this.missionService.update$(mission).pipe(take(1))
       .subscribe(res => {
@@ -66,30 +63,30 @@ export class MissionFormComponent extends SubscriptionComponent {
       })
   }
 
-  private configureForm(){
-    if(!this.missionId) this.isCreateForm = true;
-    else this.mission$ = this.missionService.get$(this.missionId).pipe(takeUntil(this.unsubscribe));
+  private initalizeObservables(): void{
+    if(!this.isCreateForm) 
+      this.mission$ = this.missionService.get$(this.missionId).pipe(takeUntil(this.unsubscribe));
 
     this.missionTypes$ = this.missionTypeService.getAll$().pipe(takeUntil(this.unsubscribe));
     this.employers$ = this.employerService.getAll$().pipe(takeUntil(this.unsubscribe));
   }
 
-  private configureMainNav(){
-    if(this.isCreateForm) this.mainNavConfig.title = "Nytt oppdrag";
-    else this.mainNavConfig.title = "Rediger oppdrag";
-    this.mainNavConfig.altNav = false;
-    this.mainNavConfig.menuBtnEnabled = false;
-  }
-
-  private onFinished(id: number){
+  private onFinished(id: number): void{
     if(this.returnRoute != undefined) this.router.navigate([this.returnRoute])
     else this.router.navigate(['oppdrag', id, 'detaljer'])
   }
 
-  onBack(){
+  private onBack = (): void => {
     if(this.returnRoute != undefined) this.router.navigate([this.returnRoute])
     else if(!this.isCreateForm) this.router.navigate(['oppdrag',this.missionId, 'detaljer'])
     else this.router.navigate(['oppdrag'])
   }
 
+  private configureMainNav(): void{
+    let cfg = this.mainNavService.getDefaultConfig();
+    cfg.title = this.isCreateForm ?  "Nytt oppdrag" : "Rediger oppdrag";
+    cfg.menuBtnEnabled = false;
+    cfg.backFn = this.onBack;
+    this.mainNavService.addConfig(cfg);
+  }
 }

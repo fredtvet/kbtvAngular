@@ -5,7 +5,7 @@ export class NavAction{
     public text: string = null,
     public icon: string = null,
     public event: string,
-    public handle: any = null,
+    public handle: Function = null,
     public roles: string[] = [
       Roles.Ansatt,
       Roles.Mellomleder,

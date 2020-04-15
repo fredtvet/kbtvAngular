@@ -1,5 +1,4 @@
-<app-main-nav [config]="mainNavConfig" (iconActionClicked)="goToTimesheetList($event)" *ngIf="vm$ | async; let vm">
-
+<ng-container *ngIf="vm$ | async; let vm">
   <app-timesheet-week-menu
     [dateParams]="vm.dateParams"
     (dateParamsChanged)="changeDateParams($event)"
@@ -35,5 +34,4 @@
 
 
   </div>
-
-</app-main-nav>
+</ng-container>

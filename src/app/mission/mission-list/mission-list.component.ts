@@ -1,13 +1,12 @@
 import { Component  } from '@angular/core';
-import { MatDialog, MatBottomSheet } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Mission } from 'src/app/shared/models';
-import { NavAction } from 'src/app/shared/components';
 import { Roles } from '../../shared/enums';
 import { BehaviorSubject, Observable} from 'rxjs';
-import { MainNavConfig, BottomSheetParent } from 'src/app/shared/layout';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { MissionService, BottomSheetActionHubService } from 'src/app/core/services';
+import { MissionService, MainNavService } from 'src/app/core/services';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
 @Component({
   selector: 'app-mission-list',
@@ -15,8 +14,7 @@ import { MissionService, BottomSheetActionHubService } from 'src/app/core/servic
   styleUrls: ['./mission-list.component.scss']
 })
 
-export class MissionListComponent extends BottomSheetParent{
-
+export class MissionListComponent extends SubscriptionComponent{
   Roles = Roles;
 
   private pageInfo = {searchString: "", showFinishedMissions: false}
@@ -24,21 +22,16 @@ export class MissionListComponent extends BottomSheetParent{
 
   missions$: Observable<Mission[]>;
 
-  mainNavConfig = new MainNavConfig();
-
   constructor(
+    private mainNavService: MainNavService,
     private missionService: MissionService,
     public dialog: MatDialog,
-    private router: Router,
-    _bottomSheet: MatBottomSheet,
-    bottomSheetActionHub: BottomSheetActionHubService) {
-      super(bottomSheetActionHub, _bottomSheet);
-      this.mainNavConfig.searchBarEnabled = true;
-      this.mainNavConfig.bottomSheetActions = this.bottomSheetActions
+    private router: Router) {
+      super();  
+      this.configureMainNav();
     }
 
   ngOnInit(){
-    super.ngOnInit();
     this.missions$ = this.pageInfoSubject.pipe(
       switchMap(pageInfo => {
         return this.missionService
@@ -46,25 +39,16 @@ export class MissionListComponent extends BottomSheetParent{
       }), 
       takeUntil(this.unsubscribe)
     );
-
-    let navAction = new NavAction("Vis ferdige oppdrag",
-                      "check_box_outline_blank",
-                      "toggleFinishedMissions", this.toggleFinishedMissions,
-                      [Roles.Ansatt, Roles.Leder, Roles.Mellomleder, Roles.Oppdragsgiver]);
-                      
-    this.mainNavConfig.bottomSheetBtnEnabled = true;
-    this.bottomSheetActions.push(navAction);
-  }
-
-  searchMissionList(searchString: string){
-    this.pageInfo.searchString = searchString;
-    this.pageInfoSubject.next(this.pageInfo)
   }
 
   createMission() {
     this.router.navigate(['oppdrag','ny'])
   }
 
+  private searchMissionList = (searchString: string) => {
+    this.pageInfo.searchString = searchString;
+    this.pageInfoSubject.next(this.pageInfo)
+  }
 
   private toggleFinishedMissions = (event:string) => {
     this.pageInfo.showFinishedMissions = !this.pageInfo.showFinishedMissions;
@@ -73,7 +57,17 @@ export class MissionListComponent extends BottomSheetParent{
     //Toggle icon on nav action on bottom sheet
     let icon = "check_box_outline_blank";
     if(this.pageInfo.showFinishedMissions) icon = "check_box";
-    this.bottomSheetActions.find(x => x.event == event).icon = icon;
+    let cfg = this.mainNavService.getCurrentConfig();
+    cfg.bottomSheetButtons = [{text: "Vis ferdige oppdrag", icon: icon, callback: this.toggleFinishedMissions}];
+    this.mainNavService.addConfig(cfg);
+  }
+
+  private configureMainNav(){
+    let cfg = this.mainNavService.getDefaultConfig();
+    cfg.title = "Oppdrag"
+    cfg.bottomSheetButtons = [{text: "Vis ferdige oppdrag", icon: "check_box_outline_blank", callback: this.toggleFinishedMissions}]
+    cfg.searchFn = this.searchMissionList;
+    this.mainNavService.addConfig(cfg);
   }
 
 }

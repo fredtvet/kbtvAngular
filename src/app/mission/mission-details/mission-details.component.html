@@ -1,8 +1,3 @@
-<app-main-nav
-  [config]="mainNavConfig"
-  (bottomSheetEvent)="handleBottomSheetEvent($event)"
-  (bottomSheetOpened)="openBottomSheet()"
-  (back)="onBack()">
 
   <app-mission-details-view
     [mission]="mission"
@@ -16,6 +11,4 @@
     (noteEdit)="editNote($event)"
     (reportDeleted)="deleteReport($event)">
   </app-mission-details-view>
-
-</app-main-nav>
 

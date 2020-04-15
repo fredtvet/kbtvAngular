@@ -1,17 +1,7 @@
-
-
-<app-main-nav
-  [config]="mainNavConfig"
-  (back)="onBack()"
-  (bottomSheetEvent)="handleBottomSheetEvent($event)"
-  (bottomSheetOpened)="openBottomSheet()">
-
-  <app-employer-form-view
-    [employer]="employer"
-    (formSubmitted)="onSubmit($event)">
-  </app-employer-form-view>
-
-</app-main-nav>
+<app-employer-form-view
+  [employer]="employer"
+  (formSubmitted)="onSubmit($event)">
+</app-employer-form-view>
 
 
 

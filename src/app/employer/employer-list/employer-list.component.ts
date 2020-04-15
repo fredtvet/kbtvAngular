@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IdentityService, EmployerService } from 'src/app/core/services';
+import { IdentityService, EmployerService, MainNavService } from 'src/app/core/services';
 import { Employer, User } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
 import { Router } from '@angular/router';
@@ -21,9 +21,11 @@ export class EmployerListComponent extends SubscriptionComponent {
   constructor(
     private employerService: EmployerService,
     private identityService: IdentityService,
+    private mainNavService: MainNavService,
     public router: Router) {super()}
 
   ngOnInit() {
+    this.mainNavService.addConfig();
     this.employerService.getAll$()
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(data => this.employers = data)

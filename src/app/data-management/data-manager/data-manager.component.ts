@@ -1,12 +1,12 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MissionService, BaseService, MissionTypeService, ReportTypeService, EmployerService, TranslationService, SessionService } from 'src/app/core/services';
+import { MissionService, BaseService, MissionTypeService, ReportTypeService, EmployerService, TranslationService, SessionService, MainNavService } from 'src/app/core/services';
 import { Subscription } from 'rxjs';
-import { MainNavConfig } from 'src/app/shared/layout';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ConfirmDeleteDialogComponent, MissionTypeFormDialogComponent, ReportTypeFormDialogComponent } from 'src/app/shared/components';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { BaseEntity } from 'src/app/shared/interfaces';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
 @Component({
   selector: 'app-data-manager',
@@ -15,10 +15,8 @@ import { BaseEntity } from 'src/app/shared/interfaces';
   encapsulation : ViewEncapsulation.None,
 })
 
-export class DataManagerComponent {
+export class DataManagerComponent extends SubscriptionComponent {
 @ViewChild('dataGrid', {static: false}) dataGrid: AgGridAngular;
-
-mainNavConfig = new MainNavConfig();
 
 dataSub$ = new Subscription();
 
@@ -38,20 +36,23 @@ objectProperties = ['missiontype', 'employer'];
 
 constructor(
   public sessionService: SessionService,
+  private mainNavService: MainNavService,
   private translationService: TranslationService,
   private employerService: EmployerService,
   private missionTypeService: MissionTypeService,
   private missionService: MissionService,
   private reportTypeService: ReportTypeService,
   private router: Router,
-  private dialog: MatDialog) {
+  private dialog: MatDialog) { 
+    super(); 
+    this.configureMainNav();
   }
 
-  ngOnInit(){
+  ngOnInit(){ 
     this.loadTable();
   }
 
-  initNgGrid(data: BaseEntity[]){
+  private initNgGrid(data: BaseEntity[]){
     this.columnDefs = [];
     this.rowData = [];
 
@@ -64,7 +65,6 @@ constructor(
 
     this.rowData = data;
   }
-
 
   loadTable(){
     if(this.sessionService.dataTable != undefined){
@@ -191,6 +191,11 @@ constructor(
     });
   }
 
+  private configureMainNav(){
+    let cfg = this.mainNavService.getDefaultConfig();
+    cfg.title = "Data";
+    this.mainNavService.addConfig(cfg);
+  }
 }
 
 

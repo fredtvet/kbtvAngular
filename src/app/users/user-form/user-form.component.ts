@@ -1,56 +1,52 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatBottomSheet } from '@angular/material';
-import { RolesService, UsersService, NotificationService, BottomSheetActionHubService } from 'src/app/core/services';
+import { RolesService, UsersService, NotificationService, BottomSheetActionHubService, MainNavService } from 'src/app/core/services';
 import { ConfirmDeleteDialogComponent, NavAction } from 'src/app/shared/components';
 import { User } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MainNavConfig, BottomSheetParent } from 'src/app/shared/layout';
 import { Observable } from 'rxjs';
 import { map, takeUntil, take } from 'rxjs/operators';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
 })
 
-export class UserFormComponent extends BottomSheetParent  {
+export class UserFormComponent extends SubscriptionComponent  {
   Roles = Roles;
 
   isCreateForm = false;
-
-  mainNavConfig = new MainNavConfig();
 
   user: User = new User();
 
   roles$: Observable<string[]>;
 
   constructor(
+    private mainNavService: MainNavService,
     private notificationService: NotificationService,
     private _rolesService: RolesService,
     private _usersService: UsersService,
     private _router: Router,
     private _route: ActivatedRoute,
-    private _dialog: MatDialog,   
-    _bottomSheet: MatBottomSheet,
-    bottomSheetActionHub: BottomSheetActionHubService,
-  ){ super(bottomSheetActionHub, _bottomSheet) };
+    private _dialog: MatDialog, 
+  ){ 
+    super();
+    this.user.userName = this._route.snapshot.paramMap.get('userName');
+    if(!this.user.userName) this.isCreateForm = true;
+    this.configureMainNav();
+  }
 
     ngOnInit(){
-      super.ngOnInit();
-      let userName = this._route.snapshot.paramMap.get('userName');
+      if(!this.isCreateForm)
+      this._usersService.get$(this.user.userName).pipe(takeUntil(this.unsubscribe))
+        .subscribe(result => this.user = result);
 
       this.roles$ = this._rolesService.getAll$().pipe(
         takeUntil(this.unsubscribe),
         map(arr => arr.filter(x => x != Roles.Leder))
       )
-
-      if(!userName) this.isCreateForm = true;
-      else
-        this._usersService.get$(userName).pipe(takeUntil(this.unsubscribe))
-        .subscribe(result => this.user = result);
-
-      this.configureMainNav();
     }
 
     onSubmit(result: User){
@@ -59,7 +55,7 @@ export class UserFormComponent extends BottomSheetParent  {
       else this.createUser(result);
     }
 
-    createUser(user: any){
+    private createUser(user: any){
       this._usersService.add$(user).pipe(take(1))
        .subscribe(success => {
          this.notificationService.setNotification('Vellykket! Ny bruker registrert.');
@@ -67,7 +63,7 @@ export class UserFormComponent extends BottomSheetParent  {
         });
     }
 
-    updateUser(user: User){
+    private updateUser(user: User){
       this._usersService.update$(user).pipe(take(1))
         .subscribe(success => {
           this.notificationService.setNotification('Vellykket oppdatering!');
@@ -75,7 +71,7 @@ export class UserFormComponent extends BottomSheetParent  {
         });
     }
 
-    deleteUser(username: string){
+    private deleteUser(username: string){
       this.onBack();
       this._usersService.delete$(username).pipe(take(1))
         .subscribe(res => {
@@ -91,18 +87,20 @@ export class UserFormComponent extends BottomSheetParent  {
       });
     }
 
-    configureMainNav(){
+    private configureMainNav(){
+      let cfg = this.mainNavService.getDefaultConfig();   
+      cfg.title = this.isCreateForm ? 'Ny bruker' : 'Rediger bruker';
       if(!this.isCreateForm){
-        this.bottomSheetActions = [new NavAction("Slett", "delete_forever", "delete", this.openDeleteDialog, [Roles.Leder])];
-        this.mainNavConfig.bottomSheetBtnEnabled = true;
-        this.mainNavConfig.bottomSheetActions = this.bottomSheetActions;
+        cfg.bottomSheetButtons = [
+          {text: "Slett", icon: "delete_forever", callback: this.openDeleteDialog, allowedRoles: [Roles.Leder]}
+        ];
       }
-      this.mainNavConfig.title = this.isCreateForm ? 'Ny' : 'Rediger';
-      this.mainNavConfig.title+= ' bruker';
-      this.mainNavConfig.menuBtnEnabled = false;
+      cfg.backFn = this.onBack;
+      cfg.menuBtnEnabled = false;
+      this.mainNavService.addConfig(cfg);
     }
 
-    onBack(): void {
+    private onBack = () => {
       this._router.navigate(['brukere'])
     }
 

@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { IdentityService, NotificationService } from 'src/app/core/services';
+import { IdentityService, NotificationService, MainNavService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
 import { takeUntil, take } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
-import { MainNavConfig } from 'src/app/shared/layout';
 
 @Component({
   selector: 'app-profile',
@@ -13,21 +12,19 @@ export class ProfileComponent extends SubscriptionComponent {
 
   user: User;
   passwordStatus: string;
-  mainNavConfig = new MainNavConfig();
 
   constructor(
+    private mainNavService: MainNavService,
     private identityService: IdentityService,
     private notificationService: NotificationService,
   ){ 
-    super(); 
-    this.mainNavConfig.elevationEnabled = false; 
+    super();     
+    this.configureMainNav();
   }
-
 
   ngOnInit() {
     this.identityService.currentUser$.pipe(takeUntil(this.unsubscribe))
-      .subscribe(user => this.user = user);
-    
+      .subscribe(user => this.user = user); 
   }
 
   updateProfile(updatedUser){
@@ -53,4 +50,10 @@ export class ProfileComponent extends SubscriptionComponent {
     }
   }
 
+  private configureMainNav(){
+    let cfg = this.mainNavService.getDefaultConfig();
+    cfg.title = "Profil";
+    cfg.elevationEnabled = false;
+    this.mainNavService.addConfig(cfg);
+  }
 }

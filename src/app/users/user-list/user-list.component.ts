@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UsersService, IdentityService } from 'src/app/core/services';
+import { UsersService, IdentityService, MainNavService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
 import { combineLatest } from 'rxjs';
@@ -18,9 +18,13 @@ export class UserListComponent extends SubscriptionComponent {
   currentUser: User;
 
   constructor(
+    private mainNavService: MainNavService,
     private usersService: UsersService,
     private identityService: IdentityService,
-    private router: Router) { super() }
+    private router: Router) { 
+      super();    
+      this.configureMainNav(); 
+    }
 
   ngOnInit() {
     combineLatest( //Calling seperate to have them ordered correctly. Should be done more efficiently.
@@ -43,6 +47,12 @@ export class UserListComponent extends SubscriptionComponent {
 
   createUser(){
     this.router.navigate(['brukere', 'ny'])
+  }
+
+  private configureMainNav(){
+    let cfg = this.mainNavService.getDefaultConfig();
+    cfg.title = "Brukere";
+    this.mainNavService.addConfig(cfg);
   }
 
 }

@@ -23,6 +23,7 @@ import {
   UserTimesheetService,
   BottomSheetActionHubService,
   DateTimeService,
+  MainNavService,
 } from './services';
 
 import { NotificationComponent } from '../shared/components';
@@ -57,7 +58,8 @@ import { NotificationComponent } from '../shared/components';
     TranslationService,
     SessionService,
     BottomSheetActionHubService,
-    DateTimeService
+    DateTimeService,
+    MainNavService
   ]
 })
 export class CoreModule { }

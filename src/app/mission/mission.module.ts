@@ -32,7 +32,6 @@ import { BottomSheetComponent } from '../shared/layout';
     DatePipe
   ],
   entryComponents:[
-    BottomSheetComponent,
     ConfirmDeleteDialogComponent,
     ImageViewerDialogComponent,
     MissionReportFormComponent
