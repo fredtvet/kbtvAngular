@@ -23,7 +23,7 @@ export class UserTimesheetService extends BaseMissionChildService<Timesheet> {
     connectionService: ConnectionService,
     protected dataSubject: UserTimesheetSubject
   ){
-    super(notificationService, apiService, dataSubject, connectionService, "/Timesheets");
+    super(notificationService, apiService, dataSubject, connectionService, "/UserTimesheets");
   }
 
   getByWeekGrouped$(dateParams: DateParams): Observable<Timesheet[][]>{

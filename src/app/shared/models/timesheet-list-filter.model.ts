@@ -2,9 +2,10 @@ import { Mission } from './mission.model';
 import { DateRangePresets } from '../enums/date-range-presets.enum';
 import { TimesheetStatus } from '../enums/timesheet-status.enum';
 import { Timesheet } from './timesheet.model';
+import { TimesheetFilter } from '../interfaces/timesheet-filter.interface';
 
 
-export class TimesheetListFilter {
+export class TimesheetListFilter implements TimesheetFilter {
     constructor(
         public status: TimesheetStatus = TimesheetStatus.Open,    
         public mission: Mission = undefined,    

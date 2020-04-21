@@ -2,11 +2,11 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MissionImage } from '../../models/mission-image.model';
-import { NavAction } from '../nav-action.model';
 import { Roles } from '../../enums/roles.enum';
 import { MatBottomSheet } from '@angular/material';
-import { BottomSheetParent } from '../../layout/bottom-sheet/bottom-sheet-parent.extension';
-import { BottomSheetActionHubService } from 'src/app/core/services/ui/bottom-sheet-action-hub.service';
+import { SubscriptionComponent } from '../abstracts/subscription.component';
+import { BottomSheetMenuComponent } from '../bottom-sheet-menu/bottom-sheet-menu.component';
+import { AppButton } from '../../interfaces/app-button.interface';
 
 @Component({
   selector: 'app-image-viewer-dialog',
@@ -43,32 +43,33 @@ import { BottomSheetActionHubService } from 'src/app/core/services/ui/bottom-she
   templateUrl: './image-viewer-dialog.component.html',
   styleUrls: ['./image-viewer-dialog.component.scss']
 })
-export class ImageViewerDialogComponent extends BottomSheetParent {
+
+export class ImageViewerDialogComponent extends SubscriptionComponent {
   public Roles = Roles;
   toolbarHidden = false;
+
+  private bottomSheetButtons: AppButton[];
 
   public currentImage: MissionImage;
   public index: number;
   public images: MissionImage[];
 
   constructor(
-    public dialogRef: MatDialogRef<ImageViewerDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,   
-    _bottomSheet: MatBottomSheet,
-    bottomSheetActionHub: BottomSheetActionHubService,
-  ){ super(bottomSheetActionHub, _bottomSheet) };
+    private dialogRef: MatDialogRef<ImageViewerDialogComponent>,
+    private _bottomSheet: MatBottomSheet,
+    @Inject(MAT_DIALOG_DATA) private data: any,     
+  ){ super(); };
 
   ngOnInit() {
-    super.ngOnInit();
+    this.bottomSheetButtons = [
+      {text: "Last ned bilde", icon: "cloud_download", callback: this.downloadImage},
+      {text: "Last ned alle", icon: "cloud_download", callback: this.downloadImages},
+      {text: "Slett bilde", icon: "delete", callback: this.deleteImage, allowedRoles: [Roles.Leder]}
+    ];
+
     this.images = this.data.images;
     this.index = this.images.findIndex(x => x.id == this.data.imageId);
     this.currentImage = this.images[this.index];
-
-    this.bottomSheetActions = [
-      new NavAction("Last ned bilde", "cloud_download", "downloadImage", this.downloadImage),
-      new NavAction("Last ned alle", "cloud_download", "downloadImages", this.downloadImages),
-      new NavAction("Slett bilde", "delete_forever", "delete", this.deleteImage, [Roles.Leder]),
-    ];
   }
 
   nextImage(){
@@ -91,15 +92,17 @@ export class ImageViewerDialogComponent extends BottomSheetParent {
     this.dialogRef.close();
   }
 
-  private deleteImage = (e:string) => {
+  openBottomSheet = () => this._bottomSheet.open(BottomSheetMenuComponent, { data: this.bottomSheetButtons });
+  
+  private deleteImage = () => {
     this.dialogRef.close(this.currentImage.id);
   }
 
-  private downloadImage = (e:string) => {
+  private downloadImage = () => {
     window.open(this.currentImage.fileURL)
   }
 
-  private downloadImages = (e:string) => {
+  private downloadImages = () => {
     this.images.forEach(x => {
       window.open(x.fileURL)
     });

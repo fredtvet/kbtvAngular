@@ -13,7 +13,7 @@ export class TimesheetListMenuComponent implements OnInit {
 
   @Input() filter: TimesheetListFilter;
   @Output() statusChanged = new EventEmitter();
-  @Output() filterClicked = new EventEmitter();
+  @Output() filterClick = new EventEmitter();
 
   constructor() { }
 

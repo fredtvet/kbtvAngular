@@ -39,7 +39,7 @@ export class MissionImageService extends BaseMissionChildService<MissionImage> {
     }
 
     return this.apiService
-                .post(`${this.uri}/${missionId}`, formData)
+                .post(`${this.uri}?missionId=${missionId}`, formData)
                 .pipe(map(data =>{
                   this.dataSubject.addOrReplaceRange(data);
                   return data;

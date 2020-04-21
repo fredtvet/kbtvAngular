@@ -9,3 +9,5 @@ export * from './main-nav-config.interface';
 export * from './main-nav-event.interface';
 export * from './app-button.interface';
 export * from './app-action.interface';
+export * from './timesheet-summary.interface';
+export * from './timesheet-filter.interface';

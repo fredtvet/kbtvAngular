@@ -31,12 +31,13 @@
         <mat-icon mat-list-icon>timer</mat-icon>
         <p mat-line>Timeliste</p>
       </a>
+
       <ng-container *ifRole="[Roles.Leder, Roles.Mellomleder]">
-        <!-- <mat-divider class="mid-divider"></mat-divider>
-        <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/oppdragsgivere']" [routerLinkActive]="['active']">
-          <mat-icon mat-list-icon>work</mat-icon>
-          <p mat-line>Oppdragsgivere</p>
-        </a> -->
+        <mat-divider class="mid-divider"></mat-divider>
+        <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/timestatistikk']" [routerLinkActive]="['active']">
+          <mat-icon mat-list-icon>assessment</mat-icon>
+          <p mat-line>Timestatistikk</p>
+        </a>
         <mat-divider class="mid-divider"></mat-divider>
         <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/data']" [routerLinkActive]="['active']">
           <mat-icon mat-list-icon>dns</mat-icon>
@@ -48,6 +49,7 @@
           <p mat-line>Brukere</p>
         </a>
       </ng-container>
+
       <mat-divider></mat-divider>
       <span style="position: absolute;bottom:0;width:100%;">
         <mat-divider></mat-divider>

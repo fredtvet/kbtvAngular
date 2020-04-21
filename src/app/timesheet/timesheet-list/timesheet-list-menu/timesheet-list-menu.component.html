@@ -1,16 +1,5 @@
-<span fxLayout="row" fxLayoutAlign="space-between start" class="mt-1 mb-1">
-    <span class="mat-body faded-text ellipsis" fxLayout="column" fxLayoutAlign="start start">
-        <span *ngIf="filter.mission">{{ filter.mission.address }}</span>
-        <span *ngIf="filter.dateRange">
-            Fra {{ filter.dateRange[0] | date }} til {{ filter.dateRange[1] | date }}
-        </span>
-    </span>
 
-    <button mat-button color="primary" (click)="openFilter()">
-        <mat-icon>filter_list</mat-icon>
-        Filter
-    </button>
-</span>
+<app-timesheet-filter-header [filter]="filter" (filterClick)="filterClick.emit()"></app-timesheet-filter-header>
 
 <mat-divider></mat-divider>
 

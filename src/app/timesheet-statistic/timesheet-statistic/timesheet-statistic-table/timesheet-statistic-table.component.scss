@@ -1,0 +1,8 @@
+@import '../../../../variables';
+
+$filter-menu-height: 115;
+
+.table-height{
+    height: calc(100vh - ((#{$bottom-nav-height} * 2px) + (#{$filter-menu-height} * 1px)));
+}
+

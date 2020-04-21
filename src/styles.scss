@@ -249,6 +249,13 @@ body {
   }
 }
 
+.mat-button-toggle-appearance-standard {
+  .mat-button-toggle-label-content {
+    line-height: 38px!important;
+  }
+}
+
+
 //Spinner primarily for buttons
 @keyframes spinner {
   to {transform: rotate(360deg);}

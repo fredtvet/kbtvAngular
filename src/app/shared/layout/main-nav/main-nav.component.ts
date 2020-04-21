@@ -9,7 +9,7 @@ import { MatDrawer, MatBottomSheet } from '@angular/material';
 import { User } from '../../models/user.model';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { TimesheetStatus } from '../../enums/timesheet-status.enum';
-import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
+import { BottomSheetMenuComponent } from '../../components/bottom-sheet-menu/bottom-sheet-menu.component';
 import { MainNavConfig } from '../../interfaces/main-nav-config.interface';
 import { AppButton } from '../../interfaces/app-button.interface';
 
@@ -73,7 +73,7 @@ export class MainNavComponent extends SubscriptionComponent {
     this.router.navigate(['/login']);
   } 
   
-  openBottomSheet = (buttons: AppButton[]) => this._bottomSheet.open(BottomSheetComponent, { data: buttons });
+  openBottomSheet = (buttons: AppButton[]) => this._bottomSheet.open(BottomSheetMenuComponent, { data: buttons });
 
   handleFn = (fn: Function, ...parameters: any[]) => {
     fn(...parameters);

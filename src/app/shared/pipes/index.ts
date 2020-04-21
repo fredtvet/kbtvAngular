@@ -5,3 +5,4 @@ export * from './sort-by-timesheet-status.pipe';
 export * from './duration.pipe';
 export * from './get-date-by-date-params.pipe';
 export * from './same-date.pipe';
+export * from './array-includes.pipe';

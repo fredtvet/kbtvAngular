@@ -21,9 +21,10 @@ import {
   TranslationService,
   SessionService,
   UserTimesheetService,
-  BottomSheetActionHubService,
   DateTimeService,
   MainNavService,
+  TimesheetService,
+  TimesheetAggregatorService,
 } from './services';
 
 import { NotificationComponent } from '../shared/components';
@@ -54,12 +55,13 @@ import { NotificationComponent } from '../shared/components';
     MissionTypeService,
     ReportTypeService,
     UserTimesheetService,
+    TimesheetService,
     DataSyncService,
     TranslationService,
     SessionService,
-    BottomSheetActionHubService,
     DateTimeService,
-    MainNavService
+    MainNavService,
+    TimesheetAggregatorService,
   ]
 })
 export class CoreModule { }

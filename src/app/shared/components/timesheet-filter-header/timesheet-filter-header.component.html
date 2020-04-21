@@ -1,0 +1,15 @@
+<span fxLayout="row" fxLayoutAlign="space-between start" class="mb-1">
+    
+    <span class="mat-body faded-text ellipsis" fxLayout="column" fxLayoutAlign="start start" style="line-height:15px;height:50px">
+        <span *ngIf="filter.user">{{ filter.user.firstName }} {{ filter.user.lastName }}</span>
+        <span *ngIf="filter.mission">{{ filter.mission.address }}</span>
+        <span *ngIf="filter.dateRange">
+            Fra {{ filter.dateRange[0] | date }} til {{ filter.dateRange[1] | date }}
+        </span>
+    </span>
+
+    <button mat-button color="primary" (click)="filterClicked()">
+        <mat-icon>filter_list</mat-icon>
+        Filter
+    </button>
+</span>

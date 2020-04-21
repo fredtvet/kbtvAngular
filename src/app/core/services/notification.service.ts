@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NotificationComponent } from 'src/app/shared/components';
-import { Notifications } from 'src/app/shared/enums';
+import { Notifications } from 'src/app/shared/enums/notifications.enum';
+import { NotificationComponent } from 'src/app/shared/components/notification/notification.component';
 
 @Injectable({
   providedIn: 'root'

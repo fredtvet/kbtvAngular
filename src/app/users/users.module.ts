@@ -6,7 +6,6 @@ import { ConfirmDeleteDialogComponent } from '../shared/components';
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserFormViewComponent } from './components/user-form-view/user-form-view.component';
-import { BottomSheetComponent } from '../shared/layout';
 
 @NgModule({
   declarations: [
@@ -15,7 +14,6 @@ import { BottomSheetComponent } from '../shared/layout';
     UserFormViewComponent
   ],
   entryComponents:[
-    BottomSheetComponent,
     ConfirmDeleteDialogComponent
   ],
   imports: [

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
-import { AgGridModule } from 'ag-grid-angular';
 
+import { AppAgGridModule } from '../app-ag-grid/app-ag-grid.module';
 import { DataManagementRoutingModule } from './data-management-routing.module';
 import { DataManagerComponent } from './data-manager/data-manager.component';
 
@@ -10,6 +10,8 @@ import {
   MissionTypeFormDialogComponent,
   ReportTypeFormDialogComponent,
 } from '../shared/components';
+
+
 
 
 @NgModule({
@@ -24,7 +26,7 @@ import {
   imports: [
     SharedModule,
     DataManagementRoutingModule,
-    AgGridModule.withComponents([]),
+    AppAgGridModule
   ]
 })
 

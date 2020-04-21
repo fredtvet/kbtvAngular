@@ -1,7 +1,6 @@
-import { Component, OnInit, SimpleChanges, ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { UserTimesheetService, DateTimeService, MainNavService } from "src/app/core/services";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
-import { TimesheetListFilterWrapperComponent } from "./timesheet-list-filter-wrapper.component";
 import { FixedSizeVirtualScrollStrategy } from "@angular/cdk/scrolling";
 import { TimesheetStatus, DateRangePresets } from "src/app/shared/enums";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -9,7 +8,8 @@ import { TimesheetFormDialogWrapperComponent } from "../components/timesheet-for
 import { MatDialog } from "@angular/material/dialog";
 import { Mission, TimesheetListFilter, Timesheet } from "src/app/shared/models";
 import { BehaviorSubject, Observable } from "rxjs";
-import { map, switchMap, tap, filter, distinctUntilChanged, shareReplay } from "rxjs/operators";
+import { switchMap,filter} from "rxjs/operators";
+import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared/components';
 
 @Component({
   selector: "app-timesheet-list",
@@ -44,8 +44,8 @@ export class TimesheetListComponent implements OnInit {
   }
 
   openBottomSheet(): void {
-    let ref = this._bottomSheet.open(TimesheetListFilterWrapperComponent, {
-      data: this.getFilterCopy()
+    let ref = this._bottomSheet.open(TimesheetFilterSheetWrapperComponent, {
+      data: {filter: this.getFilterCopy(), disabledFilters: ['user']}
     });
 
     ref.afterDismissed()

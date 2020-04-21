@@ -5,8 +5,7 @@ import { EmployerRoutingModule } from './employer-routing.module';
 import { EmployerFormComponent } from './employer-form/employer-form.component';
 import { EmployerListComponent } from './employer-list/employer-list.component';
 import { ConfirmDeleteDialogComponent } from '../shared/components';
-import { EmployerFormViewComponent } from './components/employer-form-view/employer-form-view.component';
-import { BottomSheetComponent } from '../shared/layout';
+import { EmployerFormViewComponent } from './employer-form/employer-form-view/employer-form-view.component';
 
 
 @NgModule({
@@ -16,7 +15,6 @@ import { BottomSheetComponent } from '../shared/layout';
     EmployerFormViewComponent
   ],
   entryComponents:[
-    BottomSheetComponent,
     ConfirmDeleteDialogComponent
   ],
   imports: [

@@ -1,0 +1,26 @@
+<div fxLayout="column" fxLayoutAlign="start start" class="static-page-container mb-0 mt-0 h-100">
+
+    <app-timesheet-filter-header class="w-100" 
+        [filter]="filter$ | async" 
+        (filterClick)="openBottomSheet($event)">        
+    </app-timesheet-filter-header>
+
+    <mat-button-toggle-group aria-label="Grupper etter tidsperiode" class="mb-1"
+    [ngModel]="groupBy$ | async" (ngModelChange)="changeGroupingPeriod($event)">
+        <mat-button-toggle [value]="timePeriods.Day">Dag</mat-button-toggle>
+        <mat-button-toggle [value]="timePeriods.Week">Uke</mat-button-toggle>
+        <mat-button-toggle [value]="timePeriods.Month">Måned</mat-button-toggle>
+        <mat-button-toggle [value]="timePeriods.Year">År</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <app-timesheet-statistic-table class="w-100"
+        [timesheetSummaries]="timesheetSummaries$ | async"
+        [users]="users$ | async">
+    </app-timesheet-statistic-table>
+  
+</div>
+
+
+
+
+

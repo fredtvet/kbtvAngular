@@ -6,7 +6,6 @@ import { SharedModule } from '../shared/shared.module';
 import { PasswordFormComponent } from './password-form/password-form.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileFormComponent } from './profile-form/profile-form.component';
-import { BottomSheetComponent } from '../shared/layout';
 
 
 @NgModule({
@@ -14,9 +13,6 @@ import { BottomSheetComponent } from '../shared/layout';
     PasswordFormComponent,
     ProfileComponent,
     ProfileFormComponent
-  ],
-  entryComponents:[
-    BottomSheetComponent,
   ],
   imports: [
     SharedModule,

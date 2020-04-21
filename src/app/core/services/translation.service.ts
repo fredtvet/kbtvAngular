@@ -14,5 +14,4 @@ export class TranslationService {
     if(hit === undefined) return property;
     return hit.value
   }
-
 }

@@ -25,15 +25,19 @@ import {
   SubmitButtonComponent,
   AddToHomeScreenComponent,
   WeekPickerComponent,
-  PageNotFoundComponent
+  PageNotFoundComponent,
+  TimesheetFilterComponent,
+  TimesheetFilterSheetWrapperComponent
 } from './components';
 
 import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
 import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date-time-formats';
-import { BottomSheetComponent } from './layout/bottom-sheet/bottom-sheet.component';
+import { BottomSheetMenuComponent } from './components/bottom-sheet-menu/bottom-sheet-menu.component';
 import { DurationPipe } from './pipes/duration.pipe';
 import { GetDateByDateParamsPipe } from './pipes/get-date-by-date-params.pipe';
 import { SameDatePipe } from './pipes/same-date.pipe';
+import { ArrayIncludesPipe } from './pipes/array-includes.pipe';
+import { TimesheetFilterHeaderComponent } from './components/timesheet-filter-header/timesheet-filter-header.component';
 
 @NgModule({
   declarations: [
@@ -57,11 +61,16 @@ import { SameDatePipe } from './pipes/same-date.pipe';
     MissionTypeFormDialogComponent,
     ReportTypeFormDialogComponent,
     WeekPickerComponent,
-    BottomSheetComponent,
+    BottomSheetMenuComponent,
     DurationPipe,
     GetDateByDateParamsPipe,
     SameDatePipe,
     PageNotFoundComponent,
+    TimesheetFilterComponent,
+    TimesheetFilterSheetWrapperComponent,
+    ArrayIncludesPipe,
+    TimesheetFilterHeaderComponent
+
   ],
   imports: [
     CommonModule,
@@ -76,7 +85,7 @@ import { SameDatePipe } from './pipes/same-date.pipe';
     OwlNativeDateTimeModule,
   ],
   entryComponents:[
-    BottomSheetComponent,
+    BottomSheetMenuComponent,
   ],
   providers: [
     {provide: OwlDateTimeIntl, useClass: DefaultOwlDateTimeIntl},
@@ -116,7 +125,10 @@ import { SameDatePipe } from './pipes/same-date.pipe';
     MissionTypeFormDialogComponent,
     ReportTypeFormDialogComponent,
     WeekPickerComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    TimesheetFilterSheetWrapperComponent,
+    ArrayIncludesPipe,
+    TimesheetFilterHeaderComponent
   ]
 })
 export class SharedModule { }

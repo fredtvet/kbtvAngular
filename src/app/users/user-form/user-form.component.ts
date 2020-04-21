@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { MatDialog, MatBottomSheet } from '@angular/material';
-import { RolesService, UsersService, NotificationService, BottomSheetActionHubService, MainNavService } from 'src/app/core/services';
-import { ConfirmDeleteDialogComponent, NavAction } from 'src/app/shared/components';
+import { MatDialog } from '@angular/material';
+import { RolesService, UsersService, NotificationService, MainNavService } from 'src/app/core/services';
+import { ConfirmDeleteDialogComponent } from 'src/app/shared/components';
 import { User } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
 import { Router, ActivatedRoute } from '@angular/router';

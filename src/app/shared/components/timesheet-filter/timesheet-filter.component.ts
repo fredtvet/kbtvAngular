@@ -1,20 +1,25 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Mission, TimesheetListFilter } from 'src/app/shared/models';
-import { TimesheetStatus, DateRangePresets } from 'src/app/shared/enums';
-import { DateTimeService } from 'src/app/core/services';
+import { DateRangePresets } from '../../enums/date-range-presets.enum';
+import { TimesheetStatus } from '../../enums/timesheet-status.enum';
+import { Mission } from '../../models/mission.model';
+import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
+import { TimesheetFilter } from '../../interfaces';
+import { User } from '../../models/user.model';
 
 @Component({
-  selector: 'app-timesheet-list-filter',
-  templateUrl: './timesheet-list-filter.component.html',
+  selector: 'app-timesheet-filter',
+  templateUrl: './timesheet-filter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TimesheetListFilterComponent {
+export class TimesheetFilterComponent {
 
   timesheetStatus = TimesheetStatus;
   dateRangePresets = DateRangePresets;
 
   @Input() missions: Mission[] = [];
-  @Input() filterPreset: TimesheetListFilter;
+  @Input() users: User[] = [];
+  @Input() filterPreset: TimesheetFilter;
+  @Input() disabledFilters: string[] = [];
 
   @Output() filterChanged = new EventEmitter();
 
@@ -33,8 +38,13 @@ export class TimesheetListFilterComponent {
     this.filterChanged.emit();
   }
 
-  displayFn(mission: Mission): string {
+  displayFnMission(mission: Mission): string {
     if(mission == undefined) return null;
     return mission.address;
+  }
+
+  displayFnUser(user: User): string {
+    if(user == undefined) return null;
+    return user.userName;
   }
 }
