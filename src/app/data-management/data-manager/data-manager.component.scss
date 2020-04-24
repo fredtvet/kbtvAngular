@@ -2,12 +2,15 @@
 
 $select-height: 59.5;
 
-.data-picker .mat-form-field-flex{
-  height:$select-height * 1px!important;
-}
+.data-picker{
+  background:white; 
+  .mat-form-field-flex{
+    height:$select-height * 1px!important;
+  }
 
-.data-picker .mat-form-field-wrapper{
-  margin-bottom: -1.25em!important;
+  .mat-form-field-wrapper{
+    margin-bottom: -1.25em!important;
+  }
 }
 
 .data-container{

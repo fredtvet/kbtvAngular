@@ -4,7 +4,7 @@
 
     <ng-container *ngFor="let week of visibleWeeks$ | async">
       <button mat-button
-        [ngClass]="{'primary-border': week == weekNr, 'color-primary': week == currentWeek}"
+        [ngClass]="{'border-accent': week == weekNr, 'color-accent': week == currentWeek}"
         (click)="this.weekSelected.emit(week)">
         {{ week }}
       </button>

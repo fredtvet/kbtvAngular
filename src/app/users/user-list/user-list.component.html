@@ -1,18 +1,16 @@
-<div class="static-page-container" fxLayout="column" fxLayoutGap="8px">
+<div fxLayout="column">
 
     <div  fxFlex="10" class="content-header">
       <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
-        <span>Brukere</span>
-        <button (click)="createUser()" color="primary" *ifRole="[Roles.Leder]"
+        <span class="ml-2">Ansatte</span>
+        <button (click)="createUser()" color="accent" *ifRole="[Roles.Leder]"
           mat-icon-button aria-label="ny">
-          <mat-icon class="icon_125">person_add</mat-icon>
+          <mat-icon>person_add</mat-icon>
         </button>
       </div>
     </div>
 
-    <mat-divider></mat-divider>
-
-    <div class="static-page-content" fxFlex="90">
+    <div fxFlex="90">
       <mat-spinner *ngIf="!users" class="center-spinner"></mat-spinner>
       <mat-nav-list *ngIf="users" class="p-0">
         <app-nav-list-item

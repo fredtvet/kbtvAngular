@@ -1,48 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
 @import './variables';
 @import "~ag-grid-community/dist/styles/ag-grid.css";
-@import "~ag-grid-community/dist/styles/ag-theme-balham-dark.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 
 html, body { height: 100%;}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  overflow:hidden;
-  background-color:$bg-content!important;
-}
+body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 
-.primary-border{
-  border: 1px solid $primary!important;;
-}
+.bg-primary{background:$primary!important;color:white;}
+.bg-primary-light{background:$primary-light!important;color:black;}
+.bg-primary-dark{background:$primary-dark!important;color:white;}
 
-.active{
-  color: $primary !important;
-}
+.color-primary{color:$primary!important;}
+.color-primary-light{color:$primary-light!important;}
+.color-primary-dark{color:$primary-dark!important;}
 
-.active-icon{
-  color: $primary !important;
-}
+.bg-accent{background:$accent!important;color:black;}
+.bg-accent-light{ background:$accent-light!important;color:black;}
+
+.color-accent{color:$accent!important;}
+.color-accent-light{color:$accent-light!important;}
+
+.bg-warn{background:$warn!important;}
+.color-warn{color:$warn;}
+
+.bg-success{background:$success!important;}
+.color-success{color:$success;}
+
+.bg-background{background:$background-color;color:black;}
+.bg-foreground{background:$foreground-color;color:black;}
+
+.border-primary{border: 1px solid $primary!important;}
+.border-accent{border: 1px solid $accent!important;}
+
+.active{color: $accent !important;}
 
 .p-0{
   padding:0 !important;
 }
-
-.hide{
-  display:none!important;
-}
-
 .action_fab{
   position:absolute!important;
   right: $content-margin * 1px!important;
   bottom: $content-margin * 1px!important;
   z-index:2;
+  background:$accent;
 }
-
-.mat-icon {
-  vertical-align: middle!important;
-}
-
 .icon_150{
   transform:scale(1.5);
 }
@@ -52,189 +54,89 @@ body {
 .icon_75{
   transform:scale(.75);
 }
-
 .image_viewer_dialog{
   max-width:none!important;
 }
-
-.mat-dialog-container{
-  background-color:$bg-dialog;
-  padding:0!important;
-}
-
 .image_viewer_dialog .mat-dialog-container{
-  background-color:mat-color($background,"status-bar")!important;
+  background-color:black!important;
 }
-
 .notification{
   margin-bottom:($bottom-nav-height + $content-margin) * 1px!important;
   background-color:mat-color($background,"unselected-chip");
   color:mat-color($foreground, "base");
 }
-
 .notification-error{
   margin-bottom:($bottom-nav-height + $content-margin) * 1px!important;
   background-color:$warn !important;
   color:mat-color($background, "background");
 }
-
-.bg-card{
-  background:$bg-card;
-}
-
-.bg-dialog{
-  background-color:$bg-dialog;
-  color:mat-color($foreground, "base");
-}
-
-.bg-content{
-  background:$bg-content;
-}
-
-.bg-0{
-  background-color:mat-color($background,"status-bar");
-  color:mat-color($foreground, "base");
-}
-
-.bg-1{
-  background-color:mat-color($background,"app-bar");
-  color:mat-color($foreground, "base");
-}
-.bg-2{
-  background-color:mat-color($background,"background");
-  color:mat-color($foreground, "base");
-}
-.bg-3{
-  background-color:mat-color($background,"card");
-  color:mat-color($foreground, "base");
-}
-.bg-4{
-  background-color:mat-color($background,"unselected-chip");
-  color:mat-color($foreground, "base");
-}
-
-
-.bg-primary{
-  background:$primary!important;
-}
-.bg-warn{
-  background:$warn!important;
-}
-
-.color-primary{
-  color:$primary!important;
-}
-
-.color-green{
-  color:$green;
-}
-
-.color-warn{
-  color:$warn;
-}
-
 .ellipsis{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .static-page-container{
-  @include full-page-container;
+  padding: $content-margin * 1px!important;
+  height:100% !important;
+  width:100%;
 }
-
 .static-page-content{
   overflow:auto;
 }
-
-.form-header{
-  @include small-header;
-  color: rgb(255, 255,255,0.7);
-  margin-bottom:$content-margin * 1px;
-}
-
-.faded-text{
-  color: rgb(255, 255,255,0.7);
-}
-
 .content-header{
-  @include small-header;
-  margin-left:$content-margin * 2px;
+  font-weight: 500;
+  font-size:$font-size-small;
+  background:$primary;
+  position:fixed;
+  padding:$content-margin*1px;
+  width:100%;
+  z-index:2;
+  color:white;
 }
-
-.content-container{
-  @include content-container;
-}
-
 .app-form{
   max-width:600px;
   padding:$content-margin * 1px;
-  background-color:$bg-card;
   color:mat-color($foreground, "base");
   height:auto;
 }
-
 .form-container{
   padding: $content-margin * 2px!important;
   background:mat-color($background,"app-bar");
   border:1px grey dashed;
 }
-
 .mid-divider{
    margin-left:$content-margin * 2px!important;
    width:calc(100% - (#{$content-margin} * 4px))!important;
 }
-
 .center-spinner{
   margin:$content-margin * 2px auto;
 }
-
-.mat-menu-content {
-  background-color:$bg-dialog!important;
+.tab-container{
+  overflow:auto;
+  position:relative;
+  height:calc(100vh - ((#{$tab-header-height} + #{$main-nav-height} + #{$bottom-nav-height}) * 1.01px))!important;
 }
-
-.text-faded{
-  color: rgb(255, 255,255,0.7);
-}
-
-.timesheet-dialog-container{
-  background:$bg-card;
-}
-
-//Owl Date Time Picker Styling
-.owl-dt-dialog-container{
-  background:$bg-dialog;
-  .owl-dt-container-info{
-    color:#FFF;
-    .owl-dt-container-info-active{
-      color:$primary;
-    }
-  }
-  .owl-dt-control-button{
-    color:#FFF;
-  }
+.tab-container-alt{
+  overflow:auto;
+  position:relative;
+  height:calc(100vh - ((#{$tab-header-height} + #{$alt-nav-height} + #{$bottom-nav-height}) * 1.01px))!important;
 }
 
 .owl-dt-calendar-table{
-  .owl-dt-calendar-header{
-    color:#FFF;
-  }
   .owl-dt-calendar-cell{
-    color:#FFF;
     .owl-dt-calendar-cell-today{
       border-color:$primary;
       box-shadow: none!important;
     }
     .owl-dt-calendar-cell-selected{
       background:$primary;
-      color:$bg-black;
     }
   }
   .owl-dt-calendar-cell-in-range{
-    background:rgba(235, 203, 22, 0.2)!important;
+    background:$primary-light!important;
   }
 }
-
+//Ag material
 .mat-button-toggle-group{
   .mat-button-toggle-appearance-standard {
     .mat-button-toggle-label-content {
@@ -242,33 +144,28 @@ body {
     }
   }
 }
-
 .mat-tab-group{
   position:sticky!important;
   width:100%;
   .mat-tab-header{
-    background-color:$bg-app-bar;
+    background-color:$primary-dark;
+    color:white!important;
     position:sticky!important;
     width:100%;
     left:0;
     z-index:2;
+    .mat-tab-label-content{
+      color:white
+    }
   }
 }
-
-.tab-container{
-  overflow:auto;
-  position:relative;
-  height:calc(100vh - ((#{$tab-header-height} + #{$main-nav-height} + #{$bottom-nav-height}) * 1.01px))!important;
+.mat-icon{
+  vertical-align: middle!important;
 }
-
-.tab-container-alt{
-  overflow:auto;
-  position:relative;
-  height:calc(100vh - ((#{$tab-header-height} + #{$alt-nav-height} + #{$bottom-nav-height}) * 1.01px))!important;
+.mat-dialog-container{
+  //background:rgba(255,255,255,0)!important;
+  padding:0!important;
 }
-
-
-
 
 //Spinner primarily for buttons
 @keyframes spinner {
@@ -286,7 +183,7 @@ body {
   margin-top: -10px;
   margin-left: -10px;
   border-radius: 50%;
-  border: 2px solid $bg-dialog;
+  border: 2px solid $background-color;
   border-top-color: $primary;
   animation: spinner .8s linear infinite;
 }

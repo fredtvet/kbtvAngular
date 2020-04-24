@@ -10,8 +10,7 @@ import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subsc
 
 @Component({
   selector: 'app-mission-list',
-  templateUrl: './mission-list.component.html',
-  styleUrls: ['./mission-list.component.scss']
+  templateUrl: './mission-list.component.html'
 })
 
 export class MissionListComponent extends SubscriptionComponent{

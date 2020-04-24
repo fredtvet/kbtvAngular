@@ -1,11 +1,11 @@
-<div class="mission-bar mat-elevation-z6" fxLayout="column" fxLayoutAlign="center center" 
+<div class="mission-bar mat-elevation-z2" fxLayout="column" fxLayoutAlign="center center" 
     [ngClass]="{
-        'bg-primary': timesheet.status == 2, 
+        'bg-accent': timesheet.status == 2, 
         'bg-warn': timesheet.status == 0,
         'width-no-handset': true
     }"
     [ngClass.xs]="{
-        'bg-primary': timesheet.status == 2, 
+        'bg-accent': timesheet.status == 2, 
         'bg-warn': timesheet.status == 0,
         'width-handset': true
     }"

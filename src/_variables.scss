@@ -1,26 +1,28 @@
 @import '~@angular/material/theming';
 
-$app-primary: mat-palette($mat-amber, A200, A150, A200);
-$app-accent:  mat-palette($mat-amber, A200, A150, A200);
-$app-warn:    mat-palette($mat-red, A200, A150, A100);
+$app-primary: mat-palette($mat-brown, 500);
+$app-accent:  mat-palette($mat-yellow, A700, A100);
+$app-warn:    mat-palette($mat-red, 900);
 
+$primary-light: mat-color($app-primary, 100);
 $primary: mat-color($app-primary);
-$accent: mat-color($app-accent);
-$warn: mat-color($app-warn);
-$green: mat-color($mat-green, 300);
+$primary-dark: mat-color($app-primary, 700);
 
-$kbtv-client-theme: mat-dark-theme($app-primary, $app-accent, $app-warn);
+$accent-light: mat-color($app-accent, A100);
+$accent: mat-color($app-accent, A700);
+
+$warn: mat-color($app-warn);
+$success: mat-color($mat-green, A700);
+
+$kbtv-client-theme: mat-light-theme($app-primary, $app-accent);
 
 $background: map-get($kbtv-client-theme, background);
 $foreground: map-get($kbtv-client-theme, foreground);
 
-$bg-black: mat-color($background,"status-bar");
-$bg-highlight:mat-color($background,"background");
-$bg-content: mat-color($background,"app-bar");
-$bg-card: mat-color($background,"card");
-$bg-app-bar: mat-color($background,"card");
+$background-color:$primary-light;
+$foreground-color:white;
 
-$bg-dialog: mat-color($background,"unselected-chip");
+
 
 $content-margin: 8;
 $content-width: calc(100% - (#{$content-margin} * 2 * 1px));
@@ -35,15 +37,6 @@ $font-size-small:14px;
 
 $timesheet-menu-height: 93;
 
-@mixin full-page-container{
-  padding: $content-margin * 1px!important;
-  height:100% !important;
-  width:100%;
-}
-
-@mixin content-container{
-  margin: $content-margin * 1px;
-}
 
 @mixin small-header{
   font-weight: 500;

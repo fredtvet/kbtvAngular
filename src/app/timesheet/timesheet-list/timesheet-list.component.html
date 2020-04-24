@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="start stretch" class="content-container mb-0 mt-2 h-100">
+<div fxLayout="column" fxLayoutAlign="start stretch" class="h-100">
         
         <ng-container>
             <app-timesheet-list-menu 
@@ -7,7 +7,7 @@
                 (statusChanged)="changeStatus($event)">
             </app-timesheet-list-menu>
 
-            <button color="primary" mat-mini-fab aria-label="ny" class="action_fab"
+            <button mat-mini-fab aria-label="ny" class="action_fab"
                 (click)="openTimesheetForm(getCurrentFilter().mission)">
                 <mat-icon class="icon_125">add</mat-icon>
             </button>
@@ -15,12 +15,13 @@
 
 
         <cdk-virtual-scroll-viewport itemSize="scrollStrategy" fxFlex>
-            <app-timesheet-card
-                *cdkVirtualFor="let timesheet of timesheets$ | async"
+            <div class="m-2 mat-elevation-z3" *cdkVirtualFor="let timesheet of timesheets$ | async">
+                <app-timesheet-card         
                 [timesheet]="timesheet"
                 (confirmed)="confirmTimesheet($event)"
                 (deleted)="deleteTimesheet($event)">
-            </app-timesheet-card>
+                </app-timesheet-card>
+            </div>
         </cdk-virtual-scroll-viewport>
 
 </div>

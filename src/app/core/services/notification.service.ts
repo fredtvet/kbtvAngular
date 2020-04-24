@@ -14,7 +14,7 @@ export class NotificationService {
   setNotification(message: string, type: number = 0){
     switch(type){
       case Notifications.Success:
-        this.openSnackBar(message, 'check_circle', 2000, 'notification', 'color-green');
+        this.openSnackBar(message, 'check_circle', 2000, 'notification', 'color-success');
         break;
       case Notifications.Error:
         this.openSnackBar(message, 'error', 3500, 'notification-error');

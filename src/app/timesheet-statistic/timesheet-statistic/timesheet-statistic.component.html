@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="start start" class="static-page-container mb-0 mt-0 h-100">
+<div fxLayout="column" fxLayoutAlign="start start" class="static-page-container mb-0 mt-0 h-100 bg-primary">
 
     <app-timesheet-filter-header class="w-100" 
         [filter]="filter$ | async" 
@@ -13,7 +13,7 @@
         <mat-button-toggle [value]="timePeriods.Year">År</mat-button-toggle>
     </mat-button-toggle-group>
 
-    <app-timesheet-statistic-table class="w-100"
+    <app-timesheet-statistic-table class="w-100 mat-elevation-z2"
         [timesheetSummaries]="timesheetSummaries$ | async"
         [users]="users$ | async">
     </app-timesheet-statistic-table>

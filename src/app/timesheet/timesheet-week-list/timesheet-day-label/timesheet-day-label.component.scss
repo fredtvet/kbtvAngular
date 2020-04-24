@@ -5,11 +5,7 @@
 }
 
 .static-section{
-  background:$bg-app-bar;
   width:100%;
   padding-top:$content-margin*1px;
-}
-
-.highlighted{
-  border: 1px dashed $primary;
+  //border-bottom:1px dashed $primary;
 }

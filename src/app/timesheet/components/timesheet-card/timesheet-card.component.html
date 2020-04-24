@@ -1,13 +1,11 @@
-<div fxLayout="column" fxLayoutAlign="space-between start" class="mat-elevation-z6 timesheet-card"
+<div fxLayout="column" fxLayoutAlign="space-between start" class="timesheet-card bg-foreground"
   *ngIf="timesheet"
-  [ngClass]="{'no-padding-top': timesheet.status == 0}">
+  [ngClass]="{'pt-0': timesheet.status == 0}">
 
-  <span fxLayout="row" fxLayoutAlign="start center" *ngIf="timesheet.status == 0" >
-
-    <span class="color-warn">Ubekreftet!</span>
-    <button mat-button color="primary" (click)="confirmTimesheet()">Trykk for å bekrefte</button>
-
-  </span>
+  <button mat-button class="p-0" *ngIf="timesheet.status == 0" (click)="confirmTimesheet()"> 
+      <span class="color-warn">Ubekreftet!</span>
+      Trykk for å bekrefte
+  </button>
 
   <span fxLayout="row" fxLayoutAlign="space-between center" class="w-100" *ngIf="timesheet">
 
@@ -25,7 +23,7 @@
       </span>
 
     </span>
-    <mat-icon color="primary" style="margin-bottom:auto"
+    <mat-icon class="mb-auto color-success"
       *ngIf="timesheet.status !== 0">
       check
     </mat-icon>

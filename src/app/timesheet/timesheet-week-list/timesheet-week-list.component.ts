@@ -127,7 +127,7 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
   private configureMainNav(){
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Timevisning";
-    cfg.buttons = [{icon: "list", color: "primary", callback: this.goToTimesheetList}];
+    cfg.buttons = [{icon: "list", callback: this.goToTimesheetList}];
     this.mainNavService.addConfig(cfg);
   }
 }

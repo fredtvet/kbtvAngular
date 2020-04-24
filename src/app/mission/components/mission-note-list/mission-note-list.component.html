@@ -6,7 +6,7 @@
         <mat-expansion-panel-header>
 
           <mat-panel-title class="ellipsis">
-            <mat-icon [color]="note.pinned ? 'primary' : ''">{{note.pinned ? 'star' : 'note'}}</mat-icon>
+            <mat-icon [color]="note.pinned ? 'accent' : ''">{{note.pinned ? 'star' : 'note'}}</mat-icon>
             <span class="ml-3 ellipsis">{{ note.title || (note.createdAt | date: 'short')}}</span>
           </mat-panel-title>
 

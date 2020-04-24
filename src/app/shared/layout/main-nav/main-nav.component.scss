@@ -4,7 +4,7 @@
   position: sticky;
   top: 0;
   z-index: 2;
-  background-color:$bg-app-bar;
+  background-color:$primary-dark;
   padding:0 8px 0 8px !important;
 }
 
@@ -25,25 +25,40 @@ mat-sidenav-container {
   padding-bottom:$bottom-nav-height * 1px;
 }
 
-mat-sidenav-container mat-sidenav {
-  width: $sidenav-width * 1px;
-  background-color:$bg-app-bar;
-  z-index:3;
+mat-sidenav-container{
+  mat-sidenav {
+    width: $sidenav-width * 1px;
+    background-color:$primary;
+    z-index:3;
+    mat-nav-list{
+      .bottom-list{
+        position: absolute;
+        bottom:0;
+        width:100%;
+      } 
+    }
+    mat-toolbar {
+      height:$main-nav-height * 1px!important;
+      background:$primary-dark!important;
+      @include small-header;
+      color:white;
+    }
+  }
+
+  mat-sidenav-content {
+    background-color:$primary;
+    mat-toolbar {
+        color:white;
+        padding:0;
+    }
+  }
 }
 
-mat-sidenav-container mat-sidenav mat-toolbar {
-  height:$main-nav-height * 1px!important;
-  background:$bg-app-bar!important;
-  @include small-header;
-  color:$primary;
+.mat-list-base .mat-list-item{
+  color:white;
 }
-mat-sidenav-container mat-sidenav-content {
-  background:$bg-content!important;
-}
-mat-sidenav-container mat-sidenav-content mat-toolbar {
-  color:$primary;
-  padding:0;
-}
+
+
 
 .alt_nav{
   @include nav;
@@ -60,7 +75,7 @@ mat-sidenav-container mat-sidenav-content mat-toolbar {
   position:sticky;
   top:0;
   z-index:1;
-  background:$bg-content;
+  background:$background-color;
   overflow:auto;
 }
 
@@ -71,6 +86,7 @@ mat-sidenav-container mat-sidenav-content mat-toolbar {
 .main_content_height_main{
   height:$content-container-height;
 }
+
 .alt_nav_row{
   height:auto!important;
   padding-left:$content-margin * 4px;

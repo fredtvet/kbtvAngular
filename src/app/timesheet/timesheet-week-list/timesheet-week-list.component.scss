@@ -24,8 +24,8 @@ $width-handset: calc((100vw / 5) - 1px);
 .progress-bar-container{
   margin-top:1px;
   min-height:25px;
-  color:$bg-black;
   position:relative;
+  color:$background-color;
   width:100%;
 }
 

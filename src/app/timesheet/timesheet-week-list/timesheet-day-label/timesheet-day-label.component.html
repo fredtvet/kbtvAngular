@@ -1,5 +1,4 @@
-<span class="static-section" fxLayout="column" fxLayoutAlign="start center" matRipple 
-  [ngClass]="{ 'highlighted' : date | sameDate : today }" 
+<span class="static-section mat-elevation-z2 bg-foreground" fxLayout="column" fxLayoutAlign="start center" matRipple 
   (click)="labelClicked.emit(date)">
 
     <div fxLayout="column" fxLayoutAlign="center center">
@@ -12,10 +11,9 @@
       </span>
     </div>
 
-    <button mat-icon-button color="primary" [disableRipple]="true">
+    <button mat-icon-button [disableRipple]="true">
       <mat-icon class="icon">add</mat-icon>Ny
     </button>
-
 </span>
 
 

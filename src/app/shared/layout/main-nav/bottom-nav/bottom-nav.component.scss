@@ -5,7 +5,7 @@
     bottom:0px;
     right:0px;
     height:$bottom-nav-height * 1px !important;
-    background:$bg-app-bar;
+    background:$primary-dark;
     z-index:2;
 }
 
@@ -19,6 +19,6 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    color:#fff;
+    color:white;
 }
 

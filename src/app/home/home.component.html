@@ -1,6 +1,6 @@
 
-  <div class="content-container mat-elevation-z6" fxLayout="column">
-    <mat-nav-list>
+  <div class="mat-elevation-z3 m-2 bg-foreground" fxLayout="column">
+    <mat-nav-list class="p-0">
         <mat-list-item [routerLink]="['/oppdrag']">
           <mat-icon mat-list-icon>view_list</mat-icon>
           <span mat-line>Oppdrag</span>
@@ -17,20 +17,13 @@
     </mat-nav-list>
   </div>
 
-  <div class="content-container mat-elevation-z6" fxLayout="column">
-
-    <mat-nav-list>
-      <!-- <mat-list-item [routerLink]="['/oppdragsgivere']">
-        <mat-icon mat-list-icon>work</mat-icon>
-        <span mat-line>Oppdragsgivere</span>
-        <mat-icon>chevron_right</mat-icon>
-        <mat-divider class="mid-divider"></mat-divider>
-      </mat-list-item> -->
-
+  <div class="mat-elevation-z3 m-2  bg-foreground" fxLayout="column">
+    <mat-nav-list class="p-0">
       <mat-list-item [routerLink]="['/data']">
         <mat-icon mat-list-icon>dns</mat-icon>
         <span mat-line>Administrer data</span>
         <mat-icon>chevron_right</mat-icon>
+        <mat-divider class="mid-divider"></mat-divider>
       </mat-list-item>
       <mat-list-item [routerLink]="['/timestatistikk']">
         <mat-icon mat-list-icon>assessment</mat-icon>
@@ -45,11 +38,10 @@
         <mat-divider class="mid-divider"></mat-divider>
       </mat-list-item>
     </mat-nav-list>
-
   </div>
 
-  <div class="content-container mission-card mat-elevation-z6" fxLayout="column">
-    <span class="content-header">Sist besøkte oppdrag</span>
+  <div class="mat-elevation-z3 p-2 m-2 bg-foreground" fxLayout="column">
+    <span class="ml-2">Sist besøkte oppdrag</span>
     <div class="static-page-content" fxFill>
 
       <p *ngIf="!newestMissions"><em>Laster inn oppdrag...</em></p>

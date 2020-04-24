@@ -1,4 +1,4 @@
-<mat-tab-group mat-stretch-tabs *ngIf="mission">
+<mat-tab-group mat-stretch-tabs *ngIf="mission" color="accent">
   <mat-tab label="Generelt">
     <div class="tab-container-alt p-2">
       <mat-nav-list class="p-0">
@@ -31,7 +31,7 @@
             <mat-icon>delete_forever</mat-icon>
           </button>
 
-          <mat-icon *ifRole="[Roles.Mellomleder, Roles.Ansatt, Roles.Oppdragsgiver]" class="color-green">
+          <mat-icon *ifRole="[Roles.Mellomleder, Roles.Ansatt, Roles.Oppdragsgiver]" class="color-success">
             cloud_download
           </mat-icon>
 
@@ -64,7 +64,7 @@
 
 </mat-tab-group>
 
-<button color="primary"
+<button
     *ifRole="[Roles.Leder, Roles.Ansatt, Roles.Mellomleder]"
     mat-mini-fab aria-label="ny"
     class="action_fab"

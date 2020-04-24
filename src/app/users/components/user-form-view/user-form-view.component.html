@@ -6,7 +6,7 @@
       </mat-error>
   </mat-form-field>
 
-  <mat-form-field [ngClass]="{'hide': !isCreateForm}">
+  <mat-form-field *ngIf="isCreateForm">
     <input matInput placeholder="Passord"  formControlName="password" required>
     <mat-error *ngIf="this.password.invalid">
       Passord er ett obligatorisk felt på minst 7 tegn.

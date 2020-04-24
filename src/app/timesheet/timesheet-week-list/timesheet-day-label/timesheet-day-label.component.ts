@@ -15,8 +15,6 @@ export class TimesheetDayLabelComponent {
   @Input() date: Date;
   @Output() labelClicked = new EventEmitter();
 
-  today = new Date();
-
   constructor(public dialog: MatDialog) {}
 
 }

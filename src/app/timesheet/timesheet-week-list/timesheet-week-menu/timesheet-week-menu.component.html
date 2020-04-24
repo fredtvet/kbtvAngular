@@ -1,27 +1,31 @@
 
-<div class="week-menu" fxLayout="row" fxLayoutAlign="space-between center" >
-  <span>
-    <mat-form-field class="year-field">
-      <input matAutosize=true matInput type="number" placeholder="År" autocomplete="off"
-        [ngModel]="dateParams.year"
-        (ngModelChange)="changeYear($event)">
-    </mat-form-field>
+<div class="bg-primary mat-elevation-z3">
 
-    <mat-form-field class="week-field">
-      <input matAutosize=true matInput type="number" placeholder="Uke" autocomplete="off"
-        [ngModel]="dateParams.weekNr"
-        (ngModelChange)="changeWeek($event)">
-    </mat-form-field>
-  </span>
+  <div fxLayout="row" fxLayoutAlign="space-between center" >
+    <span>
+      <mat-form-field class="year-field" color="accent">
+        <input matAutosize=true matInput type="number" placeholder="År" autocomplete="off"
+          [ngModel]="dateParams.year"
+          (ngModelChange)="changeYear($event)">
+      </mat-form-field>
 
-  <button mat-button color="primary" (click)="allTimesheetsConfirmed.emit()">Bekreft alle</button>
+      <mat-form-field class="week-field" color="accent">
+        <input matAutosize=true matInput type="number" placeholder="Uke" autocomplete="off"
+          [ngModel]="dateParams.weekNr"
+          (ngModelChange)="changeWeek($event)">
+      </mat-form-field>
+    </span>
+
+    <button mat-button class="color-accent" (click)="allTimesheetsConfirmed.emit()">Bekreft alle</button>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <app-week-picker
+    [weekNr]="dateParams.weekNr"
+    [totalWeeks]="totalWeeks"
+    (weekSelected)="changeWeek($event)">
+  </app-week-picker>
 
 </div>
 
-<mat-divider></mat-divider>
-
-<app-week-picker
-  [weekNr]="dateParams.weekNr"
-  [totalWeeks]="totalWeeks"
-  (weekSelected)="changeWeek($event)">
-</app-week-picker>

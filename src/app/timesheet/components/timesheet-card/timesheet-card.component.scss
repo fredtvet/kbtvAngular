@@ -2,16 +2,7 @@
 
 .timesheet-card{
   padding:$content-margin * 1px;
-  background:$bg-card;
   border-radius:4px;
   margin-bottom:4px;
+  min-width:220px;
 }
-
-.no-padding-top{
-  padding-top:0!important;
-}
-
-.no-margin-top{
-  margin-top:0!important;
-}
-

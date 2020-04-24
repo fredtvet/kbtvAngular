@@ -1,6 +1,6 @@
 <span fxLayout="row" fxLayoutAlign="space-between start" class="mb-1">
     
-    <span class="mat-body faded-text ellipsis" fxLayout="column" fxLayoutAlign="start start" style="line-height:15px;height:50px">
+    <span class="mat-body ellipsis" fxLayout="column" fxLayoutAlign="start start" style="line-height:15px;height:50px">
         <span *ngIf="filter.user">{{ filter.user.firstName }} {{ filter.user.lastName }}</span>
         <span *ngIf="filter.mission">{{ filter.mission.address }}</span>
         <span *ngIf="filter.dateRange">
@@ -8,7 +8,7 @@
         </span>
     </span>
 
-    <button mat-button color="primary" (click)="filterClicked()">
+    <button mat-button color="accent" (click)="filterClicked()">
         <mat-icon>filter_list</mat-icon>
         Filter
     </button>

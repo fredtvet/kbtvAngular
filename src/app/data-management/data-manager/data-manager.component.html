@@ -1,6 +1,6 @@
-<div class="static-page-container" fxLayout="column" fxLayoutGap="8px">
+<div class="static-page-container bg-primary" fxLayout="column" fxLayoutGap="8px">
 
-    <mat-form-field appearance="fill" class="data-picker">
+    <mat-form-field appearance="fill" class="data-picker mat-elevation-z2">
       <mat-label>Velg</mat-label>
       <mat-select [(ngModel)]="sessionService.dataTable" (selectionChange)="loadTable()">
         <mat-option *ngFor="let table of tables" value="{{ table }}">{{ table }}</mat-option>
@@ -8,7 +8,7 @@
     </mat-form-field>
 
     <ag-grid-angular #dataGrid
-      class="ag-theme-balham-dark data-container"
+      class="ag-theme-balham data-container mat-elevation-z2"
       rowSelection="multiple"
       suppressRowClickSelection="true"
       suppressColumnVirtualisation="true"
@@ -20,11 +20,11 @@
     </ag-grid-angular>
 
     <span fxLayout="row" fxLayoutAlign="space-between none" >
-      <button mat-icon-button aria-label="Slett" color="warn" (click)="openDeleteDialog()">
+      <button mat-raised-button aria-label="Slett" color="warn" (click)="openDeleteDialog()">
         <mat-icon>delete_forever</mat-icon>
       </button>
 
-      <button mat-icon-button aria-label="Ny" color="primary" (click)="create()">
+      <button mat-raised-button aria-label="Ny" color="accent" (click)="create()">
         <mat-icon>add</mat-icon>
       </button>
     </span>
