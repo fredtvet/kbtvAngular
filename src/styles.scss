@@ -16,22 +16,6 @@ body {
   border: 1px solid $primary!important;;
 }
 
-.card-container{
-  //width:$content-width!important;
-  overflow:auto;
-  position:sticky;
-  margin: $content-margin  * 1px !important;
-  background-color:mat-color($background,"app-bar")!important;
-}
-
-.mat-tab-header{
-  background-color:$bg-app-bar;
-  position:sticky!important;
-  width:100%;
-  left:0;
-  z-index:2;
-}
-
 .active{
   color: $primary !important;
 }
@@ -185,13 +169,15 @@ body {
 .app-form{
   max-width:600px;
   padding:$content-margin * 1px;
-  background-color:mat-color($background,"app-bar");
+  background-color:$bg-card;
   color:mat-color($foreground, "base");
   height:auto;
 }
 
 .form-container{
   padding: $content-margin * 2px!important;
+  background:mat-color($background,"app-bar");
+  border:1px grey dashed;
 }
 
 .mid-divider{
@@ -249,11 +235,39 @@ body {
   }
 }
 
-.mat-button-toggle-appearance-standard {
-  .mat-button-toggle-label-content {
-    line-height: 38px!important;
+.mat-button-toggle-group{
+  .mat-button-toggle-appearance-standard {
+    .mat-button-toggle-label-content {
+      line-height: 38px!important;
+    }
   }
 }
+
+.mat-tab-group{
+  position:sticky!important;
+  width:100%;
+  .mat-tab-header{
+    background-color:$bg-app-bar;
+    position:sticky!important;
+    width:100%;
+    left:0;
+    z-index:2;
+  }
+}
+
+.tab-container{
+  overflow:auto;
+  position:relative;
+  height:calc(100vh - ((#{$tab-header-height} + #{$main-nav-height} + #{$bottom-nav-height}) * 1.01px))!important;
+}
+
+.tab-container-alt{
+  overflow:auto;
+  position:relative;
+  height:calc(100vh - ((#{$tab-header-height} + #{$alt-nav-height} + #{$bottom-nav-height}) * 1.01px))!important;
+}
+
+
 
 
 //Spinner primarily for buttons

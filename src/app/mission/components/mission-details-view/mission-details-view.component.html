@@ -1,6 +1,6 @@
 <mat-tab-group mat-stretch-tabs *ngIf="mission">
   <mat-tab label="Generelt">
-    <div class="card-container">
+    <div class="tab-container-alt p-2">
       <mat-nav-list class="p-0">
         <h3 mat-subheader>Informasjon</h3>
         <mat-list-item>
@@ -46,14 +46,13 @@
   </mat-tab>
 
   <mat-tab label="Bilder">
-    <div class="card-container">
+    <div class="tab-container-alt">
       <app-image-list [images]="images" (imageDeleted)="this.imageDeleted.emit($event)"></app-image-list>
     </div>
-
   </mat-tab>
 
   <mat-tab label="Notater">
-    <div class="card-container">
+    <div class="tab-container-alt p-2">
       <app-mission-note-list
         [missionId]="mission.id"
         [notes]="notes"

@@ -18,6 +18,7 @@ import { DateParams } from "src/app/shared/interfaces";
 import { MatDialog } from "@angular/material/dialog";
 import { TimesheetFormDialogWrapperComponent } from "../components/timesheet-form-dialog-wrapper.component";
 import { Router } from "@angular/router";
+import { TimesheetCardDialogWrapperComponent } from '../components/timesheet-card-dialog-wrapper.component';
 
 @Component({
   selector: "app-timesheet-week-list",
@@ -63,10 +64,6 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
     console.timeEnd("init");
   }
 
-  dateParamsWithWeekday(weekDay: number): DateParams {
-    return { ...this.dateParamsSubject.value, weekDay: weekDay };
-  }
-
   confirmWeek(days: Timesheet[][]) {
     let ids = [].concat(...days).reduce((acc, timesheet) => {
       if (timesheet.status === TimesheetStatus.Open) acc.push(timesheet.id);
@@ -82,8 +79,18 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
   }
 
   openTimesheetForm(date: Date): void {
-    this.dialog.open(TimesheetFormDialogWrapperComponent, {
+   const dialogRef = this.dialog.open(TimesheetFormDialogWrapperComponent, {
       data: { date: date }
+    });
+
+    dialogRef.afterClosed().subscribe(timesheet => {
+      if(timesheet) this.openTimesheetCard(timesheet.id);
+    });
+  }
+
+  openTimesheetCard(timesheetId: number){
+    this.dialog.open(TimesheetCardDialogWrapperComponent, {
+      data: timesheetId
     });
   }
 

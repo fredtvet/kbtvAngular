@@ -26,7 +26,7 @@ export class TimesheetListMenuComponent implements OnInit {
   }
 
   openFilter(){
-    this.filterClicked.emit();
+    this.filterClick.emit();
   }
 
 }

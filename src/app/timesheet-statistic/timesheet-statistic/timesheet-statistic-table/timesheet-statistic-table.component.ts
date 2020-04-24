@@ -1,6 +1,6 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { TimesheetSummary } from 'src/app/shared/interfaces';
+import { TimesheetSummary, TimesheetFilter } from 'src/app/shared/interfaces';
 import { DatePipe } from '@angular/common';
 import { User } from 'src/app/shared/models';
 
@@ -37,7 +37,6 @@ export class TimesheetStatisticTableComponent {
   }
 
   private initNgGrid(data: TimesheetSummary[]){
-    console.log(data);
     this.columnDefs = [];
     this.rowData = [];
 
@@ -48,40 +47,42 @@ export class TimesheetStatisticTableComponent {
     //this.columnDefs.push({colId: 'checkbox', checkboxSelection: true, width: 42, pinned: 'left', lockPosition: true})
     
     if(propertyNames.includes('year'))
-      this.columnDefs.push({field: 'year',headerName: 'År',sortable: true,resizable: true,lockPosition: true});
+      this.columnDefs.push({field: 'year',headerName: 'År',sortable: true});
 
     if(propertyNames.includes('month'))
-
-      this.columnDefs.push({field: 'month',headerName: 'Måned',sortable: true,resizable: true,lockPosition: true, 
-        valueFormatter: this.convertMonthIndex});
+      this.columnDefs.push({field: 'month',headerName: 'Måned',sortable: true, valueFormatter: this.convertMonthIndex});
 
     if(propertyNames.includes('weekNr'))
-      this.columnDefs.push({field: 'weekNr',headerName: 'Uke',sortable: true,resizable: true,lockPosition: true});
+      this.columnDefs.push({field: 'weekNr',headerName: 'Uke',sortable: true});
 
     if(propertyNames.includes('date'))
-      this.columnDefs.push({field: 'date',headerName: 'Dato',sortable: true,resizable: true,lockPosition: true,
-        valueFormatter: this.convertDate});
+      this.columnDefs.push({field: 'date',headerName: 'Dato',sortable: true, valueFormatter: this.convertDate});
 
-    this.columnDefs.push({field: 'userName',headerName: 'Bruker',sortable: true,resizable: true,lockPosition: true,
-      valueFormatter: this.convertUserNameToFullName});
+    this.columnDefs.push({field: 'userName',headerName: 'Ansatt',sortable: true, valueFormatter: this.convertUserNameToFullName});
 
-    this.columnDefs.push({field: 'totalHours',headerName: 'Timer',sortable: true,resizable: true,lockPosition: true});
+    this.columnDefs.push({field: 'totalHours',headerName: 'Timer',sortable: true});
 
-
-
+    let totalHrs = data.reduce((totalHours, summary) => { return totalHours + summary.totalHours }, 0);
+    
+    if(this.dataGrid)
+      this.dataGrid.api.setPinnedBottomRowData([{totalHours: totalHrs, userName: "Sum av timer", timesheets: []}]);
+    
     this.rowData = data;
   }
 
   private convertMonthIndex = (params) => {
-    return this.datePipe.transform(params.value, 'MMM');
+    if(params.value == undefined) return undefined;
+    return this.datePipe.transform(new Date().setMonth(params.value), 'MMM');
   }
 
   private convertDate = (params) => {
+    if(params.value == undefined) return undefined;
     return this.datePipe.transform(params.value)
   }
 
   private convertUserNameToFullName = (params) => {
     const user = this.users.find(x => x.userName == params.value);
+    if(user == undefined) return undefined;
     return user.lastName + ', ' + user.firstName;
   }
 }

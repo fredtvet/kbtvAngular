@@ -40,27 +40,50 @@
           Denne uken
         </mat-radio-button>
         <mat-radio-button [value]="dateRangePresets.CurrentMonth">
-          Denne måneden
+          Denne måned
         </mat-radio-button>
         <mat-radio-button [value]="dateRangePresets.CurrentYear">
-          Dette året
+          I år
         </mat-radio-button>     
-        <mat-radio-button [value]="dateRangePresets.Custom" #customDateRange>
-          Egendefinert
+        <mat-radio-button [value]="dateRangePresets.CustomMonth" #customMonthSelect>
+          Velg måned
+        </mat-radio-button>
+        <mat-radio-button [value]="dateRangePresets.Custom" #customDateRangeSelect>
+          Velg tid
+        </mat-radio-button>
+        <mat-radio-button [value]="dateRangePresets.ShowAll">
+          Vis alt
         </mat-radio-button>
       </mat-radio-group>
 
-      <mat-form-field style="width:164px" [hidden]="!customDateRange.checked">
-        <input matInput  placeholder="Velg tidsrom" selectMode="range" 
-          [owlDateTimeTrigger]="t1" [owlDateTime]="t1" 
-          [(ngModel)]="filterPreset.dateRange">
-        <button mat-button *ngIf="filterPreset.dateRange" matSuffix mat-icon-button aria-label="Lukk" (click)="filterPreset.dateRange=null">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
+      <ng-container *ngIf="customDateRangeSelect.checked">
+        <mat-form-field style="width:164px">
+          <input matInput  placeholder="Velg tidsrom" selectMode="range" 
+            [owlDateTimeTrigger]="customDateRange" [owlDateTime]="customDateRange" 
+            [(ngModel)]="filterPreset.dateRange">
+          <button mat-button *ngIf="filterPreset.dateRange" matSuffix mat-icon-button aria-label="Lukk" (click)="filterPreset.dateRange=null">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
 
-      <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" #t1></owl-date-time>
+        <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" #customDateRange></owl-date-time>
+      </ng-container>
+      
+      <ng-container *ngIf="customMonthSelect.checked">
+        <mat-form-field style="width:164px">
+          <input matInput  placeholder="Velg måned" selectMode="range" 
+            [owlDateTimeTrigger]="customMonth" [owlDateTime]="customMonth" 
+            [(ngModel)]="filterPreset.dateRange">
+          <button mat-button *ngIf="filterPreset.dateRange" matSuffix mat-icon-button aria-label="Lukk" (click)="filterPreset.dateRange=null">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
   
+        <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" [startView]="'multi-years'" 
+          (monthSelected)="chosenMonthHandler($event, customMonth)" #customMonth>
+        </owl-date-time>
+      </ng-container>
+
       <mat-divider class="mb-2"></mat-divider>
 
     </ng-container>

@@ -6,8 +6,7 @@ import { Roles } from '../../../shared/enums';
 
 @Component({
   selector: 'app-mission-details-view',
-  templateUrl: './mission-details-view.component.html',
-  styleUrls: ['./mission-details-view.component.scss']
+  templateUrl: './mission-details-view.component.html'
 })
 export class MissionDetailsViewComponent {
 

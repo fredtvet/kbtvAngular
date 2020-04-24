@@ -1,9 +1,9 @@
 import { Timesheet } from '../models';
 
-export interface TimesheetSummary{
-    userName: string;
+export interface TimesheetSummary{   
     totalHours: number;
     timesheets: Timesheet[];
+    userName?: string;
     year?: number;
     month?: number;
     week?: number;

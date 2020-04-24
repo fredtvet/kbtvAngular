@@ -4,6 +4,7 @@ import { Notifications, Roles } from 'src/app/shared/enums';
 import { take } from 'rxjs/operators';
 import { UserTimesheetService, IdentityService, MissionService, NotificationService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-timesheet-form',
@@ -30,7 +31,8 @@ export class TimesheetFormComponent implements OnInit {
     private _userTimesheetService: UserTimesheetService,
     private _identityService: IdentityService,
     private _missionService: MissionService,
-    private _notificationService: NotificationService) {
+    private _notificationService: NotificationService,
+    private dialogRef: MatDialogRef<TimesheetFormComponent>) {
       this.initTime.setHours(6,0,0,0);
     }
 
@@ -57,7 +59,7 @@ export class TimesheetFormComponent implements OnInit {
     timesheet.endTime = new Date(date + " " + this.timeRange[1].toTimeString());
 
     if(this.validateDates(timesheet)) 
-      this._userTimesheetService.add$(timesheet).pipe(take(1)).subscribe();
+      this._userTimesheetService.add$(timesheet).pipe(take(1)).subscribe(x => this.dialogRef.close(x));
     else 
       this._notificationService.setNotification("Sluttidspunkt må være etter starttidspunkt", Notifications.Error);   
   }

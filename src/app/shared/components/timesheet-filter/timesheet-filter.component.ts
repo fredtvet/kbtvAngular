@@ -5,6 +5,7 @@ import { Mission } from '../../models/mission.model';
 import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
 import { TimesheetFilter } from '../../interfaces';
 import { User } from '../../models/user.model';
+import { OwlDateTimeComponent } from 'ng-pick-datetime';
 
 @Component({
   selector: 'app-timesheet-filter',
@@ -43,8 +44,8 @@ export class TimesheetFilterComponent {
     return mission.address;
   }
 
-  displayFnUser(user: User): string {
-    if(user == undefined) return null;
-    return user.userName;
+  chosenMonthHandler(date: Date, datepicker: OwlDateTimeComponent<Date>) {
+    this.filterPreset.dateRange = this.dateTimeService.getMonthRange(date);
+    datepicker.close();
   }
 }
