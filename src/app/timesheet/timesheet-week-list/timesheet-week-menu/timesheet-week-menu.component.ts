@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
-import { DateParams } from 'src/app/shared/interfaces';
+import { DateParams, AppButton } from 'src/app/shared/interfaces';
 import { DateTimeService } from 'src/app/core/services';
 
 @Component({
@@ -7,7 +7,6 @@ import { DateTimeService } from 'src/app/core/services';
   templateUrl: './timesheet-week-menu.component.html',
   styleUrls: ['./timesheet-week-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation : ViewEncapsulation.None,
 })
 
 export class TimesheetWeekMenuComponent implements OnInit {
@@ -19,7 +18,9 @@ export class TimesheetWeekMenuComponent implements OnInit {
   totalWeeks: number;
   now: Date;
 
-  constructor(private dateTimeService: DateTimeService) {}
+  confirmBtnConfig: AppButton;
+
+  constructor(private dateTimeService: DateTimeService) { this.configureConfirmAll() }
 
   ngOnInit() {
     this.now = new Date();
@@ -56,5 +57,17 @@ export class TimesheetWeekMenuComponent implements OnInit {
 
   private setWeeksPerYear(year: number): void{
     this.totalWeeks = this.dateTimeService.getWeeksInYear(year);
+  }
+
+  private confirmAllTimesheets = () => this.allTimesheetsConfirmed.emit();
+
+  private configureConfirmAll(){
+    this.confirmBtnConfig = {
+        colorClass: "color-accent",
+        text: 'Bekreft alle', 
+        aria: 'Bekreft alle',
+        callback: this.confirmAllTimesheets,
+      }
+    
   }
 }

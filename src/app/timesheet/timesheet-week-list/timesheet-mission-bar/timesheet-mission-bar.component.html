@@ -1,12 +1,12 @@
 <div class="mission-bar mat-elevation-z2" fxLayout="column" fxLayoutAlign="center center" 
     [ngClass]="{
-        'bg-accent': timesheet.status == 2, 
-        'bg-warn': timesheet.status == 0,
+        'bg-success-light': timesheet.status == 2, 
+        'bg-warn-light': timesheet.status == 0,
         'width-no-handset': true
     }"
     [ngClass.xs]="{
-        'bg-accent': timesheet.status == 2, 
-        'bg-warn': timesheet.status == 0,
+        'bg-success-light': timesheet.status == 2, 
+        'bg-warn-light': timesheet.status == 0,
         'width-handset': true
     }"
     (click)="clickBar()" matRipple>

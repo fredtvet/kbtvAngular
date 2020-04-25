@@ -19,18 +19,11 @@ export class EmployerFormViewComponent implements OnInit
 
   employerForm: FormGroup;
 
-  isCreateForm: boolean = false;
-
   constructor(
     private _formBuilder: FormBuilder){ }
 
-    ngOnInit(){
-      if(this.employer == null){
-        this.employer = new Employer();
-        this.isCreateForm = true;
-      }
-      this.initalizeForm();
-    }
+    ngOnInit(){this.initalizeForm()}
+    
 
     initalizeForm(){
       this.employerForm = this._formBuilder.group({

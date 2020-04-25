@@ -1,30 +1,12 @@
-<div class="static-page-container" fxLayout="column" fxLayoutGap="8px">
-
-    <div  fxFlex="10" class="content-header ml-2">
-      <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
-        <span>Oppdragsgivere</span>
-        <button (click)="createEmployer()" color="primary" *ifRole="[Roles.Leder, Roles.Mellomleder]"
-          mat-icon-button aria-label="ny">
-          <mat-icon class="icon_125">add</mat-icon>
-        </button>
-      </div>
-    </div>
-
-    <mat-divider></mat-divider>
-
-    <div class="static-page-content" fxFlex="90">
-      <mat-spinner *ngIf="!employers" class="center-spinner"></mat-spinner>
-      <mat-nav-list *ngIf="employers">
-        <app-nav-list-item *ngFor="let employer of employers; last as last"
-          (click)="(currentUser.role == Roles.Leder) ? editEmployer(employer.id) : ''" [last]="last"
-          [config]="{mainLine: employer.name, startIcon: 'work', endIcon: (currentUser.role == Roles.Leder) ? 'edit' : '', subLines: [
-            {name: employer.phoneNumber || 'Ingen kontaktnummer', icon: 'phone'},
-            {name: employer.address || 'Ingen addresse', icon: 'home'}
-          ]}">
-        </app-nav-list-item>
-      </mat-nav-list>
-    </div>
-
-</div>
-
-
+<app-inner-nav title="Oppdragsgivere" [buttons]="innerNavButtons">
+  <mat-spinner *ngIf="!employers" class="center-spinner"></mat-spinner>
+  <mat-nav-list *ngIf="employers" class="p-0">
+    <app-nav-list-item *ngFor="let employer of employers; last as last"
+      (click)="(currentUser.role == Roles.Leder) ? editEmployer(employer.id) : ''" [last]="last"
+      [config]="{mainLine: employer.name, startIcon: 'work', endIcon: (currentUser.role == Roles.Leder) ? 'edit' : '', subLines: [
+        {name: employer.phoneNumber || 'Ingen kontaktnummer', icon: 'phone'},
+        {name: employer.address || 'Ingen addresse', icon: 'home'}
+      ]}">
+    </app-nav-list-item>
+  </mat-nav-list>
+</app-inner-nav>

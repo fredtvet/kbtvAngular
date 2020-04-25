@@ -38,8 +38,6 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
 
   vm$: Observable<any>;
 
-  //timesheetDays: Timesheet[][];
-
   totalWeeks: number;
 
   constructor(
@@ -130,4 +128,5 @@ export class TimesheetWeekListComponent extends SubscriptionComponent {
     cfg.buttons = [{icon: "list", callback: this.goToTimesheetList}];
     this.mainNavService.addConfig(cfg);
   }
+
 }

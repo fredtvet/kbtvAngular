@@ -21,10 +21,12 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 .color-accent{color:$accent!important;}
 .color-accent-light{color:$accent-light!important;}
 
-.bg-warn{background:$warn!important;}
+.bg-warn{background:$warn!important;color:black;}
+.bg-warn-light{background:$warn-light!important;color:black;}
 .color-warn{color:$warn;}
 
-.bg-success{background:$success!important;}
+.bg-success{background:$success!important;color:black;}
+.bg-success-light{background:$success-light!important;color:black;}
 .color-success{color:$success;}
 
 .bg-background{background:$background-color;color:black;}
@@ -35,13 +37,13 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 
 .active{color: $accent !important;}
 
-.p-0{
-  padding:0 !important;
+.flex-spacer{
+  flex: 1 1 auto;
 }
 .action_fab{
-  position:absolute!important;
+  position: fixed!important;
   right: $content-margin * 1px!important;
-  bottom: $content-margin * 1px!important;
+  bottom: ($content-margin + $bottom-nav-height) * 1px;
   z-index:2;
   background:$accent;
 }
@@ -83,43 +85,23 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 .static-page-content{
   overflow:auto;
 }
-.content-header{
-  font-weight: 500;
-  font-size:$font-size-small;
-  background:$primary;
-  position:fixed;
-  padding:$content-margin*1px;
-  width:100%;
-  z-index:2;
-  color:white;
+.sticky-top{
+  @include sticky-top;
 }
-.app-form{
+.app-card{
   max-width:600px;
-  padding:$content-margin * 1px;
-  color:mat-color($foreground, "base");
-  height:auto;
+  //min-width:280px;
+  .mat-card-header-text{
+    margin:0;
+  }
 }
-.form-container{
-  padding: $content-margin * 2px!important;
-  background:mat-color($background,"app-bar");
-  border:1px grey dashed;
-}
+
 .mid-divider{
    margin-left:$content-margin * 2px!important;
    width:calc(100% - (#{$content-margin} * 4px))!important;
 }
 .center-spinner{
   margin:$content-margin * 2px auto;
-}
-.tab-container{
-  overflow:auto;
-  position:relative;
-  height:calc(100vh - ((#{$tab-header-height} + #{$main-nav-height} + #{$bottom-nav-height}) * 1.01px))!important;
-}
-.tab-container-alt{
-  overflow:auto;
-  position:relative;
-  height:calc(100vh - ((#{$tab-header-height} + #{$alt-nav-height} + #{$bottom-nav-height}) * 1.01px))!important;
 }
 
 .owl-dt-calendar-table{
@@ -153,7 +135,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
     position:sticky!important;
     width:100%;
     left:0;
-    z-index:2;
+    @include sticky-top;
     .mat-tab-label-content{
       color:white
     }

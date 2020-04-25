@@ -33,13 +33,12 @@ export class EmployerFormComponent extends SubscriptionComponent {
     private router: Router,
     public dialog: MatDialog,
   ){ 
-    super();       
-    this.configureMainNav();
+    super();         
   }
 
     ngOnInit(){
-
       this.initalizeForm();
+      this.configureMainNav();
     }
 
     onSubmit(result: Employer): void{

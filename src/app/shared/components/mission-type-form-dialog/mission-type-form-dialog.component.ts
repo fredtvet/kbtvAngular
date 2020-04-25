@@ -23,7 +23,7 @@ export class MissionTypeFormDialogComponent implements OnInit {
       name: [null, [
         Validators.required,
         Validators.maxLength(45)
-      ]]
+      ]],
     });
   }
 

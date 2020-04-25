@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable} from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { MissionService, MainNavService } from 'src/app/core/services';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
+import { AppButton } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-mission-list',
@@ -21,6 +22,8 @@ export class MissionListComponent extends SubscriptionComponent{
 
   missions$: Observable<Mission[]>;
 
+  innerNavButtons: AppButton[];
+
   constructor(
     private mainNavService: MainNavService,
     private missionService: MissionService,
@@ -28,6 +31,7 @@ export class MissionListComponent extends SubscriptionComponent{
     private router: Router) {
       super();  
       this.configureMainNav();
+      this.configureInnerNav();
     }
 
   ngOnInit(){
@@ -40,16 +44,14 @@ export class MissionListComponent extends SubscriptionComponent{
     );
   }
 
-  createMission() {
-    this.router.navigate(['oppdrag','ny'])
-  }
-
+  private createMission = () => this.router.navigate(['oppdrag','ny']);
+  
   private searchMissionList = (searchString: string) => {
     this.pageInfo.searchString = searchString;
     this.pageInfoSubject.next(this.pageInfo)
   }
 
-  private toggleFinishedMissions = (event:string) => {
+  private toggleFinishedMissions = () => {
     this.pageInfo.showFinishedMissions = !this.pageInfo.showFinishedMissions;
     this.pageInfoSubject.next(this.pageInfo);
 
@@ -67,6 +69,19 @@ export class MissionListComponent extends SubscriptionComponent{
     cfg.bottomSheetButtons = [{text: "Vis ferdige oppdrag", icon: "check_box_outline_blank", callback: this.toggleFinishedMissions}]
     cfg.searchFn = this.searchMissionList;
     this.mainNavService.addConfig(cfg);
+  }
+
+  private configureInnerNav(){
+    this.innerNavButtons = [
+      {
+        icon: "add", 
+        colorClass: "color-accent",
+        text: 'Ny', 
+        aria: 'Nytt oppdrag',
+        callback: this.createMission, 
+        allowedRoles: [Roles.Leder, Roles.Mellomleder]
+      }
+    ]
   }
 
 }

@@ -38,7 +38,7 @@ export class MissionReportFormComponent extends SubscriptionComponent {
         name: [null, [
           Validators.required,
           Validators.maxLength(45)
-        ]],
+        ]]
       }),
     });
   }

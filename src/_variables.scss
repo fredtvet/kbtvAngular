@@ -2,7 +2,8 @@
 
 $app-primary: mat-palette($mat-brown, 500);
 $app-accent:  mat-palette($mat-yellow, A700, A100);
-$app-warn:    mat-palette($mat-red, 900);
+$app-warn:    mat-palette($mat-red, A700, A400);
+$app-success: mat-palette($mat-green, A700, A400);
 
 $primary-light: mat-color($app-primary, 100);
 $primary: mat-color($app-primary);
@@ -11,8 +12,10 @@ $primary-dark: mat-color($app-primary, 700);
 $accent-light: mat-color($app-accent, A100);
 $accent: mat-color($app-accent, A700);
 
-$warn: mat-color($app-warn);
-$success: mat-color($mat-green, A700);
+$warn: mat-color($app-warn, A700);
+$warn-light: mat-color($app-warn, A400);
+$success: mat-color($app-success, A700);
+$success-light: mat-color($app-success, A400);
 
 $kbtv-client-theme: mat-light-theme($app-primary, $app-accent);
 
@@ -41,6 +44,13 @@ $timesheet-menu-height: 93;
 @mixin small-header{
   font-weight: 500;
   font-size:$font-size-small;
+}
+
+@mixin sticky-top{
+  position:sticky;
+  top:0;
+  z-index:2;
+  overflow:auto;
 }
 
 

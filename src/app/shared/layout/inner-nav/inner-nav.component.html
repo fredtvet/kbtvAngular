@@ -1,0 +1,19 @@
+
+<div  fxLayout="column">
+
+    <mat-toolbar color="primary" class="sticky-top mat-elevation-z3">
+      <mat-toolbar-row>
+        <span class="mat-body-strong">{{ title }}</span>
+        <span class="flex-spacer"></span>
+        <app-stroked-button 
+            *ngFor="let button of buttons" 
+            [config]="button">
+        </app-stroked-button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div>
+      <ng-content></ng-content>
+    </div>
+
+  </div>

@@ -2,32 +2,41 @@
 <mat-tab-group mat-stretch-tabs color="accent">
 
     <mat-tab label="Profil">
-      <app-profile-form class="tab-container"
+      <div class="p-2">
+        <app-profile-form
           *ngIf="user"
           [user]="user"
           (profileUpdated)="updateProfile($event)">
-      </app-profile-form>
+        </app-profile-form>
+      </div>
     </mat-tab>
 
     <mat-tab label="Passord">
-      <app-password-form class="tab-container"
+      <div class="p-2">
+        <app-password-form
           [error]="passwordStatus"
           (passwordUpdated)="updatePassword($event)">
-      </app-password-form>
+        </app-password-form>
+      </div>
     </mat-tab>
 
     <mat-tab label="Annet">
-      <div class="tab-container">
-        <mat-nav-list>
-          <app-nav-list-item (click)="confirmPurge()"
-            [config]="{
-              mainLine: 'Slett lokal data',
-              startIcon: 'delete_sweep',
-              endIcon: 'chevron_right',
-              subLines: [{ name: 'Du vil bli logget ut!', icon: 'warning' }]
-            }">
-          </app-nav-list-item>
-        </mat-nav-list>
+      <div class="p-2">
+        <mat-card class="app-card">
+          <mat-card-header>Annet</mat-card-header>
+          <mat-card-content>
+            <mat-nav-list>
+              <app-nav-list-item (click)="confirmPurge()"
+                [config]="{
+                  mainLine: 'Slett lokal data',
+                  startIcon: 'delete_sweep',
+                  endIcon: 'chevron_right',
+                  subLines: [{ name: 'Du vil bli logget ut!', icon: 'warning' }]
+                }">
+              </app-nav-list-item>
+            </mat-nav-list>
+          </mat-card-content>
+        </mat-card>
       </div>
     </mat-tab>
 

@@ -6,7 +6,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
 import { IfRoleDirective } from './directives/if-role.directive';
-import { MainNavComponent, BottomNavComponent } from './layout';
+import { MainNavComponent, BottomNavComponent, InnerNavComponent, IconButtonComponent,StrokedButtonComponent} from './layout';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
@@ -16,7 +16,6 @@ import {
   ImageListComponent,
   ImageViewerDialogComponent,
   NavListItemComponent,
-  VertMenuComponent,
   SearchBarComponent,
   MissionListViewComponent,
   NotificationComponent,
@@ -27,7 +26,8 @@ import {
   WeekPickerComponent,
   PageNotFoundComponent,
   TimesheetFilterComponent,
-  TimesheetFilterSheetWrapperComponent
+  TimesheetFilterSheetWrapperComponent,
+  ListCardComponent,
 } from './components';
 
 import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
@@ -38,7 +38,6 @@ import { GetDateByDateParamsPipe } from './pipes/get-date-by-date-params.pipe';
 import { SameDatePipe } from './pipes/same-date.pipe';
 import { ArrayIncludesPipe } from './pipes/array-includes.pipe';
 import { TimesheetFilterHeaderComponent } from './components/timesheet-filter-header/timesheet-filter-header.component';
-
 @NgModule({
   declarations: [
     MainNavComponent,
@@ -47,7 +46,6 @@ import { TimesheetFilterHeaderComponent } from './components/timesheet-filter-he
     ImageListComponent,
     ImageViewerDialogComponent,
     NavListItemComponent,
-    VertMenuComponent,
     SearchBarComponent,
     IfRoleDirective,
     ArraySlicePipe,
@@ -69,8 +67,11 @@ import { TimesheetFilterHeaderComponent } from './components/timesheet-filter-he
     TimesheetFilterComponent,
     TimesheetFilterSheetWrapperComponent,
     ArrayIncludesPipe,
-    TimesheetFilterHeaderComponent
-
+    TimesheetFilterHeaderComponent,
+    InnerNavComponent,
+    IconButtonComponent,
+    StrokedButtonComponent,
+    ListCardComponent,
   ],
   imports: [
     CommonModule,
@@ -107,7 +108,6 @@ import { TimesheetFilterHeaderComponent } from './components/timesheet-filter-he
     ImageListComponent,
     ImageViewerDialogComponent,
     NavListItemComponent,
-    VertMenuComponent,
     IfRoleDirective,
     ArraySlicePipe,
     ThumbnailPipe,
@@ -117,6 +117,7 @@ import { TimesheetFilterHeaderComponent } from './components/timesheet-filter-he
     GetDateByDateParamsPipe,
     SortByTimesheetStatusPipe,
     MainNavComponent,
+    InnerNavComponent,
     BottomNavComponent,
     SearchBarComponent,
     MissionListViewComponent,
@@ -128,7 +129,10 @@ import { TimesheetFilterHeaderComponent } from './components/timesheet-filter-he
     PageNotFoundComponent,
     TimesheetFilterSheetWrapperComponent,
     ArrayIncludesPipe,
-    TimesheetFilterHeaderComponent
+    TimesheetFilterHeaderComponent,
+    IconButtonComponent,
+    StrokedButtonComponent,
+    ListCardComponent,
   ]
 })
 export class SharedModule { }

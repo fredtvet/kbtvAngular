@@ -16,16 +16,13 @@
   position: unset!important;
 }
 
-mat-sidenav-container {
-  height: 100%;
-  z-index:3;
-}
-
 .toolbar-padding{
   padding-bottom:$bottom-nav-height * 1px;
 }
 
 mat-sidenav-container{
+  height: 100%;
+  z-index:3;
   mat-sidenav {
     width: $sidenav-width * 1px;
     background-color:$primary;
@@ -46,7 +43,7 @@ mat-sidenav-container{
   }
 
   mat-sidenav-content {
-    background-color:$primary;
+    background-color:$background-color;
     mat-toolbar {
         color:white;
         padding:0;
@@ -75,8 +72,8 @@ mat-sidenav-container{
   position:sticky;
   top:0;
   z-index:1;
-  background:$background-color;
   overflow:auto;
+  background:$background-color;
 }
 
 .main_content_height_alt{

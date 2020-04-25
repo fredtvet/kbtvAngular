@@ -1,30 +1,14 @@
-<div fxLayout="column">
-
-    <div  fxFlex="10" class="content-header">
-      <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
-        <span class="ml-2">Ansatte</span>
-        <button (click)="createUser()" color="accent" *ifRole="[Roles.Leder]"
-          mat-icon-button aria-label="ny">
-          <mat-icon>person_add</mat-icon>
-        </button>
-      </div>
-    </div>
-
-    <div fxFlex="90">
-      <mat-spinner *ngIf="!users" class="center-spinner"></mat-spinner>
-      <mat-nav-list *ngIf="users" class="p-0">
-        <app-nav-list-item
-          *ngFor="let user of users; last as last" [last]="last"
-          (click)="(currentUser.role == Roles.Leder && user.role != Roles.Leder) ? editUser(user.userName) : ''"
-          [config]="{
-            mainLine: (user.firstName + ' ' + user.lastName),
-            startIcon: (user.role == Roles.Oppdragsgiver) ? 'work' : 'person',
-            endIcon: (currentUser.role == Roles.Leder && user.role != Roles.Leder) ? 'edit' : '',
-            subLines: [{name: user.phoneNumber || 'Ingen kontaktnummer', icon: 'phone'}]
-          }">
-        </app-nav-list-item>
-      </mat-nav-list>
-    </div>
-</div>
+<app-inner-nav title="Liste over ansatte" [buttons]="innerNavButtons">
+  <mat-spinner *ngIf="!users" class="center-spinner"></mat-spinner>
+  <div *ngIf="users" class="p-0">
+    <app-user-card *ngFor="let user of users"
+      [user]="user"
+      [editButton]="{
+        icon: 'edit', 
+        allowedRoles: [Roles.Leder], 
+        callback: editUser, params: [user.userName]}">
+    </app-user-card>
+  </div>
+</app-inner-nav>
 
 

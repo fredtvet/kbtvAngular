@@ -5,6 +5,7 @@ import { Roles } from '../../shared/enums';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
+import { AppButton } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-employer-list',
@@ -12,17 +13,21 @@ import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subsc
 })
 
 export class EmployerListComponent extends SubscriptionComponent {
-  public Roles = Roles;
+  Roles = Roles;
 
-  public employers: Employer[];
+  employers: Employer[];
+  currentUser: User;
 
-  public currentUser: User;
+  innerNavButtons: AppButton[] = [];
 
   constructor(
     private employerService: EmployerService,
     private identityService: IdentityService,
     private mainNavService: MainNavService,
-    public router: Router) {super()}
+    public router: Router) {
+      super(); 
+      this.configureInnerNav();
+    }
 
   ngOnInit() {
     this.mainNavService.addConfig();
@@ -35,12 +40,21 @@ export class EmployerListComponent extends SubscriptionComponent {
       .subscribe(data => this.currentUser = data);
   }
 
-  editEmployer(id:number){
-    this.router.navigate(['oppdragsgivere', id, 'rediger'])
-  }
+  editEmployer = (id:number) => this.router.navigate(['oppdragsgivere', id, 'rediger'])
+  
+  createEmployer = () => this.router.navigate(['oppdragsgivere', 'ny'])
+  
 
-  createEmployer(){
-    this.router.navigate(['oppdragsgivere', 'ny'])
+  private configureInnerNav(){
+    this.innerNavButtons = [
+      {
+        icon: "add",
+        colorClass: "color-accent",
+        text: 'Ny',  
+        aria: 'Nytt oppdrag',
+        callback: this.createEmployer, 
+        allowedRoles: [Roles.Leder, Roles.Mellomleder]
+      }
+    ]
   }
-
 }

@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { ConfirmDeleteDialogComponent } from 'src/app/shared/components';
 import { Mission, MissionNote, MissionImage, MissionReport } from 'src/app/shared/models';
 import { MatDialog } from '@angular/material/dialog';
-import { Roles } from '../../../shared/enums';
+import { Roles } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-mission-details-view',

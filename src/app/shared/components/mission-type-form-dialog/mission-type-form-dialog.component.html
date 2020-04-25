@@ -1,17 +1,19 @@
+<div class="app-card m-2">
+    <mat-card-header class="mb-2">Legg til oppdragstype</mat-card-header>
+    <mat-card-content>   
+        <form *ngIf="missionTypeForm" [formGroup]="missionTypeForm" fxLayout="column">
+            <mat-form-field>
+                <input matInput placeholder="Navn"  formControlName="name">
+                <mat-error *ngIf="this.name.invalid">
+                    Navn kan være på maks 45 tegn.
+                </mat-error>
+            </mat-form-field>
 
-    <form *ngIf="missionTypeForm" [formGroup]="missionTypeForm" class="form-container" fxLayout="column">
-        <h5 class="text-center">Legg til oppdragstype</h5>
-        <mat-form-field>
-            <input matInput placeholder="Navn"  formControlName="name">
-            <mat-error *ngIf="this.name.invalid">
-                Navn kan være på maks 45 tegn.
-            </mat-error>
-        </mat-form-field>
+            <app-submit-button
+            [disabled]="missionTypeForm.invalid || missionTypeForm.pristine"
+            (click)="onSubmit()">
+            </app-submit-button>
 
-        <app-submit-button
-          [disabled]="missionTypeForm.invalid || missionTypeForm.pristine"
-          (click)="onSubmit()">
-        </app-submit-button>
-
-    </form>
-
+        </form>
+    </mat-card-content>
+</div>

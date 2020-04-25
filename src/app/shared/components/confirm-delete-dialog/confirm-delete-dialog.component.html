@@ -1,12 +1,16 @@
+<div
+  class="app-card m-2"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="16px">
 
-      <div fxLayout="column" class="form-container" fxLayoutAlign="center center" fxLayoutGap="16px">
-        <span class="text-center">
-          Bekreft at du ønsker å slette ressursen.
-        </span>
-        <span>
-          <button mat-button (click)="onNoClick()">Avbryt</button>
-          <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Slett</button>
-        </span>
-      </div>
+  <span class="text-center">
+    Bekreft at du ønsker å slette ressursen.
+  </span>
 
-
+  <span>
+    <button mat-button (click)="onNoClick()">Avbryt</button>
+    <button mat-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>Slett</button>
+  </span>
+  
+</div>

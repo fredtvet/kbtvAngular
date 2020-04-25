@@ -6,12 +6,12 @@ import { MissionListComponent } from './mission-list/mission-list.component';
 import { MissionNoteFormComponent } from './mission-note-form/mission-note-form.component';
 import { MissionReportFormComponent } from './components/mission-report-form/mission-report-form.component';
 import { ConfirmDeleteDialogComponent, ImageViewerDialogComponent } from '../shared/components';
-import { MissionDetailsViewComponent } from './components/mission-details-view/mission-details-view.component';
+import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
 import { MissionNoteListComponent } from './components/mission-note-list/mission-note-list.component';
 import { DatePipe } from '@angular/common';
-import { MissionFormViewComponent } from './components/mission-form-view/mission-form-view.component';
+import { MissionFormViewComponent } from './mission-form/mission-form-view/mission-form-view.component';
 import { MissionFormComponent } from './mission-form/mission-form.component';
-import { MissionNoteFormViewComponent } from './components/mission-note-form-view/mission-note-form-view.component';
+import { MissionNoteFormViewComponent } from './mission-note-form/mission-note-form-view/mission-note-form-view.component';
 
 
 

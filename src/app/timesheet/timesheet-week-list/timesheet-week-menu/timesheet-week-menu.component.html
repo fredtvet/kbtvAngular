@@ -1,22 +1,21 @@
 
 <div class="bg-primary mat-elevation-z3">
 
-  <div fxLayout="row" fxLayoutAlign="space-between center" >
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="pl-1 pr-1">
     <span>
-      <mat-form-field class="year-field" color="accent">
+      <mat-form-field class="field year-field" color="accent">
         <input matAutosize=true matInput type="number" placeholder="År" autocomplete="off"
           [ngModel]="dateParams.year"
           (ngModelChange)="changeYear($event)">
       </mat-form-field>
 
-      <mat-form-field class="week-field" color="accent">
+      <mat-form-field class="field week-field" color="accent">
         <input matAutosize=true matInput type="number" placeholder="Uke" autocomplete="off"
           [ngModel]="dateParams.weekNr"
           (ngModelChange)="changeWeek($event)">
       </mat-form-field>
     </span>
-
-    <button mat-button class="color-accent" (click)="allTimesheetsConfirmed.emit()">Bekreft alle</button>
+    <app-stroked-button [config]="confirmBtnConfig"></app-stroked-button>
   </div>
 
   <mat-divider></mat-divider>

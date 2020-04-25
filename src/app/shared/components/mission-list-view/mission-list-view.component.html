@@ -1,12 +1,13 @@
 
-<mat-nav-list class="p-0">
+<div class="p-0">
 
-    <mat-list-item *ngIf="missions == undefined || missions.length == 0">Ingen oppdrag besøkt</mat-list-item>
+    <p *ngIf="missions == undefined || missions.length == 0" class="m-2">Fant ingen oppdrag</p>
 
-    <app-nav-list-item *ngFor="let mission of missions; last as last"
-        [config]="{mainLine: mission.address, startIcon: 'home_work', endIcon: mission.finished ? 'check':'chevron_right'}"
-        [last]="last"
+    <app-list-card *ngFor="let mission of missions"
+        startIcon="home_work"
+        [endIcon]="mission.finished ? 'check':'chevron_right'"
+        [text]="mission.address"
         [routerLink]="['/oppdrag', mission.id, 'detaljer']">
-    </app-nav-list-item>
+    </app-list-card>
 
-</mat-nav-list>
+</div>

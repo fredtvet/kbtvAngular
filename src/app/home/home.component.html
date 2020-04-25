@@ -40,12 +40,12 @@
     </mat-nav-list>
   </div>
 
-  <div class="mat-elevation-z3 p-2 m-2 bg-foreground" fxLayout="column">
-    <span class="ml-2">Sist besøkte oppdrag</span>
-    <div class="static-page-content" fxFill>
+<div class="m-1">
+  <app-list-card *ngFor="let mission of missionHistory$ | async"
+    startIcon="history"
+    [endIcon]="mission.finished ? 'check':'chevron_right'"
+    [text]="mission.address"
+    [routerLink]="['/oppdrag', mission.id, 'detaljer']">
+  </app-list-card>
+</div>
 
-      <p *ngIf="!newestMissions"><em>Laster inn oppdrag...</em></p>
-      <app-mission-list-view [missions]="missionHistory$ | async"></app-mission-list-view>
-    </div>
-
-  </div>

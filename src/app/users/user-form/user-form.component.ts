@@ -45,7 +45,7 @@ export class UserFormComponent extends SubscriptionComponent  {
 
       this.roles$ = this._rolesService.getAll$().pipe(
         takeUntil(this.unsubscribe),
-        map(arr => arr.filter(x => x != Roles.Leder))
+        map(arr => arr.filter(x => (x != Roles.Leder && x != Roles.Oppdragsgiver)))
       )
     }
 

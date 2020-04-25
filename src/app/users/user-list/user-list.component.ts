@@ -6,6 +6,7 @@ import { combineLatest } from 'rxjs';
 import { Router } from '@angular/router';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { takeUntil } from 'rxjs/operators';
+import { AppButton } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-user-list',
@@ -16,6 +17,8 @@ export class UserListComponent extends SubscriptionComponent {
 
   users: User[];
   currentUser: User;
+  
+  innerNavButtons: AppButton[];
 
   constructor(
     private mainNavService: MainNavService,
@@ -24,6 +27,7 @@ export class UserListComponent extends SubscriptionComponent {
     private router: Router) { 
       super();    
       this.configureMainNav(); 
+      this.configureInnerNav();
     }
 
   ngOnInit() {
@@ -41,18 +45,27 @@ export class UserListComponent extends SubscriptionComponent {
       .subscribe(data => this.currentUser = data);
   }
 
-  editUser(userName: string){
-    this.router.navigate(['brukere', userName, 'rediger'])
-  }
+  editUser = (userName: string) => this.router.navigate(['brukere', userName, 'rediger'])
 
-  createUser(){
-    this.router.navigate(['brukere', 'ny'])
-  }
+  createUser = () => this.router.navigate(['brukere', 'ny'])  
 
   private configureMainNav(){
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Brukere";
     this.mainNavService.addConfig(cfg);
+  }
+
+  private configureInnerNav(){
+    this.innerNavButtons = [
+      {
+        icon: "person_add", 
+        colorClass: "color-accent",
+        text: 'Ny', 
+        aria: 'Ny bruker',
+        callback: this.createUser, 
+        allowedRoles: [Roles.Leder]
+      }
+    ]
   }
 
 }

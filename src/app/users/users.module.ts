@@ -5,13 +5,15 @@ import { ConfirmDeleteDialogComponent } from '../shared/components';
 
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserListComponent } from './user-list/user-list.component';
-import { UserFormViewComponent } from './components/user-form-view/user-form-view.component';
+import { UserFormViewComponent } from './user-form/user-form-view/user-form-view.component';
+import { UserCardComponent } from './user-list/user-card/user-card.component';
 
 @NgModule({
   declarations: [
     UserFormComponent,
     UserListComponent,
-    UserFormViewComponent
+    UserFormViewComponent,
+    UserCardComponent
   ],
   entryComponents:[
     ConfirmDeleteDialogComponent

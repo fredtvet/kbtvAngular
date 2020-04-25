@@ -1,21 +1,7 @@
 
-<div  fxLayout="column">
-
-    <div  fxFlex="10" class="content-header">
-      <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
-        <span class="ml-2">Oppdragsliste</span>
-        <button (click)="createMission()" *ifRole="[Roles.Leder, Roles.Mellomleder]"
-          mat-icon-button aria-label="ny" color="accent">
-          <mat-icon class="icon_125">add</mat-icon>
-        </button>
-      </div>
-    </div>
-
-    <div>
-      <app-mission-list-view [missions]="missions$ | async"></app-mission-list-view>
-    </div>
-
-  </div>
+  <app-inner-nav title="Liste over oppdrag" [buttons]="innerNavButtons">
+    <app-mission-list-view [missions]="missions$ | async"></app-mission-list-view>
+  </app-inner-nav>
 
 
 

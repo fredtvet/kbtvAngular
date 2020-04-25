@@ -1,0 +1,9 @@
+<button mat-icon-button
+    [attr.aria-label]="config.aria"
+    [ngClass]="[
+        config.colorClass ? config.colorClass : '', 
+        config.iconSizeClass ? config.iconSizeClass : ''
+    ]"
+    (click)="handleFn(config.callback)">
+    <mat-icon>{{ config.icon }}</mat-icon>
+</button>

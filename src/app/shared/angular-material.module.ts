@@ -24,7 +24,10 @@ import {
    MatAutocompleteModule,
    MatRippleModule,
    MatBottomSheetModule,
-   MatButtonToggleModule
+   MatButtonToggleModule,
+
+   //Experimental
+   MatCardModule
 
 } from '@angular/material';
 
@@ -53,7 +56,8 @@ import {
       MatProgressSpinnerModule,
       MatRippleModule,
       MatBottomSheetModule,
-      MatButtonToggleModule
+      MatButtonToggleModule,
+      MatCardModule
    ],
    exports: [
       MatButtonModule,
@@ -78,7 +82,8 @@ import {
       MatProgressSpinnerModule,
       MatRippleModule,
       MatBottomSheetModule,
-      MatButtonToggleModule
+      MatButtonToggleModule,
+      MatCardModule
    ],
 })
 
