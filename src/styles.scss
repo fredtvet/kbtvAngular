@@ -30,12 +30,19 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 .color-success{color:$success;}
 
 .bg-background{background:$background-color;color:black;}
+.color-background{color:$primary-light;}
 .bg-foreground{background:$foreground-color;color:black;}
-
+.color-foreground{color:white;}
 .border-primary{border: 1px solid $primary!important;}
 .border-accent{border: 1px solid $accent!important;}
 
 .active{color: $accent !important;}
+
+.scale-150{transform:scale(1.5);}
+.scale-125{transform:scale(1.25);}
+.scale-75{transform:scale(.75);}
+
+.line-height-90{line-height:90%}
 
 .flex-spacer{
   flex: 1 1 auto;
@@ -47,15 +54,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
   z-index:2;
   background:$accent;
 }
-.icon_150{
-  transform:scale(1.5);
-}
-.icon_125{
-  transform:scale(1.25);
-}
-.icon_75{
-  transform:scale(.75);
-}
+
+
 .image_viewer_dialog{
   max-width:none!important;
 }
@@ -85,9 +85,11 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 .static-page-content{
   overflow:auto;
 }
+
 .sticky-top{
   @include sticky-top;
 }
+
 .app-card{
   max-width:600px;
   //min-width:280px;
@@ -100,6 +102,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
    margin-left:$content-margin * 2px!important;
    width:calc(100% - (#{$content-margin} * 4px))!important;
 }
+
 .center-spinner{
   margin:$content-margin * 2px auto;
 }

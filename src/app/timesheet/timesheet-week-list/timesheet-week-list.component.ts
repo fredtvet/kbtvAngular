@@ -1,132 +1,68 @@
-import { Component, ChangeDetectionStrategy } from "@angular/core";
-import {
-  IdentityService,
-  UserTimesheetService,
-  DateTimeService,
-  MainNavService
-} from "src/app/core/services";
-import { Timesheet } from "src/app/shared/models";
-import { BehaviorSubject, Observable } from "rxjs";
-import { SubscriptionComponent } from "src/app/shared/components/abstracts/subscription.component";
-import {
-  takeUntil,
-  switchMap,
-  map
-} from "rxjs/operators";
-import { TimesheetStatus } from "src/app/shared/enums";
-import { DateParams } from "src/app/shared/interfaces";
-import { MatDialog } from "@angular/material/dialog";
-import { TimesheetFormDialogWrapperComponent } from "../components/timesheet-form-dialog-wrapper.component";
-import { Router } from "@angular/router";
-import { TimesheetCardDialogWrapperComponent } from '../components/timesheet-card-dialog-wrapper.component';
+import { Component, OnInit } from '@angular/core';
+import { DateTimeService, MainNavService } from 'src/app/core/services';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { AppButton } from 'src/app/shared/interfaces';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { WeekListFilterSheetWrapperComponent } from './week-list-filter/week-list-filter-sheet-wrapper.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: "app-timesheet-week-list",
-  templateUrl: "./timesheet-week-list.component.html",
-  styleUrls: ["./timesheet-week-list.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-timesheet-week-list',
+  templateUrl: './timesheet-week-list.component.html'
 })
-export class TimesheetWeekListComponent extends SubscriptionComponent {
+export class TimesheetWeekListComponent implements OnInit {
 
-  date = new Date();
-  userName: string;
+  weeks: number[] = [];
 
-  dateParamsSubject: BehaviorSubject<DateParams>;
-  dateParams$: Observable<DateParams>;
+  today = new Date();
 
-  timesheetDays$: Observable<Timesheet[][]>;
-
-  vm$: Observable<any>;
-
-  totalWeeks: number;
+  weekNr: number = this.dateTimeService.getWeekOfYear(this.today);
+  year: number = this.today.getFullYear();
 
   constructor(
-    private mainNavService: MainNavService,
-    private router: Router,
-    private dialog: MatDialog,
-    private identityService: IdentityService,
+    private _bottomSheet: MatBottomSheet,
     private dateTimeService: DateTimeService,
-    private userTimesheetService: UserTimesheetService
-  ) {
-    super();
-    console.time("init");
-    this.configureMainNav();
+    private mainNavService: MainNavService,
+    private route: ActivatedRoute,
+    private router: Router) 
+    { this.configureMainNav(+this.route.snapshot.paramMap.get('year')) }
+
+  ngOnInit() {
+    this.route.paramMap
+      .subscribe(pm =>{       
+        this.year = +pm.get('year') || this.today.getFullYear();
+        let endWeek = (this.year == this.today.getFullYear()) ? this.weekNr : this.dateTimeService.getWeeksInYear(this.year)
+        this.weeks = this.createWeeksArray(1, endWeek);  
+        this.configureMainNav(this.year);  
+      });  
   }
 
-  ngOnInit() { 
-    this.initalizeObservables();
-    this.userName = this.identityService.getCurrentUser().userName;  
+  private createWeeksArray(startWeek: number, endWeek: number): number[]{
+    const weeks = [];
+    for(let n = endWeek; n >= startWeek; n--){
+      weeks.push(n);
+    }
+    return [...weeks];
   }
 
-  ngAfterViewInit(): void {
-    console.timeEnd("init");
-  }
-
-  confirmWeek(days: Timesheet[][]) {
-    let ids = [].concat(...days).reduce((acc, timesheet) => {
-      if (timesheet.status === TimesheetStatus.Open) acc.push(timesheet.id);
-      return acc;
-    }, []);
-    this.userTimesheetService
-      .changeStatuses$(ids, TimesheetStatus.Confirmed)
-      .subscribe();
-  }
-
-  changeDateParams(dateParams: DateParams) {
-    this.dateParamsSubject.next(dateParams);
-  }
-
-  openTimesheetForm(date: Date): void {
-   const dialogRef = this.dialog.open(TimesheetFormDialogWrapperComponent, {
-      data: { date: date }
+  private openWeekFilter = () => {
+    let ref = this._bottomSheet.open(WeekListFilterSheetWrapperComponent, {
+      data: {year: this.year}
     });
 
-    dialogRef.afterClosed().subscribe(timesheet => {
-      if(timesheet) this.openTimesheetCard(timesheet.id);
-    });
+    ref.afterDismissed()
+      .pipe(filter(f => f != undefined))
+      .subscribe(f => this.updateYear(f.year));
   }
 
-  openTimesheetCard(timesheetId: number){
-    this.dialog.open(TimesheetCardDialogWrapperComponent, {
-      data: timesheetId
-    });
-  }
+  private updateYear = (year: number) => this.router.navigate(['timer', year, 'ukeliste'])
 
-  private goToTimesheetList = () => {
-      this.router.navigate([
-        "timer/liste",
-        {
-          returnRoute: this.router.url,
-          dateRange: JSON.stringify(
-            this.dateTimeService.getWeekRangeByDateParams(this.dateParamsSubject.value)
-          )
-        }
-      ]);
-  };
-
-  private initalizeObservables() {
-    this.dateParamsSubject = new BehaviorSubject<DateParams>({
-      year: this.date.getFullYear(),
-      weekNr: this.dateTimeService.getWeekOfYear(this.date)
-    });
-
-    this.vm$ = this.dateParamsSubject.asObservable().pipe(
-      switchMap(dp => {
-        return this.userTimesheetService.getByWeekGrouped$(dp).pipe(
-          map(days => {
-            return { days: days, dateParams: dp };
-          })
-        );
-      }),
-      takeUntil(this.unsubscribe)
-    );
-  }
-
-  private configureMainNav(){
+  private configureMainNav(year: number){
     let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Timevisning";
-    cfg.buttons = [{icon: "list", callback: this.goToTimesheetList}];
+    cfg.title = "Ukeliste";
+    cfg.subTitle = year.toString();
+    cfg.buttons = [{icon: 'filter_list', callback: this.openWeekFilter} as AppButton]
+    //cfg.buttons = [{icon: "list", callback: this.goToTimesheetList}];
     this.mainNavService.addConfig(cfg);
   }
-
 }

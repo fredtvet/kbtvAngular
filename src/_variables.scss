@@ -25,25 +25,15 @@ $foreground: map-get($kbtv-client-theme, foreground);
 $background-color:$primary-light;
 $foreground-color:white;
 
-
-
 $content-margin: 8;
-$content-width: calc(100% - (#{$content-margin} * 2 * 1px));
 $bottom-nav-height: 44;
 $main-nav-height: 44;
 $alt-nav-height: $main-nav-height + 64;
-$tab-header-height: 48;
 $sidenav-width: 200;
-$content-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$main-nav-height}) * 1px));
-$details-container-height: calc(100vh - ((#{$bottom-nav-height} + #{$alt-nav-height}) * 1px));
-$font-size-small:14px;
-
-$timesheet-menu-height: 93;
-
 
 @mixin small-header{
   font-weight: 500;
-  font-size:$font-size-small;
+  font-size:14px;
 }
 
 @mixin sticky-top{

@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
 
   missionHistory$: Observable<Mission[]>;
 
+  currentYear = new Date().getFullYear();
+
   constructor(
     private mainNavService: MainNavService,
     private missionService: MissionService) {

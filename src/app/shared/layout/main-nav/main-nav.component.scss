@@ -8,17 +8,9 @@
   padding:0 8px 0 8px !important;
 }
 
-.main-nav-title{
-  margin-right:auto;
-  margin-left:$content-margin * 1px;
-}
-.mat-drawer-container { //Fix for bug on iOs
-  position: unset!important;
-}
+.mat-drawer-container {position: unset!important;}//Fix for bug on iOs
 
-.toolbar-padding{
-  padding-bottom:$bottom-nav-height * 1px;
-}
+.bottom-toolbar-padding{padding-bottom:($bottom-nav-height) * 1px;}
 
 mat-sidenav-container{
   height: 100%;
@@ -37,7 +29,6 @@ mat-sidenav-container{
     mat-toolbar {
       height:$main-nav-height * 1px!important;
       background:$primary-dark!important;
-      @include small-header;
       color:white;
     }
   }
@@ -51,21 +42,27 @@ mat-sidenav-container{
   }
 }
 
-.mat-list-base .mat-list-item{
-  color:white;
-}
+.mat-list-base .mat-list-item{color:white;}
 
-
-
-.alt_nav{
-  @include nav;
-  height:$alt-nav-height * 1px!important;
+.main-nav-title{
+  margin-right:auto;
+  margin-left:$content-margin * 1px;
 }
 
 .main_nav{
   @include nav;
   min-height:$main-nav-height * 1px!important;
   max-height:$main-nav-height * 1px!important;
+}
+
+.alt_nav{
+  @include nav;
+  height:$alt-nav-height * 1px!important;
+}
+
+.alt_nav_row{
+  height:auto!important;
+  padding-left:$content-margin * 4px;
 }
 
 .main_content{
@@ -76,17 +73,8 @@ mat-sidenav-container{
   background:$background-color;
 }
 
-.main_content_height_alt{
-  height:$details-container-height;
-}
+.main_content_height_alt{height:calc(100% - (#{$alt-nav-height} * 1px));}
 
-.main_content_height_main{
-  height:$content-container-height;
-}
-
-.alt_nav_row{
-  height:auto!important;
-  padding-left:$content-margin * 4px;
-}
+.main_content_height_main{height:calc(100% - (#{$main-nav-height} * 1px));}
 
 

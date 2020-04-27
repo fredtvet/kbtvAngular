@@ -1,0 +1,15 @@
+<div fxLayout="column" fxLayoutAlign="space-around stretch">
+  <span class="mat-body-2">Velg filtre for uker</span>
+
+  <mat-form-field>
+    <mat-label>Velg år</mat-label>
+    <input matInput [(ngModel)]="year" type="number">
+  </mat-form-field>
+
+  <mat-divider class="mb-2"></mat-divider>
+
+  <span fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button color="warn" (click)="close()">Avbryt</button>
+    <button mat-button color="primary" (click)="applyFilter()">Bruk</button>
+  </span>
+</div>

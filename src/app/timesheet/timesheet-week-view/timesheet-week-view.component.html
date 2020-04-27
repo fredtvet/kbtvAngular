@@ -1,0 +1,31 @@
+<ng-container *ngIf="vm$ | async; let vm">
+  <div class="h-100" fxLayout="row" fxLayoutAlign="start stretch" 
+    (swiperight)="previousWeek(vm.dateParams)" 
+    (swipeleft)="nextWeek(vm.dateParams)">
+
+    <ng-container *ngFor="let weekDay of [1,2,3,4,5,6,7]"> 
+
+        <div class="timesheet-bar" fxLayout="column" fxLayoutAlign="start center">
+
+          <app-timesheet-day-label class="w-100 mb-1"
+            [date]="vm.dateParams | getDateByDateParams : weekDay"
+            (labelClicked)="openTimesheetForm($event)">
+          </app-timesheet-day-label>
+
+          <div class="progress-bar-container"
+            fxLayout="column" fxLayoutAlign="start center" fxFlex>
+              <app-timesheet-mission-bar class="w-100 mb-1"
+                *ngFor="let timesheet of vm.days[weekDay] | sortByDate: 'startTime';" 
+                [timesheet]="timesheet"
+                (barClicked)="openTimesheetCard($event)"
+                [style.height.%]="(timesheet.totalHours / 14)*100">
+              </app-timesheet-mission-bar>
+          </div>
+
+        </div>
+        
+        <mat-divider vertical="true" *ngIf="weekDay !== 7"></mat-divider>
+    </ng-container>
+
+  </div>
+</ng-container>

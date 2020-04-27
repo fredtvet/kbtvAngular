@@ -1,15 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TimesheetWeekListComponent } from './timesheet-week-list/timesheet-week-list.component';
+import { TimesheetWeekViewComponent } from './timesheet-week-view/timesheet-week-view.component';
 import { AuthGuard } from '../core/services';
 import { Roles } from '../shared/enums';
 import { TimesheetListComponent } from './timesheet-list/timesheet-list.component';
+import { TimesheetWeekListComponent } from './timesheet-week-list/timesheet-week-list.component';
 
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':year/ukeliste',
     component: TimesheetWeekListComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]}
+  },
+  {
+    path: ':year/:weekNr/ukevisning',
+    component: TimesheetWeekViewComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
     data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]}

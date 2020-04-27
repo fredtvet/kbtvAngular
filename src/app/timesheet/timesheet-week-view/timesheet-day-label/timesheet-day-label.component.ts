@@ -6,7 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'app-timesheet-day-label',
   templateUrl: './timesheet-day-label.component.html',
   animations: [listAnimation],
-  styleUrls: ['./timesheet-day-label.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 

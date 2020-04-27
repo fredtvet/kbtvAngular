@@ -1,38 +1,12 @@
-<ng-container *ngIf="vm$ | async; let vm">
-  <app-timesheet-week-menu
-    [dateParams]="vm.dateParams"
-    (dateParamsChanged)="changeDateParams($event)"
-    (allTimesheetsConfirmed)="confirmWeek(vm.days)">
-  </app-timesheet-week-menu>
-  <mat-divider></mat-divider>
 
-  <div class="weekdays-container  mat-elevation-z3"  fxLayout="row" fxLayoutAlign="start stretch" >
+<div class="p-0">
 
-    <ng-container *ngFor="let weekDay of [1,2,3,4,5,6,7]"> 
+    <app-list-card *ngFor="let week of weeks"
+        startIcon="home_work"
+        endIcon="chevron_right"
+        [text]="'Uke ' + week"
+        [routerLink]="['/timer', this.year, week, 'ukevisning']">
+    </app-list-card>
 
-        <div class="timesheet-bar" fxLayout="column" fxLayoutAlign="start center" 
-        ngClass.xs="width-handset" ngClass="width-no-handset">
+</div>
 
-          <app-timesheet-day-label class="w-100"
-            [date]="vm.dateParams | getDateByDateParams : weekDay"
-            (labelClicked)="openTimesheetForm($event)">
-          </app-timesheet-day-label>
-
-          <div class="progress-bar-container"
-            fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="4px" fxFlex>
-              <app-timesheet-mission-bar 
-                *ngFor="let timesheet of vm.days[weekDay] | sortByDate: 'startTime';" 
-                [timesheet]="timesheet"
-                (barClicked)="openTimesheetCard($event)"
-                [style.height.%]="(timesheet.totalHours / 14)*100">
-              </app-timesheet-mission-bar>
-          </div>
-
-        </div>
-        
-        <mat-divider vertical="true" *ngIf="weekDay !== 7"></mat-divider>
-    </ng-container>
-
-
-  </div>
-</ng-container>

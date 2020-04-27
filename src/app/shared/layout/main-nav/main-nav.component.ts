@@ -30,6 +30,8 @@ export class MainNavComponent extends SubscriptionComponent {
   loading$: Observable<boolean> = this.loadingService.loading$;
 
   openTimesheetCount$: Observable<number> = this.userTimesheetService.getCount$(TimesheetStatus.Open);
+  
+  currentYear = new Date().getFullYear();
 
   isXs$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.XSmall)
     .pipe(

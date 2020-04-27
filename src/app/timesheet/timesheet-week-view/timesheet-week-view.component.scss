@@ -1,0 +1,11 @@
+@import '../../../variables';
+
+.progress-bar-container{
+  width:100%;
+  padding: 0 1px 0 1px;
+}
+
+.timesheet-bar{
+    height:100%; 
+    width:calc(((100%) / 7));
+}
