@@ -3,7 +3,6 @@ import { SharedModule } from '../shared/shared.module';
 import { TimesheetRoutingModule } from './timesheet-routing.module';
 import { TimesheetDayLabelComponent } from './timesheet-week-view/timesheet-day-label/timesheet-day-label.component';
 import { TimesheetFormComponent } from './timesheet-form/timesheet-form.component';
-import { TimesheetWeekMenuComponent } from './timesheet-week-view/timesheet-week-menu/timesheet-week-menu.component';
 import { TimesheetMissionBarComponent } from './timesheet-week-view/timesheet-mission-bar/timesheet-mission-bar.component';
 import { TimesheetCardDialogWrapperComponent } from './components/timesheet-card-dialog-wrapper.component';
 import { TimesheetFormDialogWrapperComponent } from './components/timesheet-form-dialog-wrapper.component';
@@ -15,6 +14,7 @@ import { TimesheetWeekViewComponent } from './timesheet-week-view/timesheet-week
 import { TimesheetWeekListComponent } from './timesheet-week-list/timesheet-week-list.component';
 import { WeekListFilterComponent } from './timesheet-week-list/week-list-filter/week-list-filter.component';
 import { WeekListFilterSheetWrapperComponent } from './timesheet-week-list/week-list-filter/week-list-filter-sheet-wrapper.component';
+import { TimesheetWeekCardComponent } from './timesheet-week-list/timesheet-week-card/timesheet-week-card.component';
 
 
 
@@ -24,7 +24,6 @@ import { WeekListFilterSheetWrapperComponent } from './timesheet-week-list/week-
     TimesheetDayLabelComponent,
     TimesheetFormComponent,
     TimesheetCardComponent,
-    TimesheetWeekMenuComponent,
     TimesheetMissionBarComponent,
     TimesheetCardDialogWrapperComponent,
     TimesheetFormDialogWrapperComponent,
@@ -33,6 +32,7 @@ import { WeekListFilterSheetWrapperComponent } from './timesheet-week-list/week-
     TimesheetWeekViewComponent,
     WeekListFilterComponent,
     WeekListFilterSheetWrapperComponent,
+    TimesheetWeekCardComponent,
   ],
   entryComponents:[
     TimesheetFilterSheetWrapperComponent,

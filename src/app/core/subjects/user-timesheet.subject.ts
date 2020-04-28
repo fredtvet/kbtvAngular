@@ -3,11 +3,11 @@ import { Timesheet, TimesheetInfo  } from 'src/app/shared/models';
 import { LocalStorageService } from '../services/local-storage.service';
 import { map, tap, switchMap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { MissionSubject } from './mission.subject';
 import { TimesheetStatus } from 'src/app/shared/enums';
-import { DateParams } from 'src/app/shared/interfaces';
+import { DateParams, TimesheetSummary } from 'src/app/shared/interfaces';
 import { BaseMissionChildSubject } from './base-mission-child.subject';
 import { DateTimeService } from '../services/utility/date-time.service';
+import { TimesheetAggregatorService } from '../services/utility/timesheet-aggregator.service';
 
 
 @Injectable({
@@ -17,21 +17,10 @@ import { DateTimeService } from '../services/utility/date-time.service';
 export class UserTimesheetSubject extends BaseMissionChildSubject<Timesheet> {
 
   constructor(
-    private missionSubject: MissionSubject,
     private dateTimeService: DateTimeService,
+    private timesheetAggregator: TimesheetAggregatorService,
     localStorageService: LocalStorageService,
     ) { super(localStorageService, 'timesheets') }
-
-    getWithMission$(id: number): Observable<Timesheet>{
-      return super.get$(id).pipe(switchMap(entity => {
-        if(entity === undefined) return throwError('Entity not found');
-        return this.missionSubject.get$(entity.missionId).pipe(map(x => {
-          let e = {...entity};
-          e.mission = x;
-          return e;
-        }))
-      }));   
-    }
 
     getByWeek$(dateParams: DateParams, excludeStatus?: TimesheetStatus): Observable<TimesheetInfo>{
       const range = this.dateTimeService.getWeekRangeByDateParams(dateParams);
@@ -67,6 +56,10 @@ export class UserTimesheetSubject extends BaseMissionChildSubject<Timesheet> {
 
         return result;
       }))
+    }
+
+    getByWeekRangeGrouped$(startWeek: number, endWeek: number, year: number, excludeStatus?: TimesheetStatus): Observable<TimesheetSummary[]>{
+      return this.data$.pipe(map(t => this.timesheetAggregator.groupByWeekRange(t, startWeek, endWeek, year)))
     }
 
     changeStatuses(ids: number[], status: TimesheetStatus): void{

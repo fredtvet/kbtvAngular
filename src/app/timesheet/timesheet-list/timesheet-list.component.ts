@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { UserTimesheetService, DateTimeService, MainNavService } from "src/app/core/services";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
-import { FixedSizeVirtualScrollStrategy } from "@angular/cdk/scrolling";
 import { TimesheetStatus, DateRangePresets } from "src/app/shared/enums";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TimesheetFormDialogWrapperComponent } from "../components/timesheet-form-dialog-wrapper.component";
@@ -19,11 +18,12 @@ import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared/components'
 
 export class TimesheetListComponent implements OnInit {
   timesheetStatus = TimesheetStatus;
-  scrollStrategy = FixedSizeVirtualScrollStrategy;
 
   private filterSubject: BehaviorSubject<TimesheetListFilter>;
 
   timesheets$: Observable<Timesheet[]>;
+
+  cardSize = 142;
 
   constructor(
     private mainNavService: MainNavService,
@@ -38,8 +38,8 @@ export class TimesheetListComponent implements OnInit {
   ngOnInit() {
     //Initiate filter and observable
     this.filterSubject = new BehaviorSubject(this.getInitialFilter());
-    this.timesheets$ = this.filterSubject.asObservable().pipe(   
-      switchMap(filter => this.userTimesheetService.getBy$(t => filter.checkTimesheet(t)))
+    this.timesheets$ = this.filterSubject.asObservable().pipe(  
+      switchMap(filter => this.userTimesheetService.getByWithMission$(t => filter.checkTimesheet(t)))
     );
   }
 

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DateTimeService, MainNavService } from 'src/app/core/services';
+import { DateTimeService, MainNavService, TimesheetService, UserTimesheetService } from 'src/app/core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { AppButton } from 'src/app/shared/interfaces';
+import { AppButton, TimesheetSummary } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from './week-list-filter/week-list-filter-sheet-wrapper.component';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-timesheet-week-list',
@@ -19,9 +20,12 @@ export class TimesheetWeekListComponent implements OnInit {
   weekNr: number = this.dateTimeService.getWeekOfYear(this.today);
   year: number = this.today.getFullYear();
 
+  weekSummaries$: Observable<TimesheetSummary[]>;
+
   constructor(
     private _bottomSheet: MatBottomSheet,
     private dateTimeService: DateTimeService,
+    private userTimesheetService: UserTimesheetService,
     private mainNavService: MainNavService,
     private route: ActivatedRoute,
     private router: Router) 
@@ -29,21 +33,15 @@ export class TimesheetWeekListComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap
-      .subscribe(pm =>{       
+      .subscribe(pm =>{           
         this.year = +pm.get('year') || this.today.getFullYear();
-        let endWeek = (this.year == this.today.getFullYear()) ? this.weekNr : this.dateTimeService.getWeeksInYear(this.year)
-        this.weeks = this.createWeeksArray(1, endWeek);  
+        //Get all weeks up to current week if current year, else all weeks
+        let endWeek = (this.year == this.today.getFullYear()) ? this.weekNr : this.dateTimeService.getWeeksInYear(this.year);
+        this.weekSummaries$ = this.userTimesheetService.getByWeekRangeGrouped$(1, endWeek, this.year).pipe(map(x => x.reverse())); 
         this.configureMainNav(this.year);  
       });  
   }
 
-  private createWeeksArray(startWeek: number, endWeek: number): number[]{
-    const weeks = [];
-    for(let n = endWeek; n >= startWeek; n--){
-      weeks.push(n);
-    }
-    return [...weeks];
-  }
 
   private openWeekFilter = () => {
     let ref = this._bottomSheet.open(WeekListFilterSheetWrapperComponent, {

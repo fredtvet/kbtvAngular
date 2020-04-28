@@ -10,7 +10,6 @@ export * from './add-to-home-screen/add-to-home-screen.component';
 export * from './submit-button/submit-button.component';
 export * from './report-type-form-dialog/report-type-form-dialog.component';
 export * from './mission-type-form-dialog/mission-type-form-dialog.component';
-export * from './week-picker/week-picker.component';
 export * from './page-not-found/page-not-found.component';
 export * from './bottom-sheet-menu/bottom-sheet-menu.component';
 export * from './timesheet-filter/timesheet-filter.component';

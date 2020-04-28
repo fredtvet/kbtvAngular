@@ -14,7 +14,7 @@
         </ng-container>
 
 
-        <cdk-virtual-scroll-viewport itemSize="scrollStrategy" fxFlex>
+        <cdk-virtual-scroll-viewport itemSize="148" [attr.minBufferPx]="6*148" [attr.maxBufferPx]="8*148" fxFlex>
             <div class="m-2 mat-elevation-z3" *cdkVirtualFor="let timesheet of timesheets$ | async">
                 <app-timesheet-card         
                 [timesheet]="timesheet"

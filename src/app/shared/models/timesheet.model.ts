@@ -13,6 +13,7 @@ export class Timesheet implements Duration, MissionChild {
       public status: TimesheetStatus = TimesheetStatus.Open,
       public startTime: Date = null,
       public endTime: Date = null,
+      public comment: string = null,
       public totalHours: number = null,
     ){ };
 

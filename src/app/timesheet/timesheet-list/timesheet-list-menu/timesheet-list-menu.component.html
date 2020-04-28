@@ -8,12 +8,12 @@
         <button mat-button 
             [ngClass]="filter.status == timesheetStatus.Open ? 'color-accent':''" 
             (click)="changeStatus(timesheetStatus.Open)">
-            Ubekreftet
+            Åpen
         </button>
         <button mat-button 
             [ngClass]="filter.status == timesheetStatus.Confirmed ? 'color-accent':''" 
             (click)="changeStatus(timesheetStatus.Confirmed)">
-            Bekreftet
+            Låst
         </button>
     </span>
     

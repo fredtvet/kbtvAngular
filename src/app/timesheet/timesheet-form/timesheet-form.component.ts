@@ -22,6 +22,8 @@ export class TimesheetFormComponent implements OnInit {
   initTime: Date = new Date();
   timeRange: Date[];
 
+  comment: string;
+
   dateDisabled = false;
   missionDisabled = false;
 
@@ -52,6 +54,7 @@ export class TimesheetFormComponent implements OnInit {
 
     timesheet.userName = this._identityService.getCurrentUser().userName;
     timesheet.missionId = this.mission.id;
+    timesheet.comment = this.comment;
 
     let date = this.date.toDateString();
 
@@ -70,7 +73,13 @@ export class TimesheetFormComponent implements OnInit {
   }
 
   validateInputs(): boolean{
-    if(this.timeRange[0] == null || this.timeRange[1] == null || this.date == null || this.mission.id == null) return false
+    if(
+      !this.comment ||
+      !this.timeRange || 
+      this.timeRange[0] == null || 
+      this.timeRange[1] == null || 
+      this.date == null || 
+      this.mission.id == null) return false
     else return true;
   }
 
