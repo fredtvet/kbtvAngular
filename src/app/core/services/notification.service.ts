@@ -11,7 +11,12 @@ export class NotificationService {
 
   constructor(private _snackBar: MatSnackBar) {}
 
-  setNotification(message: string, type: number = 0){
+  lastType: Notifications;
+
+  setNotification(message: string, type: Notifications = Notifications.Success){
+    if(this.lastType === type) return undefined;
+    this.lastType = type;
+    setTimeout(() => {this.lastType = null}, 1000);
     switch(type){
       case Notifications.Success:
         this.openSnackBar(message, 'check_circle', 2000, 'notification', 'color-success');
