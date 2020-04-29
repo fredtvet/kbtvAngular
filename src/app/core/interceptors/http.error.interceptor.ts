@@ -37,7 +37,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           // case 502:
           // case 503:
           case 504:
-            msg = "Noe gikk feil på vår side. Prøv igjen senere eller ta kontakt."
+            msg = "Noe gikk feil på serveren. Prøv igjen senere eller ta kontakt."
             break;
           default:
             break;

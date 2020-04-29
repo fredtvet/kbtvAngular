@@ -77,7 +77,7 @@ export class UserTimesheetService extends BaseMissionChildService<Timesheet> {
 
     return this.apiService.put(`${this.uri}/Status`, { ids: ids, status: status})
       .pipe(map(data => {
-        this.dataSubject.addOrReplaceRange(data);
+        this.dataSubject.addOrUpdateRange(data);
         return data;
       }));
   }

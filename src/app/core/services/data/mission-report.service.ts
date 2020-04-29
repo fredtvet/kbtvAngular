@@ -37,7 +37,7 @@ export class MissionReportService extends BaseMissionChildService<MissionReport>
             .apiService
             .post(`${this.uri}?missionId=${missionId}`,formData)
             .pipe(map(data =>{
-              this.dataSubject.addOrReplace(data);
+              this.dataSubject.addOrUpdate(data);
               return data;
             }));
   }

@@ -16,7 +16,7 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
   }
 
   sync(dbSync: DbSync<T>){
-    let arr = this._addOrReplaceRange(dbSync.entities) //Add new or updated entities
+    let arr = this._addOrUpdateRange(dbSync.entities) //Add new or updated entities
     arr = arr.filter(d => !dbSync.deletedEntities.includes(d.id)) //Remove deleted entities
     this.dataSubject.next(arr);
     this.localStorageService.add(this.timestampKey, dbSync.timestamp)//Persist timestamp for next sync 
@@ -46,7 +46,7 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
       {return arr === undefined ? undefined : arr.filter(expression)}));
   }
 
-  addOrReplace(entity: T): void{
+  addOrUpdate(entity: T): void{
     if(this.dataSubject.value !== undefined && !this.dataSubject.value.find(e => e.id == entity.id)) {
       const arr = [entity, ...this.dataSubject.value]
       this.dataSubject.next(arr);
@@ -54,8 +54,8 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
     else this.update(entity);
   }
 
-  addOrReplaceRange(entities: T[], keepOriginals = false): void{
-    let arr = this._addOrReplaceRange(entities, keepOriginals)
+  addOrUpdateRange(entities: T[]): void{
+    let arr = this._addOrUpdateRange(entities)
     this.dataSubject.next(arr);
   }
 
@@ -63,7 +63,7 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
     let arr = [...this.dataSubject.value];
     arr = arr.map(e => {
       if(e.id !== entity.id) return e;
-      else return entity;
+      else return Object.assign(e, entity);
     });
     this.dataSubject.next(arr);
   }
@@ -93,13 +93,17 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
     return (this.dataSubject.value === undefined || this.dataSubject.value.length == 0)
   }
 
-  private _addOrReplaceRange(entities: T[], keepOriginals = false): T[]{
-    let arr: T[];
-    let originals = this.dataSubject.value === undefined ? [] : this.dataSubject.value;
-    if(keepOriginals) arr = [...originals, ...entities];
-    else arr = [...entities, ...originals];
+  private _addOrUpdateRange(entities: T[]): T[]{
+    console.log(entities);
+    let originals = this.dataSubject.value || [];
+    originals = [...originals];
+    entities.forEach(e => {
+      let duplicateIndex = originals.findIndex((o) => (o.id === e.id));
+      if(duplicateIndex !== -1) originals[duplicateIndex] = Object.assign(originals[duplicateIndex], e);
+      else originals.push(e);
+    });
 
-    return arr.filter((entity, index, self) => index === self.findIndex((e) => (e.id === entity.id)));
+    return originals;
   }
 
 }

@@ -16,12 +16,6 @@ import { MissionNoteSubject } from './mission-note.subject';
 
 export class MissionSubject extends BaseSubject<Mission> {
 
-  private historyKey: string = "missions/history"
-
-  private missionHistory: BehaviorSubject<number[]>;
-
-  private history$: Observable<number[]>;
-
   constructor(
     private missionTypeSubject: MissionTypeSubject,
     private employerSubject: EmployerSubject,
@@ -31,14 +25,6 @@ export class MissionSubject extends BaseSubject<Mission> {
     localStorageService: LocalStorageService
     ) {
       super(localStorageService, 'missions');
-
-      this.missionHistory = new BehaviorSubject<number[]>(this.localStorageService.get(this.historyKey) || []);
-      this.history$ = this.missionHistory.asObservable().pipe(distinctUntilChanged());
-
-      this.history$.pipe(skip(1)).subscribe(data => {
-        this.localStorageService.add(this.historyKey, data);
-      });
-
     }
 
   getAllDetails$(): Observable<Mission[]>{
@@ -56,9 +42,9 @@ export class MissionSubject extends BaseSubject<Mission> {
     }));
   }
 
-  getDetails$(id: number):Observable<Mission>{
+  getDetails$(id: number, trackHistory: boolean = true):Observable<Mission>{
+    if(trackHistory) this.updateLastVisited(id);
     return super.get$(id).pipe(
-      tap(x => this.addToHistory(x.id)),
       switchMap(data => {
       if(data === undefined || data === null) return of(undefined);
 
@@ -74,9 +60,9 @@ export class MissionSubject extends BaseSubject<Mission> {
     }));
   }
 
-  addOrReplace(entity: Mission): void{
+  addOrUpdate(entity: Mission): void{
     let x = this.addForeigns(entity);
-    super.addOrReplace(x);
+    super.addOrUpdate(x);
   }
 
   update(entity: Mission): void{
@@ -91,48 +77,26 @@ export class MissionSubject extends BaseSubject<Mission> {
     this.missionReportSubject.deleteByMissionId$(id);
   }
 
-  getHistory$(count: number = null){
-    return this.history$.pipe(switchMap(ids => {
-      if(count == null) count = ids.length - 1;
-      return this.getRange$(ids.slice(0, count))
-        .pipe(map(data => this.sortHistory(data, ids)))
-    }))
-  }
-
-  private sortHistory(missions: Mission[], ids: number[]): Mission[]{
-    let order = {};
-
-    ids.forEach(function (a, i) { order[a] = i; });
-
-    if(missions == undefined || missions.length == 0) return undefined;
-    missions.sort(function (a, b) {
-      return order[a.id] - order[b.id];
-    });
-
-    return missions;
-  }
-
-  private addToHistory(id: number){
-    let arr = this.missionHistory.value;
-
-    arr = arr.filter(x => x != id) //Remove id if already in array
-    arr.unshift(id); //Add id to start
-    this.missionHistory.next(arr);
-  }
-
   //Add foreign objects to their subjects
   private addForeigns(entity: Mission): Mission{
     let e = entity;
     if(e.missionType && e.missionType.id != 0){
-      this.missionTypeSubject.addOrReplace(e.missionType);
+      this.missionTypeSubject.addOrUpdate(e.missionType);
       e.missionTypeId = e.missionType.id;
       e.missionType = null; //Clean up
     }
     if(e.employer && e.employer.id != 0){
-      this.employerSubject.addOrReplace(e.employer);
+      this.employerSubject.addOrUpdate(e.employer);
       e.employerId = e.employer.id;
       e.employer = null;//Clean up
     }
     return e;
+  }
+
+  private updateLastVisited(id: number){
+    let missions = [...this.dataSubject.value];
+    let index = missions.findIndex(x => x.id == id);
+    missions[index].lastVisited = new Date();   
+    this.dataSubject.next(missions);
   }
 }

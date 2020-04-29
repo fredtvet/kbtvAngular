@@ -36,12 +36,12 @@ export class MissionReportSubject extends BaseMissionChildSubject<MissionReport>
     }));
   }
 
-  addOrReplace(entity: MissionReport): void{
+  addOrUpdate(entity: MissionReport): void{
     if(entity.missionReportType && entity.missionReportType.id != 0){
-        this.reportTypeSubject.addOrReplace(entity.missionReportType);
+        this.reportTypeSubject.addOrUpdate(entity.missionReportType);
         entity.missionReportTypeId = entity.missionReportType.id;
         entity.missionReportType = null; //Clean up
     }
-    super.addOrReplace(entity);
+    super.addOrUpdate(entity);
   }
 }

@@ -12,6 +12,7 @@ import { retry, tap, catchError } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
 import { Notifications } from 'src/app/shared/enums';
 import { UserTimesheetSubject } from '../../subjects/user-timesheet.subject';
+import { HttpParams } from '@angular/common/http';
 
 
 @Injectable({
@@ -43,9 +44,12 @@ export class DataSyncService {
   syncAll() : void{
     if(!this.isOnline) return undefined;
 
-    let fromDate = this.getEarliestTimestamp();
+    let timestamp = this.getEarliestTimestamp();
+    let params = new HttpParams();
+    if(timestamp) params = params.set('Timestamp', timestamp.toString());
+
     this.apiService
-      .post('/SyncAll',{ FromDate: fromDate })
+      .get('/SyncAll', params)
       .pipe(retry(3), tap(data => {
         this.missionSubject.sync(data.missionSync);
         this.employerSubject.sync(data.employerSync);
@@ -61,16 +65,14 @@ export class DataSyncService {
       })).subscribe();
   }
 
-  private getEarliestTimestamp(){
+  private getEarliestTimestamp(): number{
     // const timestamps = Object.keys(localStorage).reduce((acc, key) => {
     //   if(key.includes('/timestamp')) acc.push(this.localStorageService.get(key))    
     //   return acc;
     // },[]);
     const timestamps = this.injectedSubjectKeys.map(x => this[x].getTimestamp());
 
-    return  timestamps.sort(function(a,b) {
-              return new Date(a).getTime() - new Date(b).getTime()
-            })[0]
+    return  timestamps.sort(function(a,b) {return a - b})[0];
   }
 
 }

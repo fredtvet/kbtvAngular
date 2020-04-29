@@ -6,6 +6,7 @@ import { ConnectionService } from '../connection.service';
 import { NotificationService } from '../notification.service';
 import { Notifications } from 'src/app/shared/enums';
 import { BaseEntity } from 'src/app/shared/interfaces';
+import { HttpParams } from '@angular/common/http';
 
 export abstract class BaseService<T extends BaseEntity>{
 
@@ -23,10 +24,12 @@ export abstract class BaseService<T extends BaseEntity>{
 
   sync(): void{
     if(!this.isOnline) return null;
-    let fromDate = this.dataSubject.getTimestamp();
+    let timestamp = this.dataSubject.getTimestamp();
+    let params = new HttpParams();
+    if(timestamp) params = params.set('Timestamp', timestamp);
 
     this.apiService
-      .post(`${this.uri}/Sync`,{ FromDate: fromDate })
+      .get(`${this.uri}/Sync`, params)
       .pipe(
         retry(3),
         tap(this.dataSubject.sync),
@@ -60,7 +63,7 @@ export abstract class BaseService<T extends BaseEntity>{
     return this.apiService
                 .post(`${this.uri}`, entity)
                 .pipe(tap(data =>{
-                  this.dataSubject.addOrReplace(data);
+                  this.dataSubject.addOrUpdate(data);
                   return data;
                 }));
   }
