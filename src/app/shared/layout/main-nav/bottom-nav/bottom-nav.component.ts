@@ -10,7 +10,6 @@ export class BottomNavComponent implements OnInit {
   Roles = Roles;
 
   @Input() openTimesheetCount: number;
-  @Input() year: number;
 
   constructor() { }
 

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Mission } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
 import { BehaviorSubject, Observable} from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { MissionService, MainNavService } from 'src/app/core/services';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { AppButton } from 'src/app/shared/interfaces';
@@ -17,12 +17,13 @@ import { AppButton } from 'src/app/shared/interfaces';
 export class MissionListComponent extends SubscriptionComponent{
   Roles = Roles;
 
-  private pageInfo = {searchString: "", showFinishedMissions: false}
-  private pageInfoSubject = new BehaviorSubject(this.pageInfo);
+  //private pageInfo = {searchString: "", showFinishedMissions: false, historic: false}
+  private pageInfoSubject = new BehaviorSubject({searchString: "", showFinishedMissions: false, historic: false});
 
   missions$: Observable<Mission[]>;
 
   innerNavButtons: AppButton[];
+  innerNavTitle: string;
 
   constructor(
     private mainNavService: MainNavService,
@@ -38,7 +39,7 @@ export class MissionListComponent extends SubscriptionComponent{
     this.missions$ = this.pageInfoSubject.pipe(
       switchMap(pageInfo => {
         return this.missionService
-          .getFiltered$(pageInfo.showFinishedMissions, pageInfo.searchString)
+          .getFiltered$(pageInfo.showFinishedMissions, pageInfo.searchString, pageInfo.historic)
       }), 
       takeUntil(this.unsubscribe)
     );
@@ -47,20 +48,33 @@ export class MissionListComponent extends SubscriptionComponent{
   private createMission = () => this.router.navigate(['oppdrag','ny']);
   
   private searchMissionList = (searchString: string) => {
-    this.pageInfo.searchString = searchString;
-    this.pageInfoSubject.next(this.pageInfo)
+    let pageInfo = {...this.pageInfoSubject.value};
+    pageInfo.searchString = searchString;
+    this.pageInfoSubject.next(pageInfo)
   }
 
   private toggleFinishedMissions = () => {
-    this.pageInfo.showFinishedMissions = !this.pageInfo.showFinishedMissions;
-    this.pageInfoSubject.next(this.pageInfo);
+    let pageInfo = {...this.pageInfoSubject.value};
+    pageInfo.showFinishedMissions = !pageInfo.showFinishedMissions;
+    this.pageInfoSubject.next(pageInfo);
 
     //Toggle icon on nav action on bottom sheet
     let icon = "check_box_outline_blank";
-    if(this.pageInfo.showFinishedMissions) icon = "check_box";
+    if(pageInfo.showFinishedMissions) icon = "check_box";
     let cfg = this.mainNavService.getCurrentConfig();
     cfg.bottomSheetButtons = [{text: "Vis ferdige oppdrag", icon: icon, callback: this.toggleFinishedMissions}];
     this.mainNavService.addConfig(cfg);
+  }
+
+  private toggleHistoricOrder = () => {
+    let pageInfo = {...this.pageInfoSubject.value};
+    pageInfo.historic = !pageInfo.historic;
+    this.pageInfoSubject.next(pageInfo);
+
+    //Toggle icon on nav action on bottom sheet
+    let button = this.innerNavButtons[0];
+    button.colorClass = pageInfo.historic ? 'color-accent' : 'color-background';
+    this.innerNavTitle = pageInfo.historic ? 'Historikk' : '';
   }
 
   private configureMainNav(){
@@ -72,7 +86,15 @@ export class MissionListComponent extends SubscriptionComponent{
   }
 
   private configureInnerNav(){
-    this.innerNavButtons = [
+    this.innerNavTitle = '';
+    this.innerNavButtons = [         
+      {
+        icon: "history", 
+        colorClass: "color-background",
+        aria: 'Historisk visning',
+        callback: this.toggleHistoricOrder, 
+        allowedRoles: [Roles.Leder, Roles.Mellomleder]
+      },
       {
         icon: "add", 
         colorClass: "color-accent",
@@ -80,7 +102,8 @@ export class MissionListComponent extends SubscriptionComponent{
         aria: 'Nytt oppdrag',
         callback: this.createMission, 
         allowedRoles: [Roles.Leder, Roles.Mellomleder]
-      }
+      },
+      
     ]
   }
 

@@ -6,7 +6,7 @@ import { MissionNote, Mission, MissionReport, MissionImage } from 'src/app/share
 import { ConfirmDeleteDialogComponent } from 'src/app/shared/components';
 import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, MainNavService} from 'src/app/core/services';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
-import { take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
@@ -45,7 +45,7 @@ export class MissionDetailsComponent extends SubscriptionComponent{
   ngOnInit(){
     this.mission.id = +this.route.snapshot.paramMap.get('id');
 
-    this.mission$ = this.missionService.getDetails$(this.mission.id);
+    this.mission$ = this.missionService.getDetails$(this.mission.id).pipe(tap(console.log));
     this.images$ = this.missionImageService.getByMissionId$(this.mission.id);
     this.reports$ = this.missionReportService.getByMissionId$(this.mission.id);
     this.notes$ = this.missionNoteService.getByMissionId$(this.mission.id);

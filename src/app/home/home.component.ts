@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Mission } from '../shared/models';
 import { Roles } from '../shared/enums';
 import { MissionService, MainNavService } from '../core/services';
 import { Observable } from 'rxjs';
+import {  map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   public Roles = Roles;
 
   newestMissions: Mission[] = []
 
   missionHistory$: Observable<Mission[]>;
-
-  currentYear = new Date().getFullYear();
 
   constructor(
     private mainNavService: MainNavService,
@@ -24,7 +23,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.missionHistory$ = this.missionService.getHistory$(4);
+    this.missionHistory$ = this.missionService.getAll$().pipe(map(x => {
+      let sorted = this.missionService.sortByHistory(x);
+      return sorted.slice(0,4);
+    }))
   }
   
   private configureMainNav(){

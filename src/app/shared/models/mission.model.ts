@@ -16,4 +16,6 @@ export class Mission implements BaseEntity {
       public missionType: MissionType = new MissionType(),
     ){};
 
+    public lastVisited: Date;
+
   };

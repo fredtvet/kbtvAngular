@@ -12,9 +12,10 @@ import { TimesheetCardComponent } from './components/timesheet-card/timesheet-ca
 import { TimesheetFilterSheetWrapperComponent } from '../shared/components';
 import { TimesheetWeekViewComponent } from './timesheet-week-view/timesheet-week-view.component';
 import { TimesheetWeekListComponent } from './timesheet-week-list/timesheet-week-list.component';
-import { WeekListFilterComponent } from './timesheet-week-list/week-list-filter/week-list-filter.component';
-import { WeekListFilterSheetWrapperComponent } from './timesheet-week-list/week-list-filter/week-list-filter-sheet-wrapper.component';
+import { WeekListFilterComponent } from './components/week-list-filter/week-list-filter.component';
+import { WeekListFilterSheetWrapperComponent } from './components/week-list-filter/week-list-filter-sheet-wrapper.component';
 import { TimesheetWeekCardComponent } from './timesheet-week-list/timesheet-week-card/timesheet-week-card.component';
+import { TimesheetAdminListComponent } from './timesheet-admin-list/timesheet-admin-list.component';
 
 
 
@@ -33,6 +34,7 @@ import { TimesheetWeekCardComponent } from './timesheet-week-list/timesheet-week
     WeekListFilterComponent,
     WeekListFilterSheetWrapperComponent,
     TimesheetWeekCardComponent,
+    TimesheetAdminListComponent,
   ],
   entryComponents:[
     TimesheetFilterSheetWrapperComponent,

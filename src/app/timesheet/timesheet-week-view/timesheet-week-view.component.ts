@@ -18,7 +18,7 @@ import { TimesheetStatus } from "src/app/shared/enums";
 import { DateParams } from "src/app/shared/interfaces";
 import { MatDialog } from "@angular/material/dialog";
 import { TimesheetFormDialogWrapperComponent } from "../components/timesheet-form-dialog-wrapper.component";
-import { Router, ActivatedRoute, ParamMap } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { TimesheetCardDialogWrapperComponent } from '../components/timesheet-card-dialog-wrapper.component';
 
 @Component({
@@ -47,7 +47,7 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
     private userTimesheetService: UserTimesheetService
   ) {
     super();
-    this.configureMainNav(this.route.snapshot.paramMap);
+    this.configureMainNav(this.getDateParams(this.route.snapshot.queryParams));
   }
 
   ngOnInit() {this.initalizeObservable();}
@@ -103,7 +103,7 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
   }
 
   private goToTimesheetList = () => {
-      const dp = this.getDateParams(this.route.snapshot.paramMap)
+      const dp = this.getDateParams(this.route.snapshot.queryParams)
       this.router.navigate([
         "timer/liste",
         {
@@ -113,13 +113,13 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
       ]);
   };
 
-  private goToWeekList = () => this.router.navigate(['timer', this.route.snapshot.paramMap.get('year'), 'ukeliste'])
+  private goToWeekList = () => this.router.navigate(['timer/ukeliste'], {queryParams : {year: this.route.snapshot.queryParams['year']}})
 
   private initalizeObservable() {
-    this.vm$ = this.route.paramMap.pipe(
-      tap(pm => this.configureMainNav(pm)),
-      map(pm => this.getDateParams(pm)),
+    this.vm$ = this.route.queryParams.pipe(
+      map(qp => this.getDateParams(qp)),
       switchMap(dp => {
+        this.configureMainNav(dp);
         return this.userTimesheetService.getByWeekGrouped$(dp).pipe(
           map(days => {
             return { days: days, dateParams: dp };
@@ -130,24 +130,26 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
     );
   }
 
-  private configureMainNav(pm: ParamMap){
+  private configureMainNav(dp: DateParams){
+    console.log(dp);
     let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Uke " + pm.get('weekNr');
-    cfg.subTitle = pm.get('year');
+    cfg.title = "Uke " + dp.weekNr;
+    cfg.subTitle = dp.year.toString();
     cfg.menuBtnEnabled = false;
     cfg.backFn = this.goToWeekList;
     cfg.buttons = [{icon: "list", callback: this.goToTimesheetList}];
     this.mainNavService.addConfig(cfg);
   }
 
-  private getDateParams(pm: ParamMap): DateParams{
+  private getDateParams(params): DateParams{
+    console.log(params);
     return {
-      year: +pm.get('year') || this.date.getFullYear(), 
-      weekNr: +pm.get('weekNr') || this.dateTimeService.getWeekOfYear(this.date)
+      year: +params['year'] || this.date.getFullYear(), 
+      weekNr: +params['weekNr'] || this.dateTimeService.getWeekOfYear(this.date)
     }
   }
 
-  private changeDateParams = (dp: DateParams) => this.router.navigate(['timer', dp.year, dp.weekNr, 'ukevisning'])
+  private changeDateParams = (dp: DateParams) => this.router.navigate(['timer/ukevisning'], {queryParams : {year: dp.year, weekNr: dp.weekNr}})
   
 
 }

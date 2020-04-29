@@ -3,7 +3,7 @@ import { DateTimeService, MainNavService, TimesheetService, UserTimesheetService
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AppButton, TimesheetSummary } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { WeekListFilterSheetWrapperComponent } from './week-list-filter/week-list-filter-sheet-wrapper.component';
+import { WeekListFilterSheetWrapperComponent } from '../components/week-list-filter/week-list-filter-sheet-wrapper.component';
 import { filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -29,12 +29,13 @@ export class TimesheetWeekListComponent implements OnInit {
     private mainNavService: MainNavService,
     private route: ActivatedRoute,
     private router: Router) 
-    { this.configureMainNav(+this.route.snapshot.paramMap.get('year')) }
+    { this.configureMainNav(+this.route.snapshot.queryParamMap['year']) }
 
   ngOnInit() {
-    this.route.paramMap
-      .subscribe(pm =>{           
-        this.year = +pm.get('year') || this.today.getFullYear();
+    this.route.queryParams
+      .subscribe(qp =>{   
+        console.log(qp);        
+        this.year = +qp['year'] || this.today.getFullYear();
         //Get all weeks up to current week if current year, else all weeks
         let endWeek = (this.year == this.today.getFullYear()) ? this.weekNr : this.dateTimeService.getWeeksInYear(this.year);
         this.weekSummaries$ = this.userTimesheetService.getByWeekRangeGrouped$(1, endWeek, this.year).pipe(map(x => x.reverse())); 
@@ -53,12 +54,12 @@ export class TimesheetWeekListComponent implements OnInit {
       .subscribe(f => this.updateYear(f.year));
   }
 
-  private updateYear = (year: number) => this.router.navigate(['timer', year, 'ukeliste'])
+  private updateYear = (year: number) => this.router.navigate(['timer/ukeliste'], { queryParams: {year}})
 
   private configureMainNav(year: number){
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Ukeliste";
-    cfg.subTitle = year.toString();
+    cfg.subTitle = year ? year.toString() : this.year.toString();
     cfg.buttons = [{icon: 'filter_list', callback: this.openWeekFilter} as AppButton]
     //cfg.buttons = [{icon: "list", callback: this.goToTimesheetList}];
     this.mainNavService.addConfig(cfg);

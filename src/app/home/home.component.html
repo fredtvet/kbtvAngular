@@ -1,46 +1,39 @@
 
-  <div class="mat-elevation-z3 m-2 bg-foreground" fxLayout="column">
-    <mat-nav-list class="p-0">
-        <mat-list-item [routerLink]="['/oppdrag']">
-          <mat-icon mat-list-icon>view_list</mat-icon>
-          <span mat-line>Oppdrag</span>
-          <mat-icon>chevron_right</mat-icon>
-          <mat-divider class="mid-divider"></mat-divider>
-        </mat-list-item>
 
-        <mat-list-item [routerLink]="['/timer', currentYear, 'ukeliste']">
-          <mat-icon mat-list-icon>timer</mat-icon>
-          <span mat-line>Timeliste</span>
-          <mat-icon>chevron_right</mat-icon>
-        </mat-list-item>
+<div class="p-2 app-card">
+  <mat-grid-list cols="2" rowHeight="3:2" gutterSize="5" class="mat-subheading-2 mb-2">
+    <mat-grid-tile class="mat-elevation-z2 bg-foreground" matRipple [routerLink]="['/oppdrag']">
+      <span class="text-center">
+        <mat-icon class="scale-150">view_list</mat-icon><br />
+        <span>Oppdrag</span>
+      </span>
+    </mat-grid-tile>
+    <mat-grid-tile class="mat-elevation-z2 bg-foreground" matRipple [routerLink]="['/timer/ukeliste']">
+      <span class="text-center">
+        <mat-icon class="scale-150">timer</mat-icon><br />
+        <span>Timer</span>
+      </span>
+    </mat-grid-tile>
+  </mat-grid-list>
 
-    </mat-nav-list>
-  </div>
+  <span class="mat-body-2">Administrering</span>
+  <app-list-card text="Administrer timer" startIcon="date_range" endIcon="chevron_right"
+  [routerLink]="['/timer/admin']">
+</app-list-card>
+  <app-list-card text="Administrer data" startIcon="dns" endIcon="chevron_right"
+    [routerLink]="['/data']">
+  </app-list-card>
+  <app-list-card text="Administrer brukere" startIcon="people" endIcon="chevron_right"
+    [routerLink]="['/brukere']">
+  </app-list-card>
 
-  <div class="mat-elevation-z3 m-2  bg-foreground" fxLayout="column">
-    <mat-nav-list class="p-0">
-      <mat-list-item [routerLink]="['/data']">
-        <mat-icon mat-list-icon>dns</mat-icon>
-        <span mat-line>Administrer data</span>
-        <mat-icon>chevron_right</mat-icon>
-        <mat-divider class="mid-divider"></mat-divider>
-      </mat-list-item>
-      <mat-list-item [routerLink]="['/timestatistikk']">
-        <mat-icon mat-list-icon>assessment</mat-icon>
-        <span mat-line>Timestatistikk</span>
-        <mat-icon>chevron_right</mat-icon>
-        <mat-divider class="mid-divider"></mat-divider>
-      </mat-list-item>
-      <mat-list-item [routerLink]="['/brukere']">
-        <mat-icon mat-list-icon>people</mat-icon>
-        <span mat-line>Brukere</span>
-        <mat-icon>chevron_right</mat-icon>
-        <mat-divider class="mid-divider"></mat-divider>
-      </mat-list-item>
-    </mat-nav-list>
-  </div>
+  <span class="mat-body-2">Statistikk</span>
+  <app-list-card text="Timestatistikk" startIcon="assessment" endIcon="chevron_right"
+    [routerLink]="['/timestatistikk']">
+  </app-list-card>
 
-<div class="m-1">
+  <span class="mat-body-2">Sist besøkte oppdrag</span>
+  
   <app-list-card *ngFor="let mission of missionHistory$ | async"
     startIcon="history"
     [endIcon]="mission.finished ? 'check':'chevron_right'"

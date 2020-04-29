@@ -25,9 +25,10 @@ import {
    MatRippleModule,
    MatBottomSheetModule,
    MatButtonToggleModule,
+   MatCardModule,
 
-   //Experimental
-   MatCardModule
+   //exp
+   MatGridListModule
 
 } from '@angular/material';
 
@@ -57,7 +58,8 @@ import {
       MatRippleModule,
       MatBottomSheetModule,
       MatButtonToggleModule,
-      MatCardModule
+      MatCardModule,
+      MatGridListModule
    ],
    exports: [
       MatButtonModule,
@@ -83,7 +85,8 @@ import {
       MatRippleModule,
       MatBottomSheetModule,
       MatButtonToggleModule,
-      MatCardModule
+      MatCardModule,
+      MatGridListModule
    ],
 })
 

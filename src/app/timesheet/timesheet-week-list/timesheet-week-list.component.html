@@ -3,7 +3,7 @@
         <app-timesheet-week-card
             *cdkVirtualFor="let summary of weekSummaries$ | async"
             [summary]="summary"
-            [routerLink]="['/timer', this.year, summary.week, 'ukevisning']">
+            [routerLink]="['/timer/ukevisning']" [queryParams]="{year: this.year, weekNr: summary.week}">
         </app-timesheet-week-card>    
     </cdk-virtual-scroll-viewport>
 </div>

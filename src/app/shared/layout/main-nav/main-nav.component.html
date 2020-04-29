@@ -31,7 +31,7 @@
 
       <mat-divider class="mid-divider"></mat-divider>
 
-      <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/timer', currentYear, 'ukeliste']" [routerLinkActive]="['active']">
+      <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/timer/ukeliste']" [routerLinkActive]="['active']">
         <mat-icon mat-list-icon>timer</mat-icon>
         <p mat-line>Timeliste</p>
       </a>
@@ -120,7 +120,7 @@
           </span>
         </ng-template>
 
-        <mat-spinner *ngIf="loading$ |  async" diameter="24"></mat-spinner>
+        <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="color-accent"></mat-spinner>
 
 
         <button mat-icon-button 
@@ -160,4 +160,4 @@
 
 </mat-sidenav-container>
 
-<app-bottom-nav fxHide fxShow.xs [openTimesheetCount]="openTimesheetCount$ | async" [year]="currentYear"></app-bottom-nav>
+<app-bottom-nav fxHide fxShow.xs [openTimesheetCount]="openTimesheetCount$ | async"></app-bottom-nav>

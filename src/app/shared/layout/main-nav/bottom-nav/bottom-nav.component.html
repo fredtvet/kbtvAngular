@@ -21,7 +21,7 @@
 
         </button>
 
-        <button *ifRole="[Roles.Leder, Roles.Mellomleder]" [routerLink]="['/timer', year, 'ukeliste']" [routerLinkActive]="['active']"
+        <button *ifRole="[Roles.Leder, Roles.Mellomleder]" [routerLink]="['/timer/ukeliste']" [routerLinkActive]="['active']"
             class="bottom_toolbar_button" mat-icon-button aria-label="Gå til timeliste">
 
             <mat-icon matBadgeColor="warn" matBadgeSize="small" 

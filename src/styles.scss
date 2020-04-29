@@ -44,6 +44,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 
 .line-height-90{line-height:90%}
 
+.app-nav-tile{height:100px;width:100px}
+
 .flex-spacer{
   flex: 1 1 auto;
 }
@@ -62,6 +64,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 .image_viewer_dialog .mat-dialog-container{
   background-color:black!important;
 }
+
 .notification{
   margin-bottom:($bottom-nav-height + $content-margin) * 1px!important;
   background-color:mat-color($background,"unselected-chip");
@@ -92,7 +95,6 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 
 .app-card{
   max-width:600px;
-  //min-width:280px;
   .mat-card-header-text{
     margin:0;
   }
@@ -103,10 +105,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
    width:calc(100% - (#{$content-margin} * 4px))!important;
 }
 
-.center-spinner{
-  margin:$content-margin * 2px auto;
-}
-
+.center-margin{margin:0 auto;}
+.center-spinner{margin:$content-margin * 2px auto;}
 .owl-dt-calendar-table{
   .owl-dt-calendar-cell{
     .owl-dt-calendar-cell-today{

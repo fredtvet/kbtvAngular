@@ -5,8 +5,9 @@
       <mat-toolbar-row>
         <span class="mat-body-strong">{{ title }}</span>
         <span class="flex-spacer"></span>
-        <app-stroked-button 
-            *ngFor="let button of buttons" 
+        <app-stroked-button
+            *ngFor="let button of buttons; let last = last" 
+            [ngClass]="last ? '' : 'mr-1'"
             [config]="button">
         </app-stroked-button>
       </mat-toolbar-row>

@@ -5,18 +5,19 @@ import { AuthGuard } from '../core/services';
 import { Roles } from '../shared/enums';
 import { TimesheetListComponent } from './timesheet-list/timesheet-list.component';
 import { TimesheetWeekListComponent } from './timesheet-week-list/timesheet-week-list.component';
+import { TimesheetAdminListComponent } from './timesheet-admin-list/timesheet-admin-list.component';
 
 
 const routes: Routes = [
   {
-    path: ':year/ukeliste',
+    path: 'ukeliste',
     component: TimesheetWeekListComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
     data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]}
   },
   {
-    path: ':year/:weekNr/ukevisning',
+    path: 'ukevisning',
     component: TimesheetWeekViewComponent,
     pathMatch: 'full',
     canActivate: [AuthGuard],
@@ -28,7 +29,14 @@ const routes: Routes = [
     pathMatch: 'full',
     canActivate: [AuthGuard],
     data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]}
-  }
+  },
+  {
+    path: 'admin',
+    component: TimesheetAdminListComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: {allowedRoles: [Roles.Leder]}
+  },
 ];
 
 @NgModule({

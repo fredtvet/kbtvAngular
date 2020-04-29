@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay, takeUntil, tap } from 'rxjs/operators';
@@ -30,8 +30,6 @@ export class MainNavComponent extends SubscriptionComponent {
   loading$: Observable<boolean> = this.loadingService.loading$;
 
   openTimesheetCount$: Observable<number> = this.userTimesheetService.getCount$(TimesheetStatus.Open);
-  
-  currentYear = new Date().getFullYear();
 
   isXs$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.XSmall)
     .pipe(

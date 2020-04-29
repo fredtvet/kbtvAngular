@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --stats-json",
+    "build": "ng build --prod --base-href /kbtvAngularLive/ --stats-json",
+    "publish": "angular-cli-ghpages --repo=https://github.com/fredtvet/kbtvAngularLive.git",
+    "buildPublish": "ng build --prod --base-href /kbtvAngularLive/ --stats-json && angular-cli-ghpages --repo=https://github.com/fredtvet/kbtvAngularLive.git",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

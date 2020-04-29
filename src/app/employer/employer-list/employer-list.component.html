@@ -1,5 +1,5 @@
 <app-inner-nav title="Oppdragsgivere" [buttons]="innerNavButtons">
-  <mat-spinner *ngIf="!employers" class="center-spinner"></mat-spinner>
+  <mat-spinner *ngIf="!employers" class="center-spinner color-accent"></mat-spinner>
   <mat-nav-list *ngIf="employers" class="p-0">
     <app-nav-list-item *ngFor="let employer of employers; last as last"
       (click)="(currentUser.role == Roles.Leder) ? editEmployer(employer.id) : ''" [last]="last"
