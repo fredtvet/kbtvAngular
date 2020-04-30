@@ -131,7 +131,6 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
   }
 
   private configureMainNav(dp: DateParams){
-    console.log(dp);
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Uke " + dp.weekNr;
     cfg.subTitle = dp.year.toString();
@@ -142,7 +141,6 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
   }
 
   private getDateParams(params): DateParams{
-    console.log(params);
     return {
       year: +params['year'] || this.date.getFullYear(), 
       weekNr: +params['weekNr'] || this.dateTimeService.getWeekOfYear(this.date)

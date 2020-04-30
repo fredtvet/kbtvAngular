@@ -7,6 +7,8 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 export class WeekListFilterComponent implements OnInit {
 
   @Input() year: number;
+  @Input() userName: string;
+  @Input() users: string;
   @Output() filterChanged = new EventEmitter();
 
   currentYear = new Date().getFullYear();
@@ -16,7 +18,7 @@ export class WeekListFilterComponent implements OnInit {
   ngOnInit() {
   }
 
-  applyFilter = () => this.filterChanged.emit({year: this.year});
+  applyFilter = () => this.filterChanged.emit({year: this.year, userName: this.userName});
   
   close = () => this.filterChanged.emit();
   

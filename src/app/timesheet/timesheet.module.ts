@@ -8,14 +8,11 @@ import { TimesheetCardDialogWrapperComponent } from './components/timesheet-card
 import { TimesheetFormDialogWrapperComponent } from './components/timesheet-form-dialog-wrapper.component';
 import { TimesheetListComponent } from './timesheet-list/timesheet-list.component';
 import { TimesheetListMenuComponent } from './timesheet-list/timesheet-list-menu/timesheet-list-menu.component';
-import { TimesheetCardComponent } from './components/timesheet-card/timesheet-card.component';
 import { TimesheetFilterSheetWrapperComponent } from '../shared/components';
 import { TimesheetWeekViewComponent } from './timesheet-week-view/timesheet-week-view.component';
 import { TimesheetWeekListComponent } from './timesheet-week-list/timesheet-week-list.component';
-import { WeekListFilterComponent } from './components/week-list-filter/week-list-filter.component';
-import { WeekListFilterSheetWrapperComponent } from './components/week-list-filter/week-list-filter-sheet-wrapper.component';
-import { TimesheetWeekCardComponent } from './timesheet-week-list/timesheet-week-card/timesheet-week-card.component';
-import { TimesheetAdminListComponent } from './timesheet-admin-list/timesheet-admin-list.component';
+import { WeekListFilterSheetWrapperComponent } from '../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
+import { UsernameToFullnamePipe } from '../shared/pipes';
 
 
 
@@ -24,17 +21,13 @@ import { TimesheetAdminListComponent } from './timesheet-admin-list/timesheet-ad
     TimesheetWeekListComponent,
     TimesheetDayLabelComponent,
     TimesheetFormComponent,
-    TimesheetCardComponent,
+    
     TimesheetMissionBarComponent,
     TimesheetCardDialogWrapperComponent,
     TimesheetFormDialogWrapperComponent,
     TimesheetListComponent,
     TimesheetListMenuComponent,
     TimesheetWeekViewComponent,
-    WeekListFilterComponent,
-    WeekListFilterSheetWrapperComponent,
-    TimesheetWeekCardComponent,
-    TimesheetAdminListComponent,
   ],
   entryComponents:[
     TimesheetFilterSheetWrapperComponent,

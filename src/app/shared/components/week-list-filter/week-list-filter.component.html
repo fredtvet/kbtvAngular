@@ -1,6 +1,18 @@
 <div fxLayout="column" fxLayoutAlign="space-around stretch">
   <span class="mat-body-2">Velg filtre for uker</span>
 
+  <ng-container *ngIf="userName">
+    <mat-form-field style="max-width:400px;">
+      <mat-select [(ngModel)]="userName" placeholder="Velg ansatt">
+        <mat-option *ngFor="let user of users" [value]="user.userName">
+          {{ user.firstName }} {{ user.lastName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-divider class="mb-2"></mat-divider>
+  </ng-container>
+
   <mat-form-field>
     <mat-label>Velg år</mat-label>
     <input matInput [(ngModel)]="year" type="number">

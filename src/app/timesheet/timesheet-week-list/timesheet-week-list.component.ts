@@ -3,7 +3,7 @@ import { DateTimeService, MainNavService, TimesheetService, UserTimesheetService
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AppButton, TimesheetSummary } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { WeekListFilterSheetWrapperComponent } from '../components/week-list-filter/week-list-filter-sheet-wrapper.component';
+import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
 import { filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -33,8 +33,7 @@ export class TimesheetWeekListComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams
-      .subscribe(qp =>{   
-        console.log(qp);        
+      .subscribe(qp =>{        
         this.year = +qp['year'] || this.today.getFullYear();
         //Get all weeks up to current week if current year, else all weeks
         let endWeek = (this.year == this.today.getFullYear()) ? this.weekNr : this.dateTimeService.getWeeksInYear(this.year);

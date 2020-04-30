@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TimesheetSummary } from 'src/app/shared/interfaces';
+import { User } from 'src/app/shared/models';
 
 @Component({
-  selector: 'app-timesheet-week-card',
-  templateUrl: './timesheet-week-card.component.html'
+  selector: 'app-timesheet-summary-card',
+  templateUrl: './timesheet-summary-card.component.html'
 })
-export class TimesheetWeekCardComponent {
+export class TimesheetSummaryCardComponent {
 
   @Input() summary: TimesheetSummary;
 

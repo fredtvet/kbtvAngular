@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe, SortByTimesheetStatusPipe } from './pipes'
+import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe, SortByTimesheetStatusPipe,UsernameToFullnamePipe } from './pipes'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -27,6 +27,11 @@ import {
   TimesheetFilterComponent,
   TimesheetFilterSheetWrapperComponent,
   ListCardComponent,
+  TimesheetCardComponent,
+  WeekListFilterComponent,
+  WeekListFilterSheetWrapperComponent,
+  TimesheetSummaryCardComponent,
+  TimesheetFilterHeaderComponent,
 } from './components';
 
 import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
@@ -36,7 +41,7 @@ import { DurationPipe } from './pipes/duration.pipe';
 import { GetDateByDateParamsPipe } from './pipes/get-date-by-date-params.pipe';
 import { SameDatePipe } from './pipes/same-date.pipe';
 import { ArrayIncludesPipe } from './pipes/array-includes.pipe';
-import { TimesheetFilterHeaderComponent } from './components/timesheet-filter-header/timesheet-filter-header.component';
+
 @NgModule({
   declarations: [
     MainNavComponent,
@@ -70,6 +75,11 @@ import { TimesheetFilterHeaderComponent } from './components/timesheet-filter-he
     IconButtonComponent,
     StrokedButtonComponent,
     ListCardComponent,
+    UsernameToFullnamePipe,
+    TimesheetCardComponent,
+    WeekListFilterComponent,
+    WeekListFilterSheetWrapperComponent,
+    TimesheetSummaryCardComponent
   ],
   imports: [
     CommonModule,
@@ -114,6 +124,7 @@ import { TimesheetFilterHeaderComponent } from './components/timesheet-filter-he
     DurationPipe,
     GetDateByDateParamsPipe,
     SortByTimesheetStatusPipe,
+    UsernameToFullnamePipe,
     MainNavComponent,
     InnerNavComponent,
     BottomNavComponent,
@@ -130,6 +141,10 @@ import { TimesheetFilterHeaderComponent } from './components/timesheet-filter-he
     IconButtonComponent,
     StrokedButtonComponent,
     ListCardComponent,
+    TimesheetCardComponent,
+    WeekListFilterComponent,
+    WeekListFilterSheetWrapperComponent,
+    TimesheetSummaryCardComponent,
   ]
 })
 export class SharedModule { }

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { Timesheet } from 'src/app/shared/models';
 import { ApiService } from '../api.service';
-import { TimesheetFilter } from 'src/app/shared/interfaces';
-import { tap, switchMap, distinctUntilChanged, skip, map } from 'rxjs/operators';
+import { TimesheetFilter, TimesheetSummary } from 'src/app/shared/interfaces';
+import { tap, switchMap, distinctUntilChanged, skip, map, distinctUntilKeyChanged, pairwise } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { TimePeriods } from 'src/app/shared/enums';
 import { TimesheetAggregatorService } from '../utility/timesheet-aggregator.service';
+import { GroupByTypes } from 'src/app/shared/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -14,40 +14,48 @@ import { TimesheetAggregatorService } from '../utility/timesheet-aggregator.serv
 export class TimesheetService {
   private uri = "/Timesheets"
 
-  private groupBySubject = new BehaviorSubject<TimePeriods>(TimePeriods.Month);
+  private groupBySubject = new BehaviorSubject<GroupByTypes>(GroupByTypes.Month);
   groupBy$ = this.groupBySubject.asObservable();
 
   private filterSubject = new BehaviorSubject<TimesheetFilter>(undefined);
   filter$ = this.filterSubject.asObservable().pipe(map(filter => {return {...filter}}));
 
   private timesheetSubject = new BehaviorSubject<Timesheet[]>([]);
-  timesheets$ = this.timesheetSubject.asObservable();
+  timesheets$ = this.timesheetSubject.asObservable().pipe(distinctUntilChanged());
 
-  timesheetSummaries$ = combineLatest(this.timesheets$, this.groupBy$).pipe(map(
-    ([timesheets, groupBy]) => this.timesheetAggregatorService.groupByTimePeriod(groupBy, timesheets)));
+  timesheetSummaries$ = combineLatest(this.timesheets$, this.groupBy$).pipe(
+    map(([timesheets, groupBy]) => this.timesheetAggregatorService.groupByType(groupBy, timesheets))
+  );
 
   constructor(
     private apiService: ApiService,
     private timesheetAggregatorService: TimesheetAggregatorService) {
     this.filter$.pipe(
-      skip(1),
-      distinctUntilChanged(),
-      switchMap(this.getTimesheets))
+      skip(1), 
+      distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
+      tap(x => this.timesheetSubject.next([])),
+      switchMap(this.get$))
     .subscribe(t => this.timesheetSubject.next(t)) //populate timesheets every time filter uniquely changes.
   }
 
   addFilter(filter: TimesheetFilter){
-    this.filterSubject.next(filter);   
+    this.filterSubject.next(filter);
   }
 
-  addGroupBy(period: TimePeriods){
-    this.groupBySubject.next(period);
+  addGroupBy(type: GroupByTypes){
+    this.groupBySubject.next(type);
   }
 
-  private getTimesheets = (filter: TimesheetFilter):Observable<Timesheet[]> => {
+  getFilter(): TimesheetFilter{
+    return {...this.filterSubject.value};
+  }
+
+  private get$ = (filter: TimesheetFilter):Observable<Timesheet[]> => {
     let params = new HttpParams();
 
     if(filter.user) params = params.set('UserName', filter.user.userName);
+    else if(filter.userName) params = params.set('UserName', filter.userName);
+
     if(filter.dateRange){
       if(typeof filter.dateRange[0] !== 'undefined') 
         params = params.set('StartDate', (filter.dateRange[0].getTime()/1000).toString());

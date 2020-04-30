@@ -36,8 +36,10 @@
         <p mat-line>Timeliste</p>
       </a>
 
+      <mat-divider class="mid-divider"></mat-divider>
+<!-- 
       <ng-container *ifRole="[Roles.Leder, Roles.Mellomleder]">
-        <mat-divider class="mid-divider"></mat-divider>
+        <div mat-subheader class="color-accent pb-0">Administrering</div>
         <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/timestatistikk']" [routerLinkActive]="['active']">
           <mat-icon mat-list-icon>assessment</mat-icon>
           <p mat-line>Timestatistikk</p>
@@ -52,7 +54,7 @@
           <mat-icon mat-list-icon>people</mat-icon>
           <p mat-line>Brukere</p>
         </a>
-      </ng-container>
+      </ng-container> -->
 
       <mat-divider></mat-divider>
 
@@ -120,7 +122,7 @@
           </span>
         </ng-template>
 
-        <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="color-accent"></mat-spinner>
+        <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent"></mat-spinner>
 
 
         <button mat-icon-button 

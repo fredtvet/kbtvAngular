@@ -45,7 +45,7 @@ export class MissionDetailsComponent extends SubscriptionComponent{
   ngOnInit(){
     this.mission.id = +this.route.snapshot.paramMap.get('id');
 
-    this.mission$ = this.missionService.getDetails$(this.mission.id).pipe(tap(console.log));
+    this.mission$ = this.missionService.getDetails$(this.mission.id);
     this.images$ = this.missionImageService.getByMissionId$(this.mission.id);
     this.reports$ = this.missionReportService.getByMissionId$(this.mission.id);
     this.notes$ = this.missionNoteService.getByMissionId$(this.mission.id);

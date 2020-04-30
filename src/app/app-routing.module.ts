@@ -19,6 +19,7 @@ const routes: Routes = [
       {path: 'brukere', loadChildren: './users/users.module#UsersModule'},
       {path: 'data', loadChildren: './data-management/data-management.module#DataManagementModule'},
       {path: 'timer', loadChildren: './timesheet/timesheet.module#TimesheetModule'},
+      {path: 'timeadministrering', loadChildren: './timesheet-admin/timesheet-admin.module#TimesheetAdminModule'},
       {path: 'timestatistikk', loadChildren: './timesheet-statistic/timesheet-statistic.module#TimesheetStatisticModule'},
       {path: 'oppdrag', loadChildren: './mission/mission.module#MissionModule'}
     ]

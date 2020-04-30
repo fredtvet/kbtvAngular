@@ -12,6 +12,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { registerLocaleData } from '@angular/common';
 import norwayLocale from '@angular/common/locales/nb';
+import { TimesheetAdminModule } from './timesheet-admin/timesheet-admin.module';
 
 registerLocaleData(norwayLocale, 'nb-NO');
 
@@ -28,7 +29,8 @@ registerLocaleData(norwayLocale, 'nb-NO');
     HttpClientModule,
     SharedModule,
     CoreModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    TimesheetAdminModule
   ],
   providers: [ { provide: LOCALE_ID, useValue: "nb-NO" }, ],
   bootstrap: [AppComponent]

@@ -1,11 +1,11 @@
 import { Timesheet } from '../models';
 
 export interface TimesheetSummary{   
-    totalHours: number;
     timesheets: Timesheet[];
-    openHours?: number;
-    confirmedHours?: number;
+    openHours: number;
+    confirmedHours: number;
     userName?: string;
+    fullName?: string;
     year?: number;
     month?: number;
     week?: number;

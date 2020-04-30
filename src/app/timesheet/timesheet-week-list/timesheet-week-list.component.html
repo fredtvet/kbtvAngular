@@ -1,9 +1,9 @@
 <div class="p-0 h-100" fxLayout="column" fxLayoutAlign="start stretch">
     <cdk-virtual-scroll-viewport itemSize="82" [attr.minBufferPx]="11*82" [attr.maxBufferPx]="13*82" fxFlex>
-        <app-timesheet-week-card
+        <app-timesheet-summary-card
             *cdkVirtualFor="let summary of weekSummaries$ | async"
             [summary]="summary"
             [routerLink]="['/timer/ukevisning']" [queryParams]="{year: this.year, weekNr: summary.week}">
-        </app-timesheet-week-card>    
+        </app-timesheet-summary-card>    
     </cdk-virtual-scroll-viewport>
 </div>

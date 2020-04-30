@@ -7,6 +7,7 @@ export interface TimesheetFilter{
     status?: TimesheetStatus;    
     mission?: Mission;
     user?: User;
+    userName?: string;
     dateRange?: Date[]; 
     dateRangePreset?: DateRangePresets;
 }

@@ -94,7 +94,6 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
   }
 
   private _addOrUpdateRange(entities: T[]): T[]{
-    console.log(entities);
     let originals = this.dataSubject.value || [];
     originals = [...originals];
     entities.forEach(e => {
