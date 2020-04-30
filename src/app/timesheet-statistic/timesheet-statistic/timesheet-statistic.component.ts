@@ -4,8 +4,7 @@ import { filter, tap, map } from 'rxjs/operators';
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared/components';
 import { TimesheetFilter } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
-import { TimePeriods } from 'src/app/shared/enums';
-import { Subscription } from 'rxjs';
+import { GroupByTypes } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-timesheet-statistic',
@@ -13,13 +12,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./timesheet-statistic.component.scss']
 })
 export class TimesheetStatisticComponent {
-  timePeriods = TimePeriods;
+  groupByTypes = GroupByTypes;
 
-  filter$ = this.timesheetService.filter$.pipe(tap(console.log));
+  filter$ = this.timesheetService.filter$;
 
   groupBy$ = this.timesheetService.groupBy$;
 
-  timesheetSummaries$ = this.timesheetService.timesheetSummaries$.pipe(tap(console.log), tap(x => console.timeEnd('grping')));
+  timesheetSummaries$ = this.timesheetService.timesheetSummaries$;
 
   users$ = this.usersService.getAll$();
 
@@ -33,9 +32,8 @@ export class TimesheetStatisticComponent {
     }
 
 
-  changeGroupingPeriod(period: TimePeriods){
-    this.timesheetService.addGroupBy(period);
-  }
+  changeGroupingType = (type: GroupByTypes) => this.timesheetService.addGroupBy(type);
+  
 
   openBottomSheet(f: TimesheetFilter): void {
     let ref = this._bottomSheet.open(TimesheetFilterSheetWrapperComponent, {

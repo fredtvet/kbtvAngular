@@ -52,20 +52,24 @@ export class TimesheetStatisticTableComponent {
     if(propertyNames.includes('month'))
       this.columnDefs.push({field: 'month',headerName: 'Måned',sortable: true, valueFormatter: this.convertMonthIndex});
 
-    if(propertyNames.includes('weekNr'))
-      this.columnDefs.push({field: 'weekNr',headerName: 'Uke',sortable: true});
+    if(propertyNames.includes('week'))
+      this.columnDefs.push({field: 'week',headerName: 'Uke',sortable: true});
 
     if(propertyNames.includes('date'))
       this.columnDefs.push({field: 'date',headerName: 'Dato',sortable: true, valueFormatter: this.convertDate});
 
     this.columnDefs.push({field: 'userName',headerName: 'Ansatt',sortable: true, valueFormatter: this.convertUserNameToFullName});
 
-    this.columnDefs.push({field: 'totalHours',headerName: 'Timer',sortable: true});
+    this.columnDefs.push({field: 'confirmedHours',headerName: 'Låste timer',sortable: true});
 
-    let totalHrs = data.reduce((totalHours, summary) => { return totalHours + summary.totalHours }, 0);
-    
-    if(this.dataGrid)
-      this.dataGrid.api.setPinnedBottomRowData([{totalHours: totalHrs, userName: "Sum av timer", timesheets: []}]);
+    this.columnDefs.push({field: 'openHours',headerName: 'Åpne timer',sortable: true});
+
+    let totalOpenHrs = data.reduce((total, summary) => { return total + summary.openHours }, 0);
+    let totalConfirmedHrs = data.reduce((total, summary) => { return total + summary.confirmedHours }, 0);
+
+    if(this.dataGrid){
+      this.dataGrid.api.setPinnedBottomRowData([{openHours: totalOpenHrs, confirmedHours: totalConfirmedHrs, userName: "Sum av timer", timesheets: []}]);
+    }
     
     this.rowData = data;
   }
