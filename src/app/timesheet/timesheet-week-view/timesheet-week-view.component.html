@@ -3,16 +3,16 @@
     (swiperight)="previousWeek(vm.dateParams)" 
     (swipeleft)="nextWeek(vm.dateParams)">
 
-    <ng-container *ngFor="let weekDay of [1,2,3,4,5,6,7]"> 
+    <ng-container *ngFor="let weekDay of [1,2,3,4,5]"> 
 
-        <div class="timesheet-bar" fxLayout="column" fxLayoutAlign="start center">
+        <div class="w-100" fxLayout="column" fxLayoutAlign="start center">
 
           <app-timesheet-day-label class="w-100 mb-1"
             [date]="vm.dateParams | getDateByDateParams : weekDay"
             (labelClicked)="openTimesheetForm($event)">
           </app-timesheet-day-label>
 
-          <div class="progress-bar-container"
+          <div class="w-100" style="padding: 0 1px 0 1px"
             fxLayout="column" fxLayoutAlign="start center" fxFlex>
               <app-timesheet-mission-bar class="w-100 mb-1"
                 *ngFor="let timesheet of vm.days[weekDay] | sortByDate: 'startTime';" 

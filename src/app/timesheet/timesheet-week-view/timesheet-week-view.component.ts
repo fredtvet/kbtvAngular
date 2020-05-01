@@ -24,7 +24,6 @@ import { TimesheetCardDialogWrapperComponent } from '../components/timesheet-car
 @Component({
   selector: "app-timesheet-week-view",
   templateUrl: "./timesheet-week-view.component.html",
-  styleUrls: ["./timesheet-week-view.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimesheetWeekViewComponent extends SubscriptionComponent {
