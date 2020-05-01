@@ -56,32 +56,6 @@ export class UserTimesheetService extends BaseMissionChildService<Timesheet> {
     })); 
   }
 
-  changeStatus$(id: number, status: TimesheetStatus): Observable<Timesheet>{
-    if(!this.isOnline)
-      return throwError('Du må være tilkoblet internett for å oppdatere ting.')
-            .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-
-    return this.apiService.put(`${this.uri}/${id}/Status`, { id: id, status: status})
-      .pipe(map(data => {
-        this.dataSubject.update(data);
-        return data;
-      }));
-  }
-
-  changeStatuses$(ids: number[], status: TimesheetStatus): Observable<Timesheet[]>{
-    if(!this.isOnline)
-      return throwError('Du må være tilkoblet internett for å oppdatere ting.')
-            .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-
-    if(ids.length == 0) throwError('Ingen ubekreftede timer');
-
-    return this.apiService.put(`${this.uri}/Status`, { ids: ids, status: status})
-      .pipe(map(data => {
-        this.dataSubject.addOrUpdateRange(data);
-        return data;
-      }));
-  }
-
   getCount$(status: TimesheetStatus = undefined): Observable<number>{
     return this.dataSubject.getCount$(status);
   }

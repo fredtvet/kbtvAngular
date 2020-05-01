@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, combineLatest, Subject } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest, Subject, throwError } from 'rxjs';
 import { Timesheet } from 'src/app/shared/models';
 import { ApiService } from '../api.service';
 import { TimesheetFilter, TimesheetSummary } from 'src/app/shared/interfaces';
 import { tap, switchMap, distinctUntilChanged, map, pairwise, startWith, share, shareReplay, skip } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { TimesheetAggregatorService } from '../utility/timesheet-aggregator.service';
-import { GroupByTypes } from 'src/app/shared/enums';
+import { GroupByTypes, TimesheetStatus, Notifications } from 'src/app/shared/enums';
+import { ConnectionService } from '../connection.service';
+import { NotificationService } from '../notification.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TimesheetService {
   private uri = "/Timesheets"
+  private isOnline: boolean;
 
   private groupBySubject = new BehaviorSubject<GroupByTypes>(GroupByTypes.Month);
   groupBy$ = this.groupBySubject.asObservable();
@@ -29,14 +32,14 @@ export class TimesheetService {
 
   constructor(
     private apiService: ApiService,
-    private timesheetAggregatorService: TimesheetAggregatorService) {
-    
+    private timesheetAggregatorService: TimesheetAggregatorService,
+    private connectionService: ConnectionService,
+    private notificationService: NotificationService) {
+    this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
     this.filter$.pipe(
-      startWith(null), 
       distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
       tap(x => this.timesheetSubject.next([])),
-      pairwise(),
-      switchMap(([prev, curr]) => this.get$(curr)), tap(console.log))
+      switchMap(this.get$))
     .subscribe(t => this.timesheetSubject.next(t)) //populate timesheets every time filter uniquely changes.
   }
 
@@ -51,6 +54,27 @@ export class TimesheetService {
   getFilter(): TimesheetFilter{
     return {...this.filterSubject.value};
   }
+
+  changeStatus$(id: number, status: TimesheetStatus): Observable<Timesheet>{
+    if(!this.isOnline)
+      return throwError('Du må være tilkoblet internett for å oppdatere ting.')
+            .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
+
+    return this.apiService.put(`${this.uri}/${id}/Status`, { id: id, status: status})
+      .pipe(tap(this.update));
+  }
+
+  changeStatuses$(ids: number[], status: TimesheetStatus): Observable<Timesheet[]>{
+    if(!this.isOnline)
+      return throwError('Du må være tilkoblet internett for å oppdatere ting.')
+            .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
+
+    if(ids.length == 0) throwError('Ingen ubekreftede timer');
+
+    return this.apiService.put(`${this.uri}/Status`, { ids: ids, status: status})
+      .pipe(tap(data => this.updateRange));
+  }
+
 
   private get$ = (filter: TimesheetFilter):Observable<Timesheet[]> => {
     let params = new HttpParams();
@@ -69,8 +93,24 @@ export class TimesheetService {
     return this.apiService.get(this.uri, params);
   }
 
-  private hasFilterChanged(filter: TimesheetFilter): boolean{
-    return JSON.stringify(filter) !== JSON.stringify(this.filterSubject.value) 
+  private update(timesheet: Timesheet){
+    let arr = [...this.timesheetSubject.value];
+    arr = arr.map(e => {
+      if(e.id !== timesheet.id) return e;
+      else return Object.assign(e, timesheet);
+    });
+    this.timesheetSubject.next(arr);
+  }
+
+  private updateRange(timesheets: Timesheet[]){
+    let originals = this.timesheetSubject.value || [];
+    originals = [...originals];
+    timesheets.forEach(e => {
+      let duplicateIndex = originals.findIndex((o) => (o.id === e.id));
+      if(duplicateIndex !== -1) originals[duplicateIndex] = Object.assign(originals[duplicateIndex], e);
+      else originals.push(e);
+    });
+    this.timesheetSubject.next(originals);
   }
 
 }
