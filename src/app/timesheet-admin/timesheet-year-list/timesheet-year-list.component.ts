@@ -71,6 +71,7 @@ export class TimesheetYearListComponent extends SubscriptionComponent {
       let year = +qp['year'] || this.today.getFullYear();
       let date = new Date();
       date.setFullYear(year);
+      console.log(date);
       this.timesheetService.addFilter({dateRange: this.dateTimeService.getYearRange(date)});
       this.configureMainNav(year);
     }); 

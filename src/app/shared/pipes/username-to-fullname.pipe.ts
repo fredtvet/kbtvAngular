@@ -8,7 +8,9 @@ export class UsernameToFullnamePipe implements PipeTransform {
 
   transform(value: string, users: User[]): string {
     const user = users.find(x => x.userName === value);
-    return user.firstName + ' ' + user.lastName;
+    if(user)
+      return user.firstName + ' ' + user.lastName;
+    else return 'Ingen';
   }
 
 }

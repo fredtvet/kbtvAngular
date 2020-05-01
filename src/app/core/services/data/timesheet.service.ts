@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { Timesheet } from 'src/app/shared/models';
 import { ApiService } from '../api.service';
 import { TimesheetFilter, TimesheetSummary } from 'src/app/shared/interfaces';
-import { tap, switchMap, distinctUntilChanged, skip, map, distinctUntilKeyChanged, pairwise } from 'rxjs/operators';
+import { tap, switchMap, distinctUntilChanged, map, pairwise, startWith, share, shareReplay, skip } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { TimesheetAggregatorService } from '../utility/timesheet-aggregator.service';
 import { GroupByTypes } from 'src/app/shared/enums';
@@ -17,7 +17,7 @@ export class TimesheetService {
   private groupBySubject = new BehaviorSubject<GroupByTypes>(GroupByTypes.Month);
   groupBy$ = this.groupBySubject.asObservable();
 
-  private filterSubject = new BehaviorSubject<TimesheetFilter>(undefined);
+  private filterSubject = new BehaviorSubject<TimesheetFilter>(null);
   filter$ = this.filterSubject.asObservable().pipe(map(filter => {return {...filter}}));
 
   private timesheetSubject = new BehaviorSubject<Timesheet[]>([]);
@@ -30,11 +30,13 @@ export class TimesheetService {
   constructor(
     private apiService: ApiService,
     private timesheetAggregatorService: TimesheetAggregatorService) {
+    
     this.filter$.pipe(
-      skip(1), 
+      startWith(null), 
       distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
       tap(x => this.timesheetSubject.next([])),
-      switchMap(this.get$))
+      pairwise(),
+      switchMap(([prev, curr]) => this.get$(curr)), tap(console.log))
     .subscribe(t => this.timesheetSubject.next(t)) //populate timesheets every time filter uniquely changes.
   }
 
