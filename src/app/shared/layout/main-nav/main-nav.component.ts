@@ -75,14 +75,6 @@ export class MainNavComponent extends SubscriptionComponent {
   
   openBottomSheet = (buttons: AppButton[]) => this._bottomSheet.open(BottomSheetMenuComponent, { data: buttons });
 
-  handleFn = (fn: Function, ...parameters: any[]) => {
-    fn(...parameters);
-  };
-  
+  handleFn = (fn: Function, parameters: any[] = []) => fn(...parameters);
 
-  // ngDoCheck(){
-  //   console.log('d')
-  //   if(this.config.title)
-  //     this.config.title = this.config.title.replace(/;/g, "<br />");
-  // }
 }

@@ -12,6 +12,7 @@ export interface MainNavConfig{
     
     searchFn?: Function;
     backFn?: Function;
+    backFnParams?: any[];
     
     bottomSheetButtons?: AppButton[];
     

@@ -31,7 +31,7 @@
 
       <mat-divider class="mid-divider"></mat-divider>
 
-      <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/timer/ukeliste']" [routerLinkActive]="['active']">
+      <a mat-list-item (click)="toggleDrawer()" [routerLink]="['/timer/ukevisning']" [routerLinkActive]="['active']">
         <mat-icon mat-list-icon>timer</mat-icon>
         <p mat-line>Timeliste</p>
       </a>
@@ -95,7 +95,7 @@
           </ng-container>
 
           <ng-template #backBtn>
-            <button (click)="handleFn(config.backFn)"
+            <button (click)="handleFn(config.backFn, config.backFnParams)"
              mat-icon-button aria-label="Tilbake">
                 <mat-icon class="scale-150">chevron_left</mat-icon>
             </button>

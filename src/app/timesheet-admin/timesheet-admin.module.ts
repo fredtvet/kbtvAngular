@@ -2,16 +2,14 @@ import { NgModule } from '@angular/core';
 
 import { TimesheetAdminRoutingModule } from './timesheet-admin-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { TimesheetYearListComponent } from './timesheet-year-list/timesheet-year-list.component';
-import { TimesheetWeekListComponent } from './timesheet-week-list/timesheet-week-list.component';
 import { UsernameToFullnamePipe } from '../shared/pipes';
 import { WeekListFilterSheetWrapperComponent } from '../shared/components';
+import { TimesheetAdminListComponent } from './timesheet-admin-list/timesheet-admin-list.component';
 
 
 @NgModule({
   declarations: [
-    TimesheetYearListComponent,
-    TimesheetWeekListComponent
+    TimesheetAdminListComponent
   ],
   providers:[
     UsernameToFullnamePipe,

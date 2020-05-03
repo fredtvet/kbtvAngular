@@ -24,7 +24,7 @@ export class TimesheetService {
   filter$ = this.filterSubject.asObservable().pipe(map(filter => {return {...filter}}));
 
   private timesheetSubject = new BehaviorSubject<Timesheet[]>([]);
-  timesheets$ = this.timesheetSubject.asObservable().pipe(distinctUntilChanged());
+  timesheets$ = this.timesheetSubject.asObservable();
 
   timesheetSummaries$ = combineLatest(this.timesheets$, this.groupBy$).pipe(
     map(([timesheets, groupBy]) => this.timesheetAggregatorService.groupByType(groupBy, timesheets))
@@ -72,11 +72,11 @@ export class TimesheetService {
     if(ids.length == 0) throwError('Ingen ubekreftede timer');
 
     return this.apiService.put(`${this.uri}/Status`, { ids: ids, status: status})
-      .pipe(tap(data => this.updateRange));
+      .pipe(tap(this.updateRange));
   }
 
 
-  private get$ = (filter: TimesheetFilter):Observable<Timesheet[]> => {
+  get$ = (filter: TimesheetFilter):Observable<Timesheet[]> => {
     let params = new HttpParams();
 
     if(filter.user) params = params.set('UserName', filter.user.userName);
@@ -93,7 +93,7 @@ export class TimesheetService {
     return this.apiService.get(this.uri, params);
   }
 
-  private update(timesheet: Timesheet){
+  private update = (timesheet: Timesheet) => {
     let arr = [...this.timesheetSubject.value];
     arr = arr.map(e => {
       if(e.id !== timesheet.id) return e;
@@ -102,7 +102,7 @@ export class TimesheetService {
     this.timesheetSubject.next(arr);
   }
 
-  private updateRange(timesheets: Timesheet[]){
+  private updateRange = (timesheets: Timesheet[]) => {
     let originals = this.timesheetSubject.value || [];
     originals = [...originals];
     timesheets.forEach(e => {

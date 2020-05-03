@@ -91,15 +91,15 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
     });
   }
 
-  private confirmWeek = (days: Timesheet[][]) => {
-    let ids = [].concat(...days).reduce((acc, timesheet) => {
-      if (timesheet.status === TimesheetStatus.Open) acc.push(timesheet.id);
-      return acc;
-    }, []);
-    this.userTimesheetService
-      .changeStatuses$(ids, TimesheetStatus.Confirmed)
-      .subscribe();
-  }
+  // private confirmWeek = (days: Timesheet[][]) => {
+  //   let ids = [].concat(...days).reduce((acc, timesheet) => {
+  //     if (timesheet.status === TimesheetStatus.Open) acc.push(timesheet.id);
+  //     return acc;
+  //   }, []);
+  //   this.userTimesheetService
+  //     .changeStatuses$(ids, TimesheetStatus.Confirmed)
+  //     .subscribe();
+  // }
 
   private goToTimesheetList = () => {
       const dp = this.getDateParams(this.route.snapshot.queryParams)

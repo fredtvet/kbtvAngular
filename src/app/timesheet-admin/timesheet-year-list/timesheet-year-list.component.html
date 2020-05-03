@@ -1,9 +1,0 @@
-
-<ng-container *ngIf="userSummaries$ | async; let summaries">
-    <mat-spinner class="center-spinner" color="accent" *ngIf="summaries.length < 1"></mat-spinner>
-    <app-timesheet-summary-card
-        *ngFor="let summary of summaries" [summary]="summary"
-        [routerLink]="['/timeadministrering/ukeliste']" 
-        [queryParams]="{year: summary.year, userName: summary.userName}">
-    </app-timesheet-summary-card>
-</ng-container>

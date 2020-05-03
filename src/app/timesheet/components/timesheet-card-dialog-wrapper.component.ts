@@ -1,15 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserTimesheetService } from 'src/app/core/services';
-import { TimesheetStatus } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-timesheet-card-dialog-wrapper',
   template: `
   <app-timesheet-card 
     [timesheet]="timesheet$ | async" 
-    (deleted)="deleteTimesheet()"
-    (confirmed)="confirmTimesheet()">
+    (deleted)="deleteTimesheet()">
   </app-timesheet-card>
   `
 })
@@ -30,7 +28,7 @@ export class TimesheetCardDialogWrapperComponent {
   }
 
   confirmTimesheet(){
-    this.userTimesheetService.changeStatus$(this.timesheetId, TimesheetStatus.Confirmed)
-      .subscribe(x => this.dialogRef.close());
+    // this.userTimesheetService.changeStatus$(this.timesheetId, TimesheetStatus.Confirmed)
+    //   .subscribe(x => this.dialogRef.close());
   }
 }

@@ -67,7 +67,7 @@ export class TimesheetListComponent implements OnInit {
 
   deleteTimesheet = (id: number) => this.userTimesheetService.delete$(id).subscribe();
   
-  confirmTimesheet = (id: number) => this.userTimesheetService.changeStatus$(id, TimesheetStatus.Confirmed).subscribe();
+  // confirmTimesheet = (id: number) => this.userTimesheetService.changeStatus$(id, TimesheetStatus.Confirmed).subscribe();
 
   getCurrentFilter(): TimesheetListFilter {
     return this.filterSubject.value;
