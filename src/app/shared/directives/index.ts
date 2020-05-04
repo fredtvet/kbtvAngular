@@ -1,1 +1,2 @@
 export * from './if-role.directive';
+export * from './add-to-home-screen.directive';

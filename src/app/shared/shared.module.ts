@@ -19,8 +19,6 @@ import {
   SearchBarComponent,
   MissionListViewComponent,
   NotificationComponent,
-  ReportTypeFormDialogComponent,
-  MissionTypeFormDialogComponent,
   SubmitButtonComponent,
   AddToHomeScreenComponent,
   PageNotFoundComponent,
@@ -41,6 +39,7 @@ import { DurationPipe } from './pipes/duration.pipe';
 import { GetDateByDateParamsPipe } from './pipes/get-date-by-date-params.pipe';
 import { SameDatePipe } from './pipes/same-date.pipe';
 import { ArrayIncludesPipe } from './pipes/array-includes.pipe';
+import { AddToHomeScreenDirective } from './directives/add-to-home-screen.directive';
 
 @NgModule({
   declarations: [
@@ -60,8 +59,6 @@ import { ArrayIncludesPipe } from './pipes/array-includes.pipe';
     MissionListViewComponent,
     AddToHomeScreenComponent,
     SubmitButtonComponent,
-    MissionTypeFormDialogComponent,
-    ReportTypeFormDialogComponent,
     BottomSheetMenuComponent,
     DurationPipe,
     GetDateByDateParamsPipe,
@@ -79,7 +76,8 @@ import { ArrayIncludesPipe } from './pipes/array-includes.pipe';
     TimesheetCardComponent,
     WeekListFilterComponent,
     WeekListFilterSheetWrapperComponent,
-    TimesheetSummaryCardComponent
+    TimesheetSummaryCardComponent,
+    AddToHomeScreenDirective
   ],
   imports: [
     CommonModule,
@@ -117,6 +115,7 @@ import { ArrayIncludesPipe } from './pipes/array-includes.pipe';
     ImageViewerDialogComponent,
     NavListItemComponent,
     IfRoleDirective,
+    AddToHomeScreenDirective,
     ArraySlicePipe,
     ThumbnailPipe,
     SortByDatePipe,
@@ -132,8 +131,6 @@ import { ArrayIncludesPipe } from './pipes/array-includes.pipe';
     MissionListViewComponent,
     AddToHomeScreenComponent,
     SubmitButtonComponent,
-    MissionTypeFormDialogComponent,
-    ReportTypeFormDialogComponent,
     PageNotFoundComponent,
     TimesheetFilterSheetWrapperComponent,
     ArrayIncludesPipe,

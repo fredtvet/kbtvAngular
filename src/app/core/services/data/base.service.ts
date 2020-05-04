@@ -59,7 +59,7 @@ export abstract class BaseService<T extends BaseEntity>{
 
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å legge til ting.')
       .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-
+    console.log(entity);
     return this.apiService
                 .post(`${this.uri}`, entity)
                 .pipe(tap(data =>{

@@ -26,7 +26,7 @@
 
 <ng-template let-timesheets #timesheetList>  
     <cdk-virtual-scroll-viewport itemSize="108" [attr.minBufferPx]="6*108" [attr.maxBufferPx]="8*108" fxFlex>
-        <div class="m-2 mat-elevation-z3" *cdkVirtualFor="let timesheet of timesheets">
+        <div class="m-2 mat-elevation-z3" *cdkVirtualFor="let timesheet of timesheets | sortByTimesheetStatus">
             <app-timesheet-card adminView="true"        
             [timesheet]="timesheet"      
             (statusChanged)="changeTimesheetStatus($event.id, $event.status)">

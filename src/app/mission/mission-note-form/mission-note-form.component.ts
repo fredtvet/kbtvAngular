@@ -4,6 +4,7 @@ import { NotificationService, MissionNoteService, MainNavService } from 'src/app
 import { ActivatedRoute, Router } from '@angular/router';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { takeUntil, take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-mission-note-form',
@@ -11,10 +12,11 @@ import { takeUntil, take } from 'rxjs/operators';
 })
 export class MissionNoteFormComponent extends SubscriptionComponent {
 
+  private noteId: number = null;
   private isCreateForm: boolean = false;
 
   missionId: number = null;
-  note: MissionNote = new MissionNote();
+  note$: Observable<MissionNote>;
 
   constructor(
     private mainNavService: MainNavService,
@@ -24,16 +26,14 @@ export class MissionNoteFormComponent extends SubscriptionComponent {
     private router: Router)  {
       super();
       this.missionId = +this.route.snapshot.paramMap.get('missionId');
-      this.note.id = +this.route.snapshot.paramMap.get('id');
-      if(!this.note.id) this.isCreateForm = true;
+      this.noteId = +this.route.snapshot.paramMap.get('id');
+      if(!this.noteId) this.isCreateForm = true;
       this.configureMainNav();
     }
 
   ngOnInit(){
     if(!this.isCreateForm) 
-      this.missionNoteService.get$(this.note.id)
-            .pipe(takeUntil(this.unsubscribe))
-            .subscribe(result => this.note = result);
+      this.note$ = this.missionNoteService.get$(this.noteId);
   }
 
   onSubmit(result: MissionNote){
@@ -43,19 +43,17 @@ export class MissionNoteFormComponent extends SubscriptionComponent {
   }
 
   createNote(note: MissionNote){
-    if(note){
-      this.missionNoteService.add$(note).pipe(take(1))
-      .subscribe(note => {
-        this.notificationService.setNotification('Vellykket! Notat opprettet.');
-        this.onBack();
-      });
-    }
+    if(!note) return null;
+    this.missionNoteService.add$(note).subscribe(note => {
+      this.notificationService.setNotification('Vellykket! Notat opprettet.');
+      this.onBack();
+    });
+    
   }
 
   editNote(note: MissionNote){
     if(!note) return null;
-    this.missionNoteService.update$(note).pipe(take(1))
-      .subscribe(data =>{
+    this.missionNoteService.update$(note).subscribe(data =>{
         this.notificationService.setNotification('Vellykket oppdatering!');
         this.onBack();
       });

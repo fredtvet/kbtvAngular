@@ -41,6 +41,7 @@ export class TimesheetAdminListComponent extends SubscriptionComponent {
     private _bottomSheet: MatBottomSheet) { 
       super();
       this.timesheetService.addGroupBy(GroupByTypes.YearAndUserName);
+      this.configureDefaultNav(+this.route.snapshot.queryParams['year'] || this.today.getFullYear());
       this.initalizeObservable();
     }
 
@@ -58,7 +59,7 @@ export class TimesheetAdminListComponent extends SubscriptionComponent {
       return _ids
     }, []);
     if(ids.length == 0) return undefined;
-    if(confirm('Bekreft at du ønsker å lukke alle timene for denne uken'))
+    if(confirm('Bekreft at du ønsker å bekrefte alle timene for denne uken'))
       this.timesheetService.changeStatuses$(ids, TimesheetStatus.Confirmed).subscribe();
   }
 
@@ -100,7 +101,7 @@ export class TimesheetAdminListComponent extends SubscriptionComponent {
   private filterSummaryForUser = (userName: string, initialSummaries: TimesheetSummary[]): TimesheetSummary[] => {
     let summary = initialSummaries.find(x => x.userName == userName);
     if(!summary) return undefined;
-    return this.timesheetAggregator.groupByWeek(summary.timesheets);
+    return this.timesheetAggregator.groupByWeek(summary.timesheets).sort((a, b) => b.week - a.week);
   }
 
   private filterTimesheetsForUserWeek = (year: number, userName: string, weekNr: number, initialSummaries: TimesheetSummary[]): Timesheet[] => {

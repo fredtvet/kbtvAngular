@@ -62,7 +62,7 @@ export class TimesheetFormComponent implements OnInit {
     timesheet.endTime = new Date(date + " " + this.timeRange[1].toTimeString());
 
     if(this.validateDates(timesheet)) 
-      this._userTimesheetService.add$(timesheet).pipe(take(1)).subscribe(x => this.dialogRef.close(x));
+      this._userTimesheetService.add$(timesheet).subscribe(x => this.dialogRef.close(x));
     else 
       this._notificationService.setNotification("Sluttidspunkt må være etter starttidspunkt", Notifications.Error);   
   }

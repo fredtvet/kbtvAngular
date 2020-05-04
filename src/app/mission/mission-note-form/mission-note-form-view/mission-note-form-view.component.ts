@@ -17,13 +17,15 @@ export class MissionNoteFormViewComponent {
   @Output() formSubmitted = new EventEmitter();
 
   noteForm: FormGroup;
+  isCreateForm: boolean = false;
 
   constructor(private _formBuilder: FormBuilder)  { }
 
   ngOnInit(){
-
+    console.log(this.note);
     if(this.note == null){
       this.note = new MissionNote();
+      this.isCreateForm = true;
       this.note.missionId = this.missionId;
     }
 
@@ -32,7 +34,7 @@ export class MissionNoteFormViewComponent {
 
   initalizeForm(){
     this.noteForm = this._formBuilder.group({
-      id: +this.note.id,
+      id: this.note.id,
       title: [this.note.title, [
         Validators.maxLength(40)
       ]],

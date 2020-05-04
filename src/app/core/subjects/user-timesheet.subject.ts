@@ -73,9 +73,9 @@ export class UserTimesheetSubject extends BaseMissionChildSubject<Timesheet> {
 
     getCount$(status: TimesheetStatus = undefined): Observable<number>{
       if(status == undefined) 
-        return this.getAll$().pipe(map(arr => arr.length));
+        return this.getAll$().pipe(map(arr => arr ? arr.length : undefined));
       else
-        return this.getBy$(x => x.status == status).pipe(map(arr => arr.length));
+        return this.getBy$(x => x.status == status).pipe(map(arr => arr ? arr.length : undefined));
     }
 
 }

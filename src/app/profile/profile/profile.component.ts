@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IdentityService, NotificationService, MainNavService } from 'src/app/core/services';
+import { IdentityService, NotificationService, MainNavService, AppConfigurationService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
-import { takeUntil, take } from 'rxjs/operators';
+import { takeUntil, take, map, tap } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +14,10 @@ export class ProfileComponent extends SubscriptionComponent {
   user: User;
   passwordStatus: string;
 
+  syncRefreshTime$: Observable<number>;
+
   constructor(
+    private appConfigService: AppConfigurationService,
     private mainNavService: MainNavService,
     private identityService: IdentityService,
     private notificationService: NotificationService,
@@ -23,6 +27,7 @@ export class ProfileComponent extends SubscriptionComponent {
   }
 
   ngOnInit() {
+    this.syncRefreshTime$ = this.appConfigService.config$.pipe(map(x => x.syncRefreshTime / 1000 / 60), tap(console.log));
     this.identityService.currentUser$.pipe(takeUntil(this.unsubscribe))
       .subscribe(user => this.user = user); 
   }
@@ -48,6 +53,10 @@ export class ProfileComponent extends SubscriptionComponent {
       window.localStorage.clear();
       location.reload();
     }
+  }
+
+  updateSyncRefreshTime(minutes: number){
+    this.appConfigService.setSyncRefreshTime(minutes * 60 * 1000);
   }
 
   private configureMainNav(){

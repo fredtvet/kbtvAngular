@@ -25,7 +25,7 @@ export class HttpLoadingInterceptor implements HttpInterceptor {
         }
       }),
       catchError(err => {
-        this.decreaseRequests();
+        this.decreaseRequests(); 
         throw err;
       })
     );

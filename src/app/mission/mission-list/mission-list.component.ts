@@ -36,8 +36,7 @@ export class MissionListComponent extends SubscriptionComponent{
     }
 
   ngOnInit(){
-    this.missions$ = this.pageInfoSubject.pipe(
-      switchMap(pageInfo => {
+    this.missions$ = this.pageInfoSubject.pipe(switchMap(pageInfo => {
         return this.missionService
           .getFiltered$(pageInfo.showFinishedMissions, pageInfo.searchString, pageInfo.historic)
       }), 

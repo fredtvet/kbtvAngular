@@ -65,13 +65,8 @@ export class DataSyncService {
       })).subscribe();
   }
 
-  private getEarliestTimestamp(): number{
-    // const timestamps = Object.keys(localStorage).reduce((acc, key) => {
-    //   if(key.includes('/timestamp')) acc.push(this.localStorageService.get(key))    
-    //   return acc;
-    // },[]);
+  getEarliestTimestamp(): number{
     const timestamps = this.injectedSubjectKeys.map(x => this[x].getTimestamp());
-
     return  timestamps.sort(function(a,b) {return a - b})[0];
   }
 

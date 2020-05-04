@@ -2,11 +2,13 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MissionService, BaseService, MissionTypeService, ReportTypeService, EmployerService, TranslationService, SessionService, MainNavService } from 'src/app/core/services';
 import { Subscription } from 'rxjs';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ConfirmDeleteDialogComponent, MissionTypeFormDialogComponent, ReportTypeFormDialogComponent } from 'src/app/shared/components';
+import { ConfirmDeleteDialogComponent } from 'src/app/shared/components';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { BaseEntity } from 'src/app/shared/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
+import { MissionTypeFormDialogComponent } from '../components/mission-type-form-dialog/mission-type-form-dialog.component';
+import { ReportTypeFormDialogComponent } from '../components/report-type-form-dialog/report-type-form-dialog.component';
 
 @Component({
   selector: 'app-data-manager',
@@ -173,7 +175,7 @@ constructor(
 
   private createMission = () => this.router.navigate(['/oppdrag/ny', {returnRoute: '/data'}])
 
-  private createEmployer = () => this.router.navigate(['/oppdragsgivere/ny', {returnRoute: '/data'}])
+  private createEmployer = () => this.router.navigate(['/data/oppdragsgivere/ny', {returnRoute: '/data'}])
 
   private createMissionType(){
     const createDialogRef = this.dialog.open(MissionTypeFormDialogComponent);

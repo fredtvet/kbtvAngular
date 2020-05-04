@@ -1,6 +1,6 @@
 
     <mat-card class="app-card m-2">
-      <mat-card-header class="mb-2">Legg til oppdrag</mat-card-header>
+      <mat-card-header class="mb-2">{{ isCreateForm ? 'Legg til' : 'Rediger' }} oppdrag</mat-card-header>
       <mat-card-content>
         <form *ngIf="missionForm" [formGroup]="missionForm" fxLayout="column">
           <mat-form-field>

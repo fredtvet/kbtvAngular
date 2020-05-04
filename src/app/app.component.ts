@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import { IdentityService, LoadingService, NotificationService, DataSyncService, ConnectionService } from './core/services';
+import { IdentityService, LoadingService, NotificationService, DataSyncService, ConnectionService, AppConfigurationService } from './core/services';
 import { slideInAnimation } from './shared/animations/route-animation';
 import { skip } from 'rxjs/operators';
 import { UserTimesheetSubject } from './core/subjects/user-timesheet.subject';
@@ -14,26 +14,24 @@ import { Notifications } from './shared/enums/notifications.enum';
 export class AppComponent {
   title = 'kbtv-client';
 
-  private syncAllowed: boolean = true;
-
   constructor(
+    private appConfigService: AppConfigurationService,
     private identityService: IdentityService,
-    public loadingService: LoadingService,
     private connectionService: ConnectionService,
-    public notificationService: NotificationService,
-    private dataSyncService: DataSyncService,
-    private userTimesheetSubject: UserTimesheetSubject){
+    private notificationService: NotificationService,
+    private dataSyncService: DataSyncService){
     }
 
   ngOnInit(){
     this.identityService.populate();
+    
+    let syncTimer: any;
 
-    if(this.identityService.hasValidToken()){//Initalize data if authenticated
-      this.dataSyncService.syncAll();
-      this.hasSynced();
-    }
-
-    this.userTimesheetSubject.getAll$().subscribe()
+    this.appConfigService.config$.subscribe(config => {
+      clearInterval(syncTimer);
+      this.syncAllCheck(config.syncRefreshTime);
+      syncTimer = setInterval(() => this.syncAllCheck(config.syncRefreshTime), 1000*60);
+    });
 
     this.connectionService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
       if(isOnline) this.notificationService.setNotification('Du er tilkoblet internett igjen!')
@@ -41,20 +39,10 @@ export class AppComponent {
     });
   }
 
-  @HostListener('document:visibilitychange') //Update data incase of long periods in background
-  dataSync() {
-    if(!this.syncAllowed) return null;
-
-    const state = document.visibilityState;
-
-    if(state == 'visible') {
-      this.dataSyncService.syncAll();
-      this.hasSynced();
-    };
-  }
-
-  private hasSynced(){
-    this.syncAllowed = false;
-    setTimeout(() => {this.syncAllowed = true}, 1000*60*60) //Only once per hour
+  private syncAllCheck = (refreshTime: number): void => {
+    if(this.identityService.hasValidToken()){
+      const timeSinceLastSync = (new Date().getTime() / 1000) - this.dataSyncService.getEarliestTimestamp();
+      if(timeSinceLastSync > refreshTime) this.dataSyncService.syncAll();           
+    }
   }
 }

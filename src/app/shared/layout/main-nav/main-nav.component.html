@@ -137,7 +137,7 @@
             <mat-icon>search</mat-icon>
           </button>
 
-          <app-search-bar [isHidden]="searchBarHidden" (hide)="toggleSearchBar()" (search)="handleFn(config.searchFn, $event, $event)"></app-search-bar>
+          <app-search-bar [isHidden]="searchBarHidden" (hide)="toggleSearchBar()" (search)="handleFn(config.searchFn, [$event])"></app-search-bar>
         </ng-container>
 
         <button mat-icon-button *ngIf="config.bottomSheetButtons?.length" (click)="openBottomSheet(config.bottomSheetButtons)">

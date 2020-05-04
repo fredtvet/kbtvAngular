@@ -15,7 +15,6 @@ const routes: Routes = [
       {path: '', redirectTo: 'hjem', pathMatch: 'full'},
       {path: 'hjem', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard]},
       {path: 'profil', loadChildren: './profile/profile.module#ProfileModule'},
-      {path: 'oppdragsgivere', loadChildren: './employer/employer.module#EmployerModule'},
       {path: 'brukere', loadChildren: './users/users.module#UsersModule'},
       {path: 'data', loadChildren: './data-management/data-management.module#DataManagementModule'},
       {path: 'timer', loadChildren: './timesheet/timesheet.module#TimesheetModule'},

@@ -56,8 +56,7 @@ export class UserFormComponent extends SubscriptionComponent  {
     }
 
     private createUser(user: any){
-      this._usersService.add$(user).pipe(take(1))
-       .subscribe(success => {
+      this._usersService.add$(user).subscribe(success => {
          this.notificationService.setNotification('Vellykket! Ny bruker registrert.');
          this.onBack();
         });

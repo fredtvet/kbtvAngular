@@ -8,6 +8,7 @@ export * from './identity.service';
 export * from './loading.service';
 export * from './notification.service';
 export * from './session.service';
+export * from './app-configuration.service';
 
 export * from './data/users.service';
 export * from './data/roles.service';

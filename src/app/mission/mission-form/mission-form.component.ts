@@ -50,8 +50,7 @@ export class MissionFormComponent extends SubscriptionComponent {
 
   createMission(mission: Mission): void{
     if(!mission) return null;
-    this.missionService.add$(mission).pipe(take(1))
-      .subscribe(res => this.onFinished(res.id));
+    this.missionService.add$(mission).subscribe(res => this.onFinished(res.id));
   }
 
   editMission(mission: Mission): void{

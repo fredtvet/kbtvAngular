@@ -25,6 +25,7 @@ import {
   MainNavService,
   TimesheetService,
   TimesheetAggregatorService,
+  AppConfigurationService
 } from './services';
 
 import { NotificationComponent } from '../shared/components';
@@ -62,6 +63,7 @@ import { NotificationComponent } from '../shared/components';
     DateTimeService,
     MainNavService,
     TimesheetAggregatorService,
+    AppConfigurationService
   ]
 })
 export class CoreModule { }
