@@ -33,8 +33,9 @@ export class UserFormComponent extends SubscriptionComponent  {
     private _dialog: MatDialog, 
   ){ 
     super();
-    if(!this._route.snapshot.paramMap.get('userName')) this.isCreateForm = true;
-    this.configureMainNav();
+    let userName = this._route.snapshot.paramMap.get('userName');
+    if(!userName) this.isCreateForm = true;
+    this.configureMainNav(userName);
   }
 
     ngOnInit(){
@@ -76,18 +77,18 @@ export class UserFormComponent extends SubscriptionComponent  {
         });
     }
 
-    private openDeleteDialog = (e:string) => {
-      let confirmString = 'Bekreft at du ønsker å slette "' + this.user.firstName + ' ' + this.user.lastName + '" fra systemet.'
+    private openDeleteDialog = (userName: string) => {
+      let confirmString = 'Bekreft at du ønsker å slette "' + userName + '" fra systemet.'
       const deleteDialogRef = this._dialog.open(ConfirmDialogComponent,{data: confirmString});
-      deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteUser(this.user.userName));
+      deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteUser(userName));
     }
 
-    private configureMainNav(){
+    private configureMainNav(userName: string){
       let cfg = this.mainNavService.getDefaultConfig();   
       cfg.title = this.isCreateForm ? 'Ny bruker' : 'Rediger bruker';
       if(!this.isCreateForm){
         cfg.bottomSheetButtons = [
-          {text: "Slett", icon: "delete_forever", callback: this.openDeleteDialog, allowedRoles: [Roles.Leder]}
+          {text: "Slett", icon: "delete_forever", callback: this.openDeleteDialog, params: [userName],  allowedRoles: [Roles.Leder]}
         ];
       }
       cfg.backFn = this.onBack;

@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { IdentityService, NotificationService, MainNavService, AppConfigurationService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
-import { takeUntil, take, map, tap } from 'rxjs/operators';
+import { takeUntil, take, map, tap, filter } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +23,7 @@ export class ProfileComponent extends SubscriptionComponent {
     private mainNavService: MainNavService,
     private identityService: IdentityService,
     private notificationService: NotificationService,
+    private _dialog: MatDialog,
   ){ 
     super();     
     this.configureMainNav();
@@ -49,10 +52,14 @@ export class ProfileComponent extends SubscriptionComponent {
   }
 
   confirmPurge(){
-    if(confirm('All data blir lastet inn på nytt neste gang du logger inn. Vær oppmerksom på at dette kan kreve mye mobildata om du ikke har Wi-Fi aktivert!')){
-      window.localStorage.clear();
-      location.reload();
-    }
+    let confirmString = 'Bekreft at du ønsker å slette lokal data. Du vil bli logget ut.'
+    const deleteDialogRef = this._dialog.open(ConfirmDialogComponent,{data: confirmString});
+    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.purgeData());
+  }
+
+  private purgeData(){
+    window.localStorage.clear();
+    location.reload();
   }
 
   updateSyncRefreshTime(minutes: number){
