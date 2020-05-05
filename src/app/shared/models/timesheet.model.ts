@@ -19,4 +19,6 @@ export class Timesheet implements Duration, MissionChild {
 
     public mission: Mission = null;
 
+    public fullName?: string = null;
+
 }

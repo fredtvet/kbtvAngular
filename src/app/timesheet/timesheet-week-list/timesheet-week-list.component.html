@@ -3,7 +3,7 @@
         <app-timesheet-summary-card
             *cdkVirtualFor="let summary of weekSummaries$ | async"
             [summary]="summary"
-            [routerLink]="['/timer/ukevisning']" [queryParams]="{year: this.year, weekNr: summary.week}">
+            [navButton]="{callback: goToWeekView, params: [this.year, summary.week], icon: 'chevron_right'}">
         </app-timesheet-summary-card>    
     </cdk-virtual-scroll-viewport>
 </div>

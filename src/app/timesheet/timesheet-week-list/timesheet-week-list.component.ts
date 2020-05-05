@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DateTimeService, MainNavService, TimesheetService, UserTimesheetService } from 'src/app/core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { AppButton, TimesheetSummary } from 'src/app/shared/interfaces';
+import { AppButton, TimesheetSummary, DateParams } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
 import { filter, map } from 'rxjs/operators';
@@ -42,6 +42,10 @@ export class TimesheetWeekListComponent implements OnInit {
       });  
   }
 
+  goToWeekView = (year: number, weekNr: number) => {
+    console.log(year, weekNr);
+    this.router.navigate(['/timer/ukevisning'], { queryParams: {year, weekNr}} )
+  }
 
   private openWeekFilter = () => {
     let ref = this._bottomSheet.open(WeekListFilterSheetWrapperComponent, {

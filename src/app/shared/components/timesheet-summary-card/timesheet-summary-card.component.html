@@ -1,27 +1,46 @@
-<mat-card class="app-card m-1" *ngIf="summary" matRipple>
-    <div mat-card-content fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+<mat-card class="app-card m-1" matRipple [matRippleDisabled]="!confirmEnabled || summary.openHours <= 0"
+    *ngIf="summary" (press)="toggleConfirm($event)">
 
-        <div fxLayout="column" fxLayoutAlign="center center" *ngIf="summary.week else yearView">
-            <span class="mat-body m-0 line-height-90">Uke</span>
-            <span class="mat-headline m-0 line-height-90">{{ summary.week }}</span>
-        </div>
+  <div class="bg-success h-100" fxLayout="column" fxLayoutAlign="center center"
+    style="position:absolute;top:0;z-index:3;width:86px;" [style.width.px]="confirmBtn.style.height" 
+    [@showHideConfirm]="confirmHidden ? 'hide' : 'show'" (click)="confirmSummary()" #confirmBtn>
+        <mat-icon class="scale-125">lock</mat-icon>
+  </div>
 
-        <ng-template #yearView>
-            <div fxLayout="column" fxLayoutAlign="center center">
-                <span class="mat-body m-0 line-height-90">År</span>
-                <span class="mat-headline m-0 line-height-90">{{ summary.year }}</span>
-            </div>
-        </ng-template>
+  <div mat-card-content fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
 
-        <span fxLayout="column" fxLayoutAlign="center start">
-            <span *ngIf="summary.openHours > 0 else confirmed" class="mat-title m-0 mb-1 color-warn line-height-90">Åpen</span>
-            <ng-template #confirmed><span class="mat-subheading-2 m-0 mb-1 color-success line-height-90">Alle timer godkjent</span></ng-template>
-            <span class="mat-body m-0 mb-1 line-height-90">{{ summary.openHours }} timer åpne</span>
-            <span class="mat-body m-0 mb-1 line-height-90">{{ summary.confirmedHours }} timer godkjent</span>
-            <span *ngIf="summary.fullName" class="mat-body-2 m-0 line-height-90">{{ summary.fullName }}</span>
-        </span>
-
-        <mat-icon class="ml-auto">chevron_right</mat-icon>
-
+    <div fxLayout="column" fxLayoutAlign="center center" *ngIf="summary.week; else yearView">
+      <span class="mat-body m-0 line-height-90">Uke</span>
+      <span class="mat-headline m-0 line-height-90">{{ summary.week }}</span>
     </div>
+
+    <ng-template #yearView>
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <span class="mat-body m-0 line-height-90">År</span>
+        <span class="mat-headline m-0 line-height-90">{{ summary.year }}</span>
+      </div>
+    </ng-template>
+
+    <span fxLayout="column" fxLayoutAlign="center start">
+      <span *ngIf="summary.openHours > 0; else confirmed" class="mat-title m-0 mb-1 color-warn line-height-90">
+        Åpen
+      </span>
+      <ng-template #confirmed>
+        <span class="mat-subheading-2 m-0 mb-1 color-success line-height-90"
+          >Alle timer godkjent
+        </span>
+      </ng-template>
+      <span class="mat-body m-0 mb-1 line-height-90">
+          {{ summary.openHours }} timer åpne
+      </span>
+      <span class="mat-body m-0 mb-1 line-height-90"
+        >{{ summary.confirmedHours }} timer godkjent
+      </span>
+      <span *ngIf="summary.fullName" class="mat-body-2 m-0 line-height-90">{{
+        summary.fullName}}
+      </span>
+    </span>
+
+    <app-icon-button class="ml-auto" [config]="navButton"></app-icon-button>
+  </div>
 </mat-card>
