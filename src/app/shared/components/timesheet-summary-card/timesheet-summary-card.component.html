@@ -1,4 +1,4 @@
-<mat-card class="app-card m-1" matRipple [matRippleDisabled]="!confirmEnabled || summary.openHours <= 0"
+<mat-card class="app-card mat-elevation-z2 m-1" matRipple [matRippleDisabled]="!confirmEnabled || summary.openHours <= 0"
     *ngIf="summary" (press)="toggleConfirm($event)">
 
   <div class="bg-success h-100" fxLayout="column" fxLayoutAlign="center center"
