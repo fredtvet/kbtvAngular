@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest, Subject, throwError } from 'rxjs';
-import { Timesheet } from 'src/app/shared/models';
+import { Timesheet, User } from 'src/app/shared/models';
 import { ApiService } from '../api.service';
 import { TimesheetFilter, TimesheetSummary } from 'src/app/shared/interfaces';
 import { tap, switchMap, distinctUntilChanged, map, pairwise, startWith, share, shareReplay, skip } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { TimesheetAggregatorService } from '../utility/timesheet-aggregator.serv
 import { GroupByTypes, TimesheetStatus, Notifications } from 'src/app/shared/enums';
 import { ConnectionService } from '../connection.service';
 import { NotificationService } from '../notification.service';
+import { UsersService } from './users.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,21 +27,26 @@ export class TimesheetService {
   private timesheetSubject = new BehaviorSubject<Timesheet[]>([]);
   timesheets$ = this.timesheetSubject.asObservable();
 
-  timesheetSummaries$ = combineLatest(this.timesheets$, this.groupBy$).pipe(
-    map(([timesheets, groupBy]) => this.timesheetAggregatorService.groupByType(groupBy, timesheets))
+  timesheetSummaries$ = combineLatest(this.timesheets$, this.groupBy$, this.userService.getAll$()).pipe(
+    map(([timesheets, groupBy, users]) => {
+      let summaries = this.timesheetAggregatorService.groupByType(groupBy, timesheets);
+      return this.addFullNameToSummaries(summaries, users);
+    })
   );
 
   constructor(
     private apiService: ApiService,
     private timesheetAggregatorService: TimesheetAggregatorService,
     private connectionService: ConnectionService,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private userService: UsersService) {
     this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
+
     this.filter$.pipe(
       distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
       tap(x => this.timesheetSubject.next([])),
-      switchMap(this.get$))
-    .subscribe(t => this.timesheetSubject.next(t)) //populate timesheets every time filter uniquely changes.
+      switchMap(this.get$)
+    ).subscribe(t => this.timesheetSubject.next(t))
   }
 
   addFilter(filter: TimesheetFilter){
@@ -111,6 +117,17 @@ export class TimesheetService {
       else originals.push(e);
     });
     this.timesheetSubject.next(originals);
+  }
+
+  private addFullNameToSummaries(summaries: TimesheetSummary[], users: User[]){
+    console.time('fullname');
+    let ts = summaries.map(s => {
+      const user = users.find(x => x.userName === s.userName);
+      if(user) s.fullName = user.firstName + ' ' + user.lastName;
+      return s;
+    })
+    console.timeEnd('fullname');
+    return ts;
   }
 
 }

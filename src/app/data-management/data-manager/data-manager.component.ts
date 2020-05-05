@@ -59,7 +59,7 @@ constructor(
     this.columnDefs = [];
     this.rowData = [];
 
-    if(data.length == 0) return null;
+    if(!data || data.length == 0) return null;
 
     this.columnDefs.push({colId: 'checkbox', checkboxSelection: true, width: 42, pinned: 'left', lockPosition: true})
     //Add cols for properties
