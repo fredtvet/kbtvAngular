@@ -22,22 +22,13 @@
 
     <mat-tab label="Annet">
       <div class="p-2">
-        <mat-card class="app-card p-0">
-          <mat-card-content>
-            <mat-nav-list class="p-0">
-              <app-nav-list-item (click)="confirmPurge()"
-                [config]="{
-                  mainLine: 'Slett lokal data',
-                  startIcon: 'delete_sweep',
-                  endIcon: 'chevron_right',
-                  subLines: [{ name: 'Du vil bli logget ut!', icon: 'warning' }]
-                }">
-              </app-nav-list-item>
-            </mat-nav-list>
-          </mat-card-content>
-        </mat-card>
+        <app-list-card appAddToHomeScreen text="Legg til app" startIcon="get_app" endIcon="chevron_right"></app-list-card>
 
-        <mat-card class="app-card mt-2">
+        <app-list-card text="Slett lokal data" startIcon="delete_sweep" endIcon="chevron_right"
+          (click)="confirmPurge()">
+        </app-list-card>
+
+        <mat-card class="app-card mt-1">
           <mat-card-header class="mb-2">Konfigurasjon</mat-card-header>
           <mat-card-content>
             <mat-form-field>
