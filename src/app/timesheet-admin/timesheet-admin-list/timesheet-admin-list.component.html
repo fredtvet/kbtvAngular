@@ -9,7 +9,7 @@
 <ng-template let-summaries #yearList>   
     <app-timesheet-summary-card
         *ngFor="let summary of summaries" [summary]="summary"
-        (click)="updateQuery({userName: summary.userName})">
+        [navButton]="{callback: updateQuery, params: {userName: summary.userName}, icon: 'chevron_right'}">
     </app-timesheet-summary-card>
 </ng-template>
 
@@ -18,18 +18,19 @@
         <app-timesheet-summary-card
             *cdkVirtualFor="let summary of summaries"
             [summary]="summary"
-            (press)="confirmTimesheets(summary.timesheets)"
-            (click)="updateQuery({week: summary.week})">
+            [confirmEnabled]="true"
+            [navButton]="{callback: updateQuery, params: {week: summary.week}, icon: 'chevron_right'}"
+            (timesheetsConfirmed)="confirmTimesheets($event)">
         </app-timesheet-summary-card>    
     </cdk-virtual-scroll-viewport>
 </ng-template>
 
 <ng-template let-timesheets #timesheetList>  
     <cdk-virtual-scroll-viewport itemSize="108" [attr.minBufferPx]="6*108" [attr.maxBufferPx]="8*108" fxFlex>
-        <div class="m-2 mat-elevation-z3" *cdkVirtualFor="let timesheet of timesheets | sortByTimesheetStatus">
-            <app-timesheet-card adminView="true"        
-            [timesheet]="timesheet"      
-            (statusChanged)="changeTimesheetStatus($event.id, $event.status)">
+        <div class="m-1" *cdkVirtualFor="let timesheet of timesheets | sortByTimesheetStatus">
+            <app-timesheet-card class="mat-elevation-z2" adminView="true"        
+                [timesheet]="timesheet"      
+                (statusChanged)="changeTimesheetStatus($event.id, $event.status)">
             </app-timesheet-card>
         </div>
     </cdk-virtual-scroll-viewport>

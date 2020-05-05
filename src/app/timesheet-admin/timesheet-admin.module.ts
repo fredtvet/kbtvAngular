@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { TimesheetAdminRoutingModule } from './timesheet-admin-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { UsernameToFullnamePipe } from '../shared/pipes';
-import { WeekListFilterSheetWrapperComponent } from '../shared/components';
+import { WeekListFilterSheetWrapperComponent, ConfirmDialogComponent } from '../shared/components';
 import { TimesheetAdminListComponent } from './timesheet-admin-list/timesheet-admin-list.component';
 
 
@@ -15,7 +15,8 @@ import { TimesheetAdminListComponent } from './timesheet-admin-list/timesheet-ad
     UsernameToFullnamePipe,
   ],
   entryComponents:[
-    WeekListFilterSheetWrapperComponent
+    WeekListFilterSheetWrapperComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     SharedModule,

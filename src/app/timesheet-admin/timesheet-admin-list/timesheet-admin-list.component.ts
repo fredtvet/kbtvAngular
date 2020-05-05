@@ -10,6 +10,8 @@ import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subsc
 import { GroupByTypes, TimesheetStatus } from 'src/app/shared/enums';
 import { UsernameToFullnamePipe } from 'src/app/shared/pipes';
 import { Timesheet } from 'src/app/shared/models';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-timesheet-admin-list',
@@ -38,7 +40,8 @@ export class TimesheetAdminListComponent extends SubscriptionComponent {
     private route: ActivatedRoute,
     private router: Router,
     private dateTimeService: DateTimeService,
-    private _bottomSheet: MatBottomSheet) { 
+    private _bottomSheet: MatBottomSheet,
+    private _dialog: MatDialog) { 
       super();
       this.timesheetService.addGroupBy(GroupByTypes.YearAndUserName);
       this.configureDefaultNav(+this.route.snapshot.queryParams['year'] || this.today.getFullYear());
@@ -54,13 +57,14 @@ export class TimesheetAdminListComponent extends SubscriptionComponent {
   }
   
   confirmTimesheets = (timesheets: Timesheet[]): void => {
+    if(!timesheets) return undefined;
     let ids = timesheets.reduce((_ids, timesheet) => {
       if(timesheet.status == 0) _ids.push(timesheet.id);
       return _ids
     }, []);
     if(ids.length == 0) return undefined;
-    if(confirm('Bekreft at du ønsker å bekrefte alle timene for denne uken'))
-      this.timesheetService.changeStatuses$(ids, TimesheetStatus.Confirmed).subscribe();
+    
+    this.timesheetService.changeStatuses$(ids, TimesheetStatus.Confirmed).subscribe();
   }
 
   private initalizeObservable(){
