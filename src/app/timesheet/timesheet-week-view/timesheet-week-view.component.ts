@@ -1,25 +1,22 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
 import {
-  IdentityService,
   UserTimesheetService,
   DateTimeService,
   MainNavService
 } from "src/app/core/services";
 import { Timesheet } from "src/app/shared/models";
-import { BehaviorSubject, Observable } from "rxjs";
 import { SubscriptionComponent } from "src/app/shared/components/abstracts/subscription.component";
 import {
   takeUntil,
   switchMap,
-  map,
-  tap
+  map
 } from "rxjs/operators";
-import { TimesheetStatus } from "src/app/shared/enums";
 import { DateParams } from "src/app/shared/interfaces";
 import { MatDialog } from "@angular/material/dialog";
 import { TimesheetFormDialogWrapperComponent } from "../components/timesheet-form-dialog-wrapper.component";
 import { Router, ActivatedRoute } from "@angular/router";
 import { TimesheetCardDialogWrapperComponent } from '../components/timesheet-card-dialog-wrapper.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: "app-timesheet-week-view",
@@ -90,16 +87,6 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
       data: timesheetId
     });
   }
-
-  // private confirmWeek = (days: Timesheet[][]) => {
-  //   let ids = [].concat(...days).reduce((acc, timesheet) => {
-  //     if (timesheet.status === TimesheetStatus.Open) acc.push(timesheet.id);
-  //     return acc;
-  //   }, []);
-  //   this.userTimesheetService
-  //     .changeStatuses$(ids, TimesheetStatus.Confirmed)
-  //     .subscribe();
-  // }
 
   private goToTimesheetList = () => {
       const dp = this.getDateParams(this.route.snapshot.queryParams)

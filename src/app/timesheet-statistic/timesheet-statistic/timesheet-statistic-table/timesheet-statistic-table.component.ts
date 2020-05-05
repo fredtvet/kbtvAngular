@@ -40,7 +40,7 @@ export class TimesheetStatisticTableComponent {
     this.columnDefs = [];
     this.rowData = [];
 
-    if(data.length == 0) return null;
+    if(!data || data.length == 0) return null;
 
     const propertyNames = Object.getOwnPropertyNames(data[0]); 
 
@@ -58,7 +58,7 @@ export class TimesheetStatisticTableComponent {
     if(propertyNames.includes('date'))
       this.columnDefs.push({field: 'date',headerName: 'Dato',sortable: true, valueFormatter: this.convertDate});
 
-    this.columnDefs.push({field: 'userName',headerName: 'Ansatt',sortable: true, valueFormatter: this.convertUserNameToFullName});
+    this.columnDefs.push({field: 'fullName',headerName: 'Ansatt',sortable: true});
 
     this.columnDefs.push({field: 'confirmedHours',headerName: 'Låste timer',sortable: true});
 
@@ -82,11 +82,5 @@ export class TimesheetStatisticTableComponent {
   private convertDate = (params) => {
     if(params.value == undefined) return undefined;
     return this.datePipe.transform(params.value)
-  }
-
-  private convertUserNameToFullName = (params) => {
-    const user = this.users.find(x => x.userName == params.value);
-    if(user == undefined) return undefined;
-    return user.lastName + ', ' + user.firstName;
   }
 }

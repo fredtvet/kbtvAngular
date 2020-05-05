@@ -24,7 +24,7 @@ export class RolesService {
 
   private populateIfEmpty(){
     this.rolesSubject.getAll$().pipe(take(1)).subscribe(data => {
-      if(data.length == 0)
+      if(!data || data.length == 0)
         this.apiService.get(`${this.uri}`) //Fetch from api
         .subscribe(data => this.rolesSubject.populate(data));
     })
