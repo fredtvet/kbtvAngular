@@ -2,13 +2,14 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MissionService, BaseService, MissionTypeService, ReportTypeService, EmployerService, TranslationService, SessionService, MainNavService } from 'src/app/core/services';
 import { Subscription } from 'rxjs';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ConfirmDeleteDialogComponent } from 'src/app/shared/components';
+import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { BaseEntity } from 'src/app/shared/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { MissionTypeFormDialogComponent } from '../components/mission-type-form-dialog/mission-type-form-dialog.component';
 import { ReportTypeFormDialogComponent } from '../components/report-type-form-dialog/report-type-form-dialog.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-data-manager',
@@ -100,10 +101,8 @@ constructor(
   openDeleteDialog = () => {
     if(this.dataGrid.api.getSelectedNodes().length == 0) return null;
 
-    const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-    deleteDialogRef.afterClosed().subscribe(res => {
-        if(res) this.deleteSelectedCells();
-    });
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette ressursen(e).'});
+    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteSelectedCells());
   }
 
   private deleteSelectedCells(): boolean{

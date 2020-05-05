@@ -12,7 +12,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 
 import {
-  ConfirmDeleteDialogComponent,
+  ConfirmDialogComponent,
   ImageListComponent,
   ImageViewerDialogComponent,
   NavListItemComponent,
@@ -45,7 +45,7 @@ import { AddToHomeScreenDirective } from './directives/add-to-home-screen.direct
   declarations: [
     MainNavComponent,
     BottomNavComponent,
-    ConfirmDeleteDialogComponent,
+    ConfirmDialogComponent,
     ImageListComponent,
     ImageViewerDialogComponent,
     NavListItemComponent,
@@ -110,7 +110,7 @@ import { AddToHomeScreenDirective } from './directives/add-to-home-screen.direct
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     FlexLayoutModule,
-    ConfirmDeleteDialogComponent,
+    ConfirmDialogComponent,
     ImageListComponent,
     ImageViewerDialogComponent,
     NavListItemComponent,

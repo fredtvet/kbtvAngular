@@ -1,5 +1,5 @@
 export * from './nav-action.model';
-export * from './confirm-delete-dialog/confirm-delete-dialog.component';
+export * from './confirm-dialog/confirm-dialog.component';
 export * from './image-list/image-list.component';
 export * from './image-viewer-dialog/image-viewer-dialog.component';
 export * from './nav-list-item/nav-list-item.component';

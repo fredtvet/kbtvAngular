@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ImageViewerDialogComponent } from '../image-viewer-dialog/image-viewer-dialog.component';
-import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MissionImage } from '../../models/mission-image.model';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-image-list',
@@ -70,13 +70,10 @@ export class ImageListComponent extends SubscriptionComponent {
       data: { imageId: imageId, images: this.images }
     });
 
-    dialogRef.afterClosed().pipe(takeUntil(this.unsubscribe)).subscribe(id => {
+    dialogRef.afterClosed().subscribe(id => {
       if(id > 0){
-        const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-
-        deleteDialogRef.afterClosed().subscribe(res => {
-          if(res) this.imageDeleted.emit(id);
-        });
+        const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette bildet'});
+        deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.imageDeleted.emit(id));
       }
     });
 

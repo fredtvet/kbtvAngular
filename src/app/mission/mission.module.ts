@@ -5,7 +5,7 @@ import { MissionDetailsComponent } from './mission-details/mission-details.compo
 import { MissionListComponent } from './mission-list/mission-list.component';
 import { MissionNoteFormComponent } from './mission-note-form/mission-note-form.component';
 import { MissionReportFormComponent } from './components/mission-report-form/mission-report-form.component';
-import { ConfirmDeleteDialogComponent, ImageViewerDialogComponent } from '../shared/components';
+import { ConfirmDialogComponent, ImageViewerDialogComponent } from '../shared/components';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
 import { MissionNoteListComponent } from './components/mission-note-list/mission-note-list.component';
 import { DatePipe } from '@angular/common';
@@ -31,7 +31,7 @@ import { MissionNoteFormViewComponent } from './mission-note-form/mission-note-f
     DatePipe
   ],
   entryComponents:[
-    ConfirmDeleteDialogComponent,
+    ConfirmDialogComponent,
     ImageViewerDialogComponent,
     MissionReportFormComponent
   ],

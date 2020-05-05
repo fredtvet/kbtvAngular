@@ -3,10 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Roles } from '../../shared/enums';
 import { MissionNote, Mission, MissionReport, MissionImage } from 'src/app/shared/models';
-import { ConfirmDeleteDialogComponent } from 'src/app/shared/components';
+import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, MainNavService} from 'src/app/core/services';
 import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
-import { take, takeUntil, tap } from 'rxjs/operators';
+import { take, takeUntil, tap, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
@@ -118,8 +118,8 @@ export class MissionDetailsComponent extends SubscriptionComponent{
   }
 
   private openDeleteMissionDialog = (e: string) => {
-    const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-    deleteDialogRef.afterClosed().subscribe(confirmed => {if(confirmed)this.deleteMission()});
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette oppdraget.'});
+    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteMission());
   }
 
   private goToTimesheets = (e: string) => {

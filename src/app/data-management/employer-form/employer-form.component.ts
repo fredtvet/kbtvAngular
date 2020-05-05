@@ -4,8 +4,8 @@ import { Employer } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
 import { EmployerService, NotificationService, MainNavService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { takeUntil } from 'rxjs/operators';
-import { ConfirmDeleteDialogComponent } from 'src/app/shared/components';
+import { takeUntil, filter } from 'rxjs/operators';
+import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
 @Component({
@@ -72,10 +72,9 @@ export class EmployerFormComponent extends SubscriptionComponent {
     }
 
     private openDeleteDialog = (e: string) => {
-      const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-      deleteDialogRef.afterClosed().subscribe(res => {
-          if(res) this.deleteEmployer();
-      });
+      let confirmString = 'Bekreft at du ønsker å slette "' + this.employer.name + '" fra systemet.'
+      const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: confirmString});
+      deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteEmployer()); 
     }
 
     private onBack = () => {

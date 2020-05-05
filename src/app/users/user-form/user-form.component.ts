@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { RolesService, UsersService, NotificationService, MainNavService } from 'src/app/core/services';
-import { ConfirmDeleteDialogComponent } from 'src/app/shared/components';
+import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { User } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, takeUntil, take } from 'rxjs/operators';
+import { map, takeUntil, take, filter } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
 @Component({
@@ -19,7 +19,7 @@ export class UserFormComponent extends SubscriptionComponent  {
 
   isCreateForm = false;
 
-  user: User = new User();
+  user$: Observable<User>;
 
   roles$: Observable<string[]>;
 
@@ -33,15 +33,13 @@ export class UserFormComponent extends SubscriptionComponent  {
     private _dialog: MatDialog, 
   ){ 
     super();
-    this.user.userName = this._route.snapshot.paramMap.get('userName');
-    if(!this.user.userName) this.isCreateForm = true;
+    if(!this._route.snapshot.paramMap.get('userName')) this.isCreateForm = true;
     this.configureMainNav();
   }
 
     ngOnInit(){
       if(!this.isCreateForm)
-      this._usersService.get$(this.user.userName).pipe(takeUntil(this.unsubscribe))
-        .subscribe(result => this.user = result);
+        this.user$ = this._usersService.get$(this._route.snapshot.paramMap.get('userName'));
 
       this.roles$ = this._rolesService.getAll$().pipe(
         takeUntil(this.unsubscribe),
@@ -79,11 +77,9 @@ export class UserFormComponent extends SubscriptionComponent  {
     }
 
     private openDeleteDialog = (e:string) => {
-      const deleteDialogRef = this._dialog.open(ConfirmDeleteDialogComponent);
-
-      deleteDialogRef.afterClosed().subscribe(res => {
-          if(res) this.deleteUser(this.user.userName);
-      });
+      let confirmString = 'Bekreft at du ønsker å slette "' + this.user.firstName + ' ' + this.user.lastName + '" fra systemet.'
+      const deleteDialogRef = this._dialog.open(ConfirmDialogComponent,{data: confirmString});
+      deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteUser(this.user.userName));
     }
 
     private configureMainNav(){

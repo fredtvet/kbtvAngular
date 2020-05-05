@@ -1,8 +1,9 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { ConfirmDeleteDialogComponent } from 'src/app/shared/components';
+import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { Mission, MissionNote, MissionImage, MissionReport } from 'src/app/shared/models';
 import { MatDialog } from '@angular/material/dialog';
 import { Roles } from 'src/app/shared/enums';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mission-details-view',
@@ -26,8 +27,8 @@ export class MissionDetailsViewComponent {
   constructor(public dialog: MatDialog) { }
 
   openDeleteReportDialog(id: number){
-    const deleteDialogRef = this.dialog.open(ConfirmDeleteDialogComponent);
-    deleteDialogRef.afterClosed().subscribe(confirmed => {if(confirmed)this.reportDeleted.emit(id)});
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette rapporten.'});
+    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.reportDeleted.emit(id));
   }
 
 }
