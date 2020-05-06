@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IdentityService, NotificationService, MainNavService, AppConfigurationService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
-import { takeUntil, take, map, tap, filter } from 'rxjs/operators';
+import { takeUntil, take, map, tap, filter, debounceTime } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -30,7 +30,7 @@ export class ProfileComponent extends SubscriptionComponent {
   }
 
   ngOnInit() {
-    this.syncRefreshTime$ = this.appConfigService.config$.pipe(map(x => x.syncRefreshTime / 1000 / 60), tap(console.log));
+    this.syncRefreshTime$ = this.appConfigService.config$.pipe(debounceTime(1000), map(x => x.syncRefreshTime / 60), tap(console.log));
     this.identityService.currentUser$.pipe(takeUntil(this.unsubscribe))
       .subscribe(user => this.user = user); 
   }
@@ -57,13 +57,14 @@ export class ProfileComponent extends SubscriptionComponent {
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.purgeData());
   }
 
+  updateSyncRefreshTime(minutes: number){
+    if(isNaN(minutes)) minutes = 30;
+    this.appConfigService.setSyncRefreshTime(minutes * 60);
+  }
+
   private purgeData(){
     window.localStorage.clear();
     location.reload();
-  }
-
-  updateSyncRefreshTime(minutes: number){
-    this.appConfigService.setSyncRefreshTime(minutes * 60 * 1000);
   }
 
   private configureMainNav(){
