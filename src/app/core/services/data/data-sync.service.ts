@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ApplicationRef } from '@angular/core';
 import { ConnectionService } from '../connection.service';
 import { EmployerSubject } from '../../subjects/employer.subject';
 import { MissionTypeSubject } from '../../subjects/mission-type.subject';
@@ -8,11 +8,14 @@ import { MissionReportSubject } from '../../subjects/mission-report.subject';
 import { MissionSubject } from '../../subjects/mission.subject';
 import { ReportTypeSubject } from '../../subjects/report-type.subject';
 import { ApiService } from '../api.service';
-import { retry, tap, catchError } from 'rxjs/operators';
+import { retry, tap, catchError, switchMap, first } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
 import { Notifications } from 'src/app/shared/enums';
 import { UserTimesheetSubject } from '../../subjects/user-timesheet.subject';
 import { HttpParams } from '@angular/common/http';
+import { AppConfigurationService } from '../app-configuration.service';
+import { IdentityService } from '../identity.service';
+import { interval, concat } from 'rxjs';
 
 
 @Injectable({
@@ -24,10 +27,15 @@ export class DataSyncService {
   private isOnline: boolean = true;
   private injectedSubjectKeys: string[];
 
+  private syncTimer: any;
+
   constructor(
+    appRef: ApplicationRef,
     private apiService: ApiService,
+    private identityService: IdentityService,
     private connectionService: ConnectionService,
     private notificationService: NotificationService,
+    private appConfigService: AppConfigurationService,
     private employerSubject: EmployerSubject,
     private missionTypeSubject: MissionTypeSubject,
     private missionImageSubject: MissionImageSubject,
@@ -40,10 +48,10 @@ export class DataSyncService {
     this.connectionService.isOnline$.subscribe(res =>this.isOnline = res);
     this.injectedSubjectKeys = Object.getOwnPropertyNames(this).filter(x => x.includes('Subject'));
   }
-
+  
   syncAll() : void{
     if(!this.isOnline) return undefined;
-
+    console.log('sync');
     let timestamp = this.getEarliestTimestamp();
     let params = new HttpParams();
     if(timestamp) params = params.set('Timestamp', timestamp.toString());
@@ -70,4 +78,8 @@ export class DataSyncService {
     return  timestamps.sort(function(a,b) {return a - b})[0];
   }
 
+  syncIfTimePassed = (refreshTime: number): void => {
+    const timeSinceLastSync = (new Date().getTime() / 1000) - this.getEarliestTimestamp();
+    if(timeSinceLastSync > refreshTime) this.syncAll();             
+  }
 }

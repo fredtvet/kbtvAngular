@@ -12,7 +12,7 @@ export class AppConfigurationService extends PersistentSubject<AppConfiguration>
     super(localStorageService, 'appConfiguration', {syncRefreshTime: 1000*60*30}); 
   }
 
-  config$ = this.data$.pipe(debounceTime(500), distinctUntilChanged());
+  config$ = this.data$.pipe(distinctUntilChanged());
 
   setSyncRefreshTime = (value: number) => {
     let config = {...this.dataSubject.value};

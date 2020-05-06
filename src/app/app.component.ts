@@ -1,9 +1,9 @@
-import { Component, HostListener } from '@angular/core';
-import { IdentityService, LoadingService, NotificationService, DataSyncService, ConnectionService, AppConfigurationService } from './core/services';
+import { Component, HostListener, ApplicationRef } from '@angular/core';
+import { IdentityService, NotificationService, ConnectionService, DataSyncService, AppConfigurationService } from './core/services';
 import { slideInAnimation } from './shared/animations/route-animation';
-import { skip } from 'rxjs/operators';
-import { UserTimesheetSubject } from './core/subjects/user-timesheet.subject';
+import { skip, first, tap } from 'rxjs/operators';
 import { Notifications } from './shared/enums/notifications.enum';
+import { interval, combineLatest, concat } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,23 +15,23 @@ export class AppComponent {
   title = 'kbtv-client';
 
   constructor(
-    private appConfigService: AppConfigurationService,
+    appRef: ApplicationRef,
     private identityService: IdentityService,
     private connectionService: ConnectionService,
     private notificationService: NotificationService,
-    private dataSyncService: DataSyncService){
+    private dataSyncService: DataSyncService,
+    private appConfigService: AppConfigurationService,){
+      if(this.identityService.hasValidToken()) this.dataSyncService.syncAll();
+      //Wait for app to stabilize before initiating continuous sync interval
+      const appIsStable$ = appRef.isStable.pipe(first(isStable => isStable === true));
+      const continousSync$ = combineLatest(interval(1000*60*3), this.appConfigService.config$).pipe(
+        tap(x => {if(this.identityService.hasValidToken()) this.dataSyncService.syncIfTimePassed(x[1].syncRefreshTime)})
+      );
+      concat(appIsStable$, continousSync$).subscribe();
     }
 
   ngOnInit(){
     this.identityService.populate();
-    
-    let syncTimer: any;
-
-    this.appConfigService.config$.subscribe(config => {
-      clearInterval(syncTimer);
-      this.syncAllCheck(config.syncRefreshTime);
-      syncTimer = setInterval(() => this.syncAllCheck(config.syncRefreshTime), 1000*60);
-    });
 
     this.connectionService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
       if(isOnline) this.notificationService.setNotification('Du er tilkoblet internett igjen!')
@@ -39,10 +39,6 @@ export class AppComponent {
     });
   }
 
-  private syncAllCheck = (refreshTime: number): void => {
-    if(this.identityService.hasValidToken()){
-      const timeSinceLastSync = (new Date().getTime() / 1000) - this.dataSyncService.getEarliestTimestamp();
-      if(timeSinceLastSync > refreshTime) this.dataSyncService.syncAll();           
-    }
-  }
+
+  
 }
