@@ -15,7 +15,9 @@ export class IconButtonComponent {
 
   handleFn = (fn: Function, parameters: any[] = []) => {
     if(parameters == undefined || parameters.length == 0) parameters = this.config.params;
-    this.fnHandled.emit(fn(...parameters));
+    
+    if(parameters) this.fnHandled.emit(fn(...parameters));
+    else this.fnHandled.emit(fn());
   };
 
 }
