@@ -9,7 +9,7 @@
 <ng-template let-summaries #yearList>   
     <app-timesheet-summary-card
         *ngFor="let summary of summaries" [summary]="summary"
-        [navButton]="{callback: updateQuery, params: {userName: summary.userName}, icon: 'chevron_right'}">
+        [navButton]="{callback: updateQuery, params: {userName: summary.userName}, icon: 'chevron_right', iconSizeClass: 'scale-125'}">
     </app-timesheet-summary-card>
 </ng-template>
 
@@ -19,7 +19,7 @@
             *cdkVirtualFor="let summary of summaries"
             [summary]="summary"
             [confirmEnabled]="true"
-            [navButton]="{callback: updateQuery, params: {week: summary.week}, icon: 'chevron_right'}"
+            [navButton]="{callback: updateQuery, params: {week: summary.week}, icon: 'chevron_right', iconSizeClass: 'scale-125'}"
             (timesheetsConfirmed)="confirmTimesheets($event)">
         </app-timesheet-summary-card>    
     </cdk-virtual-scroll-viewport>

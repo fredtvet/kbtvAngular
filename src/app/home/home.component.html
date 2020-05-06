@@ -17,19 +17,19 @@
   </mat-grid-list>
 
   <span class="mat-body-2">Administrering</span>
-  <app-list-card text="Administrer timer" startIcon="date_range" endIcon="chevron_right"
-  [routerLink]="['/timeadministrering']">
-</app-list-card>
-  <app-list-card text="Administrer data" startIcon="dns" endIcon="chevron_right"
-    [routerLink]="['/data']">
+  <app-list-card text="Administrer timer" startIcon="date_range"
+    [navButton]="{callback: goToAdminTimesheets, icon: 'chevron_right'}">
   </app-list-card>
-  <app-list-card text="Administrer brukere" startIcon="people" endIcon="chevron_right"
-    [routerLink]="['/brukere']">
+  <app-list-card text="Administrer data" startIcon="dns"
+    [navButton]="{callback: goToAdminData, icon: 'chevron_right'}">
+  </app-list-card>
+  <app-list-card text="Administrer brukere" startIcon="people"
+    [navButton]="{callback: goToAdminUsers, icon: 'chevron_right'}">
   </app-list-card>
 
   <span class="mat-body-2">Statistikk</span>
-  <app-list-card text="Timestatistikk" startIcon="assessment" endIcon="chevron_right"
-    [routerLink]="['/timestatistikk']">
+  <app-list-card text="Timestatistikk" startIcon="assessment"
+    [navButton]="{callback: goToTimesheetStats, icon: 'chevron_right'}">
   </app-list-card>
 
   <span class="mat-body-2">Sist besøkte oppdrag</span>

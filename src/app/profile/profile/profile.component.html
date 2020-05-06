@@ -24,8 +24,8 @@
       <div class="p-2">
         <app-list-card appAddToHomeScreen text="Legg til app" startIcon="get_app" endIcon="chevron_right"></app-list-card>
 
-        <app-list-card text="Slett lokal data" startIcon="delete_sweep" endIcon="chevron_right"
-          (click)="confirmPurge()">
+        <app-list-card text="Slett lokal data" startIcon="delete_sweep"
+          [navButton]="{callback: confirmPurge, icon: 'chevron_right', iconSizeClass: 'scale-125'}">
         </app-list-card>
 
         <mat-card class="app-card mt-1">

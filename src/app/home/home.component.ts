@@ -4,6 +4,7 @@ import { Roles } from '../shared/enums';
 import { MissionService, MainNavService } from '../core/services';
 import { Observable } from 'rxjs';
 import {  map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ export class HomeComponent {
   missionHistory$: Observable<Mission[]>;
 
   constructor(
+    private router: Router,
     private mainNavService: MainNavService,
     private missionService: MissionService) {
     this.configureMainNav();
@@ -28,11 +30,20 @@ export class HomeComponent {
       return sorted.slice(0,4);
     }))
   }
+
+  goToAdminTimesheets = () => this.router.navigate(['timeadministrering']);
+
+  goToAdminData = () => this.router.navigate(['data']);
+
+  goToAdminUsers = () => this.router.navigate(['brukere']);
+
+  goToTimesheetStats = () => this.router.navigate(['timestatistikk']);
   
   private configureMainNav(){
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Hjem";
     this.mainNavService.addConfig(cfg);
   }
+  
 
 }
