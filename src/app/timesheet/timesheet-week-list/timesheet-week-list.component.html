@@ -1,9 +1,10 @@
-<div class="p-0 h-100" fxLayout="column" fxLayoutAlign="start stretch">
+<div class="p-0 h-100" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="weekSummaries$ | async; let summaries">
     <cdk-virtual-scroll-viewport itemSize="82" [attr.minBufferPx]="11*82" [attr.maxBufferPx]="13*82" fxFlex>
-        <app-timesheet-summary-card
-            *cdkVirtualFor="let summary of weekSummaries$ | async"
-            [summary]="summary"
-            [navButton]="{callback: goToWeekView, params: [this.year, summary.week], icon: 'chevron_right'}">
-        </app-timesheet-summary-card>    
+
+        <div class="app-card mat-elevation-z2 m-1 p-0" matRipple
+            *cdkVirtualFor="let summary of summaries" (click)="goToWeekView(year, summary.week)">
+            <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
+        </div>
+
     </cdk-virtual-scroll-viewport>
 </div>

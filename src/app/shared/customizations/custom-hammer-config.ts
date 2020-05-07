@@ -5,4 +5,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
         'pinch': { enable: false },
         'rotate': { enable: false }
     }
+    options = {
+        domEvents: true
+    }
 }

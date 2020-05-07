@@ -6,22 +6,27 @@
     </ng-container>
 </div>
 
-<ng-template let-summaries #yearList>   
-    <app-timesheet-summary-card
-        *ngFor="let summary of summaries" [summary]="summary"
-        [navButton]="{callback: updateQuery, params: {userName: summary.userName}, icon: 'chevron_right', iconSizeClass: 'scale-125'}">
-    </app-timesheet-summary-card>
+<ng-template let-summaries #yearList>  
+    <div class="app-card mat-elevation-z2 m-1 p-0" matRipple
+        *ngFor="let summary of summaries"
+        (click)="updateQuery({userName: summary.userName})">
+        <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
+    </div> 
 </ng-template>
 
 <ng-template let-summaries #weekList>  
-    <cdk-virtual-scroll-viewport itemSize="82" [attr.minBufferPx]="11*82" [attr.maxBufferPx]="13*82" fxFlex>
-        <app-timesheet-summary-card
-            *cdkVirtualFor="let summary of summaries"
-            [summary]="summary"
-            [confirmEnabled]="true"
-            [navButton]="{callback: updateQuery, params: {week: summary.week}, icon: 'chevron_right', iconSizeClass: 'scale-125'}"
-            (timesheetsConfirmed)="confirmTimesheets($event)">
-        </app-timesheet-summary-card>    
+    <cdk-virtual-scroll-viewport itemSize="82" [attr.minBufferPx]="13*82" [attr.maxBufferPx]="13*82" fxFlex>
+        <app-swipe-card
+            *cdkVirtualFor="let summary of summaries; trackBy: trackByFn; templateCacheSize:0"            
+            [navButton]="{callback: updateQuery, params: {week: summary.week}}"
+            [swipeEnabled]="summary.openHours > 0"
+            [swipeButton]="{
+                callback: confirmTimesheets, 
+                params: [summary.timesheets], 
+                icon: summary.openHours > 0 ? 'lock_open' : 'lock', 
+                colorClass: summary.openHours > 0 ? 'bg-warn' : 'bg-success'}">
+            <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
+        </app-swipe-card>
     </cdk-virtual-scroll-viewport>
 </ng-template>
 

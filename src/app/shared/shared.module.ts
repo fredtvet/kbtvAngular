@@ -28,8 +28,8 @@ import {
   TimesheetCardComponent,
   WeekListFilterComponent,
   WeekListFilterSheetWrapperComponent,
-  TimesheetSummaryCardComponent,
   TimesheetFilterHeaderComponent,
+  TimesheetSummaryCardContentComponent
 } from './components';
 
 import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
@@ -40,6 +40,7 @@ import { GetDateByDateParamsPipe } from './pipes/get-date-by-date-params.pipe';
 import { SameDatePipe } from './pipes/same-date.pipe';
 import { ArrayIncludesPipe } from './pipes/array-includes.pipe';
 import { AddToHomeScreenDirective } from './directives/add-to-home-screen.directive';
+import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
 
 @NgModule({
   declarations: [
@@ -76,8 +77,9 @@ import { AddToHomeScreenDirective } from './directives/add-to-home-screen.direct
     TimesheetCardComponent,
     WeekListFilterComponent,
     WeekListFilterSheetWrapperComponent,
-    TimesheetSummaryCardComponent,
-    AddToHomeScreenDirective
+    AddToHomeScreenDirective,
+    SwipeCardComponent,
+    TimesheetSummaryCardContentComponent
   ],
   imports: [
     CommonModule,
@@ -141,7 +143,8 @@ import { AddToHomeScreenDirective } from './directives/add-to-home-screen.direct
     TimesheetCardComponent,
     WeekListFilterComponent,
     WeekListFilterSheetWrapperComponent,
-    TimesheetSummaryCardComponent,
+    TimesheetSummaryCardContentComponent,
+    SwipeCardComponent
   ]
 })
 export class SharedModule { }

@@ -4,7 +4,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AppButton, TimesheetSummary, DateParams } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,9 +12,6 @@ import { Observable } from 'rxjs';
   templateUrl: './timesheet-week-list.component.html'
 })
 export class TimesheetWeekListComponent implements OnInit {
-
-  weeks: number[] = [];
-
   today = new Date();
 
   weekNr: number = this.dateTimeService.getWeekOfYear(this.today);
@@ -37,7 +34,7 @@ export class TimesheetWeekListComponent implements OnInit {
         this.year = +qp['year'] || this.today.getFullYear();
         //Get all weeks up to current week if current year, else all weeks
         let endWeek = (this.year == this.today.getFullYear()) ? this.weekNr : this.dateTimeService.getWeeksInYear(this.year);
-        this.weekSummaries$ = this.userTimesheetService.getByWeekRangeGrouped$(1, endWeek, this.year).pipe(map(x => x.reverse())); 
+        this.weekSummaries$ = this.userTimesheetService.getByWeekRangeGrouped$(1, endWeek, this.year).pipe(map(x => x.reverse()), tap(console.log)); 
         this.configureMainNav(this.year);  
       });  
   }

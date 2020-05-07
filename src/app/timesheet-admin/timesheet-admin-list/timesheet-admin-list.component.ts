@@ -3,7 +3,7 @@ import { MainNavService, TimesheetService, DateTimeService, UsersService, Timesh
 import { AppButton, TimesheetSummary } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
-import { filter, tap, map, takeUntil, skip, last, startWith, pairwise, switchMap, } from 'rxjs/operators';
+import { filter, tap, map, takeUntil, skip, last, startWith, pairwise, switchMap, shareReplay, } from 'rxjs/operators';
 import { ActivatedRoute, UrlSegment, Router, Params } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
@@ -12,6 +12,7 @@ import { UsernameToFullnamePipe } from 'src/app/shared/pipes';
 import { Timesheet } from 'src/app/shared/models';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-timesheet-admin-list',
@@ -31,8 +32,7 @@ export class TimesheetAdminListComponent extends SubscriptionComponent {
   activeView$: Observable<{view: TemplateRef<any>, context: any[]}>;
 
   today = new Date();
-
-
+    
   constructor(
     private timesheetAggregator: TimesheetAggregatorService,
     private timesheetService: TimesheetService,
@@ -57,13 +57,14 @@ export class TimesheetAdminListComponent extends SubscriptionComponent {
   }
   
   confirmTimesheets = (timesheets: Timesheet[]): void => {
+    console.log(timesheets);
     if(!timesheets) return undefined;
     let ids = timesheets.reduce((_ids, timesheet) => {
       if(timesheet.status == 0) _ids.push(timesheet.id);
       return _ids
     }, []);
     if(ids.length == 0) return undefined;
-    
+
     this.timesheetService.changeStatuses$(ids, TimesheetStatus.Confirmed).subscribe();
   }
 
@@ -159,6 +160,8 @@ export class TimesheetAdminListComponent extends SubscriptionComponent {
     this.mainNavService.addConfig(cfg);
   }
 
-  
+  trackByFn(index:number, summary:TimesheetSummary): string {
+    return summary.year + '-' + summary.week;
+  }
 
 }

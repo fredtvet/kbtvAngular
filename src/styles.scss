@@ -46,6 +46,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 
 .app-nav-tile{height:100px;width:100px}
 
+.prevent-pointer-events{pointer-events: none;}
+
 .flex-spacer{
   flex: 1 1 auto;
 }
@@ -95,6 +97,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 
 .app-card{
   max-width:600px;
+  background:white;
   .mat-card-header-text{
     margin:0;
   }
