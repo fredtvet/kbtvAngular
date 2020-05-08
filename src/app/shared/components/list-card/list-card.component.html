@@ -1,11 +1,7 @@
-<mat-card class="app-card mb-1" matRipple [matRippleDisabled]="navButton">
-    <div mat-card-content fxLayout="row" fxLayoutAlign="space-between center" >
-        <span class="ellipsis">
-            <mat-icon class="mr-2">{{ startIcon }}</mat-icon>
-            <span class="mat-h4">{{ text }}</span>
-        </span>
-        
-        <app-icon-button *ngIf="navButton else endIconView" class="ml-auto" [config]="navButton"></app-icon-button>
-        <ng-template #endIconView><mat-icon>{{ endIcon }}</mat-icon></ng-template>
-    </div>
-</mat-card>
+<div fxLayout="row" fxLayoutAlign="space-between center" class="app-card mb-1 p-3 mat-elevation-z2" matRipple>
+    <span class="ellipsis">
+        <mat-icon class="mr-2">{{ startIcon }}</mat-icon>
+        <span class="mat-h4">{{ text }}</span>
+    </span>
+    <mat-icon>{{ endIcon }}</mat-icon> 
+</div>

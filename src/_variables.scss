@@ -42,5 +42,8 @@ $sidenav-width: 200;
   z-index:2;
   overflow:auto;
 }
+@mixin max-width{
+  max-width:600px;
+}
 
 

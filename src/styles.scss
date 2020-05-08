@@ -95,8 +95,10 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
   @include sticky-top;
 }
 
+.max-width{@include max-width}
+
 .app-card{
-  max-width:600px;
+  @include  max-width;
   background:white;
   .mat-card-header-text{
     margin:0;

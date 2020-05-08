@@ -6,7 +6,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
 import { IfRoleDirective } from './directives/if-role.directive';
-import { MainNavComponent, BottomNavComponent, InnerNavComponent, IconButtonComponent,StrokedButtonComponent} from './layout';
+import { MainNavComponent, MainBottomNavComponent, InnerNavComponent, IconButtonComponent,StrokedButtonComponent, MainSideNavContentComponent} from './layout';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
@@ -41,11 +41,12 @@ import { SameDatePipe } from './pipes/same-date.pipe';
 import { ArrayIncludesPipe } from './pipes/array-includes.pipe';
 import { AddToHomeScreenDirective } from './directives/add-to-home-screen.directive';
 import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
+import { MainTopNavComponent } from './layout/main-nav/main-top-nav/main-top-nav.component';
 
 @NgModule({
   declarations: [
     MainNavComponent,
-    BottomNavComponent,
+    MainBottomNavComponent,
     ConfirmDialogComponent,
     ImageListComponent,
     ImageViewerDialogComponent,
@@ -79,7 +80,9 @@ import { SwipeCardComponent } from './components/swipe-card/swipe-card.component
     WeekListFilterSheetWrapperComponent,
     AddToHomeScreenDirective,
     SwipeCardComponent,
-    TimesheetSummaryCardContentComponent
+    TimesheetSummaryCardContentComponent,
+    MainSideNavContentComponent,
+    MainTopNavComponent
   ],
   imports: [
     CommonModule,
@@ -128,7 +131,6 @@ import { SwipeCardComponent } from './components/swipe-card/swipe-card.component
     UsernameToFullnamePipe,
     MainNavComponent,
     InnerNavComponent,
-    BottomNavComponent,
     SearchBarComponent,
     MissionListViewComponent,
     AddToHomeScreenComponent,

@@ -1,6 +1,6 @@
 
 
-<div class="p-2 app-card">
+<div class="p-2 max-width">
   <mat-grid-list cols="2" rowHeight="3:2" gutterSize="5" class="mat-subheading-2 mb-2">
     <mat-grid-tile class="mat-elevation-z2 bg-foreground" matRipple [routerLink]="['/oppdrag']">
       <span class="text-center">
@@ -17,19 +17,16 @@
   </mat-grid-list>
 
   <span class="mat-body-2">Administrering</span>
-  <app-list-card text="Administrer timer" startIcon="date_range"
-    [navButton]="{callback: goToAdminTimesheets, icon: 'chevron_right'}">
+
+  <app-list-card text="Administrer timer" startIcon="date_range" [routerLink]="['/timeadministrering']">
   </app-list-card>
-  <app-list-card text="Administrer data" startIcon="dns"
-    [navButton]="{callback: goToAdminData, icon: 'chevron_right'}">
+  <app-list-card text="Administrer data" startIcon="dns" [routerLink]="['/data']">
   </app-list-card>
-  <app-list-card text="Administrer brukere" startIcon="people"
-    [navButton]="{callback: goToAdminUsers, icon: 'chevron_right'}">
+  <app-list-card text="Administrer brukere" startIcon="people" [routerLink]="['/brukere']">
   </app-list-card>
 
   <span class="mat-body-2">Statistikk</span>
-  <app-list-card text="Timestatistikk" startIcon="assessment"
-    [navButton]="{callback: goToTimesheetStats, icon: 'chevron_right'}">
+  <app-list-card text="Timestatistikk" startIcon="assessment" [routerLink]="['/timestatistikk']">
   </app-list-card>
 
   <span class="mat-body-2">Sist besøkte oppdrag</span>
