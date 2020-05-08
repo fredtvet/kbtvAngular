@@ -15,54 +15,6 @@
 mat-sidenav-container{
   height: 100%;
   z-index:3;
-  mat-sidenav {
-    width: $sidenav-width * 1px;
-    background-color:$primary;
-    z-index:3;
-    mat-nav-list{
-      .bottom-list{
-        position: absolute;
-        bottom:0;
-        width:100%;
-      } 
-    }
-    mat-toolbar {
-      height:$main-nav-height * 1px!important;
-      background:$primary-dark!important;
-      color:white;
-    }
-  }
-
-  mat-sidenav-content {
-    background-color:$background-color;
-    mat-toolbar {
-        color:white;
-        padding:0;
-    }
-  }
-}
-
-.mat-list-base .mat-list-item{color:white;}
-
-.main-nav-title{
-  margin-right:auto;
-  margin-left:$content-margin * 1px;
-}
-
-.main_nav{
-  @include nav;
-  min-height:$main-nav-height * 1px!important;
-  max-height:$main-nav-height * 1px!important;
-}
-
-.alt_nav{
-  @include nav;
-  height:$alt-nav-height * 1px!important;
-}
-
-.alt_nav_row{
-  height:auto!important;
-  padding-left:$content-margin * 4px;
 }
 
 .main_content{

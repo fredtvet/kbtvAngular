@@ -1,0 +1,46 @@
+@import '../../../../../variables';
+
+@mixin nav {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color:$primary-dark;
+    padding:0 8px 0 8px;
+    color:white;
+
+  }
+  
+
+
+.main-nav-title{
+    margin-right:auto;
+    margin-left:$content-margin * 1px;
+  }
+  
+  .main_nav{
+    @include nav;
+    min-height:$main-nav-height * 1px!important;
+    max-height:$main-nav-height * 1px!important;
+  }
+  
+  .alt_nav{
+    @include nav;
+    height:$alt-nav-height * 1px!important;
+  }
+  
+  .alt_nav_row{
+    height:auto!important;
+    padding-left:$content-margin * 4px;
+  }
+  
+  .main_content{
+    position:sticky;
+    top:0;
+    z-index:1;
+    overflow:auto;
+    background:$background-color;
+  }
+  
+  .main_content_height_alt{height:calc(100% - (#{$alt-nav-height} * 1px));}
+  
+  .main_content_height_main{height:calc(100% - (#{$main-nav-height} * 1px));}

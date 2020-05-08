@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Roles } from '../../../enums/roles.enum';
 
 @Component({
-  selector: 'app-bottom-nav',
-  templateUrl: './bottom-nav.component.html',
-  styleUrls: ['./bottom-nav.component.scss']
+  selector: 'app-main-bottom-nav',
+  templateUrl: './main-bottom-nav.component.html',
+  styleUrls: ['./main-bottom-nav.component.scss']
 })
-export class BottomNavComponent implements OnInit {
+export class MainBottomNavComponent implements OnInit {
   Roles = Roles;
 
   @Input() openTimesheetCount: number;

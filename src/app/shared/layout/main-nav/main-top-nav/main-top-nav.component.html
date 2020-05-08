@@ -1,0 +1,75 @@
+<mat-toolbar *ngIf="config" class="mat-elevation-z4" 
+[ngClass]="{'alt_nav': config.altNav, 'main_nav': !config.altNav, 'mat-elevation-z4': config.elevationEnabled}">
+
+<mat-toolbar-row class="p-0">
+  <ng-container *ngIf="!config.altNav else altNav">
+
+    <ng-container *ngIf="config.menuBtnEnabled else backBtn">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="onMenuButtonClick()"
+        fxHide fxShow.xs>
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+    </ng-container>
+
+    <ng-template #backBtn>
+      <button (click)="handleFn(config.backFn, config.backFnParams)"
+       mat-icon-button aria-label="Tilbake">
+          <mat-icon class="scale-150">chevron_left</mat-icon>
+      </button>
+    </ng-template>
+    <span class="mr-auto">
+      <span class="ml-1" [routerLink]="['/hjem']">{{ config.title }}</span>
+      <span class="ml-1 mat-caption" >{{ config.subTitle }}</span>
+    </span>
+  </ng-container>
+
+  <ng-template #altNav>
+    <span style="margin-right:auto;">
+
+      <button (click)="handleFn(config.backFn)"
+       mat-icon-button aria-label="Tilbake">
+          <mat-icon class="scale-150">chevron_left</mat-icon>
+      </button>
+
+      <ng-container *ngIf="config.subTitle || config.subIcon">
+        <mat-icon>{{ config.subIcon }}</mat-icon>
+        <small>{{ config.subTitle }}</small>
+      </ng-container>
+
+    </span>
+  </ng-template>
+
+  <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent"></mat-spinner>
+
+
+  <button mat-icon-button 
+    *ngFor="let button of config.buttons" attr.aria-label="{{ button.aria || 'Knapp' }}" 
+    [ngClass]="button.colorClass || 'color-foreground'"
+    (click)="handleFn(button.callback)">
+      <mat-icon>{{ button.icon }}</mat-icon>
+  </button>
+
+  <ng-container *ngIf="config.searchFn">
+    <button (click)="toggleSearchBar()" mat-icon-button aria-label="Avbryt søk">
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <app-search-bar [isHidden]="searchBarHidden" (hide)="toggleSearchBar()" (search)="handleFn(config.searchFn, [$event])"></app-search-bar>
+  </ng-container>
+
+  <button mat-icon-button *ngIf="config.bottomSheetButtons?.length" (click)="openBottomSheet(config.bottomSheetButtons)">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+
+</mat-toolbar-row>
+
+<mat-toolbar-row *ngIf="config.altNav"  class="alt_nav_row">
+  <mat-icon *ngIf="config.icon">{{ config.icon }}</mat-icon>  &nbsp;
+  <span [innerHTML]="config.title"></span>
+</mat-toolbar-row>
+
+</mat-toolbar>

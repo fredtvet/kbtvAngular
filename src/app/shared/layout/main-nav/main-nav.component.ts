@@ -31,14 +31,14 @@ export class MainNavComponent extends SubscriptionComponent {
 
   openTimesheetCount$: Observable<number> = this.userTimesheetService.getCount$(TimesheetStatus.Open);
 
-  isXs$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.XSmall)
+  private isXs$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.XSmall)
     .pipe(
       takeUntil(this.unsubscribe),
       map(result => result.matches),
       shareReplay()
     );
 
-  private isXs: boolean;
+  isXs: boolean;
 
   searchBarHidden = true;
 
