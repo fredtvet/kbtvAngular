@@ -26,9 +26,4 @@ export class TimesheetCardDialogWrapperComponent {
     this.userTimesheetService.delete$(this.timesheetId)
       .subscribe(x => this.dialogRef.close());
   }
-
-  confirmTimesheet(){
-    // this.userTimesheetService.changeStatus$(this.timesheetId, TimesheetStatus.Confirmed)
-    //   .subscribe(x => this.dialogRef.close());
-  }
 }

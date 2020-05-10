@@ -8,7 +8,7 @@ import {
 } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { NotificationService } from '../services/notification.service';
+import { NotificationService } from '../services/ui/notification.service';
 import { Notifications } from 'src/app/shared/enums';
 
 

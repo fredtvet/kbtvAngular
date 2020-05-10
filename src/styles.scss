@@ -50,6 +50,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 
 .flex-spacer{flex: 1 1 auto;}
 
+.max-width{@include max-width}
+
 .action_fab{
   position: fixed!important;
   right: $content-margin * 1px!important;
@@ -57,7 +59,6 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
   z-index:2;
   background:$accent;
 }
-
 
 .image_viewer_dialog{max-width:none!important;}
 
@@ -68,11 +69,13 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
   background-color:mat-color($background,"unselected-chip");
   color:mat-color($foreground, "base");
 }
+
 .notification-error{
   margin-bottom:($bottom-nav-height + $content-margin) * 1px!important;
   background-color:$warn !important;
   color:mat-color($background, "background");
 }
+
 .ellipsis{
   white-space: nowrap;
   overflow: hidden;
@@ -87,15 +90,10 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
   overflow:auto;
 }
 
-.sticky-top{
-  @include sticky-top;
-}
-
-.max-width{@include max-width}
-
 .app-card{
   @include  max-width;
   background:white;
+  border-radius:5px;
   .mat-card-header-text{
     margin:0;
   }
@@ -106,9 +104,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
    width:calc(100% - (#{$content-margin} * 4px))!important;
 }
 
-
-.center-margin{margin:0 auto;}
 .center-spinner{margin:$content-margin * 2px auto;}
+
 .owl-dt-calendar-table{
   .owl-dt-calendar-cell{
     .owl-dt-calendar-cell-today{
@@ -125,6 +122,9 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 }
 
 
+.mat-icon{vertical-align: middle!important;}
+.mat-dialog-container{padding:0!important;}
+
 mat-toolbar.toolbar-slim, 
 mat-toolbar-row.toolbar-slim, 
 mat-toolbar-single-row.toolbar-slim{
@@ -133,7 +133,6 @@ mat-toolbar-single-row.toolbar-slim{
   min-height:40px!important;
 } 
 
-
 //Ag material
 .mat-button-toggle-group{
   .mat-button-toggle-appearance-standard {
@@ -141,22 +140,6 @@ mat-toolbar-single-row.toolbar-slim{
       line-height: 38px!important;
     }
   }
-}
-
-.column {
-  height: 100%;  /*allows both columns to span the full height of the browser window*/
-  display: flex;
-  flex-direction: column;  /*places the left and right headers above the bottom content*/
-}
-
-.nav {
-  flex-shrink: 0;
-  display: inline-flex;
-}
-
-.main-content {
-  flex-grow: 1;  /*ensures that the container will take up the full height of the parent container*/
-  overflow-y: auto;  /*adds scroll to this container*/
 }
 
 .mat-tab-group{
@@ -176,13 +159,6 @@ mat-toolbar-single-row.toolbar-slim{
   }
 }
 
-.mat-icon{
-  vertical-align: middle!important;
-}
-.mat-dialog-container{
-  //background:rgba(255,255,255,0)!important;
-  padding:0!important;
-}
 
 //Spinner primarily for buttons
 @keyframes spinner {

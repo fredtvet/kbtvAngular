@@ -11,6 +11,9 @@
       <span class="mat-small">
         {{ this.timesheet.startTime | duration : this.timesheet.endTime }} 
       </span>
+      <span class="mat-small">
+        {{ this.timesheet.mission?.address }} ({{this.timesheet.missionId}})
+      </span>
       <span class="mat-body-2">
         {{ timesheet.comment }}
       </span>

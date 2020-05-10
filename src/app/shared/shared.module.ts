@@ -6,7 +6,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
 import { IfRoleDirective } from './directives/if-role.directive';
-import { MainNavComponent, MainBottomNavComponent, InnerNavComponent, IconButtonComponent,StrokedButtonComponent, MainSideNavContentComponent} from './layout';
+import { MainNavComponent, MainBottomNavComponent, IconButtonComponent,StrokedButtonComponent, MainSideNavContentComponent} from './layout';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
@@ -15,11 +15,8 @@ import {
   ConfirmDialogComponent,
   ImageListComponent,
   ImageViewerDialogComponent,
-  SearchBarComponent,
-  MissionListViewComponent,
   NotificationComponent,
   SubmitButtonComponent,
-  AddToHomeScreenComponent,
   PageNotFoundComponent,
   TimesheetFilterComponent,
   TimesheetFilterSheetWrapperComponent,
@@ -41,6 +38,7 @@ import { ArrayIncludesPipe } from './pipes/array-includes.pipe';
 import { AddToHomeScreenDirective } from './directives/add-to-home-screen.directive';
 import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
 import { MainTopNavComponent } from './layout/main-nav/main-top-nav/main-top-nav.component';
+import { InputListenerDirective } from './directives';
 
 @NgModule({
   declarations: [
@@ -49,15 +47,12 @@ import { MainTopNavComponent } from './layout/main-nav/main-top-nav/main-top-nav
     ConfirmDialogComponent,
     ImageListComponent,
     ImageViewerDialogComponent,
-    SearchBarComponent,
     IfRoleDirective,
     ArraySlicePipe,
     ThumbnailPipe,
     SortByDatePipe,
     SortByTimesheetStatusPipe,
     NotificationComponent,
-    MissionListViewComponent,
-    AddToHomeScreenComponent,
     SubmitButtonComponent,
     BottomSheetMenuComponent,
     DurationPipe,
@@ -68,7 +63,6 @@ import { MainTopNavComponent } from './layout/main-nav/main-top-nav/main-top-nav
     TimesheetFilterSheetWrapperComponent,
     ArrayIncludesPipe,
     TimesheetFilterHeaderComponent,
-    InnerNavComponent,
     IconButtonComponent,
     StrokedButtonComponent,
     ListCardComponent,
@@ -80,7 +74,8 @@ import { MainTopNavComponent } from './layout/main-nav/main-top-nav/main-top-nav
     SwipeCardComponent,
     TimesheetSummaryCardContentComponent,
     MainSideNavContentComponent,
-    MainTopNavComponent
+    MainTopNavComponent,
+    InputListenerDirective
   ],
   imports: [
     CommonModule,
@@ -118,6 +113,7 @@ import { MainTopNavComponent } from './layout/main-nav/main-top-nav/main-top-nav
     ImageViewerDialogComponent,
     IfRoleDirective,
     AddToHomeScreenDirective,
+    InputListenerDirective,
     ArraySlicePipe,
     ThumbnailPipe,
     SortByDatePipe,
@@ -127,10 +123,6 @@ import { MainTopNavComponent } from './layout/main-nav/main-top-nav/main-top-nav
     SortByTimesheetStatusPipe,
     UsernameToFullnamePipe,
     MainNavComponent,
-    InnerNavComponent,
-    SearchBarComponent,
-    MissionListViewComponent,
-    AddToHomeScreenComponent,
     SubmitButtonComponent,
     PageNotFoundComponent,
     TimesheetFilterSheetWrapperComponent,

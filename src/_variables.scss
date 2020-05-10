@@ -27,21 +27,7 @@ $foreground-color:white;
 
 $content-margin: 8;
 $bottom-nav-height: 44;
-$main-nav-height: 44;
-$alt-nav-height: $main-nav-height + 64;
-$sidenav-width: 200;
 
-@mixin small-header{
-  font-weight: 500;
-  font-size:14px;
-}
-
-@mixin sticky-top{
-  position:sticky;
-  top:0;
-  z-index:2;
-  overflow:auto;
-}
 @mixin max-width{
   max-width:600px;
 }
