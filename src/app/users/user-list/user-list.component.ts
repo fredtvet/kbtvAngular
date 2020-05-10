@@ -27,7 +27,6 @@ export class UserListComponent extends SubscriptionComponent {
     private router: Router) { 
       super();    
       this.configureMainNav(); 
-      this.configureCreateButton();
     }
 
   ngOnInit() {
@@ -47,24 +46,19 @@ export class UserListComponent extends SubscriptionComponent {
 
   editUser = (userName: string) => this.router.navigate(['brukere', userName, 'rediger'])
 
-  createUser = () => this.router.navigate(['brukere', 'ny'])  
+  private createUser = () => this.router.navigate(['brukere', 'ny'])  
 
   private configureMainNav(){
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Brukere";
+    cfg.buttons = [{
+      icon: "person_add", 
+      colorClass: "color-accent",
+      aria: 'Ny bruker',
+      callback: this.createUser, 
+      allowedRoles: [Roles.Leder]
+    }]
     this.mainNavService.addConfig(cfg);
-  }
-
-  private configureCreateButton(){
-    this.createButton = {
-        icon: "person_add", 
-        colorClass: "color-accent",
-        text: 'Ny', 
-        aria: 'Ny bruker',
-        callback: this.createUser, 
-        allowedRoles: [Roles.Leder]
-      }
-    
   }
 
 }

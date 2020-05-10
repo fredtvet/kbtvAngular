@@ -1,27 +1,12 @@
-<app-inner-nav>
-
-  <ng-container header>
-    <span class="mat-body-strong pl-2">Liste over ansatte</span>
-    <span class="flex-spacer"></span>
-    <app-stroked-button
-        class="mr-1"
-        [config]="createButton">
-    </app-stroked-button>
-  </ng-container>
-
-  <ng-container body>
-    <mat-spinner *ngIf="!users" class="center-spinner" color="accent"></mat-spinner>
-    <div *ngIf="users" class="p-0">
-      <app-user-card *ngFor="let user of users"
-        [user]="user"
-        [editButton]="{
-          icon: 'edit', 
-          allowedRoles: [Roles.Leder], 
-          callback: editUser, params: [user.userName]}">
-      </app-user-card>
-    </div>
-  </ng-container>
-
-</app-inner-nav>
+<mat-spinner *ngIf="!users" class="center-spinner" color="accent"></mat-spinner>
+<div *ngIf="users" class="p-0">
+  <app-user-card *ngFor="let user of users"
+      [user]="user"
+      [editButton]="{
+        icon: 'edit', 
+        allowedRoles: [Roles.Leder], 
+        callback: editUser, params: [user.userName]}">
+  </app-user-card>
+</div>
 
 
