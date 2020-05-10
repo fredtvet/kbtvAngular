@@ -8,7 +8,7 @@ import { AppButton } from '../../interfaces/app-button.interface';
 export class InnerNavComponent {
 
   @Input() title: string;
-  @Input() color: string = "primary";
+  @Input() colorClass: string = "bg-primary";
   @Input() buttons: AppButton[] = [];
 
   constructor() { }

@@ -1,20 +1,11 @@
 
-<div  fxLayout="column">
-
-    <mat-toolbar color="primary" class="sticky-top mat-elevation-z3">
-      <mat-toolbar-row>
-        <span class="mat-body-strong">{{ title }}</span>
-        <span class="flex-spacer"></span>
-        <app-stroked-button
-            *ngFor="let button of buttons; let last = last" 
-            [ngClass]="last ? '' : 'mr-1'"
-            [config]="button">
-        </app-stroked-button>
-      </mat-toolbar-row>
+<div class="column">
+    <mat-toolbar class="top-nav p-1 mat-elevation-z3 toolbar-slim" style="overflow:hidden;" [ngClass]="colorClass">
+      <ng-content select="[header]"></ng-content>
     </mat-toolbar>
 
-    <div>
-      <ng-content></ng-content>
+    <div class="main-content">
+      <ng-content select="[body]"></ng-content>
     </div>
-
-  </div>
+</div>
+  
