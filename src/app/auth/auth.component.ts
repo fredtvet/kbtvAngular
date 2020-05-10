@@ -12,7 +12,8 @@ import { switchMap, tap } from 'rxjs/operators';
 
 export class AuthComponent {
   authForm: FormGroup;
-
+  hidePassword = true;
+  
   constructor(
     private router: Router,
     private identityService: IdentityService,

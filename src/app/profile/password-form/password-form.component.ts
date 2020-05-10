@@ -14,6 +14,7 @@ export class PasswordFormComponent implements OnInit {
     @Output() passwordUpdated = new EventEmitter();
 
     passwordForm: FormGroup;
+    hidePasswords = {curr: true, new: true, confirm: true}
 
     ngOnInit(){
       this.initalizeForm();

@@ -16,6 +16,8 @@ export class UserFormViewComponent implements OnInit {
   isCreateForm = false;
   userForm: FormGroup;
 
+  hidePassword = true;
+
   constructor(
     private _formBuilder: FormBuilder,) {  }
 

@@ -32,7 +32,7 @@ export class AppComponent {
 
   ngOnInit(){
     this.identityService.populate();
-
+    
     this.connectionService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
       if(isOnline) this.notificationService.setNotification('Du er tilkoblet internett igjen!')
       else this.notificationService.setNotification('Du er nå i frakoblet modus. Det er kun mulig å lese data.', Notifications.Warning)
