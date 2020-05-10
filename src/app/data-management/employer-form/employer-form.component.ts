@@ -101,7 +101,6 @@ export class EmployerFormComponent extends SubscriptionComponent {
         ];
       }
       cfg.backFn = this.onBack; 
-      cfg.menuBtnEnabled = false;
       this.mainNavService.addConfig(cfg);
     }
 

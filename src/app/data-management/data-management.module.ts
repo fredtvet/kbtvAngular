@@ -10,6 +10,7 @@ import { MissionTypeFormDialogComponent } from './components/mission-type-form-d
 import { ReportTypeFormDialogComponent } from './components/report-type-form-dialog/report-type-form-dialog.component';
 import { EmployerFormComponent } from './employer-form/employer-form.component';
 import { EmployerFormViewComponent } from './employer-form/employer-form-view/employer-form-view.component';
+import { DataManagerViewComponent } from './data-manager/data-manager-view/data-manager-view.component';
 
 
 
@@ -20,7 +21,8 @@ import { EmployerFormViewComponent } from './employer-form/employer-form-view/em
     MissionTypeFormDialogComponent,
     ReportTypeFormDialogComponent,
     EmployerFormComponent,
-    EmployerFormViewComponent
+    EmployerFormViewComponent,
+    DataManagerViewComponent
   ],
   entryComponents:[
     ConfirmDialogComponent,

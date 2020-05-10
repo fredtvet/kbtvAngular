@@ -1,8 +1,8 @@
-@import '../../../variables';
+@import '../../../../variables';
 
 $select-height: 59.5;
 
-.data-picker{
+::ng-deep.data-picker{
   background:white; 
   .mat-form-field-flex{
     height:$select-height * 1px!important;
@@ -17,4 +17,3 @@ $select-height: 59.5;
   width:100%;
   height:calc(100% - (#{$select-height} * 1px))!important;
 }
-

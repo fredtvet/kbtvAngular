@@ -1,88 +1,73 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MissionService, BaseService, MissionTypeService, ReportTypeService, EmployerService, TranslationService, SessionService, MainNavService } from 'src/app/core/services';
-import { Subscription } from 'rxjs';
+import { MissionService, BaseService, MissionTypeService, ReportTypeService, EmployerService, TranslationService, MainNavService } from 'src/app/core/services';
+import { Subscription, Observable } from 'rxjs';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BaseEntity } from 'src/app/shared/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { MissionTypeFormDialogComponent } from '../components/mission-type-form-dialog/mission-type-form-dialog.component';
 import { ReportTypeFormDialogComponent } from '../components/report-type-form-dialog/report-type-form-dialog.component';
-import { filter } from 'rxjs/operators';
+import { filter, takeUntil, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-data-manager',
-  templateUrl: './data-manager.component.html',
-  styleUrls: ['./data-manager.component.scss'],
-  encapsulation : ViewEncapsulation.None,
+  templateUrl: './data-manager.component.html'
 })
 
 export class DataManagerComponent extends SubscriptionComponent {
 @ViewChild('dataGrid', {static: false}) dataGrid: AgGridAngular;
 
-dataSub$ = new Subscription();
-
-columnDefs: any = [];
-
-rowData: any = [];
+data$:Observable<BaseEntity[]>;
 
 tables = ['Oppdrag', 'Oppdragstyper', 'Oppdragsgivere', 'Rapporttyper']
 
-ignoredProperties = ['id', 'updatedat', 'createdat', 'employerid', 'missiontypeid'];
-
-noEditProperties = ['missiontype', 'employer'];
-
-booleanProperties = ['finished']
-
-objectProperties = ['missiontype', 'employer'];
-
 constructor(
-  public sessionService: SessionService,
   private mainNavService: MainNavService,
-  private translationService: TranslationService,
   private employerService: EmployerService,
   private missionTypeService: MissionTypeService,
   private missionService: MissionService,
   private reportTypeService: ReportTypeService,
   private router: Router,
+  private route: ActivatedRoute,
   private dialog: MatDialog) { 
     super(); 
     this.configureMainNav();
   }
 
-  ngOnInit(){ 
-    this.loadTable();
+  get currentTable(){
+    return this.route.snapshot.queryParams['currentTable'];
   }
 
-  private initNgGrid(data: BaseEntity[]){
-    this.columnDefs = [];
-    this.rowData = [];
-
-    if(!data || data.length == 0) return null;
-
-    this.columnDefs.push({colId: 'checkbox', checkboxSelection: true, width: 42, pinned: 'left', lockPosition: true})
-    //Add cols for properties
-    Object.getOwnPropertyNames(data[0])
-      .forEach(name => this.addColumnDef(name));
-
-    this.rowData = data;
+  ngOnInit(){
+    this.data$ = this.route.queryParams.pipe(
+      distinctUntilChanged(),
+      map(qp => qp['currentTable']),
+      filter(table => this.tables.includes(table)),
+      switchMap(table => this.getTableService(table).getAllDetails$()),
+      takeUntil(this.unsubscribe)
+    );
   }
 
-  loadTable(){
-    if(this.sessionService.dataTable != undefined){
-      this.dataSub$.unsubscribe();
-      this.dataSub$ = this.getCurrentService().getAllDetails$().subscribe(x => this.initNgGrid(x))
-    }
+  changeTable(table: string){
+    this.router.navigate(['data'], {queryParams: {currentTable: table}})
   }
 
-  autoSizeGrid(){
-    let cols = this.dataGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
-    this.dataGrid.columnApi.autoSizeColumns(cols);
+  editCell(e: any){
+    if(e.oldValue != e.newValue)
+      this.getTableService(this.currentTable).update$(e.data).subscribe(x => {}, error => {
+        e.node.setDataValue(e.column.colId, e.oldValue) //Reset value on error
+      });        
   }
 
-  create() {
-    switch(this.sessionService.dataTable){
+  deleteItems(ids: number[]): boolean{
+    if(ids.length == 0) return false;
+    this.getTableService(this.currentTable).deleteRange$(ids).subscribe();
+  }
+
+  createItem() {
+    switch(this.currentTable){
       case "Oppdrag": this.createMission(); break;
       case "Oppdragstyper": this.createMissionType(); break;
       case "Oppdragsgivere": this.createEmployer(); break;
@@ -90,81 +75,8 @@ constructor(
     }
   }
 
-  editCell(e: any){
-    if(e.oldValue != e.newValue)
-      this.getCurrentService().update$(e.data).subscribe(x => {}, error => {
-        e.node.setDataValue(e.column.colId, e.oldValue) //Reset value on error
-      });
-    this.autoSizeGrid();
-  }
-
-  openDeleteDialog = () => {
-    if(this.dataGrid.api.getSelectedNodes().length == 0) return null;
-
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette ressursen(e).'});
-    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteSelectedCells());
-  }
-
-  private deleteSelectedCells(): boolean{
-    const ids = this.dataGrid.api.getSelectedNodes().map(node => node.data['id']);
-    if(ids.length == 0) return false;
-    this.getCurrentService().deleteRange$(ids).subscribe();
-  }
-
-  private addRow(data: BaseEntity){ //Manually adding as data binding did not work
-    this.dataGrid.api.updateRowData({add: [data]})
-  }
-
-  private addColumnDef(name: string){
-
-    let nameLower = name.toLowerCase();
-
-    if(this.ignoredProperties.includes(nameLower)) return false; //Ignored properties
-
-    let def = {
-      field: name,
-      headerName: this.translationService.translateProperty(nameLower),
-      sortable: true,
-      resizable: true,
-      editable: true,
-      lockPosition: true
-    };
-
-    if(this.booleanProperties.includes(nameLower)){
-
-      def['cellEditor'] = 'agSelectCellEditor';
-      def['cellEditorParams'] = { values: ['Ja', 'Nei']}
-
-      def['valueGetter'] = function(params){return params.data[name] == true ? 'Ja' : 'Nei'}
-
-      def['valueSetter'] = function(params){
-
-        let val = params.newValue.toLowerCase();
-        if(val == 'ja') params.data[name] = true;
-        else if (val == 'nei') params.data[name] = false;
-        else return false;
-
-        return true;
-      }
-    }
-
-    if(this.noEditProperties.includes(nameLower)) def['editable'] = false;
-
-    if(this.objectProperties.includes(nameLower)){
-
-      def['valueGetter'] = function(params) { //Get name of object and display
-        if(params.data[name] !== undefined)
-          return params.data[name].name;
-        else return ''
-      };
-
-    }
-
-    this.columnDefs.push(def);
-  }
-
-  private getCurrentService(): BaseService<BaseEntity>{
-    switch(this.sessionService.dataTable){
+  private getTableService(table: string): BaseService<BaseEntity>{
+    switch(table){
       case "Oppdrag": return this.missionService;
       case "Oppdragstyper": return this.missionTypeService;
       case "Oppdragsgivere": return this.employerService;
@@ -180,7 +92,7 @@ constructor(
     const createDialogRef = this.dialog.open(MissionTypeFormDialogComponent);
     createDialogRef.afterClosed().subscribe(data => {
       if(data == null) return null;
-      this.getCurrentService().add$(data).subscribe(x => this.addRow(x));
+      this.getTableService(this.currentTable).add$(data).subscribe();
     });
   }
 
@@ -188,7 +100,7 @@ constructor(
     const createDialogRef = this.dialog.open(ReportTypeFormDialogComponent);
     createDialogRef.afterClosed().subscribe(data => {
       if(data == null) return null;
-      this.getCurrentService().add$(data).subscribe(x => this.addRow(x));
+      this.getTableService(this.currentTable).add$(data).subscribe();
     });
   }
 

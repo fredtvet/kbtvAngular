@@ -1,33 +1,9 @@
-<div class="static-page-container bg-primary" fxLayout="column" fxLayoutGap="8px">
-
-    <mat-form-field appearance="fill" class="data-picker mat-elevation-z2">
-      <mat-label>Velg</mat-label>
-      <mat-select [(ngModel)]="sessionService.dataTable" (selectionChange)="loadTable()">
-        <mat-option *ngFor="let table of tables" value="{{ table }}">{{ table }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <ag-grid-angular #dataGrid
-      class="ag-theme-balham data-container mat-elevation-z2"
-      rowSelection="multiple"
-      suppressRowClickSelection="true"
-      suppressColumnVirtualisation="true"
-      overlayNoRowsTemplate="Tomt"
-      (modelUpdated)="autoSizeGrid()"
-      [rowData]="rowData"
-      [columnDefs]="columnDefs"
-      (cellValueChanged)="editCell($event)">
-    </ag-grid-angular>
-
-    <span fxLayout="row" fxLayoutAlign="space-between none" >
-      <button mat-raised-button aria-label="Slett" color="warn" (click)="openDeleteDialog()">
-        <mat-icon>delete_forever</mat-icon>
-      </button>
-
-      <button mat-raised-button aria-label="Ny" color="accent" (click)="create()">
-        <mat-icon>add</mat-icon>
-      </button>
-    </span>
-
-</div>
-
+<app-data-manager-view 
+  [tables]="tables" 
+  [selectedTable]="currentTable"
+  [data]="data$ | async"
+  (tableSelected)="changeTable($event)"
+  (cellEdited)="editCell($event)"
+  (newItemClick)="createItem()"
+  (itemsDeleted)="deleteItems($event)" >
+</app-data-manager-view>
