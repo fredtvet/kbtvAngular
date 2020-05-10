@@ -56,12 +56,6 @@ export class MissionDetailsComponent extends SubscriptionComponent{
     });
   }
 
-  ngAfterContentInit(): void {
-    //Called after ngOnInit when the component's or directive's content has been initialized.
-    //Add 'implements AfterContentInit' to the class.
-
-  }
-
   uploadImages(files: FileList)
   {
     this.missionImageService.addImages$(this.mission.id, files).pipe(take(1))
@@ -82,56 +76,47 @@ export class MissionDetailsComponent extends SubscriptionComponent{
     this.missionReportService.delete$(id).pipe(take(1))
       .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport slettet.'));
   }
+  editNote(note: MissionNote){
+    this.router.navigate(['oppdrag', note.missionId, 'notater', note.id, 'rediger'])
+  }
 
-  createReport(data){
+  private createReport(data){
     if(!data) return null;
     this.missionReportService.addReport$(this.mission.id, data.reportType, data.files).pipe(take(1))
       .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport lastet opp'));
   }
 
-  editNote(note: MissionNote){
-    this.router.navigate(['oppdrag', note.missionId, 'notater', note.id, 'rediger'])
+  private deleteMission(){   
+    this.missionService.delete$(this.mission.id).pipe(filter(del => del), tap(x => this.onBack()))
+      .subscribe(del => this.notificationService.setNotification('Vellykket! Oppdrag slettet.'));
   }
 
-  private deleteMission(){
-    this.onBack();
-    this.missionService.delete$(this.mission.id).subscribe(
-      deleted => {
-        if(deleted){
-          this.notificationService.setNotification('Vellykket! Oppdrag slettet.')
-        }
-      }
-    );
-  }
-
-  private editMission = (e: string) => {
+  private editMission = () => {
     this.router.navigate(['oppdrag', this.mission.id, 'rediger'])
   }
 
-  private createNote = (e: string) => {
+  private createNote = () => {
     this.router.navigate(['oppdrag', this.mission.id, 'notater','ny'])
   }
 
-  private  openCreateReportDialog = (e: string) => {
+  private  openCreateReportDialog = () => {
     const createDialogRef = this.dialog.open(MissionReportFormComponent);
     createDialogRef.afterClosed().subscribe(data => this.createReport(data));
   }
 
-  private openDeleteMissionDialog = (e: string) => {
+  private openDeleteMissionDialog = () => {
     const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette oppdraget.'});
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteMission());
   }
 
-  private goToTimesheets = (e: string) => {
+  private goToTimesheets = () => {
     this.router.navigate(['timer/liste', {returnRoute: this.router.url, mission: JSON.stringify(this.mission)}]);
   }
 
   private configureMainNav(){
     let cfg = this.mainNavService.getDefaultConfig();
-    cfg.altNav = true;
     cfg.elevationEnabled = false;
-    cfg.backFn = this.onBack;
-    
+    cfg.backFn = this.onBack;  
     cfg.bottomSheetButtons = [
       {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets},
       {text: "Legg til rapport", icon: "note_add", callback: this.openCreateReportDialog, allowedRoles: [Roles.Leder]},
@@ -139,17 +124,14 @@ export class MissionDetailsComponent extends SubscriptionComponent{
       {text: "Rediger", icon: "edit", callback: this.editMission, allowedRoles: [Roles.Leder]},
       {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, allowedRoles: [Roles.Leder]},
     ];
-
     this.mainNavService.addConfig(cfg);
   }
 
   private updateMainNavWithMission(mission: Mission){
     if(mission == undefined) return null;
-    let cfg = this.mainNavService.getCurrentConfig();
-
-    if(mission.address)
-      cfg.title = mission.address.replace(", Norge","").replace(/,/g, "<br />");
-    
+    let cfg = this.mainNavService.getCurrentConfig(); 
+    console.log(mission.address.split(','))
+    cfg.multiLineTitle = mission.address.split(',');
     cfg.subTitle = mission.finished ? 'Oppdrag ferdig!' : '';
     cfg.subIcon = mission.finished ? 'check' : '';
     this.mainNavService.addConfig(cfg);
