@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
-
-import { ApiService } from './api.service';
+import { ApiService } from '../api.service';
 import { JwtService } from './jwt.service';
 import { map, distinctUntilChanged, skip, tap, take } from 'rxjs/operators';
 import { Identity, User } from 'src/app/shared/models';
-import { LocalStorageService } from './local-storage.service';
-import { ConnectionService } from './connection.service';
-import { NotificationService } from './notification.service';
+import { LocalStorageService } from '../local-storage.service';
+import { ConnectionService } from '../connection.service';
+import { NotificationService } from '../ui/notification.service';
 import { Notifications } from 'src/app/shared/enums';
 
 

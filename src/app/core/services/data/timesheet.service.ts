@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest, Subject, throwError } from 'rxjs';
 import { Timesheet, User } from 'src/app/shared/models';
-import { ApiService } from '../../api.service';
+import { ApiService } from '../api.service';
 import { TimesheetFilter, TimesheetSummary } from 'src/app/shared/interfaces';
 import { tap, switchMap, distinctUntilChanged, map, pairwise, startWith, share, shareReplay, skip } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { TimesheetAggregatorService } from '../../utility/timesheet-aggregator.service';
+import { TimesheetAggregatorService } from '../utility/timesheet-aggregator.service';
 import { GroupByTypes, TimesheetStatus, Notifications } from 'src/app/shared/enums';
-import { ConnectionService } from '../../connection.service';
-import { NotificationService } from '../../notification.service';
-import { UserService } from '../user/user.service';
+import { ConnectionService } from '../connection.service';
+import { NotificationService } from '../ui/notification.service';
+import { UserService } from './user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -125,7 +125,6 @@ export class TimesheetService {
       if(user) s.fullName = user.firstName + ' ' + user.lastName;
       return s;
     })
-    console.timeEnd('fullname');
     return ts;
   }
 

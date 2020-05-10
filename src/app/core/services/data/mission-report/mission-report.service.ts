@@ -6,7 +6,7 @@ import { ApiService } from '../../api.service';
 import { Observable, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { ConnectionService } from '../../connection.service';
-import { NotificationService } from '../../notification.service';
+import { NotificationService } from '../../ui/notification.service';
 import { Notifications } from 'src/app/shared/enums';
 
 @Injectable({

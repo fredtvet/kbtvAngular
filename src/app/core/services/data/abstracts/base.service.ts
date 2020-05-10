@@ -3,7 +3,7 @@ import { map, tap, retry, catchError } from 'rxjs/operators';
 import { BaseSubject } from './base.subject';
 import { ApiService } from '../../api.service';
 import { ConnectionService } from '../../connection.service';
-import { NotificationService } from '../../notification.service';
+import { NotificationService } from '../../ui/notification.service';
 import { Notifications } from 'src/app/shared/enums';
 import { BaseEntity } from 'src/app/shared/interfaces';
 import { HttpParams } from '@angular/common/http';

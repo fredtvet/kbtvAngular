@@ -1,6 +1,6 @@
 import { Timesheet } from 'src/app/shared/models';
 import { TimesheetStatus } from 'src/app/shared/enums';
-import { NotificationService } from '../../notification.service';
+import { NotificationService } from '../../ui/notification.service';
 import { ApiService } from '../../api.service';
 import { UserTimesheetSubject } from './user-timesheet.subject';
 import { ConnectionService } from '../../connection.service';

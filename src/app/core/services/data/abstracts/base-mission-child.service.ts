@@ -5,7 +5,7 @@ import { ApiService } from '../../api.service';
 import { Observable } from 'rxjs';
 import { MissionChild } from 'src/app/shared/interfaces';
 import { ConnectionService } from '../../connection.service';
-import { NotificationService } from '../../notification.service';
+import { NotificationService } from '../../ui/notification.service';
 
 export abstract class BaseMissionChildService<T extends MissionChild> extends BaseService<T>  {
 

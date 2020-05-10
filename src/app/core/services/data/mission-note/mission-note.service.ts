@@ -6,7 +6,7 @@ import { BaseMissionChildService } from '../abstracts/base-mission-child.service
 import { Observable } from 'rxjs';
 import { ConnectionService } from '../../connection.service';
 import { map } from 'rxjs/operators';
-import { NotificationService } from '../../notification.service';
+import { NotificationService } from '../../ui/notification.service';
 
 @Injectable({
   providedIn: 'root'

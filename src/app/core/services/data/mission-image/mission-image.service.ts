@@ -7,7 +7,7 @@ import { Notifications } from 'src/app/shared/enums';
 import { Observable, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { ConnectionService } from '../../connection.service';
-import { NotificationService } from '../../notification.service';
+import { NotificationService } from '../../ui/notification.service';
 
 @Injectable({
   providedIn: 'root'

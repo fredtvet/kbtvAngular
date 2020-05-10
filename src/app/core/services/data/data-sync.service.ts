@@ -9,7 +9,7 @@ import { MissionSubject } from './mission/mission.subject';
 import { ReportTypeSubject } from './report-type/report-type.subject';
 import { ApiService } from '../api.service';
 import { retry, tap, catchError } from 'rxjs/operators';
-import { NotificationService } from '../notification.service';
+import { NotificationService } from '../ui/notification.service';
 import { Notifications } from 'src/app/shared/enums';
 import { UserTimesheetSubject } from './user-timesheet/user-timesheet.subject';
 import { HttpParams } from '@angular/common/http';

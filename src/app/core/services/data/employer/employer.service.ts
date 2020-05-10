@@ -4,7 +4,7 @@ import { BaseService } from '../abstracts/base.service';
 import { ApiService } from '../../api.service';
 import { EmployerSubject } from './employer.subject';
 import { ConnectionService } from '../../connection.service';
-import { NotificationService } from '../../notification.service';
+import { NotificationService } from '../../ui/notification.service';
 
 
 @Injectable({

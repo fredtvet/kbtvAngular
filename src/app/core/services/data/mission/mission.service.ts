@@ -6,7 +6,7 @@ import { ApiService } from '../../api.service';
 import { ConnectionService } from '../../connection.service';
 import { take, filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { NotificationService } from '../../notification.service';
+import { NotificationService } from '../../ui/notification.service';
 
 @Injectable({
   providedIn: 'root'
