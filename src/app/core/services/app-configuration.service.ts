@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PersistentSubject } from '../subjects/persistent.subject';
+import { PersistentSubject } from './data/abstracts/persistent.subject';
 import { LocalStorageService } from './local-storage.service';
 import { tap, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 

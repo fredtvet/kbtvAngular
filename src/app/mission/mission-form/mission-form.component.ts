@@ -84,7 +84,6 @@ export class MissionFormComponent extends SubscriptionComponent {
   private configureMainNav(): void{
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = this.isCreateForm ?  "Nytt oppdrag" : "Rediger oppdrag";
-    cfg.menuBtnEnabled = false;
     cfg.backFn = this.onBack;
     this.mainNavService.addConfig(cfg);
   }

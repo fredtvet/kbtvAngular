@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UsersService, IdentityService, MainNavService } from 'src/app/core/services';
+import { UserService, IdentityService, MainNavService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
 import { combineLatest } from 'rxjs';
@@ -18,24 +18,24 @@ export class UserListComponent extends SubscriptionComponent {
   users: User[];
   currentUser: User;
   
-  innerNavButtons: AppButton[];
+  createButton: AppButton;
 
   constructor(
     private mainNavService: MainNavService,
-    private usersService: UsersService,
+    private userService: UserService,
     private identityService: IdentityService,
     private router: Router) { 
       super();    
       this.configureMainNav(); 
-      this.configureInnerNav();
+      this.configureCreateButton();
     }
 
   ngOnInit() {
     combineLatest( //Calling seperate to have them ordered correctly. Should be done more efficiently.
-      this.usersService.getByRole$(Roles.Leder),
-      this.usersService.getByRole$(Roles.Mellomleder),
-      this.usersService.getByRole$(Roles.Ansatt),
-      this.usersService.getByRole$(Roles.Oppdragsgiver),
+      this.userService.getByRole$(Roles.Leder),
+      this.userService.getByRole$(Roles.Mellomleder),
+      this.userService.getByRole$(Roles.Ansatt),
+      this.userService.getByRole$(Roles.Oppdragsgiver),
     )
     .pipe(takeUntil(this.unsubscribe))
     .subscribe(([group1, group2, group3, group4]) => {this.users = [...group1, ...group2, ...group3, ...group4]});
@@ -55,9 +55,8 @@ export class UserListComponent extends SubscriptionComponent {
     this.mainNavService.addConfig(cfg);
   }
 
-  private configureInnerNav(){
-    this.innerNavButtons = [
-      {
+  private configureCreateButton(){
+    this.createButton = {
         icon: "person_add", 
         colorClass: "color-accent",
         text: 'Ny', 
@@ -65,7 +64,7 @@ export class UserListComponent extends SubscriptionComponent {
         callback: this.createUser, 
         allowedRoles: [Roles.Leder]
       }
-    ]
+    
   }
 
 }

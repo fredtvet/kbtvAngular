@@ -1,6 +1,23 @@
 
-  <app-inner-nav [title]="innerNavTitle" [buttons]="innerNavButtons">
-    <app-mission-list-view [missions]="missions$ | async"></app-mission-list-view>
+  <app-inner-nav>
+
+    <ng-container header>
+
+      <span class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
+        <app-search-bar (search)="searchMissionList($event)" class="m-2 mat-body max-width" fxFlex></app-search-bar>
+
+        <span>
+          <app-stroked-button
+            *ngFor="let button of innerNavButtons; let last = last" 
+            [ngClass]="last ? '' : 'mr-1'"
+            [config]="button">
+          </app-stroked-button>
+        </span>
+      </span>
+
+    </ng-container>
+    <app-mission-list-view body [missions]="missions$ | async"></app-mission-list-view>
+
   </app-inner-nav>
 
 

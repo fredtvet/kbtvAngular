@@ -21,7 +21,7 @@ export class ImageListComponent extends SubscriptionComponent {
 
   constructor(public dialog: MatDialog) { super() }
 
-  //Reloads thumbnail (thumbnails made async) until no error
+  //Reloads thumbnail (thumbnails made async on server) until no error
   unloadedThumbnail(img){
     //Add image to array if no exist
     let existingImg = this.unloadedThumbnails.find(val => val.img == img);
@@ -43,6 +43,10 @@ export class ImageListComponent extends SubscriptionComponent {
       this.reloadInterval = setInterval(() => this.reloadThumbnails(), 1500);
     }
   }
+  
+  loadedThumbnail(img){
+    this.unloadedThumbnails = this.unloadedThumbnails.filter(val => val.img != img);
+  }
 
   reloadThumbnails(){
     //Reload image src to retry
@@ -55,11 +59,7 @@ export class ImageListComponent extends SubscriptionComponent {
         clearInterval(this.reloadInterval);
         this.reloadThumbnailsState = false;
     }
-  }
-
-  loadedThumbnail(img){
-    this.unloadedThumbnails = this.unloadedThumbnails.filter(val => val.img != img);
-  }
+  }  
 
   openImageViewer(imageId: number){
 

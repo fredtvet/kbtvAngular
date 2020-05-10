@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Mission } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
 import { BehaviorSubject, Observable} from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { MissionService, MainNavService } from 'src/app/core/services';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { AppButton } from 'src/app/shared/interfaces';
@@ -25,6 +25,8 @@ export class MissionListComponent extends SubscriptionComponent{
   innerNavButtons: AppButton[];
   innerNavTitle: string;
 
+  searchBarHidden: boolean = true;
+
   constructor(
     private mainNavService: MainNavService,
     private missionService: MissionService,
@@ -39,18 +41,18 @@ export class MissionListComponent extends SubscriptionComponent{
     this.missions$ = this.pageInfoSubject.pipe(switchMap(pageInfo => {
         return this.missionService
           .getFiltered$(pageInfo.showFinishedMissions, pageInfo.searchString, pageInfo.historic)
-      }), 
-      takeUntil(this.unsubscribe)
-    );
+      }));
   }
 
-  private createMission = () => this.router.navigate(['oppdrag','ny']);
-  
-  private searchMissionList = (searchString: string) => {
+  searchMissionList = (searchString: string) => {
     let pageInfo = {...this.pageInfoSubject.value};
     pageInfo.searchString = searchString;
     this.pageInfoSubject.next(pageInfo)
   }
+
+  private createMission = () => this.router.navigate(['oppdrag','ny']);
+  
+
 
   private toggleFinishedMissions = () => {
     let pageInfo = {...this.pageInfoSubject.value};
@@ -80,7 +82,6 @@ export class MissionListComponent extends SubscriptionComponent{
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Oppdrag"
     cfg.bottomSheetButtons = [{text: "Vis ferdige oppdrag", icon: "check_box_outline_blank", callback: this.toggleFinishedMissions}]
-    cfg.searchFn = this.searchMissionList;
     this.mainNavService.addConfig(cfg);
   }
 

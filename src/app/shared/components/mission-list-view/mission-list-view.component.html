@@ -6,7 +6,7 @@
     <app-list-card *ngFor="let mission of missions"
         startIcon="home_work"
         [endIcon]="mission.finished ? 'check':'chevron_right'"
-        [text]="mission.address"
+        [text]="'(' + mission.id + ') ' + mission.address"
         [routerLink]="['/oppdrag', mission.id, 'detaljer']">
     </app-list-card>
 

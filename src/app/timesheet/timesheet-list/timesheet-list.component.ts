@@ -118,7 +118,6 @@ export class TimesheetListComponent implements OnInit {
   private configureMainNav(){
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Timeliste";
-    cfg.menuBtnEnabled = false;
     cfg.backFn = this.onBack;
     this.mainNavService.addConfig(cfg);
   }

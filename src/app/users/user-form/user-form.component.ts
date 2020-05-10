@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { RolesService, UsersService, NotificationService, MainNavService } from 'src/app/core/services';
+import { RoleService, UserService, NotificationService, MainNavService } from 'src/app/core/services';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { User } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
@@ -26,8 +26,8 @@ export class UserFormComponent extends SubscriptionComponent  {
   constructor(
     private mainNavService: MainNavService,
     private notificationService: NotificationService,
-    private _rolesService: RolesService,
-    private _usersService: UsersService,
+    private _roleService: RoleService,
+    private _userService: UserService,
     private _router: Router,
     private _route: ActivatedRoute,
     private _dialog: MatDialog, 
@@ -40,9 +40,9 @@ export class UserFormComponent extends SubscriptionComponent  {
 
     ngOnInit(){
       if(!this.isCreateForm)
-        this.user$ = this._usersService.get$(this._route.snapshot.paramMap.get('userName'));
+        this.user$ = this._userService.get$(this._route.snapshot.paramMap.get('userName'));
 
-      this.roles$ = this._rolesService.getAll$().pipe(
+      this.roles$ = this._roleService.getAll$().pipe(
         takeUntil(this.unsubscribe),
         map(arr => arr.filter(x => (x != Roles.Leder && x != Roles.Oppdragsgiver)))
       )
@@ -55,14 +55,14 @@ export class UserFormComponent extends SubscriptionComponent  {
     }
 
     private createUser(user: any){
-      this._usersService.add$(user).subscribe(success => {
+      this._userService.add$(user).subscribe(success => {
          this.notificationService.setNotification('Vellykket! Ny bruker registrert.');
          this.onBack();
         });
     }
 
     private updateUser(user: User){
-      this._usersService.update$(user).pipe(take(1))
+      this._userService.update$(user).pipe(take(1))
         .subscribe(success => {
           this.notificationService.setNotification('Vellykket oppdatering!');
           this.onBack();
@@ -71,7 +71,7 @@ export class UserFormComponent extends SubscriptionComponent  {
 
     private deleteUser(username: string){
       this.onBack();
-      this._usersService.delete$(username).pipe(take(1))
+      this._userService.delete$(username).pipe(take(1))
         .subscribe(res => {
           this.notificationService.setNotification('Vellykket! Bruker slettet.');
         });
@@ -92,7 +92,6 @@ export class UserFormComponent extends SubscriptionComponent  {
         ];
       }
       cfg.backFn = this.onBack;
-      cfg.menuBtnEnabled = false;
       this.mainNavService.addConfig(cfg);
     }
 

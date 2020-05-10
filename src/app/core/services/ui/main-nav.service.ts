@@ -9,21 +9,14 @@ import { MainNavConfig } from 'src/app/shared/interfaces';
 export class MainNavService {
 
   private defaultConfig: MainNavConfig = {
-    altNav: false,
     title: null,
-    icon: null,
+    multiLineTitle: null,
     subTitle: null,
-    subIcon: null,  
-   
-    searchFn: null,
+    subIcon: null,   
     backFn: null,
     bottomSheetButtons: [],
     buttons: [], 
-    
-    menuBtnEnabled: true,
     elevationEnabled: true,
-    
-    context: null
   };
 
   private configSubject =  new BehaviorSubject<MainNavConfig>({...this.defaultConfig});

@@ -28,7 +28,7 @@ import { MissionNoteFormViewComponent } from './mission-note-form/mission-note-f
     MissionNoteFormViewComponent
   ],
   providers: [
-    DatePipe
+    DatePipe,
   ],
   entryComponents:[
     ConfirmDialogComponent,

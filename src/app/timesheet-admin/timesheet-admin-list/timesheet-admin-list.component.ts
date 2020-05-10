@@ -1,19 +1,15 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { MainNavService, TimesheetService, DateTimeService, UsersService, TimesheetAggregatorService } from 'src/app/core/services';
-import { AppButton, TimesheetSummary } from 'src/app/shared/interfaces';
+import { Component, ViewChild, TemplateRef } from '@angular/core';
+import { MainNavService, TimesheetService, DateTimeService, TimesheetAggregatorService } from 'src/app/core/services';
+import { TimesheetSummary } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
-import { filter, tap, map, takeUntil, skip, last, startWith, pairwise, switchMap, shareReplay, } from 'rxjs/operators';
-import { ActivatedRoute, UrlSegment, Router, Params } from '@angular/router';
+import { filter, map, startWith, pairwise} from 'rxjs/operators';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { GroupByTypes, TimesheetStatus } from 'src/app/shared/enums';
-import { UsernameToFullnamePipe } from 'src/app/shared/pipes';
 import { Timesheet } from 'src/app/shared/models';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from 'src/app/shared/components';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-
 @Component({
   selector: 'app-timesheet-admin-list',
   templateUrl: './timesheet-admin-list.component.html'
@@ -40,8 +36,7 @@ export class TimesheetAdminListComponent extends SubscriptionComponent {
     private route: ActivatedRoute,
     private router: Router,
     private dateTimeService: DateTimeService,
-    private _bottomSheet: MatBottomSheet,
-    private _dialog: MatDialog) { 
+    private _bottomSheet: MatBottomSheet) { 
       super();
       this.timesheetService.addGroupBy(GroupByTypes.YearAndUserName);
       this.configureDefaultNav(+this.route.snapshot.queryParams['year'] || this.today.getFullYear());
@@ -142,7 +137,6 @@ export class TimesheetAdminListComponent extends SubscriptionComponent {
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Uker";
     cfg.subTitle = year + ' - ' + userName;
-    cfg.menuBtnEnabled = false;
     cfg.backFn = this.updateQuery;
     cfg.backFnParams = [{userName: null, week: null}];
     //cfg.buttons = [{icon: "list", callback: this.goToTimesheetList}];
@@ -153,7 +147,6 @@ export class TimesheetAdminListComponent extends SubscriptionComponent {
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Uke " + week;
     cfg.subTitle = year + ' - ' + userName;
-    cfg.menuBtnEnabled = false;
     cfg.backFn = this.updateQuery;
     cfg.backFnParams = [{week: null}];
     //cfg.buttons = [{icon: "list", callback: this.goToTimesheetList}];

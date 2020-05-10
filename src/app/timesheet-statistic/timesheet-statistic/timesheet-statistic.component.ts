@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MainNavService, TimesheetService, UsersService } from 'src/app/core/services';
+import { MainNavService, TimesheetService, UserService } from 'src/app/core/services';
 import { filter, tap, map } from 'rxjs/operators';
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared/components';
 import { TimesheetFilter } from 'src/app/shared/interfaces';
@@ -20,10 +20,10 @@ export class TimesheetStatisticComponent {
 
   timesheetSummaries$ = this.timesheetService.timesheetSummaries$;
 
-  users$ = this.usersService.getAll$();
+  users$ = this.userService.getAll$();
 
   constructor(
-    private usersService: UsersService,
+    private userService: UserService,
     private mainNavService: MainNavService,
     private timesheetService: TimesheetService,
     private _bottomSheet: MatBottomSheet,

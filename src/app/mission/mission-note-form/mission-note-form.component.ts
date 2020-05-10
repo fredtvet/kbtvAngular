@@ -63,7 +63,6 @@ export class MissionNoteFormComponent extends SubscriptionComponent {
     let cfg = this.mainNavService.getDefaultConfig(); 
     cfg.title = this.isCreateForm ? "Nytt notat" : "Rediger notat";
     cfg.backFn = this.onBack;
-    cfg.menuBtnEnabled = false;
     this.mainNavService.addConfig(cfg);
   }
 

@@ -120,7 +120,6 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Uke " + dp.weekNr;
     cfg.subTitle = dp.year.toString();
-    cfg.menuBtnEnabled = false;
     cfg.backFn = this.goToWeekList;
     cfg.buttons = [{icon: "list", callback: this.goToTimesheetList}];
     this.mainNavService.addConfig(cfg);

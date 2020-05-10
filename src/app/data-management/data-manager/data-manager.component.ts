@@ -1,8 +1,7 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MissionService, BaseService, MissionTypeService, ReportTypeService, EmployerService, TranslationService, MainNavService } from 'src/app/core/services';
-import { Subscription, Observable } from 'rxjs';
+import { Component, ViewChild } from '@angular/core';
+import { MissionService, BaseService, MissionTypeService, ReportTypeService, EmployerService, MainNavService } from 'src/app/core/services';
+import { Observable } from 'rxjs';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BaseEntity } from 'src/app/shared/interfaces';

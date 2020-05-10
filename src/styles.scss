@@ -4,7 +4,7 @@
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 
-html, body { height: 100%; background:$background-color;color:black;}
+html, body { height: 100%; background:$background-color;color:black;overflow:hidden;}
 body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 
 .bg-primary{background:$primary!important;color:white;}
@@ -48,9 +48,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 
 .prevent-pointer-events{pointer-events: none;}
 
-.flex-spacer{
-  flex: 1 1 auto;
-}
+.flex-spacer{flex: 1 1 auto;}
+
 .action_fab{
   position: fixed!important;
   right: $content-margin * 1px!important;
@@ -60,12 +59,9 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 }
 
 
-.image_viewer_dialog{
-  max-width:none!important;
-}
-.image_viewer_dialog .mat-dialog-container{
-  background-color:black!important;
-}
+.image_viewer_dialog{max-width:none!important;}
+
+.image_viewer_dialog .mat-dialog-container{background-color:black!important;}
 
 .notification{
   margin-bottom:($bottom-nav-height + $content-margin) * 1px!important;
@@ -110,6 +106,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
    width:calc(100% - (#{$content-margin} * 4px))!important;
 }
 
+
 .center-margin{margin:0 auto;}
 .center-spinner{margin:$content-margin * 2px auto;}
 .owl-dt-calendar-table{
@@ -126,6 +123,17 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
     background:$primary-light!important;
   }
 }
+
+
+mat-toolbar.toolbar-slim, 
+mat-toolbar-row.toolbar-slim, 
+mat-toolbar-single-row.toolbar-slim{
+  height:auto!important;
+  padding: 2px!important;
+  min-height:40px!important;
+} 
+
+
 //Ag material
 .mat-button-toggle-group{
   .mat-button-toggle-appearance-standard {
@@ -134,21 +142,40 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
     }
   }
 }
+
+.column {
+  height: 100%;  /*allows both columns to span the full height of the browser window*/
+  display: flex;
+  flex-direction: column;  /*places the left and right headers above the bottom content*/
+}
+
+.nav {
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
+.main-content {
+  flex-grow: 1;  /*ensures that the container will take up the full height of the parent container*/
+  overflow-y: auto;  /*adds scroll to this container*/
+}
+
 .mat-tab-group{
-  position:sticky!important;
-  width:100%;
+  // position:sticky!important;
+  // width:100%;
   .mat-tab-header{
     background-color:$primary-dark;
     color:white!important;
     position:sticky!important;
     width:100%;
-    left:0;
-    @include sticky-top;
+    z-index:2;
+    top:0;
+    overflow:hidden;
     .mat-tab-label-content{
-      color:white
+      color:white;
     }
   }
 }
+
 .mat-icon{
   vertical-align: middle!important;
 }

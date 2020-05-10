@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { User } from '../../models/user.model';
 import { Observable, of } from 'rxjs';
-import { UsersService } from 'src/app/core/services';
+import { UserService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-week-list-filter-sheet-wrapper',
@@ -21,12 +21,12 @@ export class WeekListFilterSheetWrapperComponent {
 
   constructor(    
     private _bottomSheetRef: MatBottomSheetRef<WeekListFilterSheetWrapperComponent>, 
-    private _usersService: UsersService, 
+    private _userService: UserService, 
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: {year: number, userName?: string}) { }
 
   ngOnInit(): void {
     if(this.data.userName !== undefined){
-      this.users$ = this._usersService.getAll$();
+      this.users$ = this._userService.getAll$();
     } 
     else this.users$ =  of([]);  
   }

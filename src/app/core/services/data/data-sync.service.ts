@@ -1,21 +1,18 @@
 import { Injectable, ApplicationRef } from '@angular/core';
 import { ConnectionService } from '../connection.service';
-import { EmployerSubject } from '../../subjects/employer.subject';
-import { MissionTypeSubject } from '../../subjects/mission-type.subject';
-import { MissionImageSubject } from '../../subjects/mission-image.subject';
-import { MissionNoteSubject } from '../../subjects/mission-note.subject';
-import { MissionReportSubject } from '../../subjects/mission-report.subject';
-import { MissionSubject } from '../../subjects/mission.subject';
-import { ReportTypeSubject } from '../../subjects/report-type.subject';
+import { EmployerSubject } from './employer/employer.subject';
+import { MissionTypeSubject } from './mission-type/mission-type.subject';
+import { MissionImageSubject } from './mission-image/mission-image.subject';
+import { MissionNoteSubject } from './mission-note/mission-note.subject';
+import { MissionReportSubject } from './mission-report/mission-report.subject';
+import { MissionSubject } from './mission/mission.subject';
+import { ReportTypeSubject } from './report-type/report-type.subject';
 import { ApiService } from '../api.service';
-import { retry, tap, catchError, switchMap, first } from 'rxjs/operators';
+import { retry, tap, catchError } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
 import { Notifications } from 'src/app/shared/enums';
-import { UserTimesheetSubject } from '../../subjects/user-timesheet.subject';
+import { UserTimesheetSubject } from './user-timesheet/user-timesheet.subject';
 import { HttpParams } from '@angular/common/http';
-import { AppConfigurationService } from '../app-configuration.service';
-import { IdentityService } from '../identity.service';
-import { interval, concat } from 'rxjs';
 
 
 @Injectable({
@@ -30,12 +27,9 @@ export class DataSyncService {
   private syncTimer: any;
 
   constructor(
-    appRef: ApplicationRef,
     private apiService: ApiService,
-    private identityService: IdentityService,
     private connectionService: ConnectionService,
     private notificationService: NotificationService,
-    private appConfigService: AppConfigurationService,
     private employerSubject: EmployerSubject,
     private missionTypeSubject: MissionTypeSubject,
     private missionImageSubject: MissionImageSubject,
@@ -51,7 +45,6 @@ export class DataSyncService {
   
   syncAll() : void{
     if(!this.isOnline) return undefined;
-    console.log('sync');
     let timestamp = this.getEarliestTimestamp();
     let params = new HttpParams();
     if(timestamp) params = params.set('Timestamp', timestamp.toString());
