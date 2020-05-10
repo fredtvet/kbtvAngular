@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { MissionFormViewComponent } from './mission-form/mission-form-view/mission-form-view.component';
 import { MissionFormComponent } from './mission-form/mission-form.component';
 import { MissionNoteFormViewComponent } from './mission-note-form/mission-note-form-view/mission-note-form-view.component';
+import { MissionListViewComponent } from './mission-list/mission-list-view/mission-list-view.component';
 
 
 
@@ -25,7 +26,8 @@ import { MissionNoteFormViewComponent } from './mission-note-form/mission-note-f
     MissionDetailsViewComponent,
     MissionNoteListComponent,
     MissionFormViewComponent,
-    MissionNoteFormViewComponent
+    MissionNoteFormViewComponent,
+    MissionListViewComponent
   ],
   providers: [
     DatePipe,

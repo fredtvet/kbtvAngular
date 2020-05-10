@@ -1,0 +1,25 @@
+
+<div class="p-0 m-1">
+
+    <div class="mt-2 mb-2">
+        <input matInput appInputListener (inputChanged)="onSearch($event)" placeholder="Søk" class="w-100 max-width p-1 pl-3 mat-elevation-z2"
+        style="background:white;border:none;border-radius:10px">
+    </div>
+
+    <p *ngIf="missions == undefined || missions.length == 0" class="m-2">Fant ingen oppdrag</p>
+
+    <app-list-card *ngFor="let mission of missions"
+        startIcon="home_work"
+        [endIcon]="mission.finished ? 'check':'chevron_right'"
+        [text]="'(' + mission.id + ') ' + mission.address"
+        [routerLink]="['/oppdrag', mission.id, 'detaljer']">
+    </app-list-card>
+</div>
+
+<button
+    *ifRole="[Roles.Leder, Roles.Mellomleder]"
+    mat-mini-fab aria-label="ny"
+    class="action_fab"
+    (click)="onCreate()">
+    <mat-icon>add</mat-icon>
+</button>
