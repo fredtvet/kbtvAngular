@@ -29,8 +29,6 @@ export class MainNavComponent extends SubscriptionComponent {
   conSub$:  Observable<boolean> = this.connectionService.isOnline$;
   loading$: Observable<boolean> = this.loadingService.loading$;
 
-  openTimesheetCount$: Observable<number> = this.userTimesheetService.getCount$(TimesheetStatus.Open);
-
   private isXs$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.XSmall)
     .pipe(
       takeUntil(this.unsubscribe),
@@ -46,7 +44,6 @@ export class MainNavComponent extends SubscriptionComponent {
     private mainNavService: MainNavService,
     private breakpointObserver: BreakpointObserver,
     private identityService: IdentityService,
-    private userTimesheetService: UserTimesheetService,
     private router: Router,
     private connectionService: ConnectionService,
     private loadingService: LoadingService,

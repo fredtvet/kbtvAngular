@@ -1,32 +1,20 @@
 @import '../../../../variables';
 
-@mixin nav {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  background-color:$primary-dark;
-  padding:0 8px 0 8px !important;
-}
 
 .mat-drawer-container {position: unset!important;}//Fix for bug on iOs
 
-.bottom-toolbar-padding{padding-bottom:($bottom-nav-height) * 1px;}
-
-mat-sidenav-container{
-  height: 100%;
-  z-index:3;
+.column {
+  height: 100%;  /*allows both columns to span the full height of the browser window*/
+  display: flex;
+  flex-direction: column;  /*places the left and right headers above the bottom content*/
 }
 
-.main_content{
-  position:sticky;
-  top:0;
-  z-index:1;
-  overflow:auto;
-  background:$background-color;
+.nav {
+  flex-shrink: 0;
+  display: inline-flex;
 }
 
-.main_content_height_alt{height:calc(100% - (#{$alt-nav-height} * 1px));}
-
-.main_content_height_main{height:calc(100% - (#{$main-nav-height} * 1px));}
-
-
+.main-content {
+  flex-grow: 1;  /*ensures that the container will take up the full height of the parent container*/
+  overflow-y: auto;  /*adds scroll to this container*/
+}

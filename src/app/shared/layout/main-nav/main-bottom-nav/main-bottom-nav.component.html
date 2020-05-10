@@ -1,32 +1,27 @@
-<mat-toolbar class="bottom_toolbar p-0 mat-elevation-z4">
-
-        <button [routerLink]="['/hjem']" [routerLinkActive]="['active']"
-        class="bottom_toolbar_button" mat-icon-button aria-label="Neste side">
+<mat-toolbar class="mat-elevation-z4 bg-primary-dark toolbar-slim" fxLayout="row" fxLayoutAlign="space-around center">
+        <button [routerLink]="['/hjem']" [routerLinkActive]="['active']" fxFlex
+         mat-icon-button aria-label="Neste side">
 
           <mat-icon>home</mat-icon>
 
         </button>
 
-        <button [routerLink]="['/oppdrag']" [routerLinkActive]="['active']"
-          class="bottom_toolbar_button" mat-icon-button aria-label="Gå til oppdrag">
+        <button [routerLink]="['/oppdrag']" [routerLinkActive]="['active']" fxFlex
+           mat-icon-button aria-label="Gå til oppdrag">
 
           <mat-icon>view_list</mat-icon>
 
         </button>
 
-        <button *ifRole="[Roles.Ansatt]" [routerLink]="['/profil']" [routerLinkActive]="['active']"
-            class="bottom_toolbar_button" mat-icon-button aria-label="Gå til profil">
+        <button *ifRole="[Roles.Oppdragsgiver]" [routerLink]="['/profil']" [routerLinkActive]="['active']" fxFlex
+            mat-icon-button aria-label="Gå til profil">
 
             <mat-icon>person</mat-icon>
 
         </button>
 
-        <button *ifRole="[Roles.Leder, Roles.Mellomleder]" [routerLink]="['/timer/ukevisning']" [routerLinkActive]="['active']"
-            class="bottom_toolbar_button" mat-icon-button aria-label="Gå til timeliste">
-
-            <mat-icon matBadgeColor="warn" matBadgeSize="small" 
-            [matBadgeHidden]="!openTimesheetCount"
-            [matBadge]="openTimesheetCount">timer</mat-icon>
-
+        <button *ifRole="[Roles.Leder, Roles.Mellomleder, Roles.Ansatt]" [routerLink]="['/timer/ukevisning']" [routerLinkActive]="['active']" fxFlex
+         mat-icon-button aria-label="Gå til timeliste">
+            <mat-icon matBadgeColor="warn" matBadgeSize="small">timer</mat-icon>
         </button>
 </mat-toolbar>

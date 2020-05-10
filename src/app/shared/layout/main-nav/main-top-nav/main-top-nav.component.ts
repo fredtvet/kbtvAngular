@@ -8,8 +8,7 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main-top-nav',
-  templateUrl: './main-top-nav.component.html',
-  styleUrls: ['./main-top-nav.component.scss']
+  templateUrl: './main-top-nav.component.html'
 })
 export class MainTopNavComponent implements OnInit {
 
@@ -18,16 +17,12 @@ export class MainTopNavComponent implements OnInit {
   
   loading$: Observable<boolean> = this.loadingService.loading$;
 
-  searchBarHidden: boolean = true;
-
   constructor(
     private _bottomSheet: MatBottomSheet,
     private loadingService: LoadingService,) { }
 
   ngOnInit() {
   }
-  
-  toggleSearchBar = () => this.searchBarHidden = !this.searchBarHidden;
   
   onMenuButtonClick = () => this.menuBtnClicked.emit();
   

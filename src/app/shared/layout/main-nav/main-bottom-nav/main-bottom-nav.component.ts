@@ -3,13 +3,10 @@ import { Roles } from '../../../enums/roles.enum';
 
 @Component({
   selector: 'app-main-bottom-nav',
-  templateUrl: './main-bottom-nav.component.html',
-  styleUrls: ['./main-bottom-nav.component.scss']
+  templateUrl: './main-bottom-nav.component.html'
 })
 export class MainBottomNavComponent implements OnInit {
   Roles = Roles;
-
-  @Input() openTimesheetCount: number;
 
   constructor() { }
 

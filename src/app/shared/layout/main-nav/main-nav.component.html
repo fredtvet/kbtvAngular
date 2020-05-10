@@ -1,4 +1,4 @@
-<mat-sidenav-container>
+<mat-sidenav-container class="bg-background h-100">
 
   <mat-sidenav fixedInViewport #drawer class="mat-elevation-z4 bg-primary" 
     [attr.role]="isXs ? 'dialog' : 'navigation'"
@@ -12,17 +12,17 @@
   </mat-sidenav>
   
 
-  <mat-sidenav-content *ngIf="config$ | async; let config" ngClass.xs="bottom-toolbar-padding">
+  <mat-sidenav-content class="column">
 
-    <app-main-top-nav [config]="config" (menuBtnClicked)="toggleDrawer()"></app-main-top-nav>
-    
-    <div class="main_content"
-      [ngClass]="config.altNav ? 'main_content_height_alt' : 'main_content_height_main'">
+    <app-main-top-nav [config]="config$ | async" (menuBtnClicked)="toggleDrawer()" class="top-nav"></app-main-top-nav>
+
+    <div class="main-content">
       <router-outlet></router-outlet>
     </div>
+    
 
+    <app-main-bottom-nav fxHide fxShow.xs class="top-nav"></app-main-bottom-nav>
   </mat-sidenav-content>
 
 </mat-sidenav-container>
 
-<app-main-bottom-nav fxHide fxShow.xs [openTimesheetCount]="openTimesheetCount$ | async"></app-main-bottom-nav>
