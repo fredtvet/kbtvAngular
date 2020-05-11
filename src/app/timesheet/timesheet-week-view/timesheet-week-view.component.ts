@@ -74,7 +74,7 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
 
   openTimesheetForm(date: Date): void {
    const dialogRef = this.dialog.open(TimesheetFormDialogWrapperComponent, {
-      data: { date: date }
+      data: { date: date }, panelClass: 'extended-dialog'
     });
 
     dialogRef.afterClosed().subscribe(timesheet => {
@@ -84,8 +84,7 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
 
   openTimesheetCard(timesheetId: number){
     this.dialog.open(TimesheetCardDialogWrapperComponent, {
-      data: timesheetId
-    });
+      data: timesheetId, panelClass: 'extended-dialog'});
   }
 
   private goToTimesheetList = () => {

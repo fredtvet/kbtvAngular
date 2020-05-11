@@ -88,7 +88,7 @@ constructor(
   private createEmployer = () => this.router.navigate(['/data/oppdragsgivere/ny', {returnRoute: '/data'}])
 
   private createMissionType(){
-    const createDialogRef = this.dialog.open(MissionTypeFormDialogComponent);
+    const createDialogRef = this.dialog.open(MissionTypeFormDialogComponent, {panelClass: 'extended-dialog'});
     createDialogRef.afterClosed().subscribe(data => {
       if(data == null) return null;
       this.getTableService(this.currentTable).add$(data).subscribe();
@@ -96,7 +96,7 @@ constructor(
   }
 
   private createReportType(){
-    const createDialogRef = this.dialog.open(ReportTypeFormDialogComponent);
+    const createDialogRef = this.dialog.open(ReportTypeFormDialogComponent, {panelClass: 'extended-dialog'});
     createDialogRef.afterClosed().subscribe(data => {
       if(data == null) return null;
       this.getTableService(this.currentTable).add$(data).subscribe();

@@ -55,7 +55,7 @@ export class TimesheetListComponent implements OnInit {
 
   openTimesheetForm(mission: Mission): void {
     this.dialog.open(TimesheetFormDialogWrapperComponent, {
-      data: { mission: mission }
+      data: { mission: mission }, panelClass: 'extended-dialog'
     });
   }
 

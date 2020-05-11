@@ -52,6 +52,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 
 .max-width{@include max-width}
 
+.extended-dialog{max-width:90vw!important}
+
 .action_fab{
   position: fixed!important;
   right: $content-margin * 1px!important;

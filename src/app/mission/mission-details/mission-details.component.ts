@@ -44,7 +44,7 @@ export class MissionDetailsComponent extends SubscriptionComponent{
 
   ngOnInit(){
     this.mission.id = +this.route.snapshot.paramMap.get('id');
-
+    
     this.mission$ = this.missionService.getDetails$(this.mission.id);
     this.images$ = this.missionImageService.getByMissionId$(this.mission.id);
     this.reports$ = this.missionReportService.getByMissionId$(this.mission.id);
@@ -100,7 +100,7 @@ export class MissionDetailsComponent extends SubscriptionComponent{
   }
 
   private  openCreateReportDialog = () => {
-    const createDialogRef = this.dialog.open(MissionReportFormComponent);
+    const createDialogRef = this.dialog.open(MissionReportFormComponent, {panelClass: 'extended-dialog'});
     createDialogRef.afterClosed().subscribe(data => this.createReport(data));
   }
 
@@ -131,7 +131,7 @@ export class MissionDetailsComponent extends SubscriptionComponent{
     if(mission == undefined) return null;
     let cfg = this.mainNavService.getCurrentConfig(); 
     console.log(mission.address.split(','))
-    cfg.multiLineTitle = mission.address.split(',');
+    cfg.multiLineTitle = mission.address.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'); 
     cfg.subTitle = mission.finished ? 'Oppdrag ferdig!' : '';
     cfg.subIcon = mission.finished ? 'check' : '';
     this.mainNavService.addConfig(cfg);
