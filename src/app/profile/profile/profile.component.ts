@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IdentityService, NotificationService, MainNavService, AppConfigurationService } from 'src/app/core/services';
+import { IdentityService, NotificationService, MainNavService, AppConfigurationService, DataSyncService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
 import { takeUntil, take, map, tap, filter, debounceTime } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
@@ -19,6 +19,7 @@ export class ProfileComponent extends SubscriptionComponent {
   syncRefreshTime$: Observable<number>;
 
   constructor(
+    private dataSyncService: DataSyncService,
     private appConfigService: AppConfigurationService,
     private mainNavService: MainNavService,
     private identityService: IdentityService,
@@ -62,9 +63,9 @@ export class ProfileComponent extends SubscriptionComponent {
     this.appConfigService.setSyncRefreshTime(minutes * 60);
   }
 
-  private purgeData(){
-    window.localStorage.clear();
-    location.reload();
+  private reloadAllData(){
+    this.dataSyncService.purgeAll();
+    this.dataSyncService.syncAll();
   }
 
   private configureMainNav(){

@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { PersistentSubject } from './data/abstracts/persistent.subject';
 import { LocalStorageService } from './local-storage.service';
-import { tap, distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
+
+export interface AppConfiguration {
+  syncRefreshTime?: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +13,7 @@ import { tap, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 export class AppConfigurationService extends PersistentSubject<AppConfiguration> {
 
   constructor(localStorageService: LocalStorageService) { 
-    super(localStorageService, 'appConfiguration', {syncRefreshTime: 1000*60*30}); 
+    super(localStorageService, 'appConfiguration', {syncRefreshTime: 60*30}); 
   }
 
   config$ = this.data$.pipe(distinctUntilChanged());
@@ -20,8 +24,4 @@ export class AppConfigurationService extends PersistentSubject<AppConfiguration>
     this.dataSubject.next(config);
   }
 
-}
-
-export interface AppConfiguration {
-  syncRefreshTime?: number;
 }

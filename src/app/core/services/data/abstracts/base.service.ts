@@ -107,9 +107,8 @@ export abstract class BaseService<T extends BaseEntity>{
             }));
   }
 
-  refreshLocal(): void{
+  purge(): void{
     this.dataSubject.purge();
-    this.sync();
   }
 
 }

@@ -8,6 +8,7 @@ import { LocalStorageService } from '../local-storage.service';
 import { ConnectionService } from '../connection.service';
 import { NotificationService } from '../ui/notification.service';
 import { Notifications } from 'src/app/shared/enums';
+import { DataSyncService } from '../data/data-sync.service';
 
 
 @Injectable({
@@ -26,6 +27,7 @@ export class IdentityService {
     private apiService: ApiService,
     private localStorageService: LocalStorageService,
     private jwtService: JwtService,
+    private dataSyncService: DataSyncService,
     private connectionService: ConnectionService,
     private notificationService: NotificationService
   ) {
@@ -57,8 +59,8 @@ export class IdentityService {
   }
 
   purgeAuth() {
-    window.localStorage.clear(); //Clearing entire storage on logout for now.
-    //this.jwtService.destroyToken();
+    this.dataSyncService.purgeAll(); //Clearing entire storage on logout for now.
+    this.jwtService.destroyToken();
     // Set current user to an empty object
     this.currentUserSubject.next({} as User);
   }

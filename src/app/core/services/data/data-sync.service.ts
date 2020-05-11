@@ -75,4 +75,6 @@ export class DataSyncService {
     const timeSinceLastSync = (new Date().getTime() / 1000) - this.getEarliestTimestamp();
     if(timeSinceLastSync > refreshTime) this.syncAll();             
   }
+
+  purgeAll = () => this.injectedSubjectKeys.forEach(x => this[x].purge())
 }

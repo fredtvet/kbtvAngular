@@ -15,15 +15,14 @@
             type="text" />
         </mat-form-field><br />
         <mat-form-field>
-          <mat-icon matSuffix color="primary">vpn_key</mat-icon>
+          <mat-icon matSuffix color="primary" (click)="hidePassword = !hidePassword">
+            {{hidePassword ? 'visibility_off' : 'visibility'}}
+          </mat-icon>
           <input matInput
             formControlName="Password"
             placeholder="Passord"
             [type]="hidePassword ? 'password' : 'text'"  />
 
-          <mat-icon matSuffix (click)="hidePassword = !hidePassword">
-              {{hidePassword ? 'visibility_off' : 'visibility'}}
-          </mat-icon>
         </mat-form-field>
       </fieldset>
       <button mat-raised-button color="accent" [disabled]="!authForm.valid" type="submit">
