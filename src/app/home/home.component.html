@@ -15,19 +15,21 @@
       </span>
     </mat-grid-tile>
   </mat-grid-list>
+  
+  <ng-container *ifRole="[Roles.Leder]">
+    <span class="mat-body-2">Administrering</span>
 
-  <span class="mat-body-2">Administrering</span>
-
-  <app-list-card text="Administrer timer" startIcon="date_range" [routerLink]="['/timeadministrering']">
-  </app-list-card>
-  <app-list-card text="Administrer data" startIcon="dns" [routerLink]="['/data']">
-  </app-list-card>
-  <app-list-card text="Administrer brukere" startIcon="people" [routerLink]="['/brukere']">
-  </app-list-card>
-
-  <span class="mat-body-2">Statistikk</span>
-  <app-list-card text="Timestatistikk" startIcon="assessment" [routerLink]="['/timestatistikk']">
-  </app-list-card>
+    <app-list-card text="Administrer timer" startIcon="date_range" [routerLink]="['/timeadministrering']">
+    </app-list-card>
+    <app-list-card text="Administrer data" startIcon="dns" [routerLink]="['/data']">
+    </app-list-card>
+    <app-list-card text="Administrer brukere" startIcon="people" [routerLink]="['/brukere']">
+    </app-list-card>
+  
+    <span class="mat-body-2">Statistikk</span>
+    <app-list-card text="Timestatistikk" startIcon="assessment" [routerLink]="['/timestatistikk']">
+    </app-list-card>
+  </ng-container>
 
   <span class="mat-body-2">Sist besøkte oppdrag</span>
   

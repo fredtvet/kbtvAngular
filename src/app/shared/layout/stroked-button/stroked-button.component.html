@@ -1,10 +1,13 @@
-<button mat-stroked-button
-    [attr.aria-label]="config.aria"
-    [ngClass]="[
-        config.colorClass ? config.colorClass : '', 
-        config.iconSizeClass ? config.iconSizeClass : ''
-    ]"
-    (click)="handleFn(config.callback)">
-    <mat-icon *ngIf="config.icon">{{ config.icon }}</mat-icon> 
-    {{ config.text }}
-</button>
+<ng-container *ngIf="config">
+    <button mat-stroked-button *ifRole="config.allowedRoles"
+        [attr.aria-label]="config.aria"
+        [ngClass]="[
+            config.colorClass ? config.colorClass : '', 
+            config.iconSizeClass ? config.iconSizeClass : ''
+        ]"
+        (click)="handleFn(config.callback)">
+        <mat-icon *ngIf="config.icon">{{ config.icon }}</mat-icon> 
+        {{ config.text }}
+    </button>
+</ng-container>
+

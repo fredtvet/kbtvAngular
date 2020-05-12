@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Mission, Timesheet } from 'src/app/shared/models';
 import { Notifications, Roles } from 'src/app/shared/enums';
-import { take } from 'rxjs/operators';
+import { take, map, switchMap } from 'rxjs/operators';
 import { UserTimesheetService, IdentityService, MissionService, NotificationService } from 'src/app/core/services';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -17,7 +17,10 @@ export class TimesheetFormComponent implements OnInit {
   @Input() date: Date;
   @Input() mission: Mission = new Mission();
 
-  missions: Observable<Mission[]>;
+  private missionSearchSubject = new BehaviorSubject<string>('');
+  private missionSearch$ = this.missionSearchSubject.asObservable();
+
+  missions$: Observable<Mission[]>;
 
   initTime: Date = new Date();
   timeRange: Date[];
@@ -39,10 +42,25 @@ export class TimesheetFormComponent implements OnInit {
     }
 
   ngOnInit(){
-    this.missions = this._missionService.getAll$();
-    if(this.date !== undefined) this.dateDisabled = true;
-    if(this.mission !== undefined && this.mission.id !== null) this.missionDisabled = true;
+    this.missions$ = this.missionSearch$.pipe(
+      switchMap(input => {
+        return this._missionService.getBy$(x => this.filterMission(x, input))
+      }),
+      map(this._missionService.sortByHistory)
+    );
+
+    if(this.date) this.dateDisabled = true;
+    if(this.mission && this.mission.id !== null) this.missionDisabled = true;
   }
+
+  private filterMission(mission: Mission, input: string){
+    let exp = (!input || input == null || mission.address.toLowerCase().includes(input.toLowerCase()));
+    let id = +input;
+    if(!isNaN(id)) exp = exp || mission.id === id
+    return exp;
+  }
+
+  onSearch = (input: string) => this.missionSearchSubject.next(input);
 
   onSubmit(){
     if(this.validateInputs()) this.submitTimesheet()

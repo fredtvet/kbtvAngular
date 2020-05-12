@@ -28,13 +28,8 @@
     </span>
 
     <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent"></mat-spinner>
-
-    <button mat-icon-button 
-      *ngFor="let button of config.buttons" attr.aria-label="{{ button.aria || 'Knapp' }}" 
-      [ngClass]="button.colorClass || 'color-foreground'"
-      (click)="handleFn(button.callback)">
-        <mat-icon>{{ button.icon }}</mat-icon>
-    </button>
+ 
+    <app-icon-button *ngFor="let button of config.buttons" [config]="button"></app-icon-button>
 
     <button mat-icon-button *ngIf="config.bottomSheetButtons?.length" (click)="openBottomSheet(config.bottomSheetButtons)">
       <mat-icon>more_vert</mat-icon>

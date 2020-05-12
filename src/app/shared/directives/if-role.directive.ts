@@ -20,7 +20,7 @@ export class IfRoleDirective {
     this.identityService.currentUser$
     .pipe(skipWhile(user => !user.role),take(1))
     .subscribe(user =>{
-      if(roles.includes(user.role)) {
+      if(!roles || roles.length == 0 || roles.includes(user.role)) {
         this.viewContainer.createEmbeddedView(this.templateRef);
       } else {
         this.viewContainer.clear();

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Mission } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
 import { BehaviorSubject, Observable} from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { MissionService, MainNavService } from 'src/app/core/services';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
@@ -32,7 +32,9 @@ export class MissionListComponent extends SubscriptionComponent{
   ngOnInit(){
     this.missions$ = this.pageInfoSubject.pipe(switchMap(pageInfo => {
         return this.missionService
-          .getFiltered$(pageInfo.showFinishedMissions, pageInfo.searchString, pageInfo.historic)
+          .getBy$(x => this.filterMission(x, pageInfo)).pipe(
+            map(x => pageInfo.historic ? this.missionService.sortByHistory(x) : x)
+          )
       }));
   }
 
@@ -43,6 +45,17 @@ export class MissionListComponent extends SubscriptionComponent{
   }
 
   createMission = () => this.router.navigate(['oppdrag','ny']);
+
+  private filterMission(mission: Mission, pageInfo: any){
+    let exp = mission.finished == pageInfo.showFinishedMissions;
+    exp = exp && (!pageInfo.searchString || 
+      pageInfo.searchString == null || 
+      mission.address.toLowerCase().includes(pageInfo.searchString.toLowerCase()));
+
+    let id = +pageInfo.searchString;
+    if(!isNaN(id)) exp = exp || mission.id === id //Search by ID if number
+    return exp;
+  }
 
   private toggleFinishedMissions = () => {
     let pageInfo = {...this.pageInfoSubject.value};
@@ -76,9 +89,8 @@ export class MissionListComponent extends SubscriptionComponent{
     cfg.buttons = [{icon: "history", 
       colorClass: "color-background",
       aria: 'Historisk visning',
-      callback: this.toggleHistoricOrder, 
-      allowedRoles: [Roles.Leder, Roles.Mellomleder]}
-    ],
+      callback: this.toggleHistoricOrder
+    }],
     cfg.bottomSheetButtons = [
       {text: "Vis ferdige oppdrag", icon: "check_box_outline_blank", callback: this.toggleFinishedMissions}
     ]

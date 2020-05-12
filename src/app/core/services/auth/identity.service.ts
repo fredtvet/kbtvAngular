@@ -39,7 +39,6 @@ export class IdentityService {
     });
 
     this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
-
   }
 
   populate(){

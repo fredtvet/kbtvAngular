@@ -53,9 +53,9 @@ export class ProfileComponent extends SubscriptionComponent {
   }
 
   confirmPurge = () => {
-    let confirmString = 'Bekreft at du ønsker å slette lokal data. Du vil bli logget ut.'
+    let confirmString = 'Bekreft at du ønsker å slette lokal data. Alt vil bli lastet inn på nytt og dette krever mye data.'
     const deleteDialogRef = this._dialog.open(ConfirmDialogComponent,{data: confirmString});
-    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.purgeData());
+    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.reloadAllData());
   }
 
   updateSyncRefreshTime(minutes: number){

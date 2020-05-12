@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
-  public Roles = Roles;
+  Roles = Roles;
 
   newestMissions: Mission[] = []
 

@@ -2,7 +2,7 @@ export const translations = {
   modelProperties: [
     {key: "name", value: "Navn"},
     {key: "phonenumber", value: "Telefonnummer"},
-    {key: "address", value: "Addresse"},
+    {key: "address", value: "Adresse"},
     {key: "user", value: "Bruker"},
     {key: "title", value: "Tittel"},
     {key: "content", value: "Innhold"},

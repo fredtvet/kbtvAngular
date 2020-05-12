@@ -5,11 +5,11 @@
   <mat-card-content>
     <div fxLayout="column" fxLayoutAlign="start stretch">
       <mat-form-field>
-        <input matInput placeholder="Oppdrag" aria-label="Velg oppdrag"
+        <input matInput appInputListener (inputChanged)="onSearch($event)" placeholder="Oppdrag" aria-label="Velg oppdrag"
           [disabled]="missionDisabled ? '' : null" [matAutocomplete]="auto1" [(ngModel)]="mission">
         <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
-          <mat-option *ngFor="let mission of missions | async" [value]="mission">
-            {{ mission.address }}
+          <mat-option *ngFor="let mission of missions$ | async" [value]="mission">
+            ({{ mission.id }}) {{ mission.address }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>

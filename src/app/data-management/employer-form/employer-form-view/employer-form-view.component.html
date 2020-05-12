@@ -19,9 +19,9 @@
   
       <mat-form-field>
         <input ngx-google-places-autocomplete [options]='googleOptions' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
-        matInput placeholder="Addresse" formControlName="address">
+        matInput placeholder="Adresse" formControlName="address">
         <mat-error *ngIf="this.address.invalid">
-          Addresse kan maks ha 100 tegn.
+          Adresse kan maks ha 100 tegn.
         </mat-error>
       </mat-form-field>
   

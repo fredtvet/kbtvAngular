@@ -5,9 +5,9 @@
         <form *ngIf="missionForm" [formGroup]="missionForm" fxLayout="column">
           <mat-form-field>
               <input ngx-google-places-autocomplete [options]='googleOptions' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
-               matInput placeholder="Addresse" formControlName="address" required>
+               matInput placeholder="Adresse" formControlName="address" required>
               <mat-error *ngIf="this.address.invalid">
-                  Addresse er ett obligatorisk felt på maks 100 tegn.
+                  Adresse er ett obligatorisk felt på maks 100 tegn.
               </mat-error>
             </mat-form-field>
     
