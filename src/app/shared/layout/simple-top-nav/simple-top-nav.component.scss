@@ -1,8 +1,5 @@
 @import '../../../../variables';
 
-
-.mat-drawer-container {position: unset!important;}//Fix for bug on iOs
-
 .column {
   @include flex-column;
 }

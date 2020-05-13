@@ -6,7 +6,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
 import { IfRoleDirective } from './directives/if-role.directive';
-import { MainNavComponent, MainBottomNavComponent, IconButtonComponent,StrokedButtonComponent, MainSideNavContentComponent} from './layout';
+import { MainNavComponent, MainBottomNavComponent, IconButtonComponent,StrokedButtonComponent, MainSideNavContentComponent, SimpleTopNavComponent} from './layout';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
@@ -75,7 +75,8 @@ import { InputListenerDirective } from './directives';
     TimesheetSummaryCardContentComponent,
     MainSideNavContentComponent,
     MainTopNavComponent,
-    InputListenerDirective
+    InputListenerDirective,
+    SimpleTopNavComponent
   ],
   imports: [
     CommonModule,
@@ -135,7 +136,8 @@ import { InputListenerDirective } from './directives';
     WeekListFilterComponent,
     WeekListFilterSheetWrapperComponent,
     TimesheetSummaryCardContentComponent,
-    SwipeCardComponent
+    SwipeCardComponent,
+    SimpleTopNavComponent
   ]
 })
 export class SharedModule { }

@@ -14,14 +14,14 @@
 
   <mat-sidenav-content class="column">
 
-    <app-main-top-nav [config]="config$ | async" (menuBtnClicked)="toggleDrawer()" class="top-nav"></app-main-top-nav>
+    <app-main-top-nav [config]="config$ | async" (menuBtnClicked)="toggleDrawer()" class="nav"></app-main-top-nav>
 
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>
     
 
-    <app-main-bottom-nav fxHide fxShow.xs class="top-nav"></app-main-bottom-nav>
+    <app-main-bottom-nav fxHide fxShow.xs class="nav"></app-main-bottom-nav>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

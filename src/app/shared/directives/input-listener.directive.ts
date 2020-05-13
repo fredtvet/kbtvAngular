@@ -20,7 +20,6 @@ export class InputListenerDirective extends SubscriptionComponent{
         debounceTime(this.debounceTime),
         distinctUntilChanged(),
         tap(data => this.inputChanged.emit(data)), 
-        tap(console.log),
         takeUntil(this.unsubscribe)
       ).subscribe();
   }

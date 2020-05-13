@@ -26,13 +26,13 @@
         <span class="mat-caption">åpen</span>
       </span>
 
-      <button *ngIf="adminView; else deleteButton" mat-icon-button (click)="changeStatus()">
+      <button *ngIf="adminView; else buttons" mat-icon-button (click)="changeStatus()">
         <mat-icon>check_circle_outline</mat-icon>
       </button> 
 
-      <ng-template #deleteButton>
-        <button mat-icon-button (click)="deleteTimesheet()">
-          <mat-icon>delete_forever</mat-icon>
+      <ng-template #buttons>
+        <button mat-icon-button color="accent" (click)="editTimesheet()">
+          <mat-icon>edit</mat-icon>
         </button>
       </ng-template>
     </span>

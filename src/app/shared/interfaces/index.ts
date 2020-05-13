@@ -10,3 +10,4 @@ export * from './app-button.interface';
 export * from './app-action.interface';
 export * from './timesheet-summary.interface';
 export * from './timesheet-filter.interface';
+export * from './simple-nav-config.interface';

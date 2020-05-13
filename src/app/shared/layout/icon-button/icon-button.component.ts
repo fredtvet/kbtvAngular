@@ -14,12 +14,6 @@ export class IconButtonComponent {
   
   constructor() { }
 
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    console.log(this.config) 
-  }
-
   handleFn = (fn: Function, parameters: any[] = []) => {
     if(parameters == undefined || parameters.length == 0) parameters = this.config.params;
     
