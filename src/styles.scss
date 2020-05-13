@@ -66,16 +66,17 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 
 .image_viewer_dialog .mat-dialog-container{background-color:black!important;}
 
-.notification{
-  margin-bottom:($bottom-nav-height + $content-margin) * 1px!important;
-  background-color:mat-color($background,"unselected-chip");
-  color:mat-color($foreground, "base");
+.notification-success{
+  @include notification;
+  background-color:$success; 
 }
-
+.notification-warning{
+  @include notification;
+  background-color:$accent;
+}
 .notification-error{
-  margin-bottom:($bottom-nav-height + $content-margin) * 1px!important;
-  background-color:$warn !important;
-  color:mat-color($background, "background");
+  @include notification;
+  background-color:$warn;
 }
 
 .ellipsis{

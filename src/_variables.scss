@@ -48,4 +48,9 @@ $bottom-nav-height: 44;
   overflow-y: auto;  /*adds scroll to this container*/
 }
 
+@mixin notification{
+  margin-bottom:44px + $content-margin * 1px!important;
+  color:black;
+}
+
 
