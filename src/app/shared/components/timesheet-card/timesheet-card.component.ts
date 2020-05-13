@@ -3,7 +3,7 @@ import { TimesheetStatus } from '../../enums/timesheet-status.enum';
 import { Timesheet } from '../../models/timesheet.model';
 import { Roles } from '../../enums/roles.enum';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { TimesheetFormSheetWrapperComponent } from 'src/app/timesheet/timesheet-form/timesheet-form-sheet-wrapper.component';
+import { TimesheetFormSheetWrapperComponent } from 'src/app/timesheet/components/timesheet-form/timesheet-form-sheet-wrapper.component';
 
 @Component({
   selector: 'app-timesheet-card',
@@ -17,14 +17,16 @@ export class TimesheetCardComponent {
   @Input() adminView: boolean = false;
   @Input() timesheet: Timesheet;
   @Output() statusChanged = new EventEmitter();
-  @Output() deleted = new EventEmitter();
+  @Output() deleteClicked = new EventEmitter();
+  @Output() editClicked = new EventEmitter();
 
   constructor(private _bottomSheet: MatBottomSheet) { }
 
-  deleteTimesheet = () => this.deleted.emit(this.timesheet.id);
+  deleteTimesheet = () => this.deleteClicked.emit(this.timesheet.id);
 
-  editTimesheet(){
-    this._bottomSheet.open(TimesheetFormSheetWrapperComponent, { data: { timesheetIdPreset: this.timesheet.id } });  
+  editTimesheet(){ 
+    this.editClicked.emit(this.timesheet.id);
+    //this._bottomSheet.open(TimesheetFormSheetWrapperComponent, { data: { timesheetIdPreset: this.timesheet.id } });  
   }
 
   changeStatus = () => {

@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { takeUntil } from 'rxjs/operators';
 import { AppButton } from 'src/app/shared/interfaces';
+import { MatBottomSheet } from '@angular/material';
+import { UserFormSheetWrapperComponent } from '../components/user-form/user-form-sheet-wrapper.component';
 
 @Component({
   selector: 'app-user-list',
@@ -24,7 +26,7 @@ export class UserListComponent extends SubscriptionComponent {
     private mainNavService: MainNavService,
     private userService: UserService,
     private identityService: IdentityService,
-    private router: Router) { 
+    private _bottomSheet: MatBottomSheet) { 
       super();    
       this.configureMainNav(); 
     }
@@ -44,9 +46,8 @@ export class UserListComponent extends SubscriptionComponent {
       .subscribe(data => this.currentUser = data);
   }
 
-  editUser = (userName: string) => this.router.navigate(['brukere', userName, 'rediger'])
-
-  private createUser = () => this.router.navigate(['brukere', 'ny'])  
+  openUserForm = (userNamePreset?: string) => 
+    this._bottomSheet.open(UserFormSheetWrapperComponent, {data: {userNamePreset}});
 
   private configureMainNav(){
     let cfg = this.mainNavService.getDefaultConfig();
@@ -55,7 +56,7 @@ export class UserListComponent extends SubscriptionComponent {
       icon: "person_add", 
       colorClass: "color-accent",
       aria: 'Ny bruker',
-      callback: this.createUser, 
+      callback: this.openUserForm, 
       allowedRoles: [Roles.Leder]
     }]
     this.mainNavService.addConfig(cfg);

@@ -17,7 +17,7 @@ import { TimesheetFormDialogWrapperComponent } from "../components/timesheet-for
 import { Router, ActivatedRoute } from "@angular/router";
 import { TimesheetCardDialogWrapperComponent } from '../components/timesheet-card-dialog-wrapper.component';
 import { Observable } from 'rxjs';
-import { TimesheetFormSheetWrapperComponent } from '../timesheet-form/timesheet-form-sheet-wrapper.component';
+import { TimesheetFormSheetWrapperComponent } from '../components/timesheet-form/timesheet-form-sheet-wrapper.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
@@ -75,8 +75,8 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
     this.changeDateParams(dp);
   }
 
-  openTimesheetForm(date: Date): void {
-    this._bottomSheet.open(TimesheetFormSheetWrapperComponent, { data: { datePreset: date } });
+  openTimesheetForm(datePreset?: Date, timesheetIdPreset?: number): void {
+    this._bottomSheet.open(TimesheetFormSheetWrapperComponent, { data: {datePreset, timesheetIdPreset} });
   }
 
   openTimesheetCard(timesheetId: number){

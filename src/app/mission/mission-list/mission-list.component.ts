@@ -44,8 +44,6 @@ export class MissionListComponent extends SubscriptionComponent{
     this.pageInfoSubject.next(pageInfo)
   }
 
-  createMission = () => this.router.navigate(['oppdrag','ny']);
-
   private filterMission(mission: Mission, pageInfo: any){
     let exp = mission.finished == pageInfo.showFinishedMissions;
     exp = exp && (!pageInfo.searchString || 

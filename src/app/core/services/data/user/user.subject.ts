@@ -22,19 +22,21 @@ export class UserSubject {
     return this.users$.pipe(map(arr => arr.find(e => e.userName == userName)));
   }
 
-  addOrUpdate(user: User) {
-    if (!this.usersSubject.value.find(e => e.userName == user.userName)) //Only add if user doesnt exist
-      this.usersSubject.value.push(user);
+  addOrUpdate(user: User): void{
+    if(this.usersSubject.value !== undefined && !this.usersSubject.value.find(e => e.userName == user.userName)) {
+      const arr = [user, ...this.usersSubject.value]
+      this.usersSubject.next(arr);
+    }
     else this.update(user);
   }
 
-  update(user: User) {
-    this.usersSubject.next(this.usersSubject.value.map(e => {
-      if (e.userName !== user.userName)
-        return e;
-      else
-        return user;
-    }));
+  update(user: User): void{
+    let arr = [...this.usersSubject.value];
+    arr = arr.map(e => {
+      if(e.userName !== user.userName) return e;
+      else return Object.assign(e, user);
+    });
+    this.usersSubject.next(arr);
   }
 
   delete(userName: string) {

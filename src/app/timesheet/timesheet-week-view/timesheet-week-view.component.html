@@ -17,7 +17,7 @@
               <app-timesheet-mission-bar class="w-100 mb-1"
                 *ngFor="let timesheet of vm.days[weekDay] | sortByDate: 'startTime';" 
                 [timesheet]="timesheet"
-                (barClicked)="openTimesheetCard($event)"
+                (barClicked)="timesheet.status ? openTimesheetCard($event) : openTimesheetForm(undefined, $event)"
                 [style.height.%]="(timesheet.totalHours / 14)*100">
               </app-timesheet-mission-bar>
           </div>

@@ -9,7 +9,7 @@ import { Mission, TimesheetListFilter, Timesheet } from "src/app/shared/models";
 import { BehaviorSubject, Observable } from "rxjs";
 import { switchMap,filter} from "rxjs/operators";
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared/components';
-import { TimesheetFormSheetWrapperComponent } from '../timesheet-form/timesheet-form-sheet-wrapper.component';
+import { TimesheetFormSheetWrapperComponent } from '../components/timesheet-form/timesheet-form-sheet-wrapper.component';
 
 @Component({
   selector: "app-timesheet-list",
@@ -54,8 +54,8 @@ export class TimesheetListComponent implements OnInit {
       .subscribe(f => this.filterSubject.next(f));
   }
 
-  openTimesheetForm(mission: Mission): void {
-    this._bottomSheet.open(TimesheetFormSheetWrapperComponent, { data: { missionPreset: mission } });
+  openTimesheetForm(missionPreset?: Mission, timesheetIdPreset?: number): void {
+    this._bottomSheet.open(TimesheetFormSheetWrapperComponent, { data: { missionPreset, timesheetIdPreset } });
   }
 
   changeStatus(status: TimesheetStatus) {
@@ -65,13 +65,9 @@ export class TimesheetListComponent implements OnInit {
   }
 
   deleteTimesheet = (id: number) => this.userTimesheetService.delete$(id).subscribe();
+
+  getCurrentFilter = (): TimesheetListFilter => this.filterSubject.value;
   
-  // confirmTimesheet = (id: number) => this.userTimesheetService.changeStatus$(id, TimesheetStatus.Confirmed).subscribe();
-
-  getCurrentFilter(): TimesheetListFilter {
-    return this.filterSubject.value;
-  }
-
   private getFilterCopy() {
     return Object.assign(
       Object.create(Object.getPrototypeOf(this.filterSubject.value)),

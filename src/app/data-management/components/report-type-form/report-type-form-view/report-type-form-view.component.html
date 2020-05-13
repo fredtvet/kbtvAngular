@@ -1,0 +1,11 @@
+<form *ngIf="reportTypeForm" [formGroup]="reportTypeForm" fxLayout="column">
+  <mat-form-field>
+    <input matInput placeholder="Navn" formControlName="name" />
+    <mat-error *ngIf="this.name.invalid">
+      Navn kan være på maks 45 tegn.
+    </mat-error>
+  </mat-form-field>
+
+  <app-submit-button [disabled]="reportTypeForm.invalid || reportTypeForm.pristine" (click)="onSubmit()">
+  </app-submit-button>
+</form>

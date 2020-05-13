@@ -6,11 +6,19 @@ import { DataManagementRoutingModule } from './data-management-routing.module';
 import { DataManagerComponent } from './data-manager/data-manager.component';
 
 import { ConfirmDialogComponent } from '../shared/components';
-import { MissionTypeFormDialogComponent } from './components/mission-type-form-dialog/mission-type-form-dialog.component';
-import { ReportTypeFormDialogComponent } from './components/report-type-form-dialog/report-type-form-dialog.component';
-import { EmployerFormComponent } from './employer-form/employer-form.component';
-import { EmployerFormViewComponent } from './employer-form/employer-form-view/employer-form-view.component';
+
 import { DataManagerViewComponent } from './data-manager/data-manager-view/data-manager-view.component';
+import { EmployerFormComponent } from './components/employer-form/employer-form.component';
+import { EmployerFormViewComponent } from './components/employer-form/employer-form-view/employer-form-view.component';
+import { EmployerFormSheetWrapperComponent } from './components/employer-form/employer-form-sheet-wrapper.component';
+import { MissionFormSheetWrapperComponent } from '../mission/components/mission-form/mission-form-sheet-wrapper.component';
+import { MissionModule } from '../mission/mission.module';
+import { MissionTypeFormComponent } from './components/mission-type-form/mission-type-form.component';
+import { ReportTypeFormComponent } from './components/report-type-form/report-type-form.component';
+import { MissionTypeFormSheetWrapperComponent } from './components/mission-type-form/mission-type-form-sheet-wrapper.component';
+import { ReportTypeFormSheetWrapperComponent } from './components/report-type-form/report-type-form-sheet-wrapper.component';
+import { ReportTypeFormViewComponent } from './components/report-type-form/report-type-form-view/report-type-form-view.component';
+import { MissionTypeFormViewComponent } from './components/mission-type-form/mission-type-form-view/mission-type-form-view.component';
 
 
 
@@ -18,21 +26,29 @@ import { DataManagerViewComponent } from './data-manager/data-manager-view/data-
 @NgModule({
   declarations: [
     DataManagerComponent,
-    MissionTypeFormDialogComponent,
-    ReportTypeFormDialogComponent,
+    DataManagerViewComponent,
     EmployerFormComponent,
     EmployerFormViewComponent,
-    DataManagerViewComponent
+    EmployerFormSheetWrapperComponent,
+    MissionTypeFormComponent,
+    MissionTypeFormViewComponent,
+    MissionTypeFormSheetWrapperComponent,
+    ReportTypeFormViewComponent,
+    ReportTypeFormComponent,
+    ReportTypeFormSheetWrapperComponent,
   ],
   entryComponents:[
     ConfirmDialogComponent,
-    MissionTypeFormDialogComponent,
-    ReportTypeFormDialogComponent
+    EmployerFormSheetWrapperComponent,
+    MissionFormSheetWrapperComponent,
+    MissionTypeFormSheetWrapperComponent,
+    ReportTypeFormSheetWrapperComponent
   ],
   imports: [
     SharedModule,
     DataManagementRoutingModule,
-    AppAgGridModule
+    AppAgGridModule,
+    MissionModule,
   ]
 })
 

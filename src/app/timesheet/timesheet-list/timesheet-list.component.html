@@ -18,7 +18,8 @@
             <div class="m-2 mat-elevation-z3" *cdkVirtualFor="let timesheet of timesheets$ | async">
                 <app-timesheet-card         
                 [timesheet]="timesheet"
-                (deleted)="deleteTimesheet($event)">
+                (deleteClicked)="deleteTimesheet($event)"
+                (editClicked)="openTimesheetForm(undefined, $event)">
                 </app-timesheet-card>
             </div>
         </cdk-virtual-scroll-viewport>

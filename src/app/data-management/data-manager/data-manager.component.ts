@@ -2,13 +2,15 @@ import { Component, ViewChild } from '@angular/core';
 import { MissionService, BaseService, MissionTypeService, ReportTypeService, EmployerService, MainNavService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
 import { AgGridAngular } from 'ag-grid-angular';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatBottomSheet } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BaseEntity } from 'src/app/shared/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
-import { MissionTypeFormDialogComponent } from '../components/mission-type-form-dialog/mission-type-form-dialog.component';
-import { ReportTypeFormDialogComponent } from '../components/report-type-form-dialog/report-type-form-dialog.component';
 import { filter, takeUntil, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import { EmployerFormSheetWrapperComponent } from '../components/employer-form/employer-form-sheet-wrapper.component';
+import { MissionFormSheetWrapperComponent } from 'src/app/mission/components/mission-form/mission-form-sheet-wrapper.component';
+import { MissionTypeFormSheetWrapperComponent } from '../components/mission-type-form/mission-type-form-sheet-wrapper.component';
+import { ReportTypeFormSheetWrapperComponent } from '../components/report-type-form/report-type-form-sheet-wrapper.component';
 
 @Component({
   selector: 'app-data-manager',
@@ -30,7 +32,8 @@ constructor(
   private reportTypeService: ReportTypeService,
   private router: Router,
   private route: ActivatedRoute,
-  private dialog: MatDialog) { 
+  private dialog: MatDialog,
+  private _bottomSheet: MatBottomSheet) { 
     super(); 
     this.configureMainNav();
   }
@@ -74,6 +77,14 @@ constructor(
     }
   }
 
+  private createMission = () => this._bottomSheet.open(MissionFormSheetWrapperComponent);
+
+  private createEmployer = () => this._bottomSheet.open(EmployerFormSheetWrapperComponent);
+
+  private createMissionType = () => this._bottomSheet.open(MissionTypeFormSheetWrapperComponent);
+
+  private createReportType = () => this._bottomSheet.open(ReportTypeFormSheetWrapperComponent);
+
   private getTableService(table: string): BaseService<BaseEntity>{
     switch(table){
       case "Oppdrag": return this.missionService;
@@ -81,26 +92,6 @@ constructor(
       case "Oppdragsgivere": return this.employerService;
       case "Rapporttyper": return this.reportTypeService;
     }
-  }
-
-  private createMission = () => this.router.navigate(['/oppdrag/ny', {returnRoute: '/data'}])
-
-  private createEmployer = () => this.router.navigate(['/data/oppdragsgivere/ny', {returnRoute: '/data'}])
-
-  private createMissionType(){
-    const createDialogRef = this.dialog.open(MissionTypeFormDialogComponent, {panelClass: 'extended-dialog'});
-    createDialogRef.afterClosed().subscribe(data => {
-      if(data == null) return null;
-      this.getTableService(this.currentTable).add$(data).subscribe();
-    });
-  }
-
-  private createReportType(){
-    const createDialogRef = this.dialog.open(ReportTypeFormDialogComponent, {panelClass: 'extended-dialog'});
-    createDialogRef.afterClosed().subscribe(data => {
-      if(data == null) return null;
-      this.getTableService(this.currentTable).add$(data).subscribe();
-    });
   }
 
   private configureMainNav(){

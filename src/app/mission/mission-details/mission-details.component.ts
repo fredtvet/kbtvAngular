@@ -9,6 +9,10 @@ import { MissionReportFormComponent } from '../components/mission-report-form/mi
 import { take, takeUntil, tap, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
+import { MissionFormSheetWrapperComponent } from '../components/mission-form/mission-form-sheet-wrapper.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MissionNoteFormSheetWrapperComponent } from '../components/mission-note-form/mission-note-form-sheet-wrapper.component';
+import { MissionReportFormSheetWrapperComponent } from '../components/mission-report-form/mission-report-form-sheet-wrapper.component';
 
 @Component({
   selector: 'app-mission-details',
@@ -36,7 +40,8 @@ export class MissionDetailsComponent extends SubscriptionComponent{
     private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog,   
+    public dialog: MatDialog, 
+    private _bottomSheet: MatBottomSheet,  
   ){ 
     super();
     this.configureMainNav();
@@ -56,53 +61,38 @@ export class MissionDetailsComponent extends SubscriptionComponent{
     });
   }
 
-  uploadImages(files: FileList)
-  {
+  uploadImages = (files: FileList) => 
     this.missionImageService.addImages$(this.mission.id, files).pipe(take(1))
       .subscribe(data => this.notificationService.setNotification(`Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`));
-  }
-
-  deleteImage(id:number){
+  
+  deleteImage = (id:number) => 
     this.missionImageService.delete$(id).pipe(take(1))
       .subscribe(res =>  this.notificationService.setNotification('Vellykket! Bilde slettet'));
-  }
-
-  deleteNote(id: number){
+  
+  deleteNote = (id: number) =>
     this.missionNoteService.delete$(id).pipe(take(1))
       .subscribe(res => this.notificationService.setNotification('Vellykket! Notat slettet.'));
-  }
-
-  deleteReport(id: number){
+  
+  deleteReport = (id: number) => 
     this.missionReportService.delete$(id).pipe(take(1))
       .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport slettet.'));
-  }
-  editNote(note: MissionNote){
+  
+  editNote = (note: MissionNote) => 
     this.router.navigate(['oppdrag', note.missionId, 'notater', note.id, 'rediger'])
-  }
-
-  private createReport(data){
-    if(!data) return null;
-    this.missionReportService.addReport$(this.mission.id, data.reportType, data.files).pipe(take(1))
-      .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport lastet opp'));
-  }
+  
 
   private deleteMission(){   
     this.missionService.delete$(this.mission.id).pipe(filter(del => del), tap(x => this.onBack()))
       .subscribe(del => this.notificationService.setNotification('Vellykket! Oppdrag slettet.'));
   }
 
-  private editMission = () => {
-    this.router.navigate(['oppdrag', this.mission.id, 'rediger'])
-  }
+  private openMissionForm = () => 
+    this._bottomSheet.open(MissionFormSheetWrapperComponent, {data: {missionIdPreset:this.mission.id}});
 
-  private createNote = () => {
-    this.router.navigate(['oppdrag', this.mission.id, 'notater','ny'])
-  }
+  private openMissionNoteForm = () => this._bottomSheet.open(MissionNoteFormSheetWrapperComponent);
 
-  private  openCreateReportDialog = () => {
-    const createDialogRef = this.dialog.open(MissionReportFormComponent, {panelClass: 'extended-dialog'});
-    createDialogRef.afterClosed().subscribe(data => this.createReport(data));
-  }
+  private openReportForm = () => 
+    this._bottomSheet.open(MissionReportFormSheetWrapperComponent, {data: {missionId: this.mission.id}});
 
   private openDeleteMissionDialog = () => {
     const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette oppdraget.'});
@@ -119,9 +109,9 @@ export class MissionDetailsComponent extends SubscriptionComponent{
     cfg.backFn = this.onBack;  
     cfg.bottomSheetButtons = [
       {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets},
-      {text: "Legg til rapport", icon: "note_add", callback: this.openCreateReportDialog, allowedRoles: [Roles.Leder]},
-      {text: "Legg til notat", icon: "add_comment", callback: this.createNote},
-      {text: "Rediger", icon: "edit", callback: this.editMission, allowedRoles: [Roles.Leder]},
+      {text: "Legg til rapport", icon: "note_add", callback: this.openReportForm, allowedRoles: [Roles.Leder]},
+      {text: "Legg til notat", icon: "add_comment", callback: this.openMissionNoteForm},
+      {text: "Rediger", icon: "edit", callback: this.openMissionForm, allowedRoles: [Roles.Leder]},
       {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, allowedRoles: [Roles.Leder]},
     ];
     this.mainNavService.addConfig(cfg);

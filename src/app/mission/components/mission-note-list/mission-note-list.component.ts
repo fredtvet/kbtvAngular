@@ -2,8 +2,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MissionNote } from 'src/app/shared/models';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { Roles } from '../../../shared/enums';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatBottomSheet } from '@angular/material';
 import { filter } from 'rxjs/operators';
+import { MissionNoteFormSheetWrapperComponent } from '../mission-note-form/mission-note-form-sheet-wrapper.component';
 
 @Component({
   selector: 'app-mission-note-list',
@@ -20,9 +21,10 @@ export class MissionNoteListComponent {
 
   Roles = Roles;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private _bottomSheet:MatBottomSheet) { }
 
-
+  openMissionNoteForm = (noteIdPreset: number) => 
+    this._bottomSheet.open(MissionNoteFormSheetWrapperComponent, {data: {noteIdPreset}});
 
   openDeleteDialog(noteId: number){
     const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette notatet'});

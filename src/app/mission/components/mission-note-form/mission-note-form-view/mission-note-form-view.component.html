@@ -1,0 +1,25 @@
+<form *ngIf="noteForm" [formGroup]="noteForm" fxLayout="column">
+  <mat-form-field>
+    <input matInput #title placeholder="Tittel" formControlName="title">
+    <mat-error *ngIf="this.title.invalid">
+      Tittel er på maks 40 tegn.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" #content cdkAutosizeMinRows="4"
+      placeholder="Innhold" formControlName="content" required>
+        </textarea>
+    <mat-hint>{{content.value.length}} / 400 tegn</mat-hint>
+    <mat-error *ngIf="this.content.invalid">
+      Innhold er ett obligatorisk felt på maks 400 tegn.
+    </mat-error>
+  </mat-form-field>
+  <br />
+  <mat-checkbox formControlName="pinned">Viktig?</mat-checkbox>
+  <br />
+
+  <app-submit-button [disabled]="noteForm.invalid || noteForm.pristine" (click)="onSubmit()">
+  </app-submit-button>
+
+</form>
