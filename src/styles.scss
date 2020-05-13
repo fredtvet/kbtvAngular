@@ -123,6 +123,9 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
   }
 }
 
+mat-bottom-sheet-container{
+  padding:0!important;
+}
 
 .mat-icon{vertical-align: middle!important;}
 .mat-dialog-container{padding:0!important;}
