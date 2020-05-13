@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-timesheet-form-dialog-wrapper',
   template: `
-  <app-timesheet-form [date]="data.date" [mission]="data.mission"></app-timesheet-form>
+  <app-timesheet-form [datePreset]="data.date" [missionPreset]="data.missionIdPreset"></app-timesheet-form>
   `
 })
 export class TimesheetFormDialogWrapperComponent implements OnInit {

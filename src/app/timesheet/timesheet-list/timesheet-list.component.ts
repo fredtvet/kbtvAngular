@@ -9,6 +9,7 @@ import { Mission, TimesheetListFilter, Timesheet } from "src/app/shared/models";
 import { BehaviorSubject, Observable } from "rxjs";
 import { switchMap,filter} from "rxjs/operators";
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared/components';
+import { TimesheetFormSheetWrapperComponent } from '../timesheet-form/timesheet-form-sheet-wrapper.component';
 
 @Component({
   selector: "app-timesheet-list",
@@ -43,7 +44,7 @@ export class TimesheetListComponent implements OnInit {
     );
   }
 
-  openBottomSheet(): void {
+  openFilterSheet(): void {
     let ref = this._bottomSheet.open(TimesheetFilterSheetWrapperComponent, {
       data: {filter: this.getFilterCopy(), disabledFilters: ['user']}
     });
@@ -54,9 +55,7 @@ export class TimesheetListComponent implements OnInit {
   }
 
   openTimesheetForm(mission: Mission): void {
-    this.dialog.open(TimesheetFormDialogWrapperComponent, {
-      data: { mission: mission }, panelClass: 'extended-dialog'
-    });
+    this._bottomSheet.open(TimesheetFormSheetWrapperComponent, { data: { missionPreset: mission } });
   }
 
   changeStatus(status: TimesheetStatus) {

@@ -1,42 +1,8 @@
-
-
-<div class="app-card m-2">
-  <mat-card-header class="mb-2">Legg til timer</mat-card-header>
-  <mat-card-content>
-    <div fxLayout="column" fxLayoutAlign="start stretch">
-      <mat-form-field>
-        <input matInput appInputListener (inputChanged)="onSearch($event)" placeholder="Oppdrag" aria-label="Velg oppdrag"
-          [disabled]="missionDisabled ? '' : null" [matAutocomplete]="auto1" [(ngModel)]="mission">
-        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
-          <mat-option *ngFor="let mission of missions$ | async" [value]="mission">
-            ({{ mission.id }}) {{ mission.address }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    
-      <span fxLayout="row" fxLayoutAlign="space-between start">
-        <label fxFlex=46>
-          <mat-form-field class="w-100">
-              <input matInput placeholder="Dato" aria-label="Velg dato" required
-                [disabled]="dateDisabled ? '' : null" [owlDateTimeTrigger]="d3" [owlDateTime]="d3" [(ngModel)]="date" >
-          </mat-form-field>
-          <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" #d3></owl-date-time>
-        </label>
-    
-        <label fxFlex=46>
-          <mat-form-field class="w-100">
-            <input matInput  placeholder="Arbeidstid" required selectMode="range" [owlDateTimeTrigger]="t1" [owlDateTime]="t1" [(ngModel)]="timeRange">
-          </mat-form-field>
-          <owl-date-time [pickerMode]="'dialog'" [pickerType]="'timer'" stepMinute="15" [startAt]="initTime" #t1></owl-date-time>
-        </label>
-      </span>
-
-      <mat-form-field>
-        <textarea matInput placeholder="Kommentar" aria-label="Kommentar" required [(ngModel)]="comment" maxlength="400"></textarea>
-      </mat-form-field>
-      <app-submit-button text="Legg til"
-        (click)="onSubmit()">
-      </app-submit-button>
-    </div>
-  </mat-card-content>
-</div>
+<app-timesheet-form-view 
+[missionPreset]="missionPreset"
+[datePreset]="datePreset"
+[timesheet]="timesheetPreset$ | async"
+[missions]="missions$ | async"
+(missionSearch)="onSearch($event)"
+(formSubmitted)="onSubmit($event)">
+</app-timesheet-form-view>

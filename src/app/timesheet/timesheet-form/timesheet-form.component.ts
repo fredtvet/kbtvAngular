@@ -1,10 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Mission, Timesheet } from 'src/app/shared/models';
 import { Notifications, Roles } from 'src/app/shared/enums';
-import { take, map, switchMap } from 'rxjs/operators';
+import { take, map, switchMap, tap } from 'rxjs/operators';
 import { UserTimesheetService, IdentityService, MissionService, NotificationService } from 'src/app/core/services';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-timesheet-form',
@@ -14,96 +13,72 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class TimesheetFormComponent implements OnInit {
   Roles = Roles;
 
-  @Input() date: Date;
-  @Input() mission: Mission = new Mission();
+  @Input() timesheetIdPreset: number;
+  @Input() datePreset: Date;
+  @Input() missionPreset: Mission;
+
+  @Output() finished = new EventEmitter();
 
   private missionSearchSubject = new BehaviorSubject<string>('');
   private missionSearch$ = this.missionSearchSubject.asObservable();
 
   missions$: Observable<Mission[]>;
+  timesheetPreset$: Observable<Timesheet>;
 
-  initTime: Date = new Date();
-  timeRange: Date[];
-
-  comment: string;
-
-  dateDisabled = false;
-  missionDisabled = false;
-
-  error: string;
+  isCreateForm: boolean;
 
   constructor(
     private _userTimesheetService: UserTimesheetService,
     private _identityService: IdentityService,
     private _missionService: MissionService,
-    private _notificationService: NotificationService,
-    private dialogRef: MatDialogRef<TimesheetFormComponent>) {
-      this.initTime.setHours(6,0,0,0);
+    private _notificationService: NotificationService) {
     }
 
   ngOnInit(){
+    if(!this.timesheetIdPreset) this.isCreateForm = true;
+
+    this.timesheetPreset$ = this._userTimesheetService.get$(this.timesheetIdPreset).pipe(
+      tap(x => {
+        if(!x && !this.isCreateForm){ //If timesheet not found for edit form, give warning and close
+          this._notificationService.setNotification('Time finnes ikke!', Notifications.Warning);
+          this.finished.emit();}
+      }));
+    
     this.missions$ = this.missionSearch$.pipe(
       switchMap(input => {
         return this._missionService.getBy$(x => this.filterMission(x, input))
       }),
       map(this._missionService.sortByHistory)
     );
-
-    if(this.date) this.dateDisabled = true;
-    if(this.mission && this.mission.id !== null) this.missionDisabled = true;
   }
+
+  onSubmit(timesheet: Timesheet): void{
+    console.log(timesheet);
+    if(this.isCreateForm) this.createTimesheet(timesheet)
+    else this.editTimesheet(timesheet);
+  }
+
+  createTimesheet(timesheet: Timesheet){
+    //timesheet.userName = this._identityService.getCurrentUser().userName;
+    this._userTimesheetService.add$(timesheet).subscribe(x => {
+      this._notificationService.setNotification('Time registrert!');
+      this.finished.emit(x);
+    })
+  }
+
+  editTimesheet(timesheet: Timesheet){
+    this._userTimesheetService.update$(timesheet).subscribe(x => {
+      this._notificationService.setNotification('Time oppdatert!');
+      this.finished.emit(x);
+    })
+  }
+
+  onSearch = (input: string) => {this.missionSearchSubject.next(input)};
 
   private filterMission(mission: Mission, input: string){
     let exp = (!input || input == null || mission.address.toLowerCase().includes(input.toLowerCase()));
     let id = +input;
     if(!isNaN(id)) exp = exp || mission.id === id
     return exp;
-  }
-
-  onSearch = (input: string) => this.missionSearchSubject.next(input);
-
-  onSubmit(){
-    if(this.validateInputs()) this.submitTimesheet()
-    else this._notificationService.setNotification("Alle felt på fylles ut", Notifications.Error)
-  }
-
-  submitTimesheet(){
-    let timesheet: Timesheet = new Timesheet();
-
-    timesheet.userName = this._identityService.getCurrentUser().userName;
-    timesheet.missionId = this.mission.id;
-    timesheet.comment = this.comment;
-
-    let date = this.date.toDateString();
-
-    timesheet.startTime = new Date(date + " " + this.timeRange[0].toTimeString());
-    timesheet.endTime = new Date(date + " " + this.timeRange[1].toTimeString());
-
-    if(this.validateDates(timesheet)) 
-      this._userTimesheetService.add$(timesheet).subscribe(x => this.dialogRef.close(x));
-    else 
-      this._notificationService.setNotification("Sluttidspunkt må være etter starttidspunkt", Notifications.Error);   
-  }
-
-  displayFn(mission: Mission): string {
-    if(mission == undefined) return null;
-    return mission.address;
-  }
-
-  validateInputs(): boolean{
-    if(
-      !this.comment ||
-      !this.timeRange || 
-      this.timeRange[0] == null || 
-      this.timeRange[1] == null || 
-      this.date == null || 
-      this.mission.id == null) return false
-    else return true;
-  }
-
-  validateDates(timesheet: Timesheet): boolean{
-    if(timesheet.startTime == undefined || timesheet.endTime == undefined) return false
-    else if(timesheet.startTime > timesheet.endTime) return false; //Check if start time is later than end time
-    else return true;
   }
 }

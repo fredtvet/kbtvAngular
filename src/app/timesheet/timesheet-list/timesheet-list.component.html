@@ -3,7 +3,7 @@
         <ng-container>
             <app-timesheet-list-menu 
                 [filter]="getCurrentFilter()"
-                (filterClick)="openBottomSheet()"
+                (filterClick)="openFilterSheet()"
                 (statusChanged)="changeStatus($event)">
             </app-timesheet-list-menu>
 

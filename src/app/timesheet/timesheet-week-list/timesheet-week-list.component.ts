@@ -34,13 +34,12 @@ export class TimesheetWeekListComponent implements OnInit {
         this.year = +qp['year'] || this.today.getFullYear();
         //Get all weeks up to current week if current year, else all weeks
         let endWeek = (this.year == this.today.getFullYear()) ? this.weekNr : this.dateTimeService.getWeeksInYear(this.year);
-        this.weekSummaries$ = this.userTimesheetService.getByWeekRangeGrouped$(1, endWeek, this.year).pipe(map(x => x.reverse()), tap(console.log)); 
+        this.weekSummaries$ = this.userTimesheetService.getByWeekRangeGrouped$(1, endWeek, this.year).pipe(map(x => x.reverse())); 
         this.configureMainNav(this.year);  
       });  
   }
 
   goToWeekView = (year: number, weekNr: number) => {
-    console.log(year, weekNr);
     this.router.navigate(['/timer/ukevisning'], { queryParams: {year, weekNr}} )
   }
 

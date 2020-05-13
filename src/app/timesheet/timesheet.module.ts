@@ -12,28 +12,29 @@ import { TimesheetFilterSheetWrapperComponent } from '../shared/components';
 import { TimesheetWeekViewComponent } from './timesheet-week-view/timesheet-week-view.component';
 import { TimesheetWeekListComponent } from './timesheet-week-list/timesheet-week-list.component';
 import { WeekListFilterSheetWrapperComponent } from '../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
-import { UsernameToFullnamePipe } from '../shared/pipes';
-
-
+import { TimesheetFormSheetWrapperComponent } from './timesheet-form/timesheet-form-sheet-wrapper.component';
+import { TimesheetFormViewComponent } from './timesheet-form/timesheet-form-view/timesheet-form-view.component';
 
 @NgModule({
   declarations: [
     TimesheetWeekListComponent,
     TimesheetDayLabelComponent,
     TimesheetFormComponent,
-    
     TimesheetMissionBarComponent,
     TimesheetCardDialogWrapperComponent,
     TimesheetFormDialogWrapperComponent,
     TimesheetListComponent,
     TimesheetListMenuComponent,
     TimesheetWeekViewComponent,
+    TimesheetFormSheetWrapperComponent,
+    TimesheetFormViewComponent,
   ],
   entryComponents:[
     TimesheetFilterSheetWrapperComponent,
     TimesheetCardDialogWrapperComponent,
     TimesheetFormDialogWrapperComponent,
-    WeekListFilterSheetWrapperComponent
+    WeekListFilterSheetWrapperComponent,
+    TimesheetFormSheetWrapperComponent
   ],
   imports: [
     SharedModule,
