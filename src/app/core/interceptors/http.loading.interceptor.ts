@@ -17,6 +17,7 @@ export class HttpLoadingInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     this.totalRequests++;
+    console.log(this.totalRequests);
     this.loadingService.setLoading(true);
     return next.handle(request).pipe(
       tap(res => {

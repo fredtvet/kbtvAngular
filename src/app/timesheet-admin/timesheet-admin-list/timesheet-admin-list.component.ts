@@ -52,7 +52,6 @@ export class TimesheetAdminListComponent extends SubscriptionComponent {
   }
   
   confirmTimesheets = (timesheets: Timesheet[]): void => {
-    console.log(timesheets);
     if(!timesheets) return undefined;
     let ids = timesheets.reduce((_ids, timesheet) => {
       if(timesheet.status == 0) _ids.push(timesheet.id);

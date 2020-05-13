@@ -76,7 +76,7 @@ export class DataManagerViewComponent implements OnInit {
   }
 
   private initNgGrid = (data: BaseEntity[]) => {
-    console.log(data);
+
     this.columnDefs = [];
     this.rowData = [];
 

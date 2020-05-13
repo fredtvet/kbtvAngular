@@ -22,7 +22,7 @@ export class MissionNoteFormViewComponent {
   constructor(private _formBuilder: FormBuilder)  { }
 
   ngOnInit(){
-    console.log(this.note);
+
     if(this.note == null){
       this.note = new MissionNote();
       this.isCreateForm = true;

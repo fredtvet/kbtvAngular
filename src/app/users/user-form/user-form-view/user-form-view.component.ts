@@ -31,7 +31,7 @@ export class UserFormViewComponent implements OnInit {
 
     initalizeForm(){
       this.userForm = this._formBuilder.group({
-        userName: [this.user.userName, [
+        userName: [{value: this.user.userName, disabled: !this.isCreateForm}, [
           Validators.required,
           Validators.minLength(4),
           Validators.maxLength(100)
@@ -60,9 +60,8 @@ export class UserFormViewComponent implements OnInit {
     }
 
     onSubmit(){
-      const {value, valid} = this.userForm;
-
-      if(valid && this.userForm.dirty) this.formSubmitted.emit(value);
+      if(this.userForm.valid && this.userForm.dirty) 
+        this.formSubmitted.emit(this.userForm.getRawValue());
     }
 
     changeRole(e){

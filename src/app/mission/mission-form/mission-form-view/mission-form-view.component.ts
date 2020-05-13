@@ -16,15 +16,13 @@ export class MissionFormViewComponent implements OnInit {
   @Input() employers: Employer[];
   @Output() formSubmitted = new EventEmitter();
 
-  title: string;
-  icon: string;
-
   missionForm: FormGroup;
 
   googleOptions = {
     types: ['geocode'],
     componentRestrictions: { country: "no" }
   }
+  
   isStreetAddress = false;
 
   isCreateForm = false;

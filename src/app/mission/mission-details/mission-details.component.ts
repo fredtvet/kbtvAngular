@@ -130,7 +130,7 @@ export class MissionDetailsComponent extends SubscriptionComponent{
   private updateMainNavWithMission(mission: Mission){
     if(mission == undefined) return null;
     let cfg = this.mainNavService.getCurrentConfig(); 
-    console.log(mission.address.split(','))
+
     cfg.multiLineTitle = mission.address.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'); 
     cfg.subTitle = mission.finished ? 'Oppdrag ferdig!' : '';
     cfg.subIcon = mission.finished ? 'check' : '';

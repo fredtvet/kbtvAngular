@@ -31,7 +31,7 @@ export class ProfileComponent extends SubscriptionComponent {
   }
 
   ngOnInit() {
-    this.syncRefreshTime$ = this.appConfigService.config$.pipe(debounceTime(1000), map(x => x.syncRefreshTime / 60), tap(console.log));
+    this.syncRefreshTime$ = this.appConfigService.config$.pipe(debounceTime(1000), map(x => x.syncRefreshTime / 60));
     this.identityService.currentUser$.pipe(takeUntil(this.unsubscribe))
       .subscribe(user => this.user = user); 
   }
