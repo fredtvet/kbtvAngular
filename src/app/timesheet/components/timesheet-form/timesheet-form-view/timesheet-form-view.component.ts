@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { Timesheet, Mission } from 'src/app/shared/models';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, tap, map, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-timesheet-form-view',
@@ -17,13 +18,14 @@ export class TimesheetFormViewComponent implements OnInit {
   @Input() datePreset: Date;
   @Input() missionPreset: Mission;
 
-  @Output() missionSearch = new EventEmitter();
   @Output() formSubmitted = new EventEmitter();
 
   timesheetForm: FormGroup;
   isCreateForm = false;
 
   initTime: Date = new Date();
+
+  filteredMissions$: Observable<Mission[]>;
 
   constructor(private _formBuilder: FormBuilder) {this.initTime.setHours(6,0,0,0);}
 
@@ -35,14 +37,24 @@ export class TimesheetFormViewComponent implements OnInit {
     else this.timesheet.mission = this.missions.find(x => x.id == this.timesheet.missionId);
 
     this.initalizeForm();
-    //this.initMissionListener();
+    this.initMissionListener();
   }
 
   ngOnChanges(){
     if(this.timesheet) this.initalizeForm();
   }
 
-  initalizeForm(){
+  onSubmit = () => {
+    if(this.timesheetForm.valid && this.timesheetForm.dirty) 
+      this.formSubmitted.emit(this.convertFormToTimesheet(this.timesheetForm.getRawValue()));
+  }
+  
+  displayMissionAddress(mission: Mission): string {
+    if(mission == undefined) return null;
+    return mission.address;
+  }
+
+  private initalizeForm(){
     this.timesheetForm = this._formBuilder.group({
       id: this.timesheet.id,
       mission: [{value: this.missionPreset || this.timesheet.mission, disabled: this.missionPreset}, [
@@ -62,22 +74,18 @@ export class TimesheetFormViewComponent implements OnInit {
     });
   }
 
-  onSubmit(){
-    if(this.timesheetForm.valid && this.timesheetForm.dirty) 
-      this.formSubmitted.emit(this.convertFormToTimesheet(this.timesheetForm.getRawValue()));
-  }
-  
-  onSearch = (input: string) => this.missionSearch.emit(input)
-  
-  displayMissionAddress(mission: Mission): string {
-    if(mission == undefined) return null;
-    return mission.address;
+  private initMissionListener(){
+    this.filteredMissions$ = this.mission.valueChanges.pipe(
+        startWith(this.mission.value ? this.mission.value.address : null),
+        debounceTime(400),
+        map(input => this.missions.filter(x => this.filterMission(x, input))))
   }
 
-  private initMissionListener(){
-    this.mission.valueChanges
-      .pipe(tap(x => {this.missionSearch.emit(x)}))
-      .subscribe();
+  private filterMission(mission: Mission, input: string){
+    let exp = (!input || input == null || mission.address.toLowerCase().includes(input.toLowerCase()));
+    let id = +input;
+    if(!isNaN(id)) exp = exp || mission.id === id
+    return exp;
   }
 
   private timeRangeValidator(): ValidatorFn{ //Check that all elements in array exist
@@ -99,6 +107,8 @@ export class TimesheetFormViewComponent implements OnInit {
     timesheet.endTime = new Date(date + " " + formData.timeRange[1].toTimeString());
     return timesheet;
   }
+
+
 
   get mission(){
     return this.timesheetForm.get('mission')

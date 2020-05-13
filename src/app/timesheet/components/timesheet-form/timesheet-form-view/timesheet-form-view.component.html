@@ -2,7 +2,7 @@
   <mat-form-field>
     <input matInput placeholder="Oppdrag" formControlName="mission" aria-label="Velg oppdrag" [matAutocomplete]="auto1">
     <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayMissionAddress">
-      <mat-option *ngFor="let mission of missions" [value]="mission">
+      <mat-option *ngFor="let mission of filteredMissions$ | async" [value]="mission">
         ({{ mission.id }}) {{ mission.address }}
       </mat-option>
     </mat-autocomplete>

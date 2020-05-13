@@ -19,10 +19,7 @@ export class TimesheetFormComponent implements OnInit {
 
   @Output() finished = new EventEmitter();
 
-  private missionSearchSubject = new BehaviorSubject<string>('');
-  private missionSearch$ = this.missionSearchSubject.asObservable();
-
-  missions$: Observable<Mission[]>;
+  missions$: Observable<Mission[]> = this._missionService.getAll$();
   timesheetPreset$: Observable<Timesheet>;
 
   isCreateForm: boolean;
@@ -38,13 +35,6 @@ export class TimesheetFormComponent implements OnInit {
 
     this.timesheetPreset$ = this._userTimesheetService.get$(this.timesheetIdPreset).pipe(
       tap(x => {if(!x && !this.isCreateForm){this.finished.emit();}})
-    );
-    
-    this.missions$ = this.missionSearch$.pipe(
-      switchMap(input => {
-        return this._missionService.getBy$(x => this.filterMission(x, input))
-      }),
-      map(this._missionService.sortByHistory)
     );
   }
 
@@ -69,12 +59,4 @@ export class TimesheetFormComponent implements OnInit {
     })
   }
 
-  onSearch = (input: string) => {this.missionSearchSubject.next(input)};
-
-  private filterMission(mission: Mission, input: string){
-    let exp = (!input || input == null || mission.address.toLowerCase().includes(input.toLowerCase()));
-    let id = +input;
-    if(!isNaN(id)) exp = exp || mission.id === id
-    return exp;
-  }
 }
