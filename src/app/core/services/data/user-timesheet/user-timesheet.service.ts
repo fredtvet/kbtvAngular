@@ -60,8 +60,6 @@ export class UserTimesheetService extends BaseMissionChildService<Timesheet> {
     return this.dataSubject.getCount$(status);
   }
 
-  update$(){return undefined}
-
   deleteRange$(){return undefined}
 
 
