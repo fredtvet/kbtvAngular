@@ -3,7 +3,7 @@ import { Mission, Timesheet } from 'src/app/shared/models';
 import { Notifications, Roles } from 'src/app/shared/enums';
 import { take, map, switchMap, tap } from 'rxjs/operators';
 import { UserTimesheetService, IdentityService, MissionService, NotificationService } from 'src/app/core/services';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-timesheet-form',
@@ -19,8 +19,10 @@ export class TimesheetFormComponent implements OnInit {
 
   @Output() finished = new EventEmitter();
 
-  missions$: Observable<Mission[]> = this._missionService.getAll$();
   timesheetPreset$: Observable<Timesheet>;
+  
+  missionsSearchSubject = new BehaviorSubject<string>('');
+  missions$: Observable<Mission[]>;
 
   isCreateForm: boolean;
 
@@ -31,18 +33,23 @@ export class TimesheetFormComponent implements OnInit {
     }
 
   ngOnInit(){
-    if(!this.timesheetIdPreset) this.isCreateForm = true;
+    this.missions$ = this.missionsSearchSubject.asObservable().pipe(
+      switchMap(input => this._missionService.getBy$(x => this.filterMission(x, input))),
+    )
 
-    this.timesheetPreset$ = this._userTimesheetService.get$(this.timesheetIdPreset).pipe(
-      tap(x => {if(!x && !this.isCreateForm){this.finished.emit();}})
-    );
+    if(!this.timesheetIdPreset) this.isCreateForm = true;
+    else 
+      this.timesheetPreset$ = this._userTimesheetService.get$(this.timesheetIdPreset).pipe(
+          tap(x => {if(!x){this.finished.emit();}})
+      );
   }
 
   onSubmit(timesheet: Timesheet): void{
-    console.log(timesheet);
     if(this.isCreateForm) this.createTimesheet(timesheet)
     else this.editTimesheet(timesheet);
   }
+
+  onMissionSearch = (input: string) => this.missionsSearchSubject.next(input)
 
   createTimesheet(timesheet: Timesheet){
     //timesheet.userName = this._identityService.getCurrentUser().userName;
@@ -59,4 +66,12 @@ export class TimesheetFormComponent implements OnInit {
     })
   }
 
+
+
+  private filterMission(mission: Mission, input: string){
+    let exp = (!input || input == null || mission.address.toLowerCase().includes(input.toLowerCase()));
+    let id = +input;
+    if(!isNaN(id)) exp = exp || mission.id === id
+    return exp;
+  }
 }

@@ -38,10 +38,6 @@ export class MissionFormViewComponent implements OnInit {
     this.initalizeForm();
   }
 
-  ngOnChanges(){
-    if(this.mission) this.initalizeForm();
-  }
-
   initalizeForm(){
     this.missionForm = this._formBuilder.group({
       id: this.mission.id,

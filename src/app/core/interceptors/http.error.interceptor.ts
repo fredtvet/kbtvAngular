@@ -18,7 +18,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(private notificationService: NotificationService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(request).pipe(tap(() => {},
+    return next.handle(request).pipe(tap(() => {console.log('xD')},
       (err: any) => {
       if (err instanceof HttpErrorResponse) {
         let msg = "Noe gikk feil! Vennligst prøv igjen."
@@ -32,12 +32,15 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           case 404: //NotFound
             msg = "Denne ressursen finnes ikke!"
             break;
+          case 408: //Request timeout
+            msg = "Får ikke kontakt med serveren!"
+            break;
           // case 500:
           // case 501:
           // case 502:
           // case 503:
           case 504:
-            msg = "Noe gikk feil på serveren. Prøv igjen senere eller ta kontakt."
+            msg = "Noe gikk feil på serveren."
             break;
           default:
             break;

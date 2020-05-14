@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { Timesheet, Mission } from 'src/app/shared/models';
-import { debounceTime, distinctUntilChanged, tap, map, startWith } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, tap, map, startWith, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,20 +12,19 @@ import { Observable } from 'rxjs';
 })
 export class TimesheetFormViewComponent implements OnInit {
 
-  @Input() timesheet: Timesheet = null;
-  @Input() missions: Mission[] = [];
+  @Input() timesheet: Timesheet;
+  @Input() missions: Mission[];
 
   @Input() datePreset: Date;
   @Input() missionPreset: Mission;
 
   @Output() formSubmitted = new EventEmitter();
+  @Output() missionsSearch = new EventEmitter();
 
   timesheetForm: FormGroup;
   isCreateForm = false;
 
   initTime: Date = new Date();
-
-  filteredMissions$: Observable<Mission[]>;
 
   constructor(private _formBuilder: FormBuilder) {this.initTime.setHours(6,0,0,0);}
 
@@ -38,10 +37,6 @@ export class TimesheetFormViewComponent implements OnInit {
 
     this.initalizeForm();
     this.initMissionListener();
-  }
-
-  ngOnChanges(){
-    if(this.timesheet) this.initalizeForm();
   }
 
   onSubmit = () => {
@@ -75,17 +70,10 @@ export class TimesheetFormViewComponent implements OnInit {
   }
 
   private initMissionListener(){
-    this.filteredMissions$ = this.mission.valueChanges.pipe(
-        startWith(this.mission.value ? this.mission.value.address : null),
-        debounceTime(400),
-        map(input => this.missions.filter(x => this.filterMission(x, input))))
-  }
-
-  private filterMission(mission: Mission, input: string){
-    let exp = (!input || input == null || mission.address.toLowerCase().includes(input.toLowerCase()));
-    let id = +input;
-    if(!isNaN(id)) exp = exp || mission.id === id
-    return exp;
+    this.mission.valueChanges.pipe(
+      filter(x => typeof x == 'string'),
+      debounceTime(400)
+    ).subscribe(x => this.missionsSearch.emit(x))
   }
 
   private timeRangeValidator(): ValidatorFn{ //Check that all elements in array exist
@@ -97,8 +85,6 @@ export class TimesheetFormViewComponent implements OnInit {
 
   private convertFormToTimesheet(formData:any){
     let timesheet = new Timesheet();   
-    //let date = new Date(formData.date).toDateString();
-    console.log(formData.date);
     let date = formData.date.toDateString();
     timesheet.id = formData.id;
     timesheet.missionId = formData.mission.id;
@@ -107,8 +93,6 @@ export class TimesheetFormViewComponent implements OnInit {
     timesheet.endTime = new Date(date + " " + formData.timeRange[1].toTimeString());
     return timesheet;
   }
-
-
 
   get mission(){
     return this.timesheetForm.get('mission')

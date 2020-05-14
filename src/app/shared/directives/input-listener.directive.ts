@@ -8,7 +8,7 @@ import { debounceTime, distinctUntilChanged, tap, takeUntil } from 'rxjs/operato
 })
 export class InputListenerDirective extends SubscriptionComponent{
 
-  @Input() debounceTime: number = 200;
+  @Input() debounceTime: number = 400;
   @Output() inputChanged = new EventEmitter();
 
   private inputUpdated: Subject<string> = new Subject();

@@ -74,10 +74,12 @@ export abstract class BaseService<T extends BaseEntity>{
               .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     return this.apiService.put(`${this.uri}/${entity.id}`, entity)
-      .pipe(map(data => {
-        this.dataSubject.update(data);
-        return data;
-      }));
+      .pipe(
+        map(data => {
+          this.dataSubject.update(data);
+          return data;
+        })
+      );
   }
 
   delete$(id: number): Observable<boolean> {
