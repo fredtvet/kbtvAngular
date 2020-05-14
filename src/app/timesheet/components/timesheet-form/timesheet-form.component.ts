@@ -59,8 +59,10 @@ export class TimesheetFormComponent implements OnInit {
   }
 
   editTimesheet(timesheet: Timesheet){
+    console.log(timesheet);
     this._userTimesheetService.update$(timesheet).subscribe(x => {
       this._notificationService.setNotification('Time oppdatert!');
+      console.log(x);
       this.finished.emit(x);
     })
   }

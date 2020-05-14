@@ -1,4 +1,4 @@
-<div class="mission-bar mat-elevation-z1" fxLayout="column" fxLayoutAlign="center center" 
+<div  *ngIf="timesheet" class="mission-bar mat-elevation-z1" fxLayout="column" fxLayoutAlign="center center" 
     [ngClass]="{
         'bg-accent-light': timesheet.status == 2, 
         'bg-warn-light': timesheet.status == 0
