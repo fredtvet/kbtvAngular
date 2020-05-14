@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { UserService, IdentityService, MainNavService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 import { AppButton } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material';
 import { UserFormSheetWrapperComponent } from '../components/user-form/user-form-sheet-wrapper.component';
@@ -14,37 +13,26 @@ import { UserFormSheetWrapperComponent } from '../components/user-form/user-form
   selector: 'app-user-list',
   templateUrl: './user-list.component.html'
 })
-export class UserListComponent extends SubscriptionComponent {
+export class UserListComponent {
   Roles = Roles;
 
   users: User[];
-  currentUser: User;
-  
-  createButton: AppButton;
+
+  users$: Observable<User[]> = this.userService.getAll$().pipe(map(users => {
+    let grouped = users.reduce((groups, user) => {
+      if (!groups[user.role]) groups[user.role] = [];      
+      groups[user.role].push(user);
+      return groups;
+    }, []);
+    return [...grouped[Roles.Leder], ...grouped[Roles.Mellomleder], ...grouped[Roles.Ansatt]];
+  }));
 
   constructor(
     private mainNavService: MainNavService,
     private userService: UserService,
-    private identityService: IdentityService,
-    private _bottomSheet: MatBottomSheet) { 
-      super();    
+    private _bottomSheet: MatBottomSheet) {    
       this.configureMainNav(); 
     }
-
-  ngOnInit() {
-    combineLatest( //Calling seperate to have them ordered correctly. Should be done more efficiently.
-      this.userService.getByRole$(Roles.Leder),
-      this.userService.getByRole$(Roles.Mellomleder),
-      this.userService.getByRole$(Roles.Ansatt),
-      this.userService.getByRole$(Roles.Oppdragsgiver),
-    )
-    .pipe(takeUntil(this.unsubscribe))
-    .subscribe(([group1, group2, group3, group4]) => {this.users = [...group1, ...group2, ...group3, ...group4]});
-
-    this.identityService.currentUser$
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(data => this.currentUser = data);
-  }
 
   openUserForm = (userNamePreset?: string) => 
     this._bottomSheet.open(UserFormSheetWrapperComponent, {data: {userNamePreset}});

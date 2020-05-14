@@ -1,13 +1,15 @@
-<mat-spinner *ngIf="!users" class="center-spinner" color="accent"></mat-spinner>
-<div *ngIf="users" class="p-0">
+<ng-container *ngIf="users$ | async else loading; let users">
   <app-user-card *ngFor="let user of users"
-      [user]="user"
-      [editButton]="{
-        icon: 'edit', 
-        allowedRoles: [Roles.Leder], 
-        callback: openUserForm, params: [user.userName]
-      }">
+        [user]="user"
+        [editButton]="{
+          icon: 'edit', 
+          allowedRoles: [Roles.Leder], 
+          callback: openUserForm, params: [user.userName]
+        }">
   </app-user-card>
-</div>
+</ng-container>
 
+<ng-template #loading>
+  <mat-spinner class="center-spinner" color="accent"></mat-spinner>
+</ng-template>
 

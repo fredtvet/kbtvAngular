@@ -52,7 +52,6 @@ export class TimesheetFormComponent implements OnInit {
   onMissionSearch = (input: string) => this.missionsSearchSubject.next(input)
 
   createTimesheet(timesheet: Timesheet){
-    //timesheet.userName = this._identityService.getCurrentUser().userName;
     this._userTimesheetService.add$(timesheet).subscribe(x => {
       this._notificationService.setNotification('Time registrert!');
       this.finished.emit(x);
@@ -65,8 +64,6 @@ export class TimesheetFormComponent implements OnInit {
       this.finished.emit(x);
     })
   }
-
-
 
   private filterMission(mission: Mission, input: string){
     let exp = (!input || input == null || mission.address.toLowerCase().includes(input.toLowerCase()));
