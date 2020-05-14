@@ -60,7 +60,7 @@ export class UserService {
     return this
       .apiService
       .delete(`${this.uri}/${userName}`)
-      .pipe(map(bool =>{
+      .pipe(map(bool =>{ console.log(bool);
         if(bool) this.userSubject.delete(userName);
         return bool;
       }));

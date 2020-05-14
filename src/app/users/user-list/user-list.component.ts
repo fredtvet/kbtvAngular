@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { UserService, IdentityService, MainNavService } from 'src/app/core/services';
+import { UserService, MainNavService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
-import { combineLatest, Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { takeUntil, map } from 'rxjs/operators';
-import { AppButton } from 'src/app/shared/interfaces';
+import { Observable } from 'rxjs';;
+import { map } from 'rxjs/operators';
 import { MatBottomSheet } from '@angular/material';
 import { UserFormSheetWrapperComponent } from '../components/user-form/user-form-sheet-wrapper.component';
 
@@ -18,14 +16,7 @@ export class UserListComponent {
 
   users: User[];
 
-  users$: Observable<User[]> = this.userService.getAll$().pipe(map(users => {
-    let grouped = users.reduce((groups, user) => {
-      if (!groups[user.role]) groups[user.role] = [];      
-      groups[user.role].push(user);
-      return groups;
-    }, []);
-    return [...grouped[Roles.Leder], ...grouped[Roles.Mellomleder], ...grouped[Roles.Ansatt]];
-  }));
+  users$: Observable<User[]> = this.userService.getAll$().pipe(map(this.sortByRole));
 
   constructor(
     private mainNavService: MainNavService,
@@ -48,6 +39,25 @@ export class UserListComponent {
       allowedRoles: [Roles.Leder]
     }]
     this.mainNavService.addConfig(cfg);
+  }
+
+  private sortByRole(users: User[]): User[]{
+    let grouped = users.reduce((groups, user) => {
+      switch(user.role){
+        case Roles.Leder:
+          groups[Roles.Leder].push(user);
+          break;
+        case Roles.Mellomleder:
+          groups[Roles.Mellomleder].push(user);
+          break;
+        case Roles.Ansatt: 
+          groups[Roles.Ansatt].push(user);
+          break;
+      }
+      return groups;
+    }, {"Leder":[], "Mellomleder":[], "Ansatt":[]});
+  
+    return [...grouped[Roles.Leder], ...grouped[Roles.Mellomleder], ...grouped[Roles.Ansatt]];
   }
 
 }
