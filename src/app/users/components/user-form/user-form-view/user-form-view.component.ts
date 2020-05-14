@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { User } from 'src/app/shared/models';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-form-view',
-  templateUrl: './user-form-view.component.html'
+  templateUrl: './user-form-view.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class UserFormViewComponent implements OnInit {

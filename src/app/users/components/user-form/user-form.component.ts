@@ -1,22 +1,18 @@
-import { Component, Output, EventEmitter, Input } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from "@angular/core";
 import {
   RoleService,
   UserService,
   NotificationService,
-  MainNavService,
 } from "src/app/core/services";
-import { ConfirmDialogComponent } from "src/app/shared/components";
 import { User } from "src/app/shared/models";
-import { Router, ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs";
-import { map, takeUntil, take, filter } from "rxjs/operators";
-import { SubscriptionComponent } from "src/app/shared/components/abstracts/subscription.component";
+import { map} from "rxjs/operators";
 import { Roles } from "src/app/shared/enums";
 
 @Component({
   selector: "app-user-form",
   templateUrl: "./user-form.component.html",
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserFormComponent {
   Roles = Roles;

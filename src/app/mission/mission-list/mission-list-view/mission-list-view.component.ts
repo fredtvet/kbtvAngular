@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Mission } from 'src/app/shared/models';
 import { Roles } from 'src/app/shared/enums';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -6,7 +6,8 @@ import { MissionFormSheetWrapperComponent } from '../../components/mission-form/
 
 @Component({
   selector: 'app-mission-list-view',
-  templateUrl: './mission-list-view.component.html'
+  templateUrl: './mission-list-view.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionListViewComponent implements OnInit {
   Roles = Roles;

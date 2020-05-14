@@ -50,10 +50,6 @@ export class MainNavComponent extends SubscriptionComponent {
     private _bottomSheet: MatBottomSheet) { super(); }
 
   ngOnInit(){
-    // //Get route name and set as title if no input
-    // if(!this.config.title && !this.config.altNav){
-    //   this.config.title = this.router.url.split(';')[0].split('/')[1].replace(/^\w/, c => c.toUpperCase())
-    // }'
     this.isXs$.pipe(takeUntil(this.unsubscribe)).subscribe(xs => this.isXs = xs)
   }
 

@@ -1,10 +1,11 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { ReportTypeService } from 'src/app/core/services';
 import { MissionReportType } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-report-type-form',
-  templateUrl: './report-type-form.component.html'
+  templateUrl: './report-type-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportTypeFormComponent implements OnInit {
   

@@ -1,23 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DateTimeService, MainNavService, TimesheetService, UserTimesheetService } from 'src/app/core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AppButton, TimesheetSummary, DateParams } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, map, tap, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-timesheet-week-list',
-  templateUrl: './timesheet-week-list.component.html'
+  templateUrl: './timesheet-week-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimesheetWeekListComponent implements OnInit {
   today = new Date();
 
   weekNr: number = this.dateTimeService.getWeekOfYear(this.today);
-  year: number = this.today.getFullYear();
 
-  weekSummaries$: Observable<TimesheetSummary[]>;
+  vm$: Observable<{year: number, summaries:TimesheetSummary[]}>;
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -29,23 +29,25 @@ export class TimesheetWeekListComponent implements OnInit {
     { this.configureMainNav(+this.route.snapshot.queryParamMap['year']) }
 
   ngOnInit() {
-    this.route.queryParams
-      .subscribe(qp =>{        
-        this.year = +qp['year'] || this.today.getFullYear();
-        //Get all weeks up to current week if current year, else all weeks
-        let endWeek = (this.year == this.today.getFullYear()) ? this.weekNr : this.dateTimeService.getWeeksInYear(this.year);
-        this.weekSummaries$ = this.userTimesheetService.getByWeekRangeGrouped$(1, endWeek, this.year).pipe(map(x => x.reverse())); 
-        this.configureMainNav(this.year);  
-      });  
+    this.vm$ = this.route.queryParams.pipe(
+      map(qp => +qp['year'] || this.today.getFullYear()),
+      tap(this.configureMainNav),
+      switchMap(year => {
+        let endWeek = (year == this.today.getFullYear()) ? this.weekNr : this.dateTimeService.getWeeksInYear(year); 
+        return this.userTimesheetService.getByWeekRangeGrouped$(1, endWeek, year).pipe(
+          map(x => {return {year, summaries: x.reverse()}})
+        );
+      })
+    )
   }
 
   goToWeekView = (year: number, weekNr: number) => {
     this.router.navigate(['/timer/ukevisning'], { queryParams: {year, weekNr}} )
   }
 
-  private openWeekFilter = () => {
+  private openWeekFilter = (year: number) => {
     let ref = this._bottomSheet.open(WeekListFilterSheetWrapperComponent, {
-      data: {year: this.year}
+      data: {year}
     });
 
     ref.afterDismissed()
@@ -55,12 +57,11 @@ export class TimesheetWeekListComponent implements OnInit {
 
   private updateYear = (year: number) => this.router.navigate(['timer/ukeliste'], { queryParams: {year}})
 
-  private configureMainNav(year: number){
+  private configureMainNav = (year: number) => {
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Ukeliste";
-    cfg.subTitle = year ? year.toString() : this.year.toString();
-    cfg.buttons = [{icon: 'filter_list', callback: this.openWeekFilter} as AppButton]
-    //cfg.buttons = [{icon: "list", callback: this.goToTimesheetList}];
+    cfg.subTitle = year ? year.toString() : this.today.getFullYear().toString();
+    cfg.buttons = [{icon: 'filter_list', colorClass:'color-accent', callback: this.openWeekFilter, params:[year]} as AppButton]
     this.mainNavService.addConfig(cfg);
   }
 }

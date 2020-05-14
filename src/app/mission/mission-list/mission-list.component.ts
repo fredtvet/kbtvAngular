@@ -1,31 +1,25 @@
-import { Component  } from '@angular/core';
+import { Component, ChangeDetectionStrategy  } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
 import { Mission } from 'src/app/shared/models';
-import { Roles } from '../../shared/enums';
 import { BehaviorSubject, Observable} from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { MissionService, MainNavService } from 'src/app/core/services';
-import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
 @Component({
   selector: 'app-mission-list',
-  templateUrl: './mission-list.component.html'
+  templateUrl: './mission-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class MissionListComponent extends SubscriptionComponent{
+export class MissionListComponent{
   private pageInfoSubject = new BehaviorSubject({searchString: "", showFinishedMissions: false, historic: false});
 
   missions$: Observable<Mission[]>;
 
-  searchBarHidden: boolean = true;
-
   constructor(
     private mainNavService: MainNavService,
     private missionService: MissionService,
-    public dialog: MatDialog,
-    private router: Router) {
-      super();  
+    public dialog: MatDialog) { 
       this.configureMainNav();
     }
 

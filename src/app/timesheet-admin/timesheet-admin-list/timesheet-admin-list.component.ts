@@ -1,4 +1,4 @@
-import { Component, ViewChild, TemplateRef } from '@angular/core';
+import { Component, ViewChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { MainNavService, TimesheetService, DateTimeService, TimesheetAggregatorService } from 'src/app/core/services';
 import { TimesheetSummary } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -6,15 +6,16 @@ import { WeekListFilterSheetWrapperComponent } from '../../shared/components/wee
 import { filter, map, startWith, pairwise} from 'rxjs/operators';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
-import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { GroupByTypes, TimesheetStatus } from 'src/app/shared/enums';
 import { Timesheet } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-timesheet-admin-list',
-  templateUrl: './timesheet-admin-list.component.html'
+  templateUrl: './timesheet-admin-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimesheetAdminListComponent extends SubscriptionComponent {
+
+export class TimesheetAdminListComponent {
 
   @ViewChild('yearList', {static:false}) 
   private yearList: TemplateRef<any>;
@@ -37,7 +38,6 @@ export class TimesheetAdminListComponent extends SubscriptionComponent {
     private router: Router,
     private dateTimeService: DateTimeService,
     private _bottomSheet: MatBottomSheet) { 
-      super();
       this.timesheetService.addGroupBy(GroupByTypes.YearAndUserName);
       this.configureDefaultNav(+this.route.snapshot.queryParams['year'] || this.today.getFullYear());
       this.initalizeObservable();

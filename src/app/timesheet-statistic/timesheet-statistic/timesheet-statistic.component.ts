@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MainNavService, TimesheetService, UserService } from 'src/app/core/services';
-import { filter, tap, map } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared/components';
 import { TimesheetFilter } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
@@ -8,18 +8,15 @@ import { GroupByTypes } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-timesheet-statistic',
-  templateUrl: './timesheet-statistic.component.html',
-  styleUrls: ['./timesheet-statistic.component.scss']
+  templateUrl: './timesheet-statistic.component.html',  
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimesheetStatisticComponent {
   groupByTypes = GroupByTypes;
 
   filter$ = this.timesheetService.filter$;
-
   groupBy$ = this.timesheetService.groupBy$;
-
   timesheetSummaries$ = this.timesheetService.timesheetSummaries$;
-
   users$ = this.userService.getAll$();
 
   constructor(
@@ -34,7 +31,6 @@ export class TimesheetStatisticComponent {
 
   changeGroupingType = (type: GroupByTypes) => this.timesheetService.addGroupBy(type);
   
-
   openBottomSheet(f: TimesheetFilter): void {
     let ref = this._bottomSheet.open(TimesheetFilterSheetWrapperComponent, {
       data: {filter: f, disabledFilters: ['status']}

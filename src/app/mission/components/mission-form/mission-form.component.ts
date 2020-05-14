@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { EmployerService, NotificationService, MissionTypeService, MissionService, MainNavService } from 'src/app/core/services';
 import { Mission, MissionType, Employer } from 'src/app/shared/models';
 import { Observable } from 'rxjs';
@@ -7,7 +7,8 @@ import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subsc
 
 @Component({
   selector: 'app-mission-form',
-  templateUrl: './mission-form.component.html'
+  templateUrl: './mission-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionFormComponent extends SubscriptionComponent {
 
@@ -16,10 +17,8 @@ export class MissionFormComponent extends SubscriptionComponent {
   @Output() finished = new EventEmitter();
 
   mission$: Observable<Mission>;
-  missionTypes$: Observable<MissionType[]>;
-  employers$: Observable<Employer[]>;
-
-  loading$: Observable<boolean>;
+  missionTypes$: Observable<MissionType[]> = this.missionTypeService.getAll$();
+  employers$: Observable<Employer[]> = this.employerService.getAll$();
 
   isCreateForm: boolean = false;
 
@@ -33,7 +32,7 @@ export class MissionFormComponent extends SubscriptionComponent {
 
   ngOnInit(): void {
     if(!this.missionIdPreset) this.isCreateForm = true;
-    this.initalizeObservables();
+    else this.mission$ = this.missionService.get$(this.missionIdPreset);
   }
 
   onSubmit(result: Mission): void{
@@ -49,19 +48,10 @@ export class MissionFormComponent extends SubscriptionComponent {
 
   editMission(mission: Mission): void{
     if(!mission) return null;
-    this.missionService.update$(mission).pipe(take(1))
-      .subscribe(res => {
+    this.missionService.update$(mission).subscribe(res => {
         this.notificationService.setNotification('Vellykket oppdatering!');
         this.onFinished(res.id);
       })
-  }
-
-  private initalizeObservables(): void{
-    if(!this.isCreateForm) 
-      this.mission$ = this.missionService.get$(this.missionIdPreset).pipe(takeUntil(this.unsubscribe));
-
-    this.missionTypes$ = this.missionTypeService.getAll$().pipe(takeUntil(this.unsubscribe));
-    this.employers$ = this.employerService.getAll$().pipe(takeUntil(this.unsubscribe));
   }
 
   private onFinished = (id: number): void => this.finished.emit(id);

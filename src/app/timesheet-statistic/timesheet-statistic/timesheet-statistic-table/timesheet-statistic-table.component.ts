@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, ViewChild, Input, ChangeDetectionStrategy } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { TimesheetSummary } from 'src/app/shared/interfaces';
 import { DatePipe } from '@angular/common';
@@ -6,7 +6,8 @@ import { User } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-timesheet-statistic-table',
-  templateUrl: './timesheet-statistic-table.component.html'
+  templateUrl: './timesheet-statistic-table.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimesheetStatisticTableComponent {
   @ViewChild('dataGrid', {static: false}) dataGrid: AgGridAngular;

@@ -1,11 +1,12 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MissionNote } from 'src/app/shared/models';
 import { Roles } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-mission-note-form-view',
-  templateUrl: './mission-note-form-view.component.html'
+  templateUrl: './mission-note-form-view.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class MissionNoteFormViewComponent {

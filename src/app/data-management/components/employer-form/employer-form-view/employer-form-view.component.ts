@@ -1,10 +1,11 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Employer } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-employer-form-view',
-  templateUrl: './employer-form-view.component.html'
+  templateUrl: './employer-form-view.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class EmployerFormViewComponent implements OnInit

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { MissionNote } from 'src/app/shared/models';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { Roles } from '../../../shared/enums';
@@ -8,7 +8,8 @@ import { MissionNoteFormSheetWrapperComponent } from '../mission-note-form/missi
 
 @Component({
   selector: 'app-mission-note-list',
-  templateUrl: './mission-note-list.component.html'
+  templateUrl: './mission-note-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionNoteListComponent {
 
@@ -16,7 +17,6 @@ export class MissionNoteListComponent {
 
   @Input() missionId: number;
 
-  @Output() noteEdit = new EventEmitter();
   @Output() noteDeleted = new EventEmitter();
 
   Roles = Roles;

@@ -22,7 +22,7 @@
         <input matInput placeholder="Arbeidstid" formControlName="timeRange" required selectMode="range"
           [owlDateTimeTrigger]="t1" [owlDateTime]="t1">
       </mat-form-field>
-      <owl-date-time [pickerType]="'timer'" [pickerMode]="'dialog'" stepMinute="15" [startAt]="initTime" #t1>
+      <owl-date-time [pickerType]="'timer'" [pickerMode]="'dialog'" stepMinute="15" [startAt]="timesheet.startTime || initTime" #t1>
       </owl-date-time>
     </label>
   </span>

@@ -6,7 +6,6 @@
         <mat-option *ngFor="let table of tables" value="{{ table }}">{{ table }}</mat-option>
       </mat-select>
     </mat-form-field>
-
     <ag-grid-angular #dataGrid
       class="ag-theme-balham data-container mat-elevation-z2"
       rowSelection="multiple"

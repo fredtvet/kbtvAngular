@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IdentityService, DataSyncService } from '../core/services';
@@ -7,7 +7,8 @@ import { switchMap, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-auth-page',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+  styleUrls: ['./auth.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class AuthComponent {

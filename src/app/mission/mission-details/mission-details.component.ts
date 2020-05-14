@@ -1,14 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Roles } from '../../shared/enums';
 import { MissionNote, Mission, MissionReport, MissionImage } from 'src/app/shared/models';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, MainNavService} from 'src/app/core/services';
-import { MissionReportFormComponent } from '../components/mission-report-form/mission-report-form.component';
-import { take, takeUntil, tap, filter } from 'rxjs/operators';
+import { tap, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { MissionFormSheetWrapperComponent } from '../components/mission-form/mission-form-sheet-wrapper.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MissionNoteFormSheetWrapperComponent } from '../components/mission-note-form/mission-note-form-sheet-wrapper.component';
@@ -16,10 +14,11 @@ import { MissionReportFormSheetWrapperComponent } from '../components/mission-re
 
 @Component({
   selector: 'app-mission-details',
-  templateUrl: './mission-details.component.html'
+  templateUrl: './mission-details.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class MissionDetailsComponent extends SubscriptionComponent{
+export class MissionDetailsComponent{
   Roles = Roles;
 
   mission: Mission = new Mission();
@@ -28,8 +27,6 @@ export class MissionDetailsComponent extends SubscriptionComponent{
   images$: Observable<MissionImage[]>;
   notes$: Observable<MissionNote[]>;
   reports$: Observable<MissionReport[]>;
-
-  loading$: Observable<boolean>;
 
   constructor(
     private mainNavService: MainNavService,
@@ -43,84 +40,82 @@ export class MissionDetailsComponent extends SubscriptionComponent{
     public dialog: MatDialog, 
     private _bottomSheet: MatBottomSheet,  
   ){ 
-    super();
-    this.configureMainNav();
+    this.configureMainNav(+this.route.snapshot.paramMap.get('id'));
   }
 
   ngOnInit(){
-    this.mission.id = +this.route.snapshot.paramMap.get('id');
+    let missionId = +this.route.snapshot.paramMap.get('id');
     
-    this.mission$ = this.missionService.getDetails$(this.mission.id);
-    this.images$ = this.missionImageService.getByMissionId$(this.mission.id);
-    this.reports$ = this.missionReportService.getByMissionId$(this.mission.id);
-    this.notes$ = this.missionNoteService.getByMissionId$(this.mission.id);
-        
-    this.mission$.pipe(takeUntil(this.unsubscribe)).subscribe(x => {
-      this.mission = x;
-      this.updateMainNavWithMission(x)
-    });
+    this.mission$ = this.missionService.getDetails$(missionId).pipe(tap(this.updateMainNavWithMission));
+    this.images$ = this.missionImageService.getByMissionId$(missionId);
+    this.reports$ = this.missionReportService.getByMissionId$(missionId);
+    this.notes$ = this.missionNoteService.getByMissionId$(missionId);
   }
 
-  uploadImages = (files: FileList) => 
-    this.missionImageService.addImages$(this.mission.id, files).pipe(take(1))
-      .subscribe(data => this.notificationService.setNotification(`Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`));
+  uploadImages = (data: {files: FileList, missionId: number}) => {
+    this.missionImageService.addImages$(data.missionId, data.files).subscribe(data =>
+      this.notificationService.setNotification(
+        `Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`
+        )
+    );
+  }
   
   deleteImage = (id:number) => 
-    this.missionImageService.delete$(id).pipe(take(1))
-      .subscribe(res =>  this.notificationService.setNotification('Vellykket! Bilde slettet'));
+    this.missionImageService.delete$(id).subscribe(res =>  
+      this.notificationService.setNotification('Vellykket! Bilde slettet'));
   
   deleteNote = (id: number) =>
-    this.missionNoteService.delete$(id).pipe(take(1))
-      .subscribe(res => this.notificationService.setNotification('Vellykket! Notat slettet.'));
+    this.missionNoteService.delete$(id).subscribe(res => 
+      this.notificationService.setNotification('Vellykket! Notat slettet.'));
   
   deleteReport = (id: number) => 
-    this.missionReportService.delete$(id).pipe(take(1))
-      .subscribe(res => this.notificationService.setNotification('Vellykket! Rapport slettet.'));
+    this.missionReportService.delete$(id).subscribe(res => 
+      this.notificationService.setNotification('Vellykket! Rapport slettet.'));
   
-  editNote = (note: MissionNote) => 
-    this.router.navigate(['oppdrag', note.missionId, 'notater', note.id, 'rediger'])
-  
-
-  private deleteMission(){   
-    this.missionService.delete$(this.mission.id).pipe(filter(del => del), tap(x => this.onBack()))
+  private deleteMission(id: number){   
+    this.missionService.delete$(id).pipe(filter(del => del), tap(x => this.onBack()))
       .subscribe(del => this.notificationService.setNotification('Vellykket! Oppdrag slettet.'));
   }
 
-  private openMissionForm = () => 
-    this._bottomSheet.open(MissionFormSheetWrapperComponent, {data: {missionIdPreset:this.mission.id}});
+  private openMissionForm = (missionIdPreset: number) => 
+    this._bottomSheet.open(MissionFormSheetWrapperComponent, {data: {missionIdPreset}});
 
-  private openMissionNoteForm = () => this._bottomSheet.open(MissionNoteFormSheetWrapperComponent);
+  private openMissionNoteForm = (missionId: number) => {
+    console.log(missionId);
+    this._bottomSheet.open(MissionNoteFormSheetWrapperComponent, {data: {missionId}});
+  }
 
-  private openReportForm = () => 
-    this._bottomSheet.open(MissionReportFormSheetWrapperComponent, {data: {missionId: this.mission.id}});
+  private openReportForm = (missionId: number) => 
+    this._bottomSheet.open(MissionReportFormSheetWrapperComponent, {data: {missionId}});
 
-  private openDeleteMissionDialog = () => {
+  private openDeleteMissionDialog = (id: number) => {
     const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette oppdraget.'});
-    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteMission());
+    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteMission(id));
   }
 
-  private goToTimesheets = () => {
-    this.router.navigate(['timer/liste', {returnRoute: this.router.url, mission: JSON.stringify(this.mission)}]);
+  private goToTimesheets = (mission: Mission) => {
+    this.router.navigate(['timer/liste', {returnRoute: this.router.url, missionId: JSON.stringify(mission)}]);
   }
 
-  private configureMainNav(){
+  private configureMainNav(missionId: number){
+    console.log(missionId);
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.elevationEnabled = false;
     cfg.backFn = this.onBack;  
     cfg.bottomSheetButtons = [
-      {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets},
-      {text: "Legg til rapport", icon: "note_add", callback: this.openReportForm, allowedRoles: [Roles.Leder]},
-      {text: "Legg til notat", icon: "add_comment", callback: this.openMissionNoteForm},
-      {text: "Rediger", icon: "edit", callback: this.openMissionForm, allowedRoles: [Roles.Leder]},
-      {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, allowedRoles: [Roles.Leder]},
+      {text: "Legg til rapport", icon: "note_add", callback: this.openReportForm, params: [missionId], allowedRoles: [Roles.Leder]},
+      {text: "Legg til notat", icon: "add_comment", callback: this.openMissionNoteForm, params: [missionId]},
+      {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [missionId], allowedRoles: [Roles.Leder]},
+      {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, params: [missionId], allowedRoles: [Roles.Leder]},
     ];
     this.mainNavService.addConfig(cfg);
   }
 
-  private updateMainNavWithMission(mission: Mission){
+  private updateMainNavWithMission = (mission: Mission) => {
     if(mission == undefined) return null;
     let cfg = this.mainNavService.getCurrentConfig(); 
-
+    cfg.bottomSheetButtons = cfg.bottomSheetButtons.filter(x => x.icon != "timer"); //remove if btn alrdy exist
+    cfg.bottomSheetButtons.push({text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission]})
     cfg.multiLineTitle = mission.address.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'); 
     cfg.subTitle = mission.finished ? 'Oppdrag ferdig!' : '';
     cfg.subIcon = mission.finished ? 'check' : '';

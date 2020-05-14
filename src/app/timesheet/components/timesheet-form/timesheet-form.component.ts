@@ -1,13 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Mission, Timesheet } from 'src/app/shared/models';
-import { Notifications, Roles } from 'src/app/shared/enums';
-import { take, map, switchMap, tap } from 'rxjs/operators';
-import { UserTimesheetService, IdentityService, MissionService, NotificationService } from 'src/app/core/services';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Roles } from 'src/app/shared/enums';
+import { switchMap, tap } from 'rxjs/operators';
+import { UserTimesheetService, MissionService, NotificationService } from 'src/app/core/services';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-timesheet-form',
-  templateUrl: './timesheet-form.component.html'
+  templateUrl: './timesheet-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class TimesheetFormComponent implements OnInit {

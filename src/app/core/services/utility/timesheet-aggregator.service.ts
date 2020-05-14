@@ -45,7 +45,7 @@ export class TimesheetAggregatorService {
       else if (timesheet.status == TimesheetStatus.Confirmed)
         groups[index].confirmedHours += timesheet.totalHours;
 
-      groups[index].timesheets.push(timesheet);
+      groups[index].timesheets.push({...timesheet});
 
       return groups;
     }, {});
@@ -77,7 +77,7 @@ export class TimesheetAggregatorService {
       else if (timesheet.status == TimesheetStatus.Confirmed)
         groups[index].confirmedHours += timesheet.totalHours;
 
-      groups[index].timesheets.push(timesheet);
+      groups[index].timesheets.push({...timesheet});
 
       return groups;
     }, []);
@@ -97,7 +97,7 @@ export class TimesheetAggregatorService {
         if (!groups[weekNr])
           groups[weekNr] = { week: weekNr,timesheets: [],openHours: 0,confirmedHours: 0,} as TimesheetSummary;
 
-        groups[weekNr].timesheets.push(timesheet);
+        groups[weekNr].timesheets.push({...timesheet});
 
         if (timesheet.status == TimesheetStatus.Open)
           groups[weekNr].openHours += timesheet.totalHours;
@@ -133,7 +133,7 @@ export class TimesheetAggregatorService {
       else if (timesheet.status == TimesheetStatus.Confirmed)
         groups[index].confirmedHours += timesheet.totalHours;
 
-      groups[index].timesheets.push(timesheet);
+      groups[index].timesheets.push({...timesheet});
 
       return groups;
     }, []);
@@ -163,7 +163,7 @@ export class TimesheetAggregatorService {
       else if (timesheet.status == TimesheetStatus.Confirmed)
         groups[index].confirmedHours += timesheet.totalHours;
 
-      groups[index].timesheets.push(timesheet);
+      groups[index].timesheets.push({...timesheet});
 
       return groups;
     }, []);
@@ -181,7 +181,7 @@ export class TimesheetAggregatorService {
         groups[index] = {year, userName: timesheet.userName, openHours: 0, confirmedHours: 0, timesheets: []};
       }
 
-      groups[index].timesheets.push(timesheet);
+      groups[index].timesheets.push({...timesheet});
 
       if (timesheet.status == TimesheetStatus.Open)
         groups[index].openHours += timesheet.totalHours;

@@ -5,15 +5,9 @@ import {
   MainNavService
 } from "src/app/core/services";
 import { Timesheet } from "src/app/shared/models";
-import { SubscriptionComponent } from "src/app/shared/components/abstracts/subscription.component";
-import {
-  takeUntil,
-  switchMap,
-  map
-} from "rxjs/operators";
+import {switchMap,map, tap} from "rxjs/operators";
 import { DateParams } from "src/app/shared/interfaces";
 import { MatDialog } from "@angular/material/dialog";
-import { TimesheetFormDialogWrapperComponent } from "../components/timesheet-form-dialog-wrapper.component";
 import { Router, ActivatedRoute } from "@angular/router";
 import { TimesheetCardDialogWrapperComponent } from '../components/timesheet-card-dialog-wrapper.component';
 import { Observable } from 'rxjs';
@@ -25,14 +19,12 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
   templateUrl: "./timesheet-week-view.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimesheetWeekViewComponent extends SubscriptionComponent {
+export class TimesheetWeekViewComponent {
 
   date = new Date();
 
   currentWeekNr: number = this.dateTimeService.getWeekOfYear(this.date);
   currentYear: number = this.date.getFullYear();
-
-  timesheetDays$: Observable<Timesheet[][]>;
 
   vm$: Observable<any>;
 
@@ -45,7 +37,6 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
     private dateTimeService: DateTimeService,
     private userTimesheetService: UserTimesheetService
   ) {
-    super();
     this.configureMainNav(this.getDateParams(this.route.snapshot.queryParams));
   }
 
@@ -107,8 +98,7 @@ export class TimesheetWeekViewComponent extends SubscriptionComponent {
             return { days: days, dateParams: dp };
           })
         );
-      }),
-      takeUntil(this.unsubscribe)
+      }), tap(console.log)
     );
   }
 

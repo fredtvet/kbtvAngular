@@ -1,10 +1,11 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { MissionType } from 'src/app/shared/models';
 import { MissionTypeService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-mission-type-form',
-  templateUrl: './mission-type-form.component.html'
+  templateUrl: './mission-type-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionTypeFormComponent implements OnInit {
   

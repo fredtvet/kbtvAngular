@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserTimesheetService } from 'src/app/core/services';
 import { Timesheet } from 'src/app/shared/models';
@@ -12,7 +12,8 @@ import { of } from 'rxjs';
     [timesheet]="timesheet$ | async" 
     (deleteClicked)="deleteTimesheet()">
   </app-timesheet-card>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class TimesheetCardDialogWrapperComponent {

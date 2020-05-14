@@ -3,8 +3,6 @@ import { UserTimesheetService, DateTimeService, MainNavService } from "src/app/c
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { TimesheetStatus, DateRangePresets } from "src/app/shared/enums";
 import { ActivatedRoute, Router } from "@angular/router";
-import { TimesheetFormDialogWrapperComponent } from "../components/timesheet-form-dialog-wrapper.component";
-import { MatDialog } from "@angular/material/dialog";
 import { Mission, TimesheetListFilter, Timesheet } from "src/app/shared/models";
 import { BehaviorSubject, Observable } from "rxjs";
 import { switchMap,filter} from "rxjs/operators";
@@ -24,11 +22,8 @@ export class TimesheetListComponent implements OnInit {
 
   timesheets$: Observable<Timesheet[]>;
 
-  cardSize = 142;
-
   constructor(
     private mainNavService: MainNavService,
-    private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
     private _bottomSheet: MatBottomSheet,
@@ -116,7 +111,5 @@ export class TimesheetListComponent implements OnInit {
     cfg.backFn = this.onBack;
     this.mainNavService.addConfig(cfg);
   }
-
-
 
 }

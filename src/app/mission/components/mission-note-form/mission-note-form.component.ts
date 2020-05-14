@@ -1,11 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { MissionNote } from 'src/app/shared/models';
 import { NotificationService, MissionNoteService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-mission-note-form',
-  templateUrl: './mission-note-form.component.html'
+  templateUrl: './mission-note-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionNoteFormComponent {
 

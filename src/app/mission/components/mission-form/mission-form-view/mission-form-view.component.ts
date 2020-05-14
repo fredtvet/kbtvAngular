@@ -1,11 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MissionType, Employer, Mission } from 'src/app/shared/models';
 import { Roles } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-mission-form-view',
-  templateUrl: './mission-form-view.component.html'
+  templateUrl: './mission-form-view.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class MissionFormViewComponent implements OnInit {
@@ -84,7 +85,6 @@ export class MissionFormViewComponent implements OnInit {
     this.missionForm.controls['address']
       .setValue(googleAddress.formatted_address);
   }
-
 
   get address(){
     return this.missionForm.get('address')

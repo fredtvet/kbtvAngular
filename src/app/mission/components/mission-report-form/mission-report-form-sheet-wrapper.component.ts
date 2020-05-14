@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
 
@@ -9,7 +9,8 @@ import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
     <app-mission-report-form [missionId]="data?.missionId" (finished)="close()">
     </app-mission-report-form>
   </app-simple-top-nav> 
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionReportFormSheetWrapperComponent implements OnInit {
 

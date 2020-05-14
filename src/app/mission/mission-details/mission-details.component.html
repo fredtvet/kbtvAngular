@@ -1,14 +1,13 @@
 
     <app-mission-details-view body
-      [mission]="mission"
-      [images]="(images$ | async)"
-      [reports]="(reports$ | async)"
-      [notes]="(notes$ | async)"
+      [mission]="mission$ | async"
+      [images]="images$ | async"
+      [reports]="reports$ | async"
+      [notes]="notes$ | async"
 
       (imagesUploaded)="uploadImages($event)"
       (imageDeleted)="deleteImage($event)"
       (noteDeleted)="deleteNote($event)"
-      (noteEdit)="editNote($event)"
       (reportDeleted)="deleteReport($event)">
     </app-mission-details-view>
 

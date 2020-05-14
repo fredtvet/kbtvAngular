@@ -1,22 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IdentityService, NotificationService, MainNavService, AppConfigurationService, DataSyncService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
-import { takeUntil, take, map, tap, filter, debounceTime } from 'rxjs/operators';
-import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
+import { map, filter, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.component.html'
+  templateUrl: './profile.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProfileComponent extends SubscriptionComponent {
+export class ProfileComponent {
 
-  user: User;
   passwordStatus: string;
 
-  syncRefreshTime$: Observable<number>;
+  user$: Observable<User> =  this.identityService.currentUser$;
+
+  syncRefreshTime$: Observable<number> = 
+    this.appConfigService.config$.pipe(debounceTime(1000), map(x => x.syncRefreshTime / 60));
 
   constructor(
     private dataSyncService: DataSyncService,
@@ -25,27 +27,17 @@ export class ProfileComponent extends SubscriptionComponent {
     private identityService: IdentityService,
     private notificationService: NotificationService,
     private _dialog: MatDialog,
-  ){ 
-    super();     
+  ){    
     this.configureMainNav();
   }
 
-  ngOnInit() {
-    this.syncRefreshTime$ = this.appConfigService.config$.pipe(debounceTime(1000), map(x => x.syncRefreshTime / 60));
-    this.identityService.currentUser$.pipe(takeUntil(this.unsubscribe))
-      .subscribe(user => this.user = user); 
-  }
-
-  updateProfile(updatedUser){
-    updatedUser.userName = this.user.userName;
-
-    this.identityService.updateCurrentUser(updatedUser).pipe(take(1))
-      .subscribe(data => this.notificationService.setNotification('Vellykket oppdatering!'));
-  }
+  updateProfile = (user: User) =>
+    this.identityService.updateCurrentUser(user).subscribe(data => 
+      this.notificationService.setNotification('Vellykket oppdatering!'));
+  
 
   updatePassword(data: any){
-    this.identityService.changePassword(data.oldPassword, data.password).pipe(take(1))
-    .subscribe(
+    this.identityService.changePassword(data.oldPassword, data.password).subscribe(
       data => this.notificationService.setNotification('Passord oppdatert!'),
       error => this.passwordStatus = "Nåværende passord stemmer ikke",
       () => this.passwordStatus = ""

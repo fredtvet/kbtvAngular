@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
 import { UserService } from 'src/app/core/services';
@@ -15,7 +15,8 @@ import { filter } from 'rxjs/operators';
       (finished)="close()">
   </app-user-form>
   </app-simple-top-nav> 
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserFormSheetWrapperComponent implements OnInit {
 

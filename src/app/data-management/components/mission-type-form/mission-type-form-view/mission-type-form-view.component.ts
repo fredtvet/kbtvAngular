@@ -1,9 +1,10 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-mission-type-form-view',
-  templateUrl: './mission-type-form-view.component.html'
+  templateUrl: './mission-type-form-view.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionTypeFormViewComponent implements OnInit {
   

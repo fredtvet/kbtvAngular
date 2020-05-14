@@ -22,20 +22,6 @@ export class UserTimesheetSubject extends BaseMissionChildSubject<Timesheet> {
     localStorageService: LocalStorageService,
     ) { super(localStorageService, 'timesheets') }
 
-    getByWeek$(dateParams: DateParams, excludeStatus?: TimesheetStatus): Observable<TimesheetInfo>{
-      const range = this.dateTimeService.getWeekRangeByDateParams(dateParams);
-      return this.data$.pipe(map(arr => {
-        let timesheetInfo = new TimesheetInfo();
-        arr.forEach(x => {
-          if(x.status == excludeStatus) return false;
-          let date = new Date(x.startTime);
-          if(date >= range[0] && date <= range[1])
-            timesheetInfo.addTimesheet(x);     
-        });
-        return timesheetInfo;
-      }))
-    }
-
     getByWeekGrouped$(dateParams: DateParams, excludeStatus?: TimesheetStatus): Observable<Timesheet[][]>{
       const range = this.dateTimeService.getWeekRangeByDateParams(dateParams);
       return this.data$.pipe(map(timesheets => {
@@ -51,7 +37,7 @@ export class UserTimesheetSubject extends BaseMissionChildSubject<Timesheet> {
           if(x.status == excludeStatus) return false;
           let date = new Date(x.startTime);
           if(date >= range[0] && date <= range[1]) 
-            result[date.getDay()||7].push(x); //1-7, mon-sun              
+            result[date.getDay()||7].push({...x}); //1-7, mon-sun              
         });
 
         return result;

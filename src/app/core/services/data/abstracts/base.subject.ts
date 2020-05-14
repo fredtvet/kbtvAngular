@@ -64,7 +64,7 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
     let arr = [...this.dataSubject.value];
     arr = arr.map(e => {
       if(e.id !== entity.id) return e;
-      else return Object.assign(e, entity);
+      else return {...Object.assign(e, entity)};
     });
     this.dataSubject.next(arr);
   }

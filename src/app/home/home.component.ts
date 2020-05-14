@@ -1,19 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Mission } from '../shared/models';
 import { Roles } from '../shared/enums';
 import { MissionService, MainNavService } from '../core/services';
 import { Observable } from 'rxjs';
 import {  map } from 'rxjs/operators';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class HomeComponent {
   Roles = Roles;
-
-  newestMissions: Mission[] = []
 
   missionHistory$: Observable<Mission[]>;
 

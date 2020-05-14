@@ -5,6 +5,7 @@ import { Timesheet } from 'src/app/shared/models';
   selector: 'app-timesheet-mission-bar',
   templateUrl: './timesheet-mission-bar.component.html',
   styleUrls: ['./timesheet-mission-bar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimesheetMissionBarComponent {
   

@@ -56,7 +56,7 @@
   </mat-tab>
 
   <mat-tab label="Bilder">
-      <app-image-list [images]="images" (imageDeleted)="this.imageDeleted.emit($event)"></app-image-list>
+      <app-image-list [images]="images" (imageDeleted)="deleteImage($event)"></app-image-list>
   </mat-tab>
 
   <mat-tab label="Notater">
@@ -64,8 +64,7 @@
       <app-mission-note-list
         [missionId]="mission.id"
         [notes]="notes"
-        (noteDeleted)="noteDeleted.emit($event)"
-        (noteEdit)="noteEdit.emit($event)">
+        (noteDeleted)="deleteNote($event)">
       </app-mission-note-list>
     </div>
   </mat-tab>
@@ -79,5 +78,5 @@
     <mat-icon>camera_enhance</mat-icon>
 </button>
 
-<input type="file" style="display:none" multiple (change)="this.imagesUploaded.emit($event.target.files)" #imageInput>
+<input type="file" style="display:none" multiple (change)="uploadImages($event.target.files, mission.id)" #imageInput>
 

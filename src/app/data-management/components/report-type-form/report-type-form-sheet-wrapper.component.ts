@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
 
@@ -9,7 +9,8 @@ import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
     <app-report-type-form (finished)="close()">
     </app-report-type-form>
   </app-simple-top-nav> 
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class ReportTypeFormSheetWrapperComponent implements OnInit {

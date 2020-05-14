@@ -1,9 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-password-form',
-  templateUrl: './password-form.component.html'
+  templateUrl: './password-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PasswordFormComponent implements OnInit {
 

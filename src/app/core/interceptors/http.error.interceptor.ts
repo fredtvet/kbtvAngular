@@ -18,7 +18,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(private notificationService: NotificationService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(request).pipe(tap(() => {console.log('xD')},
+    return next.handle(request).pipe(tap(() => {},
       (err: any) => {
       if (err instanceof HttpErrorResponse) {
         let msg = "Noe gikk feil! Vennligst prøv igjen."

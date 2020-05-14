@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { filter } from 'rxjs/operators';
@@ -9,7 +9,8 @@ import { TranslationService } from 'src/app/core/services';
 @Component({
   selector: 'app-data-manager-view',
   templateUrl: './data-manager-view.component.html',
-  styleUrls: ['./data-manager-view.component.scss']
+  styleUrls: ['./data-manager-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataManagerViewComponent implements OnInit {
   @ViewChild('dataGrid', {static: false}) dataGrid: AgGridAngular;
@@ -68,7 +69,7 @@ export class DataManagerViewComponent implements OnInit {
     let cols = this.dataGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
     this.dataGrid.columnApi.autoSizeColumns(cols);
   }
-  
+
   private deleteSelectedCells(): boolean{
     const ids = this.dataGrid.api.getSelectedNodes().map(node => node.data['id']);
     if(ids.length == 0) return false;
@@ -106,7 +107,6 @@ export class DataManagerViewComponent implements OnInit {
     };
 
     if(this.booleanProperties.includes(nameLower)){
-
       def['cellEditor'] = 'agSelectCellEditor';
       def['cellEditorParams'] = { values: ['Ja', 'Nei']}
 
@@ -118,7 +118,6 @@ export class DataManagerViewComponent implements OnInit {
         if(val == 'ja') params.data[name] = true;
         else if (val == 'nei') params.data[name] = false;
         else return false;
-
         return true;
       }
     }
@@ -126,9 +125,8 @@ export class DataManagerViewComponent implements OnInit {
     if(this.noEditProperties.includes(nameLower)) def['editable'] = false;
 
     if(this.objectProperties.includes(nameLower)){
-
       def['valueGetter'] = function(params) { //Get name of object and display
-        if(params.data[name] !== undefined)
+        if(params.data[name])
           return params.data[name].name;
         else return ''
       };

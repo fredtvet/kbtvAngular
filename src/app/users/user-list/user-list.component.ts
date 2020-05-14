@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { UserService, MainNavService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
 import { Roles } from '../../shared/enums';
@@ -9,7 +9,8 @@ import { UserFormSheetWrapperComponent } from '../components/user-form/user-form
 
 @Component({
   selector: 'app-user-list',
-  templateUrl: './user-list.component.html'
+  templateUrl: './user-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent {
   Roles = Roles;

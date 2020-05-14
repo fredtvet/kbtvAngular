@@ -1,12 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MissionService, BaseService, MissionTypeService, ReportTypeService, EmployerService, MainNavService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
-import { AgGridAngular } from 'ag-grid-angular';
-import { MatDialog, MatBottomSheet } from '@angular/material';
+import { MatBottomSheet } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BaseEntity } from 'src/app/shared/interfaces';
-import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
-import { filter, takeUntil, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import { filter, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { EmployerFormSheetWrapperComponent } from '../components/employer-form/employer-form-sheet-wrapper.component';
 import { MissionFormSheetWrapperComponent } from 'src/app/mission/components/mission-form/mission-form-sheet-wrapper.component';
 import { MissionTypeFormSheetWrapperComponent } from '../components/mission-type-form/mission-type-form-sheet-wrapper.component';
@@ -14,12 +12,11 @@ import { ReportTypeFormSheetWrapperComponent } from '../components/report-type-f
 
 @Component({
   selector: 'app-data-manager',
-  templateUrl: './data-manager.component.html'
+  templateUrl: './data-manager.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class DataManagerComponent extends SubscriptionComponent {
-@ViewChild('dataGrid', {static: false}) dataGrid: AgGridAngular;
-
+export class DataManagerComponent {
 data$:Observable<BaseEntity[]>;
 
 tables = ['Oppdrag', 'Oppdragstyper', 'Oppdragsgivere', 'Rapporttyper']
@@ -32,9 +29,7 @@ constructor(
   private reportTypeService: ReportTypeService,
   private router: Router,
   private route: ActivatedRoute,
-  private dialog: MatDialog,
   private _bottomSheet: MatBottomSheet) { 
-    super(); 
     this.configureMainNav();
   }
 
@@ -47,8 +42,7 @@ constructor(
       distinctUntilChanged(),
       map(qp => qp['currentTable']),
       filter(table => this.tables.includes(table)),
-      switchMap(table => this.getTableService(table).getAllDetails$()),
-      takeUntil(this.unsubscribe)
+      switchMap(table => this.getTableService(table).getAllDetails$())
     );
   }
 
@@ -58,9 +52,7 @@ constructor(
 
   editCell(e: any){
     if(e.oldValue != e.newValue)
-      this.getTableService(this.currentTable).update$(e.data).subscribe(x => {}, error => {
-        e.node.setDataValue(e.column.colId, e.oldValue) //Reset value on error
-      });        
+      this.getTableService(this.currentTable).update$(e.data).subscribe();        
   }
 
   deleteItems(ids: number[]): boolean{

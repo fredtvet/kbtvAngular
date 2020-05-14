@@ -1,10 +1,11 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MissionReportType } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-mission-report-form-view',
-  templateUrl: './mission-report-form-view.component.html'
+  templateUrl: './mission-report-form-view.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class MissionReportFormViewComponent {

@@ -10,6 +10,7 @@ import { User } from 'src/app/shared/models';
 export class UserSubject {
 
   private usersSubject = new BehaviorSubject<User[]>([]);
+  
   public users$ = this.usersSubject.asObservable();
 
   constructor() { }
@@ -19,7 +20,7 @@ export class UserSubject {
   }
 
   get$(userName: string): Observable<User> {
-    return this.users$.pipe(map(arr => arr.find(e => e.userName == userName)));
+    return this.users$.pipe(map(arr => { return {...arr.find(e => e.userName == userName)}}));
   }
 
   addOrUpdate(user: User): void{
@@ -34,7 +35,7 @@ export class UserSubject {
     let arr = [...this.usersSubject.value];
     arr = arr.map(e => {
       if(e.userName !== user.userName) return e;
-      else return Object.assign(e, user);
+      else return {...Object.assign(e, user)};
     });
     this.usersSubject.next(arr);
   }

@@ -1,9 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-report-type-form-view',
-  templateUrl: './report-type-form-view.component.html'
+  templateUrl: './report-type-form-view.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportTypeFormViewComponent implements OnInit {
 
