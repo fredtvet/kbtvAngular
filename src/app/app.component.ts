@@ -1,4 +1,4 @@
-import { Component, HostListener, ApplicationRef } from '@angular/core';
+import { Component, ApplicationRef, ChangeDetectionStrategy } from '@angular/core';
 import { IdentityService, NotificationService, ConnectionService, DataSyncService, AppConfigurationService } from './core/services';
 import { slideInAnimation } from './shared/animations/route-animation';
 import { skip, first, tap } from 'rxjs/operators';
@@ -8,7 +8,8 @@ import { interval, combineLatest, concat } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  animations: [ slideInAnimation ]
+  animations: [ slideInAnimation ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class AppComponent {
@@ -28,7 +29,7 @@ export class AppComponent {
         tap(x => {if(this.identityService.hasValidToken()) this.dataSyncService.syncIfTimePassed(x[1].syncRefreshTime)})
       );
       concat(appIsStable$, continousSync$).subscribe();
-    }
+  }
 
   ngOnInit(){
     this.identityService.populate();
@@ -38,7 +39,5 @@ export class AppComponent {
       else this.notificationService.setNotification('Du er nå i frakoblet modus. Det er kun mulig å lese data.', Notifications.Warning)
     });
   }
-
-
   
 }

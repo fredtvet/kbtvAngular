@@ -8,7 +8,6 @@ const routes: Routes = [
   {
     path: '',
     component: TimesheetAdminListComponent,
-    pathMatch: 'full',
     canActivate: [AuthGuard],
     data: {allowedRoles: [Roles.Leder]}
   },

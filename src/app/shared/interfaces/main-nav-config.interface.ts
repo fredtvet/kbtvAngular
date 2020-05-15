@@ -14,4 +14,6 @@ export interface MainNavConfig{
     backFnParams?: any[];
        
     elevationEnabled?: boolean;
+
+    isXs?: boolean;
 }

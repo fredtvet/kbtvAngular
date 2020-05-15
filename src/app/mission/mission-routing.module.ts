@@ -9,13 +9,11 @@ const routes: Routes = [
 {
   path: '',
   component: MissionListComponent,
-  pathMatch: 'full',
   canActivate: [AuthGuard],
 },
 {
   path: ':id/detaljer',
   component: MissionDetailsComponent,
-  pathMatch: 'full',
   canActivate: [AuthGuard],
 },
 ];

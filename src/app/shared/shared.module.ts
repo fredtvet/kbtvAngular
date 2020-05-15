@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe, SortByTimesheetStatusPipe,UsernameToFullnamePipe } from './pipes'
+import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe } from './pipes'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -33,7 +33,6 @@ import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date
 import { BottomSheetMenuComponent } from './components/bottom-sheet-menu/bottom-sheet-menu.component';
 import { DurationPipe } from './pipes/duration.pipe';
 import { GetDateByDateParamsPipe } from './pipes/get-date-by-date-params.pipe';
-import { SameDatePipe } from './pipes/same-date.pipe';
 import { ArrayIncludesPipe } from './pipes/array-includes.pipe';
 import { AddToHomeScreenDirective } from './directives/add-to-home-screen.directive';
 import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
@@ -51,13 +50,11 @@ import { InputListenerDirective } from './directives';
     ArraySlicePipe,
     ThumbnailPipe,
     SortByDatePipe,
-    SortByTimesheetStatusPipe,
     NotificationComponent,
     SubmitButtonComponent,
     BottomSheetMenuComponent,
     DurationPipe,
     GetDateByDateParamsPipe,
-    SameDatePipe,
     PageNotFoundComponent,
     TimesheetFilterComponent,
     TimesheetFilterSheetWrapperComponent,
@@ -66,7 +63,6 @@ import { InputListenerDirective } from './directives';
     IconButtonComponent,
     StrokedButtonComponent,
     ListCardComponent,
-    UsernameToFullnamePipe,
     TimesheetCardComponent,
     WeekListFilterComponent,
     WeekListFilterSheetWrapperComponent,
@@ -118,11 +114,8 @@ import { InputListenerDirective } from './directives';
     ArraySlicePipe,
     ThumbnailPipe,
     SortByDatePipe,
-    SameDatePipe,
     DurationPipe,
     GetDateByDateParamsPipe,
-    SortByTimesheetStatusPipe,
-    UsernameToFullnamePipe,
     MainNavComponent,
     SubmitButtonComponent,
     PageNotFoundComponent,

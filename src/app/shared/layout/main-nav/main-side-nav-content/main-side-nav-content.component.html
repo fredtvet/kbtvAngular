@@ -14,21 +14,21 @@
 
 <mat-nav-list >
 
-  <a mat-list-item (click)="onNavItemClick()" [routerLink]="['/hjem']" [routerLinkActive]="['active']">
+  <a mat-list-item (click)="navItemClick()" [routerLink]="['/hjem']" [routerLinkActive]="['active']">
     <mat-icon mat-list-icon>home</mat-icon>
     <p mat-line>Hjem</p>
   </a>
 
   <mat-divider class="mid-divider"></mat-divider>
 
-  <a mat-list-item (click)="onNavItemClick()" [routerLink]="['/oppdrag']" [routerLinkActive]="['active']">
+  <a mat-list-item (click)="navItemClick()" [routerLink]="['/oppdrag']" [routerLinkActive]="['active']">
     <mat-icon mat-list-icon>view_list</mat-icon>
     <p mat-line>Oppdrag</p>
   </a>
 
   <mat-divider class="mid-divider"></mat-divider>
 
-  <a mat-list-item (click)="onNavItemClick()" [routerLink]="['/timer/ukevisning']" [routerLinkActive]="['active']">
+  <a mat-list-item (click)="navItemClick()" [routerLink]="['/timer']" [routerLinkActive]="['active']">
     <mat-icon mat-list-icon>timer</mat-icon>
     <p mat-line>Timer</p>
   </a>
@@ -37,24 +37,24 @@
 
   <span *ifRole="[Roles.Leder, Roles.Mellomleder]" fxHide.xs>
     <div mat-subheader class="color-accent-light pb-0">Administrering</div>
-    <a mat-list-item (click)="onNavItemClick()" [routerLink]="['/data']" [routerLinkActive]="['active']">
+    <a mat-list-item (click)="navItemClick()" [routerLink]="['/data']" [routerLinkActive]="['active']">
       <mat-icon mat-list-icon>dns</mat-icon>
       <p mat-line>Data</p>
     </a>
     <mat-divider class="mid-divider"></mat-divider>
-    <a mat-list-item (click)="onNavItemClick()" [routerLink]="['/brukere']" [routerLinkActive]="['active']">
+    <a mat-list-item (click)="navItemClick()" [routerLink]="['/brukere']" [routerLinkActive]="['active']">
       <mat-icon mat-list-icon>people</mat-icon>
       <p mat-line>Brukere</p>
     </a>
     <mat-divider class="mid-divider"></mat-divider>
-    <a mat-list-item (click)="onNavItemClick()" [routerLink]="['/timeadministrering']" [routerLinkActive]="['active']">
+    <a mat-list-item (click)="navItemClick()" [routerLink]="['/timeadministrering']" [routerLinkActive]="['active']">
       <mat-icon mat-list-icon>assessment</mat-icon>
       <p mat-line>Timer</p>
     </a>
     <mat-divider class="mid-divider"></mat-divider>
 
     <div mat-subheader class="pb-0 color-accent-light">Statistikk</div>
-    <a mat-list-item (click)="onNavItemClick()" [routerLink]="['/timestatistikk']" [routerLinkActive]="['active']">
+    <a mat-list-item (click)="navItemClick()" [routerLink]="['/timestatistikk']" [routerLinkActive]="['active']">
       <mat-icon mat-list-icon>assessment</mat-icon>
       <p mat-line>Timestatistikk</p>
     </a>
@@ -63,12 +63,12 @@
 
   <span class="bottom-list">
     <mat-divider></mat-divider>
-    <a mat-list-item (click)="onNavItemClick()" [routerLink]="['/profil']" [routerLinkActive]="['active']">
+    <a mat-list-item (click)="navItemClick()" [routerLink]="['/profil']" [routerLinkActive]="['active']">
       <mat-icon mat-list-icon>person</mat-icon>
       <p mat-line>Profil</p>
     </a>
     <mat-divider class="mid-divider"></mat-divider>
-    <a mat-list-item (click)="onLogOut()">
+    <a mat-list-item (click)="logOut()">
       <mat-icon mat-list-icon>power_settings_new</mat-icon>
       <p mat-line>Logg ut</p>
     </a>

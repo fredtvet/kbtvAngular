@@ -9,7 +9,6 @@ const routes: Routes = [
   {
     path: '',
     component: DataManagerComponent,
-    pathMatch: 'full',
     canActivate: [AuthGuard],
     data: {allowedRoles: [Roles.Leder]}
   },

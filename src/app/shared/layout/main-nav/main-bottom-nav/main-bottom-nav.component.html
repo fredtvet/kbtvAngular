@@ -20,7 +20,7 @@
 
         </button>
 
-        <button *ifRole="[Roles.Leder, Roles.Mellomleder, Roles.Ansatt]" [routerLink]="['/timer/ukevisning']" [routerLinkActive]="['active']" fxFlex
+        <button *ifRole="[Roles.Leder, Roles.Mellomleder, Roles.Ansatt]" [routerLink]="['/timer']" [routerLinkActive]="['active']" fxFlex
          mat-icon-button aria-label="Gå til timeliste">
             <mat-icon matBadgeColor="warn" matBadgeSize="small">timer</mat-icon>
         </button>

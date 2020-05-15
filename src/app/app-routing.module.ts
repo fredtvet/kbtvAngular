@@ -13,7 +13,8 @@ const routes: Routes = [
     path: '', component: MainNavComponent,
     children:[
       {path: '', redirectTo: 'hjem', pathMatch: 'full'},
-      {path: 'hjem', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+      {path: 'hjem', component: HomeComponent, canActivate: [AuthGuard]},
+      
       {path: 'profil', loadChildren: './profile/profile.module#ProfileModule'},
       {path: 'brukere', loadChildren: './users/users.module#UsersModule'},
       {path: 'data', loadChildren: './data-management/data-management.module#DataManagementModule'},
@@ -21,7 +22,7 @@ const routes: Routes = [
       {path: 'timeadministrering', loadChildren: './timesheet-admin/timesheet-admin.module#TimesheetAdminModule'},
       {path: 'timestatistikk', loadChildren: './timesheet-statistic/timesheet-statistic.module#TimesheetStatisticModule'},
       {path: 'oppdrag', loadChildren: './mission/mission.module#MissionModule'}
-    ]
+    ], 
   },
   {path: 'login', component: AuthComponent, canActivate: [NoAuthGuard]},
   {path: '**', component: PageNotFoundComponent},

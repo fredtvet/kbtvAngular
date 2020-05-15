@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { AppButton } from '../../interfaces/app-button.interface';
 
 @Component({
   selector: 'app-stroked-button',
-  templateUrl: './stroked-button.component.html'
+  templateUrl: './stroked-button.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class StrokedButtonComponent {

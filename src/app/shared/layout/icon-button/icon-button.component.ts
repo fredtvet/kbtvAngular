@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { AppButton } from '../../interfaces/app-button.interface';
 import { Roles } from '../../enums/roles.enum';
 
 @Component({
   selector: 'app-icon-button',
-  templateUrl: './icon-button.component.html'
+  templateUrl: './icon-button.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconButtonComponent {
   Roles = Roles;

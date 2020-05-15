@@ -10,7 +10,7 @@ import {
 
 export const slideInAnimation =
   trigger('routeAnimations', [
-    transition('HomePage <=> *', [
+    transition('Home <=> *', [
       style({ position: 'relative' }),
       query(':enter, :leave', [
         style({

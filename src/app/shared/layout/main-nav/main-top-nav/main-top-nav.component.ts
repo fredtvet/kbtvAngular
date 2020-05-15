@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { MainNavConfig } from 'src/app/shared/interfaces/main-nav-config.interface';
 import { AppButton } from 'src/app/shared/interfaces/app-button.interface';
 import { BottomSheetMenuComponent } from 'src/app/shared/components/bottom-sheet-menu/bottom-sheet-menu.component';
@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main-top-nav',
-  templateUrl: './main-top-nav.component.html'
+  templateUrl: './main-top-nav.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainTopNavComponent implements OnInit {
 
@@ -27,6 +28,4 @@ export class MainTopNavComponent implements OnInit {
   onMenuButtonClick = () => this.menuBtnClicked.emit();
   
   openBottomSheet = (buttons: AppButton[]) => this._bottomSheet.open(BottomSheetMenuComponent, { data: buttons });
-
-  handleFn = (fn: Function, parameters: any[] = []) => fn(...parameters);
 }
