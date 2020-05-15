@@ -62,10 +62,7 @@ export abstract class BaseService<T extends BaseEntity>{
  
     return this.apiService
                 .post(`${this.uri}`, entity)
-                .pipe(tap(data =>{
-                  this.dataSubject.addOrUpdate(data);
-                  return data;
-                }));
+                .pipe(tap(data =>this.dataSubject.addOrUpdate(data)));
   }
 
   update$(entity: T): Observable<T>{
@@ -74,12 +71,7 @@ export abstract class BaseService<T extends BaseEntity>{
               .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     return this.apiService.put(`${this.uri}/${entity.id}`, entity)
-      .pipe(
-        map(data => {
-          this.dataSubject.update(data);
-          return data;
-        })
-      );
+      .pipe(tap(data => this.dataSubject.update(data)));
   }
 
   delete$(id: number): Observable<boolean> {
@@ -91,9 +83,7 @@ export abstract class BaseService<T extends BaseEntity>{
     return this
             .apiService
             .delete(`${this.uri}/${id}`)
-            .pipe(tap(bool =>{
-              if(bool) this.dataSubject.delete(id);
-            }));
+            .pipe(tap(bool =>{if(bool) this.dataSubject.delete(id)}));
   }
 
   deleteRange$(ids: number[]): Observable<boolean>{
@@ -104,9 +94,7 @@ export abstract class BaseService<T extends BaseEntity>{
     return this
             .apiService
             .post(`${this.uri}/DeleteRange`, {Ids: ids})
-            .pipe(tap(bool =>{
-              if(bool) this.dataSubject.deleteRange(ids);
-            }));
+            .pipe(tap(bool =>{if(bool) this.dataSubject.deleteRange(ids)}));
   }
 
   purge(): void{

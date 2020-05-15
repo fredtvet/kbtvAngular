@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from 'src/app/shared/models';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../api.service';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { UserSubject } from './user.subject';
 
 @Injectable({
@@ -40,30 +40,21 @@ export class UserService {
   {
     return this.apiService
       .post(`${this.uri}`, user)
-      .pipe(map(data => {
-        this.userSubject.addOrUpdate(data);
-        return data;
-      }));
+      .pipe(tap(data => this.userSubject.addOrUpdate(data)));
   }
 
   update$(user: User): Observable<User>
   {
     return this.apiService
       .put(`${this.uri}/${user.userName}`, user)
-      .pipe(map(data => {
-        this.userSubject.update(data);
-        return data;
-      }));
+      .pipe(tap(data => this.userSubject.update(data)));
   }
 
   delete$(userName: string): Observable<boolean> {
     return this
       .apiService
       .delete(`${this.uri}/${userName}`)
-      .pipe(map(bool =>{ console.log(bool);
-        if(bool) this.userSubject.delete(userName);
-        return bool;
-      }));
+      .pipe(tap(bool =>{if(bool) this.userSubject.delete(userName)}));
   }
 
 }
