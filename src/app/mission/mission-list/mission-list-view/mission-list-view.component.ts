@@ -26,4 +26,7 @@ export class MissionListViewComponent implements OnInit {
 
   openMissionForm = () => this._bottomSheet.open(MissionFormSheetWrapperComponent);
 
+  trackByFn = (index: number, mission: Mission) => mission.id;
+  
+
 }

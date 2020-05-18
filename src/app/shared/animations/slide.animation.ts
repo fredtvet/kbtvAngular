@@ -19,7 +19,7 @@ export const slideAnimation = animation([
         ":enter",
         [
           style({ transform: '{{ enterX }}' }),
-          animate("0.35s ease-in-out", style({ transform: "translateX(0%)" })),
+          animate("0.25s ease-in-out", style({ transform: "translateX(0%)" })),
         ],
         { optional: true }
       ),
@@ -28,7 +28,7 @@ export const slideAnimation = animation([
         [
           style({ transform: "translateX(0%)" }),
           animate(
-            "0.35s ease-in-out",
+            "0.25s ease-in-out",
             style({ transform: '{{ leaveX }}' })
           ),
         ],
@@ -37,10 +37,10 @@ export const slideAnimation = animation([
     ]),
     query(
       ":enter .anim-block",
-      stagger(75, [
+      stagger(40, [
         style({ transform: "translateY(100px)" }),
         animate(
-          ".25s ease-in-out",
+          ".2s ease-in-out",
           style({ transform: "translateY(0px)", opacity: 1 })
         ),
       ]),

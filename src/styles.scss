@@ -3,6 +3,7 @@
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 @import "~ng-pick-datetime/assets/style/picker.min.css";
+@import "~animate.css/animate.min";
 
 html, body { height: 100%; background:$background-color;color:black;overflow:hidden;}
 body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
@@ -62,8 +63,42 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
   bottom: ($content-margin + $bottom-nav-height) * 1px;
   z-index:2;
   background:$accent;
+
+  animation: backInUp;
+  animation-duration:.5s
 }
 
+.bounceIn{
+  animation: bounceIn;
+  animation-duration: .5s;
+}
+
+.fadeInDown{
+  animation: fadeInDown;
+  animation-duration:.5s
+}
+
+.backInUp{
+  animation: backInUp;
+  animation-duration:.5s
+}
+.backInDown{
+  animation: backInDown;
+  animation-duration:.5s
+}
+.fadeIn{
+  animation: fadeIn;
+  animation-duration:.8s
+}
+
+.fadeInRight{
+  animation: fadeInRight;
+  animation-duration:.5s
+}
+.fadeInLeft{
+  animation: fadeInLeft;
+  animation-duration:.5s
+}
 .image_viewer_dialog{max-width:none!important;}
 
 .image_viewer_dialog .mat-dialog-container{background-color:black!important;}

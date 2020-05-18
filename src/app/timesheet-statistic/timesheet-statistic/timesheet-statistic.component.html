@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutGap="8px" class="h-100 p-2">
 
-    <span fxLayout="row" fxLayoutAlign="space-between center">  
-        <mat-button-toggle-group aria-label="Grupper etter tidsperiode" class="anim-block" [ngModel]="groupBy$ | async"
+    <span fxLayout="row" fxLayoutAlign="space-between center" class="fadeInLeft">  
+        <mat-button-toggle-group aria-label="Grupper etter tidsperiode" [ngModel]="groupBy$ | async"
             (ngModelChange)="changeGroupingType($event)">
             <mat-button-toggle [value]="groupByTypes.Day">Dag</mat-button-toggle>
             <mat-button-toggle [value]="groupByTypes.Week">Uke</mat-button-toggle>
@@ -9,7 +9,7 @@
             <mat-button-toggle [value]="groupByTypes.Year">År</mat-button-toggle>
         </mat-button-toggle-group>  
 
-        <button mat-raised-button class="bg-accent anim-block" *ngIf="filter$ | async; let filter" (click)="openBottomSheet(filter)">
+        <button mat-raised-button class="bg-accent" *ngIf="filter$ | async; let filter" (click)="openBottomSheet(filter)">
             <mat-icon>filter_list</mat-icon>
         </button>  
     </span>

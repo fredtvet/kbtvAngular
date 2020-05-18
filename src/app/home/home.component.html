@@ -33,7 +33,7 @@
 
   <span class="mat-body-2 anim-block">Sist besøkte oppdrag</span>
   
-  <app-list-card *ngFor="let mission of missionHistory$ | async"
+  <app-list-card *ngFor="let mission of missionHistory$ | async" 
     startIcon="history"
     [endIcon]="mission.finished ? 'check':'chevron_right'"
     [text]="mission.address"

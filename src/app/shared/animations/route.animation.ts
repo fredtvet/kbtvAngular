@@ -11,10 +11,10 @@ const slideForwardParams = {enterX: 'translateX(100%)',leaveX: 'translateX(-100%
 export const routeAnimation = trigger("routeAnimation", [
   transition("void <=> Home", useAnimation(slideAnimation, 
     {params: slideForwardParams})),
-  // transition("Home => *", useAnimation(slideAnimation,
-  //   {params: slideForwardParams})),
-  // transition("* => Home", useAnimation(slideAnimation,
-  //   {params: slideBackwardParams})),
+  //  transition("Home => *", useAnimation(slideAnimation,
+  //    {params: slideForwardParams})),
+   transition("* => Home", useAnimation(slideAnimation,
+     {params: slideBackwardParams})),
 
   // transition("MissionList => TimesheetWeekView", useAnimation(slideAnimation,
   //   {params: slideForwardParams})),

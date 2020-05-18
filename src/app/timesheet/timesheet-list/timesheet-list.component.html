@@ -1,12 +1,14 @@
 <div fxLayout="column" fxLayoutAlign="start stretch" class="h-100">
 
-    <button mat-mini-fab aria-label="ny" class="action_fab anim-block"
+    <button mat-mini-fab aria-label="ny" class="action_fab"
         (click)="openTimesheetForm(getCurrentFilter().mission)">
         <mat-icon class="scale-125">add</mat-icon>
     </button>
+
     <ng-container *ngIf="(timesheets$ | async)?.length else noSheets; let timesheets">
-        <cdk-virtual-scroll-viewport itemSize="148" [attr.minBufferPx]="6*148" [attr.maxBufferPx]="8*148" fxFlex>
-            <div class="m-2 mat-elevation-z3 anim-block" *cdkVirtualFor="let timesheet of timesheets$ | async">
+        <cdk-virtual-scroll-viewport itemSize="148" fxFlex>
+            <div class="m-2 w-auto fadeInRight" 
+                *cdkVirtualFor="let timesheet of timesheets$ | async">
                 <app-timesheet-card [timesheet]="timesheet" (deleteClicked)="deleteTimesheet($event)"
                     (editClicked)="openTimesheetForm(undefined, $event)">
                 </app-timesheet-card>
@@ -16,8 +18,8 @@
 </div>
 
 <ng-template #noSheets>
-    <span class="mt-3 text-center">
+    <span class="mt-3 text-center w-100">
         <p>Finner ingen timer med gitte filtre. </p>
-        <button mat-raised-button color="accent" (click)="openFilterSheet()">Åpne filter</button>
+        <button mat-raised-button color="accent" class="bounceIn" (click)="openFilterSheet()">Åpne filter</button>
     </span>
 </ng-template>

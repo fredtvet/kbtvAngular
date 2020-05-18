@@ -1,11 +1,11 @@
 <div class="static-page-container" fxLayout="column" fxLayoutGap="8px">
-  <app-data-table-picker class="anim-block"
+  <app-data-table-picker
     [tables]="tables" 
     [selectedTable]="selectedTable$ | async" 
     (tableSelected)="changeTable($event)">
   </app-data-table-picker>
 
-  <app-data-table class="h-100 anim-block" fxLayout="column" fxLayoutGap="8px"
+  <app-data-table class="h-100" fxLayout="column" fxLayoutGap="8px"
     [data]="data$ | async"
     (itemEdited)="editCell($event)"
     (createItem)="createItem()"

@@ -155,8 +155,9 @@ export class TimesheetAdminListComponent {
     this.mainNavService.addConfig(cfg);
   }
 
-  trackByFn(index:number, summary:TimesheetSummary): string {
-    return summary.year + '-' + summary.week;
-  }
+  trackByUserName = (index:number, summary:TimesheetSummary): string => summary.userName;
+  
+  trackByWeek = (index:number, summary:TimesheetSummary): number => summary.week;
 
+  trackById = (index:number, timesheet:Timesheet): number => timesheet.id;
 }
