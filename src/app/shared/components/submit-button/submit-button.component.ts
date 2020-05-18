@@ -1,25 +1,20 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { Observable } from 'rxjs';
-import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
-import { takeUntil } from 'rxjs/operators';
+import { shareReplay, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-submit-button',
-  templateUrl: './submit-button.component.html'
+  templateUrl: './submit-button.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SubmitButtonComponent extends SubscriptionComponent {
+export class SubmitButtonComponent {
 
   @Input() disabled: boolean;
   @Input() icon: string;
   @Input() text: string = 'Lagre';
 
-  loading$: Observable<boolean> = this.loadingService.loading$.pipe(takeUntil(this.unsubscribe));
-  loading: boolean = false;
+  loading$: Observable<boolean> = this.loadingService.loading$.pipe(shareReplay());
 
-  constructor(private loadingService: LoadingService) {
-    super();
-    this.loading$.subscribe(x => this.loading =  x)
-  }
-
+  constructor(private loadingService: LoadingService) {}
 }

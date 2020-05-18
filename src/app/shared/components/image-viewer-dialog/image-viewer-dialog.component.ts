@@ -1,10 +1,9 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MissionImage } from '../../models/mission-image.model';
 import { Roles } from '../../enums/roles.enum';
 import { MatBottomSheet } from '@angular/material';
-import { SubscriptionComponent } from '../abstracts/subscription.component';
 import { BottomSheetMenuComponent } from '../bottom-sheet-menu/bottom-sheet-menu.component';
 import { AppButton } from '../../interfaces/app-button.interface';
 
@@ -41,24 +40,24 @@ import { AppButton } from '../../interfaces/app-button.interface';
     ])
   ],
   templateUrl: './image-viewer-dialog.component.html',
-  styleUrls: ['./image-viewer-dialog.component.scss']
+  styleUrls: ['./image-viewer-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class ImageViewerDialogComponent extends SubscriptionComponent {
+export class ImageViewerDialogComponent {
   public Roles = Roles;
   toolbarHidden = false;
 
   private bottomSheetButtons: AppButton[];
 
-  public currentImage: MissionImage;
-  public index: number;
-  public images: MissionImage[];
+  currentImage: MissionImage;
+  index: number;
+  images: MissionImage[];
 
   constructor(
     private dialogRef: MatDialogRef<ImageViewerDialogComponent>,
     private _bottomSheet: MatBottomSheet,
-    @Inject(MAT_DIALOG_DATA) private data: any,     
-  ){ super(); };
+    @Inject(MAT_DIALOG_DATA) private data: any){};
 
   ngOnInit() {
     this.bottomSheetButtons = [

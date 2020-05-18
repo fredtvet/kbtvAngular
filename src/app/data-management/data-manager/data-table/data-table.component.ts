@@ -1,18 +1,16 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
-import { ConfirmDialogComponent } from 'src/app/shared/components';
-import { filter } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { BaseEntity } from 'src/app/shared/interfaces';
+import { AgGridAngular } from 'ag-grid-angular';
 import { TranslationService } from 'src/app/core/services';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-data-manager-view',
-  templateUrl: './data-manager-view.component.html',
-  styleUrls: ['./data-manager-view.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-data-table',
+  templateUrl: './data-table.component.html'
 })
-export class DataManagerViewComponent implements OnInit {
+export class DataTableComponent {
   @ViewChild('dataGrid', {static: false}) dataGrid: AgGridAngular;
 
   _data: BaseEntity[];
@@ -24,13 +22,9 @@ export class DataManagerViewComponent implements OnInit {
       this.initNgGrid(value)
   }
 
-  @Input() tables: string[];
-  @Input() selectedTable: string;
-
-  @Output() tableSelected = new EventEmitter();
+  @Output() itemEdited = new EventEmitter();
   @Output() itemsDeleted = new EventEmitter();
-  @Output() newItemClick = new EventEmitter();
-  @Output() cellEdited = new EventEmitter();
+  @Output() createItem = new EventEmitter();
 
   columnDefs: any = [];
 
@@ -46,34 +40,28 @@ export class DataManagerViewComponent implements OnInit {
 
   constructor(
     private _dialog: MatDialog,
-    private translationService: TranslationService
-  ) { }
+    private translationService: TranslationService) { }
 
-  ngOnInit() {
+  ngDoCheck(): void {
+    //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
+    //Add 'implements DoCheck' to the class.
+    console.log('checvk')
   }
-
-  openDeleteDialog = () => {
-    if(this.dataGrid.api.getSelectedNodes().length == 0) return null;
-
-    const deleteDialogRef = this._dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette ressursen(e).'});
-    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteSelectedCells());
-  }
-
-  editCell = (e:any) => this.cellEdited.emit(e);
-
-  createItem = () => this.newItemClick.emit();
-
-  changeTable = (table:string) => this.tableSelected.emit(table);
 
   autoSizeGrid(){
     let cols = this.dataGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
     this.dataGrid.columnApi.autoSizeColumns(cols);
   }
 
-  private deleteSelectedCells(): boolean{
-    const ids = this.dataGrid.api.getSelectedNodes().map(node => node.data['id']);
-    if(ids.length == 0) return false;
-    this.itemsDeleted.emit(ids);
+  editCell = (e:any) => this.itemEdited.emit(e);
+
+  openDeleteDialog = () => {
+    let nodes = this.dataGrid.api.getSelectedNodes();
+    if(nodes.length == 0) return null;
+    const deleteDialogRef = this._dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette ressursen(e).'});
+
+    deleteDialogRef.afterClosed().pipe(filter(res => res))
+      .subscribe(res =>  this.itemsDeleted.emit(nodes.map(node => node.data['id'])));
   }
 
   private initNgGrid = (data: BaseEntity[]) => {
@@ -92,7 +80,6 @@ export class DataManagerViewComponent implements OnInit {
   }
 
   private addColumnDef(name: string){
-
     let nameLower = name.toLowerCase();
 
     if(this.ignoredProperties.includes(nameLower)) return false; //Ignored properties
@@ -135,5 +122,5 @@ export class DataManagerViewComponent implements OnInit {
 
     this.columnDefs.push(def);
   }
-
+  
 }

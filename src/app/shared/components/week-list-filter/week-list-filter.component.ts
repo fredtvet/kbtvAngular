@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-week-list-filter',
-  templateUrl: './week-list-filter.component.html'
+  templateUrl: './week-list-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WeekListFilterComponent implements OnInit {
 

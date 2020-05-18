@@ -1,8 +1,9 @@
 <div class="p-0 h-100" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="vm$ | async; let vm">
-    <cdk-virtual-scroll-viewport itemSize="82" [attr.minBufferPx]="11*82" [attr.maxBufferPx]="13*82" fxFlex>
+    <cdk-virtual-scroll-viewport class="h-min-100" itemSize="82" [attr.minBufferPx]="13*82" [attr.maxBufferPx]="13*82" fxFlex>
 
         <div class="app-card mat-elevation-z2 m-1 p-0" matRipple
-            *cdkVirtualFor="let summary of vm.summaries" (click)="goToWeekView(vm.year, summary.week)">
+            *cdkVirtualFor="let summary of vm.summaries; trackBy: trackByWeekNr; templateCacheSize:0" 
+            (click)="goToWeekView(vm.year, summary.week)">
             <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
         </div>
 

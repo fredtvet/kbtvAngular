@@ -2,7 +2,6 @@ import { Component, Input, EventEmitter, Output, ChangeDetectionStrategy } from 
 import { TimesheetStatus } from '../../enums/timesheet-status.enum';
 import { Timesheet } from '../../models/timesheet.model';
 import { Roles } from '../../enums/roles.enum';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-timesheet-card',

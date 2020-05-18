@@ -1,10 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-password-form',
-  templateUrl: './password-form.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './password-form.component.html'
 })
 export class PasswordFormComponent implements OnInit {
 
@@ -33,7 +32,7 @@ export class PasswordFormComponent implements OnInit {
     onSubmit(){
       const {value, valid} = this.passwordForm;
 
-      if(valid && this.password.value == this.confirmPassword.value)
+      if(valid && this.password.value === this.confirmPassword.value)
       {
         this.passwordUpdated.emit(value);
         this.passwordForm.reset();

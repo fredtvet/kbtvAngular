@@ -14,9 +14,6 @@ import { MissionNoteFormSheetWrapperComponent } from '../mission-note-form/missi
 export class MissionNoteListComponent {
 
   @Input() notes: MissionNote[] = [];
-
-  @Input() missionId: number;
-
   @Output() noteDeleted = new EventEmitter();
 
   Roles = Roles;

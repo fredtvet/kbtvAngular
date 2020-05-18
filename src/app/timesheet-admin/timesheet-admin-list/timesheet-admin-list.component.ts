@@ -3,15 +3,18 @@ import { MainNavService, TimesheetService, DateTimeService, TimesheetAggregatorS
 import { TimesheetSummary } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
-import { filter, map, startWith, pairwise} from 'rxjs/operators';
+import { filter, map, startWith, pairwise, tap} from 'rxjs/operators';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
 import { GroupByTypes, TimesheetStatus } from 'src/app/shared/enums';
 import { Timesheet } from 'src/app/shared/models';
+import { listAnimation } from 'src/app/shared/animations/list.animation';
+import { useAnimation, query, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-timesheet-admin-list',
   templateUrl: './timesheet-admin-list.component.html',
+  animations: [listAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -87,7 +90,7 @@ export class TimesheetAdminListComponent {
           this.configureDefaultNav(params.year);
         }
         return result;
-      })
+      }),tap(console.log)
     );
   }
 

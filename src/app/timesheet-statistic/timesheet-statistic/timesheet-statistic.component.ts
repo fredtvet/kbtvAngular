@@ -28,7 +28,6 @@ export class TimesheetStatisticComponent {
       this.configureMainNav();
     }
 
-
   changeGroupingType = (type: GroupByTypes) => this.timesheetService.addGroupBy(type);
   
   openBottomSheet(f: TimesheetFilter): void {

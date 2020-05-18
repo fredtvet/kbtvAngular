@@ -1,9 +1,9 @@
 
-    <app-mission-details-view body
-      [mission]="mission$ | async"
-      [images]="images$ | async"
-      [reports]="reports$ | async"
-      [notes]="notes$ | async"
+    <app-mission-details-view body *ngIf="vm$ | async; let vm"
+      [mission]="vm.mission"
+      [images]="vm.images"
+      [reports]="vm.reports"
+      [notes]="vm.notes"
 
       (imagesUploaded)="uploadImages($event)"
       (imageDeleted)="deleteImage($event)"

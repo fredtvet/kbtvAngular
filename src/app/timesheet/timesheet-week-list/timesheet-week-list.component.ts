@@ -45,6 +45,10 @@ export class TimesheetWeekListComponent implements OnInit {
     this.router.navigate(['/timer/ukevisning'], { queryParams: {year, weekNr}} )
   }
 
+  trackByWeekNr(index:number, summary:TimesheetSummary): number {
+    return summary.week;
+  }
+
   private openWeekFilter = (year: number) => {
     let ref = this._bottomSheet.open(WeekListFilterSheetWrapperComponent, {
       data: {year}

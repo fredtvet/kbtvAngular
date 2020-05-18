@@ -94,11 +94,8 @@ export class TimesheetWeekViewComponent {
       switchMap(dp => {
         this.configureMainNav(dp);
         return this.userTimesheetService.getByWeekGrouped$(dp).pipe(
-          map(days => {
-            return { days: days, dateParams: dp };
-          })
-        );
-      }), tap(console.log)
+           map(days => { return { days: days, dateParams: dp }}));
+      })
     );
   }
 

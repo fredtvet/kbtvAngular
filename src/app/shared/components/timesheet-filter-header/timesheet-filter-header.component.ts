@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { TimesheetFilter } from '../../interfaces/timesheet-filter.interface';
 
 @Component({
   selector: 'app-timesheet-filter-header',
-  templateUrl: './timesheet-filter-header.component.html'
+  templateUrl: './timesheet-filter-header.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimesheetFilterHeaderComponent implements OnInit {
 

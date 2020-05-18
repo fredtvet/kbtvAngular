@@ -1,16 +1,18 @@
 import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Router } from "@angular/router";
-import { IdentityService, LoadingService, ConnectionService, MainNavService } from 'src/app/core/services';
+import { Router, RouterOutlet } from "@angular/router";
+import { IdentityService, MainNavService } from 'src/app/core/services';
 import { Roles } from '../../enums/roles.enum';
 import { MatDrawer } from '@angular/material';
 import { User } from '../../models/user.model';
 import { MainNavConfig } from '../../interfaces/main-nav-config.interface';
+import { routeAnimation} from '../../animations/route.animation';
 
 @Component({
   selector: 'app-main-nav',
   templateUrl: './main-nav.component.html',
   styleUrls: ['./main-nav.component.scss'],
+  animations: [ routeAnimation ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainNavComponent {
@@ -32,5 +34,9 @@ export class MainNavComponent {
     this.identityService.purgeAuth();
     this.router.navigate(['/login']);
   }  
-
+  
+  prepareRoute(outlet: RouterOutlet) {
+    //console.log(outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation']);
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  }
 }

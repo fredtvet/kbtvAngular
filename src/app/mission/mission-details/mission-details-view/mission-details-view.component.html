@@ -1,7 +1,6 @@
-<mat-tab-group mat-stretch-tabs *ngIf="mission" color="accent">
+<mat-tab-group mat-stretch-tabs color="accent">
   <mat-tab label="Generelt">
-
-    <mat-card class="app-card m-2">
+    <mat-card class="app-card m-2 anim-block" *ngIf="mission">
       <mat-card-header>
         Informasjon
       </mat-card-header>
@@ -26,7 +25,7 @@
       </mat-card-content>
     </mat-card> 
 
-    <mat-card class="app-card m-2" *ngIf="reports && reports.length != 0">
+    <mat-card class="app-card m-2 anim-block" *ngIf="reports && reports.length != 0">
       <mat-card-header>
         Rapporter
       </mat-card-header>
@@ -52,17 +51,18 @@
       </mat-nav-list>
       </mat-card-content>
     </mat-card>
- 
   </mat-tab>
 
   <mat-tab label="Bilder">
-      <app-image-list [images]="images" (imageDeleted)="deleteImage($event)"></app-image-list>
+    <app-image-list *ngIf="images" 
+      [images]="images" 
+      (imageDeleted)="deleteImage($event)">
+    </app-image-list>
   </mat-tab>
 
   <mat-tab label="Notater">
     <div class="p-2">
-      <app-mission-note-list
-        [missionId]="mission.id"
+      <app-mission-note-list *ngIf="notes"
         [notes]="notes"
         (noteDeleted)="deleteNote($event)">
       </app-mission-note-list>
@@ -73,10 +73,11 @@
 <button
     *ifRole="[Roles.Leder, Roles.Ansatt, Roles.Mellomleder]"
     mat-mini-fab aria-label="ny"
-    class="action_fab"
+    class="action_fab anim-block"
     (click)="imageInput.click()">
     <mat-icon>camera_enhance</mat-icon>
 </button>
 
-<input type="file" style="display:none" multiple (change)="uploadImages($event.target.files, mission.id)" #imageInput>
+<input type="file" style="display:none" multiple #imageInput
+  (change)="uploadImages($event.target.files, mission?.id)">
 

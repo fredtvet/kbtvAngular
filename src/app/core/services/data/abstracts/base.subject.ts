@@ -25,7 +25,7 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
 
   getAll$(): Observable<T[]>{
     return this.data$.pipe(map(arr =>
-      {return arr === undefined ? [] : arr}));
+      {return !arr ? [] : arr}));
   }
 
   getAllDetails$(): Observable<T[]>{
@@ -34,21 +34,21 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
 
   get$(id: number): Observable<T>{
     return this.data$.pipe(map(arr =>
-      {return arr === undefined ? undefined : arr.find(e => e.id == id)}));
+      {return !arr ? undefined : arr.find(e => e.id == id)}));
   }
 
   getRange$(ids: number[]): Observable<T[]>{
     return this.data$.pipe(map(arr =>
-      {return arr === undefined ? undefined : arr.filter(d => ids.includes(d.id))}));
+      {return !arr ? undefined : arr.filter(d => ids.includes(d.id))}));
   }
 
   getBy$(expression: (value: T, index?: number, Array?: any[]) => boolean): Observable<T[]>{
     return this.data$.pipe(map(arr =>
-      {return arr === undefined ? undefined : arr.filter(expression)}));
+      {return !arr ? undefined : arr.filter(expression)}));
   }
 
   addOrUpdate(entity: T): void{
-    if(this.dataSubject.value !== undefined && !this.dataSubject.value.find(e => e.id == entity.id)) {
+    if(this.dataSubject.value && !this.dataSubject.value.find(e => e.id == entity.id)) {
       const arr = [entity, ...this.dataSubject.value]
       this.dataSubject.next(arr);
     }

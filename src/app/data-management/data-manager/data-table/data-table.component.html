@@ -1,0 +1,25 @@
+
+
+    <ag-grid-angular #dataGrid
+        class="ag-theme-balham mat-elevation-z2 h-100"
+        rowSelection="multiple"
+        suppressRowClickSelection="true"
+        suppressColumnVirtualisation="true"
+        overlayNoRowsTemplate="Tomt"
+        (modelUpdated)="autoSizeGrid()"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"   
+        (cellValueChanged)="editCell($event)">
+    </ag-grid-angular>
+
+
+    <span fxLayout="row" fxLayoutAlign="space-between none" >
+        <button mat-raised-button aria-label="Slett" color="warn" (click)="openDeleteDialog()">
+        <mat-icon>delete_forever</mat-icon>
+        </button>
+
+        <button mat-raised-button aria-label="Ny" color="accent" (click)="createItem.emit()">
+        <mat-icon>add</mat-icon>
+        </button>
+    </span>
+

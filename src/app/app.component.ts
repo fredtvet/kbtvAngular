@@ -1,6 +1,5 @@
 import { Component, ApplicationRef, ChangeDetectionStrategy } from '@angular/core';
 import { IdentityService, NotificationService, ConnectionService, DataSyncService, AppConfigurationService } from './core/services';
-import { slideInAnimation } from './shared/animations/route-animation';
 import { skip, first, tap } from 'rxjs/operators';
 import { Notifications } from './shared/enums/notifications.enum';
 import { interval, combineLatest, concat } from 'rxjs';
@@ -8,7 +7,6 @@ import { interval, combineLatest, concat } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  animations: [ slideInAnimation ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 

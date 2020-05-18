@@ -9,12 +9,12 @@ const routes: Routes = [
 {
   path: '',
   component: MissionListComponent,
-  canActivate: [AuthGuard],
+  canActivate: [AuthGuard],data: {animation: 'MissionList'}
 },
 {
   path: ':id/detaljer',
   component: MissionDetailsComponent,
-  canActivate: [AuthGuard],
+  canActivate: [AuthGuard],data: {animation: 'MissionDetails'}
 },
 ];
 

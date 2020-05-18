@@ -7,10 +7,9 @@ import { TimesheetMissionBarComponent } from './timesheet-week-view/timesheet-mi
 import { TimesheetCardDialogWrapperComponent } from './components/timesheet-card-dialog-wrapper.component';
 import { TimesheetListComponent } from './timesheet-list/timesheet-list.component';
 import { TimesheetListMenuComponent } from './timesheet-list/timesheet-list-menu/timesheet-list-menu.component';
-import { TimesheetFilterSheetWrapperComponent } from '../shared/components';
+import { TimesheetFilterSheetWrapperComponent, WeekListFilterSheetWrapperComponent } from '../shared/components';
 import { TimesheetWeekViewComponent } from './timesheet-week-view/timesheet-week-view.component';
 import { TimesheetWeekListComponent } from './timesheet-week-list/timesheet-week-list.component';
-import { WeekListFilterSheetWrapperComponent } from '../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
 import { TimesheetFormSheetWrapperComponent } from './components/timesheet-form/timesheet-form-sheet-wrapper.component';
 import { TimesheetFormViewComponent } from './components/timesheet-form/timesheet-form-view/timesheet-form-view.component';
 

@@ -1,6 +1,4 @@
 <div fxLayout="column" fxLayoutAlign="space-around stretch">
-    <span class="mat-body-2">Velg filtre for timer</span>
-
     <ng-container *ngIf="!(disabledFilters | arrayIncludes : 'user')">
       <mat-form-field style="max-width:400px;">
         <mat-select [(ngModel)]="filterPreset.user" placeholder="Velg ansatt">

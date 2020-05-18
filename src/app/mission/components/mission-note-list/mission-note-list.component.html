@@ -1,6 +1,5 @@
 
-  <span *ngIf="notes.length == 0">Ingen notater</span>
-  <mat-accordion>
+  <mat-accordion *ngIf="notes else noNotes">
     <mat-expansion-panel *ngFor="let note of notes">
 
         <mat-expansion-panel-header>
@@ -30,5 +29,9 @@
 
     </mat-expansion-panel>
   </mat-accordion>
+
+  <ng-template #noNotes>
+    <span>Ingen notater</span>
+  </ng-template>
 
 

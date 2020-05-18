@@ -6,6 +6,7 @@ import { debounceTime, distinctUntilChanged, tap, takeUntil } from 'rxjs/operato
 @Directive({
   selector: '[appInputListener]'
 })
+
 export class InputListenerDirective extends SubscriptionComponent{
 
   @Input() debounceTime: number = 400;

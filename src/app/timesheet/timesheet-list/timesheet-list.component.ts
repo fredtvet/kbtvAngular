@@ -5,7 +5,7 @@ import { TimesheetStatus, DateRangePresets } from "src/app/shared/enums";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Mission, TimesheetListFilter, Timesheet } from "src/app/shared/models";
 import { BehaviorSubject, Observable } from "rxjs";
-import { switchMap,filter} from "rxjs/operators";
+import { switchMap,filter, tap} from "rxjs/operators";
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared/components';
 import { TimesheetFormSheetWrapperComponent } from '../components/timesheet-form/timesheet-form-sheet-wrapper.component';
 
@@ -35,18 +35,9 @@ export class TimesheetListComponent implements OnInit {
     //Initiate filter and observable
     this.filterSubject = new BehaviorSubject(this.getInitialFilter());
     this.timesheets$ = this.filterSubject.asObservable().pipe(  
-      switchMap(filter => this.userTimesheetService.getByWithMission$(t => filter.checkTimesheet(t)))
+      switchMap(filter => this.userTimesheetService.getByWithMission$(t => filter.checkTimesheet(t))),
+      tap(console.log)
     );
-  }
-
-  openFilterSheet(): void {
-    let ref = this._bottomSheet.open(TimesheetFilterSheetWrapperComponent, {
-      data: {filter: this.getFilterCopy(), disabledFilters: ['user']}
-    });
-
-    ref.afterDismissed()
-      .pipe(filter(f => f instanceof TimesheetListFilter))
-      .subscribe(f => this.filterSubject.next(f));
   }
 
   openTimesheetForm(missionPreset?: Mission, timesheetIdPreset?: number): void {
@@ -62,8 +53,18 @@ export class TimesheetListComponent implements OnInit {
   deleteTimesheet = (id: number) => this.userTimesheetService.delete$(id).subscribe();
 
   getCurrentFilter = (): TimesheetListFilter => this.filterSubject.value;
+
+  openFilterSheet = (): void => {
+    let ref = this._bottomSheet.open(TimesheetFilterSheetWrapperComponent, {
+      data: {filter: this.getFilterCopy(), disabledFilters: ['user']}
+    });
+
+    ref.afterDismissed()
+      .pipe(filter(f => f instanceof TimesheetListFilter))
+      .subscribe(f => this.filterSubject.next(f));
+  }
   
-  private getFilterCopy() {
+  private getFilterCopy() { //Copy filter with functionality
     return Object.assign(
       Object.create(Object.getPrototypeOf(this.filterSubject.value)),
       this.filterSubject.value
@@ -109,6 +110,7 @@ export class TimesheetListComponent implements OnInit {
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Timeliste";
     cfg.backFn = this.onBack;
+    cfg.buttons = [{icon: 'filter_list', colorClass:'color-accent', callback: this.openFilterSheet}]
     this.mainNavService.addConfig(cfg);
   }
 

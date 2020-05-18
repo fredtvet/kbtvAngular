@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-list-card',
-  templateUrl: './list-card.component.html'
+  templateUrl: './list-card.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListCardComponent implements OnInit {
 

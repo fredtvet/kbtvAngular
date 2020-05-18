@@ -13,16 +13,23 @@ const routes: Routes = [
     path: '', component: MainNavComponent,
     children:[
       {path: '', redirectTo: 'hjem', pathMatch: 'full'},
-      {path: 'hjem', component: HomeComponent, canActivate: [AuthGuard]},
-      
-      {path: 'profil', loadChildren: './profile/profile.module#ProfileModule'},
-      {path: 'brukere', loadChildren: './users/users.module#UsersModule'},
-      {path: 'data', loadChildren: './data-management/data-management.module#DataManagementModule'},
-      {path: 'timer', loadChildren: './timesheet/timesheet.module#TimesheetModule'},
-      {path: 'timeadministrering', loadChildren: './timesheet-admin/timesheet-admin.module#TimesheetAdminModule'},
-      {path: 'timestatistikk', loadChildren: './timesheet-statistic/timesheet-statistic.module#TimesheetStatisticModule'},
-      {path: 'oppdrag', loadChildren: './mission/mission.module#MissionModule'}
-    ], 
+      {path: 'hjem', component: HomeComponent, pathMatch: 'full', 
+        canActivate: [AuthGuard], data: {animation: 'Home'}},
+      {path: 'profil', loadChildren: './profile/profile.module#ProfileModule', 
+        data: {animation: 'Profile'}},
+      {path: 'brukere', loadChildren: './users/users.module#UsersModule', 
+        data: {animation: 'Users'}},
+      {path: 'data', loadChildren: './data-management/data-management.module#DataManagementModule', 
+        data: {animation: 'DataManagement'}},
+      {path: 'timer', loadChildren: './timesheet/timesheet.module#TimesheetModule', 
+        data: {animation: 'Timesheet'}},
+      {path: 'timeadministrering', loadChildren: './timesheet-admin/timesheet-admin.module#TimesheetAdminModule', 
+        data: {animation: 'TimesheetAdmin'}},
+      {path: 'timestatistikk', loadChildren: './timesheet-statistic/timesheet-statistic.module#TimesheetStatisticModule', 
+        data: {animation: 'TimesheetStatistic'}},
+      {path: 'oppdrag', loadChildren: './mission/mission.module#MissionModule', 
+        }
+    ]
   },
   {path: 'login', component: AuthComponent, canActivate: [NoAuthGuard]},
   {path: '**', component: PageNotFoundComponent},

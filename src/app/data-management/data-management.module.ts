@@ -7,7 +7,6 @@ import { DataManagerComponent } from './data-manager/data-manager.component';
 
 import { ConfirmDialogComponent } from '../shared/components';
 
-import { DataManagerViewComponent } from './data-manager/data-manager-view/data-manager-view.component';
 import { EmployerFormComponent } from './components/employer-form/employer-form.component';
 import { EmployerFormViewComponent } from './components/employer-form/employer-form-view/employer-form-view.component';
 import { EmployerFormSheetWrapperComponent } from './components/employer-form/employer-form-sheet-wrapper.component';
@@ -19,6 +18,9 @@ import { MissionTypeFormSheetWrapperComponent } from './components/mission-type-
 import { ReportTypeFormSheetWrapperComponent } from './components/report-type-form/report-type-form-sheet-wrapper.component';
 import { ReportTypeFormViewComponent } from './components/report-type-form/report-type-form-view/report-type-form-view.component';
 import { MissionTypeFormViewComponent } from './components/mission-type-form/mission-type-form-view/mission-type-form-view.component';
+import { DataTablePickerComponent } from './data-manager/data-table-picker/data-table-picker.component';
+import { DataTableComponent } from './data-manager/data-table/data-table.component';
+import { DataManagerFacadeService } from './data-manager-facade.service';
 
 
 
@@ -26,7 +28,6 @@ import { MissionTypeFormViewComponent } from './components/mission-type-form/mis
 @NgModule({
   declarations: [
     DataManagerComponent,
-    DataManagerViewComponent,
     EmployerFormComponent,
     EmployerFormViewComponent,
     EmployerFormSheetWrapperComponent,
@@ -36,6 +37,8 @@ import { MissionTypeFormViewComponent } from './components/mission-type-form/mis
     ReportTypeFormViewComponent,
     ReportTypeFormComponent,
     ReportTypeFormSheetWrapperComponent,
+    DataTablePickerComponent,
+    DataTableComponent,
   ],
   entryComponents:[
     ConfirmDialogComponent,
@@ -43,6 +46,9 @@ import { MissionTypeFormViewComponent } from './components/mission-type-form/mis
     MissionFormSheetWrapperComponent,
     MissionTypeFormSheetWrapperComponent,
     ReportTypeFormSheetWrapperComponent
+  ],
+  providers:[
+    DataManagerFacadeService
   ],
   imports: [
     SharedModule,

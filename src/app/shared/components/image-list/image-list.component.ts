@@ -1,17 +1,17 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ImageViewerDialogComponent } from '../image-viewer-dialog/image-viewer-dialog.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MissionImage } from '../../models/mission-image.model';
-import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
-import { takeUntil, filter } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-image-list',
   templateUrl: './image-list.component.html',
-  styleUrls: ['./image-list.component.scss']
+  styleUrls: ['./image-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ImageListComponent extends SubscriptionComponent {
+export class ImageListComponent {
   @Input() images: MissionImage[];
   @Output() imageDeleted = new EventEmitter();
 
@@ -19,7 +19,7 @@ export class ImageListComponent extends SubscriptionComponent {
   reloadThumbnailsState: boolean = false;
   reloadInterval: any;
 
-  constructor(public dialog: MatDialog) { super() }
+  constructor(public dialog: MatDialog) {}
 
   //Reloads thumbnail (thumbnails made async on server) until no error
   unloadedThumbnail(img){

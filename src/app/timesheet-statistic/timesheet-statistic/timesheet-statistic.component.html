@@ -1,26 +1,21 @@
-<div fxLayout="column" class="static-page-container mb-0 mt-0 bg-primary" >
+<div fxLayout="column" fxLayoutGap="8px" class="h-100 p-2">
 
-    <app-timesheet-filter-header class="w-100" 
-        [filter]="filter$ | async" 
-        (filterClick)="openBottomSheet($event)">        
-    </app-timesheet-filter-header>
+    <span fxLayout="row" fxLayoutAlign="space-between center">  
+        <mat-button-toggle-group aria-label="Grupper etter tidsperiode" class="anim-block" [ngModel]="groupBy$ | async"
+            (ngModelChange)="changeGroupingType($event)">
+            <mat-button-toggle [value]="groupByTypes.Day">Dag</mat-button-toggle>
+            <mat-button-toggle [value]="groupByTypes.Week">Uke</mat-button-toggle>
+            <mat-button-toggle [value]="groupByTypes.Month">Måned</mat-button-toggle>
+            <mat-button-toggle [value]="groupByTypes.Year">År</mat-button-toggle>
+        </mat-button-toggle-group>  
 
-    <mat-button-toggle-group aria-label="Grupper etter tidsperiode" class="mb-1"
-    [ngModel]="groupBy$ | async" (ngModelChange)="changeGroupingType($event)">
-        <mat-button-toggle [value]="groupByTypes.Day">Dag</mat-button-toggle>
-        <mat-button-toggle [value]="groupByTypes.Week">Uke</mat-button-toggle>
-        <mat-button-toggle [value]="groupByTypes.Month">Måned</mat-button-toggle>
-        <mat-button-toggle [value]="groupByTypes.Year">År</mat-button-toggle>
-    </mat-button-toggle-group>
+        <button mat-raised-button class="bg-accent anim-block" *ngIf="filter$ | async; let filter" (click)="openBottomSheet(filter)">
+            <mat-icon>filter_list</mat-icon>
+        </button>  
+    </span>
 
-    <app-timesheet-statistic-table class="w-100 mat-elevation-z2" fxFlex
-        [timesheetSummaries]="timesheetSummaries$ | async"
-        [users]="users$ | async">
+    <app-timesheet-statistic-table class="mat-elevation-z2" fxFlex
+        [timesheetSummaries]="timesheetSummaries$ | async" [users]="users$ | async">
     </app-timesheet-statistic-table>
-  
+
 </div>
-
-
-
-
-

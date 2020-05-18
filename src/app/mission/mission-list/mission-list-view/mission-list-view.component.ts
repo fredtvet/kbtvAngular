@@ -3,10 +3,12 @@ import { Mission } from 'src/app/shared/models';
 import { Roles } from 'src/app/shared/enums';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MissionFormSheetWrapperComponent } from '../../components/mission-form/mission-form-sheet-wrapper.component';
+import { listAnimation } from 'src/app/shared/animations/list.animation';
 
 @Component({
   selector: 'app-mission-list-view',
   templateUrl: './mission-list-view.component.html',
+  animations: [listAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionListViewComponent implements OnInit {

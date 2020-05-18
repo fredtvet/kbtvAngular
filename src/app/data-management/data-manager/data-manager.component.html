@@ -1,9 +1,14 @@
-<app-data-manager-view 
-  [tables]="tables" 
-  [selectedTable]="currentTable"
-  [data]="data$ | async"
-  (tableSelected)="changeTable($event)"
-  (cellEdited)="editCell($event)"
-  (newItemClick)="createItem()"
-  (itemsDeleted)="deleteItems($event)" >
-</app-data-manager-view>
+<div class="static-page-container" fxLayout="column" fxLayoutGap="8px">
+  <app-data-table-picker class="anim-block"
+    [tables]="tables" 
+    [selectedTable]="selectedTable$ | async" 
+    (tableSelected)="changeTable($event)">
+  </app-data-table-picker>
+
+  <app-data-table class="h-100 anim-block" fxLayout="column" fxLayoutGap="8px"
+    [data]="data$ | async"
+    (itemEdited)="editCell($event)"
+    (createItem)="createItem()"
+    (itemsDeleted)="deleteItems($event)">
+  </app-data-table>
+</div>

@@ -5,8 +5,8 @@ import { Roles } from '../../shared/enums';
 import { MissionNote, Mission, MissionReport, MissionImage } from 'src/app/shared/models';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, MainNavService} from 'src/app/core/services';
-import { tap, filter } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { tap, filter, map } from 'rxjs/operators';
+import { Observable, combineLatest } from 'rxjs';
 import { MissionFormSheetWrapperComponent } from '../components/mission-form/mission-form-sheet-wrapper.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MissionNoteFormSheetWrapperComponent } from '../components/mission-note-form/mission-note-form-sheet-wrapper.component';
@@ -21,9 +21,9 @@ import { MissionReportFormSheetWrapperComponent } from '../components/mission-re
 export class MissionDetailsComponent{
   Roles = Roles;
 
-  mission: Mission = new Mission();
-  mission$: Observable<Mission>;
+  vm$: Observable<{mission: Mission, images:MissionImage[], notes:MissionNote[], reports:MissionReport[]}>;
 
+  mission$: Observable<Mission>;
   images$: Observable<MissionImage[]>;
   notes$: Observable<MissionNote[]>;
   reports$: Observable<MissionReport[]>;
@@ -45,11 +45,18 @@ export class MissionDetailsComponent{
 
   ngOnInit(){
     let missionId = +this.route.snapshot.paramMap.get('id');
-    
-    this.mission$ = this.missionService.getDetails$(missionId).pipe(tap(this.updateMainNavWithMission));
-    this.images$ = this.missionImageService.getByMissionId$(missionId);
-    this.reports$ = this.missionReportService.getByMissionId$(missionId);
-    this.notes$ = this.missionNoteService.getByMissionId$(missionId);
+
+    let mission$ = this.missionService.getDetails$(missionId);
+    let images$ = this.missionImageService.getByMissionId$(missionId);
+    let reports$ = this.missionReportService.getByMissionId$(missionId);
+    let notes$ = this.missionNoteService.getByMissionId$(missionId);
+
+    this.vm$ = combineLatest(mission$, images$, reports$, notes$).pipe(
+      map(([mission, images, reports, notes]) => {
+        return {mission, images, reports, notes}
+      }),
+      tap(x => this.updateMainNavWithMission(x.mission))
+    );
   }
 
   uploadImages = (data: {files: FileList, missionId: number}) => {
@@ -72,19 +79,16 @@ export class MissionDetailsComponent{
     this.missionReportService.delete$(id).subscribe(res => 
       this.notificationService.setNotification('Vellykket! Rapport slettet.'));
   
-  private deleteMission(id: number){   
+  private deleteMission = (id: number) =>
     this.missionService.delete$(id).pipe(filter(del => del), tap(x => this.onBack()))
       .subscribe(del => this.notificationService.setNotification('Vellykket! Oppdrag slettet.'));
-  }
-
+  
   private openMissionForm = (missionIdPreset: number) => 
     this._bottomSheet.open(MissionFormSheetWrapperComponent, {data: {missionIdPreset}});
 
-  private openMissionNoteForm = (missionId: number) => {
-    console.log(missionId);
+  private openMissionNoteForm = (missionId: number) => 
     this._bottomSheet.open(MissionNoteFormSheetWrapperComponent, {data: {missionId}});
-  }
-
+  
   private openReportForm = (missionId: number) => 
     this._bottomSheet.open(MissionReportFormSheetWrapperComponent, {data: {missionId}});
 
@@ -93,14 +97,12 @@ export class MissionDetailsComponent{
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteMission(id));
   }
 
-  private goToTimesheets = (mission: Mission) => {
+  private goToTimesheets = (mission: Mission) => 
     this.router.navigate(['timer/liste', {returnRoute: this.router.url, missionId: JSON.stringify(mission)}]);
-  }
 
   private configureMainNav(missionId: number){
-    console.log(missionId);
     let cfg = this.mainNavService.getDefaultConfig();
-    cfg.elevationEnabled = false;
+    
     cfg.backFn = this.onBack;  
     cfg.bottomSheetButtons = [
       {text: "Legg til rapport", icon: "note_add", callback: this.openReportForm, params: [missionId], allowedRoles: [Roles.Leder]},

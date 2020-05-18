@@ -1,9 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { AppButton } from '../../interfaces/app-button.interface';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { SubscriptionComponent } from '../abstracts/subscription.component';
-import { takeUntil, map, shareReplay } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -26,9 +25,9 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ])
   ],
   templateUrl: './swipe-card.component.html',
-  styleUrls: ['./swipe-card.component.scss']
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SwipeCardComponent extends SubscriptionComponent {
+export class SwipeCardComponent {
 
   @Input() swipeButton: AppButton;
   @Input() navButton: AppButton;
@@ -38,12 +37,11 @@ export class SwipeCardComponent extends SubscriptionComponent {
 
   isXs$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.XSmall)
     .pipe(
-      takeUntil(this.unsubscribe),
       map(result => result.matches),
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) { super(); }
+  constructor(private breakpointObserver: BreakpointObserver) { }
 
   hideSwipeAction(e: any, state: boolean): void{
     if(!this.swipeEnabled) return undefined;

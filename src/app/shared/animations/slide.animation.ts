@@ -1,0 +1,49 @@
+import {
+    query,
+    style,
+    animate,
+    group,
+    stagger,
+    animation,
+  } from "@angular/animations";
+
+export const slideAnimation = animation([
+    query(
+      ":enter, :leave",
+      style({ position: "fixed", width: "100%" }),
+      { optional: true }
+    ),
+    query(".anim-block", style({ opacity: 0 }), { optional: true }),
+    group([
+      query(
+        ":enter",
+        [
+          style({ transform: '{{ enterX }}' }),
+          animate("0.35s ease-in-out", style({ transform: "translateX(0%)" })),
+        ],
+        { optional: true }
+      ),
+      query(
+        ":leave",
+        [
+          style({ transform: "translateX(0%)" }),
+          animate(
+            "0.35s ease-in-out",
+            style({ transform: '{{ leaveX }}' })
+          ),
+        ],
+        { optional: true }
+      ),
+    ]),
+    query(
+      ":enter .anim-block",
+      stagger(75, [
+        style({ transform: "translateY(100px)" }),
+        animate(
+          ".25s ease-in-out",
+          style({ transform: "translateY(0px)", opacity: 1 })
+        ),
+      ]),
+      { optional: true }
+    ),
+  ])

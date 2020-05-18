@@ -15,9 +15,9 @@ export class MissionDetailsViewComponent {
   public Roles = Roles;
 
   @Input() mission: Mission;
-  @Input() images: MissionImage[] = [];
-  @Input() notes: MissionNote[] = [];
-  @Input() reports: MissionReport[] = [];
+  @Input() images: MissionImage[];
+  @Input() notes: MissionNote[];
+  @Input() reports: MissionReport[];
 
   @Output() imagesUploaded = new EventEmitter();
   @Output() imageDeleted = new EventEmitter();

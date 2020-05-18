@@ -10,8 +10,8 @@ export class TranslationService {
   constructor() {}
 
   translateProperty(property: string): string{
-    const hit = translations.modelProperties.find(x => x.key == property);
-    if(hit === undefined) return property;
-    return hit.value
+    const translation = translations.modelProperties[property];
+    if(!translation) return property;
+    return translation
   }
 }

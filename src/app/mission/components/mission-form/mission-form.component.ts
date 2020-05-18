@@ -1,16 +1,14 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { EmployerService, NotificationService, MissionTypeService, MissionService, MainNavService } from 'src/app/core/services';
+import { EmployerService, NotificationService, MissionTypeService, MissionService } from 'src/app/core/services';
 import { Mission, MissionType, Employer } from 'src/app/shared/models';
 import { Observable } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
-import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
 @Component({
   selector: 'app-mission-form',
   templateUrl: './mission-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MissionFormComponent extends SubscriptionComponent {
+export class MissionFormComponent {
 
   @Input() missionIdPreset: number;
   
@@ -26,9 +24,7 @@ export class MissionFormComponent extends SubscriptionComponent {
     private employerService: EmployerService,
     private missionTypeService: MissionTypeService,
     private missionService: MissionService,
-    private notificationService: NotificationService) {
-      super();
-    }
+    private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     if(!this.missionIdPreset) this.isCreateForm = true;

@@ -1,8 +1,8 @@
 
-<mat-tab-group mat-stretch-tabs color="accent">
+<mat-tab-group mat-stretch-tabs color="accent" class="anim-header">
 
     <mat-tab label="Profil">
-      <div class="p-2">
+      <div class="p-2 anim-block">
         <app-profile-form *ngIf="user$ | async; let user"
           [user]="user"
           (profileUpdated)="updateProfile($event)">

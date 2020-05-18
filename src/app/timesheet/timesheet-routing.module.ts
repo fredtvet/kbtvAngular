@@ -8,24 +8,24 @@ import { TimesheetWeekListComponent } from './timesheet-week-list/timesheet-week
 
 
 const routes: Routes = [
-  {path: '', redirectTo: 'ukeliste', pathMatch: 'full'},
-  {
-    path: 'ukeliste',
-    component: TimesheetWeekListComponent,
-    canActivate: [AuthGuard],
-    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]}
-  },
+  {path: '', redirectTo: 'ukevisning', pathMatch: 'full'},
   {
     path: 'ukevisning',
     component: TimesheetWeekViewComponent,
     canActivate: [AuthGuard],
-    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]}
+    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt], animation: 'TimesheetWeekView'}
+  },
+  {
+    path: 'ukeliste',
+    component: TimesheetWeekListComponent,
+    canActivate: [AuthGuard],
+    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt], animation: 'TimesheetWeekList'}
   },
   {
     path: 'liste',
     component: TimesheetListComponent,
     canActivate: [AuthGuard],
-    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]}
+    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt], animation: 'TimesheetList'}
   },
 ];
 
