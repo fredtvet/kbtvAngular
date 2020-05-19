@@ -13,8 +13,6 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_T
 
 import {
   ConfirmDialogComponent,
-  ImageListComponent,
-  ImageViewerDialogComponent,
   NotificationComponent,
   SubmitButtonComponent,
   PageNotFoundComponent,
@@ -24,7 +22,6 @@ import {
   TimesheetCardComponent,
   WeekListFilterComponent,
   WeekListFilterSheetWrapperComponent,
-  TimesheetFilterHeaderComponent,
   TimesheetSummaryCardContentComponent
 } from './components';
 
@@ -38,14 +35,13 @@ import { AddToHomeScreenDirective } from './directives/add-to-home-screen.direct
 import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
 import { MainTopNavComponent } from './layout/main-nav/main-top-nav/main-top-nav.component';
 import { InputListenerDirective } from './directives';
+import { GetEmployerByIdPipe } from './pipes/get-employer-by-id.pipe';
 
 @NgModule({
   declarations: [
     MainNavComponent,
     MainBottomNavComponent,
     ConfirmDialogComponent,
-    ImageListComponent,
-    ImageViewerDialogComponent,
     IfRoleDirective,
     ArraySlicePipe,
     ThumbnailPipe,
@@ -59,7 +55,6 @@ import { InputListenerDirective } from './directives';
     TimesheetFilterComponent,
     TimesheetFilterSheetWrapperComponent,
     ArrayIncludesPipe,
-    TimesheetFilterHeaderComponent,
     IconButtonComponent,
     StrokedButtonComponent,
     ListCardComponent,
@@ -72,7 +67,8 @@ import { InputListenerDirective } from './directives';
     MainSideNavContentComponent,
     MainTopNavComponent,
     InputListenerDirective,
-    SimpleTopNavComponent
+    SimpleTopNavComponent,
+    GetEmployerByIdPipe
   ],
   imports: [
     CommonModule,
@@ -106,8 +102,6 @@ import { InputListenerDirective } from './directives';
     OwlNativeDateTimeModule,
     FlexLayoutModule,
     ConfirmDialogComponent,
-    ImageListComponent,
-    ImageViewerDialogComponent,
     IfRoleDirective,
     AddToHomeScreenDirective,
     InputListenerDirective,
@@ -121,7 +115,6 @@ import { InputListenerDirective } from './directives';
     PageNotFoundComponent,
     TimesheetFilterSheetWrapperComponent,
     ArrayIncludesPipe,
-    TimesheetFilterHeaderComponent,
     IconButtonComponent,
     StrokedButtonComponent,
     ListCardComponent,
@@ -130,7 +123,8 @@ import { InputListenerDirective } from './directives';
     WeekListFilterSheetWrapperComponent,
     TimesheetSummaryCardContentComponent,
     SwipeCardComponent,
-    SimpleTopNavComponent
+    SimpleTopNavComponent,
+    GetEmployerByIdPipe
   ]
 })
 export class SharedModule { }

@@ -5,9 +5,9 @@ import { MissionDetailsComponent } from './mission-details/mission-details.compo
 import { MissionListComponent } from './mission-list/mission-list.component';
 import { MissionNoteFormComponent } from './components/mission-note-form/mission-note-form.component';
 import { MissionReportFormComponent } from './components/mission-report-form/mission-report-form.component';
-import { ConfirmDialogComponent, ImageViewerDialogComponent } from '../shared/components';
+import { ConfirmDialogComponent } from '../shared/components';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
-import { MissionNoteListComponent } from './components/mission-note-list/mission-note-list.component';
+import { MissionNoteListComponent } from './mission-details/mission-details-view/mission-note-list/mission-note-list.component';
 import { DatePipe } from '@angular/common';
 import { MissionFormViewComponent } from './components/mission-form/mission-form-view/mission-form-view.component';
 import { MissionFormComponent } from './components/mission-form/mission-form.component';
@@ -17,6 +17,8 @@ import { MissionFormSheetWrapperComponent } from './components/mission-form/miss
 import { MissionNoteFormSheetWrapperComponent } from './components/mission-note-form/mission-note-form-sheet-wrapper.component';
 import { MissionReportFormSheetWrapperComponent } from './components/mission-report-form/mission-report-form-sheet-wrapper.component';
 import { MissionReportFormViewComponent } from './components/mission-report-form/mission-report-form-view/mission-report-form-view.component';
+import { ImageViewerDialogComponent } from './components/image-viewer-dialog/image-viewer-dialog.component';
+import { ImageListComponent } from './mission-details/mission-details-view/image-list/image-list.component';
 
 
 
@@ -35,7 +37,9 @@ import { MissionReportFormViewComponent } from './components/mission-report-form
     MissionNoteFormSheetWrapperComponent,
     MissionReportFormComponent,
     MissionReportFormViewComponent,
-    MissionReportFormSheetWrapperComponent
+    MissionReportFormSheetWrapperComponent,
+    ImageListComponent,
+    ImageViewerDialogComponent
   ],
   providers: [
     DatePipe,

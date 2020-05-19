@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { UserSubject } from './user.subject';
+import { Roles } from 'src/app/shared/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -56,5 +57,5 @@ export class UserService {
       .delete(`${this.uri}/${userName}`)
       .pipe(tap(bool =>{if(bool) this.userSubject.delete(userName)}));
   }
-
+  
 }

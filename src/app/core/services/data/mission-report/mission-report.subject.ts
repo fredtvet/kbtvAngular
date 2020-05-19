@@ -20,7 +20,7 @@ export class MissionReportSubject extends BaseMissionChildSubject<MissionReport>
     return super.getByMissionId$(missionId).pipe(switchMap(reports => {
       return this.reportTypeSubject.getAll$().pipe(map(types => {
         return reports.map(report => {
-          report.reportType = types.find(x => x.id === report.missionReportTypeId);
+          report.reportType = types.find(x => x.id === report.reportTypeId);
           return report;
         })
       }))
@@ -29,7 +29,7 @@ export class MissionReportSubject extends BaseMissionChildSubject<MissionReport>
 
   get$(id: number):Observable<MissionReport>{
       return super.get$(id).pipe(switchMap(report => {
-        return this.reportTypeSubject.get$(report.missionReportTypeId).pipe(map(type => {
+        return this.reportTypeSubject.get$(report.reportTypeId).pipe(map(type => {
           report.reportType = type;
           return report;
         }));
@@ -39,7 +39,7 @@ export class MissionReportSubject extends BaseMissionChildSubject<MissionReport>
   addOrUpdate(entity: MissionReport): void{
     if(entity.reportType && entity.reportType.id != 0){
         this.reportTypeSubject.addOrUpdate(entity.reportType);
-        entity.missionReportTypeId = entity.reportType.id;
+        entity.reportTypeId = entity.reportType.id;
         entity.reportType = null; //Clean up
     }
     super.addOrUpdate(entity);

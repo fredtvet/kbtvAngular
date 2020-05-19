@@ -3,8 +3,7 @@
     <mat-toolbar *ngIf="config" class="toolbar-slim mat-elevation-z2 nav" [ngClass]="config.colorClass ? config.colorClass : 'bg-accent'">  
         <app-icon-button [config]="config.leftBtn"></app-icon-button>
           
-        <span class="mr-auto">
-          <span class="ml-1">{{ config.icon }}</span> 
+        <span class="mr-auto">    
           <span class="ml-1">{{ config.title }}</span> 
         </span>
      

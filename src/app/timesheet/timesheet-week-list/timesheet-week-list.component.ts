@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { DateTimeService, MainNavService, TimesheetService, UserTimesheetService } from 'src/app/core/services';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { AppButton, TimesheetSummary, DateParams } from 'src/app/shared/interfaces';
+import { DateTimeService, MainNavService, UserTimesheetService } from 'src/app/core/services';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AppButton, TimesheetSummary } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
 import { filter, map, tap, switchMap } from 'rxjs/operators';

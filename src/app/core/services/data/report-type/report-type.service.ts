@@ -19,7 +19,7 @@ export class ReportTypeService extends BaseService<ReportType> {
     dataSubject: ReportTypeSubject,
     connectionService: ConnectionService
   ){
-    super(notificationService, apiService, dataSubject, connectionService, "/MissionReportTypes");
+    super(notificationService, apiService, dataSubject, connectionService, "/ReportTypes");
   }
 
 }

@@ -8,7 +8,7 @@ export class MissionReport implements MissionChild{
       public missionId: number = null,    
       public fileURL: string = null,
       public createdAt: Date = null,
-      public missionReportTypeId: number = null,
+      public reportTypeId: number = null,
       public reportType: ReportType,
     ){};
 
