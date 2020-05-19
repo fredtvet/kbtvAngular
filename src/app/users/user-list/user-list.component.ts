@@ -54,11 +54,14 @@ export class UserListComponent {
         case Roles.Ansatt: 
           groups[Roles.Ansatt].push(user);
           break;
+        case Roles.Oppdragsgiver: 
+          groups[Roles.Oppdragsgiver].push(user);
+          break;
       }
       return groups;
-    }, {"Leder":[], "Mellomleder":[], "Ansatt":[]});
+    }, {"Leder":[], "Mellomleder":[], "Ansatt":[], "Oppdragsgiver":[]});
   
-    return [...grouped[Roles.Leder], ...grouped[Roles.Mellomleder], ...grouped[Roles.Ansatt]];
+    return [...grouped[Roles.Leder], ...grouped[Roles.Mellomleder], ...grouped[Roles.Ansatt], ...grouped[Roles.Oppdragsgiver]];
   }
 
 }

@@ -40,6 +40,12 @@
     </mat-select>
   </mat-form-field>
 
+  <mat-form-field [fxHide]="role.value !== Roles.Oppdragsgiver">
+    <mat-select placeholder="Oppdragsgiver" (change)="changeEmployerId($event)" formControlName="employerId">
+      <mat-option *ngFor="let employer of employers" [value]="employer.id">{{ employer.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <mat-form-field>
     <input matInput placeholder="Kontaktnummer" formControlName="phoneNumber">
     <mat-error *ngIf="this.phoneNumber.invalid">

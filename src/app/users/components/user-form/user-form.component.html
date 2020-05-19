@@ -1,5 +1,6 @@
 <app-user-form-view
   [user]="user$ | async"
   [roles]="roles$ | async"
+  [employers]="employers$ | async"
   (formSubmitted)="onSubmit($event)">
 </app-user-form-view>

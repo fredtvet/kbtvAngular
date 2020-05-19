@@ -3,8 +3,9 @@ import {
   RoleService,
   UserService,
   NotificationService,
+  EmployerService,
 } from "src/app/core/services";
-import { User } from "src/app/shared/models";
+import { User, Employer } from "src/app/shared/models";
 import { Observable } from "rxjs";
 import { map} from "rxjs/operators";
 import { Roles } from "src/app/shared/enums";
@@ -24,11 +25,13 @@ export class UserFormComponent {
 
   user$: Observable<User>;
   roles$: Observable<string[]>;
+  employers$: Observable<Employer[]>;
 
   constructor(
     private notificationService: NotificationService,
     private _roleService: RoleService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _employerService: EmployerService,
   ) {}
 
   ngOnInit() {
@@ -36,8 +39,9 @@ export class UserFormComponent {
     else this.user$ = this._userService.get$(this.userNamePreset);
 
     this.roles$ = this._roleService.getAll$().pipe(
-      map((arr) => arr.filter((x) => x != Roles.Leder && x != Roles.Oppdragsgiver))
+      map((arr) => arr.filter((x) => x != Roles.Leder))
     );
+    this.employers$ = this._employerService.getAll$();
   }
 
   onSubmit(result: User) {

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { User } from 'src/app/shared/models';
+import { User, Employer } from 'src/app/shared/models';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Roles } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-user-form-view',
@@ -9,8 +10,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 
 export class UserFormViewComponent implements OnInit {
-
+  Roles = Roles;
   @Input() user: User;
+  @Input() employers: Employer[];
   @Input() roles: any;
   @Output() formSubmitted = new EventEmitter();
 
@@ -31,6 +33,7 @@ export class UserFormViewComponent implements OnInit {
     }
 
     initalizeForm(){
+      console.log(this.user);
       this.userForm = this._formBuilder.group({
         userName: [{value: this.user.userName, disabled: !this.isCreateForm}, [
           Validators.required,
@@ -56,22 +59,24 @@ export class UserFormViewComponent implements OnInit {
         ]],
         role: [this.user.role, [
           Validators.required
-        ]]
+        ]],
+        employerId: [this.user.employerId]
       });
     }
 
     onSubmit(){
+      console.log(this.userForm.getRawValue());
       if(this.userForm.valid && this.userForm.dirty) 
         this.formSubmitted.emit(this.userForm.getRawValue());
     }
 
     changeRole(e){
-      this.role.setValue(
-        e.target.value,
-        {onlySelf: true}
-      );
+      this.role.setValue(e.target.value,{onlySelf: true});
     }
 
+    changeEmployerId(e){
+      this.employerId.setValue(e.target.value,{onlySelf: true});
+    }
 
     get userName(){
       return this.userForm.get('userName')
@@ -97,5 +102,7 @@ export class UserFormViewComponent implements OnInit {
       return this.userForm.get('role')
     }
 
-
+    get employerId(){
+      return this.userForm.get('employerId')
+    }
 }

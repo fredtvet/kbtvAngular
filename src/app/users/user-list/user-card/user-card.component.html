@@ -1,12 +1,19 @@
 <mat-card class="app-card m-1">
     <mat-card-content fxLayout="row" fxLayoutAlign="space-between center">
-        <span class="ellipsis">
-            <mat-icon class="mr-2">{{ (user.role == Roles.Oppdragsgiver) ? 'work' : 'person' }}</mat-icon>
-            <span class="mat-h4">{{ user.firstName }} {{ user.lastName }}</span>
+        
+        <mat-icon class="mr-2">{{ (user.role == Roles.Oppdragsgiver) ? 'work' : 'person' }}</mat-icon>
+
+        <span class="ellipsis mr-auto">
+            <span class="mat-h4">{{ user.firstName }} {{ user.lastName }}</span><br />
+            <mat-hint *ngIf="user.employerId | getEmployerById; let employer">{{ employer.name }}</mat-hint>
         </span>
+
         <span>
             <a *ngIf="user.phoneNumber" class="color-success" mat-icon-button href="tel:{{ user.phoneNumber }}"><mat-icon>phone</mat-icon></a>
             <app-icon-button *ngIf="editButton && user.role != Roles.Leder" [config]="editButton"></app-icon-button>
         </span>
+
+       
+
     </mat-card-content>
 </mat-card>
