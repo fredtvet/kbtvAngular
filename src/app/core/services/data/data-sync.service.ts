@@ -13,7 +13,13 @@ import { NotificationService } from '../ui/notification.service';
 import { Notifications } from 'src/app/shared/enums';
 import { UserTimesheetSubject } from './user-timesheet/user-timesheet.subject';
 import { HttpParams } from '@angular/common/http';
+import { BaseSubject } from './abstracts/base.subject';
+import { BaseEntity } from 'src/app/shared/interfaces';
 
+interface SubjectWithEntityKey{
+  entityKey: string;
+  subject: BaseSubject<BaseEntity>;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +28,7 @@ import { HttpParams } from '@angular/common/http';
 export class DataSyncService {
 
   private isOnline: boolean = true;
-  private injectedSubjectKeys: string[];
-
-  private syncTimer: any;
+  private entitySubjects: SubjectWithEntityKey[];
 
   constructor(
     private apiService: ApiService,
@@ -40,35 +44,30 @@ export class DataSyncService {
     private userTimesheetSubject: UserTimesheetSubject
   ){
     this.connectionService.isOnline$.subscribe(res =>this.isOnline = res);
-    this.injectedSubjectKeys = Object.getOwnPropertyNames(this).filter(x => x.includes('Subject'));
+    this.entitySubjects = this.createEntitySubjectArrays();
   }
   
   syncAll() : void{
     if(!this.isOnline) return undefined;
-    let timestamp = this.getEarliestTimestamp();
     let params = new HttpParams();
-    if(timestamp) params = params.set('Timestamp', timestamp.toString());
+
+    this.entitySubjects.forEach(x =>{
+      let key = x.entityKey + 'Timestamp';
+      let timestamp = x.subject.getTimestamp();
+      params = params.set(key, timestamp ? timestamp.toString() : null);
+    });
 
     this.apiService
       .get('/SyncAll', params)
       .pipe(retry(3), tap(data => {
-        this.missionSubject.sync(data.missionSync);
-        this.employerSubject.sync(data.employerSync);
-        this.missionTypeSubject.sync(data.missionTypeSync);
-        this.missionImageSubject.sync(data.missionImageSync);
-        this.missionNoteSubject.sync(data.missionNoteSync);
-        this.missionReportSubject.sync(data.missionReportSync);
-        this.reportTypeSubject.sync(data.missionReportTypeSync);
-        this.userTimesheetSubject.sync(data.userTimesheetSync);
+        this.entitySubjects.forEach(x =>{
+          let key = x.entityKey + 'Sync';
+          x.subject.sync(data[key]);
+        });
       }),catchError(err => {
         this.notificationService.setNotification('Noe gikk feil med synkroniseringen!' , Notifications.Error)
         throw err;
       })).subscribe();
-  }
-
-  getEarliestTimestamp(): number{
-    const timestamps = this.injectedSubjectKeys.map(x => this[x].getTimestamp());
-    return  timestamps.sort(function(a,b) {return a - b})[0];
   }
 
   syncIfTimePassed = (refreshTime: number): void => {
@@ -76,5 +75,23 @@ export class DataSyncService {
     if(timeSinceLastSync > refreshTime) this.syncAll();             
   }
 
-  purgeAll = () => this.injectedSubjectKeys.forEach(x => this[x].purge())
+  purgeUserSpesificResources = () => {
+    this.userTimesheetSubject.purge();
+  }
+
+  purgeAll = () => this.entitySubjects.forEach(x => x.subject.purge());
+
+  private getEarliestTimestamp(): number{
+    const timestamps = this.entitySubjects.map(x => x.subject.getTimestamp());
+    return  timestamps.sort(function(a,b) {return a - b})[0];
+  }
+
+  private createEntitySubjectArrays(): SubjectWithEntityKey[] {
+    return Object.getOwnPropertyNames(this).filter(x => x.includes('Subject')).map(x => {
+      return {
+        entityKey: x.replace(/Subject/g,''),
+        subject: this[x]
+      }
+    });
+  }
 }

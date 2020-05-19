@@ -11,7 +11,6 @@ import { DateParams, TimesheetSummary } from 'src/app/shared/interfaces';
 import { BaseMissionChildService } from '../abstracts/base-mission-child.service';
 import { MissionSubject } from '../mission/mission.subject';
 
-
 @Injectable({
   providedIn: 'root'
 })

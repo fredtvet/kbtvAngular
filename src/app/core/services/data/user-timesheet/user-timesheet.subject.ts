@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Timesheet, TimesheetInfo  } from 'src/app/shared/models';
+import { Timesheet } from 'src/app/shared/models';
 import { LocalStorageService } from '../../local-storage.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -20,7 +20,7 @@ export class UserTimesheetSubject extends BaseMissionChildSubject<Timesheet> {
     private dateTimeService: DateTimeService,
     private timesheetAggregator: TimesheetAggregatorService,
     localStorageService: LocalStorageService,
-    ) { super(localStorageService, 'timesheets') }
+    ) { super(localStorageService, 'userTimesheets') }
 
     getByWeekGrouped$(dateParams: DateParams, excludeStatus?: TimesheetStatus): Observable<Timesheet[][]>{
       const range = this.dateTimeService.getWeekRangeByDateParams(dateParams);
