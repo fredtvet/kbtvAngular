@@ -14,6 +14,11 @@ export class BottomSheetMenuComponent {
 
   handleFn = (fn: Function, parameters: any[] = []) => {
     fn(...parameters);
-    this._bottomSheetRef.dismiss();
+    this.close();
   };
+
+  logher = (e) => console.log(e)
+
+  close = () => this._bottomSheetRef.dismiss();
+  
 }

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Mission } from '../shared/models';
-import { Roles } from '../shared/enums';
+import { Roles, RolePresets } from '../shared/enums';
 import { MissionService, MainNavService } from '../core/services';
 import { Observable } from 'rxjs';
 import {  map } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import {  map } from 'rxjs/operators';
 
 export class HomeComponent {
   Roles = Roles;
+  rolePresets = RolePresets;
 
   missionHistory$: Observable<Mission[]>;
 

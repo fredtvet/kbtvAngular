@@ -8,10 +8,16 @@
         <span>Oppdrag</span>
       </span>
     </mat-grid-tile>
-    <mat-grid-tile class="mat-elevation-z2 bg-foreground anim-block" matRipple [routerLink]="['/timer']">
+    <mat-grid-tile *ifRole="rolePresets.Internal" class="mat-elevation-z2 bg-foreground anim-block" matRipple [routerLink]="['/timer']">
       <span class="text-center">
         <mat-icon class="scale-150">timer</mat-icon><br />
         <span>Timer</span>
+      </span>
+    </mat-grid-tile>
+    <mat-grid-tile *ifRole="rolePresets.External" class="mat-elevation-z2 bg-foreground anim-block" matRipple [routerLink]="['/profil']">
+      <span class="text-center">
+        <mat-icon class="scale-150">person</mat-icon><br />
+        <span>Profil</span>
       </span>
     </mat-grid-tile>
   </mat-grid-list>

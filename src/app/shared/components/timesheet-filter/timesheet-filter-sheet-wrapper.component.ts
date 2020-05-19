@@ -36,7 +36,7 @@ export class TimesheetFilterSheetWrapperComponent implements OnInit {
 
   ngOnInit() {
     this.navConfig = {
-      title: 'Velg filtre',
+      title: 'Velg filtre',  
       leftBtn: {icon: 'close', callback: this.close} as AppButton,
     };
 

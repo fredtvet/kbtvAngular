@@ -13,14 +13,14 @@
 
         </button>
 
-        <button *ifRole="[Roles.Oppdragsgiver]" [routerLink]="['/profil']" [routerLinkActive]="['active']" fxFlex
+        <button *ifRole="RolePresets.External" [routerLink]="['/profil']" [routerLinkActive]="['active']" fxFlex
             mat-icon-button aria-label="Gå til profil">
 
             <mat-icon>person</mat-icon>
 
         </button>
 
-        <button *ifRole="[Roles.Leder, Roles.Mellomleder, Roles.Ansatt]" [routerLink]="['/timer']" [routerLinkActive]="['active']" fxFlex
+        <button *ifRole="RolePresets.Internal" [routerLink]="['/timer']" [routerLinkActive]="['active']" fxFlex
          mat-icon-button aria-label="Gå til timeliste">
             <mat-icon matBadgeColor="warn" matBadgeSize="small">timer</mat-icon>
         </button>

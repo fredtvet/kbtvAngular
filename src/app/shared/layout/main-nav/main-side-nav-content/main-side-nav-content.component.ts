@@ -2,7 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy
 import { Observable } from 'rxjs';
 import { ConnectionService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models/user.model';
-import { Roles } from 'src/app/shared/enums/roles.enum';
+import { Roles, RolePresets } from 'src/app/shared/enums/roles.enum';
 
 @Component({
   selector: 'app-main-side-nav-content',
@@ -11,6 +11,7 @@ import { Roles } from 'src/app/shared/enums/roles.enum';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainSideNavContentComponent {
+  RolePresets = RolePresets;
   Roles = Roles;
   
   @Input() user: User;

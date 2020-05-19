@@ -1,8 +1,10 @@
 <mat-nav-list class="p-1">
-    <a mat-list-item *ngFor="let button of buttons" (click)="handleFn(button.callback, button.params)" class="sheet-item">
-        <span mat-line>
-            <mat-icon class="mr-1">{{ button.icon }}</mat-icon>
-            {{ button.text }}
-        </span>     
-    </a>
+        <ng-container *ngFor="let button of buttons">
+            <a mat-list-item *ifRole="button.allowedRoles" (click)="handleFn(button.callback, button.params)" class="sheet-item">
+                <span mat-line>
+                    <mat-icon class="mr-1">{{ button.icon }}</mat-icon>
+                    {{ button.text }}
+                </span>     
+            </a>
+        </ng-container>
 </mat-nav-list>

@@ -28,14 +28,16 @@
 
   <mat-divider class="mid-divider"></mat-divider>
 
-  <a mat-list-item (click)="navItemClick()" [routerLink]="['/timer']" [routerLinkActive]="['active']">
-    <mat-icon mat-list-icon>timer</mat-icon>
-    <p mat-line>Timer</p>
-  </a>
+  <ng-container *ifRole="RolePresets.Internal">
+    <a mat-list-item (click)="navItemClick()" [routerLink]="['/timer']" [routerLinkActive]="['active']">
+      <mat-icon mat-list-icon>timer</mat-icon>
+      <p mat-line>Timer</p>
+    </a>
+  </ng-container>
 
   <mat-divider class="mid-divider"></mat-divider>
 
-  <span *ifRole="[Roles.Leder, Roles.Mellomleder]" fxHide.xs>
+  <span *ifRole="[Roles.Leder]" fxHide.xs>
     <div mat-subheader class="color-accent-light pb-0">Administrering</div>
     <a mat-list-item (click)="navItemClick()" [routerLink]="['/data']" [routerLinkActive]="['active']">
       <mat-icon mat-list-icon>dns</mat-icon>

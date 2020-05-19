@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Roles } from '../../shared/enums';
+import { Roles, RolePresets } from '../../shared/enums';
 import { MissionNote, Mission, MissionReport, MissionImage } from 'src/app/shared/models';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, MainNavService} from 'src/app/core/services';
@@ -19,6 +19,7 @@ import { MissionReportFormSheetWrapperComponent } from '../components/mission-re
 })
 
 export class MissionDetailsComponent{
+  RolePresets = RolePresets;
   Roles = Roles;
 
   vm$: Observable<{mission: Mission, images:MissionImage[], notes:MissionNote[], reports:MissionReport[]}>;
@@ -106,7 +107,7 @@ export class MissionDetailsComponent{
     cfg.backFn = this.onBack;  
     cfg.bottomSheetButtons = [
       {text: "Legg til rapport", icon: "note_add", callback: this.openReportForm, params: [missionId], allowedRoles: [Roles.Leder]},
-      {text: "Legg til notat", icon: "add_comment", callback: this.openMissionNoteForm, params: [missionId]},
+      {text: "Legg til notat", icon: "add_comment", callback: this.openMissionNoteForm, params: [missionId], allowedRoles: RolePresets.Internal},
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [missionId], allowedRoles: [Roles.Leder]},
       {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, params: [missionId], allowedRoles: [Roles.Leder]},
     ];
@@ -117,7 +118,10 @@ export class MissionDetailsComponent{
     if(mission == undefined) return null;
     let cfg = this.mainNavService.getCurrentConfig(); 
     cfg.bottomSheetButtons = cfg.bottomSheetButtons.filter(x => x.icon != "timer"); //remove if btn alrdy exist
-    cfg.bottomSheetButtons.push({text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission]})
+    
+    cfg.bottomSheetButtons.push(
+      {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal})
+
     cfg.multiLineTitle = mission.address.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'); 
     cfg.subTitle = mission.finished ? 'Oppdrag ferdig!' : '';
     cfg.subIcon = mission.finished ? 'check' : '';

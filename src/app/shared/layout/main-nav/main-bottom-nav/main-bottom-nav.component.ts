@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Roles } from '../../../enums/roles.enum';
+import { Roles, RolePresets } from '../../../enums/roles.enum';
 
 @Component({
   selector: 'app-main-bottom-nav',
@@ -7,6 +7,7 @@ import { Roles } from '../../../enums/roles.enum';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainBottomNavComponent {
+  RolePresets = RolePresets;
   Roles = Roles;
 
   constructor() { }

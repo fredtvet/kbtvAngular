@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { AppButton } from '../../interfaces/app-button.interface';
-import { Roles } from '../../enums/roles.enum';
 
 @Component({
   selector: 'app-icon-button',
@@ -8,7 +7,6 @@ import { Roles } from '../../enums/roles.enum';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconButtonComponent {
-  Roles = Roles;
   @Input() config: AppButton;
 
   @Output() fnHandled = new EventEmitter();
