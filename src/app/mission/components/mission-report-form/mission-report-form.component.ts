@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
-import { MissionReportType } from 'src/app/shared/models';
+import { ReportType } from 'src/app/shared/models';
 import { ReportTypeService, MissionReportService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,7 @@ export class MissionReportFormComponent{
   @Input() missionId: number;
   @Output() finished = new EventEmitter();
 
-  reportTypes$: Observable<MissionReportType[]>;
+  reportTypes$: Observable<ReportType[]>;
 
   constructor(
     private missionReportService: MissionReportService,

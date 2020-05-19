@@ -86,7 +86,7 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
     this.localStorageService.add(this.timestampKey, null)
   }
 
-  getTimestamp(): string{
+  getTimestamp(): number{
     return this.localStorageService.get(this.timestampKey);
   }
 

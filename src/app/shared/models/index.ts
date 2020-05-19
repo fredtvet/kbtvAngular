@@ -3,7 +3,7 @@ export * from './employer.model';
 export * from './mission-image.model';
 export * from './mission-note.model';
 export * from './mission-report.model';
-export * from './mission-report-type.model';
+export * from './report-type.model';
 export * from './mission-type.model';
 export * from './mission.model';
 export * from './user.model';

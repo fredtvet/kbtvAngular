@@ -5,7 +5,7 @@
     (tableSelected)="changeTable($event)">
   </app-data-table-picker>
 
-  <app-data-table class="h-100" fxLayout="column" fxLayoutGap="8px"
+  <app-data-table fxLayout="column" fxLayoutGap="8px" class="h-100"
     [data]="data$ | async"
     (itemEdited)="editCell($event)"
     (createItem)="createItem()"

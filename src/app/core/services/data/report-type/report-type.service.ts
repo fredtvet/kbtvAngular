@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MissionReportType } from 'src/app/shared/models';
+import { ReportType } from 'src/app/shared/models';
 import { BaseService } from '../abstracts/base.service';
 import { ApiService } from '../../api.service';
 import { ReportTypeSubject } from './report-type.subject';
@@ -11,7 +11,7 @@ import { NotificationService } from '../../ui/notification.service';
   providedIn: 'root'
 })
 
-export class ReportTypeService extends BaseService<MissionReportType> {
+export class ReportTypeService extends BaseService<ReportType> {
 
   constructor(
     notificationService: NotificationService,

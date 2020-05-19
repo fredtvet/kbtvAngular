@@ -26,7 +26,7 @@ export abstract class BaseService<T extends BaseEntity>{
     if(!this.isOnline) return null;
     let timestamp = this.dataSubject.getTimestamp();
     let params = new HttpParams();
-    if(timestamp) params = params.set('Timestamp', timestamp);
+    if(timestamp) params = params.set('Timestamp', timestamp.toString());
 
     this.apiService
       .get(`${this.uri}/Sync`, params)

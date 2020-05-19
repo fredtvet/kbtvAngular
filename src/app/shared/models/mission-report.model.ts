@@ -1,4 +1,4 @@
-import { MissionReportType } from './mission-report-type.model';
+import { ReportType } from './report-type.model';
 import { MissionChild } from '../interfaces/mission-child.interface';
 import { Mission } from './mission.model';
 
@@ -9,7 +9,7 @@ export class MissionReport implements MissionChild{
       public fileURL: string = null,
       public createdAt: Date = null,
       public missionReportTypeId: number = null,
-      public missionReportType: MissionReportType,
+      public reportType: ReportType,
     ){};
 
   public mission: Mission = undefined;

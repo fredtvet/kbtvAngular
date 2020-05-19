@@ -34,7 +34,7 @@
           <mat-list-item *ngFor="let report of reports;">
   
             <mat-icon mat-list-icon>description</mat-icon>
-            <a mat-line href="{{ report.fileURL }}">{{ report.missionReportType?.name }}</a>
+            <a mat-line href="{{ report.fileURL }}">{{ report.reportType?.name }}</a>
             <p mat-line>{{ report.createdAt | date }}</p>
   
             <button *ifRole="[Roles.Leder]" (click)="openDeleteReportDialog(report.id)" mat-icon-button color="warn">

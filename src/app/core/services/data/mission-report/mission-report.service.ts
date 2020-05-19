@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { MissionReport, MissionReportType } from 'src/app/shared/models';
+import { MissionReport, ReportType } from 'src/app/shared/models';
 import { BaseMissionChildService } from '../abstracts/base-mission-child.service';
 import { MissionReportSubject } from './mission-report.subject';
 import { ApiService } from '../../api.service';
@@ -24,14 +24,14 @@ export class MissionReportService extends BaseMissionChildService<MissionReport>
     super(notificationService, apiService, dataSubject, connectionService, "/MissionReports");
   }
 
-  addReport$(missionId:number, reportType: MissionReportType, files: FileList): Observable<MissionReport>{
+  addReport$(missionId:number, reportType: ReportType, files: FileList): Observable<MissionReport>{
     if(!this.isOnline)
     return throwError('Du må være tilkoblet internett for å legge til rapporter.')
             .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     const formData: FormData = new FormData();
     formData.append('file', files[0], files[0].name);
-    formData.append('MissionReportType',JSON.stringify(reportType));
+    formData.append('ReportType',JSON.stringify(reportType));
 
     return this
             .apiService

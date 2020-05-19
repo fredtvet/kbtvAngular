@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MissionReportType } from 'src/app/shared/models';
+import { ReportType } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-mission-report-form-view',
@@ -9,7 +9,7 @@ import { MissionReportType } from 'src/app/shared/models';
 })
 
 export class MissionReportFormViewComponent {
-  @Input() types: MissionReportType[] = [];
+  @Input() types: ReportType[] = [];
 
   @Output() formSubmitted = new EventEmitter();
   
