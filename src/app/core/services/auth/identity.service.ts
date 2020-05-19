@@ -58,7 +58,7 @@ export class IdentityService {
   }
 
   purgeAuth() {
-    this.dataSyncService.purgeAll(); //Clearing entire storage on logout for now.
+    this.dataSyncService.purgeUserSpesificResources(); //Clearing user spesific resources
     this.jwtService.destroyToken();
     // Set current user to an empty object
     this.currentUserSubject.next({} as User);
