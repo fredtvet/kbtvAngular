@@ -3,7 +3,7 @@
   <mat-form-field>
     <input matInput placeholder="Brukernavn" formControlName="userName" required>
     <mat-error *ngIf="this.userName.invalid">
-      Brukernavn er ett obligatorisk felt på minst 4 tegn. ÆØÅ ikke tillatt.
+      Minst 4 tegn. ÆØÅ og mellomrom ikke tillatt.
     </mat-error>
   </mat-form-field>
 

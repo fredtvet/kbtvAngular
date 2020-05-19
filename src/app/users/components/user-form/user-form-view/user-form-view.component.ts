@@ -37,6 +37,7 @@ export class UserFormViewComponent implements OnInit {
       this.userForm = this._formBuilder.group({
         userName: [{value: this.user.userName, disabled: !this.isCreateForm}, [
           Validators.required,
+          Validators.pattern('^[a-zA-Z0-9_.-]*$'),
           Validators.minLength(4),
           Validators.maxLength(100)
         ]],
