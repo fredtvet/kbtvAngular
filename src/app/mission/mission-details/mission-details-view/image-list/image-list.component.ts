@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ImageViewerDialogComponent } from '../image-viewer-dialog/image-viewer-dialog.component';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { MissionImage } from '../../models/mission-image.model';
 import { filter } from 'rxjs/operators';
+import { MissionImage } from 'src/app/shared/models';
+import { ConfirmDialogComponent } from 'src/app/shared/components';
+import { ImageViewerDialogComponent } from 'src/app/mission/components/image-viewer-dialog/image-viewer-dialog.component';
 
 @Component({
   selector: 'app-image-list',
@@ -64,8 +64,8 @@ export class ImageListComponent {
   openImageViewer(imageId: number){
 
     const dialogRef = this.dialog.open(ImageViewerDialogComponent, {
-      width: '100vw',
-      height: '100vh',
+      width: '100%',
+      height: '100%',
       panelClass: 'image_viewer_dialog',
       data: { imageId: imageId, images: this.images }
     });

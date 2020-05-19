@@ -1,11 +1,11 @@
 import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { MissionImage } from '../../models/mission-image.model';
-import { Roles } from '../../enums/roles.enum';
+import { MissionImage } from '../../../shared/models/mission-image.model';
+import { Roles } from '../../../shared/enums/roles.enum';
 import { MatBottomSheet } from '@angular/material';
-import { BottomSheetMenuComponent } from '../bottom-sheet-menu/bottom-sheet-menu.component';
-import { AppButton } from '../../interfaces/app-button.interface';
+import { BottomSheetMenuComponent } from '../../../shared/components/bottom-sheet-menu/bottom-sheet-menu.component';
+import { AppButton } from '../../../shared/interfaces/app-button.interface';
 
 @Component({
   selector: 'app-image-viewer-dialog',

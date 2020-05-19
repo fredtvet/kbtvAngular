@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { MissionNote } from 'src/app/shared/models';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
-import { Roles } from '../../../shared/enums';
+import { Roles } from '../../../../shared/enums';
 import { MatDialog, MatBottomSheet } from '@angular/material';
 import { filter } from 'rxjs/operators';
-import { MissionNoteFormSheetWrapperComponent } from '../mission-note-form/mission-note-form-sheet-wrapper.component';
+import { MissionNoteFormSheetWrapperComponent } from '../../../components/mission-note-form/mission-note-form-sheet-wrapper.component';
 
 @Component({
   selector: 'app-mission-note-list',
