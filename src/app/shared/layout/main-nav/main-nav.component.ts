@@ -11,7 +11,6 @@ import { routeAnimation} from '../../animations/route.animation';
 @Component({
   selector: 'app-main-nav',
   templateUrl: './main-nav.component.html',
-  styleUrls: ['./main-nav.component.scss'],
   animations: [ routeAnimation ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

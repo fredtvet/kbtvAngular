@@ -57,6 +57,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 
 .h-min-100{min-height:100%}
 
+.flex-nav{flex-shrink: 0;display: inline-flex;}
+
 .action_fab{
   position: fixed!important;
   right: $content-margin * 1px!important;

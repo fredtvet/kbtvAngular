@@ -1,13 +1,12 @@
 @import '../../../../variables';
 
 .column {
-  @include flex-column;
-}
-
-.nav {
-  @include flex-nav;
+  height: 100%;
+  display: flex;
+  flex-direction: column; 
 }
 
 .main-content {
-  @include flex-content;
+  flex-grow: 1;
+  overflow-y: auto;  
 }

@@ -12,16 +12,17 @@
   </mat-sidenav>
   
 
-  <mat-sidenav-content class="column">
+  <mat-sidenav-content fxLayout="column" class="h-100">
 
-    <app-main-top-nav [config]="config" (menuBtnClicked)="toggleDrawer(config.isXs)" class="nav"></app-main-top-nav>
+    <app-main-top-nav [config]="config" (menuBtnClicked)="toggleDrawer(config.isXs)" class="flex-nav"></app-main-top-nav>
 
-    <div class="main-content" [@routeAnimation]="prepareRoute(outlet)">
+    <!-- h-100 for iOS Safari fix -->
+    <div  fxFlex style="overflow-y:auto" [@routeAnimation]="prepareRoute(outlet)">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
     
 
-    <app-main-bottom-nav fxHide fxShow.xs class="nav"></app-main-bottom-nav>
+    <app-main-bottom-nav fxHide fxShow.xs class="flex-nav"></app-main-bottom-nav>
   </mat-sidenav-content>
 
 </mat-sidenav-container>
