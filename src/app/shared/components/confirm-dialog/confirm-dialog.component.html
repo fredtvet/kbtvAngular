@@ -1,16 +1,12 @@
-<div
-  class="app-card m-2"
-  fxLayout="column"
-  fxLayoutAlign="center center"
-  fxLayoutGap="16px">
+<div class="app-card">
 
-  <span class="text-center">
+  <div class="text-center m-2">
     {{ message || 'Vennligst bekreft operasjonen.' }}
-  </span>
+  </div>
 
-  <span>
+  <div class="float-right m-2">
     <button mat-button color="warn" (click)="onNoClick()">Avbryt</button>
     <button mat-button  [mat-dialog-close]="true" cdkFocusInitial>Bekreft</button>
-  </span>
+  </div>
   
 </div>
