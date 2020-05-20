@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
 import { Mission, Timesheet } from 'src/app/shared/models';
 import { Roles } from 'src/app/shared/enums';
 import { switchMap, tap } from 'rxjs/operators';
-import { UserTimesheetService, MissionService, NotificationService } from 'src/app/core/services';
+import { UserTimesheetService, MissionService, NotificationService, DateTimeService } from 'src/app/core/services';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -22,12 +22,13 @@ export class TimesheetFormComponent implements OnInit {
 
   timesheetPreset$: Observable<Timesheet>;
   
-  missionsSearchSubject = new BehaviorSubject<string>('');
+  missionsSearchSubject = new BehaviorSubject<string>(undefined);
   missions$: Observable<Mission[]>;
 
   isCreateForm: boolean;
 
   constructor(
+    private _dateTimeService: DateTimeService,
     private _userTimesheetService: UserTimesheetService,
     private _missionService: MissionService,
     private _notificationService: NotificationService) {
@@ -66,10 +67,18 @@ export class TimesheetFormComponent implements OnInit {
     })
   }
 
-  private filterMission(mission: Mission, input: string){
+  private filterMission(mission: Mission, input: string): boolean{
+    if(!input) return this.filterInitialMission(mission);
     let exp = (!input || input == null || mission.address.toLowerCase().includes(input.toLowerCase()));
     let id = +input;
-    if(!isNaN(id)) exp = exp || mission.id === id
+    if(!isNaN(id)) exp = exp || mission.id === id //If search input is number, include id search
+    return exp;
+  }
+
+  private filterInitialMission(mission: Mission): boolean{
+    let thirtyDaysAgo = this._dateTimeService.getNDaysAgo(30);
+    let exp = new Date(mission.updatedAt).getTime() >= thirtyDaysAgo; //Grab missions updated last 30 days
+    exp = exp || new Date(mission.lastVisited).getTime() >= thirtyDaysAgo;//Grab missions visited last 30 days
     return exp;
   }
 }
