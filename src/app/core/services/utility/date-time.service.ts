@@ -102,4 +102,7 @@ export class DateTimeService {
     return d.getDay() === 4 || isLeap && d.getDay() === 3 ? 53 : 52
   }
 
+  getNDaysAgo(n: number): number {
+    return new Date().setDate(this.currentDate.getDate() - n);
+  }
 }
