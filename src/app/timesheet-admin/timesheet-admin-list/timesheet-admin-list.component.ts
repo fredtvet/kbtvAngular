@@ -3,13 +3,13 @@ import { MainNavService, TimesheetService, DateTimeService, TimesheetAggregatorS
 import { TimesheetSummary } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
-import { filter, map, startWith, pairwise, tap} from 'rxjs/operators';
+import { filter, map, startWith, pairwise, tap, distinctUntilKeyChanged, distinct, takeUntil} from 'rxjs/operators';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
 import { GroupByTypes, TimesheetStatus } from 'src/app/shared/enums';
 import { Timesheet } from 'src/app/shared/models';
 import { listAnimation } from 'src/app/shared/animations/list.animation';
-import { useAnimation, query, transition, trigger } from '@angular/animations';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
 @Component({
   selector: 'app-timesheet-admin-list',
@@ -18,7 +18,7 @@ import { useAnimation, query, transition, trigger } from '@angular/animations';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class TimesheetAdminListComponent {
+export class TimesheetAdminListComponent extends SubscriptionComponent{
 
   @ViewChild('yearList', {static:false}) 
   private yearList: TemplateRef<any>;
@@ -30,25 +30,32 @@ export class TimesheetAdminListComponent {
   private timesheetList: TemplateRef<any>;
 
   activeView$: Observable<{view: TemplateRef<any>, context: any[]}>;
-
-  today = new Date();
     
   constructor(
-    private timesheetAggregator: TimesheetAggregatorService,
     private timesheetService: TimesheetService,
     private mainNavService: MainNavService,
     private route: ActivatedRoute,
     private router: Router,
     private dateTimeService: DateTimeService,
     private _bottomSheet: MatBottomSheet) { 
-      this.timesheetService.addGroupBy(GroupByTypes.YearAndUserName);
-      this.configureDefaultNav(+this.route.snapshot.queryParams['year'] || this.today.getFullYear());
+      super();
+      this.timesheetService.addGroupBy(GroupByTypes.Week);
+      this.configureWeekListNav();
       this.initalizeObservable();
     }
 
-  updateQuery = (queryParams: Params): void => {
-    this.router.navigate(['timeadministrering'], {queryParams, queryParamsHandling: 'merge'})
+  get selectedYear() {return +this.route.snapshot.params['year']};
+  get selectedUserName() {return this.route.snapshot.params['userName']};
+
+  updateUri = (year?: number, userName?: string): void => {
+    console.log(!year && !userName);
+    if(!year && !userName) this.router.navigate(['timeadministrering']);
+    else this.router.navigate(['timeadministrering', userName || this.selectedUserName, year || this.selectedYear])
   }
+
+  selectWeek = (week: number) => 
+    this.router.navigate([], {relativeTo: this.route, queryParams: {week}, queryParamsHandling: 'merge'})
+  
 
   changeTimesheetStatus = (id: number, status: TimesheetStatus): void => {
     this.timesheetService.changeStatus$(id, status).subscribe();
@@ -66,96 +73,69 @@ export class TimesheetAdminListComponent {
   }
 
   private initalizeObservable(){
-    this.activeView$ = combineLatest(this.timesheetService.timesheetSummaries$,this.route.queryParams.pipe(startWith(null),pairwise()))
-      .pipe(
-        map(([summaries, [prev, curr]]) => {     
-        let params = {year: curr['year'] || this.today.getFullYear(), userName: curr['userName'], week: curr['week']};
+    this.route.params.pipe(takeUntil(this.unsubscribe))
+      .subscribe(x => this.loadWeekSummaries(x.year, x.userName));
+ 
+    this.activeView$ = combineLatest(
+      this.timesheetService.timesheetSummaries$, 
+      this.route.queryParams
+    ).pipe(
+        filter(([summaries, params]) => summaries && summaries.length > 0),
+        map(([summaries, params]) => {     
         //If initial load or year changes
-        if(prev == null || prev['year'] !== params.year) this.loadYearSummaries(params.year);
-        
         let result: {view: TemplateRef<any>, context: any[]} = {view: null, context: null};
-
-        if(params.userName && !params.week){
-          result.context = this.filterSummaryForUser(params.userName, summaries);
-          result.view = this.weekList;
-          this.configureWeekListNav(params.year, params.userName)
-        } 
-        else if(params.userName && params.week){
-          result.context = this.filterTimesheetsForUserWeek(params.year, params.userName, params.week, summaries);
+          console.log(params)
+        if(params.week){         
+          result.context = summaries.find(x => x.week == params.week).timesheets;
           result.view = this.timesheetList;
-          this.configureTimesheetListNav(params.year, params.userName,params.week)
+          this.configureTimesheetListNav(params.week)
         } 
-        else{
-          result = {view: this.yearList, context: summaries};
-          this.configureDefaultNav(params.year);
-        }
+        else{      
+          result.context = summaries.sort((a, b) => b.week - a.week);
+          result.view = this.weekList;
+          this.configureWeekListNav()
+        } 
+
         return result;
-      }),tap(console.log)
+      }), tap(console.log)
     );
   }
 
-  private loadYearSummaries = (year: number): void => {
+  private loadWeekSummaries = (year: number, userName: string): void => {
     let date = new Date();
     date.setFullYear(year);  
-    this.timesheetService.addFilter({dateRange: this.dateTimeService.getYearRange(date)});
-  }
-
-  private filterSummaryForUser = (userName: string, initialSummaries: TimesheetSummary[]): TimesheetSummary[] => {
-    let summary = initialSummaries.find(x => x.userName == userName);
-    if(!summary) return undefined;
-    return this.timesheetAggregator.groupByWeek(summary.timesheets).sort((a, b) => b.week - a.week);
-  }
-
-  private filterTimesheetsForUserWeek = (year: number, userName: string, weekNr: number, initialSummaries: TimesheetSummary[]): Timesheet[] => {
-    let weekRange = this.dateTimeService.getWeekRangeByDateParams({year, weekNr});
-    let userSummary = initialSummaries.find(x => x.userName == userName);
-    if(!userSummary || !userSummary.timesheets) return undefined;
-
-    return userSummary.timesheets.filter(t => {
-      let date = new Date(t.startTime);
-      return date >= weekRange[0] && date <= weekRange[1];
-    })
+    console.log(userName)
+    this.timesheetService.addFilter({dateRange: this.dateTimeService.getYearRange(date), userName});
   }
 
   private openWeekFilter = () => {
     let ref = this._bottomSheet.open(WeekListFilterSheetWrapperComponent, {
-      data: {year: +this.route.snapshot.queryParams['year'] || this.today.getFullYear()}
+      data: {year: this.selectedYear, userName: this.selectedUserName}
     });
 
     ref.afterDismissed()
       .pipe(filter(f => f != undefined))
-      .subscribe(f => this.updateQuery({year: f.year}));
+      .subscribe(f => this.updateUri(f.year, f.userName));
   }
 
-  private configureDefaultNav(year: number){
+  private configureWeekListNav(){
     let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Administrer timer";
-    cfg.subTitle = year.toString();
+    cfg.title = "Uker";
+    cfg.subTitle = this.selectedYear + ' - ' + this.selectedUserName;
+    cfg.backFn = this.updateUri;
     cfg.buttons = [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}];
     this.mainNavService.addConfig(cfg);
   }
 
-  private configureWeekListNav(year: number, userName: string){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Uker";
-    cfg.subTitle = year + ' - ' + userName;
-    cfg.backFn = this.updateQuery;
-    cfg.backFnParams = [{userName: null, week: null}];
-    //cfg.buttons = [{icon: "list", callback: this.goToTimesheetList}];
-    this.mainNavService.addConfig(cfg);
-  }
-
-  private configureTimesheetListNav(year: number, userName: string, week: number){
+  private configureTimesheetListNav(week: number){
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.title = "Uke " + week;
-    cfg.subTitle = year + ' - ' + userName;
-    cfg.backFn = this.updateQuery;
-    cfg.backFnParams = [{week: null}];
-    //cfg.buttons = [{icon: "list", callback: this.goToTimesheetList}];
+    cfg.subTitle = this.selectedYear + ' - ' + this.selectedUserName;
+    cfg.backFn = this.selectWeek;
+    cfg.backFnParams = [null];   
+    cfg.buttons = [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}];
     this.mainNavService.addConfig(cfg);
   }
-
-  trackByUserName = (index:number, summary:TimesheetSummary): string => summary.userName;
   
   trackByWeek = (index:number, summary:TimesheetSummary): number => summary.week;
 

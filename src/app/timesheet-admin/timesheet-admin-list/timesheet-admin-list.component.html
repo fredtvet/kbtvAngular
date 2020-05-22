@@ -1,54 +1,33 @@
-<ng-container *ngIf="activeView$ | async else loading; let view">
-    <ng-container *ngIf="activeView$ | async; let view"
-        [ngTemplateOutlet]="view.view || yearList"
-        [ngTemplateOutletContext]="{ $implicit: view.context }">
-    </ng-container>
+<ng-container *ngIf="activeView$ | async else loading; let view" [ngTemplateOutlet]="view.view || weekList"
+    [ngTemplateOutletContext]="{ $implicit: view.context }">
 </ng-container>
 
-<ng-template let-summaries #yearList> 
-    <div class="p-0" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="app-card mat-elevation-z2 m-1 p-0 fadeInRight" matRipple
-            *ngFor="let summary of summaries; trackBy: trackByUserName"
-            (click)="updateQuery({userName: summary.userName})">
-            <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
-        </div> 
-    </div> 
-</ng-template>
-
-<ng-template let-summaries #weekList>  
-    <div class="p-0" style="height:100%" fxLayout="column" fxLayoutAlign="start stretch">
-        <cdk-virtual-scroll-viewport itemSize="82"  fxFlex>
-            <div class="fadeInRight"
-                *cdkVirtualFor="let summary of summaries; trackBy: trackByWeek; templateCacheSize:0">
-                <app-swipe-card                          
-                    [navButton]="{callback: updateQuery, params: {week: summary.week}}"
-                    [swipeEnabled]="summary.openHours > 0"
-                    [swipeButton]="{
+<ng-template let-summaries #weekList>
+    <div class="h-100" fxLayout="column" fxLayoutAlign="start stretch">
+        <cdk-virtual-scroll-viewport itemSize="82" fxFlex>
+            <app-swipe-card *cdkVirtualFor="let summary of summaries; trackBy: trackByWeek; templateCacheSize:0"
+                [navButton]="{callback: selectWeek, params: summary.week}"
+                [swipeEnabled]="summary.openHours > 0" [swipeButton]="{
                         callback: confirmTimesheets, 
                         params: [summary.timesheets], 
                         icon: summary.openHours > 0 ? 'lock_open' : 'lock', 
                         colorClass: summary.openHours > 0 ? 'bg-warn' : 'bg-success'}">
-                    <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
-                </app-swipe-card>
-            </div>
+                <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
+            </app-swipe-card>
         </cdk-virtual-scroll-viewport>
     </div>
 </ng-template>
 
-<ng-template let-timesheets #timesheetList> 
-    <div class="p-0 h-100" fxLayout="column" fxLayoutAlign="start stretch"> 
-    <cdk-virtual-scroll-viewport itemSize="108" fxFlex>
-        <div class="m-1 fadeInRight" 
-            *cdkVirtualFor="let timesheet of timesheets; trackBy: trackById">
-            <app-timesheet-card adminView="true"        
-                [timesheet]="timesheet"      
-                (statusChanged)="changeTimesheetStatus($event.id, $event.status)">
+<ng-template let-timesheets #timesheetList>
+    <div class="h-100" fxLayout="column" fxLayoutAlign="start stretch">
+        <cdk-virtual-scroll-viewport itemSize="108" fxFlex>
+            <app-timesheet-card adminView="true" *cdkVirtualFor="let timesheet of timesheets; trackBy: trackById"
+                [timesheet]="timesheet" (statusChanged)="changeTimesheetStatus($event.id, $event.status)">
             </app-timesheet-card>
-        </div>
-    </cdk-virtual-scroll-viewport>
+        </cdk-virtual-scroll-viewport>
     </div>
 </ng-template>
 
 <ng-template #loading>
-    <mat-spinner class="center-spinner" color="accent"></mat-spinner>
+    <span>Ingen timer registrert</span>
 </ng-template>

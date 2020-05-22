@@ -1,18 +1,16 @@
 <div fxLayout="column" fxLayoutAlign="start stretch" class="h-100">
 
-    <button mat-mini-fab aria-label="ny" class="action_fab"
-        (click)="openTimesheetForm(getCurrentFilter().mission)">
+    <button mat-mini-fab aria-label="ny" class="action_fab" (click)="openTimesheetForm(getCurrentFilter().mission)">
         <mat-icon class="scale-125">add</mat-icon>
     </button>
 
     <ng-container *ngIf="(timesheets$ | async)?.length else noSheets; let timesheets">
         <cdk-virtual-scroll-viewport itemSize="148" fxFlex>
-            <div class="m-2 w-auto fadeInRight" 
-                *cdkVirtualFor="let timesheet of timesheets$ | async">
-                <app-timesheet-card [timesheet]="timesheet" (deleteClicked)="deleteTimesheet($event)"
-                    (editClicked)="openTimesheetForm(undefined, $event)">
-                </app-timesheet-card>
-            </div>
+
+            <app-timesheet-card *cdkVirtualFor="let timesheet of timesheets$ | async" [timesheet]="timesheet"
+                (deleteClicked)="deleteTimesheet($event)" (editClicked)="openTimesheetForm(undefined, $event)">
+            </app-timesheet-card>
+
         </cdk-virtual-scroll-viewport>
     </ng-container>
 </div>

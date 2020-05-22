@@ -1,0 +1,10 @@
+<ng-container *ngIf="users$ | async else loading; let users">
+        <app-list-card *ngFor="let user of users" 
+            startIcon="person" endIcon="chevron_right" [text]="user.firstName + ' ' +user.lastName"
+            [routerLink]="['/timeadministrering', user.userName, thisYear]">
+        </app-list-card>
+</ng-container>
+
+<ng-template #loading>
+    <mat-spinner class="center-spinner" color="accent"></mat-spinner>
+</ng-template>
