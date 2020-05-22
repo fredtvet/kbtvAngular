@@ -22,11 +22,16 @@ export class MissionListViewComponent implements OnInit {
 
   ngOnInit() { }
 
+  ngOnChanges(): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    console.log(this.missions)
+  }
+
   onSearch = (val: string) => this.search.emit(val);
 
   openMissionForm = () => this._bottomSheet.open(MissionFormSheetWrapperComponent);
 
-  trackByFn = (index: number, mission: Mission) => mission.id;
-  
+  trackByFn = (index: number, mission: Mission) => {return mission.id};
 
 }

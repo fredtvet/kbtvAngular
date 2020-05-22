@@ -133,7 +133,6 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 }
 
 .app-card{
-  @include  max-width;
   background:white;
   border-radius:5px;
   .mat-card-header-text{
@@ -161,6 +160,10 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
   .owl-dt-calendar-cell-in-range{
     background:$primary-light!important;
   }
+}
+
+.cdk-virtual-scroll-content-wrapper{
+  width:100%;
 }
 
 .mat-drawer-container {position: unset!important;}//Fix for bug on iOs

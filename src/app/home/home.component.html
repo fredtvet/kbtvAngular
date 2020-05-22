@@ -1,27 +1,27 @@
-
-
-<div class="p-2 max-width">
-  <mat-grid-list cols="2" rowHeight="3:2" gutterSize="5" class="mat-subheading-2 mb-2">
+<div class="p-1 max-width">
+  <mat-grid-list cols="2" rowHeight="3:2" gutterSize="5" class="mat-subheading-2 m-1 mb-2">
     <mat-grid-tile class="mat-elevation-z2 bg-foreground anim-block" matRipple [routerLink]="['/oppdrag']">
       <span class="text-center">
         <mat-icon class="scale-150">view_list</mat-icon><br />
         <span>Oppdrag</span>
       </span>
     </mat-grid-tile>
-    <mat-grid-tile *ifRole="rolePresets.Internal" class="mat-elevation-z2 bg-foreground anim-block" matRipple [routerLink]="['/timer']">
+    <mat-grid-tile *ifRole="rolePresets.Internal" class="mat-elevation-z2 bg-foreground anim-block" matRipple
+      [routerLink]="['/timer']">
       <span class="text-center">
         <mat-icon class="scale-150">timer</mat-icon><br />
         <span>Timer</span>
       </span>
     </mat-grid-tile>
-    <mat-grid-tile *ifRole="rolePresets.External" class="mat-elevation-z2 bg-foreground anim-block" matRipple [routerLink]="['/profil']">
+    <mat-grid-tile *ifRole="rolePresets.External" class="mat-elevation-z2 bg-foreground anim-block" matRipple
+      [routerLink]="['/profil']">
       <span class="text-center">
         <mat-icon class="scale-150">person</mat-icon><br />
         <span>Profil</span>
       </span>
     </mat-grid-tile>
   </mat-grid-list>
-  
+
   <ng-container *ifRole="[Roles.Leder]">
     <span class="mat-body-2 anim-block">Administrering</span>
 
@@ -31,19 +31,16 @@
     </app-list-card>
     <app-list-card text="Administrer brukere" startIcon="people" [routerLink]="['/brukere']">
     </app-list-card>
-  
+
     <span class="mat-body-2 anim-block">Statistikk</span>
     <app-list-card text="Timestatistikk" startIcon="assessment" [routerLink]="['/timestatistikk']">
     </app-list-card>
   </ng-container>
 
   <span class="mat-body-2 anim-block">Sist besøkte oppdrag</span>
-  
-  <app-list-card *ngFor="let mission of missionHistory$ | async" 
-    startIcon="history"
-    [endIcon]="mission.finished ? 'check':'chevron_right'"
-    [text]="mission.address"
+
+  <app-list-card *ngFor="let mission of missionHistory$ | async" startIcon="history"
+    [endIcon]="mission.finished ? 'check':'chevron_right'" [text]="mission.address"
     [routerLink]="['/oppdrag', mission.id, 'detaljer']">
   </app-list-card>
 </div>
-
