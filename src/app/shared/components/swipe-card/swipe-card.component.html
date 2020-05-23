@@ -8,7 +8,7 @@
         <mat-icon class="scale-125">{{ swipeButton.icon }}</mat-icon>
   </div>
 
-  <div class="bg-white" style="position:relative;z-index:1!important" fxFlex
+  <div class="bg-foreground" style="position:relative;z-index:1!important" fxFlex
     matRipple [matRippleDisabled]="!navButton"
     (click)="handleNavClick(navButton?.callback)"
     [@showHideConfirm]="((isXs$ | async) && isSwipeActionHidden) ? 'hide' : 'show'"

@@ -2,15 +2,15 @@
   (click)="labelClicked.emit(date)">
 
     <div fxLayout="column" fxLayoutAlign="center center" >
-      <span class="mat-h3 m-0 line-height-90">
+      <span class="mat-h3 m-0 line-height-100">
         {{ this.date | date : 'E' }}
       </span>
 
-      <span class="mat-title m-0 line-height-90">
+      <span class="mat-title m-0 line-height-100">
         {{ this.date | date : 'dd' }}
       </span>
 
-      <span class="mat-small line-height-90">
+      <span class="mat-small line-height-100">
         {{ this.date | date : 'MMM' }}
       </span>
     </div>

@@ -1,32 +1,32 @@
   <div class="p-3" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" *ngIf="summary">
     <div fxLayout="column" fxLayoutAlign="center center" *ngIf="summary.week; else yearView">
-        <span class="mat-body m-0 line-height-90">Uke</span>
-        <span class="mat-headline m-0 line-height-90">{{ summary.week }}</span>
+        <span class="mat-body m-0 line-height-100">Uke</span>
+        <span class="mat-headline m-0 line-height-100">{{ summary.week }}</span>
       </div>
     
       <ng-template #yearView>
         <div fxLayout="column" fxLayoutAlign="center center">
-          <span class="mat-body m-0 line-height-90">År</span>
-          <span class="mat-headline m-0 line-height-90">{{ summary.year }}</span>
+          <span class="mat-body m-0 line-height-100">År</span>
+          <span class="mat-headline m-0 line-height-100">{{ summary.year }}</span>
         </div>
       </ng-template>
     
       <span fxLayout="column" fxLayoutAlign="center start">
-        <span *ngIf="summary.openHours > 0; else confirmed" class="mat-title m-0 mb-1 color-warn line-height-90">
+        <span *ngIf="summary.openHours > 0; else confirmed" class="mat-title m-0 color-warn line-height-100">
           Åpen
         </span>
         <ng-template #confirmed>
-          <span class="mat-subheading-2 m-0 mb-1 color-success line-height-90"
+          <span class="mat-subheading-2 m-0 color-success line-height-100"
             >Alle timer låst
           </span>
         </ng-template>
-        <span class="mat-body m-0 mb-1 line-height-90">
+        <span class="mat-body m-0 line-height-100">
             {{ summary.openHours }} timer åpne
         </span>
-        <span class="mat-body m-0 mb-1 line-height-90"
+        <span class="mat-body m-0 line-height-100"
           >{{ summary.confirmedHours }} timer låst
         </span>
-        <span *ngIf="summary.fullName" class="mat-body-2 m-0 line-height-90">{{
+        <span *ngIf="summary.fullName" class="mat-body-2 m-0 line-height-100">{{
           summary.fullName}}
         </span>
       </span>

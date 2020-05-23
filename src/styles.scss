@@ -5,8 +5,8 @@
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 @import "~animate.css/animate.min";
 
-html, body { height: 100%; background:$background-color;color:black;overflow:hidden;}
-body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
+html, body { height: 100%; background:$background-color;color:black;overflow:hidden;padding:0;margin:0}
+body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 .bg-primary{background:$primary!important;color:white;}
 .bg-primary-light{background:$primary-light!important;color:black;}
@@ -43,7 +43,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 .scale-125{transform:scale(1.25);}
 .scale-75{transform:scale(.75);}
 
-.line-height-90{line-height:90%}
+.line-height-100{line-height:100%}
 
 .app-nav-tile{height:100px;width:100px}
 
@@ -86,6 +86,10 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow:hidden;}
 }
 .backInDown{
   animation: backInDown;
+  animation-duration:.5s
+}
+.backInRight{
+  animation: backInRight;
   animation-duration:.5s
 }
 .fadeIn{

@@ -36,7 +36,7 @@
 
 </mat-toolbar>
 <mat-toolbar *ngIf="config.multiLineTitle && config.multiLineTitle.length > 0" class="bg-primary-dark toolbar-slim">
-  <span class="ml-4">
+  <span class="ml-6">
     <ng-container *ngFor="let line of config.multiLineTitle; let last =  last">
       {{ line }}<br  *ngIf="!last" />
     </ng-container>

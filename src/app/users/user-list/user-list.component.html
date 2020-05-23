@@ -1,4 +1,4 @@
-<ng-container *ngIf="users$ | async else loading; let users; let index = index">
+<div class="p-2" *ngIf="users$ | async else loading; let users; let index = index">
 
     <app-user-card *ngFor="let user of users" 
       [user]="user"
@@ -9,7 +9,7 @@
       }">
     </app-user-card>
 
-</ng-container>
+</div>
 
 <ng-template #loading>
   <mat-spinner class="center-spinner" color="accent"></mat-spinner>

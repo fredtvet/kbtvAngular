@@ -4,7 +4,7 @@
 
 <ng-template let-summaries #weekList>
     <div class="h-100 fadeInRight" fxLayout="column" fxLayoutAlign="start stretch">
-        <cdk-virtual-scroll-viewport itemSize="82" fxFlex>
+        <cdk-virtual-scroll-viewport itemSize="82" maxBufferPx="800" minBufferPx="800" fxFlex>
             <app-swipe-card *cdkVirtualFor="let summary of summaries; trackBy: trackByWeek; templateCacheSize:0"
                 [navButton]="{callback: selectWeek, params: summary.week}" [swipeEnabled]="summary.openHours > 0"
                 [swipeButton]="{
@@ -21,7 +21,7 @@
 
 <ng-template let-timesheets #timesheetList>
     <div class="h-100 fadeInRight" fxLayout="column" fxLayoutAlign="start stretch">
-        <cdk-virtual-scroll-viewport itemSize="108" fxFlex>
+        <cdk-virtual-scroll-viewport itemSize="108" maxBufferPx="800" minBufferPx="800" fxFlex>
             <div class="m-1" *cdkVirtualFor="let timesheet of timesheets; trackBy: trackById">
                 <app-timesheet-card adminView="true" [timesheet]="timesheet"
                     (statusChanged)="changeTimesheetStatus($event.id, $event.status)">

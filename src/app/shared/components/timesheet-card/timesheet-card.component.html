@@ -9,10 +9,10 @@
         {{ this.timesheet.startTime | date : 'shortTime' }} - {{ this.timesheet.endTime | date : 'shortTime' }}
       </span>
       <span class="mat-small">
-        {{ this.timesheet.startTime | duration : this.timesheet.endTime }} 
+        {{ this.timesheet.totalHours | readableDuration }} 
       </span>
       <span class="mat-small">
-        {{ this.timesheet.mission?.address }} ({{this.timesheet.missionId}})
+        ({{this.timesheet.missionId}}) {{ this.timesheet.mission?.address }} 
       </span>
       <span class="mat-body-2">
         {{ timesheet.comment }}

@@ -6,6 +6,7 @@
     -ms-flex-wrap: wrap; /* IE10 */
     flex-wrap: wrap;
     max-width: 1000px;
+    padding:$gap-size-unit * 0.25px;
   }
 
   /* Create four equal columns that sits next to each other */
@@ -16,7 +17,7 @@
   }
 
   .img-column img {
-    padding:$content-margin * 0.25px;
+    padding:$gap-size-unit * 0.25px;
     vertical-align: middle;
     width: 100%;
     -moz-box-sizing: border-box;

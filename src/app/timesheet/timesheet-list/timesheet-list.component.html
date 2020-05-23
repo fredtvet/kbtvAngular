@@ -5,7 +5,7 @@
     </button>
 
     <ng-container *ngIf="(timesheets$ | async)?.length else noSheets; let timesheets">
-        <cdk-virtual-scroll-viewport itemSize="148" fxFlex class="fadeInRight">
+        <cdk-virtual-scroll-viewport itemSize="148" maxBufferPx="800" minBufferPx="800" fxFlex class="fadeInRight">
             <div class="m-1" *cdkVirtualFor="let timesheet of timesheets$ | async">
                 <app-timesheet-card [timesheet]="timesheet" (deleteClicked)="deleteTimesheet($event)"
                     (editClicked)="openTimesheetForm(undefined, $event)">

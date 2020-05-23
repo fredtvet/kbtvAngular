@@ -43,7 +43,7 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <mat-checkbox *ngIf="!isCreateForm" formControlName="finished">Er oppdraget ferdig?</mat-checkbox>
+  <mat-checkbox *ngIf="!isCreateForm" formControlName="finished" class="mb-2">Er oppdraget ferdig?</mat-checkbox>
 
   <app-submit-button [disabled]="missionForm.invalid || missionForm.pristine" (click)="onSubmit()">
   </app-submit-button>

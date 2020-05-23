@@ -8,7 +8,8 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-divider class="mb-2"></mat-divider>
+    <mat-divider></mat-divider>
+    <span class="mb-2"></span>
   </ng-container>
 
   <mat-form-field>
@@ -16,8 +17,9 @@
     <input matInput [(ngModel)]="year" type="number">
   </mat-form-field>
 
-  <mat-divider class="mb-2"></mat-divider>
-
+  <mat-divider></mat-divider>
+  <span class="mb-2"></span>
+  
   <span fxLayout="row" fxLayoutAlign="space-between center">
     <button mat-button color="warn" (click)="close()">Avbryt</button>
     <button mat-button color="primary" (click)="applyFilter()">Bruk</button>

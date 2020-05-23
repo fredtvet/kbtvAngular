@@ -9,7 +9,8 @@
         </mat-select>
       </mat-form-field>
   
-      <mat-divider class="mb-2"></mat-divider>
+      <mat-divider></mat-divider>   
+      <span class="mb-2"></span>
     </ng-container>
 
     <ng-container *ngIf="!(disabledFilters | arrayIncludes : 'mission')">
@@ -26,14 +27,15 @@
         </mat-autocomplete>
       </mat-form-field>
   
-      <mat-divider class="mb-2"></mat-divider>
+      <mat-divider></mat-divider>
+      <span class="mb-2"></span>
     </ng-container>
 
     <ng-container *ngIf="!(disabledFilters | arrayIncludes : 'dateRange')">
       <label class="mat-caption">Velg tidsrom</label>
 
-      <mat-radio-group [ngModel]="filterPreset.dateRangePreset" (ngModelChange)="updateDateRangePreset($event)"  
-        fxLayoutGap="8px">
+      <mat-radio-group color="primary" [ngModel]="filterPreset.dateRangePreset" (ngModelChange)="updateDateRangePreset($event)"  
+        fxLayoutGap="8px" class="mb-2">
         <mat-radio-button [value]="dateRangePresets.CurrentWeek">
           Denne uken
         </mat-radio-button>
@@ -82,15 +84,15 @@
         </owl-date-time>
       </ng-container>
 
-      <mat-divider class="mb-2"></mat-divider>
-
+      <mat-divider></mat-divider>
+      <span class="mb-2"></span>
     </ng-container>
     
     <ng-container *ngIf="!(disabledFilters | arrayIncludes : 'status')">
       <label class="mat-caption">Velg status</label>
-      <mat-radio-group [(ngModel)]="filterPreset.status"  
-        fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-        <mat-radio-button [value]="timesheetStatus.Open" color="warn">
+      <mat-radio-group [(ngModel)]="filterPreset.status" color="primary"
+        fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="mb-2">
+        <mat-radio-button [value]="timesheetStatus.Open">
             Åpen
         </mat-radio-button>
         <mat-radio-button [value]="timesheetStatus.Confirmed">
@@ -98,7 +100,8 @@
         </mat-radio-button>
       </mat-radio-group>
 
-      <mat-divider class="mb-2"></mat-divider>
+      <mat-divider></mat-divider>
+      <span class="mb-2"></span>
     </ng-container>
 
     <span fxLayout="row" fxLayoutAlign="space-between center">

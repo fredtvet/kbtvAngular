@@ -8,7 +8,7 @@ export class User {
     public phoneNumber: string = null,
     public email: string = null,
     public role: string = null,
-    public employerId: string = null
+    public employerId: number = null
   ){}
 
   public employer: Employer = null;
