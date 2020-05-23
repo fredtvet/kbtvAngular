@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe } from './pipes'
+import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe, ReadableDurationPipe, DurationPipe, GetDateByDateParamsPipe, ArrayIncludesPipe, GetEmployerByIdPipe } from './pipes'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -28,14 +28,10 @@ import {
 import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
 import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date-time-formats';
 import { BottomSheetMenuComponent } from './components/bottom-sheet-menu/bottom-sheet-menu.component';
-import { DurationPipe } from './pipes/duration.pipe';
-import { GetDateByDateParamsPipe } from './pipes/get-date-by-date-params.pipe';
-import { ArrayIncludesPipe } from './pipes/array-includes.pipe';
 import { AddToHomeScreenDirective } from './directives/add-to-home-screen.directive';
 import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
 import { MainTopNavComponent } from './layout/main-nav/main-top-nav/main-top-nav.component';
 import { InputListenerDirective } from './directives';
-import { GetEmployerByIdPipe } from './pipes/get-employer-by-id.pipe';
 
 @NgModule({
   declarations: [
@@ -68,7 +64,8 @@ import { GetEmployerByIdPipe } from './pipes/get-employer-by-id.pipe';
     MainTopNavComponent,
     InputListenerDirective,
     SimpleTopNavComponent,
-    GetEmployerByIdPipe
+    GetEmployerByIdPipe,
+    ReadableDurationPipe,
   ],
   imports: [
     CommonModule,
