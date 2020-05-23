@@ -17,7 +17,7 @@ export class GetEmployerByIdPipe extends SubscriptionComponent implements PipeTr
 
   transform(value: number): Employer {   
     if(!value || value == null) return undefined;  
-    console.log(this.result);
+    
     this.employerService.get$(value).pipe(takeUntil(this.unsubscribe)).subscribe(x => this.result = x);
     return this.result;
   }

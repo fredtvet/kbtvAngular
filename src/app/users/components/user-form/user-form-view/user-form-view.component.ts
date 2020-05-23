@@ -33,7 +33,6 @@ export class UserFormViewComponent implements OnInit {
     }
 
     initalizeForm(){
-      console.log(this.user);
       this.userForm = this._formBuilder.group({
         userName: [{value: this.user.userName, disabled: !this.isCreateForm}, [
           Validators.required,
@@ -66,7 +65,6 @@ export class UserFormViewComponent implements OnInit {
     }
 
     onSubmit(){
-      console.log(this.userForm.getRawValue());
       if(this.userForm.valid && this.userForm.dirty) 
         this.formSubmitted.emit(this.userForm.getRawValue());
     }
