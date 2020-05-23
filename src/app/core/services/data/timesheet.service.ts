@@ -3,13 +3,14 @@ import { Observable, BehaviorSubject, combineLatest, Subject, throwError } from 
 import { Timesheet, User } from 'src/app/shared/models';
 import { ApiService } from '../api.service';
 import { TimesheetFilter, TimesheetSummary } from 'src/app/shared/interfaces';
-import { tap, switchMap, distinctUntilChanged, map, pairwise, startWith, share, shareReplay, skip } from 'rxjs/operators';
+import { tap, switchMap, distinctUntilChanged, map, pairwise, startWith, share, shareReplay, skip, withLatestFrom } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { TimesheetAggregatorService } from '../utility/timesheet-aggregator.service';
 import { GroupByTypes, TimesheetStatus, Notifications } from 'src/app/shared/enums';
 import { ConnectionService } from '../connection.service';
 import { NotificationService } from '../ui/notification.service';
 import { UserService } from './user/user.service';
+import { MissionService } from './mission/mission.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class TimesheetService {
   filter$ = this.filterSubject.asObservable().pipe(map(filter => {return {...filter}}));
 
   private timesheetSubject = new BehaviorSubject<Timesheet[]>([]);
-  timesheets$ = this.timesheetSubject.asObservable();
+  timesheets$ = this.timesheetSubject.asObservable()
 
   timesheetSummaries$ = combineLatest(this.timesheets$, this.groupBy$, this.userService.getAll$()).pipe(
     map(([timesheets, groupBy, users]) => {
@@ -39,13 +40,21 @@ export class TimesheetService {
     private timesheetAggregatorService: TimesheetAggregatorService,
     private connectionService: ConnectionService,
     private notificationService: NotificationService,
-    private userService: UserService) {
+    private userService: UserService,
+    private missionService: MissionService) {
     this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
 
     this.filter$.pipe(
       distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
       tap(x => this.timesheetSubject.next([])),
-      switchMap(this.get$)
+      switchMap(this.get$),
+      withLatestFrom(this.missionService.getAll$()),
+      map(([timesheets, missions]) => {
+        const missions_obj = {}; 
+        missions.forEach(x => missions_obj[x.id] = x); 
+        timesheets.forEach(t => t.mission = missions_obj[t.missionId]);
+        return timesheets;
+      })
     ).subscribe(t => this.timesheetSubject.next(t))
   }
 
