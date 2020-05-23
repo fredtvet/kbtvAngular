@@ -17,8 +17,6 @@ export class BottomSheetMenuComponent {
     this.close();
   };
 
-  logher = (e) => console.log(e)
-
   close = () => this._bottomSheetRef.dismiss();
   
 }

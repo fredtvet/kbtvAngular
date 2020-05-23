@@ -10,13 +10,13 @@ const routes: Routes = [
     path: '',
     component: TimesheetAdminUserListComponent,
     canActivate: [AuthGuard],
-    data: {allowedRoles: [Roles.Leder]}
+    data: {allowedRoles: [Roles.Leder], animation: 'TimesheetAdminUserList'}
   },  
   {
     path: ':userName/:year',
     component: TimesheetAdminListComponent,
     canActivate: [AuthGuard],
-    data: {allowedRoles: [Roles.Leder]}
+    data: {allowedRoles: [Roles.Leder], animation: 'TimesheetAdminList'}
   },
 ];
 

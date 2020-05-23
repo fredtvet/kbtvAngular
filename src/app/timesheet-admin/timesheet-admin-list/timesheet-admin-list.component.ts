@@ -1,5 +1,5 @@
 import { Component, ViewChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
-import { MainNavService, TimesheetService, DateTimeService, TimesheetAggregatorService } from 'src/app/core/services';
+import { MainNavService, TimesheetService, DateTimeService, TimesheetAggregatorService, LoadingService } from 'src/app/core/services';
 import { TimesheetSummary } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
@@ -31,7 +31,10 @@ export class TimesheetAdminListComponent extends SubscriptionComponent{
 
   activeView$: Observable<{view: TemplateRef<any>, context: any[]}>;
     
+  loading$ = this._loadingService.loading$;
+
   constructor(
+    private _loadingService: LoadingService,
     private timesheetService: TimesheetService,
     private mainNavService: MainNavService,
     private route: ActivatedRoute,
@@ -48,7 +51,6 @@ export class TimesheetAdminListComponent extends SubscriptionComponent{
   get selectedUserName() {return this.route.snapshot.params['userName']};
 
   updateUri = (year?: number, userName?: string): void => {
-    console.log(!year && !userName);
     if(!year && !userName) this.router.navigate(['timeadministrering']);
     else this.router.navigate(['timeadministrering', userName || this.selectedUserName, year || this.selectedYear])
   }
@@ -84,7 +86,7 @@ export class TimesheetAdminListComponent extends SubscriptionComponent{
         map(([summaries, params]) => {     
         //If initial load or year changes
         let result: {view: TemplateRef<any>, context: any[]} = {view: null, context: null};
-          console.log(params)
+
         if(params.week){         
           result.context = summaries.find(x => x.week == params.week).timesheets;
           result.view = this.timesheetList;
@@ -97,14 +99,13 @@ export class TimesheetAdminListComponent extends SubscriptionComponent{
         } 
 
         return result;
-      }), tap(console.log)
+      })
     );
   }
 
   private loadWeekSummaries = (year: number, userName: string): void => {
     let date = new Date();
     date.setFullYear(year);  
-    console.log(userName)
     this.timesheetService.addFilter({dateRange: this.dateTimeService.getYearRange(date), userName});
   }
 

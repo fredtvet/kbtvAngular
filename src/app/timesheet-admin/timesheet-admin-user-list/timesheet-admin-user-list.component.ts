@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { UserService, MainNavService } from 'src/app/core/services';
+import { UserService, MainNavService, LoadingService } from 'src/app/core/services';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-timesheet-admin-user-list',
@@ -10,8 +11,10 @@ export class TimesheetAdminUserListComponent implements OnInit {
 
   users$ = this._userService.getAll$();
   thisYear = new Date().getFullYear();
+  loading$ = this._loadingService.loading$;
 
   constructor(
+    private _loadingService: LoadingService,
     private _mainNavService: MainNavService,
     private _userService: UserService
   ) { this.configureMainNav(); }

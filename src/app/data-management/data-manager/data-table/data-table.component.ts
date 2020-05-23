@@ -42,12 +42,6 @@ export class DataTableComponent {
     private _dialog: MatDialog,
     private translationService: TranslationService) { }
 
-  ngDoCheck(): void {
-    //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
-    //Add 'implements DoCheck' to the class.
-    console.log('checvk')
-  }
-
   autoSizeGrid(){
     let cols = this.dataGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
     this.dataGrid.columnApi.autoSizeColumns(cols);

@@ -5,18 +5,18 @@
     </button>
 
     <ng-container *ngIf="(timesheets$ | async)?.length else noSheets; let timesheets">
-        <cdk-virtual-scroll-viewport itemSize="148" fxFlex>
-
-            <app-timesheet-card *cdkVirtualFor="let timesheet of timesheets$ | async" [timesheet]="timesheet"
-                (deleteClicked)="deleteTimesheet($event)" (editClicked)="openTimesheetForm(undefined, $event)">
-            </app-timesheet-card>
-
+        <cdk-virtual-scroll-viewport itemSize="148" fxFlex class="fadeInRight">
+            <div class="m-1" *cdkVirtualFor="let timesheet of timesheets$ | async">
+                <app-timesheet-card [timesheet]="timesheet" (deleteClicked)="deleteTimesheet($event)"
+                    (editClicked)="openTimesheetForm(undefined, $event)">
+                </app-timesheet-card>
+            </div>
         </cdk-virtual-scroll-viewport>
     </ng-container>
 </div>
 
 <ng-template #noSheets>
-    <span class="mt-3 text-center w-100">
+    <span class="ppt-5 text-center w-100">
         <p>Finner ingen timer med gitte filtre. </p>
         <button mat-raised-button color="accent" class="bounceIn" (click)="openFilterSheet()">Åpne filter</button>
     </span>

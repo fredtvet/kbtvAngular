@@ -13,21 +13,34 @@ export const routeAnimation = trigger("routeAnimation", [
     {params: slideForwardParams})),
   //  transition("Home => *", useAnimation(slideAnimation,
   //    {params: slideForwardParams})),
-   transition("* => Home", useAnimation(slideAnimation,
-     {params: slideBackwardParams})),
+  transition("* => Home", useAnimation(slideAnimation,
+    {params: slideBackwardParams})),
 
-  // transition("MissionList => TimesheetWeekView", useAnimation(slideAnimation,
+  transition("* => Users", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+
+  transition("Home => TimesheetAdminUserList", useAnimation(slideAnimation,
+    {params: slideForwardParams})),  
+
+  transition("MissionList => TimesheetWeekView", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+  transition("TimesheetWeekView => MissionList", useAnimation(slideAnimation,
+    {params: slideBackwardParams})),
+
+  transition("TimesheetWeekView => TimesheetWeekList", useAnimation(slideAnimation,
+    {params: slideBackwardParams})),
+  transition("TimesheetWeekList => TimesheetWeekView", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+
+  transition("TimesheetWeekView => TimesheetList", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+  transition("TimesheetList => TimesheetWeekView", useAnimation(slideAnimation,
+    {params: slideBackwardParams})),
+
+
+  transition("TimesheetAdminList => TimesheetAdminUserList", useAnimation(slideAnimation,
+    {params: slideBackwardParams})),
+
+  // transition("TimesheetAdminUserList => TimesheetAdminList", useAnimation(slideAnimation,
   //   {params: slideForwardParams})),
-  // transition("TimesheetWeekView => MissionList", useAnimation(slideAnimation,
-  //   {params: slideBackwardParams})),
-
-  // // transition("TimesheetWeekView => TimesheetWeekList", useAnimation(slideAnimation,
-  // //   {params: slideBackwardParams})),
-  // transition("TimesheetWeekList => TimesheetWeekView", useAnimation(slideAnimation,
-  //   {params: slideForwardParams})),
-
-  // // transition("TimesheetWeekView => TimesheetList", useAnimation(slideAnimation,
-  // //   {params: slideForwardParams})),
-  // transition("TimesheetList => TimesheetWeekView", useAnimation(slideAnimation,
-  //   {params: slideBackwardParams})),
 ]);
