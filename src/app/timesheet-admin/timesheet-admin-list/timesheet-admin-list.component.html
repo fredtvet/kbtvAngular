@@ -3,7 +3,7 @@
 </ng-container>
 
 <ng-template let-summaries #weekList>
-    <div class="h-100 fadeInRight" fxLayout="column" fxLayoutAlign="start stretch">
+    <div class="h-100 fadeInRight max-width" fxLayout="column" fxLayoutAlign="start stretch">
         <cdk-virtual-scroll-viewport itemSize="82" maxBufferPx="800" minBufferPx="800" fxFlex>
             <app-swipe-card *cdkVirtualFor="let summary of summaries; trackBy: trackByWeek; templateCacheSize:0"
                 [navButton]="{callback: selectWeek, params: summary.week}" [swipeEnabled]="summary.openHours > 0"

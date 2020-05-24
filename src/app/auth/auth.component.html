@@ -1,41 +1,30 @@
+<mat-card class="app-card m-3 fadeIn max-width" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px"
+  ngClass="ml-auto mr-auto" [ngClass.xs]="{'ml-auto':false, 'mr-auto':false}">
 
-  <mat-card class="app-card m-3 fadeIn" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px"
-    ngClass="ml-auto mr-auto" [ngClass.xs]="{'ml-auto':false, 'mr-auto':false}">
+  <img src="assets/icons/icon-144x144.png" style="width:120px;height:120px" />
 
-    <img src="assets/icons/icon-144x144.png" style="width:120px;height:120px" />
+  <form [formGroup]="authForm" (ngSubmit)="submitForm()" class="text-center" fxLayout="column" fxLayoutAlign="center center">
+    <span class="mat-subheading-2">Logg inn</span>
 
-    <form [formGroup]="authForm" (ngSubmit)="submitForm()" class="text-center">
-      <span class="mat-subheading-2">Logg inn</span>
-      <fieldset>
-        <mat-form-field>
-          <mat-icon matSuffix color="primary">person</mat-icon>
-          <input matInput
-            formControlName="Username"
-            placeholder="Brukernavn"
-            type="text" />
-        </mat-form-field><br />
-        <mat-form-field>
-          <mat-icon matSuffix color="primary" (click)="hidePassword = !hidePassword">
-            {{hidePassword ? 'visibility_off' : 'visibility'}}
-          </mat-icon>
-          <input matInput
-            formControlName="Password"
-            placeholder="Passord"
-            [type]="hidePassword ? 'password' : 'text'"  />
+    <mat-form-field>
+      <mat-icon matSuffix color="primary">person</mat-icon>
+      <input matInput formControlName="Username" placeholder="Brukernavn" type="text" />
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-icon matSuffix color="primary" (click)="hidePassword = !hidePassword">
+        {{hidePassword ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+      <input matInput formControlName="Password" placeholder="Passord" [type]="hidePassword ? 'password' : 'text'" />
+    </mat-form-field>
 
-        </mat-form-field>
-      </fieldset>
-      <button mat-raised-button color="accent" [disabled]="!authForm.valid" type="submit">
-        <mat-icon>lock_open</mat-icon>
-        Logg inn
-      </button>
-    </form>
-  
-    <button mat-raised-button appAddToHomeScreen color="accent">
-      <mat-icon>get_app</mat-icon> Legg til app
+    <button mat-raised-button color="accent" [disabled]="!authForm.valid" type="submit">
+      <mat-icon>lock_open</mat-icon>
+      Logg inn
     </button>
-  </mat-card>
+  </form>
 
-
-
-
+  <button mat-raised-button appAddToHomeScreen color="accent">
+    <mat-icon>get_app</mat-icon> Legg til app
+  </button>
+</mat-card>

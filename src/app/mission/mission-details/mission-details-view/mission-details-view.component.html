@@ -1,6 +1,6 @@
 <mat-tab-group mat-stretch-tabs color="accent">
   <mat-tab label="Generelt">
-    <mat-card class="app-card m-2 fadeInLeft" *ngIf="mission">
+    <mat-card class="app-card m-2 fadeInLeft max-width" *ngIf="mission">
       <mat-card-header>
         Informasjon
       </mat-card-header>
@@ -25,7 +25,7 @@
       </mat-card-content>
     </mat-card> 
 
-    <mat-card class="app-card m-2 fadeInLeft" *ngIf="reports && reports.length != 0">
+    <mat-card class="app-card m-2 fadeInLeft max-width" *ngIf="reports && reports.length != 0">
       <mat-card-header>
         Rapporter
       </mat-card-header>
@@ -61,7 +61,7 @@
   </mat-tab>
 
   <mat-tab label="Notater">
-    <div class="p-2">
+    <div class="p-2 max-width">
       <app-mission-note-list *ngIf="notes"
         [notes]="notes"
         (noteDeleted)="deleteNote($event)">
