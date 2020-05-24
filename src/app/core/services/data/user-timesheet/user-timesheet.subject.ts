@@ -37,7 +37,7 @@ export class UserTimesheetSubject extends BaseMissionChildSubject<Timesheet> {
           if(x.status == excludeStatus) return false;
           let date = new Date(x.startTime);
           if(date >= range[0] && date <= range[1]) 
-            result[date.getDay()||7].push({...x}); //1-7, mon-sun              
+            result[date.getDay()||7].push(x); //1-7, mon-sun              
         });
 
         return result;
