@@ -48,15 +48,6 @@ export class UserTimesheetSubject extends BaseMissionChildSubject<Timesheet> {
       return this.data$.pipe(map(t => this.timesheetAggregator.groupByWeekRange(t, startWeek, endWeek, year)))
     }
 
-    changeStatuses(ids: number[], status: TimesheetStatus): void{
-      this.dataSubject.next(
-        this.dataSubject.value.map(d => {
-          if(ids.includes(d.id)) d.status = status;
-          return d;
-        })
-      );
-    }
-
     getCount$(status: TimesheetStatus = undefined): Observable<number>{
       if(status == undefined) 
         return this.getAll$().pipe(map(arr => arr ? arr.length : undefined));
