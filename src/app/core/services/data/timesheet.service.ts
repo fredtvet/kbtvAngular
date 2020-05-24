@@ -112,7 +112,7 @@ export class TimesheetService {
     let arr = [...this.timesheetSubject.value];
     arr = arr.map(e => {
       if(e.id !== timesheet.id) return e;
-      else return Object.assign(e, timesheet);
+      else return {...Object.assign(e, timesheet)};
     });
     this.timesheetSubject.next(arr);
   }
@@ -122,7 +122,7 @@ export class TimesheetService {
     originals = [...originals];
     timesheets.forEach(e => {
       let duplicateIndex = originals.findIndex((o) => (o.id === e.id));
-      if(duplicateIndex !== -1) originals[duplicateIndex] = Object.assign(originals[duplicateIndex], e);
+      if(duplicateIndex !== -1) originals[duplicateIndex] = {...Object.assign(originals[duplicateIndex], e)};
       else originals.push(e);
     });
     this.timesheetSubject.next(originals);
