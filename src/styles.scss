@@ -84,14 +84,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
   animation: backInUp;
   animation-duration:.5s
 }
-.backInDown{
-  animation: backInDown;
-  animation-duration:.5s
-}
-.backInRight{
-  animation: backInRight;
-  animation-duration:.5s
-}
+
 .fadeIn{
   animation: fadeIn;
   animation-duration:.8s
@@ -101,10 +94,12 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
   animation: fadeInRight;
   animation-duration:.5s
 }
+
 .fadeInLeft{
   animation: fadeInLeft;
   animation-duration:.5s
 }
+
 .image_viewer_dialog{max-width:none!important;}
 
 .image_viewer_dialog .mat-dialog-container{background-color:black!important;}
@@ -151,6 +146,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 .center-spinner{margin:$content-margin * 2px auto;}
 
+//Customizations for calendar
 .owl-dt-calendar-table{
   .owl-dt-calendar-cell{
     .owl-dt-calendar-cell-today{
@@ -166,11 +162,30 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
   }
 }
 
+//Customizations for time picker
+.owl-dt-container-inner{
+  .owl-dt-container-info{
+    font-size:1.2em;
+    padding:0;
+    .owl-dt-container-range{
+      padding:0 .5em;
+    }
+    .owl-dt-container-info-active{
+      @extend .bg-accent;
+    }
+  }
+  .owl-dt-container-buttons{
+    height:2.5rem;
+  }
+}
+
+//Fix to keep items in CDK virtual scroll responsive 
 .cdk-virtual-scroll-content-wrapper{
   width:100%;
 }
 
-.mat-drawer-container {position: unset!important;}//Fix for bug on iOs
+//Fix for bug on iOs
+.mat-drawer-container {position: unset!important;}
 
 mat-bottom-sheet-container{
   padding:0!important;
@@ -199,8 +214,6 @@ mat-toolbar-single-row.toolbar-slim{
 }
 
 .mat-tab-group{
-  // position:sticky!important;
-  // width:100%;
   .mat-tab-header{
     background-color:$primary-dark;
     color:white!important;
