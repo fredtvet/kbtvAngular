@@ -4,6 +4,8 @@ import { Mission, MissionNote, MissionImage, MissionReport } from 'src/app/share
 import { MatDialog } from '@angular/material/dialog';
 import { Roles } from 'src/app/shared/enums';
 import { filter } from 'rxjs/operators';
+import { MailImageSheetComponent } from './mail-image-sheet/mail-image-sheet.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-mission-details-view',
@@ -25,11 +27,18 @@ export class MissionDetailsViewComponent {
   @Output() noteDeleted = new EventEmitter();
   @Output() reportDeleted = new EventEmitter();
 
+  selectedImageIds: number[] = [];
+
   constructor(public dialog: MatDialog) { }
 
   openDeleteReportDialog(id: number){
     const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette rapporten.'});
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.reportDeleted.emit(id));
+  }
+
+  selectImages = (ids: number[]) => {
+    this.selectedImageIds = ids;
+    console.log(this.selectedImageIds);
   }
 
   uploadImages = (files: FileList, missionId: number) => this.imagesUploaded.emit({files, missionId});

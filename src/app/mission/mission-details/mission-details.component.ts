@@ -68,6 +68,8 @@ export class MissionDetailsComponent{
     );
   }
   
+
+
   deleteImage = (id:number) => 
     this.missionImageService.delete$(id).subscribe(res =>  
       this.notificationService.setNotification('Vellykket! Bilde slettet'));

@@ -19,6 +19,7 @@ import { MissionReportFormSheetWrapperComponent } from './components/mission-rep
 import { MissionReportFormViewComponent } from './components/mission-report-form/mission-report-form-view/mission-report-form-view.component';
 import { ImageViewerDialogComponent } from './components/image-viewer-dialog/image-viewer-dialog.component';
 import { ImageListComponent } from './mission-details/mission-details-view/image-list/image-list.component';
+import { MailImageSheetComponent } from './mission-details/mission-details-view/mail-image-sheet/mail-image-sheet.component';
 
 
 
@@ -39,7 +40,8 @@ import { ImageListComponent } from './mission-details/mission-details-view/image
     MissionReportFormViewComponent,
     MissionReportFormSheetWrapperComponent,
     ImageListComponent,
-    ImageViewerDialogComponent
+    ImageViewerDialogComponent,
+    MailImageSheetComponent
   ],
   providers: [
     DatePipe,
@@ -50,7 +52,8 @@ import { ImageListComponent } from './mission-details/mission-details-view/image
     MissionReportFormComponent,
     MissionFormSheetWrapperComponent,
     MissionNoteFormSheetWrapperComponent,
-    MissionReportFormSheetWrapperComponent
+    MissionReportFormSheetWrapperComponent,
+    MailImageSheetComponent
   ],
   exports: [
     MissionFormSheetWrapperComponent,

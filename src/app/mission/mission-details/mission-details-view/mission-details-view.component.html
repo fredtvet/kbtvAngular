@@ -56,7 +56,8 @@
   <mat-tab label="Bilder">
     <app-image-list *ngIf="images" 
       [images]="images" 
-      (imageDeleted)="deleteImage($event)">
+      (imageDeleted)="deleteImage($event)"
+      (imagesSelected)="selectImages($event)">
     </app-image-list>
   </mat-tab>
 
