@@ -1,13 +1,13 @@
 <mat-toolbar #imageToolBar class="toolbar-slim image-toolbar color-accent" fxLayout="row" fxLayoutAlign="space-between center"
 [@showHideToolbar]="toolbarHidden ? 'hide' : 'show'">
-    <button mat-icon-button aria-label="Lukk" (click)="onNoClick()">
+    <button mat-icon-button aria-label="Lukk" (click)="finished()">
         <mat-icon class="scale-150">chevron_left</mat-icon>
     </button>
     <button mat-icon-button (click)="openBottomSheet()"><mat-icon>more_vert</mat-icon></button>
 </mat-toolbar>
 
 <img *ngIf="currentImage" 
-  (tap)="toggleToolBar()" 
+  (tap)="toolbarHidden = !toolbarHidden" 
   (swiperight)="previousImage()" 
   (swipeleft)="nextImage()" 
   [src]="currentImage.fileURL" layout-fill/>

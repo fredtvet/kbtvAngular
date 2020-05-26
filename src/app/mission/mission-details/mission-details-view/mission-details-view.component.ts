@@ -4,7 +4,7 @@ import { Mission, MissionNote, MissionImage, MissionReport } from 'src/app/share
 import { MatDialog } from '@angular/material/dialog';
 import { Roles } from 'src/app/shared/enums';
 import { filter } from 'rxjs/operators';
-import { MailImageSheetComponent } from './mail-image-sheet/mail-image-sheet.component';
+import { MailImageSheetComponent } from '../../components/mail-image-sheet/mail-image-sheet.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({

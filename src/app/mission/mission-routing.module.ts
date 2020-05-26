@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../core/services';
 import { MissionListComponent } from './mission-list/mission-list.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
+import { MissionImageListComponent } from './mission-image-list/mission-image-list.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,11 @@ const routes: Routes = [
 {
   path: ':id/detaljer',
   component: MissionDetailsComponent,
+  canActivate: [AuthGuard],data: {animation: 'MissionDetails'}
+},
+{
+  path: ':id/bilder',
+  component: MissionImageListComponent,
   canActivate: [AuthGuard],data: {animation: 'MissionDetails'}
 },
 ];

@@ -1,0 +1,11 @@
+<app-image-list *ngIf="images$ | async; let images" 
+    [images]="images">
+</app-image-list>
+
+<button *ifRole="[Roles.Leder, Roles.Ansatt, Roles.Mellomleder]" mat-mini-fab aria-label="ny" class="action_fab"
+    (click)="imageInput.click()">
+    <mat-icon>camera_enhance</mat-icon>
+</button>
+
+<input type="file" style="display:none" multiple #imageInput
+(change)="uploadImages($event.target.files)">

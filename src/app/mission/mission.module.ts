@@ -17,9 +17,12 @@ import { MissionFormSheetWrapperComponent } from './components/mission-form/miss
 import { MissionNoteFormSheetWrapperComponent } from './components/mission-note-form/mission-note-form-sheet-wrapper.component';
 import { MissionReportFormSheetWrapperComponent } from './components/mission-report-form/mission-report-form-sheet-wrapper.component';
 import { MissionReportFormViewComponent } from './components/mission-report-form/mission-report-form-view/mission-report-form-view.component';
-import { ImageViewerDialogComponent } from './components/image-viewer-dialog/image-viewer-dialog.component';
-import { ImageListComponent } from './mission-details/mission-details-view/image-list/image-list.component';
-import { MailImageSheetComponent } from './mission-details/mission-details-view/mail-image-sheet/mail-image-sheet.component';
+import { ImageViewerComponent } from './components/image-viewer/image-viewer.component';
+import { ImageListComponent } from './mission-image-list/image-list/image-list.component';
+import { MailImageSheetComponent } from './components/mail-image-sheet/mail-image-sheet.component';
+import { MissionImageListComponent } from './mission-image-list/mission-image-list.component';
+import { SelectableImageComponent } from './mission-image-list/selectable-image/selectable-image.component';
+import { ImageViewerDialogWrapperComponent } from './components/image-viewer/image-viewer-dialog-wrapper.component';
 
 
 
@@ -40,15 +43,18 @@ import { MailImageSheetComponent } from './mission-details/mission-details-view/
     MissionReportFormViewComponent,
     MissionReportFormSheetWrapperComponent,
     ImageListComponent,
-    ImageViewerDialogComponent,
-    MailImageSheetComponent
+    ImageViewerComponent, 
+    ImageViewerDialogWrapperComponent,
+    MailImageSheetComponent,
+    MissionImageListComponent,
+    SelectableImageComponent,
   ],
   providers: [
     DatePipe,
   ],
   entryComponents:[
     ConfirmDialogComponent,
-    ImageViewerDialogComponent,
+    ImageViewerDialogWrapperComponent,
     MissionReportFormComponent,
     MissionFormSheetWrapperComponent,
     MissionNoteFormSheetWrapperComponent,

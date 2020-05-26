@@ -9,3 +9,5 @@ export * from './app-action.interface';
 export * from './timesheet-summary.interface';
 export * from './timesheet-filter.interface';
 export * from './simple-nav-config.interface';
+export * from './app-image.interface';
+export * from './image-with-select.interface';

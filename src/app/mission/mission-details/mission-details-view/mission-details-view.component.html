@@ -51,14 +51,14 @@
       </mat-nav-list>
       </mat-card-content>
     </mat-card>
+
+    <app-list-card [routerLink]="['/oppdrag',mission.id, 'bilder']" 
+      startIcon="photo_library" text="Bilder" endIcon="chevron_right">
+    </app-list-card>
   </mat-tab>
 
   <mat-tab label="Bilder">
-    <app-image-list *ngIf="images" 
-      [images]="images" 
-      (imageDeleted)="deleteImage($event)"
-      (imagesSelected)="selectImages($event)">
-    </app-image-list>
+
   </mat-tab>
 
   <mat-tab label="Notater">

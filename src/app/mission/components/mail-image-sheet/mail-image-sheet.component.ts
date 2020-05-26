@@ -36,11 +36,11 @@ export class MailImageSheetComponent implements OnInit {
 
   close = (result?: boolean) => this._bottomSheetRef.dismiss(result);
 
-  mailImages = () => 
-    this._missionImageService.mailImages$(this.data.toEmail, this.data.ids).subscribe(res => { 
-      this.close(true);
-      this._notificationService.setNotification('Vellykket! Bilder sendt')
-    });
+  mailImages = () => this.close(true);
+    // this._missionImageService.mailImages$(this.data.toEmail, this.data.ids).subscribe(res => { 
+    //   this.close(true);
+    //   this._notificationService.setNotification('Vellykket! Bilder sendt')
+    // });
   
 
 }

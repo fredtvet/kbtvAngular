@@ -34,8 +34,6 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 .color-background{color:$primary-light;}
 .bg-foreground{background:$foreground-color;color:black;}
 .color-foreground{color:white;}
-.border-primary{border: 1px solid $primary!important;}
-.border-accent{border: 1px solid $accent!important;}
 
 .active{color: $accent !important;}
 
@@ -55,8 +53,6 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 .extended-dialog{max-width:90vw!important}
 
-.h-min-100{min-height:100%}
-
 .flex-nav{flex-shrink: 0;display: inline-flex;flex-direction: column;z-index:2}
 
 .action_fab{
@@ -65,7 +61,16 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
   bottom: ($content-margin + $bottom-nav-height) * 1px;
   z-index:2;
   background:$accent;
+  animation: backInUp;
+  animation-duration:.5s
+}
 
+.action_fab_2{
+  position: fixed!important;
+  right: $content-margin * 1px!important;
+  bottom: (($content-margin*2) + 40 + $bottom-nav-height) * 1px;
+  z-index:2;
+  background:$accent;
   animation: backInUp;
   animation-duration:.5s
 }

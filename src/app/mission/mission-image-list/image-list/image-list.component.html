@@ -1,0 +1,21 @@
+<ng-container *ngIf="vm$ | async; let vm">
+    <div class="img-row">
+        <div class="img-column" *ngFor="let i of [1,2,3,4]">
+            <app-selectable-image
+                *ngFor="let img of vm.images | arrayslice: i:4;let i = index;trackBy: trackById"
+                [imageWithSelect]="img"
+                (imageSelected)="selectOrRemoveImage($event)"
+                 (click)="openImageViewer(img.image)">
+            </app-selectable-image>
+        </div>
+    </div>
+
+    <ng-container *ifRole="[Roles.Leder]">
+        <button *ngIf="!vm.noSelected" mat-mini-fab aria-label="ny" class="action_fab_2"
+            (click)="openMailImageSheet()">
+            <mat-icon>send</mat-icon>
+        </button>
+    </ng-container>
+
+  
+</ng-container>
