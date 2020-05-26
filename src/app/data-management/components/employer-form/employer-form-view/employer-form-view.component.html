@@ -21,6 +21,13 @@
     </mat-error>
   </mat-form-field>
 
+  <mat-form-field>
+    <input matInput placeholder="Epost" formControlName="email">
+    <mat-error *ngIf="this.email.invalid">
+      Pass på at eposten er skrevet riktig.
+    </mat-error>
+  </mat-form-field>
+
   <app-submit-button [disabled]="employerForm.invalid || employerForm.pristine" (click)="onSubmit()">
   </app-submit-button>
 </form>

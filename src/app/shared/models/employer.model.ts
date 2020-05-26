@@ -6,5 +6,6 @@ export class Employer implements BaseEntity {
     public name: string = null,
     public phoneNumber: string = null,
     public address: string = null,
+    public email: string = null,
   ){}
   };

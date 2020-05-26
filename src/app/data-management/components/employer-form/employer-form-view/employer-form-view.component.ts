@@ -42,7 +42,11 @@ export class EmployerFormViewComponent implements OnInit
         ]],
         address: [this.employer.address, [
           Validators.maxLength(100)
-        ]]
+        ]],   
+        email: [this.employer.email, [
+          Validators.required,
+          Validators.email
+        ]],
       });
     }
 
@@ -67,5 +71,7 @@ export class EmployerFormViewComponent implements OnInit
     get address(){
       return this.employerForm.get('address')
     }
-
+    get email(){
+      return this.employerForm.get('email')
+    }
 }
