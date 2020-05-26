@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from
 import { Timesheet, Mission } from 'src/app/shared/models';
 import { debounceTime, distinctUntilChanged, tap, map, startWith, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { ValueSelectedValidator } from 'src/app/shared/form-validators';
 
 @Component({
   selector: 'app-timesheet-form-view',
@@ -12,8 +13,8 @@ import { Observable } from 'rxjs';
 })
 export class TimesheetFormViewComponent implements OnInit {
 
+  @Input() missions: Mission[]
   @Input() timesheet: Timesheet;
-  @Input() missions: Mission[];
 
   @Input() datePreset: Date;
   @Input() missionPreset: Mission;
@@ -53,7 +54,7 @@ export class TimesheetFormViewComponent implements OnInit {
     this.timesheetForm = this._formBuilder.group({
       id: this.timesheet.id,
       mission: [{value: this.missionPreset || this.timesheet.mission, disabled: this.missionPreset}, [
-        Validators.required
+        Validators.required,
       ]],
       date: [{value: this.datePreset || (this.isCreateForm ? null : new Date(this.timesheet.startTime)), disabled: this.datePreset}, [
         Validators.required
@@ -66,7 +67,7 @@ export class TimesheetFormViewComponent implements OnInit {
         Validators.required,
         Validators.maxLength(400)
       ]],
-    });
+    }, {validators: this.isMissionValidator()});
   }
 
   private initMissionListener(){
@@ -80,6 +81,12 @@ export class TimesheetFormViewComponent implements OnInit {
     return (control: AbstractControl): {[key: string]: any} | null => {
       const invalid = !control.value[0] || !control.value[1];
       return invalid ? {'timeRangeInvalid': {value: control.value}} : null;
+    };
+  }
+  private isMissionValidator(): ValidatorFn{ //Check that all elements in array exist
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const invalid = !(control.value.mission instanceof Object); //instanceof Mission not working?
+      return invalid ? {'missionInvalid': {value: control.value}} : null;
     };
   }
 
