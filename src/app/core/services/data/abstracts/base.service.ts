@@ -39,18 +39,14 @@ export abstract class BaseService<T extends BaseEntity>{
       )
   }
 
-  getAll$(): Observable<T[]> {
-    return this.dataSubject.getAll$();
-  }
+  getAll$ = (): Observable<T[]> => this.dataSubject.getAll$();
 
-  getAllDetails$(): Observable<T[]> {
-    return this.dataSubject.getAllDetails$();
-  }
+  getAll = (): T[] => this.dataSubject.getAll();
 
-  get$(id: number):Observable<T>{
-    return this.dataSubject.get$(id);
-  }
+  getAllDetails$ = (): Observable<T[]> => this.dataSubject.getAllDetails$();
 
+  get$ = (id: number):Observable<T> => this.dataSubject.get$(id);
+  
   getBy$(expression: (value: T, index?: number, Array?: any[]) => boolean): Observable<T[]>{
     return this.dataSubject.getBy$(expression);
   }
@@ -97,8 +93,6 @@ export abstract class BaseService<T extends BaseEntity>{
             .pipe(tap(bool =>{if(bool) this.dataSubject.deleteRange(ids)}));
   }
 
-  purge(): void{
-    this.dataSubject.purge();
-  }
+  purge = (): void => this.dataSubject.purge(); 
 
 }

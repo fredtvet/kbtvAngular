@@ -28,6 +28,10 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
       {return !arr ? [] : arr}));
   }
 
+  getAll(): T[]{
+    return [...this.dataSubject.value]
+  }
+
   getAllDetails$(): Observable<T[]>{
     return this.getAll$();
   }
