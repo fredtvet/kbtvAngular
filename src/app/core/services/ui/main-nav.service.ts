@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { MainNavConfig } from 'src/app/shared/interfaces';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { map, shareReplay } from 'rxjs/operators';
+import { map, tap, distinctUntilChanged, delay } from 'rxjs/operators';
 import { DeviceInfoService } from '../device-info.service';
 
 @Injectable({
@@ -23,15 +22,17 @@ export class MainNavService {
     isXs: true,
   };
 
-  private configSubject =  new BehaviorSubject<MainNavConfig>({...this.defaultConfig});
-  private _config$ = this.configSubject.asObservable();
+  private configSubject =  new BehaviorSubject<MainNavConfig>(this.defaultConfig);
+  private _config$ = this.configSubject.asObservable().pipe(distinctUntilChanged());
   
   config$: Observable<MainNavConfig> = combineLatest(this._config$, this.deviceInfoService.isXs$)
-  .pipe(map(([config, isXs]) => {
-    let cfg = {...config};
-    cfg.isXs = isXs;
-    return cfg;
-  }));
+  .pipe(delay(10), //delay to fix bug where main nav not detecting config changes coming to quickly after route change
+    map(([config, isXs]) => {
+      let cfg = {...config};
+      cfg.isXs = isXs;
+      return cfg;
+    })
+  );
 
   constructor(private deviceInfoService: DeviceInfoService) { }
 

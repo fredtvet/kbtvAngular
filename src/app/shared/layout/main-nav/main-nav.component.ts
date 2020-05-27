@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router, RouterOutlet } from "@angular/router";
 import { IdentityService, MainNavService } from 'src/app/core/services';
@@ -7,6 +7,7 @@ import { MatDrawer } from '@angular/material';
 import { User } from '../../models/user.model';
 import { MainNavConfig } from '../../interfaces/main-nav-config.interface';
 import { routeAnimation} from '../../animations/route.animation';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-nav',
@@ -19,7 +20,7 @@ export class MainNavComponent {
   
   Roles = Roles;
 
-  config$: Observable<MainNavConfig> = this.mainNavService.config$;
+  config$: Observable<MainNavConfig> = this.mainNavService.config$.pipe(tap(console.log));
   currentUser$:  Observable<User> = this.identityService.currentUser$;
 
   constructor(
