@@ -21,6 +21,14 @@
     max-width: 25%;
   }
 
+  .img-card{  
+    width:100%;
+    vertical-align: middle;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+     box-sizing: border-box;
+  }
+
   /* Responsive layout - makes a two column-layout instead of four columns */
   @media screen and (max-width: 600px) {
     .img-column {

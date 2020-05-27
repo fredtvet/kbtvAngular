@@ -30,7 +30,7 @@ export class ImageViewerDialogWrapperComponent {
     private dialog: MatDialog,
     private missionImageService: MissionImageService,
     private dialogRef: MatDialogRef<ImageViewerDialogWrapperComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {images: AppImage[], currentImage: MissionImage}
+    @Inject(MAT_DIALOG_DATA) public data: {images: AppImage[], currentImage: AppImage}
     ) {}
   
     ngOnInit(): void {

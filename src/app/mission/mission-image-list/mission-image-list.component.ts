@@ -1,33 +1,45 @@
-import { Component, OnInit } from "@angular/core";
-import { MatBottomSheet } from "@angular/material";
-import { MailImageSheetComponent } from "../components/mail-image-sheet/mail-image-sheet.component";
-import { filter, map } from "rxjs/operators";
+import { Component, ChangeDetectionStrategy, ViewChild } from "@angular/core";
+import { MatBottomSheet, MatDialog } from "@angular/material";
+import { MailImageSheetComponent } from "../components/mail-image-form/mail-image-sheet.component";
+import { filter, map, takeUntil, tap, distinctUntilChanged } from "rxjs/operators";
 import { Roles } from 'src/app/shared/enums';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { MissionImage } from 'src/app/shared/models';
-import { MissionImageService, MainNavService, NotificationService } from 'src/app/core/services';
+import { MissionImage, Mission } from 'src/app/shared/models';
+import { MissionImageService, MainNavService, NotificationService, MissionService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppButton, AppImage } from 'src/app/shared/interfaces';
+import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
+import { ConfirmDialogComponent } from 'src/app/shared/components';
+import { ImageListComponent } from './image-list/image-list.component';
+import { ImageViewerDialogWrapperComponent } from '../components/image-viewer/image-viewer-dialog-wrapper.component';
 
 @Component({
   selector: "app-mission-image-list",
   templateUrl: "./mission-image-list.component.html",
-  styleUrls: ["./mission-image-list.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
+export class MissionImageListComponent extends SubscriptionComponent{
+  @ViewChild('imageList', {static: false}) imageList: ImageListComponent;
 
-export class MissionImageListComponent implements OnInit {
   Roles = Roles;
+
+  private mission: Mission;
+
+  currentSelections: number[] = [];
 
   images$: Observable<MissionImage[]>;
 
-  disableImageViewer: boolean = false; //Workaround to prevent ghost clicks on images
-
   constructor(
+    private bottomSheet: MatBottomSheet,
+    private dialog: MatDialog,
     private notificationService: NotificationService,
     private mainNavService: MainNavService,
     private missionImageService: MissionImageService,
+    private missionService: MissionService,
     private route: ActivatedRoute,
     private router: Router) {
+      super();
       this.configureMainNav(this.missionId)
     }
 
@@ -36,7 +48,10 @@ export class MissionImageListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.images$ = this.missionImageService.getByMissionId$(this.missionId);
+    this.images$ = this.missionImageService.getByMissionId$(this.missionId).pipe(tap(this.updateMainNav));
+
+    this.missionService.getDetails$(this.missionId)
+      .pipe(takeUntil(this.unsubscribe)).subscribe(x => this.mission = x)
   }
 
   uploadImages = (files: FileList) => {
@@ -47,13 +62,56 @@ export class MissionImageListComponent implements OnInit {
     );
   }
 
+  deleteImages = (ids: number[]) => {
+    this.missionImageService.deleteRange$(ids).subscribe(data =>
+      this.notificationService.setNotification(
+        `Vellykket! ${ids.length} ${ids.length > 1 ? 'bilder' : 'bilde'} slettet.`
+        )
+    );
+  }
+
+  openConfirmDeleteDialog = (ids: number[]) => {
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette utvalgte bilder.'});
+    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteImages(ids));
+  }
+  
+  openMailImageSheet = (ids: number[]) => {
+    let botRef = this.bottomSheet.open(MailImageSheetComponent, {
+      data: { toEmailPreset: this.mission.employer.email, ids: ids },
+    });
+    botRef
+      .afterDismissed()
+      .pipe(filter((isSent) => isSent))
+      .subscribe((x) => this.imageList.clearSelections());
+  }
+
+  openImageViewer(image: AppImage, images: AppImage[]) {
+    this.dialog.open(ImageViewerDialogWrapperComponent, {
+      width: "100%",
+      height: "100%",
+      panelClass: "image_viewer_dialog",
+      data: {currentImage: image, images},
+    });
+  }
+
   private configureMainNav(missionId: number){
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.backFn = this.onBack;  
     cfg.backFnParams = [missionId];
     cfg.title = 'Bilder'
+    cfg.buttons = [];
     this.mainNavService.addConfig(cfg);
   }
 
-  private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer'])
+  private updateMainNav = (images: MissionImage[]) => {
+    let cfg = this.mainNavService.getCurrentConfig(); 
+    cfg.bottomSheetButtons = this.getBottomSheetButtons(images.map(x => x.id));
+    this.mainNavService.addConfig(cfg);
+  }
+
+  private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
+
+  private getBottomSheetButtons = (ids: number[]): AppButton[] => 
+    [{icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, params: [ids]}]
+
 }

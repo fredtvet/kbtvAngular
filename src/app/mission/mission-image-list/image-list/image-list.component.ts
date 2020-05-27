@@ -2,19 +2,16 @@ import {
   Component,
   Input,
   ChangeDetectionStrategy,
+  EventEmitter,
+  Output,
 } from "@angular/core";
-import { MatDialog, MatBottomSheet } from "@angular/material";
-import { filter, map } from "rxjs/operators";
-import { MissionImage } from "src/app/shared/models";
-import { Roles } from "src/app/shared/enums";
-import { MailImageSheetComponent } from '../../components/mail-image-sheet/mail-image-sheet.component';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { ImageWithSelect } from 'src/app/shared/interfaces';
-import { ImageViewerDialogWrapperComponent } from '../../components/image-viewer/image-viewer-dialog-wrapper.component';
-
-interface ViewModel {images: ImageWithSelect<MissionImage>[], noSelected: boolean}
+import { MatDialog } from "@angular/material";
+import { skip } from "rxjs/operators";
+import { SelectableEntity, AppImage } from 'src/app/shared/interfaces';
+import { SelectableListPresenter } from '../../components/selectable-list.presenter';
 
 @Component({
+  providers: [SelectableListPresenter],
   selector: "app-image-list",
   templateUrl: "./image-list.component.html",
   styleUrls: ["./image-list.component.scss"],
@@ -22,88 +19,43 @@ interface ViewModel {images: ImageWithSelect<MissionImage>[], noSelected: boolea
 })
 
 export class ImageListComponent {
-  Roles = Roles;
-
-  @Input('images')
-  set images(value: MissionImage[]) {
-      this.initImages(value);
-  }
-
-  private imagesWithSelectSubject = new BehaviorSubject<ImageWithSelect<MissionImage>[]>([]);
-
-  vm$: Observable<ViewModel> = this.imagesWithSelectSubject.asObservable().pipe(
-    map(x => {return {images: x,noSelected: !x.some(x => x.selected)}})
-  );
-
   disableImageViewer: boolean = false; //Workaround to prevent ghost clicks on images
 
-  constructor(  
-    private bottomSheet: MatBottomSheet,
-    private dialog: MatDialog) {}
+  @Input() totalRows: number = 2;
 
-  get imagesCopy() {
-    return [...this.imagesWithSelectSubject.value]
+  @Input('images')
+  set images(value: AppImage[]) {this.selectableListPresenter.addEntities(value)}
+
+  @Output() selectionChanged = new EventEmitter<number[]>();
+  @Output() imageClicked = new EventEmitter<AppImage>();
+
+  selectableImages$ = this.selectableListPresenter.selectableEntities$;
+
+  constructor(  
+    private selectableListPresenter: SelectableListPresenter<AppImage>,
+    private dialog: MatDialog) {}
+  
+  ngOnInit(): void {
+      this.selectableListPresenter.selectedIds$.pipe(skip(1)).subscribe(x => this.selectionChanged.emit(x))
   }
 
-  selectOrRemoveImage(image: ImageWithSelect<MissionImage>) {
+  toggleSelect(selectable: SelectableEntity<AppImage>, isSelected: boolean) {
     this.disableImageViewer = true;
-    let images = this.imagesCopy;
-    images = images.map(x => {
-      if(x.image.id == image.image.id) {
-        let copy = {...x};
-        copy.selected = !copy.selected
-        return copy;
-      }else return x;
-    });
-    this.imagesWithSelectSubject.next(images);
+    this.selectableListPresenter.toggleEntity(selectable.entity.id)
     setTimeout(() => (this.disableImageViewer = false), 500);
   }
 
-  openMailImageSheet = () => {
-    let botRef = this.bottomSheet.open(MailImageSheetComponent, {
-      data: { ids: this.imagesCopy.map(x => x.image.id) },
-    });
-    botRef
-      .afterDismissed()
-      .pipe(filter((isSent) => isSent))
-      .subscribe((x) =>  this.clearSelectedImages());
-  };
-  
-  openImageViewer(currentImage: MissionImage) {
-    if (this.disableImageViewer || this.isImageSelected(currentImage.id))
+  trackById(index: number, selectable: SelectableEntity<AppImage>): number {
+    return selectable.entity.id;
+  }
+
+  clearSelections = () => this.selectableListPresenter.addSelections([]);
+
+  imageClick = (img: AppImage) => {
+    if (this.disableImageViewer || this.selectableListPresenter.isEntitySelected(img.id))
       return undefined;
 
-    this.dialog.open(ImageViewerDialogWrapperComponent, {
-      width: "100%",
-      height: "100%",
-      panelClass: "image_viewer_dialog",
-      data: { currentImage, images: this.imagesCopy.map(x => x.image) },
-    });
+    this.imageClicked.emit(img)
   }
-
-  trackById(index: number, img: ImageWithSelect<MissionImage>): number {
-    return img.image.id;
-  }
-
-  private clearSelectedImages(){
-    let copy = this.imagesCopy;
-    copy = copy.map(x => {
-      if(!x.selected) return x;
-      let img = {...x};
-      img.selected = false;
-      return img;
-    })
-    this.imagesWithSelectSubject.next(copy);
-  }
-
-  private initImages(images: MissionImage[]){
-    let imgsWithSelect = images.map(x => {return {image: x, selected: false}})
-    this.imagesWithSelectSubject.next(imgsWithSelect);
-  }
-
-  private isImageSelected = (imageId:number): boolean => 
-    this.imagesCopy.filter(x => x.image.id == imageId && x.selected == true).length ? true : false
-
-
 
 }
