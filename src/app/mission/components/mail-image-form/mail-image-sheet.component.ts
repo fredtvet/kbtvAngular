@@ -25,7 +25,6 @@ export class MailImageSheetComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    console.log(this.data.ids)
     this.navConfig = {
       title: 'Send bilder',
       leftBtn: {icon: 'close', callback: this.close} as AppButton,
