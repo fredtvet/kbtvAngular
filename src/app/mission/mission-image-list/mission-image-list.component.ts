@@ -5,7 +5,7 @@ import { filter, map, takeUntil, tap, distinctUntilChanged } from "rxjs/operator
 import { Roles } from 'src/app/shared/enums';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { MissionImage, Mission } from 'src/app/shared/models';
-import { MissionImageService, MainNavService, NotificationService, MissionService } from 'src/app/core/services';
+import { MissionImageService, MainNavService, NotificationService, MissionService, DeviceInfoService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppButton, AppImage } from 'src/app/shared/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
@@ -29,8 +29,10 @@ export class MissionImageListComponent extends SubscriptionComponent{
   currentSelections: number[] = [];
 
   images$: Observable<MissionImage[]>;
-
+  isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
+  
   constructor(
+    private deviceInfoService: DeviceInfoService,
     private bottomSheet: MatBottomSheet,
     private dialog: MatDialog,
     private notificationService: NotificationService,

@@ -1,4 +1,5 @@
 <app-image-list #imageList *ngIf="images$ | async; let images"
+    [totalRows]="(isXs$ | async) ? 2 : 4"
     [images]="images" 
     (selectionChanged)="currentSelections = $event"
     (imageClicked)="openImageViewer($event, images)">
