@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { MainNavConfig } from 'src/app/shared/interfaces';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
+import { DeviceInfoService } from '../device-info.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,19 +23,17 @@ export class MainNavService {
     isXs: true,
   };
 
-  private isXs$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.XSmall)
-    .pipe(map(result => result.matches),shareReplay());
-
   private configSubject =  new BehaviorSubject<MainNavConfig>({...this.defaultConfig});
   private _config$ = this.configSubject.asObservable();
   
-  config$: Observable<MainNavConfig> = combineLatest(this._config$, this.isXs$).pipe(map(([config, isXs]) => {
+  config$: Observable<MainNavConfig> = combineLatest(this._config$, this.deviceInfoService.isXs$)
+  .pipe(map(([config, isXs]) => {
     let cfg = {...config};
     cfg.isXs = isXs;
     return cfg;
   }));
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(private deviceInfoService: DeviceInfoService) { }
 
   getDefaultConfig(): MainNavConfig{
     return {...this.defaultConfig};

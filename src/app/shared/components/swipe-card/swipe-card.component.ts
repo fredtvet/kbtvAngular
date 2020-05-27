@@ -4,6 +4,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { DeviceInfoService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-swipe-card',
@@ -35,13 +36,9 @@ export class SwipeCardComponent {
 
   isSwipeActionHidden: boolean = true;
 
-  isXs$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.XSmall)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+  isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(private deviceInfoService: DeviceInfoService) { }
 
   hideSwipeAction(e: any, state: boolean): void{
     if(!this.swipeEnabled) return undefined;
