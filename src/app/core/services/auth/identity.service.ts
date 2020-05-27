@@ -5,7 +5,7 @@ import { JwtService } from './jwt.service';
 import { map, distinctUntilChanged, skip, tap, take } from 'rxjs/operators';
 import { Identity, User } from 'src/app/shared/models';
 import { LocalStorageService } from '../local-storage.service';
-import { ConnectionService } from '../connection.service';
+import { DeviceInfoService } from '../device-info.service';
 import { NotificationService } from '../ui/notification.service';
 import { Notifications } from 'src/app/shared/enums';
 import { DataSyncService } from '../data/data-sync.service';
@@ -28,7 +28,7 @@ export class IdentityService {
     private localStorageService: LocalStorageService,
     private jwtService: JwtService,
     private dataSyncService: DataSyncService,
-    private connectionService: ConnectionService,
+    private deviceInfoService: DeviceInfoService,
     private notificationService: NotificationService
   ) {
     this.currentUserSubject = new BehaviorSubject<User>(this.localStorageService.get(this.storageKey) || new User());
@@ -38,7 +38,7 @@ export class IdentityService {
       this.localStorageService.add(this.storageKey, data); //Consider excluding username from localstorage
     });
 
-    this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
+    this.deviceInfoService.isOnline$.subscribe(res =>this.isOnline = res)
   }
 
   populate(){

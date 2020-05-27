@@ -2,7 +2,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, tap, retry, catchError } from 'rxjs/operators';
 import { BaseSubject } from './base.subject';
 import { ApiService } from '../../api.service';
-import { ConnectionService } from '../../connection.service';
+import { DeviceInfoService } from '../../device-info.service';
 import { NotificationService } from '../../ui/notification.service';
 import { Notifications } from 'src/app/shared/enums';
 import { BaseEntity } from 'src/app/shared/interfaces';
@@ -16,10 +16,10 @@ export abstract class BaseService<T extends BaseEntity>{
     protected notificationService: NotificationService,
     protected apiService: ApiService,
     protected dataSubject: BaseSubject<T>,
-    protected connectionService: ConnectionService,
+    protected deviceInfoService: DeviceInfoService,
     protected readonly uri:string
     ) {
-      this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
+      this.deviceInfoService.isOnline$.subscribe(res =>this.isOnline = res)
     }
 
   sync(): void{

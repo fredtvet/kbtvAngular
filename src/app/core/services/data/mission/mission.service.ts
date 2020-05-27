@@ -3,7 +3,7 @@ import { BaseService } from '../abstracts/base.service';
 import { Mission } from 'src/app/shared/models';
 import { MissionSubject } from './mission.subject';
 import { ApiService } from '../../api.service';
-import { ConnectionService } from '../../connection.service';
+import { DeviceInfoService } from '../../device-info.service';
 import { take, filter, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { NotificationService } from '../../ui/notification.service';
@@ -18,9 +18,9 @@ export class MissionService extends BaseService<Mission> {
     notificationService: NotificationService,
     apiService: ApiService,
     protected dataSubject: MissionSubject,
-    connectionService: ConnectionService
+    deviceInfoService: DeviceInfoService
   ){
-    super(notificationService, apiService, dataSubject, connectionService, "/Missions");
+    super(notificationService, apiService, dataSubject, deviceInfoService, "/Missions");
   }
 
   getDetails$(id: number, trackHistory: boolean =  true):Observable<Mission>{

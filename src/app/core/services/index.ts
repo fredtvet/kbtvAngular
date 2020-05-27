@@ -2,7 +2,7 @@ export * from './api.service';
 export * from './auth/jwt.service';
 export * from './auth/auth-guard.service';
 export * from './auth/no-auth-guard.service';
-export * from './connection.service';
+export * from './device-info.service';
 export * from './auth/identity.service';
 export * from './loading.service';
 export * from './ui/notification.service';

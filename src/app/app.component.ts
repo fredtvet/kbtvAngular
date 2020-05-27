@@ -1,5 +1,5 @@
 import { Component, ApplicationRef, ChangeDetectionStrategy } from '@angular/core';
-import { IdentityService, NotificationService, ConnectionService, DataSyncService, AppConfigurationService } from './core/services';
+import { IdentityService, NotificationService, DeviceInfoService, DataSyncService, AppConfigurationService } from './core/services';
 import { skip, first, tap } from 'rxjs/operators';
 import { Notifications } from './shared/enums/notifications.enum';
 import { interval, combineLatest, concat } from 'rxjs';
@@ -16,7 +16,7 @@ export class AppComponent {
   constructor(
     appRef: ApplicationRef,
     private identityService: IdentityService,
-    private connectionService: ConnectionService,
+    private deviceInfoService: DeviceInfoService,
     private notificationService: NotificationService,
     private dataSyncService: DataSyncService,
     private appConfigService: AppConfigurationService,){
@@ -32,7 +32,7 @@ export class AppComponent {
   ngOnInit(){
     this.identityService.populate();
     
-    this.connectionService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
+    this.deviceInfoService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
       if(isOnline) this.notificationService.setNotification('Du er tilkoblet internett igjen!')
       else this.notificationService.setNotification('Du er nå i frakoblet modus. Det er kun mulig å lese data.', Notifications.Warning)
     });

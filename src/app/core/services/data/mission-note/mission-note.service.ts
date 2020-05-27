@@ -4,7 +4,7 @@ import { ApiService } from '../../api.service';
 import { MissionNoteSubject } from './mission-note.subject';
 import { BaseMissionChildService } from '../abstracts/base-mission-child.service';
 import { Observable } from 'rxjs';
-import { ConnectionService } from '../../connection.service';
+import { DeviceInfoService } from '../../device-info.service';
 import { map } from 'rxjs/operators';
 import { NotificationService } from '../../ui/notification.service';
 
@@ -17,9 +17,9 @@ export class MissionNoteService extends BaseMissionChildService<MissionNote> {
     notificationService: NotificationService,
     apiService: ApiService,
     dataSubject: MissionNoteSubject,
-    connectionService: ConnectionService
+    deviceInfoService: DeviceInfoService
   ){
-    super(notificationService, apiService, dataSubject, connectionService, "/MissionNotes");
+    super(notificationService, apiService, dataSubject, deviceInfoService, "/MissionNotes");
   }
 
   getByMissionId$(missionId: number):Observable<MissionNote[]>{

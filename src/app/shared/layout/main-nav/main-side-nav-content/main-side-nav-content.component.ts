@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ConnectionService } from 'src/app/core/services';
+import { DeviceInfoService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models/user.model';
 import { Roles, RolePresets } from 'src/app/shared/enums/roles.enum';
 
@@ -18,9 +18,9 @@ export class MainSideNavContentComponent {
   @Output() navItemClicked = new EventEmitter();
   @Output() hasLoggedOut = new EventEmitter();
 
-  isOnline$:  Observable<boolean> = this.connectionService.isOnline$;
+  isOnline$:  Observable<boolean> = this.deviceInfoService.isOnline$;
   
-  constructor(private connectionService: ConnectionService) {}
+  constructor(private deviceInfoService: DeviceInfoService) {}
 
   navItemClick = () => this.navItemClicked.emit();
 

@@ -13,10 +13,10 @@ export class Mission implements BaseEntity {
       public updatedAt: Date = null,
       public employerId: number = null,
       public missionTypeId: number = null,
-      public employer: Employer = new Employer(),
-      public missionType: MissionType = new MissionType(),
     ){};
 
+    public employer: Employer = new Employer();
+    public missionType: MissionType = new MissionType();
     public lastVisited: Date;
 
   };

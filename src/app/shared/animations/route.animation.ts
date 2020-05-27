@@ -22,6 +22,9 @@ export const routeAnimation = trigger("routeAnimation", [
   transition("Home => TimesheetAdminUserList", useAnimation(slideAnimation,
     {params: slideForwardParams})),  
 
+  transition("MissionDetails => MissionImages", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+
   transition("MissionList => TimesheetWeekView", useAnimation(slideAnimation,
     {params: slideForwardParams})),
   transition("TimesheetWeekView => MissionList", useAnimation(slideAnimation,

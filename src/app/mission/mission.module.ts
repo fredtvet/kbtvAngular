@@ -19,11 +19,11 @@ import { MissionReportFormSheetWrapperComponent } from './components/mission-rep
 import { MissionReportFormViewComponent } from './components/mission-report-form/mission-report-form-view/mission-report-form-view.component';
 import { ImageViewerComponent } from './components/image-viewer/image-viewer.component';
 import { ImageListComponent } from './mission-image-list/image-list/image-list.component';
-import { MailImageSheetComponent } from './components/mail-image-sheet/mail-image-sheet.component';
 import { MissionImageListComponent } from './mission-image-list/mission-image-list.component';
-import { SelectableImageComponent } from './mission-image-list/selectable-image/selectable-image.component';
 import { ImageViewerDialogWrapperComponent } from './components/image-viewer/image-viewer-dialog-wrapper.component';
-
+import { MailImageFormComponent } from './components/mail-image-form/mail-image-form.component';
+import { MailImageSheetComponent } from './components/mail-image-form/mail-image-sheet.component';
+import { SelectableCardComponent } from './mission-image-list/selectable-card/selectable-card.component';
 
 
 @NgModule({
@@ -47,7 +47,8 @@ import { ImageViewerDialogWrapperComponent } from './components/image-viewer/ima
     ImageViewerDialogWrapperComponent,
     MailImageSheetComponent,
     MissionImageListComponent,
-    SelectableImageComponent,
+    SelectableCardComponent,
+    MailImageFormComponent,
   ],
   providers: [
     DatePipe,

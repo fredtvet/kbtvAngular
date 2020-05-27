@@ -3,7 +3,7 @@ import { MissionType } from 'src/app/shared/models';
 import { BaseService } from '../abstracts/base.service';
 import { ApiService } from '../../api.service';
 import { MissionTypeSubject } from './mission-type.subject';
-import { ConnectionService } from '../../connection.service';
+import { DeviceInfoService } from '../../device-info.service';
 import { NotificationService } from '../../ui/notification.service';
 
 
@@ -17,9 +17,9 @@ export class MissionTypeService extends BaseService<MissionType> {
     notificationService: NotificationService,
     apiService: ApiService,
     dataSubject: MissionTypeSubject,
-    connectionService: ConnectionService
+    deviceInfoService: DeviceInfoService
   ){
-    super(notificationService, apiService, dataSubject, connectionService, "/MissionTypes");
+    super(notificationService, apiService, dataSubject, deviceInfoService, "/MissionTypes");
   }
 
 }

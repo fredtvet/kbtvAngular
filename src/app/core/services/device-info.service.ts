@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 
-export class ConnectionService {
+export class DeviceInfoService {
 
   constructor() { }
 

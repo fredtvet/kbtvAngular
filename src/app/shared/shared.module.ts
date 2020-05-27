@@ -31,8 +31,8 @@ import { BottomSheetMenuComponent } from './components/bottom-sheet-menu/bottom-
 import { AddToHomeScreenDirective } from './directives/add-to-home-screen.directive';
 import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
 import { MainTopNavComponent } from './layout/main-nav/main-top-nav/main-top-nav.component';
-import { InputListenerDirective } from './directives';
-
+import { InputListenerDirective, ImageErrorReloaderDirective } from './directives';
+import { ArrayFromNumberPipe } from './pipes/array-from-number.pipe';
 @NgModule({
   declarations: [
     MainNavComponent,
@@ -66,6 +66,8 @@ import { InputListenerDirective } from './directives';
     SimpleTopNavComponent,
     GetEmployerByIdPipe,
     ReadableDurationPipe,
+    ImageErrorReloaderDirective,
+    ArrayFromNumberPipe,
   ],
   imports: [
     CommonModule,
@@ -86,7 +88,7 @@ import { InputListenerDirective } from './directives';
     {provide: OwlDateTimeIntl, useClass: DefaultOwlDateTimeIntl},
     {provide: OWL_DATE_TIME_LOCALE, useValue: 'no'},
     {provide: OWL_DATE_TIME_FORMATS, useValue: DEFAULT_OWL_DATE_TIME_FORMATS},
-],
+  ],
   exports: [
     CommonModule,
     FormsModule,
@@ -121,7 +123,9 @@ import { InputListenerDirective } from './directives';
     TimesheetSummaryCardContentComponent,
     SwipeCardComponent,
     SimpleTopNavComponent,
-    GetEmployerByIdPipe
+    GetEmployerByIdPipe,
+    ArrayFromNumberPipe,
+    ImageErrorReloaderDirective
   ]
 })
 export class SharedModule { }

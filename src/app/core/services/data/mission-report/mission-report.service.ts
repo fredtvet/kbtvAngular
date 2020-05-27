@@ -5,7 +5,7 @@ import { MissionReportSubject } from './mission-report.subject';
 import { ApiService } from '../../api.service';
 import { Observable, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { ConnectionService } from '../../connection.service';
+import { DeviceInfoService } from '../../device-info.service';
 import { NotificationService } from '../../ui/notification.service';
 import { Notifications } from 'src/app/shared/enums';
 
@@ -19,9 +19,9 @@ export class MissionReportService extends BaseMissionChildService<MissionReport>
     notificationService: NotificationService,
     apiService: ApiService,
     dataSubject: MissionReportSubject,
-    connectionService: ConnectionService
+    deviceInfoService: DeviceInfoService
   ){
-    super(notificationService, apiService, dataSubject, connectionService, "/MissionReports");
+    super(notificationService, apiService, dataSubject, deviceInfoService, "/MissionReports");
   }
 
   addReport$(missionId:number, reportType: ReportType, files: FileList): Observable<MissionReport>{

@@ -71,10 +71,18 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
   bottom: (($content-margin*2) + 40 + $bottom-nav-height) * 1px;
   z-index:2;
   background:$accent;
-  animation: backInUp;
+  animation: backInRight;
   animation-duration:.5s
 }
-
+.action_fab_3{
+  position: fixed!important;
+  right: $content-margin * 1px!important;
+  bottom: (($content-margin*3) + 80 + $bottom-nav-height) * 1px;
+  z-index:2;
+  background:$accent;
+  animation: backInRight;
+  animation-duration:.5s
+}
 .bounceIn{
   animation: bounceIn;
   animation-duration: .5s;
@@ -89,7 +97,10 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
   animation: backInUp;
   animation-duration:.5s
 }
-
+.backInRight{
+  animation: backInRight;
+  animation-duration:.5s
+}
 .fadeIn{
   animation: fadeIn;
   animation-duration:.8s

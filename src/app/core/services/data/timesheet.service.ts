@@ -7,7 +7,7 @@ import { tap, switchMap, distinctUntilChanged, map, pairwise, startWith, share, 
 import { HttpParams } from '@angular/common/http';
 import { TimesheetAggregatorService } from '../utility/timesheet-aggregator.service';
 import { GroupByTypes, TimesheetStatus, Notifications } from 'src/app/shared/enums';
-import { ConnectionService } from '../connection.service';
+import { DeviceInfoService } from '../device-info.service';
 import { NotificationService } from '../ui/notification.service';
 import { UserService } from './user/user.service';
 import { MissionService } from './mission/mission.service';
@@ -38,11 +38,11 @@ export class TimesheetService {
   constructor(
     private apiService: ApiService,
     private timesheetAggregatorService: TimesheetAggregatorService,
-    private connectionService: ConnectionService,
+    private deviceInfoService: DeviceInfoService,
     private notificationService: NotificationService,
     private userService: UserService,
     private missionService: MissionService) {
-    this.connectionService.isOnline$.subscribe(res =>this.isOnline = res)
+    this.deviceInfoService.isOnline$.subscribe(res =>this.isOnline = res)
 
     this.filter$.pipe(
       distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),

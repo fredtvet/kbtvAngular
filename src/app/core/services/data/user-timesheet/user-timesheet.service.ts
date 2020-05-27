@@ -3,7 +3,7 @@ import { TimesheetStatus } from 'src/app/shared/enums';
 import { NotificationService } from '../../ui/notification.service';
 import { ApiService } from '../../api.service';
 import { UserTimesheetSubject } from './user-timesheet.subject';
-import { ConnectionService } from '../../connection.service';
+import { DeviceInfoService } from '../../device-info.service';
 import { Injectable } from '@angular/core';
 import { Observable, throwError, combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -20,11 +20,11 @@ export class UserTimesheetService extends BaseMissionChildService<Timesheet> {
   constructor(
     notificationService: NotificationService,
     apiService: ApiService,
-    connectionService: ConnectionService,
+    deviceInfoService: DeviceInfoService,
     private missionSubject: MissionSubject,
     protected dataSubject: UserTimesheetSubject
   ){
-    super(notificationService, apiService, dataSubject, connectionService, "/UserTimesheets");
+    super(notificationService, apiService, dataSubject, deviceInfoService, "/UserTimesheets");
   }
 
   getByWeekGrouped$(dateParams: DateParams): Observable<Timesheet[][]>{

@@ -4,7 +4,7 @@ import { BaseMissionChildSubject } from './base-mission-child.subject';
 import { ApiService } from '../../api.service';
 import { Observable } from 'rxjs';
 import { MissionChild } from 'src/app/shared/interfaces';
-import { ConnectionService } from '../../connection.service';
+import { DeviceInfoService } from '../../device-info.service';
 import { NotificationService } from '../../ui/notification.service';
 
 export abstract class BaseMissionChildService<T extends MissionChild> extends BaseService<T>  {
@@ -13,10 +13,10 @@ export abstract class BaseMissionChildService<T extends MissionChild> extends Ba
     notificationService: NotificationService,
     apiService: ApiService,
     @Inject(BaseMissionChildSubject) protected dataSubject: BaseMissionChildSubject<T>,
-    connectionService: ConnectionService,
+    deviceInfoService: DeviceInfoService,
     uri: string
   ){
-    super(notificationService, apiService, dataSubject, connectionService, uri);
+    super(notificationService, apiService, dataSubject, deviceInfoService, uri);
   }
 
   getByMissionId$(missionId: number):Observable<T[]>{

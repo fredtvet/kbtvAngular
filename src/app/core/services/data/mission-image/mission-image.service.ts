@@ -6,7 +6,7 @@ import { MissionImage } from 'src/app/shared/models';
 import { Notifications } from 'src/app/shared/enums';
 import { Observable, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { ConnectionService } from '../../connection.service';
+import { DeviceInfoService } from '../../device-info.service';
 import { NotificationService } from '../../ui/notification.service';
 
 @Injectable({
@@ -18,9 +18,9 @@ export class MissionImageService extends BaseMissionChildService<MissionImage> {
     notificationService: NotificationService,
     apiService: ApiService,
     dataSubject: MissionImageSubject,
-    connectionService: ConnectionService
+    deviceInfoService: DeviceInfoService
   ){
-    super(notificationService, apiService, dataSubject, connectionService, "/MissionImages");
+    super(notificationService, apiService, dataSubject, deviceInfoService, "/MissionImages");
   }
 
   getByMissionId$(missionId: number):Observable<MissionImage[]>{

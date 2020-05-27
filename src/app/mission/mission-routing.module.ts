@@ -20,7 +20,7 @@ const routes: Routes = [
 {
   path: ':id/bilder',
   component: MissionImageListComponent,
-  canActivate: [AuthGuard],data: {animation: 'MissionDetails'}
+  canActivate: [AuthGuard],data: {animation: 'MissionImages'}
 },
 ];
 

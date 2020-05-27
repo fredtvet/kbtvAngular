@@ -25,6 +25,13 @@
       </mat-card-content>
     </mat-card> 
 
+    <div class="m-2 fadeInLeft">
+      <app-list-card  [routerLink]="['/oppdrag',mission.id, 'bilder']" 
+      startIcon="photo_library" text="Bilder" endIcon="chevron_right">
+      </app-list-card>
+    </div>
+
+
     <mat-card class="app-card m-2 fadeInLeft max-width" *ngIf="reports && reports.length != 0">
       <mat-card-header>
         Rapporter
@@ -52,13 +59,6 @@
       </mat-card-content>
     </mat-card>
 
-    <app-list-card [routerLink]="['/oppdrag',mission.id, 'bilder']" 
-      startIcon="photo_library" text="Bilder" endIcon="chevron_right">
-    </app-list-card>
-  </mat-tab>
-
-  <mat-tab label="Bilder">
-
   </mat-tab>
 
   <mat-tab label="Notater">
@@ -71,7 +71,7 @@
   </mat-tab>
 </mat-tab-group>
 
-<button
+<!-- <button
     *ifRole="[Roles.Leder, Roles.Ansatt, Roles.Mellomleder]"
     mat-mini-fab aria-label="ny"
     class="action_fab"
@@ -80,5 +80,5 @@
 </button>
 
 <input type="file" style="display:none" multiple #imageInput
-  (change)="uploadImages($event.target.files, mission?.id)">
+  (change)="uploadImages($event.target.files, mission?.id)"> -->
 

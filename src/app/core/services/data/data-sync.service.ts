@@ -1,5 +1,5 @@
 import { Injectable, ApplicationRef } from '@angular/core';
-import { ConnectionService } from '../connection.service';
+import { DeviceInfoService } from '../device-info.service';
 import { EmployerSubject } from './employer/employer.subject';
 import { MissionTypeSubject } from './mission-type/mission-type.subject';
 import { MissionImageSubject } from './mission-image/mission-image.subject';
@@ -32,7 +32,7 @@ export class DataSyncService {
 
   constructor(
     private apiService: ApiService,
-    private connectionService: ConnectionService,
+    private deviceInfoService: DeviceInfoService,
     private notificationService: NotificationService,
     private employerSubject: EmployerSubject,
     private missionTypeSubject: MissionTypeSubject,
@@ -43,7 +43,7 @@ export class DataSyncService {
     private reportTypeSubject: ReportTypeSubject,
     private userTimesheetSubject: UserTimesheetSubject
   ){
-    this.connectionService.isOnline$.subscribe(res =>this.isOnline = res);
+    this.deviceInfoService.isOnline$.subscribe(res =>this.isOnline = res);
     this.entitySubjects = this.createEntitySubjectArrays();
   }
   
