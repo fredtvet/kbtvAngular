@@ -48,14 +48,11 @@ export class MissionImageService extends BaseMissionChildService<MissionImage> {
 
   mailImages$(toEmail: string, missionImageIds: number[]){
     if(!this.isOnline)
-    return throwError('Du må være tilkoblet internett for å legge til bilder.')
+    return throwError('Du må være tilkoblet internett for å sende epost.')
             .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     return this.apiService
-              .post(`${this.uri}/SendImages`, {toEmail, missionImageIds})
-              .pipe(map(data =>{
-                console.log(data);
-              }));
+              .post(`${this.uri}/SendImages`, {toEmail, missionImageIds});
   }
 
   add$(entity: MissionImage): Observable<MissionImage>{return undefined}

@@ -7,6 +7,7 @@ export * from './auth/identity.service';
 export * from './loading.service';
 export * from './ui/notification.service';
 export * from './app-configuration.service';
+export * from './downloader.service';
 
 export * from './data/user/user.service';
 export * from './data/role/role.service';

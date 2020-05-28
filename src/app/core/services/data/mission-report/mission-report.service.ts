@@ -42,6 +42,16 @@ export class MissionReportService extends BaseMissionChildService<MissionReport>
             }));
   }
 
+  mailReports$(toEmail: string, missionReportIds: number[]){
+    if(!this.isOnline)
+    return throwError('Du må være tilkoblet internett for å sende epost.')
+            .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
+
+    return this.apiService
+              .post(`${this.uri}/SendReports`, {toEmail, missionReportIds});
+  }
+
+
   add$(entity: MissionReport): Observable<MissionReport>{return undefined}
   update$(entity: MissionReport): Observable<MissionReport>{return undefined}
 }
