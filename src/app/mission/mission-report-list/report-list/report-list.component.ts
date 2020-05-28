@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { SelectableListBase } from '../../components/selectable-list/selectable-list.base';
 import { MissionReport } from 'src/app/shared/models';
 import { SelectableListPresenter } from '../../components/selectable-list/selectable-list.presenter';
@@ -12,6 +12,7 @@ import { SelectableEntity } from 'src/app/shared/interfaces';
 })
 
 export class ReportListComponent extends SelectableListBase<MissionReport>{
+  @Input() totalRows: number = 2;  
   @Output() reportClicked = new EventEmitter<MissionReport>();
 
   private clickDisabled: boolean;

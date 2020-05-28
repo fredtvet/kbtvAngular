@@ -1,4 +1,5 @@
 <app-report-list #reportList *ngIf="reportsWithType$ | async; let reports"
+    [totalRows]="(isXs$ | async) ? 2 : 4"
     [entities]="reports" 
     (selectionChanged)="currentSelections = $event"
     (reportClicked)="downloadReport($event)">

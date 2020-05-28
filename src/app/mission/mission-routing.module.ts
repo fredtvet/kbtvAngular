@@ -31,7 +31,7 @@ const routes: Routes = [
 {
   path: ':id/notater',
   component: MissionImageListComponent,
-  canActivate: [AuthGuard],data: {animation: 'MissionImages'}
+  canActivate: [AuthGuard],data: {animation: 'MissionNotes'}
 },
 ];
 

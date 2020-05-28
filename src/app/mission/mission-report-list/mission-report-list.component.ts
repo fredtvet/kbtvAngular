@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MissionReport, Mission } from 'src/app/shared/models';
 import { Observable, combineLatest } from 'rxjs';
-import { MissionReportService, MainNavService, NotificationService, MissionService, ReportTypeService, DownloaderService } from 'src/app/core/services';
+import { MissionReportService, MainNavService, NotificationService, MissionService, ReportTypeService, DownloaderService, DeviceInfoService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatBottomSheet } from '@angular/material';
 import { Roles } from 'src/app/shared/enums';
@@ -22,10 +22,12 @@ export class MissionReportListComponent extends SubscriptionComponent {
 
   currentSelections: number[] = [];
   reportsWithType$: Observable<MissionReport[]>;
+  isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
 
   private mission: Mission;
   
-  constructor(       
+  constructor(
+    private deviceInfoService: DeviceInfoService,     
     private bottomSheet: MatBottomSheet, 
     private downloaderService: DownloaderService,
     private missionReportService: MissionReportService,
