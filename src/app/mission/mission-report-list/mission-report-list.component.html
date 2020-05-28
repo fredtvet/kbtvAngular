@@ -1,0 +1,22 @@
+<app-report-list #reportList *ngIf="reportsWithType$ | async; let reports"
+    [entities]="reports" 
+    (selectionChanged)="currentSelections = $event"
+    (reportClicked)="downloadReport($event)">
+</app-report-list>
+
+<ng-container *ngIf="currentSelections.length > 0">
+    <ng-container *ifRole="[Roles.Leder]">
+        <button mat-mini-fab aria-label="ny" class="action_fab_2" (click)="openMailReportSheet(currentSelections)">
+            <mat-icon>send</mat-icon>
+        </button>
+        <button mat-mini-fab aria-label="ny" class="action_fab_3 bg-warn"
+            (click)="openConfirmDeleteDialog(currentSelections)">
+            <mat-icon>delete_forever</mat-icon>
+        </button>
+    </ng-container>
+</ng-container>
+
+
+<button *ifRole="[Roles.Leder]" mat-mini-fab aria-label="ny" class="action_fab" (click)="openReportForm()">
+    <mat-icon>note_add</mat-icon>
+</button>

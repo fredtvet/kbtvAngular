@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe, ReadableDurationPipe, DurationPipe, GetDateByDateParamsPipe, ArrayIncludesPipe, GetEmployerByIdPipe } from './pipes'
+import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe, ReadableDurationPipe, DurationPipe, GetDateByDateParamsPipe, ArrayIncludesPipe, GetEmployerByIdPipe, ArrayFromNumberPipe, FiletypeFromUrlPipe } from './pipes'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -32,7 +32,7 @@ import { AddToHomeScreenDirective } from './directives/add-to-home-screen.direct
 import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
 import { MainTopNavComponent } from './layout/main-nav/main-top-nav/main-top-nav.component';
 import { InputListenerDirective, ImageErrorReloaderDirective } from './directives';
-import { ArrayFromNumberPipe } from './pipes/array-from-number.pipe';
+
 @NgModule({
   declarations: [
     MainNavComponent,
@@ -68,6 +68,7 @@ import { ArrayFromNumberPipe } from './pipes/array-from-number.pipe';
     ReadableDurationPipe,
     ImageErrorReloaderDirective,
     ArrayFromNumberPipe,
+    FiletypeFromUrlPipe,
   ],
   imports: [
     CommonModule,
@@ -125,7 +126,8 @@ import { ArrayFromNumberPipe } from './pipes/array-from-number.pipe';
     SimpleTopNavComponent,
     GetEmployerByIdPipe,
     ArrayFromNumberPipe,
-    ImageErrorReloaderDirective
+    ImageErrorReloaderDirective,
+    FiletypeFromUrlPipe,
   ]
 })
 export class SharedModule { }

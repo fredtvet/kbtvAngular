@@ -21,9 +21,12 @@ import { ImageViewerComponent } from './components/image-viewer/image-viewer.com
 import { ImageListComponent } from './mission-image-list/image-list/image-list.component';
 import { MissionImageListComponent } from './mission-image-list/mission-image-list.component';
 import { ImageViewerDialogWrapperComponent } from './components/image-viewer/image-viewer-dialog-wrapper.component';
-import { MailImageFormComponent } from './components/mail-image-form/mail-image-form.component';
-import { MailImageSheetComponent } from './components/mail-image-form/mail-image-sheet.component';
-import { SelectableCardComponent } from './mission-image-list/selectable-card/selectable-card.component';
+import { MailEntityFormComponent } from './components/mail-entity-form/mail-entity-form.component';
+import { MailImageSheetComponent } from './components/mail-image-sheet.component';
+import { SelectableCardComponent } from './components/selectable-card/selectable-card.component';
+import { MissionReportListComponent } from './mission-report-list/mission-report-list.component';
+import { ReportListComponent } from './mission-report-list/report-list/report-list.component';
+import { MailReportSheetComponent } from './components/mail-report-sheet.component';
 
 
 @NgModule({
@@ -48,7 +51,10 @@ import { SelectableCardComponent } from './mission-image-list/selectable-card/se
     MailImageSheetComponent,
     MissionImageListComponent,
     SelectableCardComponent,
-    MailImageFormComponent,
+    MailEntityFormComponent,
+    MissionReportListComponent,
+    ReportListComponent,
+    MailReportSheetComponent
   ],
   providers: [
     DatePipe,
@@ -60,7 +66,8 @@ import { SelectableCardComponent } from './mission-image-list/selectable-card/se
     MissionFormSheetWrapperComponent,
     MissionNoteFormSheetWrapperComponent,
     MissionReportFormSheetWrapperComponent,
-    MailImageSheetComponent
+    MailImageSheetComponent,
+    MailReportSheetComponent
   ],
   exports: [
     MissionFormSheetWrapperComponent,

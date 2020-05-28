@@ -18,18 +18,24 @@ export const routeAnimation = trigger("routeAnimation", [
 
   transition("* => Users", useAnimation(slideAnimation,
     {params: slideForwardParams})),
+  
+  transition("MissionList => MissionDetails", useAnimation(slideAnimation, 
+    {params: slideForwardParams})),
+  transition("MissionDetails => MissionList", useAnimation(slideAnimation, 
+    {params: slideBackwardParams})),
+  transition("MissionDetails => MissionImages", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+  transition("MissionImages => MissionDetails", useAnimation(slideAnimation,
+    {params: slideBackwardParams})),
+
+  transition("TimesheetWeekView => MissionList", useAnimation(slideAnimation,
+    {params: slideBackwardParams})),
+  transition("MissionList => TimesheetWeekView", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
 
   transition("Home => TimesheetAdminUserList", useAnimation(slideAnimation,
     {params: slideForwardParams})),  
-
-  transition("MissionDetails => MissionImages", useAnimation(slideAnimation,
-    {params: slideForwardParams})),
-
-  transition("MissionList => TimesheetWeekView", useAnimation(slideAnimation,
-    {params: slideForwardParams})),
-  transition("TimesheetWeekView => MissionList", useAnimation(slideAnimation,
-    {params: slideBackwardParams})),
-
+  
   transition("TimesheetWeekView => TimesheetWeekList", useAnimation(slideAnimation,
     {params: slideBackwardParams})),
   transition("TimesheetWeekList => TimesheetWeekView", useAnimation(slideAnimation,

@@ -1,0 +1,18 @@
+<div class="entity-row">
+    <div class="entity-column" *ngFor="let i of 4 | arrayFromNumber">
+        <app-selectable-card selectedText="Rapport valgt" selectedIcon="check_circle"
+            *ngFor="let selectable of (selectableEntities$ | async) | arrayslice: i:4;let i = index;trackBy: trackById"
+            [isSelected]="selectable.selected" (selected)="toggleSelect(selectable)"
+            (click)="reportClick(selectable.entity)">
+
+            <div class="bg-foreground text-center mat-elevation-z2 p-2 pt-6 pb-6">
+                <mat-icon class="scale-150 mb-2">description</mat-icon>
+                <div>{{ selectable.entity.reportType?.name }}</div>
+
+                <div class="mat-caption">Filtype: {{ selectable.entity.fileURL | filetypeFromUrl | uppercase }}</div>
+                <div class="mat-caption">Lastet opp 21.mai 2020</div>
+            </div>
+            
+        </app-selectable-card>
+    </div>
+</div>

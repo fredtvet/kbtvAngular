@@ -55,6 +55,11 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 .flex-nav{flex-shrink: 0;display: inline-flex;flex-direction: column;z-index:2}
 
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
+
 .action_fab{
   position: fixed!important;
   right: $content-margin * 1px!important;
@@ -83,6 +88,50 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
   animation: backInRight;
   animation-duration:.5s
 }
+
+.entity-row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  max-width: 1000px;
+  padding:$gap-size-unit * 0.25px;
+}
+
+/* Create four equal columns that sits next to each other */
+.entity-column {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+  max-width: 25%;
+}
+
+.entity-card{  
+  width:100%;
+  vertical-align: middle;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 600px) {
+  .entity-column {
+    -ms-flex: 50%;
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 300px) {
+  .entity-column {
+    -ms-flex: 100%;
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+
+
 .bounceIn{
   animation: bounceIn;
   animation-duration: .5s;
@@ -137,6 +186,9 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.ellipsis-left{
+  direction:rtl;
 }
 .static-page-container{
   padding: $content-margin * 1px!important;

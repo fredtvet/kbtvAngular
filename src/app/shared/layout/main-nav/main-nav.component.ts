@@ -20,7 +20,7 @@ export class MainNavComponent {
   
   Roles = Roles;
 
-  config$: Observable<MainNavConfig> = this.mainNavService.config$.pipe(tap(console.log));
+  config$: Observable<MainNavConfig> = this.mainNavService.config$;
   currentUser$:  Observable<User> = this.identityService.currentUser$;
 
   constructor(

@@ -7,3 +7,4 @@ export * from './get-date-by-date-params.pipe';
 export * from './array-includes.pipe';
 export * from './get-employer-by-id.pipe';
 export * from './array-from-number.pipe';
+export * from './filetype-from-url.pipe';

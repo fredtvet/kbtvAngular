@@ -1,8 +1,8 @@
 import { MissionChild } from '../interfaces/mission-child.interface';
 import { Mission } from './mission.model';
-import { AppImage } from '../interfaces/app-image.interface';
+import { AppFile } from '../interfaces/app-file.interface';
 
-export class MissionImage implements MissionChild, AppImage{
+export class MissionImage implements MissionChild, AppFile{
   constructor(
     public id: number = null,
     public missionId: number = null,

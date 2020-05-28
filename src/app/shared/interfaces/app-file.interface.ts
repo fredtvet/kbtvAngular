@@ -1,5 +1,6 @@
 import { BaseEntity } from './base-entity.interface';
 
-export interface AppImage extends BaseEntity {
+export interface AppFile extends BaseEntity {
    fileURL: string;
+   createdAt: Date;
 }
