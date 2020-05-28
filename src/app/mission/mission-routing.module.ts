@@ -5,6 +5,7 @@ import { MissionListComponent } from './mission-list/mission-list.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
 import { MissionImageListComponent } from './mission-image-list/mission-image-list.component';
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
+import { MissionNoteListComponent } from './mission-note-list/mission-note-list.component';
 
 
 const routes: Routes = [
@@ -30,7 +31,7 @@ const routes: Routes = [
 },
 {
   path: ':id/notater',
-  component: MissionImageListComponent,
+  component: MissionNoteListComponent,
   canActivate: [AuthGuard],data: {animation: 'MissionNotes'}
 },
 ];
