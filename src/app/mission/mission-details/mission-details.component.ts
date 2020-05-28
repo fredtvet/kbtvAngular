@@ -5,12 +5,13 @@ import { Roles, RolePresets } from '../../shared/enums';
 import { MissionNote, Mission, MissionReport, MissionImage } from 'src/app/shared/models';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, MainNavService} from 'src/app/core/services';
-import { tap, filter, map } from 'rxjs/operators';
+import { tap, filter, map, delay } from 'rxjs/operators';
 import { Observable, combineLatest } from 'rxjs';
 import { MissionFormSheetWrapperComponent } from '../components/mission-form/mission-form-sheet-wrapper.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MissionNoteFormSheetWrapperComponent } from '../components/mission-note-form/mission-note-form-sheet-wrapper.component';
 import { MissionReportFormSheetWrapperComponent } from '../components/mission-report-form/mission-report-form-sheet-wrapper.component';
+import { MissionDetailsViewModel } from './mission-details-view-model.interface';
 
 @Component({
   selector: 'app-mission-details',
@@ -22,12 +23,7 @@ export class MissionDetailsComponent{
   RolePresets = RolePresets;
   Roles = Roles;
 
-  vm$: Observable<{mission: Mission, images:MissionImage[], notes:MissionNote[], reports:MissionReport[]}>;
-
-  mission$: Observable<Mission>;
-  images$: Observable<MissionImage[]>;
-  notes$: Observable<MissionNote[]>;
-  reports$: Observable<MissionReport[]>;
+  vm$: Observable<MissionDetailsViewModel>;
 
   constructor(
     private mainNavService: MainNavService,
@@ -40,23 +36,21 @@ export class MissionDetailsComponent{
     private router: Router,
     public dialog: MatDialog, 
     private _bottomSheet: MatBottomSheet,  
-  ){ 
-    this.configureMainNav(+this.route.snapshot.paramMap.get('id'));
-  }
+  ){ }
 
   ngOnInit(){
     let missionId = +this.route.snapshot.paramMap.get('id');
 
     let mission$ = this.missionService.getDetails$(missionId);
-    let images$ = this.missionImageService.getByMissionId$(missionId);
-    let reports$ = this.missionReportService.getByMissionId$(missionId);
-    let notes$ = this.missionNoteService.getByMissionId$(missionId);
+    let imageCount$ = this.missionImageService.getByMissionId$(missionId).pipe(map(x => x.length));
+    let reportCount$ = this.missionReportService.getByMissionId$(missionId).pipe(map(x => x.length));
+    let noteCount$ = this.missionNoteService.getByMissionId$(missionId).pipe(map(x => x.length));
 
-    this.vm$ = combineLatest(mission$, images$, reports$, notes$).pipe(
-      map(([mission, images, reports, notes]) => {
-        return {mission, images, reports, notes}
+    this.vm$ = combineLatest(mission$, imageCount$, reportCount$, noteCount$).pipe(
+      map(([mission, imageCount, reportCount, noteCount]) => {
+        return {mission, imageCount, reportCount, noteCount}
       }),
-      tap(x => this.updateMainNavWithMission(x.mission))
+      tap(x => this.configureMainNav(x.mission))
     );
   }
 
@@ -67,20 +61,6 @@ export class MissionDetailsComponent{
         )
     );
   }
-  
-
-
-  deleteImage = (id:number) => 
-    this.missionImageService.delete$(id).subscribe(res =>  
-      this.notificationService.setNotification('Vellykket! Bilde slettet'));
-  
-  deleteNote = (id: number) =>
-    this.missionNoteService.delete$(id).subscribe(res => 
-      this.notificationService.setNotification('Vellykket! Notat slettet.'));
-  
-  deleteReport = (id: number) => 
-    this.missionReportService.delete$(id).subscribe(res => 
-      this.notificationService.setNotification('Vellykket! Rapport slettet.'));
   
   private deleteMission = (id: number) =>
     this.missionService.delete$(id).pipe(filter(del => del), tap(x => this.onBack()))
@@ -103,30 +83,22 @@ export class MissionDetailsComponent{
   private goToTimesheets = (mission: Mission) => 
     this.router.navigate(['timer/liste', {returnRoute: this.router.url, missionId: JSON.stringify(mission)}]);
 
-  private configureMainNav(missionId: number){
+  private configureMainNav(mission: Mission){
     let cfg = this.mainNavService.getDefaultConfig();
     
     cfg.backFn = this.onBack;  
     cfg.bottomSheetButtons = [
-      {text: "Legg til rapport", icon: "note_add", callback: this.openReportForm, params: [missionId], allowedRoles: [Roles.Leder]},
-      {text: "Legg til notat", icon: "add_comment", callback: this.openMissionNoteForm, params: [missionId], allowedRoles: RolePresets.Internal},
-      {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [missionId], allowedRoles: [Roles.Leder]},
-      {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, params: [missionId], allowedRoles: [Roles.Leder]},
+      {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal},
+      {text: "Legg til rapport", icon: "note_add", callback: this.openReportForm, params: [mission.id], allowedRoles: [Roles.Leder]},
+      {text: "Legg til notat", icon: "add_comment", callback: this.openMissionNoteForm, params: [mission.id], allowedRoles: RolePresets.Internal},
+      {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission.id], allowedRoles: [Roles.Leder]},
+      {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, params: [mission.id], allowedRoles: [Roles.Leder]}
     ];
-    this.mainNavService.addConfig(cfg);
-  }
-
-  private updateMainNavWithMission = (mission: Mission) => {
-    if(mission == undefined) return null;
-    let cfg = this.mainNavService.getCurrentConfig(); 
-    cfg.bottomSheetButtons = cfg.bottomSheetButtons.filter(x => x.icon != "timer"); //remove if btn alrdy exist
     
-    cfg.bottomSheetButtons.push(
-      {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal})
-
     cfg.multiLineTitle = mission.address.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'); 
     cfg.subTitle = mission.finished ? 'Oppdrag ferdig!' : '';
     cfg.subIcon = mission.finished ? 'check' : '';
+
     this.mainNavService.addConfig(cfg);
   }
 
