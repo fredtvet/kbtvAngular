@@ -133,7 +133,10 @@ a {
   }
 }
 
-
+.slideInDown{
+  animation: slideInDown;
+  animation-duration: .5s;
+}
 .bounceIn{
   animation: bounceIn;
   animation-duration: .5s;

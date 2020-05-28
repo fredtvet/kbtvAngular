@@ -1,0 +1,32 @@
+@import '../../../../../variables';
+
+.container {
+    position:relative;
+    height:40vh;
+    background-color:$primary-dark;
+  }
+
+.img-container{
+    overflow:scroll;
+    width:100%;
+    height:100%;
+}
+
+.overlay{
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.3);
+    color:white;
+}
+.overlay-top{
+    top: 0;
+}
+.overlay-bottom{
+    bottom: 0;
+    pointer-events:none;
+}
+.overlay-color{
+    color: rgba(255,255,255,1)
+}
+

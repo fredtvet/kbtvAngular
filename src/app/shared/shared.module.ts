@@ -1,15 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe, ReadableDurationPipe, DurationPipe, GetDateByDateParamsPipe, ArrayIncludesPipe, GetEmployerByIdPipe, ArrayFromNumberPipe, FiletypeFromUrlPipe } from './pipes'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularMaterialModule } from './angular-material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
-import { IfRoleDirective } from './directives/if-role.directive';
-import { MainNavComponent, MainBottomNavComponent, IconButtonComponent,StrokedButtonComponent, MainSideNavContentComponent, SimpleTopNavComponent} from './layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { AngularMaterialModule } from './angular-material.module';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
+import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date-time-formats';
+
+import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe, ReadableDurationPipe, DurationPipe, GetDateByDateParamsPipe, ArrayIncludesPipe, GetEmployerByIdPipe, ArrayFromNumberPipe, FiletypeFromUrlPipe, FileiconFromFiletypePipe } from './pipes'
+
+import { InputListenerDirective, ImageErrorReloaderDirective, AddToHomeScreenDirective, IfRoleDirective } from './directives';
+
+import { MainNavComponent, MainBottomNavComponent, IconButtonComponent,StrokedButtonComponent, MainSideNavContentComponent, SimpleTopNavComponent, MainTopNavComponent, DetailTopNavComponent} from './layout';
 
 import {
   ConfirmDialogComponent,
@@ -22,17 +29,10 @@ import {
   TimesheetCardComponent,
   WeekListFilterComponent,
   WeekListFilterSheetWrapperComponent,
-  TimesheetSummaryCardContentComponent
+  TimesheetSummaryCardContentComponent,
+  BottomSheetMenuComponent,
+  SwipeCardComponent
 } from './components';
-
-import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
-import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date-time-formats';
-import { BottomSheetMenuComponent } from './components/bottom-sheet-menu/bottom-sheet-menu.component';
-import { AddToHomeScreenDirective } from './directives/add-to-home-screen.directive';
-import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
-import { MainTopNavComponent } from './layout/main-nav/main-top-nav/main-top-nav.component';
-import { InputListenerDirective, ImageErrorReloaderDirective } from './directives';
-import { FileiconFromFiletypePipe } from './pipes/fileicon-from-filetype.pipe';
 
 @NgModule({
   declarations: [
@@ -71,6 +71,7 @@ import { FileiconFromFiletypePipe } from './pipes/fileicon-from-filetype.pipe';
     ArrayFromNumberPipe,
     FiletypeFromUrlPipe,
     FileiconFromFiletypePipe,
+    DetailTopNavComponent,
   ],
   imports: [
     CommonModule,

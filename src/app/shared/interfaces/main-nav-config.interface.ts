@@ -1,4 +1,5 @@
 import { AppButton } from './app-button.interface';
+import { LayoutTopNavs } from '../enums';
 
 export interface MainNavConfig{
     title: string;
@@ -16,4 +17,5 @@ export interface MainNavConfig{
     elevationEnabled?: boolean;
 
     isXs?: boolean;
+    navType?: LayoutTopNavs;
 }

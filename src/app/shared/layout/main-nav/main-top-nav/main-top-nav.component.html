@@ -1,5 +1,4 @@
-<mat-toolbar *ngIf="config" class="toolbar-slim color-foreground" style="background:inherit"
-  [ngClass]="{'mat-elevation-z4': config.elevationEnabled}">
+<mat-toolbar *ngIf="config" class="toolbar-slim color-foreground" style="background:inherit">
    
     <app-icon-button *ngIf="config.backFn else menuBtn" 
     [config]="{
@@ -34,11 +33,4 @@
       <mat-icon>more_vert</mat-icon>
     </button>
 
-</mat-toolbar>
-<mat-toolbar *ngIf="config.multiLineTitle && config.multiLineTitle.length > 0" class="toolbar-slim color-foreground" style="background:inherit">
-  <span class="ml-6 mb-2">
-    <ng-container *ngFor="let line of config.multiLineTitle; let last =  last">
-      {{ line }}<br  *ngIf="!last" />
-    </ng-container>
-  </span>
 </mat-toolbar>

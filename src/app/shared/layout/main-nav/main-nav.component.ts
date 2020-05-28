@@ -7,7 +7,7 @@ import { MatDrawer } from '@angular/material';
 import { User } from '../../models/user.model';
 import { MainNavConfig } from '../../interfaces/main-nav-config.interface';
 import { routeAnimation} from '../../animations/route.animation';
-import { tap } from 'rxjs/operators';
+import { LayoutTopNavs } from '../../enums/layout-top-navs.enum';
 
 @Component({
   selector: 'app-main-nav',
@@ -18,6 +18,7 @@ import { tap } from 'rxjs/operators';
 export class MainNavComponent {
   @ViewChild('drawer', {static: false}) drawer:MatDrawer;
   
+  LayoutTopNavs = LayoutTopNavs
   Roles = Roles;
 
   config$: Observable<MainNavConfig> = this.mainNavService.config$;

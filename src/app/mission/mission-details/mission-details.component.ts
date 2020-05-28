@@ -1,11 +1,11 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Roles, RolePresets } from '../../shared/enums';
-import { MissionNote, Mission, MissionDocument, MissionImage } from 'src/app/shared/models';
+import { Roles, RolePresets, LayoutTopNavs } from '../../shared/enums';
+import { Mission } from 'src/app/shared/models';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { NotificationService, MissionService, MissionImageService, MissionDocumentService, MissionNoteService, MainNavService} from 'src/app/core/services';
-import { tap, filter, map, delay } from 'rxjs/operators';
+import { tap, filter, map } from 'rxjs/operators';
 import { Observable, combineLatest } from 'rxjs';
 import { MissionFormSheetWrapperComponent } from '../components/mission-form/mission-form-sheet-wrapper.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -94,7 +94,7 @@ export class MissionDetailsComponent{
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission.id], allowedRoles: [Roles.Leder]},
       {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, params: [mission.id], allowedRoles: [Roles.Leder]}
     ];
-    
+    cfg.navType = LayoutTopNavs.Detail;
     cfg.multiLineTitle = mission.address.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'); 
     cfg.subTitle = mission.finished ? 'Oppdrag ferdig!' : '';
     cfg.subIcon = mission.finished ? 'check' : '';
