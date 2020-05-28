@@ -1,5 +1,5 @@
-import { Component, ApplicationRef, ChangeDetectionStrategy } from '@angular/core';
-import { IdentityService, NotificationService, DeviceInfoService, DataSyncService, AppConfigurationService } from './core/services';
+import { Component, ApplicationRef, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
+import { IdentityService, NotificationService, DeviceInfoService, DataSyncService, AppConfigurationService,DownloaderService } from './core/services';
 import { skip, first, tap } from 'rxjs/operators';
 import { Notifications } from './shared/enums/notifications.enum';
 import { interval, combineLatest, concat } from 'rxjs';
@@ -11,10 +11,12 @@ import { interval, combineLatest, concat } from 'rxjs';
 })
 
 export class AppComponent {
+  @ViewChild('downloadFrame', {static: false}) downloadFrame: ElementRef;
   title = 'kbtv-client';
 
   constructor(
     appRef: ApplicationRef,
+    private downloaderService: DownloaderService,
     private identityService: IdentityService,
     private deviceInfoService: DeviceInfoService,
     private notificationService: NotificationService,
@@ -31,11 +33,13 @@ export class AppComponent {
 
   ngOnInit(){
     this.identityService.populate();
-    
+    this.downloaderService.downloadableUrl$.subscribe(this.downloadUrl);
     this.deviceInfoService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
       if(isOnline) this.notificationService.setNotification('Du er tilkoblet internett igjen!')
       else this.notificationService.setNotification('Du er nå i frakoblet modus. Det er kun mulig å lese data.', Notifications.Warning)
     });
   }
+
+ private downloadUrl = (url: string) => this.downloadFrame.nativeElement.src = url;
   
 }
