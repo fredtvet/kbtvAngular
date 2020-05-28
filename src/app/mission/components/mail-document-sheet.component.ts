@@ -26,7 +26,7 @@ export class MailDocumentSheetComponent implements OnInit {
 
   ngOnInit() {
     this.navConfig = {
-      title: 'Send rapporter',
+      title: 'Send dokumenter',
       leftBtn: {icon: 'close', callback: this.close} as AppButton,
     }
   }
@@ -36,7 +36,7 @@ export class MailDocumentSheetComponent implements OnInit {
   mailDocuments = (toEmail: string) =>
     this._missionDocumentService.mailDocuments$(toEmail, this.data.ids).subscribe(res => { 
       this.close(true);
-      this._notificationService.setNotification(`Vellykket! ${this.data.ids.length} ${this.data.ids.length > 1 ? 'rapporter' : 'rapport'} sendt`)
+      this._notificationService.setNotification(`Vellykket! ${this.data.ids.length} ${this.data.ids.length > 1 ? 'dokumenter' : 'dokument'} sendt`)
     });
   
 

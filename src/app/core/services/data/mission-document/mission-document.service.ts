@@ -26,7 +26,7 @@ export class MissionDocumentService extends BaseMissionChildService<MissionDocum
 
   addDocument$(missionId:number, documentType: DocumentType, files: FileList): Observable<MissionDocument>{
     if(!this.isOnline)
-    return throwError('Du må være tilkoblet internett for å legge til rapporter.')
+    return throwError('Du må være tilkoblet internett for å legge til dokumenter.')
             .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     const formData: FormData = new FormData();

@@ -24,7 +24,7 @@ const routes: Routes = [
   canActivate: [AuthGuard],data: {animation: 'MissionImages'}
 },
 {
-  path: ':id/rapporter',
+  path: ':id/dokumenter',
   component: MissionDocumentListComponent,
   canActivate: [AuthGuard],data: {animation: 'MissionDocuments'}
 },

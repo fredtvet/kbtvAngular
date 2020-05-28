@@ -1,6 +1,6 @@
 <form *ngIf="documentForm" [formGroup]="documentForm" fxLayout="column" fxLayoutAlign="space-around-center">
     <mat-form-field formGroupName="documentType">
-        <input matInput placeholder="Type rapport" aria-label="Type rapport" formControlName="name"
+        <input matInput placeholder="Type dokument" aria-label="Type dokument" formControlName="name"
             [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let type of types" [value]="type.name">

@@ -61,13 +61,13 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
   deleteDocuments = (ids: number[]) => {
     this.missionDocumentService.deleteRange$(ids).subscribe(data =>
       this.notificationService.setNotification(
-        `Vellykket! ${ids.length} ${ids.length > 1 ? 'rapporter' : 'rapport'} slettet.`
+        `Vellykket! ${ids.length} ${ids.length > 1 ? 'dokumenter' : 'dokument'} slettet.`
         )
     );
   }
 
   openConfirmDeleteDialog = (ids: number[]) => {
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette utvalgte rapporter.'});
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette utvalgte dokumenter.'});
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteDocuments(ids));
   }
   
@@ -90,7 +90,7 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.backFn = this.onBack;  
     cfg.backFnParams = [missionId];
-    cfg.title = 'Rapporter';
+    cfg.title = 'Dokumenter';
     this.mainNavService.addConfig(cfg);
   }
   private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);

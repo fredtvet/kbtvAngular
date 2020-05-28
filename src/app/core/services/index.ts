@@ -5,7 +5,6 @@ export * from './auth/no-auth-guard.service';
 export * from './device-info.service';
 export * from './auth/identity.service';
 export * from './loading.service';
-export * from './ui/notification.service';
 export * from './app-configuration.service';
 export * from './downloader.service';
 
@@ -27,6 +26,8 @@ export * from './data/user-timesheet/user-timesheet.service';
 export * from './data/timesheet.service';
 
 export * from './ui/main-nav.service';
+export * from './ui/icon.service';
+export * from './ui/notification.service';
 
 export * from './utility/date-time.service';
 export * from './utility/timesheet-aggregator.service';

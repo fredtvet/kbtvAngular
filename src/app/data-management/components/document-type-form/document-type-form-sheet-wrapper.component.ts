@@ -21,7 +21,7 @@ export class DocumentTypeFormSheetWrapperComponent implements OnInit {
 
   ngOnInit() {
     this.navConfig = {
-      title: 'Registrer rapporttype',
+      title: 'Registrer dokumenttype',
       leftBtn: {icon: 'close', callback: this.close} as AppButton,
     }
   }

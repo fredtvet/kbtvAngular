@@ -1,5 +1,5 @@
 import { Component, ApplicationRef, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
-import { IdentityService, NotificationService, DeviceInfoService, DataSyncService, AppConfigurationService,DownloaderService } from './core/services';
+import { IdentityService, NotificationService, DeviceInfoService, DataSyncService, AppConfigurationService,DownloaderService, IconService } from './core/services';
 import { skip, first, tap } from 'rxjs/operators';
 import { Notifications } from './shared/enums/notifications.enum';
 import { interval, combineLatest, concat } from 'rxjs';
@@ -16,6 +16,7 @@ export class AppComponent {
 
   constructor(
     appRef: ApplicationRef,
+    private iconService: IconService,
     private downloaderService: DownloaderService,
     private identityService: IdentityService,
     private deviceInfoService: DeviceInfoService,
@@ -32,6 +33,7 @@ export class AppComponent {
   }
 
   ngOnInit(){
+    this.iconService.registerIcons();
     this.identityService.populate();
     this.downloaderService.downloadableUrl$.subscribe(this.downloadUrl);
     this.deviceInfoService.isOnline$.pipe(skip(1)).subscribe(isOnline => {

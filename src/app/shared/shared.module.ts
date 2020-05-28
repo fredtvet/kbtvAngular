@@ -32,6 +32,7 @@ import { AddToHomeScreenDirective } from './directives/add-to-home-screen.direct
 import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
 import { MainTopNavComponent } from './layout/main-nav/main-top-nav/main-top-nav.component';
 import { InputListenerDirective, ImageErrorReloaderDirective } from './directives';
+import { FileiconFromFiletypePipe } from './pipes/fileicon-from-filetype.pipe';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { InputListenerDirective, ImageErrorReloaderDirective } from './directive
     ImageErrorReloaderDirective,
     ArrayFromNumberPipe,
     FiletypeFromUrlPipe,
+    FileiconFromFiletypePipe,
   ],
   imports: [
     CommonModule,
@@ -128,6 +130,7 @@ import { InputListenerDirective, ImageErrorReloaderDirective } from './directive
     ArrayFromNumberPipe,
     ImageErrorReloaderDirective,
     FiletypeFromUrlPipe,
+    FileiconFromFiletypePipe
   ]
 })
 export class SharedModule { }

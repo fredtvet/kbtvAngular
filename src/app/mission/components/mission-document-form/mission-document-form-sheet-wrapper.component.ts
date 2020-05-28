@@ -23,7 +23,7 @@ export class MissionDocumentFormSheetWrapperComponent implements OnInit {
 
   ngOnInit() {
     this.navConfig = {
-      title: 'Legg til rapport',
+      title: 'Legg til dokument',
       leftBtn: {icon: 'close', callback: this.close} as AppButton,
     }
   }
