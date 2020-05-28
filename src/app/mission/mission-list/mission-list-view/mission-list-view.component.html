@@ -1,10 +1,10 @@
 <div class="h-100 pl-2 pr-2 max-width" style="overflow:hidden" fxLayout="column" fxLayoutAlign="start stretch">
-   
-    <p *ngIf="missions == undefined || missions.length == 0" class="m-2">Fant ingen oppdrag</p>
-    
+     
     <input appInputListener (inputChanged)="onSearch($event)"
         placeholder="Søk med adresse eller id" class="mt-2 mb-2 p-2 pl-3 mat-elevation-z2 fadeInDown"
         style="background:white;border:none;border-radius:10px;"> 
+
+    <p *ngIf="missions == undefined || missions.length == 0" class="m-2">Fant ingen oppdrag</p>
 
     <cdk-virtual-scroll-viewport itemSize="60" maxBufferPx="800" minBufferPx="800" fxFlex class="fadeInRight">
         <app-list-card *cdkVirtualFor="let mission of missions; trackBy: trackByFn;" startIcon="home_work"
