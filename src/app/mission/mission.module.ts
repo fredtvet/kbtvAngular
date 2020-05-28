@@ -7,7 +7,6 @@ import { MissionNoteFormComponent } from './components/mission-note-form/mission
 import { MissionDocumentFormComponent } from './components/mission-document-form/mission-document-form.component';
 import { ConfirmDialogComponent } from '../shared/components';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
-import { MissionNoteListComponent } from './mission-details/mission-details-view/mission-note-list/mission-note-list.component';
 import { DatePipe } from '@angular/common';
 import { MissionFormViewComponent } from './components/mission-form/mission-form-view/mission-form-view.component';
 import { MissionFormComponent } from './components/mission-form/mission-form.component';
@@ -27,6 +26,7 @@ import { SelectableCardComponent } from './components/selectable-card/selectable
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
 import { DocumentListComponent } from './mission-document-list/document-list/document-list.component';
 import { MailDocumentSheetComponent } from './components/mail-document-sheet.component';
+import { MissionNoteListComponent } from './mission-note-list/mission-note-list.component';
 
 
 @NgModule({

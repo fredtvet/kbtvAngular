@@ -31,7 +31,7 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
     private bottomSheet: MatBottomSheet, 
     private downloaderService: DownloaderService,
     private missionDocumentService: MissionDocumentService,
-    private DocumentTypeService: DocumentTypeService,
+    private documentTypeService: DocumentTypeService,
     private missionService: MissionService,
     private notificationService: NotificationService,
     private mainNavService: MainNavService,
@@ -47,7 +47,7 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
   ngOnInit() {
     this.configureMainNav(this.missionId)
     let documents$ =  this.missionDocumentService.getByMissionId$(this.missionId);
-    let types$ = this.DocumentTypeService.getAll$();
+    let types$ = this.documentTypeService.getAll$();
     this.documentsWithType$ = combineLatest(documents$,types$).pipe(map(([documents, types]) => 
       documents.map(x => {
         x.documentType = types.find(t => t.id == x.documentTypeId);

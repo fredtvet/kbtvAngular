@@ -14,7 +14,7 @@
 
   <mat-sidenav-content fxLayout="column" class="h-100">
 
-    <app-main-top-nav [config]="config" (menuBtnClicked)="toggleDrawer(config.isXs)" class="flex-nav"></app-main-top-nav>
+    <app-main-top-nav [config]="config" (menuBtnClicked)="toggleDrawer(config.isXs)" class="flex-nav bg-primary-dark"></app-main-top-nav>
 
     <!-- h-100 for iOS Safari fix -->
     <div  fxFlex style="overflow-y:auto" [@routeAnimation]="prepareRoute(outlet)">

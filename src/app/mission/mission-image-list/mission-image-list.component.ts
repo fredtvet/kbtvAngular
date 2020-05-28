@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, ViewChild } from "@angular/core";
 import { MatBottomSheet, MatDialog } from "@angular/material";
 import { MailImageSheetComponent } from "../components/mail-image-sheet.component";
 import { filter, map, takeUntil, tap, distinctUntilChanged } from "rxjs/operators";
-import { Roles } from 'src/app/shared/enums';
+import { RolePresets } from 'src/app/shared/enums';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { MissionImage, Mission } from 'src/app/shared/models';
 import { MissionImageService, MainNavService, NotificationService, MissionService, DeviceInfoService } from 'src/app/core/services';
@@ -10,7 +10,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppButton, AppFile } from 'src/app/shared/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
-import { ImageListComponent } from './image-list/image-list.component';
 import { ImageViewerDialogWrapperComponent } from '../components/image-viewer/image-viewer-dialog-wrapper.component';
 import { SelectableListBase } from '../components/selectable-list/selectable-list.base';
 
@@ -23,7 +22,7 @@ import { SelectableListBase } from '../components/selectable-list/selectable-lis
 export class MissionImageListComponent extends SubscriptionComponent{
   @ViewChild('imageList', {static: false}) imageList: SelectableListBase<AppFile>;
 
-  Roles = Roles;
+  RolePresets = RolePresets;
 
   private mission: Mission;
 

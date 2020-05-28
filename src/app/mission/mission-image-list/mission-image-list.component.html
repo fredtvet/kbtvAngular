@@ -6,7 +6,7 @@
 </app-image-list>
 
 <ng-container *ngIf="currentSelections.length > 0">
-    <ng-container *ifRole="[Roles.Leder]">
+    <ng-container *ifRole="RolePresets.Authority">
         <button mat-mini-fab aria-label="ny" class="action_fab_2" (click)="openMailImageSheet(currentSelections)">
             <mat-icon>send</mat-icon>
         </button>
@@ -18,7 +18,7 @@
 </ng-container>
 
 
-<button *ifRole="[Roles.Leder, Roles.Ansatt, Roles.Mellomleder]" mat-mini-fab aria-label="ny" class="action_fab"
+<button *ifRole="RolePresets.Internal" mat-mini-fab aria-label="ny" class="action_fab"
     (click)="imageInput.click()">
     <mat-icon>camera_enhance</mat-icon>
 </button>

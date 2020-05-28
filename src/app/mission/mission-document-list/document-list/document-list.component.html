@@ -5,7 +5,7 @@
             [isSelected]="selectable.selected" (selected)="toggleSelect(selectable)"
             (click)="documentClick(selectable.entity)">
 
-            <div class="app-card text-center mat-elevation-z2 p-2 pt-6 pb-6 m-1 fadeIn">
+            <div class="bg-foreground text-center mat-elevation-z2 p-2 pt-6 pb-6 m-1 fadeIn">
                 <mat-icon [svgIcon]="selectable.entity.fileURL | filetypeFromUrl | fileiconFromFiletype" class="scale-150 mb-2"></mat-icon>
                 <div>{{ selectable.entity.documentType?.name }}</div>
 
