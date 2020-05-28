@@ -3,21 +3,21 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
 
 @Component({
-  selector: 'app-report-type-form-sheet-wrapper',
+  selector: 'app-document-type-form-sheet-wrapper',
   template: `
   <app-simple-top-nav [config]="navConfig">
-    <app-report-type-form (finished)="close()">
-    </app-report-type-form>
+    <app-document-type-form (finished)="close()">
+    </app-document-type-form>
   </app-simple-top-nav> 
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class ReportTypeFormSheetWrapperComponent implements OnInit {
+export class DocumentTypeFormSheetWrapperComponent implements OnInit {
 
   navConfig: SimpleNavConfig;
 
-  constructor(private _bottomSheetRef: MatBottomSheetRef<ReportTypeFormSheetWrapperComponent>) { }
+  constructor(private _bottomSheetRef: MatBottomSheetRef<DocumentTypeFormSheetWrapperComponent>) { }
 
   ngOnInit() {
     this.navConfig = {

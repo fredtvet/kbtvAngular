@@ -7,7 +7,7 @@ import { Observable, combineLatest, of, BehaviorSubject } from 'rxjs';
 import { switchMap, map, tap, distinctUntilChanged, skip } from 'rxjs/operators';
 import { MissionImageSubject } from '../mission-image/mission-image.subject';
 import { EmployerSubject } from '../employer/employer.subject';
-import { MissionReportSubject } from '../mission-report/mission-report.subject';
+import { MissionDocumentSubject } from '../mission-document/mission-document.subject';
 import { MissionNoteSubject } from '../mission-note/mission-note.subject';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class MissionSubject extends BaseSubject<Mission> {
     private missionTypeSubject: MissionTypeSubject,
     private employerSubject: EmployerSubject,
     private missionImageSubject: MissionImageSubject,
-    private missionReportSubject: MissionReportSubject,
+    private missionDocumentSubject: MissionDocumentSubject,
     private missionNoteSubject: MissionNoteSubject,
     localStorageService: LocalStorageService
     ) {
@@ -74,7 +74,7 @@ export class MissionSubject extends BaseSubject<Mission> {
     super.delete(id);
     this.missionImageSubject.deleteByMissionId$(id);
     this.missionNoteSubject.deleteByMissionId$(id);
-    this.missionReportSubject.deleteByMissionId$(id);
+    this.missionDocumentSubject.deleteByMissionId$(id);
   }
 
   //Add foreign objects to their subjects

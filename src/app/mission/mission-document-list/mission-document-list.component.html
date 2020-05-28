@@ -1,13 +1,13 @@
-<app-report-list #reportList *ngIf="reportsWithType$ | async; let reports"
+<app-document-list #documentList *ngIf="documentsWithType$ | async; let documents"
     [totalRows]="(isXs$ | async) ? 2 : 4"
-    [entities]="reports" 
+    [entities]="documents" 
     (selectionChanged)="currentSelections = $event"
-    (reportClicked)="downloadReport($event)">
-</app-report-list>
+    (documentClicked)="downloadDocument($event)">
+</app-document-list>
 
 <ng-container *ngIf="currentSelections.length > 0">
     <ng-container *ifRole="[Roles.Leder]">
-        <button mat-mini-fab aria-label="ny" class="action_fab_2" (click)="openMailReportSheet(currentSelections)">
+        <button mat-mini-fab aria-label="ny" class="action_fab_2" (click)="openMailDocumentSheet(currentSelections)">
             <mat-icon>send</mat-icon>
         </button>
         <button mat-mini-fab aria-label="ny" class="action_fab_3 bg-warn"
@@ -18,6 +18,6 @@
 </ng-container>
 
 
-<button *ifRole="[Roles.Leder]" mat-mini-fab aria-label="ny" class="action_fab" (click)="openReportForm()">
+<button *ifRole="[Roles.Leder]" mat-mini-fab aria-label="ny" class="action_fab" (click)="openDocumentForm()">
     <mat-icon>note_add</mat-icon>
 </button>

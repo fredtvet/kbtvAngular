@@ -3,21 +3,21 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bott
 import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
 
 @Component({
-  selector: 'app-mission-report-form-sheet-wrapper',
+  selector: 'app-mission-document-form-sheet-wrapper',
   template: `
   <app-simple-top-nav [config]="navConfig">
-    <app-mission-report-form [missionId]="data?.missionId" (finished)="close()">
-    </app-mission-report-form>
+    <app-mission-document-form [missionId]="data?.missionId" (finished)="close()">
+    </app-mission-document-form>
   </app-simple-top-nav> 
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MissionReportFormSheetWrapperComponent implements OnInit {
+export class MissionDocumentFormSheetWrapperComponent implements OnInit {
 
   navConfig: SimpleNavConfig;
 
   constructor(
-    private _bottomSheetRef: MatBottomSheetRef<MissionReportFormSheetWrapperComponent>,
+    private _bottomSheetRef: MatBottomSheetRef<MissionDocumentFormSheetWrapperComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: {missionId: number}
   ) { }
 

@@ -29,9 +29,9 @@ export const routeAnimation = trigger("routeAnimation", [
   transition("MissionImages => MissionDetails", useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 
-  transition("MissionDetails => MissionReports", useAnimation(slideAnimation,
+  transition("MissionDetails => MissionDocuments", useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  transition("MissionReports => MissionDetails", useAnimation(slideAnimation,
+  transition("MissionDocuments => MissionDetails", useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 
   transition("TimesheetWeekView => MissionList", useAnimation(slideAnimation,

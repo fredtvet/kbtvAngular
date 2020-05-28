@@ -2,15 +2,15 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Roles, RolePresets } from '../../shared/enums';
-import { MissionNote, Mission, MissionReport, MissionImage } from 'src/app/shared/models';
+import { MissionNote, Mission, MissionDocument, MissionImage } from 'src/app/shared/models';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
-import { NotificationService, MissionService, MissionImageService, MissionReportService, MissionNoteService, MainNavService} from 'src/app/core/services';
+import { NotificationService, MissionService, MissionImageService, MissionDocumentService, MissionNoteService, MainNavService} from 'src/app/core/services';
 import { tap, filter, map, delay } from 'rxjs/operators';
 import { Observable, combineLatest } from 'rxjs';
 import { MissionFormSheetWrapperComponent } from '../components/mission-form/mission-form-sheet-wrapper.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MissionNoteFormSheetWrapperComponent } from '../components/mission-note-form/mission-note-form-sheet-wrapper.component';
-import { MissionReportFormSheetWrapperComponent } from '../components/mission-report-form/mission-report-form-sheet-wrapper.component';
+import { MissionDocumentFormSheetWrapperComponent } from '../components/mission-document-form/mission-document-form-sheet-wrapper.component';
 import { MissionDetailsViewModel } from './mission-details-view-model.interface';
 
 @Component({
@@ -29,7 +29,7 @@ export class MissionDetailsComponent{
     private mainNavService: MainNavService,
     private missionService: MissionService,
     private missionImageService: MissionImageService,
-    private missionReportService: MissionReportService,
+    private missionDocumentService: MissionDocumentService,
     private missionNoteService: MissionNoteService,
     private notificationService: NotificationService,
     private route: ActivatedRoute,
@@ -43,12 +43,12 @@ export class MissionDetailsComponent{
 
     let mission$ = this.missionService.getDetails$(missionId);
     let imageCount$ = this.missionImageService.getByMissionId$(missionId).pipe(map(x => x.length));
-    let reportCount$ = this.missionReportService.getByMissionId$(missionId).pipe(map(x => x.length));
+    let documentCount$ = this.missionDocumentService.getByMissionId$(missionId).pipe(map(x => x.length));
     let noteCount$ = this.missionNoteService.getByMissionId$(missionId).pipe(map(x => x.length));
 
-    this.vm$ = combineLatest(mission$, imageCount$, reportCount$, noteCount$).pipe(
-      map(([mission, imageCount, reportCount, noteCount]) => {
-        return {mission, imageCount, reportCount, noteCount}
+    this.vm$ = combineLatest(mission$, imageCount$, documentCount$, noteCount$).pipe(
+      map(([mission, imageCount, documentCount, noteCount]) => {
+        return {mission, imageCount, documentCount, noteCount}
       }),
       tap(x => this.configureMainNav(x.mission))
     );
@@ -72,8 +72,8 @@ export class MissionDetailsComponent{
   private openMissionNoteForm = (missionId: number) => 
     this._bottomSheet.open(MissionNoteFormSheetWrapperComponent, {data: {missionId}});
   
-  private openReportForm = (missionId: number) => 
-    this._bottomSheet.open(MissionReportFormSheetWrapperComponent, {data: {missionId}});
+  private openDocumentForm = (missionId: number) => 
+    this._bottomSheet.open(MissionDocumentFormSheetWrapperComponent, {data: {missionId}});
 
   private openDeleteMissionDialog = (id: number) => {
     const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette oppdraget.'});
@@ -89,7 +89,7 @@ export class MissionDetailsComponent{
     cfg.backFn = this.onBack;  
     cfg.bottomSheetButtons = [
       {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal},
-      {text: "Legg til rapport", icon: "note_add", callback: this.openReportForm, params: [mission.id], allowedRoles: [Roles.Leder]},
+      {text: "Legg til rapport", icon: "note_add", callback: this.openDocumentForm, params: [mission.id], allowedRoles: [Roles.Leder]},
       {text: "Legg til notat", icon: "add_comment", callback: this.openMissionNoteForm, params: [mission.id], allowedRoles: RolePresets.Internal},
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission.id], allowedRoles: [Roles.Leder]},
       {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, params: [mission.id], allowedRoles: [Roles.Leder]}

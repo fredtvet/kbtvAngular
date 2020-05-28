@@ -4,9 +4,9 @@ import {
     Output,
   } from "@angular/core";
   import { skip, takeUntil } from "rxjs/operators";
-  import { SelectableEntity, AppFile, BaseEntity } from 'src/app/shared/interfaces';
 import { SelectableListPresenter } from './selectable-list.presenter';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
+import { BaseEntity, SelectableEntity } from 'src/app/shared/interfaces';
   
   export abstract class SelectableListBase<T extends BaseEntity> extends SubscriptionComponent {
     @Input('entities')

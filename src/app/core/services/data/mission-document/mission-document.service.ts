@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
-import { MissionReport, ReportType } from 'src/app/shared/models';
+import { MissionDocument, DocumentType } from 'src/app/shared/models';
 import { BaseMissionChildService } from '../abstracts/base-mission-child.service';
-import { MissionReportSubject } from './mission-report.subject';
+import { MissionDocumentSubject } from './mission-document.subject';
 import { ApiService } from '../../api.service';
 import { Observable, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -13,25 +13,25 @@ import { Notifications } from 'src/app/shared/enums';
   providedIn: 'root'
 })
 
-export class MissionReportService extends BaseMissionChildService<MissionReport> {
+export class MissionDocumentService extends BaseMissionChildService<MissionDocument> {
 
   constructor(
     notificationService: NotificationService,
     apiService: ApiService,
-    dataSubject: MissionReportSubject,
+    dataSubject: MissionDocumentSubject,
     deviceInfoService: DeviceInfoService
   ){
-    super(notificationService, apiService, dataSubject, deviceInfoService, "/MissionReports");
+    super(notificationService, apiService, dataSubject, deviceInfoService, "/MissionDocuments");
   }
 
-  addReport$(missionId:number, reportType: ReportType, files: FileList): Observable<MissionReport>{
+  addDocument$(missionId:number, documentType: DocumentType, files: FileList): Observable<MissionDocument>{
     if(!this.isOnline)
     return throwError('Du må være tilkoblet internett for å legge til rapporter.')
             .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     const formData: FormData = new FormData();
     formData.append('file', files[0], files[0].name);
-    formData.append('ReportType',JSON.stringify(reportType));
+    formData.append('DocumentType',JSON.stringify(documentType));
 
     return this
             .apiService
@@ -42,16 +42,16 @@ export class MissionReportService extends BaseMissionChildService<MissionReport>
             }));
   }
 
-  mailReports$(toEmail: string, missionReportIds: number[]){
+  mailDocuments$(toEmail: string, missionDocumentIds: number[]){
     if(!this.isOnline)
     return throwError('Du må være tilkoblet internett for å sende epost.')
             .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
     return this.apiService
-              .post(`${this.uri}/SendReports`, {toEmail, missionReportIds});
+              .post(`${this.uri}/SendDocuments`, {toEmail, missionDocumentIds});
   }
 
 
-  add$(entity: MissionReport): Observable<MissionReport>{return undefined}
-  update$(entity: MissionReport): Observable<MissionReport>{return undefined}
+  add$(entity: MissionDocument): Observable<MissionDocument>{return undefined}
+  update$(entity: MissionDocument): Observable<MissionDocument>{return undefined}
 }

@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
-import { Mission, MissionNote, MissionImage, MissionReport } from 'src/app/shared/models';
+import { Mission, MissionNote, MissionImage, MissionDocument } from 'src/app/shared/models';
 import { MatDialog } from '@angular/material/dialog';
 import { Roles } from 'src/app/shared/enums';
 import { filter } from 'rxjs/operators';

@@ -14,7 +14,7 @@ export const translations = {
     finished: "Ferdig",
     employer: "Oppdragsgiver",
     missiontype: "Oppdragstype",
-    reporttype: "Rapporttype",
+    documenttype: "Dokumenttype",
     userName: "Brukernavn",
     firstName: "Fornavn",
     lastName: "Etternavn",

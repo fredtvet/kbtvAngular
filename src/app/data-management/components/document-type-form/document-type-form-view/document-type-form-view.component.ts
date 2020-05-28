@@ -2,15 +2,15 @@ import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-report-type-form-view',
-  templateUrl: './report-type-form-view.component.html',
+  selector: 'app-document-type-form-view',
+  templateUrl: './document-type-form-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ReportTypeFormViewComponent implements OnInit {
+export class DocumentTypeFormViewComponent implements OnInit {
 
   @Output() formSubmitted = new EventEmitter();
 
-  reportTypeForm: FormGroup;
+  documentTypeForm: FormGroup;
 
   constructor(private _formBuilder: FormBuilder) {}
 
@@ -19,7 +19,7 @@ export class ReportTypeFormViewComponent implements OnInit {
   }
 
   initalizeForm(){
-    this.reportTypeForm = this._formBuilder.group({
+    this.documentTypeForm = this._formBuilder.group({
       name: [null, [
         Validators.required,
         Validators.maxLength(45)
@@ -28,12 +28,12 @@ export class ReportTypeFormViewComponent implements OnInit {
   }
 
   onSubmit(){
-    const {value, valid} = this.reportTypeForm;
-    if(valid && this.reportTypeForm.dirty) this.formSubmitted.emit(value);
+    const {value, valid} = this.documentTypeForm;
+    if(valid && this.documentTypeForm.dirty) this.formSubmitted.emit(value);
   }
 
   get name(){
-    return this.reportTypeForm.get('name')
+    return this.documentTypeForm.get('name')
   }
 
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ReportType } from 'src/app/shared/models';
+import { DocumentType } from 'src/app/shared/models';
 import { BaseService } from '../abstracts/base.service';
 import { ApiService } from '../../api.service';
-import { ReportTypeSubject } from './report-type.subject';
+import { DocumentTypeSubject } from './document-type.subject';
 import { DeviceInfoService } from '../../device-info.service';
 import { NotificationService } from '../../ui/notification.service';
 
@@ -11,15 +11,15 @@ import { NotificationService } from '../../ui/notification.service';
   providedIn: 'root'
 })
 
-export class ReportTypeService extends BaseService<ReportType> {
+export class DocumentTypeService extends BaseService<DocumentType> {
 
   constructor(
     notificationService: NotificationService,
     apiService: ApiService,
-    dataSubject: ReportTypeSubject,
+    dataSubject: DocumentTypeSubject,
     deviceInfoService: DeviceInfoService
   ){
-    super(notificationService, apiService, dataSubject, deviceInfoService, "/ReportTypes");
+    super(notificationService, apiService, dataSubject, deviceInfoService, "/DocumentTypes");
   }
 
 }

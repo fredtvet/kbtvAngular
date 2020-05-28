@@ -4,5 +4,5 @@ export interface MissionDetailsViewModel{
     mission: Mission, 
     imageCount:number,
     noteCount:number, 
-    reportCount:number
+    documentCount:number
 }

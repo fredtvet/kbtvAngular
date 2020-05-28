@@ -1,7 +1,7 @@
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
-import { BaseEntity, SelectableEntity } from 'src/app/shared/interfaces';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { BaseEntity, SelectableEntity } from 'src/app/shared/interfaces';
 
 export class SelectableListPresenter<T extends BaseEntity> extends SubscriptionComponent{
 

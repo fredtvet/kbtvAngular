@@ -4,9 +4,9 @@ import { EmployerSubject } from './employer/employer.subject';
 import { MissionTypeSubject } from './mission-type/mission-type.subject';
 import { MissionImageSubject } from './mission-image/mission-image.subject';
 import { MissionNoteSubject } from './mission-note/mission-note.subject';
-import { MissionReportSubject } from './mission-report/mission-report.subject';
+import { MissionDocumentSubject } from './mission-document/mission-document.subject';
 import { MissionSubject } from './mission/mission.subject';
-import { ReportTypeSubject } from './report-type/report-type.subject';
+import { DocumentTypeSubject } from './document-type/document-type.subject';
 import { ApiService } from '../api.service';
 import { retry, tap, catchError } from 'rxjs/operators';
 import { NotificationService } from '../ui/notification.service';
@@ -38,9 +38,9 @@ export class DataSyncService {
     private missionTypeSubject: MissionTypeSubject,
     private missionImageSubject: MissionImageSubject,
     private missionNoteSubject: MissionNoteSubject,
-    private missionReportSubject: MissionReportSubject,
+    private missionDocumentSubject: MissionDocumentSubject,
     private missionSubject: MissionSubject,
-    private reportTypeSubject: ReportTypeSubject,
+    private documentTypeSubject: DocumentTypeSubject,
     private userTimesheetSubject: UserTimesheetSubject
   ){
     this.deviceInfoService.isOnline$.subscribe(res =>this.isOnline = res);

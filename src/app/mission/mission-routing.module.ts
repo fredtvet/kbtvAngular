@@ -4,7 +4,7 @@ import { AuthGuard } from '../core/services';
 import { MissionListComponent } from './mission-list/mission-list.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
 import { MissionImageListComponent } from './mission-image-list/mission-image-list.component';
-import { MissionReportListComponent } from './mission-report-list/mission-report-list.component';
+import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
 
 
 const routes: Routes = [
@@ -25,8 +25,8 @@ const routes: Routes = [
 },
 {
   path: ':id/rapporter',
-  component: MissionReportListComponent,
-  canActivate: [AuthGuard],data: {animation: 'MissionReports'}
+  component: MissionDocumentListComponent,
+  canActivate: [AuthGuard],data: {animation: 'MissionDocuments'}
 },
 {
   path: ':id/notater',

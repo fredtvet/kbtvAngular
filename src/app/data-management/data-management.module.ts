@@ -13,10 +13,10 @@ import { EmployerFormSheetWrapperComponent } from './components/employer-form/em
 import { MissionFormSheetWrapperComponent } from '../mission/components/mission-form/mission-form-sheet-wrapper.component';
 import { MissionModule } from '../mission/mission.module';
 import { MissionTypeFormComponent } from './components/mission-type-form/mission-type-form.component';
-import { ReportTypeFormComponent } from './components/report-type-form/report-type-form.component';
+import { DocumentTypeFormComponent } from './components/document-type-form/document-type-form.component';
 import { MissionTypeFormSheetWrapperComponent } from './components/mission-type-form/mission-type-form-sheet-wrapper.component';
-import { ReportTypeFormSheetWrapperComponent } from './components/report-type-form/report-type-form-sheet-wrapper.component';
-import { ReportTypeFormViewComponent } from './components/report-type-form/report-type-form-view/report-type-form-view.component';
+import { DocumentTypeFormSheetWrapperComponent } from './components/document-type-form/document-type-form-sheet-wrapper.component';
+import { DocumentTypeFormViewComponent } from './components/document-type-form/document-type-form-view/document-type-form-view.component';
 import { MissionTypeFormViewComponent } from './components/mission-type-form/mission-type-form-view/mission-type-form-view.component';
 import { DataTablePickerComponent } from './data-manager/data-table-picker/data-table-picker.component';
 import { DataTableComponent } from './data-manager/data-table/data-table.component';
@@ -34,9 +34,9 @@ import { DataManagerFacadeService } from './data-manager-facade.service';
     MissionTypeFormComponent,
     MissionTypeFormViewComponent,
     MissionTypeFormSheetWrapperComponent,
-    ReportTypeFormViewComponent,
-    ReportTypeFormComponent,
-    ReportTypeFormSheetWrapperComponent,
+    DocumentTypeFormViewComponent,
+    DocumentTypeFormComponent,
+    DocumentTypeFormSheetWrapperComponent,
     DataTablePickerComponent,
     DataTableComponent,
   ],
@@ -45,7 +45,7 @@ import { DataManagerFacadeService } from './data-manager-facade.service';
     EmployerFormSheetWrapperComponent,
     MissionFormSheetWrapperComponent,
     MissionTypeFormSheetWrapperComponent,
-    ReportTypeFormSheetWrapperComponent
+    DocumentTypeFormSheetWrapperComponent
   ],
   providers:[
     DataManagerFacadeService

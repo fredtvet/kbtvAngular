@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import { BaseEntity } from '../shared/interfaces';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
-import { BaseService, EmployerService, MissionTypeService, MissionService, ReportTypeService } from '../core/services';
+import { BaseService, EmployerService, MissionTypeService, MissionService, DocumentTypeService } from '../core/services';
 import { AgGridAngular } from 'ag-grid-angular';
 import { MissionFormSheetWrapperComponent } from '../mission/components/mission-form/mission-form-sheet-wrapper.component';
 import { EmployerFormSheetWrapperComponent } from './components/employer-form/employer-form-sheet-wrapper.component';
 import { MissionTypeFormSheetWrapperComponent } from './components/mission-type-form/mission-type-form-sheet-wrapper.component';
-import { ReportTypeFormSheetWrapperComponent } from './components/report-type-form/report-type-form-sheet-wrapper.component';
+import { DocumentTypeFormSheetWrapperComponent } from './components/document-type-form/document-type-form-sheet-wrapper.component';
 import { MatBottomSheet } from '@angular/material';
 
 @Injectable()
 
 export class DataManagerFacadeService {
 
-  tables = ['Oppdrag', 'Oppdragstyper', 'Oppdragsgivere', 'Rapporttyper']
+  tables = ['Oppdrag', 'Oppdragstyper', 'Oppdragsgivere', 'Dokumenttyper']
   
   data$:Observable<BaseEntity[]>;
 
@@ -27,7 +27,7 @@ export class DataManagerFacadeService {
     private employerService: EmployerService,
     private missionTypeService: MissionTypeService,
     private missionService: MissionService,
-    private reportTypeService: ReportTypeService,
+    private DocumentTypeService: DocumentTypeService,
   ) { 
     this.data$ = this.selectedTable$.pipe(
       distinctUntilChanged(),
@@ -51,7 +51,7 @@ export class DataManagerFacadeService {
       case "Oppdrag": this.createMission(); break;
       case "Oppdragstyper": this.createMissionType(); break;
       case "Oppdragsgivere": this.createEmployer(); break;
-      case "Rapporttyper": this.createReportType(); break;
+      case "Dokumenttyper": this.createDocumentType(); break;
     }
   }
 
@@ -60,7 +60,7 @@ export class DataManagerFacadeService {
       case "Oppdrag": return this.missionService;
       case "Oppdragstyper": return this.missionTypeService;
       case "Oppdragsgivere": return this.employerService;
-      case "Rapporttyper": return this.reportTypeService;
+      case "Dokumenttyper": return this.DocumentTypeService;
     }
   }
 
@@ -70,5 +70,5 @@ export class DataManagerFacadeService {
 
   private createMissionType = () => this._bottomSheet.open(MissionTypeFormSheetWrapperComponent);
 
-  private createReportType = () => this._bottomSheet.open(ReportTypeFormSheetWrapperComponent);
+  private createDocumentType = () => this._bottomSheet.open(DocumentTypeFormSheetWrapperComponent);
 }

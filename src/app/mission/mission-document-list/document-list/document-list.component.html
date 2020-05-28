@@ -3,11 +3,11 @@
         <app-selectable-card selectedText="Rapport valgt" selectedIcon="check_circle"
             *ngFor="let selectable of (selectableEntities$ | async) | arrayslice: i:totalRows;let i = index;trackBy: trackById"
             [isSelected]="selectable.selected" (selected)="toggleSelect(selectable)"
-            (click)="reportClick(selectable.entity)">
+            (click)="documentClick(selectable.entity)">
 
             <div class="bg-foreground text-center mat-elevation-z2 p-2 pt-6 pb-6 fadeIn">
                 <mat-icon class="scale-150 mb-2">description</mat-icon>
-                <div>{{ selectable.entity.reportType?.name }}</div>
+                <div>{{ selectable.entity.documentType?.name }}</div>
 
                 <div class="mat-caption">Filtype: {{ selectable.entity.fileURL | filetypeFromUrl | uppercase }}</div>
                 <div class="mat-caption">Lastet opp 21.mai 2020</div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReportType  } from 'src/app/shared/models';
+import { DocumentType  } from 'src/app/shared/models';
 import { BaseSubject } from '../abstracts/base.subject';
 import { LocalStorageService } from '../../local-storage.service';
 
@@ -7,8 +7,8 @@ import { LocalStorageService } from '../../local-storage.service';
   providedIn: 'root'
 })
 
-export class ReportTypeSubject extends BaseSubject<ReportType> {
+export class DocumentTypeSubject extends BaseSubject<DocumentType> {
   constructor(
     localStorageService: LocalStorageService
-    ) { super(localStorageService, 'reportTypes'); }
+    ) { super(localStorageService, 'documentTypes'); }
 }
