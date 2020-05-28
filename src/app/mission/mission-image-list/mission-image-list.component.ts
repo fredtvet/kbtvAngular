@@ -1,17 +1,18 @@
 import { Component, ChangeDetectionStrategy, ViewChild } from "@angular/core";
 import { MatBottomSheet, MatDialog } from "@angular/material";
-import { MailImageSheetComponent } from "../components/mail-image-form/mail-image-sheet.component";
+import { MailImageSheetComponent } from "../components/mail-image-sheet.component";
 import { filter, map, takeUntil, tap, distinctUntilChanged } from "rxjs/operators";
 import { Roles } from 'src/app/shared/enums';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { MissionImage, Mission } from 'src/app/shared/models';
 import { MissionImageService, MainNavService, NotificationService, MissionService, DeviceInfoService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppButton, AppImage } from 'src/app/shared/interfaces';
+import { AppButton, AppFile } from 'src/app/shared/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { ImageListComponent } from './image-list/image-list.component';
 import { ImageViewerDialogWrapperComponent } from '../components/image-viewer/image-viewer-dialog-wrapper.component';
+import { SelectableListBase } from '../components/selectable-list/selectable-list.base';
 
 @Component({
   selector: "app-mission-image-list",
@@ -20,7 +21,7 @@ import { ImageViewerDialogWrapperComponent } from '../components/image-viewer/im
 })
 
 export class MissionImageListComponent extends SubscriptionComponent{
-  @ViewChild('imageList', {static: false}) imageList: ImageListComponent;
+  @ViewChild('imageList', {static: false}) imageList: SelectableListBase<AppFile>;
 
   Roles = Roles;
 
@@ -87,7 +88,7 @@ export class MissionImageListComponent extends SubscriptionComponent{
       .subscribe((x) => this.imageList.clearSelections());
   }
 
-  openImageViewer(image: AppImage, images: AppImage[]) {
+  openImageViewer(image: AppFile, images: AppFile[]) {
     this.dialog.open(ImageViewerDialogWrapperComponent, {
       width: "100%",
       height: "100%",
@@ -100,8 +101,7 @@ export class MissionImageListComponent extends SubscriptionComponent{
     let cfg = this.mainNavService.getDefaultConfig();
     cfg.backFn = this.onBack;  
     cfg.backFnParams = [missionId];
-    cfg.title = 'Bilder'
-    cfg.buttons = [];
+    cfg.title = 'Bilder';
     this.mainNavService.addConfig(cfg);
   }
 

@@ -1,13 +1,13 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
-import { MissionImageService, NotificationService, EmployerService } from 'src/app/core/services';
+import { MissionImageService, NotificationService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-mail-image-sheet',
   template: `
   <app-simple-top-nav [config]="navConfig">
-    <app-mail-image-form [toEmailPreset]="data.toEmailPreset" (formSubmitted)="mailImages($event)"></app-mail-image-form>
+    <app-mail-entity-form [toEmailPreset]="data.toEmailPreset" (formSubmitted)="mailImages($event)"></app-mail-entity-form>
   </app-simple-top-nav> 
   `,
   changeDetection: ChangeDetectionStrategy.OnPush

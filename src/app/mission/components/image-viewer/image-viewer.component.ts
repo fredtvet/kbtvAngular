@@ -4,7 +4,7 @@ import { Roles } from '../../../shared/enums/roles.enum';
 import { MatBottomSheet, MatDialog } from '@angular/material';
 import { BottomSheetMenuComponent } from '../../../shared/components/bottom-sheet-menu/bottom-sheet-menu.component';
 import { AppButton } from '../../../shared/interfaces/app-button.interface';
-import { AppImage } from 'src/app/shared/interfaces';
+import { AppFile } from 'src/app/shared/interfaces';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { filter } from 'rxjs/operators';
 
@@ -48,8 +48,8 @@ import { filter } from 'rxjs/operators';
 export class ImageViewerComponent {
   toolbarHidden = false;
 
-  @Input() images: AppImage[];
-  @Input() currentImage: AppImage;
+  @Input() images: AppFile[];
+  @Input() currentImage: AppFile;
   @Input() actions: AppButton[];
   
   @Output() imageDeleted = new EventEmitter();
@@ -66,7 +66,7 @@ export class ImageViewerComponent {
     // this.currentImage = this.images[this.index];
   }
 
-  changeCurrentImage(image: AppImage){
+  changeCurrentImage(image: AppFile){
     this.currentImage = image;
     this.currentImageChanged.emit(image);
   }
