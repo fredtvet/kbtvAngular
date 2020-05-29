@@ -45,7 +45,13 @@
 
   <mat-checkbox *ngIf="!isCreateForm" formControlName="finished" class="mb-2">Er oppdraget ferdig?</mat-checkbox>
 
-  <app-submit-button [disabled]="missionForm.invalid || missionForm.pristine" (click)="onSubmit()">
+  <span class="mb-2">
+    Bilde av objekt: <input (change)="changeFile($event)" type="file">
+  </span>
+  
+  <app-submit-button 
+    [disabled]="missionForm.invalid || (missionForm.pristine && !this.files)" 
+    (click)="onSubmit()">
   </app-submit-button>
 
 </form>

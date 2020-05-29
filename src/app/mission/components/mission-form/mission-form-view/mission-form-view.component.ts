@@ -28,6 +28,8 @@ export class MissionFormViewComponent implements OnInit {
 
   isCreateForm = false;
 
+  files: FileList;
+
   constructor(private _formBuilder: FormBuilder) {}
 
   ngOnInit(){
@@ -75,15 +77,22 @@ export class MissionFormViewComponent implements OnInit {
     if(existingEmployee)
       this.employerId.setValue(existingEmployee.id);
 
+    const value = { 
+      file: this.files ? this.files[0] : undefined, 
+      mission: this.missionForm.value 
+    };
 
-    const {value, valid} = this.missionForm;
-
-    if(valid && this.missionForm.dirty) this.formSubmitted.emit(value);
+    if(this.missionForm.valid && (this.missionForm.dirty || value.file)) 
+      this.formSubmitted.emit(value);
   }
 
   handleAddressChange(googleAddress){
     this.missionForm.controls['address']
       .setValue(googleAddress.formatted_address);
+  }
+
+  changeFile(e){
+    this.files = e.target.files;
   }
 
   get address(){

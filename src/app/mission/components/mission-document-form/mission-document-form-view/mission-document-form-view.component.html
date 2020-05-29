@@ -11,7 +11,8 @@
 
     <input (change)="changeFile($event)" type="file">
     <br />
-    <app-submit-button icon="cloud_upload" [disabled]="documentForm.invalid || documentForm.pristine || !this.files"
+    <app-submit-button icon="cloud_upload" 
+        [disabled]="documentForm.invalid || documentForm.pristine || !this.files"
         (click)="onSubmit()">
     </app-submit-button>
 </form>

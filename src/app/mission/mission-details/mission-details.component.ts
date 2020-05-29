@@ -89,9 +89,10 @@ export class MissionDetailsComponent{
       title: mission.address.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
       subTitle: mission.finished ? 'Oppdrag ferdig!' : '',
       subIcon: mission.finished ? 'check' : '',
+      imgSrc: mission.fileURL,
       backFn: this.onBack 
     } as TopDetailNavConfig;
-    
+
     cfg.bottomSheetButtons = [
       {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal},
       {text: "Legg til dokument", icon: "note_add", callback: this.openDocumentForm, params: [mission.id], allowedRoles: [Roles.Leder]},

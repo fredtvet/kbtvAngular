@@ -31,20 +31,20 @@ export class MissionFormComponent {
     else this.mission$ = this.missionService.get$(this.missionIdPreset);
   }
 
-  onSubmit(result: Mission): void{
+  onSubmit(result: {mission: Mission, file: File}): void{
     if(!result) this.onFinished(null);
-    else if(!this.isCreateForm) this.editMission(result);
-    else this.createMission(result);
+    else if(!this.isCreateForm) this.editMission(result.mission, result.file);
+    else this.createMission(result.mission, result.file);
   }
 
-  createMission(mission: Mission): void{
+  createMission(mission: Mission, file: File): void{
     if(!mission) return null;
-    this.missionService.add$(mission).subscribe(res => this.onFinished(res.id));
+    this.missionService.addMission$(mission, file).subscribe(res => this.onFinished(res.id));
   }
 
-  editMission(mission: Mission): void{
+  editMission(mission: Mission, file: File): void{
     if(!mission) return null;
-    this.missionService.update$(mission).subscribe(res => {
+    this.missionService.updateMission$(mission, file).subscribe(res => {
         this.notificationService.setNotification('Vellykket oppdatering!');
         this.onFinished(res.id);
       })
