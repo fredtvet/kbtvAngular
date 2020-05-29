@@ -8,6 +8,7 @@ import { take, filter, map, tap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { NotificationService } from '../../ui/notification.service';
 import { Notifications } from 'src/app/shared/enums';
+import { CreateMission, UpdateMission } from 'src/app/shared/interfaces/commands';
 
 @Injectable({
   providedIn: 'root'
@@ -24,29 +25,31 @@ export class MissionService extends BaseService<Mission> {
     super(notificationService, apiService, dataSubject, deviceInfoService, "/Missions");
   }
 
-  addMission$(entity: Mission, file: File){   
+  addMission$(command: CreateMission){   
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å legge til ting.')
       .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
     
     const body: FormData = new FormData();
-    if(file) body.append('files', file, file.name);
-    body.append('command',JSON.stringify(entity));
+    if(command.image) body.append('files', command.image, command.image.name);
+    delete command.image;
+    body.append('command',JSON.stringify(command));
 
     return this.apiService
                 .post(`${this.uri}`, body)
                 .pipe(tap(data =>this.dataSubject.addOrUpdate(data)));
   }
 
-  updateMission$(entity: Mission, file: File){   
+  updateMission$(command: UpdateMission){   
     if(!this.isOnline)
       return throwError('Du må være tilkoblet internett for å gjøre oppdateringer.')
               .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
     
     const body: FormData = new FormData();
-    if(file) body.append('files', file, file.name);
-    if(entity) body.append('command',JSON.stringify(entity));
+    if(command.image) body.append('files', command.image, command.image.name);
+    delete command.image
+    body.append('command',JSON.stringify(command));
 
-    return this.apiService.put(`${this.uri}/${entity.id}`, body)
+    return this.apiService.put(`${this.uri}/${command.id}`, body)
       .pipe(tap(data => this.dataSubject.update(data)));
   }
 

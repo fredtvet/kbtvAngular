@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 import { EmployerService, NotificationService, MissionTypeService, MissionService } from 'src/app/core/services';
 import { Mission, MissionType, Employer } from 'src/app/shared/models';
 import { Observable } from 'rxjs';
+import { CreateMission, UpdateMission } from 'src/app/shared/interfaces/commands';
 
 @Component({
   selector: 'app-mission-form',
@@ -31,20 +32,21 @@ export class MissionFormComponent {
     else this.mission$ = this.missionService.get$(this.missionIdPreset);
   }
 
-  onSubmit(result: {mission: Mission, file: File}): void{
+  onSubmit(result: any): void{
+    console.log(result);
     if(!result) this.onFinished(null);
-    else if(!this.isCreateForm) this.editMission(result.mission, result.file);
-    else this.createMission(result.mission, result.file);
+    else if(!this.isCreateForm) this.editMission(result);
+    else this.createMission(result);
   }
 
-  createMission(mission: Mission, file: File): void{
+  createMission(mission: CreateMission): void{
     if(!mission) return null;
-    this.missionService.addMission$(mission, file).subscribe(res => this.onFinished(res.id));
+    this.missionService.addMission$(mission).subscribe(res => this.onFinished(res.id));
   }
 
-  editMission(mission: Mission, file: File): void{
+  editMission(mission: UpdateMission): void{
     if(!mission) return null;
-    this.missionService.updateMission$(mission, file).subscribe(res => {
+    this.missionService.updateMission$(mission).subscribe(res => {
         this.notificationService.setNotification('Vellykket oppdatering!');
         this.onFinished(res.id);
       })

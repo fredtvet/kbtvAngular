@@ -1,9 +1,8 @@
 import { MissionType } from './mission-type.model';
 import { Employer } from './employer.model';
 import { BaseEntity } from '../interfaces/base-entity.interface';
-import { AppFile } from '../interfaces/app-file.interface';
 
-export class Mission implements BaseEntity, AppFile {
+export class Mission implements BaseEntity {
     constructor(
       public id: number = null,
       public phoneNumber: string = null,
@@ -12,7 +11,7 @@ export class Mission implements BaseEntity, AppFile {
       public finished: boolean = false,
       public createdAt: Date = null,
       public updatedAt: Date = null,
-      public fileURL: string = null,
+      public imageURL: string = null,
       public employerId: number = null,
       public missionTypeId: number = null,
     ){};

@@ -89,7 +89,7 @@ export class MissionDetailsComponent{
       title: mission.address.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
       subTitle: mission.finished ? 'Oppdrag ferdig!' : '',
       subIcon: mission.finished ? 'check' : '',
-      imgSrc: mission.fileURL,
+      imgSrc: mission.imageURL,
       backFn: this.onBack 
     } as TopDetailNavConfig;
 

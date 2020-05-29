@@ -45,10 +45,14 @@
 
   <mat-checkbox *ngIf="!isCreateForm" formControlName="finished" class="mb-2">Er oppdraget ferdig?</mat-checkbox>
 
+  <mat-checkbox *ngIf="!isCreateForm && mission.imageURL" formControlName="deleteCurrentImage" class="mb-1">
+    Slett nåværende forsidebilde?
+  </mat-checkbox>
+
   <span class="mb-2">
-    Bilde av objekt: <input (change)="changeFile($event)" type="file">
+    Last opp forsidebilde: <input (change)="changeFile($event)" type="file">
   </span>
-  
+
   <app-submit-button 
     [disabled]="missionForm.invalid || (missionForm.pristine && !this.files)" 
     (click)="onSubmit()">

@@ -37,6 +37,7 @@ export class MissionFormViewComponent implements OnInit {
       this.isCreateForm = true;
       this.mission = new Mission();
     }
+    console.log(this.mission)
 
     this.initalizeForm();
   }
@@ -55,7 +56,8 @@ export class MissionFormViewComponent implements OnInit {
       description: [this.mission.description, [
         Validators.maxLength(400)
       ]],
-      finished: [this.mission.finished],
+      finished: [this.mission.finished],     
+      deleteCurrentImage: [false],
       employer: this._formBuilder.group({
         id: [null],
         name: [this.mission.employer ? this.mission.employer.name : null],
@@ -77,12 +79,9 @@ export class MissionFormViewComponent implements OnInit {
     if(existingEmployee)
       this.employerId.setValue(existingEmployee.id);
 
-    const value = { 
-      file: this.files ? this.files[0] : undefined, 
-      mission: this.missionForm.value 
-    };
+    const value = {...this.missionForm.value, image: this.files ? this.files[0] : undefined}
 
-    if(this.missionForm.valid && (this.missionForm.dirty || value.file)) 
+    if(this.missionForm.valid && (this.missionForm.dirty || value.image)) 
       this.formSubmitted.emit(value);
   }
 
@@ -127,4 +126,7 @@ export class MissionFormViewComponent implements OnInit {
     return this.missionForm.get('finished')
   }
 
+  get deleteCurrentImage(){
+    return this.missionForm.get('deleteCurrentImage')
+  }
 }
