@@ -1,12 +1,12 @@
 <div class="container">
 
-    <div *ngIf="config.imgSrc" class="img-container text-center mr-auto ml-auto">
+    <div *ngIf="config.imgSrc" class="img-container text-center mr-auto ml-auto ">
         <img appImageErrorReloader src="{{ config.imgSrc | thumbnail }}" />
     </div>
 
     <mat-toolbar *ngIf="config" 
         [ngClass]="config.imgSrc ? 'overlay' : 'bg-primary-dark'"
-        class="toolbar-slim color-foreground overlay-top">
+        class="toolbar-slim color-foreground overlay-top slideInDown">
 
         <app-icon-button *ngIf="config.backFn else menuBtn" [config]="{
                     callback: config.backFn, 
