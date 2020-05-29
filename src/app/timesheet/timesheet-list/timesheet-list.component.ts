@@ -8,6 +8,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { switchMap,filter, tap} from "rxjs/operators";
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared/components';
 import { TimesheetFormSheetWrapperComponent } from '../components/timesheet-form/timesheet-form-sheet-wrapper.component';
+import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
 
 @Component({
   selector: "app-timesheet-list",
@@ -106,11 +107,13 @@ export class TimesheetListComponent implements OnInit {
   }
 
   private configureMainNav(){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Timeliste";
-    cfg.backFn = this.onBack;
-    cfg.buttons = [{icon: 'filter_list', colorClass:'color-accent', callback: this.openFilterSheet}]
-    this.mainNavService.addConfig(cfg);
+    let cfg = {
+      title:  "Timeliste",
+      backFn: this.onBack,
+      buttons: [{icon: 'filter_list', colorClass:'color-accent', callback: this.openFilterSheet}]
+    } as TopDefaultNavConfig;
+    
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
 
 }

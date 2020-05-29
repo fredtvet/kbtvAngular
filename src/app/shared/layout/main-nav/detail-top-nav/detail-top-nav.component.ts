@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, SimpleChanges } from '@angular/core';
-import { MainNavConfig } from 'src/app/shared/interfaces/main-nav-config.interface';
+import { MainNavConfig, TopDetailNavConfig } from 'src/app/shared/interfaces/main-nav-config.interface';
 import { AppButton } from 'src/app/shared/interfaces/app-button.interface';
 import { BottomSheetMenuComponent } from 'src/app/shared/components/bottom-sheet-menu/bottom-sheet-menu.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -13,10 +13,10 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class DetailTopNavComponent implements OnInit {
+export class DetailTopNavComponent {
 
 
-  @Input() config: MainNavConfig;
+  @Input() config: TopDetailNavConfig;
   @Output() menuBtnClicked = new EventEmitter();
   
   loading$: Observable<boolean> = this.loadingService.loading$;
@@ -24,9 +24,6 @@ export class DetailTopNavComponent implements OnInit {
   constructor(
     private _bottomSheet: MatBottomSheet,
     private loadingService: LoadingService,) { }
-
-  ngOnInit() {
-  }
   
   onMenuButtonClick = () => this.menuBtnClicked.emit();
   

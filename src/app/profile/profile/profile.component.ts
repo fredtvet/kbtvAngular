@@ -5,6 +5,7 @@ import { map, filter, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
+import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-profile',
@@ -61,9 +62,11 @@ export class ProfileComponent {
   }
 
   private configureMainNav(){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Profil";
-    cfg.elevationEnabled = false;
-    this.mainNavService.addConfig(cfg);
+    let cfg = {
+      title:  "Profil",
+      elevationDisabled: false
+    } as TopDefaultNavConfig;
+    
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
 }

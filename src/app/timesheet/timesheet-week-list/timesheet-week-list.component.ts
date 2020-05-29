@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DateTimeService, MainNavService, UserTimesheetService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppButton, TimesheetSummary } from 'src/app/shared/interfaces';
+import { AppButton, TimesheetSummary, TopDefaultNavConfig } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
 import { filter, map, tap, switchMap } from 'rxjs/operators';
@@ -62,10 +62,20 @@ export class TimesheetWeekListComponent implements OnInit {
   private updateYear = (year: number) => this.router.navigate(['timer/ukeliste'], { queryParams: {year}})
 
   private configureMainNav = (year: number) => {
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Ukeliste";
-    cfg.subTitle = year ? year.toString() : this.today.getFullYear().toString();
-    cfg.buttons = [{icon: 'filter_list', colorClass:'color-accent', callback: this.openWeekFilter, params:[year]} as AppButton]
-    this.mainNavService.addConfig(cfg);
+    let cfg = {
+      title:  "Ukeliste",
+      subTitle: year ? year.toString() : this.today.getFullYear().toString()
+    } as TopDefaultNavConfig;
+
+    cfg.buttons = [
+      {
+        icon: 'filter_list', 
+        colorClass:'color-accent', 
+        callback: this.openWeekFilter, 
+        params:[year]
+      } as AppButton
+    ]
+
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UserService, MainNavService, LoadingService } from 'src/app/core/services';
 import { map } from 'rxjs/operators';
+import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-timesheet-admin-user-list',
@@ -9,22 +10,21 @@ import { map } from 'rxjs/operators';
 })
 export class TimesheetAdminUserListComponent implements OnInit {
 
-  users$ = this._userService.getAll$();
+  users$ = this.userService.getAll$();
   thisYear = new Date().getFullYear();
-  loading$ = this._loadingService.loading$;
+  loading$ = this.loadingService.loading$;
 
   constructor(
-    private _loadingService: LoadingService,
-    private _mainNavService: MainNavService,
-    private _userService: UserService
+    private loadingService: LoadingService,
+    private mainNavService: MainNavService,
+    private userService: UserService
   ) { this.configureMainNav(); }
 
   ngOnInit() {
   }
 
   private configureMainNav(){
-    let cfg = this._mainNavService.getDefaultConfig();
-    cfg.title = "Administrer timer";
-    this._mainNavService.addConfig(cfg);
+    let cfg = {title: "Administrer timer"} as TopDefaultNavConfig;
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
 }

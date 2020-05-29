@@ -4,6 +4,7 @@ import { Roles, RolePresets } from '../shared/enums';
 import { MissionService, MainNavService } from '../core/services';
 import { Observable } from 'rxjs';
 import {  map } from 'rxjs/operators';
+import { TopDefaultNavConfig } from '../shared/interfaces';
 
 @Component({
   selector: 'app-home',
@@ -31,9 +32,8 @@ export class HomeComponent {
   }
   
   private configureMainNav(){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Hjem";
-    this.mainNavService.addConfig(cfg);
+    let cfg = {title:  "Hjem"} as TopDefaultNavConfig;
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
   
 

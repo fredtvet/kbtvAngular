@@ -12,6 +12,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MissionNoteFormSheetWrapperComponent } from '../components/mission-note-form/mission-note-form-sheet-wrapper.component';
 import { MissionDocumentFormSheetWrapperComponent } from '../components/mission-document-form/mission-document-form-sheet-wrapper.component';
 import { MissionDetailsViewModel } from './mission-details-view-model.interface';
+import { TopDetailNavConfig } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-mission-details',
@@ -84,9 +85,13 @@ export class MissionDetailsComponent{
     this.router.navigate(['timer/liste', {returnRoute: this.router.url, missionId: JSON.stringify(mission)}]);
 
   private configureMainNav(mission: Mission){
-    let cfg = this.mainNavService.getDefaultConfig();
+    let cfg = {
+      title: mission.address.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
+      subTitle: mission.finished ? 'Oppdrag ferdig!' : '',
+      subIcon: mission.finished ? 'check' : '',
+      backFn: this.onBack 
+    } as TopDetailNavConfig;
     
-    cfg.backFn = this.onBack;  
     cfg.bottomSheetButtons = [
       {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal},
       {text: "Legg til dokument", icon: "note_add", callback: this.openDocumentForm, params: [mission.id], allowedRoles: [Roles.Leder]},
@@ -94,12 +99,8 @@ export class MissionDetailsComponent{
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission.id], allowedRoles: [Roles.Leder]},
       {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, params: [mission.id], allowedRoles: [Roles.Leder]}
     ];
-    cfg.navType = LayoutTopNavs.Detail;
-    cfg.multiLineTitle = mission.address.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'); 
-    cfg.subTitle = mission.finished ? 'Oppdrag ferdig!' : '';
-    cfg.subIcon = mission.finished ? 'check' : '';
-
-    this.mainNavService.addConfig(cfg);
+ 
+    this.mainNavService.addTopNavConfig({detail: cfg});
   }
 
   private onBack = () => this.router.navigate(['/oppdrag'])

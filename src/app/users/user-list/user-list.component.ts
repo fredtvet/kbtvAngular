@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';;
 import { map } from 'rxjs/operators';
 import { MatBottomSheet } from '@angular/material';
 import { UserFormSheetWrapperComponent } from '../components/user-form/user-form-sheet-wrapper.component';
+import { TopDefaultNavConfig, AppButton } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-user-list',
@@ -30,16 +31,17 @@ export class UserListComponent {
     this._bottomSheet.open(UserFormSheetWrapperComponent, {data: {userNamePreset}});
 
   private configureMainNav(){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Brukere";
+    let cfg = {title:  "Brukere"} as TopDefaultNavConfig;
+
     cfg.buttons = [{
       icon: "person_add", 
       colorClass: "color-accent",
       aria: 'Ny bruker',
       callback: this.openUserForm, 
       allowedRoles: [Roles.Leder]
-    }]
-    this.mainNavService.addConfig(cfg);
+    }] as AppButton[]
+
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
 
   private sortByRole(users: User[]): User[]{

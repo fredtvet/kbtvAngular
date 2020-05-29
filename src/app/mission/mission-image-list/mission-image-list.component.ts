@@ -7,7 +7,7 @@ import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { MissionImage, Mission } from 'src/app/shared/models';
 import { MissionImageService, MainNavService, NotificationService, MissionService, DeviceInfoService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppButton, AppFile } from 'src/app/shared/interfaces';
+import { AppButton, AppFile, TopDefaultNavConfig } from 'src/app/shared/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { ImageViewerDialogWrapperComponent } from '../components/image-viewer/image-viewer-dialog-wrapper.component';
@@ -97,17 +97,19 @@ export class MissionImageListComponent extends SubscriptionComponent{
   }
 
   private configureMainNav(missionId: number){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.backFn = this.onBack;  
-    cfg.backFnParams = [missionId];
-    cfg.title = 'Bilder';
-    this.mainNavService.addConfig(cfg);
+    let cfg = {
+      title:  "Bilder",
+      backFn: this.onBack,
+      backFnParams: [missionId]
+    } as TopDefaultNavConfig;
+
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
 
   private updateMainNav = (images: MissionImage[]) => {
-    let cfg = this.mainNavService.getCurrentConfig(); 
+    let cfg = this.mainNavService.getTopDefaultNavConfig(); 
     cfg.bottomSheetButtons = this.getBottomSheetButtons(images.map(x => x.id));
-    this.mainNavService.addConfig(cfg);
+    this.mainNavService.addTopNavConfig({default: cfg});;
   }
 
   private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);

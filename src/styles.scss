@@ -35,6 +35,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 .bg-foreground{background:$foreground-color;color:black;}
 .color-foreground{color:white;}
 
+.bg-transparent{background:transparent};
+
 .active{color: $accent !important;}
 
 .scale-150{transform:scale(1.5);}

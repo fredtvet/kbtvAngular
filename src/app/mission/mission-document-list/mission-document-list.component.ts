@@ -11,6 +11,7 @@ import { takeUntil, filter, map } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { MissionDocumentFormSheetWrapperComponent } from '../components/mission-document-form/mission-document-form-sheet-wrapper.component';
+import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-mission-document-list',
@@ -87,11 +88,13 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
   downloadDocument = (document: MissionDocument) => this.downloaderService.downloadUrl(document.fileURL);
 
   private configureMainNav(missionId: number){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.backFn = this.onBack;  
-    cfg.backFnParams = [missionId];
-    cfg.title = 'Dokumenter';
-    this.mainNavService.addConfig(cfg);
+    let cfg = {
+      title:  "Dokumenter", 
+      backFn: this.onBack, 
+      backFnParams: [missionId]
+    } as TopDefaultNavConfig;
+
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
   private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
 }

@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MainNavService, TimesheetService, UserService } from 'src/app/core/services';
 import { filter } from 'rxjs/operators';
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared/components';
-import { TimesheetFilter } from 'src/app/shared/interfaces';
+import { TimesheetFilter, TopDefaultNavConfig } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { GroupByTypes } from 'src/app/shared/enums';
 
@@ -41,8 +41,7 @@ export class TimesheetStatisticComponent {
   }
   
   private configureMainNav(){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Timestatistikk";
-    this.mainNavService.addConfig(cfg);
+    let cfg = {title:  "Timestatistikk"} as TopDefaultNavConfig;
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
 }

@@ -6,7 +6,7 @@ import {
 } from "src/app/core/services";
 import { Timesheet } from "src/app/shared/models";
 import {switchMap,map, tap} from "rxjs/operators";
-import { DateParams } from "src/app/shared/interfaces";
+import { DateParams, TopDefaultNavConfig } from "src/app/shared/interfaces";
 import { MatDialog } from "@angular/material/dialog";
 import { Router, ActivatedRoute } from "@angular/router";
 import { TimesheetCardDialogWrapperComponent } from '../components/timesheet-card-dialog-wrapper.component';
@@ -100,12 +100,14 @@ export class TimesheetWeekViewComponent {
   }
 
   private configureMainNav(dp: DateParams){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Uke " + dp.weekNr;
-    cfg.subTitle = dp.year.toString();
-    cfg.backFn = this.goToWeekList;
-    cfg.buttons = [{icon: "list", callback: this.goToTimesheetList}];
-    this.mainNavService.addConfig(cfg);
+    let cfg = {
+      title:  "Uke " + dp.weekNr,
+      subTitle: dp.year.toString(),
+      backFn: this.goToWeekList,
+      buttons: [{icon: "list", callback: this.goToTimesheetList}]
+    } as TopDefaultNavConfig;
+    
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
 
   private getDateParams(params): DateParams{

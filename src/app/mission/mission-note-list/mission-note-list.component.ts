@@ -8,6 +8,7 @@ import { Roles, RolePresets } from 'src/app/shared/enums';
 import { filter } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { MissionNoteFormSheetWrapperComponent } from '../components/mission-note-form/mission-note-form-sheet-wrapper.component';
+import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-mission-note-list',
@@ -54,11 +55,13 @@ export class MissionNoteListComponent {
     this.bottomSheet.open(MissionNoteFormSheetWrapperComponent, {data: {noteIdPreset}});
 
   private configureMainNav(missionId: number){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.backFn = this.onBack;  
-    cfg.backFnParams = [missionId];
-    cfg.title = 'Notater';
-    this.mainNavService.addConfig(cfg);
+    let cfg = {
+      title:  "Notater",
+      backFn: this.onBack, 
+      backFnParams: [missionId]
+    } as TopDefaultNavConfig;
+    
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
 
   private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);

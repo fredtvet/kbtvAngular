@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MainNavService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
-import { BaseEntity } from 'src/app/shared/interfaces';
+import { BaseEntity, TopDefaultNavConfig } from 'src/app/shared/interfaces';
 import { DataManagerFacadeService } from '../data-manager-facade.service';
 
 @Component({
@@ -40,9 +40,8 @@ constructor(
 
 
   private configureMainNav(){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Data";
-    this.mainNavService.addConfig(cfg);
+    let cfg = {title:  "Data"} as TopDefaultNavConfig;
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
 }
 

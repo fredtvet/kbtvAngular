@@ -1,16 +1,17 @@
-<div class="container">
+<div class="container" [style.height]="config.imgSrc ? '' : 'auto'">
 
-    <div class="img-container text-center">
-        <img src="https://i.ibb.co/BGkBdNs/image.png" />
+    <div *ngIf="config.imgSrc" class="img-container text-center">
+        <img src="{{config.imgSrc}}" />
     </div>
 
-    <mat-toolbar *ngIf="config" class="toolbar-slim color-foreground overlay overlay-top">
+    <mat-toolbar *ngIf="config" 
+        [ngClass]="config.imgSrc ? 'overlay' : 'bg-primary-dark'"
+        class="toolbar-slim color-foreground overlay-top">
 
         <app-icon-button *ngIf="config.backFn else menuBtn" [config]="{
                     callback: config.backFn, 
                     params: config.backFnParams,
-                    aria: 'Tilbake',icon: 'chevron_left', iconSizeClass: 'scale-150'
-                }">
+                    aria: 'Tilbake',icon: 'chevron_left', iconSizeClass: 'scale-150'}">
         </app-icon-button>
 
         <ng-template #menuBtn>
@@ -35,14 +36,14 @@
 
     </mat-toolbar>
 
-    <mat-toolbar *ngIf="config.multiLineTitle && config.multiLineTitle.length > 0"
-        class="overlay overlay-bottom toolbar-slim color-foreground slideInDown">
+    <mat-toolbar *ngIf="config.title && config.title.length > 0" 
+        [ngClass]="config.imgSrc ? 'overlay' : 'bg-primary-dark'"
+        class="overlay-bottom toolbar-slim color-foreground slideInDown">
         <span class="ml-6 mb-2 overlay-color">
-            <ng-container *ngFor="let line of config.multiLineTitle; let last =  last">
+            <ng-container *ngFor="let line of config.title; let last =  last">
                 {{ line }}<br *ngIf="!last" />
             </ng-container>
         </span>
     </mat-toolbar>
-
 
 </div>

@@ -1,6 +1,6 @@
 import { Component, ViewChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { MainNavService, TimesheetService, DateTimeService, TimesheetAggregatorService, LoadingService } from 'src/app/core/services';
-import { TimesheetSummary } from 'src/app/shared/interfaces';
+import { TimesheetSummary, TopDefaultNavConfig } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
 import { filter, map, startWith, pairwise, tap, distinctUntilKeyChanged, distinct, takeUntil} from 'rxjs/operators';
@@ -120,22 +120,26 @@ export class TimesheetAdminListComponent extends SubscriptionComponent{
   }
 
   private configureWeekListNav(){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Uker";
-    cfg.subTitle = this.selectedYear + ' - ' + this.selectedUserName;
-    cfg.backFn = this.updateUri;
-    cfg.buttons = [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}];
-    this.mainNavService.addConfig(cfg);
+    let cfg = {
+      title:  "Uker",
+      subTitle: this.selectedYear + ' - ' + this.selectedUserName,
+      backFn: this.updateUri,
+      buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]
+    } as TopDefaultNavConfig;
+    
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
 
   private configureTimesheetListNav(week: number){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Uke " + week;
-    cfg.subTitle = this.selectedYear + ' - ' + this.selectedUserName;
-    cfg.backFn = this.selectWeek;
-    cfg.backFnParams = [null];   
-    cfg.buttons = [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}];
-    this.mainNavService.addConfig(cfg);
+    let cfg = {
+      title:  "Uke " + week,
+      subTitle: this.selectedYear + ' - ' + this.selectedUserName,
+      backFn: this.selectWeek,
+      backFnParams: [null],
+      buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]
+    } as TopDefaultNavConfig;
+    
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
   
   trackByWeek = (index:number, summary:TimesheetSummary): number => summary.week;

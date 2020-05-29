@@ -4,6 +4,7 @@ import { Mission } from 'src/app/shared/models';
 import { BehaviorSubject, Observable} from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { MissionService, MainNavService } from 'src/app/core/services';
+import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-mission-list',
@@ -57,9 +58,9 @@ export class MissionListComponent{
     //Toggle icon on nav action on bottom sheet
     let icon = "check_box_outline_blank";
     if(pageInfo.showFinishedMissions) icon = "check_box";
-    let cfg = this.mainNavService.getCurrentConfig();
+    let cfg = this.mainNavService.getTopDefaultNavConfig();
     cfg.bottomSheetButtons[0].icon = icon;
-    this.mainNavService.addConfig(cfg);
+    this.mainNavService.addTopNavConfig({default: cfg})
   }
 
   private toggleHistoricOrder = () => {
@@ -70,23 +71,25 @@ export class MissionListComponent{
     //Toggle icon on nav action on bottom sheet
     let color = "color-background";
     if(pageInfo.historic) color = "color-accent";
-    let cfg = this.mainNavService.getCurrentConfig();
+    let cfg = this.mainNavService.getTopDefaultNavConfig();
     cfg.buttons[0].colorClass = color;
-    this.mainNavService.addConfig(cfg);
+    this.mainNavService.addTopNavConfig({default: cfg})
   }
 
   private configureMainNav(){
-    let cfg = this.mainNavService.getDefaultConfig();
-    cfg.title = "Oppdrag"
+    let cfg = {title:  "Oppdrag"} as TopDefaultNavConfig;
+ 
     cfg.buttons = [{icon: "history", 
       colorClass: "color-background",
       aria: 'Historisk visning',
       callback: this.toggleHistoricOrder
-    }],
+    }];
+
     cfg.bottomSheetButtons = [
       {text: "Vis ferdige oppdrag", icon: "check_box_outline_blank", callback: this.toggleFinishedMissions}
-    ]
-    this.mainNavService.addConfig(cfg);
+    ];
+
+    this.mainNavService.addTopNavConfig({default: cfg});
   }
 
 }

@@ -1,21 +1,33 @@
 import { AppButton } from './app-button.interface';
-import { LayoutTopNavs } from '../enums';
+import { User } from '../models';
 
 export interface MainNavConfig{
-    title: string;
-    multiLineTitle?: string[];
+    isXs?: boolean;
+    currentUser?: User;
 
+    topDefaultNavConfig?: TopDefaultNavConfig;
+    topDetailNavConfig?: TopDetailNavConfig;  
+}
+
+export interface TopDefaultNavConfig extends TopNavActions{
+    title: string;
+    subTitle?:string;
+    subIcon?: string;
+   
+    elevationDisabled?: boolean;
+}
+
+export interface TopDetailNavConfig extends TopNavActions{   
+    title?: string[];
     subTitle?:string;
     subIcon?: string;
 
-    buttons?: AppButton[];
-    bottomSheetButtons?: AppButton[];
+    imgSrc?: string;
+}
 
+export interface TopNavActions{
     backFn?: Function;
     backFnParams?: any[];
-       
-    elevationEnabled?: boolean;
-
-    isXs?: boolean;
-    navType?: LayoutTopNavs;
+    buttons?: AppButton[];
+    bottomSheetButtons?: AppButton[];
 }
