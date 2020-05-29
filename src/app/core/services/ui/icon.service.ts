@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Icons } from 'src/app/shared/enums';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: "root",
@@ -13,7 +14,8 @@ export class IconService {
   ) {}
 
   public registerIcons(): void {
-    this.loadIcons(Object.values(Icons), "../assets/svg/icons");
+    var url = '..' + environment.baseUrl + '/assets/svg/icons';
+    this.loadIcons(Object.values(Icons), url);
   }
 
   private loadIcons(iconKeys: string[], iconUrl: string): void {
