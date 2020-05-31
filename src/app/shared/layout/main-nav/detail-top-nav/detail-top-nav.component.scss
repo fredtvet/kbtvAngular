@@ -7,25 +7,38 @@
   }
 
 .img-container{
-    overflow:scroll;
+    overflow-y:scroll;
+    overflow-x:hidden;
     width:100%;
+    max-width:600px;
     max-height:40vh; 
-    max-width:650px!important;
+    //max-width:650px!important;
     img{
-        min-width:100%;
+        max-width:100%;
     }
 }
+
+.title-line{
+    display:inline-block;
+    margin-top:2px; 
+}
+
+.img-title-overlay{
+    background-color:rgba(0,0,0,.75);
+}
+
 
 .overlay{
     position: absolute;
     left: 0;
     right: 0;
-    background-color: rgba(0,0,0,.3);
+    background-color:transparent;
     color:white;
 }
 
 .overlay-top{
     top: 0;
+    background-color:rgba(0,0,0,.3);
 }
 
 .overlay-bottom{

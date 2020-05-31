@@ -1,12 +1,12 @@
 <div class="container">
 
     <div *ngIf="config.imgSrc" class="img-container text-center mr-auto ml-auto ">
-        <img appImageErrorReloader src="{{ config.imgSrc | thumbnail }}" />
+        <img appImageErrorReloader src="{{ config.imgSrc }}" />
     </div>
 
     <mat-toolbar *ngIf="config" 
-        [ngClass]="config.imgSrc ? 'overlay' : 'bg-primary-dark'"
-        class="toolbar-slim color-foreground overlay-top slideInDown">
+        [ngClass]="config.imgSrc ? 'overlay overlay-top' : 'bg-primary-dark'"
+        class="toolbar-slim color-foreground slideInDown">
 
         <app-icon-button *ngIf="config.backFn else menuBtn" [config]="{
                     callback: config.backFn, 
@@ -15,7 +15,8 @@
         </app-icon-button>
 
         <ng-template #menuBtn>
-            <button mat-icon-button aria-label="Toggle sidenav" (click)="onMenuButtonClick()" fxHide fxShow.xs>
+            <button mat-icon-button aria-label="Toggle sidenav" 
+                (click)="onMenuButtonClick()" fxHide fxShow.xs>
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
         </ng-template>
@@ -37,13 +38,15 @@
     </mat-toolbar>
 
     <mat-toolbar *ngIf="config.title && config.title.length > 0" 
-        [ngClass]="config.imgSrc ? 'overlay' : 'bg-primary-dark'"
-        class="overlay-bottom toolbar-slim color-foreground slideInDown">
-        <span class="ml-6 mb-2 overlay-color">
+        [ngClass]="config.imgSrc ? 'overlay overlay-bottom' : 'bg-primary-dark'"
+        class="toolbar-slim color-foreground slideInDown">
+
+        <span class="ml-6 mb-2">
             <ng-container *ngFor="let line of config.title; let last =  last">
-                {{ line }}<br *ngIf="!last" />
+                <div [ngClass]="config.imgSrc ? 'img-title-overlay' : ''" class="title-line fadeInTop pl-2 pr-2">{{ line }}</div><br />
             </ng-container>
         </span>
+
     </mat-toolbar>
 
 </div>
