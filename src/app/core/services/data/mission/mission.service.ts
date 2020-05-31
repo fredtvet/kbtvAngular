@@ -39,6 +39,18 @@ export class MissionService extends BaseService<Mission> {
                 .pipe(tap(data =>this.dataSubject.addOrUpdate(data)));
   }
 
+  addMissionFromPdfReport$(pdf: File){
+    if(!this.isOnline) return throwError('Du må være tilkoblet internett for å legge til ting.')
+      .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
+    
+    const body: FormData = new FormData();
+    if(pdf) body.append('files', pdf, pdf.name);
+
+    return this.apiService
+                .post(`${this.uri}/CreateFromPdfReport`, body)
+                .pipe(tap(data =>this.dataSubject.addOrUpdate(data)));
+  }
+
   updateMission$(command: UpdateMission){   
     if(!this.isOnline)
       return throwError('Du må være tilkoblet internett for å gjøre oppdateringer.')
