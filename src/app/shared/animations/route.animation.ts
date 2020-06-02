@@ -18,7 +18,9 @@ export const routeAnimation = trigger("routeAnimation", [
 
   transition("* => Users", useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  
+
+  transition("Home => MissionList", useAnimation(slideAnimation,
+    {params: slideForwardParams})),   
   transition("MissionList => MissionDetails", useAnimation(slideAnimation, 
     {params: slideForwardParams})),
   transition("MissionDetails => MissionList", useAnimation(slideAnimation, 

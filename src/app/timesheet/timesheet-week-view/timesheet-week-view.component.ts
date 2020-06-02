@@ -4,7 +4,6 @@ import {
   DateTimeService,
   MainNavService
 } from "src/app/core/services";
-import { Timesheet } from "src/app/shared/models";
 import {switchMap,map, tap} from "rxjs/operators";
 import { DateParams, TopDefaultNavConfig } from "src/app/shared/interfaces";
 import { MatDialog } from "@angular/material/dialog";
@@ -53,7 +52,6 @@ export class TimesheetWeekViewComponent {
       }
       else dp.weekNr++;
     }
-    
     this.changeDateParams(dp);
   }
 

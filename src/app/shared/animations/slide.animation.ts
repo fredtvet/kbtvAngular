@@ -10,7 +10,7 @@ import {
 export const slideAnimation = animation([
     query(
       ":enter, :leave",
-      style({ position: "fixed", width: "100%" }),
+      style({ position: "fixed", width: "100%", height: "100%" }),
       { optional: true }
     ),
     query(".anim-block", style({ opacity: 0 }), { optional: true }),
