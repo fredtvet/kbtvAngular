@@ -8,14 +8,14 @@
 
     <mat-form-field>
       <mat-icon matSuffix color="primary">person</mat-icon>
-      <input matInput formControlName="Username" placeholder="Brukernavn" type="text" />
+      <input matInput formControlName="userName" placeholder="Brukernavn" type="text" />
     </mat-form-field>
     
     <mat-form-field>
       <mat-icon matSuffix color="primary" (click)="hidePassword = !hidePassword">
         {{hidePassword ? 'visibility_off' : 'visibility'}}
       </mat-icon>
-      <input matInput formControlName="Password" placeholder="Passord" [type]="hidePassword ? 'password' : 'text'" />
+      <input matInput formControlName="password" placeholder="Passord" [type]="hidePassword ? 'password' : 'text'" />
     </mat-form-field>
 
     <button mat-raised-button color="accent" [disabled]="!authForm.valid" type="submit">

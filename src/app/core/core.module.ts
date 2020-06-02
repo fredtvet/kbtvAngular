@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpTokenInterceptor, HttpLoadingInterceptor, HttpErrorInterceptor } from './interceptors';
+import { HttpRefreshTokenInterceptor, HttpLoadingInterceptor, HttpErrorInterceptor } from './interceptors';
 
 import {
   AuthGuard,
   NoAuthGuard,
   UserService,
-  JwtService,
+  IdentityTokensService,
   RoleService,
   ApiService,
-  IdentityService,
+  AuthService,
   LoadingService,
   NotificationService,
   EmployerService,
@@ -40,13 +40,13 @@ import { NotificationComponent } from '../shared/components';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRefreshTokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpLoadingInterceptor, multi: true },
     UserService,
     RoleService,
-    JwtService,
+    IdentityTokensService,
     DeviceInfoService,
-    IdentityService,
+    AuthService,
     AuthGuard,
     NoAuthGuard,
     ApiService,

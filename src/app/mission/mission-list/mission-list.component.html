@@ -3,3 +3,10 @@
   (search)="searchMissionList($event)">
 </app-mission-list-view>
 
+
+<button *ifRole="[Roles.Leder]" mat-mini-fab aria-label="ny" class="action_fab_2"
+  (click)="imageInput.click()">
+  <mat-icon>note_add</mat-icon>
+</button>
+
+<input type="file" style="display:none" multiple #imageInput (change)="createFromPdf($event.target.files[0])">

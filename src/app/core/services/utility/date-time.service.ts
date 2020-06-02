@@ -105,4 +105,10 @@ export class DateTimeService {
   getNDaysAgo(n: number): number {
     return new Date().setDate(this.currentDate.getDate() - n);
   }
+
+  getNowInUnixTimeSeconds(){
+      var date = new Date();
+      return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+      date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()) / 1000;
+  }
 }

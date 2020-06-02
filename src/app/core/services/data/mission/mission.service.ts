@@ -80,4 +80,10 @@ export class MissionService extends BaseService<Mission> {
     });
   }
 
+  sortByDate(arr: Mission[]){
+    let res = [...arr];
+    return res.sort((a, b) => {
+      return new Date(b.updatedAt || '01/01/1970').getTime() - new Date(a.updatedAt || '01/01/1970').getTime()
+    });
+  }
 }

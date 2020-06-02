@@ -8,7 +8,7 @@ import { delay, tap, timeInterval } from 'rxjs/operators';
 export class DownloaderService {
 
   private downloadableUrlSubject = new Subject<string>();
-  downloadableUrl$ = this.downloadableUrlSubject.asObservable().pipe(tap(console.log))
+  downloadableUrl$ = this.downloadableUrlSubject.asObservable();
 
   constructor() { }
 

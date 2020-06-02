@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable} from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { MissionService, MainNavService } from 'src/app/core/services';
 import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
+import { Roles } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-mission-list',
@@ -13,6 +14,7 @@ import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
 })
 
 export class MissionListComponent{
+  Roles = Roles;
   private pageInfoSubject = new BehaviorSubject({searchString: "", showFinishedMissions: false, historic: false});
 
   missions$: Observable<Mission[]>;
@@ -28,7 +30,7 @@ export class MissionListComponent{
     this.missions$ = this.pageInfoSubject.pipe(switchMap(pageInfo => {
         return this.missionService
           .getBy$(x => this.filterMission(x, pageInfo)).pipe(
-            map(x => pageInfo.historic ? this.missionService.sortByHistory(x) : x)
+            map(x => pageInfo.historic ? this.missionService.sortByHistory(x) : this.missionService.sortByDate(x))
           )
       }));
   }
@@ -37,6 +39,10 @@ export class MissionListComponent{
     let pageInfo = {...this.pageInfoSubject.value};
     pageInfo.searchString = searchString;
     this.pageInfoSubject.next(pageInfo)
+  }
+
+  createFromPdf = (pdf: File) => {
+    this.missionService.addMissionFromPdfReport$(pdf).subscribe();
   }
 
   private filterMission(mission: Mission, pageInfo: any){

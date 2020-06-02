@@ -34,6 +34,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 .color-background{color:$primary-light;}
 .bg-foreground{background:$foreground-color;color:black;}
 .color-foreground{color:white;}
+.bg-black{background-color:black;color:white;}
 
 .bg-transparent{background:transparent};
 
@@ -58,6 +59,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 .flex-nav{flex-shrink: 0;display: inline-flex;flex-direction: column;z-index:2}
 
 .float-right{float:right;}
+
+.circle-radius{border-radius:50%}
 
 a {
   color: inherit; /* blue colors for links too */
@@ -161,7 +164,10 @@ a {
   animation: fadeIn;
   animation-duration:.8s
 }
-
+.fadeInTop{
+  animation: fadeInTop;
+  animation-duration:.8s
+}
 .fadeInRight{
   animation: fadeInRight;
   animation-duration:.5s

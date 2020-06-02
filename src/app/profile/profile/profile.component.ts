@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { IdentityService, NotificationService, MainNavService, AppConfigurationService, DataSyncService } from 'src/app/core/services';
+import { AuthService, NotificationService, MainNavService, AppConfigurationService, DataSyncService } from 'src/app/core/services';
 import { User } from 'src/app/shared/models';
 import { map, filter, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -16,7 +16,7 @@ export class ProfileComponent {
 
   passwordStatus: string;
 
-  user$: Observable<User> =  this.identityService.currentUser$;
+  user$: Observable<User> =  this.authService.currentUser$;
 
   syncRefreshTime$: Observable<number> = 
     this.appConfigService.config$.pipe(debounceTime(1000), map(x => x.syncRefreshTime / 60));
@@ -25,7 +25,7 @@ export class ProfileComponent {
     private dataSyncService: DataSyncService,
     private appConfigService: AppConfigurationService,
     private mainNavService: MainNavService,
-    private identityService: IdentityService,
+    private authService: AuthService,
     private notificationService: NotificationService,
     private _dialog: MatDialog,
   ){    
@@ -33,12 +33,12 @@ export class ProfileComponent {
   }
 
   updateProfile = (user: User) =>
-    this.identityService.updateCurrentUser(user).subscribe(data => 
+    this.authService.updateCurrentUser$(user).subscribe(data => 
       this.notificationService.setNotification('Vellykket oppdatering!'));
   
 
   updatePassword(data: any){
-    this.identityService.changePassword(data.oldPassword, data.password).subscribe(
+    this.authService.changePassword$(data.oldPassword, data.password).subscribe(
       data => this.notificationService.setNotification('Passord oppdatert!'),
       error => this.passwordStatus = "Nåværende passord stemmer ikke",
       () => this.passwordStatus = ""

@@ -1,7 +1,7 @@
 import { Component, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router, RouterOutlet } from "@angular/router";
-import { IdentityService, MainNavService } from 'src/app/core/services';
+import { AuthService, MainNavService } from 'src/app/core/services';
 import { Roles } from '../../enums/roles.enum';
 import { MatDrawer } from '@angular/material';
 import { User } from '../../models/user.model';
@@ -22,18 +22,17 @@ export class MainNavComponent {
   Roles = Roles;
 
   config$: Observable<MainNavConfig> = this.mainNavService.config$;
-  currentUser$:  Observable<User> = this.identityService.currentUser$;
+  currentUser$:  Observable<User> = this.authService.currentUser$;
 
   constructor(
     private mainNavService: MainNavService,
-    private identityService: IdentityService,
+    private authService: AuthService,
     private router: Router) { }
 
   toggleDrawer(isXs:boolean){if(isXs) this.drawer.toggle()}
 
   handleLogout(){
-    this.identityService.purgeAuth();
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }  
   
   prepareRoute(outlet: RouterOutlet) {

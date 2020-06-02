@@ -37,7 +37,6 @@ export class MissionFormViewComponent implements OnInit {
       this.isCreateForm = true;
       this.mission = new Mission();
     }
-    console.log(this.mission)
 
     this.initalizeForm();
   }

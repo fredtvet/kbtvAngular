@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { MainNavConfig, TopDefaultNavConfig, TopDetailNavConfig } from 'src/app/shared/interfaces';
 import { map, tap, distinctUntilChanged, delay } from 'rxjs/operators';
 import { DeviceInfoService } from '../device-info.service';
-import { IdentityService } from '../auth/identity.service';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class MainNavService {
   config$: Observable<MainNavConfig> = combineLatest(
     this._config$, 
     this.deviceInfoService.isXs$, 
-    this.identityService.currentUser$
+    this.authService.currentUser$
     ).pipe(
       delay(10), //delay to fix bug where main nav not detecting config changes coming to quickly after route change
       map(([config, isXs, currentUser]) => {
@@ -36,7 +36,7 @@ export class MainNavService {
     );
 
   constructor(
-    private identityService: IdentityService,
+    private authService: AuthService,
     private deviceInfoService: DeviceInfoService) { }
 
   getTopDefaultNavConfig(): TopDefaultNavConfig{
