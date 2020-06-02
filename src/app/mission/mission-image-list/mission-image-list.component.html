@@ -7,10 +7,10 @@
 
 <ng-container *ngIf="currentSelections.length > 0">
     <ng-container *ifRole="RolePresets.Authority">
-        <button mat-mini-fab aria-label="ny" class="action_fab_2" (click)="openMailImageSheet(currentSelections)">
+        <button mat-fab aria-label="ny" class="action_fab_2" (click)="openMailImageSheet(currentSelections)">
             <mat-icon>send</mat-icon>
         </button>
-        <button mat-mini-fab aria-label="ny" class="action_fab_3 bg-warn"
+        <button mat-fab aria-label="ny" class="action_fab_3 bg-warn"
             (click)="openConfirmDeleteDialog(currentSelections)">
             <mat-icon>delete_forever</mat-icon>
         </button>
@@ -18,7 +18,7 @@
 </ng-container>
 
 
-<button *ifRole="RolePresets.Internal" mat-mini-fab aria-label="ny" class="action_fab"
+<button *ifRole="RolePresets.Internal" mat-fab aria-label="ny" class="action_fab"
     (click)="imageInput.click()">
     <mat-icon>camera_enhance</mat-icon>
 </button>

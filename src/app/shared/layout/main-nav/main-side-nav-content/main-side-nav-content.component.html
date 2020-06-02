@@ -1,10 +1,12 @@
 
 <mat-toolbar fxLayout="column" fxLayoutAlign="center start" class="bg-primary-dark">
 
-  <span class="mat-small"
-    [ngClass]="(isOnline$ | async) ? 'color-success' : 'color-warn'">
-    {{ (isOnline$ | async) ? 'Tilkoblet internett' : 'Frakoblet internett' }}
-  </span>
+  <ng-container *ngIf="isOnline$ | async else offlineHeader">
+    <span class="mat-small color-success"> Tilkoblet internett </span>
+  </ng-container>
+  <ng-template #offlineHeader>
+    <span class="mat-small color-accent">Frakoblet internett</span>
+  </ng-template>
 
   <span class="mat-body"  *ngIf="user">{{ user.firstName }} {{ user.lastName }}</span>
 

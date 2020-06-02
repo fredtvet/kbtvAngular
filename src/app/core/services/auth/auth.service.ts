@@ -47,7 +47,7 @@ export class AuthService extends PersistentSubject<User>{
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å logge inn.')
       .pipe(take(1), tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
 
-    return this.apiService.post('/auth/login', credentials)
+    return this.apiService.post('/Auth/login', credentials)
       .pipe(map(tokenResponse => {
         this.setAuth(tokenResponse);
         return tokenResponse.user;
@@ -58,7 +58,7 @@ export class AuthService extends PersistentSubject<User>{
   refreshToken$(): Observable<TokenResponse>{
     if(!this.isOnline || !this.hasTokens()) return of(undefined);
     var tokens = this.tokensService.getTokens();
-    return this.apiService.post('/auth/refresh', {accessToken: tokens.accessToken, refreshToken: tokens.refreshToken})
+    return this.apiService.post('/Auth/refresh', {accessToken: tokens.accessToken, refreshToken: tokens.refreshToken})
       .pipe(map(tokenResponse => {
         this.setAuth(tokenResponse);
         return tokenResponse;
@@ -70,7 +70,7 @@ export class AuthService extends PersistentSubject<User>{
     let refreshToken = this.tokensService.getRefreshToken();
 
     if(this.isOnline && this.hasTokens())
-         this.apiService.post('/auth/logout', {refreshToken}).pipe(
+         this.apiService.post('/Auth/logout', {refreshToken}).pipe(
              catchError(x => this.purgeAuth)).subscribe(x => this.purgeAuth()); 
     else this.purgeAuth();
   }

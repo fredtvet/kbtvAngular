@@ -26,8 +26,7 @@ export class MainNavComponent {
 
   constructor(
     private mainNavService: MainNavService,
-    private authService: AuthService,
-    private router: Router) { }
+    private authService: AuthService) { }
 
   toggleDrawer(isXs:boolean){if(isXs) this.drawer.toggle()}
 

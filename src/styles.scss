@@ -80,7 +80,7 @@ a {
 .action_fab_2{
   position: fixed!important;
   right: $content-margin * 1px!important;
-  bottom: (($content-margin*2) + 40 + $bottom-nav-height) * 1px;
+  bottom: (($content-margin*2) + 56 + $bottom-nav-height) * 1px;
   z-index:2;
   background:$accent;
   animation: backInRight;
@@ -89,7 +89,7 @@ a {
 .action_fab_3{
   position: fixed!important;
   right: $content-margin * 1px!important;
-  bottom: (($content-margin*3) + 80 + $bottom-nav-height) * 1px;
+  bottom: (($content-margin*3) + 112 + $bottom-nav-height) * 1px;
   z-index:2;
   background:$accent;
   animation: backInRight;

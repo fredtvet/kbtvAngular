@@ -7,10 +7,10 @@
 
 <ng-container *ngIf="currentSelections.length > 0">
     <ng-container *ifRole="[Roles.Leder]">
-        <button mat-mini-fab aria-label="ny" class="action_fab_2" (click)="openMailDocumentSheet(currentSelections)">
+        <button mat-fab aria-label="ny" class="action_fab_2" (click)="openMailDocumentSheet(currentSelections)">
             <mat-icon>send</mat-icon>
         </button>
-        <button mat-mini-fab aria-label="ny" class="action_fab_3 bg-warn"
+        <button mat-fab aria-label="ny" class="action_fab_3 bg-warn"
             (click)="openConfirmDeleteDialog(currentSelections)">
             <mat-icon>delete_forever</mat-icon>
         </button>
@@ -18,6 +18,6 @@
 </ng-container>
 
 
-<button *ifRole="[Roles.Leder]" mat-mini-fab aria-label="ny" class="action_fab" (click)="openDocumentForm()">
+<button *ifRole="[Roles.Leder]" mat-fab aria-label="ny" class="action_fab" (click)="openDocumentForm()">
     <mat-icon>note_add</mat-icon>
 </button>
