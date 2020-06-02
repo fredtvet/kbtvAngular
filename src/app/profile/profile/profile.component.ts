@@ -56,6 +56,8 @@ export class ProfileComponent {
     this.appConfigService.setSyncRefreshTime(minutes * 60);
   }
 
+  refresh = () => this.dataSyncService.syncAll();
+
   private reloadAllData(){
     this.dataSyncService.purgeAll();
     this.dataSyncService.syncAll();

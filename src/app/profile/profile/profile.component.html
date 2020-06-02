@@ -23,6 +23,9 @@
       <div class="p-2">
         <app-list-card appAddToHomeScreen text="Legg til app" startIcon="get_app"></app-list-card>
 
+        <app-list-card text="Synkroniser manuelt" startIcon="update" (click)="refresh()">
+        </app-list-card>
+
         <app-list-card text="Slett lokal data" startIcon="delete_sweep" (click)="confirmPurge()">
         </app-list-card>
 
