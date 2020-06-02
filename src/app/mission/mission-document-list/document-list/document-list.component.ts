@@ -7,8 +7,7 @@ import { SelectableEntity } from 'src/app/shared/interfaces';
 @Component({
   providers: [SelectableListPresenter],
   selector: 'app-document-list',
-  templateUrl: './document-list.component.html',
-  styleUrls: ['./document-list.component.scss']
+  templateUrl: './document-list.component.html'
 })
 
 export class DocumentListComponent extends SelectableListBase<MissionDocument>{

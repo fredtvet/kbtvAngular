@@ -60,11 +60,12 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
   }
 
   deleteDocuments = (ids: number[]) => {
-    this.missionDocumentService.deleteRange$(ids).subscribe(data =>
+    this.missionDocumentService.deleteRange$(ids).subscribe(data =>{
+      this.documentList.clearSelections();
       this.notificationService.setNotification(
         `Vellykket! ${ids.length} ${ids.length > 1 ? 'dokumenter' : 'dokument'} slettet.`
-        )
-    );
+      )
+    });
   }
 
   openConfirmDeleteDialog = (ids: number[]) => {

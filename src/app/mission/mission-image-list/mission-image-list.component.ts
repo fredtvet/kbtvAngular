@@ -65,11 +65,12 @@ export class MissionImageListComponent extends SubscriptionComponent{
   }
 
   deleteImages = (ids: number[]) => {
-    this.missionImageService.deleteRange$(ids).subscribe(data =>
+    this.missionImageService.deleteRange$(ids).subscribe(data =>{
+      this.imageList.clearSelections();
       this.notificationService.setNotification(
         `Vellykket! ${ids.length} ${ids.length > 1 ? 'bilder' : 'bilde'} slettet.`
-        )
-    );
+      )  
+    })    
   }
 
   openConfirmDeleteDialog = (ids: number[]) => {
