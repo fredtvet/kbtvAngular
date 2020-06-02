@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { IdentityService } from './identity.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +9,14 @@ import { IdentityService } from './identity.service';
 export class NoAuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private identityService: IdentityService
+    private authService: AuthService,
   ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if(this.identityService.hasValidToken()){
+    if(this.authService.hasTokens()){
       this.router.navigate(['/hjem']);
       return false;
     }

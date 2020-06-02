@@ -1,12 +1,13 @@
 export * from './api.service';
-export * from './auth/jwt.service';
-export * from './auth/auth-guard.service';
-export * from './auth/no-auth-guard.service';
 export * from './device-info.service';
-export * from './auth/identity.service';
 export * from './loading.service';
 export * from './app-configuration.service';
 export * from './downloader.service';
+
+export * from './auth/identity-tokens.service';
+export * from './auth/auth-guard.service';
+export * from './auth/auth.service';
+export * from './auth/no-auth-guard.service';
 
 export * from './data/user/user.service';
 export * from './data/role/role.service';
