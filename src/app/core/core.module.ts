@@ -28,7 +28,7 @@ import {
   DownloaderService
 } from './services';
 
-import { NotificationComponent } from '../shared/components';
+import { NotificationComponent, LoginPromptComponent } from '../shared/components';
 
 @NgModule({
   declarations: [],
@@ -36,7 +36,8 @@ import { NotificationComponent } from '../shared/components';
     CommonModule
   ],
   entryComponents:[
-    NotificationComponent
+    NotificationComponent,
+    LoginPromptComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },

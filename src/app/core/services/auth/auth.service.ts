@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { ApiService } from '../api.service';
 import { IdentityTokensService } from './identity-tokens.service';
-import { map, distinctUntilChanged, skip, tap, take, catchError } from 'rxjs/operators';
-import {  User } from 'src/app/shared/models';
+import { map, distinctUntilChanged, tap, take, catchError } from 'rxjs/operators';
 import { LocalStorageService } from '../local-storage.service';
 import { DeviceInfoService } from '../device-info.service';
 import { NotificationService } from '../ui/notification.service';
-import { Notifications } from 'src/app/shared/enums';
 import { DataSyncService } from '../data/data-sync.service';
-import { TokenResponse, Credentials } from 'src/app/shared/interfaces';
 import { DateTimeService } from '../utility/date-time.service';
 import { PersistentSubject } from '../data/abstracts/persistent.subject';
-import { Router } from '@angular/router';
+import { Notifications } from 'src/app/shared/enums';
+import { User } from 'src/app/shared/models';
+import { TokenResponse, Credentials } from 'src/app/shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -26,13 +25,12 @@ export class AuthService extends PersistentSubject<User>{
 
   constructor (     
     localStorageService: LocalStorageService,
-    private router: Router,
     private dateTimeService: DateTimeService,
     private apiService: ApiService,
     private tokensService: IdentityTokensService,
     private dataSyncService: DataSyncService,
     private deviceInfoService: DeviceInfoService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
     super(localStorageService, "identity", new User());
 
@@ -80,7 +78,7 @@ export class AuthService extends PersistentSubject<User>{
         this.apiService.get('/auth').subscribe(data => this.dataSubject.next(data));
   }
  
-  hasJwtExpired(): boolean{
+  hasAccessTokenExpired(): boolean{
     let tokenExpiration = this.tokensService.getAccessTokenExpiration();
 
     if(!tokenExpiration) return true;
@@ -133,7 +131,6 @@ export class AuthService extends PersistentSubject<User>{
     this.dataSyncService.purgeAll(); //Clearing resources to prevent bugs if new user
     this.tokensService.destroyTokens();
     this.dataSubject.next({} as User);  // Set current user to an empty object  
-    this.router.navigate(['/login']);
   }
 
   private setAuth(tokenResponse: TokenResponse) {
