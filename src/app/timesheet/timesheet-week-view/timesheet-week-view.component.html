@@ -12,13 +12,13 @@
             (labelClicked)="openTimesheetForm($event)">
           </app-timesheet-day-label>
 
-          <div class="w-100" style="padding: 0 1px 0 1px; z-index:0"
+          <div class="w-100" style="padding: 0 2px 0 2px; z-index:0"
             fxLayout="column" fxLayoutAlign="start center" fxFlex>
               <app-timesheet-mission-bar class="w-100 mb-1 fadeInDown"
                 *ngFor="let timesheet of vm.days[weekDay] | sortByDate: 'startTime';" 
                 [timesheet]="timesheet"
                 (barClicked)="timesheet.status ? openTimesheetCard($event) : openTimesheetForm(undefined, $event)"
-                [style.height.%]="(timesheet.totalHours / 14)*100">
+                [style.height.px]="(timesheet.totalHours / 14)*300">
               </app-timesheet-mission-bar>
           </div>
 
