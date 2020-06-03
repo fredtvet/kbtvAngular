@@ -16,7 +16,8 @@ export class ApiService {
   ) { }
 
   private handleErrors(response: any) {
-    return  throwError(response.error);
+    console.log(response);
+    return  throwError(response.error || 'HttpError ' + response.status);
   }
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
@@ -24,7 +25,7 @@ export class ApiService {
     return this.http.get(`${environment.apiUrl}${path}`, { params })
       .pipe(
         tap(x => this.loadingService.setLoading(false)),
-        catchError(this.handleErrors)
+        catchError(x => this.handleErrors(x))
       );
   }
 
@@ -42,7 +43,7 @@ export class ApiService {
     return this.http.post(`${environment.apiUrl}${path}`, body)
       .pipe(
         tap(x => this.loadingService.setLoading(false)),
-        catchError(this.handleErrors)
+        catchError(x => this.handleErrors(x))
       );
   }
 
