@@ -16,7 +16,6 @@ export class ApiService {
   ) { }
 
   private handleErrors(response: any) {
-    console.log(response);
     return  throwError(response.error || 'HttpError ' + response.status);
   }
 

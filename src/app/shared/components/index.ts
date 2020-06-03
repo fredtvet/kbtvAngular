@@ -14,3 +14,5 @@ export * from './week-list-filter/week-list-filter-sheet-wrapper.component';
 export * from './week-list-filter/week-list-filter.component';
 export * from './swipe-card/swipe-card.component';
 export * from './timesheet-summary-card-content/timesheet-summary-card-content.component';
+export * from './login-prompt/login-prompt.component';
+export * from './login-prompt/login-form/login-form.component';

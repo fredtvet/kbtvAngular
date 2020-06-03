@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard, NoAuthGuard } from './core/services';
-import { AuthComponent } from './auth/auth.component';
 import { CustomPreloadingService } from './custom-preloading.service';
 import { MainNavComponent } from './shared/layout';
 import { PageNotFoundComponent } from './shared/components';
+import { LoginPageComponent } from './login-page.component';
 
 const routes: Routes = [
 
@@ -31,7 +31,7 @@ const routes: Routes = [
         }
     ]
   },
-  {path: 'login', component: AuthComponent, canActivate: [NoAuthGuard]},
+  {path: 'login', component: LoginPageComponent, canActivate: [NoAuthGuard]},
   {path: '**', component: PageNotFoundComponent},
 ];
 

@@ -33,6 +33,8 @@ import {
   BottomSheetMenuComponent,
   SwipeCardComponent
 } from './components';
+import { LoginPromptComponent } from './components/login-prompt/login-prompt.component';
+import { LoginFormComponent } from './components/login-prompt/login-form/login-form.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,8 @@ import {
     FiletypeFromUrlPipe,
     FileiconFromFiletypePipe,
     DetailTopNavComponent,
+    LoginPromptComponent,
+    LoginFormComponent,
   ],
   imports: [
     CommonModule,

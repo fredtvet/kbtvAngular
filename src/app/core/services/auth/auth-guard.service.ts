@@ -12,21 +12,18 @@ import { DialogService } from '../dialog.service';
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private dialogService: DialogService,
     private authService: AuthService,
     private notificaitonService: NotificationService
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
 
-    if(this.authService.hasAccessTokenExpired()){
-        this.authService.refreshToken$().subscribe();
-    }
-
     if(!this.authService.hasTokens()) {
-      //this.router.navigate(['/login']);
-      this.dialogService.openLoginPrompt$().subscribe();
+      this.authService.logout();
       return false;
+    }
+    else if(this.authService.hasAccessTokenExpired()){
+        this.authService.refreshToken$().subscribe();
     }
 
     if(route.data['allowedRoles']){

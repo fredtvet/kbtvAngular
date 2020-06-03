@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError, of, Subject } from 'rxjs';
 import { ApiService } from '../api.service';
 import { IdentityTokensService } from './identity-tokens.service';
 import { map, distinctUntilChanged, tap, take, catchError } from 'rxjs/operators';
@@ -12,6 +12,7 @@ import { PersistentSubject } from '../data/abstracts/persistent.subject';
 import { Notifications } from 'src/app/shared/enums';
 import { User } from 'src/app/shared/models';
 import { TokenResponse, Credentials } from 'src/app/shared/interfaces';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,9 @@ import { TokenResponse, Credentials } from 'src/app/shared/interfaces';
 export class AuthService extends PersistentSubject<User>{
 
   public currentUser$: Observable<User> = this.data$.pipe(distinctUntilChanged());
+  
+  private logoutSubject = new Subject<any>();
+  userLoggedOut$ = this.logoutSubject.asObservable();
 
   private isOnline: boolean = true;
 
@@ -54,7 +58,7 @@ export class AuthService extends PersistentSubject<User>{
   }
 
   refreshToken$(): Observable<TokenResponse>{
-    if(!this.isOnline || !this.hasTokens()) return of(undefined);
+    if(!this.isOnline || !this.hasRefreshToken()) return of(undefined);
     var tokens = this.tokensService.getTokens();
     return this.apiService.post('/Auth/refresh', {accessToken: tokens.accessToken, refreshToken: tokens.refreshToken})
       .pipe(map(tokenResponse => {
@@ -67,10 +71,14 @@ export class AuthService extends PersistentSubject<User>{
   logout(): void{  
     let refreshToken = this.tokensService.getRefreshToken();
 
-    if(this.isOnline && this.hasTokens())
-         this.apiService.post('/Auth/logout', {refreshToken}).pipe(
-             catchError(x => this.purgeAuth)).subscribe(x => this.purgeAuth()); 
-    else this.purgeAuth();
+    if(this.isOnline && this.hasTokens()) //Delete from server if possible to keep clean
+        this.apiService.post('/Auth/logout', {refreshToken}).pipe(
+            catchError(x => {
+                 this._logout();
+                 return throwError(x)
+            })
+        ).subscribe(x => this._logout()); 
+    else this._logout();
   }
 
   populate(): void{
@@ -81,24 +89,22 @@ export class AuthService extends PersistentSubject<User>{
   hasAccessTokenExpired(): boolean{
     let tokenExpiration = this.tokensService.getAccessTokenExpiration();
 
-    if(!tokenExpiration) return true;
+    if(!tokenExpiration) return true; //If no access token expiration set
 
     var now =  this.dateTimeService.getNowInUnixTimeSeconds();
 
-    if (now >= tokenExpiration) return true;
+    if (now >= tokenExpiration) return true; //If access token expired
   
     return false;
   }
 
   hasTokens(): boolean{
     let tokens = this.tokensService.getTokens();
-
-    return !(
-        this.isUndefinedOrNull(tokens) || 
-        this.isUndefinedOrNull(tokens.accessToken) || 
-        this.isUndefinedOrNull(tokens.refreshToken)
-    );
+    return !this.isUndefinedOrNull(tokens) && !this.isUndefinedOrNull(tokens.accessToken) && !this.isUndefinedOrNull(tokens.refreshToken);
   }
+
+  hasRefreshToken = (): boolean => 
+    !this.isUndefinedOrNull(this.tokensService.getRefreshToken())
 
   getAccessToken = () => this.tokensService.getAccessToken();
 
@@ -127,10 +133,11 @@ export class AuthService extends PersistentSubject<User>{
       .put('/auth/changePassword', obj);
   }
 
-  purgeAuth(){
+  private _logout(): void{
     this.dataSyncService.purgeAll(); //Clearing resources to prevent bugs if new user
     this.tokensService.destroyTokens();
     this.dataSubject.next({} as User);  // Set current user to an empty object  
+    this.logoutSubject.next(true);
   }
 
   private setAuth(tokenResponse: TokenResponse) {
@@ -143,6 +150,6 @@ export class AuthService extends PersistentSubject<User>{
     if(tokenResponse.user) this.dataSubject.next(tokenResponse.user);
   }
 
-  private isUndefinedOrNull = (val: any) => val == undefined || val == null;
+  private isUndefinedOrNull = (val: any): boolean => val == undefined || val == null;
 
 }

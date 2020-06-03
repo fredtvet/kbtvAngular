@@ -1,7 +1,6 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthComponent } from './auth/auth.component';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
@@ -14,14 +13,15 @@ import { registerLocaleData } from '@angular/common';
 import norwayLocale from '@angular/common/locales/nb';
 import { TimesheetAdminModule } from './timesheet-admin/timesheet-admin.module';
 import { CustomHammerConfig } from './shared/customizations/custom-hammer-config';
+import { LoginPageComponent } from './login-page.component';
 
 registerLocaleData(norwayLocale, 'nb-NO');
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent,
-    HomeComponent
+    HomeComponent,
+    LoginPageComponent,
   ],
   imports: [
     AppRoutingModule,
