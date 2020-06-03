@@ -41,10 +41,6 @@ export class MissionListComponent{
     this.pageInfoSubject.next(pageInfo)
   }
 
-  createFromPdf = (pdf: File) => {
-    this.missionService.addMissionFromPdfReport$(pdf).subscribe();
-  }
-
   private filterMission(mission: Mission, pageInfo: any){
     let exp = mission.finished == pageInfo.showFinishedMissions;
     exp = exp && (!pageInfo.searchString || 
