@@ -80,7 +80,7 @@ export class MissionImageListComponent extends SubscriptionComponent{
   
   openMailImageSheet = (ids: number[]) => {
     let botRef = this.bottomSheet.open(MailImageSheetComponent, {
-      data: { toEmailPreset: this.mission.employer.email, ids: ids },
+      data: { toEmailPreset: this.mission.employer ? this.mission.employer.email : null, ids: ids },
     });
     botRef
       .afterDismissed()

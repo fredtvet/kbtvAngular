@@ -75,7 +75,7 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
   
   openMailDocumentSheet = (ids: number[]) => {
     let botRef = this.bottomSheet.open(MailDocumentSheetComponent, {
-      data: { toEmailPreset: this.mission.employer.email, ids: ids },
+      data: { toEmailPreset: this.mission.employer ? this.mission.employer.email : null, ids: ids },
     });
     botRef
       .afterDismissed()
