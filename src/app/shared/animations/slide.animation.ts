@@ -13,7 +13,7 @@ export const slideAnimation = animation([
       style({ position: "fixed", width: "100%", height: "100%" }),
       { optional: true }
     ),
-    query(".anim-block", style({ opacity: 0 }), { optional: true }),
+    query(".route-anim-block", style({ opacity: 0 }), { optional: true }),
     group([
       query(
         ":enter",
@@ -36,7 +36,7 @@ export const slideAnimation = animation([
       ),
     ]),
     query(
-      ":enter .anim-block",
+      ":enter .route-anim-block",
       stagger(40, [
         style({ transform: "translateY(100px)" }),
         animate(
@@ -45,5 +45,5 @@ export const slideAnimation = animation([
         ),
       ]),
       { optional: true }
-    ),
+    ),    
   ])
