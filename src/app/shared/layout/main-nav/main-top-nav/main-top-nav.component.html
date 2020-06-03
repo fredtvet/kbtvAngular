@@ -25,7 +25,7 @@
       <span class="ml-1 mat-caption" >{{ config.subTitle }}</span>
     </span>
 
-    <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent"></mat-spinner>
+    <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>
  
     <app-icon-button *ngFor="let button of config.buttons" [config]="button"></app-icon-button>
 
