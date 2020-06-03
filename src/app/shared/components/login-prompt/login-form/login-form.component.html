@@ -1,0 +1,27 @@
+<form [formGroup]="authForm" (ngSubmit)="submitForm()" fxLayout="column">
+    <span class="mat-subheading-2 mb-2">Logg på</span>
+
+    <mat-form-field>
+      <mat-icon matSuffix color="primary">person</mat-icon>
+      <input matInput formControlName="userName" placeholder="Brukernavn" type="text" />
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-icon matSuffix color="primary" (click)="hidePassword = !hidePassword">
+        {{hidePassword ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+      <input matInput formControlName="password" placeholder="Passord" [type]="hidePassword ? 'password' : 'text'" />
+    </mat-form-field>
+
+    <div>
+      <button mat-raised-button appAddToHomeScreen color="accent" class="ml-auto">
+        <mat-icon>get_app</mat-icon> Legg til app
+      </button>
+
+      <button mat-raised-button color="accent" [disabled]="!authForm.valid" type="submit" class="float-right">
+        <mat-icon>lock_open</mat-icon>
+        Logg inn
+      </button>
+    </div>
+
+  </form>
