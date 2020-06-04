@@ -15,7 +15,6 @@ import { TopDefaultNavConfig, AppButton } from 'src/app/shared/interfaces';
 })
 export class UserListComponent {
   Roles = Roles;
-
   users: User[];
 
   users$: Observable<User[]> = this.userService.getAll$().pipe(map(this.sortByRole));
