@@ -10,8 +10,12 @@ export class DialogService {
 
   constructor(private dialog: MatDialog) { }
 
-  openLoginPrompt$(): Observable<boolean>{
-    let ref = this.dialog.open(LoginPromptComponent, {disableClose: true, panelClass: 'extended-dialog'});
+  openLoginPrompt$(returnUrl: string): Observable<boolean>{
+    let ref = this.dialog.open(LoginPromptComponent, {
+      data: {returnUrl},
+      disableClose: true, 
+      panelClass: 'extended-dialog'
+    });
     return ref.afterClosed()
   }
 

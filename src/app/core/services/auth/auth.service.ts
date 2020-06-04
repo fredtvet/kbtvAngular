@@ -21,11 +21,8 @@ import { Router } from '@angular/router';
 export class AuthService extends PersistentSubject<User>{
 
   public currentUser$: Observable<User> = this.data$.pipe(distinctUntilChanged());
-  
-  private logoutSubject = new Subject<any>();
-  userLoggedOut$ = this.logoutSubject.asObservable();
 
-  private _isRefreshingToken: boolean = false;
+  private _isRefreshingToken: boolean = false;//Prevent multiple refresh requests at once
 
   private isOnline: boolean = true;
 
@@ -37,6 +34,7 @@ export class AuthService extends PersistentSubject<User>{
     private dataSyncService: DataSyncService,
     private deviceInfoService: DeviceInfoService,
     private notificationService: NotificationService,
+    private router: Router,
   ) {
     super(localStorageService, "identity", new User());
 
@@ -83,15 +81,14 @@ export class AuthService extends PersistentSubject<User>{
       );
   }
 
-
-  logout(): void{  
+  logout(returnUrl?: string): void{  
     let refreshToken = this.tokensService.getRefreshToken();
 
     if(this.isOnline && !this.hasAccessTokenExpired()  && this.hasTokens()) //Delete from server if possible to keep clean
         this.apiService.post('/Auth/logout', {refreshToken}).pipe(
-          finalize(() => this._logout())
+          finalize(() => this._logout(returnUrl))
         ).subscribe(); 
-    else this._logout();
+    else this._logout(returnUrl);
   }
 
   populate(): void{
@@ -146,11 +143,11 @@ export class AuthService extends PersistentSubject<User>{
       .put('/auth/changePassword', obj);
   }
 
-  private _logout(): void{
+  private _logout(returnUrl: string = this.router.url): void{
     this.dataSyncService.purgeAll(); //Clearing resources to prevent bugs if new user
     this.tokensService.destroyTokens();
-    this.dataSubject.next({} as User);  // Set current user to an empty object  
-    this.logoutSubject.next(true);
+    this.dataSubject.next({} as User);  // Set current user to an empty object 
+    this.router.navigate(['/login'], { queryParams: {returnUrl}})  
   }
 
   private setAuth(tokenResponse: TokenResponse) {

@@ -20,12 +20,12 @@ export class NoAuthGuard implements CanActivate {
   ): boolean {
 
     if(this.authService.hasTokens()){
-      this.router.navigate(['/hjem']);
+      //this.router.navigate(['/hjem']);
       return false;
     }
 
-    this.dialogService.openLoginPrompt$();
-    
+    this.dialogService.openLoginPrompt$(route.queryParams['returnUrl']);
+
     return true;
   }
 }

@@ -40,10 +40,10 @@ export class AppComponent {
 
   ngOnInit(){
 
-    this.authService.userLoggedOut$.pipe(
-      tap(x => this.router.navigate(['/login'])),
-      switchMap(x => this.dialogService.openLoginPrompt$())
-    ).subscribe();
+    // this.authService.userLoggedOut$.pipe(
+    //   tap(x => this.router.navigate(['/login'])),
+    //   //switchMap(x => this.dialogService.openLoginPrompt$())
+    // ).subscribe();
 
     this.iconService.registerIcons();
     

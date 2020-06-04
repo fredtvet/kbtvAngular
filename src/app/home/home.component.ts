@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Mission } from '../shared/models';
-import { Roles, RolePresets } from '../shared/enums';
+import { Roles, RolePresets, Icons } from '../shared/enums';
 import { MissionService, MainNavService, DataSyncService } from '../core/services';
 import { Observable } from 'rxjs';
 import {  map } from 'rxjs/operators';
@@ -37,7 +37,7 @@ export class HomeComponent {
   private configureMainNav(){
     let cfg = {
       title:  "Hjem",
-      buttons: [{icon: "update", callback: this.refresh}] as AppButton[],
+      buttons: [{svgIcon: Icons.Sync, callback: this.refresh}] as AppButton[],
     } as TopDefaultNavConfig;
     this.mainNavService.addTopNavConfig({default: cfg});
   }
