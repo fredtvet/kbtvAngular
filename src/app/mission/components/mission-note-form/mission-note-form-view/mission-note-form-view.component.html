@@ -19,7 +19,10 @@
   <mat-checkbox formControlName="pinned">Viktig?</mat-checkbox>
   <br />
 
-  <app-submit-button [disabled]="noteForm.invalid || noteForm.pristine" (click)="onSubmit()">
-  </app-submit-button>
+  <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
+    [disabled]="noteForm.invalid || noteForm.pristine"
+    (click)="onSubmit()">
+    {{ isCreateForm ? 'Legg til' : 'Oppdater' }}  
+  </button>
 
 </form>

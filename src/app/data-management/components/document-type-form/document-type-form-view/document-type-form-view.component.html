@@ -6,6 +6,9 @@
     </mat-error>
   </mat-form-field>
 
-  <app-submit-button [disabled]="documentTypeForm.invalid || documentTypeForm.pristine" (click)="onSubmit()">
-  </app-submit-button>
+  <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
+    [disabled]="documentTypeForm.invalid || documentTypeForm.pristine"
+    (click)="onSubmit()">
+    Lagre   
+  </button>
 </form>

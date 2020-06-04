@@ -53,9 +53,10 @@
     Last opp forsidebilde: <input (change)="changeFile($event)" type="file">
   </span>
 
-  <app-submit-button 
-    [disabled]="missionForm.invalid || (missionForm.pristine && !this.files)" 
+  <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
+    [disabled]="missionForm.invalid || (missionForm.pristine && !this.files)"
     (click)="onSubmit()">
-  </app-submit-button>
+    {{ isCreateForm ? 'Legg til' : 'Oppdater' }}    
+  </button>
 
 </form>

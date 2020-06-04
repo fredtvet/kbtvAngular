@@ -8,9 +8,11 @@
             Pass på at eposten er skrevet riktig.
         </mat-error>
     </mat-form-field>
-  
-    <app-submit-button text="Send"
-        [disabled]="mailEntityForm.invalid || mailEntityForm.pristine" (click)="onSubmit()">
-    </app-submit-button>
+    
+    <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
+        [disabled]="mailEntityForm.invalid || mailEntityForm.pristine"
+        (click)="onSubmit()">
+        Send   
+    </button>
   
 </form>

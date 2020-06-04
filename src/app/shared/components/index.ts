@@ -1,7 +1,6 @@
 export * from './nav-action.model';
 export * from './confirm-dialog/confirm-dialog.component';
 export * from './notification/notification.component';
-export * from './submit-button/submit-button.component';
 export * from './page-not-found/page-not-found.component';
 export * from './bottom-sheet-menu/bottom-sheet-menu.component';
 export * from './timesheet-filter/timesheet-filter.component';

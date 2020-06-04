@@ -10,9 +10,13 @@
     </mat-form-field>
 
     <input (change)="changeFile($event)" type="file">
+
     <br />
-    <app-submit-button icon="cloud_upload" 
-        [disabled]="documentForm.invalid || documentForm.pristine || !this.files"
+
+    <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
+        [disabled]="documentForm.invalid || documentForm.pristine"
         (click)="onSubmit()">
-    </app-submit-button>
+        <mat-icon>cloud_upload</mat-icon>
+        Last opp   
+    </button>
 </form>

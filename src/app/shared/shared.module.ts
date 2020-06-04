@@ -14,14 +14,13 @@ import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date
 
 import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe, ReadableDurationPipe, DurationPipe, GetDateByDateParamsPipe, ArrayIncludesPipe, GetEmployerByIdPipe, ArrayFromNumberPipe, FiletypeFromUrlPipe, FileiconFromFiletypePipe } from './pipes'
 
-import { InputListenerDirective, ImageErrorReloaderDirective, AddToHomeScreenDirective, IfRoleDirective } from './directives';
+import { InputListenerDirective, ImageErrorReloaderDirective, AddToHomeScreenDirective, IfRoleDirective, HttpCommandButtonDirective } from './directives';
 
 import { MainNavComponent, MainBottomNavComponent, IconButtonComponent,StrokedButtonComponent, MainSideNavContentComponent, SimpleTopNavComponent, MainTopNavComponent, DetailTopNavComponent} from './layout';
 
 import {
   ConfirmDialogComponent,
   NotificationComponent,
-  SubmitButtonComponent,
   PageNotFoundComponent,
   TimesheetFilterComponent,
   TimesheetFilterSheetWrapperComponent,
@@ -46,7 +45,6 @@ import { LoginFormComponent } from './components/login-prompt/login-form/login-f
     ThumbnailPipe,
     SortByDatePipe,
     NotificationComponent,
-    SubmitButtonComponent,
     BottomSheetMenuComponent,
     DurationPipe,
     GetDateByDateParamsPipe,
@@ -76,6 +74,7 @@ import { LoginFormComponent } from './components/login-prompt/login-form/login-f
     DetailTopNavComponent,
     LoginPromptComponent,
     LoginFormComponent,
+    HttpCommandButtonDirective,
   ],
   imports: [
     CommonModule,
@@ -112,13 +111,13 @@ import { LoginFormComponent } from './components/login-prompt/login-form/login-f
     IfRoleDirective,
     AddToHomeScreenDirective,
     InputListenerDirective,
+    HttpCommandButtonDirective,
     ArraySlicePipe,
     ThumbnailPipe,
     SortByDatePipe,
     DurationPipe,
     GetDateByDateParamsPipe,
     MainNavComponent,
-    SubmitButtonComponent,
     PageNotFoundComponent,
     TimesheetFilterSheetWrapperComponent,
     ArrayIncludesPipe,

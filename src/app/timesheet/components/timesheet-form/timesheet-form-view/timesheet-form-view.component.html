@@ -32,7 +32,9 @@
       maxlength="400"></textarea>
   </mat-form-field>
 
-  <app-submit-button [text]="isCreateForm ? 'Legg til' : 'Oppdater'"
-    [disabled]="timesheetForm.invalid || timesheetForm.pristine" (click)="onSubmit()">
-  </app-submit-button>
+  <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
+    [disabled]="timesheetForm.invalid || timesheetForm.pristine"
+    (click)="onSubmit()">
+    {{ isCreateForm ? 'Legg til' : 'Oppdater' }} 
+  </button>
 </form>
