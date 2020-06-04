@@ -22,6 +22,9 @@ export class AuthService extends PersistentSubject<User>{
 
   public currentUser$: Observable<User> = this.data$.pipe(distinctUntilChanged());
 
+  private refreshedAccessToken: Subject<string> = new Subject<string>();
+  refreshedAccessToken$ = this.refreshedAccessToken.asObservable();
+
   private _isRefreshingToken: boolean = false;//Prevent multiple refresh requests at once
 
   private isOnline: boolean = true;
@@ -69,6 +72,7 @@ export class AuthService extends PersistentSubject<User>{
         map(tokens => {
           if(!tokens || !tokens.accessToken || !tokens.accessToken.token)  return this._logout();
           this.setAuth(tokens);
+          this.refreshedAccessToken.next(tokens.accessToken.token);
           return tokens;
         }), 
         catchError(err => { //If refresh returns errors, logout

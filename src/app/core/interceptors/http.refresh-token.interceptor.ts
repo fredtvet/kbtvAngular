@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, throwError } from 'rxjs';
-import { take, filter, switchMap, map } from 'rxjs/operators';
+import { Observable, throwError, Subject } from 'rxjs';
+import { take, switchMap, map } from 'rxjs/operators';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpErrorResponse } from "@angular/common/http";
 import { AuthService } from '../services/auth/auth.service';
 
@@ -8,7 +8,6 @@ import { AuthService } from '../services/auth/auth.service';
 @Injectable()
 
 export class HttpRefreshTokenInterceptor implements HttpInterceptor {
-    private tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
     constructor(private authService:AuthService) {}
 
@@ -42,19 +41,14 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
 
     private handleTokenExpired$(): Observable<string>{
         if (!this.authService.isRefreshingToken) {
-            this.tokenSubject.next(null);
+            console.log('refreshin');
             return this.authService.refreshToken$().pipe(
                 map(tokens => {
-                    if (tokens && tokens.accessToken && tokens.accessToken.token) {
-                        this.tokenSubject.next(tokens.accessToken.token);
-                        return tokens.accessToken.token;
-                    }
+                    if (tokens && tokens.accessToken && tokens.accessToken.token) 
+                        return tokens.accessToken.token;                 
                 }));
-        } else {
-            return this.tokenSubject.pipe(
-                filter(token => token != null),
-                take(1));
-        }
+        } 
+        else return this.authService.refreshedAccessToken$.pipe(take(1));      
     }
 
     private logoutUser(): Observable<any> {
