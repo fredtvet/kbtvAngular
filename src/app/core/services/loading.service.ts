@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { delay, distinctUntilChanged } from 'rxjs/operators';
+import { delay, distinctUntilChanged, shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +8,19 @@ import { delay, distinctUntilChanged } from 'rxjs/operators';
 
 export class LoadingService {
 
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-  public loading$ = this.loadingSubject.asObservable().pipe(distinctUntilChanged());
+  private commandLoadingSubject = new BehaviorSubject<boolean>(false);
+  commandLoading$ = this.commandLoadingSubject.asObservable().pipe(distinctUntilChanged(), shareReplay());
+
+  private queryLoadingSubject = new BehaviorSubject<boolean>(false);
+  queryLoading$ = this.queryLoadingSubject.asObservable().pipe(distinctUntilChanged(), shareReplay());
 
   constructor() { }
 
-  setLoading(loading: boolean){
-    this.loadingSubject.next(loading);
+  setCommandLoading(loading: boolean){
+    this.commandLoadingSubject.next(loading);
+  }
+
+  setQueryLoading(loading: boolean){
+    this.queryLoadingSubject.next(loading);
   }
 }

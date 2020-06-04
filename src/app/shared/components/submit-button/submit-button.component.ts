@@ -14,7 +14,7 @@ export class SubmitButtonComponent {
   @Input() icon: string;
   @Input() text: string = 'Lagre';
 
-  loading$: Observable<boolean> = this.loadingService.loading$.pipe(shareReplay());
+  loading$: Observable<boolean> = this.loadingService.commandLoading$.pipe(shareReplay());
 
   constructor(private loadingService: LoadingService) {}
 }

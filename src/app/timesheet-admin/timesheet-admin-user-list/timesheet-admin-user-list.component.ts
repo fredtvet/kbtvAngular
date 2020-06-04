@@ -12,7 +12,7 @@ export class TimesheetAdminUserListComponent implements OnInit {
 
   users$ = this.userService.getAll$();
   thisYear = new Date().getFullYear();
-  loading$ = this.loadingService.loading$;
+  loading$ = this.loadingService.queryLoading$;
 
   constructor(
     private loadingService: LoadingService,

@@ -2,39 +2,50 @@ import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
-  HttpInterceptor,
-  HttpResponse
+  HttpInterceptor
 } from '@angular/common/http';
-import { tap, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { LoadingService } from '../services/loading.service';
 
 @Injectable()
 export class HttpLoadingInterceptor implements HttpInterceptor {
-  private totalRequests = 0;
+    private totalCommandRequests = 0;
+    private totalQueryRequests = 0;
 
-  constructor(private loadingService: LoadingService) { }
+    constructor(private loadingService: LoadingService) { }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler) {
-    this.totalRequests++;
-    this.loadingService.setLoading(true);
-    return next.handle(request).pipe(
-      tap(res => {
-        if (res instanceof HttpResponse) {
-          this.decreaseRequests();
-        }
-      }),
-      catchError(err => {
-        this.decreaseRequests(); 
-        throw err;
-      })
-    );
-  }
+    intercept(request: HttpRequest<any>, next: HttpHandler) {
+      if(request.method === "GET"){
+        this.totalQueryRequests++;
+        this.loadingService.setQueryLoading(true);
+        return next.handle(request).pipe(finalize(() => this.decreaseQueryRequests()));
+      } else {
+        this.totalCommandRequests++;
+        this.loadingService.setCommandLoading(true);
+        return next.handle(request).pipe(finalize(() => this.decreaseCommandRequests()));
+      }
+        // tap(res => {
+        //   if (res instanceof HttpResponse) {
+        //     this.decreaseRequests();
+        //   }
+        // }),
+        // catchError(err => {
+        //   this.decreaseRequests(); 
+        //   throw err;
+        // })
+    }  
 
-  private decreaseRequests() {
-    this.totalRequests--;
-    if (this.totalRequests === 0) {
-      this.loadingService.setLoading(false);
+    private decreaseCommandRequests() {
+      this.totalCommandRequests--;
+      if (this.totalCommandRequests === 0) {
+        this.loadingService.setCommandLoading(false);
+      }
     }
-  }
+
+    private decreaseQueryRequests() {
+      this.totalQueryRequests--;
+      if (this.totalQueryRequests === 0) {
+        this.loadingService.setQueryLoading(false);
+      }
+    }
 }

@@ -19,7 +19,7 @@ export class DetailTopNavComponent {
   @Input() config: TopDetailNavConfig;
   @Output() menuBtnClicked = new EventEmitter();
   
-  loading$: Observable<boolean> = this.loadingService.loading$;
+  loading$: Observable<boolean> = this.loadingService.queryLoading$;
 
   constructor(
     private _bottomSheet: MatBottomSheet,

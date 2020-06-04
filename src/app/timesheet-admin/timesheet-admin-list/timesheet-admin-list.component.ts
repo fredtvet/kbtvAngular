@@ -31,10 +31,10 @@ export class TimesheetAdminListComponent extends SubscriptionComponent{
 
   activeView$: Observable<{view: TemplateRef<any>, context: any[]}>;
     
-  loading$ = this._loadingService.loading$;
+  loading$ = this.loadingService.queryLoading$;
 
   constructor(
-    private _loadingService: LoadingService,
+    private loadingService: LoadingService,
     private timesheetService: TimesheetService,
     private mainNavService: MainNavService,
     private route: ActivatedRoute,

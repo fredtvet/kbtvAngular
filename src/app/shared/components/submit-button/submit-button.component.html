@@ -3,7 +3,10 @@
     color="primary"
     [disabled]="disabled || (loading$ | async)"
     [class.spinner]="loading$ | async">
+
     <mat-icon *ngIf="icon && !(loading$ | async)">{{ icon }}</mat-icon>
+
     {{(loading$ | async) ? '&nbsp;' : text }}
+    
   </button>
 

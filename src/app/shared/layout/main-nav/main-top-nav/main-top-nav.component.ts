@@ -16,7 +16,7 @@ export class MainTopNavComponent implements OnInit {
   @Input() config: TopDefaultNavConfig;
   @Output() menuBtnClicked = new EventEmitter();
   
-  loading$: Observable<boolean> = this.loadingService.loading$;
+  loading$: Observable<boolean> = this.loadingService.queryLoading$;
 
   constructor(
     private _bottomSheet: MatBottomSheet,
