@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Credentials } from '../../interfaces/credentials.interface';
 import { tap } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { DataSyncService } from 'src/app/core/services/data/data-sync.service';
 @Component({
   selector: 'app-login-prompt',
   templateUrl: './login-prompt.component.html',
-  styleUrls: ['./login-prompt.component.scss']
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPromptComponent implements OnInit {
 
