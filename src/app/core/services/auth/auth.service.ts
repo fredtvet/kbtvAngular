@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, of, Subject } from 'rxjs';
 import { ApiService } from '../api.service';
 import { IdentityTokensService } from './identity-tokens.service';
-import { map, distinctUntilChanged, tap, take, catchError } from 'rxjs/operators';
+import { map, distinctUntilChanged, tap, take, catchError, finalize } from 'rxjs/operators';
 import { LocalStorageService } from '../local-storage.service';
 import { DeviceInfoService } from '../device-info.service';
 import { NotificationService } from '../ui/notification.service';
@@ -25,6 +25,8 @@ export class AuthService extends PersistentSubject<User>{
   private logoutSubject = new Subject<any>();
   userLoggedOut$ = this.logoutSubject.asObservable();
 
+  private _isRefreshingToken: boolean = false;
+
   private isOnline: boolean = true;
 
   constructor (     
@@ -41,9 +43,9 @@ export class AuthService extends PersistentSubject<User>{
     this.deviceInfoService.isOnline$.subscribe(res =>this.isOnline = res)
   }
 
-  get currentUser() {
-    return this.dataSubject.value
-  }
+  get currentUser() { return this.dataSubject.value }
+  
+  get isRefreshingToken() { return this._isRefreshingToken }
 
   attemptAuth$(credentials: Credentials): Observable<User> {
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å logge inn.')
@@ -58,26 +60,37 @@ export class AuthService extends PersistentSubject<User>{
   }
 
   refreshToken$(): Observable<TokenResponse>{
-    if(!this.isOnline || !this.hasRefreshToken()) return of(undefined);
+    if(this.isRefreshingToken || !this.isOnline || !this.hasTokens()) return of(undefined);
+
+    this._isRefreshingToken = true;
+
     var tokens = this.tokensService.getTokens();
+
     return this.apiService.post('/Auth/refresh', {accessToken: tokens.accessToken, refreshToken: tokens.refreshToken})
-      .pipe(map(tokenResponse => {
-        this.setAuth(tokenResponse);
-        return tokenResponse;
-      }
-    ));
+      .pipe(
+        map(tokens => {
+          if(!tokens || !tokens.accessToken || !tokens.accessToken.token)  return this._logout();
+          this.setAuth(tokens);
+          return tokens;
+        }), 
+        catchError(err => { //If refresh returns errors, logout
+          this._logout();
+          return throwError(err);
+        }),
+        finalize(() => {
+            this._isRefreshingToken = false;
+        })
+      );
   }
+
 
   logout(): void{  
     let refreshToken = this.tokensService.getRefreshToken();
 
-    if(this.isOnline && this.hasTokens()) //Delete from server if possible to keep clean
+    if(this.isOnline && !this.hasAccessTokenExpired()  && this.hasTokens()) //Delete from server if possible to keep clean
         this.apiService.post('/Auth/logout', {refreshToken}).pipe(
-            catchError(x => {
-                 this._logout();
-                 return throwError(x)
-            })
-        ).subscribe(x => this._logout()); 
+          finalize(() => this._logout())
+        ).subscribe(); 
     else this._logout();
   }
 

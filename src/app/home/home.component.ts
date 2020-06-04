@@ -1,10 +1,10 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Mission } from '../shared/models';
 import { Roles, RolePresets } from '../shared/enums';
-import { MissionService, MainNavService } from '../core/services';
+import { MissionService, MainNavService, DataSyncService } from '../core/services';
 import { Observable } from 'rxjs';
 import {  map } from 'rxjs/operators';
-import { TopDefaultNavConfig } from '../shared/interfaces';
+import { TopDefaultNavConfig, AppButton } from '../shared/interfaces';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +19,7 @@ export class HomeComponent {
   missionHistory$: Observable<Mission[]>;
 
   constructor(
+    private dataSyncService: DataSyncService,
     private mainNavService: MainNavService,
     private missionService: MissionService) {
     this.configureMainNav();
@@ -30,9 +31,14 @@ export class HomeComponent {
       return sorted.slice(0,4);
     }))
   }
-  
+
+  private refresh = () => this.dataSyncService.syncAll();
+
   private configureMainNav(){
-    let cfg = {title:  "Hjem"} as TopDefaultNavConfig;
+    let cfg = {
+      title:  "Hjem",
+      buttons: [{icon: "update", callback: this.refresh}] as AppButton[],
+    } as TopDefaultNavConfig;
     this.mainNavService.addTopNavConfig({default: cfg});
   }
   

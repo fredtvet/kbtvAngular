@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
-import { take, filter, catchError, switchMap, finalize, tap, map } from 'rxjs/operators';
+import { take, filter, switchMap } from 'rxjs/operators';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpErrorResponse } from "@angular/common/http";
 import { AuthService } from '../services/auth/auth.service';
-import { DialogService } from '../services/dialog.service';
 
 
 @Injectable()
 
 export class HttpRefreshTokenInterceptor implements HttpInterceptor {
-    isRefreshingToken: boolean = false;
     tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
     constructor(private authService:AuthService) {}
@@ -21,44 +19,36 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-        if(this.authService.hasAccessTokenExpired() && this.authService.hasTokens() && !this.isRefreshRequest(req)) 
+        console.log(req.url);    
+        if(this.isLoginRequest(req)) return next.handle(req); //Dont mess with login requests
+
+        if(!this.authService.hasTokens()){ //If one or more tokens are missing, logout
+            if(!this.isLogoutRequest(req)){ //Dont logout if request is logout (handled in auth service elsewhere)
+                console.log(1, !!this.authService.hasTokens() && !this.isLoginRequest(req));
+                return this.logoutUser(); 
+            }else 
+                return throwError('Cant log out without tokens')
+        }
+ 
+        //Dont handle expired tokens on refresh requests, nor if any token is missing.
+        if(this.authService.hasAccessTokenExpired() && !this.isRefreshRequest(req)){
+            console.log(2, this.authService.hasAccessTokenExpired() && !this.isRefreshRequest(req));               
             return this.handleTokenExpired$().pipe(switchMap(x =>{ return next.handle(this.addToken(req, x)) }));
-
-        if(!this.authService.hasTokens() && this.isRefreshRequest(req)) return this.logoutUser(); 
-
-        if(this.isRefreshRequest(req)){
-            return next.handle(req).pipe(
-                catchError((error: HttpErrorResponse) => { 
-                    if(this.isInvalidRefreshTokenError(error)) return this.logoutUser();               
-                    else return throwError(error);             
-                }));
-        } 
+        }  
+        
+        console.log(3, 'default');
         return next.handle(this.addToken(req, this.authService.getAccessToken()));
     }
 
-    private isInvalidRefreshTokenError = (error: HttpErrorResponse) => 
-        error && error.status === 400 && error.error == "invalid_grant"
-
     private handleTokenExpired$(): Observable<string>{
-        if (!this.isRefreshingToken) {
-            this.isRefreshingToken = true;
-
+        if (!this.authService.isRefreshingToken) {
             return this.authService.refreshToken$().pipe(
                 switchMap(tokens => {
                     if (tokens && tokens.accessToken && tokens.accessToken.token) {
                         this.tokenSubject.next(tokens.accessToken.token);
                         return tokens.accessToken.token;
                     }
-                   // If we don't get a new token, we are in trouble so logout.
-                    return this.logoutUser();
-                }),
-                catchError(error => {
-                    // If there is an exception calling 'refreshToken', bad news so logout.
-                    return this.logoutUser();
-                }),
-                finalize(() => {
-                    this.isRefreshingToken = false;
-                }),);
+                }));
         } else {
             return this.tokenSubject.pipe(
                 filter(token => token != null),
@@ -67,10 +57,13 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
     }
 
     private logoutUser(): Observable<any> {
-        // Route to the login page (implementation up to you)
         this.authService.logout();
         return throwError("Noe gikk galt");
     }
 
+    private isLoginRequest = (req: HttpRequest<any>) => req.url.includes("Auth/login");
+
     private isRefreshRequest = (req: HttpRequest<any>): boolean => req.url.includes("Auth/refresh");
+
+    private isLogoutRequest = (req: HttpRequest<any>): boolean => req.url.includes("Auth/logout");
 }

@@ -17,7 +17,6 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
-
     if(!this.authService.hasTokens()) {
       this.authService.logout();
       return false;
