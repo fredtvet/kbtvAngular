@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
-import { take, filter, switchMap } from 'rxjs/operators';
+import { take, filter, switchMap, map } from 'rxjs/operators';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpErrorResponse } from "@angular/common/http";
 import { AuthService } from '../services/auth/auth.service';
 
@@ -8,18 +8,12 @@ import { AuthService } from '../services/auth/auth.service';
 @Injectable()
 
 export class HttpRefreshTokenInterceptor implements HttpInterceptor {
-    tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+    private tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
     constructor(private authService:AuthService) {}
 
-    addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
-        return req.clone({ setHeaders: { 
-            Authorization: `Bearer ${token}`,
-         }})
-    }
-
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-        console.log(req.url);    
+        console.log(req);    
         if(this.isLoginRequest(req)) return next.handle(req); //Dont mess with login requests
 
         if(!this.authService.hasTokens()){ //If one or more tokens are missing, logout
@@ -40,10 +34,18 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
         return next.handle(this.addToken(req, this.authService.getAccessToken()));
     }
 
+    private addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
+        console.log(token);
+        return req.clone({ setHeaders: { 
+            Authorization: `Bearer ${token}`,
+         }})
+    }
+
     private handleTokenExpired$(): Observable<string>{
         if (!this.authService.isRefreshingToken) {
+            this.tokenSubject.next(null);
             return this.authService.refreshToken$().pipe(
-                switchMap(tokens => {
+                map(tokens => {
                     if (tokens && tokens.accessToken && tokens.accessToken.token) {
                         this.tokenSubject.next(tokens.accessToken.token);
                         return tokens.accessToken.token;
