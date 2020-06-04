@@ -35,7 +35,6 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
     }
 
     private addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
-        console.log(token);
         return req.clone({ setHeaders: { 
             Authorization: `Bearer ${token}`,
          }})
