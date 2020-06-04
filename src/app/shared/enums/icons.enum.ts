@@ -6,5 +6,8 @@ export enum Icons{
     DefaultFile = "default",
     ImageFile = "image",
     Invoice = "invoice",
-    InvoiceDollar = "invoice-dollar"
+    InvoiceDollar = "invoice-dollar",
+    History = "history",
+    Sync = "sync-alt",
+    SyncAlt = "sync"
 }
