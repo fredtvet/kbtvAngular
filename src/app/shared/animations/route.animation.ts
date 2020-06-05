@@ -16,11 +16,25 @@ export const routeAnimation = trigger("routeAnimation", [
   transition("* => Home", useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 
-  transition("* => Users", useAnimation(slideAnimation,
-    {params: slideForwardParams})),
-
   transition("Home => MissionList", useAnimation(slideAnimation,
     {params: slideForwardParams})),   
+  transition("Home => MissionDetails", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+  transition("Home => TimesheetWeekView", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+  transition("Home => TimesheetAdminUserList", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+  
+  transition("* => Profile", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+  transition("Profile => *", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+    
+  transition("* => Users", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+  transition("Users => *", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+
   transition("MissionList => MissionDetails", useAnimation(slideAnimation, 
     {params: slideForwardParams})),
   transition("MissionDetails => MissionList", useAnimation(slideAnimation, 
@@ -41,13 +55,15 @@ export const routeAnimation = trigger("routeAnimation", [
   transition("MissionNotes => MissionDetails", useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 
+  transition("MissionDetails => TimesheetList", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+  transition("TimesheetList => MissionDetails", useAnimation(slideAnimation,
+    {params: slideBackwardParams})),
+
   transition("TimesheetWeekView => MissionList", useAnimation(slideAnimation,
     {params: slideBackwardParams})),
   transition("MissionList => TimesheetWeekView", useAnimation(slideAnimation,
     {params: slideForwardParams})),
-
-  transition("Home => TimesheetAdminUserList", useAnimation(slideAnimation,
-    {params: slideForwardParams})),  
   
   transition("TimesheetWeekView => TimesheetWeekList", useAnimation(slideAnimation,
     {params: slideBackwardParams})),
@@ -59,7 +75,8 @@ export const routeAnimation = trigger("routeAnimation", [
   transition("TimesheetList => TimesheetWeekView", useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 
-
+  transition("TimesheetAdminUserList => TimesheetAdminList", useAnimation(slideAnimation,
+    {params: slideForwardParams})),
   transition("TimesheetAdminList => TimesheetAdminUserList", useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 

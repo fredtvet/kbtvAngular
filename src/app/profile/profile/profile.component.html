@@ -2,7 +2,7 @@
 <mat-tab-group mat-stretch-tabs color="accent">
 
     <mat-tab label="Profil">
-      <div class="p-2 fadeInLeft">
+      <div class="p-2">
         <app-profile-form *ngIf="user$ | async; let user"
           [user]="user"
           (profileUpdated)="updateProfile($event)">

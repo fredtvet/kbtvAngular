@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import {
@@ -8,14 +7,13 @@ import {
    MatIconModule,
    MatBadgeModule,
    MatSidenavModule,
-   MatListModule, 
+   MatListModule, //remove
    MatProgressSpinnerModule,
    MatFormFieldModule,
    MatInputModule,
    MatSelectModule,
    MatRadioModule,
    MatTooltipModule,
-   MatExpansionModule,
    MatTabsModule,
    MatMenuModule,
    MatSnackBarModule,
@@ -34,7 +32,6 @@ import {
 
 @NgModule({
    imports: [
-      CommonModule,
       MatButtonModule,
       MatToolbarModule,
       MatIconModule,
@@ -46,7 +43,6 @@ import {
       MatSelectModule,
       MatRadioModule,
       MatTooltipModule,
-      MatExpansionModule,
       MatTabsModule,
       MatMenuModule,
       MatSnackBarModule,

@@ -25,21 +25,21 @@
   <ng-container *ifRole="[Roles.Leder]">
     <span class="mat-body-2 route-anim-block">Administrering</span>
 
-    <app-list-card text="Administrer timer" startIcon="date_range" [routerLink]="['/timeadministrering']">
+    <app-list-card text="Administrer timer" startIcon="date_range" panelClass="route-anim-block" [routerLink]="['/timeadministrering']">
     </app-list-card>
-    <app-list-card text="Administrer data" startIcon="dns" [routerLink]="['/data']">
+    <app-list-card text="Administrer data" startIcon="dns" panelClass="route-anim-block"[routerLink]="['/data']">
     </app-list-card>
-    <app-list-card text="Administrer brukere" startIcon="people" [routerLink]="['/brukere']">
+    <app-list-card text="Administrer brukere" startIcon="people" panelClass="route-anim-block" [routerLink]="['/brukere']">
     </app-list-card>
 
     <span class="mat-body-2 route-anim-block">Statistikk</span>
-    <app-list-card text="Timestatistikk" startIcon="assessment" [routerLink]="['/timestatistikk']">
+    <app-list-card text="Timestatistikk" startIcon="assessment" panelClass="route-anim-block" [routerLink]="['/timestatistikk']">
     </app-list-card>
   </ng-container>
 
   <span class="mat-body-2 route-anim-block">Sist besøkte oppdrag</span>
 
-  <app-list-card *ngFor="let mission of missionHistory$ | async" startIcon="history"
+  <app-list-card *ngFor="let mission of missionHistory$ | async" startIcon="history" panelClass="route-anim-block"
     [endIcon]="mission.finished ? 'check':'chevron_right'" [text]="mission.address"
     [routerLink]="['/oppdrag', mission.id, 'detaljer']">
   </app-list-card>
