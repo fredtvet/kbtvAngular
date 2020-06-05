@@ -24,7 +24,7 @@ export class UserSubject {
   }
 
   addOrUpdate(user: User): void{
-    if(this.usersSubject.value !== undefined && !this.usersSubject.value.find(e => e.userName == user.userName)) {
+    if(this.usersSubject.value && !this.usersSubject.value.find(e => e.userName == user.userName)) {
       const arr = [user, ...this.usersSubject.value]
       this.usersSubject.next(arr);
     }
@@ -47,6 +47,6 @@ export class UserSubject {
   }
 
   get isEmpty(): boolean {
-    return (this.usersSubject.value === undefined || this.usersSubject.value.length == 0);
+    return (!this.usersSubject.value || this.usersSubject.value.length == 0);
   }
 }

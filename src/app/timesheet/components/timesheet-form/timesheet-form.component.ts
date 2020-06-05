@@ -47,6 +47,7 @@ export class TimesheetFormComponent implements OnInit {
   }
 
   onSubmit(timesheet: Timesheet): void{
+    if(!timesheet || timesheet == null) this.finished.emit(null);
     if(this.isCreateForm) this.createTimesheet(timesheet)
     else this.editTimesheet(timesheet);
   }

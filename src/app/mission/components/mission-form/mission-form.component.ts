@@ -33,7 +33,7 @@ export class MissionFormComponent {
   }
 
   onSubmit(result: any): void{
-    if(result || result == null) this.finished.emit(null);
+    if(!result || result == null) this.finished.emit(null);
     else if(!this.isCreateForm) this.editMission(result);
     else this.createMission(result);
   }

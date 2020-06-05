@@ -28,7 +28,7 @@ export class TimesheetFormViewComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder) {this.initTime.setHours(6,0,0,0);}
 
   ngOnInit(){
-    if(this.timesheet || this.timesheet == null)this.isCreateForm = true;
+    if(!this.timesheet || this.timesheet == null)this.isCreateForm = true;
     else this.timesheet.mission = this.missions.find(x => x.id == this.timesheet.missionId);
 
     this.initalizeForm(this.timesheet);

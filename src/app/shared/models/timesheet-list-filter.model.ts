@@ -17,15 +17,15 @@ export class TimesheetListFilter implements TimesheetFilter {
     checkTimesheet(t: Timesheet): boolean{
         let exp = t.status == this.status;
 
-        if(this.userName !== undefined)
+        if(this.userName && this.userName !== null)
             exp = exp && t.userName == this.userName;
             
-        if(this.dateRange !== undefined && this.dateRange !== null) {
+        if(this.dateRange && this.dateRange !== null) {
             let date = new Date(t.startTime);
             exp = exp && date >= this.dateRange[0] && date <= this.dateRange[1]; 
         }
     
-        if(this.mission !== undefined && this.mission !== null) 
+        if(this.mission && this.mission !== null) 
             exp = exp && t.missionId == this.mission.id;  
     
         return exp

@@ -33,7 +33,7 @@ export class MissionFormViewComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder) {}
 
   ngOnInit(){
-    if(this.mission || this.mission == null) this.isCreateForm = true;
+    if(!this.mission || this.mission == null) this.isCreateForm = true;
     console.log(this.isCreateForm);
     this.initalizeForm(this.mission);
   }
