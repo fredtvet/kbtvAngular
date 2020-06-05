@@ -69,7 +69,6 @@ import {
       MatSelectModule,
       MatRadioModule,
       MatTooltipModule,
-      MatExpansionModule,
       MatTabsModule,
       MatMenuModule,
       MatSnackBarModule,
