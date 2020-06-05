@@ -17,8 +17,6 @@ export class AppComponent {
 
   constructor(
     appRef: ApplicationRef,
-    private router: Router,
-    private dialogService: DialogService,
     private iconService: IconService,
     private downloaderService: DownloaderService,
     private authService: AuthService,
@@ -39,17 +37,11 @@ export class AppComponent {
   }
 
   ngOnInit(){
-
-    // this.authService.userLoggedOut$.pipe(
-    //   tap(x => this.router.navigate(['/login'])),
-    //   //switchMap(x => this.dialogService.openLoginPrompt$())
-    // ).subscribe();
-
     this.iconService.registerIcons();
     
     this.authService.populate();
 
-    this.downloaderService.downloadableUrl$.subscribe(this.downloadUrl);
+    this.downloaderService.downloadableUrl$.subscribe(this.downloadUrl); 
 
     this.deviceInfoService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
       if(isOnline) this.notificationService.setNotification('Du er tilkoblet internett igjen!')

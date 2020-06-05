@@ -15,7 +15,7 @@
 
 </div>
 
-<button *ifRole="[Roles.Leder, Roles.Mellomleder]" mat-fab aria-label="ny" class="action_fab"
+<button appHttpCommandButton *ifRole="[Roles.Leder, Roles.Mellomleder]" mat-fab aria-label="ny" class="action_fab"
     (click)="openMissionForm()">
     <mat-icon>add</mat-icon>
 </button>

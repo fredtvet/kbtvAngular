@@ -8,11 +8,11 @@ import { PageNotFoundComponent } from './shared/components';
 import { LoginPageComponent } from './login-page.component';
 
 const routes: Routes = [
-
+  {path: '', component: LoginPageComponent, canActivate: [NoAuthGuard]},
   {
     path: '', component: MainNavComponent,
     children:[
-      {path: '', redirectTo: 'hjem', pathMatch: 'full'},
+      // {path: '', redirectTo: 'hjem', pathMatch: 'full'},
       {path: 'hjem', component: HomeComponent, pathMatch: 'full', 
         canActivate: [AuthGuard], data: {animation: 'Home'}},
       {path: 'profil', loadChildren: './profile/profile.module#ProfileModule', 

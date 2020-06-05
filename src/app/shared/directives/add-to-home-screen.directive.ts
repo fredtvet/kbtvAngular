@@ -26,6 +26,9 @@ export class AddToHomeScreenDirective {
   onClick() {
     // hide our user interface that shows our A2HS button
     this.elementRef.nativeElement.style.display = 'none';
+
+    if(!this.deferredPrompt) return undefined;
+    
     // Show the prompt
     this.deferredPrompt.prompt();
     // Wait for the user to respond to the prompt

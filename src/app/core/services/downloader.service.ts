@@ -6,7 +6,7 @@ import { delay, tap, timeInterval } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class DownloaderService {
-
+  //iframe in app container receiving files to download
   private downloadableUrlSubject = new Subject<string>();
   downloadableUrl$ = this.downloadableUrlSubject.asObservable();
 

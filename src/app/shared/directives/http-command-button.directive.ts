@@ -46,6 +46,4 @@ export class HttpCommandButtonDirective {
     if(this.loadingSub) this.loadingSub.unsubscribe();
   }
 
-
-
 }

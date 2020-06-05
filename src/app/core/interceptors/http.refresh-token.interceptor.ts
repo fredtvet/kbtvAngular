@@ -12,12 +12,12 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
     constructor(private authService:AuthService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-        console.log(req);    
+        //console.log(req);    
         if(this.isLoginRequest(req)) return next.handle(req); //Dont mess with login requests
 
         if(!this.authService.hasTokens()){ //If one or more tokens are missing, logout
             if(!this.isLogoutRequest(req)){ //Dont logout if request is logout (handled in auth service elsewhere)
-                console.log(1, !!this.authService.hasTokens() && !this.isLoginRequest(req));
+                //console.log(1, !!this.authService.hasTokens() && !this.isLoginRequest(req));
                 return this.logoutUser(); 
             }else 
                 return throwError('Cant log out without tokens')
@@ -25,11 +25,11 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
  
         //Dont handle expired tokens on refresh requests, nor if any token is missing.
         if(this.authService.hasAccessTokenExpired() && !this.isRefreshRequest(req)){
-            console.log(2, this.authService.hasAccessTokenExpired() && !this.isRefreshRequest(req));               
+            //console.log(2, this.authService.hasAccessTokenExpired() && !this.isRefreshRequest(req));               
             return this.handleTokenExpired$().pipe(switchMap(x =>{ return next.handle(this.addToken(req, x)) }));
         }  
         
-        console.log(3, 'default');
+        //console.log(3, 'default');
         return next.handle(this.addToken(req, this.authService.getAccessToken()));
     }
 
@@ -41,7 +41,7 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
 
     private handleTokenExpired$(): Observable<string>{
         if (!this.authService.isRefreshingToken) {
-            console.log('refreshin');
+            //console.log('refreshin');
             return this.authService.refreshToken$().pipe(
                 map(tokens => {
                     if (tokens && tokens.accessToken && tokens.accessToken.token) 

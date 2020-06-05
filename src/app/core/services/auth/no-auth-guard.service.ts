@@ -8,7 +8,7 @@ import { DialogService } from '../dialog.service';
 })
 
 export class NoAuthGuard implements CanActivate {
-  constructor(
+  constructor(   
     private router: Router,
     private authService: AuthService,
     private dialogService: DialogService
@@ -19,12 +19,15 @@ export class NoAuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean {
 
-    if(this.authService.hasTokens()){
-      //this.router.navigate(['/hjem']);
+    let returnUrl = route.queryParams['returnUrl'];  
+
+    if(this.authService.hasTokens()){   
+      if(returnUrl) this.router.navigateByUrl(returnUrl);
+      else this.router.navigate(['hjem']);
       return false;
     }
 
-    this.dialogService.openLoginPrompt$(route.queryParams['returnUrl']);
+    this.dialogService.openLoginPrompt$(returnUrl);
 
     return true;
   }
