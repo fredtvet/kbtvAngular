@@ -1,5 +1,5 @@
-import { Employer } from '../../models/employer.model';
-import { MissionType } from '../../models/mission-type.model';
+import { Employer } from '../models/employer.interface';
+import { MissionType } from '../models/mission-type.interface';
 
 export interface CreateMission extends BaseMission {}
 

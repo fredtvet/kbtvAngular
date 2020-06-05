@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { DateRangePresets } from '../../enums/date-range-presets.enum';
 import { TimesheetStatus } from '../../enums/timesheet-status.enum';
-import { Mission } from '../../models/mission.model';
+import { Mission } from '../../interfaces/models/mission.interface';
 import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
 import { TimesheetFilter } from '../../interfaces';
-import { User } from '../../models/user.model';
+import { User } from '../../interfaces/models/user.interface';
 import { OwlDateTimeComponent } from 'ng-pick-datetime';
 
 @Component({

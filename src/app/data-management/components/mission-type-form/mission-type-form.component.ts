@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
-import { MissionType } from 'src/app/shared/models';
+import { MissionType } from 'src/app/shared/interfaces/models';
 import { MissionTypeService } from 'src/app/core/services';
 
 @Component({

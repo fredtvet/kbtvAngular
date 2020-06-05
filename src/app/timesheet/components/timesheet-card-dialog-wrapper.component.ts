@@ -1,9 +1,8 @@
 import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserTimesheetService } from 'src/app/core/services';
-import { Timesheet } from 'src/app/shared/models';
-import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-timesheet-card-dialog-wrapper',

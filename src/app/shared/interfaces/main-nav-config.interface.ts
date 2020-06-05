@@ -1,5 +1,5 @@
 import { AppButton } from './app-button.interface';
-import { User } from '../models';
+import { User } from '../interfaces/models';
 
 export interface MainNavConfig{
     isXs?: boolean;

@@ -1,4 +1,4 @@
-import { Timesheet } from 'src/app/shared/models';
+import { Timesheet } from 'src/app/shared/interfaces/models';
 import { TimesheetStatus } from 'src/app/shared/enums';
 import { NotificationService } from '../../ui/notification.service';
 import { ApiService } from '../../api.service';

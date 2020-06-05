@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Roles, RolePresets, LayoutTopNavs } from '../../shared/enums';
-import { Mission } from 'src/app/shared/models';
+import { Roles, RolePresets } from '../../shared/enums';
+import { Mission } from 'src/app/shared/interfaces/models';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { NotificationService, MissionService, MissionImageService, MissionDocumentService, MissionNoteService, MainNavService} from 'src/app/core/services';
 import { tap, filter, map } from 'rxjs/operators';

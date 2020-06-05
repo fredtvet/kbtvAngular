@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DeviceInfoService, DataSyncService } from 'src/app/core/services';
-import { User } from 'src/app/shared/models/user.model';
+import { DeviceInfoService } from 'src/app/core/services';
+import { User } from 'src/app/shared/interfaces/models/user.interface';
 import { Roles, RolePresets } from 'src/app/shared/enums/roles.enum';
 
 @Component({

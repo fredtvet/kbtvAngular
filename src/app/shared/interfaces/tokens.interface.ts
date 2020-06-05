@@ -1,4 +1,4 @@
-import { User } from '../models/user.model';
+import { User } from '../interfaces/models/user.interface';
 
 export interface TokenResponse {
   accessToken: AccessToken;

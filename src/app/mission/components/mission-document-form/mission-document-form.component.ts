@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
-import { DocumentType } from 'src/app/shared/models';
+import { AppDocumentType } from 'src/app/shared/interfaces/models';
 import { DocumentTypeService, MissionDocumentService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,7 @@ export class MissionDocumentFormComponent{
   @Input() missionId: number;
   @Output() finished = new EventEmitter();
 
-  documentTypes$: Observable<DocumentType[]>;
+  documentTypes$: Observable<AppDocumentType[]>;
 
   constructor(
     private missionDocumentService: MissionDocumentService,

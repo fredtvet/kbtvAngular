@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MissionImageSubject } from './mission-image.subject';
 import { ApiService } from '../../api.service';
 import { BaseMissionChildService } from '../abstracts/base-mission-child.service';
-import { MissionImage } from 'src/app/shared/models';
+import { MissionImage } from 'src/app/shared/interfaces/models';
 import { Notifications } from 'src/app/shared/enums';
 import { Observable, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';

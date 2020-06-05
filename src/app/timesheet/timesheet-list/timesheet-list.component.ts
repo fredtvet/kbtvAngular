@@ -3,12 +3,13 @@ import { UserTimesheetService, DateTimeService, MainNavService } from "src/app/c
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { TimesheetStatus, DateRangePresets } from "src/app/shared/enums";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Mission, TimesheetListFilter, Timesheet } from "src/app/shared/models";
+import { Mission, Timesheet } from "src/app/shared/interfaces/models";
 import { BehaviorSubject, Observable } from "rxjs";
-import { switchMap,filter, tap} from "rxjs/operators";
+import { switchMap, filter } from "rxjs/operators";
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared/components';
 import { TimesheetFormSheetWrapperComponent } from '../components/timesheet-form/timesheet-form-sheet-wrapper.component';
 import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
+import { TimesheetListFilter } from 'src/app/shared/models';
 
 @Component({
   selector: "app-timesheet-list",

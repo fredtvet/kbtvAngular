@@ -1,14 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { EmployerService } from 'src/app/core/services';
-import { Employer } from '../models';
 import { SubscriptionComponent } from '../components/abstracts/subscription.component';
 import { takeUntil } from 'rxjs/operators';
+import { Employer } from '../interfaces/models/employer.interface';
 
 @Pipe({
   name: 'getEmployerById',
-  pure: false
-  
+  pure: false 
 })
+
 export class GetEmployerByIdPipe extends SubscriptionComponent implements PipeTransform {
 
   result: Employer = null;

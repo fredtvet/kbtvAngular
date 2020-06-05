@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Mission, Timesheet } from 'src/app/shared/models';
+import { Mission, Timesheet } from "src/app/shared/interfaces/models";
 import { Roles } from 'src/app/shared/enums';
 import { switchMap, tap } from 'rxjs/operators';
 import { UserTimesheetService, MissionService, NotificationService, DateTimeService } from 'src/app/core/services';

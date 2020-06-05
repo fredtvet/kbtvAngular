@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DocumentType } from 'src/app/shared/models';
+import { AppDocumentType } from 'src/app/shared/interfaces/models';
 import { BaseService } from '../abstracts/base.service';
 import { ApiService } from '../../api.service';
 import { DocumentTypeSubject } from './document-type.subject';
@@ -11,7 +11,7 @@ import { NotificationService } from '../../ui/notification.service';
   providedIn: 'root'
 })
 
-export class DocumentTypeService extends BaseService<DocumentType> {
+export class DocumentTypeService extends BaseService<AppDocumentType> {
 
   constructor(
     notificationService: NotificationService,

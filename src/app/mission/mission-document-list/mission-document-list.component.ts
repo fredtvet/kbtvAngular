@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MissionDocument, Mission } from 'src/app/shared/models';
+import { Component, ViewChild } from '@angular/core';
+import { MissionDocument, Mission } from 'src/app/shared/interfaces/models';
 import { Observable, combineLatest } from 'rxjs';
 import { MissionDocumentService, MainNavService, NotificationService, MissionService, DocumentTypeService, DownloaderService, DeviceInfoService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';

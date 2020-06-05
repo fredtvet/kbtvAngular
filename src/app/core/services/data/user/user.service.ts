@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { User } from 'src/app/shared/models';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { UserSubject } from './user.subject';
-import { Roles } from 'src/app/shared/enums';
+import { User } from 'src/app/shared/interfaces/models';
 
 @Injectable({
   providedIn: 'root'

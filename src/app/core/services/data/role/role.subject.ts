@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User } from 'src/app/shared/models';
 import { PersistentSubject } from '../abstracts/persistent.subject';
 import { LocalStorageService } from '../../local-storage.service';
 

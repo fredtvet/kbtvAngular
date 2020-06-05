@@ -1,13 +1,13 @@
 import { Component, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Router, RouterOutlet } from "@angular/router";
+import { RouterOutlet } from "@angular/router";
 import { AuthService, MainNavService } from 'src/app/core/services';
-import { Roles } from '../../enums/roles.enum';
 import { MatDrawer } from '@angular/material';
-import { User } from '../../models/user.model';
 import { MainNavConfig } from '../../interfaces/main-nav-config.interface';
 import { routeAnimation} from '../../animations/route.animation';
 import { LayoutTopNavs } from '../../enums/layout-top-navs.enum';
+import { Roles } from '../../enums/roles.enum';
+import { User } from '../../interfaces/models/user.interface';
 
 @Component({
   selector: 'app-main-nav',

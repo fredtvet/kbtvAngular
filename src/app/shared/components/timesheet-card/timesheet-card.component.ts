@@ -1,6 +1,6 @@
 import { Component, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { TimesheetStatus } from '../../enums/timesheet-status.enum';
-import { Timesheet } from '../../models/timesheet.model';
+import { Timesheet } from '../../interfaces/models/timesheet.interface';
 import { Roles } from '../../enums/roles.enum';
 
 @Component({

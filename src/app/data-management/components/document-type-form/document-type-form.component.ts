@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { DocumentTypeService } from 'src/app/core/services';
-import { DocumentType } from 'src/app/shared/models';
+import { AppDocumentType } from 'src/app/shared/interfaces/models';
 
 @Component({
   selector: 'app-document-type-form',
@@ -16,7 +16,7 @@ export class DocumentTypeFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit = (documentType: DocumentType) => {
+  onSubmit = (documentType: AppDocumentType) => {
     if(!documentType) this.finished.emit();
     else this.DocumentTypeService.add$(documentType).subscribe(x => this.finished.emit(x));
   }

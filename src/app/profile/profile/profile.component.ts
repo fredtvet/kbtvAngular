@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService, NotificationService, MainNavService, AppConfigurationService, DataSyncService } from 'src/app/core/services';
-import { User } from 'src/app/shared/models';
+import { User } from 'src/app/shared/interfaces/models';
 import { map, filter, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';

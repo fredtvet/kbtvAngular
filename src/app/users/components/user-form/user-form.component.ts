@@ -5,7 +5,7 @@ import {
   NotificationService,
   EmployerService,
 } from "src/app/core/services";
-import { User, Employer } from "src/app/shared/models";
+import { User, Employer } from "src/app/shared/interfaces/models";
 import { Observable } from "rxjs";
 import { map} from "rxjs/operators";
 import { Roles } from "src/app/shared/enums";
@@ -35,7 +35,7 @@ export class UserFormComponent {
   ) {}
 
   ngOnInit() {
-    if (!this.userNamePreset) this.isCreateForm = true;
+    if(!this.userNamePreset) this.isCreateForm = true;
     else this.user$ = this._userService.get$(this.userNamePreset);
 
     this.roles$ = this._roleService.getAll$().pipe(

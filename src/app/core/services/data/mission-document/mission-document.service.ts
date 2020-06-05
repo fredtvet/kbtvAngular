@@ -1,5 +1,5 @@
-import { Injectable, Inject } from '@angular/core';
-import { MissionDocument, DocumentType } from 'src/app/shared/models';
+import { Injectable } from '@angular/core';
+import { AppDocumentType, MissionDocument } from 'src/app/shared/interfaces/models';
 import { BaseMissionChildService } from '../abstracts/base-mission-child.service';
 import { MissionDocumentSubject } from './mission-document.subject';
 import { ApiService } from '../../api.service';
@@ -24,7 +24,7 @@ export class MissionDocumentService extends BaseMissionChildService<MissionDocum
     super(notificationService, apiService, dataSubject, deviceInfoService, "/MissionDocuments");
   }
 
-  addDocument$(missionId:number, documentType: DocumentType, files: FileList): Observable<MissionDocument>{
+  addDocument$(missionId:number, documentType: AppDocumentType, files: FileList): Observable<MissionDocument>{
     if(!this.isOnline)
     return throwError('Du må være tilkoblet internett for å legge til dokumenter.')
             .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));

@@ -1,4 +1,4 @@
-import { MissionDocument } from 'src/app/shared/models';
+import { MissionDocument } from 'src/app/shared/interfaces/models';
 import { Injectable } from '@angular/core';
 import { BaseMissionChildSubject } from '../abstracts/base-mission-child.subject';
 import { DocumentTypeSubject } from '../document-type/document-type.subject';

@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Mission } from '../shared/models';
+import { Mission } from '../shared/interfaces/models';
 import { Roles, RolePresets, Icons } from '../shared/enums';
 import { MissionService, MainNavService, DataSyncService } from '../core/services';
 import { Observable } from 'rxjs';

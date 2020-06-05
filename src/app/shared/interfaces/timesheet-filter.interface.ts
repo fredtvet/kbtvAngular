@@ -1,7 +1,8 @@
 import { TimesheetStatus } from '../enums/timesheet-status.enum';
-import { Mission } from '../models/mission.model';
 import { DateRangePresets } from '../enums/date-range-presets.enum';
-import { User } from '../models/user.model';
+import { User } from './models/user.interface';
+import { Mission } from './models/mission.interface';
+
 
 export interface TimesheetFilter{
     status?: TimesheetStatus;    

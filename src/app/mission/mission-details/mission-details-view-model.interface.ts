@@ -1,4 +1,4 @@
-import { Mission } from 'src/app/shared/models';
+import { Mission } from 'src/app/shared/interfaces/models';
 
 export interface MissionDetailsViewModel{
     mission: Mission, 

@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Employer } from 'src/app/shared/models';
+import { Employer } from 'src/app/shared/interfaces/models';
 
 @Component({
   selector: 'app-employer-form-view',
@@ -19,35 +19,31 @@ export class EmployerFormViewComponent implements OnInit
   }
 
   employerForm: FormGroup;
-  isCreateForm: boolean = true;
+  isCreateForm: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder){ }
 
     ngOnInit(){
-      if(!this.employer) this.employer = new Employer();
-      else this.isCreateForm = false;
-      
-      this.initalizeForm();
+      if(this.employer || this.employer == null) this.isCreateForm = true;
+      this.initalizeForm(this.employer);
     }
     
-
-    initalizeForm(){
+    private initalizeForm(x: Employer){
       this.employerForm = this._formBuilder.group({
-        id: this.employer.id,
-        name: [this.employer.name, [
+        id: x ? x.id : null,
+        name: [x ? x.name : null, [
           Validators.required,
           Validators.maxLength(200)
         ]],
-        phoneNumber: [this.employer.phoneNumber, [
+        phoneNumber: [x ? x.phoneNumber : null, [
           Validators.minLength(4),
           Validators.maxLength(12)
         ]],
-        address: [this.employer.address, [
+        address: [x ? x.address : null, [
           Validators.maxLength(100)
         ]],   
-        email: [this.employer.email, [
-          Validators.required,
+        email: [x ? x.email : null, [
           Validators.email
         ]],
       });

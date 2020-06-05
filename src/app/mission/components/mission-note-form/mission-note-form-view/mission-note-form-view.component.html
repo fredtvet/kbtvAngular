@@ -1,7 +1,7 @@
 <form *ngIf="noteForm" [formGroup]="noteForm" fxLayout="column">
   <mat-form-field>
     <input matInput #title placeholder="Tittel" formControlName="title">
-    <mat-error *ngIf="this.title.invalid">
+    <mat-error *ngIf="title.invalid">
       Tittel er på maks 40 tegn.
     </mat-error>
   </mat-form-field>
@@ -11,7 +11,7 @@
       placeholder="Innhold" formControlName="content" required>
         </textarea>
     <mat-hint>{{content.value.length}} / 400 tegn</mat-hint>
-    <mat-error *ngIf="this.content.invalid">
+    <mat-error *ngIf="content.invalid">
       Innhold er ett obligatorisk felt på maks 400 tegn.
     </mat-error>
   </mat-form-field>

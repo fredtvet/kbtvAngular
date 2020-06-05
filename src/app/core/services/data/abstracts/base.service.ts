@@ -1,5 +1,5 @@
 import { Observable, throwError } from 'rxjs';
-import { map, tap, retry, catchError } from 'rxjs/operators';
+import { tap, retry, catchError } from 'rxjs/operators';
 import { BaseSubject } from './base.subject';
 import { ApiService } from '../../api.service';
 import { DeviceInfoService } from '../../device-info.service';

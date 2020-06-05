@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { EmployerService, NotificationService, MissionTypeService, MissionService } from 'src/app/core/services';
-import { Mission, MissionType, Employer } from 'src/app/shared/models';
+import { Mission, MissionType, Employer } from 'src/app/shared/interfaces/models';
 import { Observable } from 'rxjs';
 import { CreateMission, UpdateMission } from 'src/app/shared/interfaces/commands';
 
@@ -33,25 +33,21 @@ export class MissionFormComponent {
   }
 
   onSubmit(result: any): void{
-    if(!result) this.onFinished(null);
+    if(result || result == null) this.finished.emit(null);
     else if(!this.isCreateForm) this.editMission(result);
     else this.createMission(result);
   }
 
-  createMission(mission: CreateMission): void{
-    if(!mission) return null;
-    this.missionService.addMission$(mission).subscribe(res => this.onFinished(res.id));
+  private createMission(mission: CreateMission): void{
+    this.missionService.addMission$(mission).subscribe(res => this.finished.emit(res.id));
   }
 
-  editMission(mission: UpdateMission): void{
-    if(!mission) return null;
+  private editMission(mission: UpdateMission): void{
     this.missionService.updateMission$(mission).subscribe(res => {
         this.notificationService.setNotification('Vellykket oppdatering!');
-        this.onFinished(res.id);
+        this.finished.emit(res.id);
       })
   }
-
-  private onFinished = (id: number): void => this.finished.emit(id);
-  
+ 
 
 }

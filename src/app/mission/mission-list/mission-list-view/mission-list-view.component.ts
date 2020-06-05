@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Mission } from 'src/app/shared/models';
+import { Mission } from 'src/app/shared/interfaces/models';
 import { Roles } from 'src/app/shared/enums';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MissionFormSheetWrapperComponent } from '../../components/mission-form/mission-form-sheet-wrapper.component';

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Employer, Mission, MissionType  } from 'src/app/shared/models';
+import { Mission } from 'src/app/shared/interfaces/models';
 import { BaseSubject } from '../abstracts/base.subject';
 import { MissionTypeSubject } from '../mission-type/mission-type.subject';
 import { LocalStorageService } from '../../local-storage.service';
-import { Observable, combineLatest, of, BehaviorSubject } from 'rxjs';
-import { switchMap, map, tap, distinctUntilChanged, skip } from 'rxjs/operators';
+import { Observable, combineLatest, of } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
 import { MissionImageSubject } from '../mission-image/mission-image.subject';
 import { EmployerSubject } from '../employer/employer.subject';
 import { MissionDocumentSubject } from '../mission-document/mission-document.subject';
@@ -49,7 +49,7 @@ export class MissionSubject extends BaseSubject<Mission> {
       if(data === undefined || data === null) return of(undefined);
 
       let employerSub = this.employerSubject.get$(data.employerId);
-      let  typeSub = this.missionTypeSubject.get$(data.missionTypeId);
+      let typeSub = this.missionTypeSubject.get$(data.missionTypeId);
 
       return combineLatest(employerSub, typeSub).pipe(map(([employer, type]) => {
           data.employer = employer;
@@ -78,8 +78,7 @@ export class MissionSubject extends BaseSubject<Mission> {
   }
 
   //Add foreign objects to their subjects
-  private addForeigns(entity: Mission): Mission{
-    let e = entity;
+  private addForeigns(e: Mission): Mission{
     if(e.missionType && e.missionType.id != 0){
       this.missionTypeSubject.addOrUpdate(e.missionType);
       e.missionTypeId = e.missionType.id;

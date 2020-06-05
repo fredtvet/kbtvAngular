@@ -1,4 +1,4 @@
-import { Timesheet } from '../models';
+import { Timesheet } from './models/timesheet.interface';
 
 export interface TimesheetSummary{   
     timesheets: Timesheet[];

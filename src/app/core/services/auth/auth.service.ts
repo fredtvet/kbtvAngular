@@ -10,7 +10,7 @@ import { DataSyncService } from '../data/data-sync.service';
 import { DateTimeService } from '../utility/date-time.service';
 import { PersistentSubject } from '../data/abstracts/persistent.subject';
 import { Notifications } from 'src/app/shared/enums';
-import { User } from 'src/app/shared/models';
+import { User } from 'src/app/shared/interfaces/models';
 import { TokenResponse, Credentials } from 'src/app/shared/interfaces';
 import { Router } from '@angular/router';
 
@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 
 export class AuthService extends PersistentSubject<User>{
 
-  public currentUser$: Observable<User> = this.data$.pipe(distinctUntilChanged());
+  currentUser$: Observable<User> = this.data$.pipe(distinctUntilChanged());
 
   private refreshedAccessToken: Subject<string> = new Subject<string>();
   refreshedAccessToken$ = this.refreshedAccessToken.asObservable();
@@ -39,7 +39,7 @@ export class AuthService extends PersistentSubject<User>{
     private notificationService: NotificationService,
     private router: Router,
   ) {
-    super(localStorageService, "identity", new User());
+    super(localStorageService, "identity");
 
     this.deviceInfoService.isOnline$.subscribe(res =>this.isOnline = res)
   }

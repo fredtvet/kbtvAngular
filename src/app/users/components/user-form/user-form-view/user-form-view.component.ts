@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { User, Employer } from 'src/app/shared/models';
+import { User, Employer } from 'src/app/shared/interfaces/models';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Roles } from 'src/app/shared/enums';
 
@@ -25,16 +25,13 @@ export class UserFormViewComponent implements OnInit {
     private _formBuilder: FormBuilder,) {  }
 
     ngOnInit(){
-      if(this.user == undefined || this.user.userName == undefined){
-        this.isCreateForm = true;
-        this.user = new User();
-      }
-      this.initalizeForm();
+      if(this.user || this.user.userName) this.isCreateForm = true;
+      this.initalizeForm(this.user);
     }
 
-    initalizeForm(){
+    private initalizeForm(x: User){
       this.userForm = this._formBuilder.group({
-        userName: [{value: this.user.userName, disabled: !this.isCreateForm}, [
+        userName: [{value: x ? x.userName : null, disabled: !this.isCreateForm}, [
           Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.-]*$'),
           Validators.minLength(4),
@@ -45,22 +42,22 @@ export class UserFormViewComponent implements OnInit {
           Validators.minLength(7),
           Validators.maxLength(100)
         ]],
-        firstName: [this.user.firstName, [
+        firstName: [x ? x.firstName : null, [
           Validators.required,
           Validators.maxLength(100)
         ]],
-        lastName: [this.user.lastName, [
+        lastName: [x ? x.lastName : null, [
           Validators.required,
           Validators.maxLength(100)
         ]],
-        phoneNumber: [this.user.phoneNumber, [
+        phoneNumber: [x ? x.phoneNumber : null, [
           Validators.minLength(4),
           Validators.maxLength(12)
         ]],
-        role: [this.user.role, [
+        role: [x ? x.role : null, [
           Validators.required
         ]],
-        employerId: [this.user.employerId]
+        employerId: [x ? x.employerId : null]
       });
     }
 

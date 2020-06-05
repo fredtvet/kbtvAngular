@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Timesheet } from 'src/app/shared/models';
+import { Timesheet } from 'src/app/shared/interfaces/models';
 import { LocalStorageService } from '../../local-storage.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';

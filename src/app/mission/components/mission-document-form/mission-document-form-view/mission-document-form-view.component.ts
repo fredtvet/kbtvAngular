@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DocumentType } from 'src/app/shared/models';
+import { AppDocumentType } from 'src/app/shared/interfaces/models';
 
 @Component({
   selector: 'app-mission-document-form-view',
@@ -9,7 +9,7 @@ import { DocumentType } from 'src/app/shared/models';
 })
 
 export class MissionDocumentFormViewComponent {
-  @Input() types: DocumentType[] = [];
+  @Input() types: AppDocumentType[] = [];
 
   @Output() formSubmitted = new EventEmitter();
   

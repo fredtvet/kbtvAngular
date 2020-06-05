@@ -1,13 +1,13 @@
 import { Component, ViewChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
-import { MainNavService, TimesheetService, DateTimeService, TimesheetAggregatorService, LoadingService } from 'src/app/core/services';
+import { MainNavService, TimesheetService, DateTimeService, LoadingService } from 'src/app/core/services';
 import { TimesheetSummary, TopDefaultNavConfig } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
-import { filter, map, startWith, pairwise, tap, distinctUntilKeyChanged, distinct, takeUntil} from 'rxjs/operators';
+import { filter, map, takeUntil} from 'rxjs/operators';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
 import { GroupByTypes, TimesheetStatus } from 'src/app/shared/enums';
-import { Timesheet } from 'src/app/shared/models';
+import { Timesheet } from 'src/app/shared/interfaces/models';
 import { listAnimation } from 'src/app/shared/animations/list.animation';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
@@ -19,9 +19,6 @@ import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subsc
 })
 
 export class TimesheetAdminListComponent extends SubscriptionComponent{
-
-  @ViewChild('yearList', {static:false}) 
-  private yearList: TemplateRef<any>;
 
   @ViewChild('weekList', {static:false}) 
   private weekList: TemplateRef<any>;

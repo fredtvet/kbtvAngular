@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Observable, of } from 'rxjs';
 import { UserService } from 'src/app/core/services';
-import { User } from '../../models/user.model';
+import { User } from '../../interfaces/models/user.interface';
 import { SimpleNavConfig } from '../../interfaces/simple-nav-config.interface';
 import { AppButton } from '../../interfaces/app-button.interface';
 

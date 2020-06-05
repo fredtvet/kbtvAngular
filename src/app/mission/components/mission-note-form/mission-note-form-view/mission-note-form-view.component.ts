@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MissionNote } from 'src/app/shared/models';
+import { MissionNote } from 'src/app/shared/interfaces/models';
 import { Roles } from 'src/app/shared/enums';
 
 @Component({
@@ -23,27 +23,23 @@ export class MissionNoteFormViewComponent {
   constructor(private _formBuilder: FormBuilder)  { }
 
   ngOnInit(){
-    if(this.note == null){
-      this.note = new MissionNote();
-      this.isCreateForm = true;
-      this.note.missionId = this.missionId;
-    }
+    if(this.note || this.note == null) this.isCreateForm = true;
 
-    this.initalizeForm();
+    this.initalizeForm(this.note);
   }
 
-  initalizeForm(){
+  initalizeForm(x: MissionNote){
     this.noteForm = this._formBuilder.group({
-      id: this.note.id,
-      title: [this.note.title, [
+      id: x ? x.id : null,
+      title: [x ? x.title : null, [
         Validators.maxLength(40)
       ]],
-      content: [this.note.content, [
+      content: [x ? x.content : null, [
         Validators.required,
         Validators.maxLength(400)
       ]],
-      pinned: this.note.pinned,
-      missionId: this.note.missionId
+      pinned: x ? x.pinned : null,
+      missionId: this.missionId
     });
   }
 

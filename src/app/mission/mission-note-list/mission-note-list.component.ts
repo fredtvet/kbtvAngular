@@ -1,10 +1,10 @@
 import { Component} from '@angular/core';
-import { MissionNote } from 'src/app/shared/models';
+import { MissionNote } from 'src/app/shared/interfaces/models';
 import { Observable } from 'rxjs';
 import { MainNavService, NotificationService, MissionNoteService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatBottomSheet } from '@angular/material';
-import { Roles, RolePresets } from 'src/app/shared/enums';
+import { RolePresets } from 'src/app/shared/enums';
 import { filter } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { MissionNoteFormSheetWrapperComponent } from '../components/mission-note-form/mission-note-form-sheet-wrapper.component';

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { UserService, MainNavService } from 'src/app/core/services';
-import { User } from 'src/app/shared/models';
+import { User } from 'src/app/shared/interfaces/models';
 import { Roles } from '../../shared/enums';
 import { Observable } from 'rxjs';;
 import { map } from 'rxjs/operators';

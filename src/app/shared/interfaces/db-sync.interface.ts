@@ -1,4 +1,4 @@
-import { BaseEntity } from '../interfaces/base-entity.interface';
+import { BaseEntity } from './models/base-entity.interface';
 
 export interface DbSync<T extends BaseEntity> {
     entities: T[];

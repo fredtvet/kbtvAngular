@@ -5,7 +5,7 @@ import { MissionImageService, DownloaderService } from 'src/app/core/services';
 import { AppFile, AppButton } from 'src/app/shared/interfaces';
 import { Roles } from 'src/app/shared/enums';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
-import { MissionImage } from 'src/app/shared/models';
+import { MissionImage } from 'src/app/shared/interfaces/models';
 
 @Component({
   selector: 'app-timesheet-card-dialog-wrapper',

@@ -1,8 +1,8 @@
-import { Mission } from './mission.model';
 import { DateRangePresets } from '../enums/date-range-presets.enum';
 import { TimesheetStatus } from '../enums/timesheet-status.enum';
-import { Timesheet } from './timesheet.model';
 import { TimesheetFilter } from '../interfaces/timesheet-filter.interface';
+import { Timesheet } from '../interfaces/models/timesheet.interface';
+import { Mission } from '../interfaces/models/mission.interface';
 
 
 export class TimesheetListFilter implements TimesheetFilter {

@@ -2,9 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MissionService } from 'src/app/core/services/data/mission/mission.service';
 import { TimesheetFilter, SimpleNavConfig, AppButton } from '../../interfaces';
-import { User } from '../../models/user.model';
+import { User } from '../../interfaces/models/user.interface';
 import { Observable, of } from 'rxjs';
-import { Mission } from '../../models/mission.model';
+import { Mission } from '../../interfaces/models/mission.interface';
 import { UserService } from 'src/app/core/services';
 
 @Component({

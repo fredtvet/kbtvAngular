@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy  } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Mission } from 'src/app/shared/models';
+import { Mission } from 'src/app/shared/interfaces/models';
 import { BehaviorSubject, Observable} from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { MissionService, MainNavService } from 'src/app/core/services';

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MissionType, Employer, Mission } from 'src/app/shared/models';
+import { Mission, MissionType, Employer } from 'src/app/shared/interfaces/models';
 import { Roles } from 'src/app/shared/enums';
 
 @Component({
@@ -12,7 +12,7 @@ import { Roles } from 'src/app/shared/enums';
 export class MissionFormViewComponent implements OnInit {
   Roles = Roles;
 
-  @Input() mission: Mission = null;
+  @Input() mission: Mission;
   @Input() missionTypes: MissionType[];
   @Input() employers: Employer[];
   @Output() formSubmitted = new EventEmitter();
@@ -26,44 +26,41 @@ export class MissionFormViewComponent implements OnInit {
   
   isStreetAddress = false;
 
-  isCreateForm = false;
+  isCreateForm: boolean = false;
 
   files: FileList;
 
   constructor(private _formBuilder: FormBuilder) {}
 
   ngOnInit(){
-    if(this.mission == null){
-      this.isCreateForm = true;
-      this.mission = new Mission();
-    }
-
-    this.initalizeForm();
+    if(this.mission || this.mission == null) this.isCreateForm = true;
+    console.log(this.isCreateForm);
+    this.initalizeForm(this.mission);
   }
 
-  initalizeForm(){
+  initalizeForm(x: Mission){
     this.missionForm = this._formBuilder.group({
-      id: this.mission.id,
-      address: [this.mission.address, [
+      id: x ? x.id : null,
+      address: [x ? x.address : null, [
         Validators.required,
         Validators.maxLength(100)
       ]],
-      phoneNumber: [this.mission.phoneNumber, [
+      phoneNumber: [x ? x.phoneNumber : null, [
         Validators.minLength(4),
         Validators.maxLength(12)
       ]],
-      description: [this.mission.description, [
+      description: [x ? x.description : null, [
         Validators.maxLength(400)
       ]],
-      finished: [this.mission.finished],     
+      finished: [x ? x.finished : null]  ,
       deleteCurrentImage: [false],
       employer: this._formBuilder.group({
         id: [null],
-        name: [this.mission.employer ? this.mission.employer.name : null],
+        name: [(x && x.employer) ? x.employer.name : null],
       }),
       missionType: this._formBuilder.group({
         id: [null],
-        name: [this.mission.missionType ? this.mission.missionType.name : null],
+        name: [(x && x.missionType) ? x.missionType.name : null],
       })
     });
   }
