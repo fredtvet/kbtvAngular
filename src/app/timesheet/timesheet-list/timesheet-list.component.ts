@@ -104,7 +104,7 @@ export class TimesheetListComponent implements OnInit {
   private onBack = () => {
     let returnRoute: string = this.route.snapshot.params["returnRoute"];
     if (returnRoute) this.router.navigateByUrl(returnRoute);
-    else this.router.navigate(["hjem"]);
+    else this.router.navigate([""]);
   }
 
   private configureMainNav(){

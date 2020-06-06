@@ -1,9 +1,8 @@
 import { Component, ApplicationRef, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { AuthService, NotificationService, DeviceInfoService, DataSyncService, AppConfigurationService,DownloaderService, IconService, DialogService } from './core/services';
-import { skip, first, tap, switchMap } from 'rxjs/operators';
+import { skip, first, tap } from 'rxjs/operators';
 import { Notifications } from './shared/enums/notifications.enum';
 import { interval, combineLatest, concat } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',

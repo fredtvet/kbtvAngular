@@ -23,7 +23,7 @@ export class NoAuthGuard implements CanActivate {
 
     if(this.authService.hasTokens()){   
       if(returnUrl) this.router.navigateByUrl(returnUrl);
-      else this.router.navigate(['hjem']);
+      else this.router.navigate(['']);
       return false;
     }
 

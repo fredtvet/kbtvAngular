@@ -1,6 +1,6 @@
-<mat-toolbar *ngIf="config" class="toolbar-slim color-foreground" style="background:inherit">
+<mat-toolbar class="toolbar-slim color-foreground" style="background:inherit">
    
-    <app-icon-button *ngIf="config.backFn else menuBtn" 
+    <app-icon-button *ngIf="config?.backFn else menuBtn" 
     [config]="{
       callback: config.backFn, 
       params: config.backFnParams,
@@ -17,19 +17,19 @@
     </ng-template>
       
     <span class="mr-auto">
-      <ng-container *ngIf="config.title">
-        <span *ngIf="!config.backFn else noLinkTitle" class="ml-1" [routerLink]="['/hjem']">{{ config.title }}</span>
+      <ng-container>
+        <span *ngIf="!config?.backFn else noLinkTitle" class="ml-1" [routerLink]="['/']">{{ config?.title || "Hjem" }}</span>
         <ng-template #noLinkTitle><span class="ml-1">{{ config.title }}</span></ng-template>
       </ng-container>
-      <mat-icon *ngIf="config.subIcon" class="scale-75">{{ config.subIcon }}</mat-icon>
-      <span class="ml-1 mat-caption" >{{ config.subTitle }}</span>
+      <mat-icon *ngIf="config?.subIcon" class="scale-75">{{ config.subIcon }}</mat-icon>
+      <span class="ml-1 mat-caption" >{{ config?.subTitle }}</span>
     </span>
 
     <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>
  
-    <app-icon-button *ngFor="let button of config.buttons" [config]="button"></app-icon-button>
+    <app-icon-button *ngFor="let button of config?.buttons" [config]="button"></app-icon-button>
 
-    <button mat-icon-button *ngIf="config.bottomSheetButtons?.length" (click)="openBottomSheet(config.bottomSheetButtons)">
+    <button mat-icon-button *ngIf="config?.bottomSheetButtons?.length" (click)="openBottomSheet(config.bottomSheetButtons)">
       <mat-icon>more_vert</mat-icon>
     </button>
 
