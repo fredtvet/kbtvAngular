@@ -14,9 +14,8 @@ import { Observable } from 'rxjs';
 })
 
 export class DetailTopNavComponent {
-
-
   @Input() config: TopDetailNavConfig;
+  @Input() currentUserRole: string;
   @Output() menuBtnClicked = new EventEmitter();
   
   loading$: Observable<boolean> = this.loadingService.queryLoading$;

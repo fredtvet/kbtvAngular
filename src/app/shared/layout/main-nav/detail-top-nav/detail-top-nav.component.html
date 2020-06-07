@@ -1,7 +1,7 @@
 <div class="container">
 
     <div *ngIf="config.imgSrc" class="img-container text-center mr-auto ml-auto ">
-        <img appImageErrorReloader src="{{ config.imgSrc }}" />
+        <img appImageErrorReloader #img src="{{ config.imgSrc }}" (error)="img.src = '/assets/notfound.png'" />
     </div>
 
     <mat-toolbar *ngIf="config" 
@@ -30,7 +30,8 @@
 
         <app-icon-button *ngFor="let button of config.buttons" [config]="button"></app-icon-button>
 
-        <button mat-icon-button *ngIf="config.bottomSheetButtons?.length"
+        <button mat-icon-button 
+            *ngIf="(config?.bottomSheetButtons | checkRolesInButtons : currentUserRole)" 
             (click)="openBottomSheet(config.bottomSheetButtons)">
             <mat-icon>more_vert</mat-icon>
         </button>
