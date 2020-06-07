@@ -1,0 +1,36 @@
+<div fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="5px"
+    class="app-card m-1 p-2 mat-elevation-z2 fadeIn" *ngIf="note">
+
+    <ng-container *ngIf="note.title || note.pinned">
+        <span class="mat-h2 w-100" fxLayout="row" fxLayoutAlign="space-between center">
+            {{ note.title  }}
+            <span class="ml-auto" *ngIf="note.pinned" fxLayout="column" fxLayoutAlign="center center">
+                <mat-icon color="accent">star</mat-icon>
+                <span class="mat-caption line-height-100">Viktig</span>
+            </span>
+        </span>
+
+    </ng-container>
+
+    <span>
+        {{ note.content }}
+    </span>
+    <mat-divider class="w-100 mb-0"></mat-divider>
+    <span class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
+        <span>
+            {{ note.createdAt | date: 'dd.MMM' }} av {{ note.createdBy || "Anonym" }}
+        </span>
+        <ng-container *ifRole="RolePresets.Authority">
+            <span>
+                <button (click)="editNote()" mat-icon-button color="primary" aria-label="Rediger notat">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button (click)="deleteNote()" mat-icon-button color="warn"
+                    aria-label="Slett notat">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </span>
+        </ng-container>
+    </span>
+
+</div>

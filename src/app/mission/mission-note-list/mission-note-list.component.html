@@ -1,40 +1,8 @@
 <div class="max-width">
-    <div fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="5px"
-        class="app-card m-1 p-2 mat-elevation-z2 fadeIn" *ngFor="let note of notes$ | async">
-
-        <ng-container *ngIf="note.title || note.pinned">
-            <span class="mat-h2 w-100" fxLayout="row" fxLayoutAlign="space-between center">
-                {{ note.title  }}  
-                <span class="ml-auto" *ngIf="note.pinned"  fxLayout="column" fxLayoutAlign="center center">
-                    <mat-icon color="accent">star</mat-icon>   
-                    <span class="mat-caption line-height-100">Viktig</span>
-                </span> 
-            </span>
-
-        </ng-container>
-
-        <span>
-            {{ note.content }}
-        </span>
-        <mat-divider class="w-100 mb-0"></mat-divider>
-        <span class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
-            <span>
-                {{ note.createdAt | date: 'dd.MMM' }} av {{ note.createdBy || "Anonym" }}
-            </span>
-            <ng-container *ifRole="RolePresets.Authority">
-                <span>
-                    <button (click)="openEditNoteForm(note.id)" mat-icon-button color="primary" aria-label="Rediger notat">
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                    <button (click)="openConfirmDeleteDialog(note.id)" mat-icon-button color="warn"
-                        aria-label="Slett notat">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </span>
-            </ng-container>
-        </span>
-
-    </div>
+    <app-note-card *ngFor="let note of notes$ | async" [note]="note" 
+        (deleteClicked)="openConfirmDeleteDialog($event)" 
+        (editClicked)="openEditNoteForm($event)">
+    </app-note-card>
 </div>
 
 <button *ifRole="RolePresets.Internal" mat-fab aria-label="ny" class="action_fab" (click)="openCreateNoteForm()">
