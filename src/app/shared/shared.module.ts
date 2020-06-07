@@ -8,10 +8,6 @@ import { AngularMaterialModule } from './angular-material.module';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_TIME_FORMATS, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
-import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
-import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date-time-formats';
-
 import { SortByDatePipe, GetEmployerByIdPipe, ArrayFromNumberPipe } from './pipes'
 
 import { InputListenerDirective, ImageErrorReloaderDirective, AddToHomeScreenDirective, IfRoleDirective, HttpCommandButtonDirective } from './directives';
@@ -64,16 +60,9 @@ import { LoginFormComponent } from './components/login-prompt/login-form/login-f
     ReactiveFormsModule,
     GooglePlaceModule,
     FlexLayoutModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
   ],
   entryComponents:[
     BottomSheetMenuComponent,
-  ],
-  providers: [
-    {provide: OwlDateTimeIntl, useClass: DefaultOwlDateTimeIntl},
-    {provide: OWL_DATE_TIME_LOCALE, useValue: 'no'},
-    {provide: OWL_DATE_TIME_FORMATS, useValue: DEFAULT_OWL_DATE_TIME_FORMATS},
   ],
   exports: [
     CommonModule,
@@ -83,8 +72,6 @@ import { LoginFormComponent } from './components/login-prompt/login-form/login-f
     AngularMaterialModule,
     ReactiveFormsModule,
     GooglePlaceModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
     FlexLayoutModule,
     ConfirmDialogComponent,
     IfRoleDirective,

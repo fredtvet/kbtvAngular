@@ -11,7 +11,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { registerLocaleData, DatePipe } from '@angular/common';
 import norwayLocale from '@angular/common/locales/nb';
-import { CustomHammerConfig } from './shared/customizations/custom-hammer-config';
+import { CustomHammerConfig } from './custom-hammer-config';
 import { LoginPageComponent } from './login-page.component';
 
 registerLocaleData(norwayLocale, 'nb-NO');

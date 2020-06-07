@@ -9,6 +9,7 @@ import {
   TimesheetSummaryCardContentComponent 
 } from './components';
 import { GetDateByDateParamsPipe, ArrayIncludesPipe, ReadableDurationPipe } from './pipes';
+import { AppOwlDateTimeModule } from '../app-owl-date-time/app-owl-date-time.module';
 
 @NgModule({
   declarations: [
@@ -24,9 +25,11 @@ import { GetDateByDateParamsPipe, ArrayIncludesPipe, ReadableDurationPipe } from
   ],
   imports: [
     SharedModule,
+    AppOwlDateTimeModule
   ],
   exports: [
     SharedModule,
+    AppOwlDateTimeModule,
     TimesheetCardComponent,
     WeekListFilterComponent,
     WeekListFilterSheetWrapperComponent,
