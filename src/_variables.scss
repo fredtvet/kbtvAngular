@@ -24,7 +24,6 @@ $foreground: map-get($kbtv-client-theme, foreground);
 $background-color:$primary-light;
 $foreground-color:white;
 
-$content-margin: 8;
 $bottom-nav-height: 44;
 
 @mixin max-width{
@@ -32,7 +31,7 @@ $bottom-nav-height: 44;
 }
 
 @mixin notification{
-  margin-bottom:44px + $content-margin * 1px!important;
+  margin-bottom:$bottom-nav-height + $gap-size-unit * 2px!important;
   color:black;
 }
 
@@ -56,9 +55,5 @@ $levels: 6;
     }
   }
 }
-
-.h-100{height:100%;}
-.w-100{width:100%;}
-.text-center{text-align:center}
 
 @include gap-units;

@@ -9,12 +9,12 @@ img{
 
 .top_left_fab{
     position:absolute;
-    left:$content-margin * 1px;
+    left:$gap-size-unit * 2px;
 }
 
 .top_right_fab{
     position:absolute;
-    right:$content-margin * 1px;
+    right:$gap-size-unit * 2px;
 }
 
 .image-toolbar{

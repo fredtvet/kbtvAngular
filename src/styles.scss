@@ -1,9 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import './variables';
+@import './app-animations.scss';
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 @import "~ng-pick-datetime/assets/style/picker.min.css";
-@import "~animate.css/animate.min";
+
 
 html, body { height: 100%; background:$background-color;color:black;overflow:hidden;padding:0;margin:0}
 body {font-family: Roboto, "Helvetica Neue", sans-serif;}
@@ -22,17 +23,18 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 .bg-warn{background:$warn!important;color:black;}
 .bg-warn-light{background:$warn-light!important;color:black;}
+
 .color-warn{color:$warn;}
 
 .bg-success{background:$success!important;color:black;}
 .bg-success-light{background:$success-light!important;color:black;}
+
 .color-success{color:$success;}
 
 .bg-background{background:$background-color;color:black;}
 .color-background{color:$primary-light;}
 .bg-foreground{background:$foreground-color;color:black;}
 .color-foreground{color:white;}
-.bg-black{background-color:black;color:white;}
 
 .bg-transparent{background:transparent};
 
@@ -44,11 +46,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 .line-height-100{line-height:100%}
 
-.app-nav-tile{height:100px;width:100px}
-
-.prevent-pointer-events{pointer-events: none;}
-
-.flex-spacer{flex: 1 1 auto;}
+.flex-spacer{flex: 1 1 auto;} //unnused
 
 .max-width{@include max-width}
 
@@ -58,7 +56,11 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 .float-right{float:right;}
 
-.circle-radius{border-radius:50%}
+.h-100{height:100%;}
+
+.w-100{width:100%;}
+
+.text-center{text-align:center}
 
 .nav-list{
   a{
@@ -77,8 +79,8 @@ a {
 
 .action_fab{
   position: fixed!important;
-  right: $content-margin * 1px!important;
-  bottom: ($content-margin + $bottom-nav-height) * 1px;
+  right: $gap-size-unit * 2px!important;
+  bottom: (($gap-size-unit * 2) + $bottom-nav-height) * 1px;
   z-index:2;
   background:$accent;
   animation: backInUp;
@@ -87,8 +89,8 @@ a {
 
 .action_fab_2{
   position: fixed!important;
-  right: $content-margin * 1px!important;
-  bottom: (($content-margin*2) + 56 + $bottom-nav-height) * 1px;
+  right: $gap-size-unit * 2px!important;
+  bottom: (($gap-size-unit*4) + 56 + $bottom-nav-height) * 1px;
   z-index:2;
   background:$accent;
   animation: backInRight;
@@ -96,14 +98,15 @@ a {
 }
 .action_fab_3{
   position: fixed!important;
-  right: $content-margin * 1px!important;
-  bottom: (($content-margin*3) + 112 + $bottom-nav-height) * 1px;
+  right: $gap-size-unit * 2px!important;
+  bottom: (($gap-size-unit*6) + 112 + $bottom-nav-height) * 1px;
   z-index:2;
   background:$accent;
   animation: backInRight;
   animation-duration:.5s
 }
 
+//Entity -> used in selective list 
 .entity-row {
   display: -ms-flexbox; /* IE10 */
   display: flex;
@@ -146,47 +149,6 @@ a {
   }
 }
 
-.slideInDown{
-  animation: slideInDown;
-  animation-duration: .5s;
-}
-.bounceIn{
-  animation: bounceIn;
-  animation-duration: .5s;
-}
-
-.fadeInDown{
-  animation: fadeInDown;
-  animation-duration:.5s
-}
-
-.backInUp{
-  animation: backInUp;
-  animation-duration:.5s
-}
-.backInRight{
-  animation: backInRight;
-  animation-duration:.5s
-}
-.fadeIn{
-  animation: fadeIn;
-  animation-duration:.8s
-}
-
-.fadeInTop{
-  animation: fadeInTop;
-  animation-duration:.8s
-}
-.fadeInRight{
-  animation: fadeInRight;
-  animation-duration:.5s
-}
-
-.fadeInLeft{
-  animation: fadeInLeft;
-  animation-duration:.5s
-}
-
 .image_viewer_dialog{max-width:none!important;}
 
 .image_viewer_dialog .mat-dialog-container{background-color:black!important;}
@@ -209,17 +171,6 @@ a {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.ellipsis-left{
-  direction:rtl;
-}
-.static-page-container{
-  padding: $content-margin * 1px!important;
-  height:100% !important;
-  width:100%;
-}
-.static-page-content{
-  overflow:auto;
-}
 
 .app-card{
   background:white;
@@ -230,11 +181,11 @@ a {
 }
 
 .mid-divider{
-   margin-left:$content-margin * 2px!important;
-   width:calc(100% - (#{$content-margin} * 4px))!important;
+   margin-left:$gap-size-unit * 4px!important;
+   width:calc(100% - (#{$gap-size-unit} * 8px))!important;
 }
 
-.center-spinner{margin:$content-margin * 2px auto;}
+.center-spinner{margin:$gap-size-unit * 4px auto;}
 
 //Customizations for calendar
 .owl-dt-calendar-table{
@@ -318,26 +269,3 @@ mat-toolbar-single-row.toolbar-slim{
     }
   }
 }
-
-
-//Spinner primarily for buttons
-@keyframes spinner {
-  to {transform: rotate(360deg);}
-}
-
-.spinner:before {
-  content: '';
-  box-sizing: border-box;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  margin-top: -10px;
-  margin-left: -10px;
-  border-radius: 50%;
-  border: 2px solid $background-color;
-  border-top-color: $primary;
-  animation: spinner .8s linear infinite;
-}
-
