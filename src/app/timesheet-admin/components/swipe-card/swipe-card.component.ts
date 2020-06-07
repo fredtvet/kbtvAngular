@@ -1,10 +1,8 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { AppButton } from '../../interfaces/app-button.interface';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { DeviceInfoService } from 'src/app/core/services';
+import { AppButton } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-swipe-card',
@@ -28,6 +26,7 @@ import { DeviceInfoService } from 'src/app/core/services';
   templateUrl: './swipe-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class SwipeCardComponent {
 
   @Input() swipeButton: AppButton;

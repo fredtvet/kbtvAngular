@@ -12,7 +12,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_T
 import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
 import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date-time-formats';
 
-import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe, GetEmployerByIdPipe, ArrayFromNumberPipe, FiletypeFromUrlPipe, FileiconFromFiletypePipe } from './pipes'
+import { SortByDatePipe, GetEmployerByIdPipe, ArrayFromNumberPipe } from './pipes'
 
 import { InputListenerDirective, ImageErrorReloaderDirective, AddToHomeScreenDirective, IfRoleDirective, HttpCommandButtonDirective } from './directives';
 
@@ -24,7 +24,6 @@ import {
   PageNotFoundComponent,
   ListCardComponent,
   BottomSheetMenuComponent,
-  SwipeCardComponent
 } from './components';
 
 import { LoginPromptComponent } from './components/login-prompt/login-prompt.component';
@@ -36,8 +35,6 @@ import { LoginFormComponent } from './components/login-prompt/login-form/login-f
     MainBottomNavComponent,
     ConfirmDialogComponent,
     IfRoleDirective,
-    ArraySlicePipe,
-    ThumbnailPipe,
     SortByDatePipe,
     NotificationComponent,
     BottomSheetMenuComponent,
@@ -46,7 +43,6 @@ import { LoginFormComponent } from './components/login-prompt/login-form/login-f
     StrokedButtonComponent,
     ListCardComponent,
     AddToHomeScreenDirective,
-    SwipeCardComponent,
     MainSideNavContentComponent,
     MainTopNavComponent,
     InputListenerDirective,
@@ -54,8 +50,6 @@ import { LoginFormComponent } from './components/login-prompt/login-form/login-f
     GetEmployerByIdPipe,
     ImageErrorReloaderDirective,
     ArrayFromNumberPipe,
-    FiletypeFromUrlPipe,
-    FileiconFromFiletypePipe,
     DetailTopNavComponent,
     LoginPromptComponent,
     LoginFormComponent,
@@ -97,21 +91,16 @@ import { LoginFormComponent } from './components/login-prompt/login-form/login-f
     AddToHomeScreenDirective,
     InputListenerDirective,
     HttpCommandButtonDirective,
-    ArraySlicePipe,
-    ThumbnailPipe,
     SortByDatePipe,
     MainNavComponent,
     PageNotFoundComponent,
     IconButtonComponent,
     StrokedButtonComponent,
     ListCardComponent,
-    SwipeCardComponent,
     SimpleTopNavComponent,
     GetEmployerByIdPipe,
     ArrayFromNumberPipe,
-    ImageErrorReloaderDirective,
-    FiletypeFromUrlPipe,
-    FileiconFromFiletypePipe
+    ImageErrorReloaderDirective
   ]
 })
 export class SharedModule { }

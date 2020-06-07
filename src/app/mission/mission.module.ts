@@ -27,6 +27,10 @@ import { MissionDocumentListComponent } from './mission-document-list/mission-do
 import { DocumentListComponent } from './mission-document-list/document-list/document-list.component';
 import { MailDocumentSheetComponent } from './components/mail-document-sheet.component';
 import { MissionNoteListComponent } from './mission-note-list/mission-note-list.component';
+import { FiletypeFromUrlPipe } from './pipes/filetype-from-url.pipe';
+import { FileiconFromFiletypePipe } from './pipes/fileicon-from-filetype.pipe';
+import { ArraySlicePipe } from './pipes/array-slice.pipe';
+import { ThumbnailPipe } from './pipes/thumbnail.pipe';
 
 
 @NgModule({
@@ -54,7 +58,11 @@ import { MissionNoteListComponent } from './mission-note-list/mission-note-list.
     MailEntityFormComponent,
     MissionDocumentListComponent,
     DocumentListComponent,
-    MailDocumentSheetComponent
+    MailDocumentSheetComponent,
+    FiletypeFromUrlPipe,
+    FileiconFromFiletypePipe,
+    ArraySlicePipe,
+    ThumbnailPipe,
   ],
   providers: [
     DatePipe,

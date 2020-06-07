@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Icons } from '../enums';
+import { Icons } from 'src/app/shared/enums';
+
 
 @Pipe({
   name: 'fileiconFromFiletype'
