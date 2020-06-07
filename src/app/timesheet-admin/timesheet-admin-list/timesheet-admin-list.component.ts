@@ -2,7 +2,7 @@ import { Component, ViewChild, TemplateRef, ChangeDetectionStrategy } from '@ang
 import { MainNavService, TimesheetService, DateTimeService, LoadingService } from 'src/app/core/services';
 import { TimesheetSummary, TopDefaultNavConfig } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
+import { WeekListFilterSheetWrapperComponent } from '../../shared-timesheet/components/week-list-filter/week-list-filter-sheet-wrapper.component';
 import { filter, map, takeUntil} from 'rxjs/operators';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';

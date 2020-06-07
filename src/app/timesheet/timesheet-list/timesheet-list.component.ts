@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Mission, Timesheet } from "src/app/shared/interfaces/models";
 import { BehaviorSubject, Observable } from "rxjs";
 import { switchMap, filter } from "rxjs/operators";
-import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared/components';
+import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared-timesheet/components';
 import { TimesheetFormSheetWrapperComponent } from '../components/timesheet-form/timesheet-form-sheet-wrapper.component';
 import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
 import { TimesheetListFilter } from 'src/app/shared/models';

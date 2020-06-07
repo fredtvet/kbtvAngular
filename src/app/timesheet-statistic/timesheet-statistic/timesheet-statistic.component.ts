@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MainNavService, TimesheetService, UserService } from 'src/app/core/services';
 import { filter } from 'rxjs/operators';
-import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared/components';
+import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared-timesheet/components';
 import { TimesheetFilter, TopDefaultNavConfig } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { GroupByTypes } from 'src/app/shared/enums';

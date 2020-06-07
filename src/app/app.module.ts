@@ -9,9 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, DatePipe } from '@angular/common';
 import norwayLocale from '@angular/common/locales/nb';
-import { TimesheetAdminModule } from './timesheet-admin/timesheet-admin.module';
 import { CustomHammerConfig } from './shared/customizations/custom-hammer-config';
 import { LoginPageComponent } from './login-page.component';
 
@@ -31,9 +30,9 @@ registerLocaleData(norwayLocale, 'nb-NO');
     SharedModule,
     CoreModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    TimesheetAdminModule
   ],
   providers: [ 
+    DatePipe,
     { provide: LOCALE_ID, useValue: "nb-NO" }, 
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig}
   ],

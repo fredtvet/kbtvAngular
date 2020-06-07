@@ -3,7 +3,7 @@ import { DateTimeService, MainNavService, UserTimesheetService } from 'src/app/c
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppButton, TimesheetSummary, TopDefaultNavConfig } from 'src/app/shared/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { WeekListFilterSheetWrapperComponent } from '../../shared/components/week-list-filter/week-list-filter-sheet-wrapper.component';
+import { WeekListFilterSheetWrapperComponent } from '../../shared-timesheet/components/week-list-filter/week-list-filter-sheet-wrapper.component';
 import { filter, map, tap, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 

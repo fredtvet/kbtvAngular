@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DateParams } from '../interfaces/date-params.interface';
+import { DateParams } from '../../shared/interfaces/date-params.interface';
 import { DateTimeService } from 'src/app/core/services';
 
 @Pipe({

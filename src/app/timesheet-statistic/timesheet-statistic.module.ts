@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/shared.module';
 import { TimesheetStatisticRoutingModule } from './timesheet-statistic-routing.module';
 import { AppAgGridModule } from '../app-ag-grid/app-ag-grid.module';
 
 import { TimesheetStatisticComponent } from './timesheet-statistic/timesheet-statistic.component';
-import { TimesheetFilterSheetWrapperComponent } from '../shared/components';
+import { TimesheetFilterSheetWrapperComponent } from '../shared-timesheet/components';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic/timesheet-statistic-table/timesheet-statistic-table.component';
-import { DatePipe } from '@angular/common';
+import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 
 
 @NgModule({
@@ -17,11 +16,8 @@ import { DatePipe } from '@angular/common';
   entryComponents:[
     TimesheetFilterSheetWrapperComponent
   ],
-  providers: [
-    DatePipe
-  ],
   imports: [
-    SharedModule,
+    SharedTimesheetModule,
     TimesheetStatisticRoutingModule,
     AppAgGridModule,
   ],

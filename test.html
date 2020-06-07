@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BjBygg test</title>
+<body class="background-color">
+    <script type="application/javascript">
+        var state = {
+            arr1: [],
+            arr2: [],
+            arr3: [],
+            arr4: []
+        };
+        let startTime = Date.now();
+        for(var i = 0; i<300;i++){
+            state.arr1.push({
+                address: "Furuberget 17, 1940 Bjørkelangen" + i,
+                phoneNumber: "9227848" + i,
+                id: i,
+                name: "kari a" + i,
+                fileURL: "https://kbtv.blob.core.windows.net/images/28e89dfa-8d9b-422f-81fd-ee1f7aafbbe7.jpg",
+                createdAt: Date.now()
+            });
+        }
+        for(var i = 0; i<1500;i++){
+            state.arr2.push({
+                startTime: startTime,
+                endTime: Date.now(),
+                id: i,
+                snake: "kassri a" + i,
+                fileURL: "https://kbtv.blob.core.windows.net/images/28e89dfa-8d9b-422f-81fd-ee1f7aafbbe7.jpg",
+                createdAt: Date.now(),
+                updatedAt: Date.now()
+            });
+        }
+        for(var i = 0; i<60;i++){
+            state.arr3.push({
+                address: "FureDFSGDSGrget 17, 1940 BjøDSADSArkngen" + i,
+                phoneNumber: "9227FDG848" + i,
+                id: i,
+            });
+        }
+        for(var i = 0; i<30;i++){
+            state.arr4.push({
+                address: "SADdsadas 17, 1940 BjørkEDSWADSAelen" + i,
+                id: i,
+                name: "kasadsari a" + i,
+                createdAt: Date.now()
+            });
+        }
+
+        console.time("writing");
+            window.localStorage.setItem("test", JSON.stringify(state))
+        console.timeEnd("writing");
+
+        
+        console.time("reading");
+            let parsedState = JSON.parse(window.localStorage.getItem("test"));
+        console.timeEnd("reading");
+    </script>
+</body>
+</html>

@@ -12,7 +12,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_T
 import { DefaultOwlDateTimeIntl } from './customizations/default-owl-date-time-intl';
 import { DEFAULT_OWL_DATE_TIME_FORMATS } from './customizations/default-owl-date-time-formats';
 
-import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe, ReadableDurationPipe, DurationPipe, GetDateByDateParamsPipe, ArrayIncludesPipe, GetEmployerByIdPipe, ArrayFromNumberPipe, FiletypeFromUrlPipe, FileiconFromFiletypePipe } from './pipes'
+import { ArraySlicePipe, ThumbnailPipe, SortByDatePipe, GetEmployerByIdPipe, ArrayFromNumberPipe, FiletypeFromUrlPipe, FileiconFromFiletypePipe } from './pipes'
 
 import { InputListenerDirective, ImageErrorReloaderDirective, AddToHomeScreenDirective, IfRoleDirective, HttpCommandButtonDirective } from './directives';
 
@@ -22,16 +22,11 @@ import {
   ConfirmDialogComponent,
   NotificationComponent,
   PageNotFoundComponent,
-  TimesheetFilterComponent,
-  TimesheetFilterSheetWrapperComponent,
   ListCardComponent,
-  TimesheetCardComponent,
-  WeekListFilterComponent,
-  WeekListFilterSheetWrapperComponent,
-  TimesheetSummaryCardContentComponent,
   BottomSheetMenuComponent,
   SwipeCardComponent
 } from './components';
+
 import { LoginPromptComponent } from './components/login-prompt/login-prompt.component';
 import { LoginFormComponent } from './components/login-prompt/login-form/login-form.component';
 
@@ -46,27 +41,17 @@ import { LoginFormComponent } from './components/login-prompt/login-form/login-f
     SortByDatePipe,
     NotificationComponent,
     BottomSheetMenuComponent,
-    DurationPipe,
-    GetDateByDateParamsPipe,
     PageNotFoundComponent,
-    TimesheetFilterComponent,
-    TimesheetFilterSheetWrapperComponent,
-    ArrayIncludesPipe,
     IconButtonComponent,
     StrokedButtonComponent,
     ListCardComponent,
-    TimesheetCardComponent,
-    WeekListFilterComponent,
-    WeekListFilterSheetWrapperComponent,
     AddToHomeScreenDirective,
     SwipeCardComponent,
-    TimesheetSummaryCardContentComponent,
     MainSideNavContentComponent,
     MainTopNavComponent,
     InputListenerDirective,
     SimpleTopNavComponent,
     GetEmployerByIdPipe,
-    ReadableDurationPipe,
     ImageErrorReloaderDirective,
     ArrayFromNumberPipe,
     FiletypeFromUrlPipe,
@@ -115,19 +100,11 @@ import { LoginFormComponent } from './components/login-prompt/login-form/login-f
     ArraySlicePipe,
     ThumbnailPipe,
     SortByDatePipe,
-    DurationPipe,
-    GetDateByDateParamsPipe,
     MainNavComponent,
     PageNotFoundComponent,
-    TimesheetFilterSheetWrapperComponent,
-    ArrayIncludesPipe,
     IconButtonComponent,
     StrokedButtonComponent,
     ListCardComponent,
-    TimesheetCardComponent,
-    WeekListFilterComponent,
-    WeekListFilterSheetWrapperComponent,
-    TimesheetSummaryCardContentComponent,
     SwipeCardComponent,
     SimpleTopNavComponent,
     GetEmployerByIdPipe,
