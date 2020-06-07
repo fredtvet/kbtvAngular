@@ -1,5 +1,5 @@
 <span class="nav-list mat-subheading-2">
-    <ng-container *ngFor="let button of buttons">
+    <ng-container #navs *ngFor="let button of buttons">
         <a *ifRole="button.allowedRoles" (click)="handleFn(button.callback, button.params)">
             <mat-icon>{{ button.icon }}</mat-icon>
             <span>{{ button.text }}</span>

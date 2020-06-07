@@ -7,7 +7,6 @@ import { MainNavConfig } from '../../interfaces/main-nav-config.interface';
 import { routeAnimation} from '../../animations/route.animation';
 import { LayoutTopNavs } from '../../enums/layout-top-navs.enum';
 import { Roles } from '../../enums/roles.enum';
-import { User } from '../../interfaces/models/user.interface';
 
 @Component({
   selector: 'app-main-nav',
@@ -22,7 +21,6 @@ export class MainNavComponent {
   Roles = Roles;
 
   config$: Observable<MainNavConfig> = this.mainNavService.config$;
-  currentUser$:  Observable<User> = this.authService.currentUser$;
 
   constructor(
     private mainNavService: MainNavService,

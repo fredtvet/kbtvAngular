@@ -31,6 +31,7 @@ import { FiletypeFromUrlPipe } from './pipes/filetype-from-url.pipe';
 import { FileiconFromFiletypePipe } from './pipes/fileicon-from-filetype.pipe';
 import { ArraySlicePipe } from './pipes/array-slice.pipe';
 import { ThumbnailPipe } from './pipes/thumbnail.pipe';
+import { NoteCardComponent } from './mission-note-list/note-card/note-card.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { ThumbnailPipe } from './pipes/thumbnail.pipe';
     FileiconFromFiletypePipe,
     ArraySlicePipe,
     ThumbnailPipe,
+    NoteCardComponent,
   ],
   providers: [
     DatePipe,

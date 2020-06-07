@@ -12,10 +12,9 @@ const routes: Routes = [
   {
     path: '', component: MainNavComponent,
     children:[
-      {path: '', component: HomeComponent, pathMatch: 'full', 
-        canActivate: [AuthGuard], data: {animation: 'Home'}},
-      // {path: 'hjem', component: HomeComponent, pathMatch: 'full', 
-      //   canActivate: [AuthGuard], data: {animation: 'Home'}},
+      {path: '', redirectTo: 'hjem', pathMatch: 'full'},
+      {path: 'hjem', component: HomeComponent, canActivate: [AuthGuard], 
+        data: {animation: 'Home'}},
       {path: 'profil', loadChildren: './profile/profile.module#ProfileModule', 
         data: {animation: 'Profile'}},
       {path: 'brukere', loadChildren: './users/users.module#UsersModule', 

@@ -116,6 +116,6 @@ export class MissionImageListComponent extends SubscriptionComponent{
   private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
 
   private getBottomSheetButtons = (ids: number[]): AppButton[] => 
-    [{icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, params: [ids]}]
+    [{icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, params: [ids], allowedRoles: RolePresets.Authority}]
 
 }

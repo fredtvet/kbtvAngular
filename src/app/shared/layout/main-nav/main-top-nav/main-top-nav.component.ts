@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 export class MainTopNavComponent implements OnInit {
 
   @Input() config: TopDefaultNavConfig;
+  @Input() currentUserRole: string;
   @Output() menuBtnClicked = new EventEmitter();
   
   loading$: Observable<boolean> = this.loadingService.queryLoading$;

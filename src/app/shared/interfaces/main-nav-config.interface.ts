@@ -13,7 +13,7 @@ export interface TopDefaultNavConfig extends TopNavActions{
     title: string;
     subTitle?:string;
     subIcon?: string;
-   
+
     elevationDisabled?: boolean;
 }
 

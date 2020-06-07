@@ -8,11 +8,20 @@ import { AngularMaterialModule } from './angular-material.module';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { SortByDatePipe, GetEmployerByIdPipe, ArrayFromNumberPipe } from './pipes'
+import { SortByDatePipe, GetEmployerByIdPipe, ArrayFromNumberPipe, CheckRolesInButtons } from './pipes'
 
 import { InputListenerDirective, ImageErrorReloaderDirective, AddToHomeScreenDirective, IfRoleDirective, HttpCommandButtonDirective } from './directives';
 
-import { MainNavComponent, MainBottomNavComponent, IconButtonComponent,StrokedButtonComponent, MainSideNavContentComponent, SimpleTopNavComponent, MainTopNavComponent, DetailTopNavComponent} from './layout';
+import { 
+  MainNavComponent, 
+  MainBottomNavComponent, 
+  IconButtonComponent,
+  StrokedButtonComponent, 
+  MainSideNavContentComponent, 
+  SimpleTopNavComponent, 
+  MainTopNavComponent, 
+  DetailTopNavComponent
+} from './layout';
 
 import {
   ConfirmDialogComponent,
@@ -20,10 +29,9 @@ import {
   PageNotFoundComponent,
   ListCardComponent,
   BottomSheetMenuComponent,
+  LoginPromptComponent,
+  LoginFormComponent,
 } from './components';
-
-import { LoginPromptComponent } from './components/login-prompt/login-prompt.component';
-import { LoginFormComponent } from './components/login-prompt/login-form/login-form.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +58,7 @@ import { LoginFormComponent } from './components/login-prompt/login-form/login-f
     LoginPromptComponent,
     LoginFormComponent,
     HttpCommandButtonDirective,
+    CheckRolesInButtons,
   ],
   imports: [
     CommonModule,
@@ -87,7 +96,8 @@ import { LoginFormComponent } from './components/login-prompt/login-form/login-f
     SimpleTopNavComponent,
     GetEmployerByIdPipe,
     ArrayFromNumberPipe,
-    ImageErrorReloaderDirective
+    ImageErrorReloaderDirective,
+    CheckRolesInButtons
   ]
 })
 export class SharedModule { }

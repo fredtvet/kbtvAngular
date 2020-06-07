@@ -18,7 +18,7 @@
       
     <span class="mr-auto">
       <ng-container>
-        <span *ngIf="!config?.backFn else noLinkTitle" class="ml-1" [routerLink]="['/']">{{ config?.title || "Hjem" }}</span>
+        <span *ngIf="!config?.backFn else noLinkTitle" class="ml-1" [routerLink]="['/hjem']">{{ config?.title || "Hjem" }}</span>
         <ng-template #noLinkTitle><span class="ml-1">{{ config.title }}</span></ng-template>
       </ng-container>
       <mat-icon *ngIf="config?.subIcon" class="scale-75">{{ config.subIcon }}</mat-icon>
@@ -29,7 +29,10 @@
  
     <app-icon-button *ngFor="let button of config?.buttons" [config]="button"></app-icon-button>
 
-    <button mat-icon-button *ngIf="config?.bottomSheetButtons?.length" (click)="openBottomSheet(config.bottomSheetButtons)">
+    <button mat-icon-button 
+      *ngIf="(config?.bottomSheetButtons | checkRolesInButtons : currentUserRole)" 
+      (click)="openBottomSheet(config.bottomSheetButtons)">
+
       <mat-icon>more_vert</mat-icon>
     </button>
 
