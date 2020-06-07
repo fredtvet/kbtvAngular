@@ -5,7 +5,7 @@
     </div>
 
     <mat-toolbar *ngIf="config" 
-        [ngClass]="config.imgSrc ? 'overlay overlay-top' : 'bg-primary-dark'"
+        [ngClass]="config.imgSrc ? 'overlay overlay-top' : 'bg-primary'"
         class="toolbar-slim color-foreground slideInDown">
 
         <app-icon-button *ngIf="config.backFn else menuBtn" [config]="{
@@ -38,7 +38,7 @@
     </mat-toolbar>
 
     <mat-toolbar *ngIf="config.title && config.title.length > 0" 
-        [ngClass]="config.imgSrc ? 'overlay overlay-bottom' : 'bg-primary-dark'"
+        [ngClass]="config.imgSrc ? 'overlay overlay-bottom' : 'bg-primary'"
         class="toolbar-slim color-foreground slideInDown">
 
         <span class="ml-6 mb-2">

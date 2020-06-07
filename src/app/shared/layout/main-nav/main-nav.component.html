@@ -21,7 +21,7 @@
     </app-detail-top-nav>
 
     <ng-template #defaultNav>
-      <app-main-top-nav class="flex-nav bg-primary-dark" 
+      <app-main-top-nav class="flex-nav bg-primary" 
         [ngClass]="config.topDefaultNavConfig?.elevationDisabled ? '' : 'mat-elevation-z4'"
         [config]="config.topDefaultNavConfig" (menuBtnClicked)="toggleDrawer(config.isXs)" 
        ></app-main-top-nav>

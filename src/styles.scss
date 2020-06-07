@@ -10,11 +10,9 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 .bg-primary{background:$primary!important;color:white;}
 .bg-primary-light{background:$primary-light!important;color:black;}
-.bg-primary-dark{background:$primary-dark!important;color:white;}
 
 .color-primary{color:$primary!important;}
 .color-primary-light{color:$primary-light!important;}
-.color-primary-dark{color:$primary-dark!important;}
 
 .bg-accent{background:$accent!important;color:black;}
 .bg-accent-light{ background:$accent-light!important;color:black;}
@@ -308,7 +306,7 @@ mat-toolbar-single-row.toolbar-slim{
 
 .mat-tab-group{
   .mat-tab-header{
-    background-color:$primary-dark;
+    background-color:$primary;
     color:white!important;
     position:sticky!important;
     width:100%;
