@@ -7,7 +7,6 @@ import {
    MatIconModule,
    MatBadgeModule,
    MatSidenavModule,
-   MatListModule, //remove
    MatProgressSpinnerModule,
    MatFormFieldModule,
    MatInputModule,
@@ -24,9 +23,8 @@ import {
    MatBottomSheetModule,
    MatButtonToggleModule,
    MatCardModule,
-
-   //exp
-   MatGridListModule
+   MatGridListModule,
+   MatDividerModule
 
 } from '@angular/material';
 
@@ -37,7 +35,6 @@ import {
       MatIconModule,
       MatSidenavModule,
       MatBadgeModule,
-      MatListModule,
       MatFormFieldModule,
       MatInputModule,
       MatSelectModule,
@@ -55,7 +52,8 @@ import {
       MatBottomSheetModule,
       MatButtonToggleModule,
       MatCardModule,
-      MatGridListModule
+      MatGridListModule,
+      MatDividerModule
    ],
    exports: [
       MatButtonModule,
@@ -63,7 +61,6 @@ import {
       MatIconModule,
       MatSidenavModule,
       MatBadgeModule,
-      MatListModule,
       MatInputModule,
       MatFormFieldModule,
       MatSelectModule,
@@ -81,7 +78,8 @@ import {
       MatBottomSheetModule,
       MatButtonToggleModule,
       MatCardModule,
-      MatGridListModule
+      MatGridListModule,
+      MatDividerModule
    ],
 })
 

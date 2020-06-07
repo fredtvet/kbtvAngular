@@ -1,13 +1,4 @@
-@import '../../../../../variables';
-
-mat-nav-list{
-  background:$primary!important;
-    .bottom-list{
-      position: absolute;
-      bottom:0;
-      width:100%;
-    } 
-
-}
-
-.mat-list-base .mat-list-item{color:white;}
+.bottom-list{
+  position: absolute;
+  bottom:0;
+} 

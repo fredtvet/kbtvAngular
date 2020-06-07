@@ -62,6 +62,16 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 .circle-radius{border-radius:50%}
 
+.nav-list{
+  a{
+    padding: $gap-size-unit *  4px;
+    display:block;
+    mat-icon{
+      margin-right:$gap-size-unit *  2px;
+    }
+  }
+}
+
 a {
   color: inherit; /* blue colors for links too */
   text-decoration: inherit; /* no underline */
