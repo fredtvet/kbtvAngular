@@ -8,12 +8,11 @@ export class CheckRolesInButtons implements PipeTransform {
 
   transform(buttons: AppButton[], role: string): any {
     if(!buttons || buttons.length == 0) return false; //No buttons no roles
-    console.log(role);
+
     let allowedRoles: string[] = [].concat
       .apply([], buttons.map(x => x.allowedRoles || [])) //Flatten all roles to one array
       .filter((value, index, self) => self.indexOf(value) === index); //Filter unique
 
-    console.log(allowedRoles);
     //Return true if no roles are given or input role find match in array
     if(!allowedRoles || allowedRoles.length == 0 || allowedRoles.includes(role)) return true; 
 

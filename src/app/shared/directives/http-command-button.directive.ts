@@ -42,7 +42,6 @@ export class HttpCommandButtonDirective {
   }
    
   ngOnDestroy = () => {
-    console.log('destroy');
     if(this.loadingSub) this.loadingSub.unsubscribe();
   }
 

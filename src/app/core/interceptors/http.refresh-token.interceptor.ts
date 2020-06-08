@@ -11,8 +11,7 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
 
     constructor(private authService:AuthService) {}
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-        //console.log(req);    
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {  
         if(this.isLoginRequest(req)) return next.handle(req); //Dont mess with login requests
 
         if(!this.authService.hasTokens()){ //If one or more tokens are missing, logout

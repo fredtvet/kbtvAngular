@@ -36,4 +36,6 @@
 @include mat-toolbar-theme($kbtv-client-theme); //
 @include mat-tooltip-theme($kbtv-client-theme); //
 @include mat-snack-bar-theme($kbtv-client-theme); // 
-@include mat-sidenav-theme($kbtv-client-theme) //
+@include mat-sidenav-theme($kbtv-client-theme); //
+@include mat-radio-theme($kbtv-client-theme);
+@include mat-select-theme($kbtv-client-theme);
