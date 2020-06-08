@@ -20,7 +20,7 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
     let arr = this._addOrUpdateRange(dbSync.entities) //Add new or updated entities
     arr = arr.filter(d => !dbSync.deletedEntities.includes(d.id)) //Remove deleted entities
     this.dataSubject.next(arr);
-    this.localStorageService.add(this.timestampKey, dbSync.timestamp)//Persist timestamp for next sync 
+    this.localStorageService.add(this.timestampKey, dbSync.timestamp)//Persist timestamp for next sync
   }
 
   getAll$(): Observable<T[]>{
@@ -99,8 +99,9 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
   }
 
   private _addOrUpdateRange(entities: T[]): T[]{
-    let originals = this.dataSubject.value || [];
-    originals = [...originals];
+    let originals = this.dataSubject.value;
+    if(!originals || originals.length == 0) return entities.slice(); //If initial array empty, just return entities
+    originals = originals.slice();
     entities.forEach(e => {
       let duplicateIndex = originals.findIndex((o) => (o.id === e.id));
       if(duplicateIndex !== -1) originals[duplicateIndex] = Object.assign(originals[duplicateIndex], e);

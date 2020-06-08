@@ -93,11 +93,14 @@ export class MissionSubject extends BaseSubject<Mission> {
   }
 
   private updateLastVisited(id: number){
-    let missions = [...this.dataSubject.value];
+    console.time('mission');
+    let missions = this.dataSubject.value.slice();
     let index = missions.findIndex(x => x.id == id);
     let mission = {...missions[index]};
     mission.lastVisited = new Date(); 
     missions[index] = mission;  
     this.dataSubject.next(missions);
+    
+    console.timeEnd('mission');
   }
 }

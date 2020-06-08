@@ -3,5 +3,5 @@ import { AppFile } from '../app-file.interface';
 
 
 export interface MissionImage extends MissionChild, AppFile{
-    createdAt: Date;
+    updatedAt: Date;
 }

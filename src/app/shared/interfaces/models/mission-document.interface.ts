@@ -4,7 +4,7 @@ import { AppDocumentType } from './app-document-type.interface';
 
 
 export interface MissionDocument extends MissionChild, AppFile{  
-    createdAt: Date;
+    updatedAt: Date;
 
     documentTypeId: number;
     documentType: AppDocumentType;

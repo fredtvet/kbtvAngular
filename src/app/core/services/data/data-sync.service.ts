@@ -60,9 +60,9 @@ export class DataSyncService {
     this.apiService
       .get('/SyncAll', params)
       .pipe(retry(3), tap(data => {
-        this.entitySubjects.forEach(x =>{
-          let key = x.entityKey + 'Sync';
-          x.subject.sync(data[key]);
+        this.entitySubjects.forEach(e =>{
+          let key = e.entityKey + 'Sync';
+          e.subject.sync(data[key]);
         });
       }),catchError(err => {
         this.notificationService.setNotification('Noe gikk feil med synkroniseringen!' , Notifications.Error)

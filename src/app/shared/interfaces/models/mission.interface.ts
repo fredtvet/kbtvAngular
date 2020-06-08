@@ -9,7 +9,6 @@ export interface Mission extends BaseEntity {
     finished: boolean;
     imageURL: string;
 
-    createdAt: Date;
     updatedAt: Date;
     lastVisited: Date;
 
