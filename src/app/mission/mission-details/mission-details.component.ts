@@ -63,9 +63,11 @@ export class MissionDetailsComponent{
     );
   }
   
-  private deleteMission = (id: number) =>
-    this.missionService.delete$(id).pipe(filter(del => del), tap(x => this.onBack()))
+  private deleteMission = (id: number) =>{
+    this.onBack()
+    this.missionService.delete$(id).pipe(filter(del => del))
       .subscribe(del => this.notificationService.setNotification('Vellykket! Oppdrag slettet.'));
+  }
   
   private openMissionForm = (missionIdPreset: number) => 
     this._bottomSheet.open(MissionFormSheetWrapperComponent, {data: {missionIdPreset}});
