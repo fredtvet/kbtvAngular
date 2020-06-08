@@ -12,9 +12,37 @@
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#212121">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <style>
+    body{
+      background:#d7ccc8;
+    }
+    @keyframes spinner {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+  .init-spinner:before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top:calc(50% - 50px);
+    left:calc(50% - 50px);
+    border-radius: 50%;
+    border: 2px solid #d7ccc8;
+    border-top-color: #6d4c41;
+    animation: spinner 0.8s linear infinite;
+  }
+  </style>
 </head>
-<body class="background-color">
-  <app-root></app-root>
+<body>
+  <app-root>
+
+      <span class="init-spinner">&nbsp;</span>
+    
+  </app-root>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUWZmwjGN92B3PoNS6x6qpOmc3xrP55d8&amp;libraries=places&amp;language=no"></script>
   <noscript>
     For å bruke nettsiden må du aktivere Javascript.
