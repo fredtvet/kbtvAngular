@@ -115,7 +115,7 @@ export class ArrayHelperService {
   }
 
 
-  convertArrayToObject = (array: any[], key?: string) => {
+  convertArrayToObject = <T>(array: T[], key?: string): { [key: string]: T } => {
     let arr = array.reduce((obj, item) => {
         const itemKey = key ? item[key] : item;
         obj[itemKey] = item;

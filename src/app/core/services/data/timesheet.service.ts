@@ -121,8 +121,9 @@ export class TimesheetService {
   }
 
   private addFullNameToSummaries(summaries: TimesheetSummary[], users: User[]){
+    let usersObj = this.arrayHelperService.convertArrayToObject(users, 'userName');
     let ts = summaries.map(s => {
-      const user = users.find(x => x.userName === s.userName);
+      const user = usersObj[s.userName];
       if(user) s.fullName = user.firstName + ' ' + user.lastName;
       return s;
     })
