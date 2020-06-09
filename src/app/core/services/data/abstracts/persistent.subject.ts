@@ -16,9 +16,7 @@ export abstract class PersistentSubject<T> {
     this.dataSubject = new BehaviorSubject<T>(this.localStorageService.get(this.storageKey) || initalValue || undefined);
     this.data$ = this.dataSubject.asObservable();
 
-    this.data$.pipe(skip(1)).subscribe(data => {
-      this.localStorageService.add(this.storageKey, data);
-    });
+    this.data$.pipe(skip(1)).subscribe(data => this.localStorageService.add(this.storageKey, data));
   }
 
 }

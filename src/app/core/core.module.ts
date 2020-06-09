@@ -25,7 +25,8 @@ import {
   TimesheetService,
   TimesheetAggregatorService,
   AppConfigurationService,
-  DownloaderService
+  DownloaderService,
+  ArrayHelperService
 } from './services';
 
 import { NotificationComponent, LoginPromptComponent } from '../shared/components';
@@ -65,6 +66,7 @@ import { NotificationComponent, LoginPromptComponent } from '../shared/component
     TimesheetAggregatorService,
     AppConfigurationService,
     DownloaderService,
+    ArrayHelperService
   ]
 })
 export class CoreModule { }

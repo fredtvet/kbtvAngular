@@ -9,6 +9,7 @@ import { MissionImageSubject } from '../mission-image/mission-image.subject';
 import { EmployerSubject } from '../employer/employer.subject';
 import { MissionDocumentSubject } from '../mission-document/mission-document.subject';
 import { MissionNoteSubject } from '../mission-note/mission-note.subject';
+import { ArrayHelperService } from '../../utility/array-helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +23,9 @@ export class MissionSubject extends BaseSubject<Mission> {
     private missionImageSubject: MissionImageSubject,
     private missionDocumentSubject: MissionDocumentSubject,
     private missionNoteSubject: MissionNoteSubject,
-    localStorageService: LocalStorageService
-    ) {
-      super(localStorageService, 'missions');
+    localStorageService: LocalStorageService,
+    arrayHelperService: ArrayHelperService,
+    ) { super(arrayHelperService,localStorageService, 'missions');
     }
 
   getAllDetails$(): Observable<Mission[]>{

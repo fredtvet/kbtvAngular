@@ -8,6 +8,7 @@ import { DateParams, TimesheetSummary } from 'src/app/shared/interfaces';
 import { BaseMissionChildSubject } from '../abstracts/base-mission-child.subject';
 import { DateTimeService } from '../../utility/date-time.service';
 import { TimesheetAggregatorService } from '../../utility/timesheet-aggregator.service';
+import { ArrayHelperService } from '../../utility/array-helper.service';
 
 
 @Injectable({
@@ -20,7 +21,8 @@ export class UserTimesheetSubject extends BaseMissionChildSubject<Timesheet> {
     private dateTimeService: DateTimeService,
     private timesheetAggregator: TimesheetAggregatorService,
     localStorageService: LocalStorageService,
-    ) { super(localStorageService, 'userTimesheets') }
+    arrayHelperService: ArrayHelperService,
+    ) { super(arrayHelperService,localStorageService, 'userTimesheets') }
 
     getByWeekGrouped$(dateParams: DateParams, excludeStatus?: TimesheetStatus): Observable<Timesheet[][]>{
       const range = this.dateTimeService.getWeekRangeByDateParams(dateParams);

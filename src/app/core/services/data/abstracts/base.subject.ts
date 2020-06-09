@@ -4,12 +4,14 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LocalStorageService } from '../../local-storage.service';
 import { PersistentSubject } from './persistent.subject';
+import { ArrayHelperService } from '../../utility/array-helper.service';
 
 export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubject<T[]>{
 
   private timestampKey: string;
 
   constructor(
+    private arrayHelperService: ArrayHelperService,
     localStorageService: LocalStorageService,
     storageKey:string) {
     super(localStorageService, storageKey);
@@ -17,15 +19,19 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
   }
 
   sync(dbSync: DbSync<T>){
-    let arr = this._addOrUpdateRange(dbSync.entities) //Add new or updated entities
-    arr = arr.filter(d => !dbSync.deletedEntities.includes(d.id)) //Remove deleted entities
+
+    let arr = this.arrayHelperService.addOrUpdateRange<T>(this.dataSubject.value, dbSync.entities, 'id');
+
+    arr = this.arrayHelperService.removeRangeByIdentifier<T>(arr, dbSync.deletedEntities, 'id');
+
     this.dataSubject.next(arr);
+
     this.localStorageService.add(this.timestampKey, dbSync.timestamp)//Persist timestamp for next sync
   }
 
   getAll$(): Observable<T[]>{
     return this.data$.pipe(map(arr =>
-      {return !arr ? [] : arr}));
+      {return !arr ? [] : arr.slice()}));
   }
 
   getAll(): T[]{
@@ -60,28 +66,30 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
   }
 
   addOrUpdateRange(entities: T[]): void{
-    let arr = this._addOrUpdateRange(entities)
+    let arr = this.arrayHelperService.addOrUpdateRange<T>(this.dataSubject.value, entities, 'id')
     this.dataSubject.next(arr);
   }
 
   update(entity: T): void{
-    let arr = [...this.dataSubject.value];
-    arr = arr.map(e => {
-      if(e.id !== entity.id) return e;
-      else return {...Object.assign(e, entity)};
-    });
+    let arr = this.dataSubject.value.slice();
+    for(let i = 0; i < arr.length; i++){
+      let obj = arr[i];
+      if(obj.id === entity.id){
+        arr[i] = {...Object.assign(obj, entity)};
+        break;
+      }
+    }
     this.dataSubject.next(arr);
   }
 
   delete(id: number): void{
-    let arr = [...this.dataSubject.value];
+    let arr = this.dataSubject.value.slice();
     arr = arr.filter(d => d.id != id);
     this.dataSubject.next(arr);
   }
 
   deleteRange(ids: number[]){
-    let arr = [...this.dataSubject.value];
-    arr = arr.filter(d => !ids.includes(d.id));
+    let arr = this.arrayHelperService.removeRangeByIdentifier<T>(this.dataSubject.value, ids, 'id');
     this.dataSubject.next(arr);
   }
 
@@ -96,19 +104,6 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
 
   get isEmpty(): boolean{
     return (this.dataSubject.value === undefined || this.dataSubject.value.length == 0)
-  }
-
-  private _addOrUpdateRange(entities: T[]): T[]{
-    let originals = this.dataSubject.value;
-    if(!originals || originals.length == 0) return entities.slice(); //If initial array empty, just return entities
-    originals = originals.slice();
-    entities.forEach(e => {
-      let duplicateIndex = originals.findIndex((o) => (o.id === e.id));
-      if(duplicateIndex !== -1) originals[duplicateIndex] = Object.assign(originals[duplicateIndex], e);
-      else originals.push(e);
-    });
-
-    return originals;
   }
 
 }

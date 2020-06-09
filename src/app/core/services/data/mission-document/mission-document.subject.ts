@@ -5,6 +5,7 @@ import { DocumentTypeSubject } from '../document-type/document-type.subject';
 import { LocalStorageService } from '../../local-storage.service';
 import { Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
+import { ArrayHelperService } from '../../utility/array-helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,9 @@ import { switchMap, map } from 'rxjs/operators';
 export class MissionDocumentSubject extends BaseMissionChildSubject<MissionDocument> {
   constructor(
     private documentTypeSubject: DocumentTypeSubject,
-    localStorageService: LocalStorageService
-    ) { super(localStorageService, 'missionDocuments'); }
+    localStorageService: LocalStorageService,
+    arrayHelperService: ArrayHelperService,
+    ) { super(arrayHelperService, localStorageService, 'missionDocuments'); }
 
   getByMissionId$(missionId: number): Observable<MissionDocument[]>{
     return super.getByMissionId$(missionId).pipe(switchMap(documents => {

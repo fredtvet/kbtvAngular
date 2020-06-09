@@ -34,3 +34,4 @@ export * from './ui/notification.service';
 export * from './utility/date-time.service';
 export * from './utility/timesheet-aggregator.service';
 export * from './utility/translation.service';
+export * from './utility/array-helper.service';
