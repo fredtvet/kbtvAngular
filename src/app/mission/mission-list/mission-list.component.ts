@@ -2,10 +2,12 @@ import { Component, ChangeDetectionStrategy  } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Mission } from 'src/app/shared/interfaces/models';
 import { BehaviorSubject, Observable} from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, tap, withLatestFrom } from 'rxjs/operators';
 import { MissionService, MainNavService } from 'src/app/core/services';
 import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
 import { Roles } from 'src/app/shared/enums';
+
+interface PageInfo {searchString: string, showFinishedMissions: boolean, historic: boolean}
 
 @Component({
   selector: 'app-mission-list',
@@ -15,9 +17,9 @@ import { Roles } from 'src/app/shared/enums';
 
 export class MissionListComponent{
   Roles = Roles;
-  private pageInfoSubject = new BehaviorSubject({searchString: "", showFinishedMissions: false, historic: false});
+  private pageInfoSubject = new BehaviorSubject<PageInfo>({searchString: "", showFinishedMissions: false, historic: false});
 
-  missions$: Observable<Mission[]>;
+  vm$: Observable<{missions: Mission[], pageInfo: PageInfo}>;
 
   constructor(
     private mainNavService: MainNavService,
@@ -27,12 +29,10 @@ export class MissionListComponent{
     }
 
   ngOnInit(){
-    this.missions$ = this.pageInfoSubject.pipe(switchMap(pageInfo => {
-        return this.missionService
-          .getBy$(x => this.filterMission(x, pageInfo)).pipe(
-            map(x => pageInfo.historic ? this.missionService.sortByHistory(x) : this.missionService.sortByDate(x))
-          )
-      }));
+    this.vm$ = this.pageInfoSubject.pipe(switchMap(pageInfo =>  
+        this.missionService.getBy$(x => this.filterMission(x, pageInfo))
+        .pipe(map(x => {return {missions: x, pageInfo}}))      
+      ));
   }
 
   searchMissionList = (searchString: string) => {

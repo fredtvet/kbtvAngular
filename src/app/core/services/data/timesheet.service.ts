@@ -11,6 +11,7 @@ import { DeviceInfoService } from '../device-info.service';
 import { NotificationService } from '../ui/notification.service';
 import { UserService } from './user/user.service';
 import { MissionService } from './mission/mission.service';
+import { ArrayHelperService } from '../utility/array-helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,7 @@ export class TimesheetService {
   );
 
   constructor(
+    private arrayHelperService: ArrayHelperService,
     private apiService: ApiService,
     private timesheetAggregatorService: TimesheetAggregatorService,
     private deviceInfoService: DeviceInfoService,
@@ -87,7 +89,7 @@ export class TimesheetService {
     if(ids.length == 0) throwError('Ingen ubekreftede timer');
 
     return this.apiService.put(`${this.uri}/Status`, { ids: ids, status: status})
-      .pipe(tap(this.updateRange));
+      .pipe(tap(this.addOrUpdateRange));
   }
 
 
@@ -109,23 +111,13 @@ export class TimesheetService {
   }
 
   private update = (timesheet: Timesheet) => {
-    let arr = [...this.timesheetSubject.value];
-    arr = arr.map(e => {
-      if(e.id !== timesheet.id) return e;
-      else return {...Object.assign(e, timesheet)};
-    });
+    let arr = this.arrayHelperService.update(this.timesheetSubject.value, timesheet, 'id');
     this.timesheetSubject.next(arr);
   }
 
-  private updateRange = (timesheets: Timesheet[]) => {
-    let originals = this.timesheetSubject.value || [];
-    originals = [...originals];
-    timesheets.forEach(e => {
-      let duplicateIndex = originals.findIndex((o) => (o.id === e.id));
-      if(duplicateIndex !== -1) originals[duplicateIndex] = {...Object.assign(originals[duplicateIndex], e)};
-      else originals.push(e);
-    });
-    this.timesheetSubject.next(originals);
+  private addOrUpdateRange = (timesheets: Timesheet[]) => {
+    let arr = this.arrayHelperService.addOrUpdateRange(this.timesheetSubject.value, timesheets, 'id');
+    this.timesheetSubject.next(arr);
   }
 
   private addFullNameToSummaries(summaries: TimesheetSummary[], users: User[]){

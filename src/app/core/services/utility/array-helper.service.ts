@@ -21,7 +21,6 @@ export class ArrayHelperService {
     return result;
   }
 
-
   add<T>(array: T[], value: T): T[]{
     let arr = array.slice();
     arr.unshift(value);
@@ -32,7 +31,7 @@ export class ArrayHelperService {
     let arr = array.slice();
     for(let i = 0; i < arr.length; i++){
       let obj = arr[i];
-      if(obj['identifier'] === updatedObj['identifier']){
+      if(obj[identifier] === updatedObj[identifier]){
         arr[i] = {...Object.assign(obj, updatedObj)};
         break;
       }
@@ -59,7 +58,12 @@ export class ArrayHelperService {
        } //If no obj exist, add obj to end of array 
     } 
 
-    return Object.values(originalsObj) as T[]; 
+    let result: T[] = [];
+    let keys = Object.keys(originalsObj);
+    for(let i = 0; i < keys.length;i++){
+      result.push(originalsObj[keys[i]]);
+    }
+    return result;
 }
 
   removeRangeByIdentifier<T>(originals: T[], deletedIds: any[], identifier: string): T[]{       
@@ -73,7 +77,12 @@ export class ArrayHelperService {
       delete originalsObj[id];
     } 
 
-    return Object.values(originalsObj) as T[];
+    let result: T[] = [];
+    let keys = Object.keys(originalsObj);
+    for(let i = 0; i < keys.length;i++){
+      result.push(originalsObj[keys[i]]);
+    }
+    return result;
   }
 
   removeByIdentifier<T>(originals: T[], deletedId: any, identifier: string): T[]{       

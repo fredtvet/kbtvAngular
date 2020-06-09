@@ -26,7 +26,7 @@ export class TimesheetAggregatorService {
   }
 
   groupByDay(t: Timesheet[]): TimesheetSummary[] {
-
+    
     const obj_arr = t.reduce((groups, timesheet) => {
       const date = timesheet.startTime.toString().split("T")[0];
       const index = date + "-" + timesheet.userName;
@@ -51,7 +51,10 @@ export class TimesheetAggregatorService {
     }, {});
 
     let result = [];
-    Object.keys(obj_arr).forEach((x) => result.push(obj_arr[x]));
+    let keys = Object.keys(obj_arr);
+    for(let i = 0; i < keys.length;i++){
+      result.push(obj_arr[keys[i]]);
+    }
     return result;
   }
 
