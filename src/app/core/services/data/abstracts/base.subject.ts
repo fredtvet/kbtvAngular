@@ -11,7 +11,7 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
   private timestampKey: string;
 
   constructor(
-    private arrayHelperService: ArrayHelperService,
+    protected arrayHelperService: ArrayHelperService,
     localStorageService: LocalStorageService,
     storageKey:string) {
     super(localStorageService, storageKey);
@@ -29,29 +29,26 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
     this.localStorageService.add(this.timestampKey, dbSync.timestamp)//Persist timestamp for next sync
   }
 
-  getAll$(): Observable<T[]>{
-    return this.data$.pipe(map(arr =>
-      {return !arr ? [] : arr.slice()}));
+  getAll$ (): Observable<T[]> {
+    return this.data$.pipe(map(arr => !arr ? [] : arr.slice()));
   }
 
-  getAll(): T[]{
-    return [...this.dataSubject.value]
+  getAll (): T[]{  
+    return this.dataSubject.value.slice();
   }
-
+  
   getAllDetails$(): Observable<T[]>{
     return this.getAll$();
   }
-
+  
   get$(id: number): Observable<T>{
-    return this.data$.pipe(map(arr =>
-      {return !arr ? undefined : arr.find(e => e.id == id)}));
+    return this.data$.pipe(map(arr => this.arrayHelperService.find(arr, id, 'id')));
   }
 
   getRange$(ids: number[]): Observable<T[]>{
-    return this.data$.pipe(map(arr =>
-      {return !arr ? undefined : arr.filter(d => ids.includes(d.id))}));
+    return this.data$.pipe(map(arr => this.arrayHelperService.getRangeByIdentifier(arr, ids, 'id')));
   }
-
+  
   getBy$(expression: (value: T, index?: number, Array?: any[]) => boolean): Observable<T[]>{
     return this.data$.pipe(map(arr =>
       {return !arr ? undefined : arr.filter(expression)}));
@@ -59,7 +56,7 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
 
   addOrUpdate(entity: T): void{
     if(this.dataSubject.value && !this.dataSubject.value.find(e => e.id == entity.id)) {
-      const arr = [entity, ...this.dataSubject.value]
+      let arr = this.arrayHelperService.add<T>(this.dataSubject.value, entity);
       this.dataSubject.next(arr);
     }
     else this.update(entity);
@@ -71,20 +68,12 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
   }
 
   update(entity: T): void{
-    let arr = this.dataSubject.value.slice();
-    for(let i = 0; i < arr.length; i++){
-      let obj = arr[i];
-      if(obj.id === entity.id){
-        arr[i] = {...Object.assign(obj, entity)};
-        break;
-      }
-    }
+    let arr = this.arrayHelperService.update<T>(this.dataSubject.value, entity, 'id');
     this.dataSubject.next(arr);
   }
 
   delete(id: number): void{
-    let arr = this.dataSubject.value.slice();
-    arr = arr.filter(d => d.id != id);
+    let arr = this.arrayHelperService.removeByIdentifier(this.dataSubject.value, id, 'id')
     this.dataSubject.next(arr);
   }
 

@@ -28,22 +28,26 @@ export class MissionSubject extends BaseSubject<Mission> {
     ) { super(arrayHelperService,localStorageService, 'missions');
     }
 
-  getAllDetails$(): Observable<Mission[]>{
+  getAllDetails$ = (): Observable<Mission[]> => {
     let employerSub = this.employerSubject.getAll$();
     let typeSub = this.missionTypeSubject.getAll$();
-
-    return combineLatest(employerSub, typeSub).pipe(switchMap(data => {
-      return super.getAll$().pipe(map(missions => {
-        return missions.map(mission => {
-          mission.employer = data[0].find(x => x.id == mission.employerId);
-          mission.missionType = data[1].find(x => x.id == mission.missionTypeId);
-          return mission;
-        })
+    let missionSub = super.getAll$();
+    return combineLatest(missionSub, employerSub, typeSub).pipe(
+      map(([missions, employers, types]) => {
+        let missionsClone = missions.slice();
+        let employersObj = this.arrayHelperService.convertArrayToObject(employers, 'id');
+        let typesObj = this.arrayHelperService.convertArrayToObject(types, 'id');
+        for(var i = 0; i < missions.length; i++){
+          let missionClone = {...missionsClone[i]};
+          missionClone.employer = employersObj[missionClone.employerId];    
+          missionClone.missionType = typesObj[missionClone.missionTypeId];
+          missionsClone[i] = missionClone;
+        }
+        return missionsClone
       }));
-    }));
   }
 
-  getDetails$(id: number, trackHistory: boolean = true):Observable<Mission>{
+  getDetails$ = (id: number, trackHistory: boolean = true):Observable<Mission> => {
     if(trackHistory) this.updateLastVisited(id);
     return super.get$(id).pipe(
       switchMap(data => {
