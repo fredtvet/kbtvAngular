@@ -3,16 +3,10 @@ import { SharedModule } from '../shared/shared.module';
 import { MissionRoutingModule } from './mission-routing.module';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
 import { MissionListComponent } from './mission-list/mission-list.component';
-import { MissionNoteFormComponent } from './components/mission-note-form/mission-note-form.component';
-import { MissionDocumentFormComponent } from './components/mission-document-form/mission-document-form.component';
 import { ConfirmDialogComponent } from '../shared/components';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
 import { DatePipe } from '@angular/common';
-import { MissionNoteFormViewComponent } from './components/mission-note-form/mission-note-form-view/mission-note-form-view.component';
 import { MissionListViewComponent } from './mission-list/mission-list-view/mission-list-view.component';
-import { MissionNoteFormSheetWrapperComponent } from './components/mission-note-form/mission-note-form-sheet-wrapper.component';
-import { MissionDocumentFormSheetWrapperComponent } from './components/mission-document-form/mission-document-form-sheet-wrapper.component';
-import { MissionDocumentFormViewComponent } from './components/mission-document-form/mission-document-form-view/mission-document-form-view.component';
 import { ImageViewerComponent } from './components/image-viewer/image-viewer.component';
 import { ImageListComponent } from './mission-image-list/image-list/image-list.component';
 import { MissionImageListComponent } from './mission-image-list/mission-image-list.component';
@@ -28,7 +22,6 @@ import { FileiconFromFiletypePipe } from './pipes/fileicon-from-filetype.pipe';
 import { ArraySlicePipe } from './pipes/array-slice.pipe';
 import { ThumbnailPipe } from './pipes/thumbnail.pipe';
 import { NoteCardComponent } from './mission-note-list/note-card/note-card.component';
-import { MailToFormComponent } from './components/mail-to-form/maill-to-form.component';
 
 
 @NgModule({
@@ -38,19 +31,12 @@ import { MailToFormComponent } from './components/mail-to-form/maill-to-form.com
     MissionListComponent,
     MissionListViewComponent,   
     MissionNoteListComponent,
-    MissionNoteFormComponent,
-    MissionNoteFormViewComponent,
-    MissionNoteFormSheetWrapperComponent,
-    MissionDocumentFormComponent,
-    MissionDocumentFormViewComponent,
-    MissionDocumentFormSheetWrapperComponent,
     ImageListComponent,
     ImageViewerComponent, 
     ImageViewerDialogWrapperComponent,
     MailImageSheetComponent,
     MissionImageListComponent,
     SelectableCardComponent,
-    MailToFormComponent,
     MissionDocumentListComponent,
     DocumentListComponent,
     MailDocumentSheetComponent,
@@ -66,9 +52,6 @@ import { MailToFormComponent } from './components/mail-to-form/maill-to-form.com
   entryComponents:[
     ConfirmDialogComponent,
     ImageViewerDialogWrapperComponent,
-    MissionDocumentFormComponent,
-    MissionNoteFormSheetWrapperComponent,
-    MissionDocumentFormSheetWrapperComponent,
     MailImageSheetComponent,
     MailDocumentSheetComponent
   ],

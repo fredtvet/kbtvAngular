@@ -8,7 +8,7 @@ import { MissionService } from 'src/app/core/services';
   template: `
   <app-simple-top-nav [config]="navConfig">
     <app-mission-form 
-      [missionIdPreset]="data?.missionIdPreset"
+      [idPreset]="data?.idPreset"
       (finished)="close()">
     </app-mission-form>
   </app-simple-top-nav> 
@@ -25,11 +25,11 @@ export class MissionFormSheetWrapperComponent implements OnInit {
   constructor(
     private missionService: MissionService,
     private _bottomSheetRef: MatBottomSheetRef<MissionFormSheetWrapperComponent>,  
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: {missionIdPreset: number}) { }
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: {idPreset: number}) { }
 
   ngOnInit() {
     this.navConfig = {
-      title: (this.data && this.data.missionIdPreset) ? 'Rediger oppdrag' : 'Registrer oppdrag',
+      title: (this.data && this.data.idPreset) ? 'Rediger oppdrag' : 'Registrer oppdrag',
       leftBtn: {icon: 'close', callback: this.close} as AppButton,
       buttons: [{icon: 'note_add', callback: this.openPdfInput}] as AppButton[]
     }

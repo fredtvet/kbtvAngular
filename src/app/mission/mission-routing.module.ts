@@ -33,12 +33,18 @@ const routes: Routes = [
 {
   path: ':id/dokumenter',
   component: MissionDocumentListComponent,
-  canActivate: [AuthGuard],data: {animation: 'MissionDocuments'}
+  canActivate: [AuthGuard],data: {animation: 'MissionDocuments'},
+  children: [
+    {path: 'skjema', loadChildren: 'src/app/mission-modules/mission-document-form/mission-document-form.module#MissionDocumentFormModule'},
+  ],
 },
 {
   path: ':id/notater',
   component: MissionNoteListComponent,
-  canActivate: [AuthGuard],data: {animation: 'MissionNotes'}
+  canActivate: [AuthGuard],data: {animation: 'MissionNotes'},
+  children: [
+    {path: 'skjema', loadChildren: 'src/app/mission-modules/mission-note-form/mission-note-form.module#MissionNoteFormModule'},
+  ],
 },
 ];
 

@@ -7,7 +7,6 @@ import { MatDialog, MatBottomSheet } from '@angular/material';
 import { RolePresets } from 'src/app/shared/enums';
 import { filter } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
-import { MissionNoteFormSheetWrapperComponent } from '../components/mission-note-form/mission-note-form-sheet-wrapper.component';
 import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
 
 @Component({
@@ -49,10 +48,10 @@ export class MissionNoteListComponent {
   }
 
   openCreateNoteForm = () => 
-    this.bottomSheet.open(MissionNoteFormSheetWrapperComponent, {data: {missionId: this.missionId}});
+    this.router.navigate(['skjema'], {relativeTo: this.route, queryParams: {missionId: this.missionId}});
 
-  openEditNoteForm = (noteIdPreset: number) => 
-    this.bottomSheet.open(MissionNoteFormSheetWrapperComponent, {data: {noteIdPreset}});
+  openEditNoteForm = (idPreset: number) => 
+    this.router.navigate(['skjema'], {relativeTo: this.route, queryParams: {idPreset, missionId: this.missionId}});
 
   private configureMainNav(missionId: number){
     let cfg = {

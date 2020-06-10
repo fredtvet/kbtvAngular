@@ -10,7 +10,6 @@ import { MailDocumentSheetComponent } from '../components/mail-document-sheet.co
 import { takeUntil, filter, map } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
-import { MissionDocumentFormSheetWrapperComponent } from '../components/mission-document-form/mission-document-form-sheet-wrapper.component';
 import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
 
 @Component({
@@ -84,7 +83,7 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
   }
 
   openDocumentForm = () => 
-    this.bottomSheet.open(MissionDocumentFormSheetWrapperComponent, {data: {missionId: this.missionId}});
+    this.router.navigate(['skjema'], {relativeTo: this.route, queryParams: {missionId: this.missionId}});
 
   downloadDocument = (document: MissionDocument) => this.downloaderService.downloadUrl(document.fileURL);
 

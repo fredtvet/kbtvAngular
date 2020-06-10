@@ -31,6 +31,7 @@ import {
   BottomSheetMenuComponent,
   LoginPromptComponent,
   LoginFormComponent,
+  MailToFormComponent,
 } from './components';
 
 @NgModule({
@@ -59,6 +60,7 @@ import {
     LoginFormComponent,
     HttpCommandButtonDirective,
     CheckRolesInButtons,
+    MailToFormComponent,
   ],
   imports: [
     CommonModule,
@@ -97,7 +99,8 @@ import {
     GetEmployerByIdPipe,
     ArrayFromNumberPipe,
     ImageErrorReloaderDirective,
-    CheckRolesInButtons
+    CheckRolesInButtons,
+    MailToFormComponent,
   ]
 })
 export class SharedModule { }

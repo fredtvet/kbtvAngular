@@ -7,7 +7,7 @@ import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
   template: `
   <app-simple-top-nav [config]="navConfig">
     <app-mission-note-form 
-      [noteIdPreset]="data?.noteIdPreset"
+      [idPreset]="data?.idPreset"
       [missionId]="data?.missionId"
       (finished)="close()">
     </app-mission-note-form>
@@ -21,11 +21,11 @@ export class MissionNoteFormSheetWrapperComponent implements OnInit {
 
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<MissionNoteFormSheetWrapperComponent>,  
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: {noteIdPreset: number, missionId: number}) { }
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: {idPreset: number, missionId: number}) { }
 
   ngOnInit() {
     this.navConfig = {
-      title: (this.data && this.data.noteIdPreset) ? 'Rediger notat' : 'Registrer notat',
+      title: (this.data && this.data.idPreset) ? 'Rediger notat' : 'Registrer notat',
       leftBtn: {icon: 'close', callback: this.close} as AppButton,
     }
   }

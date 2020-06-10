@@ -7,9 +7,6 @@ import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { NotificationService, MissionService, MissionImageService, MissionDocumentService, MissionNoteService, MainNavService} from 'src/app/core/services';
 import { tap, filter, map } from 'rxjs/operators';
 import { Observable, combineLatest } from 'rxjs';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MissionNoteFormSheetWrapperComponent } from '../components/mission-note-form/mission-note-form-sheet-wrapper.component';
-import { MissionDocumentFormSheetWrapperComponent } from '../components/mission-document-form/mission-document-form-sheet-wrapper.component';
 import { MissionDetailsViewModel } from './mission-details-view-model.interface';
 import { TopDetailNavConfig } from 'src/app/shared/interfaces';
 
@@ -35,7 +32,6 @@ export class MissionDetailsComponent{
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog, 
-    private _bottomSheet: MatBottomSheet,  
   ){ }
 
   ngOnInit(){
@@ -68,13 +64,7 @@ export class MissionDetailsComponent{
       .subscribe(del => this.notificationService.setNotification('Vellykket! Oppdrag slettet.'));
   }
   
-  private openMissionForm = (id: number) => this.router.navigate(['rediger'], {relativeTo: this.route, queryParams: {id}});
-
-  private openMissionNoteForm = (missionId: number) => 
-    this._bottomSheet.open(MissionNoteFormSheetWrapperComponent, {data: {missionId}});
-  
-  private openDocumentForm = (missionId: number) => 
-    this._bottomSheet.open(MissionDocumentFormSheetWrapperComponent, {data: {missionId}});
+  private openMissionForm = (idPreset: number) => this.router.navigate(['rediger'], {relativeTo: this.route, queryParams: {idPreset}});
 
   private openDeleteMissionDialog = (id: number) => {
     const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette oppdraget.'});
@@ -95,8 +85,6 @@ export class MissionDetailsComponent{
 
     cfg.bottomSheetButtons = [
       {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal},
-      {text: "Legg til dokument", icon: "note_add", callback: this.openDocumentForm, params: [mission.id], allowedRoles: [Roles.Leder]},
-      {text: "Legg til notat", icon: "add_comment", callback: this.openMissionNoteForm, params: [mission.id], allowedRoles: RolePresets.Internal},
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission.id], allowedRoles: [Roles.Leder]},
       {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, params: [mission.id], allowedRoles: [Roles.Leder]}
     ];

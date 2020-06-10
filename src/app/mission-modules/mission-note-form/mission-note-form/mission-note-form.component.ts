@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class MissionNoteFormComponent {
 
-  @Input() noteIdPreset: number;
+  @Input() idPreset: number;
   @Input() missionId: number;
 
   @Output() finished = new EventEmitter();
@@ -24,8 +24,8 @@ export class MissionNoteFormComponent {
     private notificationService: NotificationService)  {}
 
   ngOnInit(){
-    if(!this.noteIdPreset) this.isCreateForm = true; 
-    else this.note$ = this.missionNoteService.get$(this.noteIdPreset);
+    if(!this.idPreset) this.isCreateForm = true; 
+    else this.note$ = this.missionNoteService.get$(this.idPreset);
   }
 
   onSubmit(result: MissionNote){

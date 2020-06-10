@@ -12,7 +12,7 @@ import { tap } from 'rxjs/operators';
 })
 export class MissionFormComponent {
 
-  @Input() missionIdPreset: number;
+  @Input() idPreset: number;
   
   @Output() finished = new EventEmitter();
 
@@ -29,8 +29,8 @@ export class MissionFormComponent {
     private notificationService: NotificationService) {}
 
   ngOnInit(): void {
-    if(!this.missionIdPreset) this.isCreateForm = true;
-    else this.mission$ = this.missionService.get$(this.missionIdPreset);
+    if(!this.idPreset) this.isCreateForm = true;
+    else this.mission$ = this.missionService.get$(this.idPreset);
   }
 
   onSubmit(result: any): void{
