@@ -9,7 +9,7 @@ export class ArrayHelperService {
   constructor() {}
 
   find<T>(array: T[], value: any, identifier: string){
-    if(this.isEmptyArray(array)) return undefined;
+    if(this.isEmptyArray(array) || !value || value === null) return undefined;
     let result: T;
     for(let i = 0; i < array.length; i++){
       let obj = array[i];
