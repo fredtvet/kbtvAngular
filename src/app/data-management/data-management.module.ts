@@ -10,8 +10,6 @@ import { ConfirmDialogComponent } from '../shared/components';
 import { EmployerFormComponent } from './components/employer-form/employer-form.component';
 import { EmployerFormViewComponent } from './components/employer-form/employer-form-view/employer-form-view.component';
 import { EmployerFormSheetWrapperComponent } from './components/employer-form/employer-form-sheet-wrapper.component';
-import { MissionFormSheetWrapperComponent } from '../mission/components/mission-form/mission-form-sheet-wrapper.component';
-import { MissionModule } from '../mission/mission.module';
 import { MissionTypeFormComponent } from './components/mission-type-form/mission-type-form.component';
 import { DocumentTypeFormComponent } from './components/document-type-form/document-type-form.component';
 import { MissionTypeFormSheetWrapperComponent } from './components/mission-type-form/mission-type-form-sheet-wrapper.component';
@@ -43,7 +41,6 @@ import { DataManagerFacadeService } from './data-manager-facade.service';
   entryComponents:[
     ConfirmDialogComponent,
     EmployerFormSheetWrapperComponent,
-    MissionFormSheetWrapperComponent,
     MissionTypeFormSheetWrapperComponent,
     DocumentTypeFormSheetWrapperComponent
   ],
@@ -54,7 +51,6 @@ import { DataManagerFacadeService } from './data-manager-facade.service';
     SharedModule,
     DataManagementRoutingModule,
     AppAgGridModule,
-    MissionModule,
   ]
 })
 

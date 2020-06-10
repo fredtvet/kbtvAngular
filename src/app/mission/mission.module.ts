@@ -8,11 +8,8 @@ import { MissionDocumentFormComponent } from './components/mission-document-form
 import { ConfirmDialogComponent } from '../shared/components';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
 import { DatePipe } from '@angular/common';
-import { MissionFormViewComponent } from './components/mission-form/mission-form-view/mission-form-view.component';
-import { MissionFormComponent } from './components/mission-form/mission-form.component';
 import { MissionNoteFormViewComponent } from './components/mission-note-form/mission-note-form-view/mission-note-form-view.component';
 import { MissionListViewComponent } from './mission-list/mission-list-view/mission-list-view.component';
-import { MissionFormSheetWrapperComponent } from './components/mission-form/mission-form-sheet-wrapper.component';
 import { MissionNoteFormSheetWrapperComponent } from './components/mission-note-form/mission-note-form-sheet-wrapper.component';
 import { MissionDocumentFormSheetWrapperComponent } from './components/mission-document-form/mission-document-form-sheet-wrapper.component';
 import { MissionDocumentFormViewComponent } from './components/mission-document-form/mission-document-form-view/mission-document-form-view.component';
@@ -41,9 +38,6 @@ import { NoteCardComponent } from './mission-note-list/note-card/note-card.compo
     MissionListComponent,
     MissionListViewComponent,   
     MissionNoteListComponent,
-    MissionFormComponent,
-    MissionFormViewComponent,
-    MissionFormSheetWrapperComponent,   
     MissionNoteFormComponent,
     MissionNoteFormViewComponent,
     MissionNoteFormSheetWrapperComponent,
@@ -73,14 +67,10 @@ import { NoteCardComponent } from './mission-note-list/note-card/note-card.compo
     ConfirmDialogComponent,
     ImageViewerDialogWrapperComponent,
     MissionDocumentFormComponent,
-    MissionFormSheetWrapperComponent,
     MissionNoteFormSheetWrapperComponent,
     MissionDocumentFormSheetWrapperComponent,
     MailImageSheetComponent,
     MailDocumentSheetComponent
-  ],
-  exports: [
-    MissionFormSheetWrapperComponent,
   ],
   imports: [
     SharedModule,

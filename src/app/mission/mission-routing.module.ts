@@ -12,12 +12,18 @@ const routes: Routes = [
 {
   path: '',
   component: MissionListComponent,
-  canActivate: [AuthGuard],data: {animation: 'MissionList'}
+  canActivate: [AuthGuard],data: {animation: 'MissionList'},
+  children: [
+    {path: 'ny', loadChildren: 'src/app/mission-form/mission-form.module#MissionFormModule'},
+  ],
 },
 {
   path: ':id/detaljer',
   component: MissionDetailsComponent,
-  canActivate: [AuthGuard],data: {animation: 'MissionDetails'}
+  canActivate: [AuthGuard],data: {animation: 'MissionDetails'},
+  children: [
+    {path: 'rediger', loadChildren: 'src/app/mission-form/mission-form.module#MissionFormModule'},
+  ],
 },
 {
   path: ':id/bilder',

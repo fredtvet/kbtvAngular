@@ -2,3 +2,5 @@
   [missions]="vm.missions | sortByDate : vm.pageInfo?.historic ? 'lastVisited':'updatedAt' : 'desc'" 
   (search)="searchMissionList($event)">
 </app-mission-list-view>
+
+<router-outlet></router-outlet>

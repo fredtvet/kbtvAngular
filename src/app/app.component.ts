@@ -23,16 +23,7 @@ export class AppComponent {
     private notificationService: NotificationService,
     private dataSyncService: DataSyncService,
     private appConfigService: AppConfigurationService){
-
-      if(!this.authService.hasAccessTokenExpired()) this.dataSyncService.syncAll();
-      //Wait for app to stabilize before initiating continuous sync interval
-      const appIsStable$ = appRef.isStable.pipe(first(isStable => isStable === true));
-
-      const continousSync$ = combineLatest(interval(1000*60*3), this.appConfigService.config$).pipe(
-        tap(x => {if(!this.authService.hasAccessTokenExpired()) this.dataSyncService.syncIfTimePassed(x[1].syncRefreshTime)})
-      );
-
-      concat(appIsStable$, continousSync$).subscribe();
+      this.initalizeSync(appRef)
   }
 
   ngOnInit(){
@@ -45,8 +36,19 @@ export class AppComponent {
     this.deviceInfoService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
       if(isOnline) this.notificationService.setNotification('Du er tilkoblet internett igjen!')
       else this.notificationService.setNotification('Du er nå i frakoblet modus. Det er kun mulig å lese data.', Notifications.Warning)
-    });
-    
+    });   
+  }
+
+  private initalizeSync(appRef: ApplicationRef){
+    if(!this.authService.hasAccessTokenExpired()) this.dataSyncService.syncAll();
+    //Wait for app to stabilize before initiating continuous sync interval
+    const appIsStable$ = appRef.isStable.pipe(first(isStable => isStable === true));
+
+    const continousSync$ = combineLatest(interval(1000*60*3), this.appConfigService.config$).pipe(
+      tap(x => {if(!this.authService.hasAccessTokenExpired()) this.dataSyncService.syncIfTimePassed(x[1].syncRefreshTime)})
+    );
+
+    concat(appIsStable$, continousSync$).subscribe();
   }
 
  private downloadUrl = (url: string) => this.downloadFrame.nativeElement.src = url;

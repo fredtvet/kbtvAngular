@@ -3,12 +3,11 @@ import { BaseEntity } from '../shared/interfaces';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { BaseService, EmployerService, MissionTypeService, MissionService, DocumentTypeService } from '../core/services';
-import { AgGridAngular } from 'ag-grid-angular';
-import { MissionFormSheetWrapperComponent } from '../mission/components/mission-form/mission-form-sheet-wrapper.component';
 import { EmployerFormSheetWrapperComponent } from './components/employer-form/employer-form-sheet-wrapper.component';
 import { MissionTypeFormSheetWrapperComponent } from './components/mission-type-form/mission-type-form-sheet-wrapper.component';
 import { DocumentTypeFormSheetWrapperComponent } from './components/document-type-form/document-type-form-sheet-wrapper.component';
 import { MatBottomSheet } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Injectable()
 
@@ -28,6 +27,7 @@ export class DataManagerFacadeService {
     private missionTypeService: MissionTypeService,
     private missionService: MissionService,
     private DocumentTypeService: DocumentTypeService,
+    private router: Router,
   ) { 
     this.data$ = this.selectedTable$.pipe(
       distinctUntilChanged(),
@@ -64,7 +64,7 @@ export class DataManagerFacadeService {
     }
   }
 
-  private createMission = () => this._bottomSheet.open(MissionFormSheetWrapperComponent);
+  private createMission = () => this.router.navigate(['data/ny/oppdrag']);
 
   private createEmployer = () => this._bottomSheet.open(EmployerFormSheetWrapperComponent);
 

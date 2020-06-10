@@ -7,7 +7,6 @@ import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { NotificationService, MissionService, MissionImageService, MissionDocumentService, MissionNoteService, MainNavService} from 'src/app/core/services';
 import { tap, filter, map } from 'rxjs/operators';
 import { Observable, combineLatest } from 'rxjs';
-import { MissionFormSheetWrapperComponent } from '../components/mission-form/mission-form-sheet-wrapper.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MissionNoteFormSheetWrapperComponent } from '../components/mission-note-form/mission-note-form-sheet-wrapper.component';
 import { MissionDocumentFormSheetWrapperComponent } from '../components/mission-document-form/mission-document-form-sheet-wrapper.component';
@@ -69,8 +68,7 @@ export class MissionDetailsComponent{
       .subscribe(del => this.notificationService.setNotification('Vellykket! Oppdrag slettet.'));
   }
   
-  private openMissionForm = (missionIdPreset: number) => 
-    this._bottomSheet.open(MissionFormSheetWrapperComponent, {data: {missionIdPreset}});
+  private openMissionForm = (id: number) => this.router.navigate(['rediger'], {relativeTo: this.route, queryParams: {id}});
 
   private openMissionNoteForm = (missionId: number) => 
     this._bottomSheet.open(MissionNoteFormSheetWrapperComponent, {data: {missionId}});

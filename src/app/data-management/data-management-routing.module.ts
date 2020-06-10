@@ -10,7 +10,10 @@ const routes: Routes = [
     path: '',
     component: DataManagerComponent,
     canActivate: [AuthGuard],
-    data: {allowedRoles: [Roles.Leder]}
+    data: {allowedRoles: [Roles.Leder]},
+    children: [
+      {path: 'ny/oppdrag', loadChildren: 'src/app/mission-form/mission-form.module#MissionFormModule'},
+    ],
   },
 ];
 
