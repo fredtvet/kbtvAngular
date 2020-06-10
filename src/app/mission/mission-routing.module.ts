@@ -14,7 +14,7 @@ const routes: Routes = [
   component: MissionListComponent,
   canActivate: [AuthGuard],data: {animation: 'MissionList'},
   children: [
-    {path: 'ny', loadChildren: 'src/app/mission-form/mission-form.module#MissionFormModule'},
+    {path: 'ny', loadChildren: 'src/app/mission-modules/mission-form/mission-form.module#MissionFormModule'},
   ],
 },
 {
@@ -22,7 +22,7 @@ const routes: Routes = [
   component: MissionDetailsComponent,
   canActivate: [AuthGuard],data: {animation: 'MissionDetails'},
   children: [
-    {path: 'rediger', loadChildren: 'src/app/mission-form/mission-form.module#MissionFormModule'},
+    {path: 'rediger', loadChildren: 'src/app/mission-modules/mission-form/mission-form.module#MissionFormModule'},
   ],
 },
 {

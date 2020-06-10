@@ -7,7 +7,7 @@ import { NotificationService, MissionDocumentService } from 'src/app/core/servic
   selector: 'app-mail-document-sheet',
   template: `
   <app-simple-top-nav [config]="navConfig">
-    <app-mail-entity-form [toEmailPreset]="data.toEmailPreset" (formSubmitted)="mailDocuments($event)"></app-mail-entity-form>
+    <app-mail-to-form [toEmailPreset]="data.toEmailPreset" (formSubmitted)="mailDocuments($event)"></app-mail-to-form>
   </app-simple-top-nav> 
   `,
   changeDetection: ChangeDetectionStrategy.OnPush

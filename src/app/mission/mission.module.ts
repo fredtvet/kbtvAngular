@@ -17,7 +17,6 @@ import { ImageViewerComponent } from './components/image-viewer/image-viewer.com
 import { ImageListComponent } from './mission-image-list/image-list/image-list.component';
 import { MissionImageListComponent } from './mission-image-list/mission-image-list.component';
 import { ImageViewerDialogWrapperComponent } from './components/image-viewer/image-viewer-dialog-wrapper.component';
-import { MailEntityFormComponent } from './components/mail-entity-form/mail-entity-form.component';
 import { MailImageSheetComponent } from './components/mail-image-sheet.component';
 import { SelectableCardComponent } from './components/selectable-card/selectable-card.component';
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
@@ -29,6 +28,7 @@ import { FileiconFromFiletypePipe } from './pipes/fileicon-from-filetype.pipe';
 import { ArraySlicePipe } from './pipes/array-slice.pipe';
 import { ThumbnailPipe } from './pipes/thumbnail.pipe';
 import { NoteCardComponent } from './mission-note-list/note-card/note-card.component';
+import { MailToFormComponent } from './components/mail-to-form/maill-to-form.component';
 
 
 @NgModule({
@@ -50,7 +50,7 @@ import { NoteCardComponent } from './mission-note-list/note-card/note-card.compo
     MailImageSheetComponent,
     MissionImageListComponent,
     SelectableCardComponent,
-    MailEntityFormComponent,
+    MailToFormComponent,
     MissionDocumentListComponent,
     DocumentListComponent,
     MailDocumentSheetComponent,

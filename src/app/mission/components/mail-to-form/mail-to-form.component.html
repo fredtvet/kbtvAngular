@@ -1,6 +1,6 @@
 
 
-<form *ngIf="mailEntityForm" [formGroup]="mailEntityForm" fxLayout="column">
+<form *ngIf="mailToForm" [formGroup]="mailToForm" fxLayout="column">
 
     <mat-form-field>
         <input matInput placeholder="Epost" formControlName="toEmail" required>
@@ -10,7 +10,7 @@
     </mat-form-field>
     
     <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
-        [disabled]="mailEntityForm.invalid || mailEntityForm.pristine"
+        [disabled]="mailToForm.invalid || mailToForm.pristine"
         (click)="onSubmit()">
         Send   
     </button>

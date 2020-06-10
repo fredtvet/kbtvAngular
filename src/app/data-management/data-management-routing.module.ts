@@ -12,7 +12,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {allowedRoles: [Roles.Leder]},
     children: [
-      {path: 'ny/oppdrag', loadChildren: 'src/app/mission-form/mission-form.module#MissionFormModule'},
+      {path: 'ny/oppdrag', loadChildren: 'src/app/mission-modules/mission-form/mission-form.module#MissionFormModule'},
     ],
   },
 ];

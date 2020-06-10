@@ -2,20 +2,20 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
-  selector: 'app-mail-entity-form',
-  templateUrl: './mail-entity-form.component.html',
+  selector: 'app-mail-to-form',
+  templateUrl: './mail-to-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MailEntityFormComponent implements OnInit {
+export class MailToFormComponent implements OnInit {
   @Input() toEmailPreset: string;
   @Output() formSubmitted = new EventEmitter();
 
-  mailEntityForm: FormGroup;
+  mailToForm: FormGroup;
 
   constructor(private _formBuilder: FormBuilder) {}
 
   ngOnInit(){
-    this.mailEntityForm = this._formBuilder.group({
+    this.mailToForm = this._formBuilder.group({
       toEmail: [this.toEmailPreset, [
         Validators.required,
         Validators.email
@@ -24,12 +24,12 @@ export class MailEntityFormComponent implements OnInit {
   }
 
   onSubmit(){
-    const {value, valid} = this.mailEntityForm;
+    const {value, valid} = this.mailToForm;
     if(valid) this.formSubmitted.emit(this.toEmail.value);
   }
 
   get toEmail(){
-    return this.mailEntityForm.get('toEmail')
+    return this.mailToForm.get('toEmail')
   }
 
 }

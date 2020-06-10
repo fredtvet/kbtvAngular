@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { MissionFormRoutingModule } from './mission-form-routing.module';
 import { MissionFormEntryComponent } from './mission-form-entry.component';
 import { MissionFormComponent } from './mission-form/mission-form.component';
