@@ -1,8 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, NgModule } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MissionNoteFormSheetWrapperComponent } from './mission-note-form/mission-note-form-sheet-wrapper.component';
+import { MissionNoteFormComponent } from './mission-note-form/mission-note-form.component';
+import { MissionNoteFormViewComponent } from './mission-note-form/mission-note-form-view/mission-note-form-view.component';
+import { MissionNoteFormRoutingModule } from './mission-note-form-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   template: '',
@@ -26,3 +30,20 @@ export class MissionNoteFormEntryComponent {
     ref.afterDismissed().subscribe(x => this.location.back())
   };
 }
+
+@NgModule({
+  declarations: [
+    MissionNoteFormEntryComponent,
+    MissionNoteFormSheetWrapperComponent,
+    MissionNoteFormComponent,
+    MissionNoteFormViewComponent
+  ],
+  entryComponents:[
+    MissionNoteFormSheetWrapperComponent
+  ],
+  imports: [
+    MissionNoteFormRoutingModule,
+    SharedModule
+  ]
+})
+export class MissionNoteFormModule { }
