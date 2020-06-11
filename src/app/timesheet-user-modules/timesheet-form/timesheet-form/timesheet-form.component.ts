@@ -4,6 +4,7 @@ import { Roles } from 'src/app/shared/enums';
 import { switchMap, tap } from 'rxjs/operators';
 import { UserTimesheetService, MissionService, NotificationService, DateTimeService } from 'src/app/core/services';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { TimesheetFormConfig } from './timesheet-form-config.interface';
 
 @Component({
   selector: 'app-timesheet-form',
@@ -14,10 +15,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class TimesheetFormComponent implements OnInit {
   Roles = Roles;
 
-  @Input() timesheetIdPreset: number;
-  @Input() datePreset: Date;
-  @Input() missionPreset: Mission;
-
+  @Input() config: TimesheetFormConfig;
   @Output() finished = new EventEmitter();
 
   timesheetPreset$: Observable<Timesheet>;
@@ -39,9 +37,9 @@ export class TimesheetFormComponent implements OnInit {
       switchMap(input => this._missionService.getBy$(x => this.filterMission(x, input))),
     )
 
-    if(!this.timesheetIdPreset) this.isCreateForm = true;
+    if(!this.config.idPreset) this.isCreateForm = true;
     else 
-      this.timesheetPreset$ = this._userTimesheetService.get$(this.timesheetIdPreset).pipe(
+      this.timesheetPreset$ = this._userTimesheetService.get$(this.config.idPreset).pipe(
           tap(x => {if(!x){this.finished.emit();}})
       );
   }

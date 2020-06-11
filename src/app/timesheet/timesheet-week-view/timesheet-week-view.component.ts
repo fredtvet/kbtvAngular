@@ -4,13 +4,12 @@ import {
   DateTimeService,
   MainNavService
 } from "src/app/core/services";
-import {switchMap,map, tap} from "rxjs/operators";
+import { switchMap, map } from "rxjs/operators";
 import { DateParams, TopDefaultNavConfig } from "src/app/shared/interfaces";
 import { MatDialog } from "@angular/material/dialog";
 import { Router, ActivatedRoute } from "@angular/router";
 import { TimesheetCardDialogWrapperComponent } from '../components/timesheet-card-dialog-wrapper.component';
 import { Observable } from 'rxjs';
-import { TimesheetFormSheetWrapperComponent } from '../components/timesheet-form/timesheet-form-sheet-wrapper.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
@@ -64,9 +63,8 @@ export class TimesheetWeekViewComponent {
     this.changeDateParams(dp);
   }
 
-  openTimesheetForm(datePreset?: Date, timesheetIdPreset?: number): void {
-    this._bottomSheet.open(TimesheetFormSheetWrapperComponent, { data: {datePreset, timesheetIdPreset} });
-  }
+  openTimesheetForm = (datePreset?: Date, idPreset?: number) => 
+    this.router.navigate(['skjema'], {relativeTo: this.route, queryParams: {idPreset, datePreset: datePreset.toString()}});
 
   openTimesheetCard(timesheetId: number){
     this.dialog.open(TimesheetCardDialogWrapperComponent, {

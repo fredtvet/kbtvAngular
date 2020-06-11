@@ -7,7 +7,6 @@ import { Mission, Timesheet } from "src/app/shared/interfaces/models";
 import { BehaviorSubject, Observable } from "rxjs";
 import { switchMap, filter } from "rxjs/operators";
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared-timesheet/components';
-import { TimesheetFormSheetWrapperComponent } from '../components/timesheet-form/timesheet-form-sheet-wrapper.component';
 import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
 import { TimesheetListFilter } from 'src/app/shared/models';
 
@@ -42,9 +41,8 @@ export class TimesheetListComponent implements OnInit {
     );
   }
 
-  openTimesheetForm(missionPreset?: Mission, timesheetIdPreset?: number): void {
-    this._bottomSheet.open(TimesheetFormSheetWrapperComponent, { data: { missionPreset, timesheetIdPreset } });
-  }
+  openTimesheetForm = (missionPreset?: Mission, idPreset?: number) => 
+    this.router.navigate(['skjema'], {relativeTo: this.route, queryParams: {idPreset, missionPreset: JSON.stringify(missionPreset)}});
 
   changeStatus(status: TimesheetStatus) {
     let filter = this.getFilterCopy();

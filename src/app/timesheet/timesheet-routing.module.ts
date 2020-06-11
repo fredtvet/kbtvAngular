@@ -13,19 +13,25 @@ const routes: Routes = [
     path: 'ukevisning',
     component: TimesheetWeekViewComponent,
     canActivate: [AuthGuard],
-    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt], animation: 'TimesheetWeekView'}
+    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt], animation: 'TimesheetWeekView'},
+    children: [
+      {path: 'skjema', loadChildren: () => import('src/app/timesheet-user-modules/timesheet-form/timesheet-form.module').then(m => m.TimesheetFormModule)},
+    ],
   },
   {
     path: 'ukeliste',
     component: TimesheetWeekListComponent,
     canActivate: [AuthGuard],
-    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt], animation: 'TimesheetWeekList'}
+    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt], animation: 'TimesheetWeekList'},
   },
   {
     path: 'liste',
     component: TimesheetListComponent,
     canActivate: [AuthGuard],
-    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt], animation: 'TimesheetList'}
+    data: {allowedRoles: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt], animation: 'TimesheetList'},
+    children: [
+      {path: 'skjema', loadChildren: () => import('src/app/timesheet-user-modules/timesheet-form/timesheet-form.module').then(m => m.TimesheetFormModule)},
+    ],
   },
 ];
 

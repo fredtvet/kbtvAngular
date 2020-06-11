@@ -3,15 +3,14 @@ import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bott
 import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
 import { Mission } from 'src/app/shared/interfaces/models';
 import { UserTimesheetService } from 'src/app/core/services';
+import { TimesheetFormConfig } from './timesheet-form-config.interface';
 
 @Component({
   selector: 'app-timesheet-form-sheet-wrapper',
   template: `
   <app-simple-top-nav [config]="navConfig">
     <app-timesheet-form 
-      [datePreset]="data?.datePreset" 
-      [missionPreset]="data?.missionPreset" 
-      [timesheetIdPreset]="data?.timesheetIdPreset"
+      [config]="config"
       (finished)="close()">
   </app-timesheet-form>
   </app-simple-top-nav> 
@@ -25,10 +24,10 @@ export class TimesheetFormSheetWrapperComponent implements OnInit {
   constructor(
     private _userTimesheetService: UserTimesheetService,
     private _bottomSheetRef: MatBottomSheetRef<TimesheetFormSheetWrapperComponent>,  
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: {datePreset: Date, missionPreset: Mission, timesheetIdPreset: number}) { }
+    @Inject(MAT_BOTTOM_SHEET_DATA) public config: TimesheetFormConfig) { }
 
   ngOnInit() {
-    let isCreateForm = (!this.data || !this.data.timesheetIdPreset);
+    let isCreateForm = (!this.config || !this.config.idPreset);
     this.navConfig = {
       title: !isCreateForm ? 'Rediger time' : 'Registrer time',
       leftBtn: {icon: 'close', callback: this.close} as AppButton,
@@ -39,7 +38,7 @@ export class TimesheetFormSheetWrapperComponent implements OnInit {
   close = () => this._bottomSheetRef.dismiss();
 
   deleteTimesheet = () => 
-    this._userTimesheetService.delete$(this.data.timesheetIdPreset).subscribe(x => this.close());
+    this._userTimesheetService.delete$(this.config.idPreset).subscribe(x => this.close());
   
 
 }

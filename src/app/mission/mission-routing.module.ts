@@ -14,7 +14,7 @@ const routes: Routes = [
   component: MissionListComponent,
   canActivate: [AuthGuard],data: {animation: 'MissionList'},
   children: [
-    {path: 'ny', loadChildren: () => import('src/app/mission-modules/mission-form/mission-form-entry.component').then(m => m.MissionFormModule)},
+    {path: 'ny', loadChildren: () => import('src/app/mission-modules/mission-form/mission-form.module').then(m => m.MissionFormModule)},
   ],
 },
 {
@@ -22,7 +22,7 @@ const routes: Routes = [
   component: MissionDetailsComponent,
   canActivate: [AuthGuard],data: {animation: 'MissionDetails'},
   children: [
-    {path: 'rediger', loadChildren: () => import('src/app/mission-modules/mission-form/mission-form-entry.component').then(m => m.MissionFormModule)},
+    {path: 'rediger', loadChildren: () => import('src/app/mission-modules/mission-form/mission-form.module').then(m => m.MissionFormModule)},
   ],
 },
 {
@@ -35,7 +35,7 @@ const routes: Routes = [
   component: MissionDocumentListComponent,
   canActivate: [AuthGuard],data: {animation: 'MissionDocuments'},
   children: [
-    {path: 'skjema', loadChildren: () => import('src/app/mission-modules/mission-document-form/mission-document-form-entry.component').then(m => m.MissionDocumentFormModule)},
+    {path: 'skjema', loadChildren: () => import('src/app/mission-modules/mission-document-form/mission-document-form.module').then(m => m.MissionDocumentFormModule)},
   ],
 },
 {
@@ -43,7 +43,7 @@ const routes: Routes = [
   component: MissionNoteListComponent,
   canActivate: [AuthGuard],data: {animation: 'MissionNotes'},
   children: [
-    {path: 'skjema', loadChildren: () => import('src/app/mission-modules/mission-note-form/mission-note-form-entry.component').then(m => m.MissionNoteFormModule)},
+    {path: 'skjema', loadChildren: () => import('src/app/mission-modules/mission-note-form/mission-note-form.module').then(m => m.MissionNoteFormModule)},
   ],
 },
 ];

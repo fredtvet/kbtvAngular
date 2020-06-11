@@ -66,7 +66,7 @@
           </button>
         </mat-form-field>
 
-        <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" #customDateRange></owl-date-time>
+        <owl-date-time [pickerType]="'calendar'" #customDateRange></owl-date-time>
       </ng-container>
       
       <ng-container *ngIf="customMonthSelect.checked">
@@ -79,7 +79,7 @@
           </button>
         </mat-form-field>
   
-        <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" [startView]="'multi-years'" 
+        <owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" 
           (monthSelected)="chosenMonthHandler($event, customMonth)" #customMonth>
         </owl-date-time>
       </ng-container>
