@@ -72,9 +72,6 @@ import {
     GooglePlaceModule,
     FlexLayoutModule,
   ],
-  entryComponents:[
-    BottomSheetMenuComponent,
-  ],
   exports: [
     CommonModule,
     FormsModule,

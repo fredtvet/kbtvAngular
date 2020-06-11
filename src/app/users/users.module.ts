@@ -17,10 +17,6 @@ import { UserFormSheetWrapperComponent } from './components/user-form/user-form-
     UserFormViewComponent,
     UserFormSheetWrapperComponent
   ],
-  entryComponents:[
-    ConfirmDialogComponent,
-    UserFormSheetWrapperComponent
-  ],
   imports: [
     SharedModule,
     UsersRoutingModule

@@ -49,12 +49,6 @@ import { NoteCardComponent } from './mission-note-list/note-card/note-card.compo
   providers: [
     DatePipe,
   ],
-  entryComponents:[
-    ConfirmDialogComponent,
-    ImageViewerDialogWrapperComponent,
-    MailImageSheetComponent,
-    MailDocumentSheetComponent
-  ],
   imports: [
     SharedModule,
     MissionRoutingModule

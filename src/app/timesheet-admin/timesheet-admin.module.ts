@@ -15,10 +15,6 @@ import { SwipeCardComponent } from './components/swipe-card/swipe-card.component
     TimesheetAdminUserListComponent,
     SwipeCardComponent,
   ],
-  entryComponents:[
-    WeekListFilterSheetWrapperComponent,
-    ConfirmDialogComponent
-  ],
   imports: [
     SharedTimesheetModule,
     TimesheetAdminRoutingModule

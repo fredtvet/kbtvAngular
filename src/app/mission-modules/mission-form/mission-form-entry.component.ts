@@ -38,9 +38,6 @@ export class MissionFormEntryComponent {
     MissionFormComponent,
     MissionFormViewComponent,
   ],
-  entryComponents: [
-    MissionFormSheetWrapperComponent
-  ],
   imports: [
     SharedModule,
     MissionFormRoutingModule

@@ -24,12 +24,6 @@ import { TimesheetFilterSheetWrapperComponent, WeekListFilterSheetWrapperCompone
     TimesheetFormSheetWrapperComponent,
     TimesheetFormViewComponent,
   ],
-  entryComponents:[
-    TimesheetFilterSheetWrapperComponent,
-    TimesheetCardDialogWrapperComponent,
-    WeekListFilterSheetWrapperComponent,
-    TimesheetFormSheetWrapperComponent
-  ],
   imports: [
     SharedTimesheetModule,
     TimesheetRoutingModule

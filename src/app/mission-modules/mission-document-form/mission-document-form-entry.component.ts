@@ -37,9 +37,6 @@ export class MissionDocumentFormEntryComponent {
     MissionDocumentFormComponent,
     MissionDocumentFormViewComponent,
   ],
-  entryComponents:[
-    MissionDocumentFormSheetWrapperComponent
-  ],
   imports: [
     MissionDocumentFormRoutingModule,
     SharedModule,

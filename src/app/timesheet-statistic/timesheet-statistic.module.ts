@@ -13,9 +13,6 @@ import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.modu
     TimesheetStatisticComponent,
     TimesheetStatisticTableComponent
   ],
-  entryComponents:[
-    TimesheetFilterSheetWrapperComponent
-  ],
   imports: [
     SharedTimesheetModule,
     TimesheetStatisticRoutingModule,

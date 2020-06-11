@@ -36,10 +36,6 @@ import { NotificationComponent, LoginPromptComponent } from '../shared/component
   imports: [
     CommonModule
   ],
-  entryComponents:[
-    NotificationComponent,
-    LoginPromptComponent
-  ],
   providers: [  
     { provide: HTTP_INTERCEPTORS, useClass: HttpRefreshTokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },

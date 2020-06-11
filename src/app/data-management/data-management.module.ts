@@ -38,12 +38,6 @@ import { DataManagerFacadeService } from './data-manager-facade.service';
     DataTablePickerComponent,
     DataTableComponent,
   ],
-  entryComponents:[
-    ConfirmDialogComponent,
-    EmployerFormSheetWrapperComponent,
-    MissionTypeFormSheetWrapperComponent,
-    DocumentTypeFormSheetWrapperComponent
-  ],
   providers:[
     DataManagerFacadeService
   ],

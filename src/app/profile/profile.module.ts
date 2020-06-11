@@ -15,9 +15,6 @@ import { ConfirmDialogComponent } from '../shared/components';
     ProfileComponent,
     ProfileFormComponent
   ],
-  entryComponents:[
-    ConfirmDialogComponent
-  ],
   imports: [
     SharedModule,
     ProfileRoutingModule
