@@ -1,25 +1,29 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, OnDestroy } from '@angular/core';
 import { EmployerService } from 'src/app/core/services';
-import { SubscriptionComponent } from '../components/abstracts/subscription.component';
-import { takeUntil } from 'rxjs/operators';
 import { Employer } from '../interfaces/models/employer.interface';
+import { Subscription } from 'rxjs';
 
 @Pipe({
   name: 'getEmployerById',
   pure: false 
 })
 
-export class GetEmployerByIdPipe extends SubscriptionComponent implements PipeTransform {
+export class GetEmployerByIdPipe implements OnDestroy, PipeTransform {
 
   result: Employer = null;
+  private sub: Subscription;
 
-  constructor(private employerService: EmployerService){super()}
+  constructor(private employerService: EmployerService){}
 
   transform(value: number): Employer {   
     if(!value || value == null) return undefined;  
     
-    this.employerService.get$(value).pipe(takeUntil(this.unsubscribe)).subscribe(x => this.result = x);
+    this.sub = this.employerService.get$(value).subscribe(x => this.result = x);
     return this.result;
+  }
+
+  ngOnDestroy(){ 
+    if(this.sub) this.sub.unsubscribe();
   }
 
 }

@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
-import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -25,7 +25,8 @@ registerLocaleData(norwayLocale, 'nb-NO');
   imports: [
     AppRoutingModule,
     BrowserModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule,   
+    HammerModule, 
     HttpClientModule,
     SharedModule,
     CoreModule,
