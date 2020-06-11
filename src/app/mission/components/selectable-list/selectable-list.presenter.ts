@@ -2,7 +2,9 @@ import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subsc
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BaseEntity, SelectableEntity } from 'src/app/shared/interfaces';
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class SelectableListPresenter<T extends BaseEntity> extends SubscriptionComponent{
 
     private selectedIdsSubject = new BehaviorSubject<number[]>([]);

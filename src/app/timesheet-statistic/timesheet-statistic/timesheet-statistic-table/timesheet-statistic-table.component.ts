@@ -10,7 +10,7 @@ import { User } from 'src/app/shared/interfaces/models';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimesheetStatisticTableComponent {
-  @ViewChild('dataGrid', {static: false}) dataGrid: AgGridAngular;
+  @ViewChild('dataGrid') dataGrid: AgGridAngular;
 
   @Input() users: User[] = [];
 

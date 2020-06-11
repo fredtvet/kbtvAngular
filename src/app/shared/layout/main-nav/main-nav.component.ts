@@ -15,7 +15,7 @@ import { Roles } from '../../enums/roles.enum';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainNavComponent {
-  @ViewChild('drawer', {static: false}) drawer:MatDrawer;
+  @ViewChild('drawer') drawer:MatDrawer;
   
   LayoutTopNavs = LayoutTopNavs
   Roles = Roles;

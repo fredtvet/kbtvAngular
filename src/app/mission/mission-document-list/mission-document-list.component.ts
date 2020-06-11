@@ -17,7 +17,7 @@ import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
   templateUrl: './mission-document-list.component.html',
 })
 export class MissionDocumentListComponent extends SubscriptionComponent {
-  @ViewChild('documentList', {static: false}) documentList: SelectableListBase<MissionDocument>;
+  @ViewChild('documentList') documentList: SelectableListBase<MissionDocument>;
   Roles = Roles;
 
   currentSelections: number[] = [];

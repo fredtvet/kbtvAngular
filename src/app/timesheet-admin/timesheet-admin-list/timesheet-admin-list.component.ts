@@ -20,10 +20,10 @@ import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subsc
 
 export class TimesheetAdminListComponent extends SubscriptionComponent{
 
-  @ViewChild('weekList', {static:false}) 
+  @ViewChild('weekList') 
   private weekList: TemplateRef<any>;
 
-  @ViewChild('timesheetList', {static:false}) 
+  @ViewChild('timesheetList') 
   private timesheetList: TemplateRef<any>;
 
   activeView$: Observable<{view: TemplateRef<any>, context: any[]}>;

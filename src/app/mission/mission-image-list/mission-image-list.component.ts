@@ -20,7 +20,7 @@ import { SelectableListBase } from '../components/selectable-list/selectable-lis
 })
 
 export class MissionImageListComponent extends SubscriptionComponent{
-  @ViewChild('imageList', {static: false}) imageList: SelectableListBase<AppFile>;
+  @ViewChild('imageList') imageList: SelectableListBase<AppFile>;
 
   RolePresets = RolePresets;
 

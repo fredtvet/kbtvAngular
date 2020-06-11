@@ -19,7 +19,7 @@ import { MissionService } from 'src/app/core/services';
   
 })
 export class MissionFormSheetWrapperComponent implements OnInit {
-  @ViewChild('pdfInput', {static: false}) pdfInput: ElementRef;
+  @ViewChild('pdfInput') pdfInput: ElementRef;
   navConfig: SimpleNavConfig;
 
   constructor(

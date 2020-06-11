@@ -11,7 +11,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: './data-table.component.html'
 })
 export class DataTableComponent {
-  @ViewChild('dataGrid', {static: false}) dataGrid: AgGridAngular;
+  @ViewChild('dataGrid') dataGrid: AgGridAngular;
 
   _data: BaseEntity[];
   get data(): BaseEntity[] {return this._data}
