@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy  } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Mission } from 'src/app/shared/interfaces/models';
 import { BehaviorSubject, Observable} from 'rxjs';
 import { switchMap, map, tap, withLatestFrom } from 'rxjs/operators';

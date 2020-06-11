@@ -4,7 +4,7 @@ import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
 import { EmployerService } from 'src/app/core/services';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { filter } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-timesheet-form-sheet-wrapper',

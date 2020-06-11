@@ -1,7 +1,8 @@
 import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Roles } from '../../../shared/enums/roles.enum';
-import { MatBottomSheet, MatDialog } from '@angular/material';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatDialog } from '@angular/material/dialog';
 import { BottomSheetMenuComponent } from '../../../shared/components/bottom-sheet-menu/bottom-sheet-menu.component';
 import { AppButton } from '../../../shared/interfaces/app-button.interface';
 import { AppFile } from 'src/app/shared/interfaces';

@@ -5,7 +5,7 @@ import {
   Output,
   ChangeDetectionStrategy,
 } from "@angular/core";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { Employer } from 'src/app/shared/interfaces/models';
 import { Roles } from "src/app/shared/enums";
 import { EmployerService, NotificationService } from "src/app/core/services";

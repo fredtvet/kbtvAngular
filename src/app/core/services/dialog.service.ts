@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { LoginPromptComponent } from 'src/app/shared/components/login-prompt/login-prompt.component';
 
 @Injectable({

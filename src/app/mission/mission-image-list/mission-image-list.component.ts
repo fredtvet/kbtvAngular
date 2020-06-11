@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, ViewChild } from "@angular/core";
-import { MatBottomSheet, MatDialog } from "@angular/material";
+import { MatBottomSheet } from "@angular/material/bottom-sheet";
+import { MatDialog } from "@angular/material/dialog";
 import { MailImageSheetComponent } from "../components/mail-image-sheet.component";
 import { filter, takeUntil, tap } from "rxjs/operators";
 import { RolePresets } from 'src/app/shared/enums';

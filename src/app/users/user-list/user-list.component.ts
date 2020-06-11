@@ -4,7 +4,7 @@ import { User } from 'src/app/shared/interfaces/models';
 import { Roles } from '../../shared/enums';
 import { Observable } from 'rxjs';;
 import { map } from 'rxjs/operators';
-import { MatBottomSheet } from '@angular/material';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { UserFormSheetWrapperComponent } from '../components/user-form/user-form-sheet-wrapper.component';
 import { TopDefaultNavConfig, AppButton } from 'src/app/shared/interfaces';
 

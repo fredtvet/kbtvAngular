@@ -2,7 +2,7 @@ import { Component, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from
 import { Observable } from 'rxjs';
 import { RouterOutlet } from "@angular/router";
 import { AuthService, MainNavService } from 'src/app/core/services';
-import { MatDrawer } from '@angular/material';
+import { MatDrawer } from '@angular/material/sidenav';
 import { MainNavConfig } from '../../interfaces/main-nav-config.interface';
 import { routeAnimation} from '../../animations/route.animation';
 import { LayoutTopNavs } from '../../enums/layout-top-navs.enum';
