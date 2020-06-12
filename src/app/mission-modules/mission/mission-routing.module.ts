@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MissionListComponent } from './mission-list/mission-list.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
 import { AuthGuard } from 'src/app/core/services';
+import { Roles } from 'src/app/shared/enums';
 
 
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
   component: MissionListComponent,
   canActivate: [AuthGuard], data: {animation: 'MissionList'},
   children: [
-    {path: 'ny', loadChildren: () => import('src/app/mission-modules/mission-form/mission-form.module').then(m => m.MissionFormModule)},
+    {path: 'ny', canActivate: [AuthGuard], data: {allowedRoles: [Roles.Leder]}, 
+    loadChildren: () => import('src/app/mission-modules/mission-form/mission-form.module').then(m => m.MissionFormModule)},
   ],
 },
 {
@@ -19,7 +21,8 @@ const routes: Routes = [
   component: MissionDetailsComponent,
   canActivate: [AuthGuard], data: {animation: 'MissionDetails'},
   children: [
-    {path: 'rediger', loadChildren: () => import('src/app/mission-modules/mission-form/mission-form.module').then(m => m.MissionFormModule)},
+    {path: 'rediger', canActivate: [AuthGuard], data: {allowedRoles: [Roles.Leder]},
+    loadChildren: () => import('src/app/mission-modules/mission-form/mission-form.module').then(m => m.MissionFormModule)},
   ],
 },
 {

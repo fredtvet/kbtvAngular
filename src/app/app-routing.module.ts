@@ -13,8 +13,8 @@ const routes: Routes = [
     path: '', component: MainNavComponent,
     children:[
       {path: '', redirectTo: 'hjem', pathMatch: 'full'},
-      {path: 'hjem', component: HomeComponent, canActivate: [AuthGuard], 
-        data: {animation: 'Home'}},
+      {path: 'hjem', loadChildren: () => import('./home/home.module').then(m => m.HomeModule), 
+        canActivate: [AuthGuard], data: {animation: 'Home'}},
       {path: 'profil', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule), 
         data: {animation: 'Profile'}},
       {path: 'brukere', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), 

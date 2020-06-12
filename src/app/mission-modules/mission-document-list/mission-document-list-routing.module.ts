@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
+import { AuthGuard } from 'src/app/core/services';
+import { Roles } from 'src/app/shared/enums';
 
 
 const routes: Routes = [
@@ -8,7 +10,8 @@ const routes: Routes = [
     path: '',
     component: MissionDocumentListComponent,
     children: [
-      {path: 'skjema', loadChildren: () => import('src/app/mission-modules/mission-document-form/mission-document-form.module').then(m => m.MissionDocumentFormModule)},
+      {path: 'skjema', canActivate: [AuthGuard], data: {allowedRoles: [Roles.Leder]}, 
+      loadChildren: () => import('src/app/mission-modules/mission-document-form/mission-document-form.module').then(m => m.MissionDocumentFormModule)},
     ],
   },
 ];
