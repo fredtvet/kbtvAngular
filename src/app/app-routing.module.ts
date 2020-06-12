@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 import { AuthGuard, NoAuthGuard } from './core/services';
 import { CustomPreloadingService } from './custom-preloading.service';
 import { MainNavComponent } from './shared/layout';
 import { PageNotFoundComponent } from './shared/components';
 import { LoginPageComponent } from './login-page.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   //{path: '', component: LoginPageComponent, canActivate: [NoAuthGuard]},
@@ -13,8 +13,7 @@ const routes: Routes = [
     path: '', component: MainNavComponent,
     children:[
       {path: '', redirectTo: 'hjem', pathMatch: 'full'},
-      {path: 'hjem', loadChildren: () => import('./home/home.module').then(m => m.HomeModule), 
-        canActivate: [AuthGuard], data: {animation: 'Home'}},
+      {path: 'hjem', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'Home'}},
       {path: 'profil', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule), 
         data: {animation: 'Profile'}},
       {path: 'brukere', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), 

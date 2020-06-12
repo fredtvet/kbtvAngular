@@ -1,25 +1,18 @@
 <div class="p-2 max-width" *ngIf="vm">
 
-  <mat-grid-list cols="2" rowHeight="3:2" gutterSize="5" class="mat-subheading-2 mb-2">
-    <a href="tel:{{ vm.mission.phoneNumber }}">
-      <mat-grid-tile class="mat-elevation-z2 bg-foreground" matRipple>
-        <span class="text-center">
-          <mat-icon class="scale-150">phone</mat-icon><br />
-          <span>{{ vm.mission.phoneNumber || 'N/A' }} </span>
-        </span>
-      </mat-grid-tile>
+  <div fxLayout="row" fxLayoutGap="8px" class="mat-subheading-2 mb-2">
+    <a href="tel:{{ vm.mission.phoneNumber }}" class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50"
+      matRipple [routerLink]="['/oppdrag']">
+      <mat-icon class="scale-150 mb-1">phone</mat-icon><br />
+      <span>{{ vm.mission.phoneNumber || 'N/A' }} </span>
     </a>
     <a href="https://www.google.com/maps/dir/?api=1&destination={{ vm.mission.address }}&travelmode=driving"
-      target="_blank">
-      <mat-grid-tile class="mat-elevation-z2 bg-foreground" matRipple>
-        <span class="text-center">
-          <mat-icon class="scale-150">directions_car</mat-icon><br />
-          <span>Veibeskrivelse</span>
-        </span>
-      </mat-grid-tile>
+      target="_blank" class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50" matRipple
+      [routerLink]="['/timer']">
+      <mat-icon class="scale-150">directions_car</mat-icon><br />
+      <span>Veibeskrivelse</span>
     </a>
-  </mat-grid-list>
-
+  </div>
 
   <app-list-card text="Bilder" startIcon="photo_library" [routerLink]="['/oppdrag', vm.mission.id, 'bilder']">
   </app-list-card>
