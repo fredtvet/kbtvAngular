@@ -21,13 +21,13 @@ const routes: Routes = [
         data: {animation: 'Users'}},
       {path: 'data', loadChildren: () => import('./data-management/data-management.module').then(m => m.DataManagementModule), 
         data: {animation: 'DataManagement'}},
-      {path: 'timer', loadChildren: () => import('./timesheet/timesheet.module').then(m => m.TimesheetModule), 
+      {path: 'timer', loadChildren: () => import('./timesheet-user-modules/timesheet/timesheet.module').then(m => m.TimesheetModule), 
         data: {animation: 'Timesheet'}},
       {path: 'timeadministrering', loadChildren: () => import('./timesheet-admin/timesheet-admin.module').then(m => m.TimesheetAdminModule), 
         data: {animation: 'TimesheetAdmin'}},
       {path: 'timestatistikk', loadChildren: () => import('./timesheet-statistic/timesheet-statistic.module').then(m => m.TimesheetStatisticModule), 
         data: {animation: 'TimesheetStatistic'}},
-      {path: 'oppdrag', loadChildren: () => import('./mission/mission.module').then(m => m.MissionModule), 
+      {path: 'oppdrag', loadChildren: () => import('./mission-modules/mission/mission.module').then(m => m.MissionModule), 
         }
     ]
   },

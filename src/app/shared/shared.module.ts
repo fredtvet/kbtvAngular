@@ -8,7 +8,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { SortByDatePipe, GetEmployerByIdPipe, ArrayFromNumberPipe, CheckRolesInButtons } from './pipes'
+import { SortByDatePipe, GetEmployerByIdPipe, ArrayFromNumberPipe, CheckRolesInButtons, ArraySlicePipe } from './pipes'
 
 import { InputListenerDirective, ImageErrorReloaderDirective, AddToHomeScreenDirective, IfRoleDirective, HttpCommandButtonDirective } from './directives';
 
@@ -32,6 +32,7 @@ import {
   LoginPromptComponent,
   LoginFormComponent,
   MailToFormComponent,
+  SelectableCardComponent,
 } from './components';
 
 @NgModule({
@@ -61,6 +62,8 @@ import {
     HttpCommandButtonDirective,
     CheckRolesInButtons,
     MailToFormComponent,
+    SelectableCardComponent,
+    ArraySlicePipe,
   ],
   imports: [
     CommonModule,
@@ -98,6 +101,8 @@ import {
     ImageErrorReloaderDirective,
     CheckRolesInButtons,
     MailToFormComponent,
+    SelectableCardComponent,
+    ArraySlicePipe
   ]
 })
 export class SharedModule { }

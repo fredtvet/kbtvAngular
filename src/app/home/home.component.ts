@@ -1,10 +1,10 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Mission } from '../shared/interfaces/models';
-import { Roles, RolePresets, Icons } from '../shared/enums';
-import { MissionService, MainNavService, DataSyncService } from '../core/services';
 import { Observable } from 'rxjs';
 import {  map } from 'rxjs/operators';
-import { TopDefaultNavConfig, AppButton } from '../shared/interfaces';
+import { Roles, RolePresets, Icons } from 'src/app/shared/enums';
+import { DataSyncService, MainNavService, MissionService } from 'src/app/core/services';
+import { Mission } from 'src/app/shared/interfaces/models';
+import { TopDefaultNavConfig, AppButton } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-home',
