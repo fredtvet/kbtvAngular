@@ -17,7 +17,6 @@ import {
 } from './components';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HammerModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -40,7 +39,6 @@ import { HammerModule } from '@angular/platform-browser';
     ReactiveFormsModule,
     AngularMaterialModule,
     GooglePlaceModule,
-    HammerModule, 
   ],
   exports: [
     SharedAppModule,
