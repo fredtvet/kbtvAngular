@@ -7,7 +7,7 @@ import { SharedAppModule } from '../shared-app/shared-app.module';
 
 import { SortByDatePipe, GetEmployerByIdPipe, ArrayFromNumberPipe, ArraySlicePipe } from './pipes'
 
-import { InputListenerDirective, HttpCommandButtonDirective } from './directives';
+import { InputListenerDirective, HttpCommandButtonDirective, AddToHomeScreenDirective } from './directives';
 
 import {
   ConfirmDialogComponent,
@@ -16,11 +16,15 @@ import {
   SimpleTopNavComponent,
 } from './components';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HammerModule } from '@angular/platform-browser';
+
 @NgModule({
   declarations: [
     ConfirmDialogComponent,
     SortByDatePipe,
     InputListenerDirective,
+    AddToHomeScreenDirective,
     GetEmployerByIdPipe,
     ArrayFromNumberPipe,
     HttpCommandButtonDirective,
@@ -32,12 +36,17 @@ import {
   imports: [
     SharedAppModule,
     LayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
     AngularMaterialModule,
     GooglePlaceModule,
+    HammerModule, 
   ],
   exports: [
     SharedAppModule,
     LayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
     AngularMaterialModule,
     GooglePlaceModule,
     ConfirmDialogComponent,
@@ -49,7 +58,8 @@ import {
     MailToFormComponent,
     SelectableCardComponent,
     ArraySlicePipe,
-    SimpleTopNavComponent
+    SimpleTopNavComponent,
+    AddToHomeScreenDirective
   ]
 })
 export class SharedModule { }

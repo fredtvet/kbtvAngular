@@ -3,6 +3,4 @@ export * from './stroked-button/stroked-button.component';
 export * from './icon-button/icon-button.component';
 export * from './list-card/list-card.component';
 export * from './page-not-found/page-not-found.component';
-export * from './login-prompt/login-prompt.component';
-export * from './login-prompt/login-form/login-form.component';
 export * from './notification/notification.component';

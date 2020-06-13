@@ -3,7 +3,6 @@ import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { NotificationService } from '../ui/notification.service';
 import { AuthService } from './auth.service';
 import { Notifications } from 'src/app/shared-app/enums';
-import { DialogService } from '../dialog.service';
 
 @Injectable({
   providedIn: 'root'

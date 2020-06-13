@@ -11,6 +11,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
    imports: [
@@ -18,7 +19,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       // MatToolbarModule, //
       // MatIconModule,
       MatBadgeModule,
-      // MatFormFieldModule,
+      MatFormFieldModule,
       MatInputModule,
       MatSelectModule,
       MatRadioModule,
@@ -43,7 +44,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       //MatIconModule,
       MatBadgeModule,
       MatInputModule,
-      // MatFormFieldModule,
+      MatFormFieldModule,
       MatSelectModule,
       MatRadioModule,
       MatTooltipModule,
