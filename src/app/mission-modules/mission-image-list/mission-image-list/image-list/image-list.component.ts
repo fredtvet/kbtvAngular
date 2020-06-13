@@ -5,7 +5,7 @@ import {
   EventEmitter,
   Output,
 } from "@angular/core";
-import { SelectableEntity, AppFile } from 'src/app/shared/interfaces';
+import { SelectableEntity, AppFile } from 'src/app/shared-app/interfaces';
 import { SelectableListPresenter, SelectableListBase } from 'src/app/shared/components';
 
 @Component({

@@ -1,14 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { MissionDocument, Mission } from 'src/app/shared/interfaces/models';
+import { MissionDocument, Mission } from 'src/app/core/models';
 import { Observable, combineLatest } from 'rxjs';
 import { MissionDocumentService, MainNavService, NotificationService, MissionService, DocumentTypeService, DownloaderService, DeviceInfoService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
-import { Roles } from 'src/app/shared/enums';
+import { Roles } from 'src/app/shared-app/enums';
 import { takeUntil, filter, map } from 'rxjs/operators';
 import { ConfirmDialogComponent, SelectableListBase } from 'src/app/shared/components';
-import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
+import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { MailDocumentSheetComponent } from '../mail-document-sheet.component';
 

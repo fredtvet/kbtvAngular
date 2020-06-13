@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
-import { Mission, Timesheet } from "src/app/shared/interfaces/models";
+import { Mission, Timesheet } from "src/app/core/models";
 import { debounceTime, filter } from 'rxjs/operators';
 
 @Component({

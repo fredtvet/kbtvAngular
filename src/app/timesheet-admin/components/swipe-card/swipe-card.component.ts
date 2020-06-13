@@ -2,7 +2,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { DeviceInfoService } from 'src/app/core/services';
-import { AppButton } from 'src/app/shared/interfaces';
+import { AppButton } from 'src/app/shared-app/interfaces';
 
 @Component({
   selector: 'app-swipe-card',

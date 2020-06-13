@@ -1,7 +1,7 @@
 import { Component, ApplicationRef, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { AuthService, NotificationService, DeviceInfoService, DataSyncService, AppConfigurationService,DownloaderService, IconService, DialogService } from './core/services';
 import { skip, first, tap } from 'rxjs/operators';
-import { Notifications } from './shared/enums/notifications.enum';
+import { Notifications } from './shared-app/enums/notifications.enum';
 import { interval, combineLatest, concat } from 'rxjs';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { AppButton } from 'src/app/shared/interfaces';
-import { Roles } from 'src/app/shared/enums';
-import { User } from 'src/app/shared/interfaces/models';
+import { AppButton } from 'src/app/shared-app/interfaces';
+import { Roles } from 'src/app/shared-app/enums';
+import { User } from 'src/app/core/models';
 
 
 @Component({

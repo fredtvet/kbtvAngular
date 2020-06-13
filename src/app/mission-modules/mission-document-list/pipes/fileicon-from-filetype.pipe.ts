@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Icons } from 'src/app/shared/enums';
+import { Icons } from 'src/app/shared-app/enums';
 
 
 @Pipe({

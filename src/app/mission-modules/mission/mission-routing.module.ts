@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MissionListComponent } from './mission-list/mission-list.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
 import { AuthGuard } from 'src/app/core/services';
-import { Roles } from 'src/app/shared/enums';
+import { Roles } from 'src/app/shared-app/enums';
 
 
 const routes: Routes = [

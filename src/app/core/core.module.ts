@@ -29,8 +29,6 @@ import {
   ArrayHelperService
 } from './services';
 
-import { NotificationComponent, LoginPromptComponent } from '../shared/components';
-
 @NgModule({
   declarations: [],
   imports: [

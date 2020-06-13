@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { User } from "src/app/shared/interfaces/models";
+import { User } from "src/app/core/models";
 
 @Component({
   selector: "app-profile-form",

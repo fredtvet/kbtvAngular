@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Employer } from 'src/app/shared/interfaces/models';
+import { Employer } from 'src/app/core/models';
 import { BaseSubject } from '../abstracts/base.subject';
 import { LocalStorageService } from '../../local-storage.service';
 import { ArrayHelperService } from '../../utility/array-helper.service';

@@ -4,9 +4,9 @@ import { BaseSubject } from './base.subject';
 import { ApiService } from '../../api.service';
 import { DeviceInfoService } from '../../device-info.service';
 import { NotificationService } from '../../ui/notification.service';
-import { Notifications } from 'src/app/shared/enums';
-import { BaseEntity } from 'src/app/shared/interfaces';
 import { HttpParams } from '@angular/common/http';
+import { BaseEntity } from 'src/app/core/models/base-entity.interface';
+import { Notifications } from 'src/app/shared-app/enums';
 
 export abstract class BaseService<T extends BaseEntity>{
 

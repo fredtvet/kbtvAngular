@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppDocumentType, MissionDocument } from 'src/app/shared/interfaces/models';
+import { AppDocumentType, MissionDocument } from 'src/app/core/models';
 import { BaseMissionChildService } from '../abstracts/base-mission-child.service';
 import { MissionDocumentSubject } from './mission-document.subject';
 import { ApiService } from '../../api.service';
@@ -7,7 +7,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { DeviceInfoService } from '../../device-info.service';
 import { NotificationService } from '../../ui/notification.service';
-import { Notifications } from 'src/app/shared/enums';
+import { Notifications } from 'src/app/shared-app/enums';
 
 @Injectable({
   providedIn: 'root'

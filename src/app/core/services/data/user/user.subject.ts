@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { User } from 'src/app/shared/interfaces/models';
+import { User } from 'src/app/core/models';
 
 @Injectable({
   providedIn: 'root'

@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
-import { AppDocumentType } from 'src/app/shared/interfaces/models';
+import { AppDocumentType } from 'src/app/core/models';
 import { DocumentTypeService, MissionDocumentService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
 

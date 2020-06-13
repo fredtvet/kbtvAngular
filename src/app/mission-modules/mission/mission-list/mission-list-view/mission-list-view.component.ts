@@ -1,14 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Mission } from 'src/app/shared/interfaces/models';
-import { Roles } from 'src/app/shared/enums';
+import { Mission } from 'src/app/core/models';
+import { Roles } from 'src/app/shared-app/enums';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { listAnimation } from 'src/app/shared/animations/list.animation';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mission-list-view',
   templateUrl: './mission-list-view.component.html',
-  animations: [listAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionListViewComponent implements OnInit {

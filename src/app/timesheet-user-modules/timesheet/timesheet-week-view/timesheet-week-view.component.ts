@@ -5,7 +5,7 @@ import {
   MainNavService
 } from "src/app/core/services";
 import { switchMap, map } from "rxjs/operators";
-import { DateParams, TopDefaultNavConfig } from "src/app/shared/interfaces";
+import { DateParams, TopDefaultNavConfig } from "src/app/shared-app/interfaces";
 import { MatDialog } from "@angular/material/dialog";
 import { Router, ActivatedRoute } from "@angular/router";
 import { TimesheetCardDialogWrapperComponent } from '../components/timesheet-card-dialog-wrapper.component';

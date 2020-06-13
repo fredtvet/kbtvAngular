@@ -9,10 +9,10 @@ import { NotificationService } from '../ui/notification.service';
 import { DataSyncService } from '../data/data-sync.service';
 import { DateTimeService } from '../utility/date-time.service';
 import { PersistentSubject } from '../data/abstracts/persistent.subject';
-import { Notifications } from 'src/app/shared/enums';
-import { User } from 'src/app/shared/interfaces/models';
-import { TokenResponse, Credentials } from 'src/app/shared/interfaces';
+import { User } from 'src/app/core/models';
+import { TokenResponse, Credentials } from 'src/app/shared-app/interfaces';
 import { Router } from '@angular/router';
+import { Notifications } from 'src/app/shared-app/enums';
 
 @Injectable({
   providedIn: 'root'

@@ -1,8 +1,8 @@
 import { Component, ViewChild, Input, ChangeDetectionStrategy } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { TimesheetSummary } from 'src/app/shared/interfaces';
+import { TimesheetSummary } from 'src/app/shared-app/interfaces';
 import { DatePipe } from '@angular/common';
-import { User } from 'src/app/shared/interfaces/models';
+import { User } from 'src/app/core/models';
 
 @Component({
   selector: 'app-timesheet-statistic-table',

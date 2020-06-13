@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { User, Employer } from 'src/app/shared/interfaces/models';
+import { User, Employer } from 'src/app/core/models';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Roles } from 'src/app/shared/enums';
+import { Roles } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-user-form-view',

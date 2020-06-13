@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { TimesheetWeekViewComponent } from './timesheet-week-view/timesheet-week-view.component';
 import { TimesheetListComponent } from './timesheet-list/timesheet-list.component';
 import { TimesheetWeekListComponent } from './timesheet-week-list/timesheet-week-list.component';
-import { Roles } from 'src/app/shared/enums';
+import { Roles } from 'src/app/shared-app/enums';
 import { AuthGuard } from 'src/app/core/services';
 
 

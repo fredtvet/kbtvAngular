@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Roles } from 'src/app/shared/enums';
+import { Roles } from 'src/app/shared-app/enums';
 import { MissionDetailsViewModel } from '../mission-details-view-model.interface';
 
 @Component({

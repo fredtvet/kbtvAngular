@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppDocumentType } from 'src/app/shared/interfaces/models';
+import { AppDocumentType } from 'src/app/core/models';
 import { BaseService } from '../abstracts/base.service';
 import { ApiService } from '../../api.service';
 import { DocumentTypeSubject } from './document-type.subject';

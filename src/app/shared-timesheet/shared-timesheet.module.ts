@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
+
 import { 
   TimesheetCardComponent, 
   WeekListFilterComponent, 
@@ -8,6 +9,7 @@ import {
   TimesheetFilterSheetWrapperComponent, 
   TimesheetSummaryCardContentComponent 
 } from './components';
+
 import { GetDateByDateParamsPipe, ArrayIncludesPipe, ReadableDurationPipe } from './pipes';
 import { AppOwlDateTimeModule } from '../app-owl-date-time/app-owl-date-time.module';
 

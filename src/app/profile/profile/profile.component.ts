@@ -1,11 +1,11 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService, NotificationService, MainNavService, AppConfigurationService, DataSyncService } from 'src/app/core/services';
-import { User } from 'src/app/shared/interfaces/models';
+import { User } from 'src/app/core/models';
 import { map, filter, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
-import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
+import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 
 @Component({
   selector: 'app-profile',

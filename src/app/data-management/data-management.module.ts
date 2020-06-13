@@ -5,8 +5,6 @@ import { AppAgGridModule } from '../app-ag-grid/app-ag-grid.module';
 import { DataManagementRoutingModule } from './data-management-routing.module';
 import { DataManagerComponent } from './data-manager/data-manager.component';
 
-import { ConfirmDialogComponent } from '../shared/components';
-
 import { EmployerFormComponent } from './components/employer-form/employer-form.component';
 import { EmployerFormViewComponent } from './components/employer-form/employer-form-view/employer-form-view.component';
 import { EmployerFormSheetWrapperComponent } from './components/employer-form/employer-form-sheet-wrapper.component';

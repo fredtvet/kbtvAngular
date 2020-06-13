@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Timesheet } from 'src/app/shared/interfaces/models';
+import { Timesheet } from 'src/app/core/models';
 import { DateTimeService } from './date-time.service';
-import { GroupByTypes, TimesheetStatus } from 'src/app/shared/enums';
-import { TimesheetSummary } from 'src/app/shared/interfaces';
+import { GroupByTypes, TimesheetStatus } from 'src/app/shared-app/enums';
+import { TimesheetSummary } from 'src/app/shared-app/interfaces';
 
 @Injectable({
   providedIn: "root",

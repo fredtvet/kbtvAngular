@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { EmployerService, NotificationService, MissionTypeService, MissionService } from 'src/app/core/services';
-import { Mission, MissionType, Employer } from 'src/app/shared/interfaces/models';
+import { Mission, MissionType, Employer } from 'src/app/core/models';
 import { Observable } from 'rxjs';
-import { CreateMission, UpdateMission } from 'src/app/shared/interfaces/commands';
+import { CreateMission, UpdateMission } from 'src/app/shared-app/interfaces/commands';
 import { tap } from 'rxjs/operators';
 
 @Component({

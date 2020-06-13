@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
+import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 
 @Component({
   selector: 'app-mission-document-form-sheet-wrapper',

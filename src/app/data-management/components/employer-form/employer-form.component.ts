@@ -6,8 +6,8 @@ import {
   ChangeDetectionStrategy,
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { Employer } from 'src/app/shared/interfaces/models';
-import { Roles } from "src/app/shared/enums";
+import { Employer } from 'src/app/core/models';
+import { Roles } from "src/app/shared-app/enums";
 import { EmployerService, NotificationService } from "src/app/core/services";
 import { Observable } from "rxjs";
 

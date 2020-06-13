@@ -1,5 +1,5 @@
-import { Timesheet } from 'src/app/shared/interfaces/models';
-import { TimesheetStatus } from 'src/app/shared/enums';
+import { Timesheet } from 'src/app/core/models';
+import { TimesheetStatus } from 'src/app/shared-app/enums';
 import { NotificationService } from '../../ui/notification.service';
 import { ApiService } from '../../api.service';
 import { UserTimesheetSubject } from './user-timesheet.subject';
@@ -7,7 +7,7 @@ import { DeviceInfoService } from '../../device-info.service';
 import { Injectable } from '@angular/core';
 import { Observable, throwError, combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { DateParams, TimesheetSummary } from 'src/app/shared/interfaces';
+import { DateParams, TimesheetSummary } from 'src/app/shared-app/interfaces';
 import { BaseMissionChildService } from '../abstracts/base-mission-child.service';
 import { MissionSubject } from '../mission/mission.subject';
 

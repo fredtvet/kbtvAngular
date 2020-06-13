@@ -1,13 +1,13 @@
 import { Component} from '@angular/core';
-import { MissionNote } from 'src/app/shared/interfaces/models';
+import { MissionNote } from 'src/app/core/models';
 import { Observable } from 'rxjs';
 import { MainNavService, NotificationService, MissionNoteService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { RolePresets } from 'src/app/shared/enums';
+import { RolePresets } from 'src/app/shared-app/enums';
 import { filter } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
-import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
+import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 
 @Component({
   selector: 'app-mission-note-list',

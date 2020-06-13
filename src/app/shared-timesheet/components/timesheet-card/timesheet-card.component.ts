@@ -1,6 +1,7 @@
 import { Component, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
-import { Roles, TimesheetStatus } from 'src/app/shared/enums';
-import { Timesheet } from 'src/app/shared/interfaces/models';
+import { Timesheet } from 'src/app/core/models';
+import { Roles } from 'src/app/shared-app/enums';
+import { TimesheetStatus } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-timesheet-card',

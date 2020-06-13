@@ -1,108 +1,55 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { LayoutModule } from '@angular/cdk/layout';
-import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from './angular-material.module';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { SharedAppModule } from '../shared-app/shared-app.module';
 
-import { SortByDatePipe, GetEmployerByIdPipe, ArrayFromNumberPipe, CheckRolesInButtons, ArraySlicePipe } from './pipes'
+import { SortByDatePipe, GetEmployerByIdPipe, ArrayFromNumberPipe, ArraySlicePipe } from './pipes'
 
-import { InputListenerDirective, ImageErrorReloaderDirective, AddToHomeScreenDirective, IfRoleDirective, HttpCommandButtonDirective } from './directives';
-
-import { 
-  MainNavComponent, 
-  MainBottomNavComponent, 
-  IconButtonComponent,
-  StrokedButtonComponent, 
-  MainSideNavContentComponent, 
-  SimpleTopNavComponent, 
-  MainTopNavComponent, 
-  DetailTopNavComponent
-} from './layout';
+import { InputListenerDirective, HttpCommandButtonDirective } from './directives';
 
 import {
   ConfirmDialogComponent,
-  NotificationComponent,
-  PageNotFoundComponent,
-  ListCardComponent,
-  BottomSheetMenuComponent,
-  LoginPromptComponent,
-  LoginFormComponent,
   MailToFormComponent,
   SelectableCardComponent,
+  SimpleTopNavComponent,
 } from './components';
 
 @NgModule({
   declarations: [
-    MainNavComponent,
-    MainBottomNavComponent,
     ConfirmDialogComponent,
-    IfRoleDirective,
     SortByDatePipe,
-    NotificationComponent,
-    BottomSheetMenuComponent,
-    PageNotFoundComponent,
-    IconButtonComponent,
-    StrokedButtonComponent,
-    ListCardComponent,
-    AddToHomeScreenDirective,
-    MainSideNavContentComponent,
-    MainTopNavComponent,
     InputListenerDirective,
-    SimpleTopNavComponent,
     GetEmployerByIdPipe,
-    ImageErrorReloaderDirective,
     ArrayFromNumberPipe,
-    DetailTopNavComponent,
-    LoginPromptComponent,
-    LoginFormComponent,
     HttpCommandButtonDirective,
-    CheckRolesInButtons,
     MailToFormComponent,
     SelectableCardComponent,
     ArraySlicePipe,
+    SimpleTopNavComponent
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
+    SharedAppModule,
     LayoutModule,
     AngularMaterialModule,
-    ReactiveFormsModule,
     GooglePlaceModule,
-    FlexLayoutModule,
   ],
   exports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
+    SharedAppModule,
     LayoutModule,
     AngularMaterialModule,
-    ReactiveFormsModule,
     GooglePlaceModule,
-    FlexLayoutModule,
     ConfirmDialogComponent,
-    IfRoleDirective,
-    AddToHomeScreenDirective,
     InputListenerDirective,
     HttpCommandButtonDirective,
     SortByDatePipe,
-    MainNavComponent,
-    PageNotFoundComponent,
-    IconButtonComponent,
-    StrokedButtonComponent,
-    ListCardComponent,
-    SimpleTopNavComponent,
     GetEmployerByIdPipe,
     ArrayFromNumberPipe,
-    ImageErrorReloaderDirective,
-    CheckRolesInButtons,
     MailToFormComponent,
     SelectableCardComponent,
-    ArraySlicePipe
+    ArraySlicePipe,
+    SimpleTopNavComponent
   ]
 })
 export class SharedModule { }

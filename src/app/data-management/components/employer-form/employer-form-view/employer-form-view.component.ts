@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Employer } from 'src/app/shared/interfaces/models';
+import { Employer } from 'src/app/core/models';
 
 @Component({
   selector: 'app-employer-form-view',

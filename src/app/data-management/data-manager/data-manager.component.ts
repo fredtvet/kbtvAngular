@@ -1,8 +1,9 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MainNavService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
-import { BaseEntity, TopDefaultNavConfig } from 'src/app/shared/interfaces';
+import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { DataManagerFacadeService } from '../data-manager-facade.service';
+import { BaseEntity } from 'src/app/core/models';
 
 @Component({
   selector: 'app-data-manager',

@@ -5,10 +5,10 @@ import {
   NotificationService,
   EmployerService,
 } from "src/app/core/services";
-import { User, Employer } from "src/app/shared/interfaces/models";
+import { User, Employer } from "src/app/core/models";
 import { Observable } from "rxjs";
 import { map} from "rxjs/operators";
-import { Roles } from "src/app/shared/enums";
+import { Roles } from "src/app/shared-app/enums";
 
 @Component({
   selector: "app-user-form",

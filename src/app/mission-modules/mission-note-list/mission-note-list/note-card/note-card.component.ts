@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { MissionNote } from 'src/app/shared/interfaces/models';
-import { RolePresets } from 'src/app/shared/enums';
+import { MissionNote } from 'src/app/core/models';
+import { RolePresets } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-note-card',

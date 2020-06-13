@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard, NoAuthGuard } from './core/services';
 import { CustomPreloadingService } from './custom-preloading.service';
-import { MainNavComponent } from './shared/layout';
-import { PageNotFoundComponent } from './shared/components';
 import { LoginPageComponent } from './login-page.component';
 import { HomeComponent } from './home/home.component';
+import { MainNavComponent } from './layout/main-nav/main-nav.component';
+import { PageNotFoundComponent } from './shared-app/components';
 
 const routes: Routes = [
   //{path: '', component: LoginPageComponent, canActivate: [NoAuthGuard]},

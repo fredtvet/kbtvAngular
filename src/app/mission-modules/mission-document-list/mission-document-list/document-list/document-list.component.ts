@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { MissionDocument } from 'src/app/shared/interfaces/models';
-import { SelectableEntity } from 'src/app/shared/interfaces';
+import { MissionDocument } from 'src/app/core/models';
+import { SelectableEntity } from 'src/app/shared-app/interfaces';
 import { SelectableListPresenter, SelectableListBase } from 'src/app/shared/components';
 
 @Component({

@@ -1,4 +1,4 @@
-import { Injectable, ApplicationRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { DeviceInfoService } from '../device-info.service';
 import { EmployerSubject } from './employer/employer.subject';
 import { MissionTypeSubject } from './mission-type/mission-type.subject';
@@ -10,11 +10,11 @@ import { DocumentTypeSubject } from './document-type/document-type.subject';
 import { ApiService } from '../api.service';
 import { retry, tap, catchError } from 'rxjs/operators';
 import { NotificationService } from '../ui/notification.service';
-import { Notifications } from 'src/app/shared/enums';
+import { Notifications } from 'src/app/shared-app/enums';
 import { UserTimesheetSubject } from './user-timesheet/user-timesheet.subject';
 import { HttpParams } from '@angular/common/http';
 import { BaseSubject } from './abstracts/base.subject';
-import { BaseEntity } from 'src/app/shared/interfaces';
+import { BaseEntity } from '../../models/base-entity.interface';
 
 interface SubjectWithEntityKey{
   entityKey: string;

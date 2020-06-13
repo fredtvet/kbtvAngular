@@ -1,7 +1,6 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,6 +12,7 @@ import norwayLocale from '@angular/common/locales/nb';
 import { CustomHammerConfig } from './custom-hammer-config';
 import { LoginPageComponent } from './login-page.component';
 import { HomeComponent } from './home/home.component';
+import { AppLayoutModule } from './layout/app-layout.module';
 
 registerLocaleData(norwayLocale, 'nb-NO');
 
@@ -28,7 +28,7 @@ registerLocaleData(norwayLocale, 'nb-NO');
     BrowserAnimationsModule,   
     HammerModule, 
     HttpClientModule,
-    SharedModule,
+    AppLayoutModule,
     CoreModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],

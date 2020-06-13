@@ -2,8 +2,8 @@
 import { BaseSubject } from './base.subject';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '../../local-storage.service';
-import { MissionChild } from 'src/app/shared/interfaces';
 import { ArrayHelperService } from '../../utility/array-helper.service';
+import { MissionChild } from 'src/app/core/models/mission-child.interface';
 
 export abstract class BaseMissionChildSubject<T extends MissionChild> extends BaseSubject<T> {
   constructor( 

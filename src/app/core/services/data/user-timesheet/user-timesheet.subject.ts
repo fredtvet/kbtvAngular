@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Timesheet } from 'src/app/shared/interfaces/models';
+import { Timesheet } from 'src/app/core/models';
 import { LocalStorageService } from '../../local-storage.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { TimesheetStatus } from 'src/app/shared/enums';
-import { DateParams, TimesheetSummary } from 'src/app/shared/interfaces';
+import { TimesheetStatus } from 'src/app/shared-app/enums';
+import { DateParams, TimesheetSummary } from 'src/app/shared-app/interfaces';
 import { BaseMissionChildSubject } from '../abstracts/base-mission-child.subject';
 import { DateTimeService } from '../../utility/date-time.service';
 import { TimesheetAggregatorService } from '../../utility/timesheet-aggregator.service';

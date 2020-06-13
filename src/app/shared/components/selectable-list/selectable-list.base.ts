@@ -2,8 +2,8 @@ import { Input, EventEmitter, Output, Directive } from "@angular/core";
 import { skip, takeUntil } from "rxjs/operators";
 import { SelectableListPresenter } from './selectable-list.presenter';
 import { SubscriptionComponent } from '../abstracts/subscription.component';
-import { BaseEntity } from '../../interfaces/models/base-entity.interface';
-import { SelectableEntity } from '../../interfaces/selectable-entity.interface';
+import { BaseEntity } from '../../../core/models/base-entity.interface';
+import { SelectableEntity } from 'src/app/shared-app/interfaces';
 
 @Directive()
 export abstract class SelectableListBase<T extends BaseEntity> extends SubscriptionComponent {

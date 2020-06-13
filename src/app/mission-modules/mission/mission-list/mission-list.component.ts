@@ -1,11 +1,11 @@
 import { Component, ChangeDetectionStrategy  } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Mission } from 'src/app/shared/interfaces/models';
+import { Mission } from 'src/app/core/models';
 import { BehaviorSubject, Observable} from 'rxjs';
-import { switchMap, map, tap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { MissionService, MainNavService } from 'src/app/core/services';
-import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
-import { Roles } from 'src/app/shared/enums';
+import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
+import { Roles } from 'src/app/shared-app/enums';
 
 interface PageInfo {searchString: string, showFinishedMissions: boolean, historic: boolean}
 

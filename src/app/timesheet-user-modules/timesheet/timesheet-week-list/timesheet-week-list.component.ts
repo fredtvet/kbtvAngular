@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DateTimeService, MainNavService, UserTimesheetService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppButton, TimesheetSummary, TopDefaultNavConfig } from 'src/app/shared/interfaces';
+import { AppButton, TimesheetSummary, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { filter, map, tap, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';

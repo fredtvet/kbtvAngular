@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Mission } from 'src/app/shared/interfaces/models';
+import { Mission } from 'src/app/core/models';
 import { BaseSubject } from '../abstracts/base.subject';
 import { MissionTypeSubject } from '../mission-type/mission-type.subject';
 import { LocalStorageService } from '../../local-storage.service';

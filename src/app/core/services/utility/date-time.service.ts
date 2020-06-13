@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { DateRangePresets } from 'src/app/shared/enums';
-import { DateParams } from 'src/app/shared/interfaces';
+import { DateRangePresets } from 'src/app/shared-app/enums';
+import { DateParams } from 'src/app/shared-app/interfaces';
 
 @Injectable({
   providedIn: "root"

@@ -1,20 +1,18 @@
 import { Component, ViewChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { MainNavService, TimesheetService, DateTimeService, LoadingService } from 'src/app/core/services';
-import { TimesheetSummary, TopDefaultNavConfig } from 'src/app/shared/interfaces';
+import { TimesheetSummary, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { WeekListFilterSheetWrapperComponent } from '../../shared-timesheet/components/week-list-filter/week-list-filter-sheet-wrapper.component';
 import { filter, map, takeUntil} from 'rxjs/operators';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
-import { GroupByTypes, TimesheetStatus } from 'src/app/shared/enums';
-import { Timesheet } from 'src/app/shared/interfaces/models';
-import { listAnimation } from 'src/app/shared/animations/list.animation';
+import { GroupByTypes, TimesheetStatus } from 'src/app/shared-app/enums';
+import { Timesheet } from 'src/app/core/models';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 
 @Component({
   selector: 'app-timesheet-admin-list',
   templateUrl: './timesheet-admin-list.component.html',
-  animations: [listAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 

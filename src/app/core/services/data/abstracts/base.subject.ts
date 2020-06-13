@@ -1,10 +1,10 @@
-import { DbSync  } from 'src/app/shared/interfaces';
-import { BaseEntity } from 'src/app/shared/interfaces';
+import { DbSync  } from 'src/app/shared-app/interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LocalStorageService } from '../../local-storage.service';
 import { PersistentSubject } from './persistent.subject';
 import { ArrayHelperService } from '../../utility/array-helper.service';
+import { BaseEntity } from 'src/app/core/models/base-entity.interface';
 
 export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubject<T[]>{
 

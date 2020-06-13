@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MissionNote } from 'src/app/shared/interfaces/models';
+import { MissionNote } from 'src/app/core/models';
 import { ApiService } from '../../api.service';
 import { MissionNoteSubject } from './mission-note.subject';
 import { BaseMissionChildService } from '../abstracts/base-mission-child.service';

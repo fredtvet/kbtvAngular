@@ -2,8 +2,8 @@ import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
 import { MissionImageService, DownloaderService } from 'src/app/core/services';
-import { AppFile, AppButton } from 'src/app/shared/interfaces';
-import { Roles } from 'src/app/shared/enums';
+import { AppFile, AppButton } from 'src/app/shared-app/interfaces';
+import { Roles } from 'src/app/shared-app/enums';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 
 @Component({

@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { BaseEntity } from 'src/app/shared/interfaces';
+import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { TranslationService } from 'src/app/core/services';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
+import { BaseEntity } from 'src/app/core/models';
 
 @Component({
   selector: 'app-data-table',

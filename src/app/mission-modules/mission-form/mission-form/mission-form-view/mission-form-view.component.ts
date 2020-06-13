@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Mission, MissionType, Employer } from 'src/app/shared/interfaces/models';
-import { Roles } from 'src/app/shared/enums';
+import { Mission, MissionType, Employer } from 'src/app/core/models';
+import { Roles } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-mission-form-view',

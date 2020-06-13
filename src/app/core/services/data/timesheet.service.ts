@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest, throwError } from 'rxjs';
-import { Timesheet, User } from 'src/app/shared/interfaces/models';
+import { Timesheet, User } from 'src/app/core/models';
 import { ApiService } from '../api.service';
-import { TimesheetFilter, TimesheetSummary } from 'src/app/shared/interfaces';
+import { TimesheetFilter, TimesheetSummary } from 'src/app/shared-app/interfaces';
 import { tap, switchMap, distinctUntilChanged, map, withLatestFrom } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { TimesheetAggregatorService } from '../utility/timesheet-aggregator.service';
-import { GroupByTypes, TimesheetStatus, Notifications } from 'src/app/shared/enums';
+import { GroupByTypes, TimesheetStatus, Notifications } from 'src/app/shared-app/enums';
 import { DeviceInfoService } from '../device-info.service';
 import { NotificationService } from '../ui/notification.service';
 import { UserService } from './user/user.service';

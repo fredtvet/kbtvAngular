@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
 import { AuthGuard } from 'src/app/core/services';
-import { Roles } from 'src/app/shared/enums';
+import { Roles } from 'src/app/shared-app/enums';
 
 
 const routes: Routes = [

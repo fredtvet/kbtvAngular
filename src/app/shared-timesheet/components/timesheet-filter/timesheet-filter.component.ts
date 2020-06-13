@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
 import { OwlDateTimeComponent } from 'ng-pick-datetime';
-import { TimesheetStatus, DateRangePresets } from 'src/app/shared/enums';
-import { Mission, User } from 'src/app/shared/interfaces/models';
-import { TimesheetFilter } from 'src/app/shared/interfaces';
+import { TimesheetStatus, DateRangePresets } from 'src/app/shared-app/enums';
+import { Mission, User } from 'src/app/core/models';
+import { TimesheetFilter } from 'src/app/shared-app/interfaces';
 
 @Component({
   selector: 'app-timesheet-filter',

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from '../abstracts/base.service';
-import { Mission } from 'src/app/shared/interfaces/models';
+import { Mission } from 'src/app/core/models';
 import { MissionSubject } from './mission.subject';
 import { ApiService } from '../../api.service';
 import { DeviceInfoService } from '../../device-info.service';
 import { tap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { NotificationService } from '../../ui/notification.service';
-import { Notifications } from 'src/app/shared/enums';
-import { CreateMission, UpdateMission } from 'src/app/shared/interfaces/commands';
+import { CreateMission, UpdateMission } from 'src/app/shared-app/interfaces/commands';
+import { Notifications } from 'src/app/shared-app/enums';
 
 @Injectable({
   providedIn: 'root'

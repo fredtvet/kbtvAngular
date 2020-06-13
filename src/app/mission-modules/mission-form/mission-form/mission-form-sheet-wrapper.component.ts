@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
+import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 import { MissionService } from 'src/app/core/services';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MissionNote } from 'src/app/shared/interfaces/models';
-import { Roles } from 'src/app/shared/enums';
+import { MissionNote } from 'src/app/core/models';
+import { Roles } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-mission-note-form-view',

@@ -9,7 +9,7 @@ import {
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { NotificationService } from '../services/ui/notification.service';
-import { Notifications } from 'src/app/shared/enums';
+import { Notifications } from 'src/app/shared-app/enums';
 
 
 @Injectable()

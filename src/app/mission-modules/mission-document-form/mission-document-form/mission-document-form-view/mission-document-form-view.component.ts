@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AppDocumentType } from 'src/app/shared/interfaces/models';
+import { AppDocumentType } from 'src/app/core/models';
 
 @Component({
   selector: 'app-mission-document-form-view',

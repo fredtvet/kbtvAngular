@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UserService, MainNavService, LoadingService } from 'src/app/core/services';
 import { map } from 'rxjs/operators';
-import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
+import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 
 @Component({
   selector: 'app-timesheet-admin-user-list',

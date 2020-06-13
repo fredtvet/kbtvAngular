@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { MissionNote } from 'src/app/shared/interfaces/models';
+import { MissionNote } from 'src/app/core/models';
 import { NotificationService, MissionNoteService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
 

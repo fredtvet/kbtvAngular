@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
-import { Timesheet } from 'src/app/shared/interfaces/models';
+import { Timesheet } from 'src/app/core/models';
 
 @Component({
   selector: 'app-timesheet-mission-bar',

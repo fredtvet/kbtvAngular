@@ -2,9 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Observable, of } from 'rxjs';
 import { UserService } from 'src/app/core/services';
-import { User } from '../../../shared/interfaces/models/user.interface';
-import { SimpleNavConfig } from '../../../shared/interfaces/simple-nav-config.interface';
-import { AppButton } from '../../../shared/interfaces/app-button.interface';
+import { User } from '../../../core/models/user.interface';
+import { SimpleNavConfig } from '../../../shared-app/interfaces/simple-nav-config.interface';
+import { AppButton } from '../../../shared-app/interfaces/app-button.interface';
 
 @Component({
   selector: 'app-week-list-filter-sheet-wrapper',

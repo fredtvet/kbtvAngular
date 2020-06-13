@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
 import { DocumentTypeService } from 'src/app/core/services';
-import { AppDocumentType } from 'src/app/shared/interfaces/models';
+import { AppDocumentType } from 'src/app/core/models';
 
 @Component({
   selector: 'app-document-type-form',

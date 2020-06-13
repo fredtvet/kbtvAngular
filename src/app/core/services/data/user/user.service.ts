@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from '../../api.service';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { UserSubject } from './user.subject';
-import { User } from 'src/app/shared/interfaces/models';
+import { User } from 'src/app/core/models';
 
 @Injectable({
   providedIn: 'root'

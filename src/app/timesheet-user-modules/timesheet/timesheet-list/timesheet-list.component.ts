@@ -1,14 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { UserTimesheetService, DateTimeService, MainNavService } from "src/app/core/services";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
-import { TimesheetStatus, DateRangePresets } from "src/app/shared/enums";
+import { TimesheetStatus, DateRangePresets } from "src/app/shared-app/enums";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Mission, Timesheet } from "src/app/shared/interfaces/models";
+import { Mission, Timesheet } from "src/app/core/models";
 import { BehaviorSubject, Observable } from "rxjs";
 import { switchMap, filter } from "rxjs/operators";
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared-timesheet/components';
-import { TopDefaultNavConfig } from 'src/app/shared/interfaces';
-import { TimesheetListFilter } from 'src/app/shared/models';
+import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
+import { TimesheetListFilter } from 'src/app/shared/timesheet-list-filter.model';
 
 @Component({
   selector: "app-timesheet-list",

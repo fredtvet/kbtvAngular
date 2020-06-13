@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { MainNavConfig, TopDefaultNavConfig, TopDetailNavConfig } from 'src/app/shared/interfaces';
+import { MainNavConfig, TopDefaultNavConfig, TopDetailNavConfig } from 'src/app/shared-app/interfaces';
 import { map, tap, distinctUntilChanged, delay } from 'rxjs/operators';
 import { DeviceInfoService } from '../device-info.service';
 import { AuthService } from '../auth/auth.service';

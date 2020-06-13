@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform, OnDestroy } from '@angular/core';
 import { EmployerService } from 'src/app/core/services';
-import { Employer } from '../interfaces/models/employer.interface';
+import { Employer } from '../../core/models/employer.interface';
 import { Subscription } from 'rxjs';
 
 @Pipe({

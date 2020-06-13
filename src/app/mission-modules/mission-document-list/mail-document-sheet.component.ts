@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { SimpleNavConfig, AppButton } from 'src/app/shared/interfaces';
+import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 import { NotificationService, MissionDocumentService } from 'src/app/core/services';
 
 @Component({
