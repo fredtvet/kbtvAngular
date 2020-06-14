@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject, combineLatest, throwError } from 'rxjs';
 import { Timesheet, User } from 'src/app/core/models';
 import { ApiService } from '../api.service';
 import { TimesheetFilter, TimesheetSummary } from 'src/app/shared-app/interfaces';
-import { tap, switchMap, distinctUntilChanged, map, withLatestFrom } from 'rxjs/operators';
+import { tap, switchMap, distinctUntilChanged, map, withLatestFrom, filter } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { TimesheetAggregatorService } from '../utility/timesheet-aggregator.service';
 import { GroupByTypes, TimesheetStatus, Notifications } from 'src/app/shared-app/enums';
@@ -23,7 +23,7 @@ export class TimesheetService {
   private groupBySubject = new BehaviorSubject<GroupByTypes>(GroupByTypes.Month);
   groupBy$ = this.groupBySubject.asObservable();
 
-  private filterSubject = new BehaviorSubject<TimesheetFilter>(null);
+  private filterSubject = new BehaviorSubject<TimesheetFilter>(undefined);
   filter$ = this.filterSubject.asObservable().pipe(map(filter => {return {...filter}}));
 
   private timesheetSubject = new BehaviorSubject<Timesheet[]>([]);
@@ -46,7 +46,8 @@ export class TimesheetService {
     private missionService: MissionService) {
     this.deviceInfoService.isOnline$.subscribe(res =>this.isOnline = res)
 
-    this.filter$.pipe(
+    this.filterSubject.pipe(
+      filter(x => x !== undefined),
       distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
       tap(x => this.timesheetSubject.next([])),
       switchMap(this.get$),
