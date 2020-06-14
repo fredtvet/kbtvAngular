@@ -12,8 +12,6 @@ import { User } from 'src/app/core/models';
 export class TimesheetStatisticTableComponent {
   @ViewChild('dataGrid') dataGrid: AgGridAngular;
 
-  @Input() users: User[] = [];
-
   _timesheetSummaries: TimesheetSummary[];
   get timesheetSummaries(): TimesheetSummary[] {
       return this._timesheetSummaries;

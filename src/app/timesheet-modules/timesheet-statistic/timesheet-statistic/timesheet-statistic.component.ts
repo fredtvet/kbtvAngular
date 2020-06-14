@@ -17,10 +17,8 @@ export class TimesheetStatisticComponent {
   filter$ = this.timesheetService.filter$;
   groupBy$ = this.timesheetService.groupBy$;
   timesheetSummaries$ = this.timesheetService.timesheetSummaries$;
-  users$ = this.userService.getAll$();
 
   constructor(
-    private userService: UserService,
     private mainNavService: MainNavService,
     private timesheetService: TimesheetService,
     private bottomSheet: MatBottomSheet
