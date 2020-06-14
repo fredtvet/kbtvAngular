@@ -27,6 +27,7 @@ import { AppOwlDateTimeModule } from 'src/app/app-owl-date-time/app-owl-date-tim
   ],
   imports: [
     SharedModule,
+    AppOwlDateTimeModule
   ],
   exports: [
     SharedModule,

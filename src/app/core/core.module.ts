@@ -26,7 +26,8 @@ import {
   TimesheetAggregatorService,
   AppConfigurationService,
   DownloaderService,
-  ArrayHelperService
+  ArrayHelperService,
+  RolePreloadService
 } from './services';
 
 @NgModule({
@@ -60,7 +61,8 @@ import {
     TimesheetAggregatorService,
     AppConfigurationService,
     DownloaderService,
-    ArrayHelperService
+    ArrayHelperService,
+    RolePreloadService
   ]
 })
 export class CoreModule { }

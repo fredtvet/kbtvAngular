@@ -2,84 +2,85 @@ import {
   transition,
   trigger,
   useAnimation,
-} from "@angular/animations";
+} from '@angular/animations';
 import { slideAnimation } from './slide.animation';
+import { AppPages } from '../shared-app/enums';
 
 const slideBackwardParams = {enterX: 'translateX(-100%)',leaveX: 'translateX(100%)'};
 const slideForwardParams = {enterX: 'translateX(100%)',leaveX: 'translateX(-100%)'}
 
-export const routeAnimation = trigger("routeAnimation", [
-  transition("void <=> Home", useAnimation(slideAnimation, 
+export const routeAnimation = trigger(`routeAnimation`, [
+  transition(`void <=> ${AppPages.Home}`, useAnimation(slideAnimation, 
     {params: slideForwardParams})),
-  //  transition("Home => *", useAnimation(slideAnimation,
+  //  transition(`Home => *`, useAnimation(slideAnimation,
   //    {params: slideForwardParams})),
-  transition("* => Home", useAnimation(slideAnimation,
+  transition(`* => ${AppPages.Home}`, useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 
-  transition("Home => MissionList", useAnimation(slideAnimation,
+  transition(`${AppPages.Home} => ${AppPages.MissionList}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),   
-  transition("Home => MissionDetails", useAnimation(slideAnimation,
+  transition(`${AppPages.Home} => ${AppPages.MissionDetails}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  transition("Home => TimesheetWeekView", useAnimation(slideAnimation,
+  transition(`${AppPages.Home} => ${AppPages.TimesheetWeekView}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  transition("Home => TimesheetAdminUserList", useAnimation(slideAnimation,
+  transition(`${AppPages.Home} => ${AppPages.TimesheetAdminUserList}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
   
-  transition("* => Profile", useAnimation(slideAnimation,
+  transition(`* => ${AppPages.Profile}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  transition("Profile => *", useAnimation(slideAnimation,
+  transition(`${AppPages.Profile} => *`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
     
-  transition("* => Users", useAnimation(slideAnimation,
+  transition(`* => ${AppPages.Users}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  transition("Users => *", useAnimation(slideAnimation,
+  transition(`${AppPages.Users} => *`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
 
-  transition("MissionList => MissionDetails", useAnimation(slideAnimation, 
+  transition(`${AppPages.MissionList} => ${AppPages.MissionDetails}`, useAnimation(slideAnimation, 
     {params: slideForwardParams})),
-  transition("MissionDetails => MissionList", useAnimation(slideAnimation, 
+  transition(`${AppPages.MissionDetails} => ${AppPages.MissionList}`, useAnimation(slideAnimation, 
     {params: slideBackwardParams})),
 
-  transition("MissionDetails => MissionImages", useAnimation(slideAnimation,
+  transition(`${AppPages.MissionDetails} => ${AppPages.MissionImages}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  transition("MissionImages => MissionDetails", useAnimation(slideAnimation,
+  transition(`${AppPages.MissionImages} => ${AppPages.MissionDetails}`, useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 
-  transition("MissionDetails => MissionDocuments", useAnimation(slideAnimation,
+  transition(`${AppPages.MissionDetails} => ${AppPages.MissionDocuments}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  transition("MissionDocuments => MissionDetails", useAnimation(slideAnimation,
+  transition(`${AppPages.MissionDocuments} => ${AppPages.MissionDetails}`, useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 
-  transition("MissionDetails => MissionNotes", useAnimation(slideAnimation,
+  transition(`${AppPages.MissionDetails} => ${AppPages.MissionNotes}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  transition("MissionNotes => MissionDetails", useAnimation(slideAnimation,
+  transition(`${AppPages.MissionNotes} => ${AppPages.MissionDetails}`, useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 
-  transition("MissionDetails => TimesheetList", useAnimation(slideAnimation,
+  transition(`${AppPages.MissionDetails} => ${AppPages.TimesheetList}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  transition("TimesheetList => MissionDetails", useAnimation(slideAnimation,
+  transition(`${AppPages.TimesheetList} => ${AppPages.MissionDetails}`, useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 
-  transition("TimesheetWeekView => MissionList", useAnimation(slideAnimation,
+  transition(`${AppPages.TimesheetWeekView} => ${AppPages.MissionList}`, useAnimation(slideAnimation,
     {params: slideBackwardParams})),
-  transition("MissionList => TimesheetWeekView", useAnimation(slideAnimation,
+  transition(`${AppPages.MissionList} => ${AppPages.TimesheetWeekView}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
   
-  transition("TimesheetWeekView => TimesheetWeekList", useAnimation(slideAnimation,
+  transition(`${AppPages.TimesheetWeekView} => ${AppPages.TimesheetWeekList}`, useAnimation(slideAnimation,
     {params: slideBackwardParams})),
-  transition("TimesheetWeekList => TimesheetWeekView", useAnimation(slideAnimation,
+  transition(`${AppPages.TimesheetWeekList} => ${AppPages.TimesheetWeekView}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
 
-  transition("TimesheetWeekView => TimesheetList", useAnimation(slideAnimation,
+  transition(`${AppPages.TimesheetWeekView} => ${AppPages.TimesheetList}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  transition("TimesheetList => TimesheetWeekView", useAnimation(slideAnimation,
+  transition(`${AppPages.TimesheetList} => ${AppPages.TimesheetWeekView}`, useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 
-  transition("TimesheetAdminUserList => TimesheetAdminList", useAnimation(slideAnimation,
+  transition(`${AppPages.TimesheetAdminUserList} => ${AppPages.TimesheetAdminList}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  transition("TimesheetAdminList => TimesheetAdminUserList", useAnimation(slideAnimation,
+  transition(`${AppPages.TimesheetAdminList} => ${AppPages.TimesheetAdminUserList}`, useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 
-  // transition("TimesheetAdminUserList => TimesheetAdminList", useAnimation(slideAnimation,
+  // transition(`TimesheetAdminUserList => TimesheetAdminList`, useAnimation(slideAnimation,
   //   {params: slideForwardParams})),
 ]);

@@ -4,7 +4,6 @@ import { OwlDateTimeComponent } from 'ng-pick-datetime';
 import { TimesheetStatus, DateRangePresets } from 'src/app/shared-app/enums';
 import { Mission, User } from 'src/app/core/models';
 import { TimesheetFilter } from 'src/app/shared-app/interfaces';
-import { SharedTimesheetModule } from '../../shared-timesheet.module';
 
 @Component({
   selector: 'app-timesheet-filter',

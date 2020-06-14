@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginPromptComponent } from './login-prompt/login-prompt.component';
 
 @Component({
-  template: '',
+  template: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 

@@ -3,6 +3,7 @@ export * from './device-info.service';
 export * from './loading.service';
 export * from './app-configuration.service';
 export * from './downloader.service';
+export * from './role-preload.service';
 
 export * from './auth/identity-tokens.service';
 export * from './auth/auth-guard.service';
