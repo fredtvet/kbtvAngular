@@ -35,7 +35,6 @@ export class UserSubject {
         for(let i = 0; i < users.length; i++){
           users[i].employer = employersObj[users[i].employerId]
         }
-        console.log(users);
         return users;
       })
     );

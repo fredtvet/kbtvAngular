@@ -3,6 +3,7 @@
 .container {
     position:relative;
     margin:$gap-size-unit  * .25px;
+    touch-action: auto!important;
   }
 
 .overlay {

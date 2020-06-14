@@ -45,7 +45,6 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
   }
 
   ngOnInit() {
-    console.log(this.missionId);
     this.configureMainNav(this.missionId)
     let documents$ =  this.missionDocumentService.getByMissionId$(this.missionId);
     let types$ = this.documentTypeService.getAll$();

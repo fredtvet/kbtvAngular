@@ -96,7 +96,6 @@ export class ArrayHelperService {
       }      
     };
 
-    console.log(arr2);
     return arr2;
   }
 
