@@ -5,7 +5,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { SharedAppModule } from '../shared-app/shared-app.module';
 
-import { SortByDatePipe, GetEmployerByIdPipe, ArrayFromNumberPipe, ArraySlicePipe } from './pipes'
+import { SortByDatePipe, ArrayFromNumberPipe, ArraySlicePipe } from './pipes'
 
 import { InputListenerDirective, HttpCommandButtonDirective, AddToHomeScreenDirective } from './directives';
 
@@ -24,7 +24,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SortByDatePipe,
     InputListenerDirective,
     AddToHomeScreenDirective,
-    GetEmployerByIdPipe,
     ArrayFromNumberPipe,
     HttpCommandButtonDirective,
     MailToFormComponent,
@@ -51,7 +50,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     InputListenerDirective,
     HttpCommandButtonDirective,
     SortByDatePipe,
-    GetEmployerByIdPipe,
     ArrayFromNumberPipe,
     MailToFormComponent,
     SelectableCardComponent,

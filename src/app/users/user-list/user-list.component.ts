@@ -17,7 +17,7 @@ export class UserListComponent {
   Roles = Roles;
   users: User[];
 
-  users$: Observable<User[]> = this.userService.getAll$().pipe(map(this.sortByRole));
+  users$: Observable<User[]> = this.userService.getAllDetails$().pipe(map(this.sortByRole));
 
   constructor(
     private mainNavService: MainNavService,

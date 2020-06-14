@@ -28,6 +28,10 @@ export class UserService {
     else return this.userSubject.users$;
   }
 
+  getAllDetails$(): Observable<User[]>{
+    
+  }
+
   getByRole$(role: string): Observable<User[]>{
     return this.getAll$().pipe(map(arr => arr.filter(u => u.role == role)));
   }
