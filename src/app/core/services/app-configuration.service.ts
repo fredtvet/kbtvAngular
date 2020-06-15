@@ -20,6 +20,7 @@ export class AppConfigurationService extends PersistentSubject<AppConfiguration>
 
   setSyncRefreshTime = (value: number) => {
     let config = {...this.dataSubject.value};
+    console.log(value);
     config.syncRefreshTime = value;
     this.dataSubject.next(config);
   }
