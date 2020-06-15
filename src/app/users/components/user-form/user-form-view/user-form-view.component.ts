@@ -25,7 +25,6 @@ export class UserFormViewComponent implements OnInit {
     private _formBuilder: FormBuilder,) {  }
 
     ngOnInit(){
-      console.log(this.user);
       if(!this.user || !this.user.userName) this.isCreateForm = true;
 
       this.initalizeForm(this.user);
