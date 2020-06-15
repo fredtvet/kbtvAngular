@@ -1,25 +1,30 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { delay, tap, timeInterval } from 'rxjs/operators';
+import { Injectable, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DownloaderService {
-  //iframe in app container receiving files to download
-  private downloadableUrlSubject = new Subject<string>();
-  downloadableUrl$ = this.downloadableUrlSubject.asObservable();
 
-  constructor() { }
+  private link: HTMLAnchorElement;
 
-  downloadUrl = (url: string): void => this.downloadableUrlSubject.next(url);
+  constructor(@Inject(DOCUMENT) private document: Document) {
+    const body = this.document.getElementsByTagName('body')[0];
+    this.link = this.document.createElement('a'); //Using ahref for iOS support
+    this.link.style.display = 'none';
+    body.appendChild(this.link);
+  }
 
+  downloadUrl = (url: string): void => {
+    this.link.href = url;
+    this.link.click();
+  };
+ 
   downloadUrls = (urls: string[]): void => {
     let delay = 0;
     urls.forEach(url => {
       setTimeout(() => this.downloadUrl(url), delay);
-      delay = delay + 50;
+      delay = delay + 200;
     })
   }
-  
 }

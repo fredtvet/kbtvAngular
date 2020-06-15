@@ -17,7 +17,6 @@ export class AppComponent {
   constructor(
     appRef: ApplicationRef,
     private iconService: IconService,
-    private downloaderService: DownloaderService,
     private authService: AuthService,
     private deviceInfoService: DeviceInfoService,
     private notificationService: NotificationService,
@@ -30,8 +29,6 @@ export class AppComponent {
     this.iconService.registerIcons();
     
     this.authService.populate();
-
-    this.downloaderService.downloadableUrl$.subscribe(this.downloadUrl); 
 
     this.deviceInfoService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
       if(isOnline) this.notificationService.setNotification('Du er tilkoblet internett igjen!')
@@ -50,7 +47,5 @@ export class AppComponent {
 
     concat(appIsStable$, continousSync$).subscribe();
   }
-
- private downloadUrl = (url: string) => this.downloadFrame.nativeElement.src = url;
   
 }
