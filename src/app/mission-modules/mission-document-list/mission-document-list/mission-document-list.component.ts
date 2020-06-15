@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MissionDocument, Mission } from 'src/app/core/models';
 import { Observable, combineLatest } from 'rxjs';
 import { MissionDocumentService, MainNavService, NotificationService, MissionService, DocumentTypeService, DownloaderService, DeviceInfoService } from 'src/app/core/services';
@@ -15,6 +15,7 @@ import { MailDocumentSheetComponent } from '../mail-document-sheet.component';
 @Component({
   selector: 'app-mission-document-list',
   templateUrl: './mission-document-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionDocumentListComponent extends SubscriptionComponent {
   @ViewChild('documentList') documentList: SelectableListBase<MissionDocument>;

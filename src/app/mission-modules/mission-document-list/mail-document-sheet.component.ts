@@ -11,8 +11,8 @@ import { NotificationService, MissionDocumentService } from 'src/app/core/servic
   </app-simple-top-nav> 
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
-  
 })
+
 export class MailDocumentSheetComponent implements OnInit {
 
   navConfig: SimpleNavConfig;

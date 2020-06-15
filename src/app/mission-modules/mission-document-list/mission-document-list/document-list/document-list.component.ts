@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MissionDocument } from 'src/app/core/models';
 import { SelectableEntity } from 'src/app/shared-app/interfaces';
 import { SelectableListPresenter, SelectableListBase } from 'src/app/shared/components';
@@ -6,7 +6,8 @@ import { SelectableListPresenter, SelectableListBase } from 'src/app/shared/comp
 @Component({
   providers: [SelectableListPresenter],
   selector: 'app-document-list',
-  templateUrl: './document-list.component.html'
+  templateUrl: './document-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class DocumentListComponent extends SelectableListBase<MissionDocument>{

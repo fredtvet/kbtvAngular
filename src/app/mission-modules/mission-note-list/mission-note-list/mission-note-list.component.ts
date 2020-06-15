@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, ChangeDetectionStrategy} from '@angular/core';
 import { MissionNote } from 'src/app/core/models';
 import { Observable } from 'rxjs';
 import { MainNavService, NotificationService, MissionNoteService } from 'src/app/core/services';
@@ -12,6 +12,7 @@ import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 @Component({
   selector: 'app-mission-note-list',
   templateUrl: './mission-note-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionNoteListComponent {
   RolePresets = RolePresets;

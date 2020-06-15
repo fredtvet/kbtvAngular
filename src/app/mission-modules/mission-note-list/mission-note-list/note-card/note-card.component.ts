@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { MissionNote } from 'src/app/core/models';
 import { RolePresets } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-note-card',
-  templateUrl: './note-card.component.html'
+  templateUrl: './note-card.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NoteCardComponent implements OnInit {
   RolePresets = RolePresets;

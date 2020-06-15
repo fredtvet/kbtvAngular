@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
 import { filter, debounceTime, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
-  templateUrl: './settings.component.html'
+  templateUrl: './settings.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsComponent {
 
