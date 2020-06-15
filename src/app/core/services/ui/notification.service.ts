@@ -19,20 +19,20 @@ export class NotificationService {
     setTimeout(() => {this.lastType = null}, 1000);
     switch(type){
       case Notifications.Success:
-        this.openSnackBar(message, 'check_circle', 2000, 'notification bg-success');
+        this.openSnackBar(message, 'check_circle', 2000, 'notification-success');
         break;
       case Notifications.Error:
-        this.openSnackBar(message, 'error', 3500, 'notification bg-accent');
+        this.openSnackBar(message, 'error', 3500, 'notification-error');
         break;
       case Notifications.Warning:
-        this.openSnackBar(message, 'warning', 3500, 'notification bg-warn')
+        this.openSnackBar(message, 'warning', 3500, 'notification-warn')
     }
 
   }
 
   openSnackBar(message: string, icon:string, duration: number, panelClass:string){
     this._snackBar.openFromComponent(NotificationComponent, {
-      data : { message, icon},
+      data : { message, icon },
       duration: duration,
       panelClass: panelClass
     })
