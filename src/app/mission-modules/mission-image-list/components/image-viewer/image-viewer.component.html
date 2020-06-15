@@ -6,7 +6,7 @@
     <button mat-icon-button (click)="openBottomSheet()"><mat-icon>more_vert</mat-icon></button>
 </mat-toolbar>
 
-<img *ngIf="currentImage" 
+<img *ngIf="currentImage" alt="oppdragsbilde"
   (tap)="toolbarHidden = !toolbarHidden" 
   (swiperight)="previousImage()" 
   (swipeleft)="nextImage()" 
