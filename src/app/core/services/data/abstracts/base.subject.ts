@@ -9,24 +9,28 @@ import { BaseEntity } from 'src/app/core/models/base-entity.interface';
 export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubject<T[]>{
 
   private timestampKey: string;
+  lastSyncTimestamp: number;
 
   constructor(
     protected arrayHelperService: ArrayHelperService,
     localStorageService: LocalStorageService,
     storageKey:string) {
+
     super(localStorageService, storageKey);
     this.timestampKey = this.storageKey.concat('/timestamp');
+    this.lastSyncTimestamp = this.localStorageService.get(this.timestampKey);
+    
   }
 
   sync(dbSync: DbSync<T>){
-
     let arr = this.arrayHelperService.addOrUpdateRange<T>(this.dataSubject.value, dbSync.entities, 'id');
-
     arr = this.arrayHelperService.removeRangeByIdentifier<T>(arr, dbSync.deletedEntities, 'id');
-
     this.dataSubject.next(arr);
 
+    this.lastSyncTimestamp = dbSync.timestamp;
+    console.time(this.storageKey)
     this.localStorageService.add(this.timestampKey, dbSync.timestamp)//Persist timestamp for next sync
+    console.timeEnd(this.storageKey)
   }
 
   getAll$ (): Observable<T[]> {
@@ -85,10 +89,6 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
   purge(){
     this.dataSubject.next([]);
     this.localStorageService.add(this.timestampKey, null)
-  }
-
-  getTimestamp(): number{
-    return this.localStorageService.get(this.timestampKey);
   }
 
   get isEmpty(): boolean{

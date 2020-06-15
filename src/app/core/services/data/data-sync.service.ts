@@ -53,7 +53,7 @@ export class DataSyncService {
 
     this.entitySubjects.forEach(x =>{
       let key = x.entityKey + 'Timestamp';
-      let timestamp = x.subject.getTimestamp();
+      let timestamp = x.subject.lastSyncTimestamp;
       params = params.set(key, timestamp ? timestamp.toString() : null);
     });
 
@@ -82,7 +82,7 @@ export class DataSyncService {
   purgeAll = () => this.entitySubjects.forEach(x => x.subject.purge());
 
   private getEarliestTimestamp(): number{
-    const timestamps = this.entitySubjects.map(x => x.subject.getTimestamp());
+    const timestamps = this.entitySubjects.map(x => x.subject.lastSyncTimestamp);
     return  timestamps.sort(function(a,b) {return a - b})[0];
   }
 

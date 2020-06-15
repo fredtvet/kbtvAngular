@@ -22,23 +22,6 @@ export abstract class BaseService<T extends BaseEntity>{
       this.deviceInfoService.isOnline$.subscribe(res =>this.isOnline = res)
     }
 
-  sync(): void{
-    if(!this.isOnline) return null;
-    let timestamp = this.dataSubject.getTimestamp();
-    let params = new HttpParams();
-    if(timestamp) params = params.set('Timestamp', timestamp.toString());
-
-    this.apiService
-      .get(`${this.uri}/Sync`, params)
-      .pipe(
-        retry(3),
-        tap(this.dataSubject.sync),
-        catchError(err => {
-        this.notificationService.setNotification('Noe gikk feil med synkroniseringen!' , Notifications.Error)
-        throw err;})
-      )
-  }
-
   getAll$ = (): Observable<T[]> => this.dataSubject.getAll$();
 
   getAll = (): T[] => this.dataSubject.getAll();
