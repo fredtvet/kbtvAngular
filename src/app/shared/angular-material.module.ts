@@ -23,12 +23,10 @@ import { LazyStyles } from '../shared-app/enums';
       MatSelectModule,
       MatRadioModule,
       MatTooltipModule,
-      MatTabsModule,
       MatCheckboxModule,
       MatAutocompleteModule,
       ScrollingModule, 
       MatButtonToggleModule,
-      MatCardModule,
    ],
    exports: [
       MatBadgeModule,
@@ -37,18 +35,15 @@ import { LazyStyles } from '../shared-app/enums';
       MatSelectModule,
       MatRadioModule,
       MatTooltipModule,
-      MatTabsModule,
       MatCheckboxModule,
       MatAutocompleteModule,
       ScrollingModule, 
       MatButtonToggleModule,
-      MatCardModule,
    ],
 })
 
 export class AngularMaterialModule { 
    constructor(private cssLoaderService: CssLoaderService){
-      console.log('stylerino');
       this.cssLoaderService.loadStyle(LazyStyles.MatStyles);
     }
 }

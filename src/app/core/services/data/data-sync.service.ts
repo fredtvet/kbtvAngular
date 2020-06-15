@@ -56,7 +56,7 @@ export class DataSyncService {
       let timestamp = x.subject.lastSyncTimestamp;
       params = params.set(key, timestamp ? timestamp.toString() : null);
     });
-
+    console.log(params);
     this.apiService
       .get('/SyncAll', params)
       .pipe(retry(3), tap(data => {
