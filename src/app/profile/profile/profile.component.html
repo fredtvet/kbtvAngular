@@ -1,46 +1,9 @@
-
-<mat-tab-group mat-stretch-tabs color="accent">
-
-    <mat-tab label="Profil">
-      <div class="p-2">
-        <app-profile-form *ngIf="user$ | async; let user"
-          [user]="user"
-          (profileUpdated)="updateProfile($event)">
-        </app-profile-form>
-      </div>
-    </mat-tab>
-
-    <mat-tab label="Passord">
-      <div class="p-2">
-        <app-password-form
-          [error]="passwordStatus"
-          (passwordUpdated)="updatePassword($event)">
-        </app-password-form>
-      </div>
-    </mat-tab>
-
-    <mat-tab label="Annet">
-      <div class="p-2">
-        <app-list-card appAddToHomeScreen text="Legg til app" startIcon="get_app"></app-list-card>
-
-        <app-list-card text="Synkroniser manuelt" startIcon="update" (click)="refresh()">
-        </app-list-card>
-
-        <app-list-card text="Slett lokal data" startIcon="delete_sweep" (click)="confirmPurge()">
-        </app-list-card>
-
-        <mat-card class="app-card mt-1">
-          <mat-card-header class="mb-2">Konfigurasjon</mat-card-header>
-          <mat-card-content>
-            <mat-form-field>
-              <input matInput placeholder="Synkroniseringstid i minutter" type="tel"
-              [ngModel]="syncRefreshTime$ | async" (ngModelChange)="updateSyncRefreshTime($event)">
-            </mat-form-field>   
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </mat-tab>
-
- </mat-tab-group>
-
-
+<div class="p-2 max-width">
+  <app-list-card text="Oppdater profil" startIcon="account_circle" panelClass="route-anim-block" (click)="updateProfile()">
+  </app-list-card>
+  <app-list-card text="Oppdater passord" startIcon="vpn_key" panelClass="route-anim-block" (click)="updatePassword()">
+  </app-list-card>
+  <app-list-card text="Innstillinger" startIcon="settings" panelClass="route-anim-block" [routerLink]="['/profil/innstillinger']">
+  </app-list-card>
+  <app-list-card appAddToHomeScreen text="Legg til app" startIcon="get_app"></app-list-card>
+</div>

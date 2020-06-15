@@ -1,32 +1,6 @@
-<mat-card class="app-card">
-  <mat-card-header class="mb-2">Endre profil</mat-card-header>
-  <mat-card-content>
-    <form *ngIf="profileForm && user" [formGroup]="profileForm" fxLayout="column">
+<app-profile-form-view
+    [user]="user$ | async"
+    (formSubmitted)="onSubmit($event)">
+</app-profile-form-view>
 
-      <mat-form-field>
-        <input matInput placeholder="Brukernavn" formControlName="userName" >
-      </mat-form-field>
-    
-      <mat-form-field>
-        <input matInput placeholder="Fornavn"  formControlName="firstName" required>
-      </mat-form-field>
-    
-      <mat-form-field>
-        <input matInput placeholder="Etternavn"  formControlName="lastName" required>
-      </mat-form-field>
 
-      <mat-form-field>
-        <input matInput placeholder="Kontaktnummer"  formControlName="phoneNumber">
-        <mat-error *ngIf="this.phoneNumber.invalid">
-            Kontaktnummer må være mellom 4 og 12 siffer.
-        </mat-error>
-      </mat-form-field>
-      
-      <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
-        [disabled]="profileForm.invalid || profileForm.pristine"
-        (click)="onSubmit()">
-        Lagre   
-     </button>
-    </form>
-  </mat-card-content>
-</mat-card>

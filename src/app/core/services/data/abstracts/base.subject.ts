@@ -19,7 +19,7 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
     super(localStorageService, storageKey);
     this.timestampKey = this.storageKey.concat('/timestamp');
     this.lastSyncTimestamp = this.localStorageService.get(this.timestampKey);
-    
+
   }
 
   sync(dbSync: DbSync<T>){
@@ -88,7 +88,8 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
 
   purge(){
     this.dataSubject.next([]);
-    this.localStorageService.add(this.timestampKey, null)
+    this.localStorageService.add(this.timestampKey, null);
+    this.lastSyncTimestamp = null;
   }
 
   get isEmpty(): boolean{

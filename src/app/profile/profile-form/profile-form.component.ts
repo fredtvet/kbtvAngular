@@ -1,67 +1,33 @@
-import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { User } from "src/app/core/models";
+import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { NotificationService, AuthService } from 'src/app/core/services';
+import { User } from 'src/app/core/models';
+import { Observable } from 'rxjs';
 
 @Component({
-  selector: "app-profile-form",
-  templateUrl: "./profile-form.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-profile-form',
+  templateUrl: './profile-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProfileFormComponent implements OnInit {
-  @Input() user: User;
-  @Output() profileUpdated = new EventEmitter();
 
-  profileForm: FormGroup;
+export class ProfileFormComponent {
+ 
+  @Output() finished = new EventEmitter();
 
-  constructor(private _formBuilder: FormBuilder) {}
+  user$: Observable<User> = this.authService.currentUser$;
 
-  ngOnInit() {
-    this.initalizeForm();
-  }
+  constructor(
+    private authService: AuthService,
+    private notificationService: NotificationService) {}
 
-  initalizeForm() {
-    this.profileForm = this._formBuilder.group({
-      userName: [
-        { value: this.user.userName, disabled: true },
-        [
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(100),
-        ],
-      ],
-      firstName: [
-        { value: this.user.firstName, disabled: true },
-        [Validators.required, Validators.maxLength(100)],
-      ],
-      lastName: [
-        { value: this.user.lastName, disabled: true },
-        [Validators.required, Validators.maxLength(100)],
-      ],
-      phoneNumber: [
-        this.user.phoneNumber,
-        [Validators.minLength(4), Validators.maxLength(12)],
-      ],
-    });
-  }
+  onSubmit(user:User): void{
+    console.log(user);
+    if(!user || user == null) this.finished.emit();
 
-  onSubmit() {
-    const { value, valid } = this.profileForm;
-    if (valid) this.profileUpdated.emit(value);    
-  }
-
-  get userName() {
-    return this.profileForm.get("userName");
-  }
-
-  get firstName() {
-    return this.profileForm.get("firstName");
-  }
-
-  get lastName() {
-    return this.profileForm.get("lastName");
-  }
-
-  get phoneNumber() {
-    return this.profileForm.get("phoneNumber");
+    this.authService.updateCurrentUser$(user).subscribe(
+      res => {
+        this.notificationService.setNotification('Vellykket oppdatering!');
+        this.finished.emit();
+      },
+    )
   }
 }

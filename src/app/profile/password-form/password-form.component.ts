@@ -1,56 +1,31 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { NotificationService, AuthService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-password-form',
-  templateUrl: './password-form.component.html'
+  templateUrl: './password-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PasswordFormComponent implements OnInit {
+
+export class PasswordFormComponent {
+ 
+  @Output() finished = new EventEmitter();
+
+  serverError: string;
 
   constructor(
-    private _formBuilder: FormBuilder) { }
+    private authService: AuthService,
+    private notificationService: NotificationService) {}
 
-    @Input() error: string;
-    @Output() passwordUpdated = new EventEmitter();
+  onSubmit(result:any): void{
+    if(!result || result == null) this.finished.emit();
 
-    passwordForm: FormGroup;
-    hidePasswords = {curr: true, new: true, confirm: true}
-
-    ngOnInit(){
-      this.initalizeForm();
-    }
-
-    initalizeForm(){
-      this.passwordForm = this._formBuilder.group({
-        oldPassword: ['', [Validators.required, Validators.minLength(7)]],
-        password: ['', [Validators.required, Validators.minLength(7)]],
-        confirmPassword: ['', Validators.required],
-      });
-    }
-
-
-    onSubmit(){
-      const {value, valid} = this.passwordForm;
-
-      if(valid && this.password.value === this.confirmPassword.value)
-      {
-        this.passwordUpdated.emit(value);
-        this.passwordForm.reset();
-      }
-      else if (this.password.value !== this.confirmPassword.value)
-        this.error = "Passordene er ikke like";
-    }
-
-    get oldPassword(){
-      return this.passwordForm.get('oldPassword')
-    }
-
-    get password(){
-      return this.passwordForm.get('password')
-    }
-
-    get confirmPassword(){
-      return this.passwordForm.get('confirmPassword');
-    }
-
+    this.authService.changePassword$(result.oldPassword, result.password).subscribe(
+      res => {
+        this.notificationService.setNotification('Vellykket oppdatering!');
+        this.finished.emit();
+      }, 
+      error => this.serverError = error
+    )
+  }
 }
