@@ -3,7 +3,7 @@
     (swiperight)="previousWeek(vm.dateParams)" 
     (swipeleft)="nextWeek(vm.dateParams)">
 
-    <ng-container *ngFor="let weekDay of [1,2,3,4,5]"> 
+    <ng-container *ngFor="let weekDay of ((isXs$ | async) ? 5 : 7) | arrayFromNumber"> 
 
         <div class="w-100" fxLayout="column" fxLayoutAlign="start center">
 

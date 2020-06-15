@@ -2,7 +2,8 @@ import { Component, ChangeDetectionStrategy } from "@angular/core";
 import {
   UserTimesheetService,
   DateTimeService,
-  MainNavService
+  MainNavService,
+  DeviceInfoService
 } from "src/app/core/services";
 import { switchMap, map } from "rxjs/operators";
 import { DateParams, TopDefaultNavConfig } from "src/app/shared-app/interfaces";
@@ -10,7 +11,6 @@ import { MatDialog } from "@angular/material/dialog";
 import { Router, ActivatedRoute } from "@angular/router";
 import { TimesheetCardDialogWrapperComponent } from '../components/timesheet-card-dialog-wrapper.component';
 import { Observable } from 'rxjs';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: "app-timesheet-week-view",
@@ -25,13 +25,14 @@ export class TimesheetWeekViewComponent {
   currentYear: number = this.date.getFullYear();
 
   vm$: Observable<any>;
+  isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
 
   constructor(
     private mainNavService: MainNavService,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private _bottomSheet: MatBottomSheet,
+    private deviceInfoService: DeviceInfoService,
     private dateTimeService: DateTimeService,
     private userTimesheetService: UserTimesheetService
   ) {
