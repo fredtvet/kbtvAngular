@@ -1,6 +1,7 @@
 export enum AppPages{
     Home,
     Profile,
+    Settings,
     Users,
     DataManagement,
     TimesheetStatistic,

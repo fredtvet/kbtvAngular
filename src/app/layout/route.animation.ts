@@ -25,12 +25,22 @@ export const routeAnimation = trigger(`routeAnimation`, [
     {params: slideForwardParams})),
   transition(`${AppPages.Home} => ${AppPages.TimesheetAdminUserList}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  
+
+  transition(`${AppPages.Home} => ${AppPages.Profile}`, useAnimation(slideAnimation,
+    {params: slideForwardParams})),   
+  transition(`${AppPages.Profile} => ${AppPages.Home}`, useAnimation(slideAnimation,
+    {params: slideBackwardParams})),
+
   transition(`* => ${AppPages.Profile}`, useAnimation(slideAnimation,
-    {params: slideForwardParams})),
+    {params: slideBackwardParams})),
   transition(`${AppPages.Profile} => *`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
-    
+
+  transition(`* => ${AppPages.Settings}`, useAnimation(slideAnimation,
+    {params: slideBackwardParams})),
+  transition(`${AppPages.Settings} => *`, useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+
   transition(`* => ${AppPages.Users}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
   transition(`${AppPages.Users} => *`, useAnimation(slideAnimation,

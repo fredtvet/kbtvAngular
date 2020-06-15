@@ -20,7 +20,6 @@ export class ProfileFormComponent {
     private notificationService: NotificationService) {}
 
   onSubmit(user:User): void{
-    console.log(user);
     if(!user || user == null) this.finished.emit();
 
     this.authService.updateCurrentUser$(user).subscribe(
