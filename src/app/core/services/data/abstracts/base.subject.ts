@@ -28,9 +28,8 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
     this.dataSubject.next(arr);
 
     this.lastSyncTimestamp = dbSync.timestamp;
-    console.time(this.storageKey)
     this.localStorageService.add(this.timestampKey, dbSync.timestamp)//Persist timestamp for next sync
-    console.timeEnd(this.storageKey)
+
   }
 
   getAll$ (): Observable<T[]> {
