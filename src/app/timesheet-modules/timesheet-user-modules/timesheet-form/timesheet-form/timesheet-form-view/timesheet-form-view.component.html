@@ -6,6 +6,9 @@
         ({{ mission.id }}) {{ mission.address }}
       </mat-option>
     </mat-autocomplete>
+    <mat-error *ngIf="mission.errors">
+      Velg ett oppdrag fra listen
+    </mat-error>
   </mat-form-field>
 
   <span fxLayout="row" fxLayoutAlign="space-between start">

@@ -6,7 +6,6 @@ import { debounceTime, filter } from 'rxjs/operators';
 @Component({
   selector: 'app-timesheet-form-view',
   templateUrl: './timesheet-form-view.component.html',
-  styleUrls: ['./timesheet-form-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimesheetFormViewComponent implements OnInit {
@@ -50,6 +49,7 @@ export class TimesheetFormViewComponent implements OnInit {
       id: x ? x.id : null,
       mission: [{value: this.missionPreset || (x ? x.mission : null), disabled: this.missionPreset}, [
         Validators.required,
+        this.isMissionValidator()
       ]],
       date: [{value: this.datePreset || (this.isCreateForm ? null : new Date(x.startTime)), disabled: this.datePreset}, [
         Validators.required
@@ -62,7 +62,7 @@ export class TimesheetFormViewComponent implements OnInit {
         Validators.required,
         Validators.maxLength(400)
       ]],
-    }, {validators: this.isMissionValidator()});
+    });
   }
 
   private initMissionListener(){
@@ -80,7 +80,7 @@ export class TimesheetFormViewComponent implements OnInit {
   }
   private isMissionValidator(): ValidatorFn{ //Check that all elements in array exist
     return (control: AbstractControl): {[key: string]: any} | null => {
-      const invalid = !(control.value.mission instanceof Object); //instanceof Mission not working?
+      const invalid = !(control.value instanceof Object); 
       return invalid ? {'missionInvalid': {value: control.value}} : null;
     };
   }
