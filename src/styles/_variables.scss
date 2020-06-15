@@ -26,34 +26,5 @@ $foreground-color:white;
 
 $bottom-nav-height: 44;
 
-@mixin max-width{
-  max-width:600px!important;
-}
+$gap-size: 4;
 
-@mixin notification{
-  margin-bottom:$bottom-nav-height + $gap-size-unit * 2px!important;
-  color:black;
-}
-
-$gap-size-unit: 4;
-$directions: ('t':'top', 'l':'left', 'r':'right', 'b':'bottom');
-$gap-styles: ('m':'margin', 'p':'padding');
-$levels: 6;
-
-@mixin gap-units {
-  @each $styleAbbr, $style in $gap-styles{
-    @for $i from 0 through $levels {     
-      .#{$styleAbbr}-#{$i} { #{$style}: $gap-size-unit * $i * 1px }
-      @each $dirAbbr, $dir in $directions{
-        .#{$styleAbbr}#{$dirAbbr}-#{$i} { #{$style}-#{$dir}: $gap-size-unit * $i * 1px }
-      }
-    } 
-    //Autos
-    .#{$styleAbbr}-auto { #{$style}: auto }
-    @each $dirAbbr, $dir in $directions{
-      .#{$styleAbbr}#{$dirAbbr}-auto { #{$style}-#{$dir}: auto }
-    }
-  }
-}
-
-@include gap-units;

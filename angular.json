@@ -25,9 +25,25 @@
               "src/manifest.webmanifest",
               "src/manifest.webmanifest"
             ],
+            "extractCss": true,
             "styles": [
-              "src/custom-theme.scss",
-              "src/styles.scss"
+              "src/styles/custom-theme.scss",
+              "src/styles/styles.scss",
+              {
+                "input": "src/styles/lazy-styles/ag-grid.scss",
+                "bundleName": "ag-grid",
+                "inject": false
+              },
+              {
+                "input": "src/styles/lazy-styles/mat-styles.scss",
+                "bundleName": "mat-styles",
+                "inject": false
+              },
+              {
+                "input": "src/styles/lazy-styles/owl-date-time.scss",
+                "bundleName": "owl-date-time",
+                "inject": false
+              }
             ],
             "scripts": []
           },
@@ -96,7 +112,7 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles/styles.scss"
             ],
             "scripts": []
           }

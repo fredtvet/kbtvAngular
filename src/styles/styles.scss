@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import './variables';
 @import './app-animations.scss';
+@import './spacing.scss';
 
 @include gap-units($gap-size);
 
@@ -177,85 +178,9 @@ a {
 
 .center-spinner{margin:$gap-size * 4px auto;}
 
-//Customizations for calendar
-.owl-dt-calendar-table{
-  .owl-dt-calendar-cell{
-    .owl-dt-calendar-cell-today{
-      border-color:$primary;
-      box-shadow: none!important;
-    }
-    .owl-dt-calendar-cell-selected{
-      background:$primary;
-    }
-  }
-  .owl-dt-calendar-cell-in-range{
-    background:$primary-light!important;
-  }
-}
-
-//Customizations for time picker
-.owl-dt-container-inner{
-  .owl-dt-container-info{
-    font-size:1.2em;
-    padding:0;
-    .owl-dt-container-range{
-      padding:0 .5em;
-    }
-    .owl-dt-container-info-active{
-      @extend .bg-accent;
-    }
-  }
-  .owl-dt-container-buttons{
-    height:2.5rem;
-  }
-}
-
 //Fix to keep items in CDK virtual scroll responsive 
 .cdk-virtual-scroll-content-wrapper{
   width:100%;
 }
 
-//Fix for bug on iOs
-.mat-drawer-container {position: unset!important;}
 
-mat-bottom-sheet-container{
-  padding:0!important;
-  max-height:none!important;
-}
-
-.mat-icon{vertical-align: middle!important;}
-.mat-dialog-container{padding:0!important;}
-
-mat-toolbar.toolbar-slim, 
-mat-toolbar-row.toolbar-slim, 
-mat-toolbar-single-row.toolbar-slim{
-  height:auto!important;
-  padding: 2px!important;
-  min-height:40px!important;
-} 
-
-//Ag material
-.mat-button-toggle-group{
-  border:none;
-  .mat-button-toggle-appearance-standard {
-
-    .mat-button-toggle-label-content {
-      line-height: 38px!important;
-    }
-  }
-}
-
-.mat-tab-group{
-  .mat-tab-header{
-    background-color:$primary;
-    color:white!important;
-    position:sticky!important;
-    width:100%;
-    z-index:2;
-    top:0;
-    overflow:hidden;
-    .mat-tab-label-content{
-      color:white;
-    }
-  }
-}

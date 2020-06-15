@@ -12,12 +12,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CssLoaderService } from '../core/services';
+import { LazyStyles } from '../shared-app/enums';
 
 @NgModule({
    imports: [
-      // MatButtonModule,
-      // MatToolbarModule, //
-      // MatIconModule,
       MatBadgeModule,
       MatFormFieldModule,
       MatInputModule,
@@ -25,23 +24,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
       MatRadioModule,
       MatTooltipModule,
       MatTabsModule,
-      // MatMenuModule, //
-      // MatSnackBarModule,
       MatCheckboxModule,
-      // MatDialogModule,
       MatAutocompleteModule,
       ScrollingModule, 
-      // MatProgressSpinnerModule,
-      // MatRippleModule, //
-      // MatBottomSheetModule, //
       MatButtonToggleModule,
       MatCardModule,
-      //MatDividerModule
    ],
    exports: [
-      //MatButtonModule,
-     // MatToolbarModule,
-      //MatIconModule,
       MatBadgeModule,
       MatInputModule,
       MatFormFieldModule,
@@ -49,19 +38,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
       MatRadioModule,
       MatTooltipModule,
       MatTabsModule,
-      //MatMenuModule,
-      //MatSnackBarModule,
       MatCheckboxModule,
-      // MatDialogModule,
       MatAutocompleteModule,
       ScrollingModule, 
-      //MatProgressSpinnerModule,
-      //MatRippleModule,
-      //MatBottomSheetModule,
       MatButtonToggleModule,
       MatCardModule,
-      //MatDividerModule
    ],
 })
 
-export class AngularMaterialModule { }
+export class AngularMaterialModule { 
+   constructor(private cssLoaderService: CssLoaderService){
+      console.log('stylerino');
+      this.cssLoaderService.loadStyle(LazyStyles.MatStyles);
+    }
+}

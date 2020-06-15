@@ -27,7 +27,8 @@ import {
   AppConfigurationService,
   DownloaderService,
   ArrayHelperService,
-  RolePreloadService
+  RolePreloadService,
+  CssLoaderService
 } from './services';
 
 @NgModule({
@@ -62,7 +63,8 @@ import {
     AppConfigurationService,
     DownloaderService,
     ArrayHelperService,
-    RolePreloadService
+    RolePreloadService,
+    CssLoaderService,
   ]
 })
 export class CoreModule { }

@@ -1,4 +1,4 @@
-@import '../../../../../variables';
+@import '../../../../../styles/variables';
 
 img{
     display: block;
@@ -9,12 +9,12 @@ img{
 
 .top_left_fab{
     position:absolute;
-    left:$gap-size-unit * 2px;
+    left:$gap-size * 2px;
 }
 
 .top_right_fab{
     position:absolute;
-    right:$gap-size-unit * 2px;
+    right:$gap-size * 2px;
 }
 
 .image-toolbar{

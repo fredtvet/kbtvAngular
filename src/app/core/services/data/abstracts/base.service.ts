@@ -1,10 +1,9 @@
 import { Observable, throwError } from 'rxjs';
-import { tap, retry, catchError } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { BaseSubject } from './base.subject';
 import { ApiService } from '../../api.service';
 import { DeviceInfoService } from '../../device-info.service';
 import { NotificationService } from '../../ui/notification.service';
-import { HttpParams } from '@angular/common/http';
 import { BaseEntity } from 'src/app/core/models/base-entity.interface';
 import { Notifications } from 'src/app/shared-app/enums';
 
@@ -35,7 +34,6 @@ export abstract class BaseService<T extends BaseEntity>{
   }
 
   add$(entity: T): Observable<T>{
-
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å legge til ting.')
       .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
  
@@ -54,7 +52,6 @@ export abstract class BaseService<T extends BaseEntity>{
   }
 
   delete$(id: number): Observable<boolean> {
-
     if(!this.isOnline)
       return throwError('Du må være tilkoblet internett for å slette ting.')
               .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));

@@ -1,0 +1,19 @@
+$directions: ('t':'top', 'l':'left', 'r':'right', 'b':'bottom');
+$gap-styles: ('m':'margin', 'p':'padding');
+$levels: 6;
+
+@mixin gap-units($gap-size-unit) {
+  @each $styleAbbr, $style in $gap-styles{
+    @for $i from 0 through $levels {     
+      .#{$styleAbbr}-#{$i} { #{$style}: $gap-size-unit * $i * 1px }
+      @each $dirAbbr, $dir in $directions{
+        .#{$styleAbbr}#{$dirAbbr}-#{$i} { #{$style}-#{$dir}: $gap-size-unit * $i * 1px }
+      }
+    } 
+    //Autos
+    .#{$styleAbbr}-auto { #{$style}: auto }
+    @each $dirAbbr, $dir in $directions{
+      .#{$styleAbbr}#{$dirAbbr}-auto { #{$style}-#{$dir}: auto }
+    }
+  }
+}

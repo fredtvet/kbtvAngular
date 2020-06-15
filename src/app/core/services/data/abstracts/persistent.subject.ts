@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { skip, tap } from 'rxjs/operators';
+import { skip } from 'rxjs/operators';
 import { LocalStorageService } from '../../local-storage.service';
 
 export abstract class PersistentSubject<T> {

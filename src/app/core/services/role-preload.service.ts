@@ -45,8 +45,7 @@ export class RolePreloadService implements PreloadingStrategy {
       return this.authService.currentUser$.pipe(
         switchMap(user => {
           let routes: OnDemandRolePreloadOptions[] =  [];
-
-          if(strategies.get(user.role as Roles))
+          if(user && strategies.get(user.role as Roles))
             routes = strategies.get(user.role as Roles).map(mod => new OnDemandRolePreloadOptions(mod, true));
           return from(routes);
         }), 

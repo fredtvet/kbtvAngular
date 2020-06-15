@@ -1,0 +1,36 @@
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+@import '../variables';
+
+//Customizations for calendar
+.owl-dt-calendar-table{
+    .owl-dt-calendar-cell{
+      .owl-dt-calendar-cell-today{
+        border-color:$primary;
+        box-shadow: none!important;
+      }
+      .owl-dt-calendar-cell-selected{
+        background:$primary;
+      }
+    }
+    .owl-dt-calendar-cell-in-range{
+      background:$primary-light!important;
+    }
+  }
+
+//Customizations for time picker
+.owl-dt-container-inner{
+    .owl-dt-container-info{
+      font-size:1.2em;
+      padding:0;
+      .owl-dt-container-range{
+        padding:0 .5em;
+      }
+      .owl-dt-container-info-active{
+        background:$accent!important;
+        color:black;
+      }
+    }
+    .owl-dt-container-buttons{
+      height:2.5rem;
+    }
+}

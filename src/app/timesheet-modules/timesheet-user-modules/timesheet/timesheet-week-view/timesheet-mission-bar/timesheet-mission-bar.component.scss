@@ -1,9 +1,9 @@
 
-@import '../../../../../../variables';
+@import '../../../../../../styles/variables';
 
 .mission-bar{
     border-radius:4px!important;
     height:100%;
-    padding:$gap-size-unit * 0.5px!important; 
+    padding:$gap-size * 0.5px!important; 
     text-align:center;
 }

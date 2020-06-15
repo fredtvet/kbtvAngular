@@ -38,7 +38,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
-    // MatMenuModule,
     MatRippleModule,
     MatBottomSheetModule,
     MatSnackBarModule,
@@ -54,7 +53,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     FlexLayoutModule,
     MatToolbarModule, //
     MatSidenavModule, //
-    //MatMenuModule,
     MatRippleModule, //
     MatDividerModule, //
     MatBottomSheetModule, //
