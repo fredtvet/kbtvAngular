@@ -1,0 +1,33 @@
+<form *ngIf="profileForm && user" [formGroup]="profileForm" fxLayout="column">
+
+  <mat-form-field>
+    <input matInput placeholder="Brukernavn" formControlName="userName">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Fornavn" formControlName="firstName" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Etternavn" formControlName="lastName" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Kontaktnummer" formControlName="phoneNumber">
+    <mat-error *ngIf="this.phoneNumber.invalid">
+      Kontaktnummer må være mellom 4 og 12 siffer.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Epost" formControlName="email">
+    <mat-error *ngIf="this.email.invalid">
+      Epostadressen er ikke gyldig.
+    </mat-error>
+  </mat-form-field>
+
+  <button appHttpCommandButton mat-raised-button class="w-100" color="primary"
+    [disabled]="profileForm.invalid || profileForm.pristine" (click)="onSubmit()">
+    Lagre
+  </button>
+</form>
