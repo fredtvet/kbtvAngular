@@ -5,7 +5,7 @@ import { filter, takeUntil, tap } from "rxjs/operators";
 import { RolePresets } from 'src/app/shared-app/enums';
 import { Observable } from 'rxjs';
 import { MissionImage, Mission } from 'src/app/core/models';
-import { MissionImageService, MainNavService, NotificationService, MissionService, DeviceInfoService } from 'src/app/core/services';
+import { MissionImageService, MainNavService, NotificationService, MissionService, DeviceInfoService, DownloaderService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppButton, AppFile, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
@@ -32,6 +32,7 @@ export class MissionImageListComponent extends SubscriptionComponent{
   isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
   
   constructor(
+    private downloaderService: DownloaderService,
     private deviceInfoService: DeviceInfoService,
     private bottomSheet: MatBottomSheet,
     private dialog: MatDialog,
@@ -107,15 +108,21 @@ export class MissionImageListComponent extends SubscriptionComponent{
     this.mainNavService.addTopNavConfig({default: cfg});
   }
 
+
   private updateMainNav = (images: MissionImage[]) => {
     let cfg = this.mainNavService.getTopDefaultNavConfig(); 
-    cfg.bottomSheetButtons = this.getBottomSheetButtons(images.map(x => x.id));
-    this.mainNavService.addTopNavConfig({default: cfg});;
-  }
+    cfg.bottomSheetButtons = [
+      {icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, 
+      params: [images.map(x => x.id)], allowedRoles: RolePresets.Authority},
+      {icon: "cloud_download", text: "Last ned alle", callback: this.downloadImages, 
+      params: [images.map(x => x.fileURL)]},
+    ]
+    this.mainNavService.addTopNavConfig({default: cfg});
+  }  
+
+  private downloadImages = (fileUrls: string[]) => 
+    this.downloaderService.downloadUrls(fileUrls)
 
   private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
-
-  private getBottomSheetButtons = (ids: number[]): AppButton[] => 
-    [{icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, params: [ids], allowedRoles: RolePresets.Authority}]
 
 }

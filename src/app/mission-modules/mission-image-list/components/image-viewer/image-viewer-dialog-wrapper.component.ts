@@ -35,7 +35,6 @@ export class ImageViewerDialogWrapperComponent {
     ngOnInit(): void {
       this.actions = [
         {text: "Last ned bilde", icon: "cloud_download", callback: this.downloadImage},
-        {text: "Last ned alle", icon: "cloud_download", callback: this.downloadImages},
         {text: "Slett bilde", icon: "delete", callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
       ];
     }
@@ -52,9 +51,6 @@ export class ImageViewerDialogWrapperComponent {
     
     private downloadImage = () => 
       this.downloaderService.downloadUrl(this.data.currentImage.fileURL)
-    
-    private downloadImages = () => 
-      this.downloaderService.downloadUrls(this.data.images.map(x => x.fileURL))
     
     private openConfirmDeleteDialog = () => {
       const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette bildet.'});
