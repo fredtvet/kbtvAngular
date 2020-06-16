@@ -1,6 +1,4 @@
 <div class="p-2">
-    <app-list-card appAddToHomeScreen [config]="{startIcon:'get_app'}"></app-list-card>Legg til app
-
     <app-list-card [config]="{startIcon:'update'}" (click)="refresh()">Synkroniser manuelt
     </app-list-card>
 
@@ -9,9 +7,6 @@
 
     <div class="app-card mt-1 p-3">
         <div class="mb-2">Konfigurasjon</div>
-        <mat-form-field>
-            <input matInput appInputListener placeholder="Synkroniseringstid i minutter" type="tel"
-                (inputChanged)="updateSyncRefreshTime($event)" [ngModel]="syncRefreshTime$ | async">
-        </mat-form-field>
+        <app-app-config-form [appConfig]="appConfig$ | async" (formSubmitted)="updateAppConfig($event)"></app-app-config-form>
     </div>
 </div>

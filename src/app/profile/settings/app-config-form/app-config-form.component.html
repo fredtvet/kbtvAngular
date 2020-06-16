@@ -1,0 +1,15 @@
+<form *ngIf="settingsForm && appConfig" [formGroup]="settingsForm" fxLayout="column">
+
+  <mat-form-field>
+    <input matInput placeholder="Synkroniseringstid i minutter" type="tel" formControlName="syncRefreshTime" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Antall måneder med data" type="tel" formControlName="initialNumberOfMonths" required>
+  </mat-form-field>
+
+  <button appHttpCommandButton mat-raised-button class="w-100" color="primary"
+    [disabled]="settingsForm.invalid || settingsForm.pristine" (click)="onSubmit()">
+    Lagre
+  </button>
+</form>

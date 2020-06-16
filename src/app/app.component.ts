@@ -41,8 +41,8 @@ export class AppComponent {
     //Wait for app to stabilize before initiating continuous sync interval
     const appIsStable$ = appRef.isStable.pipe(first(isStable => isStable === true));
 
-    const continousSync$ = combineLatest(interval(1000*60*3), this.appConfigService.config$).pipe(
-      tap(x => {if(!this.authService.hasAccessTokenExpired()) this.dataSyncService.syncIfTimePassed(x[1].syncRefreshTime)})
+    const continousSync$ = combineLatest(interval(1000*60*3), this.appConfigService.syncRefreshTime$).pipe(
+      tap(x => {if(!this.authService.hasAccessTokenExpired()) this.dataSyncService.syncIfTimePassed(x[1])})
     );
 
     concat(appIsStable$, continousSync$).subscribe();

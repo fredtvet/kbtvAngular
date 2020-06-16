@@ -8,13 +8,14 @@ import { MissionDocumentSubject } from './mission-document/mission-document.subj
 import { MissionSubject } from './mission/mission.subject';
 import { DocumentTypeSubject } from './document-type/document-type.subject';
 import { ApiService } from '../api.service';
-import { retry, tap, catchError } from 'rxjs/operators';
+import { retry, tap, catchError, skip } from 'rxjs/operators';
 import { NotificationService } from '../ui/notification.service';
 import { Notifications } from 'src/app/shared-app/enums';
 import { UserTimesheetSubject } from './user-timesheet/user-timesheet.subject';
 import { HttpParams } from '@angular/common/http';
 import { BaseSubject } from './abstracts/base.subject';
 import { BaseEntity } from '../../models/base-entity.interface';
+import { AppConfigurationService } from '../app-configuration.service';
 
 interface SubjectWithEntityKey{
   entityKey: string;
@@ -28,12 +29,14 @@ interface SubjectWithEntityKey{
 export class DataSyncService {
 
   private isOnline: boolean = true;
+  private initialNumberOfMonths: string;
   private entitySubjects: SubjectWithEntityKey[];
 
   constructor(
     private apiService: ApiService,
     private deviceInfoService: DeviceInfoService,
     private notificationService: NotificationService,
+    private appConfigurationService: AppConfigurationService,
     private employerSubject: EmployerSubject,
     private missionTypeSubject: MissionTypeSubject,
     private missionImageSubject: MissionImageSubject,
@@ -43,13 +46,23 @@ export class DataSyncService {
     private documentTypeSubject: DocumentTypeSubject,
     private userTimesheetSubject: UserTimesheetSubject
   ){
-    this.deviceInfoService.isOnline$.subscribe(res =>this.isOnline = res);
+    this.deviceInfoService.isOnline$.subscribe(res =>this.isOnline = res);  
     this.entitySubjects = this.createEntitySubjectArrays();
+    this.appConfigurationService.initialNumberOfMonths$.pipe(
+      tap(x => this.initialNumberOfMonths = x),
+      skip(1),
+      tap(x => {    
+        this.purgeAll();
+        this.syncAll();
+      })
+    ).subscribe();
   }
   
   syncAll() : void{
     if(!this.isOnline) return undefined;
     let params = new HttpParams();
+
+    params = params.set("initialNumberOfMonths", this.initialNumberOfMonths)
 
     this.entitySubjects.forEach(x =>{
       let key = x.entityKey + 'Timestamp';
@@ -94,4 +107,5 @@ export class DataSyncService {
       }
     });
   }
+  
 }

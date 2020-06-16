@@ -9,6 +9,7 @@ import { ProfileFormViewComponent } from './profile-form/profile-form-view/profi
 import { ProfileFormComponent } from './profile-form/profile-form.component';
 import { PasswordFormWrapperComponent } from './password-form/password-form-wrapper.component';
 import { ProfileFormWrapperComponent } from './profile-form/profile-form-wrapper.component';
+import { AppConfigFormComponent } from './settings/app-config-form/app-config-form.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ProfileFormWrapperComponent } from './profile-form/profile-form-wrapper
     PasswordFormWrapperComponent,
     PasswordFormComponent,
     PasswordFormViewComponent,
-    SettingsComponent
+    SettingsComponent,
+    AppConfigFormComponent
   ],
   imports: [
     SharedModule,
