@@ -21,8 +21,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(tap(() => {},
       (err: any) => {
       if (err instanceof HttpErrorResponse) {   
+        console.log(err.status);
         let msg = "Noe gikk feil! Vennligst prøv igjen."
         switch(err.status){
+          case 0: 
+            msg = "Får ikke kontakt med serveren."
+            break;
           case 401: //Unauthorized
             msg = "Feil brukernavn eller passord."
             break;
@@ -30,10 +34,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             msg = "Du har ikke tilgang til denne funksjonen."
             break;
           case 404: //NotFound
-            msg = "Denne ressursen finnes ikke!"
+            msg = "Denne ressursen finnes ikke."
             break;
           case 408: //Request timeout
-            msg = "Får ikke kontakt med serveren!"
+            msg = "Får ikke kontakt med serveren."
             break;
           // case 500:
           // case 501:
