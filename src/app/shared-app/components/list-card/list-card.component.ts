@@ -5,11 +5,10 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
   templateUrl: './list-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class ListCardComponent implements OnInit {
 
-  @Input() startIcon: string;
-  @Input() endIcon: string = "chevron_right";
-  @Input() panelClass: string;
+  @Input() config: ListCardConfig;
   
   constructor() { }
 
@@ -17,3 +16,10 @@ export class ListCardComponent implements OnInit {
   }
 
 }
+
+export interface ListCardConfig{ 
+  startIcon: string;
+  endIcon: string;
+  panelClass: string;
+  ellipsisDisabled: boolean;
+} 

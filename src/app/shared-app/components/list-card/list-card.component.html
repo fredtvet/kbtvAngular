@@ -1,9 +1,9 @@
-<div fxLayout="row" fxLayoutAlign="space-between center" [ngClass]="panelClass" class="app-card mb-1 p-3 ellipsis mat-elevation-z2" matRipple>  
-    <mat-icon class="mr-2">{{ startIcon }}</mat-icon>
-    <span class="ellipsis mr-auto" fxFlex>
+<div fxLayout="row" fxLayoutAlign="space-between center" [ngClass]="config.panelClass" class="app-card mb-1 p-3 mat-elevation-z2" matRipple>  
+    <mat-icon class="mr-2">{{ config.startIcon }}</mat-icon>
+    <span [ngClass]="config.ellipsisDisabled ? '':'ellipsis'" class="mr-auto" fxFlex>
         <ng-content>
 
         </ng-content>
     </span>
-    <mat-icon>{{ endIcon }}</mat-icon> 
+    <mat-icon>{{ config.endIcon || 'chevron_right' }}</mat-icon> 
 </div>

@@ -14,11 +14,17 @@
     </a>
   </div>
 
-  <app-list-card startIcon="photo_library" [routerLink]="['/oppdrag', vm.mission.id, 'bilder']">Bilder
+  <app-list-card [config]="{startIcon:'photo_library', ellipsisDisabled: true}"  
+    [routerLink]="['/oppdrag', vm.mission.id, 'bilder']">
+    <span [matBadge]="vm.imageCount" matBadgeOverlap="false" matBadgeColor="accent">Bilder</span>
   </app-list-card>
-  <app-list-card startIcon="folder" [routerLink]="['/oppdrag', vm.mission.id, 'dokumenter']">Dokumenter
+  <app-list-card [config]="{startIcon:'folder', ellipsisDisabled: true}" 
+    [routerLink]="['/oppdrag', vm.mission.id, 'dokumenter']">
+    <span [matBadge]="vm.documentCount" matBadgeOverlap="false" matBadgeColor="accent">Dokumenter</span>
   </app-list-card>
-  <app-list-card startIcon="rate_review" [routerLink]="['/oppdrag', vm.mission.id, 'notater']">Notater
+  <app-list-card [config]="{startIcon:'rate_review', ellipsisDisabled: true}" 
+    [routerLink]="['/oppdrag', vm.mission.id, 'notater']">
+    <span [matBadge]="vm.noteCount" matBadgeOverlap="false" matBadgeColor="accent">Notater</span>
   </app-list-card>
 
 

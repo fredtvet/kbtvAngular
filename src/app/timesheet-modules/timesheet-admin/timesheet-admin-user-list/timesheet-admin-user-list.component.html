@@ -1,6 +1,6 @@
 <div class="p-2 max-width" *ngIf="users$ | async else loading; let users">
         <app-list-card *ngFor="let user of users" 
-            startIcon="person" endIcon="chevron_right"
+            [config]="{startIcon:'person', endIcon: 'chevron_right'}"
             [routerLink]="['/timeadministrering', user.userName, thisYear]"> 
                 {{user.firstName + ' ' +user.lastName}}
         </app-list-card>
