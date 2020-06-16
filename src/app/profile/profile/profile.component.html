@@ -1,9 +1,9 @@
 <div class="p-2 max-width">
-  <app-list-card text="Oppdater profil" startIcon="account_circle" (click)="updateProfile()">
+  <app-list-card startIcon="account_circle" (click)="updateProfile()">Oppdater profil
   </app-list-card>
-  <app-list-card text="Oppdater passord" startIcon="vpn_key" (click)="updatePassword()">
+  <app-list-card startIcon="vpn_key" (click)="updatePassword()">Oppdater passord
   </app-list-card>
-  <app-list-card text="Innstillinger" startIcon="settings" [routerLink]="['/profil/innstillinger']">
+  <app-list-card startIcon="settings" [routerLink]="['/profil/innstillinger']">Innstillinger
   </app-list-card>
-  <app-list-card appAddToHomeScreen text="Legg til app" startIcon="get_app"></app-list-card>
+  <app-list-card appAddToHomeScreen startIcon="get_app">Legg til app</app-list-card>
 </div>

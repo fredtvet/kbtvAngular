@@ -9,7 +9,6 @@ export class ListCardComponent implements OnInit {
 
   @Input() startIcon: string;
   @Input() endIcon: string = "chevron_right";
-  @Input() text: string;
   @Input() panelClass: string;
   
   constructor() { }
