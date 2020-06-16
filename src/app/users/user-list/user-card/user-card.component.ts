@@ -14,6 +14,7 @@ export class UserCardComponent implements OnInit {
   
   @Input() user: User;
   @Input() editButton: AppButton;
+  @Input() newPasswordButton: AppButton;
 
   callButton: AppButton;
   

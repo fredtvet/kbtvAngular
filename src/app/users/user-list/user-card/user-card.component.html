@@ -9,7 +9,8 @@
     <span>
         <a *ngIf="user.phoneNumber" class="color-success" mat-icon-button href="tel:{{ user.phoneNumber }}">
             <mat-icon>phone</mat-icon>
-        </a>
+        </a>   
+        <app-icon-button *ngIf="newPasswordButton && user.role != Roles.Leder" [config]="newPasswordButton"></app-icon-button>
         <app-icon-button *ngIf="editButton && user.role != Roles.Leder" [config]="editButton"></app-icon-button>
     </span>
 </div>

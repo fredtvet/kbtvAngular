@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { UserFormSheetWrapperComponent } from '../components/user-form/user-form-sheet-wrapper.component';
 import { TopDefaultNavConfig, AppButton } from 'src/app/shared-app/interfaces';
+import { NewPasswordFormWrapperComponent } from '../components/new-password-form/new-password-form-wrapper.component';
 
 @Component({
   selector: 'app-user-list',
@@ -28,6 +29,9 @@ export class UserListComponent {
 
   openUserForm = (userNamePreset?: string) => 
     this._bottomSheet.open(UserFormSheetWrapperComponent, {data: {userNamePreset}});
+
+  openNewPasswordForm = (userName?: string) => 
+    this._bottomSheet.open(NewPasswordFormWrapperComponent, {data: {userName}});
 
   private configureMainNav(){
     let cfg = {title:  "Brukere"} as TopDefaultNavConfig;

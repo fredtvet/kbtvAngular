@@ -25,7 +25,8 @@ export class PasswordFormComponent {
         this.notificationService.setNotification('Vellykket oppdatering!');
         this.finished.emit();
       }, 
-      error => this.serverError = error
+      error => this.serverError = error,
+      () => this.serverError = ''
     )
   }
 }

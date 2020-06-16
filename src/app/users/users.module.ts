@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { UsersRoutingModule } from './users-routing.module';
-import { ConfirmDialogComponent } from '../shared/components';
 
 import { UserListComponent } from './user-list/user-list.component';
 import { UserCardComponent } from './user-list/user-card/user-card.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserFormViewComponent } from './components/user-form/user-form-view/user-form-view.component';
 import { UserFormSheetWrapperComponent } from './components/user-form/user-form-sheet-wrapper.component';
+import { NewPasswordFormComponent } from './components/new-password-form/new-password-form.component';
+import { NewPasswordFormViewComponent } from './components/new-password-form/new-password-form-view/new-password-form-view.component';
+import { NewPasswordFormWrapperComponent } from './components/new-password-form/new-password-form-wrapper.component';
 
 @NgModule({
   declarations: [    
@@ -15,7 +17,10 @@ import { UserFormSheetWrapperComponent } from './components/user-form/user-form-
     UserCardComponent,
     UserFormComponent,
     UserFormViewComponent,
-    UserFormSheetWrapperComponent
+    UserFormSheetWrapperComponent,
+    NewPasswordFormComponent,
+    NewPasswordFormViewComponent,
+    NewPasswordFormWrapperComponent
   ],
   imports: [
     SharedModule,

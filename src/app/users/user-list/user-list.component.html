@@ -6,6 +6,12 @@
         icon: 'edit', 
         allowedRoles: [Roles.Leder], 
         callback: openUserForm, params: [user.userName]
+      }"
+      [newPasswordButton]="{
+        icon: 'vpn_key', 
+        colorClass: 'color-accent',
+        allowedRoles: [Roles.Leder], 
+        callback: openNewPasswordForm, params: [user.userName]
       }">
     </app-user-card>
 

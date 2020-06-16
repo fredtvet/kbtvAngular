@@ -51,6 +51,11 @@ export class UserService {
       .pipe(tap(data => this.userSubject.update(data)));
   }
 
+  newPassword$(userName: string, newPassword: string): Observable<boolean>{
+    return this.apiService
+      .put(`${this.uri}/${userName}/NewPassword`, {newPassword, userName});
+  }
+
   delete$(userName: string): Observable<boolean> {
     return this
       .apiService
