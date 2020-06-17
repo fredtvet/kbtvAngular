@@ -1,0 +1,50 @@
+<div fxLayout="column" fxLayoutAlign="space-around stretch">
+
+    <mat-form-field>
+        <input matInput placeholder="Søk med adresse eller id" [(ngModel)]="filter.searchString" />
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-select [(ngModel)]="filter.employerId" placeholder="Velg oppdragsgiver">
+            <mat-option>Ingen</mat-option>
+            <mat-option *ngFor="let employer of employers" [value]="employer.id">
+                {{ employer.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+
+    <mat-form-field>
+        <mat-select [(ngModel)]="filter.missionTypeId" placeholder="Velg oppdragstype">
+            <mat-option>Ingen</mat-option>
+            <mat-option *ngFor="let type of missionTypes" [value]="type.id">
+                {{ type.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+
+    <label class="mat-caption mt-2">Velg status</label>
+    <mat-radio-group [(ngModel)]="filter.showFinishedMissions" color="primary" fxLayout="row" fxLayoutAlign="start center"
+        fxLayoutGap="8px" class="mb-2">
+        <mat-radio-button [value]="false">
+            Aktiv
+        </mat-radio-button>
+        <mat-radio-button [value]="true">
+            Ferdig
+        </mat-radio-button>
+    </mat-radio-group>
+    <span class="mb-2"></span>
+    <mat-divider></mat-divider>
+    <span class="mb-2"></span>
+
+
+    <span fxLayout="row" fxLayoutAlign="space-between center">
+        <button mat-button color="warn" (click)="reset()">Nullstill</button>
+        <button mat-button color="primary" (click)="applyFilter()">Bruk</button>
+    </span>
+
+
+</div>

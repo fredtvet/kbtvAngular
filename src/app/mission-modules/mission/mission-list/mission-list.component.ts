@@ -1,13 +1,12 @@
 import { Component, ChangeDetectionStrategy  } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Mission } from 'src/app/core/models';
-import { BehaviorSubject, Observable} from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
-import { MissionService, MainNavService } from 'src/app/core/services';
+import { MainNavService } from 'src/app/core/services';
 import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { Roles } from 'src/app/shared-app/enums';
-
-interface PageInfo {searchString: string, showFinishedMissions: boolean, historic: boolean}
+import { MissionSortBy } from '../mission-sort-by.enum';
+import { MissionsFacade } from '../missions.facade';
+import { MissionFilter } from '../mission.filter';
+import { MissionFilterWrapperComponent } from '../mission-filter/mission-filter-wrapper.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-mission-list',
@@ -16,79 +15,47 @@ interface PageInfo {searchString: string, showFinishedMissions: boolean, histori
 })
 
 export class MissionListComponent{
+  MissionSortBy = MissionSortBy;
   Roles = Roles;
-  private pageInfoSubject = new BehaviorSubject<PageInfo>({searchString: "", showFinishedMissions: false, historic: false});
 
-  vm$: Observable<{missions: Mission[], pageInfo: PageInfo}>;
+  vm$ = this.missionsFacade.missionListVm$;
 
   constructor(
     private mainNavService: MainNavService,
-    private missionService: MissionService,
-    public dialog: MatDialog) { 
+    private missionsFacade: MissionsFacade,
+    private bottomSheet: MatBottomSheet) { 
       this.configureMainNav();
     }
 
-  ngOnInit(){
-    this.vm$ = this.pageInfoSubject.pipe(switchMap(pageInfo =>  
-        this.missionService.getBy$(x => this.filterMission(x, pageInfo))
-        .pipe(map(x => {return {missions: x, pageInfo}}))      
-      ));
-  }
+  ngOnInit(){}
 
-  searchMissionList = (searchString: string) => {
-    let pageInfo = {...this.pageInfoSubject.value};
-    pageInfo.searchString = searchString;
-    this.pageInfoSubject.next(pageInfo)
-  }
-
-  private filterMission(mission: Mission, pageInfo: any){
-    let exp = mission.finished == pageInfo.showFinishedMissions;
-    exp = exp && (!pageInfo.searchString || 
-      pageInfo.searchString == null || 
-      mission.address.toLowerCase().includes(pageInfo.searchString.toLowerCase()));
-
-    let id = +pageInfo.searchString;
-    if(!isNaN(id)) exp = exp || mission.id === id //Search by ID if number
-    return exp;
-  }
-
-  private toggleFinishedMissions = () => {
-    let pageInfo = {...this.pageInfoSubject.value};
-    pageInfo.showFinishedMissions = !pageInfo.showFinishedMissions;
-    this.pageInfoSubject.next(pageInfo);
-
-    //Toggle icon on nav action on bottom sheet
-    let icon = "check_box_outline_blank";
-    if(pageInfo.showFinishedMissions) icon = "check_box";
-    let cfg = this.mainNavService.getTopDefaultNavConfig();
-    cfg.bottomSheetButtons[0].icon = icon;
-    this.mainNavService.addTopNavConfig({default: cfg})
+  searchMissions = (searchString: string, currFilter: MissionFilter) => {
+    currFilter.searchString = searchString;
+    this.missionsFacade.addFilter(currFilter)
   }
 
   private toggleHistoricOrder = () => {
-    let pageInfo = {...this.pageInfoSubject.value};
-    pageInfo.historic = !pageInfo.historic;
-    this.pageInfoSubject.next(pageInfo);
+    let sortBy = this.missionsFacade.getSortBy();
+    sortBy = (sortBy === MissionSortBy.Historic) ? MissionSortBy.UpdatedAt : MissionSortBy.Historic;
+    this.missionsFacade.addSortBy(sortBy);
 
     //Toggle icon on nav action on bottom sheet
     let color = "color-background";
-    if(pageInfo.historic) color = "color-accent";
+    if(sortBy === MissionSortBy.Historic) color = "color-accent";
     let cfg = this.mainNavService.getTopDefaultNavConfig();
     cfg.buttons[0].colorClass = color;
     this.mainNavService.addTopNavConfig({default: cfg})
   }
 
+  private openMissionFilter = () => 
+    this.bottomSheet.open(MissionFilterWrapperComponent)
+  
   private configureMainNav(){
     let cfg = {title:  "Oppdrag"} as TopDefaultNavConfig;
  
-    cfg.buttons = [{icon: "history", 
-      colorClass: "color-background",
-      aria: 'Historisk visning',
-      callback: this.toggleHistoricOrder
-    }];
-
-    cfg.bottomSheetButtons = [
-      {text: "Vis ferdige oppdrag", icon: "check_box_outline_blank", callback: this.toggleFinishedMissions}
+    cfg.buttons = [
+      {icon: "history", colorClass: "color-background",aria: 'Historisk visning',callback: this.toggleHistoricOrder},     
+      {icon: 'filter_list', colorClass: 'color-accent', callback: this.openMissionFilter}
     ];
 
     this.mainNavService.addTopNavConfig({default: cfg});

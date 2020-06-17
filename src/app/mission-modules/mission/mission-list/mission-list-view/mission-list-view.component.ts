@@ -13,6 +13,7 @@ export class MissionListViewComponent implements OnInit {
   Roles = Roles;
   
   @Input() missions: Mission[] = [];
+  @Input() searchInput: string;
   @Input() title: string = "Oppdrag";
   @Output() search = new EventEmitter();
 

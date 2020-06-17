@@ -1,6 +1,7 @@
  <app-mission-list-view *ngIf="vm$ | async; let vm"
-  [missions]="vm.missions | sortByDate : vm.pageInfo?.historic ? 'lastVisited':'updatedAt' : 'desc'" 
-  (search)="searchMissionList($event)">
+  [missions]="vm.missions" 
+  [searchInput]="vm.filter.searchString"
+  (search)="searchMissions($event, vm.filter)">
 </app-mission-list-view>
 
 <router-outlet></router-outlet>

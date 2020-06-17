@@ -6,6 +6,10 @@ import { MissionDetailsViewComponent } from './mission-details/mission-details-v
 import { DatePipe } from '@angular/common';
 import { MissionListViewComponent } from './mission-list/mission-list-view/mission-list-view.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MissionsFacade } from './missions.facade';
+import { MissionFilterWrapperComponent } from './mission-filter/mission-filter-wrapper.component';
+import { MissionFilterViewComponent } from './mission-filter/mission-filter-view/mission-filter-view.component';
+import { MissionFilterComponent } from './mission-filter/mission-filter.component';
 
 
 @NgModule({
@@ -13,10 +17,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MissionDetailsComponent,
     MissionDetailsViewComponent,
     MissionListComponent,
-    MissionListViewComponent,   
+    MissionListViewComponent, 
+    MissionFilterComponent,
+    MissionFilterViewComponent,
+    MissionFilterWrapperComponent  
   ],
   providers: [
     DatePipe,
+    MissionsFacade
   ],
   imports: [
     SharedModule,
