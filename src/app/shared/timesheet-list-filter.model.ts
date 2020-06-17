@@ -9,16 +9,16 @@ export class TimesheetListFilter implements TimesheetFilter {
     constructor(
         public status: TimesheetStatus = TimesheetStatus.Open,    
         public mission: Mission = undefined,    
-        public dateRangePreset: DateRangePresets = DateRangePresets.CurrentYear,   
+        public dateRangePreset: DateRangePresets = DateRangePresets.Custom,   
         public dateRange: Date[] = [],
         public userName: string = undefined,
     ){ }
 
     checkTimesheet(t: Timesheet): boolean{
-        let exp = t.status == this.status;
+        let exp = t.status === this.status;
 
         if(this.userName && this.userName !== null)
-            exp = exp && t.userName == this.userName;
+            exp = exp && t.userName === this.userName;
             
         if(this.dateRange && this.dateRange !== null) {
             let date = new Date(t.startTime);
@@ -26,11 +26,9 @@ export class TimesheetListFilter implements TimesheetFilter {
         }
     
         if(this.mission && this.mission !== null) 
-            exp = exp && t.missionId == this.mission.id;  
+            exp = exp && t.missionId === this.mission.id;  
     
         return exp
       }
-    
-
-    
+       
 };

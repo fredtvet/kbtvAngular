@@ -1,11 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-week-list-filter',
   templateUrl: './week-list-filter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WeekListFilterComponent implements OnInit {
+export class WeekListFilterComponent {
 
   @Input() year: number;
   @Input() userName: string;
@@ -16,12 +16,7 @@ export class WeekListFilterComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
   applyFilter = () => this.filterChanged.emit({year: this.year, userName: this.userName});
-  
-  close = () => this.filterChanged.emit();
   
 
 }

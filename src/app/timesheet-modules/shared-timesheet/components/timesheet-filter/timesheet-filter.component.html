@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="space-around stretch">
     <ng-container *ngIf="!(disabledFilters | arrayIncludes : 'user')">
-      <mat-form-field style="max-width:400px;">
+      <mat-form-field>
         <mat-select [(ngModel)]="filterPreset.user" placeholder="Velg ansatt">
           <mat-option>Ingen</mat-option>
           <mat-option *ngFor="let user of users" [value]="user">
@@ -14,7 +14,7 @@
     </ng-container>
 
     <ng-container *ngIf="!(disabledFilters | arrayIncludes : 'mission')">
-      <mat-form-field style="max-width:400px;">
+      <mat-form-field>
         <input matInput placeholder="Oppdrag" aria-label="Velg oppdrag" 
         [matAutocomplete]="auto1" [(ngModel)]="filterPreset.mission">
         <button mat-button *ngIf="filterPreset.mission" matSuffix mat-icon-button aria-label="Lukk" (click)="filterPreset.mission=null">
@@ -105,7 +105,7 @@
     </ng-container>
 
     <span fxLayout="row" fxLayoutAlign="space-between center">
-      <button mat-button color="warn" (click)="close()">Avbryt</button>
+      <button mat-button color="warn" (click)="reset()">Nullstill</button>
       <button mat-button color="primary" (click)="applyFilter()">Bruk</button>
     </span>
 

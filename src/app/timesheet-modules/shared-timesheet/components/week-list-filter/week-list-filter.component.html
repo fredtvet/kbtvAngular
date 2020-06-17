@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="space-around stretch">
   <ng-container *ngIf="userName">
-    <mat-form-field style="max-width:400px;">
+    <mat-form-field>
       <mat-select [(ngModel)]="userName" placeholder="Velg ansatt">
         <mat-option *ngFor="let user of users" [value]="user.userName">
           {{ user.firstName }} {{ user.lastName }}
@@ -20,8 +20,7 @@
   <mat-divider></mat-divider>
   <span class="mb-2"></span>
   
-  <span fxLayout="row" fxLayoutAlign="space-between center">
-    <button mat-button color="warn" (click)="close()">Avbryt</button>
+  <span fxLayout="row" fxLayoutAlign="end center">
     <button mat-button color="primary" (click)="applyFilter()">Bruk</button>
   </span>
 </div>

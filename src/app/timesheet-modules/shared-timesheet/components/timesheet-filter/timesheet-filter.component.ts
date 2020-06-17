@@ -4,6 +4,7 @@ import { OwlDateTimeComponent } from 'ng-pick-datetime';
 import { TimesheetStatus, DateRangePresets } from 'src/app/shared-app/enums';
 import { Mission, User } from 'src/app/core/models';
 import { TimesheetFilter } from 'src/app/shared-app/interfaces';
+import { TimesheetListFilter } from 'src/app/shared/timesheet-list-filter.model';
 
 @Component({
   selector: 'app-timesheet-filter',
@@ -29,13 +30,9 @@ export class TimesheetFilterComponent {
     this.filterPreset.dateRange = this.dateTimeService.getRangeByDateRangePreset(preset);
   }
 
-  applyFilter(){
-    this.filterChanged.emit(this.filterPreset);
-  }
-
-  close(){
-    this.filterChanged.emit();
-  }
+  applyFilter = () => this.filterChanged.emit(this.filterPreset);
+  
+  reset = () => this.filterChanged.emit(new TimesheetListFilter());
 
   displayFnMission(mission: Mission): string {
     if(mission == undefined) return null;
@@ -47,13 +44,3 @@ export class TimesheetFilterComponent {
     datepicker.close();
   }
 }
-
-// @NgModule({
-//   declarations: [
-//     TimesheetFilterComponent,
-//   ],
-//   imports: [
-//     SharedTimesheetModule
-//   ]
-// })
-// export class TimesheetFilterModule { }
