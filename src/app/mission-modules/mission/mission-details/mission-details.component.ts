@@ -72,7 +72,7 @@ export class MissionDetailsComponent{
   }
 
   private goToTimesheets = (mission: Mission) => 
-    this.router.navigate(['timer/liste', {returnRoute: this.router.url, missionId: JSON.stringify(mission)}]);
+    this.router.navigate(['timer/liste', {returnRoute: this.router.url, mission: JSON.stringify(mission)}]);
 
   private configureMainNav(mission: Mission){
     let cfg = {
