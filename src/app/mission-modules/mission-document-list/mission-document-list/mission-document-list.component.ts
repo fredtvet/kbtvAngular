@@ -11,6 +11,7 @@ import { ConfirmDialogComponent, SelectableListBase } from 'src/app/shared/compo
 import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { MailDocumentSheetComponent } from '../mail-document-sheet.component';
+import { MissionsFacade } from '../../mission/missions.facade';
 
 @Component({
   selector: 'app-mission-document-list',

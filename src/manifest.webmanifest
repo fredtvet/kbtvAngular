@@ -1,11 +1,11 @@
 {
-  "name": "kbtv-client",
-  "short_name": "kbtv-client",
+  "name": "test-client",
+  "short_name": "test-client",
   "theme_color": "#212121",
   "background_color": "#212121",
   "display": "standalone",
-  "scope": "/kbtvAngularLive/",
-  "start_url": "/kbtvAngularLive/",
+  "scope": "/",
+  "start_url": "/",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",

@@ -65,7 +65,8 @@ export class TimesheetWeekViewComponent {
   }
 
   openTimesheetForm = (datePreset?: Date, idPreset?: number) => 
-    this.router.navigate(['skjema'], {relativeTo: this.route, queryParamsHandling: "merge", queryParams: {idPreset, datePreset: datePreset.toString()}});
+    this.router.navigate(['skjema'], {relativeTo: this.route, queryParamsHandling: "merge", queryParams: {
+      idPreset, datePreset: datePreset ? datePreset.toString() : undefined}});
 
   openTimesheetCard(timesheetId: number){
     this.dialog.open(TimesheetCardDialogWrapperComponent, {

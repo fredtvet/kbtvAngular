@@ -21,7 +21,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(tap(() => {},
       (err: any) => {
       if (err instanceof HttpErrorResponse) {   
-        console.log(err.status);
         let msg = "Noe gikk feil! Vennligst prøv igjen."
         switch(err.status){
           case 0: 

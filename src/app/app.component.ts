@@ -12,7 +12,7 @@ import { interval, combineLatest, concat } from 'rxjs';
 
 export class AppComponent {
   @ViewChild('downloadFrame') downloadFrame: ElementRef;
-  title = 'kbtv-client';
+  title = 'test-client';
 
   constructor(
     appRef: ApplicationRef,
