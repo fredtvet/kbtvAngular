@@ -36,8 +36,8 @@ export class TimesheetListComponent implements OnInit {
     //Initiate filter and observable
     this.filterSubject = new BehaviorSubject(this.getInitialFilter());
 
-    this.timesheets$ = this.filterSubject.asObservable().pipe(tap(console.log), distinctUntilChanged(),
-      switchMap(filter => this.userTimesheetService.getByWithMission$(filter.checkTimesheet))
+    this.timesheets$ = this.filterSubject.asObservable().pipe(distinctUntilChanged(),
+      switchMap(filter => this.userTimesheetService.getByWithMission$(x => filter.checkTimesheet(x)))
     );
   }
 

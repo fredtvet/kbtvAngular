@@ -14,7 +14,7 @@ export class TimesheetListFilter implements TimesheetFilter {
         public userName: string = undefined,
     ){ }
 
-    checkTimesheet = (t: Timesheet): boolean => {
+    checkTimesheet(t: Timesheet): boolean {
         let exp = t.status === this.status;
 
         if(this.userName && this.userName !== null)

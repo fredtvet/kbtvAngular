@@ -29,7 +29,6 @@ export class MissionFilterComponent {
   ) { }
 
   updateFilter(filter: MissionFilter){
-    console.log(filter);
     if(filter) this.missionsFacade.addFilter(filter);
     this.filterUpdated.emit(null);
   }
