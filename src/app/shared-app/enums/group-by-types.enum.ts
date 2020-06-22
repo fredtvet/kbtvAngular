@@ -3,6 +3,5 @@ export enum GroupByTypes {
     Day,
     Week,
     Month,
-    Year,
-    YearAndUserName,
+    Year
 }
