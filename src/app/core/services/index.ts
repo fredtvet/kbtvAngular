@@ -27,6 +27,7 @@ export * from './data/mission-note/mission-note.service';
 export * from './data/mission-document/mission-document.service';
 export * from './data/user-timesheet/user-timesheet.service';
 export * from './data/timesheet.service';
+export * from './data/inbound-email-password/inbound-email-password.service';
 
 export * from './ui/main-nav.service';
 export * from './ui/icon.service';

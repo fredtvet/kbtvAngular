@@ -4,7 +4,11 @@ import { AppDocumentType } from 'src/app/core/models';
 
 @Component({
   selector: 'app-document-type-form',
-  templateUrl: './document-type-form.component.html',
+  template: `
+  <app-document-type-form-view
+    (formSubmitted)="onSubmit($event)">
+  </app-document-type-form-view>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DocumentTypeFormComponent implements OnInit {

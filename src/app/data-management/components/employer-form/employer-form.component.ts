@@ -13,7 +13,12 @@ import { Observable } from "rxjs";
 
 @Component({
   selector: "app-employer-form",
-  templateUrl: "./employer-form.component.html",
+  template: `
+  <app-employer-form-view
+    [employer]="employer$ | async"
+    (formSubmitted)="onSubmit($event)">
+  </app-employer-form-view>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmployerFormComponent {
