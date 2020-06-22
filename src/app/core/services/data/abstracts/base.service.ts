@@ -40,7 +40,6 @@ export abstract class BaseService<T>{
     return this.dataSubject.getBy$(expression);
   }
 
-
   add$(entity: T): Observable<T>{
     if(!this.isOnline) return throwError('Du må være tilkoblet internett for å lagre.')
       .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Warning)));
@@ -84,7 +83,6 @@ export abstract class BaseService<T>{
   purge = (): void => this.dataSubject.purge(); 
   
   protected populate<T>(returnObservable: Observable<T>): Observable<T>{
-    console.log('pop')
     if(!this.isOnline) 
       return throwError('Du må være tilkoblet internett for å hente denne informasjonen.')
               .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Warning)));
@@ -92,7 +90,6 @@ export abstract class BaseService<T>{
     return this.apiService.get(`${this.uri}`)
     .pipe(switchMap(data => {
       this.dataSubject.populate(data);
-      console.log(returnObservable)
       return returnObservable
     }));
   }

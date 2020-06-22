@@ -24,6 +24,6 @@ export class MissionFilterWrapperComponent implements OnInit {
     }
   }
 
-  close = () => {console.log('dismiss');this.bottomSheetRef.dismiss();}
+  close = () => this.bottomSheetRef.dismiss();
 
 }
