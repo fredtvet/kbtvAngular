@@ -17,6 +17,9 @@ import { MissionTypeFormViewComponent } from './components/mission-type-form/mis
 import { DataTablePickerComponent } from './data-manager/data-table-picker/data-table-picker.component';
 import { DataTableComponent } from './data-manager/data-table/data-table.component';
 import { DataManagerFacadeService } from './data-manager-facade.service';
+import { InboundEmailPasswordFormComponent } from './components/inbound-email-password-form/inbound-email-password-form.component';
+import { InboundEmailPasswordFormViewComponent } from './components/inbound-email-password-form/inbound-email-password-form-view/inbound-email-password-form-view.component';
+import { InboundEmailPasswordFormWrapperComponent } from './components/inbound-email-password-form/inbound-email-password-form-wrapper.component';
 
 
 
@@ -35,6 +38,9 @@ import { DataManagerFacadeService } from './data-manager-facade.service';
     DocumentTypeFormSheetWrapperComponent,
     DataTablePickerComponent,
     DataTableComponent,
+    InboundEmailPasswordFormComponent,
+    InboundEmailPasswordFormViewComponent,
+    InboundEmailPasswordFormWrapperComponent
   ],
   providers:[
     DataManagerFacadeService

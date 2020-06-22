@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
-import { BaseService, EmployerService, MissionTypeService, MissionService, DocumentTypeService } from '../core/services';
+import { BaseService, EmployerService, MissionTypeService, MissionService, DocumentTypeService, InboundEmailPasswordService } from '../core/services';
 import { EmployerFormSheetWrapperComponent } from './components/employer-form/employer-form-sheet-wrapper.component';
 import { MissionTypeFormSheetWrapperComponent } from './components/mission-type-form/mission-type-form-sheet-wrapper.component';
 import { DocumentTypeFormSheetWrapperComponent } from './components/document-type-form/document-type-form-sheet-wrapper.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { BaseEntity } from '../core/models';
+import { InboundEmailPasswordFormWrapperComponent } from './components/inbound-email-password-form/inbound-email-password-form-wrapper.component';
 
 @Injectable()
 
 export class DataManagerFacadeService {
 
-  tables = ['Oppdrag', 'Oppdragstyper', 'Oppdragsgivere', 'Dokumenttyper']
+  tables = ['Oppdrag', 'Oppdragstyper', 'Oppdragsgivere', 'Dokumenttyper', 'Epostpassord']
   
   data$:Observable<BaseEntity[]>;
 
@@ -26,7 +27,8 @@ export class DataManagerFacadeService {
     private employerService: EmployerService,
     private missionTypeService: MissionTypeService,
     private missionService: MissionService,
-    private DocumentTypeService: DocumentTypeService,
+    private documentTypeService: DocumentTypeService,
+    private inboundEmailPasswordService: InboundEmailPasswordService,
     private router: Router,
   ) { 
     this.data$ = this.selectedTable$.pipe(
@@ -51,7 +53,8 @@ export class DataManagerFacadeService {
       case "Oppdrag": this.createMission(); break;
       case "Oppdragstyper": this.createMissionType(); break;
       case "Oppdragsgivere": this.createEmployer(); break;
-      case "Dokumenttyper": this.createDocumentType(); break;
+      case "Dokumenttyper": this.createDocumentType(); break;     
+      case "Epostpassord": this.createInboundEmailPassword(); break;
     }
   }
 
@@ -60,7 +63,8 @@ export class DataManagerFacadeService {
       case "Oppdrag": return this.missionService;
       case "Oppdragstyper": return this.missionTypeService;
       case "Oppdragsgivere": return this.employerService;
-      case "Dokumenttyper": return this.DocumentTypeService;
+      case "Dokumenttyper": return this.documentTypeService;
+      case "Epostpassord": return this.inboundEmailPasswordService;
     }
   }
 
@@ -71,4 +75,6 @@ export class DataManagerFacadeService {
   private createMissionType = () => this._bottomSheet.open(MissionTypeFormSheetWrapperComponent);
 
   private createDocumentType = () => this._bottomSheet.open(DocumentTypeFormSheetWrapperComponent);
+
+  private createInboundEmailPassword = () => this._bottomSheet.open(InboundEmailPasswordFormWrapperComponent);
 }
