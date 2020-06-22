@@ -64,7 +64,17 @@ export class ArrayHelperService {
       result.push(originalsObj[keys[i]]);
     }
     return result;
-}
+  }
+
+  filter<T>(originals: T[], expression: (value: T, index?: number, Array?: any[]) => boolean): T[]{
+    if(this.isEmptyArray(originals)) return undefined;
+    let filtered = [];
+    for(let i = 0; i < originals.length; i++){
+      let obj = originals[i];
+      if(expression(obj)) filtered.push(obj);
+    }
+    return filtered;
+  }
 
   removeRangeByIdentifier<T>(originals: T[], deletedIds: any[], identifier: string): T[]{       
     if(this.isEmptyArray(deletedIds)) return originals.slice(); //If no deleted ids, just return originals
