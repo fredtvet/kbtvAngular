@@ -1,9 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ConfirmDialogComponent } from 'src/app/shared/components';
-import { filter, debounceTime, map } from 'rxjs/operators';
+import { filter} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { DataSyncService, AppConfigurationService, MainNavService, AppConfiguration } from 'src/app/core/services';
-import { Observable } from 'rxjs';
+import { DataSyncService, MainNavService, DataSyncConfig, SyncConfig } from 'src/app/core/services';
 import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { Router } from '@angular/router';
 
@@ -14,14 +13,14 @@ import { Router } from '@angular/router';
 })
 export class SettingsComponent {
 
-  appConfig$ = this.appConfigService.config$;
+  syncConfig$ = this.dataSyncConfig.config$;
 
   constructor(
     private router: Router,
     private mainNavService: MainNavService,
     private dialog: MatDialog,
     private dataSyncService: DataSyncService,
-    private appConfigService: AppConfigurationService,
+    private dataSyncConfig: DataSyncConfig,
   ) { this.configureMainNav(); }
 
   confirmPurge = () => {
@@ -32,10 +31,10 @@ export class SettingsComponent {
 
   refresh = () => this.dataSyncService.syncAll();
 
-  updateAppConfig = (appConfig: AppConfiguration) => {
-    let cfg = {...appConfig};
+  updateSyncConfig = (syncConfig: SyncConfig) => {
+    let cfg = {...syncConfig};
     cfg.syncRefreshTime = cfg.syncRefreshTime * 60;
-    this.appConfigService.updateConfig(cfg);
+    this.dataSyncConfig.updateConfig(cfg);
   }
 
   private reloadAllData(){

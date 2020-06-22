@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AppConfiguration } from 'src/app/core/services';
+import { SyncConfig } from 'src/app/core/services';
 
 @Component({
   selector: "app-app-config-form",
@@ -8,7 +8,7 @@ import { AppConfiguration } from 'src/app/core/services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppConfigFormComponent implements OnInit {
-  @Input() appConfig: AppConfiguration;
+  @Input() syncConfig: SyncConfig;
   @Output() formSubmitted = new EventEmitter();
 
   settingsForm: FormGroup;
@@ -22,11 +22,11 @@ export class AppConfigFormComponent implements OnInit {
   initalizeForm() {
     this.settingsForm = this._formBuilder.group({
       syncRefreshTime: [
-        this.appConfig.syncRefreshTime / 60,
+        this.syncConfig.syncRefreshTime / 60,
         [Validators.required, Validators.min(1)],
       ],
       initialNumberOfMonths: [
-        this.appConfig.initialNumberOfMonths,
+        this.syncConfig.initialNumberOfMonths,
         [Validators.required, Validators.min(1)],
       ],
     });
