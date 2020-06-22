@@ -10,6 +10,8 @@ import { map, switchMap } from 'rxjs/operators';
 import { DateParams, TimesheetSummary } from 'src/app/shared-app/interfaces';
 import { BaseMissionChildService } from '../abstracts/base-mission-child.service';
 import { MissionSubject } from '../mission/mission.subject';
+import { ArrayHelperService } from '../../utility/array-helper.service';
+import { LocalStorageService } from '../../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +24,12 @@ export class UserTimesheetService extends BaseMissionChildService<Timesheet> {
     apiService: ApiService,
     deviceInfoService: DeviceInfoService,
     private missionSubject: MissionSubject,
-    protected dataSubject: UserTimesheetSubject
+    protected dataSubject: UserTimesheetSubject,
+    arrayHelperService: ArrayHelperService,
+    localStorageService: LocalStorageService,  
   ){
-    super(notificationService, apiService, dataSubject, deviceInfoService, "/UserTimesheets");
+    super(arrayHelperService, localStorageService, 'UserTimesheetTimestamp',
+      notificationService, apiService, dataSubject, deviceInfoService, "/UserTimesheets");
   }
 
   getByWeekGrouped$(dateParams: DateParams): Observable<Timesheet[][]>{
@@ -36,31 +41,17 @@ export class UserTimesheetService extends BaseMissionChildService<Timesheet> {
   }
 
   getByWithMission$(expression: (value: Timesheet, index?: number, Array?: any[]) => boolean): Observable<Timesheet[]>{
-    return combineLatest(super.getBy$(expression), this.missionSubject.getAll$()).pipe(map(([timesheets, missions]) =>{
-      const missions_obj = {}; //Create associative list for faster index search
-      missions.forEach(x => missions_obj[x.id] = x); 
-      timesheets.forEach(t => t.mission = missions_obj[t.missionId]);
-      return timesheets;
-    }))
+    return this.dataSubject.getByWithMission$(expression);
   }
 
   getWithMission$(id: number): Observable<Timesheet>{
-    return this.dataSubject.get$(id).pipe(switchMap(entity => {
-      if(entity === undefined) return throwError('Entity not found');
-      return this.missionSubject.get$(entity.missionId).pipe(map(x => {
-        let e = {...entity};
-        e.mission = x;
-        return e;
-      }))
-    })); 
+    return this.dataSubject.getWithMission$(id);
   }
 
   getCount$(status: TimesheetStatus = undefined): Observable<number>{
     return this.dataSubject.getCount$(status);
   }
 
-  deleteRange$(){return undefined}
-
-
-  
+  deleteRange$(): Observable<boolean>{throw new Error("Method not implemented.")}
+ 
 }

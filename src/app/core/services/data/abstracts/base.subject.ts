@@ -1,36 +1,21 @@
-import { DbSync  } from 'src/app/shared-app/interfaces';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { LocalStorageService } from '../../local-storage.service';
 import { PersistentSubject } from './persistent.subject';
 import { ArrayHelperService } from '../../utility/array-helper.service';
-import { BaseEntity } from 'src/app/core/models/base-entity.interface';
 
-export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubject<T[]>{
+export abstract class BaseSubject<T> extends PersistentSubject<T[]>{
 
-  private timestampKey: string;
-  lastSyncTimestamp: number;
-
-  constructor(
-    protected arrayHelperService: ArrayHelperService,
-    localStorageService: LocalStorageService,
-    storageKey:string) {
+  constructor( 
+    readonly entityIdentifier: string,
+    protected arrayHelperService: ArrayHelperService,  
+    localStorageService?: LocalStorageService,
+    storageKey?:string,) {
 
     super(localStorageService, storageKey);
-    this.timestampKey = this.storageKey.concat('/timestamp');
-    this.lastSyncTimestamp = this.localStorageService.get(this.timestampKey);
-
   }
 
-  sync(dbSync: DbSync<T>){
-    let arr = this.arrayHelperService.addOrUpdateRange<T>(this.dataSubject.value, dbSync.entities, 'id');
-    arr = this.arrayHelperService.removeRangeByIdentifier<T>(arr, dbSync.deletedEntities, 'id');
-    this.dataSubject.next(arr);
-
-    this.lastSyncTimestamp = dbSync.timestamp;
-    this.localStorageService.add(this.timestampKey, dbSync.timestamp)//Persist timestamp for next sync
-
-  }
+  populate = (arr: T[]) => this.dataSubject.next(arr);
 
   getAll$ (): Observable<T[]> {
     return this.data$.pipe(map(arr => !arr ? [] : arr.slice()));
@@ -44,21 +29,20 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
     return this.getAll$();
   }
   
-  get$(id: number): Observable<T>{
-    return this.data$.pipe(map(arr => this.arrayHelperService.find(arr, id, 'id')));
+  get$(id: any): Observable<T>{
+    return this.data$.pipe(map(arr => this.arrayHelperService.find(arr, id, this.entityIdentifier)));
   }
 
-  getRange$(ids: number[]): Observable<T[]>{
-    return this.data$.pipe(map(arr => this.arrayHelperService.getRangeByIdentifier(arr, ids, 'id')));
+  getRange$(ids: any[]): Observable<T[]>{
+    return this.data$.pipe(map(arr => this.arrayHelperService.getRangeByIdentifier(arr, ids, this.entityIdentifier)));
   }
   
   getBy$(expression: (value: T, index?: number, Array?: any[]) => boolean): Observable<T[]>{
-    return this.data$.pipe(map(arr =>
-      {return !arr ? undefined : arr.filter(expression)}));
+    return this.data$.pipe(map(arr => this.arrayHelperService.filter(arr, expression)));
   }
 
   addOrUpdate(entity: T): void{
-    if(this.dataSubject.value && !this.dataSubject.value.find(e => e.id == entity.id)) {
+    if(this.dataSubject.value && !this.dataSubject.value.find(e => e[this.entityIdentifier] == entity[this.entityIdentifier])) {
       let arr = this.arrayHelperService.add<T>(this.dataSubject.value, entity);
       this.dataSubject.next(arr);
     }
@@ -66,31 +50,27 @@ export abstract class BaseSubject<T extends BaseEntity> extends PersistentSubjec
   }
 
   addOrUpdateRange(entities: T[]): void{
-    let arr = this.arrayHelperService.addOrUpdateRange<T>(this.dataSubject.value, entities, 'id')
+    let arr = this.arrayHelperService.addOrUpdateRange<T>(this.dataSubject.value, entities, this.entityIdentifier)
     this.dataSubject.next(arr);
   }
 
   update(entity: T): void{
-    let arr = this.arrayHelperService.update<T>(this.dataSubject.value, entity, 'id');
+    let arr = this.arrayHelperService.update<T>(this.dataSubject.value, entity, this.entityIdentifier);
     this.dataSubject.next(arr);
   }
 
-  delete(id: number): void{
-    let arr = this.arrayHelperService.removeByIdentifier(this.dataSubject.value, id, 'id')
+  delete(id: any): void{
+    let arr = this.arrayHelperService.removeByIdentifier(this.dataSubject.value, id, this.entityIdentifier)
     this.dataSubject.next(arr);
   }
 
-  deleteRange(ids: number[]){
-    let arr = this.arrayHelperService.removeRangeByIdentifier<T>(this.dataSubject.value, ids, 'id');
+  deleteRange(ids: any[]){
+    let arr = this.arrayHelperService.removeRangeByIdentifier<T>(this.dataSubject.value, ids, this.entityIdentifier);
     this.dataSubject.next(arr);
   }
 
-  purge(){
-    this.dataSubject.next([]);
-    this.localStorageService.add(this.timestampKey, null);
-    this.lastSyncTimestamp = null;
-  }
-
+  purge = (): void => this.dataSubject.next([]);
+  
   get isEmpty(): boolean{
     return (this.dataSubject.value === undefined || this.dataSubject.value.length == 0)
   }

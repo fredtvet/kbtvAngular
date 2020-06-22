@@ -21,18 +21,6 @@ export class AppConfigurationService extends PersistentSubject<AppConfiguration>
   syncRefreshTime$ = this.data$.pipe(map(x => x.syncRefreshTime), distinctUntilChanged());
   initialNumberOfMonths$ = this.data$.pipe(map(x => x.initialNumberOfMonths), distinctUntilChanged());
 
-  setSyncRefreshTime = (value: number) => {
-    let config = {...this.dataSubject.value};
-    config.syncRefreshTime = value;
-    this.dataSubject.next(config);
-  }
-
-  setInitialNumberOfMonths = (value: number) => {
-    let config = {...this.dataSubject.value};
-    config.syncRefreshTime = value;
-    this.dataSubject.next(config);
-  }
-
   updateConfig(appConfig: AppConfiguration){
     this.dataSubject.next(appConfig);
   }

@@ -1,5 +1,5 @@
 import { Component, ApplicationRef, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
-import { AuthService, NotificationService, DeviceInfoService, DataSyncService, AppConfigurationService,DownloaderService, IconService } from './core/services';
+import { AuthService, NotificationService, DeviceInfoService, DataSyncService, IconService, DataSyncConfig } from './core/services';
 import { skip, first, tap } from 'rxjs/operators';
 import { Notifications } from './shared-app/enums/notifications.enum';
 import { interval, combineLatest, concat } from 'rxjs';
@@ -21,7 +21,7 @@ export class AppComponent {
     private deviceInfoService: DeviceInfoService,
     private notificationService: NotificationService,
     private dataSyncService: DataSyncService,
-    private appConfigService: AppConfigurationService){
+    private syncConfig: DataSyncConfig){
       this.initalizeSync(appRef)
   }
 
@@ -41,7 +41,7 @@ export class AppComponent {
     //Wait for app to stabilize before initiating continuous sync interval
     const appIsStable$ = appRef.isStable.pipe(first(isStable => isStable === true));
 
-    const continousSync$ = combineLatest(interval(1000*60*3), this.appConfigService.syncRefreshTime$).pipe(
+    const continousSync$ = combineLatest(interval(1000*60*3), this.syncConfig.syncRefreshTime$).pipe(
       tap(x => {if(!this.authService.hasAccessTokenExpired()) this.dataSyncService.syncIfTimePassed(x[1])})
     );
 

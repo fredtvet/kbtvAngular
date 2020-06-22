@@ -1,6 +1,4 @@
-import { BaseEntity } from '../../core/models/base-entity.interface';
-
-export interface DbSync<T extends BaseEntity> {
+export interface DbSync<T> {
     entities: T[];
     deletedEntities: number[];
     timestamp: number;

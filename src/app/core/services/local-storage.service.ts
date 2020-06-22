@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 
 export class LocalStorageService {
 
+  private subjectsToPersist
+
   constructor() { }
 
   add(key:string, data: any){

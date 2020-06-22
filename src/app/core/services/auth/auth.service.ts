@@ -148,7 +148,7 @@ export class AuthService extends PersistentSubject<User>{
   }
 
   private _logout(returnUrl: string = this.router.url): void{
-    this.dataSyncService.purgeAll(); //Clearing resources to prevent bugs if new user
+    this.dataSyncService.purgeAll(); //Clearing resources to prevent leaking data if new user logs in
     this.tokensService.destroyTokens();
     this.dataSubject.next({} as User);  // Set current user to an empty object 
     this.router.navigate(['/login'], { queryParams: {returnUrl}})  

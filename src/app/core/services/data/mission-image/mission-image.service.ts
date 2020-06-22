@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { MissionImageSubject } from './mission-image.subject';
 import { ApiService } from '../../api.service';
 import { BaseMissionChildService } from '../abstracts/base-mission-child.service';
@@ -8,19 +8,24 @@ import { Observable, throwError } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { DeviceInfoService } from '../../device-info.service';
 import { NotificationService } from '../../ui/notification.service';
+import { ArrayHelperService } from '../../utility/array-helper.service';
+import { LocalStorageService } from '../../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MissionImageService extends BaseMissionChildService<MissionImage> {
+export class MissionImageService extends BaseMissionChildService<MissionImage>{
 
   constructor(
     notificationService: NotificationService,
     apiService: ApiService,
     dataSubject: MissionImageSubject,
-    deviceInfoService: DeviceInfoService
+    deviceInfoService: DeviceInfoService,
+    arrayHelperService: ArrayHelperService,
+    localStorageService: LocalStorageService,  
   ){
-    super(notificationService, apiService, dataSubject, deviceInfoService, "/MissionImages");
+    super(arrayHelperService, localStorageService, 'MissionImageTimestamp',
+      notificationService, apiService, dataSubject, deviceInfoService, "/MissionImages");
   }
 
   getByMissionId$(missionId: number):Observable<MissionImage[]>{
@@ -55,8 +60,8 @@ export class MissionImageService extends BaseMissionChildService<MissionImage> {
               .post(`${this.uri}/SendImages`, {toEmail, missionImageIds});
   }
 
-  add$(entity: MissionImage): Observable<MissionImage>{return undefined}
+  add$(entity: MissionImage): Observable<MissionImage>{throw new Error("Method not implemented.")}
 
-  update$(entity: MissionImage): Observable<MissionImage>{return undefined}
+  update$(entity: MissionImage): Observable<MissionImage>{throw new Error("Method not implemented.")}
 
 }

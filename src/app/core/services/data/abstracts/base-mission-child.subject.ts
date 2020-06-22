@@ -10,7 +10,7 @@ export abstract class BaseMissionChildSubject<T extends MissionChild> extends Ba
     arrayHelperService: ArrayHelperService,
     localStorageService: LocalStorageService,
     storageKey: string,
-    ) { super(arrayHelperService, localStorageService, storageKey); }
+    ) { super('id', arrayHelperService, localStorageService, storageKey); }
 
   getByMissionId$(missionId: number): Observable<T[]>{
     return super.getBy$(x => x.missionId == missionId);

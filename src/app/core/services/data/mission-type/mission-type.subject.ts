@@ -12,5 +12,5 @@ export class MissionTypeSubject extends BaseSubject<MissionType> {
   constructor(
     localStorageService: LocalStorageService,
     arrayHelperService: ArrayHelperService,
-    ) { super(arrayHelperService,localStorageService, 'missionTypes'); }
+    ) { super('id', arrayHelperService,localStorageService, 'missionTypes'); }
 }

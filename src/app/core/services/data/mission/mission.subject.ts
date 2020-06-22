@@ -25,7 +25,7 @@ export class MissionSubject extends BaseSubject<Mission> {
     private missionNoteSubject: MissionNoteSubject,
     localStorageService: LocalStorageService,
     arrayHelperService: ArrayHelperService,
-    ) { super(arrayHelperService,localStorageService, 'missions');
+    ) { super('id', arrayHelperService,localStorageService, 'missions');
     }
 
   getAllDetails$ = (): Observable<Mission[]> => {

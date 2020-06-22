@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { DeviceInfoService } from '../../device-info.service';
 import { map } from 'rxjs/operators';
 import { NotificationService } from '../../ui/notification.service';
+import { ArrayHelperService } from '../../utility/array-helper.service';
+import { LocalStorageService } from '../../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +19,12 @@ export class MissionNoteService extends BaseMissionChildService<MissionNote> {
     notificationService: NotificationService,
     apiService: ApiService,
     dataSubject: MissionNoteSubject,
-    deviceInfoService: DeviceInfoService
+    deviceInfoService: DeviceInfoService,
+    arrayHelperService: ArrayHelperService,
+    localStorageService: LocalStorageService,  
   ){
-    super(notificationService, apiService, dataSubject, deviceInfoService, "/MissionNotes");
+    super(arrayHelperService, localStorageService, 'MissionNoteTimestamp',
+      notificationService, apiService, dataSubject, deviceInfoService, "/MissionNotes");
   }
 
   getByMissionId$(missionId: number):Observable<MissionNote[]>{

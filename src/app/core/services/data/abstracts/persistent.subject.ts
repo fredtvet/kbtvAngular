@@ -1,6 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { LocalStorageService } from '../../local-storage.service';
+import { Optional } from '@angular/core';
 
 export abstract class PersistentSubject<T> {
 
@@ -9,14 +10,18 @@ export abstract class PersistentSubject<T> {
   protected data$: Observable<T>;
 
   constructor(
-    protected localStorageService: LocalStorageService,
-    protected storageKey:string,
-    initalValue?:T) {
+    @Optional() protected localStorageService?: LocalStorageService,
+    protected storageKey?:string,
+    initalValue?:T,) {
 
-    this.dataSubject = new BehaviorSubject<T>(this.localStorageService.get(this.storageKey) || initalValue || undefined);
+    let persistanceEnabled = localStorageService && storageKey;
+    let persistedValue = persistanceEnabled ? this.localStorageService.get(this.storageKey) : undefined;
+
+    this.dataSubject = new BehaviorSubject<T>(persistedValue || initalValue || undefined);
     this.data$ = this.dataSubject.asObservable();
 
-    this.data$.pipe(skip(1)).subscribe(data => this.localStorageService.add(this.storageKey, data));
+    if(persistanceEnabled)
+      this.data$.pipe(skip(1)).subscribe(data => this.localStorageService.add(this.storageKey, data));   
   }
 
 }

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Timesheet } from 'src/app/core/models';
 import { LocalStorageService } from '../../local-storage.service';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { Observable, combineLatest, throwError } from 'rxjs';
 import { TimesheetStatus } from 'src/app/shared-app/enums';
 import { DateParams, TimesheetSummary } from 'src/app/shared-app/interfaces';
 import { BaseMissionChildSubject } from '../abstracts/base-mission-child.subject';
 import { DateTimeService } from '../../utility/date-time.service';
 import { TimesheetAggregatorService } from '../../utility/timesheet-aggregator.service';
 import { ArrayHelperService } from '../../utility/array-helper.service';
+import { MissionSubject } from '../mission/mission.subject';
 
 
 @Injectable({
@@ -17,7 +18,8 @@ import { ArrayHelperService } from '../../utility/array-helper.service';
 
 export class UserTimesheetSubject extends BaseMissionChildSubject<Timesheet> {
 
-  constructor(
+  constructor(    
+    private missionSubject: MissionSubject,
     private dateTimeService: DateTimeService,
     private timesheetAggregator: TimesheetAggregatorService,
     localStorageService: LocalStorageService,
@@ -56,5 +58,25 @@ export class UserTimesheetSubject extends BaseMissionChildSubject<Timesheet> {
       else
         return this.getBy$(x => x.status == status).pipe(map(arr => arr ? arr.length : undefined));
     }
-
+    
+    getByWithMission$(expression: (value: Timesheet, index?: number, Array?: any[]) => boolean): Observable<Timesheet[]>{
+      console.time('getbyWithmISSION');
+      return combineLatest(super.getBy$(expression), this.missionSubject.getAll$()).pipe(map(([timesheets, missions]) =>{
+        const missions_obj = {}; //Create associative list for faster index search
+        missions.forEach(x => missions_obj[x.id] = x); 
+        timesheets.forEach(t => t.mission = missions_obj[t.missionId]);
+        return timesheets;
+      }), tap(x => console.timeEnd('getbyWithmISSION')))
+    }
+  
+    getWithMission$(id: number): Observable<Timesheet>{
+      return super.get$(id).pipe(switchMap(entity => {
+        if(entity === undefined) return throwError('Entity not found');
+        return this.missionSubject.get$(entity.missionId).pipe(map(x => {
+          let e = {...entity};
+          e.mission = x;
+          return e;
+        }))
+      })); 
+    }
 }

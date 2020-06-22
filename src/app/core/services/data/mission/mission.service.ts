@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from '../abstracts/base.service';
 import { Mission } from 'src/app/core/models';
 import { MissionSubject } from './mission.subject';
 import { ApiService } from '../../api.service';
@@ -9,20 +8,26 @@ import { Observable, throwError } from 'rxjs';
 import { NotificationService } from '../../ui/notification.service';
 import { CreateMission, UpdateMission } from 'src/app/shared-app/interfaces/commands';
 import { Notifications } from 'src/app/shared-app/enums';
+import { BaseSyncService } from '../abstracts/base-sync.service';
+import { ArrayHelperService } from '../../utility/array-helper.service';
+import { LocalStorageService } from '../../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class MissionService extends BaseService<Mission> {
+export class MissionService extends BaseSyncService<Mission> {
 
   constructor(
     notificationService: NotificationService,
     apiService: ApiService,
     protected dataSubject: MissionSubject,
-    deviceInfoService: DeviceInfoService
+    deviceInfoService: DeviceInfoService,
+    arrayHelperService: ArrayHelperService,
+    localStorageService: LocalStorageService,  
   ){
-    super(notificationService, apiService, dataSubject, deviceInfoService, "/Missions");
+    super(arrayHelperService, localStorageService, 'MissionDocumentTimestamp',
+    notificationService, apiService, dataSubject, deviceInfoService, "/Missions");
   }
 
   addMission$(command: CreateMission){   
@@ -65,10 +70,6 @@ export class MissionService extends BaseService<Mission> {
       .pipe(tap(data => this.dataSubject.update(data)));
   }
 
-  add$(){return undefined}
-
-  update$(){return undefined}
-
   getDetails$(id: number, trackHistory: boolean =  true):Observable<Mission>{
     return this.dataSubject.getDetails$(id, trackHistory);
   }
@@ -86,4 +87,8 @@ export class MissionService extends BaseService<Mission> {
       return new Date(b.updatedAt || '01/01/1970').getTime() - new Date(a.updatedAt || '01/01/1970').getTime()
     });
   }
+  
+  add$(): Observable<Mission> {throw new Error("Method not implemented.")}
+
+  update$(): Observable<Mission> {throw new Error("Method not implemented.")}
 }

@@ -8,6 +8,8 @@ import { map, tap } from 'rxjs/operators';
 import { DeviceInfoService } from '../../device-info.service';
 import { NotificationService } from '../../ui/notification.service';
 import { Notifications } from 'src/app/shared-app/enums';
+import { ArrayHelperService } from '../../utility/array-helper.service';
+import { LocalStorageService } from '../../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +21,12 @@ export class MissionDocumentService extends BaseMissionChildService<MissionDocum
     notificationService: NotificationService,
     apiService: ApiService,
     dataSubject: MissionDocumentSubject,
-    deviceInfoService: DeviceInfoService
+    deviceInfoService: DeviceInfoService,
+    arrayHelperService: ArrayHelperService,
+    localStorageService: LocalStorageService,  
   ){
-    super(notificationService, apiService, dataSubject, deviceInfoService, "/MissionDocuments");
+    super(arrayHelperService, localStorageService, 'MissionDocumentTimestamp', notificationService, 
+      apiService, dataSubject, deviceInfoService, "/MissionDocuments");
   }
 
   addDocument$(missionId:number, documentType: AppDocumentType, files: FileList): Observable<MissionDocument>{
@@ -52,6 +57,6 @@ export class MissionDocumentService extends BaseMissionChildService<MissionDocum
   }
 
 
-  add$(entity: MissionDocument): Observable<MissionDocument>{return undefined}
-  update$(entity: MissionDocument): Observable<MissionDocument>{return undefined}
+  add$(entity: MissionDocument): Observable<MissionDocument>{throw new Error("Method not implemented.")}
+  update$(entity: MissionDocument): Observable<MissionDocument>{throw new Error("Method not implemented.")}
 }

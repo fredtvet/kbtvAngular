@@ -12,10 +12,10 @@ export * from './auth/auth.service';
 export * from './auth/no-auth-guard.service';
 
 export * from './data/user/user.service';
-export * from './data/role/role.service';
 export * from './data/abstracts/base.service';
 export * from './data/abstracts/base-mission-child.service';
 export * from './data/data-sync.service';
+export * from './data/data-sync.config';
 
 export * from './data/employer/employer.service';
 export * from './data/mission-type/mission-type.service';

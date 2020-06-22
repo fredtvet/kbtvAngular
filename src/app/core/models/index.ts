@@ -8,3 +8,4 @@ export * from './mission.interface';
 export * from './user.interface';
 export * from './timesheet.interface';
 export * from './base-entity.interface';
+export * from './inbound-email-password.interface';

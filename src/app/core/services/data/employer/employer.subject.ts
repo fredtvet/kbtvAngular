@@ -12,5 +12,5 @@ export class EmployerSubject extends BaseSubject<Employer> {
   constructor(
     localStorageService: LocalStorageService,
     arrayHelperService: ArrayHelperService,
-    ) { super(arrayHelperService,localStorageService, 'employers'); }
+    ) { super('id', arrayHelperService,localStorageService, 'employers'); }
 }

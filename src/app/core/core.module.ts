@@ -8,7 +8,6 @@ import {
   NoAuthGuard,
   UserService,
   IdentityTokensService,
-  RoleService,
   ApiService,
   AuthService,
   LoadingService,
@@ -24,12 +23,12 @@ import {
   MainNavService,
   TimesheetService,
   TimesheetAggregatorService,
-  AppConfigurationService,
   DownloaderService,
   ArrayHelperService,
   RolePreloadService,
   CssLoaderService
 } from './services';
+import { InboundEmailPasswordService } from './services/data/inbound-email-password/inbound-email-password.service';
 
 @NgModule({
   declarations: [],
@@ -41,7 +40,6 @@ import {
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpLoadingInterceptor, multi: true },
     UserService,
-    RoleService,
     IdentityTokensService,
     DeviceInfoService,
     AuthService,
@@ -60,11 +58,11 @@ import {
     DateTimeService,
     MainNavService,
     TimesheetAggregatorService,
-    AppConfigurationService,
     DownloaderService,
     ArrayHelperService,
     RolePreloadService,
     CssLoaderService,
+    InboundEmailPasswordService
   ]
 })
 export class CoreModule { }

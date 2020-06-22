@@ -12,5 +12,5 @@ export class DocumentTypeSubject extends BaseSubject<AppDocumentType> {
   constructor(
     localStorageService: LocalStorageService,
     arrayHelperService: ArrayHelperService,
-    ) { super(arrayHelperService, localStorageService, 'documentTypes'); }
+    ) { super('id', arrayHelperService, localStorageService, 'documentTypes'); }
 }
