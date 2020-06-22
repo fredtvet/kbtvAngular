@@ -37,10 +37,10 @@ export class TimesheetListComponent implements OnInit {
     this.filterSubject = new BehaviorSubject(this.getInitialFilter());
 
     this.timesheets$ = this.filterSubject.asObservable().pipe(distinctUntilChanged(),
-      switchMap(filter => this.userTimesheetService.getByWithMission$(x => filter.checkTimesheet(x)))
+      switchMap(filter => this.userTimesheetService.getByWithMission$(x => filter.checkTimesheet(x))),tap(console.log),
     );
   }
-
+  test(){console.log('test')}
   openTimesheetForm = (missionPreset?: Mission, idPreset?: number) => 
     this.router.navigate(['skjema'], {relativeTo: this.route, queryParams: {idPreset, missionPreset: JSON.stringify(missionPreset)}});
 

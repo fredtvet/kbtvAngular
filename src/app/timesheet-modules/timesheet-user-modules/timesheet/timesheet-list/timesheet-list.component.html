@@ -4,9 +4,9 @@
         <mat-icon class="scale-125">add</mat-icon>
     </button>
 
-    <ng-container *ngIf="(timesheets$ | async)?.length else noSheets; let timesheets">
-        <cdk-virtual-scroll-viewport itemSize="148" maxBufferPx="800" minBufferPx="800" fxFlex class="fadeInRight">
-            <div class="m-1" *cdkVirtualFor="let timesheet of timesheets$ | async">
+    <ng-container *ngIf="(timesheets$ | async); let timesheets">{{test()}}
+        <cdk-virtual-scroll-viewport *ngIf="timesheets?.length else noSheets" itemSize="148" maxBufferPx="800" minBufferPx="800" fxFlex class="fadeInRight">
+            <div class="m-1" *cdkVirtualFor="let timesheet of timesheets">
                 <app-timesheet-card [timesheet]="timesheet" (deleteClicked)="deleteTimesheet($event)"
                     (editClicked)="openTimesheetForm(undefined, $event)">
                 </app-timesheet-card>
