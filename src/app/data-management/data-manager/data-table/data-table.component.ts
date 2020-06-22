@@ -30,7 +30,7 @@ export class DataTableComponent {
 
   rowData: any = [];
   
-  ignoredProperties = ['id', 'updatedat', 'createdat', 'employerid', 'missiontypeid'];
+  ignoredProperties = ['id', 'updatedat', 'createdat', 'employerid', 'missiontypeid', 'imageurl'];
   
   noEditProperties = ['missiontype', 'employer'];
   
