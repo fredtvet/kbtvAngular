@@ -60,13 +60,20 @@ export class UserTimesheetSubject extends BaseMissionChildSubject<Timesheet> {
     }
     
     getByWithMission$(expression: (value: Timesheet, index?: number, Array?: any[]) => boolean): Observable<Timesheet[]>{
-      console.time('getbyWithmISSION');
-      return combineLatest(super.getBy$(expression), this.missionSubject.getAll$()).pipe(map(([timesheets, missions]) =>{
+      return combineLatest(this.data$, this.missionSubject.getAll$()).pipe(map(([timesheets, missions]) =>{
         const missions_obj = {}; //Create associative list for faster index search
-        missions.forEach(x => missions_obj[x.id] = x); 
-        timesheets.forEach(t => t.mission = missions_obj[t.missionId]);
-        return timesheets;
-      }), tap(x => console.timeEnd('getbyWithmISSION')))
+        missions.forEach(x => missions_obj[x.id] = x)
+
+        let filtered = [];
+        for(let i = 0; i < timesheets.length; i++){
+          let obj = timesheets[i];
+          if(!expression(obj)) continue; //filter 
+          let newObj = {...obj, mission: missions_obj[obj.missionId]}
+          filtered.push(newObj);     
+        }
+        
+        return filtered;
+      }))
     }
   
     getWithMission$(id: number): Observable<Timesheet>{
