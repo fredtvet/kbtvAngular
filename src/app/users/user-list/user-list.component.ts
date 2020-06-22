@@ -3,7 +3,7 @@ import { UserService, MainNavService } from 'src/app/core/services';
 import { User } from 'src/app/core/models';
 import { Roles } from '../../shared-app/enums';
 import { Observable } from 'rxjs';;
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { UserFormSheetWrapperComponent } from '../components/user-form/user-form-sheet-wrapper.component';
 import { TopDefaultNavConfig, AppButton } from 'src/app/shared-app/interfaces';
@@ -18,7 +18,7 @@ export class UserListComponent {
   Roles = Roles;
   users: User[];
 
-  users$: Observable<User[]> = this.userService.getAllDetails$().pipe(map(this.sortByRole));
+  users$: Observable<User[]> = this.userService.getAllDetails$().pipe(tap(console.log),map(this.sortByRole));
 
   constructor(
     private mainNavService: MainNavService,

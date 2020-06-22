@@ -1,13 +1,11 @@
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from "@angular/core";
 import {
-  RoleService,
   UserService,
   NotificationService,
   EmployerService,
 } from "src/app/core/services";
 import { User, Employer } from "src/app/core/models";
 import { Observable } from "rxjs";
-import { map} from "rxjs/operators";
 import { Roles } from "src/app/shared-app/enums";
 
 @Component({
@@ -24,12 +22,12 @@ export class UserFormComponent {
   isCreateForm = false;
 
   user$: Observable<User>;
-  roles$: Observable<string[]>;
+  roles: string[] = Object.keys(Roles).map(key => Roles[key] as string);
+
   employers$: Observable<Employer[]>;
 
   constructor(
     private notificationService: NotificationService,
-    private _roleService: RoleService,
     private _userService: UserService,
     private _employerService: EmployerService,
   ) {}
@@ -38,9 +36,6 @@ export class UserFormComponent {
     if(!this.userNamePreset) this.isCreateForm = true;
     else this.user$ = this._userService.get$(this.userNamePreset);
 
-    this.roles$ = this._roleService.getAll$().pipe(
-      map((arr) => arr.filter((x) => x != Roles.Leder))
-    );
     this.employers$ = this._employerService.getAll$();
   }
 
