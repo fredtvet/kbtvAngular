@@ -24,6 +24,7 @@ export class TimesheetAggregatorService {
   }
 
   groupByDay(t: Timesheet[]): TimesheetSummary[] {
+    console.time('loco');
     const obj_arr = t.reduce((groups, timesheet) => {
       const date = timesheet.startTime.toString().split("T")[0];
       const index = date + "-" + timesheet.userName;
@@ -46,7 +47,7 @@ export class TimesheetAggregatorService {
 
       return groups;
     }, {});
-
+    console.timeEnd('loco');
     return Object.values(obj_arr);;
   }
 
@@ -54,16 +55,14 @@ export class TimesheetAggregatorService {
     let groups = {} as {[key: string]: TimesheetSummary};
     for(let i = 0; i < t.length; i++){
       let timesheet = t[i];
-      const date = new Date(timesheet.startTime);
-      const week = this.dateTimeService.getWeekOfYear(date);
-      const year = date.getFullYear();
-      const index = year + "-" + week + "-" + timesheet.userName;
+      const wy = this.dateTimeService.getWeekAndYearFromString(timesheet.startTime);
+      const index = wy.year + "-" + wy.week + "-" + timesheet.userName;
 
       if (!groups[index]) {
         groups[index] = {
           userName: timesheet.userName,
-          year,
-          week,
+          year: wy.year,
+          week: wy.week,
           openHours: 0,
           confirmedHours: 0,
           timesheets: [],
@@ -105,8 +104,9 @@ export class TimesheetAggregatorService {
 
   groupByMonth(t: Timesheet[]): TimesheetSummary[] {
     const obj_arr = t.reduce((groups, timesheet) => {
-      const month = new Date(timesheet.startTime).getMonth();
-      const year = new Date(timesheet.startTime).getFullYear();
+      const date = new Date(timesheet.startTime);
+      const month = date.getMonth();
+      const year = date.getFullYear();
       const index = year + "-" + month + "-" + timesheet.userName;
       if (!groups[index]) {
         groups[index] = {
