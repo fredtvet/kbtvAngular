@@ -10,9 +10,16 @@ export class ConfirmDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public message: string) {}
+    @Inject(MAT_DIALOG_DATA) public config: ConfirmDialogConfig) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
+}
+
+export interface ConfirmDialogConfig {
+  title?: string,
+  message?: string,
+  discardText?: string,
+  confirmText: string,
 }

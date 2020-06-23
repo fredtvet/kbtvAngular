@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { ConfirmDialogComponent } from 'src/app/shared/components';
+import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 import { filter} from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DataSyncService, MainNavService, DataSyncConfig, SyncConfig } from 'src/app/core/services';
@@ -24,8 +24,9 @@ export class SettingsComponent {
   ) { this.configureMainNav(); }
 
   confirmPurge = () => {
-    let confirmString = 'Bekreft at du ønsker å slette lokal data. Alt vil bli lastet inn på nytt og dette krever mye data.'
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent,{data: confirmString});
+    let config: ConfirmDialogConfig = {title: 'Slett lokalt data?', message: 'All data vil bli lastet ned på nytt. Vær varsom ved bruk av mobildata.', confirmText: 'Slett'};
+    //let confirmString = 'Bekreft at du ønsker å slette lokal data. Alt vil bli lastet inn på nytt og dette krever mye data.'
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent,{data: config});
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.reloadAllData());
   }
 

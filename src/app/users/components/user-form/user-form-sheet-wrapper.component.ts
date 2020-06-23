@@ -3,7 +3,7 @@ import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bott
 import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 import { UserService } from 'src/app/core/services';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from 'src/app/shared/components';
+import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -40,12 +40,12 @@ export class UserFormSheetWrapperComponent implements OnInit {
   close = () => this._bottomSheetRef.dismiss();
 
   private confirmDelete = () => {
-    let confirmString = 'Bekreft at du ønsker å slette oppdragsgiveren fra systemet.'
-    const deleteDialogRef = this._dialog.open(ConfirmDialogComponent, {data: confirmString});
-    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteEmployer());
+    let config: ConfirmDialogConfig = {message: 'Slett bruker?', confirmText: 'Slett'};
+    const deleteDialogRef = this._dialog.open(ConfirmDialogComponent, {data: config});
+    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteUser());
   }
 
-  private deleteEmployer = () => 
+  private deleteUser = () => 
     this._userService.delete$(this.data.userNamePreset).subscribe(x => this.close());
   
 }

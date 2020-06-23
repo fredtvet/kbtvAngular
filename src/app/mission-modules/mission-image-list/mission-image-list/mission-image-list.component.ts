@@ -9,7 +9,7 @@ import { MissionImageService, MainNavService, NotificationService, MissionServic
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppButton, AppFile, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
-import { ConfirmDialogComponent, SelectableListBase } from 'src/app/shared/components';
+import { ConfirmDialogComponent, SelectableListBase, ConfirmDialogConfig } from 'src/app/shared/components';
 import { MailImageSheetComponent } from '../components/mail-image-sheet.component';
 import { ImageViewerDialogWrapperComponent } from '../components/image-viewer/image-viewer-dialog-wrapper.component';
 
@@ -74,8 +74,9 @@ export class MissionImageListComponent extends SubscriptionComponent{
     })    
   }
 
-  openConfirmDeleteDialog = (ids: number[]) => {
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette utvalgte bilder.'});
+  openConfirmDeleteDialog = (ids: number[]) => {   
+    let config: ConfirmDialogConfig = {message: 'Slett utvalgte bilder?', confirmText: 'Slett'};
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteImages(ids));
   }
   

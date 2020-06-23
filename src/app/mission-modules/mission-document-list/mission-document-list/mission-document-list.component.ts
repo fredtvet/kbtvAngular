@@ -7,7 +7,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { Roles } from 'src/app/shared-app/enums';
 import { takeUntil, filter, map } from 'rxjs/operators';
-import { ConfirmDialogComponent, SelectableListBase } from 'src/app/shared/components';
+import { ConfirmDialogComponent, SelectableListBase, ConfirmDialogConfig } from 'src/app/shared/components';
 import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { MailDocumentSheetComponent } from '../mail-document-sheet.component';
@@ -69,8 +69,9 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
     });
   }
 
-  openConfirmDeleteDialog = (ids: number[]) => {
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette utvalgte dokumenter.'});
+  openConfirmDeleteDialog = (ids: number[]) => {   
+    let config: ConfirmDialogConfig = {message: 'Slett dokument?', confirmText: 'Slett'};
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteDocuments(ids));
   }
   

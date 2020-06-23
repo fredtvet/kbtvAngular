@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Mission } from 'src/app/core/models';
-import { ConfirmDialogComponent } from 'src/app/shared/components';
+import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 import { NotificationService, MissionService, MissionImageService, MissionDocumentService, MissionNoteService, MainNavService} from 'src/app/core/services';
 import { tap, filter, map } from 'rxjs/operators';
 import { Observable, combineLatest } from 'rxjs';
@@ -67,7 +67,8 @@ export class MissionDetailsComponent{
   private openMissionForm = (idPreset: number) => this.router.navigate(['rediger'], {relativeTo: this.route, queryParams: {idPreset}});
 
   private openDeleteMissionDialog = (id: number) => {
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette oppdraget.'});
+    let config: ConfirmDialogConfig = {message: 'Slett oppdrag?', confirmText: 'Slett'};
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteMission(id));
   }
 

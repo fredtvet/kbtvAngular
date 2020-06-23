@@ -4,7 +4,7 @@ import { filter } from 'rxjs/operators';
 import { MissionImageService, DownloaderService } from 'src/app/core/services';
 import { AppFile, AppButton } from 'src/app/shared-app/interfaces';
 import { Roles } from 'src/app/shared-app/enums';
-import { ConfirmDialogComponent } from 'src/app/shared/components';
+import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-timesheet-card-dialog-wrapper',
@@ -52,8 +52,9 @@ export class ImageViewerDialogWrapperComponent {
     private downloadImage = () => 
       this.downloaderService.downloadUrl(this.data.currentImage.fileURL)
     
-    private openConfirmDeleteDialog = () => {
-      const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette bildet.'});
+    private openConfirmDeleteDialog = () => {  
+      let config: ConfirmDialogConfig = {message: 'Slett bilde?', confirmText: 'Slett'};
+      const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
       deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteCurrentImage());
     }
   

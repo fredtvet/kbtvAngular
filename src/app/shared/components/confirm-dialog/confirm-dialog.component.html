@@ -1,12 +1,18 @@
-<div class="app-card">
+<div class="app-card" style="width:250px">
 
-  <div class="text-center m-2">
-    {{ message || 'Vennligst bekreft operasjonen.' }}
+  <div class="m-5">
+    <div class="mat-title" *ngIf="config.title">
+      {{ config.title }}
+    </div>
+  
+    <div *ngIf="config.message">
+      {{ config.message || 'Vennligst bekreft operasjonen.' }}
+    </div>
   </div>
 
   <div class="m-2" style="float:right">
-    <button mat-button color="warn" (click)="onNoClick()">Avbryt</button>
-    <button mat-button  [mat-dialog-close]="true" cdkFocusInitial>Bekreft</button>
+    <button mat-button (click)="onNoClick()">{{ config.discardText || 'Avbryt'}}</button>
+    <button mat-button  [mat-dialog-close]="true" cdkFocusInitial>{{ config.confirmText }}</button>
   </div>
   
 </div>

@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/cor
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 import { EmployerService } from 'src/app/core/services';
-import { ConfirmDialogComponent } from 'src/app/shared/components';
+import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -40,8 +40,8 @@ export class EmployerFormSheetWrapperComponent implements OnInit {
   close = () => this._bottomSheetRef.dismiss();
 
   private confirmDelete = () => {
-    let confirmString = 'Bekreft at du ønsker å slette oppdragsgiveren fra systemet.'
-    const deleteDialogRef = this._dialog.open(ConfirmDialogComponent, {data: confirmString});
+    let config: ConfirmDialogConfig = {message: 'Slett oppdragsgiver?', confirmText: 'Slett'};
+    const deleteDialogRef = this._dialog.open(ConfirmDialogComponent, {data: config});
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteEmployer());
   }
 

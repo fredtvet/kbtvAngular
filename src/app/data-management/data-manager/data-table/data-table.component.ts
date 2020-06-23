@@ -1,7 +1,7 @@
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { TranslationService } from 'src/app/core/services';
-import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
 import { BaseEntity } from 'src/app/core/models';
@@ -52,7 +52,9 @@ export class DataTableComponent {
   openDeleteDialog = () => {
     let nodes = this.dataGrid.api.getSelectedNodes();
     if(nodes.length == 0) return null;
-    const deleteDialogRef = this._dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette ressursen(e).'});
+    
+    let config: ConfirmDialogConfig = {message: 'Slett ressurs(er)?', confirmText: 'Slett'};
+    const deleteDialogRef = this._dialog.open(ConfirmDialogComponent, {data: config});
 
     deleteDialogRef.afterClosed().pipe(filter(res => res))
       .subscribe(res =>  this.itemsDeleted.emit(nodes.map(node => node.data['id'])));

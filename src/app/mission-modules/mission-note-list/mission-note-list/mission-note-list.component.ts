@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { RolePresets } from 'src/app/shared-app/enums';
 import { filter } from 'rxjs/operators';
-import { ConfirmDialogComponent } from 'src/app/shared/components';
+import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 
 @Component({
@@ -41,7 +41,8 @@ export class MissionNoteListComponent {
       this.notificationService.setNotification(`Vellykket! notat slettet.`)
     );
   
-  openConfirmDeleteDialog = (id: number) => {
+  openConfirmDeleteDialog = (id: number) => {   
+    let config: ConfirmDialogConfig = {message: 'Slett notat?', confirmText: 'Slett'};
     const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette notatet.'});
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteNote(id));
   }
