@@ -22,7 +22,8 @@ export abstract class BaseSubject<T> extends PersistentSubject<T[]>{
   }
 
   getAll (): T[]{  
-    return this.dataSubject.value.slice();
+    let arr = this.dataSubject.value;
+    return !arr ? [] : arr.slice();
   }
   
   getAllDetails$(): Observable<T[]>{

@@ -24,7 +24,7 @@ export class MissionsFacade {
   sortBy$ = this.sortBySubject.asObservable().pipe(distinctUntilChanged());
 
   private missionsSubject = new BehaviorSubject<Mission[]>([]);
-  missions$ = this.missionsSubject.asObservable().pipe(map(x => x.slice()));
+  missions$ = this.missionsSubject.asObservable().pipe(map(x => x ? x.slice() : []));
 
   missionListVm$: Observable<MissionListViewModel> = combineLatest(this.missions$, this.sortBy$, this.filter$).pipe(
     map(([missions, sortBy, filter]) => {
@@ -65,7 +65,7 @@ export class MissionsFacade {
   }
 
   private sortByDate(missions: Mission[], sortBy: MissionSortBy, order: string = 'desc'){
-    let arr = missions.slice();
+    let arr = missions ? missions.slice() : [];
     return arr.sort((a: any, b: any) =>{
         if(!a[sortBy]) return 1;
         if(!b[sortBy]) return -1;

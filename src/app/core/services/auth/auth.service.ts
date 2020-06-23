@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError, of, Subject } from 'rxjs';
+import { Observable, throwError, of, Subject, EMPTY } from 'rxjs';
 import { ApiService } from '../api.service';
 import { IdentityTokensService } from './identity-tokens.service';
 import { map, distinctUntilChanged, tap, take, catchError, finalize } from 'rxjs/operators';
@@ -61,7 +61,7 @@ export class AuthService extends PersistentSubject<User>{
   }
 
   refreshToken$(): Observable<TokenResponse>{
-    if(this.isRefreshingToken || !this.isOnline || !this.hasTokens()) return of(undefined);
+    if(this.isRefreshingToken || !this.isOnline || !this.hasTokens()) return EMPTY;
 
     this._isRefreshingToken = true;
 

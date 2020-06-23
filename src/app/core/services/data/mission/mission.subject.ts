@@ -3,7 +3,7 @@ import { Mission } from 'src/app/core/models';
 import { BaseSubject } from '../abstracts/base.subject';
 import { MissionTypeSubject } from '../mission-type/mission-type.subject';
 import { LocalStorageService } from '../../local-storage.service';
-import { Observable, combineLatest, of } from 'rxjs';
+import { Observable, combineLatest, of, EMPTY } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { MissionImageSubject } from '../mission-image/mission-image.subject';
 import { EmployerSubject } from '../employer/employer.subject';
@@ -34,7 +34,7 @@ export class MissionSubject extends BaseSubject<Mission> {
     let missionSub = super.getAll$();
     return combineLatest(missionSub, employerSub, typeSub).pipe(
       map(([missions, employers, types]) => {
-        let missionsClone = missions.slice();
+        let missionsClone = missions ? missions.slice() : [];
         let employersObj = this.arrayHelperService.convertArrayToObject(employers, 'id');
         let typesObj = this.arrayHelperService.convertArrayToObject(types, 'id');
         for(var i = 0; i < missions.length; i++){
@@ -51,7 +51,7 @@ export class MissionSubject extends BaseSubject<Mission> {
     if(trackHistory) this.updateLastVisited(id);
     return super.get$(id).pipe(
       switchMap(data => {
-      if(data === undefined || data === null) return of(undefined);
+      if(data === undefined || data === null) return EMPTY;
 
       let employerSub = this.employerSubject.get$(data.employerId);
       let typeSub = this.missionTypeSubject.get$(data.missionTypeId);
@@ -98,7 +98,7 @@ export class MissionSubject extends BaseSubject<Mission> {
   }
 
   private updateLastVisited(id: number){
-    let missions = this.dataSubject.value.slice();
+    let missions = this.dataSubject.value ? this.dataSubject.value.slice() : [];
     let index = missions.findIndex(x => x.id == id);
     let mission = {...missions[index]};
     mission.lastVisited = new Date(); 
