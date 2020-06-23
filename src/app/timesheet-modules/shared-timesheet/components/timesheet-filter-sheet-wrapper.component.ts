@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MissionService } from 'src/app/core/services/data/mission/mission.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, EMPTY } from 'rxjs';
 import { UserService } from 'src/app/core/services';
 import { Mission, User } from 'src/app/core/models';
 import { SimpleNavConfig, TimesheetFilter, AppButton } from 'src/app/shared-app/interfaces';
@@ -51,12 +51,12 @@ export class TimesheetFilterSheetWrapperComponent extends SubscriptionComponent 
     if(this.data.disabledFilters === undefined || this.data.disabledFilters === null || !this.data.disabledFilters.includes("mission")){
       this.missions$ = this._missionService.getAll$();
     }
-    else this.missions$ =  of([]);
+    else this.missions$ =  EMPTY;
 
     if(this.data.disabledFilters === undefined || this.data.disabledFilters === null || !this.data.disabledFilters.includes("user")){
         this.users$ = this._userService.getAll$();
     } 
-    else this.users$ =  of([]);  
+    else this.users$ =  EMPTY;  
   }
 
 

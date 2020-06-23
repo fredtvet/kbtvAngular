@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { Observable, of } from 'rxjs';
+import { Observable, of, EMPTY } from 'rxjs';
 import { UserService } from 'src/app/core/services';
 import { User } from 'src/app/core/models';
 import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
@@ -38,7 +38,7 @@ export class WeekListFilterSheetWrapperComponent {
     if(this.data.userName !== undefined){
       this.users$ = this._userService.getAll$();
     } 
-    else this.users$ =  of([]);  
+    else this.users$ =  EMPTY;  
   }
 
   updateFilter = (filter: {year: number, username?: string}) => this.close(filter)
