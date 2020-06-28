@@ -3,6 +3,7 @@ import { AgGridAngular } from 'ag-grid-angular';
 import { TimesheetSummary } from 'src/app/shared-app/interfaces';
 import { DatePipe } from '@angular/common';
 import { User } from 'src/app/core/models';
+import { TranslationService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-timesheet-statistic-table',
@@ -27,7 +28,10 @@ export class TimesheetStatisticTableComponent {
 
   rowData: any = [];
 
-  constructor(private datePipe: DatePipe) { }
+  constructor(
+    private datePipe: DatePipe,
+    private translationService: TranslationService,
+    ) { }
 
   autoSizeGrid(){
     let cols = this.dataGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
@@ -45,22 +49,22 @@ export class TimesheetStatisticTableComponent {
     //this.columnDefs.push({colId: 'checkbox', checkboxSelection: true, width: 42, pinned: 'left', lockPosition: true})
     
     if(propertyNames.includes('year'))
-      this.columnDefs.push({field: 'year',headerName: 'År',sortable: true});
+      this.columnDefs.push({field: 'year',headerName: this.translationService.translateProperty('year'), sortable: true});
 
     if(propertyNames.includes('month'))
-      this.columnDefs.push({field: 'month',headerName: 'Måned',sortable: true, valueFormatter: this.convertMonthIndex});
+      this.columnDefs.push({field: 'month',headerName: this.translationService.translateProperty('month'),sortable: true, valueFormatter: this.convertMonthIndex});
 
     if(propertyNames.includes('week'))
-      this.columnDefs.push({field: 'week',headerName: 'Uke',sortable: true});
+      this.columnDefs.push({field: 'week',headerName: this.translationService.translateProperty('week'),sortable: true});
 
     if(propertyNames.includes('date'))
-      this.columnDefs.push({field: 'date',headerName: 'Dato',sortable: true, valueFormatter: this.convertDate});
+      this.columnDefs.push({field: 'date',headerName: this.translationService.translateProperty('date'),sortable: true, valueFormatter: this.convertDate});
 
-    this.columnDefs.push({field: 'fullName',headerName: 'Ansatt',sortable: true});
+    this.columnDefs.push({field: 'fullName',headerName: this.translationService.translateProperty('fullName'),sortable: true});
 
-    this.columnDefs.push({field: 'confirmedHours',headerName: 'Låste timer',sortable: true});
+    this.columnDefs.push({field: 'confirmedHours',headerName: this.translationService.translateProperty('confirmedHours'),sortable: true});
 
-    this.columnDefs.push({field: 'openHours',headerName: 'Åpne timer',sortable: true});
+    this.columnDefs.push({field: 'openHours',headerName: this.translationService.translateProperty('openHours'),sortable: true});
 
     let totalOpenHrs = data.reduce((total, summary) => { return total + summary.openHours }, 0);
     let totalConfirmedHrs = data.reduce((total, summary) => { return total + summary.confirmedHours }, 0);
