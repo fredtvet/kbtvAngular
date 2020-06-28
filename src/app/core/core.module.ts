@@ -26,7 +26,8 @@ import {
   DownloaderService,
   ArrayHelperService,
   RolePreloadService,
-  CssLoaderService
+  CssLoaderService,
+  JsonToCsvExportService
 } from './services';
 import { InboundEmailPasswordService } from './services/data/inbound-email-password/inbound-email-password.service';
 
@@ -62,6 +63,7 @@ import { InboundEmailPasswordService } from './services/data/inbound-email-passw
     ArrayHelperService,
     RolePreloadService,
     CssLoaderService,
+    JsonToCsvExportService,
     InboundEmailPasswordService
   ]
 })

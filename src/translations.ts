@@ -19,7 +19,13 @@ export const translations = {
     firstName: "Fornavn",
     lastName: "Etternavn",
     email: "Epost",
-    role: "Rolle"
-  }
+    role: "Rolle",
+    year: "År",
+    month: "Måned",
+    week: "Uke",
+    date: "Dato",
+    fullName: "Navn",
+    confirmedHours: "Låste timer",
+    openHours: "Åpne timer"
+  },
 };
-

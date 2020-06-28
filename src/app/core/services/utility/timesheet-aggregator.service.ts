@@ -24,7 +24,6 @@ export class TimesheetAggregatorService {
   }
 
   groupByDay(t: Timesheet[]): TimesheetSummary[] {
-    console.time('loco');
     const obj_arr = t.reduce((groups, timesheet) => {
       const date = timesheet.startTime.toString().split("T")[0];
       const index = date + "-" + timesheet.userName;
@@ -47,7 +46,6 @@ export class TimesheetAggregatorService {
 
       return groups;
     }, {});
-    console.timeEnd('loco');
     return Object.values(obj_arr);;
   }
 
