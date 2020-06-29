@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
-import { MainNavService, TimesheetService, JsonToCsvExportService } from 'src/app/core/services';
+import { MainNavService, TimesheetService } from 'src/app/core/services';
 import { TopDefaultNavConfig, TimesheetFilter} from 'src/app/shared-app/interfaces';
 import { GroupByTypes } from 'src/app/shared-app/enums';
 import { TimesheetFilterSheetWrapperComponent } from '../../shared-timesheet/components/timesheet-filter-sheet-wrapper.component';
@@ -41,8 +41,15 @@ export class TimesheetStatisticComponent {
       .subscribe(x => this.timesheetService.addFilter(x));
   }
 
-  private exportAsCsv = () => this.statTable.dataGrid.api.exportDataAsCsv();
-  
+  private exportAsCsv = () => {
+    this.statTable.dataGrid.api.exportDataAsCsv({
+      processCellCallback: (cell) => {
+        if(cell.column.getColId() === "month" && cell.value) return cell.value + 1;
+        return cell.value
+      }
+    });
+  }
+
   private configureMainNav(){
     let cfg = {
       title:  "Timestatistikk",

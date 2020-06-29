@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { ApiService } from '../api.service';
 import { TranslationService } from '../utility/translation.service';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { DownloaderService } from '../downloader.service';
 
 @Injectable({

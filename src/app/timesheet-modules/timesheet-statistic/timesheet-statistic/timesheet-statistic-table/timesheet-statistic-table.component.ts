@@ -70,7 +70,7 @@ export class TimesheetStatisticTableComponent {
     let totalConfirmedHrs = data.reduce((total, summary) => { return total + summary.confirmedHours }, 0);
 
     if(this.dataGrid){
-      this.dataGrid.api.setPinnedBottomRowData([{openHours: totalOpenHrs, confirmedHours: totalConfirmedHrs, userName: "Sum av timer", timesheets: []}]);
+      this.dataGrid.api.setPinnedBottomRowData([{openHours: totalOpenHrs, confirmedHours: totalConfirmedHrs, fullName: "Sum av timer", timesheets: []}]);
     }
     
     this.rowData = data;
