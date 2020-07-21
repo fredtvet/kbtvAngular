@@ -23,7 +23,6 @@ export class UserTimesheetService extends BaseMissionChildService<Timesheet> {
     notificationService: NotificationService,
     apiService: ApiService,
     deviceInfoService: DeviceInfoService,
-    private missionSubject: MissionSubject,
     protected dataSubject: UserTimesheetSubject,
     arrayHelperService: ArrayHelperService,
     localStorageService: LocalStorageService,  

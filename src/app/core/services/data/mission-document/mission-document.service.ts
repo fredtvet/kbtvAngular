@@ -29,11 +29,10 @@ export class MissionDocumentService extends BaseMissionChildService<MissionDocum
       apiService, dataSubject, deviceInfoService, "/MissionDocuments");
   }
 
-  addDocument$(missionId:number, documentType: AppDocumentType, files: FileList): Observable<MissionDocument>{
+  addDocument$(missionId:number, documentType: AppDocumentType, files: FileList): Observable<MissionDocument>{ 
     if(!this.isOnline)
     return throwError('Du må være tilkoblet internett for å legge til dokumenter.')
             .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-
     const formData: FormData = new FormData();
     formData.append('file', files[0], files[0].name);
     formData.append('DocumentType',JSON.stringify(documentType));
