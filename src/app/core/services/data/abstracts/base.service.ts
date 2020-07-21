@@ -66,7 +66,7 @@ export abstract class BaseService<T>{
     return this
             .apiService
             .delete(`${this.uri}/${id}`)
-            .pipe(tap(bool =>{if(bool) this.dataSubject.delete(id)}));
+            .pipe(tap(x => this.dataSubject.delete(id)));
   }
 
   deleteRange$(ids: any[]): Observable<boolean>{
@@ -77,7 +77,7 @@ export abstract class BaseService<T>{
     return this
             .apiService
             .post(`${this.uri}/DeleteRange`, {Ids: ids})
-            .pipe(tap(bool =>{if(bool) this.dataSubject.deleteRange(ids)}));
+            .pipe(tap(x => this.dataSubject.deleteRange(ids)));
   }
 
   purge = (): void => this.dataSubject.purge(); 
