@@ -31,9 +31,6 @@ export class MissionService extends BaseSyncService<Mission> {
   }
 
   addMission$(command: CreateMission){   
-    if(!this.isOnline) return throwError('Du må være tilkoblet internett for å legge til ting.')
-      .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-    
     const body: FormData = new FormData();
     if(command.image) body.append('files', command.image, command.image.name);
     delete command.image;
@@ -45,9 +42,6 @@ export class MissionService extends BaseSyncService<Mission> {
   }
 
   addMissionFromPdfReport$(pdf: File){
-    if(!this.isOnline) return throwError('Du må være tilkoblet internett for å legge til ting.')
-      .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-    
     const body: FormData = new FormData();
     if(pdf) body.append('files', pdf, pdf.name);
 
@@ -57,10 +51,6 @@ export class MissionService extends BaseSyncService<Mission> {
   }
 
   updateMission$(command: UpdateMission){   
-    if(!this.isOnline)
-      return throwError('Du må være tilkoblet internett for å gjøre oppdateringer.')
-              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-    
     const body: FormData = new FormData();
     if(command.image) body.append('files', command.image, command.image.name);
     delete command.image

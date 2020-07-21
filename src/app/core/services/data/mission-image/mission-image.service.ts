@@ -33,10 +33,6 @@ export class MissionImageService extends BaseMissionChildService<MissionImage>{
   }
 
   addImages$(missionId:number, files: FileList): Observable<MissionImage[]>{
-    if(!this.isOnline)
-      return throwError('Du må være tilkoblet internett for å legge til bilder.')
-              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-
     const formData: FormData = new FormData();
 
     for(let i = 0; i < files.length; i++){
@@ -52,10 +48,6 @@ export class MissionImageService extends BaseMissionChildService<MissionImage>{
   }
 
   mailImages$(toEmail: string, missionImageIds: number[]){
-    if(!this.isOnline)
-    return throwError('Du må være tilkoblet internett for å sende epost.')
-            .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-
     return this.apiService
               .post(`${this.uri}/SendImages`, {toEmail, missionImageIds});
   }

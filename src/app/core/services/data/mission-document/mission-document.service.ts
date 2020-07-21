@@ -30,9 +30,6 @@ export class MissionDocumentService extends BaseMissionChildService<MissionDocum
   }
 
   addDocument$(missionId:number, documentType: AppDocumentType, files: FileList): Observable<MissionDocument>{ 
-    if(!this.isOnline)
-    return throwError('Du må være tilkoblet internett for å legge til dokumenter.')
-            .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
     const formData: FormData = new FormData();
     formData.append('file', files[0], files[0].name);
     formData.append('DocumentType',JSON.stringify(documentType));
@@ -47,10 +44,6 @@ export class MissionDocumentService extends BaseMissionChildService<MissionDocum
   }
 
   mailDocuments$(toEmail: string, missionDocumentIds: number[]){
-    if(!this.isOnline)
-    return throwError('Du må være tilkoblet internett for å sende epost.')
-            .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-
     return this.apiService
               .post(`${this.uri}/SendDocuments`, {toEmail, missionDocumentIds});
   }

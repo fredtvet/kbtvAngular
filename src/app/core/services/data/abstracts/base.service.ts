@@ -41,28 +41,17 @@ export abstract class BaseService<T>{
   }
 
   add$(entity: T): Observable<T>{
-    if(!this.isOnline) return throwError('Du må være tilkoblet internett for å lagre.')
-      .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Warning)));
- 
     return this.apiService
                 .post(`${this.uri}`, entity)
                 .pipe(tap(data =>this.dataSubject.addOrUpdate(data)));
   }
 
   update$(entity: T): Observable<T>{
-    if(!this.isOnline)
-      return throwError('Du må være tilkoblet internett for å oppdatere.')
-              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Warning)));
-
     return this.apiService.put(`${this.uri}/${entity[this.dataSubject.entityIdentifier]}`, entity)
       .pipe(tap(data => this.dataSubject.update(data)));
   }
 
   delete$(id: any): Observable<boolean> {
-    if(!this.isOnline)
-      return throwError('Du må være tilkoblet internett for å slette.')
-              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Warning)));
-
     return this
             .apiService
             .delete(`${this.uri}/${id}`)
@@ -70,10 +59,6 @@ export abstract class BaseService<T>{
   }
 
   deleteRange$(ids: any[]): Observable<boolean>{
-    if(!this.isOnline)
-      return throwError('Du må være tilkoblet internett for å slette.')
-              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Warning)));
-
     return this
             .apiService
             .post(`${this.uri}/DeleteRange`, {Ids: ids})
@@ -83,10 +68,6 @@ export abstract class BaseService<T>{
   purge = (): void => this.dataSubject.purge(); 
   
   protected populate<T>(returnObservable: Observable<T>): Observable<T>{
-    if(!this.isOnline) 
-      return throwError('Du må være tilkoblet internett for å hente denne informasjonen.')
-              .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Warning)));
-
     return this.apiService.get(`${this.uri}`)
     .pipe(switchMap(data => {
       this.dataSubject.populate(data);

@@ -49,9 +49,6 @@ export class AuthService extends PersistentSubject<User>{
   get isRefreshingToken() { return this._isRefreshingToken }
 
   attemptAuth$(credentials: Credentials): Observable<User> {
-    if(!this.isOnline) return throwError('Du må være tilkoblet internett for å logge inn.')
-      .pipe(take(1), tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-
     return this.apiService.post('/Auth/login', credentials)
       .pipe(map(tokenResponse => {
         this.setAuth(tokenResponse);
@@ -123,9 +120,6 @@ export class AuthService extends PersistentSubject<User>{
   getAccessToken = () => this.tokensService.getAccessToken();
 
   updateCurrentUser$(user: User): Observable<User> {
-    if(!this.isOnline) return throwError('Du må være tilkoblet internett for å oppdatere profilen.')
-    .pipe(take(1), tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-
     return this.apiService
     .put('/auth', user)
     .pipe(map(data => {
@@ -136,9 +130,6 @@ export class AuthService extends PersistentSubject<User>{
   }
 
   changePassword$(oldPw: string, newPw: string){
-    if(!this.isOnline) return throwError('Du må være tilkoblet internett for å endre passord.')
-    .pipe(take(1), tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
-
     const obj = {
       OldPassword: oldPw,
       NewPassword: newPw
