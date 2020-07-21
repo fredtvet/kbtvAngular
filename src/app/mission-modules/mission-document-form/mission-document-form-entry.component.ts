@@ -16,12 +16,11 @@ export class MissionDocumentFormEntryComponent {
     private route: ActivatedRoute,
     private location: Location
     ) {  
-    let missionId:number = +this.route.snapshot.queryParams['missionId'];
-    this.openDialog({missionId});
+    this.openDialog({ missionId: +this.route.snapshot.queryParams['missionId'] });
    }
 
   openDialog = (data: any) => {
-    let ref = this.bottomSheet.open(MissionDocumentFormSheetWrapperComponent, data);
+    let ref = this.bottomSheet.open(MissionDocumentFormSheetWrapperComponent, { data });
     ref.afterDismissed().subscribe(x => this.location.back())
   };
 }

@@ -5,7 +5,12 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-mission-document-form',
-  templateUrl: './mission-document-form.component.html',
+  template: `
+  <app-mission-document-form-view
+    [types]="documentTypes$ | async"
+    (formSubmitted)="onSubmit($event)">
+  </app-mission-document-form-view>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -17,15 +22,18 @@ export class MissionDocumentFormComponent{
 
   constructor(
     private missionDocumentService: MissionDocumentService,
-    private DocumentTypeService: DocumentTypeService) {}
+    private documentTypeService: DocumentTypeService) {}
 
   ngOnInit() {
-    this.documentTypes$ = this.DocumentTypeService.getAll$();
+    this.documentTypes$ = this.documentTypeService.getAll$();
   }
 
   onSubmit(data:any){  
     if(!data || !this.missionId) this.finished.emit();
-    else this.missionDocumentService.addDocument$(this.missionId, data.documentType, data.files).subscribe(x => this.finished.emit(x)) 
+    else 
+      this.missionDocumentService
+        .addDocument$(this.missionId, data.documentType, data.files)
+        .subscribe(x => this.finished.emit(x)) 
   }
 
 }
