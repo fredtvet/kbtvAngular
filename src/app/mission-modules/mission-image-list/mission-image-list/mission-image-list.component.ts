@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, ViewChild } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { MatDialog } from "@angular/material/dialog";
 import { filter, takeUntil, tap } from "rxjs/operators";
-import { RolePresets } from 'src/app/shared-app/enums';
+import { RolePresets, Notifications } from 'src/app/shared-app/enums';
 import { Observable } from 'rxjs';
 import { MissionImage, Mission } from 'src/app/core/models';
 import { MissionImageService, MainNavService, NotificationService, MissionService, DeviceInfoService, DownloaderService } from 'src/app/core/services';
@@ -59,18 +59,20 @@ export class MissionImageListComponent extends SubscriptionComponent{
 
   uploadImages = (files: FileList) => {
     this.missionImageService.addImages$(this.missionId, files).subscribe(data =>
-      this.notificationService.setNotification(
-        `Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`
-        )
+      this.notificationService.notify({
+        title: `Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`,
+        type: Notifications.Success
+      })
     );
   }
 
   deleteImages = (ids: number[]) => {
     this.missionImageService.deleteRange$(ids).subscribe(data =>{
       this.imageList.clearSelections();
-      this.notificationService.setNotification(
-        `Vellykket! ${ids.length} ${ids.length > 1 ? 'bilder' : 'bilde'} slettet.`
-      )  
+      this.notificationService.notify({
+        title: `Vellykket! ${ids.length} ${ids.length > 1 ? 'bilder' : 'bilde'} slettet.`,        
+        type: Notifications.Success
+      })     
     })    
   }
 

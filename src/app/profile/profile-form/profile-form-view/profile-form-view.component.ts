@@ -39,7 +39,7 @@ export class ProfileFormViewComponent implements OnInit {
       ],
       phoneNumber: [
         this.user.phoneNumber,
-        [Validators.minLength(4), Validators.maxLength(12)],
+        [Validators.minLength(4), Validators.maxLength(14)],
       ],
       email: [
         this.user.email,

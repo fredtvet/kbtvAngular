@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 import { MissionNote } from 'src/app/core/models';
 import { NotificationService, MissionNoteService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
+import { Notifications } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-mission-note-form',
@@ -37,7 +38,10 @@ export class MissionNoteFormComponent {
   private createNote(note: MissionNote){
     if(note)
       this.missionNoteService.add$(note).subscribe(n => {
-        this.notificationService.setNotification('Vellykket! Notat opprettet.');
+        this.notificationService.notify({
+          title:'Vellykket! Notat opprettet.',        
+          type: Notifications.Success
+        })
         this.finished.emit(n);
       });  
   }
@@ -45,9 +49,12 @@ export class MissionNoteFormComponent {
   private editNote(note: MissionNote){
     if(note)
       this.missionNoteService.update$(note).subscribe(n =>{
-          this.notificationService.setNotification('Vellykket oppdatering!');
-          this.finished.emit(n);
-        });
+        this.notificationService.notify({
+          title:'Vellykket oppdatering!',        
+          type: Notifications.Success
+        })
+        this.finished.emit(n);
+      });
   }
 
 }

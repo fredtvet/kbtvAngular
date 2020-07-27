@@ -31,8 +31,8 @@ export class AppComponent {
     this.authService.populate();
 
     this.deviceInfoService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
-      if(isOnline) this.notificationService.setNotification('Du er tilkoblet internett igjen!')
-      else this.notificationService.setNotification('Du er nå i frakoblet modus. Det er kun mulig å lese data.', Notifications.Warning)
+      if(isOnline) this.notificationService.notify({title: 'Du er tilkoblet internett igjen!', type: Notifications.Success})
+      else this.notificationService.notify({title: 'Du er nå i frakoblet modus. Det er kun mulig å lese data.', type: Notifications.Warning})
     });   
   }
 

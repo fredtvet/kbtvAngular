@@ -55,6 +55,6 @@ export class ApiService {
 
   private throwNotOnlineError(): Observable<never> {
     return throwError('Denne funksjonen krever internett tilkobling.')
-      .pipe(tap(next => {}, error => this.notificationService.setNotification(error, Notifications.Error)));
+      .pipe(tap(next => {}, error => this.notificationService.notify({title: error, type: Notifications.Error})))
   }
 }

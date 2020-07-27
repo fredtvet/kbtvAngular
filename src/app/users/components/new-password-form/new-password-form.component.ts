@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input } from '@angular/core';
 import { NotificationService, UserService } from 'src/app/core/services';
+import { Notifications } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-new-password-form',
@@ -23,7 +24,10 @@ export class NewPasswordFormComponent {
     
     this.userService.newPassword$(this.userName, result.newPassword).subscribe(
       res => {
-        this.notificationService.setNotification('Vellykket oppdatering!');
+        this.notificationService.notify({
+          title:'Vellykket oppdatering!',        
+          type: Notifications.Success
+        })
         this.finished.emit();
       }, 
       error => this.serverError = error

@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Notifications } from 'src/app/shared-app/enums/notifications.enum';
-import { NotificationComponent } from 'src/app/shared-app/components/notification/notification.component';
+import { Subject, of } from 'rxjs';
+import { AppNotification } from 'src/app/shared-app/interfaces';
+import { NotificationComponent } from 'src/app/shared-app/components';
+import { delay, concatMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,30 +12,34 @@ import { NotificationComponent } from 'src/app/shared-app/components/notificatio
 
 export class NotificationService {
 
-  constructor(private _snackBar: MatSnackBar) {}
+  private notificationSubject = new Subject<AppNotification>();
 
-  lastType: Notifications;
-
-  setNotification(message: string, type: Notifications = Notifications.Success){
-    if(this.lastType === type) return undefined;
-    this.lastType = type;
-    setTimeout(() => {this.lastType = null}, 1000);
-    switch(type){
-      case Notifications.Success:
-        this.openSnackBar(message, 'check_circle', 2000, 'notification-success');
-        break;
-      case Notifications.Error:
-        this.openSnackBar(message, 'error', 3500, 'notification-error');
-        break;
-      case Notifications.Warning:
-        this.openSnackBar(message, 'warning', 3500, 'notification-warn')
-    }
-
+  constructor(private snackBar: MatSnackBar) {
+    this.notificationSubject.pipe(
+      concatMap(notification => of(notification).pipe(delay(1000))) //Delay emissions
+    ).subscribe(this.setNotification)
   }
 
-  openSnackBar(message: string, icon:string, duration: number, panelClass:string){
-    this._snackBar.openFromComponent(NotificationComponent, {
-      data : { message, icon },
+  notify = (notification: AppNotification) => 
+    this.notificationSubject.next(notification);
+  
+  private setNotification = (notification: AppNotification) => {
+    switch(notification.type){
+      case Notifications.Success:
+        this.openSnackBar(notification.title, notification.details, 'check_circle', 2000, 'notification-success');
+        break;
+      case Notifications.Error:
+        this.openSnackBar(notification.title, notification.details, 'error', 3500, 'notification-error');
+        break;
+      case Notifications.Warning:
+        this.openSnackBar(notification.title, notification.details, 'warning', 3500, 'notification-warn');
+        break;
+    }
+  }
+
+  private openSnackBar(title: string, details: string[], icon:string, duration: number, panelClass:string){
+    this.snackBar.openFromComponent(NotificationComponent, {
+      data : { title, details, icon },
       duration: duration,
       panelClass: panelClass
     })

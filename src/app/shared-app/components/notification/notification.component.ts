@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 
 @Component({
@@ -7,18 +7,12 @@ import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar'
   host: { '(click)': 'onClick()'},
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NotificationComponent implements OnInit {
+export class NotificationComponent {
 
   constructor(
-    @Inject(MAT_SNACK_BAR_DATA) public data: any,
-    private _snackRef: MatSnackBarRef<NotificationComponent>) { }
+    @Inject(MAT_SNACK_BAR_DATA) public data: {title: string, details: string[], icon: string},
+    private _snackRef: MatSnackBarRef<NotificationComponent>) {  }
 
-  ngOnInit() {}
-
-  onClick(){
-    this._snackRef.dismiss();
-  }
-
-
-
+  onClick = () => this._snackRef.dismiss();
+  
 }

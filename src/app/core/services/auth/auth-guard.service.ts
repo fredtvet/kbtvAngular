@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     }
 
     if(this.authService.currentUser && allowedRoles && !allowedRoles.includes(this.authService.currentUser.role)){
-      this.notificaitonService.setNotification('Du mangler riktig autorisasjon for å gå inn på denne siden.',Notifications.Error);
+      this.notificaitonService.notify({title: 'Du mangler riktig autorisasjon for å gå inn på denne siden.', type: Notifications.Error})
       this.router.navigate(['/hjem']);
       return false;    
     }

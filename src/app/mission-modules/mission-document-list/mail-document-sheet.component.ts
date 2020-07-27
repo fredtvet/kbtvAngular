@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/cor
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 import { NotificationService, MissionDocumentService } from 'src/app/core/services';
+import { Notifications } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-mail-document-sheet',
@@ -36,7 +37,10 @@ export class MailDocumentSheetComponent implements OnInit {
   mailDocuments = (toEmail: string) =>
     this._missionDocumentService.mailDocuments$(toEmail, this.data.ids).subscribe(res => { 
       this.close(true);
-      this._notificationService.setNotification(`Vellykket! ${this.data.ids.length} ${this.data.ids.length > 1 ? 'dokumenter' : 'dokument'} sendt`)
+      this._notificationService.notify({
+        title: `Vellykket! ${this.data.ids.length} ${this.data.ids.length > 1 ? 'dokumenter' : 'dokument'} sendt`,
+        type: Notifications.Success
+      })
     });
   
 

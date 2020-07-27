@@ -5,7 +5,7 @@ import { MissionDocumentService, MainNavService, NotificationService, MissionSer
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
-import { Roles } from 'src/app/shared-app/enums';
+import { Roles, Notifications } from 'src/app/shared-app/enums';
 import { takeUntil, filter, map } from 'rxjs/operators';
 import { ConfirmDialogComponent, SelectableListBase, ConfirmDialogConfig } from 'src/app/shared/components';
 import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
@@ -63,9 +63,10 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
   deleteDocuments = (ids: number[]) => {
     this.missionDocumentService.deleteRange$(ids).subscribe(data =>{
       this.documentList.clearSelections();
-      this.notificationService.setNotification(
-        `Vellykket! ${ids.length} ${ids.length > 1 ? 'dokumenter' : 'dokument'} slettet.`
-      )
+      this.notificationService.notify({
+        title: `Vellykket! ${ids.length} ${ids.length > 1 ? 'dokumenter' : 'dokument'} slettet.`,
+        type: Notifications.Success
+      })
     });
   }
 

@@ -50,7 +50,7 @@ export class DataSyncService {
       .pipe(retry(3), tap(data => {
         this.dataSyncConfig.syncEntities.forEach(s =>s.service.sync(data[s.httpResponseKey]));
       }),catchError(err => {
-        this.notificationService.setNotification('Noe gikk feil med synkroniseringen!' , Notifications.Error)
+        this.notificationService.notify({title: 'Noe gikk feil med synkroniseringen!' , type: Notifications.Error})
         throw err;
       })).subscribe();
   }

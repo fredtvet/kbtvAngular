@@ -4,6 +4,7 @@ import { Mission, MissionType, Employer } from 'src/app/core/models';
 import { Observable } from 'rxjs';
 import { CreateMission, UpdateMission } from 'src/app/shared-app/interfaces/commands';
 import { tap } from 'rxjs/operators';
+import { Notifications } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-mission-form',
@@ -45,7 +46,7 @@ export class MissionFormComponent {
 
   private editMission(mission: UpdateMission): void{
     this.missionService.updateMission$(mission).subscribe(res => {
-        this.notificationService.setNotification('Vellykket oppdatering!');
+        this.notificationService.notify({title: 'Vellykket oppdatering!', type: Notifications.Success});
         this.finished.emit(res.id);
       })
   }

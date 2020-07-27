@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Employer } from 'src/app/core/models';
-import { Roles } from "src/app/shared-app/enums";
+import { Roles, Notifications } from "src/app/shared-app/enums";
 import { EmployerService, NotificationService } from "src/app/core/services";
 import { Observable } from "rxjs";
 
@@ -54,16 +54,14 @@ export class EmployerFormComponent {
 
   private updateEmployer(employer: Employer): void {
     this.employerService.update$(employer).subscribe((e) => {
-      this.notificationService.setNotification("Vellykket oppdatering!");
+      this.notificationService.notify({title: "Vellykket oppdatering!", type: Notifications.Success});
       this.finished.emit(e);
     });
   }
 
   private createEmployer(employer: any): void {
     this.employerService.add$(employer).subscribe((e) => {
-      this.notificationService.setNotification(
-        "Vellykket! Ny oppdragsgiver registrert."
-      );
+      this.notificationService.notify({title: "Vellykket! Ny oppdragsgiver registrert.", type: Notifications.Success});
       this.finished.emit(e);
     });
   }

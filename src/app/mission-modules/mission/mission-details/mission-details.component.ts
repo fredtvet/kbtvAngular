@@ -8,7 +8,7 @@ import { tap, filter, map } from 'rxjs/operators';
 import { Observable, combineLatest } from 'rxjs';
 import { MissionDetailsViewModel } from './mission-details-view-model.interface';
 import { TopDetailNavConfig } from 'src/app/shared-app/interfaces';
-import { RolePresets, Roles } from 'src/app/shared-app/enums';
+import { RolePresets, Roles, Notifications } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-mission-details',
@@ -52,16 +52,17 @@ export class MissionDetailsComponent{
 
   uploadImages = (data: {files: FileList, missionId: number}) => {
     this.missionImageService.addImages$(data.missionId, data.files).subscribe(data =>
-      this.notificationService.setNotification(
-        `Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`
-        )
+      this.notificationService.notify({
+        title: `Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`,
+        type: Notifications.Success
+      })
     );
   }
   
   private deleteMission = (id: number) =>{
     this.onBack()
     this.missionService.delete$(id).pipe(filter(del => del))
-      .subscribe(del => this.notificationService.setNotification('Vellykket! Oppdrag slettet.'));
+      .subscribe(del => this.notificationService.notify({title: 'Vellykket! Oppdrag slettet.', type: Notifications.Success}));
   }
   
   private openMissionForm = (idPreset: number) => this.router.navigate(['rediger'], {relativeTo: this.route, queryParams: {idPreset}});

@@ -6,7 +6,7 @@ import {
 } from "src/app/core/services";
 import { User, Employer } from "src/app/core/models";
 import { Observable } from "rxjs";
-import { Roles } from "src/app/shared-app/enums";
+import { Roles, Notifications } from "src/app/shared-app/enums";
 
 @Component({
   selector: "app-user-form",
@@ -47,15 +47,21 @@ export class UserFormComponent {
 
   private createUser(user: any) {
     this._userService.add$(user).subscribe((success) => {
-      this.notificationService.setNotification("Vellykket! Ny bruker registrert.");
+      this.notificationService.notify({
+        title:'Vellykket! Ny bruker registrert.',        
+        type: Notifications.Success
+      })
       this.finished.emit(success);
     });
   }
 
   private updateUser(user: User) {
     this._userService.update$(user).subscribe((success) => {
-        this.notificationService.setNotification("Vellykket oppdatering!");
-        this.finished.emit(success);
+      this.notificationService.notify({
+        title:'Vellykket oppdatering!',        
+        type: Notifications.Success
+      })
+      this.finished.emit(success);
     });
   }
 }

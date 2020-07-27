@@ -1,5 +1,8 @@
 <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
     <mat-icon>{{data.icon}}</mat-icon>
-    <span>{{ data.message }}</span>
+    <span *ngIf="data.title">{{ data.title }}</span>
+    <div *ngFor="let detail of data.details">
+        {{ detail }}
+    </div>
 </span>
 

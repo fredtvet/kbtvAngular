@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angul
 import { NotificationService, AuthService } from 'src/app/core/services';
 import { User } from 'src/app/core/models';
 import { Observable } from 'rxjs';
+import { Notifications } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-profile-form',
@@ -24,7 +25,10 @@ export class ProfileFormComponent {
 
     this.authService.updateCurrentUser$(user).subscribe(
       res => {
-        this.notificationService.setNotification('Vellykket oppdatering!');
+        this.notificationService.notify({
+          title:'Vellykket oppdatering!',        
+          type: Notifications.Success
+        })
         this.finished.emit();
       },
     )

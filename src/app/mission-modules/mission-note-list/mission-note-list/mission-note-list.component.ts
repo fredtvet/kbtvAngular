@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { MainNavService, NotificationService, MissionNoteService } from 'src/app/core/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { RolePresets } from 'src/app/shared-app/enums';
+import { RolePresets, Notifications } from 'src/app/shared-app/enums';
 import { filter } from 'rxjs/operators';
 import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
@@ -38,7 +38,10 @@ export class MissionNoteListComponent {
 
   deleteNote = (id: number) => 
     this.missionNoteService.delete$(id).subscribe(data =>
-      this.notificationService.setNotification(`Vellykket! notat slettet.`)
+      this.notificationService.notify({
+        title:'Vellykket! notat slettet.',        
+        type: Notifications.Success
+      })
     );
   
   openConfirmDeleteDialog = (id: number) => {   

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Mission, Timesheet } from "src/app/core/models";
-import { Roles } from 'src/app/shared-app/enums';
+import { Roles, Notifications } from 'src/app/shared-app/enums';
 import { switchMap, tap } from 'rxjs/operators';
 import { UserTimesheetService, MissionService, NotificationService, DateTimeService } from 'src/app/core/services';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -29,7 +29,7 @@ export class TimesheetFormComponent implements OnInit {
     private _dateTimeService: DateTimeService,
     private _userTimesheetService: UserTimesheetService,
     private _missionService: MissionService,
-    private _notificationService: NotificationService) {
+    private notificationService: NotificationService) {
     }
 
   ngOnInit(){
@@ -54,14 +54,20 @@ export class TimesheetFormComponent implements OnInit {
 
   createTimesheet(timesheet: Timesheet){
     this._userTimesheetService.add$(timesheet).subscribe(x => {
-      this._notificationService.setNotification('Time registrert!');
+      this.notificationService.notify({
+        title:'Time registrert!',        
+        type: Notifications.Success
+      })
       this.finished.emit(x);
     })
   }
 
   editTimesheet(timesheet: Timesheet){
     this._userTimesheetService.update$(timesheet).subscribe(x => {
-      this._notificationService.setNotification('Time oppdatert!');
+      this.notificationService.notify({
+        title:'Time oppdatert!',        
+        type: Notifications.Success
+      })
       this.finished.emit(x);
     })
   }

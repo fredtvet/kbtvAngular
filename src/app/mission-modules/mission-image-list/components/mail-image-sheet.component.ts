@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/cor
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 import { MissionImageService, NotificationService } from 'src/app/core/services';
+import { Notifications } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-mail-image-sheet',
@@ -36,7 +37,10 @@ export class MailImageSheetComponent implements OnInit {
   mailImages = (toEmail: string) =>
     this._missionImageService.mailImages$(toEmail, this.data.ids).subscribe(res => { 
       this.close(true);
-      this._notificationService.setNotification(`Vellykket! ${this.data.ids.length} ${this.data.ids.length > 1 ? 'bilder' : 'bilde'} sendt`)
+      this._notificationService.notify({
+        title:`Vellykket! ${this.data.ids.length} ${this.data.ids.length > 1 ? 'bilder' : 'bilde'} sendt`,
+        type: Notifications.Success
+      })
     });
   
 
