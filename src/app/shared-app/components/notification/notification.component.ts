@@ -11,7 +11,7 @@ export class NotificationComponent {
 
   constructor(
     @Inject(MAT_SNACK_BAR_DATA) public data: {title: string, details: string[], icon: string},
-    private _snackRef: MatSnackBarRef<NotificationComponent>) {  }
+    private _snackRef: MatSnackBarRef<NotificationComponent>) { console.log(data)  }
 
   onClick = () => this._snackRef.dismiss();
   

@@ -1,8 +1,12 @@
-<span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+<span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="mb-1">
     <mat-icon>{{data.icon}}</mat-icon>
     <span *ngIf="data.title">{{ data.title }}</span>
-    <div *ngFor="let detail of data.details">
+</span>
+<ng-container *ngFor="let detail of data.details">
+    <mat-divider></mat-divider>
+    <div class="mt-1">
         {{ detail }}
     </div>
-</span>
+</ng-container>
+
 
