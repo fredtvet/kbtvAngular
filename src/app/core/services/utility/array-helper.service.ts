@@ -123,7 +123,6 @@ export class ArrayHelperService {
     return result;
   }
 
-
   convertArrayToObject = <T>(array: T[], key?: string): { [key: string]: T } => {
     let arr = array.reduce((obj, item) => {
         const itemKey = key ? item[key] : item;
@@ -131,7 +130,14 @@ export class ArrayHelperService {
         return obj;
     }, {});
     return arr;
-  };
+  }
+
+  groupBy = <T>(array: T[], key: string): {[key: string] : T[]} => {
+    return array.reduce((groups, x) => {
+      (groups[x[key]] = groups[x[key]] || []).push(x);
+      return groups;
+    }, {});
+  }
 
   isEmptyArray = (arr: any[]) => !arr || arr === null || arr.length === 0
 
