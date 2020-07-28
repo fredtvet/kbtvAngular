@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/cor
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 import { UserTimesheetService } from 'src/app/core/services';
-import { TimesheetFormConfig } from '../timesheet-form-config.interface';
+import { TimesheetFormConfig } from './timesheet-form-config.interface';
 
 @Component({
   selector: 'app-timesheet-form-sheet-wrapper',

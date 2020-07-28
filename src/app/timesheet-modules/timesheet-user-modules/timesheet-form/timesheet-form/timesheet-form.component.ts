@@ -4,7 +4,7 @@ import { Roles, Notifications } from 'src/app/shared-app/enums';
 import { switchMap, tap } from 'rxjs/operators';
 import { UserTimesheetService, MissionService, NotificationService, DateTimeService } from 'src/app/core/services';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { TimesheetFormConfig } from '../timesheet-form-config.interface';
+import { TimesheetFormConfig } from './timesheet-form-config.interface';
 
 @Component({
   selector: 'app-timesheet-form',

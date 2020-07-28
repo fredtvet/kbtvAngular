@@ -3,7 +3,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { TimesheetFormSheetWrapperComponent } from './timesheet-form/timesheet-form-sheet-wrapper.component';
-import { TimesheetFormConfig } from './timesheet-form-config.interface';
+import { TimesheetFormConfig } from './timesheet-form/timesheet-form-config.interface';
 
 @Component({
   template: '',
