@@ -21,16 +21,10 @@ export class MainNavComponent {
 
   config$: Observable<MainNavConfig> = this.mainNavService.config$;
 
-  constructor(
-    private mainNavService: MainNavService,
-    private authService: AuthService) { }
+  constructor(private mainNavService: MainNavService) { }
 
   toggleDrawer(isXs:boolean){if(isXs) this.drawer.toggle()}
 
-  handleLogout(){
-    this.authService.logout();
-  }  
-  
   prepareRoute(outlet: RouterOutlet) {
     //console.log(outlet && outlet.activatedRouteData && outlet.activatedRouteData['page']);
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['page'];

@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { MainNavService } from 'src/app/core/services';
+import { MainNavService, AuthService } from 'src/app/core/services';
 import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ProfileFormWrapperComponent } from '../profile-form/profile-form-wrapper.component';
@@ -18,6 +18,7 @@ export class ProfileComponent {
   constructor(
     private mainNavService: MainNavService,
     private bottomSheet: MatBottomSheet,
+    private authService: AuthService,
   ){    
     this.configureMainNav();
   }
@@ -26,6 +27,7 @@ export class ProfileComponent {
   
   updatePassword = () => this.bottomSheet.open(PasswordFormWrapperComponent);
 
+  logout = () => this.authService.logout();
 
   private configureMainNav(){
     let cfg = {

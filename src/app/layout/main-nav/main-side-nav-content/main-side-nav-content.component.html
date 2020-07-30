@@ -1,5 +1,5 @@
 
-<mat-toolbar fxLayout="column" fxLayoutAlign="center start" class="bg-primary">
+<span fxLayout="column" fxLayoutAlign="center start" class="p-2 mat-elevation-z1">
 
   <ng-container *ngIf="isOnline$ | async else offlineHeader">
     <span class="mat-small color-success"> Tilkoblet internett </span>
@@ -10,9 +10,7 @@
 
   <span class="mat-body"  *ngIf="user">{{ user.firstName }} {{ user.lastName }}</span>
 
-</mat-toolbar>
-
-<mat-divider></mat-divider>
+</span>
 
 <span class="nav-list">
 
@@ -39,7 +37,7 @@
 
   <mat-divider class="mid-divider"></mat-divider>
 
-  <span *ifRole="[Roles.Leder]" fxHide.xs>
+  <span *ifRole="[Roles.Leder]">
     <div mat-subheader class="color-accent-light pb-0">Administrering</div>
     <a matRipple (click)="navItemClick()" [routerLink]="['/data']" [routerLinkActive]="['active']">
       <mat-icon>dns</mat-icon>
@@ -65,18 +63,12 @@
     <mat-divider class="mid-divider"></mat-divider>
   </span>
 
-  <span class="bottom-list">
-    <mat-divider class="mid-divider"></mat-divider>
-    <a matRipple (click)="navItemClick()" [routerLink]="['/profil']" [routerLinkActive]="['active']">
-      <mat-icon>person</mat-icon>
-      <span>Profil</span>
-    </a>
-    <mat-divider class="mid-divider"></mat-divider>
-    <a matRipple (click)="logOut()">
-      <mat-icon>power_settings_new</mat-icon>
-      <span>Logg ut</span>
-    </a>
-  </span>
-
 </span>
 
+<span class="nav-list bottom-list">
+  <mat-divider class="mid-divider"></mat-divider>
+  <a matRipple (click)="navItemClick()" [routerLink]="['/profil']" [routerLinkActive]="['active']">
+    <mat-icon>person</mat-icon>
+    <span>Min Profil</span>
+  </a>
+</span>

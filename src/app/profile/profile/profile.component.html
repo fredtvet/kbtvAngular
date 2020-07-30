@@ -1,9 +1,15 @@
-<div class="p-2 max-width">
-  <app-list-card [config]="{startIcon:'account_circle'}" (click)="updateProfile()">Oppdater profil
+<div class="p-2 max-width h-100" fxLayout="column" fxLayoutAlign="space-between stretch">
+  <span>
+    <app-list-card [config]="{startIcon:'account_circle'}" (click)="updateProfile()">Oppdater profil
+    </app-list-card>
+    <app-list-card [config]="{startIcon:'vpn_key'}" (click)="updatePassword()">Oppdater passord
+    </app-list-card>
+    <app-list-card [config]="{startIcon:'settings'}" [routerLink]="['/profil/innstillinger']">Innstillinger
+    </app-list-card>
+    <app-list-card appAddToHomeScreen [config]="{startIcon:'get_app'}">Legg til app</app-list-card>
+  </span>
+
+  <app-list-card [config]="{startIcon:'power_settings_new'}" (click)="logout()">Logg ut
   </app-list-card>
-  <app-list-card [config]="{startIcon:'vpn_key'}" (click)="updatePassword()">Oppdater passord
-  </app-list-card>
-  <app-list-card [config]="{startIcon:'settings'}" [routerLink]="['/profil/innstillinger']">Innstillinger
-  </app-list-card>
-  <app-list-card appAddToHomeScreen [config]="{startIcon:'get_app'}">Legg til app</app-list-card>
+  
 </div>

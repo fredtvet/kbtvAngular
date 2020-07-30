@@ -16,14 +16,11 @@ export class MainSideNavContentComponent {
   
   @Input() user: User;
   @Output() navItemClicked = new EventEmitter();
-  @Output() hasLoggedOut = new EventEmitter();
 
   isOnline$:  Observable<boolean> = this.deviceInfoService.isOnline$;
   
   constructor(private deviceInfoService: DeviceInfoService) {}
 
   navItemClick = () => this.navItemClicked.emit();
-
-  logOut = () => this.hasLoggedOut.emit();
 
 }
