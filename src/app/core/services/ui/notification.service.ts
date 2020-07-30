@@ -13,14 +13,14 @@ export class NotificationService {
 
   private queue: AppNotification[] = [];
 
-  private currentNotificationSub: Subscription;
+  private currentNotification: AppNotification;
 
   constructor(private snackBar: MatSnackBar) {}
 
   notify = (notification: AppNotification) => {
-    if(!this.currentNotificationSub || this.currentNotificationSub.closed)
+    if(!this.currentNotification)
       this.setNotification(notification);
-    else 
+    else if(JSON.stringify(notification) !== JSON.stringify(this.currentNotification))
       this.queue.push(notification);
   }
 
@@ -30,15 +30,18 @@ export class NotificationService {
       duration: duration,
       panelClass: panelClass
     });
-    this.currentNotificationSub = ref.afterDismissed().subscribe(x => this.setNextNotification())
+
+    ref.afterDismissed().subscribe(x => this.setNextNotification())
   }
 
   private setNextNotification = () => {
-    let notification = this.queue.shift();
+    let notification = this.queue.shift();    
     if(notification) this.setNotification(notification);
+    else this.currentNotification = undefined;
   }
    
   private setNotification = (notification: AppNotification) => {
+    this.currentNotification = notification;
     switch(notification.type){
       case Notifications.Success:
         this.openSnackBar(notification.title, notification.details, 'check_circle', 2000, 'notification-success');
