@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpRefreshTokenInterceptor, HttpLoadingInterceptor, HttpErrorInterceptor } from './interceptors';
+import { HttpRefreshTokenInterceptor, HttpLoadingInterceptor, HttpErrorInterceptor, HttpIsOnlineInterceptor } from './interceptors';
 
 import {
   AuthGuard,
@@ -37,9 +37,10 @@ import { InboundEmailPasswordService } from './services/data/inbound-email-passw
     CommonModule
   ],
   providers: [  
-    { provide: HTTP_INTERCEPTORS, useClass: HttpRefreshTokenInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpIsOnlineInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRefreshTokenInterceptor, multi: true }, 
     { provide: HTTP_INTERCEPTORS, useClass: HttpLoadingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     UserService,
     IdentityTokensService,
     DeviceInfoService,
