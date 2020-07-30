@@ -2,7 +2,7 @@
     <ng-container #navs *ngFor="let button of buttons">
         <a *ifRole="button.allowedRoles" (click)="handleFn(button.callback, button.params)">
             <mat-icon>{{ button.icon }}</mat-icon>
-            <span>{{ button.text }}</span>
+            <span class="ml-2 mr-2">{{ button.text }}</span>
         </a>
     </ng-container>
 </span>
