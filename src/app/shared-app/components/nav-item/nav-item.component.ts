@@ -1,6 +1,6 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { halfwayRotate } from 'src/app/shared-app/animations';
-import { NavItem } from '../../interfaces/nav-item.interface';
+import { AppButton } from '../../interfaces/app-button.interface';
 
 @Component({
   selector: 'app-nav-item',
@@ -10,27 +10,7 @@ import { NavItem } from '../../interfaces/nav-item.interface';
 })
 export class NavItemComponent {
 
-  @Input() navItem: NavItem = {
-    icon: "dns",
-    text: "Administrering",
-    children: [
-      {
-        icon: "dns",
-        text: "Data",
-        routerLink: "/data"
-      },
-      {
-        icon: "people",
-        text: "Brukere",
-        routerLink: "/brukere"
-      },
-      {
-        icon: "assessment",
-        text: "Timer",
-        routerLink: "/timeadministrering",
-      },
-    ]
-  } as NavItem;
+  @Input() navButton: AppButton;
 
   @Output() hasNavigated = new EventEmitter();
 
@@ -39,10 +19,10 @@ export class NavItemComponent {
   constructor() { }
 
   navItemClick = () => {
-    if(this.navItem.children && this.navItem.children != null && this.navItem.children.length > 0){
+    if(this.navButton.children && this.navButton.children != null && this.navButton.children.length > 0){
       this.childrenShown = !this.childrenShown; //Toggle children if present
     }
-    else if(this.navItem.routerLink && this.navItem.routerLink != null){
+    else if(this.navButton.routerLink && this.navButton.routerLink != null){
       this.hasNavigated.emit(); //Alert that navigation has happen if no children to show
     }
   };

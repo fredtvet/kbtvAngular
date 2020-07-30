@@ -1,7 +1,7 @@
-import { NavItem } from 'src/app/shared-app/interfaces';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
+import { AppButton } from 'src/app/shared-app/interfaces';
 
-export const SideNavNavigations: NavItem[] = [
+export const SideNavNavigations: AppButton[] = [
   {
     icon: "home",
     text: "Hjem",

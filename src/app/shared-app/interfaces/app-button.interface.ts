@@ -1,15 +1,19 @@
-import { AppAction } from './app-action.interface';
 import { Icons } from '../enums/icons.enum';
 
 
-export interface AppButton extends AppAction{
+export interface AppButton{
     text?: string;
     icon?: string;
+    allowedRoles?: string[];
+
+    routerLink?: string;
+
+    callback?: Function;
+    params?: any[];
+
+    children?: AppButton[];
     svgIcon?: Icons;
     colorClass?: string; 
     iconSizeClass?: string;
-    allowedRoles?: string[];
     aria?: string;
-    callback: Function;
-    params?: any[];
 }

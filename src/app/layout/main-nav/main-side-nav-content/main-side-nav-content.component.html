@@ -13,11 +13,11 @@
 </span>
 
 <div class="nav-list">
-  <ng-container *ngFor="let navItem of SideNavNavigations" >
+  <ng-container *ngFor="let navButton of SideNavNavigations" >
     <app-nav-item 
-      [navItem]="navItem"
+      [navButton]="navButton"
       (hasNavigated)="navItemClick()">
     </app-nav-item>  
-    <mat-divider *ifRole="navItem.allowedRoles" class="mid-divider"></mat-divider>
+    <mat-divider *ifRole="navButton.allowedRoles" class="mid-divider"></mat-divider>
   </ng-container>
 </div>
