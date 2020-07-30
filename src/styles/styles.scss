@@ -14,6 +14,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 .bg-primary{background:$primary!important;color:white;}
 .bg-primary-light{background:$primary-light!important;color:black;}
+.bg-primary-dark{background:$primary-dark!important;color:white;}
 
 .color-primary{color:$primary!important;}
 .color-primary-light{color:$primary-light!important;}
@@ -67,11 +68,9 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 .nav-list{
   a{
-    padding: $gap-size *  4px;
+    margin: $gap-size * 2px;
+    padding: $gap-size * 2px;
     display:block;
-    mat-icon{
-      margin-right:$gap-size *  2px;
-    }
   }
 }
 

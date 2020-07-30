@@ -1,5 +1,5 @@
 
-<span fxLayout="column" fxLayoutAlign="center start" class="p-2 mat-elevation-z1">
+<span fxLayout="column" fxLayoutAlign="center start" class="p-2 pl-4 mat-elevation-z1">
 
   <ng-container *ngIf="isOnline$ | async else offlineHeader">
     <span class="mat-small color-success"> Tilkoblet internett </span>
@@ -12,63 +12,12 @@
 
 </span>
 
-<span class="nav-list">
-
-  <a matRipple (click)="navItemClick()" [routerLink]="['/hjem']" [routerLinkActive]="['active']">
-    <mat-icon>home</mat-icon>
-    <span>Hjem</span>
-  </a>
-
-  <mat-divider class="mid-divider"></mat-divider>
-
-  <a matRipple (click)="navItemClick()" [routerLink]="['/oppdrag']" [routerLinkActive]="['active']">
-    <mat-icon>view_list</mat-icon>
-    <span>Oppdrag</span>
-  </a>
-
-  <mat-divider class="mid-divider"></mat-divider>
-
-  <ng-container *ifRole="RolePresets.Internal">
-    <a matRipple (click)="navItemClick()" [routerLink]="['/timer']" [routerLinkActive]="['active']">
-      <mat-icon>timer</mat-icon>
-      <span>Timer</span>
-    </a>
+<div class="nav-list">
+  <ng-container *ngFor="let navItem of SideNavNavigations" >
+    <app-nav-item 
+      [navItem]="navItem"
+      (hasNavigated)="navItemClick()">
+    </app-nav-item>  
+    <mat-divider *ifRole="navItem.allowedRoles" class="mid-divider"></mat-divider>
   </ng-container>
-
-  <mat-divider class="mid-divider"></mat-divider>
-
-  <span *ifRole="[Roles.Leder]">
-    <div mat-subheader class="color-accent-light pb-0">Administrering</div>
-    <a matRipple (click)="navItemClick()" [routerLink]="['/data']" [routerLinkActive]="['active']">
-      <mat-icon>dns</mat-icon>
-      <span>Data</span>
-    </a>
-    <mat-divider class="mid-divider"></mat-divider>
-    <a matRipple (click)="navItemClick()" [routerLink]="['/brukere']" [routerLinkActive]="['active']">
-      <mat-icon>people</mat-icon>
-      <span>Brukere</span>
-    </a>
-    <mat-divider class="mid-divider"></mat-divider>
-    <a matRipple (click)="navItemClick()" [routerLink]="['/timeadministrering']" [routerLinkActive]="['active']">
-      <mat-icon>assessment</mat-icon>
-      <span>Timer</span>
-    </a>
-    <mat-divider class="mid-divider"></mat-divider>
-
-    <div mat-subheader class="pb-0 color-accent-light">Statistikk</div>
-    <a matRipple (click)="navItemClick()" [routerLink]="['/timestatistikk']" [routerLinkActive]="['active']">
-      <mat-icon>assessment</mat-icon>
-      <span>Timestatistikk</span>
-    </a>
-    <mat-divider class="mid-divider"></mat-divider>
-  </span>
-
-</span>
-
-<span class="nav-list bottom-list">
-  <mat-divider class="mid-divider"></mat-divider>
-  <a matRipple (click)="navItemClick()" [routerLink]="['/profil']" [routerLinkActive]="['active']">
-    <mat-icon>person</mat-icon>
-    <span>Min Profil</span>
-  </a>
-</span>
+</div>

@@ -14,3 +14,4 @@ export * from './timesheet-summary.interface';
 export * from './tokens.interface';
 export * from './commands/mission-commands.interface';
 export * from './app-notification.interface';
+export * from './nav-item.interface';

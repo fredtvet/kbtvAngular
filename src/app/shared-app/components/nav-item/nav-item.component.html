@@ -1,0 +1,16 @@
+<ng-container *ifRole="navItem.allowedRoles">
+    <a matRipple (click)="navItemClick()" [routerLink]="[navItem.routerLink]" [routerLinkActive]="['active']">
+        <mat-icon>{{navItem.icon}}</mat-icon>
+        <span class="ml-2 mr-2">{{navItem.text}}</span>
+        <mat-icon *ngIf="navItem.children && navItem.children.length > 0" [@halfwayRotate]="childrenShown">
+            expand_more
+        </mat-icon>
+    </a>
+
+    <span class="children" *ngIf="navItem.children && navItem.children.length > 0" [fxHide]="!childrenShown">
+
+        <app-nav-item *ngFor="let child of navItem.children" [navItem]="child" (hasNavigated)="alertNavigation()">
+        </app-nav-item>
+
+    </span>
+</ng-container>

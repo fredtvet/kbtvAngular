@@ -17,6 +17,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NavItemComponent } from './components/nav-item/nav-item.component';
 
 
 
@@ -31,6 +32,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     IfRoleDirective,
     PageNotFoundComponent,
     NotificationComponent,
+    NavItemComponent,
   ],
   imports: [
     RouterModule,
@@ -69,7 +71,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ListCardComponent,
     IfRoleDirective,
     PageNotFoundComponent,
-    NotificationComponent
+    NotificationComponent,
+    NavItemComponent
   ]
 })
 export class SharedAppModule { }

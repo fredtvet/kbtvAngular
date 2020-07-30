@@ -6,8 +6,6 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { DetailTopNavComponent } from './main-nav/detail-top-nav/detail-top-nav.component';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 
-
-
 @NgModule({
   declarations: [
     MainNavComponent,
