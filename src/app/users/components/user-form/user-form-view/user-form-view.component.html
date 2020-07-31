@@ -53,6 +53,13 @@
     </mat-error>
   </mat-form-field>
 
+  <mat-form-field>
+    <input matInput placeholder="Epost" formControlName="email">
+    <mat-error *ngIf="this.email.invalid">
+      Epost adressen er ugyldig.
+    </mat-error>
+  </mat-form-field>
+
   <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
     [disabled]="userForm.invalid || userForm.pristine"
     (click)="onSubmit()">
