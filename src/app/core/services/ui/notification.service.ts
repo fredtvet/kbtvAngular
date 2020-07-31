@@ -18,10 +18,10 @@ export class NotificationService {
   constructor(private snackBar: MatSnackBar) {}
 
   notify = (notification: AppNotification) => {
-    if(!this.currentNotification)
-      this.setNotification(notification);
-    else if(JSON.stringify(notification) !== JSON.stringify(this.currentNotification))
-      this.queue.push(notification);
+    if(!this.currentNotification && this.currentNotification !== null)
+       this.setNotification(notification);      
+    else if(JSON.stringify(notification) !== JSON.stringify(this.currentNotification))     
+        this.queue.push(notification);    
   }
 
   private openSnackBar(title: string, details: string[], icon:string, duration: number, panelClass:string){
@@ -31,18 +31,13 @@ export class NotificationService {
       panelClass: panelClass
     });
 
-    ref.afterDismissed().subscribe(x => this.setNextNotification())
-  }
-
-  private setNextNotification = () => {
-    let notification = this.queue.shift();    
-    if(notification) this.setNotification(notification);
-    else this.currentNotification = undefined;
+    ref.afterDismissed().subscribe(x => this.setNotification(this.queue.shift()))
   }
    
   private setNotification = (notification: AppNotification) => {
     this.currentNotification = notification;
-    switch(notification.type){
+
+    switch(notification?.type){
       case Notifications.Success:
         this.openSnackBar(notification.title, notification.details, 'check_circle', 2000, 'notification-success');
         break;
