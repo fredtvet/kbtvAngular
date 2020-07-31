@@ -2,11 +2,11 @@
     <mat-icon>{{data.icon}}</mat-icon>
     <span *ngIf="data.title">{{ data.title }}</span>
 </span>
-<ng-container *ngFor="let detail of data.details">
-    <mat-divider></mat-divider>
-    <div class="mt-1">
+
+<ul *ngFor="let detail of data.details">
+    <li>
         {{ detail }}
-    </div>
-</ng-container>
+    </li>
+</ul>
 
 
