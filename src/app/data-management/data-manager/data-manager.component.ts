@@ -1,9 +1,11 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { MainNavService } from 'src/app/core/services';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { DataManagerFacadeService } from '../data-manager-facade.service';
 import { BaseEntity } from 'src/app/core/models';
+import { DataTableComponent } from './data-table/data-table.component';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-data-manager',
@@ -12,6 +14,7 @@ import { BaseEntity } from 'src/app/core/models';
 })
 
 export class DataManagerComponent {
+@ViewChild('dataTable') dataTable: DataTableComponent;
 
 data$:Observable<BaseEntity[]> = this.dataManagerFacade.data$;
 
@@ -26,9 +29,12 @@ constructor(
 
   changeTable = (table: string) => this.dataManagerFacade.changeTable(table);
   
-  editCell(e: any){
-    if(e.oldValue != e.newValue)
-      this.dataManagerFacade.updateSelectedTableEntity(e.data);     
+  editCell(command: any){
+    if(command.oldValue != command.newValue)
+      this.dataManagerFacade.updateSelectedTableEntity$(command.data).pipe(catchError(x => {
+        this.revertTableUpdate(command)
+        return throwError(x);
+      })).subscribe();     
   }
 
   deleteItems(ids: number[]): boolean{
@@ -36,9 +42,13 @@ constructor(
       this.dataManagerFacade.deleteSelectedTableEntities(ids);   
   }
 
-  createItem() { this.dataManagerFacade.createItem()
+  createItem = () => this.dataManagerFacade.createItem();
+  
+  private revertTableUpdate(command:any){
+    console.log(command);
+    //command.node.data[command.colDef.Field] = command.oldValue;
+    command.node.setDataValue(command.column, command.oldValue);
   }
-
 
   private configureMainNav(){
     let cfg = {title:  "Data"} as TopDefaultNavConfig;

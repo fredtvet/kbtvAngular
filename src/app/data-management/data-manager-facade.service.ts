@@ -42,8 +42,8 @@ export class DataManagerFacadeService {
 
   changeTable = (table:string) => this.selectedTableSubject.next(table);
 
-  updateSelectedTableEntity = (entity: BaseEntity) => 
-    this.getTableService(this.selectedTable).update$(entity).subscribe();   
+  updateSelectedTableEntity$ = (entity: BaseEntity): Observable<BaseEntity> => 
+    this.getTableService(this.selectedTable).update$(entity);   
 
   deleteSelectedTableEntities = (ids: number[]) => 
     this.getTableService(this.selectedTable).deleteRange$(ids).subscribe();

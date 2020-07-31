@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { TranslationService } from 'src/app/core/services';
 import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
@@ -8,7 +8,8 @@ import { BaseEntity } from 'src/app/core/models';
 
 @Component({
   selector: 'app-data-table',
-  templateUrl: './data-table.component.html'
+  templateUrl: './data-table.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableComponent {
   @ViewChild('dataGrid') dataGrid: AgGridAngular;
@@ -30,7 +31,7 @@ export class DataTableComponent {
 
   rowData: any = [];
   
-  ignoredProperties = ['updatedat', 'createdat', 'employerid', 'missiontypeid', 'imageurl'];
+  ignoredProperties = ['updatedat', 'createdat', 'lastvisited', 'employerid', 'missiontypeid', 'imageurl'];
   
   noEditProperties = ['id', 'missiontype', 'employer', 'password'];
   
@@ -61,7 +62,6 @@ export class DataTableComponent {
   }
 
   private initNgGrid = (data: BaseEntity[]) => {
-
     this.columnDefs = [];
     this.rowData = [];
 
