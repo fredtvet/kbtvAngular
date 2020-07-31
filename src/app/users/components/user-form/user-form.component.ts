@@ -21,7 +21,7 @@ export class UserFormComponent {
 
   isCreateForm = false;
 
-  user$: Observable<User>;
+  users$: Observable<User[]>;
   roles: string[] = Object.keys(Roles).map(key => Roles[key] as string);
 
   employers$: Observable<Employer[]>;
@@ -34,8 +34,8 @@ export class UserFormComponent {
 
   ngOnInit() {
     if(!this.userNamePreset) this.isCreateForm = true;
-    else this.user$ = this._userService.get$(this.userNamePreset);
-
+    
+    this.users$ = this._userService.getAll$();
     this.employers$ = this._employerService.getAll$();
   }
 

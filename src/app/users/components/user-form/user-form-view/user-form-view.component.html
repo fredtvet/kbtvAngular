@@ -2,42 +2,42 @@
 
   <mat-form-field>
     <input matInput placeholder="Brukernavn" formControlName="userName" required>
-    <mat-error *ngIf="this.userName.invalid">
-      Minst 4 tegn. ÆØÅ og mellomrom ikke tillatt.
-    </mat-error>
+    <mat-error *ngIf="userName.errors?.required">Brukernavn er ett obligatorisk felt.</mat-error>  
+    <mat-error *ngIf="userName.errors?.pattern">ÆØÅ og mellomrom ikke tillatt.</mat-error>  
+    <mat-error *ngIf="userName.errors?.minlength">Brukernavn må ha minst 4 tegn.</mat-error> 
+    <mat-error *ngIf="userName.errors?.maxlength">Brukernavn kan ha maks 100 tegn.</mat-error>
+    <mat-error *ngIf="userName.errors?.userNameTaken">Brukernavnet er allerede i bruk.</mat-error>
   </mat-form-field>
 
   <mat-form-field *ngIf="isCreateForm">
     <input matInput placeholder="Passord" formControlName="password" [type]="hidePassword ? 'password' : 'text'"
       required>
-
+    <mat-error *ngIf="password.errors?.required">Passord er ett obligatorisk felt.</mat-error>  
+    <mat-error *ngIf="password.errors?.minlength">Passord må ha minst 7 tegn.</mat-error>
+    <mat-error *ngIf="password.errors?.maxlength">Passord kan ha maks 100 tegn.</mat-error>
+    
     <mat-icon matSuffix (click)="hidePassword = !hidePassword">
       {{hidePassword ? 'visibility_off' : 'visibility'}}
     </mat-icon>
-
-    <mat-error *ngIf="this.password.invalid">
-      Passord er ett obligatorisk felt på minst 7 tegn.
-    </mat-error>
   </mat-form-field>
 
   <mat-form-field>
     <input matInput placeholder="Fornavn" formControlName="firstName" required>
-    <mat-error *ngIf="this.firstName.invalid">
-      Fornavn er ett obligatorisk felt på maks 100 tegn.
-    </mat-error>
+    <mat-error *ngIf="firstName.errors?.required">Fornavn er ett obligatorisk felt.</mat-error>  
+    <mat-error *ngIf="firstName.errors?.maxlength">Fornavn kan ha maks 100 tegn.</mat-error>
   </mat-form-field>
 
   <mat-form-field>
     <input matInput placeholder="Etternavn" formControlName="lastName" required>
-    <mat-error *ngIf="this.lastName.invalid">
-      Etternavn er ett obligatorisk felt på maks 100 tegn.
-    </mat-error>
+    <mat-error *ngIf="lastName.errors?.required">Etternavn er ett obligatorisk felt.</mat-error>  
+    <mat-error *ngIf="lastName.errors?.maxlength">Etternavn kan ha maks 100 tegn.</mat-error>
   </mat-form-field>
 
   <mat-form-field>
     <mat-select placeholder="Rolle" (change)="changeRole($event)" formControlName="role" required>
       <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
     </mat-select>
+    <mat-error *ngIf="role.errors?.required">Rolle er ett obligatorisk felt.</mat-error>
   </mat-form-field>
 
   <mat-form-field [fxHide]="role.value !== Roles.Oppdragsgiver">
@@ -48,16 +48,13 @@
 
   <mat-form-field>
     <input matInput placeholder="Kontaktnummer" formControlName="phoneNumber">
-    <mat-error *ngIf="this.phoneNumber.invalid">
-      Kontaktnummer må være mellom 4 og 12 siffer.
-    </mat-error>
+    <mat-error *ngIf="phoneNumber.errors?.minlength">Kontaktnummer må ha minst 7 tegn.</mat-error>
+    <mat-error *ngIf="phoneNumber.errors?.maxlength">Kontaktnummer kan ha maks 12 tegn.</mat-error>
   </mat-form-field>
 
   <mat-form-field>
     <input matInput placeholder="Epost" formControlName="email">
-    <mat-error *ngIf="this.email.invalid">
-      Epost adressen er ugyldig.
-    </mat-error>
+    <mat-error *ngIf="email.errors?.email">Epost adressen er ugyldig.</mat-error>
   </mat-form-field>
 
   <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 

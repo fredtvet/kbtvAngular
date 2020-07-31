@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { User, Employer } from 'src/app/core/models';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Roles } from 'src/app/shared-app/enums';
 
 @Component({
@@ -11,7 +11,8 @@ import { Roles } from 'src/app/shared-app/enums';
 
 export class UserFormViewComponent implements OnInit {
   Roles = Roles;
-  @Input() user: User;
+  @Input() users: User[];
+  @Input() userNamePreset: string;
   @Input() employers: Employer[];
   @Input() roles: any;
   @Output() formSubmitted = new EventEmitter();
@@ -25,9 +26,14 @@ export class UserFormViewComponent implements OnInit {
     private _formBuilder: FormBuilder,) {  }
 
     ngOnInit(){
-      if(!this.user || !this.user.userName) this.isCreateForm = true;
+      let user;
 
-      this.initalizeForm(this.user);
+      if(this.users && this.users !== null)
+        user = this.users.find(x => x.userName === this.userNamePreset);   
+   
+      if(!user) this.isCreateForm = true;
+
+      this.initalizeForm(user);
     }
 
     private initalizeForm(x: User){
@@ -36,7 +42,8 @@ export class UserFormViewComponent implements OnInit {
           Validators.required,
           Validators.pattern('^[a-zA-Z0-9_.-]*$'),
           Validators.minLength(4),
-          Validators.maxLength(100)
+          Validators.maxLength(100),
+          this.uniqueUserNameValidator()
         ]],
         password: [{value: null, disabled: !this.isCreateForm},[
           Validators.required,
@@ -53,15 +60,13 @@ export class UserFormViewComponent implements OnInit {
         ]],
         phoneNumber: [x ? x.phoneNumber : null, [
           Validators.minLength(4),
-          Validators.maxLength(12),
-          Validators.nullValidator
+          Validators.maxLength(12)
         ]],
         email: [x ? x.email : null, [
-          Validators.email,
-          Validators.nullValidator
+          Validators.email
         ]],
         role: [x ? x.role : null, [
-          Validators.required
+          Validators.required, 
         ]],
         employerId: [x ? x.employerId : null]
       });
@@ -78,6 +83,13 @@ export class UserFormViewComponent implements OnInit {
 
     changeEmployerId(e){
       this.employerId.setValue(e.target.value,{onlySelf: true});
+    }
+
+    private uniqueUserNameValidator(): ValidatorFn{ 
+      return (control: AbstractControl): {[key: string]: any} | null => {
+        const invalid = this.users.find(x => x.userName === control.value); 
+        return invalid ? {'userNameTaken': {value: control.value}} : null;
+      };
     }
 
     get userName(){
