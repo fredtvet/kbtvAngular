@@ -16,6 +16,9 @@
       <mat-form-field class="w-100">
         <input matInput placeholder="Dato" formControlName="date" aria-label="Velg dato" required
           [owlDateTimeTrigger]="d3" [owlDateTime]="d3">
+          <mat-error *ngIf="date.errors">
+            Velg en dato
+          </mat-error>
       </mat-form-field>
       <owl-date-time pickerType="calendar" start #d3></owl-date-time>
     </label>
@@ -24,6 +27,9 @@
       <mat-form-field class="w-100">
         <input matInput placeholder="Arbeidstid" formControlName="timeRange" required selectMode="range"
           [owlDateTimeTrigger]="t1" [owlDateTime]="t1">
+          <mat-error *ngIf="timeRange.errors">
+            Velg start- og sluttidspunkt
+          </mat-error>
       </mat-form-field>
       <owl-date-time pickerType="timer"  stepMinute="15" [startAt]="timesheet?.startTime || initTime" #t1>
       </owl-date-time>
@@ -33,6 +39,9 @@
   <mat-form-field>
     <textarea matInput placeholder="Kommentar" formControlName="comment" aria-label="Kommentar" required
       maxlength="400"></textarea>
+      <mat-error *ngIf="comment.errors">
+        Vennligst skriv en kommentar om arbeidet som er utført. 
+      </mat-error>
   </mat-form-field>
 
   <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
