@@ -53,7 +53,12 @@ export class UserFormViewComponent implements OnInit {
         ]],
         phoneNumber: [x ? x.phoneNumber : null, [
           Validators.minLength(4),
-          Validators.maxLength(12)
+          Validators.maxLength(12),
+          Validators.nullValidator
+        ]],
+        email: [x ? x.email : null, [
+          Validators.email,
+          Validators.nullValidator
         ]],
         role: [x ? x.role : null, [
           Validators.required
@@ -93,6 +98,10 @@ export class UserFormViewComponent implements OnInit {
 
     get phoneNumber(){
       return this.userForm.get('phoneNumber')
+    }
+
+    get email(){
+      return this.userForm.get('email')
     }
 
     get role(){
