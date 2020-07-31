@@ -2,11 +2,11 @@
     <mat-icon class="mr-2">{{ (user.role == Roles.Oppdragsgiver) ? 'work' : 'person' }}</mat-icon>
 
     <span class="ellipsis mr-auto">
-        <span class="mat-h4">{{ user.firstName }} {{ user.lastName }}</span><br />
+        <span class="mat-h4">{{ user.lastName }}, {{ user.firstName }}</span><br />
         <mat-hint *ngIf="user.employer">{{ user.employer.name }}</mat-hint>
     </span>
 
-    <span>
+    <span fxLayout="row">
         <a *ngIf="user.phoneNumber" class="color-success" mat-icon-button href="tel:{{ user.phoneNumber }}">
             <mat-icon>phone</mat-icon>
         </a>   
