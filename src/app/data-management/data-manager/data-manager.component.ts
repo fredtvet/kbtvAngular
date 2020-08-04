@@ -51,7 +51,7 @@ constructor(
 
   private configureMainNav(){
     let cfg = {title:  "Data"} as TopDefaultNavConfig;
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
 }
 

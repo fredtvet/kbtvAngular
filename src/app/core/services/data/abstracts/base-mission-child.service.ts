@@ -8,6 +8,7 @@ import { MissionChild } from 'src/app/core/models/mission-child.interface';
 import { BaseSyncService } from './base-sync.service';
 import { ArrayHelperService } from '../../utility/array-helper.service';
 import { LocalStorageService } from '../../local-storage.service';
+import { filter } from 'rxjs/operators';
 
 export abstract class BaseMissionChildService<T extends MissionChild> extends BaseSyncService<T>  {
 

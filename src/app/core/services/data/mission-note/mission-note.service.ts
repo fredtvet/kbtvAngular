@@ -28,7 +28,7 @@ export class MissionNoteService extends BaseMissionChildService<MissionNote> {
   }
 
   getByMissionId$(missionId: number):Observable<MissionNote[]>{
-    return super.getByMissionId$(missionId).pipe(map(notes => notes.sort(function(x, y) {
+    return super.getByMissionId$(missionId).pipe(map(notes => notes?.sort(function(x, y) {
       return (x.pinned === y.pinned)? 0 : x.pinned? -1 : 1;
     })));;
   }

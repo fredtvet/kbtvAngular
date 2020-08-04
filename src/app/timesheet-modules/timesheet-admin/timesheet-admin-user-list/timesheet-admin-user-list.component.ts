@@ -25,6 +25,6 @@ export class TimesheetAdminUserListComponent implements OnInit {
 
   private configureMainNav(){
     let cfg = {title: "Administrer timer"} as TopDefaultNavConfig;
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { MainNavConfig, TopDefaultNavConfig, TopDetailNavConfig } from 'src/app/shared-app/interfaces';
+import { MainNavConfig, TopDefaultNavConfig, TopDetailNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 import { map, tap, distinctUntilChanged, delay } from 'rxjs/operators';
 import { DeviceInfoService } from '../device-info.service';
 import { AuthService } from '../auth/auth.service';
@@ -15,7 +15,8 @@ export class MainNavService {
     topDefaultNavConfig: null,
     topDetailNavConfig: null,
     isXs: true,
-    currentUser: null
+    currentUser: null,
+    fabs: []
   };
 
   private configSubject =  new BehaviorSubject<MainNavConfig>(this.defaultConfig);
@@ -47,10 +48,11 @@ export class MainNavService {
     return {...this.configSubject.value.topDetailNavConfig};
   }
 
-  addTopNavConfig(options: {default?: TopDefaultNavConfig, detail?: TopDetailNavConfig}): void{
+  addConfig(topNav: {default?: TopDefaultNavConfig, detail?: TopDetailNavConfig}, fabs?: AppButton[]): void{
     let mainCfg = {...this.configSubject.value};
-    mainCfg.topDetailNavConfig = options.detail ? options.detail : null;  
-    mainCfg.topDefaultNavConfig = (options.default && !options.detail) ? options.default : null;
+    mainCfg.topDetailNavConfig = topNav.detail ? topNav.detail : null;  
+    mainCfg.topDefaultNavConfig = (topNav.default && !topNav.detail) ? topNav.default : null;
+    mainCfg.fabs = fabs;
     this.configSubject.next(mainCfg);
   }
 

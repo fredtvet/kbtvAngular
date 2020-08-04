@@ -122,7 +122,7 @@ export class TimesheetAdminListComponent extends SubscriptionComponent{
       buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]
     } as TopDefaultNavConfig;
     
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
 
   private configureTimesheetListNav(week: number){
@@ -134,7 +134,7 @@ export class TimesheetAdminListComponent extends SubscriptionComponent{
       buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]
     } as TopDefaultNavConfig;
     
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
   
   trackByWeek = (index:number, summary:TimesheetSummary): number => summary.week;

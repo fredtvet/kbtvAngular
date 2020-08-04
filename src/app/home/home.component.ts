@@ -39,7 +39,7 @@ export class HomeComponent {
       title:  "Hjem",
       buttons: [{svgIcon: Icons.Sync, iconSizeClass: 'scale-75', callback: this.refresh}] as AppButton[],
     } as TopDefaultNavConfig;
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
   
 

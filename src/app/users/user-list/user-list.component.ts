@@ -47,7 +47,7 @@ export class UserListComponent {
       allowedRoles: [Roles.Leder]
     }] as AppButton[]
 
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
 
   private sortByRole = (users: User[]): User[] => {

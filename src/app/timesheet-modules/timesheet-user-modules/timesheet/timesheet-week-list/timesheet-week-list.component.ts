@@ -76,6 +76,6 @@ export class TimesheetWeekListComponent implements OnInit {
       } as AppButton
     ]
 
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
 }

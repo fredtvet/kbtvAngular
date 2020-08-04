@@ -63,7 +63,7 @@ export class MissionNoteListComponent {
       backFnParams: [missionId]
     } as TopDefaultNavConfig;
     
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
 
   private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);

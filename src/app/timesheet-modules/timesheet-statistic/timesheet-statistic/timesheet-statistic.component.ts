@@ -56,6 +56,6 @@ export class TimesheetStatisticComponent {
       bottomSheetButtons: [{icon: "import_export", text: "Eksporter timer til CSV", callback: this.exportAsCsv}]
     } as TopDefaultNavConfig;
     
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
 }

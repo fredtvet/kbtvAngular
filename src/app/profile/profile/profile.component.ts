@@ -35,6 +35,6 @@ export class ProfileComponent {
       elevationDisabled: false
     } as TopDefaultNavConfig;
     
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
 }

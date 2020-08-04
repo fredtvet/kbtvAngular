@@ -21,8 +21,8 @@ export class MissionDocumentSubject extends BaseMissionChildSubject<MissionDocum
   getByMissionId$(missionId: number): Observable<MissionDocument[]>{
     return super.getByMissionId$(missionId).pipe(switchMap(documents => {
       return this.documentTypeSubject.getAll$().pipe(map(types => {
-        return documents.map(document => {
-          document.documentType = types.find(x => x.id === document.documentTypeId);
+        return documents?.map(document => {
+          document.documentType = types.find(x => x.id === document?.documentTypeId);
           return document;
         })
       }))
@@ -39,7 +39,7 @@ export class MissionDocumentSubject extends BaseMissionChildSubject<MissionDocum
   }
 
   addOrUpdate(entity: MissionDocument): void{
-    if(entity.documentType && entity.documentType.id != 0){
+    if(entity?.documentType?.id != 0){
         this.documentTypeSubject.addOrUpdate(entity.documentType);
         entity.documentTypeId = entity.documentType.id;
         entity.documentType = null; //Clean up

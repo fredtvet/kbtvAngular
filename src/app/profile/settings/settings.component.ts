@@ -50,7 +50,7 @@ export class SettingsComponent {
       elevationDisabled: false
     } as TopDefaultNavConfig;
     
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
 
   private onBack = () => this.router.navigate(['profil']);

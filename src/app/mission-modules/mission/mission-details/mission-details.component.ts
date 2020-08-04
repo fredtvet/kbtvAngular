@@ -38,9 +38,9 @@ export class MissionDetailsComponent{
     let missionId = +this.route.snapshot.paramMap.get('id');
 
     let mission$ = this.missionService.getDetails$(missionId);
-    let imageCount$ = this.missionImageService.getByMissionId$(missionId).pipe(map(x => x.length));
-    let documentCount$ = this.missionDocumentService.getByMissionId$(missionId).pipe(map(x => x.length));
-    let noteCount$ = this.missionNoteService.getByMissionId$(missionId).pipe(map(x => x.length));
+    let imageCount$ = this.missionImageService.getByMissionId$(missionId).pipe(map(x => x?.length));
+    let documentCount$ = this.missionDocumentService.getByMissionId$(missionId).pipe(map(x => x?.length));
+    let noteCount$ = this.missionNoteService.getByMissionId$(missionId).pipe(map(x => x?.length));
 
     this.vm$ = combineLatest(mission$, imageCount$, documentCount$, noteCount$).pipe(
       map(([mission, imageCount, documentCount, noteCount]) => {
@@ -91,7 +91,7 @@ export class MissionDetailsComponent{
       {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, params: [mission.id], allowedRoles: [Roles.Leder]}
     ];
  
-    this.mainNavService.addTopNavConfig({detail: cfg});
+    this.mainNavService.addConfig({detail: cfg});
   }
 
   private onBack = () => this.router.navigate(['/oppdrag'])

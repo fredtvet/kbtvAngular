@@ -105,7 +105,7 @@ export class TimesheetListComponent implements OnInit {
       buttons: [{icon: 'filter_list', colorClass:'color-accent', callback: this.openFilterSheet}]
     } as TopDefaultNavConfig;
     
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
 
 }

@@ -44,7 +44,7 @@ export class MissionListComponent{
     if(sortBy === MissionSortBy.Historic) color = "color-accent";
     let cfg = this.mainNavService.getTopDefaultNavConfig();
     cfg.buttons[0].colorClass = color;
-    this.mainNavService.addTopNavConfig({default: cfg})
+    this.mainNavService.addConfig({default: cfg})
   }
 
   private openMissionFilter = () => 
@@ -58,7 +58,7 @@ export class MissionListComponent{
       {icon: 'filter_list', colorClass: 'color-accent', callback: this.openMissionFilter}
     ];
 
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
 
 }

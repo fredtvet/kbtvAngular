@@ -105,7 +105,7 @@ export class TimesheetWeekViewComponent {
       buttons: [{icon: "list", callback: this.goToTimesheetList}]
     } as TopDefaultNavConfig;
     
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
 
   private getDateParams(params): DateParams{

@@ -57,6 +57,11 @@ export class MissionImageListComponent extends SubscriptionComponent{
       .pipe(takeUntil(this.unsubscribe)).subscribe(x => this.mission = x)
   }
 
+  updateSelections(selections: number[]){
+    if(selections.length === 0) {} //remove fabs
+    else {} //add fabs if no exist
+  }
+
   uploadImages = (files: FileList) => {
     this.missionImageService.addImages$(this.missionId, files).subscribe(data =>
       this.notificationService.notify({
@@ -108,7 +113,7 @@ export class MissionImageListComponent extends SubscriptionComponent{
       backFnParams: [missionId]
     } as TopDefaultNavConfig;
 
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }
 
 
@@ -120,7 +125,7 @@ export class MissionImageListComponent extends SubscriptionComponent{
       {icon: "cloud_download", text: "Last ned alle", callback: this.downloadImages, 
       params: [images.map(x => x.fileURL)]},
     ]
-    this.mainNavService.addTopNavConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg});
   }  
 
   private downloadImages = (fileUrls: string[]) => 

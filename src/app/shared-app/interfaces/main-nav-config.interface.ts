@@ -7,6 +7,8 @@ export interface MainNavConfig{
 
     topDefaultNavConfig?: TopDefaultNavConfig;
     topDetailNavConfig?: TopDetailNavConfig;  
+
+    fabs?: AppButton[];
 }
 
 export interface TopDefaultNavConfig extends TopNavActions{
