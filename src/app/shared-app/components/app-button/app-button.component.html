@@ -1,0 +1,15 @@
+<ng-container *ngIf="config">
+    <button mat-button class="{{ getButtonClass() }}" *ifRole="config.allowedRoles"
+        [attr.aria-label]="config.aria"
+        [ngClass]="[
+            getButtonClass(config.type) || '',
+            config.colorClass ? config.colorClass : 'bg-accent', 
+            config.iconSizeClass ? config.iconSizeClass : ''
+        ]"
+        (click)="handleFn(config.callback)">
+
+        <mat-icon *ngIf="config.icon">{{ config.icon }}</mat-icon>
+        <mat-icon *ngIf="config.svgIcon" [svgIcon]="config.svgIcon"></mat-icon>      
+    </button>
+</ng-container>
+
