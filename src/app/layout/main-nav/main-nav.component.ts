@@ -22,6 +22,8 @@ export class MainNavComponent {
   config$: Observable<MainNavConfig> = this.mainNavService.config$;
 
   constructor(private mainNavService: MainNavService) { }
+  
+  log = (x) => console.log(x);
 
   toggleDrawer(isXs:boolean){if(isXs) this.drawer.toggle()}
 

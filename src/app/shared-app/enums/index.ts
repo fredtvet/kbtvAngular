@@ -7,3 +7,4 @@ export * from './date-range-presets.enum';
 export * from './group-by-types.enum';
 export * from './app-pages.enum';
 export * from './lazy-styles.enum';
+export * from './button-types.enum';

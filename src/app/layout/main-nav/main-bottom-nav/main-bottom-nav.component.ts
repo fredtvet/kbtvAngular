@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 
 @Component({
@@ -10,6 +10,6 @@ export class MainBottomNavComponent {
   RolePresets = RolePresets;
   Roles = Roles;
 
-  constructor() { }
+  constructor(public element: ElementRef) {} //Elementref set for parent 
 
 }

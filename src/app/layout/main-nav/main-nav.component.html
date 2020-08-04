@@ -31,9 +31,15 @@
     <div  fxFlex style="overflow-y:auto" [@routeAnimation]="prepareRoute(outlet)">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
-    
 
-    <app-main-bottom-nav fxHide fxShow.xs class="flex-nav"></app-main-bottom-nav>
+    <div style="position:absolute;right:0;" class="m-1" 
+      fxLayout="column" fxLayoutGap="4px"
+      [style.bottom.px]="bottomNav.element.nativeElement.offsetHeight">  
+      <app-button *ngFor="let fab of config.fabs | reverseArray" [config]="fab"></app-button>
+    </div>
+
+    <app-main-bottom-nav #bottomNav fxHide fxShow.xs class="flex-nav"></app-main-bottom-nav>
+
   </mat-sidenav-content>
 
 </mat-sidenav-container>

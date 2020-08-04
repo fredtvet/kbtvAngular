@@ -4,6 +4,7 @@ import { MainNavConfig, TopDefaultNavConfig, TopDetailNavConfig, AppButton } fro
 import { map, tap, distinctUntilChanged, delay } from 'rxjs/operators';
 import { DeviceInfoService } from '../device-info.service';
 import { AuthService } from '../auth/auth.service';
+import { ButtonTypes } from 'src/app/shared-app/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,10 @@ export class MainNavService {
     private authService: AuthService,
     private deviceInfoService: DeviceInfoService) { }
 
+  getConfig(): MainNavConfig{
+    return {...this.configSubject.value};
+  }
+
   getTopDefaultNavConfig(): TopDefaultNavConfig{
     return {...this.configSubject.value.topDefaultNavConfig};
   }
@@ -48,12 +53,21 @@ export class MainNavService {
     return {...this.configSubject.value.topDetailNavConfig};
   }
 
+  getCurrentFabs(): AppButton[]{
+    return {...this.configSubject.value.fabs};
+  }
+
   addConfig(topNav: {default?: TopDefaultNavConfig, detail?: TopDetailNavConfig}, fabs?: AppButton[]): void{
     let mainCfg = {...this.configSubject.value};
     mainCfg.topDetailNavConfig = topNav.detail ? topNav.detail : null;  
     mainCfg.topDefaultNavConfig = (topNav.default && !topNav.detail) ? topNav.default : null;
+
     mainCfg.fabs = fabs;
+    mainCfg.fabs?.map(x => x.type = ButtonTypes.Fab)
+
     this.configSubject.next(mainCfg);
   }
+
+
 
 }

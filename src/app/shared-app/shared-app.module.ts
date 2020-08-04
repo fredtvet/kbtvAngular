@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
 import { ImageErrorReloaderDirective } from './directives/image-error-reloader.directive';
-import { CheckRolesInButtonsPipe } from './check-roles-in-buttons.pipe';
-import { ListCardComponent, StrokedButtonComponent, BottomSheetMenuComponent, PageNotFoundComponent, NotificationComponent } from './components';
+import { ListCardComponent, StrokedButtonComponent, BottomSheetMenuComponent, PageNotFoundComponent, NotificationComponent, AppButtonComponent } from './components';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
@@ -18,6 +17,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NavItemComponent } from './components/nav-item/nav-item.component';
+import { ReverseArrayPipe, CheckRolesInButtonsPipe } from './pipes';
 
 
 
@@ -25,8 +25,10 @@ import { NavItemComponent } from './components/nav-item/nav-item.component';
   declarations: [
     IconButtonComponent,
     StrokedButtonComponent,
+    AppButtonComponent,
     ImageErrorReloaderDirective,
     CheckRolesInButtonsPipe,
+    ReverseArrayPipe,
     BottomSheetMenuComponent,
     ListCardComponent,
     IfRoleDirective,
@@ -67,12 +69,14 @@ import { NavItemComponent } from './components/nav-item/nav-item.component';
     StrokedButtonComponent,
     ImageErrorReloaderDirective,
     CheckRolesInButtonsPipe,
+    ReverseArrayPipe,
     BottomSheetMenuComponent,
     ListCardComponent,
     IfRoleDirective,
     PageNotFoundComponent,
     NotificationComponent,
-    NavItemComponent
+    NavItemComponent,
+    AppButtonComponent,
   ]
 })
 export class SharedAppModule { }
