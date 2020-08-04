@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Mission } from 'src/app/core/models';
 import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 import { NotificationService, MissionService, MissionImageService, MissionDocumentService, MissionNoteService, MainNavService} from 'src/app/core/services';
-import { tap, filter, map } from 'rxjs/operators';
+import { tap, filter, map, take, finalize } from 'rxjs/operators';
 import { Observable, combineLatest } from 'rxjs';
 import { MissionDetailsViewModel } from './mission-details-view-model.interface';
 import { TopDetailNavConfig } from 'src/app/shared-app/interfaces';

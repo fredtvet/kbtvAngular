@@ -45,7 +45,6 @@ constructor(
   createItem = () => this.dataManagerFacade.createItem();
   
   private revertTableUpdate(command:any){
-    console.log(command);
     //command.node.data[command.colDef.Field] = command.oldValue;
     command.node.setDataValue(command.column, command.oldValue);
   }

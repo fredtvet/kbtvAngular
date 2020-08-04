@@ -7,7 +7,7 @@ import {
 import { DeviceInfoService } from "../services/device-info.service";
 import { throwError, Observable } from "rxjs";
 import { NotificationService } from "../services/ui/notification.service";
-import { tap, switchMap } from 'rxjs/operators';
+import { tap, switchMap, finalize, take } from 'rxjs/operators';
 import { Notifications } from 'src/app/shared-app/enums';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class HttpIsOnlineInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
-      return this.deviceInfoService.isOnline$.pipe(switchMap(isOnline => {
+      return this.deviceInfoService.isOnline$.pipe(take(1), switchMap(isOnline => {
         if(isOnline) return next.handle(request);
         else return this.throwNotOnlineError();
       }))

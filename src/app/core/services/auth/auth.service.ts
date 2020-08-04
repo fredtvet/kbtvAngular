@@ -87,8 +87,7 @@ export class AuthService extends PersistentSubject<User>{
 
     if(this.isOnline && !this.hasAccessTokenExpired()  && this.hasTokens()) //Delete from server if possible to keep clean
         this.apiService.post('/Auth/logout', {refreshToken}).pipe(
-          finalize(() => this._logout(returnUrl))
-        ).subscribe(); 
+          finalize(() => this._logout(returnUrl))).subscribe(); 
     else this._logout(returnUrl);
   }
 
