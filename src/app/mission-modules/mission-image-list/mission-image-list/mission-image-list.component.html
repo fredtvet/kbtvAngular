@@ -1,26 +1,8 @@
 <app-image-list #imageList *ngIf="images$ | async; let images"
     [totalRows]="(isXs$ | async) ? 2 : 4"
     [entities]="images" 
-    (selectionChanged)="currentSelections = $event"
+    (selectionChanged)="onSelectionChange($event)"
     (imageClicked)="openImageViewer($event, images)">
 </app-image-list>
-
-<ng-container *ngIf="currentSelections.length > 0">
-    <ng-container *ifRole="RolePresets.Authority">
-        <button mat-fab aria-label="ny" class="action_fab_2" (click)="openMailImageSheet(currentSelections)">
-            <mat-icon>send</mat-icon>
-        </button>
-        <button mat-fab aria-label="ny" class="action_fab_3 bg-warn"
-            (click)="openConfirmDeleteDialog(currentSelections)">
-            <mat-icon>delete_forever</mat-icon>
-        </button>
-    </ng-container>
-</ng-container>
-
-
-<button *ifRole="RolePresets.Internal" mat-fab aria-label="ny" class="action_fab"
-    (click)="imageInput.click()">
-    <mat-icon>camera_enhance</mat-icon>
-</button>
 
 <input type="file" style="display:none" multiple #imageInput (change)="uploadImages($event.target.files)">

@@ -79,35 +79,6 @@ a {
   text-decoration: inherit; /* no underline */
 }
 
-.action_fab{
-  position: fixed!important;
-  right: $gap-size * 2px!important;
-  bottom: (($gap-size * 2) + $bottom-nav-height) * 1px;
-  z-index:2;
-  background:$accent;
-  animation: backInUp;
-  animation-duration:.5s
-}
-
-.action_fab_2{
-  position: fixed!important;
-  right: $gap-size * 2px!important;
-  bottom: (($gap-size*4) + 56 + $bottom-nav-height) * 1px;
-  z-index:2;
-  background:$accent;
-  animation: backInRight;
-  animation-duration:.5s
-}
-.action_fab_3{
-  position: fixed!important;
-  right: $gap-size * 2px!important;
-  bottom: (($gap-size*6) + 112 + $bottom-nav-height) * 1px;
-  z-index:2;
-  background:$accent;
-  animation: backInRight;
-  animation-duration:.5s
-}
-
 //Entity -> used in selective list 
 .entity-row {
   display: -ms-flexbox; /* IE10 */
@@ -167,6 +138,7 @@ a {
   margin-bottom:$bottom-nav-height + $gap-size * 2px!important;
   @extend .bg-accent;
 }
+
 .ellipsis{
   white-space: nowrap;
   overflow: hidden;

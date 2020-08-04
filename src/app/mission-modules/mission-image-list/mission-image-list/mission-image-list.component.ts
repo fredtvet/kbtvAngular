@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, ViewChild } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { MatDialog } from "@angular/material/dialog";
 import { filter, takeUntil, tap } from "rxjs/operators";
-import { RolePresets, Notifications } from 'src/app/shared-app/enums';
+import { RolePresets, Notifications, Roles } from 'src/app/shared-app/enums';
 import { Observable } from 'rxjs';
 import { MissionImage, Mission } from 'src/app/core/models';
 import { MissionImageService, MainNavService, NotificationService, MissionService, DeviceInfoService, DownloaderService } from 'src/app/core/services';
@@ -21,16 +21,15 @@ import { ImageViewerDialogWrapperComponent } from '../components/image-viewer/im
 
 export class MissionImageListComponent extends SubscriptionComponent{
   @ViewChild('imageList') imageList: SelectableListBase<AppFile>;
-
-  RolePresets = RolePresets;
-
-  private mission: Mission;
+  @ViewChild('imageInput') imageInput: HTMLElement;
 
   currentSelections: number[] = [];
 
   images$: Observable<MissionImage[]>;
   isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
-  
+
+  private mission: Mission;
+
   constructor(
     private downloaderService: DownloaderService,
     private deviceInfoService: DeviceInfoService,
@@ -50,6 +49,17 @@ export class MissionImageListComponent extends SubscriptionComponent{
     return +this.route.snapshot.paramMap.get('id');
   }
 
+  get selectedItemsFabs(): AppButton[] {
+    return [
+      {icon: "send", aria: 'Send', callback: this.openMailImageSheet, allowedRoles: [Roles.Leder]}, 
+      {icon: "delete_forever", aria: 'Slett', colorClass: 'bg-warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
+    ]
+  }
+
+  get staticFabs(): AppButton[] {
+    return [{icon: "camera_enhance", aria: 'Ta bilde', callback: this.openImageInput, allowedRoles: RolePresets.Internal}]
+  }
+
   ngOnInit() {
     this.images$ = this.missionImageService.getByMissionId$(this.missionId).pipe(tap(this.updateMainNav));
 
@@ -57,44 +67,10 @@ export class MissionImageListComponent extends SubscriptionComponent{
       .pipe(takeUntil(this.unsubscribe)).subscribe(x => this.mission = x)
   }
 
-  updateSelections(selections: number[]){
-    if(selections.length === 0) {} //remove fabs
-    else {} //add fabs if no exist
-  }
-
-  uploadImages = (files: FileList) => {
-    this.missionImageService.addImages$(this.missionId, files).subscribe(data =>
-      this.notificationService.notify({
-        title: `Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`,
-        type: Notifications.Success
-      })
-    );
-  }
-
-  deleteImages = (ids: number[]) => {
-    this.missionImageService.deleteRange$(ids).subscribe(data =>{
-      this.imageList.clearSelections();
-      this.notificationService.notify({
-        title: `Vellykket! ${ids.length} ${ids.length > 1 ? 'bilder' : 'bilde'} slettet.`,        
-        type: Notifications.Success
-      })     
-    })    
-  }
-
-  openConfirmDeleteDialog = (ids: number[]) => {   
-    let config: ConfirmDialogConfig = {message: 'Slett utvalgte bilder?', confirmText: 'Slett'};
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
-    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteImages(ids));
-  }
-  
-  openMailImageSheet = (ids: number[]) => {
-    let botRef = this.bottomSheet.open(MailImageSheetComponent, {
-      data: { toEmailPreset: this.mission.employer ? this.mission.employer.email : null, ids: ids },
-    });
-    botRef
-      .afterDismissed()
-      .pipe(filter((isSent) => isSent))
-      .subscribe((x) => this.imageList.clearSelections());
+  onSelectionChange(selections: number[]){
+    if(!selections) return undefined;
+    this.currentSelections = selections;
+    this.updateFabs();
   }
 
   openImageViewer(image: AppFile, images: AppFile[]) {
@@ -106,6 +82,58 @@ export class MissionImageListComponent extends SubscriptionComponent{
     });
   }
 
+  uploadImages = (files: FileList) => {
+    this.missionImageService.addImages$(this.missionId, files).subscribe(data =>
+      this.notificationService.notify({
+        title: `Vellykket! ${data.length} ${data.length > 1 ? 'bilder' : 'bilde'} lastet opp.`,
+        type: Notifications.Success
+      })
+    );
+  }
+
+  private openImageInput = (): void => this.imageInput.click();
+  
+  private updateFabs(){
+    let fabs = this.mainNavService.getCurrentFabs();
+    let totalFabCount = this.staticFabs.length + this.selectedItemsFabs.length;
+
+    if(this.currentSelections.length === 0 && fabs.length === totalFabCount) //If no selections remove fabs if existing
+      this.mainNavService.removeFabsByIcons(this.selectedItemsFabs.map(x => x.icon))
+    else if (this.currentSelections.length > 0 && fabs.length === this.staticFabs.length)
+      this.mainNavService.addFabs(this.selectedItemsFabs);
+  }
+
+  private  deleteSelectedImages = () => {
+    this.missionImageService.deleteRange$(this.currentSelections).subscribe(data =>{
+      this.imageList.clearSelections();
+      this.notificationService.notify({
+        title: `Vellykket! ${this.currentSelections.length} ${this.currentSelections.length > 1 ? 'bilder' : 'bilde'} slettet.`,        
+        type: Notifications.Success
+      })     
+    })    
+  }
+
+  private  openConfirmDeleteDialog = () => {   
+    let config: ConfirmDialogConfig = {message: 'Slett utvalgte bilder?', confirmText: 'Slett'};
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
+    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteSelectedImages());
+  }
+  
+  private openMailImageSheet = () => {
+    let botRef = this.bottomSheet.open(MailImageSheetComponent, {
+      data: { toEmailPreset: this.mission.employer ? this.mission.employer.email : null, ids: this.currentSelections },
+    });
+    botRef
+      .afterDismissed()
+      .pipe(filter((isSent) => isSent))
+      .subscribe((x) => this.imageList.clearSelections());
+  }
+
+  private downloadImages = (fileUrls: string[]) => 
+    this.downloaderService.downloadUrls(fileUrls)
+
+  private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
+
   private configureMainNav(missionId: number){
     let cfg = {
       title:  "Bilder",
@@ -113,9 +141,8 @@ export class MissionImageListComponent extends SubscriptionComponent{
       backFnParams: [missionId]
     } as TopDefaultNavConfig;
 
-    this.mainNavService.addConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg}, this.staticFabs);
   }
-
 
   private updateMainNav = (images: MissionImage[]) => {
     let cfg = this.mainNavService.getTopDefaultNavConfig(); 
@@ -125,12 +152,8 @@ export class MissionImageListComponent extends SubscriptionComponent{
       {icon: "cloud_download", text: "Last ned alle", callback: this.downloadImages, 
       params: [images.map(x => x.fileURL)]},
     ]
-    this.mainNavService.addConfig({default: cfg});
+    this.mainNavService.addConfig({default: cfg}, this.staticFabs);
   }  
 
-  private downloadImages = (fileUrls: string[]) => 
-    this.downloaderService.downloadUrls(fileUrls)
-
-  private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
 
 }

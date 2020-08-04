@@ -15,8 +15,6 @@ import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionNoteListComponent {
-  RolePresets = RolePresets;
-  
   notes$: Observable<MissionNote[]>;
   
   constructor( 
@@ -50,11 +48,11 @@ export class MissionNoteListComponent {
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteNote(id));
   }
 
-  openCreateNoteForm = () => 
-    this.router.navigate(['skjema'], {relativeTo: this.route, queryParams: {missionId: this.missionId}});
-
   openEditNoteForm = (idPreset: number) => 
     this.router.navigate(['skjema'], {relativeTo: this.route, queryParams: {idPreset, missionId: this.missionId}});
+
+  private openCreateNoteForm = () => 
+    this.router.navigate(['skjema'], {relativeTo: this.route, queryParams: {missionId: this.missionId}});
 
   private configureMainNav(missionId: number){
     let cfg = {
@@ -62,8 +60,8 @@ export class MissionNoteListComponent {
       backFn: this.onBack, 
       backFnParams: [missionId]
     } as TopDefaultNavConfig;
-    
-    this.mainNavService.addConfig({default: cfg});
+    let fabs = [{icon: "add", aria: 'Legg til', callback: this.openCreateNoteForm, allowedRoles: RolePresets.Internal}];
+    this.mainNavService.addConfig({default: cfg}, fabs);
   }
 
   private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);

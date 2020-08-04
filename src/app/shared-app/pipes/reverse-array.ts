@@ -7,7 +7,7 @@ import { AppButton } from '../interfaces/app-button.interface';
 export class ReverseArrayPipe implements PipeTransform {
 
   transform(arr: any[]) {
-    return arr.slice().reverse();
+    return arr?.slice().reverse();
   }
 
 }

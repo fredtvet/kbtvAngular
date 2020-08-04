@@ -30,11 +30,13 @@ export class TimesheetListComponent implements OnInit {
     private _bottomSheet: MatBottomSheet,
     private userTimesheetService: UserTimesheetService,
     private dateTimeService: DateTimeService
-  ) {this.configureMainNav();}
+  ) {}
 
   ngOnInit() {
     //Initiate filter and observable
     this.filterSubject = new BehaviorSubject(this.getInitialFilter());
+    
+    this.configureMainNav();
 
     this.timesheets$ = this.filterSubject.asObservable().pipe(distinctUntilChanged(),
       switchMap(filter => this.userTimesheetService.getByWithMission$(x => filter.checkTimesheet(x))),
@@ -45,8 +47,6 @@ export class TimesheetListComponent implements OnInit {
     this.router.navigate(['skjema'], {relativeTo: this.route, queryParams: {idPreset, missionPreset: JSON.stringify(missionPreset)}});
 
   deleteTimesheet = (id: number) => this.userTimesheetService.delete$(id).subscribe();
-
-  getCurrentFilter = (): TimesheetListFilter => this.filterSubject.value;
 
   openFilterSheet = (): void => {
     let ref = this._bottomSheet.open(TimesheetFilterSheetWrapperComponent, {
@@ -105,7 +105,9 @@ export class TimesheetListComponent implements OnInit {
       buttons: [{icon: 'filter_list', colorClass:'color-accent', callback: this.openFilterSheet}]
     } as TopDefaultNavConfig;
     
-    this.mainNavService.addConfig({default: cfg});
+    let fabs = [{icon: "add", aria: 'Legg til', callback: this.openTimesheetForm, params: [this.filterSubject.value.mission]}];
+
+    this.mainNavService.addConfig({default: cfg}, fabs);
   }
 
 }

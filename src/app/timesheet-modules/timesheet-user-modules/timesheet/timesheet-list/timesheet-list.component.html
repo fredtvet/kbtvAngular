@@ -1,9 +1,4 @@
 <div fxLayout="column" fxLayoutAlign="start stretch" class="h-100 max-width">
-
-    <button mat-fab aria-label="ny" class="action_fab" (click)="openTimesheetForm(getCurrentFilter().mission)">
-        <mat-icon class="scale-125">add</mat-icon>
-    </button>
-
     <ng-container *ngIf="timesheets$ | async; let timesheets">
         <cdk-virtual-scroll-viewport *ngIf="timesheets?.length else noSheets" itemSize="148" maxBufferPx="800" minBufferPx="800" fxFlex class="fadeInRight">
             <div class="m-1" *cdkVirtualFor="let timesheet of timesheets">

@@ -1,25 +1,8 @@
 <app-document-list #documentList *ngIf="documentsWithType$ | async; let documents"
     [totalRows]="(isXs$ | async) ? 2 : 4"
     [entities]="documents" 
-    (selectionChanged)="currentSelections = $event"
+    (selectionChanged)="onSelectionChange($event)"
     (documentClicked)="downloadDocument($event)">
 </app-document-list>
-
-<ng-container *ngIf="currentSelections.length > 0">
-    <ng-container *ifRole="[Roles.Leder]">
-        <button mat-fab aria-label="ny" class="action_fab_2" (click)="openMailDocumentSheet(currentSelections)">
-            <mat-icon>send</mat-icon>
-        </button>
-        <button mat-fab aria-label="ny" class="action_fab_3 bg-warn"
-            (click)="openConfirmDeleteDialog(currentSelections)">
-            <mat-icon>delete_forever</mat-icon>
-        </button>
-    </ng-container>
-</ng-container>
-
-
-<button *ifRole="[Roles.Leder]" mat-fab aria-label="ny" class="action_fab" (click)="openDocumentForm()">
-    <mat-icon>note_add</mat-icon>
-</button>
 
 <router-outlet></router-outlet>

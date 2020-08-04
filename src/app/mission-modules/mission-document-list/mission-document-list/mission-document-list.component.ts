@@ -8,10 +8,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Roles, Notifications } from 'src/app/shared-app/enums';
 import { takeUntil, filter, map } from 'rxjs/operators';
 import { ConfirmDialogComponent, SelectableListBase, ConfirmDialogConfig } from 'src/app/shared/components';
-import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
+import { TopDefaultNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { MailDocumentSheetComponent } from '../mail-document-sheet.component';
-import { MissionsFacade } from '../../mission/missions.facade';
 
 @Component({
   selector: 'app-mission-document-list',
@@ -20,12 +19,11 @@ import { MissionsFacade } from '../../mission/missions.facade';
 })
 export class MissionDocumentListComponent extends SubscriptionComponent {
   @ViewChild('documentList') documentList: SelectableListBase<MissionDocument>;
-  Roles = Roles;
 
-  currentSelections: number[] = [];
   documentsWithType$: Observable<MissionDocument[]>;
   isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
 
+  private currentSelections: number[] = [];
   private mission: Mission;
   
   constructor(
@@ -46,6 +44,17 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
     return +this.route.snapshot.paramMap.get('id');
   }
 
+  get selectedItemsFabs(): AppButton[] {
+    return [
+      {icon: "send", aria: 'Send', callback: this.openMailDocumentSheet, allowedRoles: [Roles.Leder]}, 
+      {icon: "delete_forever", aria: 'Slett', colorClass: 'bg-warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
+    ]
+  }
+
+  get staticFabs(): AppButton[] {
+    return [{icon: "note_add", aria: 'Legg til', callback: this.openDocumentForm, allowedRoles: [Roles.Leder]}]
+  }
+  
   ngOnInit() {
     this.configureMainNav(this.missionId)
     let documents$ =  this.missionDocumentService.getByMissionId$(this.missionId);
@@ -60,25 +69,43 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
       .pipe(takeUntil(this.unsubscribe)).subscribe(x => this.mission = x)
   }
 
-  deleteDocuments = (ids: number[]) => {
-    this.missionDocumentService.deleteRange$(ids).subscribe(data =>{
+  onSelectionChange(selections: number[]){
+    if(!selections) return undefined;
+    this.currentSelections = selections;
+    this.updateFabs();
+  }
+
+  downloadDocument = (document: MissionDocument) => this.downloaderService.downloadUrl(document.fileURL);
+
+  private updateFabs(){
+    let fabs = this.mainNavService.getCurrentFabs();
+    let totalFabCount = this.staticFabs.length + this.selectedItemsFabs.length;
+
+    if(this.currentSelections.length === 0 && fabs.length === totalFabCount) //If no selections remove fabs if existing
+      this.mainNavService.removeFabsByIcons(this.selectedItemsFabs.map(x => x.icon))
+    else if (this.currentSelections.length > 0 && fabs.length === this.staticFabs.length)
+      this.mainNavService.addFabs(this.selectedItemsFabs);
+  }
+
+  private deleteSelectedDocuments = () => {
+    this.missionDocumentService.deleteRange$(this.currentSelections).subscribe(data =>{
       this.documentList.clearSelections();
       this.notificationService.notify({
-        title: `Vellykket! ${ids.length} ${ids.length > 1 ? 'dokumenter' : 'dokument'} slettet.`,
+        title: `Vellykket! ${this.currentSelections.length} ${this.currentSelections.length > 1 ? 'dokumenter' : 'dokument'} slettet.`,
         type: Notifications.Success
       })
     });
   }
 
-  openConfirmDeleteDialog = (ids: number[]) => {   
+  private openConfirmDeleteDialog = () => {   
     let config: ConfirmDialogConfig = {message: 'Slett dokument?', confirmText: 'Slett'};
     const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
-    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteDocuments(ids));
+    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteSelectedDocuments());
   }
   
-  openMailDocumentSheet = (ids: number[]) => {
+  private openMailDocumentSheet = () => {
     let botRef = this.bottomSheet.open(MailDocumentSheetComponent, {
-      data: { toEmailPreset: this.mission.employer ? this.mission.employer.email : null, ids: ids },
+      data: { toEmailPreset: this.mission.employer ? this.mission.employer.email : null, ids: this.currentSelections },
     });
     botRef
       .afterDismissed()
@@ -86,19 +113,18 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
       .subscribe((x) => this.documentList.clearSelections());
   }
 
-  openDocumentForm = () => 
+  private openDocumentForm = () => 
     this.router.navigate(['skjema'], {relativeTo: this.route, queryParams: {missionId: this.missionId}});
 
-  downloadDocument = (document: MissionDocument) => this.downloaderService.downloadUrl(document.fileURL);
+  private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
 
   private configureMainNav(missionId: number){
-    let cfg = {
+    let topCfg = {
       title:  "Dokumenter", 
       backFn: this.onBack, 
       backFnParams: [missionId]
     } as TopDefaultNavConfig;
 
-    this.mainNavService.addConfig({default: cfg});
+    this.mainNavService.addConfig({default: topCfg}, this.staticFabs);
   }
-  private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
 }

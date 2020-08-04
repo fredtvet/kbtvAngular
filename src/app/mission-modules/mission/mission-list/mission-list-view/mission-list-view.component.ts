@@ -17,18 +17,14 @@ export class MissionListViewComponent implements OnInit {
   @Input() title: string = "Oppdrag";
   @Output() search = new EventEmitter();
 
-  constructor(
-    private _bottomSheet: MatBottomSheet,
-    private router: Router,
-    private route: ActivatedRoute,
-    ) { }
+  constructor() { }
 
   ngOnInit() { }
 
   onSearch = (val: string) => this.search.emit(val);
 
-  openMissionForm = () => this.router.navigate(['ny'], {relativeTo: this.route});
+  //openMissionForm = () => this.router.navigate(['ny'], {relativeTo: this.route});
   
-  trackByFn = (index: number, mission: Mission) => {return mission.id};
+  trackByFn = (index: number, mission: Mission) => mission.id;
 
 }

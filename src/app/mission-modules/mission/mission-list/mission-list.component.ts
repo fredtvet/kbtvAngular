@@ -7,6 +7,7 @@ import { MissionsFacade } from '../missions.facade';
 import { MissionFilter } from '../mission.filter';
 import { MissionFilterWrapperComponent } from '../mission-filter/mission-filter-wrapper.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mission-list',
@@ -23,7 +24,9 @@ export class MissionListComponent{
   constructor(
     private mainNavService: MainNavService,
     private missionsFacade: MissionsFacade,
-    private bottomSheet: MatBottomSheet) { 
+    private bottomSheet: MatBottomSheet,    
+    private router: Router,
+    private route: ActivatedRoute,) { 
       this.configureMainNav();
     }
 
@@ -47,6 +50,9 @@ export class MissionListComponent{
     this.mainNavService.addConfig({default: cfg})
   }
 
+  private openMissionForm = () => 
+    this.router.navigate(['ny'], {relativeTo: this.route});
+
   private openMissionFilter = () => 
     this.bottomSheet.open(MissionFilterWrapperComponent)
   
@@ -58,7 +64,9 @@ export class MissionListComponent{
       {icon: 'filter_list', colorClass: 'color-accent', callback: this.openMissionFilter}
     ];
 
-    this.mainNavService.addConfig({default: cfg});
+    let fabs = [{icon: "add", aria: 'Legg til', callback: this.openMissionForm, allowedRoles: [Roles.Leder, Roles.Mellomleder]}]
+
+    this.mainNavService.addConfig({default: cfg}, fabs);
   }
 
 }

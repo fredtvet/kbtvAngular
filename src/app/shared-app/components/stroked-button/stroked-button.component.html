@@ -1,5 +1,5 @@
 <ng-container *ngIf="config">
-    <button mat-stroked-button *ifRole="config.allowedRoles"
+    <button mat-stroked-button="true" *ifRole="config.allowedRoles"
         [attr.aria-label]="config.aria"
         [ngClass]="[
             config.colorClass ? config.colorClass : '', 
@@ -11,4 +11,3 @@
         {{ config.text }}
     </button>
 </ng-container>
-

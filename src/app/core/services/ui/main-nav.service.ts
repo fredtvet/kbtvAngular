@@ -54,11 +54,11 @@ export class MainNavService {
   }
 
   getCurrentFabs(): AppButton[]{
-    return {...this.configSubject.value.fabs};
+    return this.configSubject.value.fabs.slice();
   }
 
   addConfig(topNav: {default?: TopDefaultNavConfig, detail?: TopDetailNavConfig}, fabs?: AppButton[]): void{
-    let mainCfg = {...this.configSubject.value};
+    let mainCfg = this.getConfig();
     mainCfg.topDetailNavConfig = topNav.detail ? topNav.detail : null;  
     mainCfg.topDefaultNavConfig = (topNav.default && !topNav.detail) ? topNav.default : null;
 
@@ -68,6 +68,18 @@ export class MainNavService {
     this.configSubject.next(mainCfg);
   }
 
+  addFabs(fabs: AppButton[]){
+    console.log(fabs);
+    let mainCfg = this.getConfig();
+    fabs?.map(x => x.type = ButtonTypes.Fab)
+    mainCfg.fabs = mainCfg.fabs.slice().concat(fabs);
+    this.configSubject.next(mainCfg);
+  }
 
+  removeFabsByIcons(icons: string[]){
+    let mainCfg = this.getConfig();
+    mainCfg.fabs = mainCfg.fabs?.filter(x => !icons.includes(x.icon)); 
+    this.configSubject.next(mainCfg);
+  }
 
 }
