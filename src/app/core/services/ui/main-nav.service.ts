@@ -41,38 +41,40 @@ export class MainNavService {
     private authService: AuthService,
     private deviceInfoService: DeviceInfoService) { }
 
-  getConfig(): MainNavConfig{
+  get config(): MainNavConfig{
     return {...this.configSubject.value};
   }
 
-  getTopDefaultNavConfig(): TopDefaultNavConfig{
+  get topDefaultNavConfig(): TopDefaultNavConfig{
     return {...this.configSubject.value.topDefaultNavConfig};
   }
 
-  getTopDetailNavConfig(): TopDetailNavConfig{
+  get topDetailNavConfig(): TopDetailNavConfig{
     return {...this.configSubject.value.topDetailNavConfig};
   }
 
-  getCurrentFabs(): AppButton[]{
+  get currentFabs(): AppButton[]{
     return this.configSubject.value.fabs.slice();
   }
 
   addConfig(topNav: {default?: TopDefaultNavConfig, detail?: TopDetailNavConfig}, fabs?: AppButton[]): void{
-    let mainCfg = this.getConfig();
+    let mainCfg = this.config;
+
     mainCfg.topDetailNavConfig = topNav.detail ? topNav.detail : null;  
-    mainCfg.topDefaultNavConfig = (topNav.default && !topNav.detail) ? topNav.default : null;
-    mainCfg.fabs = fabs;
+    mainCfg.topDefaultNavConfig = (topNav.default && !topNav.detail) ? topNav.default : null;  
+    mainCfg.fabs = fabs?.slice();
+
     this.configSubject.next(mainCfg);
   }
 
   addFabs(fabs: AppButton[]){
-    let mainCfg = this.getConfig();   
+    let mainCfg = this.config;   
     mainCfg.fabs = mainCfg.fabs.slice().concat(fabs);
     this.configSubject.next(mainCfg);
   }
 
   removeFabsByIcons(icons: string[]){
-    let mainCfg = this.getConfig();
+    let mainCfg = this.config;
     mainCfg.fabs = mainCfg.fabs?.filter(x => !icons.includes(x.icon)); 
     this.configSubject.next(mainCfg);
   }

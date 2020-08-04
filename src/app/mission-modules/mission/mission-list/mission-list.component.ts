@@ -44,7 +44,7 @@ export class MissionListComponent{
 
     let color = "color-background";
     if(sortBy === MissionSortBy.Historic) color = "color-accent";
-    let cfg = this.mainNavService.getTopDefaultNavConfig();
+    let cfg = this.mainNavService.topDefaultNavConfig;
     cfg.buttons = [...cfg.buttons];
     cfg.buttons[0].colorClass = color;
     this.mainNavService.addConfig({default: cfg})

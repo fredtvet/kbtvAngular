@@ -78,7 +78,7 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
   downloadDocument = (document: MissionDocument) => this.downloaderService.downloadUrl(document.fileURL);
 
   private updateFabs(){
-    let fabs = this.mainNavService.getCurrentFabs();
+    let fabs = this.mainNavService.currentFabs;
     let totalFabCount = this.staticFabs.length + this.selectedItemsFabs.length;
 
     if(this.currentSelections.length === 0 && fabs.length === totalFabCount) //If no selections remove fabs if existing

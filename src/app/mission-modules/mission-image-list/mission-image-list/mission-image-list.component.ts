@@ -94,7 +94,7 @@ export class MissionImageListComponent extends SubscriptionComponent{
   private openImageInput = (): void => this.imageInput.click();
   
   private updateFabs(){
-    let fabs = this.mainNavService.getCurrentFabs();
+    let fabs = this.mainNavService.currentFabs;
     let totalFabCount = this.staticFabs.length + this.selectedItemsFabs.length;
 
     if(this.currentSelections.length === 0 && fabs.length === totalFabCount) //If no selections remove fabs if existing
@@ -145,7 +145,7 @@ export class MissionImageListComponent extends SubscriptionComponent{
   }
 
   private updateMainNav = (images: MissionImage[]) => {
-    let cfg = this.mainNavService.getTopDefaultNavConfig(); 
+    let cfg = this.mainNavService.topDefaultNavConfig; 
     cfg.bottomSheetButtons = [
       {icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, 
       params: [images.map(x => x.id)], allowedRoles: RolePresets.Authority},
