@@ -4,6 +4,7 @@ import { LoadingService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
 import { TopDetailNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 import { BottomSheetMenuComponent } from 'src/app/shared-app/components';
+import { ButtonTypes } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-detail-top-nav',
@@ -13,10 +14,12 @@ import { BottomSheetMenuComponent } from 'src/app/shared-app/components';
 })
 
 export class DetailTopNavComponent {
+  ButtonTypes = ButtonTypes;
+  
   @Input() config: TopDetailNavConfig;
   @Input() currentUserRole: string;
   @Output() menuBtnClicked = new EventEmitter();
-  
+
   loading$: Observable<boolean> = this.loadingService.queryLoading$;
 
   constructor(

@@ -1,13 +1,14 @@
 <mat-toolbar class="toolbar-slim color-foreground" style="background:inherit">
    
-    <app-icon-button *ngIf="config?.backFn else menuBtn" 
-    [config]="{
-      callback: config.backFn, 
-      params: config.backFnParams,
-      aria: 'Tilbake',
-      icon: 'chevron_left',
-      iconSizeClass: 'scale-150'}">
-    </app-icon-button>
+    <app-button *ngIf="config?.backFn else menuBtn" 
+      [config]="{
+        callback: config.backFn, 
+        params: config.backFnParams,
+        type: ButtonTypes.Icon,
+        aria: 'Tilbake',
+        icon: 'chevron_left',
+        iconSizeClass: 'scale-150'}">
+    </app-button>
     
     <ng-template #menuBtn>
       <button mat-icon-button aria-label="Toggle sidenav" (click)="onMenuButtonClick()"
@@ -26,8 +27,9 @@
     </span>
 
     <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>
- 
-    <app-icon-button *ngFor="let button of config?.buttons" [config]="button"></app-icon-button>
+
+    <app-button *ngFor="let button of config?.buttons | transformButtons: ButtonTypes.Icon" 
+      [config]="button"></app-button>
 
     <button mat-icon-button 
       *ngIf="(config?.bottomSheetButtons | checkRolesInButtons : currentUserRole)" 

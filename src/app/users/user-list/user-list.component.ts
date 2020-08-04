@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { UserService, MainNavService, ArrayHelperService } from 'src/app/core/services';
 import { User } from 'src/app/core/models';
-import { Roles } from '../../shared-app/enums';
+import { Roles, ButtonTypes } from '../../shared-app/enums';
 import { Observable } from 'rxjs';;
 import { map, tap } from 'rxjs/operators';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -16,6 +16,7 @@ import { NewPasswordFormWrapperComponent } from '../components/new-password-form
 })
 export class UserListComponent {
   Roles = Roles;
+  ButtonTypes = ButtonTypes;
 
   users$: Observable<User[]>;
 

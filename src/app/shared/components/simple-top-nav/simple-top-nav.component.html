@@ -1,13 +1,13 @@
 <div class="column">
 
     <mat-toolbar *ngIf="config" class="toolbar-slim mat-elevation-z2 flex-nav" [ngClass]="config.colorClass ? config.colorClass : 'bg-accent'">  
-        <app-icon-button [config]="config.leftBtn"></app-icon-button>
+        <app-button [config]="config.leftBtn | transformButton : ButtonTypes.Icon"></app-button>
           
         <span class="mr-auto">    
           <span class="ml-1">{{ config.title }}</span> 
         </span>
      
-        <app-icon-button *ngFor="let button of config.buttons" [config]="button"></app-icon-button>   
+        <app-button *ngFor="let button of config.buttons | transformButtons : ButtonTypes.Icon" [config]="button"></app-button>   
     </mat-toolbar>
 
     <div class="main-content p-3">

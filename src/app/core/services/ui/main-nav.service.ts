@@ -61,17 +61,12 @@ export class MainNavService {
     let mainCfg = this.getConfig();
     mainCfg.topDetailNavConfig = topNav.detail ? topNav.detail : null;  
     mainCfg.topDefaultNavConfig = (topNav.default && !topNav.detail) ? topNav.default : null;
-
     mainCfg.fabs = fabs;
-    mainCfg.fabs?.map(x => x.type = ButtonTypes.Fab)
-
     this.configSubject.next(mainCfg);
   }
 
   addFabs(fabs: AppButton[]){
-    console.log(fabs);
-    let mainCfg = this.getConfig();
-    fabs?.map(x => x.type = ButtonTypes.Fab)
+    let mainCfg = this.getConfig();   
     mainCfg.fabs = mainCfg.fabs.slice().concat(fabs);
     this.configSubject.next(mainCfg);
   }

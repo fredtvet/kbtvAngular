@@ -46,13 +46,13 @@ export class MissionDocumentListComponent extends SubscriptionComponent {
 
   get selectedItemsFabs(): AppButton[] {
     return [
-      {icon: "send", aria: 'Send', callback: this.openMailDocumentSheet, allowedRoles: [Roles.Leder]}, 
+      {icon: "send", aria: 'Send', colorClass: 'bg-accent', callback: this.openMailDocumentSheet, allowedRoles: [Roles.Leder]}, 
       {icon: "delete_forever", aria: 'Slett', colorClass: 'bg-warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
     ]
   }
 
   get staticFabs(): AppButton[] {
-    return [{icon: "note_add", aria: 'Legg til', callback: this.openDocumentForm, allowedRoles: [Roles.Leder]}]
+    return [{icon: "note_add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openDocumentForm, allowedRoles: [Roles.Leder]}]
   }
   
   ngOnInit() {

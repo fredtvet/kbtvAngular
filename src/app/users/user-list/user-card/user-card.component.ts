@@ -3,24 +3,18 @@ import { AppButton } from 'src/app/shared-app/interfaces';
 import { Roles } from 'src/app/shared-app/enums';
 import { User } from 'src/app/core/models';
 
-
 @Component({
   selector: 'app-user-card',
   templateUrl: './user-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserCardComponent implements OnInit {
+export class UserCardComponent {
   Roles = Roles;
   
   @Input() user: User;
   @Input() editButton: AppButton;
   @Input() newPasswordButton: AppButton;
-
-  callButton: AppButton;
   
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

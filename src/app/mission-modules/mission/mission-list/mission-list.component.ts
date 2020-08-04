@@ -42,10 +42,10 @@ export class MissionListComponent{
     sortBy = (sortBy === MissionSortBy.Historic) ? MissionSortBy.UpdatedAt : MissionSortBy.Historic;
     this.missionsFacade.addSortBy(sortBy);
 
-    //Toggle icon on nav action on bottom sheet
     let color = "color-background";
     if(sortBy === MissionSortBy.Historic) color = "color-accent";
     let cfg = this.mainNavService.getTopDefaultNavConfig();
+    cfg.buttons = [...cfg.buttons];
     cfg.buttons[0].colorClass = color;
     this.mainNavService.addConfig({default: cfg})
   }
@@ -64,7 +64,9 @@ export class MissionListComponent{
       {icon: 'filter_list', colorClass: 'color-accent', callback: this.openMissionFilter}
     ];
 
-    let fabs = [{icon: "add", aria: 'Legg til', callback: this.openMissionForm, allowedRoles: [Roles.Leder, Roles.Mellomleder]}]
+    let fabs = [
+      {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openMissionForm, allowedRoles: [Roles.Leder, Roles.Mellomleder]}
+    ]
 
     this.mainNavService.addConfig({default: cfg}, fabs);
   }

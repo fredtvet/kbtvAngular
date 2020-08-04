@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IconButtonComponent } from './components/icon-button/icon-button.component';
 import { ImageErrorReloaderDirective } from './directives/image-error-reloader.directive';
-import { ListCardComponent, StrokedButtonComponent, BottomSheetMenuComponent, PageNotFoundComponent, NotificationComponent, AppButtonComponent } from './components';
+import { ListCardComponent, BottomSheetMenuComponent, PageNotFoundComponent, NotificationComponent, AppButtonComponent } from './components';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
@@ -17,18 +16,18 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NavItemComponent } from './components/nav-item/nav-item.component';
-import { ReverseArrayPipe, CheckRolesInButtonsPipe } from './pipes';
+import { ReverseArrayPipe, CheckRolesInButtonsPipe, TransformButtonsPipe, TransformButtonPipe } from './pipes';
 
 
 
 @NgModule({
   declarations: [
-    IconButtonComponent,
-    StrokedButtonComponent,
     AppButtonComponent,
     ImageErrorReloaderDirective,
     CheckRolesInButtonsPipe,
     ReverseArrayPipe,
+    TransformButtonsPipe,
+    TransformButtonPipe,
     BottomSheetMenuComponent,
     ListCardComponent,
     IfRoleDirective,
@@ -65,10 +64,10 @@ import { ReverseArrayPipe, CheckRolesInButtonsPipe } from './pipes';
     MatSnackBarModule, //
     MatDialogModule,
     MatProgressSpinnerModule, //
-    IconButtonComponent,
-    StrokedButtonComponent,
     ImageErrorReloaderDirective,
     CheckRolesInButtonsPipe,
+    TransformButtonsPipe,
+    TransformButtonPipe,
     ReverseArrayPipe,
     BottomSheetMenuComponent,
     ListCardComponent,

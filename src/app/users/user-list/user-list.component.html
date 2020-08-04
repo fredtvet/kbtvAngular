@@ -5,13 +5,15 @@
       [editButton]="{
         icon: 'edit', 
         allowedRoles: [Roles.Leder], 
-        callback: openUserForm, params: [user.userName]
+        callback: openUserForm, params: [user.userName],
+        type: ButtonTypes.Icon
       }"
       [newPasswordButton]="{
         icon: 'vpn_key', 
         colorClass: 'color-accent',
         allowedRoles: [Roles.Leder], 
-        callback: openNewPasswordForm, params: [user.userName]
+        callback: openNewPasswordForm, params: [user.userName],
+        type: ButtonTypes.Icon
       }">
     </app-user-card>
 

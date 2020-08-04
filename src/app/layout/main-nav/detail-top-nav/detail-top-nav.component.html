@@ -8,11 +8,12 @@
         [ngClass]="config.imgSrc ? 'overlay overlay-top' : 'bg-primary'"
         class="toolbar-slim color-foreground slideInDown">
 
-        <app-icon-button *ngIf="config.backFn else menuBtn" [config]="{
+        <app-button *ngIf="config.backFn else menuBtn" [config]="{
                     callback: config.backFn, 
                     params: config.backFnParams,
+                    type: ButtonTypes.Icon,
                     aria: 'Tilbake',icon: 'chevron_left', iconSizeClass: 'scale-150'}">
-        </app-icon-button>
+        </app-button>
 
         <ng-template #menuBtn>
             <button mat-icon-button aria-label="Toggle sidenav" 
@@ -28,7 +29,8 @@
 
         <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent"></mat-spinner>
 
-        <app-icon-button *ngFor="let button of config.buttons" [config]="button"></app-icon-button>
+        <app-button *ngFor="let button of config.buttons | transformButtons: ButtonTypes.Icon" 
+            [config]="button"></app-button>
 
         <button mat-icon-button 
             *ngIf="(config?.bottomSheetButtons | checkRolesInButtons : currentUserRole)" 

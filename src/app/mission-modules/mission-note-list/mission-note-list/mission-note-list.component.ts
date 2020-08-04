@@ -44,7 +44,7 @@ export class MissionNoteListComponent {
   
   openConfirmDeleteDialog = (id: number) => {   
     let config: ConfirmDialogConfig = {message: 'Slett notat?', confirmText: 'Slett'};
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: 'Bekreft at du ønsker å slette notatet.'});
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteNote(id));
   }
 
@@ -60,7 +60,9 @@ export class MissionNoteListComponent {
       backFn: this.onBack, 
       backFnParams: [missionId]
     } as TopDefaultNavConfig;
-    let fabs = [{icon: "add", aria: 'Legg til', callback: this.openCreateNoteForm, allowedRoles: RolePresets.Internal}];
+    let fabs = [
+      {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openCreateNoteForm, allowedRoles: RolePresets.Internal}
+    ];
     this.mainNavService.addConfig({default: cfg}, fabs);
   }
 

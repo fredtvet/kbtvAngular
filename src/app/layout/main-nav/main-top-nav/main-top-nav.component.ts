@@ -4,14 +4,15 @@ import { LoadingService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
 import { TopDefaultNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 import { BottomSheetMenuComponent } from 'src/app/shared-app/components';
+import { ButtonTypes } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-main-top-nav',
   templateUrl: './main-top-nav.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainTopNavComponent implements OnInit {
-
+export class MainTopNavComponent {
+  ButtonTypes = ButtonTypes;
   @Input() config: TopDefaultNavConfig;
   @Input() currentUserRole: string;
   @Output() menuBtnClicked = new EventEmitter();
@@ -20,11 +21,8 @@ export class MainTopNavComponent implements OnInit {
 
   constructor(
     private _bottomSheet: MatBottomSheet,
-    private loadingService: LoadingService,) { }
+    private loadingService: LoadingService) { }
 
-  ngOnInit() {
-  }
-  
   onMenuButtonClick = () => this.menuBtnClicked.emit();
   
   openBottomSheet = (buttons: AppButton[]) => this._bottomSheet.open(BottomSheetMenuComponent, { data: buttons });

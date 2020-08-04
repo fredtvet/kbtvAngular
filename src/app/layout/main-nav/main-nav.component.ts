@@ -5,7 +5,7 @@ import { AuthService, MainNavService } from 'src/app/core/services';
 import { MatDrawer } from '@angular/material/sidenav';
 import { routeAnimation } from '../route.animation';
 import { MainNavConfig } from 'src/app/shared-app/interfaces';
-import { LayoutTopNavs, Roles } from 'src/app/shared-app/enums';
+import { LayoutTopNavs, Roles, ButtonTypes } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-main-nav',
@@ -15,15 +15,13 @@ import { LayoutTopNavs, Roles } from 'src/app/shared-app/enums';
 })
 export class MainNavComponent {
   @ViewChild('drawer') drawer:MatDrawer;
-  
-  LayoutTopNavs = LayoutTopNavs
+  ButtonTypes = ButtonTypes;
+  LayoutTopNavs = LayoutTopNavs;
   Roles = Roles;
 
   config$: Observable<MainNavConfig> = this.mainNavService.config$;
 
   constructor(private mainNavService: MainNavService) { }
-  
-  log = (x) => console.log(x);
 
   toggleDrawer(isXs:boolean){if(isXs) this.drawer.toggle()}
 

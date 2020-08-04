@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { SimpleNavConfig } from 'src/app/shared-app/interfaces';
+import { ButtonTypes } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-simple-top-nav',
@@ -7,13 +8,11 @@ import { SimpleNavConfig } from 'src/app/shared-app/interfaces';
   styleUrls: ['./simple-top-nav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SimpleTopNavComponent implements OnInit {
-
+export class SimpleTopNavComponent {
+  ButtonTypes = ButtonTypes;
+  
   @Input() config: SimpleNavConfig;
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

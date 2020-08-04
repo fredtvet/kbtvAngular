@@ -105,7 +105,9 @@ export class TimesheetListComponent implements OnInit {
       buttons: [{icon: 'filter_list', colorClass:'color-accent', callback: this.openFilterSheet}]
     } as TopDefaultNavConfig;
     
-    let fabs = [{icon: "add", aria: 'Legg til', callback: this.openTimesheetForm, params: [this.filterSubject.value.mission]}];
+    let fabs = [
+      {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openTimesheetForm, params: [this.filterSubject.value.mission]}
+    ];
 
     this.mainNavService.addConfig({default: cfg}, fabs);
   }

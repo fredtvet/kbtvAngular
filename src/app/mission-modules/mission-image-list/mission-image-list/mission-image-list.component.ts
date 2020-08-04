@@ -51,13 +51,13 @@ export class MissionImageListComponent extends SubscriptionComponent{
 
   get selectedItemsFabs(): AppButton[] {
     return [
-      {icon: "send", aria: 'Send', callback: this.openMailImageSheet, allowedRoles: [Roles.Leder]}, 
+      {icon: "send", aria: 'Send', colorClass: 'bg-accent', callback: this.openMailImageSheet, allowedRoles: [Roles.Leder]}, 
       {icon: "delete_forever", aria: 'Slett', colorClass: 'bg-warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
     ]
   }
 
   get staticFabs(): AppButton[] {
-    return [{icon: "camera_enhance", aria: 'Ta bilde', callback: this.openImageInput, allowedRoles: RolePresets.Internal}]
+    return [{icon: "camera_enhance", aria: 'Ta bilde', colorClass: 'bg-accent', callback: this.openImageInput, allowedRoles: RolePresets.Internal}]
   }
 
   ngOnInit() {

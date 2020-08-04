@@ -35,7 +35,7 @@
     <div style="position:absolute;right:0;" class="m-1" 
       fxLayout="column" fxLayoutGap="4px"
       [style.bottom.px]="bottomNav.element.nativeElement.offsetHeight">  
-      <app-button *ngFor="let fab of config.fabs | reverseArray" [config]="fab"></app-button>
+      <app-button *ngFor="let fab of config.fabs | transformButtons : ButtonTypes.Fab | reverseArray" [config]="fab"></app-button>
     </div>
 
     <app-main-bottom-nav #bottomNav fxHide fxShow.xs class="flex-nav"></app-main-bottom-nav>
