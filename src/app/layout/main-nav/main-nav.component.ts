@@ -4,7 +4,7 @@ import { RouterOutlet } from "@angular/router";
 import { AuthService, MainNavService } from 'src/app/core/services';
 import { MatDrawer } from '@angular/material/sidenav';
 import { routeAnimation } from '../route.animation';
-import { MainNavConfig } from 'src/app/shared-app/interfaces';
+import { MainNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 import { LayoutTopNavs, Roles, ButtonTypes } from 'src/app/shared-app/enums';
 
 @Component({
@@ -29,4 +29,6 @@ export class MainNavComponent {
     //console.log(outlet && outlet.activatedRouteData && outlet.activatedRouteData['page']);
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['page'];
   }
+
+  trackByFab = (index: number, fab: AppButton) => fab.icon;
 }
