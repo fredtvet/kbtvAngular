@@ -1,8 +1,8 @@
 export enum Roles {
-  Leder = "leder",
-  Mellomleder = "mellomleder",
-  Ansatt = "ansatt",
-  Oppdragsgiver = "oppdragsgiver"
+  Leder = "Leder",
+  Mellomleder = "Mellomleder",
+  Ansatt = "Ansatt",
+  Oppdragsgiver = "Oppdragsgiver"
 }
 
 export const RolePresets = {
