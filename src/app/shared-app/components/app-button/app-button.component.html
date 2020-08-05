@@ -1,8 +1,8 @@
 <ng-container *ngIf="config">
-    <button mat-button class="{{ getButtonClass() }}" *ifRole="config.allowedRoles"
+    <button mat-button *ifRole="config.allowedRoles"
         [attr.aria-label]="config.aria"
         [ngClass]="[
-            getButtonClass(config.type) || '',
+            buttonClass,
             config.colorClass ? config.colorClass : '', 
             config.iconSizeClass ? config.iconSizeClass : ''
         ]"

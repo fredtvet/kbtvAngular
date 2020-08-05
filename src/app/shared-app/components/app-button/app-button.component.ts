@@ -14,19 +14,20 @@ export class AppButtonComponent {
   
   constructor() { }
 
+  get buttonClass(): string{
+    switch(this.config.type){
+      case ButtonTypes.Icon: return "mat-icon-button";
+      case ButtonTypes.Stroked: return "mat-stroked-button";
+      case ButtonTypes.Fab: return "mat-fab";
+      default: return "";
+    }
+  }
+
   handleFn = (fn: Function, parameters: any[] = []) => {
     if(parameters == undefined || parameters.length == 0) parameters = this.config.params;
     
     if(parameters) this.fnHandled.emit(fn(...parameters));
     else this.fnHandled.emit(fn());
   };
-
-  getButtonClass(buttonType: ButtonTypes): string{
-    switch(buttonType){
-      case ButtonTypes.Icon: return "mat-icon-button";
-      case ButtonTypes.Stroked: return "mat-stroked-button";
-      case ButtonTypes.Fab: return "mat-fab";
-    }
-  }
 
 }
