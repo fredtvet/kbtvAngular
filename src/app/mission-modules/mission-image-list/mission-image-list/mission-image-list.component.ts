@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewChild } from "@angular/core";
+import { Component, ChangeDetectionStrategy, ViewChild, ElementRef } from "@angular/core";
 import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { MatDialog } from "@angular/material/dialog";
 import { filter, takeUntil, tap } from "rxjs/operators";
@@ -21,7 +21,7 @@ import { ImageViewerDialogWrapperComponent } from '../components/image-viewer/im
 
 export class MissionImageListComponent extends SubscriptionComponent{
   @ViewChild('imageList') imageList: SelectableListBase<AppFile>;
-  @ViewChild('imageInput') imageInput: HTMLElement;
+  @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
 
   currentSelections: number[] = [];
 
@@ -91,7 +91,7 @@ export class MissionImageListComponent extends SubscriptionComponent{
     );
   }
 
-  private openImageInput = (): void => this.imageInput.click();
+  private openImageInput = (): void => this.imageInput.nativeElement.click();
   
   private updateFabs(){
     let fabs = this.mainNavService.currentFabs;
@@ -103,7 +103,7 @@ export class MissionImageListComponent extends SubscriptionComponent{
       this.mainNavService.addFabs(this.selectedItemsFabs);
   }
 
-  private  deleteSelectedImages = () => {
+  private deleteSelectedImages = () => {
     this.missionImageService.deleteRange$(this.currentSelections).subscribe(data =>{
       this.imageList.clearSelections();
       this.notificationService.notify({
