@@ -5,14 +5,12 @@ import { IdentityTokensService } from './identity-tokens.service';
 import { map, distinctUntilChanged, tap, take, catchError, finalize } from 'rxjs/operators';
 import { LocalStorageService } from '../local-storage.service';
 import { DeviceInfoService } from '../device-info.service';
-import { NotificationService } from '../ui/notification.service';
 import { DataSyncService } from '../data/data-sync.service';
 import { DateTimeService } from '../utility/date-time.service';
 import { PersistentSubject } from '../data/abstracts/persistent.subject';
 import { User } from 'src/app/core/models';
 import { TokenResponse, Credentials } from 'src/app/shared-app/interfaces';
 import { Router } from '@angular/router';
-import { Notifications } from 'src/app/shared-app/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +34,6 @@ export class AuthService extends PersistentSubject<User>{
     private tokensService: IdentityTokensService,
     private dataSyncService: DataSyncService,
     private deviceInfoService: DeviceInfoService,
-    private notificationService: NotificationService,
     private router: Router,
   ) {
     super(localStorageService, "identity");

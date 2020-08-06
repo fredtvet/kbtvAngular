@@ -23,7 +23,7 @@ export class MainNavComponent {
 
   constructor(private mainNavService: MainNavService) { }
 
-  toggleDrawer(isXs:boolean){if(isXs) this.drawer.toggle()}
+  toggleDrawer = (isXs:boolean) => isXs ? this.drawer.toggle() : null;
 
   prepareRoute(outlet: RouterOutlet) {
     //console.log(outlet && outlet.activatedRouteData && outlet.activatedRouteData['page']);

@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "analyze": "webpack-bundle-analyzer dist/kbtv-client/stats.json"
+    "analyze:wba": "webpack-bundle-analyzer dist/kbtv-client/stats.json",
+    "analyze:sme": "source-map-explorer dist/kbtv-client/**/*.js"
   },
   "private": true,
   "dependencies": {
