@@ -11,7 +11,6 @@ import { interval, combineLatest, concat } from 'rxjs';
 })
 
 export class AppComponent {
-  @ViewChild('downloadFrame') downloadFrame: ElementRef;
   title = 'test-client';
 
   constructor(

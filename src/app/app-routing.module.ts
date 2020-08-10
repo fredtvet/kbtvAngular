@@ -17,10 +17,10 @@ const routes: Routes = [
       {path: 'profil', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule), 
         canActivate: [AuthGuard], data: {preload: true, page: AppPages.Profile}},
 
-      {path: 'timer', loadChildren: () => import('./timesheet-modules/timesheet-user-modules/timesheet/timesheet.module').then(m => m.TimesheetModule), 
+      {path: 'mine-timer', loadChildren: () => import('./timesheet-user/timesheet-user.module').then(m => m.TimesheetUserModule), 
         canActivate: [AuthGuard], data: {preload: true, page: AppPages.Timesheet}},
 
-      {path: 'oppdrag', loadChildren: () => import('./mission-modules/mission/mission.module').then(m => m.MissionModule),
+      {path: 'oppdrag', loadChildren: () => import('./mission/mission.module').then(m => m.MissionModule),
         canActivate: [AuthGuard], data: {preload: true, page: AppPages.Mission}},
 
       {path: 'brukere', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), 
@@ -29,11 +29,8 @@ const routes: Routes = [
       {path: 'data', loadChildren: () => import('./data-management/data-management.module').then(m => m.DataManagementModule), 
         canActivate: [AuthGuard], data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.DataManagement}},
 
-      {path: 'timeadministrering', loadChildren: () => import('./timesheet-modules/timesheet-admin/timesheet-admin.module').then(m => m.TimesheetAdminModule), 
+      {path: 'timer', loadChildren: () => import('./timesheet/timesheet.module').then(m => m.TimesheetModule), 
         canActivate: [AuthGuard], data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.TimesheetAdmin}},
-
-      {path: 'timestatistikk', loadChildren: () => import('./timesheet-modules/timesheet-statistic/timesheet-statistic.module').then(m => m.TimesheetStatisticModule), 
-        canActivate: [AuthGuard], data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.TimesheetStatistic}},
     ]
   },
   {path: 'login', loadChildren: () => import('./login-prompt/login-prompt.module').then(m => m.LoginPromptModule),

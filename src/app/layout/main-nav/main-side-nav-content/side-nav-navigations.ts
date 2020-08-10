@@ -15,7 +15,7 @@ export const SideNavNavigations: AppButton[] = [
   {
     icon: "timer",
     text: "Timer",
-    routerLink: "/timer",
+    routerLink: "/mine-timer",
     allowedRoles: RolePresets.Internal
   },
   {
@@ -36,7 +36,7 @@ export const SideNavNavigations: AppButton[] = [
       {
         icon: "assessment",
         text: "Timer",
-        routerLink: "/timeadministrering",
+        routerLink: "/timer/administrering",
       },
     ],
   },
@@ -48,7 +48,7 @@ export const SideNavNavigations: AppButton[] = [
       {
         icon: "assessment",
         text: "Timestatistikk",
-        routerLink: "/timestatistikk",
+        routerLink: "/timer/statistikk",
       },
     ],
   },
