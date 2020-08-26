@@ -15,22 +15,25 @@ const routes: Routes = [
       {path: 'hjem', component: HomeComponent, canActivate: [AuthGuard], data: {page: AppPages.Home}},
 
       {path: 'profil', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule), 
-        canActivate: [AuthGuard], data: {preload: true, page: AppPages.Profile}},
+        canActivateChild: [AuthGuard], data: {preload: true, page: AppPages.Profile}},
 
-      {path: 'mine-timer', loadChildren: () => import('./timesheet-user/timesheet-user.module').then(m => m.TimesheetUserModule), 
-        canActivate: [AuthGuard], data: {preload: true, page: AppPages.Timesheet}},
+      {path: 'mine-timer', loadChildren: () => import('./timesheet-modules/user-timesheet-list/user-timesheet-list.module').then(m => m.UserTimesheetListModule), 
+        canActivateChild: [AuthGuard], data: {preload: true, page: AppPages.Timesheet}},
 
-      {path: 'oppdrag', loadChildren: () => import('./mission/mission.module').then(m => m.MissionModule),
-        canActivate: [AuthGuard], data: {preload: true, page: AppPages.Mission}},
+      {path: 'oppdrag', loadChildren: () => import('./mission-modules/mission-list/mission-list.module').then(m => m.MissionListModule),
+        canActivateChild: [AuthGuard], data: {preload: true, page: AppPages.Mission}},
 
       {path: 'brukere', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), 
-        canActivate: [AuthGuard], data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.Users}},
+        canActivateChild: [AuthGuard], data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.Users}},
 
       {path: 'data', loadChildren: () => import('./data-management/data-management.module').then(m => m.DataManagementModule), 
-        canActivate: [AuthGuard], data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.DataManagement}},
+        canActivateChild: [AuthGuard], data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.DataManagement}},
 
-      {path: 'timer', loadChildren: () => import('./timesheet/timesheet.module').then(m => m.TimesheetModule), 
-        canActivate: [AuthGuard], data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.TimesheetAdmin}},
+      {path: 'timeadministrering', loadChildren: () => import('./timesheet-modules/timesheet-admin/timesheet-admin.module').then(m => m.TimesheetAdminModule), 
+        canActivateChild: [AuthGuard], data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.TimesheetAdmin}},
+
+      {path: 'timestatistikk', loadChildren: () => import('./timesheet-modules/timesheet-statistic/timesheet-statistic.module').then(m => m.TimesheetStatisticModule), 
+        canActivateChild: [AuthGuard], data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.TimesheetStatistic}},
     ]
   },
   {path: 'login', loadChildren: () => import('./login-prompt/login-prompt.module').then(m => m.LoginPromptModule),

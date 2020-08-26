@@ -1,0 +1,6 @@
+<mat-form-field appearance="fill" class="data-picker mat-elevation-z2 w-100 fadeInLeft">
+    <mat-label>Velg</mat-label>
+    <mat-select [ngModel]="selectedProperty" (ngModelChange)="changeProperty($event)">
+      <mat-option *ngFor="let prop of properties" value="{{ prop }}">{{ prop | translate }}</mat-option>
+    </mat-select>
+</mat-form-field>

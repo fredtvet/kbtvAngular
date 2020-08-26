@@ -1,9 +1,9 @@
 <div fxLayout="column" fxLayoutAlign="space-around stretch">
     <ng-container *ngIf="!(disabledFilters | arrayIncludes : 'user')">
       <mat-form-field>
-        <mat-select [(ngModel)]="filterPreset.user" placeholder="Velg ansatt">
+        <mat-select [(ngModel)]="filter.userName" placeholder="Velg ansatt">
           <mat-option>Ingen</mat-option>
-          <mat-option *ngFor="let user of users" [value]="user">
+          <mat-option *ngFor="let user of users" [value]="user.userName">
             {{ user.firstName }} {{ user.lastName }}
           </mat-option>
         </mat-select>
@@ -16,8 +16,8 @@
     <ng-container *ngIf="!(disabledFilters | arrayIncludes : 'mission')">
       <mat-form-field>
         <input matInput placeholder="Oppdrag" aria-label="Velg oppdrag" 
-        [matAutocomplete]="auto1" [(ngModel)]="filterPreset.mission">
-        <button mat-button *ngIf="filterPreset.mission" matSuffix mat-icon-button aria-label="Lukk" (click)="filterPreset.mission=null">
+        [matAutocomplete]="auto1" [(ngModel)]="filter.mission">
+        <button mat-button *ngIf="filter.mission" matSuffix mat-icon-button aria-label="Lukk" (click)="filter.mission=null">
           <mat-icon>close</mat-icon>
         </button>
         <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFnMission">
@@ -34,7 +34,7 @@
     <ng-container *ngIf="!(disabledFilters | arrayIncludes : 'dateRange')">
       <label class="mat-caption">Velg tidsrom</label>
 
-      <mat-radio-group color="primary" [ngModel]="filterPreset.dateRangePreset" (ngModelChange)="updateDateRangePreset($event)"  
+      <mat-radio-group color="primary" [ngModel]="filter.dateRangePreset" (ngModelChange)="updateDateRangePreset($event)"  
         fxLayoutGap="8px" class="mb-2">
         <mat-radio-button [value]="dateRangePresets.CurrentWeek">
           Denne uken
@@ -51,7 +51,7 @@
         <mat-radio-button [value]="dateRangePresets.Custom" #customDateRangeSelect>
           Velg tid
         </mat-radio-button>
-        <mat-radio-button [value]="dateRangePresets.ShowAll">
+        <mat-radio-button [value]="dateRangePresets.None">
           Vis alt
         </mat-radio-button>
       </mat-radio-group>
@@ -60,8 +60,8 @@
         <mat-form-field style="width:164px">
           <input matInput  placeholder="Velg tidsrom" selectMode="range" 
             [owlDateTimeTrigger]="customDateRange" [owlDateTime]="customDateRange" 
-            [(ngModel)]="filterPreset.dateRange">
-          <button mat-button *ngIf="filterPreset.dateRange" matSuffix mat-icon-button aria-label="Lukk" (click)="filterPreset.dateRange=null">
+            [(ngModel)]="filter.dateRange">
+          <button mat-button *ngIf="filter.dateRange" matSuffix mat-icon-button aria-label="Lukk" (click)="filter.dateRange=null">
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
@@ -73,14 +73,14 @@
         <mat-form-field style="width:164px">
           <input matInput  placeholder="Velg måned" selectMode="range"
             [owlDateTimeTrigger]="customMonth" [owlDateTime]="customMonth" 
-            [(ngModel)]="filterPreset.dateRange">
-          <button mat-button *ngIf="filterPreset.dateRange" matSuffix mat-icon-button aria-label="Lukk" (click)="filterPreset.dateRange=null">
+            [(ngModel)]="filter.dateRange">
+          <button mat-button *ngIf="filter.dateRange" matSuffix mat-icon-button aria-label="Lukk" (click)="filter.dateRange=null">
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
   
         <owl-date-time pickerType="calendar"  startView="year"
-          (monthSelected)="chosenMonthHandler($event, customMonth)" #customMonth>
+          (monthSelected)="selectMonthHandler($event, customMonth)" #customMonth>
         </owl-date-time>
       </ng-container>
 
@@ -90,7 +90,7 @@
     
     <ng-container *ngIf="!(disabledFilters | arrayIncludes : 'status')">
       <label class="mat-caption">Velg status</label>
-      <mat-radio-group [(ngModel)]="filterPreset.status" color="primary"
+      <mat-radio-group [(ngModel)]="filter.status" color="primary"
         fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="mb-2">
         <mat-radio-button [value]="timesheetStatus.Open">
             Åpen

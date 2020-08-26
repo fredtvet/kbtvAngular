@@ -1,0 +1,25 @@
+<div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="summaries$ | async else loading; let summaries">
+    
+    <ng-container *ngIf="summaries?.length == 0" [ngTemplateOutlet]="noContent"></ng-container>
+
+    <cdk-virtual-scroll-viewport itemSize="82" maxBufferPx="800" minBufferPx="800" fxFlex>
+        <app-swipe-card *cdkVirtualFor="let summary of summaries; trackBy: trackByWeek; templateCacheSize:0"
+            [navButton]="{callback: selectWeek, params: summary.week}" [swipeEnabled]="summary.openHours > 0"
+            [swipeButton]="{
+                        callback: changeTimesheetStatuses, 
+                        params: [summary.timesheets], 
+                        icon: summary.openHours > 0 ? 'lock_open' : 'lock', 
+                        colorClass: summary.openHours > 0 ? 'bg-warn' : 'bg-success'}">
+            <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
+        </app-swipe-card>
+    </cdk-virtual-scroll-viewport>
+  
+</div>
+
+<ng-template #noContent>
+    <div class="w-100 text-center mt-2 mat-h3">Fant ingen timer!</div>
+</ng-template>
+
+<ng-template #loading>
+    <mat-spinner *ngIf="loading$ | async else noContent" class="center-spinner" color="accent"></mat-spinner>
+</ng-template>

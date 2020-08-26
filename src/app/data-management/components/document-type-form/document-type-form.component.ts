@@ -1,6 +1,6 @@
-import { Component, OnInit, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
-import { DocumentTypeService } from 'src/app/core/services';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { AppDocumentType } from 'src/app/core/models';
+import { DataManagementStore } from '../../data-management.store';
 
 @Component({
   selector: 'app-document-type-form',
@@ -11,17 +11,14 @@ import { AppDocumentType } from 'src/app/core/models';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DocumentTypeFormComponent implements OnInit {
+export class DocumentTypeFormComponent {
   
   @Output() finished = new EventEmitter();
 
-  constructor(private DocumentTypeService: DocumentTypeService) { }
-
-  ngOnInit() {
-  }
+  constructor(private store: DataManagementStore) { }
 
   onSubmit = (documentType: AppDocumentType) => {
     if(!documentType) this.finished.emit();
-    else this.DocumentTypeService.add$(documentType).subscribe(x => this.finished.emit(x));
+    else this.store.add$(documentType).subscribe(x => this.finished.emit());
   }
 }

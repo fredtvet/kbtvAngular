@@ -5,8 +5,6 @@ export enum AppPages{
     Users,
     DataManagement,
     TimesheetStatistic,
-    TimesheetAdminUserList,
-    TimesheetAdminList,
     TimesheetWeekView,
     TimesheetWeekList,
     TimesheetList,
@@ -20,5 +18,8 @@ export enum AppPages{
     Login,
     Mission,
     Timesheet,
-    TimesheetAdmin
+    TimesheetAdmin,
+    TimesheetAdminUserList,  
+    TimesheetAdminWeekList,
+    TimesheetAdminList,
 }

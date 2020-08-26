@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
-import { InboundEmailPasswordService } from 'src/app/core/services';
 import { InboundEmailPassword } from 'src/app/core/models';
+import { DataManagementStore } from '../../data-management.store';
 
 @Component({
   selector: 'app-inbound-email-password-form',  
@@ -15,11 +15,11 @@ export class InboundEmailPasswordFormComponent {
 
   @Output() finished = new EventEmitter();
 
-  constructor(private inboundEmailPasswordService: InboundEmailPasswordService) { }
+  constructor(private store: DataManagementStore) { }
 
   onSubmit = (password: InboundEmailPassword) => {
     if(!password) this.finished.emit();
-    else this.inboundEmailPasswordService.add$(password).subscribe(x => this.finished.emit(x));
+    else this.store.add$(password).subscribe(x => this.finished.emit());
   }
 
 }

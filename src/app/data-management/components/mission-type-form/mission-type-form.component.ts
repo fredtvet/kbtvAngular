@@ -1,6 +1,6 @@
-import { Component, OnInit, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { MissionType } from 'src/app/core/models';
-import { MissionTypeService } from 'src/app/core/services';
+import { DataManagementStore } from '../../data-management.store';
 
 @Component({
   selector: 'app-mission-type-form',
@@ -15,10 +15,10 @@ export class MissionTypeFormComponent {
   
   @Output() finished = new EventEmitter();
 
-  constructor(private missionTypeService:MissionTypeService) { }
+  constructor(private store: DataManagementStore) { }
 
   onSubmit = (missionType: MissionType) => {
     if(!missionType) this.finished.emit();
-    else this.missionTypeService.add$(missionType).subscribe(x => this.finished.emit(x));
+    else this.store.add$(missionType).subscribe(x => this.finished.emit(x));
   }
 }

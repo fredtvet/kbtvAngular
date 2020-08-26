@@ -1,10 +1,11 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
-import { filter} from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DataSyncService, MainNavService, DataSyncConfig, SyncConfig } from 'src/app/core/services';
-import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { MainNavService } from 'src/app/core/services';
+import { SyncStore, SyncStoreConfig } from 'src/app/core/services/sync';
+import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
+import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-settings',
@@ -13,14 +14,13 @@ import { Router } from '@angular/router';
 })
 export class SettingsComponent {
 
-  syncConfig$ = this.dataSyncConfig.config$;
+  syncConfig$ = this.syncStore.syncConfig$;
 
   constructor(
     private router: Router,
     private mainNavService: MainNavService,
     private dialog: MatDialog,
-    private dataSyncService: DataSyncService,
-    private dataSyncConfig: DataSyncConfig,
+    private syncStore: SyncStore
   ) { this.configureMainNav(); }
 
   confirmPurge = () => {
@@ -30,17 +30,17 @@ export class SettingsComponent {
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.reloadAllData());
   }
 
-  refresh = () => this.dataSyncService.syncAll();
+  refresh = () => this.syncStore.syncAll();
 
-  updateSyncConfig = (syncConfig: SyncConfig) => {
+  updateSyncConfig = (syncConfig: SyncStoreConfig) => {
     let cfg = {...syncConfig};
-    cfg.syncRefreshTime = cfg.syncRefreshTime * 60;
-    this.dataSyncConfig.updateConfig(cfg);
+    cfg.refreshTime = cfg.refreshTime * 60;
+    this.syncStore.updateSyncConfig(cfg);
   }
 
   private reloadAllData(){
-    this.dataSyncService.purgeAll();
-    this.dataSyncService.syncAll();
+    this.syncStore.purgeAll();
+    this.syncStore.syncAll();
   }  
 
   private configureMainNav(){

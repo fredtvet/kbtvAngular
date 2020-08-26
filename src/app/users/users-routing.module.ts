@@ -9,7 +9,6 @@ const routes: Routes = [
   {
     path: '',
     component: UserListComponent,
-    canActivate: [AuthGuard],
     data: {allowedRoles: [Roles.Leder, Roles.Mellomleder]}
   },
 ];

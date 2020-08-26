@@ -36,7 +36,7 @@ export const SideNavNavigations: AppButton[] = [
       {
         icon: "assessment",
         text: "Timer",
-        routerLink: "/timer/administrering",
+        routerLink: "/timeadministrering",
       },
     ],
   },
@@ -48,7 +48,7 @@ export const SideNavNavigations: AppButton[] = [
       {
         icon: "assessment",
         text: "Timestatistikk",
-        routerLink: "/timer/statistikk",
+        routerLink: "/timestatistikk",
       },
     ],
   },

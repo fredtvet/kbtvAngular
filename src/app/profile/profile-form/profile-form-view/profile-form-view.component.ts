@@ -22,7 +22,7 @@ export class ProfileFormViewComponent implements OnInit {
   initalizeForm() {
     this.profileForm = this._formBuilder.group({
       userName: [
-        { value: this.user.userName, disabled: true },
+        { value: this.user?.userName, disabled: true },
         [
           Validators.required,
           Validators.minLength(4),
@@ -30,19 +30,19 @@ export class ProfileFormViewComponent implements OnInit {
         ],
       ],
       firstName: [
-        { value: this.user.firstName, disabled: true },
+        { value: this.user?.firstName, disabled: true },
         [Validators.required, Validators.maxLength(100)],
       ],
       lastName: [
-        { value: this.user.lastName, disabled: true },
+        { value: this.user?.lastName, disabled: true },
         [Validators.required, Validators.maxLength(100)],
       ],
       phoneNumber: [
-        this.user.phoneNumber,
+        this.user?.phoneNumber,
         [Validators.minLength(4), Validators.maxLength(14)],
       ],
       email: [
-        this.user.email,
+        this.user?.email,
         [Validators.email],
       ],
     });

@@ -1,0 +1,27 @@
+<span class="mat-elevation-z2 bg-foreground pt-2" fxLayout="column" fxLayoutAlign="start center" matRipple 
+  (click)="labelClicked.emit(date)">
+
+    <div fxLayout="column" fxLayoutAlign="center center" *ngIf="date" >
+      <span class="mat-h3 m-0 line-height-100">
+        {{ date | date : 'E' }}
+      </span>
+
+      <span class="mat-title m-0 line-height-100">
+        {{ date | date : 'dd' }}
+      </span>
+
+      <span class="mat-small line-height-100">
+        {{ date | date : 'MMM' }}
+      </span>
+    </div>
+
+    
+    <mat-icon class="icon m-1">add</mat-icon>
+    
+</span>
+
+
+
+
+
+

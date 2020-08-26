@@ -9,13 +9,11 @@ const routes: Routes = [
   {
     path: '',
     component: ProfileComponent,
-    canActivate: [AuthGuard],
     data: {page: AppPages.Profile}
   },
   {
     path: 'innstillinger',
     component: SettingsComponent,
-    canActivate: [AuthGuard],
     data: {page: AppPages.Settings}
   }
 ];

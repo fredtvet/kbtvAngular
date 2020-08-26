@@ -40,7 +40,7 @@
 
     </mat-toolbar>
 
-    <mat-toolbar *ngIf="config.title && config.title.length > 0" 
+    <mat-toolbar *ngIf="config?.title && config.title.length > 0" 
         [ngClass]="config.imgSrc ? 'overlay overlay-bottom' : 'bg-primary'"
         class="toolbar-slim color-foreground slideInDown">
 

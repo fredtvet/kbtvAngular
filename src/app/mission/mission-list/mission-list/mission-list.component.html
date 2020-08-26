@@ -1,7 +1,0 @@
- <app-mission-list-view *ngIf="vm$ | async; let vm"
-  [missions]="vm.missions" 
-  [searchInput]="vm.filter.searchString"
-  (search)="searchMissions($event, vm.filter)">
-</app-mission-list-view>
-
-<router-outlet></router-outlet>

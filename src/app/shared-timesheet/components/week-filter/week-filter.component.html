@@ -1,0 +1,36 @@
+<div fxLayout="column" fxLayoutAlign="space-around stretch" *ngIf="config && config.filter">
+  <ng-container *ngIf="config.filter.userName">
+    <mat-form-field>
+      <mat-select [(ngModel)]="config.filter.userName" placeholder="Velg ansatt">
+        <mat-option *ngFor="let user of config.users" [value]="user.userName">
+          {{ user.firstName }} {{ user.lastName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+    <span class="mb-2"></span>
+  </ng-container>
+
+  <mat-form-field>
+    <mat-label>Velg år</mat-label>
+    <input matInput [(ngModel)]="config.filter.year" type="number">
+  </mat-form-field>
+
+  <mat-divider></mat-divider>
+  <span class="mb-2"></span>
+  
+  <ng-container *ngIf="config.filter.weekNr">
+    <mat-form-field>
+      <mat-label>Velg uke</mat-label>
+      <input matInput [(ngModel)]="config.filter.weekNr" type="number">
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+    <span class="mb-2"></span>
+  </ng-container>
+
+  <span fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button color="primary" (click)="applyFilter()">Bruk</button>
+  </span>
+</div>

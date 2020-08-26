@@ -1,32 +1,30 @@
-import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy, OnChanges } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { SyncConfig } from 'src/app/core/services';
+import { SyncStoreConfig } from 'src/app/core/services/sync';
 
 @Component({
   selector: "app-app-config-form",
   templateUrl: "./app-config-form.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppConfigFormComponent implements OnInit {
-  @Input() syncConfig: SyncConfig;
+export class AppConfigFormComponent implements OnChanges {
+  @Input() syncConfig: SyncStoreConfig;
   @Output() formSubmitted = new EventEmitter();
 
   settingsForm: FormGroup;
 
   constructor(private _formBuilder: FormBuilder) {}
 
-  ngOnInit() {
-    this.initalizeForm();
-  }
+  ngOnChanges() { this.initalizeForm(); }
 
   initalizeForm() {
     this.settingsForm = this._formBuilder.group({
-      syncRefreshTime: [
-        this.syncConfig.syncRefreshTime / 60,
+      refreshTime: [
+        this.syncConfig?.refreshTime / 60,
         [Validators.required, Validators.min(1)],
       ],
       initialNumberOfMonths: [
-        this.syncConfig.initialNumberOfMonths,
+        this.syncConfig?.initialNumberOfMonths,
         [Validators.required, Validators.min(1)],
       ],
     });
@@ -37,8 +35,8 @@ export class AppConfigFormComponent implements OnInit {
     if (valid) this.formSubmitted.emit(value);    
   }
 
-  get syncRefreshTime() {
-    return this.settingsForm.get("syncRefreshTime");
+  get refreshTime() {
+    return this.settingsForm.get("refreshTime");
   }
 
   get initialNumberOfMonths() {

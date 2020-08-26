@@ -1,9 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AuthService } from 'src/app/core/services/auth/auth.service';
-import { DataSyncService } from 'src/app/core/services/data/data-sync.service';
+import { AuthStore } from 'src/app/core/services';
 import { Credentials } from 'src/app/shared-app/interfaces';
 
 @Component({
@@ -11,23 +10,18 @@ import { Credentials } from 'src/app/shared-app/interfaces';
   templateUrl: './login-prompt.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginPromptComponent implements OnInit {
+export class LoginPromptComponent {
 
   constructor(    
     private router: Router,
-    private authService: AuthService,
-    private dataSyncService: DataSyncService, 
+    private authStore: AuthStore,
     private dialogRef: MatDialogRef<LoginPromptComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {returnUrl: string}) { }
 
-  ngOnInit() {
-  }
-
   authenticate(credentials: Credentials) {
-    this.authService
+    this.authStore
     .attemptAuth$(credentials).pipe(
       tap(x => {
-        this.dataSyncService.syncAll();
         this.router.navigateByUrl(this.data.returnUrl);      
         this.dialogRef.close(true);
       })

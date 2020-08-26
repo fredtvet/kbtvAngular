@@ -1,10 +1,10 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
-import { EmployerService } from 'src/app/core/services';
-import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
-import { filter } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
+import { filter } from 'rxjs/operators';
+import { AppButton, SimpleNavConfig } from 'src/app/shared-app/interfaces';
+import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
+import { DataManagementStore } from '../../data-management.store';
 
 @Component({
   selector: 'app-timesheet-form-sheet-wrapper',
@@ -23,9 +23,9 @@ export class EmployerFormSheetWrapperComponent implements OnInit {
   navConfig: SimpleNavConfig;
 
   constructor(
-    private _employerService: EmployerService,
-    private _dialog: MatDialog,
-    private _bottomSheetRef: MatBottomSheetRef<EmployerFormSheetWrapperComponent>,  
+    private store: DataManagementStore,
+    private dialog: MatDialog,
+    private bottomSheetRef: MatBottomSheetRef<EmployerFormSheetWrapperComponent>,  
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: {employerIdPreset: number}) { }
 
   ngOnInit() {
@@ -37,15 +37,15 @@ export class EmployerFormSheetWrapperComponent implements OnInit {
     }
   }
 
-  close = () => this._bottomSheetRef.dismiss();
+  close = () => this.bottomSheetRef.dismiss();
 
   private confirmDelete = () => {
     let config: ConfirmDialogConfig = {message: 'Slett oppdragsgiver?', confirmText: 'Slett'};
-    const deleteDialogRef = this._dialog.open(ConfirmDialogComponent, {data: config});
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
     deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteEmployer());
   }
 
-  private deleteEmployer = () => this._employerService.delete$(this.data.employerIdPreset).subscribe(x => this.close());
+  private deleteEmployer = () => this.store.deleteRange$([this.data.employerIdPreset]).subscribe(x => this.close());
   
   
 

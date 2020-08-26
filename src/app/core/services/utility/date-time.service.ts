@@ -21,6 +21,7 @@ export class DateTimeService {
         return this.getMonthRange();
       case DateRangePresets.CurrentYear:
         return this.getYearRange();
+      default: return undefined;
     }
   }
 
@@ -32,9 +33,7 @@ export class DateTimeService {
   }
 
   getWeekRangeByDateParams(dateParams: DateParams): Date[] {
-    var d = new Date("Jan 01, " + dateParams.year + " 01:00:00");
-    var w = d.getTime() + 604800000 * (dateParams.weekNr - 1);
-    return this.getWeekRange(new Date(w));
+    return this.getWeekRange(this.getDateOfWeek(dateParams.weekNr, dateParams.year));
   }
 
   getMonthRange(date: Date = this.currentDate): Date[] {
@@ -83,7 +82,7 @@ export class DateTimeService {
   }
 
   getLastDayOfYear(date: Date = this.currentDate): Date {
-    return new Date(date.getFullYear(), 11, 31);
+    return new Date(date.getFullYear(), 11, 31, 23, 59, 59);
   }
 
   getWeekOfYear(date: Date = this.currentDate): number {
@@ -111,13 +110,16 @@ export class DateTimeService {
     return d.getDay() === 4 || isLeap && d.getDay() === 3 ? 53 : 52
   }
 
-  getNDaysAgo(n: number): number {
-    return new Date().setDate(this.currentDate.getDate() - n);
-  }
+  getDateOfWeek(weekNr: number, year: number) {
+    var d = (1 + (weekNr - 1) * 7); // 1st of January + 7 days for each week
 
+    return new Date(year, 0, d);
+  }
+  
   getNowInUnixTimeSeconds(){
       var date = new Date();
       return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
       date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()) / 1000;
   }
+
 }

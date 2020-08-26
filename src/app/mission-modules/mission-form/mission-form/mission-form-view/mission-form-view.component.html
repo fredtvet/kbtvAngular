@@ -1,0 +1,62 @@
+<form *ngIf="missionForm && vm" [formGroup]="missionForm" fxLayout="column">
+  <mat-form-field>
+    <input ngx-google-places-autocomplete [options]='googleOptions' #placesRef="ngx-places"
+      (onAddressChange)="handleAddressChange($event)" matInput placeholder="Adresse" formControlName="address" required>
+    <mat-error *ngIf="this.address.invalid">
+      Adresse er ett obligatorisk felt på maks 100 tegn.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Kontaktnummer" formControlName="phoneNumber">
+    <mat-error *ngIf="this.phoneNumber.invalid">
+      Kontaktnummer må være mellom 4 og 12 siffer.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" placeholder="Beskrivelse"
+      formControlName="description">
+              </textarea>
+    <mat-error *ngIf="this.description.invalid">
+      Beskrivelse er på maks 400 tegn.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field formGroupName="employer">
+    <input matInput placeholder="Oppdragsgiver" aria-label="Oppdragsgiver" formControlName="name"
+      [matAutocomplete]="auto1">
+    <mat-autocomplete #auto1="matAutocomplete">
+      <mat-option *ngFor="let employer of vm?.employers" [value]="employer.name">
+        {{employer.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field formGroupName="missionType">
+    <input matInput placeholder="Oppdragstype" aria-label="Oppdragstype" formControlName="name"
+      [matAutocomplete]="auto2">
+    <mat-autocomplete #auto2="matAutocomplete">
+      <mat-option *ngFor="let type of vm?.missionTypes" [value]="type.name">
+        {{type.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-checkbox *ngIf="!isCreateForm" formControlName="finished" class="mb-2">Er oppdraget ferdig?</mat-checkbox>
+
+  <mat-checkbox *ngIf="!isCreateForm && vm?.mission?.imageURL" formControlName="deleteCurrentImage" class="mb-1">
+    Slett nåværende forsidebilde?
+  </mat-checkbox>
+
+  <span class="mb-2" *ngIf="isCreateForm">
+    Last opp forsidebilde: <input (change)="changeFile($event)" type="file">
+  </span>
+
+  <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
+    [disabled]="missionForm.invalid || (missionForm.pristine && !this.files)"
+    (click)="onSubmit()">
+    {{ isCreateForm ? 'Legg til' : 'Oppdater' }}    
+  </button>
+
+</form>

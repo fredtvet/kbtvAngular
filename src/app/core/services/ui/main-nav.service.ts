@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { MainNavConfig, TopDefaultNavConfig, TopDetailNavConfig, AppButton } from 'src/app/shared-app/interfaces';
-import { map, tap, distinctUntilChanged, delay } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { delay, distinctUntilChanged, map } from 'rxjs/operators';
+import { AppButton, MainNavConfig, TopDefaultNavConfig, TopDetailNavConfig } from 'src/app/shared-app/interfaces';
+import { AuthStore } from '../auth/auth.store';
 import { DeviceInfoService } from '../device-info.service';
-import { AuthService } from '../auth/auth.service';
-import { ButtonTypes } from 'src/app/shared-app/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +25,7 @@ export class MainNavService {
   config$: Observable<MainNavConfig> = combineLatest(
     this._config$, 
     this.deviceInfoService.isXs$, 
-    this.authService.currentUser$
+    this.authStore.currentUser$
     ).pipe(
       delay(10), //delay to fix bug where main nav not detecting config changes coming to quickly after route change
       map(([config, isXs, currentUser]) => {
@@ -38,7 +37,7 @@ export class MainNavService {
     );
 
   constructor(
-    private authService: AuthService,
+    private authStore: AuthStore,
     private deviceInfoService: DeviceInfoService) { }
 
   get config(): MainNavConfig{

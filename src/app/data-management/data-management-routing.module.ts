@@ -9,10 +9,9 @@ const routes: Routes = [
   {
     path: '',
     component: DataManagerComponent,
-    canActivate: [AuthGuard],
     data: {allowedRoles: [Roles.Leder]},
     children: [
-      {path: 'ny/oppdrag', loadChildren: () => import('src/app/mission/mission-form/mission-form.module').then(m => m.MissionFormModule)},
+      {path: 'ny/oppdrag', loadChildren: () => import('src/app/mission-modules/mission-form/mission-form.module').then(m => m.MissionFormModule)},
     ],
   },
 ];

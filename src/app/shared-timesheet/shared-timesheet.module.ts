@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 
 import { 
   TimesheetCardComponent, 
-  WeekListFilterComponent, 
-  WeekListFilterSheetWrapperComponent,  
+  WeekFilterComponent, 
+  WeekFilterSheetWrapperComponent,  
   TimesheetFilterSheetWrapperComponent, 
   TimesheetSummaryCardContentComponent, 
   TimesheetFilterComponent
@@ -16,8 +16,8 @@ import { AppOwlDateTimeModule } from 'src/app/app-owl-date-time/app-owl-date-tim
 @NgModule({
   declarations: [
     TimesheetCardComponent,
-    WeekListFilterComponent,
-    WeekListFilterSheetWrapperComponent,
+    WeekFilterComponent,
+    WeekFilterSheetWrapperComponent,
     TimesheetFilterSheetWrapperComponent,
     TimesheetSummaryCardContentComponent,
     GetDateByDateParamsPipe,   
@@ -33,8 +33,8 @@ import { AppOwlDateTimeModule } from 'src/app/app-owl-date-time/app-owl-date-tim
     SharedModule,
     AppOwlDateTimeModule,
     TimesheetCardComponent,
-    WeekListFilterComponent,
-    WeekListFilterSheetWrapperComponent,
+    WeekFilterComponent,
+    WeekFilterSheetWrapperComponent,
     TimesheetFilterSheetWrapperComponent,
     TimesheetSummaryCardContentComponent,
     GetDateByDateParamsPipe,   

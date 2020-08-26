@@ -4,7 +4,7 @@ export * from './roles.enum';
 export * from './notifications.enum';
 export * from './timesheet-status.enum';
 export * from './date-range-presets.enum';
-export * from './group-by-types.enum';
+export * from './group-by-period.enum';
 export * from './app-pages.enum';
 export * from './lazy-styles.enum';
 export * from './button-types.enum';

@@ -8,14 +8,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class PasswordFormViewComponent implements OnInit {
 
-  constructor(
-    private _formBuilder: FormBuilder) { }
+  @Output() formSubmitted = new EventEmitter();
+    
+  error: string;
+  passwordForm: FormGroup;
+  hidePasswords = {curr: true, new: true, confirm: true}
 
-    @Input() error: string;
-    @Output() formSubmitted = new EventEmitter();
-
-    passwordForm: FormGroup;
-    hidePasswords = {curr: true, new: true, confirm: true}
+  constructor(private _formBuilder: FormBuilder) { }
 
     ngOnInit(){
       this.initalizeForm();
@@ -28,7 +27,6 @@ export class PasswordFormViewComponent implements OnInit {
         confirmPassword: ['', Validators.required],
       });
     }
-
 
     onSubmit(){
       const {value, valid} = this.passwordForm;

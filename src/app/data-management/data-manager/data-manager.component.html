@@ -1,14 +1,14 @@
 <div class="h-100 p-2" fxLayout="column" fxLayoutGap="8px">
-  <app-data-table-picker
-    [tables]="tables" 
-    [selectedTable]="selectedTable$ | async" 
-    (tableSelected)="changeTable($event)">
-  </app-data-table-picker>
+  <app-data-property-picker
+    [properties]="properties" 
+    [selectedProperty]="selectedProperty$ | async" 
+    (propertySelected)="updateSelectedProperty($event)">
+  </app-data-property-picker>
 
   <app-data-table fxLayout="column" fxLayoutGap="8px" class="h-100" #dataTable
     [data]="data$ | async"
-    (itemEdited)="editCell($event)"
-    (createItem)="createItem()"
+    (itemEdited)="updateItem($event)"
+    (createItem)="openCreateForm()"
     (itemsDeleted)="deleteItems($event)">
   </app-data-table>
 </div>

@@ -86,11 +86,15 @@ export const routeAnimation = trigger(`routeAnimation`, [
   transition(`${AppPages.TimesheetList} => ${AppPages.TimesheetWeekView}`, useAnimation(slideAnimation,
     {params: slideBackwardParams})),
 
-  transition(`${AppPages.TimesheetAdminUserList} => ${AppPages.TimesheetAdminList}`, useAnimation(slideAnimation,
+  transition(`${AppPages.TimesheetAdminUserList} => ${AppPages.TimesheetAdminWeekList}`, useAnimation(slideAnimation,
     {params: slideForwardParams})),
-  transition(`${AppPages.TimesheetAdminList} => ${AppPages.TimesheetAdminUserList}`, useAnimation(slideAnimation,
+  transition(`${AppPages.TimesheetAdminWeekList} => ${AppPages.TimesheetAdminUserList}`, useAnimation(slideAnimation,
     {params: slideBackwardParams})),
-
+    
+  transition(`${AppPages.TimesheetAdminWeekList} => ${AppPages.TimesheetAdminList}`, useAnimation(slideAnimation,
+    {params: slideForwardParams})),
+  transition(`${AppPages.TimesheetAdminList} => ${AppPages.TimesheetAdminWeekList}`, useAnimation(slideAnimation,
+    {params: slideBackwardParams})),
   // transition(`TimesheetAdminUserList => TimesheetAdminList`, useAnimation(slideAnimation,
   //   {params: slideForwardParams})),
 ]);

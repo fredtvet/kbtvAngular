@@ -11,6 +11,8 @@ export class DeviceInfoService {
 
   constructor(private breakpointObserver: BreakpointObserver) { }
 
+  isOnline = navigator.onLine;
+
   isOnline$ = merge<boolean>(
     fromEvent(window, 'offline').pipe(map(() => false)),
     fromEvent(window, 'online').pipe(map(() => true)),

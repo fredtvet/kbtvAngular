@@ -3,8 +3,8 @@ import { DateTimeService } from 'src/app/core/services/utility/date-time.service
 import { OwlDateTimeComponent } from 'ng-pick-datetime';
 import { TimesheetStatus, DateRangePresets } from 'src/app/shared-app/enums';
 import { Mission, User } from 'src/app/core/models';
-import { TimesheetFilter } from 'src/app/shared-app/interfaces';
-import { TimesheetListFilter } from 'src/app/shared/timesheet-list-filter.model';
+import { TimesheetCriteria } from 'src/app/shared-app/interfaces';
+import { TimesheetFilter } from 'src/app/shared/timesheet-filter.model';
 
 @Component({
   selector: 'app-timesheet-filter',
@@ -18,7 +18,7 @@ export class TimesheetFilterComponent {
 
   @Input() missions: Mission[] = [];
   @Input() users: User[] = [];
-  @Input() filterPreset: TimesheetFilter;
+  @Input() filter: TimesheetCriteria = {};
   @Input() disabledFilters: string[] = [];
 
   @Output() filterChanged = new EventEmitter();
@@ -26,21 +26,20 @@ export class TimesheetFilterComponent {
   constructor(private dateTimeService: DateTimeService) {}
 
   updateDateRangePreset(preset: DateRangePresets){
-    this.filterPreset.dateRangePreset = preset;
-    this.filterPreset.dateRange = this.dateTimeService.getRangeByDateRangePreset(preset);
+    this.filter.dateRangePreset = preset;
   }
 
-  applyFilter = () => this.filterChanged.emit(this.filterPreset);
+  applyFilter = () => this.filterChanged.emit(this.filter);
   
-  reset = () => this.filterChanged.emit(new TimesheetListFilter());
+  reset = () => this.filter = {dateRangePreset: DateRangePresets.CurrentYear};
 
   displayFnMission(mission: Mission): string {
     if(mission == undefined) return null;
     return mission.address;
   }
 
-  chosenMonthHandler(date: Date, datepicker: OwlDateTimeComponent<Date>) {
-    this.filterPreset.dateRange = this.dateTimeService.getMonthRange(date);
+  selectMonthHandler(date: Date, datepicker: OwlDateTimeComponent<Date>) {
+    this.filter.dateRange = this.dateTimeService.getMonthRange(date);
     datepicker.close();
   }
 }

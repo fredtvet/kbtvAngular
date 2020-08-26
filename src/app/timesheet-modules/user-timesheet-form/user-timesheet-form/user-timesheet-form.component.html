@@ -1,0 +1,8 @@
+<app-user-timesheet-form-view 
+    [missionPreset]="config.missionPreset"
+    [datePreset]="config.datePreset"
+    [timesheet]="timesheetPreset$ | async"
+    [missions]="missions$ | async"
+    (formSubmitted)="onSubmit($event)"
+    (missionsSearch)="onMissionSearch($event)">
+</app-user-timesheet-form-view>

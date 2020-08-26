@@ -2,10 +2,16 @@ import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { MainNavService } from 'src/app/core/services';
 import { Observable, throwError } from 'rxjs';
 import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
-import { DataManagerFacadeService } from '../data-manager-facade.service';
-import { BaseEntity } from 'src/app/core/models';
+import { catchError, throttleTime, finalize } from 'rxjs/operators';
+import { DataManagementStore } from '../data-management.store';
+import { StoreState } from '../store-state';
+import { Router } from '@angular/router';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { EmployerFormSheetWrapperComponent } from '../components/employer-form/employer-form-sheet-wrapper.component';
+import { MissionTypeFormSheetWrapperComponent } from '../components/mission-type-form/mission-type-form-sheet-wrapper.component';
+import { DocumentTypeFormSheetWrapperComponent } from '../components/document-type-form/document-type-form-sheet-wrapper.component';
+import { InboundEmailPasswordFormWrapperComponent } from '../components/inbound-email-password-form/inbound-email-password-form-wrapper.component';
 import { DataTableComponent } from './data-table/data-table.component';
-import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-data-manager',
@@ -15,38 +21,44 @@ import { catchError } from 'rxjs/operators';
 
 export class DataManagerComponent {
 @ViewChild('dataTable') dataTable: DataTableComponent;
+data$:Observable<any[]> = this.store.data$;
 
-data$:Observable<BaseEntity[]> = this.dataManagerFacade.data$;
-
-selectedTable$ = this.dataManagerFacade.selectedTable$;
-tables = this.dataManagerFacade.tables;
+selectedProperty$ = this.store.selectedProperty$;
+properties = this.store.properties;
 
 constructor(
+  private store: DataManagementStore,
   private mainNavService: MainNavService,
-  private dataManagerFacade: DataManagerFacadeService,) { 
+  private router: Router,
+  private bottomSheet: MatBottomSheet) { 
     this.configureMainNav();
   }
 
-  changeTable = (table: string) => this.dataManagerFacade.changeTable(table);
+  updateSelectedProperty = (prop: keyof StoreState) => this.store.updateSelectedProperty(prop);
   
-  editCell(command: any){
-    if(command.oldValue != command.newValue)
-      this.dataManagerFacade.updateSelectedTableEntity$(command.data).pipe(catchError(x => {
-        this.revertTableUpdate(command)
+  updateItem(command: any): void{
+    if(!command || command === null) return;
+    this.store.update$(command.data).pipe(catchError(x => {
+        let newData = command?.data;
+        newData[command?.column?.colId] = command?.oldValue;
+        command.node.setData(newData);
         return throwError(x);
-      })).subscribe();     
+    })).subscribe();     
   }
 
   deleteItems(ids: number[]): boolean{
-    if(ids.length == 0) return false;
-      this.dataManagerFacade.deleteSelectedTableEntities(ids);   
+    if(ids?.length == 0) return false;
+    this.store.deleteRange$(ids).subscribe();   
   }
 
-  createItem = () => this.dataManagerFacade.createItem();
-  
-  private revertTableUpdate(command:any){
-    //command.node.data[command.colDef.Field] = command.oldValue;
-    command.node.setDataValue(command.column, command.oldValue);
+  openCreateForm(): void{
+    switch(this.store.selectedProperty){
+      case "missions": this.router.navigate(['data/ny/oppdrag']); break;
+      case "employers": this.bottomSheet.open(EmployerFormSheetWrapperComponent); break;
+      case "missionTypes": this.bottomSheet.open(MissionTypeFormSheetWrapperComponent); break;
+      case "documentTypes": this.bottomSheet.open(DocumentTypeFormSheetWrapperComponent); break;
+      case "inboundEmailPasswords": this.bottomSheet.open(InboundEmailPasswordFormWrapperComponent); break;
+    }
   }
 
   private configureMainNav(){

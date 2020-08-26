@@ -1,13 +1,14 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { UserService, MainNavService, ArrayHelperService } from 'src/app/core/services';
-import { User } from 'src/app/core/models';
-import { Roles, ButtonTypes } from '../../shared-app/enums';
-import { Observable } from 'rxjs';;
-import { map, tap } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { UserFormSheetWrapperComponent } from '../components/user-form/user-form-sheet-wrapper.component';
-import { TopDefaultNavConfig, AppButton } from 'src/app/shared-app/interfaces';
-import { NewPasswordFormWrapperComponent } from '../components/new-password-form/new-password-form-wrapper.component';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/core/models';
+import { MainNavService } from 'src/app/core/services';
+import { AppButton, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
+import { ButtonTypes, Roles } from '../../shared-app/enums';
+import { NewPasswordFormWrapperComponent } from '../new-password-form/new-password-form-wrapper.component';
+import { UserFormSheetWrapperComponent } from '../user-form/user-form-sheet-wrapper.component';
+import { UsersStore } from '../users.store';
+;
 
 @Component({
   selector: 'app-user-list',
@@ -18,17 +19,15 @@ export class UserListComponent {
   Roles = Roles;
   ButtonTypes = ButtonTypes;
 
-  users$: Observable<User[]>;
+  users$: Observable<User[]> = this.store.sortedUsers$;
 
   constructor(
     private mainNavService: MainNavService,
-    private userService: UserService,
-    private bottomSheet: MatBottomSheet,
-    private arrayHelperService: ArrayHelperService) {}
+    private store: UsersStore,
+    private bottomSheet: MatBottomSheet) {}
 
   ngOnInit(): void {
     this.configureMainNav(); 
-    this.users$ = this.userService.getAllDetails$().pipe(map(this.sortByRole));
   }
 
   openUserForm = (userNamePreset?: string) => 
@@ -49,11 +48,6 @@ export class UserListComponent {
     }] as AppButton[]
 
     this.mainNavService.addConfig({default: cfg});
-  }
-
-  private sortByRole = (users: User[]): User[] => {
-    let grouped = this.arrayHelperService.groupBy(users, "role");  
-    return [...grouped[Roles.Leder], ...grouped[Roles.Mellomleder], ...grouped[Roles.Ansatt], ...grouped[Roles.Oppdragsgiver]];
   }
 
 }

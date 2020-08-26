@@ -1,11 +1,11 @@
-import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs';
-import { RouterOutlet } from "@angular/router";
-import { AuthService, MainNavService } from 'src/app/core/services';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
+import { RouterOutlet } from "@angular/router";
+import { Observable } from 'rxjs';
+import { MainNavService } from 'src/app/core/services';
+import { ButtonTypes, LayoutTopNavs, Roles } from 'src/app/shared-app/enums';
+import { AppButton, MainNavConfig } from 'src/app/shared-app/interfaces';
 import { routeAnimation } from '../route.animation';
-import { MainNavConfig, AppButton } from 'src/app/shared-app/interfaces';
-import { LayoutTopNavs, Roles, ButtonTypes } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-main-nav',

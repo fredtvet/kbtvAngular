@@ -1,6 +1,7 @@
-import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { NotificationService, AuthService } from 'src/app/core/services';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { NotificationService } from 'src/app/core/services';
 import { Notifications } from 'src/app/shared-app/enums';
+import { ProfileStore } from '../profile.store';
 
 @Component({
   selector: 'app-password-form',
@@ -12,25 +13,20 @@ export class PasswordFormComponent {
  
   @Output() finished = new EventEmitter();
 
-  serverError: string;
-
   constructor(
-    private authService: AuthService,
+    private store: ProfileStore,
     private notificationService: NotificationService) {}
 
   onSubmit(result:any): void{
     if(!result || result == null) this.finished.emit();
 
-    this.authService.changePassword$(result.oldPassword, result.password).subscribe(
-      res => {
+    this.store.updatePassword$(result.oldPassword, result.password).subscribe(x => {
         this.notificationService.notify({
           title:'Vellykket oppdatering!',        
           type: Notifications.Success
         })
         this.finished.emit();
-      }, 
-      error => this.serverError = error,
-      () => this.serverError = ''
+      }
     )
   }
 }

@@ -1,8 +1,8 @@
-export enum DateRangePresets {
+export enum DateRangePresets {   
+    None,
     CurrentWeek,
     CurrentMonth,
     CurrentYear,
     CustomMonth,
     Custom,
-    ShowAll
 }

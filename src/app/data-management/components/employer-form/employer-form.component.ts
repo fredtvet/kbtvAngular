@@ -1,15 +1,16 @@
 import {
-  Component,
-  Input,
-  EventEmitter,
-  Output,
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, Component,
+
+  EventEmitter, Input,
+
+  Output
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { Observable, of } from "rxjs";
 import { Employer } from 'src/app/core/models';
-import { Roles, Notifications } from "src/app/shared-app/enums";
-import { EmployerService, NotificationService } from "src/app/core/services";
-import { Observable } from "rxjs";
+import { NotificationService } from "src/app/core/services";
+import { Notifications, Roles } from "src/app/shared-app/enums";
+import { DataManagementStore } from '../../data-management.store';
 
 @Component({
   selector: "app-employer-form",
@@ -36,14 +37,14 @@ export class EmployerFormComponent {
   private isCreateForm: boolean = false;
 
   constructor(
-    private employerService: EmployerService,
+    private store: DataManagementStore,
     private notificationService: NotificationService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit() {
     if (!this.employerIdPreset) this.isCreateForm = true;
-    else this.employer$ = this.employerService.get$(this.employerIdPreset);
+    else this.employer$ = of(null); //placeholder
   }
 
   onSubmit(result: Employer): void {
@@ -53,14 +54,14 @@ export class EmployerFormComponent {
   }
 
   private updateEmployer(employer: Employer): void {
-    this.employerService.update$(employer).subscribe((e) => {
+    this.store.update$(employer).subscribe((e) => {
       this.notificationService.notify({title: "Vellykket oppdatering!", type: Notifications.Success});
       this.finished.emit(e);
     });
   }
 
   private createEmployer(employer: any): void {
-    this.employerService.add$(employer).subscribe((e) => {
+    this.store.add$(employer).subscribe((e) => {
       this.notificationService.notify({title: "Vellykket! Ny oppdragsgiver registrert.", type: Notifications.Success});
       this.finished.emit(e);
     });

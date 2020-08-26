@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, CanLoad, UrlSegment, Route } from '@angular/router';
-import { NotificationService } from '../ui/notification.service';
-import { AuthService } from './auth.service';
+import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, UrlSegment, CanActivateChild } from '@angular/router';
 import { Notifications } from 'src/app/shared-app/enums';
+import { NotificationService } from '../ui/notification.service';
+import { AuthStore } from './auth.store';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class AuthGuard implements CanActivate, CanLoad {
+export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(
     private router: Router,
-    private authService: AuthService,
+    private authStore: AuthStore,
     private notificaitonService: NotificationService
   ) {}
 
@@ -23,16 +23,20 @@ export class AuthGuard implements CanActivate, CanLoad {
     return this.authCheck(route.data['allowedRoles']);
   }
 
+  canActivateChild(route: ActivatedRouteSnapshot): boolean {
+    return this.authCheck(route.data['allowedRoles']);
+  }
+
   private authCheck(allowedRoles: string[]){
-    if(!this.authService.hasTokens()) {
-      this.authService.logout();
+    if(!this.authStore.hasTokens) {
+      this.authStore.logout();
       return false;
     }
-    else if(this.authService.hasAccessTokenExpired()){
-        this.authService.refreshToken$().subscribe();
+    else if(this.authStore.hasAccessTokenExpired){
+      this.authStore.refreshToken$().subscribe();
     }
 
-    if(this.authService.currentUser && allowedRoles && !allowedRoles.includes(this.authService.currentUser.role)){
+    if(this.authStore.currentUser && allowedRoles && !allowedRoles.includes(this.authStore.currentUser?.role)){
       this.notificaitonService.notify({title: 'Du mangler riktig autorisasjon for å gå inn på denne siden.', type: Notifications.Error})
       this.router.navigate(['/hjem']);
       return false;    

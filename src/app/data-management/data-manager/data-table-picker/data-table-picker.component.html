@@ -1,6 +1,0 @@
-<mat-form-field appearance="fill" class="data-picker mat-elevation-z2 w-100 fadeInLeft">
-    <mat-label>Velg</mat-label>
-    <mat-select [ngModel]="selectedTable" (ngModelChange)="changeTable($event)">
-      <mat-option *ngFor="let table of tables" value="{{ table }}">{{ table }}</mat-option>
-    </mat-select>
-</mat-form-field>

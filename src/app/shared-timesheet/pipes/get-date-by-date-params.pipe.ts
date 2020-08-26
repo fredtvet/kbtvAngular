@@ -9,6 +9,8 @@ export class GetDateByDateParamsPipe implements PipeTransform {
   constructor(private dateTimeService: DateTimeService){}
 
   transform(dateParams: DateParams, weekDayOverride: number): Date {
+    if(!dateParams || Object.keys(dateParams).length === 0) return new Date();
+    
     let date = this.dateTimeService.getWeekRangeByDateParams(dateParams)[0];
 
     if(weekDayOverride || dateParams.weekDay)

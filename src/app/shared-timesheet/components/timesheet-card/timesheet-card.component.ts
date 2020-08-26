@@ -14,7 +14,7 @@ export class TimesheetCardComponent {
 
   @Input() adminView: boolean = false;
   @Input() timesheet: Timesheet;
-  @Output() statusChanged = new EventEmitter();
+  @Output() statusChanged = new EventEmitter<{id: number, status: TimesheetStatus}>();
   @Output() deleteClicked = new EventEmitter();
   @Output() editClicked = new EventEmitter();
 
