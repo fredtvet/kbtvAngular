@@ -5,6 +5,8 @@ export * from './downloader.service';
 export * from './role-preload.service';
 export * from './css-loader.service';
 
+export * from './persistance/persistance.store';
+
 export * from './auth/auth-guard.service';
 export * from './auth/auth.store';
 export * from './auth/no-auth-guard.service';

@@ -31,15 +31,14 @@ export class MissionDocumentFormStore extends BaseModelStore<StoreState>  {
 
     return this.apiService.post(`${ApiUrl.MissionDocument}?missionId=${command?.missionId}`, formData)
         .pipe(
-          tap(doc => this.modifyMissionDocumentWithForeigns(
-            doc, StoreActions.AddMissionDocument, 
+          tap(doc => this.modifyMissionDocumentWithForeigns(doc,
             (doc: MissionDocument) => this.arrayHelperService.add(this.getProperty("missionDocuments"), doc)))
         );  
   }
 
   //Add foreign properties (multiple properties can be created in single API call) 
   private modifyMissionDocumentWithForeigns
-    (doc: MissionDocument, action: string, actionFn: (doc: MissionDocument) => MissionDocument[]): void{
+    (doc: MissionDocument, actionFn: (doc: MissionDocument) => MissionDocument[]): void{
 
     let state: Partial<StoreState> = {};
     if(doc?.documentType?.id){ 
@@ -48,11 +47,8 @@ export class MissionDocumentFormStore extends BaseModelStore<StoreState>  {
       doc.documentType = null; //Clean up
     }
     state.missionDocuments = actionFn(doc);
-    this._setStateVoid(state, action)
+
+    this._setStateVoid(state)
   }
 
-}
-
-export enum StoreActions {
-  AddMissionDocument = "add_missionDocuments", 
 }

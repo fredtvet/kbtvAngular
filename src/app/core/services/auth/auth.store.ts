@@ -12,6 +12,8 @@ import { ArrayHelperService } from '../utility/array-helper.service';
 import { DateTimeService } from '../utility/date-time.service';
 import { AuthStoreActions } from './auth-store-actions.enum';
 import { StoreState } from './store-state';
+import { PersistanceStore } from '../persistance/persistance.store';
+import { SyncStore } from '../sync';
 
 @Injectable({
   providedIn: 'root'
@@ -29,9 +31,12 @@ export class AuthStore extends BaseModelStore<StoreState>{
     private dateTimeService: DateTimeService,
     private deviceInfoService: DeviceInfoService,
     private router: Router,
+    private persistanceStore: PersistanceStore,
+    private syncStore: SyncStore,
   ) {
     super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
-    this.populate();
+    this.persistanceStore.authStateInitalized$
+      .subscribe(x => { if(this.hasTokens){this.syncStore.syncAll(); this.populate(); }})
   }
 
   get currentUser(): User { return this.getProperty("currentUser") }
@@ -93,20 +98,21 @@ export class AuthStore extends BaseModelStore<StoreState>{
   }
 
   private _logout(returnUrl: string = this.router.url): void{
-    //this.syncStore.purgeAll(); //Clearing resources to prevent leaking data if new user logs in
+    this.syncStore.handleLogout();
     this._setStateVoid({currentUser: null, accessToken: null, refreshToken: null}, AuthStoreActions.Logout) // Set current user to an empty object 
     this.router.navigate(['/login'], { queryParams: {returnUrl}})  
   }
 
   private setAuth(response: TokenResponse): void {
-    if(this._isNullOrUndefined(response)) return; 
+    if(!response) return; 
     // Save tokens sent from server in localstorage
     let accessToken: AccessToken = {
         token: response.accessToken?.token.replace("Bearer ", ""),
         expiresIn: this.dateTimeService.getNowInUnixTimeSeconds() + response.accessToken?.expiresIn
     };
 
-    this._setStateVoid({currentUser: response.user, accessToken, refreshToken: response.refreshToken}, AuthStoreActions.Login)
+    this._setStateVoid({currentUser: response.user, accessToken, refreshToken: response.refreshToken}, AuthStoreActions.Login);
+    this.syncStore.handleLogin();
   }
 
   private populate(): void{

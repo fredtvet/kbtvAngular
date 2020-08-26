@@ -34,7 +34,7 @@ export class UserTimesheetFormStore extends BaseModelStore<StoreState>  {
   add$(timesheet: Timesheet): Observable<void> {
     return this.apiService.post(ApiUrl.UserTimesheet, this.getTimesheetHttpBody(timesheet))
         .pipe(tap(entity => 
-            this._updateStateProperty<Timesheet[]>("userTimesheets", StoreActions.AddUserTimesheet, 
+            this._updateStateProperty<Timesheet[]>("userTimesheets", 
               (arr) => this.arrayHelperService.add(arr, entity))
         ));  
   }
@@ -42,7 +42,7 @@ export class UserTimesheetFormStore extends BaseModelStore<StoreState>  {
   update$(timesheet: Timesheet): Observable<void> {
     return this.apiService.put(ApiUrl.UserTimesheet + '/' + timesheet.id, this.getTimesheetHttpBody(timesheet))
         .pipe(tap(entity => 
-            this._updateStateProperty<Timesheet[]>("userTimesheets", StoreActions.UpdateUserTimesheet, 
+            this._updateStateProperty<Timesheet[]>("userTimesheets", 
                 (arr) => this.arrayHelperService.update(arr, entity, "id"))
         ));  
   }
@@ -50,7 +50,7 @@ export class UserTimesheetFormStore extends BaseModelStore<StoreState>  {
   delete$(id: number): Observable<void>{
       return this.apiService.delete(`${ApiUrl.UserTimesheet}/${id}`)
         .pipe(tap(x => 
-            this._updateStateProperty<Timesheet[]>("userTimesheets", StoreActions.DeleteUserTimesheet, 
+            this._updateStateProperty<Timesheet[]>("userTimesheets",
                 (arr) => this.arrayHelperService.removeByIdentifier(arr, id, "id"))
         ));  
   }
@@ -66,10 +66,4 @@ export class UserTimesheetFormStore extends BaseModelStore<StoreState>  {
     }
   }
 
-}
-
-export enum StoreActions {
-  AddUserTimesheet = "add_userTimesheets",
-  UpdateUserTimesheet = "update_userTimesheets",
-  DeleteUserTimesheet = "delete_userTimesheets"
 }

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { combineLatest, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { distinctUntilChanged, filter, map, switchMap, tap } from "rxjs/operators";
-import { Employer, Mission, MissionType } from "src/app/core/models";
+import { Mission } from "src/app/core/models";
 import {
     ApiService,
     ArrayHelperService
@@ -17,17 +17,20 @@ import { StoreState } from './store-state';
 export class DataManagementStore extends BaseModelStore<StoreState>  {
 
     properties = ["missions", "employers", "missionTypes", "documentTypes", "inboundEmailPasswords"] as (keyof Partial<ModelState>)[];
+    noPersistProps = {inboundEmailPasswords: true};
 
     selectedProperty$ = this.property$<keyof StoreState>("selectedProperty");
 
     data$ = this.selectedProperty$.pipe(
         distinctUntilChanged(), 
-        filter(x => !this._isNullOrUndefined(x)), 
+        filter(x => x != null), 
         switchMap(x => this.getData$(x)));
 
     get selectedProperty() {
         return this.getProperty<keyof StoreState>("selectedProperty")
     }
+
+    get propInfo() { return ModelStateSettings[this.selectedProperty] }
 
     constructor(
         apiService: ApiService,
@@ -39,69 +42,56 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
     updateSelectedProperty = (prop: keyof StoreState) => this._setStateVoid({selectedProperty: prop})
 
     add$<T>(entity: T): Observable<void> {
-        let propInfo = ModelStateSettings[this.selectedProperty];
-        return this.apiService.post(`${propInfo.apiUrl}`, entity)    
+        return this.apiService.post(`${this.propInfo.apiUrl}`, entity)    
             .pipe(
             tap(newEntity => this._updateStateProperty(
-                this.selectedProperty,
-                GenericAction.Add + this.selectedProperty, 
+                this.selectedProperty, 
                 (arr: T[]) => this.arrayHelperService.add(arr, newEntity)))
             );   
     }
 
     update$<T>(entity: T): Observable<void> {
-        let propInfo = ModelStateSettings[this.selectedProperty];
-        return this.apiService.put(`${propInfo.apiUrl}/${entity[propInfo.identifier]}`, entity)    
+        return this.apiService.put(`${this.propInfo.apiUrl}/${entity[this.propInfo.identifier]}`, entity)    
             .pipe(
             tap(x => this._updateStateProperty(
-                this.selectedProperty,
-                GenericAction.Update + this.selectedProperty, 
-                (arr: T[]) => this.arrayHelperService.update(arr, entity, propInfo.identifier)))
+                this.selectedProperty, 
+                (arr: T[]) => this.arrayHelperService.update(arr, entity, this.propInfo.identifier)))
             );   
     }
 
     deleteRange$<T>(ids: number[]): Observable<void> {
-        return this.apiService.post(`${ModelStateSettings[this.selectedProperty].apiUrl}/DeleteRange`, {Ids: ids})    
+        return this.apiService.post(`${this.propInfo.apiUrl}/DeleteRange`, {Ids: ids})    
             .pipe(
             tap(x => this._updateStateProperty(
                 this.selectedProperty,
-                GenericAction.DeleteRange + this.selectedProperty, 
                 (arr: T[]) => this.arrayHelperService.removeRangeByIdentifier(arr, ids, 'id')))
             );   
     }
 
     private getData$(property: keyof StoreState): Observable<any[]>{ 
         if(property === "missions") return this.getAllMissions$();
-        if(ModelStateSettings[property].notPersisted) return super._propertyWithFetch$(property, this._fetchData$(property))
+        if(this.propInfo.notPersisted) return super._propertyWithFetch$(property, this._fetchData$(this.propInfo.apiUrl))
         return this.property$(property);
     }
 
-    protected _fetchData$ = <T>(property: string): Observable<T> =>
-        this.apiService.get(`${ModelStateSettings[property].apiUrl}`)
+    protected _fetchData$ = <T>(url: string): Observable<T> => this.apiService.get(`${url}`)
     
     private getAllMissions$(): Observable<Mission[]>{
-        return combineLatest(
-            this.property$<Mission[]>("missions"),
-            this.property$<Employer[]>("employers"),
-            this.property$<MissionType[]>("missionTypes")
-        ).pipe(map(([missions, employers, types]) => {  
-        if(this._isNullOrUndefined(missions) || missions.length == 0) return missions;
-        let employersObj = this.arrayHelperService.convertArrayToObject(employers, 'id');
-        let typesObj = this.arrayHelperService.convertArrayToObject(types, 'id');
-     
-        for(var i = 0; i < missions.length; i++){
-            let mission = missions[i];
-            mission.employer = employersObj[mission.employerId];    
-            mission.missionType = typesObj[mission.missionTypeId];
-            missions[i] = mission;
-        }
-        return missions
-        }));
+        return this.stateSlice$(["missions", "employers", "missionTypes"]).pipe(
+            map(({missions, employers, missionTypes}) => {  
+                if(!missions || missions.length == 0) return missions;
+    
+                let employersObj = this.arrayHelperService.convertArrayToObject(employers, 'id');
+                let typesObj = this.arrayHelperService.convertArrayToObject(missionTypes, 'id');
+            
+                for(var i = 0; i < missions.length; i++){
+                    let mission = missions[i];
+                    mission.employer = employersObj[mission.employerId];    
+                    mission.missionType = typesObj[mission.missionTypeId];
+                    missions[i] = mission;
+                }
+                return missions
+            })
+        );
     } 
-}
-
-export enum GenericAction {
-  DeleteRange = "deleteRange_",
-  Update = "update_",
-  Add = "add_",
 }

@@ -35,8 +35,7 @@ export class UsersStore extends BaseModelStore<StoreState>  {
   add$(user: User): Observable<void> {
     return this.apiService.post(ApiUrl.Users, user)
         .pipe(
-          tap(x => this._updateUsers(
-            StoreActions.AddUser, 
+          tap(x => this._updateStateProperty("users",
             (users: User[]) => this.arrayHelperService.add(users, x)))
         );  
   }
@@ -44,8 +43,7 @@ export class UsersStore extends BaseModelStore<StoreState>  {
   update$(user: User): Observable<void> {
     return this.apiService.put(ApiUrl.MissionNote + '/' + user.userName, user)
         .pipe(
-          tap(x => this._updateUsers(
-            StoreActions.UpdateUser, 
+          tap(x => this._updateStateProperty("users",
             (users: User[]) => this.arrayHelperService.update(users, x, 'userName')))
         );   
   }
@@ -53,8 +51,7 @@ export class UsersStore extends BaseModelStore<StoreState>  {
   delete$(userName: string): Observable<void> {
     return this.apiService.delete(ApiUrl.Users + '/' + userName)
         .pipe(
-          tap(x => this._updateUsers(
-            StoreActions.DeleteUser, 
+          tap(x => this._updateStateProperty("users",
             (users: User[]) => this.arrayHelperService.removeByIdentifier(users, x, 'userName')))
         );   
   }
@@ -69,14 +66,4 @@ export class UsersStore extends BaseModelStore<StoreState>  {
     let grouped = this.arrayHelperService.groupBy(users, "role");  
     return [...grouped[Roles.Leder], ...grouped[Roles.Mellomleder], ...grouped[Roles.Ansatt], ...grouped[Roles.Oppdragsgiver]];
   }
-
-  private _updateUsers(action: string, actionFn: (users: User[]) => User[]){
-    this._updateStateProperty("users", action, actionFn);
-  }
-}
-
-export enum StoreActions {
-  AddUser = "add_users",
-  UpdateUser = "update_users",
-  DeleteUser = "delete_users"
 }

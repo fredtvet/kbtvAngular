@@ -38,7 +38,6 @@ export class UserTimesheetListStore extends BaseModelStore<StoreState>  {
           map(state => {
               const filter = new TimesheetFilter(state.userTimesheetListCriteria);
               let arr = this.arrayHelperService.filter(state.userTimesheets, (t: Timesheet) => filter.check(t));
-              console.log(arr);
               return this.addMissionToTimesheet(arr, state.missions)   
           }),       
       );
@@ -50,7 +49,6 @@ export class UserTimesheetListStore extends BaseModelStore<StoreState>  {
       ).pipe(
           filter(([timesheets]) => timesheets != null),
           map(([timesheets, groupBy]) => this.timesheetSummaryAggregator.groupByType(groupBy, timesheets)),
-          tap(console.log)
       );
 
 
@@ -94,7 +92,7 @@ export class UserTimesheetListStore extends BaseModelStore<StoreState>  {
   delete$(id: number): Observable<void>{
     return this.apiService.delete(`${ApiUrl.UserTimesheet}/${id}`)
       .pipe(tap(x => 
-          this._updateStateProperty<Timesheet[]>("userTimesheets", "delete_userTimesheets", 
+          this._updateStateProperty<Timesheet[]>("userTimesheets", 
               (arr) => this.arrayHelperService.removeByIdentifier(arr, id, "id"))
       ));  
   }

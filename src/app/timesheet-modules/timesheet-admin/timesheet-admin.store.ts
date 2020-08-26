@@ -52,7 +52,6 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState>{
         return this.apiService.put(`${ApiUrl.Timesheet}/${id}/Status`, {id, status})
           .pipe(tap(response => this._updateStateProperty(
                 "timesheets", 
-                StoreActions.UpdateStatusTimesheet, 
                 (arr: Timesheet[]) => this.arrayHelperService.update(arr, response, "id")
               )));
     }
@@ -63,20 +62,8 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState>{
         return this.apiService.put(`${ApiUrl.Timesheet}/Status`, {ids, status})
             .pipe(tap(response => this._updateStateProperty(
                 "timesheets", 
-                StoreActions.UpdateStatusesTimesheet, 
                 (arr: Timesheet[]) => this.arrayHelperService.addOrUpdateRange(arr, response, "id")
             )));
     }
     
 }
-
-export enum StoreActions {
-    UpdateStatusTimesheet = "updateStatus_timesheets",
-    UpdateStatusesTimesheet = "updateStatuses_timesheets"
-}
-
-// public status: TimesheetStatus = TimesheetStatus.Open,    
-// public mission: Mission = undefined,    
-// public dateRangePreset: DateRangePresets = DateRangePresets.Custom,   
-// public dateRange: Date[] = [],
-// public userName: string = undefined,

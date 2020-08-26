@@ -42,8 +42,8 @@ export class MissionImageListStore extends BaseModelStore<StoreState>  {
 
     return this.apiService.post(`${ApiUrl.MissionImage}?missionId=${command.missionId}`, formData)
         .pipe(
-          tap(x => this._updateMissionImages(
-            StoreActions.AddMissionImage, 
+          tap(x => this._updateStateProperty(
+            "missionImages", 
             (imgs: MissionImage[]) => this.arrayHelperService.add(imgs, x)))
         );  
   }
@@ -56,8 +56,8 @@ export class MissionImageListStore extends BaseModelStore<StoreState>  {
   delete$(id: number): Observable<void> {
     return this.apiService.delete(`${ApiUrl.MissionImage}/${id}`)    
         .pipe(
-          tap(x => this._updateMissionImages(
-            StoreActions.DeleteMissionImage, 
+          tap(x => this._updateStateProperty(
+            "missionImages", 
             (imgs: MissionImage[]) => this.arrayHelperService.removeByIdentifier(imgs, id, 'id')))
         );   
   }
@@ -65,19 +65,9 @@ export class MissionImageListStore extends BaseModelStore<StoreState>  {
   deleteRange$(ids: number[]): Observable<void> {
     return this.apiService.post(`${ApiUrl.MissionImage}/DeleteRange`, {Ids: ids})    
         .pipe(
-          tap(x => this._updateMissionImages(
-            StoreActions.DeleteRangeMissionImage, 
+          tap(x => this._updateStateProperty(
+            "missionImages", 
             (imgs: MissionImage[]) => this.arrayHelperService.removeRangeByIdentifier(imgs, ids, 'id')))
         );   
   }
-
-  private _updateMissionImages(action: string, actionFn: (notes: MissionImage[]) => MissionImage[]){
-    this._updateStateProperty("missionImages", action, actionFn);
-  }
-}
-
-export enum StoreActions {
-  AddMissionImage = "add_missionImages", 
-  DeleteMissionImage = "delete_missionImages",
-  DeleteRangeMissionImage = "deleteRange_missionImages"
 }

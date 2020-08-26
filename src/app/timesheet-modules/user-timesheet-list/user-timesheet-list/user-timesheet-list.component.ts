@@ -18,7 +18,7 @@ import { UserTimesheetListStore } from '../user-timesheet-list.store';
 export class UserTimesheetListComponent implements OnInit {
 
   timesheets$: Observable<Timesheet[]> = 
-    this.store.filteredTimesheets$.pipe(tap(console.log),tap(x => this.configureMainNav(this.store.criteria)));
+    this.store.filteredTimesheets$.pipe(tap(x => this.configureMainNav(this.store.criteria)));
 
   constructor(
     private mainNavService: MainNavService,

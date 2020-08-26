@@ -27,8 +27,7 @@ export class MissionNoteFormStore extends BaseModelStore<StoreState>  {
   add$(note: MissionNote): Observable<void> {
     return this.apiService.post(ApiUrl.MissionNote, note)
         .pipe(
-          tap(x => this._updateMissionNotes(
-            StoreActions.AddMissionNote, 
+          tap(x => this._updateStateProperty("missionNotes", 
             (notes: MissionNote[]) => this.arrayHelperService.add(notes, x)))
         );  
   }
@@ -36,18 +35,8 @@ export class MissionNoteFormStore extends BaseModelStore<StoreState>  {
   update$(note: MissionNote): Observable<void> {
     return this.apiService.put(ApiUrl.MissionNote + '/' + note.id, note)
         .pipe(
-          tap(x => this._updateMissionNotes(
-            StoreActions.UpdateMissionNote, 
+          tap(x => this._updateStateProperty("missionNotes",
             (notes: MissionNote[]) => this.arrayHelperService.update(notes, x, 'id')))
         );   
   }
-
-  private _updateMissionNotes(action: string, actionFn: (notes: MissionNote[]) => MissionNote[]){
-    this._updateStateProperty("missionNotes", action, actionFn);
-  }
-}
-
-export enum StoreActions {
-  AddMissionNote = "add_missionNotes",
-  UpdateMissionNote = "update_missionNotes"
 }

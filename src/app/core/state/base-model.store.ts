@@ -1,7 +1,7 @@
-import { of, Observable, merge, iif } from 'rxjs';
-import { map, filter, switchMap, tap, take, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { ObservableStore, ObservableStoreSettings } from '@codewithdan/observable-store';
-import { ArrayHelperService, ApiService } from 'src/app/core/services';
+import { merge, Observable, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, take, tap } from 'rxjs/operators';
+import { ApiService, ArrayHelperService } from 'src/app/core/services';
 
 export abstract class BaseModelStore<TState> extends ObservableStore<TState>  {
 
@@ -62,7 +62,7 @@ export abstract class BaseModelStore<TState> extends ObservableStore<TState>  {
         const fetchData$ = fetch$.pipe(take(1),filter(x => x != null), tap(arr => {
                 let state = {} as Partial<TState>;
                 state[property] = arr as any;
-                this._setStateVoid(state, "fetch_" + property)
+                this._setStateVoid(state)
             }));
 
         return this.property$<T>(property).pipe(
@@ -88,17 +88,17 @@ export abstract class BaseModelStore<TState> extends ObservableStore<TState>  {
         );
     } 
 
-    protected _updateStateProperty = <T>(property: Extract<keyof TState, string>, action: string, actionFn: (prop: T) => T): void => {
+    protected _updateStateProperty = <T>(property: Extract<keyof TState, string>, actionFn: (prop: T) => T, action?: string): void => {
         let state: Partial<TState> = {};
         state[property as string] = actionFn(this.getProperty<T>(property));
         this._setStateVoid(state, action)
     } 
 
     protected _setStateVoid(state: Partial<TState>, action?: string): void{ 
-        this.setState(state, action, true, false) 
+        this._setState(state, action, true, false) 
     }
 
-    protected setState(state: Partial<TState>, action?: string, dispatchState?: boolean, deepCloneState?: boolean): TState{
+    protected _setState(state: Partial<TState>, action?: string, dispatchState?: boolean, deepCloneState?: boolean): TState{
         state['lastAction'] = action;
         return super.setState(state, action, dispatchState, deepCloneState);
     }

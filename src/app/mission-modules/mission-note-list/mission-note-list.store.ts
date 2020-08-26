@@ -28,17 +28,8 @@ export class MissionNoteListStore extends BaseModelStore<StoreState>  {
   delete$(id: number): Observable<void> {
     return this.apiService.delete(ApiUrl.MissionNote + '/' + id)
         .pipe(
-          tap(x => this._updateMissionNotes(
-            StoreActions.DeleteMissionNote, 
+          tap(x => this._updateStateProperty("missionNotes",
             (notes: MissionNote[]) => this.arrayHelperService.removeByIdentifier(notes, id, 'id')))
         );   
   }
-
-  private _updateMissionNotes(action: string, actionFn: (notes: MissionNote[]) => MissionNote[]){
-    this._updateStateProperty("missionNotes", action, actionFn);
-  }
-}
-
-export enum StoreActions {
-  DeleteMissionNote = "delete_missionNotes"
 }

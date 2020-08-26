@@ -88,7 +88,7 @@ export class MissionListStore extends BaseModelStore<StoreState>  {
 
     return this.apiService.put(`${ApiUrl.Mission}/${command.id}/UpdateHeaderImage`, body)
         .pipe(tap(imageURL => 
-          this._updateStateProperty<Mission[]>("missions", "", (state: Mission[]) => this.arrayHelperService.update(state, {imageURL}, 'id'))
+          this._updateStateProperty<Mission[]>("missions", (state: Mission[]) => this.arrayHelperService.update(state, {imageURL}, 'id'))
         ));  
   }
 

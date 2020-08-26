@@ -18,7 +18,8 @@ import {
   ArrayHelperService,
   RolePreloadService,
   CssLoaderService,
-  SorterService
+  SorterService,
+  PersistanceStore
 } from './services';
 
 @NgModule({
@@ -30,11 +31,9 @@ import {
     { provide: HTTP_INTERCEPTORS, useClass: HttpIsOnlineInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpRefreshTokenInterceptor, multi: true }, 
     { provide: HTTP_INTERCEPTORS, useClass: HttpLoadingInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },  
     AuthStore,
     DeviceInfoService,
-    AuthGuard,
-    NoAuthGuard,
     ApiService,
     LoadingService,
     NotificationService,
@@ -48,4 +47,5 @@ import {
     CssLoaderService, 
   ]
 })
-export class CoreModule { }
+export class CoreModule { 
+}

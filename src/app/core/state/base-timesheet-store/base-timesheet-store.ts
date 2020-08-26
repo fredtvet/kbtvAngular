@@ -70,10 +70,8 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
     else {
         this.baseCriteria = criteria;
         this.get$(criteria).pipe(take(1), tap(timesheets => {
-            console.log(timesheets.find(x => x.id === 4))
             state.timesheets = this.arrayHelperService.addOrUpdateRange(
                 this.getProperty<Timesheet[]>("timesheets" as any), timesheets, "id");
-            console.log(state.timesheets.find(x => x.id === 4))
             this._setStateVoid(state);
         })).subscribe()
     }

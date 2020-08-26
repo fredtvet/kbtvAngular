@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { combineLatest, Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
 import { ApiUrl } from 'src/app/core/api-url';
-import { AppDocumentType, Employer, Mission, MissionDocument, MissionImage } from "src/app/core/models";
+import { AppDocumentType, Employer, Mission, MissionDocument } from "src/app/core/models";
 import {
   ApiService,
   ArrayHelperService
@@ -37,8 +37,7 @@ export class MissionDocumentListStore extends BaseModelStore<StoreState>  {
   getMissionEmployer(missionId: number): Employer{
     let mission = this.arrayHelperService.find(this.getProperty<Mission[]>("missions", false), missionId, 'id');
     if(!mission?.employerId) return null;
-    let employer = this.arrayHelperService.find(this.getProperty<Employer[]>("employers", false), mission.employerId, 'id');
-    return {...employer}
+    return this.arrayHelperService.find(this.getProperty<Employer[]>("employers", false), mission.employerId, 'id');
   }
 
   mailDocuments$(toEmail: string, missionDocumentIds: number[]){
@@ -49,17 +48,10 @@ export class MissionDocumentListStore extends BaseModelStore<StoreState>  {
   deleteRange$(ids: number[]): Observable<void> {
     return this.apiService.post(`${ApiUrl.MissionDocument}/DeleteRange`, {Ids: ids})    
         .pipe(
-          tap(x => this._updateMissionDocuments(
-            StoreActions.DeleteRangeMissionDocument, 
-            (imgs: MissionImage[]) => this.arrayHelperService.removeRangeByIdentifier(imgs, ids, 'id')))
+          tap(x => this._updateStateProperty(
+            "missionDocuments", 
+            (docs: MissionDocument[]) => this.arrayHelperService.removeRangeByIdentifier(docs, ids, 'id')))
         );   
   }
-
-  private _updateMissionDocuments(action: string, actionFn: (notes: MissionImage[]) => MissionImage[]){
-    this._updateStateProperty("missionDocuments", action, actionFn);
-  }
 }
 
-export enum StoreActions {
-  DeleteRangeMissionDocument = "deleteRange_missionDocuments"
-}

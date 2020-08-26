@@ -16,6 +16,6 @@ export interface StoreState extends
     // StateRefreshToken,
     // StateAccessToken  
 {
-    timestamps: SyncStoreTimestamps;
+    syncTimestamps: SyncStoreTimestamps;
 }
 
