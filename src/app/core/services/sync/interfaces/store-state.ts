@@ -1,4 +1,4 @@
-import { StateDocumentTypes, StateEmployers, StateMissionDocuments, StateMissionImages, StateMissionNotes, StateMissions, StateMissionTypes, StateSyncConfig, StateUserTimesheets, StateLastAction } from 'src/app/core/state/global.state';
+import { StateDocumentTypes, StateEmployers, StateMissionDocuments, StateMissionImages, StateMissionNotes, StateMissions, StateMissionTypes, StateSyncConfig, StateUserTimesheets, StateLastAction, StateCurrentUser } from 'src/app/core/state/global.state';
 import { SyncStoreTimestamps } from './sync-store-timestamps.interface';
 
 export interface StoreState extends 
@@ -11,10 +11,8 @@ export interface StoreState extends
     StateEmployers,
     StateDocumentTypes,
     StateUserTimesheets,
-    StateSyncConfig
-    // StateCurrentUser,
-    // StateRefreshToken,
-    // StateAccessToken  
+    StateSyncConfig,
+    StateCurrentUser
 {
     syncTimestamps: SyncStoreTimestamps;
 }

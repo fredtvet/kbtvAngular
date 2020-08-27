@@ -17,6 +17,7 @@ import { AuthStoreActions } from '../auth/auth-store-actions.enum';
 import { ModelStateSettings } from '../../state/model-state.settings';
 import { BaseModelStore } from '../../state/base-model.store';
 import { PersistanceStore } from '../persistance/persistance.store';
+import { User } from '../../models/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -97,7 +98,9 @@ export class SyncStore extends BaseModelStore<StoreState>{
   private setSyncResponseState(response: SyncResponse){
     let state = {syncTimestamps: {}};
 
-    Object.keys(SyncPropertySettings).forEach(prop => 
+    this.syncCurrentUser(response[SyncPropertySettings.currentUser.responseKey], state);
+
+    Object.keys(SyncPropertySettings).filter(x => x !== "currentUser").forEach(prop => 
       this.syncLocalEntityResponse(prop, response[SyncPropertySettings[prop]?.responseKey], state));
       
     this._setStateVoid(state, SyncStoreActions.StoreSync)
@@ -105,15 +108,20 @@ export class SyncStore extends BaseModelStore<StoreState>{
 
   private syncLocalEntityResponse(prop: string, response: EntitySyncResponse, state: Partial<StoreState>): void{
     if(!response || !prop) return;
+    
     state.syncTimestamps[prop] = response.timestamp; //Update given timestamp
-
+    const modelSettings = ModelStateSettings[prop];
+    if(!modelSettings) throw `No model state settings for property ${prop}`;
     state[prop] = 
-        this.arrayHelperService.addOrUpdateRange(this.getStateProperty(prop), response.entities, ModelStateSettings[prop].identifier); 
-
+        this.arrayHelperService.addOrUpdateRange(this.getStateProperty(prop), response.entities, modelSettings.identifier); 
     state[prop] = 
-        this.arrayHelperService.removeRangeByIdentifier(state[prop], response.deletedEntities, ModelStateSettings[prop].identifier);
+        this.arrayHelperService.removeRangeByIdentifier(state[prop], response.deletedEntities, modelSettings.identifier);
   } 
 
+  private syncCurrentUser(response: EntitySyncResponse, state: Partial<StoreState>): void{
+    state.syncTimestamps.currentUser = response.timestamp; //Update given timestamp
+    if(response?.entities?.length > 0) state.currentUser = response.entities[0] as User;
+  }
 
   private getEarliestTimestamp = (): number =>
     this.syncTimestamps ? Object.values(this.syncTimestamps).sort(function(a,b) {return a - b})[0] : 0; 

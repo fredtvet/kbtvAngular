@@ -14,7 +14,7 @@ export const ModelStateSettings: {[key in keyof ModelState]: ModelPropertySettin
     missionImages:  {apiUrl: ApiUrl.MissionImage, identifier: "id"},    
     missionDocuments:  {apiUrl: ApiUrl.MissionDocument, identifier: "id"},    
     missionNotes:  {apiUrl: ApiUrl.MissionNote, identifier: "id"},
-    users: {apiUrl: ApiUrl.Users, identifier: "id", notPersisted: true}, 
+    users: {apiUrl: ApiUrl.Users, identifier: "userName", notPersisted: true},   
     userTimesheets: {apiUrl: ApiUrl.UserTimesheet, identifier: "id"},    
     timesheets: {apiUrl: ApiUrl.Timesheet, identifier: "id", notPersisted: true}, 
 }

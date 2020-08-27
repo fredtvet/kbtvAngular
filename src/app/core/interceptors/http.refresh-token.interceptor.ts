@@ -22,9 +22,9 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
             }else 
                 return throwError('Cant log out without tokens')
         }
-        
+
         //Dont handle expired tokens on refresh requests, nor if any token is missing.
-        if(this.authStore.hasAccessTokenExpired && !this.isRefreshRequest(req)){
+        if(!this.isRefreshRequest(req) && this.authStore.hasAccessTokenExpired){
             //console.log(2, this.authService.hasAccessTokenExpired() && !this.isRefreshRequest(req));               
             return this.handleTokenExpired$().pipe(switchMap(x =>{ return next.handle(this.addToken(req, x)) }));
         }  

@@ -1,3 +1,5 @@
+import { User } from 'src/app/core/models';
+
 export interface SyncResponse{
     [key: string]: EntitySyncResponse
 }

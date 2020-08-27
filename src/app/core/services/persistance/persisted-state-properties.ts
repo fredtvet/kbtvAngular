@@ -8,6 +8,5 @@ export const PersistedStateProperties:{[key: string]: boolean}  =
     documentTypes: true,
     employers: true,
     userTimesheets: true,
-    syncConfig:  true,
-    syncTimestamps: true,
+    currentUser: true,
 };  

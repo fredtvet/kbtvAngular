@@ -3,8 +3,8 @@ import { ObservableStore } from '@codewithdan/observable-store';
 import { get, set, Store } from 'idb-keyval';
 import { forkJoin, from, Observable, BehaviorSubject, throwError } from 'rxjs';
 import { PersistedStateProperties } from './persisted-state-properties';
-import { tap, filter, first, catchError, finalize } from 'rxjs/operators';
-import { PersistedAuthProperties } from './persisted-auth-properties';
+import { tap, filter, first, catchError } from 'rxjs/operators';
+import { PersistedInitialProperties } from './persisted-initial-properties';
 
 
 @Injectable({
@@ -12,8 +12,8 @@ import { PersistedAuthProperties } from './persisted-auth-properties';
 })
 export class PersistanceStore extends ObservableStore<Object> {
 
-    private authStateInitalizedSubject = new BehaviorSubject<boolean>(false);
-    authStateInitalized$: Observable<boolean> = this.authStateInitalizedSubject.asObservable().pipe(first(x => x === true));
+    private initialStateInitalizedSubject = new BehaviorSubject<boolean>(false);
+    initialStateInitalized$: Observable<boolean> = this.initialStateInitalizedSubject.asObservable().pipe(first(x => x === true));
 
     private stateInitalizedSubject = new BehaviorSubject<boolean>(false);
     stateInitalized$: Observable<boolean> = this.stateInitalizedSubject.asObservable().pipe(first(x => x === true));
@@ -23,7 +23,7 @@ export class PersistanceStore extends ObservableStore<Object> {
     constructor() { 
         super({logStateChanges: true, trackStateHistory: true});
     
-        this.initalizeAuthStateFromDb();
+        this.initalizeInitialStateFromDb();
         this.initalizeStateFromDb();
 
         this.globalStateWithPropertyChanges.pipe(
@@ -33,25 +33,25 @@ export class PersistanceStore extends ObservableStore<Object> {
      
     }
 
-    set<T>(property: keyof typeof PersistedStateProperties, payload: T): void{
+    private set<T>(property: keyof typeof PersistedStateProperties, payload: T): void{
         from(set(property, payload, this.dbStore))
             .subscribe(() => {}, err => console.log(err))
     }
 
-    get$<T>(property: keyof typeof PersistedStateProperties): Observable<T>{
+    private get$<T>(property: keyof typeof PersistedStateProperties): Observable<T>{
         return from(get<T>(property, this.dbStore))
     }
 
     private persistStateChanges = (stateChanges: Partial<Object>) => {
-        const props = {...PersistedStateProperties, ...PersistedAuthProperties};
+        const props = {...PersistedStateProperties, ...PersistedInitialProperties};
         for(const prop in stateChanges){
             if(props[prop]) this.set(prop, stateChanges[prop]);
         }
     }
 
-    private initalizeAuthStateFromDb(): void{
-        this.initalizePropsFromDb$(Object.keys(PersistedAuthProperties))
-            .subscribe(x => this.authStateInitalizedSubject.next(true));
+    private initalizeInitialStateFromDb(): void{
+        this.initalizePropsFromDb$(Object.keys(PersistedInitialProperties))
+            .subscribe(x => this.initialStateInitalizedSubject.next(true));
     }
 
     private initalizeStateFromDb(): void{

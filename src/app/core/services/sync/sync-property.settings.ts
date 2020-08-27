@@ -11,4 +11,5 @@ export const SyncPropertySettings =
     employers: {responseKey: 'employerSync', requestKey: 'employerTimestamp'},
     documentTypes: {responseKey: 'documentTypeSync', requestKey: 'documentTypeTimestamp'},     
     userTimesheets: {responseKey: 'userTimesheetSync', requestKey: 'userTimesheetTimestamp'}, 
+    currentUser: {responseKey: 'currentUserSync', requestKey: 'currentUserTimestamp'}, 
 };

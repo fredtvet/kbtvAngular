@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   private authCheck$(allowedRoles: string[]){
-    return this.persistanceStore.authStateInitalized$
+    return this.persistanceStore.initialStateInitalized$
       .pipe(map(x => this.authCheck(allowedRoles)))
   }
 

@@ -35,8 +35,7 @@ export class AuthStore extends BaseModelStore<StoreState>{
     private syncStore: SyncStore,
   ) {
     super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
-    this.persistanceStore.authStateInitalized$
-      .subscribe(x => { if(this.hasTokens){this.syncStore.syncAll(); this.populate(); }})
+    this.persistanceStore.initialStateInitalized$.subscribe(x => { if(this.hasTokens) {this.syncStore.syncAll();}})
   }
 
   get currentUser(): User { return this.getProperty("currentUser") }
@@ -77,6 +76,7 @@ export class AuthStore extends BaseModelStore<StoreState>{
       .pipe(
         map(tokens => {
           if(!tokens || !tokens.accessToken || !tokens.accessToken.token) return this._logout();
+          this.setAccessTokenExpiration(tokens.accessToken)
           this._setStateVoid({accessToken: tokens.accessToken, refreshToken:tokens.refreshToken}, AuthStoreActions.RefreshToken)
           return tokens;
         }), 
@@ -106,18 +106,15 @@ export class AuthStore extends BaseModelStore<StoreState>{
   private setAuth(response: TokenResponse): void {
     if(!response) return; 
     // Save tokens sent from server in localstorage
-    let accessToken: AccessToken = {
-        token: response.accessToken?.token.replace("Bearer ", ""),
-        expiresIn: this.dateTimeService.getNowInUnixTimeSeconds() + response.accessToken?.expiresIn
-    };
+    let accessToken = {token: response.accessToken?.token.replace("Bearer ", "")} as AccessToken;
+    this.setAccessTokenExpiration(accessToken);
 
     this._setStateVoid({currentUser: response.user, accessToken, refreshToken: response.refreshToken}, AuthStoreActions.Login);
     this.syncStore.handleLogin();
   }
-
-  private populate(): void{
-    if(this.hasTokens)
-        this.apiService.get('/auth').subscribe(currentUser => this._setStateVoid({currentUser}, AuthStoreActions.SetCurrentUser));
+  
+  private setAccessTokenExpiration = (accessToken: AccessToken): void => {
+    accessToken.expiresIn = this.dateTimeService.getNowInUnixTimeSeconds() + accessToken.expiresIn;
   }
 }
 
