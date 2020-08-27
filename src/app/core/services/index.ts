@@ -19,3 +19,4 @@ export * from './utility/date-time.service';
 export * from './utility/timesheet-summary.aggregator';
 export * from './utility/array-helper.service';
 export * from './utility/sorter.service';
+export * from './utility/object-helper.service';

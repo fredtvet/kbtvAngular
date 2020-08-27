@@ -4,6 +4,8 @@ import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/comp
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
 import { translations } from 'src/app/shared-app/translations';
+import { ObjectHelperService } from 'src/app/core/services';
+import { DataTableConfig } from './data-table.config';
 
 @Component({
   selector: 'app-data-table',
@@ -13,34 +15,20 @@ import { translations } from 'src/app/shared-app/translations';
 export class DataTableComponent {
   @ViewChild('dataGrid') dataGrid: AgGridAngular;
 
-  _data: any[];
-  get data(): any[] {return this._data}
-
-  @Input('data')
-  set data(value: any[]) {
-      this._data = value;
-      this.initNgGrid(value);
-  }
+  @Input() data: any[];
 
   @Output() itemEdited = new EventEmitter();
   @Output() itemsDeleted = new EventEmitter();
   @Output() createItem = new EventEmitter();
 
   columnDefs: any = [];
-
   rowData: any = [];
-  
-  ignoredProperties = ['updatedat', 'createdat', 'lastvisited', 'employerid', 'missiontypeid', 'imageurl'];
-  
-  noEditProperties = ['id', 'missiontype', 'employer', 'password'];
-  
-  booleanProperties = ['finished']
-  
-  objectProperties = ['missiontype', 'employer'];
 
   private currentObject: Object;
 
-  constructor(private _dialog: MatDialog) { }
+  constructor(private _dialog: MatDialog, private objectHelperService: ObjectHelperService) { }
+
+  ngOnChanges(){ this.initNgGrid(this.data); }
 
   autoSizeGrid(){
     let cols = this.dataGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
@@ -73,7 +61,7 @@ export class DataTableComponent {
     };
    
     //Add cols for properties if obj is new 
-    if(!this.hasSameObjectProps(data[0], this.currentObject)){
+    if(!this.objectHelperService.hasSameObjectProps(data[0], this.currentObject)){
       this.columnDefs = [{colId: 'checkbox', checkboxSelection: true, width: 42, pinned: 'left', lockPosition: true}];
       this.currentObject = data[0];
       Object.keys(data[0]).forEach(name => this.addColumnDef(name));
@@ -82,23 +70,10 @@ export class DataTableComponent {
     this.rowData = data;
   }
 
-  private hasSameObjectProps(obj1: Object, obj2: Object): boolean{
-    let objProps1 = Object.keys(obj1 || {});
-
-    if(objProps1?.length !== Object.keys(obj2 || {})?.length) return false;
-
-    for(const prop of objProps1){
-      if(!obj2.hasOwnProperty(prop)) return false   
-    }
-
-    return true;
-  }
-
-
   private addColumnDef(name: string): void{
     let nameLower = name.toLowerCase();
 
-    if(this.ignoredProperties.includes(nameLower)) return; //Ignored properties
+    if(DataTableConfig.ignoredProperties.includes(nameLower)) return; //Ignored properties
 
     let def = {
       field: name,
@@ -109,7 +84,7 @@ export class DataTableComponent {
       lockPosition: true
     };
 
-    if(this.booleanProperties.includes(nameLower)){
+    if(DataTableConfig.booleanProperties.includes(nameLower)){
       def['cellEditor'] = 'agSelectCellEditor';
       def['cellEditorParams'] = { values: ['Ja', 'Nei']}
 
@@ -125,9 +100,9 @@ export class DataTableComponent {
       }
     }
 
-    if(this.noEditProperties.includes(nameLower)) def['editable'] = false;
+    if(DataTableConfig.noEditProperties.includes(nameLower)) def['editable'] = false;
 
-    if(this.objectProperties.includes(nameLower)){
+    if(DataTableConfig.objectProperties.includes(nameLower)){
       def['valueGetter'] = function(params) { //Get name of object and display
         if(params.data[name])
           return params.data[name].name;

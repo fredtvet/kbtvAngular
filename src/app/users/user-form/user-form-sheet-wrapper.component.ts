@@ -13,7 +13,7 @@ import { UsersStore } from '../users.store';
     <app-user-form 
       [config]="config"
       (finished)="close($event)">
-  </app-user-form>
+    </app-user-form>
   </app-simple-top-nav> 
   `,
   changeDetection: ChangeDetectionStrategy.OnPush

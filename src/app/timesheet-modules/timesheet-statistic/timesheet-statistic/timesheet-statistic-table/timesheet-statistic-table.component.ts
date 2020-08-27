@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/c
 import { AgGridAngular } from 'ag-grid-angular';
 import { TimesheetSummary } from 'src/app/shared-app/interfaces';
 import { translations } from 'src/app/shared-app/translations';
+import { ObjectHelperService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-timesheet-statistic-table',
@@ -12,16 +13,7 @@ import { translations } from 'src/app/shared-app/translations';
 export class TimesheetStatisticTableComponent {
   @ViewChild('dataGrid') dataGrid: AgGridAngular;
 
-  _timesheetSummaries: TimesheetSummary[];
-  get timesheetSummaries(): TimesheetSummary[] {
-      return this._timesheetSummaries;
-  }
-  
-  @Input('timesheetSummaries')
-  set timesheetSummaries(value: TimesheetSummary[]) {
-      this._timesheetSummaries = value;
-      this.initNgGrid(this.timesheetSummaries);
-  }
+  @Input() timesheetSummaries: TimesheetSummary[];
 
   columnDefs: any = [];
 
@@ -29,7 +21,13 @@ export class TimesheetStatisticTableComponent {
 
   private currentSummary: TimesheetSummary;
 
-  constructor(private datePipe: DatePipe) { }
+  constructor(
+    private datePipe: DatePipe, 
+    private objectHelperService: ObjectHelperService) { }
+
+  ngOnChanges(): void {
+    this.initNgGrid(this.timesheetSummaries)
+  }
 
   autoSizeGrid(){
     let cols = this.dataGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
@@ -44,7 +42,7 @@ export class TimesheetStatisticTableComponent {
       return;
     };
 
-    if(!this.hasSameObjectProps(data[0], this.currentSummary)){
+    if(!this.objectHelperService.hasSameObjectProps(data[0], this.currentSummary)){
       this.columnDefs = [];
       this.currentSummary = data[0];
       this.addColDefs(this.currentSummary);
@@ -80,18 +78,6 @@ export class TimesheetStatisticTableComponent {
     this.columnDefs.push({field: 'confirmedHours',headerName: translations['confirmedHours'] || 'confirmedHours',sortable: true});
 
     this.columnDefs.push({field: 'openHours',headerName: translations['openHours'] || 'openHours',sortable: true});
-  }
-
-  private hasSameObjectProps(obj1: Object, obj2: Object): boolean{
-    let objProps1 = Object.keys(obj1 || {});
-
-    if(objProps1.length !== Object.keys(obj2 || {}).length) return false;
-
-    for(const prop of objProps1){
-      if(!obj2.hasOwnProperty(prop)) return false   
-    }
-
-    return true;
   }
 
   private convertMonthIndex = (params) => 

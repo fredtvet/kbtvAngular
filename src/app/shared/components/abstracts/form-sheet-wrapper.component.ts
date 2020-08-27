@@ -6,8 +6,8 @@ import { filter } from 'rxjs/operators';
 import { OnStateDelete } from 'src/app/core/state';
 import { AppButton, SimpleNavConfig } from 'src/app/shared-app/interfaces';
 import { FormConfig } from 'src/app/shared/interfaces';
-import { ConfirmDialogComponent, ConfirmDialogConfig } from '..';
 import { FormAction } from '../../enums';
+import { ConfirmDialogComponent, ConfirmDialogConfig } from '../confirm-dialog/confirm-dialog.component';
 
 export abstract class FormSheetWrapperComponent implements OnInit {
 

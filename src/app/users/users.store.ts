@@ -41,7 +41,7 @@ export class UsersStore extends BaseModelStore<StoreState> implements OnStateAdd
   }
 
   update$(user: User): Observable<void> {
-    return this.apiService.put(ApiUrl.MissionNote + '/' + user.userName, user)
+    return this.apiService.put(ApiUrl.Users + '/' + user.userName, user)
         .pipe(
           tap(x => this._updateStateProperty("users",
             (users: User[]) => this.arrayHelperService.update(users, x, 'userName')))
