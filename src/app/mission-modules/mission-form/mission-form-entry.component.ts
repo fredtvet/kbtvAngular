@@ -1,28 +1,22 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MissionFormSheetWrapperComponent } from './mission-form/mission-form-sheet-wrapper.component';
 import { Location } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute } from '@angular/router';
+import { FormEntryComponent } from 'src/app/shared/components';
+import { MissionFormSheetWrapperComponent } from './mission-form/mission-form-sheet-wrapper.component';
 
 @Component({
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
-export class MissionFormEntryComponent {
+export class MissionFormEntryComponent extends FormEntryComponent {
 
   constructor(
-    private bottomSheet: MatBottomSheet,
-    private route: ActivatedRoute,
-    private location: Location
+      bottomSheet: MatBottomSheet,
+      route: ActivatedRoute,
+      location: Location,   
     ) {
-    let idPreset:number = +this.route.snapshot.queryParams['idPreset'];
+      super(bottomSheet, route, location, MissionFormSheetWrapperComponent);
+    }
 
-    this.openDialog({idPreset});
-   }
-
-  openDialog = (data) => {
-    let ref = this.bottomSheet.open(MissionFormSheetWrapperComponent, {data});
-    ref.afterDismissed().subscribe(x => this.location.back())
-  };
 }

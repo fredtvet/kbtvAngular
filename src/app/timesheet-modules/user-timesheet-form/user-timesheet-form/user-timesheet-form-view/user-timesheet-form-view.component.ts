@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from "@angular/forms";
 import { Mission, Timesheet } from "src/app/core/models";
 import { debounceTime, filter } from 'rxjs/operators';
+import { TimesheetFormConfig } from 'src/app/shared-timesheet/interfaces';
 
 @Component({
   selector: 'app-user-timesheet-form-view',
@@ -13,8 +14,7 @@ export class UserTimesheetFormViewComponent{
   @Input() missions: Mission[]
   @Input() timesheet: Timesheet;
 
-  @Input() datePreset: Date;
-  @Input() missionPreset: Mission;
+  @Input() config: TimesheetFormConfig;
 
   @Output() formSubmitted = new EventEmitter();
   @Output() missionsSearch = new EventEmitter();
@@ -27,7 +27,7 @@ export class UserTimesheetFormViewComponent{
   constructor(private _formBuilder: FormBuilder) {this.initTime.setHours(6,0,0,0);}
 
   ngOnChanges(){
-    if(!this.timesheet || this.timesheet == null)this.isCreateForm = true;
+    if(!this.timesheet || this.timesheet == null) this.isCreateForm = true;
     else this.timesheet.mission = this.missions?.find(x => x.id == this.timesheet.missionId);
 
     this.initalizeForm(this.timesheet);
@@ -47,11 +47,11 @@ export class UserTimesheetFormViewComponent{
   private initalizeForm(x: Timesheet){
     this.timesheetForm = this._formBuilder.group({
       id: x ? x.id : null,
-      mission: [{value: this.missionPreset || (x ? x.mission : null), disabled: this.missionPreset}, [
+      mission: [{value: this.config?.mission || (x ? x.mission : null), disabled: this.config?.mission}, [
         Validators.required,
         this.isMissionValidator()
       ]],
-      date: [{value: this.datePreset || (this.isCreateForm ? null : new Date(x.startTime)), disabled: this.datePreset}, [
+      date: [{value: this.config?.date || (this.isCreateForm ? null : new Date(x.startTime)), disabled: this.config?.date}, [
         Validators.required
       ]],
       timeRange: [this.isCreateForm ? [] : [new Date(x.startTime), new Date(x.endTime)], [

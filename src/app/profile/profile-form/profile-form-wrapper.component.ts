@@ -1,29 +1,25 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
+import { Router } from '@angular/router';
+import { FormSheetWrapperComponent } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-profile-form-sheet-wrapper',
   template: `
   <app-simple-top-nav [config]="navConfig">
-    <app-profile-form (finished)="close()">
+    <app-profile-form (finished)="close($event)">
     </app-profile-form>
   </app-simple-top-nav> 
   `,
   changeDetection: ChangeDetectionStrategy.OnPush 
 })
 
-export class ProfileFormWrapperComponent implements OnInit {
-  navConfig: SimpleNavConfig;
+export class ProfileFormWrapperComponent extends FormSheetWrapperComponent {
 
-  constructor(private _bottomSheetRef: MatBottomSheetRef<ProfileFormWrapperComponent>) { }
-
-  ngOnInit() {
-    this.navConfig = {
-      title: 'Oppdater profil',
-      leftBtn: {icon: 'close', callback: this.close} as AppButton
-    }
+  constructor(
+    router: Router,
+    bottomSheetRef: MatBottomSheetRef<ProfileFormWrapperComponent>
+  ) { 
+    super(router, bottomSheetRef, "profil", {customTitle: "Oppdater profil"})
   }
-
-  close = () => this._bottomSheetRef.dismiss();
 }

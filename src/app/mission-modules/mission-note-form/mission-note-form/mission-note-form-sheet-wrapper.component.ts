@@ -1,36 +1,33 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
+import { MissionChildFormConfig } from 'src/app/shared/interfaces';
+import { FormSheetWrapperComponent } from 'src/app/shared/components';
+import { MissionNoteFormStore } from '../mission-note-form.store';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-mission-note-form-sheet-wrapper',
   template: `
   <app-simple-top-nav [config]="navConfig">
     <app-mission-note-form 
-      [idPreset]="data?.idPreset"
-      [missionId]="data?.missionId"
-      (finished)="close()">
+      [config]="config"
+      (finished)="close($event)">
     </app-mission-note-form>
   </app-simple-top-nav> 
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MissionNoteFormSheetWrapperComponent implements OnInit {
-
-  navConfig: SimpleNavConfig;
-
+export class MissionNoteFormSheetWrapperComponent extends FormSheetWrapperComponent {
+  
   constructor(
-    private _bottomSheetRef: MatBottomSheetRef<MissionNoteFormSheetWrapperComponent>,  
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: {idPreset: number, missionId: number}) { }
-
-  ngOnInit() {
-    this.navConfig = {
-      title: (this.data && this.data.idPreset) ? 'Rediger notat' : 'Registrer notat',
-      leftBtn: {icon: 'close', callback: this.close} as AppButton,
+    store: MissionNoteFormStore,
+    router: Router,
+    bottomSheetRef: MatBottomSheetRef<MissionNoteFormSheetWrapperComponent>, 
+    dialog: MatDialog, 
+    @Inject(MAT_BOTTOM_SHEET_DATA) public config: MissionChildFormConfig) {
+      super(router, bottomSheetRef, "notat", config, dialog, store)
     }
-  }
-
-  close = () => this._bottomSheetRef.dismiss();
-
 
 }

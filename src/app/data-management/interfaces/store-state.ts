@@ -1,4 +1,4 @@
-import { StateMissions, StateDocumentTypes, StateEmployers, StateMissionTypes, StateInboundEmailPassword, StateUsers } from '../core/state/global.state';
+import { StateMissions, StateDocumentTypes, StateEmployers, StateMissionTypes, StateInboundEmailPassword, StateUsers } from '../../core/state/global.state';
 
 export interface StoreState extends 
     StateMissions,

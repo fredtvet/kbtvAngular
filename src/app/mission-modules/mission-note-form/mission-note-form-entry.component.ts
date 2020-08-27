@@ -3,26 +3,20 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MissionNoteFormSheetWrapperComponent } from './mission-note-form/mission-note-form-sheet-wrapper.component';
+import { FormEntryComponent } from 'src/app/shared/components';
 
 @Component({
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
-export class MissionNoteFormEntryComponent {
+export class MissionNoteFormEntryComponent extends FormEntryComponent {
 
   constructor(
-    private bottomSheet: MatBottomSheet,
-    private route: ActivatedRoute,
-    private location: Location
+    bottomSheet: MatBottomSheet,
+    route: ActivatedRoute,
+    location: Location
     ) {
-    let idPreset:number = +this.route.snapshot.queryParams['idPreset'];
-    let missionId:number = +this.route.snapshot.queryParams['missionId'];
-    this.openDialog({idPreset, missionId});
+    super(bottomSheet, route, location, MissionNoteFormSheetWrapperComponent)
    }
 
-  openDialog = (data) => {
-    let ref = this.bottomSheet.open(MissionNoteFormSheetWrapperComponent, {data});
-    ref.afterDismissed().subscribe(x => this.location.back())
-  };
 }

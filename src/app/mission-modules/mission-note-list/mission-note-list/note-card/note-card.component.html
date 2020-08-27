@@ -21,15 +21,11 @@
             {{ note.createdAt | date: 'dd.MMM' }} av {{ note.createdBy || "Anonym" }}
         </span>
         <ng-container *ifRole="RolePresets.Authority">
-            <span>
-                <button (click)="editNote()" mat-icon-button color="primary" aria-label="Rediger notat">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <button (click)="deleteNote()" mat-icon-button color="warn"
-                    aria-label="Slett notat">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </span>
+
+            <button (click)="editNote()" mat-icon-button color="primary" aria-label="Rediger notat">
+                <mat-icon>edit</mat-icon>
+            </button>
+
         </ng-container>
     </span>
 

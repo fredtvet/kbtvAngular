@@ -14,6 +14,7 @@ import { UserTimesheetCardDialogWrapperComponent } from '../user-timesheet-card-
 import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { WeekFilterCriteria } from 'src/app/shared-timesheet/components/week-filter/week-filter-config.interface';
 import { GroupByPeriod, TimesheetStatus } from 'src/app/shared-app/enums';
+import { TimesheetFormConfig } from 'src/app/shared-timesheet/interfaces';
 
 @Component({
   selector: "app-user-timesheet-week-view",
@@ -76,9 +77,8 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
     this.store.addWeekFilter(currFilter);
   }
 
-  openTimesheetForm = (datePreset?: Date, idPreset?: number) => 
-    this.router.navigate(['skjema'], {relativeTo: this.route, queryParamsHandling: "merge", queryParams: {
-      idPreset, datePreset: datePreset ? datePreset.toString() : undefined}});
+  openTimesheetForm = (config: TimesheetFormConfig) => 
+    this.router.navigate(['skjema', {config: JSON.stringify(config)}], {relativeTo: this.route});
 
   openTimesheetCard = (timesheetId: number) =>
     this.dialog.open(UserTimesheetCardDialogWrapperComponent, {

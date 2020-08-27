@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { FormSheetWrapperComponent } from 'src/app/shared/components';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inbound-email-password-form-wrapper-component',
@@ -12,19 +14,13 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InboundEmailPasswordFormWrapperComponent implements OnInit {
+export class InboundEmailPasswordFormWrapperComponent extends FormSheetWrapperComponent {
 
-  navConfig: SimpleNavConfig;
-
-  constructor(private _bottomSheetRef: MatBottomSheetRef<InboundEmailPasswordFormWrapperComponent>) { }
-
-  ngOnInit() {
-    this.navConfig = {
-      title: 'Registrer epostpassord',
-      leftBtn: {icon: 'close', callback: this.close} as AppButton,
-    }
+  constructor(
+    router: Router,
+    bottomSheetRef: MatBottomSheetRef<InboundEmailPasswordFormWrapperComponent>
+    ) {
+      super(router, bottomSheetRef, "epostpassord")
   }
-
-  close = () => this._bottomSheetRef.dismiss();
-
+  
 }

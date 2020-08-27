@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { catchError, throttleTime, finalize } from 'rxjs/operators';
 import { DataManagementStore } from '../data-management.store';
-import { StoreState } from '../store-state';
+import { StoreState } from '../interfaces/store-state';
 import { Router } from '@angular/router';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { EmployerFormSheetWrapperComponent } from '../components/employer-form/employer-form-sheet-wrapper.component';

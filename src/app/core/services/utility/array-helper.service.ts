@@ -74,7 +74,7 @@ export class ArrayHelperService {
   }
 
   removeRangeByIdentifier<T>(originals: T[], deletedIds: any[], identifier: string): T[]{       
-    if(this.isEmptyArray(deletedIds)) return originals.slice(); //If no deleted ids, just return originals
+    if(this.isEmptyArray(deletedIds)) return originals?.slice(); //If no deleted ids, just return originals
     if(this.isEmptyArray(originals)) return []; //If initial array empty, just return empty array
 
     let originalsObj = this.convertArrayToObject(originals, identifier);
@@ -137,6 +137,6 @@ export class ArrayHelperService {
     }, {});
   }
 
-  isEmptyArray = (arr: any[]) => !arr || arr === null || arr.length === 0
+  isEmptyArray = (arr: any[]) => !arr || arr.length === 0
 
 }

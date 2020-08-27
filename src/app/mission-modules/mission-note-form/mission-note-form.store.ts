@@ -8,12 +8,12 @@ import {
   ArrayHelperService
 } from "src/app/core/services";
 import { StoreState } from './store-state';
-import { BaseModelStore } from 'src/app/core/state';
+import { BaseModelStore, OnStateUpdate, OnStateAdd, OnStateDelete } from 'src/app/core/state';
 
 @Injectable({
   providedIn: 'any',
 })
-export class MissionNoteFormStore extends BaseModelStore<StoreState>  {
+export class MissionNoteFormStore extends BaseModelStore<StoreState> implements OnStateAdd, OnStateUpdate, OnStateDelete {
 
   constructor(
     apiService: ApiService,
@@ -37,6 +37,14 @@ export class MissionNoteFormStore extends BaseModelStore<StoreState>  {
         .pipe(
           tap(x => this._updateStateProperty("missionNotes",
             (notes: MissionNote[]) => this.arrayHelperService.update(notes, x, 'id')))
+        );   
+  }
+   
+  delete$(id: number): Observable<void> {
+    return this.apiService.delete(ApiUrl.MissionNote + '/' + id)
+        .pipe(
+          tap(x => this._updateStateProperty("missionNotes",
+            (notes: MissionNote[]) => this.arrayHelperService.removeByIdentifier(notes, id, 'id')))
         );   
   }
 }

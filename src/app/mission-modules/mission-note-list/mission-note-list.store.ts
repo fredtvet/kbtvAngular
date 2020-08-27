@@ -24,12 +24,5 @@ export class MissionNoteListStore extends BaseModelStore<StoreState>  {
 
   getByMissionId$ = (id: number): Observable<MissionNote[]> => 
     this._getBy$("missionNotes", (x: MissionNote) => x.missionId === id)
- 
-  delete$(id: number): Observable<void> {
-    return this.apiService.delete(ApiUrl.MissionNote + '/' + id)
-        .pipe(
-          tap(x => this._updateStateProperty("missionNotes",
-            (notes: MissionNote[]) => this.arrayHelperService.removeByIdentifier(notes, id, 'id')))
-        );   
-  }
+
 }

@@ -5,11 +5,20 @@ import { Mission, Timesheet } from "src/app/core/models";
 import { NotificationService } from 'src/app/core/services';
 import { Notifications, Roles } from 'src/app/shared-app/enums';
 import { UserTimesheetFormStore } from '../user-timesheet-form.store';
-import { TimesheetFormConfig } from './timesheet-form-config.interface';
+import { TimesheetFormConfig } from '../../../shared-timesheet/interfaces/timesheet-form-config.interface';
+import { FormAction } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-user-timesheet-form',
-  templateUrl: './user-timesheet-form.component.html',
+  template: `
+  <app-user-timesheet-form-view 
+    [config]="config"
+    [timesheet]="timesheet$ | async"
+    [missions]="missions$ | async"
+    (formSubmitted)="onSubmit($event)"
+    (missionsSearch)="onMissionSearch($event)">
+  </app-user-timesheet-form-view>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -19,7 +28,7 @@ export class UserTimesheetFormComponent implements OnInit {
   @Input() config: TimesheetFormConfig;
   @Output() finished = new EventEmitter();
 
-  timesheetPreset$: Observable<Timesheet>;
+  timesheet$: Observable<Timesheet>;
 
   missions$: Observable<Mission[]> = this.store.filteredMissions$;
 
@@ -31,9 +40,9 @@ export class UserTimesheetFormComponent implements OnInit {
     }
 
   ngOnInit(){
-    if(!this.config.idPreset) this.isCreateForm = true;
+    if(!this.config.entityId) this.isCreateForm = true;
     else 
-      this.timesheetPreset$ = this.store.get$(this.config.idPreset).pipe(
+      this.timesheet$ = this.store.get$(this.config.entityId).pipe(
           tap(x => !x ? this.finished.emit() : null)
       );
   }
@@ -52,7 +61,7 @@ export class UserTimesheetFormComponent implements OnInit {
         title:'Time registrert!',        
         type: Notifications.Success
       })
-      this.finished.emit(x);
+      this.finished.emit(FormAction.Create);
     })
   }
 
@@ -62,7 +71,7 @@ export class UserTimesheetFormComponent implements OnInit {
         title:'Time oppdatert!',        
         type: Notifications.Success
       })
-      this.finished.emit(x);
+      this.finished.emit(FormAction.Update);
     })
   }
 

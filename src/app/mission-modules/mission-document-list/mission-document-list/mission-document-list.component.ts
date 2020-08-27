@@ -101,7 +101,7 @@ export class MissionDocumentListComponent {
   }
 
   private openDocumentForm = () => 
-    this.router.navigate(['skjema'], {relativeTo: this.route, queryParams: {missionId: this.missionId}});
+    this.router.navigate(['skjema', {config: JSON.stringify({missionId: this.missionId})}], {relativeTo: this.route});
 
   private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
 

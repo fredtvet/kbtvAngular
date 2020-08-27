@@ -65,7 +65,7 @@ export class MissionListStore extends BaseModelStore<StoreState>  {
     ).pipe(
         map(([mission, imageCount, documentCount, noteCount, employers, types]) => {
             let details:  MissionDetails = {mission, imageCount, documentCount, noteCount};
-            if(this._isNullOrUndefined(mission)) return details;
+            if(!mission) return details;
             details.mission.employer = this.arrayHelperService.find(employers, details.mission?.employerId, 'id');
             details.mission.missionType = this.arrayHelperService.find(types, details.mission?.missionTypeId, 'id');
             return details;
@@ -79,9 +79,6 @@ export class MissionListStore extends BaseModelStore<StoreState>  {
   addSortByDate = (missionSortByDate: "lastVisited" | "updatedAt"): void =>
     this._setStateVoid({ missionSortByDate },StoreActions.UpdateSortByDateMission);
 
-  delete$ = (id: number): Observable<void> =>
-    this.apiService.delete(ApiUrl.Mission + '/' + id).pipe(tap(x => this.deleteMissionWithChildren(id)));  
-
   updateHeaderImage$(command: {id: number, file: File}): Observable<void> {
     const body: FormData = new FormData();
     body.append("files", command?.file, command?.file?.name);
@@ -94,21 +91,11 @@ export class MissionListStore extends BaseModelStore<StoreState>  {
 
   private updateLastVisited(id: number){
     let missions = this.getStateProperty<Mission[]>("missions");
-    if(this._isNullOrUndefined(missions)) return;
+    if(!missions) return;
     let index = missions.findIndex(x => x.id == id);
+    if(!missions[index]) return;
     missions[index].lastVisited = new Date(); 
     this._setStateVoid({missions}, StoreActions.UpdateLastVisitedMission)
-  }
-
-  private deleteMissionWithChildren(id: number): void{
-    let missions = this.getStateProperty<Mission[]>("missions");
-    let state: Partial<StoreState> = {
-        missions: this.arrayHelperService.removeByIdentifier(missions, id, 'id'),
-        missionImages: this.arrayHelperService.filter(this.getStateProperty<MissionImage[]>("missionImages"), (x) => x.missionId !== id),       
-        missionDocuments: this.arrayHelperService.filter(this.getStateProperty<MissionDocument[]>("missionDocuments"), (x) => x.missionId !== id),    
-        missionNotes: this.arrayHelperService.filter(this.getStateProperty<MissionNote[]>("missionNotes"), (x) => x.missionId !== id),
-    }
-    this._setStateVoid(state, StoreActions.DeleteMission);
   }
 
   private initState(): void {

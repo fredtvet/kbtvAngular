@@ -32,4 +32,5 @@ export const translations: { [key: string]: string } = {
   missionTypes: "Oppdragstyper",
   inboundEmailPasswords: "Epostpassord",
   password: "Passord",
+  timesheet: "Time"
 };

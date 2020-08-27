@@ -7,15 +7,22 @@ import { Notifications } from 'src/app/shared-app/enums';
 import { CreateMission, UpdateMission } from 'src/app/shared-app/interfaces/commands';
 import { MissionFormStore } from '../mission-form.store';
 import { MissionFormVm } from '../interfaces/mission-form-vm.interface';
+import { FormConfig } from 'src/app/shared/interfaces';
+import { FormAction } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-mission-form',
-  templateUrl: './mission-form.component.html',
+  template: `
+  <app-mission-form-view
+    [vm]="vm$ | async"
+    (formSubmitted)="onSubmit($event)">
+  </app-mission-form-view>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionFormComponent {
 
-  @Input() idPreset: number;
+  @Input() config: FormConfig;
   @Output() finished = new EventEmitter();
 
   vm$: Observable<MissionFormVm>;
@@ -32,8 +39,8 @@ export class MissionFormComponent {
       this.store.property$<Employer[]>("employers")
     ];
 
-    if(!this.idPreset) this.isCreateForm = true;
-    else observables.push(this.store.getMissionById$(this.idPreset));
+    if(!this.config?.entityId) this.isCreateForm = true;
+    else observables.push(this.store.getMissionById$(this.config?.entityId));
 
     this.vm$ = combineLatest(...observables).pipe(map(([missionTypes, employers, mission]) => { 
       if(mission){
@@ -51,13 +58,13 @@ export class MissionFormComponent {
   }
 
   private createMission(mission: CreateMission): void{
-    this.store.add$(mission).subscribe(x => this.finished.emit());
+    this.store.add$(mission).subscribe(x => this.finished.emit(FormAction.Create));
   }
 
   private editMission(mission: UpdateMission): void{
     this.store.update$(mission).subscribe(res => {
         this.notificationService.notify({title: 'Vellykket oppdatering!', type: Notifications.Success});
-        this.finished.emit();
+        this.finished.emit(FormAction.Update);
       })
   }
  

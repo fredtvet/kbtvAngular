@@ -2,33 +2,21 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { TimesheetFormConfig } from './user-timesheet-form/timesheet-form-config.interface';
 import { UserTimesheetFormSheetWrapperComponent } from './user-timesheet-form/user-timesheet-form-sheet-wrapper.component';
+import { FormEntryComponent } from 'src/app/shared/components';
 
 @Component({
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
-export class UserTimesheetFormEntryComponent {
+export class UserTimesheetFormEntryComponent extends FormEntryComponent {
 
   constructor(
-    private bottomSheet: MatBottomSheet,
-    private route: ActivatedRoute,
-    private location: Location
+    bottomSheet: MatBottomSheet,
+    route: ActivatedRoute,
+    location: Location
     ) {
-      
-    let config: TimesheetFormConfig = {
-      idPreset: +this.route.snapshot.queryParams['idPreset'],
-      missionPreset: this.route.snapshot.queryParams['missionPreset'] ? JSON.parse(this.route.snapshot.queryParams['missionPreset']) : undefined,
-      datePreset: this.route.snapshot.queryParams['datePreset'] ? new Date(this.route.snapshot.queryParams['datePreset']) : undefined
-    }
-
-    this.openDialog(config);
+     super(bottomSheet, route, location, UserTimesheetFormSheetWrapperComponent)
    }
 
-  openDialog = (data: TimesheetFormConfig) => {
-    let ref = this.bottomSheet.open(UserTimesheetFormSheetWrapperComponent, {data});
-    ref.afterDismissed().subscribe(x => this.location.back())
-  };
 }

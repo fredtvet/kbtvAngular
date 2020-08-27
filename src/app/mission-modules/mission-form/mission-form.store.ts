@@ -2,19 +2,20 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { ApiUrl } from 'src/app/core/api-url';
-import { Mission } from "src/app/core/models";
+import { Mission, MissionImage, MissionDocument, MissionNote } from "src/app/core/models";
 import {
   ApiService,
   ArrayHelperService
 } from "src/app/core/services";
-import { BaseModelStore } from "../../core/state";
+import { BaseModelStore, OnStateAdd, OnStateUpdate, OnStateDelete } from "../../core/state";
 import { CreateMission, UpdateMission } from './interfaces/mission-commands.interface';
 import { StoreState } from './interfaces/store-state';
+import { StoreActions } from 'src/app/profile/profile.store';
 
 @Injectable({
   providedIn: 'any',
 })
-export class MissionFormStore extends BaseModelStore<StoreState>  {
+export class MissionFormStore extends BaseModelStore<StoreState> implements OnStateAdd, OnStateUpdate, OnStateDelete  {
 
   constructor(
     apiService: ApiService,
@@ -33,7 +34,7 @@ export class MissionFormStore extends BaseModelStore<StoreState>  {
 
     return this.apiService.post(ApiUrl.Mission, body)
         .pipe(tap(entity => 
-            this.modifyMissionWithForeigns(entity, StoreActions.AddMission, 
+            this.modifyMissionWithForeigns(entity,
               (entity) => this.arrayHelperService.add(this.getProperty("missions", false), entity))
         ));  
   }
@@ -41,10 +42,13 @@ export class MissionFormStore extends BaseModelStore<StoreState>  {
   update$(command: UpdateMission): Observable<void> {
     return this.apiService.put(ApiUrl.Mission + '/' + command.id, command)
         .pipe(tap(entity => 
-            this.modifyMissionWithForeigns(entity, StoreActions.UpdateMission, 
+            this.modifyMissionWithForeigns(entity, 
               (entity) => this.arrayHelperService.update(this.getProperty("missions", false), entity, 'id'))
         ));  
   }
+
+  delete$ = (id: number): Observable<void> =>
+    this.apiService.delete(ApiUrl.Mission + '/' + id).pipe(tap(x => this.deleteMissionWithChildren(id))); 
 
   addFromPdfReport$(pdf: File): Observable<void> {
     const body: FormData = new FormData();
@@ -56,13 +60,13 @@ export class MissionFormStore extends BaseModelStore<StoreState>  {
         let state = {} as Partial<StoreState>;
         state.missions = this.arrayHelperService.add(this.getProperty("missions", false), entity);
         state.missionDocuments = this.arrayHelperService.add(this.getProperty("missionDocuments", false), entity)        
-        this._setStateVoid(state, StoreActions.AddMissionFromPdf);
+        this._setStateVoid(state);
       }));  
   }
 
   //Add foreign properties (multiple properties can be created in single API call)
   private modifyMissionWithForeigns
-    (m: Mission, action: string, actionFn: (entity: Mission) => Mission[]): void{
+    (m: Mission, actionFn: (entity: Mission) => Mission[]): void{
     let state: Partial<StoreState> = {};
     if(m?.missionType?.id){ 
       state.missionTypes = this.arrayHelperService.add(this.getProperty("missionTypes"), m.missionType)
@@ -76,13 +80,18 @@ export class MissionFormStore extends BaseModelStore<StoreState>  {
     }
     state.missions = actionFn(m);
 
-    this._setStateVoid(state, action);
+    this._setStateVoid(state);
   }
 
-}
-
-export enum StoreActions {
-  AddMission = "add_missions",
-  AddMissionFromPdf = "addFromPdf_missions",
-  UpdateMission = "update_missions",
+  private deleteMissionWithChildren(id: number): void{
+    let missions = this.getStateProperty<Mission[]>("missions");
+    let state: Partial<StoreState> = {
+        missions: this.arrayHelperService.removeByIdentifier(missions, id, 'id'),
+        missionImages: this.arrayHelperService.filter(this.getStateProperty<MissionImage[]>("missionImages"), (x) => x.missionId !== id),       
+        missionDocuments: this.arrayHelperService.filter(this.getStateProperty<MissionDocument[]>("missionDocuments"), (x) => x.missionId !== id),    
+        missionNotes: this.arrayHelperService.filter(this.getStateProperty<MissionNote[]>("missionNotes"), (x) => x.missionId !== id),
+    }
+    this._setStateVoid(state);
+  }
+  
 }

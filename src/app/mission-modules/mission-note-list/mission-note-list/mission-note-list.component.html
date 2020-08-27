@@ -1,6 +1,5 @@
 <div class="max-width">
     <app-note-card *ngFor="let note of notes$ | async" [note]="note" 
-        (deleteClicked)="openConfirmDeleteDialog($event)" 
         (editClicked)="openEditNoteForm($event)">
     </app-note-card>
 </div>

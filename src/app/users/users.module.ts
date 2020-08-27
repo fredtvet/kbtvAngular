@@ -9,7 +9,7 @@ import { UserFormViewComponent } from './user-form/user-form-view/user-form-view
 import { UserFormSheetWrapperComponent } from './user-form/user-form-sheet-wrapper.component';
 import { NewPasswordFormComponent } from './new-password-form/new-password-form.component';
 import { NewPasswordFormViewComponent } from './new-password-form/new-password-form-view/new-password-form-view.component';
-import { NewPasswordFormWrapperComponent } from './new-password-form/new-password-form-wrapper.component';
+import { NewPasswordFormSheetWrapperComponent } from './new-password-form/new-password-form-sheet-wrapper.component';
 
 @NgModule({
   declarations: [    
@@ -20,7 +20,7 @@ import { NewPasswordFormWrapperComponent } from './new-password-form/new-passwor
     UserFormSheetWrapperComponent,
     NewPasswordFormComponent,
     NewPasswordFormViewComponent,
-    NewPasswordFormWrapperComponent
+    NewPasswordFormSheetWrapperComponent
   ],
   imports: [
     SharedModule,

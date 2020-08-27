@@ -3,17 +3,27 @@ import { Observable } from "rxjs";
 import { Employer, User } from "src/app/core/models";
 import { NotificationService } from "src/app/core/services";
 import { Notifications, Roles } from "src/app/shared-app/enums";
+import { FormAction } from 'src/app/shared/enums';
+import { FormConfig } from 'src/app/shared/interfaces';
 import { UsersStore } from '../users.store';
 
 @Component({
   selector: "app-user-form",
-  templateUrl: "./user-form.component.html",
+  template: `
+  <app-user-form-view
+    [users]="users$ | async"
+    [userNamePreset]="config.entityId"
+    [roles]="roles"
+    [employers]="employers$ | async"
+    (formSubmitted)="onSubmit($event)">
+  </app-user-form-view>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserFormComponent {
   Roles = Roles;
 
-  @Input() userNamePreset: string;
+  @Input() config: FormConfig;
   @Output() finished = new EventEmitter();
 
   isCreateForm = false;
@@ -28,7 +38,7 @@ export class UserFormComponent {
   ) {}
 
   ngOnInit() {
-    if(!this.userNamePreset) this.isCreateForm = true;
+    if(!this.config?.entityId) this.isCreateForm = true;
   }
 
   onSubmit(result: User) {
@@ -43,7 +53,7 @@ export class UserFormComponent {
         title:'Vellykket! Ny bruker registrert.',        
         type: Notifications.Success
       })
-      this.finished.emit();
+      this.finished.emit(FormAction.Create);
     });
   }
 
@@ -53,7 +63,7 @@ export class UserFormComponent {
         title:'Vellykket oppdatering!',        
         type: Notifications.Success
       })
-      this.finished.emit();
+      this.finished.emit(FormAction.Update);
     });
   }
 }

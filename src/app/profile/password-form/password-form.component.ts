@@ -2,10 +2,15 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angul
 import { NotificationService } from 'src/app/core/services';
 import { Notifications } from 'src/app/shared-app/enums';
 import { ProfileStore } from '../profile.store';
+import { FormAction } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-password-form',
-  templateUrl: './password-form.component.html',
+  template: `
+  <app-password-form-view
+    (formSubmitted)="onSubmit($event)">
+  </app-password-form-view>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -25,7 +30,7 @@ export class PasswordFormComponent {
           title:'Vellykket oppdatering!',        
           type: Notifications.Success
         })
-        this.finished.emit();
+        this.finished.emit(FormAction.Update);
       }
     )
   }

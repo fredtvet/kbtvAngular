@@ -4,6 +4,7 @@ import { User } from 'src/app/core/models';
 import { NotificationService } from 'src/app/core/services';
 import { Notifications } from 'src/app/shared-app/enums';
 import { ProfileStore } from '../profile.store';
+import { FormAction } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-profile-form',
@@ -29,7 +30,7 @@ export class ProfileFormComponent {
         title:'Vellykket oppdatering!',        
         type: Notifications.Success
       })
-      this.finished.emit();
+      this.finished.emit(FormAction.Update);
     })
   }
 }

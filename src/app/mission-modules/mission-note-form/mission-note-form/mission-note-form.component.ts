@@ -4,16 +4,23 @@ import { MissionNote } from 'src/app/core/models';
 import { NotificationService } from 'src/app/core/services';
 import { Notifications } from 'src/app/shared-app/enums';
 import { MissionNoteFormStore } from '../mission-note-form.store';
+import { MissionChildFormConfig } from 'src/app/shared/interfaces';
+import { FormAction } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-mission-note-form',
-  templateUrl: './mission-note-form.component.html',
+  template: `
+  <app-mission-note-form-view
+    [note]="note$ | async"
+    [missionId]="config?.missionId"
+    (formSubmitted)="onSubmit($event)">
+  </app-mission-note-form-view>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionNoteFormComponent {
 
-  @Input() idPreset: number;
-  @Input() missionId: number;
+  @Input() config: MissionChildFormConfig;
 
   @Output() finished = new EventEmitter();
 
@@ -26,8 +33,8 @@ export class MissionNoteFormComponent {
     private notificationService: NotificationService)  {}
 
   ngOnInit(){
-    if(!this.idPreset) this.isCreateForm = true; 
-    else this.note$ = this.store.getNoteById$(this.idPreset);
+    if(!this.config?.entityId) this.isCreateForm = true; 
+    else this.note$ = this.store.getNoteById$(this.config.entityId);
   }
 
   onSubmit(result: MissionNote){
@@ -43,7 +50,7 @@ export class MissionNoteFormComponent {
           title:'Vellykket! Notat opprettet.',        
           type: Notifications.Success
         })
-        this.finished.emit();
+        this.finished.emit(FormAction.Create);
       });  
   }
 
@@ -54,7 +61,7 @@ export class MissionNoteFormComponent {
           title:'Vellykket oppdatering!',        
           type: Notifications.Success
         })
-        this.finished.emit();
+        this.finished.emit(FormAction.Update);
       });
   }
 

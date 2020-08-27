@@ -9,7 +9,7 @@ import {
 import { BaseModelStore } from '../core/state';
 import { ModelState } from '../core/state/global.state';
 import { ModelStateSettings } from '../core/state/model-state.settings';
-import { StoreState } from './store-state';
+import { StoreState } from './interfaces/store-state';
 
 @Injectable({
   providedIn: 'any',
@@ -56,6 +56,15 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
             tap(x => this._updateStateProperty(
                 this.selectedProperty, 
                 (arr: T[]) => this.arrayHelperService.update(arr, entity, this.propInfo.identifier)))
+            );   
+    }
+
+    delete$<T>(id: number): Observable<void> {
+        return this.apiService.delete(`${this.propInfo.apiUrl}/${id}`)    
+            .pipe(
+            tap(x => this._updateStateProperty(
+                this.selectedProperty,
+                (arr: T[]) => this.arrayHelperService.removeByIdentifier(arr, id, 'id')))
             );   
     }
 

@@ -8,7 +8,7 @@
 
             <app-timesheet-day-label class="w-100 mb-1 fadeInDown" style="z-index:1"
               [date]="weekFilter | getDateByDateParams : weekDay"
-              (labelClicked)="openTimesheetForm($event)">
+              (labelClicked)="openTimesheetForm({date: $event})">
             </app-timesheet-day-label>
 
             <div class="w-100" style="padding: 0 2px 0 2px; z-index:0" 
@@ -16,7 +16,7 @@
                 <app-timesheet-mission-bar class="w-100 mb-1 fadeInDown"
                   *ngFor="let timesheet of summaries[weekDay]?.timesheets | sortByDate: 'startTime';" 
                     [timesheet]="timesheet"
-                    (barClicked)="timesheet.status ? openTimesheetCard($event) : openTimesheetForm(undefined, $event)"
+                    (barClicked)="timesheet.status ? openTimesheetCard($event) : openTimesheetForm({entityId: timesheet.id})"
                     [style.height.px]="(timesheet.totalHours / 14)*300">
                 </app-timesheet-mission-bar>
             </div>

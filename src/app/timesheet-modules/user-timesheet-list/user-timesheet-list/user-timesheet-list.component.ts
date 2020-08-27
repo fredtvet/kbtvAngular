@@ -8,6 +8,7 @@ import { DateTimeService, MainNavService, LoadingService } from "src/app/core/se
 import { TimesheetCriteria, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared-timesheet/components';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
+import { TimesheetFormConfig } from 'src/app/shared-timesheet/interfaces';
 
 @Component({
   selector: "app-user-timesheet-list",
@@ -35,8 +36,8 @@ export class UserTimesheetListComponent implements OnInit {
     this.configureMainNav(initFilter);
   }
 
-  openTimesheetForm = (missionPreset?: Mission, idPreset?: number) => 
-    this.router.navigate(['skjema'], {relativeTo: this.route, queryParams: {idPreset, missionPreset: JSON.stringify(missionPreset)}});
+  openTimesheetForm = (config: TimesheetFormConfig) => 
+    this.router.navigate(['skjema', {config: JSON.stringify(config)}], {relativeTo: this.route});
 
   deleteTimesheet = (id: number) => this.store.delete$(id).subscribe();
 
@@ -68,7 +69,7 @@ export class UserTimesheetListComponent implements OnInit {
     } as TopDefaultNavConfig;
     
     let fabs = [
-      {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openTimesheetForm, params: [criteria?.mission]}
+      {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openTimesheetForm, params: [{mission: criteria?.mission}]}
     ];
 
     this.mainNavService.addConfig({default: cfg}, fabs);

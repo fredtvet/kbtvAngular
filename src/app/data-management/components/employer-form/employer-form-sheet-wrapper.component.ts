@@ -3,50 +3,30 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bott
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
 import { AppButton, SimpleNavConfig } from 'src/app/shared-app/interfaces';
-import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
+import { ConfirmDialogComponent, ConfirmDialogConfig, FormSheetWrapperComponent } from 'src/app/shared/components';
 import { DataManagementStore } from '../../data-management.store';
+import { EmployerFormConfig } from '../../interfaces/employer-form-config.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-timesheet-form-sheet-wrapper',
   template: `
   <app-simple-top-nav [config]="navConfig">
     <app-employer-form
-      [employerIdPreset]="data?.employerIdPreset"
-      (finished)="close()">
+      [config]="config"
+      (finished)="close($event)">
     </app-employer-form>
   </app-simple-top-nav> 
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EmployerFormSheetWrapperComponent implements OnInit {
-
-  navConfig: SimpleNavConfig;
+export class EmployerFormSheetWrapperComponent extends FormSheetWrapperComponent {
 
   constructor(
-    private store: DataManagementStore,
-    private dialog: MatDialog,
-    private bottomSheetRef: MatBottomSheetRef<EmployerFormSheetWrapperComponent>,  
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: {employerIdPreset: number}) { }
-
-  ngOnInit() {
-    let isCreateForm = (!this.data || !this.data.employerIdPreset);
-    this.navConfig = {
-      title: !isCreateForm ? 'Rediger oppdragsgiver' : 'Registrer oppdragsgiver',
-      leftBtn: {icon: 'close', callback: this.close} as AppButton,
-      buttons: !isCreateForm ? [{icon: 'delete_forever', callback: this.confirmDelete} as AppButton] : undefined
-    }
-  }
-
-  close = () => this.bottomSheetRef.dismiss();
-
-  private confirmDelete = () => {
-    let config: ConfirmDialogConfig = {message: 'Slett oppdragsgiver?', confirmText: 'Slett'};
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
-    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteEmployer());
-  }
-
-  private deleteEmployer = () => this.store.deleteRange$([this.data.employerIdPreset]).subscribe(x => this.close());
-  
-  
+    router: Router,
+    bottomSheetRef: MatBottomSheetRef<EmployerFormSheetWrapperComponent>,  
+    @Inject(MAT_BOTTOM_SHEET_DATA) config: EmployerFormConfig) { 
+      super(router, bottomSheetRef, "oppdragsgiver", config)
+    } 
 
 }

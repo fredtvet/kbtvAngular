@@ -29,7 +29,6 @@ export class MissionDetailsComponent{
   constructor(
     private mainNavService: MainNavService,
     private store: MissionListStore,
-    private notificationService: NotificationService,
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog, 
@@ -46,19 +45,8 @@ export class MissionDetailsComponent{
 
   private openHeaderImageInput = (): void => this.imageInput?.nativeElement?.click();
   
-  private deleteMission = (id: number) =>{
-    this.onBack()
-    this.store.delete$(id).subscribe(
-      del => this.notificationService.notify({title: 'Vellykket! Oppdrag slettet.', type: Notifications.Success}));
-  }
-  
-  private openMissionForm = (idPreset: number) => this.router.navigate(['rediger'], {relativeTo: this.route, queryParams: {idPreset}});
-
-  private openDeleteMissionDialog = (id: number) => {
-    let config: ConfirmDialogConfig = {message: 'Slett oppdrag?', confirmText: 'Slett'};
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
-    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteMission(id));
-  }
+  private openMissionForm = (entityId: number) => 
+    this.router.navigate(['rediger', {config: JSON.stringify({entityId, onDeleteUri: "/oppdrag"})}], {relativeTo: this.route});
 
   private goToTimesheets = (mission: Mission) => 
     this.router.navigate(['mine-timer/liste', {
@@ -79,7 +67,6 @@ export class MissionDetailsComponent{
       {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal},
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission?.id], allowedRoles: [Roles.Leder]},
       {text: `${mission?.imageURL ? 'Oppdater' : 'Legg til'} forsidebilde`, icon: "add_photo_alternate", callback: this.openHeaderImageInput, allowedRoles: [Roles.Leder]},
-      {text: "Slett", icon: "delete_forever", callback: this.openDeleteMissionDialog, params: [mission?.id], allowedRoles: [Roles.Leder]}
     ];
  
     this.mainNavService.addConfig({detail: cfg});

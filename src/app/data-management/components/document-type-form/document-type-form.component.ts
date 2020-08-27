@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { AppDocumentType } from 'src/app/core/models';
 import { DataManagementStore } from '../../data-management.store';
+import { FormAction } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-document-type-form',
@@ -19,6 +20,6 @@ export class DocumentTypeFormComponent {
 
   onSubmit = (documentType: AppDocumentType) => {
     if(!documentType) this.finished.emit();
-    else this.store.add$(documentType).subscribe(x => this.finished.emit());
+    else this.store.add$(documentType).subscribe(x => this.finished.emit(FormAction.Create));
   }
 }

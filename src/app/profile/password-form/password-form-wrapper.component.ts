@@ -1,29 +1,26 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
+import { Router } from '@angular/router';
+import { FormSheetWrapperComponent } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-password-form-sheet-wrapper',
   template: `
   <app-simple-top-nav [config]="navConfig">
-    <app-password-form (finished)="close()">
+    <app-password-form (finished)="close($event)">
     </app-password-form>
   </app-simple-top-nav> 
   `,
   changeDetection: ChangeDetectionStrategy.OnPush 
 })
 
-export class PasswordFormWrapperComponent implements OnInit {
-  navConfig: SimpleNavConfig;
+export class PasswordFormWrapperComponent extends FormSheetWrapperComponent {
 
-  constructor(private _bottomSheetRef: MatBottomSheetRef<PasswordFormWrapperComponent>) { }
-
-  ngOnInit() {
-    this.navConfig = {
-      title: 'Oppdater passord',
-      leftBtn: {icon: 'close', callback: this.close} as AppButton
-    }
+  constructor(
+    router: Router,
+    bottomSheetRef: MatBottomSheetRef<PasswordFormWrapperComponent>
+  ) { 
+    super(router, bottomSheetRef, "passord", {customTitle: "Oppdater passord"})
   }
 
-  close = () => this._bottomSheetRef.dismiss();
 }

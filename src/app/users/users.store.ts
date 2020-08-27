@@ -7,14 +7,14 @@ import {
   ApiService,
   ArrayHelperService
 } from "src/app/core/services";
-import { BaseModelStore } from '../core/state';
+import { BaseModelStore, OnStateAdd, OnStateUpdate, OnStateDelete } from '../core/state';
 import { Roles } from '../shared-app/enums';
 import { StoreState } from './store-state';
 
 @Injectable({
   providedIn: 'any',
 })
-export class UsersStore extends BaseModelStore<StoreState>  {
+export class UsersStore extends BaseModelStore<StoreState> implements OnStateAdd, OnStateUpdate, OnStateDelete {
 
   sortedUsers$: Observable<User[]>;
 

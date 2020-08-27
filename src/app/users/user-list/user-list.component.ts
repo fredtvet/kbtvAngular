@@ -5,9 +5,9 @@ import { User } from 'src/app/core/models';
 import { MainNavService } from 'src/app/core/services';
 import { AppButton, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { ButtonTypes, Roles } from '../../shared-app/enums';
-import { NewPasswordFormWrapperComponent } from '../new-password-form/new-password-form-wrapper.component';
 import { UserFormSheetWrapperComponent } from '../user-form/user-form-sheet-wrapper.component';
 import { UsersStore } from '../users.store';
+import { NewPasswordFormSheetWrapperComponent } from '../new-password-form/new-password-form-sheet-wrapper.component';
 ;
 
 @Component({
@@ -30,11 +30,11 @@ export class UserListComponent {
     this.configureMainNav(); 
   }
 
-  openUserForm = (userNamePreset?: string) => 
-    this.bottomSheet.open(UserFormSheetWrapperComponent, {data: {userNamePreset}});
+  openUserForm = (userName?: string) => 
+    this.bottomSheet.open(UserFormSheetWrapperComponent, {data: {entityId: userName}});
 
   openNewPasswordForm = (userName?: string) => 
-    this.bottomSheet.open(NewPasswordFormWrapperComponent, {data: {userName}});
+    this.bottomSheet.open(NewPasswordFormSheetWrapperComponent, {data: {entityId: userName}});
 
   private configureMainNav(){
     let cfg = {title:  "Brukere"} as TopDefaultNavConfig;

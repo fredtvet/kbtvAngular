@@ -8,13 +8,13 @@ import {
   ArrayHelperService
 } from "src/app/core/services";
 import { MissionFilter } from 'src/app/shared/mission-filter.model';
-import { BaseModelStore } from "../../core/state";
+import { BaseModelStore, OnStateAdd, OnStateUpdate, OnStateDelete } from "../../core/state";
 import { StoreState } from './store-state';
 
 @Injectable({
   providedIn: 'any',
 })
-export class UserTimesheetFormStore extends BaseModelStore<StoreState>  {
+export class UserTimesheetFormStore extends BaseModelStore<StoreState> implements OnStateAdd, OnStateUpdate, OnStateDelete {
 
   filteredMissions$ = this.stateSlice$(["userTimesheetFormMissionCriteria", "missions"]).pipe(
       map(state => 
