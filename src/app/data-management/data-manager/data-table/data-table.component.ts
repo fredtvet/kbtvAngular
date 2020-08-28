@@ -42,15 +42,16 @@ export class DataTableComponent extends AgGridTableComponent<any> {
   protected addColDefs(object: Object): any[]{
     const colDefs = [{colId: 'checkbox', checkboxSelection: true, width: 42, pinned: 'left', lockPosition: true}];
     for(const prop in object){
-      colDefs.push(this.addColumnDef(prop))
+      const colDef = this.addColDef(prop);
+      if(colDef) colDefs.push(colDef)
     }
     return colDefs;
   }
 
-  private addColumnDef(name: string): any{
+  private addColDef(name: string): any{
     let nameLower = name.toLowerCase();
 
-    if(DataTableConfig.ignoredProperties[nameLower]) return; //Ignored properties
+    if(DataTableConfig.ignoredProperties[nameLower]) return null; //Ignored properties
 
     let def = {
       field: name,
