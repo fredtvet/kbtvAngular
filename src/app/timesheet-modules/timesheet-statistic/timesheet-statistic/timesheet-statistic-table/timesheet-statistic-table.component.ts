@@ -1,83 +1,39 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TimesheetSummary } from 'src/app/shared-app/interfaces';
 import { translations } from 'src/app/shared-app/translations';
-import { ObjectHelperService } from 'src/app/core/services';
+import { AgGridTableComponent } from 'src/app/app-ag-grid/ag-grid-table.component';
 
 @Component({
   selector: 'app-timesheet-statistic-table',
   templateUrl: './timesheet-statistic-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimesheetStatisticTableComponent {
-  @ViewChild('dataGrid') dataGrid: AgGridAngular;
+export class TimesheetStatisticTableComponent extends AgGridTableComponent<TimesheetSummary> {
 
-  @Input() timesheetSummaries: TimesheetSummary[];
+  constructor(private datePipe: DatePipe) { super() }
 
-  columnDefs: any = [];
+  protected addColDefs(object: Object): any[]{
+    const columnDefs = [];
+    if(object['year'])
+      columnDefs.push({field: 'year', headerName: translations['year'] || 'year', sortable: true});
 
-  rowData: any = [];
+    if(object['month'])
+      columnDefs.push({field: 'month',headerName: translations['month'] || 'month', sortable: true, valueFormatter: this.convertMonthIndex});
 
-  private currentSummary: TimesheetSummary;
+    if(object['week'])
+      columnDefs.push({field: 'week',headerName: translations['week'] || 'week',sortable: true});
 
-  constructor(
-    private datePipe: DatePipe, 
-    private objectHelperService: ObjectHelperService) { }
+    if(object['date'])
+      columnDefs.push({field: 'date',headerName: translations['date'] || 'date',sortable: true, valueFormatter: this.convertDate});
 
-  ngOnChanges(): void {
-    this.initNgGrid(this.timesheetSummaries)
-  }
+    columnDefs.push({field: 'fullName',headerName: translations['fullName'] || 'fullName',sortable: true});
 
-  autoSizeGrid(){
-    let cols = this.dataGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
-    this.dataGrid.columnApi.autoSizeColumns(cols);
-  }
+    columnDefs.push({field: 'confirmedHours',headerName: translations['confirmedHours'] || 'confirmedHours',sortable: true});
 
-  private initNgGrid(data: TimesheetSummary[]): void{
-    
-    if(!data || data.length === 0){ //Reset grid if no data
-      this.columnDefs = [];
-      this.rowData = [];
-      return;
-    };
+    columnDefs.push({field: 'openHours',headerName: translations['openHours'] || 'openHours',sortable: true});
 
-    if(!this.objectHelperService.hasSameObjectProps(data[0], this.currentSummary)){
-      this.columnDefs = [];
-      this.currentSummary = data[0];
-      this.addColDefs(this.currentSummary);
-    }
-
-    let totalOpenHrs = data.reduce((total, summary) => { return total + summary.openHours }, 0);
-    let totalConfirmedHrs = data.reduce((total, summary) => { return total + summary.confirmedHours }, 0);
-
-    if(this.dataGrid){
-      this.dataGrid.api.setPinnedBottomRowData([{openHours: totalOpenHrs, confirmedHours: totalConfirmedHrs, fullName: "Sum av timer", timesheets: []}]);
-    }
-
-    this.rowData = data;
-  }
-
-  private addColDefs(summary: TimesheetSummary){
-    const propertyNames = Object.getOwnPropertyNames(summary); 
-
-    if(propertyNames.includes('year'))
-      this.columnDefs.push({field: 'year', headerName: translations['year'] || 'year', sortable: true});
-
-    if(propertyNames.includes('month'))
-      this.columnDefs.push({field: 'month',headerName: translations['month'] || 'month', sortable: true, valueFormatter: this.convertMonthIndex});
-
-    if(propertyNames.includes('week'))
-      this.columnDefs.push({field: 'week',headerName: translations['week'] || 'week',sortable: true});
-
-    if(propertyNames.includes('date'))
-      this.columnDefs.push({field: 'date',headerName: translations['date'] || 'date',sortable: true, valueFormatter: this.convertDate});
-
-    this.columnDefs.push({field: 'fullName',headerName: translations['fullName'] || 'fullName',sortable: true});
-
-    this.columnDefs.push({field: 'confirmedHours',headerName: translations['confirmedHours'] || 'confirmedHours',sortable: true});
-
-    this.columnDefs.push({field: 'openHours',headerName: translations['openHours'] || 'openHours',sortable: true});
+    return columnDefs;
   }
 
   private convertMonthIndex = (params) => 

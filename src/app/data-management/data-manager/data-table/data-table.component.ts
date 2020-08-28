@@ -1,10 +1,9 @@
-import { Component, ViewChild, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
-import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
+import { AgGridTableComponent } from 'src/app/app-ag-grid/ag-grid-table.component';
 import { translations } from 'src/app/shared-app/translations';
-import { ObjectHelperService } from 'src/app/core/services';
+import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { DataTableConfig } from './data-table.config';
 
 @Component({
@@ -12,10 +11,7 @@ import { DataTableConfig } from './data-table.config';
   templateUrl: './data-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataTableComponent {
-  @ViewChild('dataGrid') dataGrid: AgGridAngular;
-
-  @Input() data: any[];
+export class DataTableComponent extends AgGridTableComponent<any> {
 
   @Output() itemEdited = new EventEmitter();
   @Output() itemsDeleted = new EventEmitter();
@@ -24,16 +20,7 @@ export class DataTableComponent {
   columnDefs: any = [];
   rowData: any = [];
 
-  private currentObject: Object;
-
-  constructor(private _dialog: MatDialog, private objectHelperService: ObjectHelperService) { }
-
-  ngOnChanges(){ this.initNgGrid(this.data); }
-
-  autoSizeGrid(){
-    let cols = this.dataGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
-    this.dataGrid.columnApi.autoSizeColumns(cols);
-  }
+  constructor(private dialog: MatDialog) { super() }
 
   editCell = (e:any) => {
     if(e.newValue !== e.oldValue){
@@ -46,34 +33,24 @@ export class DataTableComponent {
     if(nodes?.length == 0) return null;
     
     let config: ConfirmDialogConfig = {message: 'Slett ressurs(er)?', confirmText: 'Slett'};
-    const deleteDialogRef = this._dialog.open(ConfirmDialogComponent, {data: config});
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
 
     deleteDialogRef.afterClosed().pipe(filter(res => res))
       .subscribe(res =>  this.itemsDeleted.emit(nodes.map(node => node.data['id'])));
   }
 
-  private initNgGrid = (data: Object[]): void => {
-    
-    if(!data || data === null || data.length === 0){ //Reset grid if no data
-      this.columnDefs = [];
-      this.rowData = [];
-      return;
-    };
-   
-    //Add cols for properties if obj is new 
-    if(!this.objectHelperService.hasSameObjectProps(data[0], this.currentObject)){
-      this.columnDefs = [{colId: 'checkbox', checkboxSelection: true, width: 42, pinned: 'left', lockPosition: true}];
-      this.currentObject = data[0];
-      Object.keys(data[0]).forEach(name => this.addColumnDef(name));
+  protected addColDefs(object: Object): any[]{
+    const colDefs = [{colId: 'checkbox', checkboxSelection: true, width: 42, pinned: 'left', lockPosition: true}];
+    for(const prop in object){
+      colDefs.push(this.addColumnDef(prop))
     }
-
-    this.rowData = data;
+    return colDefs;
   }
 
-  private addColumnDef(name: string): void{
+  private addColumnDef(name: string): any{
     let nameLower = name.toLowerCase();
 
-    if(DataTableConfig.ignoredProperties.includes(nameLower)) return; //Ignored properties
+    if(DataTableConfig.ignoredProperties[nameLower]) return; //Ignored properties
 
     let def = {
       field: name,
@@ -84,7 +61,7 @@ export class DataTableComponent {
       lockPosition: true
     };
 
-    if(DataTableConfig.booleanProperties.includes(nameLower)){
+    if(DataTableConfig.booleanProperties[nameLower]){
       def['cellEditor'] = 'agSelectCellEditor';
       def['cellEditorParams'] = { values: ['Ja', 'Nei']}
 
@@ -100,9 +77,9 @@ export class DataTableComponent {
       }
     }
 
-    if(DataTableConfig.noEditProperties.includes(nameLower)) def['editable'] = false;
+    if(DataTableConfig.noEditProperties[nameLower]) def['editable'] = false;
 
-    if(DataTableConfig.objectProperties.includes(nameLower)){
+    if(DataTableConfig.objectProperties[nameLower]){
       def['valueGetter'] = function(params) { //Get name of object and display
         if(params.data[name])
           return params.data[name].name;
@@ -111,7 +88,7 @@ export class DataTableComponent {
 
     }
 
-    this.columnDefs.push(def);
+    return def;
   }
   
 }
