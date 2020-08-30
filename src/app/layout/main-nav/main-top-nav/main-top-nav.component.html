@@ -1,4 +1,4 @@
-<mat-toolbar class="toolbar-slim color-foreground" style="background:inherit">
+<mat-toolbar class="toolbar-slim color-foreground" style="background:inherit" [fxHide]="!searchBarHidden">
    
     <app-button *ngIf="config?.backFn else menuBtn" 
       [config]="{
@@ -28,6 +28,14 @@
 
     <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>
 
+    <app-button *ngIf="config?.searchBar"
+      [config]="{
+        callback: toggleSearchBar, 
+        type: ButtonTypes.Icon,
+        aria: 'Tilbake',
+        icon: 'search'}">
+    </app-button>
+
     <app-button *ngFor="let button of config?.buttons | transformButtons: ButtonTypes.Icon" 
       [config]="button"></app-button>
 
@@ -37,5 +45,21 @@
 
       <mat-icon>more_vert</mat-icon>
     </button>
+
+</mat-toolbar>
+
+<mat-toolbar class="toolbar-slim color-foreground fadeInDown" style="background:inherit" *ngIf="config?.searchBar" [fxHide]="searchBarHidden">
+   
+  <app-button
+    [config]="{
+      callback: toggleSearchBar, 
+      type: ButtonTypes.Icon,
+      aria: 'Tilbake',
+      icon: 'close'}">
+  </app-button>
+    
+  <input #searchInput appInputListener (inputChanged)="handleSearchFn($event);" fxFlex
+    [placeholder]="config.searchBar.placeholder"  class="mt-1 mb-1 p-2 pl-3 mr-1"
+    style="background:white;border:none;border-radius:10px;"> 
 
 </mat-toolbar>
