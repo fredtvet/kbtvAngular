@@ -1,19 +1,18 @@
-import { NgModule } from '@angular/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-
+import { NgModule } from '@angular/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { CssLoaderService } from '../core/services';
 import { LazyStyles } from '../shared-app/enums';
+
 
 @NgModule({
    imports: [
@@ -27,6 +26,7 @@ import { LazyStyles } from '../shared-app/enums';
       MatAutocompleteModule,
       ScrollingModule, 
       MatButtonToggleModule,
+      MatDialogModule,
    ],
    exports: [
       MatBadgeModule,
@@ -39,6 +39,7 @@ import { LazyStyles } from '../shared-app/enums';
       MatAutocompleteModule,
       ScrollingModule, 
       MatButtonToggleModule,
+      MatDialogModule,
    ],
 })
 

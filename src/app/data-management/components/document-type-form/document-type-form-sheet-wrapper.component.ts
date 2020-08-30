@@ -1,8 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
-import { FormSheetWrapperComponent } from 'src/app/shared/components';
 import { Router } from '@angular/router';
+import { FormSheetWrapperComponent } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-document-type-form-sheet-wrapper',

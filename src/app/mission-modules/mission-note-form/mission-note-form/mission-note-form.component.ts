@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MissionNote } from 'src/app/core/models';
-import { NotificationService } from 'src/app/core/services';
-import { Notifications } from 'src/app/shared-app/enums';
 import { MissionNoteFormStore } from '../mission-note-form.store';
 import { MissionChildFormConfig } from 'src/app/shared/interfaces';
 import { FormAction } from 'src/app/shared/enums';
+import { NotificationService, NotificationType } from 'src/app/core/services/notification';
 
 @Component({
   selector: 'app-mission-note-form',
@@ -48,7 +47,7 @@ export class MissionNoteFormComponent {
       this.store.add$(note).subscribe(n => {
         this.notificationService.notify({
           title:'Vellykket! Notat opprettet.',        
-          type: Notifications.Success
+          type: NotificationType.Success
         })
         this.finished.emit(FormAction.Create);
       });  
@@ -59,7 +58,7 @@ export class MissionNoteFormComponent {
       this.store.update$(note).subscribe(n =>{
         this.notificationService.notify({
           title:'Vellykket oppdatering!',        
-          type: Notifications.Success
+          type: NotificationType.Success
         })
         this.finished.emit(FormAction.Update);
       });

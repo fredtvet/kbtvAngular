@@ -2,9 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MissionNote } from 'src/app/core/models';
-import { MainNavService } from 'src/app/core/services';
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { RolePresets } from 'src/app/shared-app/enums';
-import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { MissionNoteListStore } from '../mission-note-list.store';
 
 @Component({

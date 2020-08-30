@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { filter } from 'rxjs/operators';
-import { MainNavService } from 'src/app/core/services';
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { GroupByPeriod } from 'src/app/shared-app/enums';
-import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared-timesheet/components/timesheet-filter/timesheet-filter-sheet-wrapper.component';
 import { TimesheetStatisticStore } from '../timesheet-statistic.store';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';

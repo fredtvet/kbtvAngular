@@ -8,11 +8,11 @@ import {
 import { MatDialog } from "@angular/material/dialog";
 import { Observable, of } from "rxjs";
 import { Employer } from 'src/app/core/models';
-import { NotificationService } from "src/app/core/services";
-import { Notifications, Roles } from "src/app/shared-app/enums";
+import { Roles } from "src/app/shared-app/enums";
 import { DataManagementStore } from '../../data-management.store';
 import { EmployerFormConfig } from '../../interfaces/employer-form-config.interface';
 import { FormAction } from 'src/app/shared/enums';
+import { NotificationService, NotificationType } from 'src/app/core/services/notification';
 
 @Component({
   selector: "app-employer-form",
@@ -57,14 +57,14 @@ export class EmployerFormComponent {
 
   private updateEmployer(employer: Employer): void {
     this.store.update$(employer).subscribe((e) => {
-      this.notificationService.notify({title: "Vellykket oppdatering!", type: Notifications.Success});
+      this.notificationService.notify({title: "Vellykket oppdatering!", type: NotificationType.Success});
       this.finished.emit(FormAction.Update);
     });
   }
 
   private createEmployer(employer: any): void {
     this.store.add$(employer).subscribe((e) => {
-      this.notificationService.notify({title: "Vellykket! Ny oppdragsgiver registrert.", type: Notifications.Success});
+      this.notificationService.notify({title: "Vellykket! Ny oppdragsgiver registrert.", type: NotificationType.Success});
       this.finished.emit(FormAction.Create);
     });
   }

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MissionNoteListComponent } from './mission-note-list/mission-note-list.component';
-import { AuthGuard } from 'src/app/core/services';
 import { Roles } from 'src/app/shared-app/enums';
 
 

@@ -6,9 +6,8 @@ import {
 } from "@angular/common/http";
 import { DeviceInfoService } from "../services/device-info.service";
 import { throwError, Observable } from "rxjs";
-import { NotificationService } from "../services/ui/notification.service";
-import { tap, switchMap, finalize, take } from 'rxjs/operators';
-import { Notifications } from 'src/app/shared-app/enums';
+import { tap, switchMap, take } from 'rxjs/operators';
+import { NotificationType, NotificationService } from '../services/notification';
 
 @Injectable()
 export class HttpIsOnlineInterceptor implements HttpInterceptor {
@@ -16,7 +15,7 @@ export class HttpIsOnlineInterceptor implements HttpInterceptor {
   constructor(
     private deviceInfoService: DeviceInfoService,
     private notificationService: NotificationService
-  ) {}
+  ) {console.log("HttpIsOnlineInterceptor");}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
       return this.deviceInfoService.isOnline$.pipe(take(1), switchMap(isOnline => {
@@ -30,7 +29,7 @@ export class HttpIsOnlineInterceptor implements HttpInterceptor {
       tap((next) => {}, (error) =>
           this.notificationService.notify({
             title: error,
-            type: Notifications.Error,
+            type: NotificationType.Error,
           }),
       )
     );

@@ -1,14 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { DateTimeService, MainNavService } from 'src/app/core/services';
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppButton, TimesheetSummary, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { filter, map, tap, switchMap, takeUntil } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { WeekFilterSheetWrapperComponent } from 'src/app/shared-timesheet/components';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
-import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
+import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
 import { GroupByPeriod } from 'src/app/shared-app/enums';
+import { TimesheetSummary } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-user-timesheet-week-list',

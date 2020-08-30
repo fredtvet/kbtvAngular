@@ -14,7 +14,7 @@ export abstract class AgGridTableComponent<TData> {
 
   constructor() { }
 
-  ngOnChanges(): void { console.log(this.data);
+  ngOnChanges(): void {
     this.initNgGrid(this.data)
   }
 

@@ -7,13 +7,8 @@ export * from './css-loader.service';
 
 export * from './persistance/persistance.store';
 
-export * from './auth/auth-guard.service';
-export * from './auth/auth.store';
-export * from './auth/no-auth-guard.service';
-
-export * from './ui/main-nav.service';
-export * from './ui/icon.service';
-export * from './ui/notification.service';
+export * from './icon.service';
+export * from './notification/notification.service';
 
 export * from './utility/date-time.service';
 export * from './utility/timesheet-summary.aggregator';

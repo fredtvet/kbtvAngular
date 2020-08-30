@@ -1,5 +1,6 @@
 @import '../variables';
 
+@include mat-dialog-theme($kbtv-client-theme); // d
 @include mat-autocomplete-theme($kbtv-client-theme); //
 @include mat-badge-theme($kbtv-client-theme); //
 @include mat-button-toggle-theme($kbtv-client-theme); //
@@ -11,6 +12,7 @@
 @include mat-tooltip-theme($kbtv-client-theme); //
 @include mat-radio-theme($kbtv-client-theme);
 @include mat-select-theme($kbtv-client-theme);
+
 
 //Customizations
 .mat-button-toggle-group{

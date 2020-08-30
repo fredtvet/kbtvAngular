@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 
 export class ArrayHelperService {
 
-  constructor() {}
+  constructor() { console.log("ArrayHelperService"); }
 
   find<T>(array: T[], value: any, identifier: string){
     if(this.isEmptyArray(array) || !value || value === null) return undefined;

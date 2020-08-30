@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { NotificationService } from 'src/app/core/services';
-import { Notifications } from 'src/app/shared-app/enums';
-import { AppButton, SimpleNavConfig } from 'src/app/shared-app/interfaces';
+import { SimpleNavConfig } from 'src/app/shared/interfaces';
+import { AppButton } from 'src/app/shared-app/interfaces';
 import { MissionImageListStore } from './mission-image-list.store';
+import { NotificationType, NotificationService } from 'src/app/core/services/notification';
 
 @Component({
   selector: 'app-mail-image-sheet',
@@ -40,7 +40,7 @@ export class MailImageSheetComponent implements OnInit {
       this.close(true);
       this._notificationService.notify({
         title:`Vellykket! ${this.data?.ids?.length} ${this.data?.ids?.length > 1 ? 'bilder' : 'bilde'} sendt`,
-        type: Notifications.Success
+        type: NotificationType.Success
       })
     });
   

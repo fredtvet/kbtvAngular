@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { AuthStore, MainNavService } from 'src/app/core/services';
-import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
+import { AuthStore } from 'src/app/core/services/auth';
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { PasswordFormWrapperComponent } from '../password-form/password-form-wrapper.component';
 import { ProfileFormWrapperComponent } from '../profile-form/profile-form-wrapper.component';
 

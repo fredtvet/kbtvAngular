@@ -9,7 +9,7 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
 export class DeviceInfoService {
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(private breakpointObserver: BreakpointObserver) { console.log("DeviceInfoService");}
 
   isOnline = navigator.onLine;
 

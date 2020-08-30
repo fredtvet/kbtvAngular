@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CssLoaderService {
 
-    constructor(@Inject(DOCUMENT) private document: Document) {}
+    constructor(@Inject(DOCUMENT) private document: Document) {console.log("CssLoaderService");}
   
     loadStyle(styleSheet: LazyStyles) {
       if (this.document.getElementById(styleSheet))  return undefined;

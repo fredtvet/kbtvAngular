@@ -1,9 +1,8 @@
 import { Component, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { SimpleNavConfig } from 'src/app/shared-app/interfaces';
 import { FormSheetWrapperComponent } from 'src/app/shared/components';
 import { Router } from '@angular/router';
-import { FormConfig } from 'src/app/shared/interfaces';
+import { FormConfig, SimpleNavConfig } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-new-password-form-sheet-wrapper',

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { combineLatest, Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
-import { ApiUrl } from 'src/app/core/api-url';
+import { ApiUrl } from 'src/app/core/api-url.enum';
 import { AppDocumentType, Employer, Mission, MissionDocument } from "src/app/core/models";
 import {
   ApiService,

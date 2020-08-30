@@ -1,12 +1,11 @@
 import { Directive, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { Subject } from 'rxjs';
-import { SubscriptionComponent } from '../components/abstracts/subscription.component';
 import { debounceTime, distinctUntilChanged, tap, takeUntil } from 'rxjs/operators';
+import { SubscriptionComponent } from '../components';
 
 @Directive({
   selector: '[appInputListener]'
 })
-
 export class InputListenerDirective extends SubscriptionComponent{
 
   @Input() debounceTime: number = 400;

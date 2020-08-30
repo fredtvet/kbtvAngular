@@ -6,7 +6,6 @@ import { AppFile } from 'src/app/shared-app/interfaces';
 
 export interface MissionDocument extends MissionChild, AppFile{  
     updatedAt: Date;
-
     documentTypeId: number;
     documentType: AppDocumentType;
 }

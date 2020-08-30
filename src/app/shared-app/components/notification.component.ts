@@ -3,7 +3,18 @@ import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-notification',
-  templateUrl: './notification.component.html',
+  template: `
+    <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="mb-1">
+      <mat-icon>{{data.icon}}</mat-icon>
+      <span *ngIf="data.title">{{ data.title }}</span>
+    </span>
+
+    <ul *ngFor="let detail of data.details">
+        <li>
+            {{ detail }}
+        </li>
+    </ul>
+  `,
   host: { '(click)': 'onClick()'},
   changeDetection: ChangeDetectionStrategy.OnPush
 })

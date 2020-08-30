@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class SorterService {
 
+    constructor(){console.log("SorterService");}
+
     sort<T>(collection: T[], prop: string, direction: "asc" | "desc" = "desc"): void {
         if(!collection || collection === null) return;
         collection.sort((a: any, b: any) => {

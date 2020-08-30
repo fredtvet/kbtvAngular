@@ -1,4 +1,4 @@
-import { StateUsers, StateMissions, StateTimesheets } from '../global.state';
+import { StateUsers, StateMissions, StateTimesheets } from 'src/app/core/state';
 
 export interface BaseTimesheetStoreState extends 
     StateUsers,

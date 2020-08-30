@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
-import { ApiUrl } from 'src/app/core/api-url';
+import { ApiUrl } from 'src/app/core/api-url.enum';
 import { MissionNote } from "src/app/core/models";
 import {
   ApiService,

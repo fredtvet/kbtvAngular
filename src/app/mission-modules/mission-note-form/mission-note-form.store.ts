@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
-import { ApiUrl } from 'src/app/core/api-url';
+import { ApiUrl } from 'src/app/core/api-url.enum';
 import { MissionNote } from "src/app/core/models";
 import {
   ApiService,
@@ -20,6 +20,7 @@ export class MissionNoteFormStore extends BaseModelStore<StoreState> implements 
     arrayHelperService: ArrayHelperService
   ) {
     super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
+    console.log("MissionNoteFormStore");
   }
 
   getNoteById$ = (id: number): Observable<MissionNote> => super._getById$("missionNotes", id, "id")

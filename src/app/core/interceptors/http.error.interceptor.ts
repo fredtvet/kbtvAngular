@@ -8,8 +8,7 @@ import {
 } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { NotificationService } from '../services/ui/notification.service';
-import { Notifications } from 'src/app/shared-app/enums';
+import { NotificationService, NotificationType } from '../services/notification';
 
 interface AppErrorResponse {
   status: number;
@@ -21,10 +20,9 @@ interface AppErrorResponse {
 }
 
 @Injectable()
-
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-  constructor(private notificationService: NotificationService) { }
+  constructor(private notificationService: NotificationService) { console.log("HttpErrorInterceptor"); }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(tap(() => {},
@@ -34,7 +32,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         this.notificationService.notify({ 
           title: error.detail || error.title || "Noe gikk feil! Vennligst prøv igjen.",  
           details: this.convertErrorsToStringArray(error.errors),
-          type: Notifications.Error
+          type: NotificationType.Error
         });
       }
     }));

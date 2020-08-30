@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { NotificationService } from 'src/app/core/services';
-import { Notifications } from 'src/app/shared-app/enums';
 import { FormAction } from 'src/app/shared/enums';
 import { FormConfig } from 'src/app/shared/interfaces';
 import { UsersStore } from '../users.store';
+import { NotificationType, NotificationService } from 'src/app/core/services/notification';
 
 @Component({
   selector: 'app-new-password-form',
@@ -30,7 +29,7 @@ export class NewPasswordFormComponent {
     this.store.updatePassord$(this.config?.entityId, result.newPassword).subscribe(x => {
       this.notificationService.notify({
         title:'Vellykket oppdatering!',        
-        type: Notifications.Success
+        type: NotificationType.Success
       })
       this.finished.emit(FormAction.Update);
     })

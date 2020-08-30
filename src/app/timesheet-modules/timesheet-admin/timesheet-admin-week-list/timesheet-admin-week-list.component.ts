@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
-import { LoadingService, MainNavService } from 'src/app/core/services';
-import { TimesheetStatus } from 'src/app/shared-app/enums';
-import { TimesheetSummary, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
+import { LoadingService } from 'src/app/core/services';
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { WeekFilterSheetWrapperComponent } from 'src/app/shared-timesheet/components/week-filter/week-filter-sheet-wrapper.component';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
+import { TimesheetSummary } from 'src/app/shared/interfaces';
+import { TimesheetStatus } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-timesheet-admin-week-list',

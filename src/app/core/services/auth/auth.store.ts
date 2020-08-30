@@ -3,17 +3,16 @@ import { Router } from '@angular/router';
 import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
 import { User } from 'src/app/core/models';
-import { AccessToken, Credentials, TokenResponse } from 'src/app/shared-app/interfaces';
-import { ApiUrl } from '../../api-url';
+import { ApiUrl } from '../../api-url.enum';
 import { BaseModelStore } from '../../state';
 import { ApiService } from '../api.service';
 import { DeviceInfoService } from '../device-info.service';
 import { ArrayHelperService } from '../utility/array-helper.service';
 import { DateTimeService } from '../utility/date-time.service';
 import { AuthStoreActions } from './auth-store-actions.enum';
-import { StoreState } from './store-state';
-import { PersistanceStore } from '../persistance/persistance.store';
-import { SyncStore } from '../sync';
+import { StoreState } from './interfaces/store-state';
+import { AccessToken, TokenResponse } from './interfaces/tokens.interface';
+import { Credentials } from './interfaces/credentials.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -31,11 +30,9 @@ export class AuthStore extends BaseModelStore<StoreState>{
     private dateTimeService: DateTimeService,
     private deviceInfoService: DeviceInfoService,
     private router: Router,
-    private persistanceStore: PersistanceStore,
-    private syncStore: SyncStore,
   ) {
     super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
-    this.persistanceStore.initialStateInitalized$.subscribe(x => { if(this.hasTokens) {this.syncStore.syncAll();}})
+    console.log("AuthStore");
   }
 
   get currentUser(): User { return this.getProperty("currentUser") }
@@ -98,9 +95,8 @@ export class AuthStore extends BaseModelStore<StoreState>{
   }
 
   private _logout(returnUrl: string = this.router.url): void{
-    this.syncStore.handleLogout();
     this._setStateVoid({currentUser: null, accessToken: null, refreshToken: null}, AuthStoreActions.Logout) // Set current user to an empty object 
-    this.router.navigate(['/login'], { queryParams: {returnUrl}})  
+    console.log(this.router);this.router.navigate(['/login'], { queryParams: {returnUrl}})  
   }
 
   private setAuth(response: TokenResponse): void {
@@ -110,7 +106,6 @@ export class AuthStore extends BaseModelStore<StoreState>{
     this.setAccessTokenExpiration(accessToken);
 
     this._setStateVoid({currentUser: response.user, accessToken, refreshToken: response.refreshToken}, AuthStoreActions.Login);
-    this.syncStore.handleLogin();
   }
   
   private setAccessTokenExpiration = (accessToken: AccessToken): void => {

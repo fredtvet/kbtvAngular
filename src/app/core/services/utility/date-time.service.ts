@@ -9,7 +9,7 @@ import { DateParams } from 'src/app/shared-app/interfaces';
 export class DateTimeService {
   private currentDate = new Date();
 
-  constructor() {
+  constructor() { console.log("DateTimeService");
     this.currentDate.setHours(0, 0, 0, 0);
   }
 

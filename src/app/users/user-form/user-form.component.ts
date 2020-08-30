@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from "@angular/core";
 import { Observable } from "rxjs";
 import { Employer, User } from "src/app/core/models";
-import { NotificationService } from "src/app/core/services";
-import { Notifications, Roles } from "src/app/shared-app/enums";
+import { Roles } from "src/app/shared-app/enums";
 import { FormAction } from 'src/app/shared/enums';
 import { FormConfig } from 'src/app/shared/interfaces';
 import { UsersStore } from '../users.store';
+import { NotificationType, NotificationService } from 'src/app/core/services/notification';
 
 @Component({
   selector: "app-user-form",
@@ -51,7 +51,7 @@ export class UserFormComponent {
     this.store.add$(user).subscribe(x => {
       this.notificationService.notify({
         title:'Vellykket! Ny bruker registrert.',        
-        type: Notifications.Success
+        type: NotificationType.Success
       })
       this.finished.emit(FormAction.Create);
     });
@@ -61,7 +61,7 @@ export class UserFormComponent {
     this.store.update$(user).subscribe(x => {
       this.notificationService.notify({
         title:'Vellykket oppdatering!',        
-        type: Notifications.Success
+        type: NotificationType.Success
       })
       this.finished.emit(FormAction.Update);
     });

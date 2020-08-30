@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
-import { NotificationService } from 'src/app/core/services';
-import { Notifications } from 'src/app/shared-app/enums';
+import { SimpleNavConfig } from 'src/app/shared/interfaces';
+import { AppButton } from 'src/app/shared-app/interfaces';
 import { MissionDocumentListStore } from './mission-document-list.store';
+import { NotificationService, NotificationType } from 'src/app/core/services/notification';
 
 @Component({
   selector: 'app-mail-document-sheet',
@@ -40,7 +40,7 @@ export class MailDocumentSheetComponent implements OnInit {
       this.close(true);
       this._notificationService.notify({
         title: `Vellykket! ${this.data.ids.length} ${this.data.ids.length > 1 ? 'dokumenter' : 'dokument'} sendt`,
-        type: Notifications.Success
+        type: NotificationType.Success
       })
     });
   

@@ -1,1 +1,0 @@
-export * from '../../../mission-modules/mission-form/interfaces/mission-commands.interface';

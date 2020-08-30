@@ -1,20 +1,18 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Observable, combineLatest } from 'rxjs';
-import { map, switchMap, tap, takeUntil } from "rxjs/operators";
-import {
-  DateTimeService,
-
-  DeviceInfoService, MainNavService, SorterService
-} from "src/app/core/services";
-import { DateParams, TopDefaultNavConfig, TimesheetCriteria, TimesheetSummary } from "src/app/shared-app/interfaces";
-import { UserTimesheetListStore } from '../user-timesheet-list.store';
-import { UserTimesheetCardDialogWrapperComponent } from '../user-timesheet-card-dialog-wrapper.component';
-import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
+import { Observable } from 'rxjs';
+import { map, takeUntil, tap } from "rxjs/operators";
+import { DateTimeService,DeviceInfoService } from "src/app/core/services";
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
+import { GroupByPeriod } from 'src/app/shared-app/enums';
+import { DateParams } from "src/app/shared-app/interfaces";
 import { WeekFilterCriteria } from 'src/app/shared-timesheet/components/week-filter/week-filter-config.interface';
-import { GroupByPeriod, TimesheetStatus } from 'src/app/shared-app/enums';
 import { TimesheetFormConfig } from 'src/app/shared-timesheet/interfaces';
+import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
+import { UserTimesheetCardDialogWrapperComponent } from '../user-timesheet-card-dialog-wrapper.component';
+import { UserTimesheetListStore } from '../user-timesheet-list.store';
+import { TimesheetSummary } from 'src/app/shared/interfaces';
 
 @Component({
   selector: "app-user-timesheet-week-view",
@@ -43,7 +41,6 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
     private deviceInfoService: DeviceInfoService,
     private dateTimeService: DateTimeService,
     private store: UserTimesheetListStore,
-    private sorterService: SorterService,
   ) { super(); this.store.addGroupBy(GroupByPeriod.Day) }
 
   ngOnInit() {

@@ -2,13 +2,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/core/models';
-import { MainNavService } from 'src/app/core/services';
-import { AppButton, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
-import { ButtonTypes, Roles } from '../../shared-app/enums';
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { UserFormSheetWrapperComponent } from '../user-form/user-form-sheet-wrapper.component';
 import { UsersStore } from '../users.store';
 import { NewPasswordFormSheetWrapperComponent } from '../new-password-form/new-password-form-sheet-wrapper.component';
-;
+import { Roles, ButtonTypes } from 'src/app/shared-app/enums';
+import { AppButton } from 'src/app/shared-app/interfaces';
 
 @Component({
   selector: 'app-user-list',

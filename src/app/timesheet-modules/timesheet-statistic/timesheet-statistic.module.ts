@@ -6,12 +6,16 @@ import { TimesheetStatisticTableComponent } from './timesheet-statistic/timeshee
 
 import { AppAgGridModule } from 'src/app/app-ag-grid/app-ag-grid.module';
 import { SharedTimesheetModule } from 'src/app/shared-timesheet/shared-timesheet.module';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
   declarations: [
     TimesheetStatisticComponent,
     TimesheetStatisticTableComponent
+  ],
+  providers:[
+    DatePipe
   ],
   imports: [
     SharedTimesheetModule,

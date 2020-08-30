@@ -4,8 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { OnStateDelete } from 'src/app/core/state';
-import { AppButton, SimpleNavConfig } from 'src/app/shared-app/interfaces';
-import { FormConfig } from 'src/app/shared/interfaces';
+import { AppButton } from 'src/app/shared-app/interfaces';
+import { FormConfig, SimpleNavConfig } from 'src/app/shared/interfaces';
 import { FormAction } from '../../enums';
 import { ConfirmDialogComponent, ConfirmDialogConfig } from '../confirm-dialog/confirm-dialog.component';
 
@@ -33,9 +33,9 @@ export abstract class FormSheetWrapperComponent implements OnInit {
 
     close(action: FormAction){
         switch(action){
-          case FormAction.Delete: this.navigateTo(this.config.onDeleteUri); break;     
-          case FormAction.Update: this.navigateTo(this.config.onUpdateUri); break;     
-          case FormAction.Create: this.navigateTo(this.config.onCreateUri); break;
+          case FormAction.Delete: this.navigateTo(this.config?.onDeleteUri); break;     
+          case FormAction.Update: this.navigateTo(this.config?.onUpdateUri); break;     
+          case FormAction.Create: this.navigateTo(this.config?.onCreateUri); break;
           default: this._bottomSheetRef.dismiss(false);
         }
     } 

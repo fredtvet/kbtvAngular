@@ -3,14 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { map, pluck, switchMap, take } from 'rxjs/operators';
 import { AuthStore } from '../services/auth/auth.store';
-import { ApiUrl } from '../api-url';
+import { ApiUrl } from '../api-url.enum';
 
 
 @Injectable()
-
 export class HttpRefreshTokenInterceptor implements HttpInterceptor {
 
-    constructor(private authStore:AuthStore) {}
+    constructor(private authStore:AuthStore) {console.log("HttpRefreshTokenInterceptor");}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {  
         if(req.responseType !== "json" || this.isLoginRequest(req)) return next.handle(req); //Dont mess with login requests

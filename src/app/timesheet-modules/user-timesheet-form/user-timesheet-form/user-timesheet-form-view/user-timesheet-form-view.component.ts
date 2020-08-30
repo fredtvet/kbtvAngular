@@ -26,7 +26,7 @@ export class UserTimesheetFormViewComponent{
 
   constructor(private _formBuilder: FormBuilder) {this.initTime.setHours(6,0,0,0);}
 
-  ngOnChanges(){
+  ngOnInit(){
     if(!this.timesheet || this.timesheet == null) this.isCreateForm = true;
     else this.timesheet.mission = this.missions?.find(x => x.id == this.timesheet.missionId);
 
@@ -86,7 +86,7 @@ export class UserTimesheetFormViewComponent{
   }
 
   private convertFormToTimesheet(formData:any){
-    let date = formData.date.toDateString();
+    let date = new Date(formData.date).toDateString();
     return {
       id: formData.id,
       missionId: formData.mission.id,

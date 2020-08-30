@@ -17,7 +17,7 @@ export class NoAuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean {
 
-    const returnUrl = route.queryParams['returnUrl'];  
+    let returnUrl = route.queryParams['returnUrl'];  
 
     if(this.authStore.hasTokens){   
       if(returnUrl) this.router.navigateByUrl(returnUrl);

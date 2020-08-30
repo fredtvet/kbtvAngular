@@ -1,6 +1,6 @@
 import { StateMissions, StateUsers, StateTimesheets } from 'src/app/core/state';
 import { GroupByPeriod } from 'src/app/shared-app/enums';
-import { TimesheetCriteria } from 'src/app/shared-app/interfaces';
+import { TimesheetCriteria } from 'src/app/shared/interfaces';
 
 export interface StoreState extends 
     StateUsers,

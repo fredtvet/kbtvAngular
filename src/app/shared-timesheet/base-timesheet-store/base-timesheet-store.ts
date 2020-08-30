@@ -1,14 +1,14 @@
 import { HttpParams } from '@angular/common/http';
-import { combineLatest, Observable, of } from 'rxjs';
-import { map, switchMap, withLatestFrom, filter, tap, take, distinctUntilChanged, shareReplay, debounceTime } from 'rxjs/operators';
-import { ApiUrl } from 'src/app/core/api-url';
+import { combineLatest, Observable } from 'rxjs';
+import { filter, map, take, tap, withLatestFrom } from 'rxjs/operators';
+import { ApiUrl } from 'src/app/core/api-url.enum';
 import { Mission, Timesheet, User } from 'src/app/core/models';
-import { ApiService, ArrayHelperService, TimesheetSummaryAggregator, DateTimeService } from 'src/app/core/services';
-import { GroupByPeriod, DateRangePresets } from 'src/app/shared-app/enums';
-import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared-app/interfaces';
+import { ApiService, ArrayHelperService, DateTimeService, TimesheetSummaryAggregator } from 'src/app/core/services';
+import { BaseModelStore } from 'src/app/core/state';
+import { DateRangePresets, GroupByPeriod } from 'src/app/shared-app/enums';
+import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared/interfaces';
 import { TimesheetFilter } from 'src/app/shared/timesheet-filter.model';
 import { BaseTimesheetStoreSettings } from './base-timesheet-store-settings.interface';
-import { BaseModelStore } from '../base-model.store';
 import { BaseTimesheetStoreState } from './base-timesheet-store-state';
 
 export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetStoreState>> extends BaseModelStore<TState>{

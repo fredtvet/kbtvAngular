@@ -3,19 +3,18 @@ import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { filter, tap } from "rxjs/operators";
-import { Mission, Timesheet } from "src/app/core/models";
-import { DateTimeService, MainNavService, LoadingService } from "src/app/core/services";
-import { TimesheetCriteria, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
+import { Timesheet } from "src/app/core/models";
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared-timesheet/components';
-import { UserTimesheetListStore } from '../user-timesheet-list.store';
 import { TimesheetFormConfig } from 'src/app/shared-timesheet/interfaces';
+import { UserTimesheetListStore } from '../user-timesheet-list.store';
+import { TimesheetCriteria } from 'src/app/shared/interfaces';
 
 @Component({
   selector: "app-user-timesheet-list",
   templateUrl: "./user-timesheet-list.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class UserTimesheetListComponent implements OnInit {
 
   timesheets$: Observable<Timesheet[]> = 
@@ -58,7 +57,7 @@ export class UserTimesheetListComponent implements OnInit {
   private onBack = () => {
     let returnUrl: string = this.route.snapshot.params.returnUrl;
     if(returnUrl) this.router.navigateByUrl(returnUrl);
-    else this.router.navigate([""]);
+    else this.router.navigate(["/hjem"]);
   }
 
   private configureMainNav = (criteria: TimesheetCriteria) => {

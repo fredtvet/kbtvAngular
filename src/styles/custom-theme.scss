@@ -18,11 +18,10 @@
 @include mat-sidenav-theme($kbtv-client-theme); // d
 @include mat-bottom-sheet-theme($kbtv-client-theme); // d
 @include mat-button-theme($kbtv-client-theme); // d
-@include mat-dialog-theme($kbtv-client-theme); // d
-@include mat-divider-theme($kbtv-client-theme); // d
 @include mat-icon-theme($kbtv-client-theme); //d
 @include mat-toolbar-theme($kbtv-client-theme); // d
-@include mat-progress-spinner-theme($kbtv-client-theme); // d
+@include mat-progress-spinner-theme($kbtv-client-theme); // d   
+@include mat-divider-theme($kbtv-client-theme); // d
 
 //Fix for bug on iOs
 .mat-drawer-container {position: unset!important;}

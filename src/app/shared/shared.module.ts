@@ -1,28 +1,26 @@
 import { NgModule } from '@angular/core';
-import { LayoutModule } from '@angular/cdk/layout';
-
-import { AngularMaterialModule } from './angular-material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { SharedAppModule } from '../shared-app/shared-app.module';
-
-import { SortByDatePipe, ArrayFromNumberPipe, ArraySlicePipe, TranslatePipe } from './pipes'
-
-import { InputListenerDirective, HttpCommandButtonDirective, AddToHomeScreenDirective } from './directives';
-
+import { AngularMaterialModule } from './angular-material.module';
 import {
   ConfirmDialogComponent,
-  MailToFormComponent,
+  ListCardComponent, MailToFormComponent,
   SelectableCardComponent,
-  SimpleTopNavComponent,
+  SimpleTopNavComponent
 } from './components';
+import { AddToHomeScreenDirective, HttpCommandButtonDirective  } from './directives';
+import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
+
+
 
 @NgModule({
   declarations: [
     ConfirmDialogComponent,
     SortByDatePipe,
-    InputListenerDirective,
     AddToHomeScreenDirective,
     ArrayFromNumberPipe,
     HttpCommandButtonDirective,
@@ -30,25 +28,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SelectableCardComponent,
     ArraySlicePipe,
     TranslatePipe,
-    SimpleTopNavComponent
+    SimpleTopNavComponent,
+    TransformButtonPipe,
+    ListCardComponent,
   ],
   imports: [
-    SharedAppModule,
-    LayoutModule,
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    GooglePlaceModule,
+    GooglePlaceModule,   
+    SharedAppModule,
   ],
   exports: [
-    SharedAppModule,
-    LayoutModule,
-    FormsModule,
+    FormsModule,    
     ReactiveFormsModule,
     AngularMaterialModule,
     GooglePlaceModule,
     ConfirmDialogComponent,
-    InputListenerDirective,
     HttpCommandButtonDirective,
     SortByDatePipe,
     TranslatePipe,
@@ -57,7 +53,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SelectableCardComponent,
     ArraySlicePipe,
     SimpleTopNavComponent,
-    AddToHomeScreenDirective
+    ListCardComponent,
+    AddToHomeScreenDirective,    
+    TransformButtonPipe,
+    SharedAppModule
   ]
 })
 export class SharedModule { }

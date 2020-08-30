@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { combineLatest, Observable } from "rxjs";
 import { filter, map, tap } from "rxjs/operators";
-import { ApiUrl } from 'src/app/core/api-url';
+import { ApiUrl } from 'src/app/core/api-url.enum';
 import { Mission, Timesheet } from "src/app/core/models";
 import {
   ApiService,
@@ -11,11 +11,11 @@ import {
   TimesheetSummaryAggregator
 } from "src/app/core/services";
 import { DateRangePresets, GroupByPeriod } from 'src/app/shared-app/enums';
-import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared-app/interfaces';
 import { WeekFilterCriteria } from 'src/app/shared-timesheet/components/week-filter/week-filter-config.interface';
 import { TimesheetFilter } from 'src/app/shared/timesheet-filter.model';
 import { BaseModelStore } from "../../core/state";
 import { StoreState } from './store-state';
+import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared/interfaces';
 
 @Injectable({
   providedIn: 'any',

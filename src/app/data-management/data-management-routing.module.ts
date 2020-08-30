@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DataManagerComponent } from './data-manager/data-manager.component';
-import { AuthGuard } from '../core/services';
 import { Roles } from '../shared-app/enums';
 
 

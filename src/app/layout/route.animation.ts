@@ -4,7 +4,7 @@ import {
   useAnimation,
 } from '@angular/animations';
 import { slideAnimation } from './slide.animation';
-import { AppPages } from '../shared-app/enums';
+import { AppPages } from 'src/app/shared-app/enums/app-pages.enum';
 
 const slideBackwardParams = {enterX: 'translateX(-100%)',leaveX: 'translateX(100%)'};
 const slideForwardParams = {enterX: 'translateX(100%)',leaveX: 'translateX(-100%)'}

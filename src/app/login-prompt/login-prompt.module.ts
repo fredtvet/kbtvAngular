@@ -18,4 +18,8 @@ import { LoginFormComponent } from './login-prompt/login-form/login-form.compone
     LoginPromptRoutingModule
   ]
 })
-export class LoginPromptModule { }
+export class LoginPromptModule { 
+  constructor(){
+    console.log("loginpromptMOdule");
+  } 
+}

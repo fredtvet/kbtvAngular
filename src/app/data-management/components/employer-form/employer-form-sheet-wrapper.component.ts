@@ -1,12 +1,8 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { MatDialog } from '@angular/material/dialog';
-import { filter } from 'rxjs/operators';
-import { AppButton, SimpleNavConfig } from 'src/app/shared-app/interfaces';
-import { ConfirmDialogComponent, ConfirmDialogConfig, FormSheetWrapperComponent } from 'src/app/shared/components';
-import { DataManagementStore } from '../../data-management.store';
-import { EmployerFormConfig } from '../../interfaces/employer-form-config.interface';
 import { Router } from '@angular/router';
+import { FormSheetWrapperComponent } from 'src/app/shared/components';
+import { EmployerFormConfig } from '../../interfaces/employer-form-config.interface';
 
 @Component({
   selector: 'app-timesheet-form-sheet-wrapper',

@@ -1,5 +1,5 @@
 import { ModelState } from './global.state';
-import { ApiUrl } from '../api-url';
+import { ApiUrl } from '../api-url.enum';
 
 export interface ModelPropertySettings { 
     apiUrl: ApiUrl, identifier: string, notPersisted?: boolean

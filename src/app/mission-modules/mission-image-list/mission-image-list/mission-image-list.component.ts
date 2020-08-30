@@ -5,14 +5,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, tap } from "rxjs/operators";
 import { MissionImage } from 'src/app/core/models';
-import { DeviceInfoService, DownloaderService, MainNavService, NotificationService } from 'src/app/core/services';
-import { Notifications, RolePresets, Roles } from 'src/app/shared-app/enums';
-import { AppButton, AppFile, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
+import { DeviceInfoService, DownloaderService } from 'src/app/core/services';
+import { RolePresets, Roles } from 'src/app/shared-app/enums';
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { ConfirmDialogComponent, ConfirmDialogConfig, SelectableListBase } from 'src/app/shared/components';
-import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MailImageSheetComponent } from '../mail-image-sheet.component';
 import { MissionImageListStore } from '../mission-image-list.store';
+import { NotificationType, NotificationService } from 'src/app/core/services/notification';
+import { AppFile,AppButton } from 'src/app/shared-app/interfaces';
 
 @Component({
   selector: "app-mission-image-list",
@@ -79,7 +80,7 @@ export class MissionImageListComponent {
     this.store.add$({missionId: this.missionId, files}).subscribe(x =>
       this.notificationService.notify({
         title: `Vellykket! ${files.length} ${files.length > 1 ? 'bilder' : 'bilde'} lastet opp.`,
-        type: Notifications.Success
+        type: NotificationType.Success
       })
     );
   }
@@ -101,7 +102,7 @@ export class MissionImageListComponent {
       this.imageList.clearSelections();
       this.notificationService.notify({
         title: `Vellykket! ${this.currentSelections.length} ${this.currentSelections.length > 1 ? 'bilder' : 'bilde'} slettet.`,        
-        type: Notifications.Success
+        type: NotificationType.Success
       })     
     })    
   }

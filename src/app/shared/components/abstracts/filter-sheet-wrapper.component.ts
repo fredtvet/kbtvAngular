@@ -1,5 +1,6 @@
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { AppButton, SimpleNavConfig } from 'src/app/shared-app/interfaces';
+import { SimpleNavConfig } from 'src/app/shared/interfaces';
+import { AppButton } from 'src/app/shared-app/interfaces';
 import { OnInit } from '@angular/core';
 
 export abstract class FilterSheetWrapperComponent implements OnInit{

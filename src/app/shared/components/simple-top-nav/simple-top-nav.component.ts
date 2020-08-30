@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { SimpleNavConfig } from 'src/app/shared-app/interfaces';
+import { SimpleNavConfig } from '../../interfaces';
 import { ButtonTypes } from 'src/app/shared-app/enums';
 
 @Component({

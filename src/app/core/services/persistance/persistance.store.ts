@@ -22,7 +22,7 @@ export class PersistanceStore extends ObservableStore<Object> {
 
     constructor() { 
         super({logStateChanges: true, trackStateHistory: true});
-    
+        console.log("PersistanceStore");
         this.initalizeInitialStateFromDb();
         this.initalizeStateFromDb();
 

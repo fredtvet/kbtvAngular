@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, UrlSegment, CanActivateChild } from '@angular/router';
-import { Notifications } from 'src/app/shared-app/enums';
-import { NotificationService } from '../ui/notification.service';
-import { AuthStore } from './auth.store';
-import { PersistanceStore } from '../persistance/persistance.store';
-import { first, map, tap } from 'rxjs/operators';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { NotificationService, NotificationType } from '../notification';
+import { PersistanceStore } from '../persistance/persistance.store';
+import { AuthStore } from './auth.store';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +26,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   canActivateChild(route: ActivatedRouteSnapshot): Observable<boolean>  {
+    console.log(route);
     return this.authCheck$(route.data['allowedRoles']);
   }
 
@@ -45,7 +45,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     }
 
     if(this.authStore.currentUser && allowedRoles && !allowedRoles.includes(this.authStore.currentUser?.role)){
-      this.notificaitonService.notify({title: 'Du mangler riktig autorisasjon for å gå inn på denne siden.', type: Notifications.Error})
+      this.notificaitonService.notify({title: 'Du mangler riktig autorisasjon for å gå inn på denne siden.', type: NotificationType.Error})
       this.router.navigate(['/hjem']);
       return false;    
     }

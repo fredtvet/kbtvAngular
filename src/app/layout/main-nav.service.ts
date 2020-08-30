@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { delay, distinctUntilChanged, map } from 'rxjs/operators';
-import { AppButton, MainNavConfig, TopDefaultNavConfig, TopDetailNavConfig } from 'src/app/shared-app/interfaces';
-import { AuthStore } from '../auth/auth.store';
-import { DeviceInfoService } from '../device-info.service';
+import { AuthStore } from '../core/services/auth/auth.store';
+import { DeviceInfoService } from '../core/services/device-info.service';
+import { MainNavConfig, TopDefaultNavConfig, TopDetailNavConfig } from './main-nav-config.interface';
+import { AppButton } from '../shared-app/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class MainNavService {
 
   private defaultConfig: MainNavConfig = {
@@ -38,7 +38,7 @@ export class MainNavService {
 
   constructor(
     private authStore: AuthStore,
-    private deviceInfoService: DeviceInfoService) { }
+    private deviceInfoService: DeviceInfoService) { console.log("MainNavService"); }
 
   get config(): MainNavConfig{
     return {...this.configSubject.value};

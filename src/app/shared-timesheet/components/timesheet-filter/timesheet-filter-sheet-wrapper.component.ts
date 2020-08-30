@@ -1,10 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { Observable } from 'rxjs';
-import { Mission, User } from 'src/app/core/models';
-import { AppButton, SimpleNavConfig, TimesheetCriteria } from 'src/app/shared-app/interfaces';
-import { TimesheetFilterConfig } from './timesheet-filter-config.interface';
 import { FilterSheetWrapperComponent } from 'src/app/shared/components';
+import { TimesheetFilterConfig } from './timesheet-filter-config.interface';
 
 @Component({
   selector: 'app-timesheet-filter-sheet-wrapper',

@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { halfwayRotate } from 'src/app/shared-app/animations';
+import { halfwayRotate } from 'src/app/shared/animations';
 import { AppButton } from '../../interfaces/app-button.interface';
 
 @Component({
@@ -18,12 +18,9 @@ export class NavItemComponent {
 
   constructor() { }
 
-  navItemClick = () => {
-    if(this.navButton.children && this.navButton.children != null && this.navButton.children.length > 0){
+  toggleChildren = () => {
+    if(this.navButton.children && this.navButton.children.length > 0){
       this.childrenShown = !this.childrenShown; //Toggle children if present
-    }
-    else if(this.navButton.routerLink && this.navButton.routerLink != null){
-      this.hasNavigated.emit(); //Alert that navigation has happen if no children to show
     }
   };
 

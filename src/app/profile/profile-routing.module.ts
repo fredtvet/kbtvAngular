@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from '../core/services';
 import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
-import { AppPages } from '../shared-app/enums';
+import { AppPages } from 'src/app/shared-app/enums/app-pages.enum';
 
 const routes: Routes = [
   {

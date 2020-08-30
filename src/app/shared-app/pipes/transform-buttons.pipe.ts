@@ -3,13 +3,20 @@ import { AppButton } from '../interfaces/app-button.interface';
 import { ButtonTypes } from '../enums/button-types.enum';
 
 @Pipe({
-  name: 'transformButton'
+  name: 'transformButtons'
 })
-export class TransformButtonPipe implements PipeTransform {
+export class TransformButtonsPipe implements PipeTransform {
 
-  transform(button: AppButton, newType: ButtonTypes): AppButton {
-    if(!button) return undefined; //No buttons no roles   
-    return {...button, type: newType};
+  transform(buttons: AppButton[], newType: ButtonTypes): AppButton[] {
+    if(!buttons) return buttons; //No buttons no roles
+
+    let result: AppButton[] = [];
+
+    for(let i = 0; i < buttons.length; i++){
+        result.push({...buttons[i], type: newType});
+    }
+    
+    return result;
   }
 
 }

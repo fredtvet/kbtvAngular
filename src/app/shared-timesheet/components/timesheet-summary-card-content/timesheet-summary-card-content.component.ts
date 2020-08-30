@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { TimesheetSummary } from 'src/app/shared-app/interfaces';
+import { TimesheetSummary } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-timesheet-summary-card-content',

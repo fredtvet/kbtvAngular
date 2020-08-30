@@ -1,15 +1,14 @@
-import { Component, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Mission } from 'src/app/core/models';
-import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
-import { NotificationService, MainNavService} from 'src/app/core/services';
-import { tap, filter } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { TopDetailNavConfig } from 'src/app/shared-app/interfaces';
-import { RolePresets, Roles, Notifications, TimesheetStatus } from 'src/app/shared-app/enums';
-import { MissionListStore } from '../mission-list.store';
+import { tap } from 'rxjs/operators';
+import { Mission } from 'src/app/core/models';
+import { MainNavService, TopDetailNavConfig } from 'src/app/layout';
+import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { MissionDetails } from '../interfaces/mission-details.interface';
+import { MissionListStore } from '../mission-list.store';
+import { TimesheetStatus } from 'src/app/shared-app/enums';
 
 @Component({
   selector: 'app-mission-details',

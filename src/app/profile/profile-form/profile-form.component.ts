@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/core/models';
-import { NotificationService } from 'src/app/core/services';
-import { Notifications } from 'src/app/shared-app/enums';
 import { ProfileStore } from '../profile.store';
 import { FormAction } from 'src/app/shared/enums';
+import { NotificationType, NotificationService } from 'src/app/core/services/notification';
 
 @Component({
   selector: 'app-profile-form',
@@ -28,7 +27,7 @@ export class ProfileFormComponent {
     this.store.updateCurrentUser$(user).subscribe(x => {
       this.notificationService.notify({
         title:'Vellykket oppdatering!',        
-        type: Notifications.Success
+        type: NotificationType.Success
       })
       this.finished.emit(FormAction.Update);
     })

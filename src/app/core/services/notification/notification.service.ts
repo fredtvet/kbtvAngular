@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Notifications } from 'src/app/shared-app/enums/notifications.enum';
-import { NotificationComponent } from 'src/app/shared-app/components';
-import { AppNotification } from 'src/app/shared-app/interfaces/app-notification.interface';
+import { AppNotification } from 'src/app/core/services/notification/app-notification.interface';
+import { NotificationComponent } from 'src/app/shared-app/components/notification.component';
+import { NotificationType } from './notification-type.enum';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class NotificationService {
 
   private queue: AppNotification[] = [];
 
   private currentNotification: AppNotification;
 
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar) {console.log("NotificationService");}
 
   notify = (notification: AppNotification) => {
     if(!this.currentNotification && this.currentNotification !== null)
@@ -37,13 +36,13 @@ export class NotificationService {
     this.currentNotification = notification;
 
     switch(notification?.type){
-      case Notifications.Success:
+      case NotificationType.Success:
         this.openSnackBar(notification.title, notification.details, 'check_circle', 2000, 'notification-success');
         break;
-      case Notifications.Error:
+      case NotificationType.Error:
         this.openSnackBar(notification.title, notification.details, 'error', 3500, 'notification-error');
         break;
-      case Notifications.Warning:
+      case NotificationType.Warning:
         this.openSnackBar(notification.title, notification.details, 'warning', 3500, 'notification-warn');
         break;
     }

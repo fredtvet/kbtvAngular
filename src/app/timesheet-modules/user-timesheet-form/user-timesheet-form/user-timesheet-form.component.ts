@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Mission, Timesheet } from "src/app/core/models";
-import { NotificationService } from 'src/app/core/services';
-import { Notifications, Roles } from 'src/app/shared-app/enums';
+import { Roles } from 'src/app/shared-app/enums';
 import { UserTimesheetFormStore } from '../user-timesheet-form.store';
 import { TimesheetFormConfig } from '../../../shared-timesheet/interfaces/timesheet-form-config.interface';
 import { FormAction } from 'src/app/shared/enums';
+import { NotificationType, NotificationService } from 'src/app/core/services/notification';
 
 @Component({
   selector: 'app-user-timesheet-form',
@@ -59,7 +59,7 @@ export class UserTimesheetFormComponent implements OnInit {
     this.store.add$(timesheet).subscribe(x => {
       this.notificationService.notify({
         title:'Time registrert!',        
-        type: Notifications.Success
+        type: NotificationType.Success
       })
       this.finished.emit(FormAction.Create);
     })
@@ -69,7 +69,7 @@ export class UserTimesheetFormComponent implements OnInit {
     this.store.update$(timesheet).subscribe(x => {
       this.notificationService.notify({
         title:'Time oppdatert!',        
-        type: Notifications.Success
+        type: NotificationType.Success
       })
       this.finished.emit(FormAction.Update);
     })

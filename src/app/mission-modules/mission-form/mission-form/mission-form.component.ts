@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Employer, MissionType } from 'src/app/core/models';
-import { NotificationService } from 'src/app/core/services';
-import { Notifications } from 'src/app/shared-app/enums';
-import { CreateMission, UpdateMission } from 'src/app/shared-app/interfaces/commands';
 import { MissionFormStore } from '../mission-form.store';
 import { MissionFormVm } from '../interfaces/mission-form-vm.interface';
 import { FormConfig } from 'src/app/shared/interfaces';
 import { FormAction } from 'src/app/shared/enums';
+import { NotificationService, NotificationType } from 'src/app/core/services/notification';
+import { CreateMission, UpdateMission } from '../interfaces/mission-commands.interface';
 
 @Component({
   selector: 'app-mission-form',
@@ -63,7 +62,7 @@ export class MissionFormComponent {
 
   private editMission(mission: UpdateMission): void{
     this.store.update$(mission).subscribe(res => {
-        this.notificationService.notify({title: 'Vellykket oppdatering!', type: Notifications.Success});
+        this.notificationService.notify({title: 'Vellykket oppdatering!', type: NotificationType.Success});
         this.finished.emit(FormAction.Update);
       })
   }

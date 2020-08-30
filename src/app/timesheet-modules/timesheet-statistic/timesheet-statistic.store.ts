@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ApiService, ArrayHelperService, TimesheetSummaryAggregator, DateTimeService } from 'src/app/core/services';
 import { StoreState } from './store-state';
-import { BaseTimesheetStoreSettings, BaseTimesheetStore } from 'src/app/core/state/base-timesheet-store';
 import { GroupByPeriod } from 'src/app/shared-app/enums';
 import { Mission } from 'src/app/core/models';
 import { MissionFilter } from 'src/app/shared/mission-filter.model';
+import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
 
 const TimesheetStatisticStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
     criteriaProp: "timesheetStatisticCriteria", 

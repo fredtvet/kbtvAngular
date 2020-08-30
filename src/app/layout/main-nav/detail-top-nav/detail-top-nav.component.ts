@@ -2,9 +2,10 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { LoadingService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
-import { TopDetailNavConfig, AppButton } from 'src/app/shared-app/interfaces';
-import { BottomSheetMenuComponent } from 'src/app/shared-app/components';
+import { TopDetailNavConfig } from '../../main-nav-config.interface';
 import { ButtonTypes } from 'src/app/shared-app/enums';
+import { AppButton } from 'src/app/shared-app/interfaces';
+import { BottomSheetMenuComponent } from 'src/app/shared-app/components';
 
 @Component({
   selector: 'app-detail-top-nav',

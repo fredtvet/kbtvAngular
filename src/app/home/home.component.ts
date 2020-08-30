@@ -2,17 +2,17 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
-import { MainNavService, SorterService } from 'src/app/core/services';
+import { SorterService } from 'src/app/core/services';
 import { Icons, RolePresets, Roles } from 'src/app/shared-app/enums';
-import { AppButton, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
-import { SyncStore } from '../core/services/sync';
+import { AppButton } from 'src/app/shared-app/interfaces';
+import { SyncStore } from 'src/app/core/services/sync';
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class HomeComponent {
   Roles = Roles;
   rolePresets = RolePresets;

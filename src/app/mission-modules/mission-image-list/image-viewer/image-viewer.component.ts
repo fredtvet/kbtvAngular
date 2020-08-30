@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { AppFile, AppButton } from 'src/app/shared-app/interfaces';
 import { BottomSheetMenuComponent } from 'src/app/shared-app/components';
+import { AppFile, AppButton } from 'src/app/shared-app/interfaces';
 
 @Component({
   selector: 'app-image-viewer',

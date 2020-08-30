@@ -1,8 +1,7 @@
 import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
-import { MainNavService } from 'src/app/core/services';
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { Observable, throwError } from 'rxjs';
-import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
-import { catchError, throttleTime, finalize } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { DataManagementStore } from '../data-management.store';
 import { StoreState } from '../interfaces/store-state';
 import { Router } from '@angular/router';

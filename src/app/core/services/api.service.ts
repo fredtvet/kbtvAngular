@@ -3,14 +3,12 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable ,  throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Mission } from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class ApiService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {console.log("ApiService");}
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     return this.http.get(`${environment.apiUrl}${path}`, { params })

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
-import { AgGridTableComponent } from 'src/app/app-ag-grid/ag-grid-table.component';
+import { AgGridTableComponent } from 'src/app/shared/components/abstracts/ag-grid-table.component';
 import { translations } from 'src/app/shared-app/translations';
 import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { DataTableConfig } from './data-table.config';

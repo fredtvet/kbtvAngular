@@ -1,9 +1,9 @@
-import { SubscriptionComponent } from 'src/app/shared/components/abstracts/subscription.component';
+import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from "@angular/core";
 import { BaseEntity } from '../../../core/models/base-entity.interface';
-import { SelectableEntity } from 'src/app/shared-app/interfaces';
+import { SelectableEntity } from 'src/app/shared/interfaces';
 
 @Injectable()
 export class SelectableListPresenter<T extends BaseEntity> extends SubscriptionComponent{

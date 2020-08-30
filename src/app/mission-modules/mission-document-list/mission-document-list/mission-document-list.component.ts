@@ -5,12 +5,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { MissionDocument } from 'src/app/core/models';
-import { DeviceInfoService, DownloaderService, MainNavService, NotificationService } from 'src/app/core/services';
-import { Notifications, Roles } from 'src/app/shared-app/enums';
-import { AppButton, TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
+import { DeviceInfoService, DownloaderService } from 'src/app/core/services';
+import { Roles } from 'src/app/shared-app/enums';
+import { AppButton } from 'src/app/shared-app/interfaces';
 import { ConfirmDialogComponent, ConfirmDialogConfig, SelectableListBase } from 'src/app/shared/components';
 import { MailDocumentSheetComponent } from '../mail-document-sheet.component';
 import { MissionDocumentListStore } from '../mission-document-list.store';
+import { NotificationType, NotificationService } from 'src/app/core/services/notification';
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 
 @Component({
   selector: 'app-mission-document-list',
@@ -79,7 +81,7 @@ export class MissionDocumentListComponent {
       this.documentList.clearSelections();
       this.notificationService.notify({
         title: `Vellykket! ${this.currentSelections.length} ${this.currentSelections.length > 1 ? 'dokumenter' : 'dokument'} slettet.`,
-        type: Notifications.Success
+        type: NotificationType.Success
       })
     });
   }

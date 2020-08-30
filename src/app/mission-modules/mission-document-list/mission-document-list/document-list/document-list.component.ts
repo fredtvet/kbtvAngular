@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MissionDocument } from 'src/app/core/models';
-import { SelectableEntity } from 'src/app/shared-app/interfaces';
+import { SelectableEntity } from 'src/app/shared/interfaces';
 import { SelectableListPresenter, SelectableListBase } from 'src/app/shared/components';
 
 @Component({

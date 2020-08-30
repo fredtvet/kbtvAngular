@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TimesheetSummary } from 'src/app/shared-app/interfaces';
+import { TimesheetSummary } from 'src/app/shared/interfaces';
 import { translations } from 'src/app/shared-app/translations';
-import { AgGridTableComponent } from 'src/app/app-ag-grid/ag-grid-table.component';
+import { AgGridTableComponent } from 'src/app/shared/components/abstracts/ag-grid-table.component';
 
 @Component({
   selector: 'app-timesheet-statistic-table',

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { DeviceInfoService, IconService, NotificationService, PersistanceStore } from './core/services';
 import { skip } from 'rxjs/operators';
-import { DeviceInfoService, IconService, NotificationService } from './core/services';
-import { Notifications } from './shared-app/enums/notifications.enum';
+import { NotificationType } from './core/services/notification';
 
 @Component({
   selector: 'app-root',
@@ -13,17 +13,17 @@ export class AppComponent {
   title = 'test-client';
 
   constructor(
-    private iconService: IconService,
-    private deviceInfoService: DeviceInfoService,
-    private notificationService: NotificationService){
-  }
+    persistanceStore: PersistanceStore,
+    deviceInfoService: DeviceInfoService,
+    iconService: IconService,
+    notificationService: NotificationService){
+    
+    iconService.registerIcons();
+    
+    deviceInfoService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
+      if(isOnline) notificationService.notify({title: 'Du er tilkoblet internett igjen!', type: NotificationType.Success})
+      else notificationService.notify({title: 'Du er nå i frakoblet modus. Det er kun mulig å lese data.', type: NotificationType.Warning})
+    });  
 
-  ngOnInit(){
-    this.iconService.registerIcons();
-
-    this.deviceInfoService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
-      if(isOnline) this.notificationService.notify({title: 'Du er tilkoblet internett igjen!', type: Notifications.Success})
-      else this.notificationService.notify({title: 'Du er nå i frakoblet modus. Det er kun mulig å lese data.', type: Notifications.Warning})
-    });   
   }
 }

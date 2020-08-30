@@ -1,11 +1,9 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable, ApplicationRef } from '@angular/core';
-import { Observable, interval, concat, Subscription, throwError } from 'rxjs';
-import { catchError, distinctUntilKeyChanged, retry, skip, tap, filter, first } from 'rxjs/operators';
-import { Notifications } from 'src/app/shared-app/enums';
+import { Observable, interval, concat, Subscription } from 'rxjs';
+import { distinctUntilKeyChanged, retry, skip, tap, first, switchMap, pluck } from 'rxjs/operators';
 import { ApiService } from '../api.service';
 import { DeviceInfoService } from '../device-info.service';
-import { NotificationService } from '../ui/notification.service';
 import { ArrayHelperService } from '../utility/array-helper.service';
 import { StoreState } from './interfaces/store-state';
 import { EntitySyncResponse, SyncResponse } from './interfaces/sync-response.interface';
@@ -13,11 +11,12 @@ import { SyncStoreConfig } from './interfaces/sync-store-config.interface';
 import { SyncStoreTimestamps } from './interfaces/sync-store-timestamps.interface';
 import { SyncStoreActions } from './sync-store-actions.enum';
 import { SyncPropertySettings } from './sync-property.settings';
-import { AuthStoreActions } from '../auth/auth-store-actions.enum';
 import { ModelStateSettings } from '../../state/model-state.settings';
 import { BaseModelStore } from '../../state/base-model.store';
 import { PersistanceStore } from '../persistance/persistance.store';
 import { User } from '../../models/user.interface';
+import { AuthStore } from '../auth/auth.store';
+import { AuthStoreActions } from '../auth/auth-store-actions.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -30,69 +29,62 @@ export class SyncStore extends BaseModelStore<StoreState>{
 
   get syncTimestamps(): SyncStoreTimestamps { return this.getProperty("syncTimestamps"); } 
 
-  private continousSyncSub: Subscription;
-
   constructor(
     apiService: ApiService,
     arrayHelperService: ArrayHelperService,
     private appRef: ApplicationRef,
     private deviceInfoService: DeviceInfoService,
-    private notificationService: NotificationService,
     private persistanceStore: PersistanceStore,
+    private authStore: AuthStore,
   ){
     super(arrayHelperService, apiService, { trackStateHistory: true,logStateChanges: true });
 
     this.initConfigObserver();
+
+    this.persistanceStore.stateInitalized$
+      .subscribe(x => this.authStore.hasTokens ? this.syncAll() : null)
+
+    this.continousSync$.subscribe();
+
+    this.property$<AuthStoreActions>("lastAction").subscribe(action => this.handleAuthActions(action))
   }
 
   syncAll() : void{
     if(!this.deviceInfoService.isOnline) return;
-
     let params = new HttpParams();
 
-    params = params.set("initialNumberOfMonths", this.syncConfig?.initialNumberOfMonths)
+    this.persistanceStore.stateInitalized$.pipe(switchMap(x => {
+      params = params.set("initialNumberOfMonths", this.syncConfig?.initialNumberOfMonths)
 
-    Object.keys(SyncPropertySettings).forEach(prop => {
-      let timestamp = this.syncTimestamps ? this.syncTimestamps[prop] : null;
-      params = params.set(SyncPropertySettings[prop]?.requestKey, timestamp ? timestamp.toString() : null);
-    })
+      Object.keys(SyncPropertySettings).forEach(prop => {
+        let timestamp = this.syncTimestamps ? this.syncTimestamps[prop] : null;
+        params = params.set(SyncPropertySettings[prop]?.requestKey, timestamp ? timestamp.toString() : null);
+      })
 
-    this.apiService
-      .get('/SyncAll', params)
-      .pipe(
-        retry(3),
-        tap(data => this.setSyncResponseState(data)),
-        catchError(err => {
-            this.notificationService.notify({title: 'Noe gikk feil med synkroniseringen!' , type: Notifications.Error})
-            return throwError(err);
-        })
-      ).subscribe();
-  }
-
-  syncIfTimePassed = (): void => {
-    const timestamp = this.getEarliestTimestamp();
-    const timeSinceLastSync = (new Date().getTime() / 1000) - timestamp;
-    if(timeSinceLastSync > this.syncConfig?.refreshTime) this.syncAll();             
+      return this.apiService
+        .get('/SyncAll', params)
+        .pipe(
+          retry(3),
+          tap(data => this.setSyncResponseState(data)),
+      );
+    })).subscribe();
   }
 
   purgeAll = () => {
-    let state = {syncTimestamps: {}};
-    Object.keys(SyncPropertySettings).forEach(prop => state[prop] = null);
-    this._setStateVoid(state, SyncStoreActions.StorePurge)
+    this.persistanceStore.stateInitalized$.subscribe(x => {
+      let state = {syncTimestamps: {}};
+      Object.keys(SyncPropertySettings).forEach(prop => state[prop] = null);
+      this._setStateVoid(state, SyncStoreActions.StorePurge)
+    })
   };
 
   updateSyncConfig = (syncConfig: SyncStoreConfig): void =>
     this._setStateVoid({syncConfig}, SyncStoreActions.UpdateSyncConfig);
 
-  handleLogout(): void{
-      this.purgeAll();
-      if(this.continousSyncSub) this.continousSyncSub.unsubscribe();
-  }
-  
-  handleLogin(): void{
-      this.syncAll();
-      if(!this.continousSyncSub) 
-        this.continousSyncSub = this.continousSync$.subscribe();
+  private syncIfTimePassed = (): void => {
+    const timestamp = this.getEarliestTimestamp();
+    const timeSinceLastSync = (new Date().getTime() / 1000) - timestamp;
+    if(timeSinceLastSync > this.syncConfig?.refreshTime) this.syncAll();             
   }
 
   private setSyncResponseState(response: SyncResponse){
@@ -121,6 +113,13 @@ export class SyncStore extends BaseModelStore<StoreState>{
   private syncCurrentUser(response: EntitySyncResponse, state: Partial<StoreState>): void{
     state.syncTimestamps.currentUser = response.timestamp; //Update given timestamp
     if(response?.entities?.length > 0) state.currentUser = response.entities[0] as User;
+  }
+
+  private handleAuthActions(action: AuthStoreActions){
+    switch(action){
+      case AuthStoreActions.Login: this.syncAll();
+      case AuthStoreActions.Logout: this.purgeAll();
+    }
   }
 
   private getEarliestTimestamp = (): number =>
@@ -152,7 +151,7 @@ export class SyncStore extends BaseModelStore<StoreState>{
 
   private get continousSync$(){
     const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
-    const continousSync$ = interval(1000*60*3).pipe(tap(x => this.syncIfTimePassed()));  
+    const continousSync$ = interval(1000*60*3).pipe(tap(x => this.authStore.hasTokens ? this.syncIfTimePassed() : null));  
     return concat(appIsStable$, continousSync$);
   }
 }

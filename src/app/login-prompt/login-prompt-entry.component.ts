@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginPromptComponent } from './login-prompt/login-prompt.component';
 
@@ -12,13 +12,13 @@ export class LoginPromptEntryComponent {
 
   constructor(
     private dialog: MatDialog,
-    private route: ActivatedRoute
-    ) {     
-    let returnUrl = this.route.snapshot.queryParams['returnUrl'];
-    this.openDialog(returnUrl);
-   }
+    private route: ActivatedRoute,
+    private router: Router
+    ) { this.openDialog() }
 
-  openDialog = (returnUrl: string) => {
+  openDialog = () => {
+    let returnUrl = this.route.snapshot.queryParams['returnUrl']
+    if(returnUrl === this.router.url.split('?')[0]) returnUrl = undefined;
     this.dialog.open(LoginPromptComponent, {
       data: {returnUrl},
       disableClose: true, 

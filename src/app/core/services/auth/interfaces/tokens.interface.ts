@@ -1,4 +1,5 @@
-import { User } from '../../core/models/user.interface';
+import { User } from 'src/app/core/models';
+
 
 export interface TokenResponse {
   accessToken: AccessToken;

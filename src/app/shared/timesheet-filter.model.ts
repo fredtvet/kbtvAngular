@@ -1,5 +1,5 @@
 import { Timesheet } from '../core/models';
-import { TimesheetCriteria } from '../shared-app/interfaces';
+import { TimesheetCriteria } from '../shared/interfaces';
 
 export class TimesheetFilter {
     constructor(public criteria: TimesheetCriteria){ }

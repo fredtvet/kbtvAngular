@@ -1,11 +1,19 @@
 <ng-container *ifRole="navButton.allowedRoles">
-    <a matRipple (click)="navItemClick()" [routerLink]="[navButton.routerLink]" [routerLinkActive]="['active']">
+    <a matRipple *ngIf="navButton.routerLink else categoryButton" 
+        (click)="alertNavigation()" [routerLink]="navButton.routerLink" [routerLinkActive]="['active']">
         <mat-icon>{{navButton.icon}}</mat-icon>
         <span class="ml-2 mr-2">{{navButton.text}}</span>
-        <mat-icon *ngIf="navButton.children && navButton.children.length > 0" [@halfwayRotate]="childrenShown">
-            expand_more
-        </mat-icon>
     </a>
+
+    <ng-template #categoryButton>
+        <a matRipple (click)="toggleChildren()">
+            <mat-icon>{{navButton.icon}}</mat-icon>
+            <span class="ml-2 mr-2">{{navButton.text}}</span>
+            <mat-icon *ngIf="navButton.children && navButton.children.length > 0" [@halfwayRotate]="childrenShown">
+                expand_more
+            </mat-icon>
+        </a>
+    </ng-template>
 
     <span class="children" *ngIf="navButton.children && navButton.children.length > 0" [fxHide]="!childrenShown">
 

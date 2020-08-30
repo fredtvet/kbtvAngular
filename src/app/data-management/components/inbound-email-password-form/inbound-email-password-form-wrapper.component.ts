@@ -1,14 +1,13 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { SimpleNavConfig, AppButton } from 'src/app/shared-app/interfaces';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { FormSheetWrapperComponent } from 'src/app/shared/components';
 import { Router } from '@angular/router';
+import { FormSheetWrapperComponent } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-inbound-email-password-form-wrapper-component',
   template: `
   <app-simple-top-nav [config]="navConfig">
-    <app-inbound-email-password-form (finished)="close()">
+    <app-inbound-email-password-form (finished)="close($event)">
     </app-inbound-email-password-form>
   </app-simple-top-nav> 
   `,
@@ -22,5 +21,5 @@ export class InboundEmailPasswordFormWrapperComponent extends FormSheetWrapperCo
     ) {
       super(router, bottomSheetRef, "epostpassord")
   }
-  
+
 }

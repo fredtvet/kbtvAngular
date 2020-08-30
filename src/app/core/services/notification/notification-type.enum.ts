@@ -1,4 +1,4 @@
-export enum Notifications {
+export enum NotificationType {
   Success,
   Warning,
   Error

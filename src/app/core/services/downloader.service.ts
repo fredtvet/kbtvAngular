@@ -1,14 +1,12 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class DownloaderService {
 
   private link: HTMLAnchorElement;
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
+  constructor(@Inject(DOCUMENT) private document: Document) {console.log("DownloaderService");
     const body = this.document.getElementsByTagName('body')[0];
     this.link = this.document.createElement('a'); 
     this.link.style.display = 'none';

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { ApiUrl } from 'src/app/core/api-url';
+import { ApiUrl } from 'src/app/core/api-url.enum';
 import { Timesheet, User } from 'src/app/core/models';
 import { ApiService, ArrayHelperService, DateTimeService, TimesheetSummaryAggregator } from 'src/app/core/services';
-import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/core/state/base-timesheet-store';
-import { DateRangePresets, GroupByPeriod, TimesheetStatus } from 'src/app/shared-app/enums';
+import { DateRangePresets, GroupByPeriod } from 'src/app/shared-app/enums';
 import { WeekFilterCriteria } from 'src/app/shared-timesheet/components/week-filter/week-filter-config.interface';
 import { StoreState } from './store-state';
+import { BaseTimesheetStoreSettings, BaseTimesheetStore } from 'src/app/shared-timesheet/base-timesheet-store';
+import { TimesheetStatus } from 'src/app/shared-app/enums';
 
 const TimesheetAdminStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
     criteriaProp: "timesheetAdminCriteria", 

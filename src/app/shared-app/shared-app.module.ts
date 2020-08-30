@@ -1,81 +1,73 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ImageErrorReloaderDirective } from './directives/image-error-reloader.directive';
-import { ListCardComponent, BottomSheetMenuComponent, PageNotFoundComponent, NotificationComponent, AppButtonComponent } from './components';
+import { PageNotFoundComponent } from './components/page-not-found.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BottomSheetMenuComponent, AppButtonComponent, NavItemComponent, NotificationComponent } from './components';
+import { ImageErrorReloaderDirective, IfRoleDirective, InputListenerDirective } from './directives';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
-import { IfRoleDirective } from './directives';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatDividerModule } from '@angular/material/divider';
+import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { NavItemComponent } from './components/nav-item/nav-item.component';
-import { ReverseArrayPipe, CheckRolesInButtonsPipe, TransformButtonsPipe, TransformButtonPipe } from './pipes';
-
-
+import { CheckRolesInButtonsPipe, ReverseArrayPipe, TransformButtonsPipe } from './pipes';
 
 @NgModule({
   declarations: [
-    AppButtonComponent,
+    PageNotFoundComponent,
+    BottomSheetMenuComponent,   
+    AppButtonComponent,  
+    NavItemComponent,
     ImageErrorReloaderDirective,
+    IfRoleDirective,
     CheckRolesInButtonsPipe,
     ReverseArrayPipe,
     TransformButtonsPipe,
-    TransformButtonPipe,
-    BottomSheetMenuComponent,
-    ListCardComponent,
-    IfRoleDirective,
-    PageNotFoundComponent,
+    InputListenerDirective,
     NotificationComponent,
-    NavItemComponent,
   ],
   imports: [
     RouterModule,
-    CommonModule,
+    CommonModule, 
+    FlexLayoutModule,
+    MatSnackBarModule,      
+    MatToolbarModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatRippleModule,
+    MatBottomSheetModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+  ],
+  exports: [
+    RouterModule,
+    CommonModule, 
+    FlexLayoutModule,
+    MatSnackBarModule,   
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
     MatRippleModule,
-    MatBottomSheetModule,
-    MatSnackBarModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
     MatDividerModule,
-    FlexLayoutModule
-  ],
-  exports: [
-    CommonModule,
-    RouterModule,
-    FlexLayoutModule,
-    MatToolbarModule, //
-    MatSidenavModule, //
-    MatRippleModule, //
-    MatDividerModule, //
-    MatBottomSheetModule, //
-    MatButtonModule, //
-    MatIconModule, //
-    MatSnackBarModule, //
-    MatDialogModule,
-    MatProgressSpinnerModule, //
-    ImageErrorReloaderDirective,
-    CheckRolesInButtonsPipe,
-    TransformButtonsPipe,
-    TransformButtonPipe,
-    ReverseArrayPipe,
-    BottomSheetMenuComponent,
-    ListCardComponent,
-    IfRoleDirective,
+    MatBottomSheetModule,
+    MatIconModule,
+    MatProgressSpinnerModule,  
     PageNotFoundComponent,
-    NotificationComponent,
+    BottomSheetMenuComponent,   
+    AppButtonComponent,  
     NavItemComponent,
-    AppButtonComponent,
+    ImageErrorReloaderDirective,
+    IfRoleDirective,
+    CheckRolesInButtonsPipe,
+    ReverseArrayPipe,
+    TransformButtonsPipe,
+    NotificationComponent,
+    InputListenerDirective,
   ]
 })
-export class SharedAppModule { }
+export class SharedAppModule {}
