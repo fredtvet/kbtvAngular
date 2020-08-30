@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-list-card',
@@ -6,14 +6,11 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class ListCardComponent implements OnInit {
+export class ListCardComponent {
 
   @Input() config: ListCardConfig;
   
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }
 

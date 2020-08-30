@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MainNavService } from 'src/app/core/services';
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { Roles } from 'src/app/shared-app/enums';
-import { TopDefaultNavConfig } from 'src/app/shared-app/interfaces';
 import { MissionListStore } from '../mission-list.store';
 import { MissionFilterCriteria } from '../interfaces/mission-filter-criteria.interface';
 import { MissionFilterSheetWrapperComponent } from '../mission-filter/mission-filter-sheet-wrapper.component';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mission-list',
@@ -17,7 +17,7 @@ import { MissionFilterSheetWrapperComponent } from '../mission-filter/mission-fi
 export class MissionListComponent{
   Roles = Roles;
 
-  filteredAndSortedMissions$ = this.store.filteredAndSortedMissions$
+  filteredMissions$ = this.store.filteredMissions$;
 
   constructor(
     private mainNavService: MainNavService,
@@ -25,25 +25,11 @@ export class MissionListComponent{
     private store: MissionListStore,
     private router: Router,
     private route: ActivatedRoute,) { 
-      this.configureMainNav(); 
+      this.configureMainNav()
     }
 
-  searchMissions = (searchString: string, currFilter: MissionFilterCriteria) => {
-    currFilter.searchString = searchString;
-    this.store.addCriteria(currFilter)
-  }
-
-  private toggleHistoricOrder = () => {
-    let sortByDate = this.store.getProperty<"lastVisited" | "updatedAt">("missionSortByDate");
-    sortByDate = (sortByDate === "lastVisited") ? "updatedAt" : "lastVisited";
-    this.store.addSortByDate(sortByDate);
-
-    let color = "color-background";
-    if(sortByDate === "lastVisited") color = "color-accent";
-    let cfg = this.mainNavService.topDefaultNavConfig;
-    cfg.buttons = [...cfg.buttons];
-    cfg.buttons[0].colorClass = color;
-    this.mainNavService.addConfig({default: cfg})
+  searchMissions = (searchString: string) => {
+    this.store.addCriteria({...this.store.criteria, searchString})
   }
 
   private openMissionForm = () => 
@@ -55,10 +41,12 @@ export class MissionListComponent{
   private configureMainNav(){
     let cfg = {title:  "Oppdrag"} as TopDefaultNavConfig;
  
-    cfg.buttons = [
-      {icon: "history", colorClass: "color-background",aria: 'Historisk visning',callback: this.toggleHistoricOrder},     
-      {icon: 'filter_list', colorClass: 'color-accent', callback: this.openMissionFilter}
-    ];
+    cfg.buttons = [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openMissionFilter}];
+
+    cfg.searchBar = {
+      callback: this.searchMissions, 
+      placeholder: "Søk med adresse eller id"
+    }
 
     let fabs = [
       {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openMissionForm, allowedRoles: [Roles.Leder, Roles.Mellomleder]}

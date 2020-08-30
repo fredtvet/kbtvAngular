@@ -1,7 +1,6 @@
- <app-mission-list-view *ngIf="filteredAndSortedMissions$ | async; let filteredAndSortedMissions"
-  [missions]="filteredAndSortedMissions?.missions" 
-  [searchInput]="filteredAndSortedMissions?.criteria?.searchString"
-  (search)="searchMissions($event, filteredAndSortedMissions.criteria)">
+ <app-mission-list-view *ngIf="filteredMissions$ | async; let filteredMissions"
+  [missions]="filteredMissions?.missions" 
+  (search)="searchMissions($event)">
 </app-mission-list-view>
 
 <router-outlet></router-outlet>

@@ -12,7 +12,7 @@ import { MissionFilter } from "./mission.filter";
 import { MissionFilterCriteria } from './interfaces/mission-filter-criteria.interface';
 import { MissionDetails } from './interfaces/mission-details.interface';
 import { StoreState } from './interfaces/store-state';
-import { ApiUrl } from 'src/app/core/api-url';
+import { ApiUrl } from 'src/app/core/api-url.enum';
 
 @Injectable({
   providedIn: 'any',
@@ -32,22 +32,13 @@ export class MissionListStore extends BaseModelStore<StoreState>  {
         }})
       );
 
-  filteredAndSortedMissions$: Observable<{criteria: MissionFilterCriteria;sortBy: string; missions: Mission[]}> = 
-    combineLatest(this.filteredMissions$, this.property$<string>("missionSortByDate"))
-      .pipe(
-        map(([filtered, sortBy]) => {
-        this.sorterService.sort(filtered.missions, sortBy);
-        return {
-            missions: filtered.missions,
-            criteria: filtered.criteria,
-            sortBy,
-        }})
-      );
+  get criteria(): MissionFilterCriteria {
+    return this.getProperty("missionCriteria");
+  }
 
   constructor(
     apiService: ApiService,
-    arrayHelperService: ArrayHelperService,
-    private sorterService: SorterService
+    arrayHelperService: ArrayHelperService
   ) {
     super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
     this.initState();
