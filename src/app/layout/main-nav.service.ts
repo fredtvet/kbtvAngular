@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { delay, distinctUntilChanged, map } from 'rxjs/operators';
+import { delay, distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { AuthStore } from '../core/services/auth/auth.store';
 import { DeviceInfoService } from '../core/services/device-info.service';
 import { MainNavConfig, TopDefaultNavConfig, TopDetailNavConfig } from './main-nav-config.interface';
@@ -33,7 +33,7 @@ export class MainNavService {
         cfg.isXs = isXs;
         cfg.currentUser = currentUser;
         return cfg;
-      })
+      }),tap(console.log)
     );
 
   constructor(

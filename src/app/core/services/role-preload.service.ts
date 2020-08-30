@@ -50,7 +50,6 @@ export class RolePreloadService implements PreloadingStrategy {
         mergeMap(options => {
           const shouldPreload = this.preloadCheck(route, options);
           if(!shouldPreload) return EMPTY;
-          console.log(route, options);
           return timer(2000).pipe(switchMap(x => load()))
         })
       );

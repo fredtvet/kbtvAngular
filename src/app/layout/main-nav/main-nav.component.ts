@@ -32,5 +32,5 @@ export class MainNavComponent {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['page'];
   }
 
-  trackByFab = (index: number, fab: AppButton) => fab.icon;
+  trackByFab = (index: number, fab: AppButton) => fab.callback.prototype.constructor;
 }
