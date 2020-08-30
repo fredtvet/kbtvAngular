@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged, shareReplay, tap } from 'rxjs/operators';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import { distinctUntilChanged, shareReplay, tap } from 'rxjs/operators';
 export class LoadingService {
 
   private commandLoadingSubject = new BehaviorSubject<boolean>(false);
-  commandLoading$ = this.commandLoadingSubject.asObservable().pipe(distinctUntilChanged(), tap(console.log));
+  commandLoading$ = this.commandLoadingSubject.asObservable().pipe(distinctUntilChanged());
 
   private queryLoadingSubject = new BehaviorSubject<boolean>(false);
   queryLoading$ = this.queryLoadingSubject.asObservable().pipe(distinctUntilChanged());

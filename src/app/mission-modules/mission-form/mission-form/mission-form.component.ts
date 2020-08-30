@@ -66,6 +66,5 @@ export class MissionFormComponent {
         this.finished.emit(FormAction.Update);
       })
   }
- 
 
 }

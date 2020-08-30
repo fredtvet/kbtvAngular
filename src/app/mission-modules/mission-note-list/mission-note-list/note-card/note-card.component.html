@@ -2,6 +2,7 @@
     class="app-card m-1 p-2 mat-elevation-z2 fadeIn" *ngIf="note">
 
     <ng-container *ngIf="note.title || note.pinned">
+
         <span class="mat-h2 w-100" fxLayout="row" fxLayoutAlign="space-between center">
             {{ note.title  }}
             <span class="ml-auto" *ngIf="note.pinned" fxLayout="column" fxLayoutAlign="center center">
@@ -12,14 +13,18 @@
 
     </ng-container>
 
-    <span>
+    <span class="mt-1">
         {{ note.content }}
     </span>
+
     <mat-divider class="w-100 mb-0"></mat-divider>
+
     <span class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
+
         <span>
             {{ note.createdAt | date: 'dd.MMM' }} av {{ note.createdBy || "Anonym" }}
         </span>
+
         <ng-container *ifRole="RolePresets.Authority">
 
             <button (click)="editNote()" mat-icon-button color="primary" aria-label="Rediger notat">
@@ -27,6 +32,7 @@
             </button>
 
         </ng-container>
+
     </span>
 
 </div>

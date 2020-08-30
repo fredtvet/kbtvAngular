@@ -15,6 +15,7 @@ export class HttpLoadingInterceptor implements HttpInterceptor {
     constructor(private loadingService: LoadingService) { console.log("HttpLoadingInterceptor");}
 
     intercept(request: HttpRequest<any>, next: HttpHandler) {
+      console.log(request);
       if(request.method === "GET"){
         this.totalQueryRequests++;
         this.loadingService.setQueryLoading(true);
