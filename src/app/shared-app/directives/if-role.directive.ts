@@ -15,16 +15,11 @@ export class IfRoleDirective {
   }
 
   @Input()
-  set ifRole(roles: string[]) {
-    this.authStore.currentUser$
-    .pipe(skipWhile(user => !user?.role),take(1))
-    .subscribe(user =>{
-      if(!roles || roles.length == 0 || roles.includes(user.role)) {
-        this.viewContainer.createEmbeddedView(this.templateRef);
-      } else {
-        this.viewContainer.clear();
-      }
-    });
+  set ifRole(roles: string[]) {   
+    if(!roles || roles.length == 0 || roles.includes(this.authStore.currentUser.role)) 
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    else 
+      this.viewContainer.clear();
   }
 
 
