@@ -2,13 +2,12 @@
 
   <div fxLayout="row" fxLayoutGap="8px" class="mat-subheading-2 mb-2">
     <a href="tel:{{ details.mission?.phoneNumber }}" class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50"
-      matRipple [routerLink]="['/oppdrag']">
+      matRipple>
       <mat-icon class="scale-150 mb-1">phone</mat-icon><br />
       <span>{{ details.mission?.phoneNumber || 'N/A' }} </span>
     </a>
     <a href="https://www.google.com/maps/dir/?api=1&destination={{ details.mission?.address }}&travelmode=driving"
-      target="_blank" class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50" matRipple
-      [routerLink]="['/mine-timer']">
+      target="_blank" class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50" matRipple>
       <mat-icon class="scale-150">directions_car</mat-icon><br />
       <span>Veibeskrivelse</span>
     </a>
