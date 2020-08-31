@@ -3,10 +3,16 @@
     <p *ngIf="!missions || missions.length == 0" class="m-2">Fant ingen oppdrag</p>
 
     <cdk-virtual-scroll-viewport itemSize="60" maxBufferPx="800" minBufferPx="800" fxFlex>
-        <app-list-card *cdkVirtualFor="let mission of missions; trackBy: trackByFn;" 
-            [config]="{startIcon: mission.syncing ? 'chevron_right' : 'home_work', endIcon: mission.finished ? 'check':'chevron_right', panelClass: 'mt-1'}" 
-            [routerLink]="['/oppdrag', mission.id, 'detaljer']">{{'(' + mission.id + ') ' + mission.address}}
-        </app-list-card>
+        <ng-container *cdkVirtualFor="let mission of missions; trackBy: trackByFn;">
+            <app-list-card *appSyncing="mission.syncing"
+                [config]="{
+                    startIcon: 'home_work', panelClass: 'mt-1',
+                    endIcon: mission.finished ? 'check':'chevron_right'                
+                }" 
+                [routerLink]="['/oppdrag', mission.id, 'detaljer']">
+                {{'(' + (mission.id > 0 ?  mission.id : 0 ) + ') ' + mission.address}}
+            </app-list-card>
+        </ng-container>  
     </cdk-virtual-scroll-viewport>
 
 </div>
