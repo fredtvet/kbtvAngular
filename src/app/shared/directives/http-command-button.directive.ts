@@ -17,7 +17,7 @@ export class HttpCommandButtonDirective {
     private loadingService: LoadingService,
     elementRef: ElementRef) {
 
-    this.loadingSub = this.loadingService.commandLoading$.subscribe(loading => { console.log(loading);
+    this.loadingSub = this.loadingService.commandLoading$.subscribe(loading => {
       if(loading && !this.inLoadingState) 
         this.setLoadingState(elementRef.nativeElement);
       else if(this.inLoadingState) 

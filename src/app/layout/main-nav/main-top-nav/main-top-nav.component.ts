@@ -1,11 +1,11 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef, ViewChild  } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { LoadingService } from 'src/app/core/services';
 import { Observable } from 'rxjs';
-import { TopDefaultNavConfig } from '../../main-nav-config.interface';
+import { LoadingService } from 'src/app/core/services';
+import { BottomSheetMenuComponent } from 'src/app/shared-app/components';
 import { ButtonTypes } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces';
-import { BottomSheetMenuComponent } from 'src/app/shared-app/components';
+import { TopDefaultNavConfig } from '../../main-nav-config.interface';
 
 @Component({
   selector: 'app-main-top-nav',
@@ -14,6 +14,7 @@ import { BottomSheetMenuComponent } from 'src/app/shared-app/components';
 })
 export class MainTopNavComponent {
   @ViewChild('searchInput') searchInput: ElementRef;
+  @ViewChild('navBar', {read: ElementRef}) navBar: ElementRef;
 
   ButtonTypes = ButtonTypes;
   @Input() config: TopDefaultNavConfig;
@@ -26,7 +27,7 @@ export class MainTopNavComponent {
 
   constructor(
     private _bottomSheet: MatBottomSheet,
-    private loadingService: LoadingService) { }
+    private loadingService: LoadingService) {}
 
   onMenuButtonClick = () => this.menuBtnClicked.emit();
   
@@ -40,7 +41,7 @@ export class MainTopNavComponent {
   handleSearchFn = (criteria: string) => this.config.searchBar.callback(criteria);
 
   private resetSearch(){
-    this.handleSearchFn(null); 
+    if(this.searchInput.nativeElement.value) this.handleSearchFn(null); 
     this.searchInput.nativeElement.value = "";
   }
 }

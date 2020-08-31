@@ -1,7 +1,7 @@
-<mat-toolbar class="toolbar-slim color-foreground" style="background:inherit" [fxHide]="!searchBarHidden">
-   
-    <app-button *ngIf="config?.backFn else menuBtn" 
-      [config]="{
+<mat-toolbar #navBar class="toolbar-slim bg-primary mat-elevation-z4 color-foreground">
+
+  <ng-container *ngIf="searchBarHidden else searchBarContent">
+    <app-button *ngIf="config?.backFn else menuBtn" [config]="{
         callback: config.backFn, 
         params: config.backFnParams,
         type: ButtonTypes.Icon,
@@ -9,57 +9,53 @@
         icon: 'chevron_left',
         iconSizeClass: 'scale-150'}">
     </app-button>
-    
+
     <ng-template #menuBtn>
-      <button mat-icon-button aria-label="Toggle sidenav" (click)="onMenuButtonClick()"
-        fxHide fxShow.xs>
+      <button mat-icon-button aria-label="Toggle sidenav" (click)="onMenuButtonClick()" fxHide fxShow.xs>
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
     </ng-template>
-      
+
     <span class="mr-auto">
       <ng-container>
-        <span *ngIf="!config?.backFn else noLinkTitle" class="ml-1" [routerLink]="['/hjem']">{{ config?.title || "Hjem" }}</span>
+        <span *ngIf="!config?.backFn else noLinkTitle" class="ml-1"
+          [routerLink]="['/hjem']">{{ config?.title || "Hjem" }}</span>
         <ng-template #noLinkTitle><span class="ml-1">{{ config.title }}</span></ng-template>
       </ng-container>
       <mat-icon *ngIf="config?.subIcon" class="scale-75">{{ config.subIcon }}</mat-icon>
-      <span class="ml-1 mat-caption" >{{ config?.subTitle }}</span>
+      <span class="ml-1 mat-caption">{{ config?.subTitle }}</span>
     </span>
 
     <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>
 
-    <app-button *ngIf="config?.searchBar"
-      [config]="{
+    <app-button *ngIf="config?.searchBar" [config]="{
         callback: toggleSearchBar, 
         type: ButtonTypes.Icon,
         aria: 'Tilbake',
         icon: 'search'}">
     </app-button>
 
-    <app-button *ngFor="let button of config?.buttons | transformButtons: ButtonTypes.Icon" 
-      [config]="button"></app-button>
+    <app-button *ngFor="let button of config?.buttons | transformButtons: ButtonTypes.Icon" [config]="button">
+    </app-button>
 
-    <button mat-icon-button 
-      *ngIf="(config?.bottomSheetButtons | checkRolesInButtons : currentUserRole)" 
+    <button mat-icon-button *ngIf="(config?.bottomSheetButtons | checkRolesInButtons : currentUserRole)"
       (click)="openBottomSheet(config.bottomSheetButtons)">
 
       <mat-icon>more_vert</mat-icon>
     </button>
+  </ng-container>
 
 </mat-toolbar>
 
-<mat-toolbar class="toolbar-slim color-foreground fadeInDown" style="background:inherit" *ngIf="config?.searchBar" [fxHide]="searchBarHidden">
-   
-  <app-button
-    [config]="{
+<ng-template #searchBarContent>
+    <app-button [config]="{
       callback: toggleSearchBar, 
       type: ButtonTypes.Icon,
       aria: 'Tilbake',
       icon: 'close'}">
-  </app-button>
-    
-  <input #searchInput appInputListener (inputChanged)="handleSearchFn($event);" fxFlex
-    [placeholder]="config.searchBar.placeholder"  class="mt-1 mb-1 p-2 pl-3 mr-1"
-    style="background:white;border:none;border-radius:10px;"> 
+    </app-button>
 
-</mat-toolbar>
+    <input #searchInput appInputListener (inputChanged)="handleSearchFn($event);" fxFlex
+      [placeholder]="config.searchBar.placeholder" class="mt-1 mb-1 p-2 pl-3 mr-1"
+      style="background:white;border:none;border-radius:10px;">
+</ng-template>

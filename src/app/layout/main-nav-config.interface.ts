@@ -17,8 +17,6 @@ export interface TopDefaultNavConfig extends TopNavActions{
     subIcon?: string;
 
     searchBar?: SearchBarConfig;
-
-    elevationDisabled?: boolean;
 }
 
 export interface TopDetailNavConfig extends TopNavActions{   

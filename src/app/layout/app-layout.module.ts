@@ -18,8 +18,7 @@ import { SharedAppModule } from '../shared-app/shared-app.module';
     SharedAppModule
   ],
   exports: [ 
-    MainNavComponent,
-    SharedAppModule
+    MainNavComponent
   ]
 })
 export class AppLayoutModule { 

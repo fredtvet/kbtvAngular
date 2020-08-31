@@ -12,11 +12,6 @@ import {
 import { AddToHomeScreenDirective, HttpCommandButtonDirective  } from './directives';
 import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 
-
-
-
-
-
 @NgModule({
   declarations: [
     ConfirmDialogComponent,
@@ -37,7 +32,7 @@ import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPip
     ReactiveFormsModule,
     AngularMaterialModule,
     GooglePlaceModule,   
-    SharedAppModule,
+    SharedAppModule
   ],
   exports: [
     FormsModule,    

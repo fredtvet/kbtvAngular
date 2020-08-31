@@ -30,11 +30,7 @@ export class ProfileComponent {
   logout = () => this.authStore.logout();
 
   private configureMainNav(){
-    let cfg = {
-      title:  "Profil",
-      elevationDisabled: false
-    } as TopDefaultNavConfig;
-    
+    let cfg = {title:  "Profil"} as TopDefaultNavConfig;
     this.mainNavService.addConfig({default: cfg});
   }
 }

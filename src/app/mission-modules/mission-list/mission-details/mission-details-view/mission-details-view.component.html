@@ -18,11 +18,13 @@
     [routerLink]="['/oppdrag', details.mission?.id, 'bilder']">
     <span [matBadge]="details.imageCount" matBadgeOverlap="false" matBadgeColor="accent">Bilder</span>
   </app-list-card>
-  <app-list-card [config]="{startIcon:'folder', ellipsisDisabled: true}" 
+
+  <app-list-card *ifRole="RolePresets.Internal" [config]="{startIcon:'folder', ellipsisDisabled: true}" 
     [routerLink]="['/oppdrag', details.mission?.id, 'dokumenter']">
     <span [matBadge]="details.documentCount" matBadgeOverlap="false" matBadgeColor="accent">Dokumenter</span>
   </app-list-card>
-  <app-list-card [config]="{startIcon:'rate_review', ellipsisDisabled: true}" 
+
+  <app-list-card *ifRole="RolePresets.Internal" [config]="{startIcon:'rate_review', ellipsisDisabled: true}" 
     [routerLink]="['/oppdrag', details.mission?.id, 'notater']">
     <span [matBadge]="details.noteCount" matBadgeOverlap="false" matBadgeColor="accent">Notater</span>
   </app-list-card>

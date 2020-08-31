@@ -45,8 +45,7 @@ export class SettingsComponent {
   private configureMainNav(){
     let cfg = {
       title:  "Innstillinger",
-      backFn: this.onBack,
-      elevationDisabled: false
+      backFn: this.onBack
     } as TopDefaultNavConfig;
     
     this.mainNavService.addConfig({default: cfg});

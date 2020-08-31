@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Roles } from 'src/app/shared-app/enums';
+import { RolePresets } from 'src/app/shared-app/enums';
 import { MissionDetails } from '../../interfaces/mission-details.interface';
 
 @Component({
@@ -9,7 +9,7 @@ import { MissionDetails } from '../../interfaces/mission-details.interface';
 })
 export class MissionDetailsViewComponent {
 
-  public Roles = Roles;
+  RolePresets = RolePresets;
 
   @Input() details: MissionDetails;
 

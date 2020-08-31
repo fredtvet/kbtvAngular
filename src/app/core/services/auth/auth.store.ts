@@ -96,7 +96,7 @@ export class AuthStore extends BaseModelStore<StoreState>{
 
   private _logout(returnUrl: string = this.router.url): void{
     this._setStateVoid({currentUser: null, accessToken: null, refreshToken: null}, AuthStoreActions.Logout) // Set current user to an empty object 
-    console.log(this.router);this.router.navigate(['/login'], { queryParams: {returnUrl}})  
+    this.router.navigate(['/login'], { queryParams: {returnUrl}})  
   }
 
   private setAuth(response: TokenResponse): void {

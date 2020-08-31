@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RolePreloadService } from './core/services';
 import { AppPages } from './shared-app/enums/app-pages.enum';
 import { PageNotFoundComponent } from './shared-app/components/page-not-found.component';
 import { AuthGuard, NoAuthGuard } from './core/services/auth';
 import { MainNavComponent } from './layout/main-nav/main-nav.component';
 import { RolePresets } from './shared-app/enums';
+import { RolePreloadService } from './core/services';
 
 const routes: Routes = [
   {
     path: '', component: MainNavComponent, canActivateChild: [AuthGuard],
     children:[
       {path: '', redirectTo: 'hjem', pathMatch: 'full'},
+
       {path: 'hjem', loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
-       data: {preload: true, page: AppPages.Home}},  
+       data: {page: AppPages.Home}},  
 
       {path: 'profil', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule), 
         data: {preload: true, page: AppPages.Profile}},
@@ -38,7 +39,7 @@ const routes: Routes = [
     ],
   },
   {path: 'login', loadChildren: () => import('./login-prompt/login-prompt.module').then(m => m.LoginPromptModule),
-    canActivate: [NoAuthGuard], data: {page: AppPages.Login}},
+    canActivate: [NoAuthGuard], data: {preload: true, page: AppPages.Login}},
 
   {path: '**', component: PageNotFoundComponent},
 ];

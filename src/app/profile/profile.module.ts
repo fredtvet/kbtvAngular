@@ -28,4 +28,4 @@ import { AppConfigFormComponent } from './settings/app-config-form/app-config-fo
     ProfileRoutingModule
   ]
 })
-export class ProfileModule { }
+export class ProfileModule { constructor(){ console.log('ProfileModule')} }

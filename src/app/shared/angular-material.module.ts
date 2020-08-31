@@ -39,7 +39,7 @@ import { LazyStyles } from '../shared-app/enums';
       MatAutocompleteModule,
       ScrollingModule, 
       MatButtonToggleModule,
-      MatDialogModule,
+      MatDialogModule
    ],
 })
 
