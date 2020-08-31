@@ -37,6 +37,9 @@ export interface OnDemandRolePreloadOptions { page: AppPages }
 
 @Injectable({ providedIn: 'root' })
 export class RolePreloadService implements PreloadingStrategy {  
+
+    private preloadedRoutes = {};
+
     constructor(private authStore: AuthStore){ console.log("RolePreloadService"); }
 
     preload(route: Route, load: () => Observable<any>): Observable<any> {
@@ -50,6 +53,8 @@ export class RolePreloadService implements PreloadingStrategy {
         mergeMap(options => {
           const shouldPreload = this.preloadCheck(route, options);
           if(!shouldPreload) return EMPTY;
+          console.log(route);
+          this.preloadedRoutes[route.path] = true;
           return timer(2000).pipe(switchMap(x => load()))
         })
       );
@@ -59,7 +64,8 @@ export class RolePreloadService implements PreloadingStrategy {
       return (
         route.data &&
         route.data['preload'] && 
-        route.data['page'] == preloadRoleOptions.page
+        route.data['page'] == preloadRoleOptions.page &&
+        !this.preloadedRoutes[route.path]
       )
     }
   
