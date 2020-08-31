@@ -44,7 +44,7 @@ export class MissionImageListStore extends BaseModelStore<StoreState>  {
         .pipe(
           tap(x => this._updateStateProperty(
             "missionImages", 
-            (imgs: MissionImage[]) => this.arrayHelperService.add(imgs, x)))
+            (imgs: MissionImage[]) => this.arrayHelperService.addOrUpdateRange(imgs, x, "id")))
         );  
   }
 
