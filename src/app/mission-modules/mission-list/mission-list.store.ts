@@ -1,23 +1,32 @@
 import { Observable, combineLatest } from "rxjs";
-import { map, tap } from "rxjs/operators";
+import { map, tap, filter } from "rxjs/operators";
 import { Injectable } from "@angular/core";
 import {
   ApiService,
   ArrayHelperService,
-  SorterService,
 } from "src/app/core/services";
 import { Mission, Employer, MissionType, MissionImage, MissionDocument, MissionNote } from "src/app/core/models";
 import { BaseModelStore } from "../../core/state";
-import { MissionFilter } from "./mission.filter";
-import { MissionFilterCriteria } from './interfaces/mission-filter-criteria.interface';
 import { MissionDetails } from './interfaces/mission-details.interface';
 import { StoreState } from './interfaces/store-state';
 import { ApiUrl } from 'src/app/core/api-url.enum';
+import { MissionFilterConfig } from './interfaces/mission-filter-config.interface';
+import { MissionFilter } from 'src/app/shared/mission-filter.model';
+import { MissionFilterCriteria } from 'src/app/shared/interfaces';
 
 @Injectable({
   providedIn: 'any',
 })
 export class MissionListStore extends BaseModelStore<StoreState>  {
+
+  filterConfig$: Observable<MissionFilterConfig> = 
+    this.stateSlice$(["missionTypes", "employers", "missions", "activeMissionSearch"]).pipe(map(cfg => {
+      const filter = new MissionFilter({searchString: cfg.activeMissionSearch}, 100);
+      return {...cfg, 
+        missions: this.arrayHelperService.filter(cfg.missions, 
+          (mission) => cfg.activeMissionSearch ? filter.check(mission) : filter.checkInitial(mission))
+      } as MissionFilterConfig;
+    }));
 
   filteredMissions$: Observable<{criteria: MissionFilterCriteria; missions: Mission[]}> = 
     combineLatest(
@@ -64,11 +73,13 @@ export class MissionListStore extends BaseModelStore<StoreState>  {
     );
   }
 
-  addCriteria = (missionCriteria: MissionFilterCriteria): void =>
-    this._setStateVoid({ missionCriteria },StoreActions.UpdateCriteriaMission);
+  addCriteria = (missionCriteria: MissionFilterCriteria): void => 
+    this._setStateVoid({ missionCriteria });
+
+  addSearch = (activeMissionSearch: string): void => this._setStateVoid({ activeMissionSearch });
 
   addSortByDate = (missionSortByDate: "lastVisited" | "updatedAt"): void =>
-    this._setStateVoid({ missionSortByDate },StoreActions.UpdateSortByDateMission);
+    this._setStateVoid({ missionSortByDate });
 
   updateHeaderImage$(command: {id: number, file: File}): Observable<void> {
     const body: FormData = new FormData();
@@ -86,24 +97,14 @@ export class MissionListStore extends BaseModelStore<StoreState>  {
     let index = missions.findIndex(x => x.id == id);
     if(!missions[index]) return;
     missions[index].lastVisited = new Date(); 
-    this._setStateVoid({missions}, StoreActions.UpdateLastVisitedMission)
+    this._setStateVoid({missions})
   }
 
   private initState(): void {
     this._setStateVoid({
-        missionSortByDate: "updatedAt",
-        missionCriteria: {finished: false,employerId: undefined,missionTypeId: undefined,searchString: undefined},
-      }, StoreActions.InitState
-    );
+      missionSortByDate: "updatedAt",
+      missionCriteria: {finished: false,employerId: undefined,missionTypeId: undefined,searchString: undefined},
+    });
   }
 
-}
-
-export enum StoreActions {
-  InitState = "initState_missions",
-  DeleteMission = "delete_missions",
-  UpdateCriteriaMission = "update_Criteria_missions",
-  UpdateSortByDateMission = "updateSortByDate_missions", 
-  UpdateLastVisitedMission = "updateLastVisited_missions",
-  UpdateHeaderImageMission = "updateHeaderImage_missions"
 }

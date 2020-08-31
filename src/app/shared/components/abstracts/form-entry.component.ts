@@ -1,5 +1,4 @@
 import { Location } from '@angular/common';
-import { TemplateRef } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute } from '@angular/router';
 import { FormConfig } from 'src/app/shared/interfaces';
@@ -22,7 +21,7 @@ export abstract class FormEntryComponent {
 
   private openDialog = <T>(compRef: ComponentType<T>) => {
     let ref = this.bottomSheet.open(compRef, {data: this.formConfig});
-    ref.afterDismissed().subscribe(hasNavigated => !hasNavigated ? this.location.back() : null)
+    ref?.afterDismissed().subscribe(hasNavigated => !hasNavigated ? this.location.back() : null)
   };
 
 }

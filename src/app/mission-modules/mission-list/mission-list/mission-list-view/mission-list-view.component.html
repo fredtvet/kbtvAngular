@@ -4,7 +4,7 @@
 
     <cdk-virtual-scroll-viewport itemSize="60" maxBufferPx="800" minBufferPx="800" fxFlex>
         <app-list-card *cdkVirtualFor="let mission of missions; trackBy: trackByFn;" 
-            [config]="{startIcon:'home_work', endIcon: mission.finished ? 'check':'chevron_right', panelClass: 'mt-1'}" 
+            [config]="{startIcon: mission.syncing ? 'chevron_right' : 'home_work', endIcon: mission.finished ? 'check':'chevron_right', panelClass: 'mt-1'}" 
             [routerLink]="['/oppdrag', mission.id, 'detaljer']">{{'(' + mission.id + ') ' + mission.address}}
         </app-list-card>
     </cdk-virtual-scroll-viewport>
