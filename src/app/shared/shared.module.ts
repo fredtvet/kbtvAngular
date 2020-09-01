@@ -7,10 +7,9 @@ import {
   ConfirmDialogComponent,
   ListCardComponent, MailToFormComponent,
   SelectableCardComponent,
-  SimpleTopNavComponent,
-  SyncingOverlayComponent
+  SimpleTopNavComponent
 } from './components';
-import { AddToHomeScreenDirective, HttpCommandButtonDirective, SyncingDirective  } from './directives';
+import { AddToHomeScreenDirective, HttpCommandButtonDirective, LoadingOverlayDirective  } from './directives';
 import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 
 @NgModule({
@@ -27,8 +26,7 @@ import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPip
     SimpleTopNavComponent,
     TransformButtonPipe,
     ListCardComponent,
-    SyncingOverlayComponent,
-    SyncingDirective
+    LoadingOverlayDirective
   ],
   imports: [
     FormsModule,
@@ -44,7 +42,7 @@ import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPip
     GooglePlaceModule,
     ConfirmDialogComponent,
     HttpCommandButtonDirective,
-    SyncingDirective,
+    LoadingOverlayDirective,
     SortByDatePipe,
     TranslatePipe,
     ArrayFromNumberPipe,
