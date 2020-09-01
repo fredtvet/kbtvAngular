@@ -14,6 +14,6 @@ export class TimesheetMissionBarComponent {
 
   constructor() { }
   
-  clickBar(): void { this.barClicked.emit(this.timesheet.id); }
+  clickBar(): void { this.barClicked.emit(); }
 
 }

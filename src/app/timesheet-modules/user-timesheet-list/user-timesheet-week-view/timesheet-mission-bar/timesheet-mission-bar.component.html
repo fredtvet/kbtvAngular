@@ -1,13 +1,15 @@
-<div  *ngIf="timesheet" class="mission-bar mat-elevation-z1" fxLayout="column" fxLayoutAlign="center center" 
-    [ngClass]="{
-        'bg-accent-light': timesheet.status == 2, 
-        'bg-warn-light': timesheet.status == 0
-    }"
-    (click)="clickBar()" matRipple>
+<ng-container *ngIf="timesheet">
+    <div class="mission-bar mat-elevation-z1" fxLayout="column" fxLayoutAlign="center center" 
+        [appLoadingOverlay]="timesheet.tempId"
+        [style.height.px]="(timesheet.totalHours / 14)*300"
+        [ngClass]="{
+            'bg-accent-light': timesheet.status == 2, 
+            'bg-warn-light': timesheet.status == 0
+        }"
+        (click)="clickBar()" matRipple>
 
-    <span class="mat-body-strong">
-        {{ timesheet.totalHours }}t
-    </span>
-
-
-</div>
+        <span class="mat-body-strong">
+            {{ timesheet.totalHours }}t
+        </span>
+    </div>
+</ng-container>
