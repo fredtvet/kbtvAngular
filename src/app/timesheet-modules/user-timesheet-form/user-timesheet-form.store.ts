@@ -32,7 +32,14 @@ export class UserTimesheetFormStore extends OptimisticFormStore<StoreState> impl
     super(arrayHelperService, apiService, "userTimesheets");
   }
 
-  get$ = (id: number) => this._getById$<Timesheet>("userTimesheets", id, "id")
+  getWithMission$ = (id: number) => {
+    return this.stateSlice$(["userTimesheets", "missions"]).pipe(map(state => {
+      let timesheet = this.arrayHelperService.find(state.userTimesheets, id, "id");
+      console.log(timesheet);
+      if(!timesheet) return timesheet;
+      return {...timesheet, mission: this.arrayHelperService.find(state.missions, timesheet.missionId, "id")}
+    }))
+  }
  
   add$(timesheet: Timesheet): Observable<void> {
     return this._add$( 
@@ -42,6 +49,7 @@ export class UserTimesheetFormStore extends OptimisticFormStore<StoreState> impl
   }
 
   update$(timesheet: Timesheet): Observable<void> {
+    console.log('body', this.getTimesheetHttpBody(timesheet))
     return this._update$(
       this.apiService.put(ApiUrl.UserTimesheet + '/' + timesheet.id, this.getTimesheetHttpBody(timesheet)), 
       this.createTempTimesheet(timesheet)

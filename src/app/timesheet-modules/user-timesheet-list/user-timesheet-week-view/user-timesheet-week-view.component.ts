@@ -31,7 +31,7 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
 
   summaries$: Observable<{ [key: number]: TimesheetSummary }> = this.store.timesheetSummaries$.pipe(
     tap(x => this.configureMainNav(this.weekFilter)),
-    map(x => this.mapSummariesToWeekdays(x)), tap(console.log)
+    map(x => this.mapSummariesToWeekdays(x))
   );
 
   constructor(

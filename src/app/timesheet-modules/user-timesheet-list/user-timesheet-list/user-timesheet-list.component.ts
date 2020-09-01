@@ -53,6 +53,9 @@ export class UserTimesheetListComponent implements OnInit {
       .pipe(filter(f => f != null))
       .subscribe(f => this.store.addCriteria(f));
   }
+  
+  trackByTimesheet = (index: number, timesheet: Timesheet) => 
+    timesheet.totalHours && new Date(timesheet.startTime).getTime()
 
   private onBack = () => {
     let returnUrl: string = this.route.snapshot.params.returnUrl;

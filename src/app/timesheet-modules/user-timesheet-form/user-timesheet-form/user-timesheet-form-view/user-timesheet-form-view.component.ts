@@ -12,9 +12,18 @@ import { TimesheetFormConfig } from 'src/app/shared-timesheet/interfaces';
 export class UserTimesheetFormViewComponent{
 
   @Input() missions: Mission[]
-  @Input() timesheet: Timesheet;
 
-  @Input() config: TimesheetFormConfig;
+  _config: TimesheetFormConfig;
+  get config(): TimesheetFormConfig { return this._config; }
+
+  @Input() set config(value: TimesheetFormConfig) {
+      this._config = value;
+      if(!value) return;
+      if(!value.timesheet) this.isCreateForm = true;
+      this.initalizeForm(value.timesheet);
+      this.initMissionListener();
+  }
+
 
   @Output() formSubmitted = new EventEmitter();
   @Output() missionsSearch = new EventEmitter();
@@ -26,14 +35,6 @@ export class UserTimesheetFormViewComponent{
 
   constructor(private _formBuilder: FormBuilder) {this.initTime.setHours(6,0,0,0);}
 
-  ngOnInit(){
-    if(!this.timesheet || this.timesheet == null) this.isCreateForm = true;
-    else this.timesheet.mission = this.missions?.find(x => x.id == this.timesheet.missionId);
-
-    this.initalizeForm(this.timesheet);
-    this.initMissionListener();
-  }
-
   onSubmit = () => {
     if(this.timesheetForm.valid && this.timesheetForm.dirty) 
       this.formSubmitted.emit(this.convertFormToTimesheet(this.timesheetForm.getRawValue()));
@@ -42,7 +43,7 @@ export class UserTimesheetFormViewComponent{
   displayMissionAddress = (mission: Mission): string => 
     mission ? mission.address : null;
 
-  private initalizeForm(x: Timesheet){
+  private initalizeForm(x: Timesheet){ 
     this.timesheetForm = this._formBuilder.group({
       id: x ? x.id : null,
       mission: [{value: this.config?.mission || (x ? x.mission : null), disabled: this.config?.mission}, [
