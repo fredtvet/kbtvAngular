@@ -10,7 +10,7 @@
                     endIcon: mission.finished ? 'check':'chevron_right' ,
                     loading: mission.tempId               
                 }" 
-                [routerLink]="['/oppdrag', mission.id, 'detaljer']">
+                [routerLink]="mission.tempId ? [] : ['/oppdrag', mission.id, 'detaljer']">
                 {{'(' + (mission.id > 0 ?  mission.id : 0 ) + ') ' + mission.address}}
             </app-list-card>
         </ng-container>  
