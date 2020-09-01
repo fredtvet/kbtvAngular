@@ -57,14 +57,13 @@ export class MissionFormComponent {
   }
 
   private createMission(mission: CreateMission): void{
-    this.store.add$(mission).subscribe(x => this.finished.emit(FormAction.Create));
+    this.finished.emit(FormAction.Create);
+    this.store.add$(mission).subscribe();
   }
 
-  private editMission(mission: UpdateMission): void{
-    this.store.update$(mission).subscribe(res => {
-        this.notificationService.notify({title: 'Vellykket oppdatering!', type: NotificationType.Success});
-        this.finished.emit(FormAction.Update);
-      })
+  private editMission(mission: UpdateMission): void{ 
+    this.finished.emit(FormAction.Update);
+    this.store.update$(mission).subscribe();
   }
 
 }

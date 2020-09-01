@@ -23,7 +23,6 @@ export class MissionFilterViewComponent {
   constructor(private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    console.log(this.config)
     this.initalizeForm(this.criteria);
     this.initMissionListener();
   }
@@ -39,7 +38,6 @@ export class MissionFilterViewComponent {
   }
 
   private initalizeForm(x: MissionFilterCriteria){
-    console.log(x);
     this.filterForm = this._formBuilder.group({
       searchString: [x?.searchString],     
       employerId: [x?.employerId],

@@ -6,7 +6,7 @@ export interface Mission extends BaseEntity {
     phoneNumber?: string;
     description?: string;
     address: string;
-    finished: boolean;
+    finished?: boolean;
     imageURL?: string;
 
     updatedAt?: Date;

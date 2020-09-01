@@ -3,10 +3,8 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { Roles } from 'src/app/shared-app/enums';
-import { MissionListStore } from '../mission-list.store';
-import { MissionFilterCriteria } from '../../../shared/interfaces/mission-filter-criteria.interface';
 import { MissionFilterSheetWrapperComponent } from '../mission-filter/mission-filter-sheet-wrapper.component';
-import { tap } from 'rxjs/operators';
+import { MissionListStore } from '../mission-list.store';
 
 @Component({
   selector: 'app-mission-list',

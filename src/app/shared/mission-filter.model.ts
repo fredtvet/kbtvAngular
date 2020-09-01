@@ -5,10 +5,7 @@ export class MissionFilter {
 
     private checksCount: number = 0;
 
-    constructor(public criteria: MissionFilterCriteria, private maxChecks?: number){ console.log(criteria); 
-        console.log(undefined === false) 
-        console.log(null === false) 
-    }
+    constructor(public criteria: MissionFilterCriteria, private maxChecks?: number){}
 
     check(mission: Mission): boolean{ 
         if(!this.criteria) return true;

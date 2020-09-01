@@ -47,8 +47,10 @@ export abstract class FormSheetWrapperComponent implements OnInit {
         deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteEntity());
     }
 
-    private deleteEntity = () => 
-        this.store?.delete$(this.config?.entityId).subscribe(x => this.close(FormAction.Delete));
+    private deleteEntity = () => {
+        this.close(FormAction.Delete)
+        this.store?.delete$(this.config?.entityId).subscribe();
+    };
 
     private navigateTo(url: string){
         let hasUrl = url ? true : false;
