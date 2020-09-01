@@ -5,6 +5,7 @@ import { forkJoin, from, Observable, BehaviorSubject, throwError } from 'rxjs';
 import { PersistedStateProperties } from './persisted-state-properties';
 import { tap, filter, first, catchError } from 'rxjs/operators';
 import { PersistedInitialProperties } from './persisted-initial-properties';
+import { Optimistic } from '../../state';
 
 
 @Injectable({
@@ -27,7 +28,7 @@ export class PersistanceStore extends ObservableStore<Object> {
         this.initalizeStateFromDb();
 
         this.globalStateWithPropertyChanges.pipe(tap(console.log),
-            filter(x => x != null),
+            filter(x => x != null && x.stateChanges.lastAction != Optimistic),
             tap(x => this.persistStateChanges(x.stateChanges))
         ).subscribe();
      
@@ -42,7 +43,7 @@ export class PersistanceStore extends ObservableStore<Object> {
         return from(get<T>(property, this.dbStore))
     }
 
-    private persistStateChanges = (stateChanges: Partial<Object>) => {
+    private persistStateChanges = (stateChanges: Partial<Object>) => {console.log("PERSIST STATE CHANGES")
         const props = {...PersistedStateProperties, ...PersistedInitialProperties};
         for(const prop in stateChanges){
             if(props[prop]) this.set(prop, stateChanges[prop]);

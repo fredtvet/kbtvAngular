@@ -68,11 +68,11 @@ export class MissionFormStore extends OptimisticFormStore<StoreState> implements
     );
   }
 
-  private addStateFromPdfReportResponse = (response: {mission: Mission, document: MissionDocument}) => {
+  private addStateFromPdfReportResponse = (response: {mission: Mission, document: MissionDocument}): Partial<StoreState> => {
     let state = {} as Partial<StoreState>;
     state.missions = this.arrayHelperService.add(this.getProperty("missions", false), response.mission);
     state.missionDocuments = this.arrayHelperService.add(this.getProperty("missionDocuments", false), response.document)        
-    this._setStateVoid(state);
+    return state;
   }
   
 } 
