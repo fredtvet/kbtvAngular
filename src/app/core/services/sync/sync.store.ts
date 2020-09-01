@@ -11,7 +11,7 @@ import { SyncStoreConfig } from './interfaces/sync-store-config.interface';
 import { SyncStoreTimestamps } from './interfaces/sync-store-timestamps.interface';
 import { SyncStoreActions } from './sync-store-actions.enum';
 import { SyncPropertySettings } from './sync-property.settings';
-import { ModelStateSettings } from '../../state/model-state.settings';
+import { ModelStateConfig } from '../../state/model-state.config';
 import { BaseModelStore } from '../../state/base-model.store';
 import { PersistanceStore } from '../persistance/persistance.store';
 import { User } from '../../models/user.interface';
@@ -102,7 +102,7 @@ export class SyncStore extends BaseModelStore<StoreState>{
     if(!response || !prop) return;
     
     state.syncTimestamps[prop] = response.timestamp; //Update given timestamp
-    const modelSettings = ModelStateSettings[prop];
+    const modelSettings = ModelStateConfig[prop];
     if(!modelSettings) throw `No model state settings for property ${prop}`;
     state[prop] = 
         this.arrayHelperService.addOrUpdateRange(this.getStateProperty(prop), response.entities, modelSettings.identifier); 
