@@ -155,6 +155,17 @@ a {
    width:calc(100% - (#{$gap-size} * 8px))!important;
 }
 
+.loading-overlay::after {
+  content: ""; // ::before and ::after both require content
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: .5;
+}
+
 .center-spinner{margin:$gap-size * 4px auto;}
 
 //Fix to keep items in CDK virtual scroll responsive 

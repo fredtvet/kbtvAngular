@@ -7,7 +7,7 @@ import { BaseModelStore } from './base-model.store';
 import { ModelState } from './global.state';
 import { ApiService } from '../services/api.service';
 import { ArrayHelperService } from '../services/utility/array-helper.service';
-
+  
 @Injectable({
   providedIn: 'any',
 })
@@ -100,8 +100,8 @@ export abstract class OptimisticFormStore<TState extends Partial<ModelState>> ex
     (entity: TEntity, actionFn: (entity: TEntity) => TEntity[]): void{
 
     let state: Partial<TState> = {};
-
-    for(var fk of this.propCfg.foreignKeys){
+    
+    for(var fk of this.propCfg.foreignKeys || []){
         const fkPropConfig = ModelStateConfig[fk]; //Key information about foreign prop
         if(entity[fkPropConfig.modelProp]?.id){ //If response model contains fk entity, add to state
             state[fk] = this.arrayHelperService.add(this.getStateProperty(fk), entity[fkPropConfig.modelProp]);
@@ -122,7 +122,7 @@ export abstract class OptimisticFormStore<TState extends Partial<ModelState>> ex
     let filterExp = (x) => x[this.propCfg.fkProp] !== cfg.id;
     if(cfg.ids) filterExp = (x) => !cfg.ids.includes(x[this.propCfg.fkProp]);
 
-    for(var childProp of this.propCfg.children){
+    for(var childProp of this.propCfg.children || []){
         state[childProp as string] = 
             this.arrayHelperService.filter(this.getStateProperty(childProp), filterExp);
     };

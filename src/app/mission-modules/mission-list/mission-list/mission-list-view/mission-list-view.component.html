@@ -4,10 +4,11 @@
 
     <cdk-virtual-scroll-viewport itemSize="60" maxBufferPx="800" minBufferPx="800" fxFlex>
         <ng-container *cdkVirtualFor="let mission of missions; trackBy: trackByFn;">
-            <app-list-card *appSyncing="mission.tempId"
+            <app-list-card
                 [config]="{
-                    startIcon: 'home_work', panelClass: 'mt-1',
-                    endIcon: mission.finished ? 'check':'chevron_right'                
+                    startIcon: 'home_work', panelClass: 'mt-1', 
+                    endIcon: mission.finished ? 'check':'chevron_right' ,
+                    loading: mission.tempId               
                 }" 
                 [routerLink]="['/oppdrag', mission.id, 'detaljer']">
                 {{'(' + (mission.id > 0 ?  mission.id : 0 ) + ') ' + mission.address}}

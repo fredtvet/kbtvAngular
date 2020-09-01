@@ -45,7 +45,7 @@ export class UserTimesheetListComponent implements OnInit {
       data: {
         filter: this.store.criteria, 
         disabledFilters: ['user'],       
-        missions: this.store.getProperty("missions")
+        missions$: this.store.property$("missions")
       }
     });
 

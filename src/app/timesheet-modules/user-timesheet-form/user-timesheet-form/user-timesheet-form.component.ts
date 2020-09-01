@@ -3,10 +3,9 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Mission, Timesheet } from "src/app/core/models";
 import { Roles } from 'src/app/shared-app/enums';
-import { UserTimesheetFormStore } from '../user-timesheet-form.store';
-import { TimesheetFormConfig } from '../../../shared-timesheet/interfaces/timesheet-form-config.interface';
 import { FormAction } from 'src/app/shared/enums';
-import { NotificationType, NotificationService } from 'src/app/core/services/notification';
+import { TimesheetFormConfig } from '../../../shared-timesheet/interfaces/timesheet-form-config.interface';
+import { UserTimesheetFormStore } from '../user-timesheet-form.store';
 
 @Component({
   selector: 'app-user-timesheet-form',
@@ -35,9 +34,7 @@ export class UserTimesheetFormComponent implements OnInit {
   isCreateForm: boolean;
 
   constructor(
-    private store: UserTimesheetFormStore,
-    private notificationService: NotificationService) {
-    }
+    private store: UserTimesheetFormStore) {}
 
   ngOnInit(){
     if(!this.config.entityId) this.isCreateForm = true;
@@ -56,23 +53,13 @@ export class UserTimesheetFormComponent implements OnInit {
   onMissionSearch = (input: string) => this.store.addMissionCriteria(input)
 
   createTimesheet(timesheet: Timesheet){
-    this.store.add$(timesheet).subscribe(x => {
-      this.notificationService.notify({
-        title:'Time registrert!',        
-        type: NotificationType.Success
-      })
-      this.finished.emit(FormAction.Create);
-    })
+    this.finished.emit(FormAction.Create);
+    this.store.add$(timesheet).subscribe()
   }
 
-  editTimesheet(timesheet: Timesheet){
-    this.store.update$(timesheet).subscribe(x => {
-      this.notificationService.notify({
-        title:'Time oppdatert!',        
-        type: NotificationType.Success
-      })
-      this.finished.emit(FormAction.Update);
-    })
+  editTimesheet(timesheet: Timesheet){ 
+    this.finished.emit(FormAction.Update);
+    this.store.update$(timesheet).subscribe()
   }
 
 }

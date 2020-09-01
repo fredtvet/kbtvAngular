@@ -13,6 +13,7 @@ import { SubscriptionComponent } from 'src/app/shared-app/components/subscriptio
 import { UserTimesheetCardDialogWrapperComponent } from '../user-timesheet-card-dialog-wrapper.component';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
 import { TimesheetSummary } from 'src/app/shared/interfaces';
+import { Timesheet } from 'src/app/core/models';
 
 @Component({
   selector: "app-user-timesheet-week-view",
@@ -30,7 +31,7 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
 
   summaries$: Observable<{ [key: number]: TimesheetSummary }> = this.store.timesheetSummaries$.pipe(
     tap(x => this.configureMainNav(this.weekFilter)),
-    map(x => this.mapSummariesToWeekdays(x))
+    map(x => this.mapSummariesToWeekdays(x)), tap(console.log)
   );
 
   constructor(
@@ -80,6 +81,9 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
   openTimesheetCard = (timesheetId: number) =>
     this.dialog.open(UserTimesheetCardDialogWrapperComponent, {
       data: timesheetId, panelClass: 'extended-dialog'});
+
+  trackByTimesheet = (index: number, timesheet: Timesheet) => 
+    timesheet.totalHours && new Date(timesheet.startTime).getTime()
 
   private goToTimesheetList = () => {
       const dp = this.weekFilter;

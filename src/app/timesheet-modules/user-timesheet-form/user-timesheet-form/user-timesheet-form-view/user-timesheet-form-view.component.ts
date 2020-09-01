@@ -39,10 +39,8 @@ export class UserTimesheetFormViewComponent{
       this.formSubmitted.emit(this.convertFormToTimesheet(this.timesheetForm.getRawValue()));
   }
   
-  displayMissionAddress(mission: Mission): string {
-    if(mission == undefined) return null;
-    return mission.address;
-  }
+  displayMissionAddress = (mission: Mission): string => 
+    mission ? mission.address : null;
 
   private initalizeForm(x: Timesheet){
     this.timesheetForm = this._formBuilder.group({
@@ -91,8 +89,8 @@ export class UserTimesheetFormViewComponent{
       id: formData.id,
       missionId: formData.mission.id,
       comment: formData.comment,
-      startTime: new Date(date + " " + formData.timeRange[0].toTimeString()),
-      endTime: new Date(date + " " + formData.timeRange[1].toTimeString()),
+      startTime: new Date(date + " " + formData.timeRange[0].toTimeString()).toString(),
+      endTime: new Date(date + " " + formData.timeRange[1].toTimeString()).toString(),
     } as Timesheet;   
   }
 
