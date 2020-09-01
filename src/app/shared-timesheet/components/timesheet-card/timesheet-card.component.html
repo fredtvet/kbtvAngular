@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutAlign="space-between start" class="app-card p-2 mat-elevation-z2"
-   *ngIf="timesheet" [appLoadingOverlay]="timesheet.tempId">
+   *ngIf="timesheet" [appLoadingOverlay]="timesheet.tempId ? true : false">
 
   <span fxLayout="row" fxLayoutAlign="space-between stretch" class="w-100">
 

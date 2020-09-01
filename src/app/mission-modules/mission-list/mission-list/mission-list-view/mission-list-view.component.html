@@ -8,7 +8,7 @@
                 [config]="{
                     startIcon: 'home_work', panelClass: 'mt-1', 
                     endIcon: mission.finished ? 'check':'chevron_right' ,
-                    loading: mission.tempId               
+                    loading: mission.tempId ? true : false             
                 }" 
                 [routerLink]="mission.tempId ? [] : ['/oppdrag', mission.id, 'detaljer']">
                 {{'(' + (mission.id > 0 ?  mission.id : 0 ) + ') ' + mission.address}}
