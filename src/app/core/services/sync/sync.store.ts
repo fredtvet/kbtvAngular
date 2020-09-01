@@ -1,22 +1,22 @@
 import { HttpParams } from '@angular/common/http';
-import { Injectable, ApplicationRef } from '@angular/core';
-import { Observable, interval, concat, Subscription } from 'rxjs';
-import { distinctUntilKeyChanged, retry, skip, tap, first, switchMap, pluck } from 'rxjs/operators';
+import { ApplicationRef, Injectable } from '@angular/core';
+import { concat, interval, Observable } from 'rxjs';
+import { distinctUntilKeyChanged, first, retry, switchMap, tap, distinctUntilChanged, pairwise, skip } from 'rxjs/operators';
+import { User } from '../../models/user.interface';
+import { BaseModelStore } from '../../state/base-model.store';
+import { ModelStateConfig } from '../../state/model-state.config';
 import { ApiService } from '../api.service';
+import { AuthStoreActions } from '../auth/auth-store-actions.enum';
+import { AuthStore } from '../auth/auth.store';
 import { DeviceInfoService } from '../device-info.service';
+import { PersistanceStore } from '../persistance/persistance.store';
 import { ArrayHelperService } from '../utility/array-helper.service';
 import { StoreState } from './interfaces/store-state';
 import { EntitySyncResponse, SyncResponse } from './interfaces/sync-response.interface';
 import { SyncStoreConfig } from './interfaces/sync-store-config.interface';
 import { SyncStoreTimestamps } from './interfaces/sync-store-timestamps.interface';
-import { SyncStoreActions } from './sync-store-actions.enum';
 import { SyncPropertySettings } from './sync-property.settings';
-import { ModelStateConfig } from '../../state/model-state.config';
-import { BaseModelStore } from '../../state/base-model.store';
-import { PersistanceStore } from '../persistance/persistance.store';
-import { User } from '../../models/user.interface';
-import { AuthStore } from '../auth/auth.store';
-import { AuthStoreActions } from '../auth/auth-store-actions.enum';
+import { SyncStoreActions } from './sync-store-actions.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -126,11 +126,11 @@ export class SyncStore extends BaseModelStore<StoreState>{
     this.syncTimestamps ? Object.values(this.syncTimestamps).sort(function(a,b) {return a - b})[0] : 0; 
 
   private initConfigObserver() {
-    const syncIfConfigChanges$ = this.propertyChanges$<SyncStoreConfig>("syncConfig").pipe(skip(1),
-      distinctUntilKeyChanged("initialNumberOfMonths"),
+    const syncIfConfigChanges$ = this.property$<SyncStoreConfig>("syncConfig").pipe(
+      distinctUntilKeyChanged("initialNumberOfMonths"),skip(1),
       tap(x => {
         this.purgeAll();
-        this.syncAll();
+        this.syncAll();    
       })
     );
 
@@ -142,7 +142,6 @@ export class SyncStore extends BaseModelStore<StoreState>{
 
   private initConfigIfNull(): void {
     if(this.getProperty("syncConfig")) return;
-
     this._setStateVoid({syncConfig: {
       refreshTime: 60*30, 
       initialNumberOfMonths: '48',
