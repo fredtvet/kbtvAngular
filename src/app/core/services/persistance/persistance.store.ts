@@ -27,8 +27,8 @@ export class PersistanceStore extends ObservableStore<Object> {
         this.initalizeInitialStateFromDb();
         this.initalizeStateFromDb();
 
-        this.globalStateWithPropertyChanges.pipe(tap(console.log),
-            filter(x => x != null && x.stateChanges.lastAction != Optimistic),
+        this.globalStateWithPropertyChanges.pipe(
+            filter(x => x != null && x.stateChanges['lastAction'] != Optimistic),
             tap(x => this.persistStateChanges(x.stateChanges))
         ).subscribe();
      
@@ -43,7 +43,7 @@ export class PersistanceStore extends ObservableStore<Object> {
         return from(get<T>(property, this.dbStore))
     }
 
-    private persistStateChanges = (stateChanges: Partial<Object>) => {console.log("PERSIST STATE CHANGES")
+    private persistStateChanges = (stateChanges: Partial<Object>) => {
         const props = {...PersistedStateProperties, ...PersistedInitialProperties};
         for(const prop in stateChanges){
             if(props[prop]) this.set(prop, stateChanges[prop]);

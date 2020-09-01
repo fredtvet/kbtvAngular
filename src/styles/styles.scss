@@ -155,7 +155,7 @@ a {
    width:calc(100% - (#{$gap-size} * 8px))!important;
 }
 
-.loading-overlay{pointer-events: none}
+.loading-overlay{pointer-events: none; position:relative}
 .loading-overlay::after {
   content: ""; // ::before and ::after both require content
   position: absolute;

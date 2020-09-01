@@ -33,7 +33,7 @@ export class MainNavService {
         cfg.isXs = isXs;
         cfg.currentUser = currentUser;
         return cfg;
-      }),tap(console.log)
+      })
     );
 
   constructor(
