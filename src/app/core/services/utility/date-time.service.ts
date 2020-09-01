@@ -69,30 +69,32 @@ export class DateTimeService {
     );
   }
 
-  getFirstDayOfMonth(date: Date = this.currentDate): Date  {
-    return new Date(date.getFullYear(), date.getMonth(), 1);
+  getFirstDayOfMonth(date: Date | string = this.currentDate): Date  {
+    const d = new Date(date);
+    return new Date(d.getFullYear(), d.getMonth(), 1);
   }
 
-  getLastDayOfMonth(date: Date = this.currentDate): Date  {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  getLastDayOfMonth(date: Date | string = this.currentDate): Date  {
+    const d = new Date(date);
+    return new Date(d.getFullYear(), d.getMonth() + 1, 0);
   }
 
-  getFirstDayOfYear(date: Date = this.currentDate): Date  {
-    return new Date(date.getFullYear(), 0, 1);
+  getFirstDayOfYear(date: Date | string = this.currentDate): Date  {
+    return new Date(new Date(date).getFullYear(), 0, 1);
   }
 
-  getLastDayOfYear(date: Date = this.currentDate): Date {
-    return new Date(date.getFullYear(), 11, 31, 23, 59, 59);
+  getLastDayOfYear(date: Date | string = this.currentDate): Date {
+    return new Date(new Date(date).getFullYear(), 11, 31, 23, 59, 59);
   }
 
-  getWeekOfYear(date: Date = this.currentDate): number {
+  getWeekOfYear(date: Date | string = this.currentDate): number {
     var d = new Date(+date);
     d.setHours(0,0,0);
     d.setDate(d.getDate()+4-(d.getDay()||7));
     return Math.ceil((((d.getTime() - new Date(d.getFullYear(),0,1).getTime())/8.64e7)+1)/7);
   }
 
-  getWeekAndYearFromString(date: Date = this.currentDate): {week: number, year: number} {
+  getWeekAndYearFromString(date: Date | string = this.currentDate): {week: number, year: number} {
     var d = new Date(date);
     d.setHours(0,0,0);
     d.setDate(d.getDate()+4-(d.getDay()||7));

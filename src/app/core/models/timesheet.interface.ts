@@ -11,7 +11,7 @@ export interface Timesheet extends BaseEntity, MissionChild {
     status: TimesheetStatus;
     comment: string;
     
-    startTime: Date;
-    endTime: Date;
+    startTime: string;
+    endTime: string;
     totalHours: number;
 }
