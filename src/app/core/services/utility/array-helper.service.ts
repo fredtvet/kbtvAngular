@@ -41,6 +41,19 @@ export class ArrayHelperService {
     return arr;
   }
 
+  replace<T>(array: T[], obj: T, id: any, identifier: string){
+    if(this.isEmptyArray(array)) return array;
+    let arr = array.slice();
+    for(let i = 0; i < arr.length; i++){
+      let currObj = arr[i];
+      if(currObj[identifier] === id){
+        arr[i] = obj;
+        break;
+      }
+    }
+    return arr;
+  }
+
   addOrUpdateRange<T>(originals: T[], newEntities: T[], identifier: string): T[]{       
     if(this.isEmptyArray(newEntities)) return originals?.slice(); //If no entities, just return current val
     if(this.isEmptyArray(originals)) return newEntities.slice(); //If initial array empty, just return empty array
