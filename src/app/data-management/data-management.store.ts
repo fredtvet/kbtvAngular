@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { distinctUntilChanged, filter, map, switchMap, tap } from "rxjs/operators";
-import { Mission } from "src/app/core/models";
+import { Mission, BaseEntity } from "src/app/core/models";
 import {
     ApiService,
     ArrayHelperService
 } from "src/app/core/services";
-import { BaseModelStore } from '../core/state';
+import { OptimisticFormStore } from '../core/state';
 import { ModelState } from '../core/state/global.state';
 import { ModelStateConfig } from '../core/state/model-state.config';
 import { StoreState } from './interfaces/store-state';
@@ -14,10 +14,9 @@ import { StoreState } from './interfaces/store-state';
 @Injectable({
   providedIn: 'any',
 })
-export class DataManagementStore extends BaseModelStore<StoreState>  {
+export class DataManagementStore extends OptimisticFormStore<StoreState>  {
 
     properties = ["missions", "employers", "missionTypes", "documentTypes", "inboundEmailPasswords"] as (keyof Partial<ModelState>)[];
-    noPersistProps = {inboundEmailPasswords: true};
 
     selectedProperty$ = this.property$<keyof StoreState>("selectedProperty");
 
@@ -30,19 +29,18 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
         return this.getProperty<keyof StoreState>("selectedProperty")
     }
 
-    get propInfo() { return ModelStateConfig[this.selectedProperty] }
-
     constructor(
         apiService: ApiService,
         arrayHelperService: ArrayHelperService
     ) {
-        super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
+        super(arrayHelperService, apiService);
+        this.selectedProperty$.subscribe(x => this.stateProp = x);
     }
 
     updateSelectedProperty = (prop: keyof StoreState) => this._setStateVoid({selectedProperty: prop})
 
     add$<T>(entity: T): Observable<void> {
-        return this.apiService.post(`${this.propInfo.apiUrl}`, entity)    
+        return this.apiService.post(`${this.propCfg.apiUrl}`, entity)    
             .pipe(
             tap(newEntity => this._updateStateProperty(
                 this.selectedProperty, 
@@ -50,36 +48,20 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
             );   
     }
 
-    update$<T>(entity: T): Observable<void> {
-        return this.apiService.put(`${this.propInfo.apiUrl}/${entity[this.propInfo.identifier]}`, entity)    
-            .pipe(
-            tap(x => this._updateStateProperty(
-                this.selectedProperty, 
-                (arr: T[]) => this.arrayHelperService.update(arr, entity, this.propInfo.identifier)))
-            );   
+    update$<T extends BaseEntity>(entity: T): Observable<void> {
+        return this._update$(
+            this.apiService.put(`${this.propCfg.apiUrl}/${entity[this.propCfg.identifier]}`, entity),
+            entity
+        ); 
     }
 
-    delete$<T>(id: number): Observable<void> {
-        return this.apiService.delete(`${this.propInfo.apiUrl}/${id}`)    
-            .pipe(
-            tap(x => this._updateStateProperty(
-                this.selectedProperty,
-                (arr: T[]) => this.arrayHelperService.removeByIdentifier(arr, id, 'id')))
-            );   
-    }
+    delete$ = (id: number): Observable<void> => this._delete$(id); 
 
-    deleteRange$<T>(ids: number[]): Observable<void> {
-        return this.apiService.post(`${this.propInfo.apiUrl}/DeleteRange`, {Ids: ids})    
-            .pipe(
-            tap(x => this._updateStateProperty(
-                this.selectedProperty,
-                (arr: T[]) => this.arrayHelperService.removeRangeByIdentifier(arr, ids, 'id')))
-            );   
-    }
-
+    deleteRange$ = (ids: number[]): Observable<void> => this._deleteRange$(ids) 
+    
     private getData$(property: keyof StoreState): Observable<any[]>{ 
         if(property === "missions") return this.getAllMissions$();
-        if(this.propInfo.notPersisted) return super._propertyWithFetch$(property, this._fetchData$(this.propInfo.apiUrl))
+        if(this.propCfg.notPersisted) return super._propertyWithFetch$(property, this._fetchData$(this.propCfg.apiUrl))
         return this.property$(property);
     }
 
