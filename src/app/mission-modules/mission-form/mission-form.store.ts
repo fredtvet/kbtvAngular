@@ -20,7 +20,7 @@ export class MissionFormStore extends OptimisticFormStore<StoreState> implements
     apiService: ApiService,
     arrayHelperService: ArrayHelperService
   ) {
-    super(apiService, arrayHelperService, "missions");
+    super(arrayHelperService, apiService, "missions");
     console.log("MissionFormStore")
   }
 
