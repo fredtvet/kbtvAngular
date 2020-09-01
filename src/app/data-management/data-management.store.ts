@@ -8,7 +8,7 @@ import {
 } from "src/app/core/services";
 import { BaseModelStore } from '../core/state';
 import { ModelState } from '../core/state/global.state';
-import { ModelStateSettings } from '../core/state/model-state.settings';
+import { ModelStateConfig } from '../core/state/model-state.config';
 import { StoreState } from './interfaces/store-state';
 
 @Injectable({
@@ -30,7 +30,7 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
         return this.getProperty<keyof StoreState>("selectedProperty")
     }
 
-    get propInfo() { return ModelStateSettings[this.selectedProperty] }
+    get propInfo() { return ModelStateConfig[this.selectedProperty] }
 
     constructor(
         apiService: ApiService,

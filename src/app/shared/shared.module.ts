@@ -7,9 +7,10 @@ import {
   ConfirmDialogComponent,
   ListCardComponent, MailToFormComponent,
   SelectableCardComponent,
-  SimpleTopNavComponent
+  SimpleTopNavComponent,
+  SyncingOverlayComponent
 } from './components';
-import { AddToHomeScreenDirective, HttpCommandButtonDirective  } from './directives';
+import { AddToHomeScreenDirective, HttpCommandButtonDirective, SyncingDirective  } from './directives';
 import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 
 @NgModule({
@@ -26,6 +27,8 @@ import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPip
     SimpleTopNavComponent,
     TransformButtonPipe,
     ListCardComponent,
+    SyncingOverlayComponent,
+    SyncingDirective
   ],
   imports: [
     FormsModule,
@@ -41,6 +44,7 @@ import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPip
     GooglePlaceModule,
     ConfirmDialogComponent,
     HttpCommandButtonDirective,
+    SyncingDirective,
     SortByDatePipe,
     TranslatePipe,
     ArrayFromNumberPipe,
@@ -51,7 +55,7 @@ import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPip
     ListCardComponent,
     AddToHomeScreenDirective,    
     TransformButtonPipe,
-    SharedAppModule
+    SharedAppModule,
   ]
 })
 export class SharedModule { }

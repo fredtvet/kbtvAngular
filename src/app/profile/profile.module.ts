@@ -23,7 +23,7 @@ import { AppConfigFormComponent } from './settings/app-config-form/app-config-fo
     SettingsComponent,
     AppConfigFormComponent
   ],
-  imports: [
+  imports: [ 
     SharedModule,
     ProfileRoutingModule
   ]

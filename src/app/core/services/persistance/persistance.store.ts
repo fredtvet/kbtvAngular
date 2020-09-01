@@ -26,7 +26,7 @@ export class PersistanceStore extends ObservableStore<Object> {
         this.initalizeInitialStateFromDb();
         this.initalizeStateFromDb();
 
-        this.globalStateWithPropertyChanges.pipe(
+        this.globalStateWithPropertyChanges.pipe(tap(console.log),
             filter(x => x != null),
             tap(x => this.persistStateChanges(x.stateChanges))
         ).subscribe();
