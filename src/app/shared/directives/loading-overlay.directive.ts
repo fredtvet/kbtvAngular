@@ -1,26 +1,17 @@
 import { Directive, ElementRef, Input } from '@angular/core';
+import { BaseLoadingOverlayDirective } from './base-loading-overlay.directive';
 
 @Directive({
   selector: '[appLoadingOverlay]'
 })
-export class LoadingOverlayDirective{
+export class LoadingOverlayDirective extends BaseLoadingOverlayDirective{
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef) { super() }
 
   @Input()
-  set appLoadingOverlay(loading: boolean) {   
-    if(loading)  this.createOverlay(this.elementRef.nativeElement)
-    else this.createRegular(this.elementRef.nativeElement);    
-  }
-
-  private createRegular(el: any){
-    el.disabled = false;  
-    el.classList.remove("loading-overlay", "spinner");
-  }
-
-  private createOverlay(el: any){
-    el.disabled = true;  
-    el.classList.add("loading-overlay", "spinner");
+  set appLoadingOverlay(loading: boolean) { 
+    if(loading) this.addOverlay(this.elementRef.nativeElement)
+    else this.removeOverlay(this.elementRef.nativeElement);    
   }
 
 }
