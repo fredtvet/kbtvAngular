@@ -25,6 +25,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(private notificationService: NotificationService) { console.log("HttpErrorInterceptor"); }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if(request.responseType != "json") return next.handle(request);
     return next.handle(request).pipe(tap(() => {},
       (err: any) => {
       if (err instanceof HttpErrorResponse) { 

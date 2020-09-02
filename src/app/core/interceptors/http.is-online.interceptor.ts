@@ -21,8 +21,8 @@ export class HttpIsOnlineInterceptor implements HttpInterceptor {
       timer(2000).pipe(map(x => false)), //Emits false after x time IF no indication of online
       this.deviceInfoService.isOnline$.pipe(first(x => x ===true))
     ).pipe(switchMap(isOnline => {
-        if(isOnline) return next.handle(request);
-        else return this.throwNotOnlineError();
+        if(isOnline || request.responseType != "json") return next.handle(request); //Not showing errors for static content etc.
+        else{ console.log(request); return this.throwNotOnlineError();}
     }));
   }
 
