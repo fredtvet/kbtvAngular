@@ -1,5 +1,6 @@
-import { BaseEntity } from './base-entity.interface';
+import { TempEntity } from './temp-entity.interface';
 
-export interface MissionType extends BaseEntity {
+export interface MissionType extends TempEntity {
+     id: number;
     name: string;
 };

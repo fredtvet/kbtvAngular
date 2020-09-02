@@ -1,6 +1,7 @@
-import { BaseEntity } from './base-entity.interface';
+import { TempEntity } from './temp-entity.interface';
 
-export interface Employer extends BaseEntity {
+export interface Employer extends TempEntity {
+    id: number;
     name: string;
     email?: string;
     phoneNumber?: string;

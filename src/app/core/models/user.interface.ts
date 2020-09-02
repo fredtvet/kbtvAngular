@@ -1,6 +1,7 @@
 import { Employer } from './employer.interface';
+import { TempEntity } from './temp-entity.interface';
 
-export interface User {
+export interface User extends TempEntity {
   userName: string;
   firstName: string;
   lastName: string;

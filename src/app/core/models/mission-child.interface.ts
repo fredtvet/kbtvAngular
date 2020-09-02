@@ -1,7 +1,8 @@
 import { Mission } from './mission.interface';
-import { BaseEntity } from './base-entity.interface';
+import { TempEntity } from './temp-entity.interface';
 
-export interface MissionChild extends BaseEntity{
-  missionId: number;
-  mission: Mission;
+export interface MissionChild extends TempEntity{
+  id?: number;
+  missionId?: number;
+  mission?: Mission;
 }

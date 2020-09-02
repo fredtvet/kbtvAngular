@@ -1,5 +1,6 @@
-import { BaseEntity } from './base-entity.interface';
+import { TempEntity } from './temp-entity.interface';
 
-export interface InboundEmailPassword extends BaseEntity{
+export interface InboundEmailPassword extends TempEntity{
+    id: number;
     password: string;
 }

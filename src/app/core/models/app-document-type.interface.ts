@@ -1,5 +1,6 @@
-import { BaseEntity } from './base-entity.interface';
+import { TempEntity } from './temp-entity.interface';
 
-export interface AppDocumentType extends BaseEntity {
+export interface AppDocumentType extends TempEntity {
+    id: number;
     name: string;
 };
