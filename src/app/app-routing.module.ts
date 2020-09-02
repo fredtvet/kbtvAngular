@@ -14,7 +14,7 @@ const routes: Routes = [
       {path: '', redirectTo: 'hjem', pathMatch: 'full'},
 
       {path: 'hjem', loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
-       data: {page: AppPages.Home}},  
+       data: {preload: true, page: AppPages.Home}},  
 
       {path: 'profil', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule), 
         data: {preload: true, page: AppPages.Profile}},

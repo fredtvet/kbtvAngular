@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DeviceInfoService, IconService, NotificationService, PersistanceStore } from './core/services';
 import { skip } from 'rxjs/operators';
 import { NotificationType } from './core/services/notification';
+import { SyncStore } from './core/services/sync';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ export class AppComponent {
   title = 'test-client';
 
   constructor(
+    syncStore: SyncStore,
     persistanceStore: PersistanceStore,
     deviceInfoService: DeviceInfoService,
     iconService: IconService,
