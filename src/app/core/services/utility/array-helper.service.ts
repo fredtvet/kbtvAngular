@@ -9,7 +9,7 @@ export class ArrayHelperService {
   constructor() { console.log("ArrayHelperService"); }
 
   find<T>(array: T[], value: any, identifier: string){
-    if(this.isEmptyArray(array) || !value || value === null) return undefined;
+    if(!array || array.length == 0 || !value) return undefined;
     let result: T;
     for(let i = 0; i < array.length; i++){
       let obj = array[i];
@@ -22,14 +22,14 @@ export class ArrayHelperService {
   }
 
   add<T>(array: T[], value: T): T[]{
-    if(this.isEmptyArray(array)) return array;
+    if(!array || array.length == 0) return array;
     let arr = array.slice();
     arr.unshift(value);
     return arr;
   }
 
   update<T>(array: T[], updatedObj: Partial<T>, identifier: string){
-    if(this.isEmptyArray(array)) return array;
+    if(!array || array.length == 0) return array;
     let arr = array.slice();
     for(let i = 0; i < arr.length; i++){
       let obj = arr[i];
@@ -42,7 +42,7 @@ export class ArrayHelperService {
   }
 
   replace<T>(array: T[], obj: T, id: any, identifier: string){
-    if(this.isEmptyArray(array)) return array;
+    if(!array || array.length == 0) return array;
     let arr = array.slice();
     for(let i = 0; i < arr.length; i++){
       let currObj = arr[i];
@@ -55,8 +55,8 @@ export class ArrayHelperService {
   }
 
   addOrUpdateRange<T>(originals: T[], newEntities: T[], identifier: string): T[]{       
-    if(this.isEmptyArray(newEntities)) return originals?.slice(); //If no entities, just return current val
-    if(this.isEmptyArray(originals)) return newEntities.slice(); //If initial array empty, just return empty array
+    if(!newEntities || newEntities.length == 0) return originals?.slice(); //If no entities, just return current val
+    if(!originals || originals.length == 0) return newEntities.slice(); //If initial array empty, just return empty array
 
     let originalsObj = this.convertArrayToObject(originals, 'id');
 
@@ -77,7 +77,7 @@ export class ArrayHelperService {
   }
 
   filter<T>(originals: T[], expression: (value: T, index?: number, Array?: any[]) => boolean): T[]{
-    if(this.isEmptyArray(originals)) return undefined;
+    if(!originals || originals.length == 0) return undefined;
     let filtered = [];
     for(let i = 0; i < originals.length; i++){
       let obj = originals[i];
@@ -87,8 +87,8 @@ export class ArrayHelperService {
   }
 
   removeRangeByIdentifier<T>(originals: T[], deletedIds: any[], identifier: string): T[]{       
-    if(this.isEmptyArray(deletedIds)) return originals?.slice(); //If no deleted ids, just return originals
-    if(this.isEmptyArray(originals)) return []; //If initial array empty, just return empty array
+    if(!deletedIds || deletedIds.length == 0) return originals?.slice(); //If no deleted ids, just return originals
+    if(!originals || originals.length == 0) return []; //If initial array empty, just return empty array
 
     let originalsObj = this.convertArrayToObject(originals, identifier);
 
@@ -106,7 +106,7 @@ export class ArrayHelperService {
   }
 
   removeByIdentifier<T>(originals: T[], deletedId: any, identifier: string): T[]{       
-    if(this.isEmptyArray(originals)) return []; //If initial array empty, just return empty array
+    if(!originals || originals.length == 0) return []; //If initial array empty, just return empty array
 
     let arr2 = originals.slice();
     for(var i = 0; i<arr2.length;i++){
@@ -120,8 +120,8 @@ export class ArrayHelperService {
   }
 
   getRangeByIdentifier<T>(originals: T[], ids: any[], identifier: string): T[]{       
-    if(this.isEmptyArray(ids)) return originals.slice(); //If no deleted ids, just return originals
-    if(this.isEmptyArray(originals)) return []; //If initial array empty, just return empty array
+    if(!ids || ids.length == 0) return originals.slice(); //If no deleted ids, just return originals
+    if(!originals || originals.length == 0) return []; //If initial array empty, just return empty array
 
     let originalsObj = this.convertArrayToObject(originals, identifier);
     let result: T[] = [];
@@ -134,7 +134,7 @@ export class ArrayHelperService {
   }
 
   convertArrayToObject = <T>(array: T[], key?: string): { [key: string]: T } => {
-    if(this.isEmptyArray(array)) return {};
+    if(!array || array.length == 0) return {};
     return array.reduce((obj, item) => {
         const itemKey = key ? item[key] : item;
         obj[itemKey] = item;
@@ -143,13 +143,11 @@ export class ArrayHelperService {
   }
 
   groupBy = <T>(array: T[], key: string): {[key: string] : T[]} => {
-    if(this.isEmptyArray(array)) return {};
+    if(!array || array.length == 0) return {};
     return array.reduce((groups, x) => {
       (groups[x[key]] = groups[x[key]] || []).push(x);
       return groups;
     }, {});
   }
-
-  isEmptyArray = (arr: any[]) => !arr || arr.length === 0
 
 }
