@@ -3,9 +3,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { filter } from 'rxjs/operators';
 import { DownloaderService } from 'src/app/core/services';
 import { Roles } from 'src/app/shared-app/enums';
-import { AppFile } from 'src/app/shared-app/interfaces';
 import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 import { MissionImageListStore } from '../mission-image-list.store';
+import { AppFile } from 'src/app/core/models';
 
 @Component({
   selector: 'app-timesheet-card-dialog-wrapper',

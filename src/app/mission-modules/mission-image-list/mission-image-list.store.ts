@@ -7,7 +7,7 @@ import {
   ApiService,
   ArrayHelperService
 } from "src/app/core/services";
-import { BaseModelStore } from "../../core/state";
+import { BaseModelStore } from 'src/app/core/state/abstractions/base-model.store';
 import { StoreState } from './store-state';
 
 @Injectable({

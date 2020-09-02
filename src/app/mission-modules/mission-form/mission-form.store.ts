@@ -1,20 +1,20 @@
 import { Injectable } from "@angular/core";
-import { Observable, throwError } from "rxjs";
-import { catchError, tap } from "rxjs/operators";
+import { Observable } from "rxjs";
 import { ApiUrl } from 'src/app/core/api-url.enum';
-import { Mission, MissionDocument, MissionImage, MissionNote } from "src/app/core/models";
+import { Mission, MissionDocument } from "src/app/core/models";
 import {
   ApiService,
   ArrayHelperService
 } from "src/app/core/services";
-import { OnStateAdd, OnStateDelete, OnStateUpdate, OptimisticFormStore } from "../../core/state";
+import { OptimisticModelFormStore } from 'src/app/core/state/abstractions/optimistic-model-form.store';
+import { OnStateAdd, OnStateDelete, OnStateUpdate } from "../../core/state";
 import { CreateMission, UpdateMission } from './interfaces/mission-commands.interface';
 import { StoreState } from './interfaces/store-state';
 
 @Injectable({
   providedIn: 'any',
 })
-export class MissionFormStore extends OptimisticFormStore<StoreState> implements OnStateAdd, OnStateUpdate, OnStateDelete  {
+export class MissionFormStore extends OptimisticModelFormStore<StoreState> implements OnStateAdd, OnStateUpdate, OnStateDelete  {
 
   constructor(
     apiService: ApiService,
@@ -63,7 +63,7 @@ export class MissionFormStore extends OptimisticFormStore<StoreState> implements
     
     return this._add$(
       this.apiService.post(`${ApiUrl.Mission}/CreateFromPdfReport`, body), 
-      {id: 0}, 
+      {id: 0, address: ""} as Mission, 
       this.addStateFromPdfReportResponse
     );
   }

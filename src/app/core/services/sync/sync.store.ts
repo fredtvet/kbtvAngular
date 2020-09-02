@@ -3,7 +3,7 @@ import { ApplicationRef, Injectable } from '@angular/core';
 import { concat, interval, Observable } from 'rxjs';
 import { distinctUntilKeyChanged, first, retry, switchMap, tap, distinctUntilChanged, pairwise, skip } from 'rxjs/operators';
 import { User } from '../../models/user.interface';
-import { BaseModelStore } from '../../state/base-model.store';
+import { BaseModelStore } from '../../state/abstractions/base-model.store';
 import { ModelStateConfig } from '../../state/model-state.config';
 import { ApiService } from '../api.service';
 import { AuthStoreActions } from '../auth/auth-store-actions.enum';

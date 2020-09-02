@@ -4,7 +4,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, tap } from "rxjs/operators";
-import { MissionImage } from 'src/app/core/models';
+import { MissionImage, AppFile } from 'src/app/core/models';
 import { DeviceInfoService, DownloaderService } from 'src/app/core/services';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
@@ -13,7 +13,7 @@ import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-
 import { MailImageSheetComponent } from '../mail-image-sheet.component';
 import { MissionImageListStore } from '../mission-image-list.store';
 import { NotificationType, NotificationService } from 'src/app/core/services/notification';
-import { AppFile,AppButton } from 'src/app/shared-app/interfaces';
+import { AppButton } from 'src/app/shared-app/interfaces';
 
 @Component({
   selector: "app-mission-image-list",

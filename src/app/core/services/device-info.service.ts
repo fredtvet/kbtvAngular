@@ -3,10 +3,7 @@ import { fromEvent, Observable, merge, Observer } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
-@Injectable({
-  providedIn: 'root'
-})
-
+@Injectable({providedIn: 'root'})
 export class DeviceInfoService {
 
   constructor(private breakpointObserver: BreakpointObserver) { console.log("DeviceInfoService");}

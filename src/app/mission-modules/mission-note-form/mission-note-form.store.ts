@@ -8,7 +8,8 @@ import {
   ArrayHelperService
 } from "src/app/core/services";
 import { StoreState } from './store-state';
-import { BaseModelStore, OnStateUpdate, OnStateAdd, OnStateDelete } from 'src/app/core/state';
+import { OnStateUpdate, OnStateAdd, OnStateDelete } from 'src/app/core/state';
+import { BaseModelStore } from 'src/app/core/state/abstractions/base-model.store';
 
 @Injectable({
   providedIn: 'any',

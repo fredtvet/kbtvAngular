@@ -4,7 +4,7 @@ import { filter, map, take, tap, withLatestFrom } from 'rxjs/operators';
 import { ApiUrl } from 'src/app/core/api-url.enum';
 import { Mission, Timesheet, User } from 'src/app/core/models';
 import { ApiService, ArrayHelperService, DateTimeService, TimesheetSummaryAggregator } from 'src/app/core/services';
-import { BaseModelStore } from 'src/app/core/state';
+import { BaseModelStore } from 'src/app/core/state/abstractions/base-model.store';
 import { DateRangePresets, GroupByPeriod } from 'src/app/shared-app/enums';
 import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared/interfaces';
 import { TimesheetFilter } from 'src/app/shared/timesheet-filter.model';

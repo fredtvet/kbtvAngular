@@ -5,57 +5,57 @@ export interface ModelPropertyConfig {
     apiUrl: ApiUrl, 
     identifier: string, 
     notPersisted?: boolean, 
-    modelProp?: string,
-    fkProp?: string,
-    children?: Extract<keyof ModelState, string>[],
-    foreignKeys?: Extract<keyof ModelState, string>[]
+    foreignProp?: string,
+    foreignKey?: string,
+    children?: (Extract<keyof Partial<ModelState>, string>)[],
+    foreigns?: (Extract<keyof Partial<ModelState>, string>)[]
 }
 
 export const ModelStateConfig: {[key in Extract<keyof ModelState, string>]: ModelPropertyConfig} = {
     missions: {
         apiUrl: ApiUrl.Mission, 
         identifier: "id", 
-        modelProp: "mission",
-        fkProp: "missionId",
+        foreignProp: "mission",
+        foreignKey: "missionId",
         children: ["missionImages", "missionDocuments", "missionNotes"], 
-        foreignKeys: ["missionTypes","employers"],       
+        foreigns: ["missionTypes","employers"],       
     },
     missionTypes: {
         apiUrl: ApiUrl.MissionType, 
         identifier: "id",    
-        modelProp: "missionType",
-        fkProp: "missionTypeId",
+        foreignProp: "missionType",
+        foreignKey: "missionTypeId",
     },
     employers: {
         apiUrl: ApiUrl.Employer, 
         identifier: "id",    
-        modelProp: "employer",
-        fkProp: "employerId",
+        foreignProp: "employer",
+        foreignKey: "employerId",
     },
     documentTypes: {
         apiUrl: ApiUrl.DocumentType, 
         identifier: "id",    
-        modelProp: "documentType",
-        fkProp: "documentTypeId",
+        foreignProp: "documentType",
+        foreignKey: "documentTypeId",
     }, 
     missionImages:  {
         apiUrl: ApiUrl.MissionImage, 
         identifier: "id",    
-        modelProp: "missionImage",
-        fkProp: "missionImageId",
+        foreignProp: "missionImage",
+        foreignKey: "missionImageId",
     },    
     missionDocuments:  {
         apiUrl: ApiUrl.MissionDocument, 
         identifier: "id", 
-        modelProp: "missionDocument",
-        fkProp: "missionDocumentId",
-        foreignKeys: ["documentTypes"]
+        foreignProp: "missionDocument",
+        foreignKey: "missionDocumentId",
+        foreigns: ["documentTypes"]
     },    
     missionNotes:  {
         apiUrl: ApiUrl.MissionNote, 
         identifier: "id",    
-        modelProp: "missionNote",
-        fkProp: "missionNoteId",
+        foreignProp: "missionNote",
+        foreignKey: "missionNoteId",
     },
     users: {
         apiUrl: ApiUrl.Users, 
@@ -69,11 +69,17 @@ export const ModelStateConfig: {[key in Extract<keyof ModelState, string>]: Mode
     }, 
     userTimesheets: {
         apiUrl: ApiUrl.UserTimesheet, 
-        identifier: "id"
+        identifier: "id",
+        foreignProp: "timesheet",
+        foreignKey: "timesheetId",
+        foreigns: ["missions"],  
     },    
     timesheets: {
         apiUrl: ApiUrl.Timesheet, 
         identifier: "id", 
-        notPersisted: true
+        notPersisted: true,
+        foreignProp: "timesheet",
+        foreignKey: "timesheetId",
+        foreigns: ["missions"],  
     }, 
 }

@@ -4,7 +4,6 @@ import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
 import { User } from 'src/app/core/models';
 import { ApiUrl } from '../../api-url.enum';
-import { BaseModelStore } from '../../state';
 import { ApiService } from '../api.service';
 import { DeviceInfoService } from '../device-info.service';
 import { ArrayHelperService } from '../utility/array-helper.service';
@@ -13,6 +12,7 @@ import { AuthStoreActions } from './auth-store-actions.enum';
 import { StoreState } from './interfaces/store-state';
 import { AccessToken, TokenResponse } from './interfaces/tokens.interface';
 import { Credentials } from './interfaces/credentials.interface';
+import { BaseModelStore } from '../../state/abstractions/base-model.store';
 
 @Injectable({
   providedIn: 'root'

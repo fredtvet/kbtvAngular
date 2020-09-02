@@ -1,20 +1,23 @@
 import { Injectable } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
-import { BaseEntity } from "src/app/core/models";
-import { ModelPropertyConfig, ModelStateConfig } from './model-state.config';
+import { TempEntity } from "src/app/core/models";
+import { ApiService } from '../../services/api.service';
+import { ArrayHelperService } from '../../services/utility/array-helper.service';
 import { BaseModelStore } from './base-model.store';
-import { ModelState } from './global.state';
-import { ApiService } from '../services/api.service';
-import { ArrayHelperService } from '../services/utility/array-helper.service';
-import { Optimistic } from './optimistic.action';
+import { ModelPropertyConfig, ModelStateConfig } from '../model-state.config';
+import { Optimistic } from '../optimistic.action';
   
 @Injectable({
   providedIn: 'any',
 })
-export abstract class OptimisticFormStore<TState extends Partial<ModelState>> extends BaseModelStore<TState>  {
+export abstract class OptimisticModelFormStore<TState> extends BaseModelStore<TState>  {
 
-  protected get propCfg(): ModelPropertyConfig { return ModelStateConfig[this.stateProp as string]; };
+  protected get propCfg(): ModelPropertyConfig { 
+    const cfg = ModelStateConfig[this.stateProp as string];
+    if(!cfg) throw `No model state settings for property ${this.stateProp}`;
+    return ModelStateConfig[this.stateProp as string]; 
+  };
 
   constructor(
     arrayHelperService: ArrayHelperService,
@@ -26,14 +29,18 @@ export abstract class OptimisticFormStore<TState extends Partial<ModelState>> ex
     console.log("BaseFormStore")
   }
 
-  protected _add$(postObserver: Observable<any>, optimisticAdd: BaseEntity, stateFunc?: (response: any) => Partial<TState>): Observable<void> {
+  protected _add$<TEntity extends TempEntity>(
+    postObserver: Observable<any>, 
+    optimisticAdd: TEntity, 
+    stateFunc?: (response: any) => Partial<TState>
+  ): Observable<void> {
     if(!this.stateProp) throwError("No state property set");
     let tempId = Math.floor(Math.random() * (100000 - 1) + 1);
     let state = this.getState(false);
   
     this._updateStateProperty(
        this.stateProp, 
-      (entities: BaseEntity[]) => this.arrayHelperService.add(entities, {...optimisticAdd, tempId}), 
+      (entities: TEntity[]) => this.arrayHelperService.add(entities, {...optimisticAdd, tempId}), 
       Optimistic
     )
 
@@ -47,13 +54,16 @@ export abstract class OptimisticFormStore<TState extends Partial<ModelState>> ex
         );  
   }
 
-  protected _update$(postObserver: Observable<any>, optimisticUpdate: BaseEntity, stateFunc?: (response: any) => Partial<TState>): Observable<void> {
+  protected _update$<TEntity extends TempEntity>(
+    postObserver: Observable<any>, 
+    optimisticUpdate: TEntity, 
+    stateFunc?: (response: any) => Partial<TState>): Observable<void> {
     if(!this.stateProp) throwError("No state property set");
     let state = this.getState(false);
 
     this._updateStateProperty(
         this.stateProp, 
-        (entities: BaseEntity[]) => this.arrayHelperService.update(entities, optimisticUpdate, this.propCfg.identifier),
+        (entities: TEntity[]) => this.arrayHelperService.update(entities, optimisticUpdate, this.propCfg.identifier),
         Optimistic
     )
 
@@ -73,7 +83,7 @@ export abstract class OptimisticFormStore<TState extends Partial<ModelState>> ex
 
     this._updateStateProperty(
         this.stateProp, 
-        (entities: BaseEntity[]) => this.arrayHelperService.removeByIdentifier(entities, id, this.propCfg.identifier),
+        (entities: TempEntity[]) => this.arrayHelperService.removeByIdentifier(entities, id, this.propCfg.identifier),
         Optimistic
     )
 
@@ -89,7 +99,7 @@ export abstract class OptimisticFormStore<TState extends Partial<ModelState>> ex
 
     this._updateStateProperty(
         this.stateProp, 
-        (entities: BaseEntity[]) => this.arrayHelperService.removeRangeByIdentifier(entities, ids, this.propCfg.identifier),
+        (entities: TempEntity[]) => this.arrayHelperService.removeRangeByIdentifier(entities, ids, this.propCfg.identifier),
         Optimistic
     )
 
@@ -101,17 +111,18 @@ export abstract class OptimisticFormStore<TState extends Partial<ModelState>> ex
   }
 
   //Add foreign properties (multiple properties can be created in single API call)
-  private modifyEntityWithForeigns<TEntity extends BaseEntity>
-    (entity: TEntity, actionFn: (entity: TEntity, entities: TEntity[]) => TEntity[]): Partial<TState>{
+  private modifyEntityWithForeigns
+    (entity: TempEntity, actionFn: (entity: TempEntity, entities: TempEntity[]) => TempEntity[]): Partial<TState>{
 
     let state: Partial<TState> = {};
     
-    for(var fk of this.propCfg.foreignKeys || []){
-        const fkPropConfig = ModelStateConfig[fk]; //Key information about foreign prop
-        if(entity[fkPropConfig.modelProp]?.id){ //If response model contains fk entity, add to state
-            state[fk] = this.arrayHelperService.add(this.getStateProperty(fk), entity[fkPropConfig.modelProp]);
-            entity[fkPropConfig.fkProp] = entity[fkPropConfig.modelProp].id; //Set foreign key on entity
-            entity[fkPropConfig.modelProp] = null; //Remove foreign entity to prevent duplicate data
+    for(var fkProp of this.propCfg.foreigns || []){
+        const fkPropConfig = ModelStateConfig[fkProp]; //Key information about foreign prop
+        const foreignEntity = entity[fkPropConfig.foreignProp];
+        if(foreignEntity?.id){ //If response model contains fk entity, add to state
+            state[fkProp] = this.arrayHelperService.add(this.getStateProperty(fkProp), foreignEntity);
+            entity[fkPropConfig.foreignKey] = foreignEntity.id; //Set foreign key on entity
+            entity[fkPropConfig.foreignProp] = null; //Remove foreign entity to prevent duplicate data
         }
     }
 
@@ -122,13 +133,15 @@ export abstract class OptimisticFormStore<TState extends Partial<ModelState>> ex
   }
 
   private deleteEntityChildren(cfg: {id?: number, ids?: number[]}): Partial<TState>{
+    if(!cfg.id && !cfg.ids) throw "deleteEntityChildren config requires either id or ids property set."
     let state: Partial<TState> = {};
 
-    let filterExp = (x) => x[this.propCfg.fkProp] !== cfg.id;
-    if(cfg.ids) filterExp = (x) => !cfg.ids.includes(x[this.propCfg.fkProp]);
+    let filterExp: (x: Object) => boolean;
+    if(cfg.id) filterExp = (x) => x[this.propCfg.foreignKey] !== cfg.id;
+    else if(cfg.ids) filterExp = (x) => !cfg.ids.includes(x[this.propCfg.foreignKey]);
 
     for(var childProp of this.propCfg.children || []){
-        state[childProp as string] = 
+        state[childProp] = 
             this.arrayHelperService.filter(this.getStateProperty(childProp), filterExp);
     };
 

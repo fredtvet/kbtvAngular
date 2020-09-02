@@ -36,7 +36,7 @@ export abstract class BaseModelStore<TState> extends ObservableStore<TState>  {
                 }, {}))
             ), //Initial state
             this.stateSliceChanges$(properties)
-         ).pipe(debounceTime(5)) as Observable<Partial<TState>>;
+         ) as Observable<Partial<TState>>;
      }
 
     stateSliceChanges$ = (properties: Extract<keyof TState, string>[]): Observable<Partial<TState>> => { 
@@ -68,7 +68,7 @@ export abstract class BaseModelStore<TState> extends ObservableStore<TState>  {
         return this.property$<T>(property).pipe(
             filter(x => {
                 if(!x) {
-                    fetchData$.subscribe(); 
+                    fetchData$.subscribe(); //subscribe and kill emission, next emission when subscribe finishes.  
                     return false
                 }
                 return true;
@@ -102,6 +102,4 @@ export abstract class BaseModelStore<TState> extends ObservableStore<TState>  {
         state['lastAction'] = action;
         return super.setState(state, action, dispatchState, deepCloneState);
     }
-
-    protected _isNullOrUndefined = (x: any) => (x === undefined || x === null);
 }
