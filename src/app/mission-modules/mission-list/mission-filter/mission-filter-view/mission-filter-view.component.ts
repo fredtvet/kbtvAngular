@@ -24,6 +24,7 @@ export class MissionFilterViewComponent {
 
   ngOnInit(): void {
     this.initalizeForm(this.criteria);
+    console.log(this.filterForm.value); 
     this.initMissionListener();
   }
   
@@ -35,6 +36,12 @@ export class MissionFilterViewComponent {
   reset = () => {
     this.filterForm.reset({finished: false});
     this.filterForm.markAsDirty()
+  }
+
+  isFormNotEmpty = () => {
+    for (var key in this.filterForm.value) {  
+      if(this.filterForm.value[key]) return true;
+    }
   }
 
   private initalizeForm(x: MissionFilterCriteria){

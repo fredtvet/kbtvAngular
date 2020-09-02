@@ -47,7 +47,7 @@
     <span class="mb-2"></span>
 
     <span fxLayout="row" fxLayoutAlign="space-between center">
-        <button mat-button color="warn" (click)="reset()">Nullstill</button>
+        <button mat-button [disabled]="!isFormNotEmpty()" color="warn" (click)="reset()">Nullstill</button>
 
         <button mat-button color="primary" 
             [disabled]="filterForm.invalid || filterForm.pristine"
