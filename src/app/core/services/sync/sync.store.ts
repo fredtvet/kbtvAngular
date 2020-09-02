@@ -64,7 +64,6 @@ export class SyncStore extends BaseModelStore<StoreState>{
       return this.apiService
         .get('/SyncAll', params)
         .pipe(
-          retry(3),
           tap(data => this.setSyncResponseState(data)),
       );
     })).subscribe();
@@ -115,7 +114,7 @@ export class SyncStore extends BaseModelStore<StoreState>{
     if(response?.entities?.length > 0) state.currentUser = response.entities[0] as User;
   }
 
-  private handleAuthActions(action: AuthStoreActions){
+  private handleAuthActions(action: AuthStoreActions){console.log(action);
     switch(action){
       case AuthStoreActions.Login: this.syncAll();
       case AuthStoreActions.Logout: this.purgeAll();
