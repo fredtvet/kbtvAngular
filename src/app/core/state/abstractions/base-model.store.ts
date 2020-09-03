@@ -1,7 +1,8 @@
 import { ObservableStore, ObservableStoreSettings } from '@codewithdan/observable-store';
-import { merge, Observable, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, take, tap } from 'rxjs/operators';
+import { merge, Observable, of, throwError } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, take, tap, catchError } from 'rxjs/operators';
 import { ApiService, ArrayHelperService } from 'src/app/core/services';
+import { Optimistic } from '../optimistic.action';
 
 export abstract class BaseModelStore<TState> extends ObservableStore<TState>  {
 
@@ -37,7 +38,7 @@ export abstract class BaseModelStore<TState> extends ObservableStore<TState>  {
             ), //Initial state
             this.stateSliceChanges$(properties)
          ) as Observable<Partial<TState>>;
-     }
+    }
 
     stateSliceChanges$ = (properties: Extract<keyof TState, string>[]): Observable<Partial<TState>> => { 
         return  this.globalStateWithPropertyChanges.pipe( //State changes
@@ -58,6 +59,23 @@ export abstract class BaseModelStore<TState> extends ObservableStore<TState>  {
        return super.getStateProperty(property, deepClone);
     }
     
+    protected _optimisticCommand$<TEntity, TResponse>(
+        postObserver: Observable<any>, 
+        stateProp: Extract<keyof TState, string>,
+        optimisticFunc: (prop: TEntity[]) => TEntity[], 
+        stateFunc: (response: TResponse) => Partial<TState>
+    ): Observable<void> {
+        if(!stateProp) throw "No state property provided for optimistic command";
+        let state = this.getState(false);
+    
+        this._updateStateProperty(stateProp, optimisticFunc, Optimistic)
+
+        return postObserver.pipe(
+            catchError(err => {this._setStateVoid(state, Optimistic); return throwError(err)}),
+            tap(entity => this._setStateVoid(stateFunc(entity)))
+        );  
+    }
+
     protected _propertyWithFetch$<T>(property: Extract<keyof TState, string>, fetch$: Observable<T>): Observable<T>{
         const fetchData$ = fetch$.pipe(take(1),filter(x => x != null), tap(arr => {
                 let state = {} as Partial<TState>;

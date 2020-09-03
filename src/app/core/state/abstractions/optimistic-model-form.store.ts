@@ -34,80 +34,56 @@ export abstract class OptimisticModelFormStore<TState> extends BaseModelStore<TS
     optimisticAdd: TEntity, 
     stateFunc?: (response: any) => Partial<TState>
   ): Observable<void> {
-    if(!this.stateProp) throwError("No state property set");
     let tempId = Math.floor(Math.random() * (100000 - 1) + 1);
-    let state = this.getState(false);
-  
-    this._updateStateProperty(
-       this.stateProp, 
-      (entities: TEntity[]) => this.arrayHelperService.add(entities, {...optimisticAdd, tempId}), 
-      Optimistic
-    )
 
-    return postObserver.pipe(
-          catchError(err => {this._setStateVoid(state, Optimistic); return throwError(err)}),
-          tap(entity => {
-            if(stateFunc) this._setStateVoid(stateFunc(entity));
-            else this._setStateVoid(this.modifyEntityWithForeigns(entity,
-              (entity, entities) => this.arrayHelperService.replace(entities, entity, tempId, "tempId")))
-          })
-        );  
+    const defaultStateFunc = (entity: TEntity) => this.modifyEntityWithForeigns(entity,
+      (entity, entities) => this.arrayHelperService.replace(entities, entity, tempId, "tempId"))
+
+    return this._optimisticCommand$(
+      postObserver,
+      this.stateProp,
+      (entities) => this.arrayHelperService.add(entities, {...optimisticAdd, tempId}),
+      stateFunc ? stateFunc : defaultStateFunc,
+    ); 
   }
 
   protected _update$<TEntity extends TempEntity>(
     postObserver: Observable<any>, 
     optimisticUpdate: TEntity, 
     stateFunc?: (response: any) => Partial<TState>): Observable<void> {
-    if(!this.stateProp) throwError("No state property set");
-    let state = this.getState(false);
 
-    this._updateStateProperty(
-        this.stateProp, 
-        (entities: TEntity[]) => this.arrayHelperService.update(entities, optimisticUpdate, this.propCfg.identifier),
-        Optimistic
-    )
+      const defaultStateFunc = (entity: TEntity) => this.modifyEntityWithForeigns(entity, 
+        (entity, entities) => this.arrayHelperService.update(entities, entity, this.propCfg.identifier));
 
-    return postObserver.pipe(
-        catchError(err => {this._setStateVoid(state, Optimistic); return throwError(err)}),
-        tap(entity => {
-          if(stateFunc) this._setStateVoid(stateFunc(entity));
-          else this._setStateVoid(this.modifyEntityWithForeigns(entity, 
-              (entity, entities) => this.arrayHelperService.update(entities, entity, this.propCfg.identifier)))
-        })
+      return this._optimisticCommand$(
+        postObserver,
+        this.stateProp,
+        (entities) => this.arrayHelperService.update(entities, optimisticUpdate, this.propCfg.identifier),
+        stateFunc ? stateFunc : defaultStateFunc,
+      );  
+  }
+
+  protected _delete$ = (id: number, stateFunc?: () => Partial<TState>): Observable<void> =>{
+
+    const defaultStateFunc = () => this.deleteEntityChildren({id});
+
+    return this._optimisticCommand$(
+      this.apiService.delete(this.propCfg.apiUrl + '/' + id),
+      this.stateProp,
+      (entities) => this.arrayHelperService.removeByIdentifier(entities, id, this.propCfg.identifier),
+      stateFunc ? stateFunc : defaultStateFunc,
     );  
   }
 
-  protected _delete$ = (id: number, stateFunc?: (id: number) => Partial<TState>): Observable<void> =>{
-    if(!this.stateProp) throwError("No state property set");
-    let state = this.getState(false);
+  protected _deleteRange$(ids: number[], stateFunc?: () => Partial<TState>): Observable<void> {
+    const defaultStateFunc = () => this.deleteEntityChildren({ids});
 
-    this._updateStateProperty(
-        this.stateProp, 
-        (entities: TempEntity[]) => this.arrayHelperService.removeByIdentifier(entities, id, this.propCfg.identifier),
-        Optimistic
-    )
-
-    return this.apiService.delete(this.propCfg.apiUrl + '/' + id).pipe(
-        catchError(err => {this._setStateVoid(state, Optimistic); return throwError(err)}),
-        tap(x => this._setStateVoid(stateFunc ? stateFunc(id) : this.deleteEntityChildren({id})))
+    return this._optimisticCommand$(
+      this.apiService.post(`${this.propCfg.apiUrl}/DeleteRange`, {Ids: ids}),
+      this.stateProp,
+      (entities) => this.arrayHelperService.removeRangeByIdentifier(entities, ids, this.propCfg.identifier),
+      stateFunc ? stateFunc : defaultStateFunc,
     ); 
-  }
-
-  protected _deleteRange$(ids: number[], stateFunc?: (ids: number[]) => Partial<TState>): Observable<void> {
-    if(!this.stateProp) throwError("No state property set");
-    let state = this.getState(false);
-
-    this._updateStateProperty(
-        this.stateProp, 
-        (entities: TempEntity[]) => this.arrayHelperService.removeRangeByIdentifier(entities, ids, this.propCfg.identifier),
-        Optimistic
-    )
-
-    return this.apiService.post(`${this.propCfg.apiUrl}/DeleteRange`, {Ids: ids})    
-        .pipe(
-          catchError(err => {this._setStateVoid(state, Optimistic); return throwError(err)}),
-          tap(x => this._setStateVoid(stateFunc ? stateFunc(ids) : this.deleteEntityChildren({ids}))) 
-        )
   }
 
   //Add foreign properties (multiple properties can be created in single API call)
