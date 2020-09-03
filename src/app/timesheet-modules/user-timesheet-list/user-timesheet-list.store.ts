@@ -13,7 +13,7 @@ import {
 import { DateRangePresets, GroupByPeriod } from 'src/app/shared-app/enums';
 import { WeekFilterCriteria } from 'src/app/shared-timesheet/components/week-filter/week-filter-config.interface';
 import { TimesheetFilter } from 'src/app/shared/timesheet-filter.model';
-import { BaseModelStore } from "../../core/state";
+import { BaseModelStore } from 'src/app/core/state/abstractions/base-model.store';
 import { StoreState } from './store-state';
 import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared/interfaces';
 

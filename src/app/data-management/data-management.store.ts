@@ -6,17 +6,20 @@ import {
     ApiService,
     ArrayHelperService
 } from "src/app/core/services";
-import { OptimisticFormStore } from '../core/state';
 import { ModelState } from '../core/state/global.state';
-import { ModelStateConfig } from '../core/state/model-state.config';
 import { StoreState } from './interfaces/store-state';
+import { OptimisticModelFormStore } from '../core/state/abstractions/optimistic-model-form.store';
+import { GetRangeWithRelationsHelper } from '../core/state/store-helpers/get-range-with-relations.helper';
+import { GetWithRelationsConfig } from '../core/state/store-helpers/get-with-relations.config';
+import { ModelStateSlice$ } from '../core/state/model-state-slice.type';
 
 @Injectable({
   providedIn: 'any',
 })
-export class DataManagementStore extends OptimisticFormStore<StoreState>  {
+export class DataManagementStore extends OptimisticModelFormStore<StoreState>  {
 
-    properties = ["missions", "employers", "missionTypes", "documentTypes", "inboundEmailPasswords"] as (keyof Partial<ModelState>)[];
+    properties:(keyof Partial<StoreState>)[] = 
+        ["missions", "employers", "missionTypes", "documentTypes", "inboundEmailPasswords"];
 
     selectedProperty$ = this.property$<keyof StoreState>("selectedProperty");
 
@@ -31,7 +34,8 @@ export class DataManagementStore extends OptimisticFormStore<StoreState>  {
 
     constructor(
         apiService: ApiService,
-        arrayHelperService: ArrayHelperService
+        arrayHelperService: ArrayHelperService,
+        private getRangeWithRelationsHelper: GetRangeWithRelationsHelper
     ) {
         super(arrayHelperService, apiService);
         this.selectedProperty$.subscribe(x => this.stateProp = x);
@@ -60,29 +64,14 @@ export class DataManagementStore extends OptimisticFormStore<StoreState>  {
     deleteRange$ = (ids: number[]): Observable<void> => this._deleteRange$(ids) 
     
     private getData$(property: keyof StoreState): Observable<any[]>{ 
-        if(property === "missions") return this.getAllMissions$();
-        if(this.propCfg.notPersisted) return super._propertyWithFetch$(property, this._fetchData$(this.propCfg.apiUrl))
-        return this.property$(property);
-    }
+        if(this.propCfg.notPersisted) 
+            return super._propertyWithFetch$(property, this.apiService.get(`${this.propCfg.apiUrl}`))
 
-    protected _fetchData$ = <T>(url: string): Observable<T> => this.apiService.get(`${url}`)
-    
-    private getAllMissions$(): Observable<Mission[]>{
-        return this.stateSlice$(["missions", "employers", "missionTypes"]).pipe(
-            map(({missions, employers, missionTypes}) => {  
-                if(!missions || missions.length == 0) return missions;
-    
-                let employersObj = this.arrayHelperService.convertArrayToObject(employers, 'id');
-                let typesObj = this.arrayHelperService.convertArrayToObject(missionTypes, 'id');
-            
-                for(var i = 0; i < missions.length; i++){
-                    let mission = missions[i];
-                    mission.employer = employersObj[mission.employerId];    
-                    mission.missionType = typesObj[mission.missionTypeId];
-                    missions[i] = mission;
-                }
-                return missions
-            })
+        return this.getRangeWithRelationsHelper.get$(
+            this.stateSlice$ as ModelStateSlice$, 
+            new GetWithRelationsConfig(property, null, {includeAll: true})
         );
-    } 
+
+    }
+    
 }

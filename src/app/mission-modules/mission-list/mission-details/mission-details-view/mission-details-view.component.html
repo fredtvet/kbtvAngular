@@ -1,41 +1,44 @@
-<div class="p-2 max-width" *ngIf="details">
+<div class="p-2 max-width" *ngIf="mission">
 
   <div fxLayout="row" fxLayoutGap="8px" class="mat-subheading-2 mb-2">
     
-    <a *ngIf="details.mission?.phoneNumber else noPhone" class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50"
-      href="tel:{{ details.mission?.phoneNumber }}"  matRipple>
+    <a *ngIf="mission?.phoneNumber else noPhone" class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50"
+      href="tel:{{ mission?.phoneNumber }}"  matRipple>
       <mat-icon class="scale-150 mb-1">phone</mat-icon><br />
-      <span>{{ details.mission?.phoneNumber || 'N/A' }} </span>
+      <span>{{ mission?.phoneNumber || 'N/A' }} </span>
     </a>
 
     <ng-template #noPhone>
       <span class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50">
         <mat-icon class="scale-150 mb-1">phone</mat-icon><br />
-        <span>{{ details.mission?.phoneNumber || 'N/A' }} </span>
+        <span>{{ mission?.phoneNumber || 'N/A' }} </span>
       </span>
     </ng-template>
 
-    <a href="https://www.google.com/maps/dir/?api=1&destination={{ details.mission?.address }}&travelmode=driving"
+    <a href="https://www.google.com/maps/dir/?api=1&destination={{ mission?.address }}&travelmode=driving"
       target="_blank" class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50" matRipple>
       <mat-icon class="scale-150">directions_car</mat-icon><br />
       <span>Veibeskrivelse</span>
     </a>
-    
+
   </div>
 
   <app-list-card [config]="{startIcon:'photo_library', ellipsisDisabled: true}"  
-    [routerLink]="['/oppdrag', details.mission?.id, 'bilder']">
-    <span [matBadge]="details.imageCount" matBadgeOverlap="false" matBadgeColor="accent">Bilder</span>
+    [routerLink]="['/oppdrag', mission?.id, 'bilder']">
+    <span [matBadge]="mission.missionImages ? mission.missionImages.length : 0" 
+      matBadgeOverlap="false" matBadgeColor="accent">Bilder</span>
   </app-list-card>
 
   <app-list-card *ifRole="RolePresets.Internal" [config]="{startIcon:'folder', ellipsisDisabled: true}" 
-    [routerLink]="['/oppdrag', details.mission?.id, 'dokumenter']">
-    <span [matBadge]="details.documentCount" matBadgeOverlap="false" matBadgeColor="accent">Dokumenter</span>
+    [routerLink]="['/oppdrag', mission?.id, 'dokumenter']">
+    <span [matBadge]="mission.missionDocuments ? mission.missionDocuments.length : 0" 
+      matBadgeOverlap="false" matBadgeColor="accent">Dokumenter</span>
   </app-list-card>
 
   <app-list-card *ifRole="RolePresets.Internal" [config]="{startIcon:'rate_review', ellipsisDisabled: true}" 
-    [routerLink]="['/oppdrag', details.mission?.id, 'notater']">
-    <span [matBadge]="details.noteCount" matBadgeOverlap="false" matBadgeColor="accent">Notater</span>
+    [routerLink]="['/oppdrag', mission?.id, 'notater']">
+    <span [matBadge]="mission.missionNotes ? mission.missionNotes.length : 0" 
+      matBadgeOverlap="false" matBadgeColor="accent">Notater</span>
   </app-list-card>
 
 

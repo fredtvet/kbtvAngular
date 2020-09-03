@@ -102,7 +102,7 @@ export class SyncStore extends BaseModelStore<StoreState>{
     
     state.syncTimestamps[prop] = response.timestamp; //Update given timestamp
     const modelSettings = ModelStateConfig[prop];
-    if(!modelSettings) throw `No model state settings for property ${prop}`;
+    if(!modelSettings) throw `No model state config for property ${prop}`;
     state[prop] = 
         this.arrayHelperService.addOrUpdateRange(this.getStateProperty(prop), response.entities, modelSettings.identifier); 
     state[prop] = 

@@ -2,13 +2,16 @@ import { Injectable } from "@angular/core";
 import { combineLatest, Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
 import { ApiUrl } from 'src/app/core/api-url.enum';
-import { AppDocumentType, Employer, Mission, MissionDocument } from "src/app/core/models";
+import { AppDocumentType, Employer, Mission, MissionDocument, Timesheet } from "src/app/core/models";
 import {
   ApiService,
   ArrayHelperService
 } from "src/app/core/services";
 import { BaseModelStore } from 'src/app/core/state/abstractions/base-model.store';
 import { StoreState } from './store-state';
+import { GetRangeWithRelationsHelper } from 'src/app/core/state/store-helpers/get-range-with-relations.helper';
+import { GetWithRelationsConfig } from 'src/app/core/state/store-helpers/get-with-relations.config';
+import { ModelStateSlice$ } from 'src/app/core/state/model-state-slice.type';
 
 @Injectable({
   providedIn: 'any',
@@ -17,21 +20,18 @@ export class MissionDocumentListStore extends BaseModelStore<StoreState>  {
 
   constructor(
     apiService: ApiService,
-    arrayHelperService: ArrayHelperService
+    arrayHelperService: ArrayHelperService,
+    private getRangeWithRelationsHelper: GetRangeWithRelationsHelper
   ) {
     super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
   }
 
   getByMissionIdWithType$(id: number): Observable<MissionDocument[]>{
-    return combineLatest(
-      this._getBy$("missionDocuments", (doc: MissionDocument) => doc.missionId === id),
-      this.property$<AppDocumentType[]>("documentTypes")
-    ).pipe(map(([documents, types]) => 
-        documents?.map(x => {
-          x.documentType = types?.find(type => type.id === x.documentTypeId);
-          return x;
-        })
-    ));
+    return this.getRangeWithRelationsHelper.get$(
+      this.stateSlice$ as ModelStateSlice$,
+      new GetWithRelationsConfig("missionDocuments", null, {include: {documentTypes: true}}),
+      (x: MissionDocument) => x.missionId === id
+    );
   } 
 
   getMissionEmployer(missionId: number): Employer{

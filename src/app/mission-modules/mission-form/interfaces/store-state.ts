@@ -1,4 +1,4 @@
-import { StateEmployers, StateMissionDocuments, StateMissions, StateMissionTypes, StateMissionImages, StateMissionNotes } from 'src/app/core/state';
+import { StateEmployers, StateMissionDocuments, StateMissionImages, StateMissionNotes, StateMissions, StateMissionTypes } from 'src/app/core/state';
 
 export interface StoreState extends 
     StateMissions, 

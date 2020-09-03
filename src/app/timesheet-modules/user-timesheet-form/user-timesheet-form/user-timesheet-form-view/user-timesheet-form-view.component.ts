@@ -84,7 +84,7 @@ export class UserTimesheetFormViewComponent{
     };
   }
 
-  private convertFormToTimesheet(formData:any){
+  private convertFormToTimesheet(formData:any): Timesheet{
     let date = new Date(formData.date).toDateString();
     return {
       id: formData.id,
@@ -92,7 +92,7 @@ export class UserTimesheetFormViewComponent{
       comment: formData.comment,
       startTime: new Date(date + " " + formData.timeRange[0].toTimeString()).toString(),
       endTime: new Date(date + " " + formData.timeRange[1].toTimeString()).toString(),
-    } as Timesheet;   
+    };   
   }
 
   get mission(){

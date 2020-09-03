@@ -8,14 +8,18 @@ import {
   ArrayHelperService
 } from "src/app/core/services";
 import { MissionFilter } from 'src/app/shared/mission-filter.model';
-import { OnStateAdd, OnStateUpdate, OnStateDelete, OptimisticFormStore } from "../../core/state";
+import { OnStateAdd, OnStateUpdate, OnStateDelete } from "../../core/state";
 import { StoreState } from './store-state';
 import { TimesheetStatus } from 'src/app/shared-app/enums';
+import { OptimisticModelFormStore } from 'src/app/core/state/abstractions/optimistic-model-form.store';
+import { GetWithRelationsHelper } from 'src/app/core/state/store-helpers/get-with-relations.helper';
+import { ModelStateSlice$ } from 'src/app/core/state/model-state-slice.type';
+import { GetWithRelationsConfig } from 'src/app/core/state/store-helpers/get-with-relations.config';
 
 @Injectable({
   providedIn: 'any',
 })
-export class UserTimesheetFormStore extends OptimisticFormStore<StoreState> implements OnStateAdd, OnStateUpdate, OnStateDelete {
+export class UserTimesheetFormStore extends OptimisticModelFormStore<StoreState> implements OnStateAdd, OnStateUpdate, OnStateDelete {
 
   filteredMissions$ = this.stateSlice$(["userTimesheetFormMissionCriteria", "missions"]).pipe(
       map(state => {    
@@ -27,18 +31,17 @@ export class UserTimesheetFormStore extends OptimisticFormStore<StoreState> impl
 
   constructor(
     apiService: ApiService,
-    arrayHelperService: ArrayHelperService
+    arrayHelperService: ArrayHelperService,
+    private getWithRelationsHelper: GetWithRelationsHelper
   ) {
     super(arrayHelperService, apiService, "userTimesheets");
   }
 
-  getWithMission$ = (id: number) => {
-    return this.stateSlice$(["userTimesheets", "missions"]).pipe(map(state => {
-      let timesheet = this.arrayHelperService.find(state.userTimesheets, id, "id");
-      console.log(timesheet);
-      if(!timesheet) return timesheet;
-      return {...timesheet, mission: this.arrayHelperService.find(state.missions, timesheet.missionId, "id")}
-    }))
+  getWithMission$ = (id: number): Observable<Timesheet> => {
+    return this.getWithRelationsHelper.get$(
+      this.stateSlice$ as ModelStateSlice$, id, 
+      new GetWithRelationsConfig("userTimesheets", null, {include: {missions: true}})
+    )
   }
  
   add$(timesheet: Timesheet): Observable<void> {

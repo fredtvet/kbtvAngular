@@ -1,18 +1,20 @@
-import { Observable, combineLatest } from "rxjs";
-import { map, tap, filter } from "rxjs/operators";
 import { Injectable } from "@angular/core";
+import { combineLatest, Observable } from "rxjs";
+import { map, tap } from "rxjs/operators";
+import { ApiUrl } from 'src/app/core/api-url.enum';
+import { Mission } from "src/app/core/models";
 import {
   ApiService,
-  ArrayHelperService,
+  ArrayHelperService
 } from "src/app/core/services";
-import { Mission, Employer, MissionType, MissionImage, MissionDocument, MissionNote } from "src/app/core/models";
-import { BaseModelStore } from "../../core/state";
-import { MissionDetails } from './interfaces/mission-details.interface';
-import { StoreState } from './interfaces/store-state';
-import { ApiUrl } from 'src/app/core/api-url.enum';
-import { MissionFilterConfig } from './interfaces/mission-filter-config.interface';
-import { MissionFilter } from 'src/app/shared/mission-filter.model';
+import { BaseModelStore } from 'src/app/core/state/abstractions/base-model.store';
+import { ModelStateSlice$ } from 'src/app/core/state/model-state-slice.type';
+import { GetWithRelationsConfig } from 'src/app/core/state/store-helpers/get-with-relations.config';
+import { GetWithRelationsHelper } from 'src/app/core/state/store-helpers/get-with-relations.helper';
 import { MissionFilterCriteria } from 'src/app/shared/interfaces';
+import { MissionFilter } from 'src/app/shared/mission-filter.model';
+import { MissionFilterConfig } from './interfaces/mission-filter-config.interface';
+import { StoreState } from './interfaces/store-state';
 
 @Injectable({
   providedIn: 'any',
@@ -47,30 +49,17 @@ export class MissionListStore extends BaseModelStore<StoreState>  {
 
   constructor(
     apiService: ApiService,
-    arrayHelperService: ArrayHelperService
+    arrayHelperService: ArrayHelperService,
+    private getWithRelationsHelper: GetWithRelationsHelper,
   ) {
     super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
     this.initState();
   }
 
-  getDetails$(id: number, trackHistory: boolean = true):Observable<MissionDetails>{
+  getWithRelations$(id: number, trackHistory: boolean = true):Observable<Mission>{
     if(trackHistory) this.updateLastVisited(id);
-    return combineLatest(
-        this._getById$<Mission>("missions", id, "id"),
-        this._getBy$<MissionImage>("missionImages", (x) => x.missionId === id).pipe(map(x => x?.length)),       
-        this._getBy$<MissionDocument>("missionDocuments", (x) => x.missionId === id).pipe(map(x => x?.length)),     
-        this._getBy$<MissionNote>("missionNotes", (x) => x.missionId === id).pipe(map(x => x?.length)), 
-        this.property$<Employer[]>("employers"), 
-        this.property$<MissionType[]>("missionTypes")
-    ).pipe(
-        map(([mission, imageCount, documentCount, noteCount, employers, types]) => {
-            let details:  MissionDetails = {mission, imageCount, documentCount, noteCount};
-            if(!mission) return details;
-            details.mission.employer = this.arrayHelperService.find(employers, details.mission?.employerId, 'id');
-            details.mission.missionType = this.arrayHelperService.find(types, details.mission?.missionTypeId, 'id');
-            return details;
-        })
-    );
+    let relationCfg = new GetWithRelationsConfig("missions", {includeAll: true});
+    return this.getWithRelationsHelper.get$(this.stateSlice$ as ModelStateSlice$, id, relationCfg);
   }
 
   addCriteria = (missionCriteria: MissionFilterCriteria): void => 

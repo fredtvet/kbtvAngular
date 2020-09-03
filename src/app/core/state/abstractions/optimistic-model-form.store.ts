@@ -15,7 +15,7 @@ export abstract class OptimisticModelFormStore<TState> extends BaseModelStore<TS
 
   protected get propCfg(): ModelPropertyConfig { 
     const cfg = ModelStateConfig[this.stateProp as string];
-    if(!cfg) throw `No model state settings for property ${this.stateProp}`;
+    if(!cfg) throw `No model state config for property ${this.stateProp}`;
     return ModelStateConfig[this.stateProp as string]; 
   };
 

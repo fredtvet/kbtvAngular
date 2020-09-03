@@ -9,3 +9,5 @@ export * from './user.interface';
 export * from './timesheet.interface';
 export * from './base-entity.interface';
 export * from './inbound-email-password.interface';
+export * from './temp-entity.interface';
+export * from './app-file.interface';

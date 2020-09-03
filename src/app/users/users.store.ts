@@ -7,9 +7,10 @@ import {
   ApiService,
   ArrayHelperService
 } from "src/app/core/services";
-import { BaseModelStore, OnStateAdd, OnStateUpdate, OnStateDelete } from '../core/state';
+import { OnStateAdd, OnStateUpdate, OnStateDelete } from '../core/state';
 import { Roles } from '../shared-app/enums';
 import { StoreState } from './store-state';
+import { BaseModelStore } from '../core/state/abstractions/base-model.store';
 
 @Injectable({
   providedIn: 'any',
@@ -61,7 +62,7 @@ export class UsersStore extends BaseModelStore<StoreState> implements OnStateAdd
   } 
 
   private sortByRole = (users: User[]): User[] => {
-    if(this._isNullOrUndefined(users)) return [];
+    if(!users) return [];
 
     let grouped = this.arrayHelperService.groupBy(users, "role");  
     return [...grouped[Roles.Leder], ...grouped[Roles.Mellomleder], ...grouped[Roles.Ansatt], ...grouped[Roles.Oppdragsgiver]];

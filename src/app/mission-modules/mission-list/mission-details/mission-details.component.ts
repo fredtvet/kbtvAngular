@@ -6,7 +6,6 @@ import { tap } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
 import { MainNavService, TopDetailNavConfig } from 'src/app/layout';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
-import { MissionDetails } from '../interfaces/mission-details.interface';
 import { MissionListStore } from '../mission-list.store';
 import { TimesheetStatus } from 'src/app/shared-app/enums';
 
@@ -21,7 +20,7 @@ export class MissionDetailsComponent{
   RolePresets = RolePresets;
   Roles = Roles;
 
-  details$: Observable<MissionDetails>;
+  mission$: Observable<Mission> = this.store.getWithRelations$(this.missionId).pipe(tap(x => this.configureMainNav(x)));
 
   get missionId() { return +this.route.snapshot.paramMap.get('id') }
 
@@ -32,11 +31,6 @@ export class MissionDetailsComponent{
     private router: Router,
     public dialog: MatDialog, 
   ){ }
-
-  ngOnInit(){
-    this.details$ = this.store.getDetails$(this.missionId)
-      .pipe(tap(x => this.configureMainNav(x.mission)));
-  }
 
   updateHeaderImage = (files: FileList): void => {
     this.store.updateHeaderImage$({id: this.missionId, file: files[0]}).subscribe();
