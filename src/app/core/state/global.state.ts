@@ -1,8 +1,10 @@
-import { Mission, Employer, MissionType, MissionImage, MissionDocument, MissionNote, AppDocumentType, Timesheet, User } from 'src/app/core/models';
+import { Mission, Employer, MissionType, MissionImage, MissionDocument, MissionNote, AppDocumentType, Timesheet, User, BaseEntity } from 'src/app/core/models';
 
 //export type KeysEnum<T> = { [P in keyof Required<T>]: P };
 
-export interface StateLastAction{ lastAction: string } 
+
+
+export interface StateLastAction { lastAction: string } 
 export interface StateMissions { missions: Mission[] }  
 export interface StateEmployers { employers: Employer[] }
 export interface StateMissionTypes { missionTypes: MissionType[] }
@@ -17,6 +19,10 @@ export interface StateUsers { users: User[] }
 export interface StateInboundEmailPassword { inboundEmailPasswords: User[] }
 export interface StateTimesheets { timesheets: Timesheet[] }
 
-export interface ModelState extends
+export interface ModelStateProperty{ 
+    [key:string]: BaseEntity[];
+}
+
+export interface ModelState extends ModelStateProperty,
     StateMissions, StateEmployers, StateMissionTypes, StateMissionImages, StateMissionDocuments, StateMissionNotes, StateDocumentTypes,
     StateUserTimesheets, StateUsers, StateInboundEmailPassword, StateTimesheets {}
