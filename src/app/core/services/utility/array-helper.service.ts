@@ -135,19 +135,22 @@ export class ArrayHelperService {
 
   convertArrayToObject = <T>(array: T[], key?: string): { [key: string]: T } => {
     if(!array || array.length == 0) return {};
-    return array.reduce((obj, item) => {
-        const itemKey = key ? item[key] : item;
-        obj[itemKey] = item;
-        return obj;
-    }, {});
+    const result = {}; 
+    for(var i = 0; i < array.length; i++){
+      const entity = array[i];
+      result[key ? entity[key] : entity] = entity
+    }
+    return result;
   }
 
   groupBy = <T>(array: T[], key: string): {[key: string] : T[]} => {
     if(!array || array.length == 0) return {};
-    return array.reduce((groups, x) => {
-      (groups[x[key]] = groups[x[key]] || []).push(x);
-      return groups;
-    }, {});
+    const result = {}; 
+    for(var i = 0; i < array.length; i++){
+      const entity = array[i];
+      (result[entity[key]] = result[entity[key]] || []).push(entity);
+    }
+    return result
   }
 
 }
