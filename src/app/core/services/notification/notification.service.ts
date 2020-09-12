@@ -13,7 +13,7 @@ export class NotificationService {
 
   private currentNotification: AppNotification;
 
-  constructor(private snackBar: MatSnackBar) {console.log("NotificationService");}
+  constructor(private snackBar: MatSnackBar) {}
 
   notify = (notification: AppNotification) => {
     if(!this.currentNotification && this.currentNotification !== null)

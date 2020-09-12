@@ -40,7 +40,7 @@ export class RolePreloadService implements PreloadingStrategy {
 
     private preloadedRoutes = {};
 
-    constructor(private authStore: AuthStore){ console.log("RolePreloadService"); }
+    constructor(private authStore: AuthStore){ }
 
     preload(route: Route, load: () => Observable<any>): Observable<any> {
       return this.authStore.currentUser$.pipe(

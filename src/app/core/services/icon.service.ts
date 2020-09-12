@@ -9,7 +9,7 @@ export class IconService {
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
-  ) { console.log("IconService"); }
+  ) { }
 
   private hasLoaded: boolean = false;
 

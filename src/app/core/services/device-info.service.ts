@@ -6,7 +6,7 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 @Injectable({providedIn: 'root'})
 export class DeviceInfoService {
 
-  constructor(private breakpointObserver: BreakpointObserver) { console.log("DeviceInfoService");}
+  constructor(private breakpointObserver: BreakpointObserver) { }
 
   get isOnline(){ return navigator.onLine };
 

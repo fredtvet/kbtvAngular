@@ -14,7 +14,7 @@ export class LoadingService {
   private queryLoadingSubject = new BehaviorSubject<boolean>(false);
   queryLoading$ = this.queryLoadingSubject.asObservable().pipe(distinctUntilChanged());
 
-  constructor() { console.log("LoadingService"); }
+  constructor() { }
 
   setCommandLoading(loading: boolean){
     this.commandLoadingSubject.next(loading);
