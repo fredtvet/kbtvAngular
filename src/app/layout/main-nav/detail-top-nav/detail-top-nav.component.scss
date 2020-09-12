@@ -28,6 +28,13 @@
     background-color:rgba(0,0,0,.75);
 }
 
+mat-toolbar.detail-nav, 
+mat-toolbar-row.detail-nav, 
+mat-toolbar-single-row.detail-nav{
+  height:auto!important;
+  padding: 2px!important;
+  min-height:40px!important;
+} 
 
 .overlay{
     position: absolute;
