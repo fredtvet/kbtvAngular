@@ -15,6 +15,6 @@ import { LazyStyles } from '../shared-app/enums';
 })
 export class AppAgGridModule { 
   constructor(private cssLoaderService: CssLoaderService){
-    this.cssLoaderService.loadStyle(LazyStyles.AgGrid); console.log('AgGridModule')
+    this.cssLoaderService.loadStyle(LazyStyles.AgGrid);
   }
 }

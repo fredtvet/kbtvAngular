@@ -1,4 +1,4 @@
-export enum ApiUrl {
+export const enum ApiUrl {
     Mission = "/Missions",
     MissionType = "/MissionTypes",
     MissionImage = "/MissionImages",
