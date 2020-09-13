@@ -1,9 +1,9 @@
 <div fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="5px"
     class="app-card m-1 p-2 mat-elevation-z2 fadeIn" *ngIf="note">
 
-    <ng-container *ngIf="note.title || note.pinned">
+    <ng-container *ngIf="note.title">
 
-        <span class="mat-h2 w-100" fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="mat-h2 w-100" fxLayout="row" fxLayoutAlign="space-between start">
             {{ note.title  }}
             <span class="ml-auto" *ngIf="note.pinned" fxLayout="column" fxLayoutAlign="center center">
                 <mat-icon color="accent">star</mat-icon>
@@ -13,8 +13,12 @@
 
     </ng-container>
 
-    <span class="mt-1">
-        {{ note.content }}
+    <span class="w-100 mt-1" fxLayout="row" fxLayoutAlign="space-between start">
+        {{ note.content }} das dsadad sadasd sad asd asdsad asdsadsadsad adasd sadas dasdsadasdsadsad adsadas dasd asdadas asdadsadsadsad
+        <span class="ml-auto" *ngIf="note.pinned && !note.title" fxLayout="column" fxLayoutAlign="center center">
+            <mat-icon color="accent">star</mat-icon>
+            <span class="mat-caption line-height-100">Viktig</span>
+        </span>
     </span>
 
     <mat-divider class="w-100 mb-0"></mat-divider>
