@@ -56,7 +56,14 @@ export class UserFormViewComponent extends BaseModelFormViewComponent<UserForm, 
         ]],
         employerId: [cfg?.entity?.employerId]
       });
-    }
+    } 
+
+    protected _convertFormDataToResponse(): SaveUserCommand{
+      let value = this.form.getRawValue();
+      if(value.role !== Roles.Oppdragsgiver) value.employerId = null;
+      return {entity: {...value, password: null}, password: value.password};
+  }
+
 
     changeRole(e){
       this.role.setValue(e.target.value,{onlySelf: true});

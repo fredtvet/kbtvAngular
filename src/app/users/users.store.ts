@@ -17,7 +17,7 @@ import { BaseModelStore } from '../core/state/abstracts/base-model.store';
 export class UsersStore extends BaseModelStore<StoreState> {
 
   sortedUsers$: Observable<User[]>;
-  get users(){ return this.getStateProperty("users"); }
+  get users(): User[]{ return this.getStateProperty("users"); }
 
   constructor(
     apiService: ApiService,
@@ -36,7 +36,12 @@ export class UsersStore extends BaseModelStore<StoreState> {
   private sortByRole = (users: User[]): User[] => {
     if(!users) return [];
 
-    let grouped = this.arrayHelperService.groupBy(users, "role");  
-    return [...grouped[Roles.Leder], ...grouped[Roles.Mellomleder], ...grouped[Roles.Ansatt], ...grouped[Roles.Oppdragsgiver]];
+    let grouped = this.arrayHelperService.groupBy(users, "role"); 
+    let result = [];
+
+    for(let role of Object.keys(Roles).map(key => Roles[key])) 
+      if(grouped[role]) result = result.concat(grouped[role])
+
+    return result;
   }
 }
