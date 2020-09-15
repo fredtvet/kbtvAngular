@@ -9,10 +9,11 @@ import { DeviceInfoService, DownloaderService } from 'src/app/core/services';
 import { Roles } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { ConfirmDialogComponent, ConfirmDialogConfig, SelectableListBase } from 'src/app/shared/components';
-import { MailDocumentSheetComponent } from '../mail-document-sheet.component';
+import { MailDocumentFormComponent } from '../mail-document-form.component';
 import { MissionDocumentListStore } from '../mission-document-list.store';
-import { NotificationType, NotificationService } from 'src/app/core/services/notification';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
+import { FormService } from 'src/app/core/services/form/form.service';
+import { appFileUrl } from 'src/app/shared-app/app-file-url.helper';
 
 @Component({
   selector: 'app-mission-document-list',
@@ -25,10 +26,10 @@ export class MissionDocumentListComponent {
   documentsWithType$: Observable<MissionDocument[]> = this.store.getByMissionIdWithType$(this.missionId);
   isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
 
-  private currentSelections: number[] = [];
+  private currentSelections: string[] = [];
   
   get missionId() {
-    return +this.route.snapshot.paramMap.get('id');
+    return this.route.snapshot.paramMap.get('id');
   }
 
   get selectedItemsFabs(): AppButton[] {
@@ -44,10 +45,9 @@ export class MissionDocumentListComponent {
 
   constructor(
     private deviceInfoService: DeviceInfoService,     
-    private bottomSheet: MatBottomSheet, 
+    private formService: FormService, 
     private downloaderService: DownloaderService,
     private store: MissionDocumentListStore,
-    private notificationService: NotificationService,
     private mainNavService: MainNavService,
     private route: ActivatedRoute,
     private router: Router,
@@ -57,14 +57,14 @@ export class MissionDocumentListComponent {
     this.configureMainNav(this.missionId)
   }
 
-  onSelectionChange(selections: number[]){
+  onSelectionChange(selections: string[]){
     if(!selections) return undefined;
     this.currentSelections = selections;
     this.updateFabs();
   }
 
   downloadDocument = (document: MissionDocument) => 
-    this.downloaderService.downloadUrl(document.fileURL);
+    this.downloaderService.downloadUrl(appFileUrl(document.fileName, "documents"));
 
   private updateFabs(){
     let fabs = this.mainNavService.currentFabs;
@@ -77,13 +77,8 @@ export class MissionDocumentListComponent {
   }
 
   private deleteSelectedDocuments = () => {
-    this.store.deleteRange$(this.currentSelections).subscribe(x =>{
-      this.documentList.clearSelections();
-      this.notificationService.notify({
-        title: `Vellykket! ${this.currentSelections.length} ${this.currentSelections.length > 1 ? 'dokumenter' : 'dokument'} slettet.`,
-        type: NotificationType.Success
-      })
-    });
+    this.store.delete({ids: this.currentSelections});    
+    this.documentList.clearSelections();
   }
 
   private openConfirmDeleteDialog = () => {   
@@ -93,21 +88,26 @@ export class MissionDocumentListComponent {
   }
   
   private openMailDocumentSheet = () => {
-    let botRef = this.bottomSheet.open(MailDocumentSheetComponent, {
-      data: { toEmailPreset: this.store.getMissionEmployer(this.missionId)?.email, ids: this.currentSelections },
+    let botRef = this.formService.open({
+      formComponent: MailDocumentFormComponent,
+      formConfig: { toEmailPreset: this.store.getMissionEmployer(this.missionId), ids: this.currentSelections },
     });
+
     botRef
       .afterDismissed()
-      .pipe(filter((isSent) => isSent))
+      .pipe(filter(result => result?.action != null))
       .subscribe((x) => this.documentList.clearSelections());
   }
 
   private openDocumentForm = () => 
-    this.router.navigate(['skjema', {config: JSON.stringify({missionId: this.missionId})}], {relativeTo: this.route});
+    this.router.navigate([
+      'skjema', 
+      {config: JSON.stringify({formConfig:{viewConfig:{lockedValues: {missionId: this.missionId}}}})}
+    ], {relativeTo: this.route});
 
-  private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
+  private onBack = (missionId: string) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
 
-  private configureMainNav(missionId: number){
+  private configureMainNav(missionId: string){
     let topCfg = {
       title:  "Dokumenter", 
       backFn: this.onBack, 

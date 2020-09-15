@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ViewContainerRef, ViewChild, ComponentFactoryResolver, Type } from '@angular/core';
 import { SimpleNavConfig } from '../../interfaces';
 import { ButtonTypes } from 'src/app/shared-app/enums';
 
@@ -10,7 +10,7 @@ import { ButtonTypes } from 'src/app/shared-app/enums';
 })
 export class SimpleTopNavComponent {
   ButtonTypes = ButtonTypes;
-  
+
   @Input() config: SimpleNavConfig;
 
   constructor() { }

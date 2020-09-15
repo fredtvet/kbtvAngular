@@ -1,66 +1,38 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { map, tap } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { ApiUrl } from 'src/app/core/api-url.enum';
 import { User } from "src/app/core/models";
 import {
   ApiService,
   ArrayHelperService
 } from "src/app/core/services";
-import { OnStateAdd, OnStateUpdate, OnStateDelete } from '../core/state';
 import { Roles } from '../shared-app/enums';
 import { StoreState } from './store-state';
-import { BaseModelStore } from '../core/state/abstractions/base-model.store';
+import { BaseModelStore } from '../core/state/abstracts/base-model.store';
 
 @Injectable({
   providedIn: 'any',
 })
-export class UsersStore extends BaseModelStore<StoreState> implements OnStateAdd, OnStateUpdate, OnStateDelete {
+export class UsersStore extends BaseModelStore<StoreState> {
 
   sortedUsers$: Observable<User[]>;
+  get users(){ return this.getStateProperty("users"); }
 
   constructor(
     apiService: ApiService,
-    arrayHelperService: ArrayHelperService
+    arrayHelperService: ArrayHelperService,
   ) {
-    super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
+    super(arrayHelperService, apiService);
 
-    this.sortedUsers$ = this._propertyWithFetch$("users", this._fetchUsers$).pipe(map(this.sortByRole));
+    this.sortedUsers$ = this.modelProperty$("users").pipe(map(this.sortByRole));
   }
 
   updatePassord$(userName: string, newPassword: string): Observable<boolean>{
     return this.apiService
       .put(`${ApiUrl.Users}/${userName}/NewPassword`, {newPassword, userName});
   }
-
-  add$(user: User): Observable<void> {
-    return this.apiService.post(ApiUrl.Users, user)
-        .pipe(
-          tap(x => this._updateStateProperty("users",
-            (users: User[]) => this.arrayHelperService.add(users, x)))
-        );  
-  }
-
-  update$(user: User): Observable<void> {
-    return this.apiService.put(ApiUrl.Users + '/' + user.userName, user)
-        .pipe(
-          tap(x => this._updateStateProperty("users",
-            (users: User[]) => this.arrayHelperService.update(users, x, 'userName')))
-        );   
-  }
-
-  delete$(userName: string): Observable<void> {
-    return this.apiService.delete(ApiUrl.Users + '/' + userName)
-        .pipe(
-          tap(x => this._updateStateProperty("users",
-            (users: User[]) => this.arrayHelperService.removeByIdentifier(users, x, 'userName')))
-        );   
-  }
-
-  private get _fetchUsers$(): Observable<User[]> {
-    return this.apiService.get(`${ApiUrl.Users}`);
-  } 
-
+  
   private sortByRole = (users: User[]): User[] => {
     if(!users) return [];
 

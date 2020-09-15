@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/core/models';
+import { FormService } from 'src/app/core/services/form/form.service';
+import { ModelFormService } from 'src/app/core/services/model';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
-import { UserFormSheetWrapperComponent } from '../user-form/user-form-sheet-wrapper.component';
-import { UsersStore } from '../users.store';
-import { NewPasswordFormSheetWrapperComponent } from '../new-password-form/new-password-form-sheet-wrapper.component';
-import { Roles, ButtonTypes } from 'src/app/shared-app/enums';
+import { ButtonTypes, Roles } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces';
+import { NewPasswordFormComponent } from '../new-password-form/new-password-form.component';
+import { UserFormViewConfig } from '../user-form-view/user-form-view-config.interface';
+import { UserFormViewComponent } from '../user-form-view/user-form-view.component';
+import { UsersStore } from '../users.store';
 
 @Component({
   selector: 'app-user-list',
@@ -23,17 +25,28 @@ export class UserListComponent {
   constructor(
     private mainNavService: MainNavService,
     private store: UsersStore,
-    private bottomSheet: MatBottomSheet) {}
+    private modelFormService: ModelFormService,
+    private formService: FormService) {}
 
   ngOnInit(): void {
-    this.configureMainNav(); 
+    this.configureMainNav();
   }
 
   openUserForm = (userName?: string) => 
-    this.bottomSheet.open(UserFormSheetWrapperComponent, {data: {entityId: userName}});
+    this.modelFormService.open({formConfig: {
+        entityId: userName, 
+        stateProp: "users", 
+        viewComponent: UserFormViewComponent,
+        viewConfig: {users: this.store.users} as UserFormViewConfig
+      }});
 
   openNewPasswordForm = (userName?: string) => 
-    this.bottomSheet.open(NewPasswordFormSheetWrapperComponent, {data: {entityId: userName}});
+    this.formService.open({
+      formConfig: {userName}, 
+      title: "Oppdater passord", 
+      formComponent: NewPasswordFormComponent
+    })
+
 
   private configureMainNav(){
     let cfg = {title:  "Brukere"} as TopDefaultNavConfig;

@@ -29,7 +29,6 @@ export class NewPasswordFormViewComponent implements OnInit {
       });
     }
 
-
     onSubmit(){
       const {value, valid} = this.passwordForm;
 

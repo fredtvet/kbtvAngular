@@ -4,16 +4,15 @@ export class ModelFileWrapper{
     id: string;
 
     constructor(inputFile: File, id: string){
-        if(!inputFile || !id) throw "File and Id are required";
+        if(!inputFile || !id) console.error( "File and Id are required");
         this.id = id;
         var type = inputFile.type;
         var extension = this.getExtension(inputFile.name);
         this.modifiedFile = new File([inputFile], `${id}.${extension}`, {type});
     }
 
-    private getExtension(fileName: string){
-        fileName.substring(fileName.lastIndexOf('.')+1, fileName.length) || fileName;
+    private getExtension(fileName: string): string{
+        return fileName.split('.').pop() || fileName;
     }
-
 
 }

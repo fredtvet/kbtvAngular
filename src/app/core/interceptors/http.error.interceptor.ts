@@ -22,7 +22,7 @@ interface AppErrorResponse {
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-  constructor(private notificationService: NotificationService) { console.log("HttpErrorInterceptor"); }
+  constructor(private notificationService: NotificationService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if(request.responseType != "json") return next.handle(request);

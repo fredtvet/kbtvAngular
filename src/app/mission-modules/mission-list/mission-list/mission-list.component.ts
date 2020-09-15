@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
+import { FilterSheetService } from 'src/app/core/services/filter';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { Roles } from 'src/app/shared-app/enums';
-import { MissionFilterSheetWrapperComponent } from '../mission-filter/mission-filter-sheet-wrapper.component';
+import { MissionFilterViewComponent } from '../mission-filter-view/mission-filter-view.component';
 import { MissionListStore } from '../mission-list.store';
 
 @Component({
@@ -15,27 +16,31 @@ import { MissionListStore } from '../mission-list.store';
 export class MissionListComponent{
   Roles = Roles;
 
-  filteredMissions$ = this.store.filteredMissions$;
+  filteredMissions$ = this.store.filteredMissions$.pipe(
+    tap(x => this.updateSearchBarValue(x.criteria?.searchString))
+  );
 
   constructor(
     private mainNavService: MainNavService,
-    private bottomSheet: MatBottomSheet,    
+    private filterSheetService: FilterSheetService,   
     private store: MissionListStore,
     private router: Router,
     private route: ActivatedRoute,) { 
-      this.configureMainNav()
+      this.configureMainNav();
     }
 
   searchMissions = (searchString: string) => {
-    this.store.addCriteria({...this.store.criteria, searchString})
+    this.store.addFilterCriteria({...this.store.criteria, searchString})
   }
 
-  private openMissionForm = () => 
+  private openMissionForm = () => {
     this.router.navigate(['ny'], {relativeTo: this.route});
+  }
 
-  private openMissionFilter = () => 
-    this.bottomSheet.open(MissionFilterSheetWrapperComponent)
-  
+  private openMissionFilter = () => {
+    this.filterSheetService.open({formConfig:{viewComponent: MissionFilterViewComponent}});
+  }
+
   private configureMainNav(){
     let cfg = {title:  "Oppdrag"} as TopDefaultNavConfig;
  
@@ -43,6 +48,7 @@ export class MissionListComponent{
 
     cfg.searchBar = {
       callback: this.searchMissions, 
+      initialValue: this.store.criteria?.searchString,
       placeholder: "Søk med adresse eller id"
     }
 
@@ -51,6 +57,12 @@ export class MissionListComponent{
     ]
 
     this.mainNavService.addConfig({default: cfg}, fabs);
+  }
+
+  private updateSearchBarValue(value: string){ 
+    const config = this.mainNavService.topDefaultNavConfig;
+    config.searchBar = {...config.searchBar, initialValue: value};
+    this.mainNavService.updateConfig({default: config});
   }
 
 }

@@ -7,6 +7,7 @@ import { TimesheetStatisticTableComponent } from './timesheet-statistic/timeshee
 import { AppAgGridModule } from 'src/app/app-ag-grid/app-ag-grid.module';
 import { SharedTimesheetModule } from 'src/app/shared-timesheet/shared-timesheet.module';
 import { DatePipe } from '@angular/common';
+import { TimesheetStatisticStore } from './timesheet-statistic.store';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { DatePipe } from '@angular/common';
     TimesheetStatisticTableComponent
   ],
   providers:[
-    DatePipe
+    DatePipe,
+    {provide: "FILTER_STORE", useExisting: TimesheetStatisticStore}
   ],
   imports: [
     SharedTimesheetModule,

@@ -1,10 +1,9 @@
 import { HttpParams } from '@angular/common/http';
 import { ApplicationRef, Injectable } from '@angular/core';
 import { concat, interval, Observable } from 'rxjs';
-import { distinctUntilKeyChanged, first, retry, switchMap, tap, distinctUntilChanged, pairwise, skip } from 'rxjs/operators';
+import { distinctUntilKeyChanged, first, skip, switchMap, tap } from 'rxjs/operators';
 import { User } from '../../models/user.interface';
-import { BaseModelStore } from '../../state/abstractions/base-model.store';
-import { ModelStateConfig } from '../../state/model-state.config';
+import { BaseStore } from '../../state/abstracts/base.store';
 import { ApiService } from '../api.service';
 import { AuthStoreActions } from '../auth/auth-store-actions.enum';
 import { AuthStore } from '../auth/auth.store';
@@ -15,19 +14,20 @@ import { StoreState } from './interfaces/store-state';
 import { EntitySyncResponse, SyncResponse } from './interfaces/sync-response.interface';
 import { SyncStoreConfig } from './interfaces/sync-store-config.interface';
 import { SyncStoreTimestamps } from './interfaces/sync-store-timestamps.interface';
-import { SyncPropertySettings } from './sync-property.settings';
+import { SyncStateConfig } from './sync-state.config';
 import { SyncStoreActions } from './sync-store-actions.enum';
+import { ModelStateConfig } from '../../model/model-state.config';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SyncStore extends BaseModelStore<StoreState>{
+export class SyncStore extends BaseStore<StoreState>{
 
   syncConfig$: Observable<SyncStoreConfig> = this.property$("syncConfig");
 
-  get syncConfig(): SyncStoreConfig { return this.getProperty("syncConfig"); }
+  get syncConfig(): SyncStoreConfig { return this.getStateProperty("syncConfig"); }
 
-  get syncTimestamps(): SyncStoreTimestamps { return this.getProperty("syncTimestamps"); } 
+  get syncTimestamps(): SyncStoreTimestamps { return this.getStateProperty("syncTimestamps"); } 
 
   constructor(
     apiService: ApiService,
@@ -37,7 +37,7 @@ export class SyncStore extends BaseModelStore<StoreState>{
     private persistanceStore: PersistanceStore,
     private authStore: AuthStore,
   ){
-    super(arrayHelperService, apiService, { trackStateHistory: true,logStateChanges: true });
+    super(arrayHelperService, apiService);
 
     this.initConfigObserver();
 
@@ -56,9 +56,9 @@ export class SyncStore extends BaseModelStore<StoreState>{
     this.persistanceStore.stateInitalized$.pipe(switchMap(x => {
       params = params.set("initialNumberOfMonths", this.syncConfig?.initialNumberOfMonths)
 
-      Object.keys(SyncPropertySettings).forEach(prop => {
+      Object.keys(SyncStateConfig).forEach(prop => {
         let timestamp = this.syncTimestamps ? this.syncTimestamps[prop] : null;
-        params = params.set(SyncPropertySettings[prop]?.requestKey, timestamp ? timestamp.toString() : null);
+        params = params.set(SyncStateConfig[prop]?.requestKey, timestamp ? timestamp.toString() : null);
       })
 
       return this.apiService
@@ -72,7 +72,7 @@ export class SyncStore extends BaseModelStore<StoreState>{
   purgeAll = () => {
     this.persistanceStore.stateInitalized$.subscribe(x => {
       let state = {syncTimestamps: {}};
-      Object.keys(SyncPropertySettings).forEach(prop => state[prop] = null);
+      Object.keys(SyncStateConfig).forEach(prop => state[prop] = null);
       this._setStateVoid(state, SyncStoreActions.StorePurge)
     })
   };
@@ -89,10 +89,10 @@ export class SyncStore extends BaseModelStore<StoreState>{
   private setSyncResponseState(response: SyncResponse){
     let state = {syncTimestamps: {}};
 
-    this.syncCurrentUser(response[SyncPropertySettings.currentUser.responseKey], state);
+    this.syncCurrentUser(response[SyncStateConfig.currentUser.responseKey], state);
 
-    Object.keys(SyncPropertySettings).filter(x => x !== "currentUser").forEach(prop => 
-      this.syncLocalEntityResponse(prop, response[SyncPropertySettings[prop]?.responseKey], state));
+    Object.keys(SyncStateConfig).filter(x => x !== "currentUser").forEach(prop => 
+      this.syncLocalEntityResponse(prop, response[SyncStateConfig[prop]?.responseKey], state));
       
     this._setStateVoid(state, SyncStoreActions.StoreSync)
   }
@@ -101,8 +101,8 @@ export class SyncStore extends BaseModelStore<StoreState>{
     if(!response || !prop) return;
     
     state.syncTimestamps[prop] = response.timestamp; //Update given timestamp
-    const modelSettings = ModelStateConfig[prop];
-    if(!modelSettings) throw `No model state config for property ${prop}`;
+    const modelSettings = ModelStateConfig.get(prop);
+
     state[prop] = 
         this.arrayHelperService.addOrUpdateRange(this.getStateProperty(prop), response.entities, modelSettings.identifier); 
     state[prop] = 
@@ -114,7 +114,7 @@ export class SyncStore extends BaseModelStore<StoreState>{
     if(response?.entities?.length > 0) state.currentUser = response.entities[0] as User;
   }
 
-  private handleAuthActions(action: AuthStoreActions){console.log(action);
+  private handleAuthActions(action: AuthStoreActions){
     switch(action){
       case AuthStoreActions.Login: this.syncAll();
       case AuthStoreActions.Logout: this.purgeAll();
@@ -140,7 +140,7 @@ export class SyncStore extends BaseModelStore<StoreState>{
   }
 
   private initConfigIfNull(): void {
-    if(this.getProperty("syncConfig")) return;
+    if(this.getStateProperty("syncConfig")) return;
     this._setStateVoid({syncConfig: {
       refreshTime: 60*30, 
       initialNumberOfMonths: '48',

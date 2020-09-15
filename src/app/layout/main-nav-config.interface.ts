@@ -36,5 +36,6 @@ export interface TopNavActions{
 
 export interface SearchBarConfig{
     callback: Function, 
+    initialValue?: string,
     placeholder: string
 }

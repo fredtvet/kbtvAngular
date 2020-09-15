@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
+import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
 import { Timesheet } from 'src/app/core/models';
 import { LoadingService } from 'src/app/core/services';
+import { FilterSheetService } from 'src/app/core/services/filter';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { TimesheetStatus } from 'src/app/shared-app/enums';
-import { WeekFilterSheetWrapperComponent } from 'src/app/shared-timesheet/components/week-filter/week-filter-sheet-wrapper.component';
+import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
+import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
 @Component({
@@ -17,37 +19,33 @@ import { TimesheetAdminStore } from '../timesheet-admin.store';
 export class TimesheetAdminListComponent{
     
   loading$ = this.loadingService.queryLoading$;
-  timesheets$ = this.store.filteredTimesheets$;
+  timesheets$ = this.store.filteredTimesheets$.pipe(tap(x => this.configureNav()));
 
   constructor(
     private loadingService: LoadingService,
     private store: TimesheetAdminStore,
     private mainNavService: MainNavService,
     private router: Router,
-    private _bottomSheet: MatBottomSheet) {}
+    private filterService: FilterSheetService) {}
 
   ngOnInit(){
     this.configureNav();
   }
 
-  changeTimesheetStatus = (id: number, status: TimesheetStatus): void => {
-    this.store.changeStatus$(id, status).subscribe();
-  }
+  changeTimesheetStatus = (id: string, status: TimesheetStatus): void => 
+    this.store.changeStatus({id, status});
+  
 
   private openWeekFilter = () => {
-    let ref = this._bottomSheet.open(WeekFilterSheetWrapperComponent, {
-      data: {filter: this.store.weekFilter, users: this.store.users}
+    this.filterService.open<WeekCriteria, FilterConfig<WeekFilterViewConfig>>({
+      formConfig: {viewComponent: WeekFilterViewComponent},
     });
-
-    ref.afterDismissed()
-      .pipe(filter(f => f != undefined))
-      .subscribe(filter => this.store.addWeekFilter(filter));
   }
 
   private configureNav(){
     let cfg = {
-      title:  "Uke " + this.store.weekFilter.weekNr || "",
-      subTitle: this.store.weekFilter.year || "" + ' - ' + this.store.weekFilter.userName || "",
+      title:  "Uke " + this.store.weekCriteria.weekNr || "",
+      subTitle: this.store.weekCriteria.year || "" + ' - ' + this.store.weekCriteria.userName || "",
       backFn: this.onBack,
       backFnParams: [null],
       buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]
@@ -57,9 +55,9 @@ export class TimesheetAdminListComponent{
   }
 
   private onBack = () => {
-    this.store.addWeekFilter({...this.store.weekFilter, weekNr: null});
+    this.store.addFilterCriteria({...this.store.weekCriteria, weekNr: null});
     this.router.navigate(["timeadministrering/uker"])
   }
   
-  trackById = (index:number, timesheet:Timesheet): number => timesheet.id;
+  trackById = (index:number, timesheet:Timesheet): string => timesheet.id;
 }

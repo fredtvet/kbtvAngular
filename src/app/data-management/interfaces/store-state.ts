@@ -1,4 +1,5 @@
-import { StateMissions, StateDocumentTypes, StateEmployers, StateMissionTypes, StateInboundEmailPassword, StateUsers } from '../../core/state/global.state';
+import { StateMissions, StateDocumentTypes, StateEmployers, StateMissionTypes, StateInboundEmailPassword, StateUsers } from '../../core/state/interfaces/global.state';
+import { StateProp } from 'src/app/core/model/state.types';
 
 export interface StoreState extends 
     StateMissions,
@@ -6,5 +7,5 @@ export interface StoreState extends
     StateEmployers,
     StateMissionTypes,
     StateInboundEmailPassword {
-        selectedProperty: Extract<keyof StoreState, string>,
+        selectedProperty: StateProp<StoreState>,
     } 

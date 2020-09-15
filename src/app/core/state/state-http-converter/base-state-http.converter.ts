@@ -7,18 +7,21 @@ export abstract class BaseStateToHttpConverter<TState, TCommand extends StateCom
     constructor(){}
 
     convert(input: TCommand, overrideApiUrl?: string): StateHttpCommand<TState> {
-        if(!input) throw "No command provided";
+        if(!input) console.error("No command provided");
 
         input = this.setupCommand(input);
-        
         const stateHttpCommand: StateHttpCommand<TState> = {
             httpMethod: this.createHttpMethod(input),
             apiUrl: overrideApiUrl || this.createApiUrl(input),
-            httpBody: this.createHttpBody(input),
+            httpBody: this.createHttpBody(this.cloneInput(input)),
             stateFunc: (state: TState) => this.modifyState(state, input)
         };
 
         return stateHttpCommand;
+    }
+
+    protected cloneInput(input: TCommand): TCommand{
+        return JSON.parse(JSON.stringify(input));
     }
 
     protected setupCommand(command: TCommand): TCommand {

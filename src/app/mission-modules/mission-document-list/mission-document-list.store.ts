@@ -1,57 +1,57 @@
 import { Injectable } from "@angular/core";
-import { combineLatest, Observable } from "rxjs";
-import { map, tap } from "rxjs/operators";
+import { Observable } from "rxjs";
 import { ApiUrl } from 'src/app/core/api-url.enum';
-import { AppDocumentType, Employer, Mission, MissionDocument, Timesheet } from "src/app/core/models";
+import { Employer, Mission, MissionDocument } from "src/app/core/models";
 import {
   ApiService,
   ArrayHelperService
 } from "src/app/core/services";
-import { BaseModelStore } from 'src/app/core/state/abstractions/base-model.store';
 import { StoreState } from './store-state';
-import { GetRangeWithRelationsHelper } from 'src/app/core/state/store-helpers/get-range-with-relations.helper';
-import { GetWithRelationsConfig } from 'src/app/core/state/store-helpers/get-with-relations.config';
-import { ModelStateSlice$ } from 'src/app/core/state/model-state-slice.type';
+import { BaseCommandStore } from 'src/app/core/state/abstracts/base-command.store';
+import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
+import { map } from 'rxjs/operators';
+import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
+import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-with-relations.helper';
+import { DeleteModelToStateHttpConverter } from 'src/app/core/services/model/converters/delete-model-to-state-http.converter';
+import { DeleteModelStateCommand } from 'src/app/core/model/interfaces';
 
 @Injectable({
   providedIn: 'any',
 })
-export class MissionDocumentListStore extends BaseModelStore<StoreState>  {
+export class MissionDocumentListStore extends BaseCommandStore<StoreState>  {
 
   constructor(
     apiService: ApiService,
     arrayHelperService: ArrayHelperService,
-    private getRangeWithRelationsHelper: GetRangeWithRelationsHelper
+    private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>,
+    private getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>,  
+    private getWithRelationsHelper: GetWithRelationsHelper<StoreState>
   ) {
-    super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
+    super(arrayHelperService, apiService);
   }
 
-  getByMissionIdWithType$(id: number): Observable<MissionDocument[]>{
-    return this.getRangeWithRelationsHelper.get$(
-      this.stateSlice$ as ModelStateSlice$,
-      new GetWithRelationsConfig("missionDocuments", null, {include: {documentTypes: true}}),
-      (x: MissionDocument) => x.missionId === id
-    );
+  getByMissionIdWithType$(id: string): Observable<MissionDocument[]>{
+    return this.stateSlice$(["missionDocuments", "employers", "documentTypes"]).pipe(map(state => {
+      const relationCfg = new GetWithRelationsConfig("missionDocuments", null, {include: {documentTypes: true}})
+      return this.getRangeWithRelationsHelper.get(state, relationCfg, (x: MissionDocument) => x.missionId === id);
+    }))
   } 
 
-  getMissionEmployer(missionId: number): Employer{
-    let mission = this.arrayHelperService.find(this.getProperty<Mission[]>("missions", false), missionId, 'id');
-    if(!mission?.employerId) return null;
-    return this.arrayHelperService.find(this.getProperty<Employer[]>("employers", false), mission.employerId, 'id');
+  getMissionEmployer(missionId: string): Employer{  
+    const relationCfg = new GetWithRelationsConfig("missions", null, {include: {employers: true}})
+    let state = this.getProperties(["missions", "employers"]);
+    return this.getWithRelationsHelper.get<Mission>(state, relationCfg, missionId)?.employer
   }
 
-  mailDocuments$(toEmail: string, missionDocumentIds: number[]){
-    return this.apiService
-              .post(`${ApiUrl.MissionDocument}/SendImages`, {toEmail, missionDocumentIds});
-  }
+  delete = (command: DeleteModelStateCommand): void => 
+    this._stateHttpCommandHandler(this.deleteStateHttpConverter.convert({...command, stateProp: "missionDocuments"}));
 
-  deleteRange$(ids: number[]): Observable<void> {
-    return this.apiService.post(`${ApiUrl.MissionDocument}/DeleteRange`, {Ids: ids})    
-        .pipe(
-          tap(x => this._updateStateProperty(
-            "missionDocuments", 
-            (docs: MissionDocument[]) => this.arrayHelperService.removeRangeByIdentifier(docs, ids, 'id')))
-        );   
+  mailDocuments(toEmail: string, ids: string[]){
+    this._stateHttpCommandHandler({
+      httpBody:{toEmail, ids},
+       httpMethod: "POST", 
+       apiUrl:`${ApiUrl.MissionDocument}/SendDocuments`
+    })
   }
 }
 

@@ -15,10 +15,10 @@ export class HttpCommandButtonDirective extends BaseLoadingOverlayDirective{
     elementRef: ElementRef) {
     super();
     this.loadingSub = this.loadingService.commandLoading$.subscribe(loading => {
-      if(loading) 
-        this.addOverlay(elementRef.nativeElement);
-      else
-        this.removeOverlay(elementRef.nativeElement);
+      // if(loading) 
+      //   this.addOverlay(elementRef.nativeElement);
+      // else
+      //   this.removeOverlay(elementRef.nativeElement);
     })
   }
 

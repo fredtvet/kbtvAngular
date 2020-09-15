@@ -1,0 +1,36 @@
+<form *ngIf="form" [formGroup]="form" fxLayout="column"  class="m-3">
+  <mat-form-field>
+    <input matInput placeholder="Navn" formControlName="name" required>
+    <mat-error *ngIf="this.name.invalid">
+      Navn er ett obligatorisk felt på maks 200 tegn.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Kontaktnummer" formControlName="phoneNumber">
+    <mat-error *ngIf="this.phoneNumber.invalid">
+      Kontaktnummer må være mellom 4 og 12 siffer.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input ngx-google-places-autocomplete [options]='googleOptions' #placesRef="ngx-places"
+      (onAddressChange)="handleAddressChange($event)" matInput placeholder="Adresse" formControlName="address">
+    <mat-error *ngIf="this.address.invalid">
+      Adresse kan maks ha 100 tegn.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Epost" formControlName="email">
+    <mat-error *ngIf="this.email.invalid">
+      Pass på at eposten er skrevet riktig.
+    </mat-error>
+  </mat-form-field>
+
+  <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
+    [disabled]="form.invalid || form.pristine"
+    (click)="onSubmit()">
+    {{ isCreateForm ? 'Legg til' : 'Oppdater' }} 
+  </button>
+</form>

@@ -1,0 +1,58 @@
+<form class="m-3" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="form" [formGroup]="form">
+
+    <mat-form-field  *appActiveStringFilter="let entities$; config: stringFilterConfig">
+        <input matInput placeholder="Søk med adresse eller id" formControlName="searchString" [matAutocomplete]="auto1">
+        <mat-autocomplete #auto1="matAutocomplete">
+          <mat-option *ngFor="let mission of entities$ | async" [value]="mission.address">
+            ({{ mission.id }}) {{ mission.address }}
+          </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-select formControlName="employerId" placeholder="Velg oppdragsgiver">
+            <mat-option>Ingen</mat-option>
+            <mat-option *ngFor="let employer of config?.state?.employers" [value]="employer.id">
+                {{ employer.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+
+    <mat-form-field>
+        <mat-select formControlName="missionTypeId" placeholder="Velg oppdragstype">
+            <mat-option>Ingen</mat-option>
+            <mat-option *ngFor="let type of config?.state?.missionTypes" [value]="type.id">
+                {{ type.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-divider></mat-divider>
+
+    <label class="mat-caption mt-2">Velg status</label>
+    <mat-radio-group formControlName="finished" color="primary" fxLayout="row" fxLayoutAlign="start center"
+        fxLayoutGap="8px" class="mb-2">
+        <mat-radio-button [value]="false">
+            Aktiv
+        </mat-radio-button>
+        <mat-radio-button [value]="true">
+            Ferdig
+        </mat-radio-button>
+    </mat-radio-group>
+
+    <span class="mb-2"></span>
+    <mat-divider></mat-divider>
+    <span class="mb-2"></span>
+
+    <span fxLayout="row" fxLayoutAlign="space-between center">
+        <button mat-button [disabled]="!isFormNotEmpty()" color="warn" (click)="reset()">Nullstill</button>
+
+        <button mat-button color="primary" 
+            [disabled]="form.invalid || form.pristine"
+            (click)="onSubmit()">Bruk
+        </button>
+    </span>
+
+</form>

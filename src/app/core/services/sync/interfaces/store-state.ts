@@ -1,4 +1,4 @@
-import { StateDocumentTypes, StateEmployers, StateMissionDocuments, StateMissionImages, StateMissionNotes, StateMissions, StateMissionTypes, StateSyncConfig, StateUserTimesheets, StateLastAction, StateCurrentUser } from 'src/app/core/state/global.state';
+import { StateDocumentTypes, StateEmployers, StateMissionDocuments, StateMissionImages, StateMissionNotes, StateMissions, StateMissionTypes, StateSyncConfig, StateUserTimesheets, StateLastAction, StateCurrentUser } from 'src/app/core/state/interfaces/global.state';
 import { SyncStoreTimestamps } from './sync-store-timestamps.interface';
 import { SyncStoreConfig } from './sync-store-config.interface';
 

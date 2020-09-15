@@ -10,16 +10,14 @@ import { Roles, TimesheetStatus } from 'src/app/shared-app/enums';
 
 export class TimesheetCardComponent {
   Roles = Roles;
-
+  
   @Input() adminView: boolean = false;
   @Input() timesheet: Timesheet;
-  @Output() statusChanged = new EventEmitter<{id: number, status: TimesheetStatus}>();
-  @Output() deleteClicked = new EventEmitter();
-  @Output() editClicked = new EventEmitter();
+  @Input() loading: boolean;
+  @Output() statusChanged = new EventEmitter<{id: string, status: TimesheetStatus}>();
+  @Output() editClicked = new EventEmitter<string>();
 
   constructor() { }
-
-  deleteTimesheet = () => this.deleteClicked.emit(this.timesheet.id);
 
   editTimesheet = () =>  this.editClicked.emit(this.timesheet.id);
   

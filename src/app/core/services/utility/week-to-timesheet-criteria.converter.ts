@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
 import { Converter } from '../../interfaces/converter.interface';
 import { DateTimeService } from './date-time.service';
-import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-config.interface';
+import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { DateRangePresets } from 'src/app/shared-app/enums/date-range-presets.enum';
 
 @Injectable({providedIn: "root"})

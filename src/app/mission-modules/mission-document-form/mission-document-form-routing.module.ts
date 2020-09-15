@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { MissionDocumentFormEntryComponent } from './mission-document-form-entry.component';
-
+import { RouterModule, Routes } from '@angular/router';
+import { ModelFormEntryComponent } from 'src/app/core/services/model/form/model-form-entry.component';
+import { MissionDocumentFormViewComponent } from './mission-document-form-view/mission-document-form-view.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MissionDocumentFormEntryComponent
+    component: ModelFormEntryComponent,
+    data: {viewComponent: MissionDocumentFormViewComponent, stateProp: "missionDocuments"}
   },
 ];
 

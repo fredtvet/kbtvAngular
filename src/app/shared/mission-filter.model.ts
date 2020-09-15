@@ -1,17 +1,24 @@
 import { Mission } from '../core/models';
-import { MissionFilterCriteria } from './interfaces';
+import { MissionCriteria } from './interfaces';
+import { DataFilter } from '../core/services/filter/data.filter';
 
-export class MissionFilter {
+export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
 
-    private checksCount: number = 0;
+    protected get isCriteriaEmpty(): boolean{
+        return !this.criteria || 
+            (this.criteria.finished == null && !this.criteria.searchString && !this.criteria.employerId && !this.criteria.missionTypeId)
+    }
 
-    constructor(public criteria: MissionFilterCriteria, private maxChecks?: number){}
+    private searchStringLower: string;
+    private sixtyDaysAgo: number;
 
-    check(mission: Mission): boolean{ 
-        if(!this.criteria) return true;
-        if(!mission) return false;
-        if(this.maxChecks && this.checksCount >= this.maxChecks) return false;
-        
+    constructor(criteria: MissionCriteria, maxChecks?: number, ignoreInitial?: boolean){
+        super(criteria, maxChecks, ignoreInitial);
+        this.searchStringLower = criteria?.searchString?.toLowerCase();
+        if(this.isCriteriaEmpty) this.sixtyDaysAgo = new Date().setDate(new Date().getDate() - 60);
+    }
+
+    protected addChecks(mission: Mission): boolean{
         let exp = true;
 
         if(this.criteria.finished != null)
@@ -26,26 +33,18 @@ export class MissionFilter {
         if(this.criteria.missionTypeId)
             exp = exp && mission.missionTypeId === this.criteria.missionTypeId;
 
-        if(exp && this.maxChecks) this.checksCount++; //if true, append checksCount
-
         return exp;
     }
 
-    checkInitial(mission: Mission): boolean{
-        let thirtyDaysAgo = new Date().setDate(new Date().getDate() - 30);
-        let exp = new Date(mission.updatedAt).getTime() >= thirtyDaysAgo; //Grab missions updated last 30 days
-        exp = exp || new Date(mission.lastVisited).getTime() >= thirtyDaysAgo;//Grab missions visited last 30 days
+    protected addInitialChecks(mission: Mission): boolean{
+        let exp = new Date(mission.updatedAt).getTime() >= this.sixtyDaysAgo; //Grab missions updated last 30 days
+        exp = exp || new Date(mission.lastVisited).getTime() >= this.sixtyDaysAgo;//Grab missions visited last 30 days
         return exp;
     }
-
+    
     private filterSearchString(m: Mission): boolean{
-        let exp = m.address.toLowerCase().includes(this.criteria.searchString.toLowerCase());
-        
-        let id = +this.criteria.searchString;
-
-        if(!isNaN(id)) exp = exp || m.id === id //Search by ID if number;
-
-        return exp
+        return m.address.toLowerCase().includes(this.searchStringLower) || 
+            m.id.includes(this.searchStringLower);
     }  
        
 };

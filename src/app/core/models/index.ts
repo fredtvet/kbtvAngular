@@ -9,5 +9,9 @@ export * from './user.interface';
 export * from './timesheet.interface';
 export * from './base-entity.interface';
 export * from './inbound-email-password.interface';
-export * from './temp-entity.interface';
-export * from './app-file.interface';
+export * from './base-entity-file.interface';
+
+export * from './relationships/document-type-foreign.interface';
+export * from './relationships/employer-foreign.interface';
+export * from './relationships/mission-type-foreign.interface';
+export * from './relationships/mission-child.interface';

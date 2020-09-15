@@ -12,12 +12,12 @@ import { AuthStoreActions } from './auth-store-actions.enum';
 import { StoreState } from './interfaces/store-state';
 import { AccessToken, TokenResponse } from './interfaces/tokens.interface';
 import { Credentials } from './interfaces/credentials.interface';
-import { BaseModelStore } from '../../state/abstractions/base-model.store';
+import { BaseStore } from '../../state/abstracts/base.store';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthStore extends BaseModelStore<StoreState>{
+export class AuthStore extends BaseStore<StoreState>{
 
   currentUser$: Observable<User> = this.property$<User>("currentUser"); //.pipe(distinctUntilChanged());
   newAccessToken$: Observable<AccessToken> = this.propertyChanges$<AccessToken>("accessToken");
@@ -31,17 +31,16 @@ export class AuthStore extends BaseModelStore<StoreState>{
     private deviceInfoService: DeviceInfoService,
     private router: Router,
   ) {
-    super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
-    console.log("AuthStore");
+    super(arrayHelperService, apiService);
   }
 
-  get currentUser(): User { return this.getProperty("currentUser") }
+  get currentUser(): User { return this.getStateProperty("currentUser") }
 
-  get refreshToken(): string {  return this.getProperty<string>("refreshToken") }
+  get refreshToken(): string {  return this.getStateProperty<string>("refreshToken") }
 
-  get accessToken(): string { return this.getProperty<AccessToken>("accessToken")?.token }
+  get accessToken(): string { return this.getStateProperty<AccessToken>("accessToken")?.token }
 
-  get accessTokenExpiresIn(): number { return this.getProperty<AccessToken>("accessToken")?.expiresIn }
+  get accessTokenExpiresIn(): number { return this.getStateProperty<AccessToken>("accessToken")?.expiresIn }
 
   get isRefreshingToken(): boolean { return this._isRefreshingToken }
 

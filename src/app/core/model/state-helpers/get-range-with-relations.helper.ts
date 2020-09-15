@@ -6,13 +6,13 @@ import { ModelState } from '../model.state';
 import { ModelStateConfig, ModelConfig } from '../model-state.config';
 
 @Injectable({providedIn: "root"})
-export class GetRangeWithRelationsHelper  {
+export class GetRangeWithRelationsHelper<TState>  {
 
     constructor(private arrayHelperService: ArrayHelperService) {}
 
     get<TModel extends Model>(
         state: Partial<ModelState>,
-        cfg: GetWithRelationsConfig,
+        cfg: GetWithRelationsConfig<TState>,
         filter?: (value: TModel, index?: number, Array?: any[]) => boolean, 
     ): TModel[] {
         const modelCfg = ModelStateConfig.get(cfg.modelProp); 
@@ -84,7 +84,7 @@ export class GetRangeWithRelationsHelper  {
 
     private mapChildrenToEntity<T>(
         props: (keyof Partial<ModelState>)[], 
-        propCfg: ModelConfig, 
+        propCfg: ModelConfig<TState>, 
         lookups: {[key: string]: Object}, 
         entity: T
     ): void{

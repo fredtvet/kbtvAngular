@@ -2,13 +2,12 @@ import { SubscriptionComponent } from 'src/app/shared-app/components/subscriptio
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from "@angular/core";
-import { BaseEntity } from '../../../core/models/base-entity.interface';
 import { SelectableEntity } from 'src/app/shared/interfaces';
 
 @Injectable()
-export class SelectableListPresenter<T extends BaseEntity> extends SubscriptionComponent{
+export class SelectableListPresenter<T> extends SubscriptionComponent{
 
-    private selectedIdsSubject = new BehaviorSubject<number[]>([]);
+    private selectedIdsSubject = new BehaviorSubject<any[]>([]);
     selectedIds$ = this.selectedIdsSubject.asObservable();
 
     private entitiesSubject =  new BehaviorSubject<T[]>([]);
@@ -17,8 +16,8 @@ export class SelectableListPresenter<T extends BaseEntity> extends SubscriptionC
     selectableEntities$: Observable<SelectableEntity<T>[]> = combineLatest(this.entities$, this.selectedIds$).pipe(
         map(([entities, selectedIds]) => this.getSelectableEntities(entities, selectedIds))
     )
-
-    constructor(){super()}
+    private identfier = "id"; //Add config injector?
+    constructor(){super();}
     
     get entities(){
         return [...this.entitiesSubject.value]
@@ -28,11 +27,11 @@ export class SelectableListPresenter<T extends BaseEntity> extends SubscriptionC
         this.entitiesSubject.next(entities);
     }
 
-    addSelections(ids: number[]){
+    addSelections(ids: any[]){
         this.selectedIdsSubject.next(ids);
     }
 
-    toggleEntity(id: number){
+    toggleEntity(id: any){
         let ids = [...this.selectedIdsSubject.value];
         let index = ids.findIndex(x => x == id);
         if(index == -1) ids.push(id); //if not selected
@@ -40,12 +39,12 @@ export class SelectableListPresenter<T extends BaseEntity> extends SubscriptionC
         this.selectedIdsSubject.next(ids);
     }
 
-    isEntitySelected = (id:number) => this.selectedIdsSubject.value.includes(id);
+    isEntitySelected = (id:any) => this.selectedIdsSubject.value.includes(id);
     
-    private getSelectableEntities(entities:T[], selectedIds:number[]): SelectableEntity<T>[]{
+    private getSelectableEntities(entities:T[], selectedIds:any[]): SelectableEntity<T>[]{
         let result = [];
         for(let i = 0; i < entities.length; i++){
-            let isSelected = selectedIds.includes(entities[i].id);
+            let isSelected = selectedIds.includes(entities[i][this.identfier]);
             result.push({entity: entities[i], selected:isSelected})
         }
         return result;

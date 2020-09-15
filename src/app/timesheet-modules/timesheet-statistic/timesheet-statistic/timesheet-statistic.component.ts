@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { filter } from 'rxjs/operators';
+import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
+import { FilterSheetService } from 'src/app/core/services/filter';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { GroupByPeriod } from 'src/app/shared-app/enums';
-import { TimesheetFilterSheetWrapperComponent } from 'src/app/shared-timesheet/components/timesheet-filter/timesheet-filter-sheet-wrapper.component';
+import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
+import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view.component';
+import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces/timesheet-criteria.interface';
 import { TimesheetStatisticStore } from '../timesheet-statistic.store';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
 
@@ -23,7 +25,7 @@ export class TimesheetStatisticComponent {
   constructor(
     private mainNavService: MainNavService,
     private store: TimesheetStatisticStore,
-    private bottomSheet: MatBottomSheet
+    private filterService: FilterSheetService
     ) { 
       this.configureMainNav();
     }
@@ -31,18 +33,10 @@ export class TimesheetStatisticComponent {
   changeGroupingType = (type: GroupByPeriod) => this.store.addGroupBy(type);
   
   openBottomSheet(): void {
-    let ref = this.bottomSheet.open(TimesheetFilterSheetWrapperComponent, {
-      data: {
-        filter: this.store.criteria, 
-        disabledFilters: ['status'], 
-        missions: this.store.filteredMissions, 
-        users: this.store.getProperty("users")
-      }
-    });
-
-    ref.afterDismissed()
-      .pipe(filter(x => x != null))
-      .subscribe(x => this.store.addCriteria(x));
+    this.filterService.open<TimesheetCriteria, FilterConfig<TimesheetFilterViewConfig>>({formConfig: {
+      filterConfig: {disabledFilters: ['status']},
+      viewComponent: TimesheetFilterViewComponent     
+    }});
   }
 
   private exportAsCsv = () => {

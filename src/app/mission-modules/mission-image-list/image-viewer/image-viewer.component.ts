@@ -3,7 +3,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { BottomSheetMenuComponent } from 'src/app/shared-app/components';
 import { AppButton } from 'src/app/shared-app/interfaces';
-import { AppFile } from 'src/app/core/models';
+import { ModelFile } from 'src/app/core/models';
 
 @Component({
   selector: 'app-image-viewer',
@@ -45,11 +45,10 @@ import { AppFile } from 'src/app/core/models';
 export class ImageViewerComponent {
   toolbarHidden = false;
 
-  @Input() images: AppFile[];
-  @Input() currentImage: AppFile;
+  @Input() images: ModelFile[];
+  @Input() currentImage: ModelFile;
   @Input() actions: AppButton[];
   
-  @Output() imageDeleted = new EventEmitter();
   @Output() currentImageChanged = new EventEmitter();
   @Output() close = new EventEmitter();
 
@@ -63,7 +62,7 @@ export class ImageViewerComponent {
     // this.currentImage = this.images[this.index];
   }
 
-  changeCurrentImage(image: AppFile){
+  changeCurrentImage(image: ModelFile){
     this.currentImage = image;
     this.currentImageChanged.emit(image);
   }

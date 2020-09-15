@@ -7,13 +7,13 @@ import { DateTimeService,DeviceInfoService } from "src/app/core/services";
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { GroupByPeriod } from 'src/app/shared-app/enums';
 import { DateParams } from "src/app/shared-app/interfaces";
-import { WeekFilterCriteria } from 'src/app/shared-timesheet/components/week-filter/week-filter-config.interface';
-import { TimesheetFormConfig } from 'src/app/shared-timesheet/interfaces';
+import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
 import { UserTimesheetCardDialogWrapperComponent } from '../user-timesheet-card-dialog-wrapper.component';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
-import { TimesheetSummary } from 'src/app/shared/interfaces';
 import { Timesheet } from 'src/app/core/models';
+import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
+import { TimesheetForm } from '../../user-timesheet-form/user-timesheet-form-view/timesheet-form.interface';
 
 @Component({
   selector: "app-user-timesheet-week-view",
@@ -25,13 +25,13 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
   currentWeekNr: number = this.dateTimeService.getWeekOfYear();
   currentYear: number = new Date().getFullYear();
 
-  get weekFilter(): WeekFilterCriteria { return this.store.weekFilter};
+  get weekCriteria(): WeekCriteria { return this.store.weekCriteria};
 
   isXs$ = this.deviceInfoService.isXs$;
 
   summaries$: Observable<{ [key: number]: TimesheetSummary }> = this.store.timesheetSummaries$.pipe(
-    tap(x => this.configureMainNav(this.weekFilter)),
-    map(x => this.mapSummariesToWeekdays(x))
+    tap(x => this.configureMainNav(this.weekCriteria)),
+    map(x => this.dateTimeService.mapObjectsToWeekdays(x, "date"))
   );
 
   constructor(
@@ -47,13 +47,13 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
   ngOnInit() {
     let initFilter = this.route.snapshot.params.initialFilter;
     initFilter = initFilter ? JSON.parse(initFilter) : {year: this.currentYear, weekNr: this.currentWeekNr};
-    this.store.addWeekFilter(initFilter);
+    this.store.addWeekFilterCriteria(initFilter);
     this.configureMainNav(initFilter);
-    this.store.criteria$.pipe(takeUntil(this.unsubscribe)).subscribe(x => this.configureMainNav(this.weekFilter))
+    this.store.criteria$.pipe(takeUntil(this.unsubscribe)).subscribe(x => this.configureMainNav(this.weekCriteria))
   }
 
   nextWeek(): void{
-    let currFilter = this.weekFilter;
+    let currFilter = this.weekCriteria;
     if(currFilter.year >= this.currentYear && currFilter.weekNr >= this.currentWeekNr) return;
 
     if(currFilter.weekNr >= this.dateTimeService.getWeeksInYear(currFilter.year)){   
@@ -62,31 +62,30 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
     }
     else currFilter.weekNr++;
 
-    this.store.addWeekFilter(currFilter);
+    this.store.addWeekFilterCriteria(currFilter);
   }
 
   previousWeek(): void{
-    let currFilter = this.weekFilter;
+    let currFilter = this.weekCriteria;
     if(currFilter.weekNr <= 1) {
       currFilter.year--; //Go to previous year if new week is less than 1
       currFilter.weekNr = this.dateTimeService.getWeeksInYear(currFilter.year); //Set to max week in previous year
     }
     else currFilter.weekNr--;  
-    this.store.addWeekFilter(currFilter);
+    this.store.addWeekFilterCriteria(currFilter);
   }
+  
+  openTimesheetForm = (entityId?: string, lockedValues?: TimesheetForm) => 
+    this.router.navigate(['skjema', {config: JSON.stringify({formConfig: {entityId, viewConfig: {lockedValues}}})}], {relativeTo: this.route});
 
-  openTimesheetForm = (config: TimesheetFormConfig) => 
-    this.router.navigate(['skjema', {config: JSON.stringify(config)}], {relativeTo: this.route});
-
-  openTimesheetCard = (timesheetId: number) =>
+  openTimesheetCard = (timesheetId: string) =>
     this.dialog.open(UserTimesheetCardDialogWrapperComponent, {
       data: timesheetId, panelClass: 'extended-dialog'});
 
-  trackByTimesheet = (index: number, timesheet: Timesheet) => 
-    timesheet.totalHours && new Date(timesheet.startTime).getTime()
+  trackByTimesheet = (index: number, timesheet: Timesheet) => timesheet.id
 
   private goToTimesheetList = () => {
-      const dp = this.weekFilter;
+      const dp = this.weekCriteria;
       this.router.navigate([
         "mine-timer/liste",
         {
@@ -97,7 +96,7 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
   };
 
   private goToWeekList = () => 
-    this.router.navigate(['mine-timer/ukeliste', {initialFilter: JSON.stringify({year: this.weekFilter.year})}])
+    this.router.navigate(['mine-timer/ukeliste', {initialFilter: JSON.stringify({year: this.weekCriteria.year})}])
 
   private configureMainNav(dp: DateParams){
     let cfg = {
@@ -108,12 +107,5 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
     } as TopDefaultNavConfig;
     
     this.mainNavService.addConfig({default: cfg});
-  }
-
-  private mapSummariesToWeekdays(summaries: TimesheetSummary[]): { [key: number]: TimesheetSummary }{
-    return  summaries.reduce((obj, summary) => { 
-      obj[new Date(summary.date).getDay() || 7] = summary;
-      return obj;
-    },{});
   }
 }

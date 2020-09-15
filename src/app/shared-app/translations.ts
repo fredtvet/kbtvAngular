@@ -1,6 +1,6 @@
 export const translations: { [key: string]: string } = {
   name: "Navn",
-  phonenumber: "Telefonnummer",
+  phoneNumber: "Telefonnummer",
   address: "Adresse",
   user: "Bruker",
   title: "Tittel",
@@ -8,7 +8,7 @@ export const translations: { [key: string]: string } = {
   createdAt: "Opprettet",
   createdBy: "Opprettet av",
   pinned: "Festet",
-  fileUri: "Lenke",
+  fileName: "Lenke",
   description: "Beskrivelse",
   finished: "Ferdig",
   employer: "Oppdragsgiver",
@@ -29,10 +29,11 @@ export const translations: { [key: string]: string } = {
   mission: "Oppdrag",
   missionDocument: "Dokument",
   missionNote: "Notat",
-  // documentTypes: "Dokumenttyper",
-  // employers: "Oppdragsgivere",
-  // missionTypes: "Oppdragstyper",
-  // inboundEmailPasswords: "Epostpassord",
+  documentTypes: "Dokumenttyper",
+  employers: "Oppdragsgivere",
+  missionTypes: "Oppdragstyper",
+  inboundEmailPasswords: "Epostpassord",
+  missions: "Oppdrag",
   password: "Passord",
   timesheet: "Time"
 };

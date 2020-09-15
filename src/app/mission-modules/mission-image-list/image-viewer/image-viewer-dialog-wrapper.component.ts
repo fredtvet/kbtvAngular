@@ -5,7 +5,8 @@ import { DownloaderService } from 'src/app/core/services';
 import { Roles } from 'src/app/shared-app/enums';
 import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 import { MissionImageListStore } from '../mission-image-list.store';
-import { AppFile } from 'src/app/core/models';
+import { ModelFile } from 'src/app/core/models';
+import { appFileUrl } from 'src/app/shared-app/app-file-url.helper';
 
 @Component({
   selector: 'app-timesheet-card-dialog-wrapper',
@@ -14,7 +15,6 @@ import { AppFile } from 'src/app/core/models';
     [images]="data.images" 
     [currentImage]="data.currentImage"
     [actions]="actions"
-    (imageDeleted)="deleteImage($event)"
     (currentImageChanged)="data.currentImage = $event"
     (close)="close()">
   </app-image-viewer>
@@ -36,19 +36,18 @@ export class ImageViewerDialogWrapperComponent {
     private downloaderService: DownloaderService,
     private store: MissionImageListStore,
     private dialogRef: MatDialogRef<ImageViewerDialogWrapperComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {images: AppFile[], currentImage: AppFile}
+    @Inject(MAT_DIALOG_DATA) public data: {images: ModelFile[], currentImage: ModelFile}
     ) {}
-  
-    deleteImage = (id: number) =>
-      this.store.delete$(id).subscribe(this.dialogRef.close);
 
     close = () => this.dialogRef.close();
     
-    private deleteCurrentImage = () => 
-      this.store.delete$(this.data.currentImage.id).subscribe(this.dialogRef.close);
+    private deleteCurrentImage(): void{
+      this.dialogRef.close();
+      this.store.delete({id: this.data.currentImage.id});
+    }
     
     private downloadImage = () => 
-      this.downloaderService.downloadUrl(this.data.currentImage.fileURL)
+      this.downloaderService.downloadUrl(appFileUrl(this.data.currentImage.fileName, "images"))
     
     private openConfirmDeleteDialog = () => {  
       let config: ConfirmDialogConfig = {message: 'Slett bilde?', confirmText: 'Slett'};

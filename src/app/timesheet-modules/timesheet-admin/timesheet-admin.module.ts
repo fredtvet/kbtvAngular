@@ -6,7 +6,7 @@ import { TimesheetAdminUserListComponent } from './timesheet-admin-user-list/tim
 import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
 import { SharedTimesheetModule } from 'src/app/shared-timesheet/shared-timesheet.module';
 import { TimesheetAdminWeekListComponent } from './timesheet-admin-week-list/timesheet-admin-week-list.component';
-
+import { TimesheetAdminStore } from './timesheet-admin.store';
 
 @NgModule({
   declarations: [
@@ -14,6 +14,9 @@ import { TimesheetAdminWeekListComponent } from './timesheet-admin-week-list/tim
     TimesheetAdminUserListComponent,
     SwipeCardComponent,
     TimesheetAdminWeekListComponent,
+  ],
+  providers:[
+    {provide: "FILTER_STORE", useExisting: TimesheetAdminStore}
   ],
   imports: [
     SharedTimesheetModule,

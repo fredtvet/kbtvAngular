@@ -9,26 +9,22 @@ import { ApiUrl } from '../api-url.enum';
 @Injectable()
 export class HttpRefreshTokenInterceptor implements HttpInterceptor {
 
-    constructor(private authStore:AuthStore) {console.log("HttpRefreshTokenInterceptor");}
+    constructor(private authStore:AuthStore) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {  
         if(req.responseType !== "json" || this.isLoginRequest(req)) return next.handle(req); //Dont mess with login requests
 
         if(!this.authStore.hasTokens){ //If one or more tokens are missing, logout
             if(!this.isLogoutRequest(req)){ //Dont logout if request is logout (handled in auth service elsewhere)
-                //console.log(1, !!this.authService.hasTokens() && !this.isLoginRequest(req));
                 return this.logoutUser(); 
             }else 
                 return throwError('Cant log out without tokens')
         }
 
         //Dont handle expired tokens on refresh requests, nor if any token is missing.
-        if(!this.isRefreshRequest(req) && this.authStore.hasAccessTokenExpired){
-            //console.log(2, this.authService.hasAccessTokenExpired() && !this.isRefreshRequest(req));               
+        if(!this.isRefreshRequest(req) && this.authStore.hasAccessTokenExpired){        
             return this.handleTokenExpired$().pipe(switchMap(x =>{ return next.handle(this.addToken(req, x)) }));
         }  
-        
-        //console.log(3, 'default');
         return next.handle(this.addToken(req, this.authStore.accessToken));
     }
 

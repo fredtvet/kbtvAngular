@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-
 export class ArrayHelperService {
 
-  constructor() { console.log("ArrayHelperService"); }
+  constructor() { }
 
   find<T>(array: T[], value: any, identifier: string){
     if(!array || array.length == 0 || !value) return undefined;

@@ -8,7 +8,7 @@ export class DeleteModelWithChildrenHelper{
     constructor(private arrayHelperService: ArrayHelperService){}
 
     delete<TState>(state: TState, stateProp: keyof TState, cfg: {id?: string, ids?: string[]}): Partial<TState>{
-        if(!cfg.id && !cfg.ids) throw "deleteEntityChildren config requires either id or ids property set."       
+        if(!cfg.id && !cfg.ids) console.error("deleteEntityChildren config requires either id or ids property set.")       
         const modelCfg = ModelStateConfig.get(stateProp as string);
 
         let newState: Partial<TState> = {};

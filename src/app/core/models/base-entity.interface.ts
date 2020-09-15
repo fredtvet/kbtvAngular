@@ -1,1 +1,1 @@
-export interface BaseEntity{}
+export interface Model{}

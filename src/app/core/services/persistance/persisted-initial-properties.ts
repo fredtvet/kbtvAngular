@@ -1,4 +1,4 @@
-export const PersistedInitialProperties:{[key: string]: boolean}  =
+export const PersistedInitialStateConfig:{[key: string]: boolean}  =
 {
     accessToken: true,
     refreshToken: true,

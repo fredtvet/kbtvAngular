@@ -14,7 +14,7 @@ export class HttpIsOnlineInterceptor implements HttpInterceptor {
   constructor(
     private deviceInfoService: DeviceInfoService,
     private notificationService: NotificationService
-  ) {console.log("HttpIsOnlineInterceptor");}
+  ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
     return race(
@@ -22,7 +22,7 @@ export class HttpIsOnlineInterceptor implements HttpInterceptor {
       this.deviceInfoService.isOnline$.pipe(first(x => x ===true))
     ).pipe(switchMap(isOnline => {
         if(isOnline || request.responseType != "json") return next.handle(request); //Not showing errors for static content etc.
-        else{ console.log(request); return this.throwNotOnlineError();}
+        else return this.throwNotOnlineError();
     }));
   }
 

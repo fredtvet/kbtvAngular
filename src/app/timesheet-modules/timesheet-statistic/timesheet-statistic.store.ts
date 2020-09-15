@@ -2,9 +2,15 @@ import { Injectable } from '@angular/core';
 import { ApiService, ArrayHelperService, TimesheetSummaryAggregator, DateTimeService } from 'src/app/core/services';
 import { StoreState } from './store-state';
 import { GroupByPeriod } from 'src/app/shared-app/enums';
-import { Mission } from 'src/app/core/models';
-import { MissionFilter } from 'src/app/shared/mission-filter.model';
 import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
+import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
+import { FilterStateHelper } from 'src/app/core/services/filter';
+import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interface';
+import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
+import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 const TimesheetStatisticStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
     criteriaProp: "timesheetStatisticCriteria", 
@@ -17,26 +23,39 @@ const TimesheetStatisticStoreSettings: BaseTimesheetStoreSettings<StoreState> = 
 @Injectable({
   providedIn: 'any'
 })
-export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState>{
-
-    get filteredMissions(){
-        const criteria = this.getProperty<string>("timesheetStatisticMissionCriteria");
-        const missions = this.getProperty<Mission[]>("missions");
-        return this.arrayHelperService.filter(missions, (mission) => new MissionFilter(criteria).check(mission))
-    }
+export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState> 
+    implements FilterStore<TimesheetCriteria, TimesheetFilterViewConfig> {
+     
+    filterConfig$: Observable<TimesheetFilterViewConfig> = 
+        this.stateSlice$(["missions", "users", "timesheetStatisticCriteria"]).pipe(map(state => {
+            return {
+                criteria: state.timesheetStatisticCriteria, 
+                state: {
+                    missions: state.missions, 
+                    users: state.users
+                }}
+        }));
 
     constructor(
         arrayHelperService: ArrayHelperService,
         apiService: ApiService,
-        summaryAggregator: TimesheetSummaryAggregator,
         dateTimeService: DateTimeService,
+        summaryAggregator: TimesheetSummaryAggregator,
+        getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>,
+        filterStateHelper: FilterStateHelper,
     ){
-        super(arrayHelperService, apiService, dateTimeService, summaryAggregator, TimesheetStatisticStoreSettings)
+        super(
+            arrayHelperService, 
+            apiService, 
+            dateTimeService, 
+            summaryAggregator, 
+            getRangeWithRelationsHelper, 
+            filterStateHelper, 
+            TimesheetStatisticStoreSettings
+        )
+    }
+
+    addFilterCriteria(criteria: TimesheetCriteria){
+        super.addTimesheetCriteria(criteria);
     }
 }
-
-// public status: TimesheetStatus = TimesheetStatus.Open,    
-// public mission: Mission = undefined,    
-// public dateRangePreset: DateRangePresets = DateRangePresets.Custom,   
-// public dateRange: Date[] = [],
-// public userName: string = undefined,

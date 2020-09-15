@@ -1,18 +1,18 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { tap } from "rxjs/operators";
 import { User } from "src/app/core/models";
 import {
   ApiService,
   ArrayHelperService
 } from "src/app/core/services";
-import { BaseModelStore } from 'src/app/core/state/abstractions/base-model.store';
+import { ApiUrl } from '../core/api-url.enum';
 import { StoreState } from './store-state';
+import { BaseCommandStore } from '../core/state/abstracts/base-command.store';
 
 @Injectable({
   providedIn: 'any',
 })
-export class ProfileStore extends BaseModelStore<StoreState>  {
+export class ProfileStore extends BaseCommandStore<StoreState>  {
 
   currentUser$: Observable<User> = this.property$("currentUser");
 
@@ -20,22 +20,24 @@ export class ProfileStore extends BaseModelStore<StoreState>  {
     apiService: ApiService,
     arrayHelperService: ArrayHelperService
   ) {
-    super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
+    super(arrayHelperService, apiService);
   }
   
-  updateCurrentUser$(user: User): Observable<User> {
-    return this.apiService.put('/auth', user)
-      .pipe(tap(updatedUser => this._setStateVoid({currentUser: updatedUser}, StoreActions.UpdateCurrentUser)));
+  updateCurrentUser(user: User): void {
+    this._stateHttpCommandHandler({
+      httpMethod: "PUT", 
+      httpBody: user, 
+      apiUrl: ApiUrl.Auth, 
+      stateFunc: (s: StoreState) => { return {currentUser: {...s.currentUser, ...user}} }
+    });
   }
 
-  updatePassword$(oldPw: string, newPw: string){
-    const obj = {OldPassword: oldPw, NewPassword: newPw}
-    return this.apiService.put('/auth/changePassword', obj);
+  updatePassword(oldPw: string, newPw: string){
+    this._stateHttpCommandHandler({
+      httpMethod: "PUT", 
+      httpBody: {OldPassword: oldPw, NewPassword: newPw}, 
+      apiUrl: `${ApiUrl.Auth}/changePassword`
+    });
   }
 
-}
-
-export enum StoreActions {
-  UpdateCurrentUser = "update_currentUser",
-  UpdateSyncConfig = "update_syncConfig"
 }

@@ -1,13 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { filter, map, takeUntil } from 'rxjs/operators';
-import { WeekFilterSheetWrapperComponent } from 'src/app/shared-timesheet/components';
-import { UserTimesheetListStore } from '../user-timesheet-list.store';
+import { FilterSheetService } from 'src/app/core/services/filter';
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
 import { GroupByPeriod } from 'src/app/shared-app/enums';
-import { TimesheetSummary } from 'src/app/shared/interfaces';
+import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
+import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
+import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
+import { UserTimesheetListStore } from '../user-timesheet-list.store';
 
 @Component({
   selector: 'app-user-timesheet-week-list',
@@ -19,7 +20,7 @@ export class UserTimesheetWeekListComponent extends SubscriptionComponent implem
   summaries$ = this.store.timesheetSummaries$.pipe(map(arr => arr.sort((a,b) => b.week - a.week)));
 
   constructor(
-    private _bottomSheet: MatBottomSheet,
+    private filterService: FilterSheetService,
     private store: UserTimesheetListStore,
     private mainNavService: MainNavService,
     private route: ActivatedRoute,
@@ -29,27 +30,31 @@ export class UserTimesheetWeekListComponent extends SubscriptionComponent implem
   ngOnInit() {
     let initFilter = this.route.snapshot.params.initialFilter;
     initFilter = initFilter ? JSON.parse(initFilter) : {year: new Date().getFullYear()};
-    this.store.addWeekFilter(initFilter);
+    this.store.addWeekFilterCriteria(initFilter);
     this.configureMainNav(initFilter?.year);
-    this.store.criteria$.pipe(takeUntil(this.unsubscribe)).subscribe(x => this.configureMainNav(this.store.weekFilter?.year))
+    this.store.criteria$.pipe(takeUntil(this.unsubscribe)).subscribe(x => this.configureMainNav(this.store.weekCriteria?.year))
   }
 
   goToWeekView = (year: number, weekNr: number) => {
     this.router.navigate(['/mine-timer/ukevisning', {initialFilter: JSON.stringify({year, weekNr})}])
   }
 
+  trackByWeekNr(index:number, summary:TimesheetSummary): number {
+    return summary.week;
+  } 
+
   openWeekFilter = () => { 
-    let ref = this._bottomSheet.open(WeekFilterSheetWrapperComponent, {
-      data: {filter: this.store.weekFilter}
+    let ref = this.filterService.open<WeekCriteria, WeekFilterViewConfig>({
+      formConfig: {
+        criteria: this.store.weekCriteria, 
+        disabledFilters: ["weekNr","userName"]
+      },
+      formComponent: WeekFilterViewComponent
     });
 
     ref.afterDismissed()
       .pipe(filter(f => f != null))
-      .subscribe(f => this.store.addWeekFilter(f));
-  }
-
-  trackByWeekNr(index:number, summary:TimesheetSummary): number {
-    return summary.week;
+      .subscribe(f => this.store.addWeekFilterCriteria(f));
   }
 
   private configureMainNav = (year: number) => {

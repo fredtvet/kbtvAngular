@@ -1,32 +1,35 @@
 import { Injectable } from "@angular/core";
 import { combineLatest, Observable } from "rxjs";
 import { filter, map, tap } from "rxjs/operators";
-import { ApiUrl } from 'src/app/core/api-url.enum';
-import { Mission, Timesheet } from "src/app/core/models";
+import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
+import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
+import { Timesheet } from "src/app/core/models";
 import {
   ApiService,
   ArrayHelperService,
-
-  DateTimeService,
   TimesheetSummaryAggregator
 } from "src/app/core/services";
-import { DateRangePresets, GroupByPeriod } from 'src/app/shared-app/enums';
-import { WeekFilterCriteria } from 'src/app/shared-timesheet/components/week-filter/week-filter-config.interface';
-import { TimesheetFilter } from 'src/app/shared/timesheet-filter.model';
-import { BaseModelStore } from 'src/app/core/state/abstractions/base-model.store';
+import { WeekToTimesheetCriteriaConverter } from 'src/app/core/services/utility/week-to-timesheet-criteria.converter';
+import { BaseStore } from 'src/app/core/state/abstracts/base.store';
+import { GroupByPeriod } from 'src/app/shared-app/enums';
+import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
+import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
 import { StoreState } from './store-state';
-import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared/interfaces';
+import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
+import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interface';
+import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 
 @Injectable({
   providedIn: 'any',
 })
-export class UserTimesheetListStore extends BaseModelStore<StoreState>  {
+export class UserTimesheetListStore extends BaseStore<StoreState> 
+  implements FilterStore<TimesheetCriteria, TimesheetFilterViewConfig> {
 
-  private _weekFilter: WeekFilterCriteria;
+  private _weekCriteria: WeekCriteria;
   
-  get weekFilter(): WeekFilterCriteria { return {...this._weekFilter} };
+  get weekCriteria(): WeekCriteria { return {...this._weekCriteria} };
 
-  get criteria(){return this.getProperty<TimesheetCriteria>("userTimesheetListCriteria") || {}} 
+  get criteria(){return this.getStateProperty<TimesheetCriteria>("userTimesheetListCriteria") || {}} 
 
   groupBy$ = this.property$<GroupByPeriod>("userTimesheetListGroupBy");
 
@@ -35,75 +38,47 @@ export class UserTimesheetListStore extends BaseModelStore<StoreState>  {
   filteredTimesheets$: Observable<Timesheet[]> = 
     this.stateSlice$(["userTimesheets", "userTimesheetListCriteria", "missions"]).pipe(
           filter(x => x.userTimesheets != null && x.userTimesheetListCriteria != null),
-          map(state => {
-              const filter = new TimesheetFilter(state.userTimesheetListCriteria);
-              let arr = this.arrayHelperService.filter(state.userTimesheets, (t: Timesheet) => filter.check(t));
-              return this.addMissionToTimesheet(arr, state.missions)   
+          map(state => { 
+            const relationCfg = new GetWithRelationsConfig("userTimesheets", null, {include: {mission: true}})
+            const filter = new TimesheetFilter(state.userTimesheetListCriteria);
+            return this.getRangeWithRelationsHelper.get(state as any, relationCfg, filter.check)
           }),       
       );
 
   timesheetSummaries$: Observable<TimesheetSummary[]> = 
-      combineLatest(
-          this.filteredTimesheets$, 
-          this.groupBy$
-      ).pipe(
+      combineLatest([this.filteredTimesheets$, this.groupBy$]).pipe(
           filter(([timesheets]) => timesheets != null),
           map(([timesheets, groupBy]) => this.timesheetSummaryAggregator.groupByType(groupBy, timesheets)),
       );
 
+  filterConfig$: Observable<TimesheetFilterViewConfig> = 
+    this.stateSlice$(["missions", "userTimesheetListCriteria"]).pipe(map(state => {
+      return {criteria: state.userTimesheetListCriteria, state: {missions: state.missions, users: null}}
+    }));
 
   constructor(
     apiService: ApiService,
     arrayHelperService: ArrayHelperService,
-    private timesheetSummaryAggregator: TimesheetSummaryAggregator,
-    private dateTimeService: DateTimeService
+    private getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>,
+    private weekToTimesheetCriteriaConverter: WeekToTimesheetCriteriaConverter,
+    private timesheetSummaryAggregator: TimesheetSummaryAggregator
   ) {
-    super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
+    super(arrayHelperService, apiService);
   }
 
-  addWeekFilter(filter: WeekFilterCriteria): void{
-    let dateRange: Date[];
 
-    if(filter?.weekNr) 
-        dateRange = this.dateTimeService.getWeekRange(this.dateTimeService.getDateOfWeek(filter.weekNr, filter.year));
-    else if(filter?.year){
-        let date = new Date();
-        date.setFullYear(filter.year);
-        dateRange = this.dateTimeService.getYearRange(date);
-    }
-    this._weekFilter = filter;
-    // this._setStateVoid({weekFilterCriteria: filter})
-    this.addCriteria({dateRange, dateRangePreset: DateRangePresets.Custom})
+  addWeekFilterCriteria(weekCriteria: WeekCriteria): void{
+    this._weekCriteria = weekCriteria;
+    this.addFilterCriteria(this.weekToTimesheetCriteriaConverter.convert(weekCriteria))
   }
 
-  addCriteria(criteria: TimesheetCriteria){
-    if(criteria?.dateRangePreset === undefined)
-      criteria.dateRangePreset = DateRangePresets.Custom;
-    else if(criteria?.dateRangePreset !== DateRangePresets.Custom)
-      criteria.dateRange = this.dateTimeService.getRangeByDateRangePreset(criteria.dateRangePreset);
-
+  addFilterCriteria(criteria: TimesheetCriteria){
     this._setStateVoid({userTimesheetListCriteria: criteria});
   }
 
   addGroupBy(type: GroupByPeriod){
     this._setStateVoid({userTimesheetListGroupBy: type});
   }
-
-  delete$(id: number): Observable<void>{
-    return this.apiService.delete(`${ApiUrl.UserTimesheet}/${id}`)
-      .pipe(tap(x => 
-          this._updateStateProperty<Timesheet[]>("userTimesheets", 
-              (arr) => this.arrayHelperService.removeByIdentifier(arr, id, "id"))
-      ));  
-  }
-
-  private addMissionToTimesheet(timesheets: Timesheet[], missions: Mission[]): Timesheet[]{
-    const missions_obj = {}; 
-    missions?.forEach(x => missions_obj[x.id] = x); 
-    timesheets?.forEach(t => t.mission = missions_obj[t.missionId]);  
-    return timesheets;
-  }
-
 
 }
 

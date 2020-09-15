@@ -49,20 +49,18 @@ export class DataTableComponent extends AgGridTableComponent<any> {
   }
 
   private addColDef(name: string): any{
-    let nameLower = name.toLowerCase();
-
-    if(DataTableConfig.ignoredProperties[nameLower]) return null; //Ignored properties
+    if(DataTableConfig.ignoredProperties[name]) return null; //Ignored properties
 
     let def = {
       field: name,
-      headerName: translations[nameLower] || nameLower,
+      headerName: translations[name] || name,
       sortable: true,
       resizable: true,
       editable: true,
       lockPosition: true
     };
 
-    if(DataTableConfig.booleanProperties[nameLower]){
+    if(DataTableConfig.booleanProperties[name]){
       def['cellEditor'] = 'agSelectCellEditor';
       def['cellEditorParams'] = { values: ['Ja', 'Nei']}
 
@@ -78,9 +76,9 @@ export class DataTableComponent extends AgGridTableComponent<any> {
       }
     }
 
-    if(DataTableConfig.noEditProperties[nameLower]) def['editable'] = false;
+    if(DataTableConfig.noEditProperties[name]) def['editable'] = false;
 
-    if(DataTableConfig.objectProperties[nameLower]){
+    if(DataTableConfig.objectProperties[name]){
       def['valueGetter'] = function(params) { //Get name of object and display
         if(params.data[name])
           return params.data[name].name;

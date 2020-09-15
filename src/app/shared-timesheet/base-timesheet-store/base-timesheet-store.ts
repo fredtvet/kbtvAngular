@@ -4,40 +4,39 @@ import { filter, map, take, tap, withLatestFrom } from 'rxjs/operators';
 import { ApiUrl } from 'src/app/core/api-url.enum';
 import { Mission, Timesheet, User } from 'src/app/core/models';
 import { ApiService, ArrayHelperService, DateTimeService, TimesheetSummaryAggregator } from 'src/app/core/services';
-import { BaseModelStore } from 'src/app/core/state/abstractions/base-model.store';
-import { DateRangePresets, GroupByPeriod } from 'src/app/shared-app/enums';
-import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared/interfaces';
-import { TimesheetFilter } from 'src/app/shared/timesheet-filter.model';
+import { GroupByPeriod } from 'src/app/shared-app/enums';
+import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
 import { BaseTimesheetStoreSettings } from './base-timesheet-store-settings.interface';
 import { BaseTimesheetStoreState } from './base-timesheet-store-state';
+import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
+import { TimesheetCriteria } from '../interfaces/timesheet-criteria.interface';
+import { TimesheetSummary } from '../interfaces/timesheet-summary.interface';
+import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
+import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
+import { FilterStateHelper } from 'src/app/core/services/filter';
 
 export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetStoreState>> extends BaseModelStore<TState>{
     
     private baseCriteria: TimesheetCriteria;
 
-    users$ = this._propertyWithFetch$<User[]>("users" as any, this.apiService.get(`${ApiUrl.Users}`));
+    users$ = this.modelProperty$<User[]>("users" as any);
 
-    groupBy$ = this.property$<GroupByPeriod>(this.settings.groupByProp);
-
-    get criteria(){
-      return this.getProperty<TimesheetCriteria>(this.settings.criteriaProp) || {};
-    } 
+    groupBy$ = this.property$<GroupByPeriod>(this.settings.groupByProp); 
 
     filteredTimesheets$: Observable<Timesheet[]> = 
       this.stateSlice$(["timesheets" as any, this.settings.criteriaProp]).pipe(
             filter(x => x.timesheets != null && x[this.settings.criteriaProp] != null),
-            map(state => {
-                const filter = new TimesheetFilter(state[this.settings.criteriaProp]);
-                return this.arrayHelperService.filter(state.timesheets, (t: Timesheet) => filter.check(t))    
-            }),       
+            map(state => 
+              this.filterStateHelper.filter<Timesheet, TimesheetCriteria>(state.timesheets, state[this.settings.criteriaProp], TimesheetFilter)
+            ),       
         );
 
     timesheetSummaries$: Observable<TimesheetSummary[]> = 
-        combineLatest(
+        combineLatest([
             this.filteredTimesheets$, 
             this.groupBy$,
             this.users$
-        ).pipe(
+        ]).pipe(
             filter(([timesheets]) => timesheets != null),
             map(([timesheets, groupBy, users]) => {
                 let summaries = this.timesheetSummaryAggregator.groupByType(groupBy, timesheets);
@@ -50,28 +49,26 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
         apiService: ApiService,
         protected dateTimeService: DateTimeService,
         private timesheetSummaryAggregator: TimesheetSummaryAggregator,
+        private getRangeWithRelationsHelper: GetRangeWithRelationsHelper<TState>,
+        private filterStateHelper: FilterStateHelper,
         private settings: BaseTimesheetStoreSettings<TState>) {
-            super(arrayHelperService, apiService, {trackStateHistory: true, logStateChanges: true})           
+            super(arrayHelperService, apiService)           
             this._setStateVoid(settings.initialState);
     }
 
-  addCriteria(criteria: TimesheetCriteria){
-    if(criteria && criteria.dateRange && criteria.dateRangePreset === undefined )
-      criteria.dateRangePreset = DateRangePresets.Custom;
-    else if(criteria && criteria.dateRangePreset !== DateRangePresets.Custom)
-      criteria.dateRange = this.dateTimeService.getRangeByDateRangePreset(criteria.dateRangePreset);
-
+  addTimesheetCriteria(criteria: TimesheetCriteria){
     let state: Partial<TState> = {};
     state[this.settings.criteriaProp] = criteria as any; 
 
     const filter = new TimesheetFilter(criteria);
 
+    //If current filter  data is contained in base, dont fetch http dataand use state. 
     if(filter.containedIn(this.baseCriteria)) this._setStateVoid(state);
     else {
         this.baseCriteria = criteria;
         this.get$(criteria).pipe(take(1), tap(timesheets => {
             state.timesheets = this.arrayHelperService.addOrUpdateRange(
-                this.getProperty<Timesheet[]>("timesheets" as any), timesheets, "id");
+                this.getStateProperty<Timesheet[]>("timesheets" as any), timesheets, "id");
             this._setStateVoid(state);
         })).subscribe()
     }
@@ -97,16 +94,14 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
     if(filter.mission) params = params.set('MissionId', filter.mission.id.toString());
 
     return this.apiService.get(ApiUrl.Timesheet, params).pipe( 
-        withLatestFrom(this.property$<Mission[]>("missions" as any)),
-        map(([timesheets, missions]) => this.addMissionToTimesheet(timesheets, missions)),
+        withLatestFrom(this.modelProperty$<Mission[]>("missions" as any)),
+        map(([timesheets, missions]) => this.addMissionToTimesheets({timesheets, missions})),
     );
   }
 
-  private addMissionToTimesheet(timesheets: Timesheet[], missions: Mission[]): Timesheet[]{
-    const missions_obj = {}; 
-    missions?.forEach(x => missions_obj[x.id] = x); 
-    timesheets?.forEach(t => t.mission = missions_obj[t.missionId]);  
-    return timesheets;
+  private addMissionToTimesheets(state: {timesheets: Timesheet[], missions: Mission[]}): Timesheet[]{
+    const relationCfg = new GetWithRelationsConfig("timesheets", null, {include:{mission: true}});
+    return this.getRangeWithRelationsHelper.get(state, relationCfg);
   }
    
   private addFullNameToSummaries(summaries: TimesheetSummary[], users: User[]): TimesheetSummary[]{

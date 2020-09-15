@@ -2,28 +2,24 @@ import { NgModule } from '@angular/core';
 
 import { 
   TimesheetCardComponent, 
-  WeekFilterComponent, 
-  WeekFilterSheetWrapperComponent,  
-  TimesheetFilterSheetWrapperComponent, 
+  WeekFilterViewComponent,  
   TimesheetSummaryCardContentComponent, 
-  TimesheetFilterComponent
 } from './components';
 
 import { GetDateByDateParamsPipe, ArrayIncludesPipe, ReadableDurationPipe } from './pipes';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AppOwlDateTimeModule } from 'src/app/app-owl-date-time/app-owl-date-time.module';
+import { TimesheetFilterViewComponent } from './components/timesheet-filter-view/timesheet-filter-view.component';
 
 @NgModule({
   declarations: [
     TimesheetCardComponent,
-    WeekFilterComponent,
-    WeekFilterSheetWrapperComponent,
-    TimesheetFilterSheetWrapperComponent,
+    TimesheetFilterViewComponent,
+    WeekFilterViewComponent,
     TimesheetSummaryCardContentComponent,
     GetDateByDateParamsPipe,   
     ArrayIncludesPipe,
     ReadableDurationPipe,
-    TimesheetFilterComponent,
   ],
   imports: [
     SharedModule,
@@ -32,15 +28,13 @@ import { AppOwlDateTimeModule } from 'src/app/app-owl-date-time/app-owl-date-tim
   exports: [
     SharedModule,
     AppOwlDateTimeModule,
+    TimesheetFilterViewComponent,
     TimesheetCardComponent,
-    WeekFilterComponent,
-    WeekFilterSheetWrapperComponent,
-    TimesheetFilterSheetWrapperComponent,
+    WeekFilterViewComponent,
     TimesheetSummaryCardContentComponent,
     GetDateByDateParamsPipe,   
     ArrayIncludesPipe,
     ReadableDurationPipe,
-    TimesheetFilterComponent
   ]
 })
 export class SharedTimesheetModule { }

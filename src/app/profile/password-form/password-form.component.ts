@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { ProfileStore } from '../profile.store';
-import { FormAction } from 'src/app/shared/enums';
-import { NotificationService, NotificationType } from 'src/app/core/services/notification';
+import { SaveAction } from 'src/app/core/state';
+import { FormComponent } from 'src/app/core/form/form-component.interface';
 
 @Component({
   selector: 'app-password-form',
@@ -13,24 +13,16 @@ import { NotificationService, NotificationType } from 'src/app/core/services/not
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class PasswordFormComponent {
+export class PasswordFormComponent implements FormComponent {
  
-  @Output() finished = new EventEmitter();
+  config: any;
+  @Output() formSubmitted = new EventEmitter<SaveAction>();
 
-  constructor(
-    private store: ProfileStore,
-    private notificationService: NotificationService) {}
+  constructor(private store: ProfileStore) {}
 
   onSubmit(result:any): void{
-    if(!result || result == null) this.finished.emit();
+    if(!result || result == null) this.formSubmitted.emit();
 
-    this.store.updatePassword$(result.oldPassword, result.password).subscribe(x => {
-        this.notificationService.notify({
-          title:'Vellykket oppdatering!',        
-          type: NotificationType.Success
-        })
-        this.finished.emit(FormAction.Update);
-      }
-    )
+    this.store.updatePassword(result.oldPassword, result.password);
   }
 }

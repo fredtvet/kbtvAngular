@@ -19,7 +19,5 @@ import { LoginFormComponent } from './login-prompt/login-form/login-form.compone
   ]
 })
 export class LoginPromptModule { 
-  constructor(){
-    console.log("loginpromptMOdule");
-  } 
+  constructor(){} 
 }

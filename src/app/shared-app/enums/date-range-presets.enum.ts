@@ -1,5 +1,5 @@
 export enum DateRangePresets {   
-    None,
+    None = 1,
     CurrentWeek,
     CurrentMonth,
     CurrentYear,

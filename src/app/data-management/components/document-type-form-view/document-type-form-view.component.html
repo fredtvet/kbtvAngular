@@ -1,0 +1,14 @@
+<form *ngIf="form" [formGroup]="form" fxLayout="column" class="m-3">
+  <mat-form-field>
+    <input matInput placeholder="Navn" formControlName="name" />
+    <mat-error *ngIf="this.name.invalid">
+      Navn kan være på maks 45 tegn.
+    </mat-error>
+  </mat-form-field>
+
+  <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
+    [disabled]="form.invalid || form.pristine"
+    (click)="onSubmit()">
+    Lagre   
+  </button>
+</form>

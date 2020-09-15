@@ -7,11 +7,10 @@
             <app-list-card
                 [config]="{
                     startIcon: 'home_work', panelClass: 'mt-1', 
-                    endIcon: mission.finished ? 'check':'chevron_right' ,
-                    loading: mission.tempId ? true : false             
+                    endIcon: mission.finished ? 'check':'chevron_right'             
                 }" 
-                [routerLink]="mission.tempId ? [] : ['/oppdrag', mission.id, 'detaljer']">
-                {{'(' + (mission.id > 0 ?  mission.id : 0 ) + ') ' + mission.address}}
+                [routerLink]="['/oppdrag', mission.id, 'detaljer']">
+                {{'(' + mission.id + ') ' + mission.address}}
             </app-list-card>
         </ng-container>  
     </cdk-virtual-scroll-viewport>

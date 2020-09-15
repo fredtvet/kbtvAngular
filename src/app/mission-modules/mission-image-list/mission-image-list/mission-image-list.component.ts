@@ -1,19 +1,19 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from "@angular/core";
-import { MatBottomSheet } from "@angular/material/bottom-sheet";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, tap } from "rxjs/operators";
-import { MissionImage, AppFile } from 'src/app/core/models';
+import { MissionImage, ModelFile } from 'src/app/core/models';
 import { DeviceInfoService, DownloaderService } from 'src/app/core/services';
-import { RolePresets, Roles } from 'src/app/shared-app/enums';
+import { FormService } from 'src/app/core/services/form/form.service';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
+import { RolePresets, Roles } from 'src/app/shared-app/enums';
+import { AppButton } from 'src/app/shared-app/interfaces';
 import { ConfirmDialogComponent, ConfirmDialogConfig, SelectableListBase } from 'src/app/shared/components';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
-import { MailImageSheetComponent } from '../mail-image-sheet.component';
+import { MailImageFormComponent } from '../mail-image-form.component';
 import { MissionImageListStore } from '../mission-image-list.store';
-import { NotificationType, NotificationService } from 'src/app/core/services/notification';
-import { AppButton } from 'src/app/shared-app/interfaces';
+import { appFileUrl } from 'src/app/shared-app/app-file-url.helper';
 
 @Component({
   selector: "app-mission-image-list",
@@ -22,16 +22,16 @@ import { AppButton } from 'src/app/shared-app/interfaces';
 })
 
 export class MissionImageListComponent {
-  @ViewChild('imageList') imageList: SelectableListBase<AppFile>;
+  @ViewChild('imageList') imageList: SelectableListBase<ModelFile>;
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
 
-  currentSelections: number[] = [];
+  currentSelections: string[] = [];
 
   images$: Observable<MissionImage[]>;
   isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
 
   get missionId() {
-    return +this.route.snapshot.paramMap.get('id');
+    return this.route.snapshot.paramMap.get('id');
   }
 
   get selectedItemsFabs(): AppButton[] {
@@ -48,9 +48,8 @@ export class MissionImageListComponent {
   constructor(
     private downloaderService: DownloaderService,
     private deviceInfoService: DeviceInfoService,
-    private bottomSheet: MatBottomSheet,
+    private formService: FormService,
     private dialog: MatDialog,
-    private notificationService: NotificationService,
     private mainNavService: MainNavService,
     private store: MissionImageListStore,
     private route: ActivatedRoute,
@@ -61,13 +60,13 @@ export class MissionImageListComponent {
     this.images$ = this.store.getByMissionId$(this.missionId).pipe(tap(this.updateMainNav));
   }
 
-  onSelectionChange(selections: number[]){
+  onSelectionChange(selections: string[]){
     if(!selections) return undefined;
     this.currentSelections = selections;
     this.updateFabs();
   }
 
-  openImageViewer(image: AppFile, images: AppFile[]) {
+  openImageViewer(image: ModelFile, images: ModelFile[]) {
     this.dialog.open(ImageViewerDialogWrapperComponent, {
       width: "100%",
       height: "100%",
@@ -76,15 +75,9 @@ export class MissionImageListComponent {
     });
   }
 
-  uploadImages = (files: FileList) => {
-    this.store.add$({missionId: this.missionId, files}).subscribe(x =>
-      this.notificationService.notify({
-        title: `Vellykket! ${files.length} ${files.length > 1 ? 'bilder' : 'bilde'} lastet opp.`,
-        type: NotificationType.Success
-      })
-    );
-  }
-
+  uploadImages = (files: FileList): void => 
+    this.store.add({missionId: this.missionId, files});
+  
   private openImageInput = (): void => this.imageInput.nativeElement.click();
   
   private updateFabs(){
@@ -98,13 +91,8 @@ export class MissionImageListComponent {
   }
 
   private deleteSelectedImages = () => {
-    this.store.deleteRange$(this.currentSelections).subscribe(data =>{
-      this.imageList.clearSelections();
-      this.notificationService.notify({
-        title: `Vellykket! ${this.currentSelections.length} ${this.currentSelections.length > 1 ? 'bilder' : 'bilde'} slettet.`,        
-        type: NotificationType.Success
-      })     
-    })    
+    this.store.delete({ids: this.currentSelections});     
+    this.imageList.clearSelections();
   }
 
   private  openConfirmDeleteDialog = () => {   
@@ -114,21 +102,24 @@ export class MissionImageListComponent {
   }
   
   private openMailImageSheet = () => {
-    let botRef = this.bottomSheet.open(MailImageSheetComponent, {
-      data: { toEmailPreset: this.store.getMissionEmployer(this.missionId)?.email, ids: this.currentSelections },
+    let botRef = this.formService.open({
+      customTitle: "Send bilder",
+      formComponent: MailImageFormComponent,
+      formConfig: { toEmailPreset: this.store.mission?.employer?.email, ids: this.currentSelections },
     });
+
     botRef
       .afterDismissed()
-      .pipe(filter((isSent) => isSent))
+      .pipe(filter(result => result?.action != null))
       .subscribe((x) => this.imageList.clearSelections());
   }
 
-  private downloadImages = (fileUrls: string[]) => 
-    this.downloaderService.downloadUrls(fileUrls)
+  private downloadImages = (fileNames: string[]) => 
+    this.downloaderService.downloadUrls(fileNames.map(x => appFileUrl(x, "images")));
 
-  private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
+  private onBack = (missionId: string) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
 
-  private configureMainNav(missionId: number){
+  private configureMainNav(missionId: string){
     let cfg = {
       title:  "Bilder",
       backFn: this.onBack,
@@ -144,7 +135,7 @@ export class MissionImageListComponent {
       {icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, 
       params: [images.map(x => x.id)], allowedRoles: RolePresets.Authority},
       {icon: "cloud_download", text: "Last ned alle", callback: this.downloadImages, 
-      params: [images.map(x => x.fileURL)]},
+      params: [images.map(x => x.fileName)]},
     ]
     this.mainNavService.addConfig({default: cfg}, this.staticFabs);
   }  

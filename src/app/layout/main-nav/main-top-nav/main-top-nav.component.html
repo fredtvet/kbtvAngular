@@ -56,6 +56,6 @@
     </app-button>
 
     <input #searchInput appInputListener (inputChanged)="handleSearchFn($event);" fxFlex
-      [placeholder]="config.searchBar.placeholder" class="mt-1 mb-1 p-2 pl-3 mr-1"
+      [value]="config.searchBar.initialValue || ''" [placeholder]="config.searchBar.placeholder" class="mt-1 mb-1 p-2 pl-3 mr-1"
       style="background:white;border:none;border-radius:10px;">
 </ng-template>

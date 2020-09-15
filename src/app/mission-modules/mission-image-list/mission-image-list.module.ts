@@ -3,10 +3,9 @@ import { MissionImageListRoutingModule } from './mission-image-list-routing.modu
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MissionImageListComponent } from './mission-image-list/mission-image-list.component';
 import { ImageListComponent } from './mission-image-list/image-list/image-list.component';
-import { MailImageSheetComponent } from './mail-image-sheet.component';
-import { ThumbnailPipe } from './pipes/thumbnail.pipe';
 import { ImageViewerDialogWrapperComponent } from './image-viewer/image-viewer-dialog-wrapper.component';
 import { ImageViewerComponent } from './image-viewer/image-viewer.component';
+import { MailImageFormComponent } from './mail-image-form.component';
 
 
 @NgModule({
@@ -15,9 +14,8 @@ import { ImageViewerComponent } from './image-viewer/image-viewer.component';
     ImageListComponent,
     ImageViewerDialogWrapperComponent,
     ImageViewerComponent,
-    MailImageSheetComponent,
     ImageListComponent,
-    ThumbnailPipe
+    MailImageFormComponent
   ],
   imports: [
     SharedModule,

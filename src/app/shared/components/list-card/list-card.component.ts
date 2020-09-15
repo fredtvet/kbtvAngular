@@ -19,5 +19,4 @@ export interface ListCardConfig{
   endIcon: string;
   panelClass: string;
   ellipsisDisabled: boolean;
-  loading: boolean;
 } 

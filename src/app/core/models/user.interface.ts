@@ -1,14 +1,11 @@
-import { Employer } from './employer.interface';
-import { TempEntity } from './temp-entity.interface';
+import { Model } from './base-entity.interface';
+import { EmployerForeign } from './relationships/employer-foreign.interface';
 
-export interface User extends TempEntity {
+export interface User extends Model, EmployerForeign {
   userName: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
   email: string;
   role: string;
-
-  employerId: number;
-  employer: Employer;
 };

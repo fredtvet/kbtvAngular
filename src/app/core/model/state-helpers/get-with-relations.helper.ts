@@ -6,16 +6,16 @@ import { ModelState } from '../model.state';
 import { ModelStateConfig } from '../model-state.config';
 
 @Injectable({providedIn: "root"})
-export class GetWithRelationsHelper  {
+export class GetWithRelationsHelper<TState>  {
 
     constructor( private arrayHelperService: ArrayHelperService) { }
 
     get<TModel extends Model>( 
         state: Partial<ModelState>,
-        cfg: GetWithRelationsConfig,
+        cfg: GetWithRelationsConfig<TState>,
         id: any, 
     ): TModel{
-        const modelCfg = ModelStateConfig.get(cfg.modelProp); 
+        const modelCfg = ModelStateConfig.get<TState>(cfg.modelProp); 
 
         const modelState = state[cfg.modelProp] as TModel[];
         if(!modelState || modelState.length == 0) return null;
@@ -30,7 +30,7 @@ export class GetWithRelationsHelper  {
         }
 
         for(const childStateProp of cfg.includedChildProps){
-            entity[childStateProp] = //Set object prop in detail prop equals to object with ID = fk id
+            entity[childStateProp as string] = //Set object prop in detail prop equals to object with ID = fk id
                 this.arrayHelperService.filter(state[childStateProp as string], (x) => x[modelCfg.foreignKey] === id);
         }
 

@@ -1,0 +1,1 @@
+export const FileFolders = ["missionheader", "documents", "images", "thumbnails"] as const

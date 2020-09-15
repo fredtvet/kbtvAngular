@@ -9,7 +9,7 @@ import { DateParams } from 'src/app/shared-app/interfaces';
 export class DateTimeService {
   private currentDate = new Date();
 
-  constructor() { console.log("DateTimeService");
+  constructor() { 
     this.currentDate.setHours(0, 0, 0, 0);
   }
 
@@ -122,6 +122,15 @@ export class DateTimeService {
       var date = new Date();
       return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
       date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()) / 1000;
+  }
+
+  mapObjectsToWeekdays<TObject>(objects: TObject[], dateProp: string): { [key: number]: TObject }{
+    const result: { [key: number]: TObject } = {};
+    for(let i = 0; i < objects.length; i++){
+      const obj = objects[i];
+      result[new Date(obj[dateProp]).getDay() || 7] = obj;
+    }
+    return result;
   }
 
 }

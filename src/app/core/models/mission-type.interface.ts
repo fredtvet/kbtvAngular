@@ -1,6 +1,6 @@
-import { TempEntity } from './temp-entity.interface';
+import { Model } from './base-entity.interface';
 
-export interface MissionType extends TempEntity {
-     id: number;
+export interface MissionType extends Model {
+    id?: string;
     name: string;
 };

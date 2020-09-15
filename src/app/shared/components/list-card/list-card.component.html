@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="space-between center" [appLoadingOverlay]="config.loading" [ngClass]="config.panelClass" class="app-card mb-1 p-3 mat-elevation-z2" matRipple>  
+<div fxLayout="row" fxLayoutAlign="space-between center" [ngClass]="config.panelClass" class="app-card mb-1 p-3 mat-elevation-z2" matRipple>  
     <mat-icon class="mr-2">{{ config.startIcon }}</mat-icon>
     <span [ngClass]="config.ellipsisDisabled ? '':'ellipsis'" class="mr-auto" fxFlex>
         <ng-content>

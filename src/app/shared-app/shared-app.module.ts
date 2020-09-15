@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CheckRolesInButtonsPipe, ReverseArrayPipe, TransformButtonsPipe } from './pipes';
+import { AppFileUrlPipe } from './pipes/app-file-url.pipe';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { CheckRolesInButtonsPipe, ReverseArrayPipe, TransformButtonsPipe } from 
     BottomSheetMenuComponent,   
     AppButtonComponent,  
     NavItemComponent,
+    AppFileUrlPipe,
     ImageErrorReloaderDirective,
     IfRoleDirective,
     CheckRolesInButtonsPipe,
@@ -52,6 +54,7 @@ import { CheckRolesInButtonsPipe, ReverseArrayPipe, TransformButtonsPipe } from 
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
+    AppFileUrlPipe,
     MatRippleModule,
     MatDividerModule,
     MatBottomSheetModule,

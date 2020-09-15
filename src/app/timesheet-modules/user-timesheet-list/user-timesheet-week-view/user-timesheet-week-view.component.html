@@ -7,8 +7,8 @@
           <div class="w-100" fxLayout="column" fxLayoutAlign="start center">
 
             <app-timesheet-day-label class="w-100 mb-1 fadeInDown" style="z-index:1"
-              [date]="weekFilter | getDateByDateParams : weekDay"
-              (labelClicked)="openTimesheetForm({date: $event})">
+              [date]="weekCriteria | getDateByDateParams : weekDay"
+              (labelClicked)="openTimesheetForm(null, {date: $event})">
             </app-timesheet-day-label>
 
             <div class="w-100" style="padding: 0 2px 0 2px; z-index:0" 
@@ -16,7 +16,7 @@
               <ng-container *ngFor="let timesheet of summaries[weekDay]?.timesheets | sortByDate: 'startTime'; trackBy: trackByTimesheet;" >
                 <app-timesheet-mission-bar class="mb-1 fadeInDown"                      
                   [timesheet]="timesheet"
-                  (barClicked)="timesheet.status ? openTimesheetCard(timesheet.id) : openTimesheetForm({entityId: timesheet.id})">
+                  (barClicked)="timesheet.status ? openTimesheetCard(timesheet.id) : openTimesheetForm(timesheet.id)">
                 </app-timesheet-mission-bar>
               </ng-container>
             </div>

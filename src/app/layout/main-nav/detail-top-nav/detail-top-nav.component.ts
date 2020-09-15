@@ -28,6 +28,8 @@ export class DetailTopNavComponent {
     private loadingService: LoadingService,) { }
   
   onMenuButtonClick = () => this.menuBtnClicked.emit();
+
+  random = () => Math.random() * 1000;
   
   openBottomSheet = (buttons: AppButton[]) => this._bottomSheet.open(BottomSheetMenuComponent, { data: buttons });
 }

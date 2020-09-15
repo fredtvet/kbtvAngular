@@ -23,16 +23,22 @@ export class MissionNoteListComponent {
     ) {  this.configureMainNav(this.missionId); }
 
   get missionId() {
-    return +this.route.snapshot.paramMap.get('id');
+    return this.route.snapshot.paramMap.get('id');
   }
 
   openEditNoteForm = (entityId: number) => 
-    this.router.navigate(['skjema', {config: JSON.stringify({entityId, missionId: this.missionId})}], {relativeTo: this.route});
+    this.router.navigate(
+      ['skjema', {config: JSON.stringify({formConfig:{entityId, viewConfig:{lockedValues: {missionId: this.missionId}}}})}], 
+      {relativeTo: this.route}
+    );
 
   private openCreateNoteForm = () => 
-    this.router.navigate(['skjema', {config: JSON.stringify({missionId: this.missionId})}], {relativeTo: this.route});
+    this.router.navigate(
+      ['skjema', {config: JSON.stringify({formConfig:{viewConfig:{lockedValues: {missionId: this.missionId}}}})}], 
+      {relativeTo: this.route}
+    );
 
-  private configureMainNav(missionId: number){
+  private configureMainNav(missionId: string){
     let cfg = {
       title:  "Notater",
       backFn: this.onBack, 
@@ -44,5 +50,5 @@ export class MissionNoteListComponent {
     this.mainNavService.addConfig({default: cfg}, fabs);
   }
 
-  private onBack = (missionId: number) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
+  private onBack = (missionId: string) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
 }

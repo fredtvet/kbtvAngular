@@ -1,0 +1,1 @@
+export type StateProp<TState> = Extract<keyof TState, string>

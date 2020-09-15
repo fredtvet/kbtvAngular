@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AuthStore } from 'src/app/core/services/auth';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
-import { PasswordFormWrapperComponent } from '../password-form/password-form-wrapper.component';
-import { ProfileFormWrapperComponent } from '../profile-form/profile-form-wrapper.component';
+import { FormService } from 'src/app/core/services/form/form.service';
+import { PasswordFormComponent } from '../password-form/password-form.component';
+import { ProfileFormComponent } from '../profile-form/profile-form.component';
 
 @Component({
   selector: 'app-profile',
@@ -17,15 +17,15 @@ export class ProfileComponent {
 
   constructor(
     private mainNavService: MainNavService,
-    private bottomSheet: MatBottomSheet,
+    private formService: FormService,
     private authStore: AuthStore,
   ){    
     this.configureMainNav();
   }
 
-  updateProfile = () => this.bottomSheet.open(ProfileFormWrapperComponent);
+  updateProfile = () => this.formService.open({formComponent: ProfileFormComponent, title: "Oppdater profil"});
   
-  updatePassword = () => this.bottomSheet.open(PasswordFormWrapperComponent);
+  updatePassword = () => this.formService.open({formComponent: PasswordFormComponent, title: "Oppdater passord"});
 
   logout = () => this.authStore.logout();
 

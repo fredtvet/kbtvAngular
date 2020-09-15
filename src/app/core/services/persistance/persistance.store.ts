@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { ObservableStore } from '@codewithdan/observable-store';
 import { get, set, Store } from 'idb-keyval';
 import { forkJoin, from, Observable, BehaviorSubject, throwError } from 'rxjs';
-import { PersistedStateProperties } from './persisted-state-properties';
+import { PersistedStateConfig } from './persisted-state.config';
 import { tap, filter, first, catchError } from 'rxjs/operators';
-import { PersistedInitialProperties } from './persisted-initial-properties';
-import { Optimistic } from '../../state';
+import { PersistedInitialStateConfig } from './persisted-initial-properties';
 
 
 @Injectable({
@@ -22,41 +21,41 @@ export class PersistanceStore extends ObservableStore<Object> {
     private dbStore: Store = new Store("kbtvDb", "state");
 
     constructor() { 
-        super({logStateChanges: true, trackStateHistory: true});
-        console.log("PersistanceStore");
+        super({logStateChanges: false, trackStateHistory: false});
+
         this.initalizeInitialStateFromDb();
         this.initalizeStateFromDb();
 
         this.globalStateWithPropertyChanges.pipe(
-            filter(x => x != null && x.stateChanges['lastAction'] != Optimistic),
+            filter(x => x != null),
             tap(x => this.persistStateChanges(x.stateChanges))
         ).subscribe();
      
     }
 
-    private set<T>(property: keyof typeof PersistedStateProperties, payload: T): void{
+    private set<T>(property: keyof typeof PersistedStateConfig, payload: T): void{
         from(set(property, payload, this.dbStore))
             .subscribe(() => {}, err => console.log(err))
     }
 
-    private get$<T>(property: keyof typeof PersistedStateProperties): Observable<T>{
+    private get$<T>(property: keyof typeof PersistedStateConfig): Observable<T>{
         return from(get<T>(property, this.dbStore))
     }
 
     private persistStateChanges = (stateChanges: Partial<Object>) => {
-        const props = {...PersistedStateProperties, ...PersistedInitialProperties};
+        const props = {...PersistedStateConfig, ...PersistedInitialStateConfig};
         for(const prop in stateChanges){
             if(props[prop]) this.set(prop, stateChanges[prop]);
         }
     }
 
     private initalizeInitialStateFromDb(): void{
-        this.initalizePropsFromDb$(Object.keys(PersistedInitialProperties))
+        this.initalizePropsFromDb$(Object.keys(PersistedInitialStateConfig))
             .subscribe(x => this.initialStateInitalizedSubject.next(true));
     }
 
     private initalizeStateFromDb(): void{
-        this.initalizePropsFromDb$(Object.keys(PersistedStateProperties))
+        this.initalizePropsFromDb$(Object.keys(PersistedStateConfig))
             .subscribe(x => this.stateInitalizedSubject.next(true));
     }
 

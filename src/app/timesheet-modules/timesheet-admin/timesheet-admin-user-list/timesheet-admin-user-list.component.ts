@@ -26,7 +26,7 @@ export class TimesheetAdminUserListComponent implements OnInit {
   }
 
   goToWeekList(userName: string){
-    this.store.addWeekFilter({userName, year: new Date().getFullYear()})
+    this.store.addFilterCriteria({userName, year: new Date().getFullYear()})
     this.router.navigate(["/timeadministrering/uker"]);
   }
 

@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TimesheetSummary } from 'src/app/shared/interfaces';
 import { translations } from 'src/app/shared-app/translations';
 import { AgGridTableComponent } from 'src/app/shared/components/abstracts/ag-grid-table.component';
+import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 
 @Component({
   selector: 'app-timesheet-statistic-table',
@@ -12,6 +12,18 @@ import { AgGridTableComponent } from 'src/app/shared/components/abstracts/ag-gri
 export class TimesheetStatisticTableComponent extends AgGridTableComponent<TimesheetSummary> {
 
   constructor(private datePipe: DatePipe) { super() }
+
+  protected initNgGrid(data: TimesheetSummary[]): void{
+    super.initNgGrid(data);
+
+    let totalOpenHrs = data?.reduce((total, summary) => { return total + summary.openHours }, 0);
+    let totalConfirmedHrs = data?.reduce((total, summary) => { return total + summary.confirmedHours }, 0);
+
+    if(this.dataGrid){
+      this.dataGrid.api.setPinnedBottomRowData([{openHours: totalOpenHrs, confirmedHours: totalConfirmedHrs, fullName: "Sum av timer", timesheets: []}]);
+    }
+
+  }
 
   protected addColDefs(object: Object): any[]{
     const columnDefs = [];
@@ -34,7 +46,7 @@ export class TimesheetStatisticTableComponent extends AgGridTableComponent<Times
     columnDefs.push({field: 'openHours',headerName: translations['openHours'] || 'openHours',sortable: true});
 
     return columnDefs;
-  }
+  } 
 
   private convertMonthIndex = (params) => 
     params?.value ? this.datePipe.transform(new Date().setMonth(params.value), 'MMM') : undefined;

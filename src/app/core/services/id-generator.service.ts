@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 @Injectable({providedIn: 'root'})
 export class IdGeneratorService {
 
+  private characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  private charLength = this.characters.length;
+
   constructor() {}
 
-  generate():  string{
+  generate(length: number = 7):  string{
     var id = '';
-    var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < 5; i++ ) {
-        id += characters.charAt(Math.floor(Math.random() * charactersLength));
+    for ( var i = 0; i < length; i++ ) {
+        id += this.characters.charAt(Math.floor(Math.random() * this.charLength));
     }
     return id;
  }

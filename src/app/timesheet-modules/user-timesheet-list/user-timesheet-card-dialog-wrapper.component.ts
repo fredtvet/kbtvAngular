@@ -7,8 +7,7 @@ import { UserTimesheetListStore } from './user-timesheet-list.store';
   selector: 'app-timesheet-card-dialog-wrapper',
   template: `
   <app-timesheet-card 
-    [timesheet]="timesheet$ | async" 
-    (deleteClicked)="deleteTimesheet()">
+    [timesheet]="timesheet$ | async">
   </app-timesheet-card>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -21,11 +20,6 @@ export class UserTimesheetCardDialogWrapperComponent {
   constructor(
     private store: UserTimesheetListStore,
     public dialogRef: MatDialogRef<UserTimesheetCardDialogWrapperComponent>,
-    @Inject(MAT_DIALOG_DATA) public timesheetId: number
+    @Inject(MAT_DIALOG_DATA) public timesheetId: string
     ) {}
-
-  deleteTimesheet(){
-    this.store.delete$(this.timesheetId)
-      .subscribe(x => this.dialogRef.close());
-  }
 }

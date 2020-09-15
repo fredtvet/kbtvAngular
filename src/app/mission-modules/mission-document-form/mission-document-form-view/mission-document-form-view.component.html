@@ -1,0 +1,22 @@
+<form *ngIf="form" [formGroup]="form" fxLayout="column" fxLayoutAlign="space-around-center"  class="m-3">
+    <mat-form-field formGroupName="documentType">
+        <input matInput placeholder="Type dokument" aria-label="Type dokument" formControlName="name"
+            [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let type of config?.foreigns?.documentTypes" [value]="type.name">
+                {{type.name}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <input (change)="changeFile($event)" type="file">
+
+    <br />
+
+    <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
+        [disabled]="form.invalid || form.pristine || files?.length == 0"
+        (click)="onSubmit()">
+        <mat-icon>cloud_upload</mat-icon>
+        Last opp   
+    </button>
+</form>

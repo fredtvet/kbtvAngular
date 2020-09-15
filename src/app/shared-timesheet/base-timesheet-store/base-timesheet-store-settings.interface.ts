@@ -1,5 +1,7 @@
+import { StateProp } from 'src/app/core/model/state.types';
+
 export interface BaseTimesheetStoreSettings<TState> {
-    groupByProp: Extract<keyof TState, string>
-    criteriaProp: Extract<keyof TState, string>
+    groupByProp: StateProp<TState>,
+    criteriaProp: StateProp<TState>,
     initialState: Partial<TState>
 }

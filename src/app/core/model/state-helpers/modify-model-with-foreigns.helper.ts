@@ -15,7 +15,7 @@ export class ModifyModelWithForeignsHelper{
         ): Partial<TState>{
 
         const propCfg = ModelStateConfig.get(stateProp as string);
-        if(!entity[propCfg.identifier]) throw `Trying to modify entity with no ID from property ${stateProp}`
+        if(!entity[propCfg.identifier]) console.error(`Trying to modify entity with no ID from property ${stateProp}`)
         let newState: Partial<TState> = {};
         
         for(var fkProp of propCfg.foreigns || []){
@@ -28,13 +28,13 @@ export class ModifyModelWithForeignsHelper{
                 entity[fkPropConfig.foreignProp] = null;
                 continue
             };
-            state[fkProp] = this.arrayHelperService.add(state[fkProp], foreignEntity); //Add new fk entity
+            newState[fkProp] = this.arrayHelperService.add(state[fkProp], foreignEntity); //Add new fk entity
             entity[fkPropConfig.foreignKey] = foreignEntityId; //Set foreign key on entity
-            entity[fkPropConfig.foreignProp] = null; //Remove foreign entity to prevent duplicate data          
+            entity[fkPropConfig.foreignProp] = null; //Remove foreign entity to prevent duplicate data    
         }
 
         newState[stateProp as string] = entityFn(entity, state[stateProp]);
-    
+        
         return newState;
     }
 }   

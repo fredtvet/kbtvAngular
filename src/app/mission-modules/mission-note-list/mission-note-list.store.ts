@@ -5,22 +5,25 @@ import {
   ApiService,
   ArrayHelperService
 } from "src/app/core/services";
-import { BaseModelStore } from 'src/app/core/state/abstractions/base-model.store';
 import { StoreState } from './store-state';
+import { BaseStore } from 'src/app/core/state/abstracts/base.store';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'any',
 })
-export class MissionNoteListStore extends BaseModelStore<StoreState>  {
+export class MissionNoteListStore extends BaseStore<StoreState>  {
 
   constructor(
     apiService: ApiService,
     arrayHelperService: ArrayHelperService
   ) {
-    super(arrayHelperService, apiService, {trackStateHistory: true,logStateChanges: true});
+    super(arrayHelperService, apiService);
   }
 
-  getByMissionId$ = (id: number): Observable<MissionNote[]> => 
-    this._getBy$("missionNotes", (x: MissionNote) => x.missionId === id)
+  getByMissionId$ = (id: string): Observable<MissionNote[]> => 
+    this.property$<MissionNote[]>("missionNotes").pipe(map(arr => 
+      this.arrayHelperService.filter<MissionNote>(arr, (x: MissionNote) => x.missionId === id)
+  )) 
 
 }

@@ -32,7 +32,7 @@ export class DocumentListComponent extends SelectableListBase<MissionDocument>{
     this.documentClicked.emit(document);
   }
   
-  trackById(index: number, selectable: SelectableEntity<MissionDocument>): number {
+  trackById(index: number, selectable: SelectableEntity<MissionDocument>): string {
     return selectable.entity.id;
   }
 }

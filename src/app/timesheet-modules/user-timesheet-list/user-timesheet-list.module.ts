@@ -7,6 +7,7 @@ import { UserTimesheetWeekViewComponent } from './user-timesheet-week-view/user-
 import { UserTimesheetListRoutingModule } from './user-timesheet-list-routing.module';
 import { UserTimesheetWeekListComponent } from './user-timesheet-week-list/user-timesheet-week-list.component';
 import { UserTimesheetListComponent } from './user-timesheet-list/user-timesheet-list.component';
+import { UserTimesheetListStore } from './user-timesheet-list.store';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,9 @@ import { UserTimesheetListComponent } from './user-timesheet-list/user-timesheet
     UserTimesheetCardDialogWrapperComponent,
     TimesheetDayLabelComponent,
     TimesheetMissionBarComponent,
+  ],
+  providers:[
+    {provide: "FILTER_STORE", useExisting: UserTimesheetListStore}
   ],
   imports: [
     SharedTimesheetModule,

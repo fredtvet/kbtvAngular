@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Timesheet } from 'src/app/core/models';
 import { DateTimeService } from './date-time.service';
-import { GroupByPeriod } from 'src/app/shared-app/enums';
-import { TimesheetSummary } from 'src/app/shared/interfaces';
-import { TimesheetStatus } from 'src/app/shared-app/enums';
+import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces/timesheet-summary.interface';
+import { TimesheetStatus } from 'src/app/shared-app/enums/timesheet-status.enum';
+import { GroupByPeriod } from 'src/app/shared-app/enums/group-by-period.enum';
 
 @Injectable({
   providedIn: "root",
 })
 export class TimesheetSummaryAggregator {
-  constructor(private dateTimeService: DateTimeService) {console.log("TimesheetSummaryAggregator");}
+  constructor(private dateTimeService: DateTimeService) {}
 
   groupByType(type: GroupByPeriod, t: Timesheet[]): TimesheetSummary[] {
     switch (type) {

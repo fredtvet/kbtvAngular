@@ -22,7 +22,5 @@ import { SharedAppModule } from '../shared-app/shared-app.module';
   ]
 })
 export class AppLayoutModule { 
-  constructor(){
-    console.log("LayoutModule");
-  }
+  constructor(){}
 }

@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { UserTimesheetFormEntryComponent } from './user-timesheet-form-entry.component';
+import { RouterModule, Routes } from '@angular/router';
+import { ModelFormEntryComponent } from 'src/app/core/services/model/form/model-form-entry.component';
+import { UserTimesheetFormViewComponent } from './user-timesheet-form-view/user-timesheet-form-view.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: UserTimesheetFormEntryComponent
+    component: ModelFormEntryComponent,
+    data: {viewComponent: UserTimesheetFormViewComponent, stateProp: "userTimesheets"}
   },
 ];
 

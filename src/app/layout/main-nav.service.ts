@@ -22,11 +22,11 @@ export class MainNavService {
   private configSubject =  new BehaviorSubject<MainNavConfig>(this.defaultConfig);
   private _config$ = this.configSubject.asObservable().pipe(distinctUntilChanged());
   
-  config$: Observable<MainNavConfig> = combineLatest(
+  config$: Observable<MainNavConfig> = combineLatest([
     this._config$, 
     this.deviceInfoService.isXs$, 
     this.authStore.currentUser$
-    ).pipe(
+    ]).pipe(
       delay(10), //delay to fix bug where main nav not detecting config changes coming to quickly after route change
       map(([config, isXs, currentUser]) => {
         let cfg = {...config};
@@ -38,7 +38,7 @@ export class MainNavService {
 
   constructor(
     private authStore: AuthStore,
-    private deviceInfoService: DeviceInfoService) { console.log("MainNavService"); }
+    private deviceInfoService: DeviceInfoService) { }
 
   get config(): MainNavConfig{
     return {...this.configSubject.value};
@@ -64,6 +64,12 @@ export class MainNavService {
     mainCfg.fabs = fabs?.slice();
 
     this.configSubject.next(mainCfg);
+  }
+
+  updateConfig(topNav: {default?: TopDefaultNavConfig, detail?: TopDetailNavConfig}, fabs?: AppButton[]){
+    let updatedCfg: MainNavConfig = {topDefaultNavConfig: topNav.default, topDetailNavConfig: topNav.detail}
+    if(fabs) updatedCfg.fabs;
+    this.configSubject.next({...this.config, ...updatedCfg})
   }
 
   addFabs(fabs: AppButton[]){

@@ -12,7 +12,7 @@
       </ng-template>
     
       <span fxLayout="column" fxLayoutAlign="center start" class="ellipsis">
-        <span *ngIf="summary.openHours > 0; else confirmed" class="mat-title m-0 color-warn line-height-100">
+        <span *ngIf="summary.openHours > 0; else confirmed" class="mat-subheading-2 m-0 color-warn line-height-100">
           Åpen
         </span>
         <ng-template #confirmed>

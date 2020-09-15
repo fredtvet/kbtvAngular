@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { ApiUrl } from 'src/app/core/api-url.enum';
+import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
 import { Timesheet, User } from 'src/app/core/models';
 import { ApiService, ArrayHelperService, DateTimeService, TimesheetSummaryAggregator } from 'src/app/core/services';
-import { DateRangePresets, GroupByPeriod } from 'src/app/shared-app/enums';
-import { WeekFilterCriteria } from 'src/app/shared-timesheet/components/week-filter/week-filter-config.interface';
+import { FilterStateHelper } from 'src/app/core/services/filter';
+import { SaveModelToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-to-state-http.converter';
+import { WeekToTimesheetCriteriaConverter } from 'src/app/core/services/utility/week-to-timesheet-criteria.converter';
+import { StateAction } from 'src/app/core/state';
+import { GroupByPeriod, TimesheetStatus } from 'src/app/shared-app/enums';
+import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
 import { StoreState } from './store-state';
-import { BaseTimesheetStoreSettings, BaseTimesheetStore } from 'src/app/shared-timesheet/base-timesheet-store';
-import { TimesheetStatus } from 'src/app/shared-app/enums';
+import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
+import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
+import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interface';
+import { combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const TimesheetAdminStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
     criteriaProp: "timesheetAdminCriteria", 
@@ -19,52 +25,56 @@ const TimesheetAdminStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
 @Injectable({
   providedIn: 'any'
 })
-export class TimesheetAdminStore extends BaseTimesheetStore<StoreState>{
+export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implements FilterStore<WeekCriteria, WeekFilterViewConfig>{
 
-    weekFilter: WeekFilterCriteria = {};
+    private _weekCriteria: WeekCriteria; 
+    get weekCriteria(): WeekCriteria { return {...this._weekCriteria} };
 
-    get users(): User[] { return this.getProperty("users") }
+    filterConfig$: Observable<WeekFilterViewConfig> = combineLatest([
+        this.modelProperty$<User[]>("users"), 
+        this.property$("timesheetAdminCriteria")
+    ]).pipe(map(([users]) => { return {criteria: this.weekCriteria, users}}))
 
     constructor(
         arrayHelperService: ArrayHelperService,
         apiService: ApiService,
-        summaryAggregator: TimesheetSummaryAggregator,
         dateTimeService: DateTimeService,
+        summaryAggregator: TimesheetSummaryAggregator,
+        getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>,
+        filterStateHelper: FilterStateHelper,
+        private weekToTimesheetCriteriaConverter: WeekToTimesheetCriteriaConverter,
+        private saveStateHttpConverter: SaveModelToStateHttpConverter<StoreState, SaveModelStateCommand<Timesheet>>
     ){
-        super(arrayHelperService, apiService, dateTimeService, summaryAggregator, TimesheetAdminStoreSettings)
+        super(arrayHelperService, apiService, dateTimeService, summaryAggregator, getRangeWithRelationsHelper, filterStateHelper, TimesheetAdminStoreSettings)
     }
     
-    addWeekFilter(filter: WeekFilterCriteria): void{
-        let dateRange: Date[];
-
-        if(filter?.weekNr) 
-            dateRange = this.dateTimeService.getWeekRange(this.dateTimeService.getDateOfWeek(filter.weekNr, filter.year));
-        else if(filter?.year){
-            let date = new Date();
-            date.setFullYear(filter.year);
-            dateRange = this.dateTimeService.getYearRange(date);
-        }
-        this.weekFilter = filter;
-        // this._setStateVoid({weekFilterCriteria: filter})
-        this.addCriteria({userName: filter.userName, dateRange, dateRangePreset: DateRangePresets.Custom})
+    addFilterCriteria(criteria: WeekCriteria): void{
+        this._weekCriteria = criteria;
+        this.addTimesheetCriteria(this.weekToTimesheetCriteriaConverter.convert(criteria))
     }
 
-    changeStatus$(id: number, status: TimesheetStatus): Observable<Timesheet>{
-        return this.apiService.put(`${ApiUrl.Timesheet}/${id}/Status`, {id, status})
-          .pipe(tap(response => this._updateStateProperty(
-                "timesheets", 
-                (arr: Timesheet[]) => this.arrayHelperService.update(arr, response, "id")
-              )));
+    changeStatus(entity: Timesheet): void{
+        this._stateHttpCommandHandler(this.saveStateHttpConverter.convert(
+                {entity, stateProp: "timesheets", saveAction: StateAction.Update},
+                `${ApiUrl.Timesheet}/${entity.id}/Status`
+        ))
     }
     
-    changeStatuses$(ids: number[], status: TimesheetStatus): Observable<Timesheet[]>{
-        if(ids.length == 0) throwError('Ingen ubekreftede timer');
-    
-        return this.apiService.put(`${ApiUrl.Timesheet}/Status`, {ids, status})
-            .pipe(tap(response => this._updateStateProperty(
-                "timesheets", 
-                (arr: Timesheet[]) => this.arrayHelperService.addOrUpdateRange(arr, response, "id")
-            )));
+    changeStatuses(ids: string[], status: TimesheetStatus): void{
+        if(ids.length == 0) return;
+
+        const updatedTimesheets = ids.map(id => { return {id, status} });
+
+        const stateFunc = (state: StoreState) => { return {
+                timesheets: this.arrayHelperService.addOrUpdateRange(state.timesheets, updatedTimesheets, "id")
+            }};
+
+        this._stateHttpCommandHandler({
+            httpMethod: "PUT", 
+            httpBody: {ids, status}, 
+            apiUrl: `${ApiUrl.Timesheet}/Status`, 
+            stateFunc
+        });      
     }
     
 }

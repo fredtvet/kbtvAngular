@@ -5,12 +5,13 @@ import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import {
   ConfirmDialogComponent,
-  ListCardComponent, MailToFormComponent,
+  ListCardComponent, MailToFormViewComponent,
   SelectableCardComponent,
   SimpleTopNavComponent
 } from './components';
 import { AddToHomeScreenDirective, HttpCommandButtonDirective, LoadingOverlayDirective  } from './directives';
 import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
+import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 
 @NgModule({
   declarations: [
@@ -18,8 +19,9 @@ import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPip
     SortByDatePipe,
     AddToHomeScreenDirective,
     ArrayFromNumberPipe,
+    ActiveStringFilterDirective,
     HttpCommandButtonDirective,
-    MailToFormComponent,
+    MailToFormViewComponent,
     SelectableCardComponent,
     ArraySlicePipe,
     TranslatePipe,
@@ -42,11 +44,12 @@ import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPip
     GooglePlaceModule,
     ConfirmDialogComponent,
     HttpCommandButtonDirective,
+    ActiveStringFilterDirective,
     LoadingOverlayDirective,
     SortByDatePipe,
     TranslatePipe,
     ArrayFromNumberPipe,
-    MailToFormComponent,
+    MailToFormViewComponent,
     SelectableCardComponent,
     ArraySlicePipe,
     SimpleTopNavComponent,

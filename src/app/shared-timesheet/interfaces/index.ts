@@ -1,1 +1,2 @@
-export * from './timesheet-form-config.interface';
+export * from './timesheet-criteria.interface';
+export * from './timesheet-summary.interface';

@@ -8,6 +8,7 @@ import { MainNavService, TopDetailNavConfig } from 'src/app/layout';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { MissionListStore } from '../mission-list.store';
 import { TimesheetStatus } from 'src/app/shared-app/enums';
+import { appFileUrl } from 'src/app/shared-app/app-file-url.helper';
 
 @Component({
   selector: 'app-mission-details',
@@ -22,7 +23,7 @@ export class MissionDetailsComponent{
 
   mission$: Observable<Mission> = this.store.getWithRelations$(this.missionId).pipe(tap(x => this.configureMainNav(x)));
 
-  get missionId() { return +this.route.snapshot.paramMap.get('id') }
+  get missionId() { return this.route.snapshot.paramMap.get('id') }
 
   constructor(
     private mainNavService: MainNavService,
@@ -33,13 +34,13 @@ export class MissionDetailsComponent{
   ){ }
 
   updateHeaderImage = (files: FileList): void => {
-    this.store.updateHeaderImage$({id: this.missionId, file: files[0]}).subscribe();
+    this.store.updateHeaderImage(this.missionId, files[0]);
   }
 
   private openHeaderImageInput = (): void => this.imageInput?.nativeElement?.click();
   
   private openMissionForm = (entityId: number) => 
-    this.router.navigate(['rediger', {config: JSON.stringify({entityId, onDeleteUri: "/oppdrag"})}], {relativeTo: this.route});
+    this.router.navigate(['rediger', {config: JSON.stringify({formConfig:{entityId}, onDeleteUri: "/oppdrag"})}], {relativeTo: this.route});
 
   private goToTimesheets = (mission: Mission) => 
     this.router.navigate(['mine-timer/liste', {
@@ -52,14 +53,14 @@ export class MissionDetailsComponent{
       title: mission?.address?.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
       subTitle: mission?.finished ? 'Oppdrag ferdig!' : '',
       subIcon: mission?.finished ? 'check' : '',
-      imgSrc: mission?.imageURL,
+      imgSrc: mission?.fileName ? appFileUrl(mission.fileName, "missionheader") : null,
       backFn: this.onBack 
     } as TopDetailNavConfig;
 
     cfg.bottomSheetButtons = [  
       {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal},
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission?.id], allowedRoles: [Roles.Leder]},
-      {text: `${mission?.imageURL ? 'Oppdater' : 'Legg til'} forsidebilde`, icon: "add_photo_alternate", callback: this.openHeaderImageInput, allowedRoles: [Roles.Leder]},
+      {text: `${mission?.fileName ? 'Oppdater' : 'Legg til'} forsidebilde`, icon: "add_photo_alternate", callback: this.openHeaderImageInput, allowedRoles: [Roles.Leder]},
     ];
  
     this.mainNavService.addConfig({detail: cfg});
