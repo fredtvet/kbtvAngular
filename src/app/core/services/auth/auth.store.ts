@@ -94,17 +94,17 @@ export class AuthStore extends BaseStore<StoreState>{
   }
 
   private _logout(returnUrl: string = this.router.url): void{
-    this._setStateVoid({currentUser: null, accessToken: null, refreshToken: null}, AuthStoreActions.Logout) // Set current user to an empty object 
+    this._setStateVoid({accessToken: null, refreshToken: null}, AuthStoreActions.Logout) // Set current user to an empty object 
     this.router.navigate(['/login'], { queryParams: {returnUrl}})  
   }
 
-  private setAuth(response: TokenResponse): void {
-    if(!response) return; 
+  private setAuth({accessToken, refreshToken, user}: TokenResponse): void {
     // Save tokens sent from server in localstorage
-    let accessToken = {token: response.accessToken?.token.replace("Bearer ", "")} as AccessToken;
+    accessToken = {...accessToken, token: accessToken?.token.replace("Bearer ", "")};
     this.setAccessTokenExpiration(accessToken);
-
-    this._setStateVoid({currentUser: response.user, accessToken, refreshToken: response.refreshToken}, AuthStoreActions.Login);
+    let action = AuthStoreActions.Login; 
+    if(user?.userName !== this.currentUser?.userName) action = AuthStoreActions.NewLogin;
+    this._setStateVoid({currentUser: user, accessToken, refreshToken}, action);
   }
   
   private setAccessTokenExpiration = (accessToken: AccessToken): void => {
