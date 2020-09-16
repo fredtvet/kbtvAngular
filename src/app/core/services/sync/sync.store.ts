@@ -5,7 +5,6 @@ import { distinctUntilKeyChanged, first, skip, switchMap, tap } from 'rxjs/opera
 import { User } from '../../models/user.interface';
 import { BaseStore } from '../../state/abstracts/base.store';
 import { ApiService } from '../api.service';
-import { AuthStoreActions } from '../auth/auth-store-actions.enum';
 import { AuthStore } from '../auth/auth.store';
 import { DeviceInfoService } from '../device-info.service';
 import { PersistanceStore } from '../persistance/persistance.store';
@@ -15,8 +14,8 @@ import { EntitySyncResponse, SyncResponse } from './interfaces/sync-response.int
 import { SyncStoreConfig } from './interfaces/sync-store-config.interface';
 import { SyncStoreTimestamps } from './interfaces/sync-store-timestamps.interface';
 import { SyncStateConfig } from './sync-state.config';
-import { SyncStoreActions } from './sync-store-actions.enum';
 import { ModelStateConfig } from '../../model/model-state.config';
+import { AuthStoreActions } from '../auth/auth-store-actions.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +47,8 @@ export class SyncStore extends BaseStore<StoreState>{
 
     this.continousSync$.subscribe();
 
-    this.property$<AuthStoreActions>("lastAction").subscribe(action => this.handleAuthActions(action))
+    this.property$<AuthStoreActions>("lastAction")
+      .subscribe(action => this.handleAuthActions(action))
   }
 
   syncAll() : void{
@@ -63,27 +63,37 @@ export class SyncStore extends BaseStore<StoreState>{
       Object.keys(SyncStateConfig).forEach(prop => {
         let timestamp = this.syncTimestamps ? this.syncTimestamps[prop] : null;
         params = params.set(SyncStateConfig[prop]?.requestKey, timestamp ? timestamp.toString() : null);
-      })
+      });
 
-      return this.apiService
-        .get('/SyncAll', params)
-        .pipe(
+      return this.apiService.get('/SyncAll', params).pipe(
           tap(data => this.setSyncResponseState(data)),
       );
     })).subscribe(x => 
       this.hasInitialSyncedSubject.value ? null : this.hasInitialSyncedSubject.next(true));
   }
 
-  purgeAll = () => {
+  purgeSyncState = () => {
     this.persistanceStore.stateInitalized$.subscribe(x => {
       let state = {syncTimestamps: {}};
       Object.keys(SyncStateConfig).forEach(prop => state[prop] = null);
-      this._setStateVoid(state, SyncStoreActions.StorePurge)
+      this._setStateVoid(state)
+    })
+  };
+
+  purgeSyncAndLocal = () => {
+    this.persistanceStore.stateInitalized$.subscribe(x => {
+      let state = this.getState(false);
+      let ignoredProps = {refreshToken: true, accessToken: true};
+
+      for(const key in state)
+        if(!ignoredProps[key]) state[key] = null;
+      
+      this._setStateVoid(state)
     })
   };
 
   updateSyncConfig = (syncConfig: SyncStoreConfig): void =>
-    this._setStateVoid({syncConfig}, SyncStoreActions.UpdateSyncConfig);
+    this._setStateVoid({syncConfig});
 
   private syncIfTimePassed = (): void => {
     const timestamp = this.getEarliestTimestamp();
@@ -99,19 +109,21 @@ export class SyncStore extends BaseStore<StoreState>{
     Object.keys(SyncStateConfig).filter(x => x !== "currentUser").forEach(prop => 
       this.syncLocalEntityResponse(prop, response[SyncStateConfig[prop]?.responseKey], state));
       
-    this._setStateVoid(state, SyncStoreActions.StoreSync)
+    this._setStateVoid(state)
   }
 
   private syncLocalEntityResponse(prop: string, response: EntitySyncResponse, state: Partial<StoreState>): void{
     if(!response || !prop) return;
     
     state.syncTimestamps[prop] = response.timestamp; //Update given timestamp
-    const modelSettings = ModelStateConfig.get(prop);
+    const id = ModelStateConfig.get(prop)?.identifier;
 
-    state[prop] = 
-        this.arrayHelperService.addOrUpdateRange(this.getStateProperty(prop), response.entities, modelSettings.identifier); 
-    state[prop] = 
-        this.arrayHelperService.removeRangeByIdentifier(state[prop], response.deletedEntities, modelSettings.identifier);
+    if(response.entities?.length > 0)
+      state[prop] = 
+          this.arrayHelperService.addOrUpdateRange(this.getStateProperty(prop), response.entities, id); 
+    if(response.deletedEntities?.length > 0)
+      state[prop] = 
+          this.arrayHelperService.removeRangeByIdentifier(state[prop], response.deletedEntities, id);
   } 
 
   private syncCurrentUser(response: EntitySyncResponse, state: Partial<StoreState>): void{
@@ -121,8 +133,14 @@ export class SyncStore extends BaseStore<StoreState>{
 
   private handleAuthActions(action: AuthStoreActions){
     switch(action){
-      case AuthStoreActions.Login: this.syncAll();
-      case AuthStoreActions.Logout: this.purgeAll();
+      case AuthStoreActions.Login: this.syncAll(); break;
+      case AuthStoreActions.NewLogin: {
+        this.purgeSyncAndLocal(); 
+        this.initConfigIfNull();
+        this.syncAll();
+        break;
+      }
+      default: break;
     }
   }
 
@@ -133,7 +151,7 @@ export class SyncStore extends BaseStore<StoreState>{
     const syncIfConfigChanges$ = this.property$<SyncStoreConfig>("syncConfig").pipe(
       distinctUntilKeyChanged("initialNumberOfMonths"),skip(1),
       tap(x => {
-        this.purgeAll();
+        this.purgeSyncState();
         this.syncAll();    
       })
     );
@@ -145,11 +163,11 @@ export class SyncStore extends BaseStore<StoreState>{
   }
 
   private initConfigIfNull(): void {
-    if(this.getStateProperty("syncConfig")) return;
+    if(this.getStateProperty("syncConfig", false)) return;
     this._setStateVoid({syncConfig: {
       refreshTime: 60*30, 
       initialNumberOfMonths: '48',
-    }}, SyncStoreActions.InitSyncConfig);
+    }});
   }
 
   private get continousSync$(){
