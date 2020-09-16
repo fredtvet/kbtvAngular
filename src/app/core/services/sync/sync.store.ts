@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { ApplicationRef, Injectable } from '@angular/core';
-import { concat, interval, Observable } from 'rxjs';
+import { BehaviorSubject, concat, EMPTY, interval, Observable } from 'rxjs';
 import { distinctUntilKeyChanged, first, skip, switchMap, tap } from 'rxjs/operators';
 import { User } from '../../models/user.interface';
 import { BaseStore } from '../../state/abstracts/base.store';
@@ -22,6 +22,9 @@ import { ModelStateConfig } from '../../model/model-state.config';
   providedIn: 'root'
 })
 export class SyncStore extends BaseStore<StoreState>{
+  
+  private hasInitialSyncedSubject = new BehaviorSubject<boolean>(false);
+  hasInitialSynced$: Observable<boolean> = this.hasInitialSyncedSubject.asObservable().pipe(first(x => x === true));
 
   syncConfig$: Observable<SyncStoreConfig> = this.property$("syncConfig");
 
@@ -41,8 +44,7 @@ export class SyncStore extends BaseStore<StoreState>{
 
     this.initConfigObserver();
 
-    this.persistanceStore.stateInitalized$
-      .subscribe(x => this.authStore.hasTokens ? this.syncAll() : null)
+    this.syncAll()
 
     this.continousSync$.subscribe();
 
@@ -54,6 +56,8 @@ export class SyncStore extends BaseStore<StoreState>{
     let params = new HttpParams();
 
     this.persistanceStore.stateInitalized$.pipe(switchMap(x => {
+      if(!this.authStore.hasTokens) return EMPTY;
+
       params = params.set("initialNumberOfMonths", this.syncConfig?.initialNumberOfMonths)
 
       Object.keys(SyncStateConfig).forEach(prop => {
@@ -66,7 +70,8 @@ export class SyncStore extends BaseStore<StoreState>{
         .pipe(
           tap(data => this.setSyncResponseState(data)),
       );
-    })).subscribe();
+    })).subscribe(x => 
+      this.hasInitialSyncedSubject.value ? null : this.hasInitialSyncedSubject.next(true));
   }
 
   purgeAll = () => {
