@@ -61,7 +61,6 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
   }
 
   protected initNgGrid(cfg:DataConfig): void{
-    console.time('initNgGrid')
     if(!cfg) return super.initNgGrid(cfg);
     const modelCfg = ModelStateConfig.get(cfg.selectedProp);
     if(modelCfg.foreigns){
@@ -76,7 +75,6 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
         }
       };
     }
-    console.timeEnd('initNgGrid')
     super.initNgGrid(cfg);
   }
 
@@ -118,27 +116,26 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
 
     if(DataTableConfig.noEditProperties[name]) def['editable'] = false;
 
-    const propModelCfg = this.propCfgMap[name];
-    if(propModelCfg){
+    const fkModelCfg = this.propCfgMap[name];
+    if(fkModelCfg){
       const fkIdProp = name;
-      const propModelCfg = this.propCfgMap[fkIdProp];
-
+      
       def['cellEditor'] = 'agSelectCellEditor';
       def['cellEditorParams'] = { 
-        values: Object.keys(this.foreignsDisplayMap[fkIdProp]), 
+        values: Object.keys(this.foreignsDisplayMap[fkIdProp] || {}), 
       }
       
       def['valueGetter'] = (params) => { //Get name of fkId and display
         const fkId = params.data[fkIdProp];
         if(fkId){
-          return this.foreignsIdMap[fkIdProp][fkId][propModelCfg.displayProp];
+          return this.foreignsIdMap[fkIdProp][fkId][fkModelCfg.displayProp || fkModelCfg.identifier];
         }
         else return ''
       };
 
       def['valueSetter'] = (params) => {
         const hit = this.foreignsDisplayMap[fkIdProp][params.newValue]
-        if(hit) params.data[fkIdProp] = hit[propModelCfg.identifier];
+        if(hit) params.data[fkIdProp] = hit[fkModelCfg.identifier];
         else return false;
         return true;
       }

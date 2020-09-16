@@ -84,8 +84,10 @@ export const ModelStateConfigData: {[key in keyof ModelState]: ModelConfig<Model
     },      
     inboundEmailPasswords: {
         apiUrl: ApiUrl.InboundEmailPassword, 
-        identifier: "id",   
-        foreignKey: "password", 
+        identifier: "id", 
+        displayProp: "password",      
+        foreignProp: "inboundEmailPassword",   
+        foreignKey: "inboundEmailPasswordId",      
         notPersisted: true,    
     }, 
     userTimesheets: {
