@@ -10,7 +10,7 @@ import { DeleteModelStateCommand, SaveModelStateCommand } from '../core/model/in
 import { GetWithRelationsConfig } from '../core/model/state-helpers/get-with-relations.config';
 import { DeleteModelToStateHttpConverter } from '../core/services/model/converters/delete-model-to-state-http.converter';
 import { SaveModelToStateHttpConverter } from '../core/services/model/converters/save-model-to-state-http.converter';
-import { StateHttpCommandHandler } from '../core/services/state-http-command.handler';
+import { StateHttpCommandHandler } from '../core/services/state/state-http-command.handler';
 import { BaseModelStore } from '../core/state/abstracts/base-model.store';
 import { DataConfig } from './interfaces/data-config.interface';
 import { StoreState } from './interfaces/store-state';
@@ -37,7 +37,7 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
     constructor(
         apiService: ApiService,
         arrayHelperService: ArrayHelperService,   
-        private stateHttpCommandHandler: StateHttpCommandHandler<StoreState>,
+        private stateHttpCommandHandler: StateHttpCommandHandler,
         private saveStateHttpConverter: SaveModelToStateHttpConverter<StoreState, SaveModelStateCommand<Model>>,
         private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>
     ) {

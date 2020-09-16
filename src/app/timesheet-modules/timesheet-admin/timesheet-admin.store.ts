@@ -9,7 +9,7 @@ import { Timesheet, User } from 'src/app/core/models';
 import { ApiService, ArrayHelperService, DateTimeService, TimesheetSummaryAggregator } from 'src/app/core/services';
 import { FilterStateHelper } from 'src/app/core/services/filter';
 import { SaveModelToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-to-state-http.converter';
-import { StateHttpCommandHandler } from 'src/app/core/services/state-http-command.handler';
+import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
 import { WeekToTimesheetCriteriaConverter } from 'src/app/core/services/utility/week-to-timesheet-criteria.converter';
 import { StateAction } from 'src/app/core/state';
 import { GroupByPeriod, TimesheetStatus } from 'src/app/shared-app/enums';
@@ -43,7 +43,7 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implemen
         summaryAggregator: TimesheetSummaryAggregator,
         getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>,
         filterStateHelper: FilterStateHelper,
-        private stateHttpCommandHandler: StateHttpCommandHandler<StoreState>,
+        private stateHttpCommandHandler: StateHttpCommandHandler,
         private weekToTimesheetCriteriaConverter: WeekToTimesheetCriteriaConverter,
         private saveStateHttpConverter: SaveModelToStateHttpConverter<StoreState, SaveModelStateCommand<Timesheet>>
     ){

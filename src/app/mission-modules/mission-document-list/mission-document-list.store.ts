@@ -12,7 +12,7 @@ import {
   ArrayHelperService
 } from "src/app/core/services";
 import { DeleteModelToStateHttpConverter } from 'src/app/core/services/model/converters/delete-model-to-state-http.converter';
-import { StateHttpCommandHandler } from 'src/app/core/services/state-http-command.handler';
+import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
 import { BaseStore } from 'src/app/core/state/abstracts/base.store';
 import { StoreState } from './store-state';
 
@@ -24,7 +24,7 @@ export class MissionDocumentListStore extends BaseStore<StoreState>  {
   constructor(
     apiService: ApiService,
     arrayHelperService: ArrayHelperService,
-    private stateHttpCommandHandler: StateHttpCommandHandler<StoreState>,
+    private stateHttpCommandHandler: StateHttpCommandHandler,
     private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>,
     private getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>,  
     private getWithRelationsHelper: GetWithRelationsHelper<StoreState>

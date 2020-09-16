@@ -38,7 +38,7 @@ export class SettingsComponent {
   }
 
   private reloadAllData(){
-    this.syncStore.purgeAll();
+    this.syncStore.purgeSyncState();
     this.syncStore.syncAll();
   }  
 

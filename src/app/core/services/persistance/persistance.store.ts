@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { ObservableStore } from '@codewithdan/observable-store';
 import { get, set, Store } from 'idb-keyval';
 import { forkJoin, from, Observable, BehaviorSubject, throwError } from 'rxjs';
-import { PersistedStateConfig } from './persisted-state.config';
+import { PersistedStateConfig, PersistedInitialStateConfig } from './persisted-state.config';
 import { tap, filter, first, catchError } from 'rxjs/operators';
-import { PersistedInitialStateConfig } from './persisted-initial-properties';
 
 
 @Injectable({

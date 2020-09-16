@@ -8,4 +8,5 @@ export interface User extends Model, EmployerForeign {
   phoneNumber: string;
   email: string;
   role: string;
+  lastCommandStatus: boolean;
 };

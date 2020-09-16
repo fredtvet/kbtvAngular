@@ -13,7 +13,7 @@ import {
 } from "src/app/core/services";
 import { FilterStateHelper } from 'src/app/core/services/filter';
 import { SaveModelFileToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-file-to-state-http.converter';
-import { StateHttpCommandHandler } from 'src/app/core/services/state-http-command.handler';
+import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
 import { StateAction } from 'src/app/core/state';
 import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
 import { MissionCriteria } from 'src/app/shared/interfaces';
@@ -54,7 +54,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
   constructor(
     apiService: ApiService,
     arrayHelperService: ArrayHelperService, 
-    private stateHttpCommandHandler: StateHttpCommandHandler<StoreState>,
+    private stateHttpCommandHandler: StateHttpCommandHandler,
     private filterStateHelper: FilterStateHelper,
     private saveWithFileStateHttpConverter: SaveModelFileToStateHttpConverter<StoreState, SaveModelWithFileStateCommand<Mission>>,
     private getWithRelationsHelper: GetWithRelationsHelper<StoreState>,

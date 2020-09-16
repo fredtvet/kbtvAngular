@@ -1,5 +1,4 @@
 export * from './sync.store';
-export * from './sync-store-actions.enum';
 export * from './sync-state.config';
 export * from './interfaces/store-state';
 export * from './interfaces/sync-response.interface';

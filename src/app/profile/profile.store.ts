@@ -6,7 +6,7 @@ import {
   ArrayHelperService
 } from "src/app/core/services";
 import { ApiUrl } from '../core/api-url.enum';
-import { StateHttpCommandHandler } from '../core/services/state-http-command.handler';
+import { StateHttpCommandHandler } from '../core/services/state/state-http-command.handler';
 import { BaseStore } from '../core/state/abstracts/base.store';
 import { StoreState } from './store-state';
 
@@ -20,7 +20,7 @@ export class ProfileStore extends BaseStore<StoreState>  {
   constructor(
     apiService: ApiService,
     arrayHelperService: ArrayHelperService,        
-    private stateHttpCommandHandler: StateHttpCommandHandler<StoreState>,
+    private stateHttpCommandHandler: StateHttpCommandHandler,
   ) {
     super(arrayHelperService, apiService);
   }

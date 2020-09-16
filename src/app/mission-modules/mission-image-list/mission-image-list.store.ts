@@ -14,7 +14,7 @@ import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-wit
 import { map } from 'rxjs/operators';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { BaseStore } from 'src/app/core/state/abstracts/base.store';
-import { StateHttpCommandHandler } from 'src/app/core/services/state-http-command.handler';
+import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
 
 @Injectable({providedIn: 'any'})
 export class MissionImageListStore extends BaseStore<StoreState>  {
@@ -24,7 +24,7 @@ export class MissionImageListStore extends BaseStore<StoreState>  {
   constructor(
     apiService: ApiService,
     arrayHelperService: ArrayHelperService,        
-    private stateHttpCommandHandler: StateHttpCommandHandler<StoreState>,
+    private stateHttpCommandHandler: StateHttpCommandHandler,
     private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>,
     private createStateHttpConverter: CreateMissionImagesToStateHttpConverter,
     private getWithRelationsHelper: GetWithRelationsHelper<StoreState>
