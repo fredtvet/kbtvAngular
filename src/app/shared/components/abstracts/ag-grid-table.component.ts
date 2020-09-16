@@ -1,22 +1,25 @@
 import { Input, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
+import { AgGridConfig } from './ag-grid-config.interface';
 
-export abstract class AgGridTableComponent<TData> {
+export abstract class AgGridTableComponent<TRecord, TConfig extends AgGridConfig<TRecord>> {
   @ViewChild('dataGrid') dataGrid: AgGridAngular;
 
-  @Input() data: TData[];
+  private _config: TConfig;
+  get config(): TConfig { return this._config; }
+
+  @Input() set config(value: TConfig) {
+      this._config = value;
+      this.initNgGrid(value);
+  }
 
   columnDefs: any = [];
 
   rowData: any = [];
 
-  private currentObject: TData;
+  private currentObject: TRecord;
 
   constructor() { }
-
-  ngOnChanges(): void {
-    this.initNgGrid(this.data)
-  }
 
   autoSizeGrid(){
     let cols = this.dataGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
@@ -25,20 +28,21 @@ export abstract class AgGridTableComponent<TData> {
 
   protected abstract addColDefs(object: Object): any[];
 
-  protected initNgGrid(data: TData[]): void{
+  protected initNgGrid(cfg: TConfig): void{
     
-    if(!data || data.length === 0){ //Reset grid if no data
+    if(!cfg?.data || cfg.data.length === 0){ //Reset grid if no data
       this.columnDefs = [];
       this.rowData = [];
       return;
     };
 
-    if(!this.hasSameObjectProps(data[0], this.currentObject)){
-      this.currentObject = data[0];
-      this.columnDefs = this.addColDefs(data[0])   
+    const record = cfg.data[0];
+    if(!this.hasSameObjectProps(record, this.currentObject)){
+      this.currentObject = record;
+      this.columnDefs = this.addColDefs(record)   
     }
 
-    this.rowData = data;
+    this.rowData = cfg.data;
   }
 
   private hasSameObjectProps(obj1: Object, obj2: Object): boolean{

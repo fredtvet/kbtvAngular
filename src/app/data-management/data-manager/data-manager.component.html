@@ -6,7 +6,7 @@
   </app-data-property-picker>
 
   <app-data-table fxLayout="column" fxLayoutGap="8px" class="h-100" #dataTable
-    [data]="data$ | async"
+    [config]="dataConfig$ | async"
     (itemEdited)="updateItem($event)"
     (createItem)="openCreateForm()"
     (itemsDeleted)="deleteItems($event)">

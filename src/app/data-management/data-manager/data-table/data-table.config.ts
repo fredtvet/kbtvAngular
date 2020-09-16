@@ -1,9 +1,7 @@
 export const DataTableConfig = {
-    ignoredProperties: {updatedAt: true, createdAt: true, lastVisited: true, employerId: true, missionTypeId: true, fileName: true}, 
+    ignoredProperties: {updatedAt: true, createdAt: true, lastVisited: true, employer: true, missionType: true, fileName: true}, 
 
-    noEditProperties: {id: true, missionType: true, employer: true, password: true},
+    noEditProperties: {id: true, password: true},
     
     booleanProperties: {finished: true},
-    
-    objectProperties: {missionType: true, employer: true},
 }

@@ -9,6 +9,7 @@ export interface ModelConfig<TState> {
     notPersisted?: boolean, 
     foreignProp?: string,
     foreignKey?: string,
+    displayProp?: string,
     children?: StateProp<TState>[],
     foreigns?: StateProp<TState>[]
 }
@@ -25,6 +26,7 @@ export const ModelStateConfigData: {[key in keyof ModelState]: ModelConfig<Model
     missions: {
         apiUrl: ApiUrl.Mission, 
         identifier: "id", 
+        displayProp: "address",
         foreignProp: "mission",
         foreignKey: "missionId",
         children: ["missionImages", "missionDocuments", "missionNotes"], 
@@ -32,31 +34,36 @@ export const ModelStateConfigData: {[key in keyof ModelState]: ModelConfig<Model
     },
     missionTypes: {
         apiUrl: ApiUrl.MissionType, 
-        identifier: "id",    
+        identifier: "id", 
+        displayProp: "name",   
         foreignProp: "missionType",
         foreignKey: "missionTypeId",
     },
     employers: {
         apiUrl: ApiUrl.Employer, 
-        identifier: "id",    
+        identifier: "id",  
+        displayProp: "name",    
         foreignProp: "employer",
         foreignKey: "employerId",
     },
     documentTypes: {
         apiUrl: ApiUrl.DocumentType, 
-        identifier: "id",    
+        identifier: "id",   
+        displayProp: "name",   
         foreignProp: "documentType",
         foreignKey: "documentTypeId",
     }, 
     missionImages:  {
         apiUrl: ApiUrl.MissionImage, 
-        identifier: "id",    
+        identifier: "id",  
+        displayProp: "fileName",    
         foreignProp: "missionImage",
         foreignKey: "missionImageId",
     },    
     missionDocuments:  {
         apiUrl: ApiUrl.MissionDocument, 
         identifier: "id", 
+        displayProp: "fileName",   
         foreignProp: "missionDocument",
         foreignKey: "missionDocumentId",
         foreigns: ["documentTypes"]
@@ -77,7 +84,8 @@ export const ModelStateConfigData: {[key in keyof ModelState]: ModelConfig<Model
     },      
     inboundEmailPasswords: {
         apiUrl: ApiUrl.InboundEmailPassword, 
-        identifier: "id", 
+        identifier: "id",   
+        foreignKey: "password", 
         notPersisted: true,    
     }, 
     userTimesheets: {

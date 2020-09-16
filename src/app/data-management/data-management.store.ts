@@ -13,6 +13,7 @@ import { GetWithRelationsConfig } from '../core/model/state-helpers/get-with-rel
 import { DeleteModelToStateHttpConverter } from '../core/services/model/converters/delete-model-to-state-http.converter';
 import { SaveModelToStateHttpConverter } from '../core/services/model/converters/save-model-to-state-http.converter';
 import { BaseModelStore } from '../core/state/abstracts/base-model.store';
+import { DataConfig } from './interfaces/data-config.interface';
 import { StoreState } from './interfaces/store-state';
 
 @Injectable({
@@ -25,10 +26,10 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
 
     selectedProperty$ = this.property$<keyof StoreState>("selectedProperty");
 
-    data$ = this.selectedProperty$.pipe(
+    dataConfig$ = this.selectedProperty$.pipe(
         distinctUntilChanged(), 
         filter(x => x != null), 
-        switchMap(x => this.getData$(x)));
+        switchMap(x => this.getDataConfig$(x)));
 
     get selectedProperty() {
         return this.getStateProperty<keyof StoreState>("selectedProperty")
@@ -38,8 +39,7 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
         apiService: ApiService,
         arrayHelperService: ArrayHelperService,   
         private saveStateHttpConverter: SaveModelToStateHttpConverter<StoreState, SaveModelStateCommand<Model>>,
-        private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>, 
-        private getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>
+        private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>
     ) {
         super( arrayHelperService, apiService);
     }
@@ -56,16 +56,20 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
         this._stateHttpCommandHandler(this.deleteStateHttpConverter.convert(command));
     }
 
-    private getData$(property: keyof StoreState): Observable<Model[]>{        
+    private getDataConfig$(property: keyof StoreState): Observable<DataConfig>{        
         let relationCfg = new GetWithRelationsConfig(property, null, {includeAll: true});
 
         return combineLatest([
             this.modelProperty$(property), //Combine with modelprop to fetch from server if no neccesary
             this.stateSlice$(relationCfg.includedForeignProps as any)
-        ]).pipe(map(([entities, state]) => { 
-            state = state || {};
+        ]).pipe(map(([entities, foreigns]) => { 
+            const state = {...foreigns} || {};
             state[property] = entities as any;
-            return this.getRangeWithRelationsHelper.get<Model>(state as any, relationCfg);
+            return {
+                data: entities,
+                foreigns,
+                selectedProp: property
+            }
         }));
     }
 }

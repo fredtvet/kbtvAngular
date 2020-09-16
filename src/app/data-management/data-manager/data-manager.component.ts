@@ -7,6 +7,7 @@ import { ModelFormService } from 'src/app/core/services/model';
 import { StateAction } from 'src/app/core/state';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { DataManagementStore } from '../data-management.store';
+import { DataConfig } from '../interfaces/data-config.interface';
 import { StoreState } from '../interfaces/store-state';
 import { DataTableComponent } from './data-table/data-table.component';
 import { PropertyFormMap } from './property-form.map';
@@ -22,7 +23,7 @@ type WrapperConfig = ModelFormWrapperConfig<FormConfig>
 
 export class DataManagerComponent {
 @ViewChild('dataTable') dataTable: DataTableComponent;
-data$:Observable<any[]> = this.store.data$;
+dataConfig$:Observable<DataConfig> = this.store.dataConfig$;
 
 selectedProperty$ = this.store.selectedProperty$;
 properties = this.store.properties;

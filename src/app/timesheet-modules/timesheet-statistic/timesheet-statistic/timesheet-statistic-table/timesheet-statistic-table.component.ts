@@ -3,21 +3,22 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { translations } from 'src/app/shared-app/translations';
 import { AgGridTableComponent } from 'src/app/shared/components/abstracts/ag-grid-table.component';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
+import { AgGridConfig } from 'src/app/shared/components/abstracts/ag-grid-config.interface';
 
 @Component({
   selector: 'app-timesheet-statistic-table',
   templateUrl: './timesheet-statistic-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimesheetStatisticTableComponent extends AgGridTableComponent<TimesheetSummary> {
+export class TimesheetStatisticTableComponent extends AgGridTableComponent<TimesheetSummary, AgGridConfig<TimesheetSummary>> {
 
   constructor(private datePipe: DatePipe) { super() }
 
-  protected initNgGrid(data: TimesheetSummary[]): void{
-    super.initNgGrid(data);
+  protected initNgGrid(cfg: AgGridConfig<TimesheetSummary>): void{
+    super.initNgGrid(cfg);
 
-    let totalOpenHrs = data?.reduce((total, summary) => { return total + summary.openHours }, 0);
-    let totalConfirmedHrs = data?.reduce((total, summary) => { return total + summary.confirmedHours }, 0);
+    let totalOpenHrs = cfg?.data?.reduce((total, summary) => { return total + summary.openHours }, 0);
+    let totalConfirmedHrs = cfg?.data?.reduce((total, summary) => { return total + summary.confirmedHours }, 0);
 
     if(this.dataGrid){
       this.dataGrid.api.setPinnedBottomRowData([{openHours: totalOpenHrs, confirmedHours: totalConfirmedHrs, fullName: "Sum av timer", timesheets: []}]);

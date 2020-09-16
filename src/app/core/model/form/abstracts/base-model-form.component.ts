@@ -2,10 +2,14 @@ import { ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { BaseFormComponent } from 'src/app/core/form/abstracts/base-form.component';
-import { BaseModelFormStore, BaseModelFormViewComponent, ModelForm, ModelFormConfig, ModelFormViewConfig } from 'src/app/core/model/form';
-import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { Model } from 'src/app/core/models';
 import { StateAction } from 'src/app/core/state';
+import { SaveModelStateCommand } from '../../interfaces/save-model-state-command.interface';
+import { ModelFormConfig } from '../interfaces/model-form-config.interface';
+import { ModelFormViewConfig } from '../interfaces/model-form-view-config.interface';
+import { ModelForm } from '../interfaces/model-form.interface';
+import { BaseModelFormViewComponent } from './base-model-form-view.component';
+import { BaseModelFormStore } from './base-model-form.store';
 
 export abstract class BaseModelFormComponent<  
     TModel extends Model,

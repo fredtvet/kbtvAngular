@@ -20,7 +20,7 @@ export class TimesheetStatisticComponent {
   groupByTypes = GroupByPeriod;
 
   groupBy$ = this.store.groupBy$;
-  timesheetSummaries$ = this.store.timesheetSummaries$;
+  tableData$ = this.store.tableData$;
 
   constructor(
     private mainNavService: MainNavService,

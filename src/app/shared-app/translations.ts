@@ -11,9 +11,6 @@ export const translations: { [key: string]: string } = {
   fileName: "Lenke",
   description: "Beskrivelse",
   finished: "Ferdig",
-  employer: "Oppdragsgiver",
-  missionType: "Oppdragstype",
-  documentType: "Dokumenttype",
   userName: "Brukernavn",
   firstName: "Fornavn",
   lastName: "Etternavn",
@@ -26,14 +23,37 @@ export const translations: { [key: string]: string } = {
   fullName: "Navn",
   confirmedHours: "Låste timer",
   openHours: "Åpne timer",
-  mission: "Oppdrag",
-  missionDocument: "Dokument",
-  missionNote: "Notat",
-  documentTypes: "Dokumenttyper",
-  employers: "Oppdragsgivere",
-  missionTypes: "Oppdragstyper",
-  inboundEmailPasswords: "Epostpassord",
-  missions: "Oppdrag",
   password: "Passord",
-  timesheet: "Time"
+
+  timesheet: "Time",
+  timesheetId: "Time",
+  timesheets: "Timer",
+  
+  mission: "Oppdrag",   
+  missionId: "Oppdrag",
+  missions: "Oppdrag",
+
+  employer: "Oppdragsgiver",
+  employerId: "Oppdragsgiver",
+  employers: "Oppdragsgivere",
+
+  documentType: "Dokumenttype",
+  documentTypeId: "Dokumenttype",
+  documentTypes: "Dokumenttyper",
+
+  missionDocument: "Dokument",
+  missionDocumentId: "Dokument",
+  missionDocuments: "Dokumenter",
+  
+  missionNote: "Notat",
+  missionNoteId: "Notat",
+  missionNotes: "Notater",
+
+  missionType: "Oppdragstype",
+  missionTypeId: "Oppdragstype",
+  missionTypes: "Oppdragstyper",
+
+  inboundEmailPassword: "Epostpassord",
+  inboundEmailPasswordId: "Epostpassord",
+  inboundEmailPasswords: "Epostpassord",
 };

@@ -15,7 +15,7 @@
     </span>
 
     <app-timesheet-statistic-table #statTable class="mat-elevation-z2" fxFlex 
-        [data]="timesheetSummaries$ | async">
+        [config]="tableData$ | async">
     </app-timesheet-statistic-table>
 
 </div>

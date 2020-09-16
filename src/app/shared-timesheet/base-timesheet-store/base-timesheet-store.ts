@@ -17,7 +17,7 @@ import { FilterStateHelper } from 'src/app/core/services/filter';
 
 export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetStoreState>> extends BaseModelStore<TState>{
     
-    private baseCriteria: TimesheetCriteria;
+    private static baseCriteria: TimesheetCriteria;
 
     users$ = this.modelProperty$<User[]>("users" as any);
 
@@ -63,9 +63,10 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
     const filter = new TimesheetFilter(criteria);
 
     //If current filter  data is contained in base, dont fetch http dataand use state. 
-    if(filter.containedIn(this.baseCriteria)) this._setStateVoid(state);
+    if(filter.containedIn(BaseTimesheetStore.baseCriteria)) this._setStateVoid(state);
     else {
-        this.baseCriteria = criteria;
+       console.log(BaseTimesheetStore.baseCriteria, criteria)
+        BaseTimesheetStore.baseCriteria = criteria;
         this.get$(criteria).pipe(take(1), tap(timesheets => {
             state.timesheets = this.arrayHelperService.addOrUpdateRange(
                 this.getStateProperty<Timesheet[]>("timesheets" as any), timesheets, "id");
