@@ -1,4 +1,5 @@
 export const translations: { [key: string]: string } = {
+  id: "Id",
   name: "Navn",
   phoneNumber: "Telefonnummer",
   address: "Adresse",
@@ -44,7 +45,7 @@ export const translations: { [key: string]: string } = {
   missionDocument: "Dokument",
   missionDocumentId: "Dokument",
   missionDocuments: "Dokumenter",
-  
+
   missionNote: "Notat",
   missionNoteId: "Notat",
   missionNotes: "Notater",
@@ -56,4 +57,5 @@ export const translations: { [key: string]: string } = {
   inboundEmailPassword: "Epostpassord",
   inboundEmailPasswordId: "Epostpassord",
   inboundEmailPasswords: "Epostpassord",
+  
 };

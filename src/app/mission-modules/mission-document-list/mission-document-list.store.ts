@@ -1,28 +1,30 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { map } from 'rxjs/operators';
 import { ApiUrl } from 'src/app/core/api-url.enum';
+import { DeleteModelStateCommand } from 'src/app/core/model/interfaces';
+import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
+import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
+import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-with-relations.helper';
 import { Employer, Mission, MissionDocument } from "src/app/core/models";
 import {
   ApiService,
   ArrayHelperService
 } from "src/app/core/services";
-import { StoreState } from './store-state';
-import { BaseCommandStore } from 'src/app/core/state/abstracts/base-command.store';
-import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
-import { map } from 'rxjs/operators';
-import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
-import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-with-relations.helper';
 import { DeleteModelToStateHttpConverter } from 'src/app/core/services/model/converters/delete-model-to-state-http.converter';
-import { DeleteModelStateCommand } from 'src/app/core/model/interfaces';
+import { StateHttpCommandHandler } from 'src/app/core/services/state-http-command.handler';
+import { BaseStore } from 'src/app/core/state/abstracts/base.store';
+import { StoreState } from './store-state';
 
 @Injectable({
   providedIn: 'any',
 })
-export class MissionDocumentListStore extends BaseCommandStore<StoreState>  {
+export class MissionDocumentListStore extends BaseStore<StoreState>  {
 
   constructor(
     apiService: ApiService,
     arrayHelperService: ArrayHelperService,
+    private stateHttpCommandHandler: StateHttpCommandHandler<StoreState>,
     private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>,
     private getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>,  
     private getWithRelationsHelper: GetWithRelationsHelper<StoreState>
@@ -44,10 +46,10 @@ export class MissionDocumentListStore extends BaseCommandStore<StoreState>  {
   }
 
   delete = (command: DeleteModelStateCommand): void => 
-    this._stateHttpCommandHandler(this.deleteStateHttpConverter.convert({...command, stateProp: "missionDocuments"}));
+    this.stateHttpCommandHandler.dispatch(this.deleteStateHttpConverter.convert({...command, stateProp: "missionDocuments"}));
 
   mailDocuments(toEmail: string, ids: string[]){
-    this._stateHttpCommandHandler({
+    this.stateHttpCommandHandler.dispatch({
       httpBody:{toEmail, ids},
        httpMethod: "POST", 
        apiUrl:`${ApiUrl.MissionDocument}/SendDocuments`

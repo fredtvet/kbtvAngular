@@ -5,4 +5,5 @@ export interface StateHttpCommand<TState>{
     httpMethod: "POST" | "PUT" | "DELETE";
     httpBody: any;
     stateFunc?: stateFunc<TState>;
+    cancelMessage?: string;
 }

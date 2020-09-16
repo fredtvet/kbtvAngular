@@ -6,12 +6,11 @@ import {
     ApiService,
     ArrayHelperService
 } from "src/app/core/services";
-import { BaseModelFormStore } from '../core/model/form';
 import { DeleteModelStateCommand, SaveModelStateCommand } from '../core/model/interfaces';
-import { GetRangeWithRelationsHelper } from '../core/model/state-helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from '../core/model/state-helpers/get-with-relations.config';
 import { DeleteModelToStateHttpConverter } from '../core/services/model/converters/delete-model-to-state-http.converter';
 import { SaveModelToStateHttpConverter } from '../core/services/model/converters/save-model-to-state-http.converter';
+import { StateHttpCommandHandler } from '../core/services/state-http-command.handler';
 import { BaseModelStore } from '../core/state/abstracts/base-model.store';
 import { DataConfig } from './interfaces/data-config.interface';
 import { StoreState } from './interfaces/store-state';
@@ -38,22 +37,23 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
     constructor(
         apiService: ApiService,
         arrayHelperService: ArrayHelperService,   
+        private stateHttpCommandHandler: StateHttpCommandHandler<StoreState>,
         private saveStateHttpConverter: SaveModelToStateHttpConverter<StoreState, SaveModelStateCommand<Model>>,
         private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>
     ) {
-        super( arrayHelperService, apiService);
+        super(arrayHelperService, apiService);
     }
 
     updateSelectedProperty = (prop: keyof StoreState) => this._setStateVoid({selectedProperty: prop})
 
     save = (command: SaveModelStateCommand<Model>): void =>{
         command.stateProp = this.selectedProperty;
-        this._stateHttpCommandHandler(this.saveStateHttpConverter.convert(command));
+        this.stateHttpCommandHandler.dispatch(this.saveStateHttpConverter.convert(command));
     }
   
     delete = (command: DeleteModelStateCommand): void => {
         command.stateProp = this.selectedProperty;
-        this._stateHttpCommandHandler(this.deleteStateHttpConverter.convert(command));
+        this.stateHttpCommandHandler.dispatch(this.deleteStateHttpConverter.convert(command));
     }
 
     private getDataConfig$(property: keyof StoreState): Observable<DataConfig>{        

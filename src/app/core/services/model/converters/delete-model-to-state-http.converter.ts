@@ -3,6 +3,7 @@ import { ModelToStateHttpConverter } from 'src/app/core/model/model-to-state-htt
 import { DeleteModelStateCommand } from 'src/app/core/model/interfaces';
 import { DeleteModelWithChildrenHelper } from 'src/app/core/model/state-helpers/delete-model-with-children.helper';
 import { StateHttpConverter } from 'src/app/core/state/state-http-converter';
+import { translations } from 'src/app/shared-app/translations';
 
 @Injectable({providedIn: 'root'})
 export class DeleteModelToStateHttpConverter<TState, TCommand extends DeleteModelStateCommand>  
@@ -16,6 +17,15 @@ export class DeleteModelToStateHttpConverter<TState, TCommand extends DeleteMode
         return command;
     }
 
+    protected createCancelMessage(command: TCommand): string{
+        const multi = command.ids?.length > 1;
+
+        const entityWord = 
+            translations[multi ? command.stateProp : this.modelConfig.foreignProp].toLowerCase();
+        
+        return `Sletting av ${command.ids?.length || ''} ${entityWord} med id ${command.ids || command.id} er reversert!`;
+     }
+  
     protected createHttpBody(command: TCommand): {ids: any[]} {
         return command.id ? null : {ids: command.ids};
     }

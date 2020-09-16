@@ -38,6 +38,11 @@ export class CreateMissionImagesToStateHttpConverter extends BaseStateToHttpConv
         return command;
     }
 
+    protected createCancelMessage(command: InternalCommand): string{
+        return `Oppretting av ${command.files.length} bilder på oppdrag ${command.missionId} er reversert.`
+    }
+
+
     protected createApiUrl(command: InternalCommand): string {
         return `${ApiUrl.MissionImage}?missionId=${command.missionId}`;
     }

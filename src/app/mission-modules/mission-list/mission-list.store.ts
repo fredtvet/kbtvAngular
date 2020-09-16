@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { combineLatest, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { ApiUrl } from 'src/app/core/api-url.enum';
 import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interface';
@@ -13,6 +13,7 @@ import {
 } from "src/app/core/services";
 import { FilterStateHelper } from 'src/app/core/services/filter';
 import { SaveModelFileToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-file-to-state-http.converter';
+import { StateHttpCommandHandler } from 'src/app/core/services/state-http-command.handler';
 import { StateAction } from 'src/app/core/state';
 import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
 import { MissionCriteria } from 'src/app/shared/interfaces';
@@ -53,6 +54,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
   constructor(
     apiService: ApiService,
     arrayHelperService: ArrayHelperService, 
+    private stateHttpCommandHandler: StateHttpCommandHandler<StoreState>,
     private filterStateHelper: FilterStateHelper,
     private saveWithFileStateHttpConverter: SaveModelFileToStateHttpConverter<StoreState, SaveModelWithFileStateCommand<Mission>>,
     private getWithRelationsHelper: GetWithRelationsHelper<StoreState>,
@@ -76,7 +78,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
     this._setStateVoid({ missionTypes: [...this.getStateProperty<any[]>("missionTypes", true), {id:"test", name: "test"}] });
 
   updateHeaderImage(id: string, file: File): void {
-    this._stateHttpCommandHandler(
+    this.stateHttpCommandHandler.dispatch(
       this.saveWithFileStateHttpConverter.convert(
         {stateProp: "missions", entity: {id}, file, saveAction: StateAction.Update},
         `${ApiUrl.Mission}/${id}/UpdateHeaderImage`

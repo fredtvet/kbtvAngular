@@ -14,7 +14,8 @@ export abstract class BaseStateToHttpConverter<TState, TCommand extends StateCom
             httpMethod: this.createHttpMethod(input),
             apiUrl: overrideApiUrl || this.createApiUrl(input),
             httpBody: this.createHttpBody(this.cloneInput(input)),
-            stateFunc: (state: TState) => this.modifyState(state, input)
+            stateFunc: (state: TState) => this.modifyState(state, input),
+            cancelMessage: this.createCancelMessage(input)
         };
 
         return stateHttpCommand;
@@ -26,6 +27,10 @@ export abstract class BaseStateToHttpConverter<TState, TCommand extends StateCom
 
     protected setupCommand(command: TCommand): TCommand {
         return command;
+    }
+
+    protected createCancelMessage(command: TCommand): string{
+        return "En operasjon ble tilbakestilt"
     }
 
     protected createApiUrl(command: TCommand): string {

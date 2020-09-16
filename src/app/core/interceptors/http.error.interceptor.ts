@@ -10,7 +10,7 @@ import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { NotificationService, NotificationType } from '../services/notification';
 
-interface AppErrorResponse {
+export interface AppErrorResponse {
   status: number;
   title: string;
   type: string;

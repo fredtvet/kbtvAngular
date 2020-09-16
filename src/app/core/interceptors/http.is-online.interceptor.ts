@@ -27,7 +27,7 @@ export class HttpIsOnlineInterceptor implements HttpInterceptor {
   }
 
   private throwNotOnlineError(): Observable<never> {
-    return throwError("Får ikke koblet til internett. Eventuelle endringer har blitt reversert.").pipe(
+    return throwError("Får ikke koblet til internett. Eventuelle endringer er reversert.").pipe(
       tap((next) => {}, (error) =>
           this.notificationService.notify({
             title: error,

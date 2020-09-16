@@ -7,9 +7,9 @@ import {
   ApiService,
   ArrayHelperService
 } from "src/app/core/services";
+import { BaseModelStore } from '../core/state/abstracts/base-model.store';
 import { Roles } from '../shared-app/enums';
 import { StoreState } from './store-state';
-import { BaseModelStore } from '../core/state/abstracts/base-model.store';
 
 @Injectable({
   providedIn: 'any',

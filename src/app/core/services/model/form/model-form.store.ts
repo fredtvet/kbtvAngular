@@ -8,18 +8,20 @@ import { ArrayHelperService } from '../../utility/array-helper.service';
 import { DeleteModelToStateHttpConverter } from '../converters/delete-model-to-state-http.converter';
 import { SaveModelToStateHttpConverter } from '../converters/save-model-to-state-http.converter';
 import { SaveModelStateCommand, DeleteModelStateCommand } from 'src/app/core/model/interfaces';
+import { StateHttpCommandHandler } from '../../state-http-command.handler';
 
 @Injectable({ providedIn: 'root' })
 export class ModelFormStore extends BaseModelFormStore<ModelState, Model> {
 
   constructor(
     apiService: ApiService,
-    arrayHelperService: ArrayHelperService,
+    arrayHelperService: ArrayHelperService,  
+    stateHttpCommandHandler: StateHttpCommandHandler<ModelState>,
     saveStateHttpConverter: SaveModelToStateHttpConverter<ModelState, SaveModelStateCommand<Model>>,
     deleteStateHttpConverter: DeleteModelToStateHttpConverter<ModelState, DeleteModelStateCommand>, 
     getWithRelationsHelper: GetWithRelationsHelper<ModelState>
   ) {
-    super(apiService, arrayHelperService, saveStateHttpConverter, getWithRelationsHelper, deleteStateHttpConverter);
+    super(apiService, arrayHelperService, stateHttpCommandHandler, saveStateHttpConverter, getWithRelationsHelper, deleteStateHttpConverter);
   }
     
 }

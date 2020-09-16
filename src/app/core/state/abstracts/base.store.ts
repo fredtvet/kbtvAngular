@@ -71,7 +71,7 @@ export abstract class BaseStore<TState> extends ObservableStore<TState>  {
         else this._setState(state as Partial<TState>, action, true, false) 
     }
 
-    protected _setState(state: Partial<TState>, action?: string, dispatchState?: boolean, deepCloneState?: boolean): TState{
+    protected _setState(state: Partial<TState> , action?: string, dispatchState?: boolean, deepCloneState?: boolean): TState{
         state['lastAction'] = action;
         return super.setState(state, action, dispatchState, deepCloneState);
     } 

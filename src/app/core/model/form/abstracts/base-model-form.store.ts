@@ -6,6 +6,7 @@ import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-wit
 import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-with-relations.helper';
 import { Model } from 'src/app/core/models';
 import { ApiService, ArrayHelperService } from 'src/app/core/services';
+import { StateHttpCommandHandler } from 'src/app/core/services/state-http-command.handler';
 import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
 import { StateHttpConverter } from 'src/app/core/state/state-http-converter';
 import { StateProp } from '../../state.types';
@@ -18,6 +19,7 @@ export abstract class BaseModelFormStore<
   constructor(
     apiService: ApiService,
     arrayHelperService: ArrayHelperService,
+    private stateHttpCommandHandler: StateHttpCommandHandler<TState>,
     private saveStateHttpConverter: StateHttpConverter<any, any>,
     private getWithRelationsHelper?: GetWithRelationsHelper<TState>,
     private deleteStateHttpConverter?: StateHttpConverter<any, any>, 
@@ -45,13 +47,13 @@ export abstract class BaseModelFormStore<
   }
 
   save = (command: any): void =>
-    this._stateHttpCommandHandler(this.saveStateHttpConverter.convert(command));
+    this.stateHttpCommandHandler.dispatch(this.saveStateHttpConverter.convert(command));
   
 
   delete = (command: any): void => {
     if(!this.deleteStateHttpConverter) console.error('Delete converter required for forms with delete');
     console.log(command);
-    this._stateHttpCommandHandler(this.deleteStateHttpConverter.convert(command));
+    this.stateHttpCommandHandler.dispatch(this.deleteStateHttpConverter.convert(command));
   }
     
 }

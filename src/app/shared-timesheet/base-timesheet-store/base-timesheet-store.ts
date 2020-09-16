@@ -2,18 +2,18 @@ import { HttpParams } from '@angular/common/http';
 import { combineLatest, Observable } from 'rxjs';
 import { filter, map, take, tap, withLatestFrom } from 'rxjs/operators';
 import { ApiUrl } from 'src/app/core/api-url.enum';
-import { Mission, Timesheet, User } from 'src/app/core/models';
-import { ApiService, ArrayHelperService, DateTimeService, TimesheetSummaryAggregator } from 'src/app/core/services';
-import { GroupByPeriod } from 'src/app/shared-app/enums';
-import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
-import { BaseTimesheetStoreSettings } from './base-timesheet-store-settings.interface';
-import { BaseTimesheetStoreState } from './base-timesheet-store-state';
-import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
-import { TimesheetCriteria } from '../interfaces/timesheet-criteria.interface';
-import { TimesheetSummary } from '../interfaces/timesheet-summary.interface';
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
+import { Mission, Timesheet, User } from 'src/app/core/models';
+import { ApiService, ArrayHelperService, DateTimeService, TimesheetSummaryAggregator } from 'src/app/core/services';
 import { FilterStateHelper } from 'src/app/core/services/filter';
+import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
+import { GroupByPeriod } from 'src/app/shared-app/enums';
+import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
+import { TimesheetCriteria } from '../interfaces/timesheet-criteria.interface';
+import { TimesheetSummary } from '../interfaces/timesheet-summary.interface';
+import { BaseTimesheetStoreSettings } from './base-timesheet-store-settings.interface';
+import { BaseTimesheetStoreState } from './base-timesheet-store-state';
 
 export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetStoreState>> extends BaseModelStore<TState>{
     
@@ -46,7 +46,7 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
 
     constructor(
         arrayHelperService: ArrayHelperService,
-        apiService: ApiService,
+        apiService: ApiService,    
         protected dateTimeService: DateTimeService,
         private timesheetSummaryAggregator: TimesheetSummaryAggregator,
         private getRangeWithRelationsHelper: GetRangeWithRelationsHelper<TState>,

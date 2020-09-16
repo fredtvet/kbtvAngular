@@ -7,6 +7,7 @@ import { StateAction } from 'src/app/core/state';
 import { StateHttpConverter } from 'src/app/core/state/state-http-converter';
 import { ArrayHelperService } from '../../utility/array-helper.service';
 import { ModelIdGeneratorService } from '../model-id-generator.service';
+import { translations } from 'src/app/shared-app/translations';
 
 @Injectable({providedIn: 'root'})
 export class SaveModelToStateHttpConverter<TState, TCommand extends SaveModelStateCommand<Model>> 
@@ -29,6 +30,14 @@ export class SaveModelToStateHttpConverter<TState, TCommand extends SaveModelSta
       const identfifier = this.modelConfig.identifier;
       const endUri = (command.saveAction === StateAction.Update) ? `/${command.entity[identfifier]}` : "";
       return this.modelConfig.apiUrl + endUri;
+   }
+
+   protected createCancelMessage(command: TCommand): string{
+      const saveWord = command.saveAction === StateAction.Update ? "Oppdatering" : "Oppretting";
+      const entityWord = translations[this.modelConfig.foreignProp].toLowerCase();
+      const displayPropWord = translations[this.modelConfig.displayProp || this.modelConfig.identifier].toLowerCase();
+      const displayPropValue = command.entity[this.modelConfig.displayProp];
+      return `${saveWord} av ${entityWord} med ${displayPropWord} ${displayPropValue} er reversert!`;
    }
 
    protected createHttpMethod(command: TCommand): "POST" | "PUT"{
