@@ -90,7 +90,7 @@ export class MissionDocumentListComponent {
   private openMailDocumentSheet = () => {
     let botRef = this.formService.open({
       formComponent: MailDocumentFormComponent,
-      formConfig: { toEmailPreset: this.store.getMissionEmployer(this.missionId), ids: this.currentSelections },
+      formConfig: { toEmailPreset: this.store.getMissionEmployer(this.missionId)?.email, ids: this.currentSelections },
     });
 
     botRef
