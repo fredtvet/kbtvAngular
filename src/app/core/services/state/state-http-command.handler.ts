@@ -53,7 +53,10 @@ export class StateHttpCommandHandler extends ObservableStore<State>
       if(!command) console.error("No state http command provided")
       //If no state changes, ignore queue and run request
       const stateFunc = command.stateFunc; 
-      if(!stateFunc) this.getHttpCommandObserver(command).subscribe();
+      if(!stateFunc){ 
+        this.getHttpCommandObserver(command).subscribe()
+        return;
+      };
       delete command.stateFunc; //Dont store state func
       //HUSK ONYL GET CERTAIN STATES,NO REFRESH TOKEN ETC  
       let request = {command, state: this.getOptimisticState()};
@@ -129,7 +132,7 @@ export class StateHttpCommandHandler extends ObservableStore<State>
     private getHttpCommandObserver(command: {httpMethod: "POST" | "PUT" | "DELETE", apiUrl: string, httpBody: any}){
       console.log(command, 'x')
       switch(command.httpMethod){
-          case "POST": return this.apiService.post(command.apiUrl, {});
+          case "POST": return this.apiService.post(command.apiUrl, command.httpBody);
           case "PUT": return this.apiService.put(command.apiUrl, command.httpBody);
           case "DELETE": return this.apiService.delete(command.apiUrl);
       }
