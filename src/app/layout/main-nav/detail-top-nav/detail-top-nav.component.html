@@ -24,7 +24,7 @@
 
         <span class="mr-auto">
             <mat-icon *ngIf="config.subIcon" class="scale-75">{{ config.subIcon }}</mat-icon>
-            <span class="ml-1 mat-caption">{{ config.subTitle }}</span>
+            <span class="mat-caption">{{ config.subTitle }}</span>
         </span>
 
         <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent"></mat-spinner>

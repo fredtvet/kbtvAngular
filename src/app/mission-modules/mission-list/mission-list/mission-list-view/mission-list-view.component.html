@@ -10,7 +10,7 @@
                     endIcon: mission.finished ? 'check':'chevron_right'             
                 }" 
                 [routerLink]="['/oppdrag', mission.id, 'detaljer']">
-                {{'(' + mission.id + ') ' + mission.address}}
+                <span fxHide.xs>{{'(' + mission.id + ') '}}</span>{{ mission.address }}
             </app-list-card>
         </ng-container>  
     </cdk-virtual-scroll-viewport>

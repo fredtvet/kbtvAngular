@@ -51,7 +51,7 @@ export class MissionDetailsComponent{
   private configureMainNav(mission: Mission){
     let cfg = {
       title: mission?.address?.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
-      subTitle: mission?.finished ? 'Oppdrag ferdig!' : '',
+      subTitle: (mission?.finished ? 'Oppdrag ferdig! ' : '') + 'ID: ' + mission?.id,
       subIcon: mission?.finished ? 'check' : '',
       imgSrc: mission?.fileName ? appFileUrl(mission.fileName, "missionheader") : null,
       backFn: this.onBack 
