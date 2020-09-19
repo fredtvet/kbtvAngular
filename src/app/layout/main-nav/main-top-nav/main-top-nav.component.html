@@ -1,6 +1,6 @@
 <mat-toolbar #navBar class="toolbar-slim bg-primary mat-elevation-z4 color-foreground">
 
-  <ng-container *ngIf="searchBarHidden else searchBarContent">
+  <ng-container *ngIf="searchBarHidden || !config?.searchBar else searchBarContent">
     <app-button *ngIf="config?.backFn else menuBtn" [config]="{
         callback: config.backFn, 
         params: config.backFnParams,
