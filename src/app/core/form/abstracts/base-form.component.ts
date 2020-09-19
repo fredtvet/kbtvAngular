@@ -28,7 +28,7 @@ export abstract class BaseFormComponent<
     ngOnInit(): void {        
       this.viewConfig$ = this.initViewConfig(); 
       this.initViewComponent();
-      this.viewConfig$.pipe(tap(console.log),takeUntil(this.unsubscribe)).subscribe(viewConfig => this.onViewConfigChanges(viewConfig))
+      this.viewConfig$.pipe(takeUntil(this.unsubscribe)).subscribe(viewConfig => this.onViewConfigChanges(viewConfig))
     }
 
     protected get formViewComponent(): Type<TViewComponent>{

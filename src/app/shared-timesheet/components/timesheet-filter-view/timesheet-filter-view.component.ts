@@ -72,7 +72,7 @@ export class TimesheetFilterViewComponent extends BaseFormViewComponent<Timeshee
   protected _initalizeForm(cfg: TimesheetFilterViewConfig): FormGroup { 
     const criteria = cfg?.criteria;
     const disabled = cfg?.disabledFilters;
-    console.log(disabled);
+
     return this._formBuilder.group({
       userName: [{value: criteria?.userName, disabled: disabled?.includes("userName")}],
       mission: [{value: criteria?.mission, disabled: disabled?.includes("mission")}, [

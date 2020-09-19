@@ -65,7 +65,6 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
     //If current filter  data is contained in base, dont fetch http dataand use state. 
     if(filter.containedIn(BaseTimesheetStore.baseCriteria)) this._setStateVoid(state);
     else {
-       console.log(BaseTimesheetStore.baseCriteria, criteria)
         BaseTimesheetStore.baseCriteria = criteria;
         this.get$(criteria).pipe(take(1), tap(timesheets => {
             state.timesheets = this.arrayHelperService.addOrUpdateRange(

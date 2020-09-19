@@ -40,7 +40,6 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
       const modelCfg = ModelStateConfigData[modelKey];
       this.propCfgMap[modelCfg.foreignKey] = {...modelCfg, stateProp: modelKey};
     }
-    console.log(this.propCfgMap)
   }
 
   editCell = (e:any) => {
@@ -119,7 +118,7 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
     const fkModelCfg = this.propCfgMap[name];
     if(fkModelCfg){
       const fkIdProp = name;
-      
+
       def['cellEditor'] = 'agSelectCellEditor';
       def['cellEditorParams'] = { 
         values: Object.keys(this.foreignsDisplayMap[fkIdProp] || {}), 

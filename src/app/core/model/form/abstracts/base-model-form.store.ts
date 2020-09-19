@@ -52,7 +52,7 @@ export abstract class BaseModelFormStore<
 
   delete = (command: any): void => {
     if(!this.deleteStateHttpConverter) console.error('Delete converter required for forms with delete');
-    console.log(command);
+
     this.stateHttpCommandHandler.dispatch(this.deleteStateHttpConverter.convert(command));
   }
     

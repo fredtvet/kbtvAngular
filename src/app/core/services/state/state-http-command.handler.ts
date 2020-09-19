@@ -27,7 +27,6 @@ export class StateHttpCommandHandler extends ObservableStore<State>
     
     private nextInQueue$ = this.nextInQueueSubject.asObservable().pipe(
       map(x => this.requestQueue[0]), //add null check
-      tap(x => console.log('nextInQueue', x)),
       filter(x => x != null),
       tap(cmd => this.dispatchHttp(cmd.command)),
     );
@@ -37,14 +36,13 @@ export class StateHttpCommandHandler extends ObservableStore<State>
       private notificationService: NotificationService,
       private syncStore: SyncStore,
       private deviceInfoService: DeviceInfoService){ 
-      super({logStateChanges: true, trackStateHistory: false});
+      super({logStateChanges: false, trackStateHistory: false});
 
       concat(
         this.syncStore.hasInitialSynced$.pipe(tap(x => this.checkForGhostErrors())),
         this.nextInQueue$
       ).subscribe();
       //Init queue from persistance
-      console.log('inito')
       //Check for bad request on curr user, if bad req handleHttpError
       // this.nextInQueue$.subscribe();
     }
@@ -61,7 +59,6 @@ export class StateHttpCommandHandler extends ObservableStore<State>
       //HUSK ONYL GET CERTAIN STATES,NO REFRESH TOKEN ETC  
       let request = {command, state: this.getOptimisticState()};
       const requestQueue = this.requestQueue;
-      console.log(this.requestQueue);
       requestQueue.push(request)
       
       this.setState({...stateFunc(this.getState(false)), requestQueue}, null, true, false)
@@ -71,7 +68,6 @@ export class StateHttpCommandHandler extends ObservableStore<State>
 
     private dispatchHttp(command: StateHttpCommand<any>){
       //Isonline merge (elns) må completes (via true) så good to go. 
-      console.log('COMMAND')
       concat(
         this.deviceInfoService.isOnline$.pipe(first(x => x === true)),
         this.getHttpCommandObserver(command).pipe(
@@ -89,7 +85,6 @@ export class StateHttpCommandHandler extends ObservableStore<State>
     }
 
     private onHttpError(): Observable<void> {
-      console.log('handleError', this.requestQueue)
         const requestQueue = this.requestQueue;
         const currentRequest = requestQueue[0];
 
@@ -123,14 +118,11 @@ export class StateHttpCommandHandler extends ObservableStore<State>
       const lastCommandStatus = 
         this.getStateProperty<User>("currentUser")?.lastCommandStatus;
 
-      console.log('checkGhost', lastCommandStatus)
-
       if(!lastCommandStatus && this.requestQueue.length > 0) 
         this.onHttpError();   
     }
 
     private getHttpCommandObserver(command: {httpMethod: "POST" | "PUT" | "DELETE", apiUrl: string, httpBody: any}){
-      console.log(command, 'x')
       switch(command.httpMethod){
           case "POST": return this.apiService.post(command.apiUrl, command.httpBody);
           case "PUT": return this.apiService.put(command.apiUrl, command.httpBody);

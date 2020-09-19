@@ -10,7 +10,7 @@ export abstract class BaseStore<TState> extends ObservableStore<TState>  {
     constructor(
         protected arrayHelperService: ArrayHelperService,
         protected apiService: ApiService) {  
-        super({logStateChanges: true, trackStateHistory: false});
+        super({logStateChanges: false, trackStateHistory: false});
     }
     
     property$ =   <T>(property: StateProp<TState>, fetch$?: Observable<T>): Observable<T> => { 

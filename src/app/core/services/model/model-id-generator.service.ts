@@ -22,7 +22,7 @@ export class ModelIdGeneratorService {
         foreignEntity[fkPropConfig.identifier] = this.idGenerator.generate();    
         entity[fkPropConfig.foreignProp] = foreignEntity;       
     }
-    console.log(entity);
+
     return entity;
  }
  

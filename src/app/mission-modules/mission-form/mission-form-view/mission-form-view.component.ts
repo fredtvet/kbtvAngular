@@ -26,7 +26,7 @@ export class MissionFormViewComponent extends BaseModelFormViewComponent<Mission
 
   handleAddressChange(googleAddress){
     this.form?.controls['address']
-      .setValue(googleAddress.formatted_address); console.log(this.form.getRawValue())
+      .setValue(googleAddress.formatted_address);
   }
 
   protected _initalizeForm(cfg: ViewConfig): FormGroup{

@@ -44,7 +44,7 @@ export class SaveModelToStateHttpConverter<TState, TCommand extends SaveModelSta
       return  command.saveAction === StateAction.Update ? "PUT" : "POST";
    }
 
-   protected createHttpBody(command: TCommand): any {console.log('entity', command.entity);
+   protected createHttpBody(command: TCommand): any {
       return command.entity;
    }
 
