@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { GenericModelFormConfig, ModelFormViewConfig, ModelFormWrapperConfig } from 'src/app/core/model/form';
 import { Model } from 'src/app/core/models';
 import { ModelFormService } from 'src/app/core/services/model';
 import { StateAction } from 'src/app/core/state';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
+import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 import { DataManagementStore } from '../data-management.store';
 import { DataConfig } from '../interfaces/data-config.interface';
 import { StoreState } from '../interfaces/store-state';
@@ -31,7 +34,8 @@ properties = this.store.properties;
 constructor(
   private store: DataManagementStore,
   private mainNavService: MainNavService,
-  private router: Router,
+  private router: Router,    
+  private dialog: MatDialog,
   private formService: ModelFormService) { 
     this.configureMainNav();
   }
@@ -43,9 +47,15 @@ constructor(
     this.store.save({entity: command.data, saveAction: StateAction.Update}); 
   }
 
-  deleteItems(ids: string[]): boolean{
-    if(ids?.length == 0) return false;
-    this.store.delete({ids});   
+  openDeleteDialog = () => {
+    let nodes = this.dataTable.dataGrid.api.getSelectedNodes();
+    if(nodes?.length == 0) return null;
+    
+    let config: ConfirmDialogConfig = {message: 'Slett ressurs(er)?', confirmText: 'Slett'};
+    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
+
+    deleteDialogRef.afterClosed().pipe(filter(res => res))
+      .subscribe(res =>  this.deleteItems(nodes.map(node => node.data['id'])));
   }
 
   openCreateForm(): void{
@@ -58,6 +68,11 @@ constructor(
       stateProp: this.store.selectedProperty,
       viewComponent: PropertyFormMap[this.store.selectedProperty]
     }})
+  }
+
+  private deleteItems(ids: string[]): boolean{
+    if(ids?.length == 0) return false;
+    this.store.delete({ids});   
   }
 
   private configureMainNav(){

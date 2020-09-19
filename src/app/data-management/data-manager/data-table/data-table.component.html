@@ -10,15 +10,3 @@
         [columnDefs]="columnDefs"   
         (cellValueChanged)="editCell($event)">
     </ag-grid-angular>
-
-
-    <span fxLayout="row" fxLayoutAlign="space-between none">
-        <button mat-raised-button aria-label="Slett" class="backInUp" color="warn" (click)="openDeleteDialog()">
-            <mat-icon>delete_forever</mat-icon>
-        </button>
-
-        <button mat-raised-button aria-label="Ny" class="backInUp" color="accent" (click)="createItem.emit()">
-            <mat-icon>add</mat-icon>
-        </button>
-    </span>
-

@@ -1,13 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { filter } from 'rxjs/operators';
 import { ModelConfig, ModelStateConfig, ModelStateConfigData } from 'src/app/core/model/model-state.config';
 import { ModelState } from 'src/app/core/model/model.state';
 import { Model } from 'src/app/core/models/base-entity.interface';
 import { ArrayHelperService } from 'src/app/core/services';
 import { translations } from 'src/app/shared-app/translations';
 import { AgGridTableComponent } from 'src/app/shared/components/abstracts/ag-grid-table.component';
-import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { DataConfig } from '../../interfaces/data-config.interface';
 import { DataTableConfig } from './data-table.config';
 
@@ -19,8 +16,6 @@ import { DataTableConfig } from './data-table.config';
 export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> {
 
   @Output() itemEdited = new EventEmitter();
-  @Output() itemsDeleted = new EventEmitter();
-  @Output() createItem = new EventEmitter();
 
   columnDefs: any = [];
   rowData: any = [];
@@ -30,12 +25,9 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
   private foreignsIdMap: {[foreignKey: string]: {[id: string]: Model}} = {}
   private foreignsDisplayMap: {[foreignKey: string]: {[displayProp: string]: Model}} = {}
 
-  constructor(
-    private dialog: MatDialog,
-    private arrayHelperService: ArrayHelperService,
-  ) { super() }
+  constructor(private arrayHelperService: ArrayHelperService) { 
+    super(); 
 
-  ngOnInit(): void {
     for(let modelKey in ModelStateConfigData){
       const modelCfg = ModelStateConfigData[modelKey];
       this.propCfgMap[modelCfg.foreignKey] = {...modelCfg, stateProp: modelKey};
@@ -47,17 +39,6 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
       this.itemEdited.emit(e);
     }
   };
-  
-  openDeleteDialog = () => {
-    let nodes = this.dataGrid.api.getSelectedNodes();
-    if(nodes?.length == 0) return null;
-    
-    let config: ConfirmDialogConfig = {message: 'Slett ressurs(er)?', confirmText: 'Slett'};
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
-
-    deleteDialogRef.afterClosed().pipe(filter(res => res))
-      .subscribe(res =>  this.itemsDeleted.emit(nodes.map(node => node.data['id'])));
-  }
 
   protected initNgGrid(cfg:DataConfig): void{
     if(!cfg) return super.initNgGrid(cfg);
@@ -116,6 +97,7 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
     if(DataTableConfig.noEditProperties[name]) def['editable'] = false;
 
     const fkModelCfg = this.propCfgMap[name];
+
     if(fkModelCfg){
       const fkIdProp = name;
 
@@ -123,11 +105,12 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
       def['cellEditorParams'] = { 
         values: Object.keys(this.foreignsDisplayMap[fkIdProp] || {}), 
       }
-      
+
       def['valueGetter'] = (params) => { //Get name of fkId and display
         const fkId = params.data[fkIdProp];
         if(fkId){
-          return this.foreignsIdMap[fkIdProp][fkId][fkModelCfg.displayProp || fkModelCfg.identifier];
+          const fkEntity = this.foreignsIdMap[fkIdProp][fkId];
+          return fkEntity ? fkEntity[fkModelCfg.displayProp || fkModelCfg.identifier] : null;
         }
         else return ''
       };

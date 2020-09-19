@@ -7,10 +7,19 @@
 
   <app-data-table fxLayout="column" fxLayoutGap="8px" class="h-100" #dataTable
     [config]="dataConfig$ | async"
-    (itemEdited)="updateItem($event)"
-    (createItem)="openCreateForm()"
-    (itemsDeleted)="deleteItems($event)">
+    (itemEdited)="updateItem($event)">
   </app-data-table>
+
+  <span fxLayout="row" fxLayoutAlign="space-between none">
+    <button mat-raised-button aria-label="Slett" class="backInUp" color="warn" [disabled]="!(selectedProperty$ | async)" (click)="openDeleteDialog()">
+        <mat-icon>delete_forever</mat-icon>
+    </button>
+
+    <button mat-raised-button aria-label="Ny" class="backInUp" color="accent" [disabled]="!(selectedProperty$ | async)" (click)="openCreateForm()">
+        <mat-icon>add</mat-icon>
+    </button>
+  </span>
+
 </div>
 
 <router-outlet></router-outlet>
