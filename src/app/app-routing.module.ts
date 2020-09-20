@@ -6,6 +6,7 @@ import { AuthGuard, NoAuthGuard } from './core/services/auth';
 import { MainNavComponent } from './layout/main-nav/main-nav.component';
 import { RolePresets } from './shared-app/enums';
 import { RolePreloadService } from './core/services';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
@@ -13,7 +14,7 @@ const routes: Routes = [
     children:[
       {path: '', redirectTo: 'hjem', pathMatch: 'full'},
 
-      {path: 'hjem', loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+      {path: 'hjem',     component: HomeComponent,
        data: {preload: true, page: AppPages.Home}},  
 
       {path: 'profil', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule), 

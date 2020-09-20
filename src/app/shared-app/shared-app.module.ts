@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PageNotFoundComponent } from './components/page-not-found.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { BottomSheetMenuComponent, AppButtonComponent, NavItemComponent, NotificationComponent } from './components';
+import { BottomSheetMenuComponent, AppButtonComponent, NavItemComponent, NotificationComponent, ListCardComponent } from './components';
 import { ImageErrorReloaderDirective, IfRoleDirective, InputListenerDirective } from './directives';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -31,6 +31,7 @@ import { AppFileUrlPipe } from './pipes/app-file-url.pipe';
     TransformButtonsPipe,
     InputListenerDirective,
     NotificationComponent,
+    ListCardComponent,
   ],
   imports: [
     RouterModule,
@@ -71,6 +72,7 @@ import { AppFileUrlPipe } from './pipes/app-file-url.pipe';
     TransformButtonsPipe,
     NotificationComponent,
     InputListenerDirective,
+    ListCardComponent,
   ]
 })
 export class SharedAppModule {}

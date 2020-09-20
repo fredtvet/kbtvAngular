@@ -11,12 +11,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { AppLayoutModule } from './layout/app-layout.module';
+import { HomeComponent } from './home/home.component';
+import { SharedAppModule } from './shared-app/shared-app.module';
 
 registerLocaleData(norwayLocale, 'nb-NO');
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent
   ],
   imports: [
     AppRoutingModule,
@@ -24,6 +27,7 @@ registerLocaleData(norwayLocale, 'nb-NO');
     BrowserAnimationsModule,   
     HttpClientModule, 
     AppLayoutModule,
+    SharedAppModule,
     CoreModule, 
     HammerModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),

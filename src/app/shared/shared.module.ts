@@ -5,7 +5,7 @@ import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import {
   ConfirmDialogComponent,
-  ListCardComponent, MailToFormViewComponent,
+  MailToFormViewComponent,
   SelectableCardComponent,
   SimpleTopNavComponent
 } from './components';
@@ -27,7 +27,6 @@ import { ActiveStringFilterDirective } from './directives/active-filter.directiv
     TranslatePipe,
     SimpleTopNavComponent,
     TransformButtonPipe,
-    ListCardComponent,
     LoadingOverlayDirective
   ],
   imports: [
@@ -53,7 +52,6 @@ import { ActiveStringFilterDirective } from './directives/active-filter.directiv
     SelectableCardComponent,
     ArraySlicePipe,
     SimpleTopNavComponent,
-    ListCardComponent,
     AddToHomeScreenDirective,    
     TransformButtonPipe,
     SharedAppModule,
