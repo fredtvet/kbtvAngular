@@ -43,5 +43,8 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         if(!dateRange || dateRange.length < 2) return false; 
         return (baseDateRange[0].getTime() <= dateRange[0].getTime()) && (baseDateRange[1].getTime() >= dateRange[1].getTime())
     }
-       
+
+    protected activeCriteriaCountIgnoreCheck(value: any, key: keyof TimesheetCriteria): boolean{
+        return key === "dateRangePreset"    
+    } 
 };

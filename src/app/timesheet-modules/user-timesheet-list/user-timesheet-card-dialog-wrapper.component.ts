@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map } from 'rxjs/operators';
+import { ArrayHelperService } from 'src/app/core/services';
 import { UserTimesheetListStore } from './user-timesheet-list.store';
 
 @Component({
@@ -15,10 +16,13 @@ import { UserTimesheetListStore } from './user-timesheet-list.store';
 
 export class UserTimesheetCardDialogWrapperComponent {
 
-  timesheet$ = this.store.filteredTimesheets$.pipe(map(arr => arr.find(x => x.id === this.timesheetId)))
+  timesheet$ = this.store.filteredTimesheets$.pipe(
+    map(arr => this.arrayHelperService.find(arr.records, this.timesheetId, "id"))
+  )
 
   constructor(
     private store: UserTimesheetListStore,
+    private arrayHelperService: ArrayHelperService,
     public dialogRef: MatDialogRef<UserTimesheetCardDialogWrapperComponent>,
     @Inject(MAT_DIALOG_DATA) public timesheetId: string
     ) {}

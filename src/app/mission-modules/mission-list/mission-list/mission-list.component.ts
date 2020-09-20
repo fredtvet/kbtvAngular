@@ -4,6 +4,8 @@ import { tap } from 'rxjs/operators';
 import { FilterSheetService } from 'src/app/core/services/filter';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { Roles } from 'src/app/shared-app/enums';
+import { MissionCriteria } from 'src/app/shared/interfaces/mission-filter-criteria.interface';
+import { MissionFilter } from 'src/app/shared/mission-filter.model';
 import { MissionFilterViewComponent } from '../mission-filter-view/mission-filter-view.component';
 import { MissionListStore } from '../mission-list.store';
 
@@ -17,7 +19,7 @@ export class MissionListComponent{
   Roles = Roles;
 
   filteredMissions$ = this.store.filteredMissions$.pipe(
-    tap(x => this.updateSearchBarValue(x.criteria?.searchString))
+    tap(x => this.updateMainNav(x.criteria))
   );
 
   constructor(
@@ -27,7 +29,7 @@ export class MissionListComponent{
     private router: Router,
     private route: ActivatedRoute,) { 
       this.configureMainNav();
-    }
+  }
 
   searchMissions = (searchString: string) => {
     this.store.addFilterCriteria({...this.store.criteria, searchString})
@@ -44,14 +46,6 @@ export class MissionListComponent{
   private configureMainNav(){
     let cfg = {title:  "Oppdrag"} as TopDefaultNavConfig;
  
-    cfg.buttons = [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openMissionFilter}];
-
-    cfg.searchBar = {
-      callback: this.searchMissions, 
-      initialValue: this.store.criteria?.searchString,
-      placeholder: "Søk med adresse eller id"
-    }
-
     let fabs = [
       {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openMissionForm, allowedRoles: [Roles.Leder, Roles.Mellomleder]}
     ]
@@ -59,9 +53,22 @@ export class MissionListComponent{
     this.mainNavService.addConfig({default: cfg}, fabs);
   }
 
-  private updateSearchBarValue(value: string){ 
+  private updateMainNav(criteria: MissionCriteria){ 
     const config = this.mainNavService.topDefaultNavConfig;
-    config.searchBar = {...config.searchBar, initialValue: value};
+    const activeCount = new MissionFilter(criteria).activeCriteriaCount;
+    
+    config.buttons = [{
+      icon: 'filter_list',
+      callback: this.openMissionFilter, 
+      colorClass: activeCount ? "color-accent" : ""
+    }]
+
+    config.searchBar = {
+      callback: this.searchMissions, 
+      initialValue: criteria.searchString, 
+      placeholder: "Søk med adresse eller id"
+    };
+
     this.mainNavService.updateConfig({default: config});
   }
 

@@ -15,7 +15,7 @@
   <ng-container *ngIf="!(config?.disabledFilters | arrayIncludes : 'year')">
     <mat-form-field>
       <mat-label>Velg år</mat-label>
-      <input matInput formControlName="year" type="number">
+      <input matInput formControlName="year" type="tel">
     </mat-form-field>
 
     <mat-divider></mat-divider>
@@ -25,7 +25,7 @@
   <ng-container *ngIf="!(config?.disabledFilters | arrayIncludes : 'weekNr')">
     <mat-form-field>
       <mat-label>Velg uke</mat-label>
-      <input matInput formControlName="weekNr" type="number">
+      <input matInput formControlName="weekNr" type="tel">
     </mat-form-field>
 
     <mat-divider></mat-divider>

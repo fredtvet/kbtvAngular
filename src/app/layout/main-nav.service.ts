@@ -68,7 +68,7 @@ export class MainNavService {
 
   updateConfig(topNav: {default?: TopDefaultNavConfig, detail?: TopDetailNavConfig}, fabs?: AppButton[]){
     let updatedCfg: MainNavConfig = {topDefaultNavConfig: topNav.default, topDetailNavConfig: topNav.detail}
-    if(fabs) updatedCfg.fabs;
+    if(fabs) updatedCfg.fabs = fabs;
     this.configSubject.next({...this.config, ...updatedCfg})
   }
 

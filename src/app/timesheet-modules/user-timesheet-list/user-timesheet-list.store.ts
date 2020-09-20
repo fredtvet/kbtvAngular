@@ -18,6 +18,7 @@ import { StoreState } from './store-state';
 import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interface';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
+import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-response.interface';
 
 @Injectable({
   providedIn: 'any',
@@ -35,20 +36,24 @@ export class UserTimesheetListStore extends BaseStore<StoreState>
 
   criteria$ = this.property$<TimesheetCriteria>("userTimesheetListCriteria");
 
-  filteredTimesheets$: Observable<Timesheet[]> = 
+  filteredTimesheets$: Observable<FilteredResponse<TimesheetCriteria, Timesheet>> = 
     this.stateSlice$(["userTimesheets", "userTimesheetListCriteria", "missions"]).pipe(
           filter(x => x.userTimesheets != null && x.userTimesheetListCriteria != null),
           map(state => { 
             const relationCfg = new GetWithRelationsConfig("userTimesheets", null, {include: {mission: true}})
             const filter = new TimesheetFilter(state.userTimesheetListCriteria);
-            return this.getRangeWithRelationsHelper.get(state as any, relationCfg, filter.check)
+            return {
+              criteria: filter.criteria,
+              activeCriteriaCount: filter.activeCriteriaCount,
+              records: this.getRangeWithRelationsHelper.get(state as any, relationCfg, filter.check)
+            }
           }),       
       );
 
   timesheetSummaries$: Observable<TimesheetSummary[]> = 
       combineLatest([this.filteredTimesheets$, this.groupBy$]).pipe(
-          filter(([timesheets]) => timesheets != null),
-          map(([timesheets, groupBy]) => this.timesheetSummaryAggregator.groupByType(groupBy, timesheets)),
+          filter(([filtered]) => filtered != null || filtered.records != null),
+          map(([filtered, groupBy]) => this.timesheetSummaryAggregator.groupByType(groupBy, filtered.records)),
       );
 
   filterConfig$: Observable<TimesheetFilterViewConfig> = 

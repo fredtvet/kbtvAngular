@@ -1,29 +1,29 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
 import { LoadingService } from 'src/app/core/services';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 import { TimesheetStatus } from 'src/app/shared-app/enums';
-import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
+import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { FilterSheetService } from 'src/app/core/services/filter';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
 import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
+import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
 
 @Component({
   selector: 'app-timesheet-admin-week-list',
   templateUrl: './timesheet-admin-week-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimesheetAdminWeekListComponent{
+export class TimesheetAdminWeekListComponent extends SubscriptionComponent{
    
   loading$ = this.loadingService.queryLoading$;
 
   summaries$: Observable<TimesheetSummary[]> = this.store.timesheetSummaries$.pipe(
-    tap(x => this.configureNav()),
     map(summaries => summaries?.sort((a, b) => b.week - a.week))
   );
 
@@ -32,10 +32,10 @@ export class TimesheetAdminWeekListComponent{
     private store: TimesheetAdminStore,
     private mainNavService: MainNavService,
     private filterService: FilterSheetService,
-    private router: Router) {  }
+    private router: Router) { super(); }
 
   ngOnInit(){
-    this.configureNav(); 
+    this.store.criteria$.pipe(takeUntil(this.unsubscribe)).subscribe(x => this.configureNav(x))
   }
 
   changeTimesheetStatuses = (timesheets: Timesheet[]): void => {
@@ -70,7 +70,7 @@ export class TimesheetAdminWeekListComponent{
     this.router.navigate(["timeadministrering"])
   }
 
-  private configureNav(){
+  private configureNav(criteria: TimesheetCriteria){
     let cfg = {
       title:  "Uker",
       subTitle: this.store.weekCriteria?.year || '' + ' - ' + this.store.weekCriteria?.userName || '',

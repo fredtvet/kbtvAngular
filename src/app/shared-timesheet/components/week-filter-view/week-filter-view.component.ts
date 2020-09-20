@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FilterComponent } from 'src/app/core/filter/interfaces/filter-component.interface';
 import { BaseFormViewComponent } from 'src/app/core/form/abstracts/base-form-view-component';
 import { WeekCriteria, WeekFilterViewConfig } from './week-filter-view-config.interface';
@@ -19,9 +19,15 @@ export class WeekFilterViewComponent extends BaseFormViewComponent<WeekFilterVie
     const disabled = cfg?.disabledFilters;
 
     return this._formBuilder.group({
-      userName: [{value: criteria?.userName, disabled: disabled?.includes("userName")}],
-      year: [{value: criteria?.year, disabled: disabled?.includes("year")}],
-      weekNr: [{value: criteria?.weekNr, disabled: disabled?.includes("weekNr")}],
+      userName: [{value: criteria?.userName, disabled: disabled?.includes("userName")}, [
+        Validators.required,
+      ]],
+      year: [{value: criteria?.year, disabled: disabled?.includes("year")}, [
+        Validators.required,   
+      ]],
+      weekNr: [{value: criteria?.weekNr, disabled: disabled?.includes("weekNr")}, [
+        Validators.required,
+      ]],
     });
   }
 

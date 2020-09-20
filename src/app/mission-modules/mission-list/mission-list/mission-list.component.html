@@ -1,5 +1,5 @@
  <app-mission-list-view *ngIf="filteredMissions$ | async; let filteredMissions"
-  [missions]="filteredMissions?.missions" 
+  [missions]="filteredMissions?.records" 
   (search)="searchMissions($event)">
 </app-mission-list-view>
 

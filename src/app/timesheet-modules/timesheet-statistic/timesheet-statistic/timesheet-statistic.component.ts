@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { map, takeUntil } from 'rxjs/operators';
 import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
 import { FilterSheetService } from 'src/app/core/services/filter';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
+import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
 import { GroupByPeriod } from 'src/app/shared-app/enums';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view.component';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces/timesheet-criteria.interface';
+import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
 import { TimesheetStatisticStore } from '../timesheet-statistic.store';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
 
@@ -14,21 +17,26 @@ import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/ti
   templateUrl: './timesheet-statistic.component.html',  
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimesheetStatisticComponent {
+export class TimesheetStatisticComponent extends SubscriptionComponent {
   @ViewChild('statTable') statTable: TimesheetStatisticTableComponent;
 
   groupByTypes = GroupByPeriod;
 
   groupBy$ = this.store.groupBy$;
   tableData$ = this.store.tableData$;
+  activeCriteriaCount$ = this.store.criteria$.pipe(
+    map(x => new TimesheetFilter(x).activeCriteriaCount)
+  );
 
   constructor(
     private mainNavService: MainNavService,
     private store: TimesheetStatisticStore,
     private filterService: FilterSheetService
-    ) { 
-      this.configureMainNav();
-    }
+    ) { super(); }
+
+  ngOnInit(): void {
+    this.configureMainNav();
+  }
     
   changeGroupingType = (type: GroupByPeriod) => this.store.addGroupBy(type);
   

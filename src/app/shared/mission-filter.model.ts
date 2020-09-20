@@ -46,5 +46,9 @@ export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
         return m.address.toLowerCase().includes(this.searchStringLower) || 
             m.id.includes(this.searchStringLower);
     }  
+
+    protected activeCriteriaCountIgnoreCheck(value: any, key:  keyof MissionCriteria): boolean{
+        return (key === "finished" && value === false)   
+    } 
        
 };

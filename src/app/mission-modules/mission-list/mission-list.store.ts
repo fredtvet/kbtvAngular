@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { ApiUrl } from 'src/app/core/api-url.enum';
 import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interface';
+import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-response.interface';
 import { SaveModelWithFileStateCommand } from 'src/app/core/model/interfaces';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-with-relations.helper';
@@ -38,12 +39,14 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
       }
     }));
 
-  filteredMissions$: Observable<{criteria: MissionCriteria; missions: Mission[]}> = 
+  filteredMissions$: Observable<FilteredResponse<MissionCriteria, Mission>> = 
     this.stateSlice$(["missions", "missionCriteria"]).pipe(
         map(state => {
+        const filter = new MissionFilter(state.missionCriteria, null, true);
         return {
             criteria: state.missionCriteria,
-            missions: this.filterStateHelper.filter(state.missions, state.missionCriteria, MissionFilter, null, true),
+            activeCriteriaCount: filter.activeCriteriaCount,
+            records: this.arrayHelperService.filter(state.missions, (entity) => filter.check(entity)),
         }})
       );
 

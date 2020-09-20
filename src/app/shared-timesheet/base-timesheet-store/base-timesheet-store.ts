@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { combineLatest, Observable } from 'rxjs';
 import { filter, map, take, tap, withLatestFrom } from 'rxjs/operators';
 import { ApiUrl } from 'src/app/core/api-url.enum';
+import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-response.interface';
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { Mission, Timesheet, User } from 'src/app/core/models';
@@ -23,12 +24,19 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
 
     groupBy$ = this.property$<GroupByPeriod>(this.settings.groupByProp); 
 
-    filteredTimesheets$: Observable<Timesheet[]> = 
+    criteria$ = this.property$<TimesheetCriteria>(this.settings.criteriaProp);
+
+    filteredTimesheets$: Observable<FilteredResponse<TimesheetCriteria, Timesheet>> = 
       this.stateSlice$(["timesheets" as any, this.settings.criteriaProp]).pipe(
             filter(x => x.timesheets != null && x[this.settings.criteriaProp] != null),
-            map(state => 
-              this.filterStateHelper.filter<Timesheet, TimesheetCriteria>(state.timesheets, state[this.settings.criteriaProp], TimesheetFilter)
-            ),       
+            map(state => {
+              const filter = new TimesheetFilter(state[this.settings.criteriaProp]);
+              return {
+                criteria: filter.criteria,
+                activeCriteriaCount: filter.activeCriteriaCount,
+                records: this.arrayHelperService.filter(state.timesheets, (entity) => filter.check(entity))
+              }
+            }),       
         );
 
     timesheetSummaries$: Observable<TimesheetSummary[]> = 
@@ -37,9 +45,9 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
             this.groupBy$,
             this.users$
         ]).pipe(
-            filter(([timesheets]) => timesheets != null),
-            map(([timesheets, groupBy, users]) => {
-                let summaries = this.timesheetSummaryAggregator.groupByType(groupBy, timesheets);
+            filter(([filtered]) => filtered != null && filtered.records != null),
+            map(([filtered, groupBy, users]) => {
+                let summaries = this.timesheetSummaryAggregator.groupByType(groupBy, filtered.records);
                 return this.addFullNameToSummaries(summaries, users);
             })
         );

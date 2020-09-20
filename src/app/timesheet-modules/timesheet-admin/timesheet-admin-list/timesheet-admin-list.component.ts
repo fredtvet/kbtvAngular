@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { filter, tap } from 'rxjs/operators';
+import { filter, pluck, tap } from 'rxjs/operators';
 import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
 import { Timesheet } from 'src/app/core/models';
 import { LoadingService } from 'src/app/core/services';
@@ -9,6 +9,7 @@ import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { TimesheetStatus } from 'src/app/shared-app/enums';
 import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
+import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
 @Component({
@@ -19,7 +20,7 @@ import { TimesheetAdminStore } from '../timesheet-admin.store';
 export class TimesheetAdminListComponent{
     
   loading$ = this.loadingService.queryLoading$;
-  timesheets$ = this.store.filteredTimesheets$.pipe(tap(x => this.configureNav()));
+  timesheets$ = this.store.filteredTimesheets$.pipe(tap(x => this.configureNav(x.criteria)), pluck("records"));
 
   constructor(
     private loadingService: LoadingService,
@@ -28,21 +29,16 @@ export class TimesheetAdminListComponent{
     private router: Router,
     private filterService: FilterSheetService) {}
 
-  ngOnInit(){
-    this.configureNav();
-  }
-
   changeTimesheetStatus = (id: string, status: TimesheetStatus): void => 
     this.store.changeStatus({id, status});
   
-
   private openWeekFilter = () => {
     this.filterService.open<WeekCriteria, FilterConfig<WeekFilterViewConfig>>({
       formConfig: {viewComponent: WeekFilterViewComponent},
     });
   }
 
-  private configureNav(){
+  private configureNav(criteria: TimesheetCriteria){
     let cfg = {
       title:  "Uke " + this.store.weekCriteria.weekNr || "",
       subTitle: this.store.weekCriteria.year || "" + ' - ' + this.store.weekCriteria.userName || "",

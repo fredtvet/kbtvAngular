@@ -9,7 +9,8 @@
             <mat-button-toggle [value]="groupByTypes.Year">År</mat-button-toggle>
         </mat-button-toggle-group>  
 
-        <button mat-raised-button class="bg-accent" (click)="openBottomSheet()">
+        <button mat-raised-button class="bg-accent" (click)="openBottomSheet()"
+        [matBadge]="activeCriteriaCount$ | async" matBadgeSize="small">
             <mat-icon>filter_list</mat-icon>
         </button>  
     </span>

@@ -7,7 +7,8 @@ import { SubscriptionComponent } from 'src/app/shared-app/components/subscriptio
 import { GroupByPeriod } from 'src/app/shared-app/enums';
 import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
-import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
+import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
+import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
 
 @Component({
@@ -31,8 +32,9 @@ export class UserTimesheetWeekListComponent extends SubscriptionComponent implem
     let initFilter = this.route.snapshot.params.initialFilter;
     initFilter = initFilter ? JSON.parse(initFilter) : {year: new Date().getFullYear()};
     this.store.addWeekFilterCriteria(initFilter);
-    this.configureMainNav(initFilter?.year);
-    this.store.criteria$.pipe(takeUntil(this.unsubscribe)).subscribe(x => this.configureMainNav(this.store.weekCriteria?.year))
+
+    this.store.criteria$.pipe(takeUntil(this.unsubscribe))
+      .subscribe(x => this.configureMainNav(this.store.weekCriteria?.year))
   }
 
   goToWeekView = (year: number, weekNr: number) => {
@@ -58,11 +60,14 @@ export class UserTimesheetWeekListComponent extends SubscriptionComponent implem
   }
 
   private configureMainNav = (year: number) => {
-    let cfg:TopDefaultNavConfig = {title:  "Ukeliste", subTitle: year ? year.toString() : ""};
+    let cfg: TopDefaultNavConfig = 
+      {title:  "Ukeliste", subTitle: year ? year.toString() : ""};
 
-    cfg.buttons = [
-      {icon: 'filter_list', colorClass:'color-accent', callback: this.openWeekFilter}
-    ]
+    cfg.buttons = [{
+      icon: 'filter_list', 
+      callback: this.openWeekFilter,
+      colorClass: "color-accent"
+    }];
 
     this.mainNavService.addConfig({default: cfg});
   }
