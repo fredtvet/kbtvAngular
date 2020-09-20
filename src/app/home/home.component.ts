@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
 import { SorterService } from 'src/app/core/services';
-import { Icons, RolePresets, Roles } from 'src/app/shared-app/enums';
+import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { SyncStore } from 'src/app/core/services/sync';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
@@ -40,7 +40,7 @@ export class HomeComponent {
   private configureMainNav(){
     let cfg = {
       title:  "Hjem",
-      buttons: [{svgIcon: Icons.Sync, iconSizeClass: 'scale-75', callback: this.refresh}] as AppButton[],
+      buttons: [{icon: "update", callback: this.refresh}] as AppButton[],
     } as TopDefaultNavConfig;
     this.mainNavService.addConfig({default: cfg});
   }

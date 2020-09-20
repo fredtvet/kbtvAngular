@@ -5,9 +5,4 @@ export enum Icons{
     Word = "word",
     DefaultFile = "default",
     ImageFile = "image",
-    Invoice = "invoice",
-    InvoiceDollar = "invoice-dollar",
-    History = "history",
-    Sync = "sync-alt",
-    SyncAlt = "sync"
 }
