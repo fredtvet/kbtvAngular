@@ -65,6 +65,7 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
         ]).pipe(map(([entities, foreigns]) => { 
             const state = {...foreigns} || {};
             state[property] = entities as any;
+
             return {
                 data: entities,
                 foreigns,

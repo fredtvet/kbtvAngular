@@ -15,7 +15,6 @@ export class GetRangeWithRelationsHelper<TState>  {
         cfg: GetWithRelationsConfig<TState>,
         filter?: (value: TModel, index?: number, Array?: any[]) => boolean, 
     ): TModel[] {
-        console.time('GetRangeWithRelationsHelper')
         const modelCfg = ModelStateConfig.get(cfg.modelProp); 
 
         let modelState = state[cfg.modelProp] as TModel[];
@@ -44,7 +43,6 @@ export class GetRangeWithRelationsHelper<TState>  {
                 modelState[i] = entity;
             }
         }
-        console.timeEnd('GetRangeWithRelationsHelper')
         return modelState
     }
     

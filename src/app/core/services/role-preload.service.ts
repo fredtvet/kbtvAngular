@@ -9,24 +9,24 @@ import { AppPages } from 'src/app/shared-app/enums/app-pages.enum';
 const strategies = new Map([ 
     [Roles.Oppdragsgiver, 
       [
-        AppPages.Home, AppPages.Mission, AppPages.MissionImages, AppPages.MissionDocuments, AppPages.Profile
+        AppPages.Mission, AppPages.MissionImages, AppPages.MissionDocuments, AppPages.Profile
       ]
     ],
     [Roles.Ansatt, 
       [
-        AppPages.Home, AppPages.Mission, AppPages.MissionImages, AppPages.Timesheet, AppPages.TimesheetForm, AppPages.MissionDocuments, 
+        AppPages.Mission, AppPages.MissionImages, AppPages.Timesheet, AppPages.TimesheetForm, AppPages.MissionDocuments, 
         AppPages.MissionNotes, AppPages.Profile,
       ]
     ],
     [Roles.Mellomleder, 
       [
-        AppPages.Home, AppPages.Mission, AppPages.MissionImages, AppPages.Timesheet, AppPages.TimesheetForm, AppPages.MissionDocuments, 
+        AppPages.Mission, AppPages.MissionImages, AppPages.Timesheet, AppPages.TimesheetForm, AppPages.MissionDocuments, 
         AppPages.MissionForm, AppPages.MissionNotes, AppPages.Profile
       ]
     ],  
     [Roles.Leder, 
       [ 
-        AppPages.Home, AppPages.Mission, AppPages.MissionImages, AppPages.MissionForm, AppPages.Timesheet, AppPages.TimesheetForm, 
+        AppPages.Mission, AppPages.MissionImages, AppPages.MissionForm, AppPages.Timesheet, AppPages.TimesheetForm, 
         AppPages.MissionDocuments, AppPages.MissionNotes, AppPages.TimesheetStatistic, AppPages.Users, AppPages.TimesheetAdmin, 
         AppPages.DataManagement, AppPages.Profile
       ]

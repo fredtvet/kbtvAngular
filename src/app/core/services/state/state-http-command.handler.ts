@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ObservableStore } from '@codewithdan/observable-store';
-import { stateFunc } from '@codewithdan/observable-store/dist/observable-store';
 import { BehaviorSubject, concat, EMPTY, Observable } from 'rxjs';
-import { catchError, filter, finalize, first, map, tap } from 'rxjs/operators';
+import { catchError, filter, first, map, tap } from 'rxjs/operators';
 import { ApiService, DeviceInfoService, NotificationService } from '..';
 import { User } from '../../models/user.interface';
 import { StateCurrentUser } from '../../state';
@@ -34,17 +33,15 @@ export class StateHttpCommandHandler extends ObservableStore<State>
     constructor(
       private apiService: ApiService, 
       private notificationService: NotificationService,
-      private syncStore: SyncStore,
-      private deviceInfoService: DeviceInfoService){ 
-      super({logStateChanges: false, trackStateHistory: false});
+      private deviceInfoService: DeviceInfoService,
+      syncStore: SyncStore){ 
+      super({logStateChanges: false, trackStateHistory: true});
+      
+      syncStore.hasInitialSynced$.subscribe(x => {
+        this.checkForGhostErrors();
+        this.nextInQueue$.subscribe();
+      });
 
-      concat(
-        this.syncStore.hasInitialSynced$.pipe(tap(x => this.checkForGhostErrors())),
-        this.nextInQueue$
-      ).subscribe();
-      //Init queue from persistance
-      //Check for bad request on curr user, if bad req handleHttpError
-      // this.nextInQueue$.subscribe();
     }
 
     dispatch(command: StateHttpCommand<any>): void {   

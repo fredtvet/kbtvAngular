@@ -8,9 +8,6 @@ export const PersistedStateConfig:{[key: string]: boolean}  =
     documentTypes: true,
     employers: true,
     userTimesheets: true,
-    currentUser: true,    
-    syncTimestamps: true,
-    syncConfig:  true,
     requestQueue: true
 };  
 
@@ -18,4 +15,7 @@ export const PersistedInitialStateConfig:{[key: string]: boolean}  =
 {
     accessToken: true,
     refreshToken: true,
+    currentUser: true,       
+    syncTimestamps: true,
+    syncConfig:  true, 
 };  

@@ -14,24 +14,18 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     private router: Router,
     private authStore: AuthStore,
     private notificaitonService: NotificationService,
-    private persistanceStore: PersistanceStore,
   ) {}
 
-  canLoad(route: Route): Observable<boolean> {
-    return this.authCheck$(route.data['allowedRoles']);
+  canLoad(route: Route): boolean {
+    return this.authCheck(route.data['allowedRoles']);
   }
 
-  canActivate(route: ActivatedRouteSnapshot): Observable<boolean>  {
-    return this.authCheck$(route.data['allowedRoles']);
+  canActivate(route: ActivatedRouteSnapshot): boolean  {
+    return this.authCheck(route.data['allowedRoles']);
   }
 
-  canActivateChild(route: ActivatedRouteSnapshot): Observable<boolean>  {
-    return this.authCheck$(route.data['allowedRoles']);
-  }
-
-  private authCheck$(allowedRoles: string[]){
-    return this.persistanceStore.initialStateInitalized$
-      .pipe(map(x => this.authCheck(allowedRoles)))
+  canActivateChild(route: ActivatedRouteSnapshot): boolean  {
+    return this.authCheck(route.data['allowedRoles']);
   }
 
   private authCheck(allowedRoles: string[]): boolean{
@@ -48,7 +42,6 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       this.router.navigate(['/hjem']);
       return false;    
     }
-
     return true;
   }
 }

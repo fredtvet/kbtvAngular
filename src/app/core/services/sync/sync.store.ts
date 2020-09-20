@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { ApplicationRef, Injectable } from '@angular/core';
-import { BehaviorSubject, concat, EMPTY, interval, Observable } from 'rxjs';
+import { BehaviorSubject, concat, EMPTY, interval, Observable, zip } from 'rxjs';
 import { distinctUntilKeyChanged, first, skip, switchMap, tap } from 'rxjs/operators';
 import { User } from '../../models/user.interface';
 import { BaseStore } from '../../state/abstracts/base.store';
@@ -40,7 +40,9 @@ export class SyncStore extends BaseStore<StoreState>{
     private authStore: AuthStore,
   ){
     super(arrayHelperService, apiService);
+  }
 
+  init(){
     this.initConfigObserver();
 
     this.syncAll()
@@ -55,21 +57,19 @@ export class SyncStore extends BaseStore<StoreState>{
     if(!this.deviceInfoService.isOnline) return;
     let params = new HttpParams();
 
-    this.persistanceStore.stateInitalized$.pipe(switchMap(x => {
-      if(!this.authStore.hasTokens) return EMPTY;
+    if(!this.authStore.hasTokens) return;
 
-      params = params.set("initialNumberOfMonths", this.syncConfig?.initialNumberOfMonths)
+    params = params.set("initialNumberOfMonths", this.syncConfig?.initialNumberOfMonths)
 
-      Object.keys(SyncStateConfig).forEach(prop => {
-        let timestamp = this.syncTimestamps ? this.syncTimestamps[prop] : null;
-        params = params.set(SyncStateConfig[prop]?.requestKey, timestamp ? timestamp.toString() : null);
-      });
+    Object.keys(SyncStateConfig).forEach(prop => {
+      let timestamp = this.syncTimestamps ? this.syncTimestamps[prop] : null;
+      params = params.set(SyncStateConfig[prop]?.requestKey, timestamp ? timestamp.toString() : null);
+    });
 
-      return this.apiService.get('/SyncAll', params).pipe(
-          tap(data => this.setSyncResponseState(data)),
-      );
-    })).subscribe(x => 
-      this.hasInitialSyncedSubject.value ? null : this.hasInitialSyncedSubject.next(true));
+    zip(
+      this.apiService.get('/SyncAll', params),
+      this.persistanceStore.stateInitalized$
+    ).subscribe(x => this.setSyncResponseState(x[0]))
   }
 
   purgeSyncState = () => {
@@ -83,7 +83,7 @@ export class SyncStore extends BaseStore<StoreState>{
   purgeSyncAndLocal = () => {
     this.persistanceStore.stateInitalized$.subscribe(x => {
       let state = this.getState(false);
-      let ignoredProps = {refreshToken: true, accessToken: true};
+      let ignoredProps = {refreshToken: true, accessToken: true, currentUser: true};
 
       for(const key in state)
         if(!ignoredProps[key]) state[key] = null;
@@ -108,8 +108,10 @@ export class SyncStore extends BaseStore<StoreState>{
 
     Object.keys(SyncStateConfig).filter(x => x !== "currentUser").forEach(prop => 
       this.syncLocalEntityResponse(prop, response[SyncStateConfig[prop]?.responseKey], state));
-      
-    this._setStateVoid(state)
+        
+    this._setStateVoid(state);
+
+    this.hasInitialSyncedSubject.value ? null : this.hasInitialSyncedSubject.next(true);
   }
 
   private syncLocalEntityResponse(prop: string, response: EntitySyncResponse, state: Partial<StoreState>): void{

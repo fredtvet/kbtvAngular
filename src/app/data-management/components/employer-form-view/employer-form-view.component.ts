@@ -30,14 +30,14 @@ export class EmployerFormViewComponent extends BaseModelFormViewComponent<Employ
         Validators.required,
         Validators.maxLength(200)
       ]],
-      phoneNumber: [employer.phoneNumber, [
+      phoneNumber: [employer?.phoneNumber, [
         Validators.minLength(4),
         Validators.maxLength(12)
       ]],
-      address: [employer.address, [
+      address: [employer?.address, [
         Validators.maxLength(100)
       ]],   
-      email: [employer.email, [
+      email: [employer?.email, [
         Validators.email
       ]],
     });
