@@ -60,7 +60,6 @@ export class MissionImageListComponent {
   ngOnInit() { 
     this.configureMainNav(this.missionId);
     this.images$ = this.store.getByMissionId$(this.missionId).pipe(
-      filter(x => x && x.length > 0),
       tap(this.updateMainNav)
     );
   }
