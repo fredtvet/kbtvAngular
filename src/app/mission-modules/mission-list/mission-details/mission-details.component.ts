@@ -35,7 +35,7 @@ export class MissionDetailsComponent{
   ){ }
 
   updateHeaderImage = (files: FileList): void => 
-    this.store.updateHeaderImage(this.missionId, files[0]);
+    files && files[0] ? this.store.updateHeaderImage(this.missionId, files[0]) : null;
   
   private openHeaderImageInput = (): void =>{ 
     if(!window.navigator.onLine)
