@@ -103,12 +103,12 @@ export class SyncStore extends BaseStore<StoreState>{
 
   private setSyncResponseState(response: SyncResponse){
     let state = {syncTimestamps: {}};
-
+    console.log(response);
     this.syncCurrentUser(response[SyncStateConfig.currentUser.responseKey], state);
 
     Object.keys(SyncStateConfig).filter(x => x !== "currentUser").forEach(prop => 
       this.syncLocalEntityResponse(prop, response[SyncStateConfig[prop]?.responseKey], state));
-        
+
     this._setStateVoid(state);
 
     this.hasInitialSyncedSubject.value ? null : this.hasInitialSyncedSubject.next(true);
@@ -120,16 +120,16 @@ export class SyncStore extends BaseStore<StoreState>{
     state.syncTimestamps[prop] = response.timestamp; //Update given timestamp
     const id = ModelStateConfig.get(prop)?.identifier;
 
-    state[prop] = this.getStateProperty<any[]>(prop);
+    state[prop] = this.getStateProperty<any[]>(prop) || [];
 
-    if(response.deletedEntities?.length > 0){
+    if(response.deletedEntities?.length > 0)
       state[prop] = 
           this.arrayHelperService.removeRangeByIdentifier(state[prop], response.deletedEntities, id);
 
     if(response.entities?.length > 0)
       state[prop] = 
           this.arrayHelperService.addOrUpdateRange(state[prop], response.entities, id); 
-    }
+    
   } 
 
   private syncCurrentUser(response: EntitySyncResponse, state: Partial<StoreState>): void{
