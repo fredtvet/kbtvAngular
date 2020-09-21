@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
+import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
+import { NotificationService } from 'src/app/core/services/notification/notification.service';
 import { MainNavService, TopDetailNavConfig } from 'src/app/layout';
-import { RolePresets, Roles } from 'src/app/shared-app/enums';
-import { MissionListStore } from '../mission-list.store';
-import { TimesheetStatus } from 'src/app/shared-app/enums';
 import { appFileUrl } from 'src/app/shared-app/app-file-url.helper';
+import { RolePresets, Roles, TimesheetStatus } from 'src/app/shared-app/enums';
+import { MissionListStore } from '../mission-list.store';
 
 @Component({
   selector: 'app-mission-details',
@@ -30,14 +30,18 @@ export class MissionDetailsComponent{
     private store: MissionListStore,
     private route: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog, 
+    private notificationService: NotificationService,
   ){ }
 
-  updateHeaderImage = (files: FileList): void => {
+  updateHeaderImage = (files: FileList): void => 
     this.store.updateHeaderImage(this.missionId, files[0]);
+  
+  private openHeaderImageInput = (): void =>{ 
+    if(!window.navigator.onLine)
+      return this.notificationService.notify(AppNotifications.OnlineRequired)
+  
+    this.imageInput?.nativeElement?.click();
   }
-
-  private openHeaderImageInput = (): void => this.imageInput?.nativeElement?.click();
   
   private openMissionForm = (entityId: number) => 
     this.router.navigate(['rediger', {config: JSON.stringify({formConfig:{entityId}, onDeleteUri: "/oppdrag"})}], {relativeTo: this.route});
