@@ -10,7 +10,6 @@ import {
   TimesheetSummaryAggregator
 } from "src/app/core/services";
 import { WeekToTimesheetCriteriaConverter } from 'src/app/core/services/utility/week-to-timesheet-criteria.converter';
-import { BaseStore } from 'src/app/core/state/abstracts/base.store';
 import { GroupByPeriod } from 'src/app/shared-app/enums';
 import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
@@ -19,11 +18,12 @@ import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-vi
 import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interface';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-response.interface';
+import { BaseExtendedStore } from 'src/app/core/state/abstracts/base.extended.store';
 
 @Injectable({
   providedIn: 'any',
 })
-export class UserTimesheetListStore extends BaseStore<StoreState> 
+export class UserTimesheetListStore extends BaseExtendedStore<StoreState> 
   implements FilterStore<TimesheetCriteria, TimesheetFilterViewConfig> {
 
   private _weekCriteria: WeekCriteria;

@@ -7,13 +7,13 @@ import {
 } from "src/app/core/services";
 import { ApiUrl } from '../core/api-url.enum';
 import { StateHttpCommandHandler } from '../core/services/state/state-http-command.handler';
-import { BaseStore } from '../core/state/abstracts/base.store';
+import { BaseExtendedStore } from '../core/state/abstracts/base.extended.store';
 import { StoreState } from './store-state';
 
 @Injectable({
   providedIn: 'any',
 })
-export class ProfileStore extends BaseStore<StoreState>  {
+export class ProfileStore extends BaseExtendedStore<StoreState>  {
 
   currentUser$: Observable<User> = this.property$("currentUser");
 

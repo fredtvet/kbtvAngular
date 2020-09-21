@@ -13,13 +13,13 @@ import {
 } from "src/app/core/services";
 import { DeleteModelToStateHttpConverter } from 'src/app/core/services/model/converters/delete-model-to-state-http.converter';
 import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
-import { BaseStore } from 'src/app/core/state/abstracts/base.store';
+import { BaseExtendedStore } from 'src/app/core/state/abstracts/base.extended.store';
 import { StoreState } from './store-state';
 
 @Injectable({
   providedIn: 'any',
 })
-export class MissionDocumentListStore extends BaseStore<StoreState>  {
+export class MissionDocumentListStore extends BaseExtendedStore<StoreState>  {
 
   constructor(
     apiService: ApiService,

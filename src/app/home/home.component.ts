@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
 import { SorterService } from 'src/app/core/services';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
@@ -28,6 +28,7 @@ export class HomeComponent {
 
   ngOnInit() {
     this.missionHistory$ = this.syncStore.property$<Mission[]>("missions").pipe(
+      tap(console.log),
       filter(x => x != null),
       map(x => {
         this.sorterService.sortByDate(x, "lastVisited", "asc");

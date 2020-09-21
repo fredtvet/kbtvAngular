@@ -6,13 +6,13 @@ import {
   ArrayHelperService
 } from "src/app/core/services";
 import { StoreState } from './store-state';
-import { BaseStore } from 'src/app/core/state/abstracts/base.store';
 import { map } from 'rxjs/operators';
+import { BaseExtendedStore } from 'src/app/core/state/abstracts/base.extended.store';
 
 @Injectable({
   providedIn: 'any',
 })
-export class MissionNoteListStore extends BaseStore<StoreState>  {
+export class MissionNoteListStore extends BaseExtendedStore<StoreState>  {
 
   constructor(
     apiService: ApiService,

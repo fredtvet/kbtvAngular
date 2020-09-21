@@ -3,9 +3,9 @@ import { ApiService, ArrayHelperService } from 'src/app/core/services';
 import { ModelStateConfig } from '../../model/model-state.config';
 import { StateProp } from '../../model/state.types';
 import { Model } from '../../models';
-import { BaseStore } from './base.store';
+import { BaseExtendedStore } from './base.extended.store';
 
-export abstract class BaseModelStore<TState> extends BaseStore<TState>  {
+export abstract class BaseModelStore<TState> extends BaseExtendedStore<TState>  {
 
     constructor(
         arrayHelperService: ArrayHelperService,

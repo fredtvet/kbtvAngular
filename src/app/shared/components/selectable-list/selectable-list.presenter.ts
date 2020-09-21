@@ -1,6 +1,6 @@
 import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Injectable } from "@angular/core";
 import { SelectableEntity } from 'src/app/shared/interfaces';
 
@@ -13,7 +13,7 @@ export class SelectableListPresenter<T> extends SubscriptionComponent{
     private entitiesSubject =  new BehaviorSubject<T[]>([]);
     private entities$ = this.entitiesSubject.asObservable();
 
-    selectableEntities$: Observable<SelectableEntity<T>[]> = combineLatest(this.entities$, this.selectedIds$).pipe(
+    selectableEntities$: Observable<SelectableEntity<T>[]> = combineLatest([this.entities$, this.selectedIds$]).pipe(
         map(([entities, selectedIds]) => this.getSelectableEntities(entities, selectedIds))
     )
     private identfier = "id"; //Add config injector?

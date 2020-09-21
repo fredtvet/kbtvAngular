@@ -13,11 +13,11 @@ import { StoreState } from './store-state';
 import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-with-relations.helper';
 import { map } from 'rxjs/operators';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
-import { BaseStore } from 'src/app/core/state/abstracts/base.store';
 import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
+import { BaseExtendedStore } from 'src/app/core/state/abstracts/base.extended.store';
 
 @Injectable({providedIn: 'any'})
-export class MissionImageListStore extends BaseStore<StoreState>  {
+export class MissionImageListStore extends BaseExtendedStore<StoreState>  {
 
   mission: Mission;
 

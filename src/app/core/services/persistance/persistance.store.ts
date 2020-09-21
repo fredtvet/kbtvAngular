@@ -1,23 +1,29 @@
 import { Injectable } from '@angular/core';
-import { ObservableStore } from '@codewithdan/observable-store';
 import { get, set, Store } from 'idb-keyval';
 import { forkJoin, from, Observable, BehaviorSubject, throwError } from 'rxjs';
 import { PersistedStateConfig, PersistedInitialStateConfig } from './persisted-state.config';
-import { tap, filter, first, catchError } from 'rxjs/operators';
+import { tap, filter, first, catchError, skip } from 'rxjs/operators';
+import { BaseStore } from '../../state/abstracts/base.store';
+import { ArrayHelperService } from '../utility/array-helper.service';
+import { ApiService } from '../api.service';
+import { StateLastAction } from '../../state';
 
+const InitializeAction = "initalize_persistedState";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PersistanceStore extends ObservableStore<Object> {
+export class PersistanceStore extends BaseStore<Object & StateLastAction> {
 
     private stateInitalizedSubject = new BehaviorSubject<boolean>(false);
     stateInitalized$: Observable<boolean> = this.stateInitalizedSubject.asObservable().pipe(first(x => x === true));
 
     private dbStore: Store = new Store("kbtvDb", "state");
 
-    constructor() { 
-        super({logStateChanges: true, trackStateHistory: false});
+    constructor(        
+        arrayHelperService: ArrayHelperService,
+        apiService: ApiService) { 
+        super(arrayHelperService, apiService);
     }
 
     init(): void{
@@ -25,7 +31,8 @@ export class PersistanceStore extends ObservableStore<Object> {
         this.initalizeState();
 
         this.globalStateWithPropertyChanges.pipe(
-            filter(x => x != null),
+            filter(x => x != null && x.stateChanges.lastAction !== InitializeAction),
+            tap(x => console.log('persist', x)),
             tap(x => this.persistStateChanges(x.stateChanges))
         ).subscribe();
     }
@@ -44,6 +51,7 @@ export class PersistanceStore extends ObservableStore<Object> {
     }
 
     private persistStateChanges = (stateChanges: Partial<Object>): void => {
+        console.log(stateChanges);
         for(const prop in stateChanges){
             this.set(prop, stateChanges[prop]);
         }
@@ -55,7 +63,7 @@ export class PersistanceStore extends ObservableStore<Object> {
             const value = window.localStorage.getItem(prop);
             state[prop] = JSON.parse(value);
         }
-        this.setState(state, "initalize_persistedState", false, false);
+        this._setStateVoid(state, InitializeAction);
     }
 
     private initalizeState(): void{
@@ -72,7 +80,7 @@ export class PersistanceStore extends ObservableStore<Object> {
 
         return forkJoin(propDbObservables).pipe(
             catchError(error => {console.log(error); return throwError(error)}),
-            tap(state => this.setState(this.mapStateArrToStateObj(state, props), "initalize_persistedState", false, false))
+            tap(state => this._setStateVoid(this.mapStateArrToStateObj(state, props), InitializeAction))
         )
     }
 
