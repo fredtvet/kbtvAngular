@@ -120,12 +120,16 @@ export class SyncStore extends BaseStore<StoreState>{
     state.syncTimestamps[prop] = response.timestamp; //Update given timestamp
     const id = ModelStateConfig.get(prop)?.identifier;
 
-    if(response.entities?.length > 0)
-      state[prop] = 
-          this.arrayHelperService.addOrUpdateRange(this.getStateProperty(prop), response.entities, id); 
-    if(response.deletedEntities?.length > 0)
+    state[prop] = this.getStateProperty<any[]>(prop);
+
+    if(response.deletedEntities?.length > 0){
       state[prop] = 
           this.arrayHelperService.removeRangeByIdentifier(state[prop], response.deletedEntities, id);
+
+    if(response.entities?.length > 0)
+      state[prop] = 
+          this.arrayHelperService.addOrUpdateRange(state[prop], response.entities, id); 
+    }
   } 
 
   private syncCurrentUser(response: EntitySyncResponse, state: Partial<StoreState>): void{
