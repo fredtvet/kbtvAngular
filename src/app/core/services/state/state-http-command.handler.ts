@@ -35,7 +35,7 @@ export class StateHttpCommandHandler extends ObservableStore<State>
       private notificationService: NotificationService,
       private deviceInfoService: DeviceInfoService,
       syncStore: SyncStore){ 
-      super({logStateChanges: false, trackStateHistory: true});
+      super({logStateChanges: true, trackStateHistory: false});
 
       syncStore.hasInitialSynced$.subscribe(x => {
         this.checkForGhostErrors();

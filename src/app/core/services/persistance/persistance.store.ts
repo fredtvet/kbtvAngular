@@ -17,7 +17,7 @@ export class PersistanceStore extends ObservableStore<Object> {
     private dbStore: Store = new Store("kbtvDb", "state");
 
     constructor() { 
-        super({logStateChanges: false, trackStateHistory: true});
+        super({logStateChanges: true, trackStateHistory: false});
     }
 
     init(): void{
@@ -85,11 +85,9 @@ export class PersistanceStore extends ObservableStore<Object> {
     }
 
     private removePayloadTempProps<T>(payload: T): void{
-        console.time('removeTemp');
         if(Array.isArray(payload) && payload.length > 0 && typeof payload[0] === "object") 
             for(var item of payload) this.removeObjectTempProps(item)
         else if(typeof payload === "object") this.removeObjectTempProps(payload);
-        console.timeEnd('removeTemp');
     }
 
     private removeObjectTempProps<T extends Object>(obj: T): void{
