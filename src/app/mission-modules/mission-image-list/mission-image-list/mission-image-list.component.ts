@@ -4,16 +4,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, tap } from "rxjs/operators";
 import { MissionImage, ModelFile } from 'src/app/core/models';
-import { DeviceInfoService, DownloaderService } from 'src/app/core/services';
+import { DeviceInfoService, DownloaderService, NotificationService } from 'src/app/core/services';
 import { FormService } from 'src/app/core/services/form/form.service';
+import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
 import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
+import { appFileUrl } from 'src/app/shared-app/app-file-url.helper';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { ConfirmDialogComponent, ConfirmDialogConfig, SelectableListBase } from 'src/app/shared/components';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MailImageFormComponent } from '../mail-image-form.component';
 import { MissionImageListStore } from '../mission-image-list.store';
-import { appFileUrl } from 'src/app/shared-app/app-file-url.helper';
 
 @Component({
   selector: "app-mission-image-list",
@@ -53,11 +54,15 @@ export class MissionImageListComponent {
     private mainNavService: MainNavService,
     private store: MissionImageListStore,
     private route: ActivatedRoute,
+    private notificationService: NotificationService,
     private router: Router) {}
 
   ngOnInit() { 
     this.configureMainNav(this.missionId);
-    this.images$ = this.store.getByMissionId$(this.missionId).pipe(tap(this.updateMainNav));
+    this.images$ = this.store.getByMissionId$(this.missionId).pipe(
+      filter(x => x && x.length > 0),
+      tap(this.updateMainNav)
+    );
   }
 
   onSelectionChange(selections: string[]){
@@ -78,7 +83,12 @@ export class MissionImageListComponent {
   uploadImages = (files: FileList): void => 
     this.store.add({missionId: this.missionId, files});
   
-  private openImageInput = (): void => this.imageInput.nativeElement.click();
+  private openImageInput = (): void =>{ 
+    if(!window.navigator.onLine)
+      return this.notificationService.notify(AppNotifications.OnlineRequired)
+    
+    this.imageInput.nativeElement.click()
+  };
   
   private updateFabs(){
     let fabs = this.mainNavService.currentFabs;

@@ -1,19 +1,19 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { MissionDocument } from 'src/app/core/models';
-import { DeviceInfoService, DownloaderService } from 'src/app/core/services';
+import { DeviceInfoService, DownloaderService, NotificationService } from 'src/app/core/services';
+import { FormService } from 'src/app/core/services/form/form.service';
+import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
+import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
+import { appFileUrl } from 'src/app/shared-app/app-file-url.helper';
 import { Roles } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { ConfirmDialogComponent, ConfirmDialogConfig, SelectableListBase } from 'src/app/shared/components';
 import { MailDocumentFormComponent } from '../mail-document-form.component';
 import { MissionDocumentListStore } from '../mission-document-list.store';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
-import { FormService } from 'src/app/core/services/form/form.service';
-import { appFileUrl } from 'src/app/shared-app/app-file-url.helper';
 
 @Component({
   selector: 'app-mission-document-list',
@@ -51,6 +51,7 @@ export class MissionDocumentListComponent {
     private mainNavService: MainNavService,
     private route: ActivatedRoute,
     private router: Router,
+    private notificationService: NotificationService,
     private dialog: MatDialog) {}
  
   ngOnInit() {
@@ -99,11 +100,15 @@ export class MissionDocumentListComponent {
       .subscribe((x) => this.documentList.clearSelections());
   }
 
-  private openDocumentForm = () => 
+  private openDocumentForm = (): void => {
+    if(!window.navigator.onLine)
+      return this.notificationService.notify(AppNotifications.OnlineRequired)
+  
     this.router.navigate([
       'skjema', 
       {config: JSON.stringify({formConfig:{viewConfig:{lockedValues: {missionId: this.missionId}}}})}
     ], {relativeTo: this.route});
+  }
 
   private onBack = (missionId: string) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
 
