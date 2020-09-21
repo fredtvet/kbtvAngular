@@ -31,6 +31,7 @@ export class PersistanceStore extends ObservableStore<Object> {
     }
 
     private set<T>(property: keyof typeof PersistedStateConfig, payload: T): void{
+        this.removePayloadTempProps(payload);
         if(PersistedStateConfig[property]) 
             from(set(property, payload, this.dbStore))
                 .subscribe(() => {}, err => console.log(err))
@@ -81,6 +82,20 @@ export class PersistanceStore extends ObservableStore<Object> {
             stateObj[propsInOrder[index]] = stateArr[index];
         }
         return stateObj;
+    }
+
+    private removePayloadTempProps<T>(payload: T): void{
+        console.time('removeTemp');
+        if(Array.isArray(payload) && payload.length > 0 && typeof payload[0] === "object") 
+            for(var item of payload) this.removeObjectTempProps(item)
+        else if(typeof payload === "object") this.removeObjectTempProps(payload);
+        console.timeEnd('removeTemp');
+    }
+
+    private removeObjectTempProps<T extends Object>(obj: T): void{
+        for(var key in obj){
+            if(key.includes("temp_")) delete obj[key]
+        }
     }
 }
 
