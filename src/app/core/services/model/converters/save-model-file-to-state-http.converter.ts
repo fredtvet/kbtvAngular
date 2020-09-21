@@ -40,7 +40,11 @@ export class SaveModelFileToStateHttpConverter<TState, TCommand extends SaveMode
     }
 
     protected modifyState(state: TState, command: TCommand):  Partial<TState>{   
-        command.entity = {...command.entity, fileName: command.file.name};      
+        command.entity = {
+            ...command.entity, 
+            fileName: command.file.name,
+            temp_localFileUrl: URL.createObjectURL(command.file)
+        };      
         return super.modifyState(state, command);    
     }
 }

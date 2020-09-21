@@ -124,8 +124,8 @@ export class MissionImageListComponent {
       .subscribe((x) => this.imageList.clearSelections());
   }
 
-  private downloadImages = (fileNames: string[]) => 
-    this.downloaderService.downloadUrls(fileNames.map(x => appFileUrl(x, "images")));
+  private downloadImages = (imgs: MissionImage[]) => 
+    this.downloaderService.downloadUrls(imgs.map(x => appFileUrl(x.fileName, "images")));
 
   private onBack = (missionId: string) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
 
@@ -145,7 +145,7 @@ export class MissionImageListComponent {
       {icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, 
       params: [images.map(x => x.id)], allowedRoles: RolePresets.Authority},
       {icon: "cloud_download", text: "Last ned alle", callback: this.downloadImages, 
-      params: [images.map(x => x.fileName)]},
+      params: [images]},
     ]
     this.mainNavService.addConfig({default: cfg}, this.staticFabs);
   }  

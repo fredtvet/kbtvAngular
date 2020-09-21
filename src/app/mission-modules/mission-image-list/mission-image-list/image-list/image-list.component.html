@@ -5,7 +5,8 @@
             [isSelected]="selectable.selected" 
             (selected)="toggleSelect(selectable)"
             (click)="imageClick(selectable.entity)">
-            <img appImageErrorReloader class="entity-card fadeIn" [src]="selectable.entity.fileName | appFileUrl: 'thumbnails'" alt="oppdragsbilde"/>
+            <img appImageErrorReloader class="entity-card fadeIn"  alt="oppdragsbilde"
+                [src]="selectable.entity | appFileUrl: 'thumbnails'"/>
         </app-selectable-card>
     </div>
 </div>

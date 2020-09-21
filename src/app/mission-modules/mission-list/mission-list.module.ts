@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { AppFileUrlPipe } from 'src/app/shared-app/pipes/app-file-url.pipe';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
@@ -18,6 +19,7 @@ import { MissionListComponent } from './mission-list/mission-list.component';
     MissionFilterViewComponent,
   ],
   providers: [
+    AppFileUrlPipe,
     {provide: "FILTER_STORE", useExisting: MissionListStore}
   ],
   imports: [

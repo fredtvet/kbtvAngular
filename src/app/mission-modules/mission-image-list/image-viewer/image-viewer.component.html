@@ -10,7 +10,7 @@
   (tap)="toolbarHidden = !toolbarHidden" 
   (swiperight)="previousImage()" 
   (swipeleft)="nextImage()" 
-  [src]="currentImage.fileName | appFileUrl: 'images'" layout-fill/>
+  [src]="currentImage | appFileUrl: 'images'" layout-fill/>
 
 <div class="page_counter" [@showHideCounter]="toolbarHidden ? 'hide' : 'show'">
   <h5>{{ index + 1 }} / {{ images.length }}</h5>

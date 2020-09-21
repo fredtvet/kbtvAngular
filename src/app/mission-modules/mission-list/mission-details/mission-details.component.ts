@@ -6,8 +6,8 @@ import { Mission } from 'src/app/core/models';
 import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
 import { NotificationService } from 'src/app/core/services/notification/notification.service';
 import { MainNavService, TopDetailNavConfig } from 'src/app/layout';
-import { appFileUrl } from 'src/app/shared-app/app-file-url.helper';
 import { RolePresets, Roles, TimesheetStatus } from 'src/app/shared-app/enums';
+import { AppFileUrlPipe } from 'src/app/shared-app/pipes/app-file-url.pipe';
 import { MissionListStore } from '../mission-list.store';
 
 @Component({
@@ -30,6 +30,7 @@ export class MissionDetailsComponent{
     private store: MissionListStore,
     private route: ActivatedRoute,
     private router: Router,
+    private appFileUrl: AppFileUrlPipe,
     private notificationService: NotificationService,
   ){ }
 
@@ -57,7 +58,7 @@ export class MissionDetailsComponent{
       title: mission?.address?.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
       subTitle: (mission?.finished ? 'Oppdrag ferdig! ' : '') + 'ID: ' + mission?.id,
       subIcon: mission?.finished ? 'check' : '',
-      imgSrc: mission?.fileName ? appFileUrl(mission.fileName, "missionheader") : null,
+      imgSrc: this.appFileUrl.transform(mission, "missionheader"),
       backFn: this.onBack 
     } as TopDetailNavConfig;
 

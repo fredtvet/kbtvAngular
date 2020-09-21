@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { MissionImage } from 'src/app/core/models';
 import { StateMissionImages } from 'src/app/core/state';
 import { ArrayHelperService } from 'src/app/core/services';
+import { DomSanitizer } from '@angular/platform-browser';
 
 export interface CreateMissionImagesStateCommand extends StateCommand{
     missionId: string;
@@ -64,7 +65,12 @@ export class CreateMissionImagesToStateHttpConverter extends BaseStateToHttpConv
         const entities: MissionImage[] = [];
         for(let i = 0; i < command.fileWrappers.length; i++){
             const wrapper = command.fileWrappers[i];
-            entities.push({id: wrapper.id, missionId: command.missionId, fileName: wrapper.modifiedFile.name})
+            entities.push({
+                id: wrapper.id, 
+                missionId: command.missionId, 
+                fileName: wrapper.modifiedFile.name,
+                temp_localFileUrl: URL.createObjectURL(wrapper.modifiedFile)
+            })
         }
         return {missionImages: this.arrayHelperService.addOrUpdateRange(state.missionImages, entities, "id")};
     }
