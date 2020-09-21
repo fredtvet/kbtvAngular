@@ -45,8 +45,10 @@ export abstract class BaseStore<TState> extends ObservableStore<TState>  {
     stateSliceChanges$ = (properties: StateProp<TState>[]): Observable<Partial<TState>> => { 
         if(!properties || properties.length === 0) return of(null);
         return  this.globalStateWithPropertyChanges.pipe( //State changes
-            filter(({stateChanges}) => {
-                for(let prop of properties){ if(stateChanges[prop]) return true; }
+            filter(x => {
+                for(let prop of properties){ 
+                    if(x?.stateChanges && x.stateChanges[prop]) return true; 
+                }
                 return false;
             }),
             map((stateWithChanges) => {

@@ -12,7 +12,7 @@ import { SyncStore } from '../sync';
 import { OptimisticStateConfig } from './optimistic-state.config';
 
 interface State extends StateCurrentUser { requestQueue: Request[]; };
-interface Request { command: StateHttpCommand<any>, state: any};
+interface Request { command: StateHttpCommand<any>, state: any };
 
 @Injectable({ providedIn: 'root' })
 export class StateHttpCommandHandler extends ObservableStore<State> 
@@ -36,7 +36,7 @@ export class StateHttpCommandHandler extends ObservableStore<State>
       private deviceInfoService: DeviceInfoService,
       syncStore: SyncStore){ 
       super({logStateChanges: false, trackStateHistory: true});
-      
+
       syncStore.hasInitialSynced$.subscribe(x => {
         this.checkForGhostErrors();
         this.nextInQueue$.subscribe();
@@ -48,13 +48,16 @@ export class StateHttpCommandHandler extends ObservableStore<State>
       if(!command) console.error("No state http command provided")
       //If no state changes, ignore queue and run request
       const stateFunc = command.stateFunc; 
+
       if(!stateFunc){ 
         this.getHttpCommandObserver(command).subscribe()
         return;
       };
+
       delete command.stateFunc; //Dont store state func
-      //HUSK ONYL GET CERTAIN STATES,NO REFRESH TOKEN ETC  
+
       let request = {command, state: this.getOptimisticState()};
+
       const requestQueue = this.requestQueue;
       requestQueue.push(request)
       
@@ -64,7 +67,6 @@ export class StateHttpCommandHandler extends ObservableStore<State>
     }
 
     private dispatchHttp(command: StateHttpCommand<any>){
-      //Isonline merge (elns) må completes (via true) så good to go. 
       concat(
         this.deviceInfoService.isOnline$.pipe(first(x => x === true)),
         this.getHttpCommandObserver(command).pipe(

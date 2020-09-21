@@ -19,19 +19,12 @@ export class NewPasswordFormComponent implements FormComponent {
   @Input() config: {userName: string};
   @Output() formSubmitted = new EventEmitter<SaveAction>();
 
-  constructor(
-    private store: UsersStore,
-    private notificationService: NotificationService) {}
+  constructor(private store: UsersStore) {}
 
   onSubmit(result:any): void{
     if(!result || result == null) this.formSubmitted.emit();
     
-    this.store.updatePassord$(this.config?.userName, result.newPassword).subscribe(x => {
-      this.notificationService.notify({
-        title:'Vellykket oppdatering!',        
-        type: NotificationType.Success
-      })
-      this.formSubmitted.emit(StateAction.Update);
-    })
+    this.store.updatePassord$(this.config?.userName, result.newPassword)
+      .subscribe(x => this.formSubmitted.emit(StateAction.Update))
   }
 }

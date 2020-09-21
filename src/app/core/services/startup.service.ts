@@ -25,7 +25,7 @@ export class StartupService {
     
     deviceInfoService.isOnline$.pipe(skip(1)).subscribe(isOnline => {
       if(isOnline) notificationService.notify({title: 'Du er tilkoblet internett igjen!', type: NotificationType.Success})
-      else notificationService.notify({title: 'Du er nå i frakoblet modus. Det er kun mulig å lese data.', type: NotificationType.Warning})
+      else notificationService.notify({title: 'Du er nå i frakoblet modus. Noen funksjoner er deaktivert.', type: NotificationType.Warning})
     });  
   }
 }
