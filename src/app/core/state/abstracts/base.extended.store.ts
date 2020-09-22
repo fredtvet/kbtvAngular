@@ -1,5 +1,5 @@
 import { merge, Observable, of } from 'rxjs';
-import { filter, map, take, tap } from 'rxjs/operators';
+import { filter, map, skip, take, tap } from 'rxjs/operators';
 import { StateProp } from '../../model/state.types';
 import { ApiService } from '../../services/api.service';
 import { ArrayHelperService } from '../../services/utility/array-helper.service';
@@ -20,32 +20,29 @@ export abstract class BaseExtendedStore<TState> extends BaseStore<TState>  {
 
     stateSlice$ = (properties: StateProp<TState>[]): Observable<Partial<TState>> => { 
         if(!properties || properties.length === 0) return of(null);
-        return  merge(
-            of(properties).pipe(
-                map(props => props.reduce((state: Partial<TState>, prop) => {
-                    state[prop] = this.getStateProperty(prop);
-                    return state;
-                }, {}))
-            ), //Initial state
-            this.stateSliceChanges$(properties)
-         ) as Observable<Partial<TState>>;
+        return  this.globalStateWithPropertyChanges.pipe(
+            map(({state}) => {
+                const stateSlice: Partial<TState> = {};
+                for(const prop of properties) stateSlice[prop] = state[prop];
+                return stateSlice;
+            })
+        )
     }
 
     stateSliceChanges$ = (properties: StateProp<TState>[]): Observable<Partial<TState>> => { 
         if(!properties || properties.length === 0) return of(null);
         return  this.globalStateWithPropertyChanges.pipe( //State changes
-            filter(x => {
-                for(let prop of properties){ 
-                    if(x?.stateChanges && x.stateChanges[prop]) return true; 
-                }
+            skip(1), //Skip initial value
+            filter(({stateChanges}) => {
+                for(const prop of properties)
+                    if(stateChanges.hasOwnProperty(prop)) return true; 
                 return false;
             }),
-            map((stateWithChanges) => {
-                return properties.reduce((state:Partial<TState>, prop) => {
-                    state[prop] = stateWithChanges.state[prop];
-                    return state;
-                }, {});
-            }),
+            map(({state}) => {
+                const stateSlice: Partial<TState> = {};
+                for(const prop of properties) stateSlice[prop] = state[prop];
+                return stateSlice;
+            })
         )
     }
 
