@@ -42,13 +42,13 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
     private deviceInfoService: DeviceInfoService,
     private dateTimeService: DateTimeService,
     private store: UserTimesheetListStore,
-  ) { super(); this.store.addGroupBy(GroupByPeriod.Day) }
+  ) { super(); }
 
   ngOnInit() {
+    this.store.addGroupBy(GroupByPeriod.Day) 
     let initFilter = this.route.snapshot.params.initialFilter;
     initFilter = initFilter ? JSON.parse(initFilter) : {year: this.currentYear, weekNr: this.currentWeekNr};
     this.store.addWeekFilterCriteria(initFilter);
-    this.configureMainNav(initFilter);
     this.store.criteria$.pipe(takeUntil(this.unsubscribe)).subscribe(x => this.configureMainNav(this.weekCriteria))
   }
 

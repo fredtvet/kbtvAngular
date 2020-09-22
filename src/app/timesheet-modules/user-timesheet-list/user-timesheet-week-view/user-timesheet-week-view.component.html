@@ -6,7 +6,7 @@
 
           <div class="w-100" fxLayout="column" fxLayoutAlign="start center">
 
-            <app-timesheet-day-label class="w-100 mb-1 fadeInDown" style="z-index:1"
+            <app-timesheet-day-label class="w-100 mb-1" style="z-index:1"
               [date]="weekCriteria | getDateByDateParams : weekDay"
               (labelClicked)="openTimesheetForm(null, {date: $event})">
             </app-timesheet-day-label>
