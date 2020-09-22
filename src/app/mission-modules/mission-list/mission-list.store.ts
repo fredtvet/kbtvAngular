@@ -88,11 +88,13 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
   }
 
   private updateLastVisited(id: string){
-    let missions = this.getStateProperty<Mission[]>("missions");
+    let missions = this.getStateProperty<Mission[]>("missions", false);
     if(!missions) return;
     let index = missions.findIndex(x => x.id == id);
     if(!missions[index]) return;
-    missions[index].lastVisited = new Date(); 
+    const mission = {...missions[index]};
+    mission.lastVisited = new Date().toISOString(); 
+    missions[index] = mission;
     this._setStateVoid({missions})
   }
 
