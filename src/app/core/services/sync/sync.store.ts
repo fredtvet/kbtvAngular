@@ -103,7 +103,6 @@ export class SyncStore extends BaseStore<StoreState>{
 
   private setSyncResponseState(response: SyncResponse){
     let state = {syncTimestamps: {}};
-    console.log(response);
     this.syncCurrentUser(response[SyncStateConfig.currentUser.responseKey], state);
 
     Object.keys(SyncStateConfig).filter(x => x !== "currentUser").forEach(prop => 

@@ -32,7 +32,6 @@ export class PersistanceStore extends BaseStore<Object & StateLastAction> {
 
         this.globalStateWithPropertyChanges.pipe(
             filter(x => x != null && x.stateChanges.lastAction !== InitializeAction),
-            tap(x => console.log('persist', x)),
             tap(x => this.persistStateChanges(x.stateChanges))
         ).subscribe();
     }
@@ -51,7 +50,6 @@ export class PersistanceStore extends BaseStore<Object & StateLastAction> {
     }
 
     private persistStateChanges = (stateChanges: Partial<Object>): void => {
-        console.log(stateChanges);
         for(const prop in stateChanges){
             this.set(prop, stateChanges[prop]);
         }
