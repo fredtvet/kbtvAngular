@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BaseModelFormViewComponent, ModelFormViewConfig } from 'src/app/core/model/form';
 import { SaveModelWithFileStateCommand } from 'src/app/core/model/interfaces';
 import { AppDocumentType, MissionDocument } from 'src/app/core/models';
+import { DocumentExtensions } from 'src/app/shared/constants/file-extension-groups';
+import { fileExtensionValidator } from 'src/app/shared/validators/file-extension.validator';
 import { MissionDocumentFormState } from './mission-document-form-state.interface';
 
 type ViewConfig = ModelFormViewConfig<MissionDocument, MissionDocumentFormState>;
@@ -15,17 +17,26 @@ type Response = SaveModelWithFileStateCommand<MissionDocument>;
 })
 export class MissionDocumentFormViewComponent extends BaseModelFormViewComponent<MissionDocumentFormState, MissionDocument, ViewConfig, Response> {
 
-  files: FileList;
+
 
   constructor(private _formBuilder: FormBuilder) { super(); }
 
-  changeFile(e){
-    this.files = e.target.files;
+  onFileChange(e) { 
+    let file = null;
+    if(e.target.files.length > 0) 
+      file = e.target.files[0]; 
+      
+    this.file.markAsDirty();
+    this.file.setValue(file);
   }
 
   protected _initalizeForm(cfg: ViewConfig): FormGroup{
     return this._formBuilder.group({
       missionId: cfg.lockedValues?.missionId,
+      file: [null, [
+        Validators.required,
+        fileExtensionValidator(DocumentExtensions)
+      ]],
       documentType: this._formBuilder.group({
         name: [null, [
           Validators.required,
@@ -48,12 +59,16 @@ export class MissionDocumentFormViewComponent extends BaseModelFormViewComponent
     if(!document.documentType.name) document.documentTypeId = null;
 
     if(existingType || !document.documentType.name) document.documentType = null;
-
-    return {entity: document, file: this.files ? this.files[0] : null};
+    console.log(document.file)
+    const file = document.file;
+    delete document.file;
+    console.log(file);
+    return {entity: document, file};
   }
 
-  protected _addSubmitChecks = () => this.files != null && this.files.length > 0
-
+  get file(){
+    return this.form.get('file')
+  }
 
   get documentType(){
     return this.form.get('documentType')

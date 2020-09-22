@@ -7,14 +7,22 @@
                 {{type.name}}
             </mat-option>
         </mat-autocomplete>
+        
+        <mat-error *ngIf="documentTypeName.errors?.required">Velg eller lag ny dokumenttype.</mat-error>      
+        <mat-error *ngIf="documentTypeName.errors?.maxlength">Navn kan maks være 45 tegn.</mat-error>  
     </mat-form-field>
 
-    <input (change)="changeFile($event)" type="file">
+    <br />
+
+    <input (change)="onFileChange($event)" type="file">
+
+    <mat-error *ngIf="file.dirty && file.errors?.required">Velg ett dokument å laste opp.</mat-error>  
+    <mat-error *ngIf="file.dirty && file.errors?.fileExtensionInvalid">Denne filtypen er ikke tillatt.</mat-error>  
 
     <br />
 
     <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
-        [disabled]="form.invalid || form.pristine || files?.length == 0"
+        [disabled]="form.invalid || form.pristine"
         (click)="onSubmit()">
         <mat-icon>cloud_upload</mat-icon>
         Last opp   
