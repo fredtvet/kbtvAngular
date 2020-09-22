@@ -10,13 +10,14 @@ import {
   SimpleTopNavComponent
 } from './components';
 import { AddToHomeScreenDirective, HttpCommandButtonDirective, LoadingOverlayDirective  } from './directives';
-import { ArrayFromNumberPipe, ArraySlicePipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
+import { ArrayFromNumberPipe, ArraySlicePipe, IsTodayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 
 @NgModule({
   declarations: [
     ConfirmDialogComponent,
     SortByDatePipe,
+    IsTodayPipe,
     AddToHomeScreenDirective,
     ArrayFromNumberPipe,
     ActiveStringFilterDirective,
@@ -51,6 +52,7 @@ import { ActiveStringFilterDirective } from './directives/active-filter.directiv
     MailToFormViewComponent,
     SelectableCardComponent,
     ArraySlicePipe,
+    IsTodayPipe,
     SimpleTopNavComponent,
     AddToHomeScreenDirective,    
     TransformButtonPipe,
