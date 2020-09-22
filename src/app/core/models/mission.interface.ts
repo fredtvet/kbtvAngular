@@ -14,8 +14,8 @@ export interface Mission extends ModelFile, EmployerForeign, MissionTypeForeign 
 
     fileName?: string;
 
-    updatedAt?: Date;
-    lastVisited?: Date;
+    updatedAt?: string;
+    lastVisited?: string;
 
     missionImages?: MissionImage[];
     missionDocuments?: MissionDocument[];
