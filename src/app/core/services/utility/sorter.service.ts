@@ -23,7 +23,7 @@ export class SorterService {
         });
     }
 
-    sortByDate<T>(collection: T[], prop: string, direction: "asc" | "desc" = "desc"): void{
+    sortByDate<T>(collection: T[], prop: keyof T, direction: "asc" | "desc" = "desc"): void{
         if(!collection || collection === null) return;
         collection.sort((a: any, b: any) => {
             if(!a[prop]) return 1;

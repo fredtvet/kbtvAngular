@@ -13,7 +13,6 @@ export abstract class BaseStore<TState> extends ObservableStore<TState>  {
         protected apiService: ApiService) {  
         super({logStateChanges: true, trackStateHistory: false});
     }
-    observer = this.globalStateWithPropertyChanges;
     
     property$<T>(property: StateProp<TState>): Observable<T>{ 
         return  this.globalStateWithPropertyChanges.pipe(

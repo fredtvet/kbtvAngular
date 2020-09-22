@@ -45,7 +45,7 @@
   </ng-container>
 
   <span class="mat-body-2 route-anim-block">Sist besøkte oppdrag</span>
-
+  {{ log('test')}}
   <app-list-card *ngFor="let mission of missionHistory$ | async" 
     [config]="{startIcon:'history', panelClass:'route-anim-block', endIcon: mission.finished ? 'check':'chevron_right'}" 
     [routerLink]="['/oppdrag', mission.id, 'detaljer']">{{mission.address}}
