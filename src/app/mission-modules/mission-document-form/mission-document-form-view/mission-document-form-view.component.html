@@ -17,7 +17,7 @@
     <input (change)="onFileChange($event)" type="file">
 
     <mat-error *ngIf="file.dirty && file.errors?.required">Velg ett dokument å laste opp.</mat-error>  
-    <mat-error *ngIf="file.dirty && file.errors?.fileExtensionInvalid">Denne filtypen er ikke tillatt.</mat-error>  
+    <mat-error *ngIf="file.dirty && file.errors?.fileExtensionInvalid">Filtypen er ikke tillatt.</mat-error>  
 
     <br />
 
