@@ -4,3 +4,5 @@ export * from './array-slice.pipe';
 export * from './translate.pipe';
 export * from './transform-button.pipe';
 export * from './is-today.pipe';
+export * from './app-file-url.pipe';
+export * from './check-roles-in-buttons.pipe';

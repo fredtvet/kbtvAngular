@@ -3,9 +3,9 @@ import { Observable } from 'rxjs';
 import { User } from 'src/app/core/models';
 import { FormService } from 'src/app/core/services/form/form.service';
 import { ModelFormService } from 'src/app/core/services/model';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
+import { MainNavService } from 'src/app/layout';
 import { ButtonTypes, Roles } from 'src/app/shared-app/enums';
-import { AppButton } from 'src/app/shared-app/interfaces';
+import { MainTopNavComponent } from 'src/app/shared/components/main-top-nav/main-top-nav.component';
 import { NewPasswordFormComponent } from '../new-password-form/new-password-form.component';
 import { UserFormViewConfig } from '../user-form-view/user-form-view-config.interface';
 import { UserFormViewComponent } from '../user-form-view/user-form-view.component';
@@ -47,19 +47,20 @@ export class UserListComponent {
       formComponent: NewPasswordFormComponent
     })
 
-
   private configureMainNav(){
-    let cfg = {title:  "Brukere"} as TopDefaultNavConfig;
-
-    cfg.buttons = [{
-      icon: "person_add", 
-      colorClass: "color-accent",
-      aria: 'Ny bruker',
-      callback: this.openUserForm, 
-      allowedRoles: [Roles.Leder]
-    }] as AppButton[]
-
-    this.mainNavService.addConfig({default: cfg});
+    this.mainNavService.addConfig({
+      topNavComponent: MainTopNavComponent, 
+      topNavConfig: {
+        title:  "Brukere",
+        buttons: [{
+          icon: "person_add", 
+          colorClass: "color-accent",
+          aria: 'Ny bruker',
+          callback: this.openUserForm, 
+          allowedRoles: [Roles.Leder]
+        }]
+      }
+    });
   }
 
 }

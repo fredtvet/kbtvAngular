@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FileFolders } from '../file-folders.const';
-import { appFileUrl } from '../app-file-url.helper';
+import { FileFolders } from '../constants/file-folders.const';
+import { appFileUrl } from '../helpers/app-file-url.helper';
 import { ModelFile } from 'src/app/core/models';
 import { DomSanitizer } from '@angular/platform-browser';
 

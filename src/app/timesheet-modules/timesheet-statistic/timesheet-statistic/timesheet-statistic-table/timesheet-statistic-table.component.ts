@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { translations } from 'src/app/shared-app/translations';
+import { translations } from 'src/app/shared/translations';
 import { AgGridTableComponent } from 'src/app/shared/components/abstracts/ag-grid-table.component';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { AgGridConfig } from 'src/app/shared/components/abstracts/ag-grid-config.interface';

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { AppButton } from '../interfaces/app-button.interface';
+import { AppButton } from '../../shared-app/interfaces/app-button.interface';
 
 @Pipe({
   name: 'checkRolesInButtons'

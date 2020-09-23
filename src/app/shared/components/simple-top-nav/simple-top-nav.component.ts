@@ -1,6 +1,7 @@
-import { Component, Input, ChangeDetectionStrategy, ViewContainerRef, ViewChild, ComponentFactoryResolver, Type } from '@angular/core';
-import { SimpleNavConfig } from '../../interfaces';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ButtonTypes } from 'src/app/shared-app/enums';
+import { LoadingService } from 'src/app/core/services/loading.service';
+import { SimpleNavConfig } from './simple-nav-config.interface';
 
 @Component({
   selector: 'app-simple-top-nav',

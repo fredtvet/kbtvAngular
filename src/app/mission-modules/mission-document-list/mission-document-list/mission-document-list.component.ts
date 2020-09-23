@@ -7,11 +7,11 @@ import { MissionDocument } from 'src/app/core/models';
 import { DeviceInfoService, DownloaderService, NotificationService } from 'src/app/core/services';
 import { FormService } from 'src/app/core/services/form/form.service';
 import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
-import { appFileUrl } from 'src/app/shared-app/app-file-url.helper';
+import { MainNavService } from 'src/app/layout';
+import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
 import { Roles } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces';
-import { ConfirmDialogComponent, ConfirmDialogConfig, SelectableListBase } from 'src/app/shared/components';
+import { ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent, SelectableListBase } from 'src/app/shared/components';
 import { MailDocumentFormComponent } from '../mail-document-form.component';
 import { MissionDocumentListStore } from '../mission-document-list.store';
 
@@ -54,9 +54,7 @@ export class MissionDocumentListComponent {
     private notificationService: NotificationService,
     private dialog: MatDialog) {}
  
-  ngOnInit() {
-    this.configureMainNav(this.missionId)
-  }
+  ngOnInit() { this.configureMainNav() }
 
   onSelectionChange(selections: string[]){
     if(!selections) return undefined;
@@ -72,9 +70,9 @@ export class MissionDocumentListComponent {
     let totalFabCount = this.staticFabs.length + this.selectedItemsFabs.length;
 
     if(this.currentSelections.length === 0 && fabs.length === totalFabCount) //If no selections remove fabs if existing
-      this.mainNavService.removeFabsByIcons(this.selectedItemsFabs.map(x => x.icon))
+      this.mainNavService.removeFabsByCallback(this.selectedItemsFabs.map(x => x.callback))
     else if (this.currentSelections.length > 0 && fabs.length === this.staticFabs.length)
-      this.mainNavService.addFabs(this.selectedItemsFabs);
+      this.mainNavService.updateConfig({fabs: this.selectedItemsFabs});
   }
 
   private deleteSelectedDocuments = () => {
@@ -110,15 +108,16 @@ export class MissionDocumentListComponent {
     ], {relativeTo: this.route});
   }
 
-  private onBack = (missionId: string) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
+  private onBack = () => this.router.navigate(['/oppdrag', this.missionId, 'detaljer']);
 
-  private configureMainNav(missionId: string){
-    let topCfg = {
-      title:  "Dokumenter", 
-      backFn: this.onBack, 
-      backFnParams: [missionId]
-    } as TopDefaultNavConfig;
-
-    this.mainNavService.addConfig({default: topCfg}, this.staticFabs);
+  private configureMainNav(){
+    this.mainNavService.addConfig({
+      fabs: this.staticFabs,
+      topNavComponent: MainTopNavComponent, 
+      topNavConfig: {
+        title:  "Dokumenter", 
+        backFn: this.onBack
+      }
+    });
   }
 }

@@ -5,13 +5,13 @@ import { pluck, tap } from "rxjs/operators";
 import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
 import { Timesheet } from "src/app/core/models";
 import { FilterSheetService } from 'src/app/core/services/filter';
-import { TopDefaultNavConfig } from 'src/app/layout/main-nav-config.interface';
 import { MainNavService } from 'src/app/layout/main-nav.service';
 import { DateRangePresets } from 'src/app/shared-app/enums';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view.component';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
+import { MainTopNavComponent } from 'src/app/shared/components';
 import { TimesheetForm } from '../../user-timesheet-form/user-timesheet-form-view/timesheet-form.interface';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
 
@@ -66,23 +66,26 @@ export class UserTimesheetListComponent implements OnInit {
   }
 
   private configureMainNav = (criteria: TimesheetCriteria) => {
-    let cfg: TopDefaultNavConfig = {title:  "Timeliste", backFn: this.onBack};
-
     const activeCount = new TimesheetFilter(criteria).activeCriteriaCount;
+
+    this.mainNavService.addConfig({
+      topNavComponent: MainTopNavComponent,
+      topNavConfig: {
+        title:  "Timeliste", 
+        backFn: this.onBack,
+        buttons: [{
+          icon: 'filter_list', 
+          callback: this.openFilterSheet,
+          colorClass: activeCount ? "color-accent" : ""
+        }]
+      },
+      fabs: [
+        {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', 
+        callback: this.openTimesheetForm, 
+        params: [null, {mission: criteria?.mission}]}
+      ]
+    });
     
-    cfg.buttons = [{
-      icon: 'filter_list', 
-      callback: this.openFilterSheet,
-      colorClass: activeCount ? "color-accent" : ""
-    }]
-
-    let fabs = [
-      {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', 
-      callback: this.openTimesheetForm, 
-      params: [null, {mission: criteria?.mission}]}
-    ];
-
-    this.mainNavService.addConfig({default: cfg}, fabs);
   }
 
 }

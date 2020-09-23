@@ -1,24 +1,24 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { map } from 'rxjs/operators';
 import { ApiUrl } from 'src/app/core/api-url.enum';
 import { DeleteModelStateCommand } from 'src/app/core/model/interfaces';
-import { Employer, Mission, MissionImage } from "src/app/core/models";
+import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
+import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-with-relations.helper';
+import { Mission, MissionImage } from "src/app/core/models";
 import {
   ApiService,
   ArrayHelperService,
   NotificationService
 } from "src/app/core/services";
 import { DeleteModelToStateHttpConverter } from 'src/app/core/services/model/converters/delete-model-to-state-http.converter';
-import { CreateMissionImagesStateCommand, CreateMissionImagesToStateHttpConverter } from './create-mission-images-to-state-http.converter';
-import { StoreState } from './store-state';
-import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-with-relations.helper';
-import { map } from 'rxjs/operators';
-import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
+import { NotificationType } from 'src/app/core/services/notification';
 import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
 import { BaseExtendedStore } from 'src/app/core/state/abstracts/base.extended.store';
-import { ImageExtensions } from 'src/app/shared/constants/file-extension-groups';
-import { validateFileExtension } from 'src/app/shared/validators/file-extension.validator';
-import { NotificationType } from 'src/app/core/services/notification';
+import { ImageFileExtensions } from 'src/app/shared/constants/image-file-extensions.const';
+import { validateFileExtension } from 'src/app/shared/helpers';
+import { CreateMissionImagesStateCommand, CreateMissionImagesToStateHttpConverter } from './create-mission-images-to-state-http.converter';
+import { StoreState } from './store-state';
 
 @Injectable({providedIn: 'any'})
 export class MissionImageListStore extends BaseExtendedStore<StoreState>  {
@@ -47,7 +47,7 @@ export class MissionImageListStore extends BaseExtendedStore<StoreState>  {
  
   add = (command: CreateMissionImagesStateCommand): void =>{
     for(var  i = 0; i < command.files.length; i++){
-      if(validateFileExtension(command.files[i], ImageExtensions)) continue;
+      if(validateFileExtension(command.files[i], ImageFileExtensions)) continue;
       return this.notificationService.notify(
         {title: "Filtype ikke tillatt for en eller flere filer", type: NotificationType.Error}
       );  

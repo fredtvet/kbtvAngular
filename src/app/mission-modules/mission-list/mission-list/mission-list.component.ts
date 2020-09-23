@@ -2,8 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { FilterSheetService } from 'src/app/core/services/filter';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
+import { MainNavService } from 'src/app/layout';
 import { Roles } from 'src/app/shared-app/enums';
+import { MainTopNavComponent } from 'src/app/shared/components';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav/main-top-nav-config.interface';
 import { MissionCriteria } from 'src/app/shared/interfaces/mission-filter-criteria.interface';
 import { MissionFilter } from 'src/app/shared/mission-filter.model';
 import { MissionFilterViewComponent } from '../mission-filter-view/mission-filter-view.component';
@@ -28,7 +30,12 @@ export class MissionListComponent{
     private store: MissionListStore,
     private router: Router,
     private route: ActivatedRoute,) { 
-      this.configureMainNav();
+     
+  }
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.configureMainNav();
   }
 
   searchMissions = (searchString: string) => {
@@ -44,32 +51,32 @@ export class MissionListComponent{
   }
 
   private configureMainNav(){
-    let cfg = {title:  "Oppdrag"} as TopDefaultNavConfig;
- 
-    let fabs = [
-      {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openMissionForm, allowedRoles: [Roles.Leder, Roles.Mellomleder]}
-    ]
-
-    this.mainNavService.addConfig({default: cfg}, fabs);
+    this.mainNavService.addConfig({
+      topNavComponent: MainTopNavComponent, 
+      topNavConfig: {title:  "Oppdrag"},
+      fabs: [
+        {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openMissionForm, allowedRoles: [Roles.Leder, Roles.Mellomleder]}
+      ],
+    });
   }
 
   private updateMainNav(criteria: MissionCriteria){ 
-    const config = this.mainNavService.topDefaultNavConfig;
+    const topNavConfig = this.mainNavService.getTopNavConfig<MainTopNavConfig>();
     const activeCount = new MissionFilter(criteria).activeCriteriaCount;
     
-    config.buttons = [{
+    topNavConfig.buttons = [{
       icon: 'filter_list',
       callback: this.openMissionFilter, 
       colorClass: activeCount ? "color-accent" : ""
     }]
 
-    config.searchBar = {
+    topNavConfig.searchBar = {
       callback: this.searchMissions, 
       initialValue: criteria.searchString, 
       placeholder: "Søk med adresse eller id"
     };
 
-    this.mainNavService.updateConfig({default: config});
+    this.mainNavService.updateConfig({topNavConfig});
   }
 
 }

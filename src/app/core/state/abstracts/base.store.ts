@@ -1,7 +1,7 @@
 import { ObservableStore } from '@codewithdan/observable-store';
 import { stateFunc } from '@codewithdan/observable-store/dist/observable-store';
-import { merge, Observable, of } from 'rxjs';
-import { distinctUntilChanged, filter, map, skip, take, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { distinctUntilChanged, filter, map, skip } from 'rxjs/operators';
 import { StateProp } from '../../model/state.types';
 import { ApiService } from '../../services/api.service';
 import { ArrayHelperService } from '../../services/utility/array-helper.service';

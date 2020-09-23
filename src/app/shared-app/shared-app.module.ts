@@ -1,37 +1,34 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { PageNotFoundComponent } from './components/page-not-found.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { BottomSheetMenuComponent, AppButtonComponent, NavItemComponent, NotificationComponent, ListCardComponent } from './components';
-import { ImageErrorReloaderDirective, IfRoleDirective, InputListenerDirective } from './directives';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { CheckRolesInButtonsPipe, ReverseArrayPipe, TransformButtonsPipe } from './pipes';
-import { AppFileUrlPipe } from './pipes/app-file-url.pipe';
+import { AppButtonComponent, ListCardComponent, NavItemComponent, NotificationComponent } from './components';
+import { PageNotFoundComponent } from './components/page-not-found.component';
+import { IfRoleDirective, InputListenerDirective } from './directives';
+import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
 
 @NgModule({
   declarations: [
-    PageNotFoundComponent,
-    BottomSheetMenuComponent,   
+    PageNotFoundComponent,  
     AppButtonComponent,  
     NavItemComponent,
-    AppFileUrlPipe,
-    ImageErrorReloaderDirective,
-    IfRoleDirective,
-    CheckRolesInButtonsPipe,
-    ReverseArrayPipe,
-    TransformButtonsPipe,
-    InputListenerDirective,
     NotificationComponent,
     ListCardComponent,
+
+    ReverseArrayPipe,
+    TransformButtonsPipe,
+
+    IfRoleDirective,
+    InputListenerDirective,
   ],
   imports: [
     RouterModule,
@@ -51,28 +48,27 @@ import { AppFileUrlPipe } from './pipes/app-file-url.pipe';
     RouterModule,
     CommonModule, 
     FlexLayoutModule,
+
     MatSnackBarModule,   
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
-    AppFileUrlPipe,
     MatRippleModule,
     MatDividerModule,
-    MatBottomSheetModule,
     MatIconModule,
     MatProgressSpinnerModule,  
+
     PageNotFoundComponent,
-    BottomSheetMenuComponent,   
     AppButtonComponent,  
-    NavItemComponent,
-    ImageErrorReloaderDirective,
-    IfRoleDirective,
-    CheckRolesInButtonsPipe,
+    NavItemComponent,   
+    ListCardComponent,
+    NotificationComponent,
+
     ReverseArrayPipe,
     TransformButtonsPipe,
-    NotificationComponent,
+
+    IfRoleDirective,
     InputListenerDirective,
-    ListCardComponent,
   ]
 })
 export class SharedAppModule {}

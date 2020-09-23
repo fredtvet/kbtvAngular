@@ -5,12 +5,11 @@ import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interfa
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
 import { ApiService, ArrayHelperService, DateTimeService, TimesheetSummaryAggregator } from 'src/app/core/services';
 import { FilterStateHelper } from 'src/app/core/services/filter';
-import { GroupByPeriod } from 'src/app/shared-app/enums';
 import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
+import { GroupByPeriod } from 'src/app/shared/enums';
 import { StoreState } from './store-state';
-
 
 const TimesheetStatisticStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
     criteriaProp: "timesheetStatisticCriteria", 

@@ -9,9 +9,7 @@ import { StartupService } from './core/services/startup.service';
 
 export class AppComponent {
   title = 'test-client';
-
   constructor(startupService: StartupService){ 
-
   }
 
 }

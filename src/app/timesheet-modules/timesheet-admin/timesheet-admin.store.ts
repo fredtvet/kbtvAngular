@@ -12,9 +12,9 @@ import { SaveModelToStateHttpConverter } from 'src/app/core/services/model/conve
 import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
 import { WeekToTimesheetCriteriaConverter } from 'src/app/core/services/utility/week-to-timesheet-criteria.converter';
 import { StateAction } from 'src/app/core/state';
-import { GroupByPeriod, TimesheetStatus } from 'src/app/shared-app/enums';
 import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
+import { GroupByPeriod, TimesheetStatus } from 'src/app/shared/enums';
 import { StoreState } from './store-state';
 
 const TimesheetAdminStoreSettings: BaseTimesheetStoreSettings<StoreState> = {

@@ -1,3 +1,4 @@
+
  <app-mission-list-view *ngIf="filteredMissions$ | async; let filteredMissions"
   [missions]="filteredMissions?.records" 
   (search)="searchMissions($event)">

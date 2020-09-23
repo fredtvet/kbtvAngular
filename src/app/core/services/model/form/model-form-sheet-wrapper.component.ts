@@ -8,10 +8,10 @@ import { ModelStateConfig } from 'src/app/core/model/model-state.config';
 import { Model } from 'src/app/core/models';
 import { ModelFormStore } from 'src/app/core/services/model/form/model-form.store';
 import { StateAction } from 'src/app/core/state/state-action.enum';
-import { translations } from 'src/app/shared-app/translations';
+import { translations } from 'src/app/shared/translations';
 import { ConfirmDialogComponent, ConfirmDialogConfig } from '../../../../shared/components';
 import { ModelFormComponent } from './model-form.component';
-import { SimpleNavConfig } from 'src/app/shared/interfaces/simple-nav-config.interface';
+import { SimpleNavConfig } from 'src/app/shared/components/simple-top-nav/simple-nav-config.interface';
 import { BaseFormSheetWrapperComponent } from 'src/app/core/form/abstracts/base-form-sheet-wrapper.component';
 
 type FormConfig = GenericModelFormConfig<Model, any, ModelFormViewConfig<Model, any>>

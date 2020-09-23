@@ -13,6 +13,6 @@ export class MissionListViewComponent {
   @Input() missions: Mission[] = [];
 
   constructor() { }
-  
+
   trackByFn = (index: number, mission: Mission) => mission.id;
 }

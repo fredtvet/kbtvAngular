@@ -1,33 +1,24 @@
 <mat-sidenav-container class="bg-background h-100" *ngIf="config$ | async; let config">
 
-  <mat-sidenav fixedInViewport #drawer class="mat-elevation-z4 bg-primary" style="max-width:250px;min-width:200px"
-    [attr.role]="config.isXs ? 'dialog' : 'navigation'"
-    [mode]="config.isXs ? 'over' : 'side'"
-    [opened]="!config.isXs">
-    <app-main-side-nav-content 
-      [user]="config.currentUser" 
-      (navItemClicked)="toggleDrawer(config.isXs)">
-    </app-main-side-nav-content>
+  <mat-sidenav fixedInViewport #drawer *ngIf="config" class="mat-elevation-z4 bg-primary" style="max-width:250px;min-width:200px"
+  [attr.role]="config.isXs ? 'dialog' : 'navigation'"
+  [mode]="config.isXs ? 'over' : 'side'"
+  [opened]="!config.isXs">
+
+    <app-main-side-nav
+      [config]="config.sideNavConfig"
+      (navItemClicked)="config.isXs ? toggleDrawer() : null">
+    </app-main-side-nav> 
+
   </mat-sidenav>
-  
 
   <mat-sidenav-content fxLayout="column" class="h-100">
 
-    <app-detail-top-nav *ngIf="config.topDetailNavConfig else defaultNav"
-      class="flex-nav mat-elevation-z4 slideInDown"
-      [config]="config.topDetailNavConfig" [currentUserRole]="config?.currentUser?.role"
-      (menuBtnClicked)="toggleDrawer(config.isXs)" >
-    </app-detail-top-nav>
-
-    <ng-template #defaultNav>
-      <app-main-top-nav #navBar class="flex-nav" 
-        [config]="config.topDefaultNavConfig" [currentUserRole]="config?.currentUser?.role" 
-        (menuBtnClicked)="toggleDrawer(config.isXs)" 
-       ></app-main-top-nav>
-    </ng-template>
+    <app-main-top-nav-wrapper [config]="config" (toggleDrawer)="toggleDrawer()">
+    </app-main-top-nav-wrapper>
 
     <!-- h-100 for iOS Safari fix -->
-    <div  fxFlex style="overflow-y:auto" [@routeAnimation]="prepareRoute(outlet)">
+    <div  fxFlex style="overflow-y:auto;position:relative" [@routeAnimation]="prepareRoute(outlet)">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
 

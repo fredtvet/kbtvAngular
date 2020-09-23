@@ -1,6 +1,4 @@
-export const ImageExtensions: string[] = ["jpg", "jpeg", "png"];  
-
-export const DocumentExtensions: string[] = [
+export const DocumentFileExtensions: string[] = [
     "doc","docm", "docx", "txt", 
     "pdf", "dot", "csv", "dotm", 
     "dotx", "xla", "odt", "xlam", 

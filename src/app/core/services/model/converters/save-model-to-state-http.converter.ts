@@ -7,7 +7,7 @@ import { StateAction } from 'src/app/core/state';
 import { StateHttpConverter } from 'src/app/core/state/state-http-converter';
 import { ArrayHelperService } from '../../utility/array-helper.service';
 import { ModelIdGeneratorService } from '../model-id-generator.service';
-import { translations } from 'src/app/shared-app/translations';
+import { translations } from 'src/app/shared/translations';
 
 @Injectable({providedIn: 'root'})
 export class SaveModelToStateHttpConverter<TState, TCommand extends SaveModelStateCommand<Model>> 

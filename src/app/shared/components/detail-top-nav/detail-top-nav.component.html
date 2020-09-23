@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container"  *ngIf="config">
 
     <div *ngIf="config.imgSrc" class="img-container text-center mr-auto ml-auto ">
         <img appImageErrorReloader #img [src]="config.imgSrc" (error)="img.src = '/assets/notfound.png?'" alt="Forsidebilde" />
@@ -33,7 +33,7 @@
             [config]="button"></app-button>
 
         <button mat-icon-button 
-            *ngIf="(config?.bottomSheetButtons | checkRolesInButtons : currentUserRole)" 
+            *ngIf="(config?.bottomSheetButtons | checkRolesInButtons : config.userRole)" 
             (click)="openBottomSheet(config.bottomSheetButtons)">
             <mat-icon>more_vert</mat-icon>
         </button>

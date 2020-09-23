@@ -1,35 +1,36 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Observable } from 'rxjs';
 import { LoadingService } from 'src/app/core/services';
-import { BottomSheetMenuComponent } from 'src/app/shared-app/components';
+import { BaseTopNavComponent } from 'src/app/shared-app/components/base-top-nav.component';
 import { ButtonTypes } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces';
-import { TopDefaultNavConfig } from '../../main-nav-config.interface';
+import { BottomSheetMenuComponent } from '../bottom-sheet-menu/bottom-sheet-menu.component';
+import { MainTopNavConfig } from './main-top-nav-config.interface';
 
 @Component({
   selector: 'app-main-top-nav',
   templateUrl: './main-top-nav.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainTopNavComponent {
+export class MainTopNavComponent extends BaseTopNavComponent<MainTopNavConfig>{
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChild('navBar', {read: ElementRef}) navBar: ElementRef;
 
   ButtonTypes = ButtonTypes;
-  @Input() config: TopDefaultNavConfig;
-  @Input() currentUserRole: string;
-  @Output() menuBtnClicked = new EventEmitter();
   
   loading$: Observable<boolean> = this.loadingService.queryLoading$;
 
   searchBarHidden: boolean = true;
 
   constructor(
+    changeDetectorRef: ChangeDetectorRef,
     private _bottomSheet: MatBottomSheet,
-    private loadingService: LoadingService) {}
+    private loadingService: LoadingService) {
+      super(changeDetectorRef);
+  }
 
-  onMenuButtonClick = () => this.menuBtnClicked.emit();
+  onMenuButtonClick = () => this.toggleDrawer.emit();
   
   openBottomSheet = (buttons: AppButton[]) => this._bottomSheet.open(BottomSheetMenuComponent, { data: buttons });
 

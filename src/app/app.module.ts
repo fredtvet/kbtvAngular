@@ -13,13 +13,15 @@ import { CoreModule } from './core/core.module';
 import { AppLayoutModule } from './layout/app-layout.module';
 import { HomeComponent } from './home/home.component';
 import { SharedAppModule } from './shared-app/shared-app.module';
+import { HomeTopNavComponent } from './home/home-top-nav.component';
 
 registerLocaleData(norwayLocale, 'nb-NO');
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    HomeTopNavComponent,
   ],
   imports: [
     AppRoutingModule,

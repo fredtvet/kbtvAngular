@@ -12,7 +12,7 @@
 @include mat-tooltip-theme($kbtv-client-theme); //
 @include mat-radio-theme($kbtv-client-theme);
 @include mat-select-theme($kbtv-client-theme);
-
+@include mat-bottom-sheet-theme($kbtv-client-theme); // d
 
 //Customizations
 .mat-button-toggle-group{

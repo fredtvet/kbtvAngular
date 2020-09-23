@@ -7,8 +7,8 @@ import { GenericModelFormConfig, ModelFormViewConfig, ModelFormWrapperConfig } f
 import { Model } from 'src/app/core/models';
 import { ModelFormService } from 'src/app/core/services/model';
 import { StateAction } from 'src/app/core/state';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
-import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
+import { MainNavService } from 'src/app/layout';
+import { ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent } from 'src/app/shared/components';
 import { DataManagementStore } from '../data-management.store';
 import { DataConfig } from '../interfaces/data-config.interface';
 import { StoreState } from '../interfaces/store-state';
@@ -76,8 +76,10 @@ constructor(
   }
 
   private configureMainNav(){
-    let cfg = {title:  "Data"} as TopDefaultNavConfig;
-    this.mainNavService.addConfig({default: cfg});
+    this.mainNavService.addConfig({
+      topNavComponent: MainTopNavComponent, 
+      topNavConfig: {title:  "Data"}
+    });
   }
 }
 

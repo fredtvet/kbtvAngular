@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MissionNote } from 'src/app/core/models';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
+import { MainNavService } from 'src/app/layout';
 import { RolePresets } from 'src/app/shared-app/enums';
+import { MainTopNavComponent } from 'src/app/shared/components';
 import { MissionNoteListStore } from '../mission-note-list.store';
 
 @Component({
@@ -39,15 +40,17 @@ export class MissionNoteListComponent {
     );
 
   private configureMainNav(missionId: string){
-    let cfg = {
-      title:  "Notater",
-      backFn: this.onBack, 
-      backFnParams: [missionId]
-    } as TopDefaultNavConfig;
-    let fabs = [
-      {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openCreateNoteForm, allowedRoles: RolePresets.Internal}
-    ];
-    this.mainNavService.addConfig({default: cfg}, fabs);
+    this.mainNavService.addConfig({
+      topNavComponent: MainTopNavComponent, 
+      topNavConfig: {
+        title:  "Notater",
+        backFn: this.onBack, 
+        backFnParams: [missionId]
+      },
+      fabs: [
+        {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openCreateNoteForm, allowedRoles: RolePresets.Internal}
+      ],
+    });
   }
 
   private onBack = (missionId: string) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);

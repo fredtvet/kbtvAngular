@@ -3,7 +3,7 @@ import { ModelToStateHttpConverter } from 'src/app/core/model/model-to-state-htt
 import { DeleteModelStateCommand } from 'src/app/core/model/interfaces';
 import { DeleteModelWithChildrenHelper } from 'src/app/core/model/state-helpers/delete-model-with-children.helper';
 import { StateHttpConverter } from 'src/app/core/state/state-http-converter';
-import { translations } from 'src/app/shared-app/translations';
+import { translations } from 'src/app/shared/translations';
 
 @Injectable({providedIn: 'root'})
 export class DeleteModelToStateHttpConverter<TState, TCommand extends DeleteModelStateCommand>  

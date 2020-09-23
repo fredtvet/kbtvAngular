@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { FilterSheetService } from 'src/app/core/services/filter';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
+import { MainNavService } from 'src/app/layout';
 import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
-import { GroupByPeriod } from 'src/app/shared-app/enums';
 import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
-import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
-import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
+import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
+import { MainTopNavComponent } from 'src/app/shared/components';
+import { GroupByPeriod } from 'src/app/shared/enums';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
 
 @Component({
@@ -59,16 +59,18 @@ export class UserTimesheetWeekListComponent extends SubscriptionComponent implem
       .subscribe(f => this.store.addWeekFilterCriteria(f));
   }
 
-  private configureMainNav = (year: number) => {
-    let cfg: TopDefaultNavConfig = 
-      {title:  "Ukeliste", subTitle: year ? year.toString() : ""};
-
-    cfg.buttons = [{
-      icon: 'filter_list', 
-      callback: this.openWeekFilter,
-      colorClass: "color-accent"
-    }];
-
-    this.mainNavService.addConfig({default: cfg});
+  private configureMainNav = (year: number) => {   
+    this.mainNavService.addConfig({
+      topNavComponent: MainTopNavComponent, 
+      topNavConfig: {
+        title:  "Ukeliste", 
+        subTitle: year ? year.toString() : "",
+        buttons: [{
+          icon: 'filter_list', 
+          callback: this.openWeekFilter,
+          colorClass: "color-accent"
+        }]
+      }
+    });
   }
 }

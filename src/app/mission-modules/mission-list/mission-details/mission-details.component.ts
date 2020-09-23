@@ -5,10 +5,13 @@ import { tap } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
 import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
 import { NotificationService } from 'src/app/core/services/notification/notification.service';
-import { MainNavService, TopDetailNavConfig } from 'src/app/layout';
-import { RolePresets, Roles, TimesheetStatus } from 'src/app/shared-app/enums';
-import { AppFileUrlPipe } from 'src/app/shared-app/pipes/app-file-url.pipe';
+import { MainNavService } from 'src/app/layout';
+import { RolePresets, Roles } from 'src/app/shared-app/enums';
+import { AppFileUrlPipe } from 'src/app/shared/pipes/app-file-url.pipe';
+import { DetailTopNavComponent } from 'src/app/shared/components';
+import { DetailTopNavConfig } from 'src/app/shared/components/detail-top-nav/detail-top-nav-config.interface';
 import { MissionListStore } from '../mission-list.store';
+import { TimesheetStatus } from 'src/app/shared/enums';
 
 @Component({
   selector: 'app-mission-details',
@@ -54,21 +57,21 @@ export class MissionDetailsComponent{
     }]);
 
   private configureMainNav(mission: Mission){
-    let cfg = {
+    let topNavConfig: DetailTopNavConfig = {
       title: mission?.address?.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
       subTitle: (mission?.finished ? 'Oppdrag ferdig! ' : '') + 'ID: ' + mission?.id,
       subIcon: mission?.finished ? 'check' : '',
       imgSrc: this.appFileUrl.transform(mission, "missionheader"),
-      backFn: this.onBack 
-    } as TopDetailNavConfig;
+      backFn: this.onBack
+    };
 
-    cfg.bottomSheetButtons = [  
+    topNavConfig.bottomSheetButtons = [  
       {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal},
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission?.id], allowedRoles: [Roles.Leder]},
       {text: `${mission?.fileName ? 'Oppdater' : 'Legg til'} forsidebilde`, icon: "add_photo_alternate", callback: this.openHeaderImageInput, allowedRoles: [Roles.Leder]},
     ];
  
-    this.mainNavService.addConfig({detail: cfg});
+    this.mainNavService.addConfig({topNavComponent: DetailTopNavComponent, topNavConfig});
   }
 
   private onBack = () => this.router.navigate(['/oppdrag'])

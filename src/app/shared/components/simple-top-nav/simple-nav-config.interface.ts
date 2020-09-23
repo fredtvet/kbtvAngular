@@ -1,4 +1,4 @@
-import { AppButton } from '../../shared-app/interfaces/app-button.interface';
+import { AppButton } from 'src/app/shared-app/interfaces/app-button.interface';
 
 export interface SimpleNavConfig{
     title?: string;

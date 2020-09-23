@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { StateAction } from 'src/app/core/state/state-action.enum';
 import { SimpleTopNavComponent } from 'src/app/shared/components/simple-top-nav/simple-top-nav.component';
-import { SimpleNavConfig } from 'src/app/shared/interfaces/simple-nav-config.interface';
+import { SimpleNavConfig } from 'src/app/shared/components/simple-top-nav/simple-nav-config.interface';
 import { FormComponent } from '../form-component.interface';
 import { FormSheetWrapperConfig } from '../form-sheet-wrapper-config.interface';
 import { FormSheetWrapperResult } from '../form-sheet-wrapper-result.interface';

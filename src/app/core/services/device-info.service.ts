@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
-import { fromEvent, Observable, merge, Observer } from 'rxjs';
+import { fromEvent, Observable, merge, Observer, combineLatest } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+
+export interface DeviceInfo {
+  isOnline: boolean;
+  isXs: boolean;
+}
 
 @Injectable({providedIn: 'root'})
 export class DeviceInfoService {
@@ -23,4 +28,9 @@ export class DeviceInfoService {
       map(result => result.matches),
       shareReplay()
     )
+
+
+  deviceInfo$ = combineLatest([this.isOnline$, this.isXs$]).pipe(
+    map(([isOnline, isXs])=> { return {isOnline, isXs} })
+  )
 }

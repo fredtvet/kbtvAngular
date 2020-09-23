@@ -1,4 +1,4 @@
-<div class="p-2 max-width">
+<div class="p-2 max-width" style="position:relative">
 
   <div fxLayout="row" fxLayoutGap="8px">
     <span class="mat-elevation-z2 bg-foreground route-anim-block text-center p-6" fxFlex="50" matRipple
@@ -49,4 +49,5 @@
     [config]="{startIcon:'history', panelClass:'route-anim-block', endIcon: mission.finished ? 'check':'chevron_right'}" 
     [routerLink]="['/oppdrag', mission.id, 'detaljer']">{{mission.address}}
   </app-list-card>
+
 </div>

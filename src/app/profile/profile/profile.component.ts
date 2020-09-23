@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuthStore } from 'src/app/core/services/auth';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { FormService } from 'src/app/core/services/form/form.service';
+import { MainNavService } from 'src/app/layout';
+import { MainTopNavComponent } from 'src/app/shared/components';
 import { PasswordFormComponent } from '../password-form/password-form.component';
 import { ProfileFormComponent } from '../profile-form/profile-form.component';
 
@@ -30,7 +31,9 @@ export class ProfileComponent {
   logout = () => this.authStore.logout();
 
   private configureMainNav(){
-    let cfg = {title:  "Profil"} as TopDefaultNavConfig;
-    this.mainNavService.addConfig({default: cfg});
+    this.mainNavService.addConfig({
+      topNavComponent: MainTopNavComponent, 
+      topNavConfig: {title:  "Profil"}
+    });
   }
 }

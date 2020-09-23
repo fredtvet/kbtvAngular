@@ -6,7 +6,7 @@ import { ArrayHelperService } from 'src/app/core/services';
 import { ModelIdGeneratorService } from 'src/app/core/services/model';
 import { SaveModelToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-to-state-http.converter';
 import { StateCurrentUser } from 'src/app/core/state';
-import { TimesheetStatus } from 'src/app/shared-app/enums';
+import { TimesheetStatus } from 'src/app/shared/enums';
 
 @Injectable({providedIn: 'any'})
 export class SaveUserTimesheetToStateHttpConverter<TState extends StateCurrentUser>

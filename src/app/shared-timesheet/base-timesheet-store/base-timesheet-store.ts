@@ -9,7 +9,7 @@ import { Mission, Timesheet, User } from 'src/app/core/models';
 import { ApiService, ArrayHelperService, DateTimeService, TimesheetSummaryAggregator } from 'src/app/core/services';
 import { FilterStateHelper } from 'src/app/core/services/filter';
 import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
-import { GroupByPeriod } from 'src/app/shared-app/enums';
+import { GroupByPeriod } from 'src/app/shared/enums';
 import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
 import { TimesheetCriteria } from '../interfaces/timesheet-criteria.interface';
 import { TimesheetSummary } from '../interfaces/timesheet-summary.interface';

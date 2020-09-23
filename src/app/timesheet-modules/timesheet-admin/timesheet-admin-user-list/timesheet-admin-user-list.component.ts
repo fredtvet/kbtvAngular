@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { LoadingService } from 'src/app/core/services';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
-import { TimesheetAdminStore } from '../timesheet-admin.store';
 import { Router } from '@angular/router';
+import { LoadingService } from 'src/app/core/services';
+import { MainNavService } from 'src/app/layout';
+import { MainTopNavComponent } from 'src/app/shared/components';
+import { TimesheetAdminStore } from '../timesheet-admin.store';
 
 @Component({
   selector: 'app-timesheet-admin-user-list',
@@ -31,7 +32,9 @@ export class TimesheetAdminUserListComponent implements OnInit {
   }
 
   private configureMainNav(){
-    let cfg = {title: "Administrer timer"} as TopDefaultNavConfig;
-    this.mainNavService.addConfig({default: cfg});
+    this.mainNavService.addConfig({
+      topNavComponent: MainTopNavComponent, 
+      topNavConfig: {title:  "Administrer timer"}
+    });
   }
 }

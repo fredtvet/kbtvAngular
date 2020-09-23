@@ -1,6 +1,6 @@
 import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { AppButton } from '../../interfaces/app-button.interface';
+import { AppButton } from 'src/app/shared-app/interfaces';
 
 @Component({
   selector: 'app-bottom-sheet-menu',

@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
 import { SyncStore, SyncStoreConfig } from 'src/app/core/services/sync';
-import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
+import { MainNavService } from 'src/app/layout';
+import { ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-settings',
@@ -43,12 +43,10 @@ export class SettingsComponent {
   }  
 
   private configureMainNav(){
-    let cfg = {
-      title:  "Innstillinger",
-      backFn: this.onBack
-    } as TopDefaultNavConfig;
-    
-    this.mainNavService.addConfig({default: cfg});
+    this.mainNavService.addConfig({
+      topNavComponent: MainTopNavComponent, 
+      topNavConfig: {title:  "Innstillinger", backFn: this.onBack}
+    });
   }
 
   private onBack = () => this.router.navigate(['profil']);

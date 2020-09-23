@@ -1,86 +1,67 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { delay, distinctUntilChanged, map } from 'rxjs/operators';
+import { debounceTime, delay, map, tap } from 'rxjs/operators';
 import { AuthStore } from '../core/services/auth/auth.store';
 import { DeviceInfoService } from '../core/services/device-info.service';
-import { MainNavConfig, TopDefaultNavConfig, TopDetailNavConfig } from './main-nav-config.interface';
 import { AppButton } from '../shared-app/interfaces';
+import { MainNavConfig } from './interfaces/main-nav-config.interface';
+import { MainSideNavConfig } from './interfaces/main-side-nav-config.interface';
+import { SideNavNavigations } from './side-nav-navigations';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MainNavService {
 
-  private defaultConfig: MainNavConfig = {
-    topDefaultNavConfig: null,
-    topDetailNavConfig: null,
-    isXs: true,
-    currentUser: null,
-    fabs: []
-  };
-
-  private configSubject =  new BehaviorSubject<MainNavConfig>(this.defaultConfig);
-  private _config$ = this.configSubject.asObservable().pipe(distinctUntilChanged());
-  
-  config$: Observable<MainNavConfig> = combineLatest([
-    this._config$, 
-    this.deviceInfoService.isXs$, 
+  private sideNavConfig$: Observable<MainSideNavConfig> = combineLatest([
+    this.deviceInfoService.isOnline$, 
     this.authStore.currentUser$
     ]).pipe(
-      delay(10), //delay to fix bug where main nav not detecting config changes coming to quickly after route change
-      map(([config, isXs, currentUser]) => {
-        let cfg = {...config};
-        cfg.isXs = isXs;
-        cfg.currentUser = currentUser;
-        return cfg;
-      })
+      map(([isOnline, user]) => { return {isOnline, user, navigations: SideNavNavigations} })
     );
+
+  private configSubject =  new BehaviorSubject<MainNavConfig<any>>(null);
+  
+  config$: Observable<MainNavConfig<any>> = combineLatest([
+    this.configSubject.asObservable(), 
+    this.deviceInfoService.isXs$, 
+    this.sideNavConfig$
+    ]).pipe(
+      debounceTime(5),
+      map(([config, isXs, sideNavConfig]) => {return {...config, isXs, sideNavConfig} }),
+      tap(console.log)
+  );
 
   constructor(
     private authStore: AuthStore,
-    private deviceInfoService: DeviceInfoService) { }
-
-  get config(): MainNavConfig{
-    return {...this.configSubject.value};
-  }
-
-  get topDefaultNavConfig(): TopDefaultNavConfig{
-    return {...this.configSubject.value.topDefaultNavConfig};
-  }
-
-  get topDetailNavConfig(): TopDetailNavConfig{
-    return {...this.configSubject.value.topDetailNavConfig};
-  }
+    private deviceInfoService: DeviceInfoService,) { }
 
   get currentFabs(): AppButton[]{
-    return this.configSubject.value.fabs.slice();
+      return this.configSubject.value.fabs.slice();
   }
 
-  addConfig(topNav: {default?: TopDefaultNavConfig, detail?: TopDetailNavConfig}, fabs?: AppButton[]): void{
-    let mainCfg = this.config;
-
-    mainCfg.topDetailNavConfig = topNav.detail ? topNav.detail : null;  
-    mainCfg.topDefaultNavConfig = (topNav.default && !topNav.detail) ? topNav.default : null;  
-    mainCfg.fabs = fabs?.slice();
-
-    this.configSubject.next(mainCfg);
+  getConfig(): MainNavConfig<any> { 
+    if(!this.configSubject.value) return {};
+    return {...this.configSubject.value} 
+  }
+  
+  getTopNavConfig<TConfig extends Object>(): TConfig{
+    if(!this.configSubject.value?.topNavConfig) return {} as TConfig;
+    return {...this.configSubject.value.topNavConfig};
   }
 
-  updateConfig(topNav: {default?: TopDefaultNavConfig, detail?: TopDetailNavConfig}, fabs?: AppButton[]){
-    let updatedCfg: MainNavConfig = {topDefaultNavConfig: topNav.default, topDetailNavConfig: topNav.detail}
-    if(fabs) updatedCfg.fabs = fabs;
-    this.configSubject.next({...this.config, ...updatedCfg})
+  addConfig<TTopConfig>(cfg: MainNavConfig<TTopConfig>): void{
+    this.configSubject.next(cfg);
   }
 
-  addFabs(fabs: AppButton[]){
-    let mainCfg = this.config;   
-    mainCfg.fabs = mainCfg.fabs.slice().concat(fabs);
-    this.configSubject.next(mainCfg);
+  updateConfig<TTopConfig>(cfg: Partial<MainNavConfig<TTopConfig>>){
+    this.configSubject.next({...this.configSubject.value, ...cfg});
   }
 
-  removeFabsByIcons(icons: string[]){
-    let mainCfg = this.config;
-    mainCfg.fabs = mainCfg.fabs?.filter(x => !icons.includes(x.icon)); 
+  removeFabsByCallback(callbacks: Function[]){
+    let mainCfg = this.getConfig();
+    const signatures = callbacks.map(x => x.prototype.constructor)
+    mainCfg.fabs = mainCfg.fabs?.filter(x => !signatures.includes(x.callback.prototype.constructor)); 
     this.configSubject.next(mainCfg);
   }
 

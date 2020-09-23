@@ -6,7 +6,7 @@ import { Roles } from 'src/app/shared-app/enums';
 import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 import { MissionImageListStore } from '../mission-image-list.store';
 import { ModelFile } from 'src/app/core/models';
-import { appFileUrl } from 'src/app/shared-app/app-file-url.helper';
+import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
 
 @Component({
   selector: 'app-timesheet-card-dialog-wrapper',

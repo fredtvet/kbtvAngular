@@ -5,8 +5,9 @@ import { FilterComponent } from 'src/app/core/filter/interfaces/filter-component
 import { BaseFormViewComponent } from 'src/app/core/form/abstracts/base-form-view-component';
 import { Mission } from 'src/app/core/models';
 import { DateTimeService } from 'src/app/core/services';
-import { DateRangePresets, TimesheetStatus } from 'src/app/shared-app/enums';
+import { DateRangePresets } from 'src/app/shared-app/enums';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
+import { TimesheetStatus } from 'src/app/shared/enums';
 import { ActiveStringFilterConfig } from 'src/app/shared/interfaces/active-string-filter-config.interface';
 import { dateRangeValidator } from 'src/app/shared/validators/date-range.validator';
 import { isObjectValidator } from 'src/app/shared/validators/is-object.validator';

@@ -2,6 +2,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgModule } from '@angular/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -27,6 +28,7 @@ import { LazyStyles } from '../shared-app/enums';
       ScrollingModule, 
       MatButtonToggleModule,
       MatDialogModule,
+      MatBottomSheetModule,
    ],
    exports: [
       MatBadgeModule,
@@ -39,7 +41,8 @@ import { LazyStyles } from '../shared-app/enums';
       MatAutocompleteModule,
       ScrollingModule, 
       MatButtonToggleModule,
-      MatDialogModule
+      MatDialogModule,
+      MatBottomSheetModule
    ],
 })
 

@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { ApplicationRef, Injectable } from '@angular/core';
-import { BehaviorSubject, concat, EMPTY, interval, Observable, zip } from 'rxjs';
-import { distinctUntilKeyChanged, first, skip, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, concat, interval, Observable, zip } from 'rxjs';
+import { distinctUntilKeyChanged, first, skip, tap } from 'rxjs/operators';
 import { User } from '../../models/user.interface';
 import { BaseStore } from '../../state/abstracts/base.store';
 import { ApiService } from '../api.service';

@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
 import { SorterService } from 'src/app/core/services';
-import { RolePresets, Roles } from 'src/app/shared-app/enums';
-import { AppButton } from 'src/app/shared-app/interfaces';
 import { SyncStore } from 'src/app/core/services/sync';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
+import { MainNavService } from 'src/app/layout';
+import { RolePresets, Roles } from 'src/app/shared-app/enums';
+import { HomeTopNavComponent } from './home-top-nav.component';
 
 @Component({
   selector: 'app-home',
@@ -23,27 +23,22 @@ export class HomeComponent {
     private syncStore: SyncStore,
     private mainNavService: MainNavService,
     private sorterService: SorterService) {
-    this.configureMainNav();
+     this.configureMainNav();
   }
 
   ngOnInit() {
     this.missionHistory$ = this.syncStore.property$<Mission[]>("missions").pipe(
       filter(x => x != null),
       map(x => {
-        console.log('emit')
         this.sorterService.sortByDate(x, "lastVisited", "desc");
         return x.slice(0,4);
     }))
   }
-
-  private refresh = () => this.syncStore.syncAll();
-
+  
   private configureMainNav(){
-    let cfg = {
-      title:  "Hjem",
-      buttons: [{icon: "update", callback: this.refresh}] as AppButton[],
-    } as TopDefaultNavConfig;
-    this.mainNavService.addConfig({default: cfg});
+    this.mainNavService.addConfig({
+      topNavComponent: HomeTopNavComponent, topNavConfig: {}
+    });
   }
   
 

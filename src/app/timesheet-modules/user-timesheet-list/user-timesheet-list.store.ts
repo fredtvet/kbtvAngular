@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { combineLatest, Observable } from "rxjs";
-import { filter, map, tap } from "rxjs/operators";
+import { filter, map } from "rxjs/operators";
+import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interface';
+import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-response.interface';
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { Timesheet } from "src/app/core/models";
@@ -10,15 +12,13 @@ import {
   TimesheetSummaryAggregator
 } from "src/app/core/services";
 import { WeekToTimesheetCriteriaConverter } from 'src/app/core/services/utility/week-to-timesheet-criteria.converter';
-import { GroupByPeriod } from 'src/app/shared-app/enums';
+import { BaseExtendedStore } from 'src/app/core/state/abstracts/base.extended.store';
+import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
+import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
+import { GroupByPeriod } from 'src/app/shared/enums';
 import { StoreState } from './store-state';
-import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
-import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interface';
-import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
-import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-response.interface';
-import { BaseExtendedStore } from 'src/app/core/state/abstracts/base.extended.store';
 
 @Injectable({
   providedIn: 'any',

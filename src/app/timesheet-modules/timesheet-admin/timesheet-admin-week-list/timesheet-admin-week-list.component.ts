@@ -1,18 +1,19 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map, takeUntil, tap } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
+import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
 import { Timesheet } from 'src/app/core/models';
 import { LoadingService } from 'src/app/core/services';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
-import { TimesheetAdminStore } from '../timesheet-admin.store';
-import { TimesheetStatus } from 'src/app/shared-app/enums';
-import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { FilterSheetService } from 'src/app/core/services/filter';
-import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
-import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
-import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
+import { MainNavService } from 'src/app/layout';
 import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
+import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
+import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
+import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
+import { MainTopNavComponent } from 'src/app/shared/components';
+import { TimesheetStatus } from 'src/app/shared/enums';
+import { TimesheetAdminStore } from '../timesheet-admin.store';
 
 @Component({
   selector: 'app-timesheet-admin-week-list',
@@ -71,14 +72,15 @@ export class TimesheetAdminWeekListComponent extends SubscriptionComponent{
   }
 
   private configureNav(criteria: TimesheetCriteria){
-    let cfg = {
-      title:  "Uker",
-      subTitle: this.store.weekCriteria?.year || '' + ' - ' + this.store.weekCriteria?.userName || '',
-      backFn: this.onBack,
-      buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]
-    } as TopDefaultNavConfig;
-    
-    this.mainNavService.addConfig({default: cfg});
+    this.mainNavService.addConfig({
+      topNavComponent: MainTopNavComponent, 
+      topNavConfig: {
+        title:  "Uker",
+        subTitle: this.store.weekCriteria?.year || '' + ' - ' + this.store.weekCriteria?.userName || '',
+        backFn: this.onBack,
+        buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]
+      }
+    });
   }
   
   trackByWeek = (index:number, summary:TimesheetSummary): number => summary.week;

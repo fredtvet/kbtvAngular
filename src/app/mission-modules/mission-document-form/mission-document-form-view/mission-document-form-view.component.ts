@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BaseModelFormViewComponent, ModelFormViewConfig } from 'src/app/core/model/form';
 import { SaveModelWithFileStateCommand } from 'src/app/core/model/interfaces';
 import { AppDocumentType, MissionDocument } from 'src/app/core/models';
-import { DocumentExtensions } from 'src/app/shared/constants/file-extension-groups';
+import { DocumentFileExtensions } from 'src/app/shared/constants/document-file-extensions.const';
 import { fileExtensionValidator } from 'src/app/shared/validators/file-extension.validator';
 import { MissionDocumentFormState } from './mission-document-form-state.interface';
 
@@ -25,7 +25,7 @@ export class MissionDocumentFormViewComponent extends BaseModelFormViewComponent
     let file = null;
     if(e.target.files.length > 0) 
       file = e.target.files[0]; 
-      
+
     this.file.markAsDirty();
     this.file.setValue(file);
   }
@@ -35,7 +35,7 @@ export class MissionDocumentFormViewComponent extends BaseModelFormViewComponent
       missionId: cfg.lockedValues?.missionId,
       file: [null, [
         Validators.required,
-        fileExtensionValidator(DocumentExtensions)
+        fileExtensionValidator(DocumentFileExtensions)
       ]],
       documentType: this._formBuilder.group({
         name: [null, [
@@ -59,10 +59,8 @@ export class MissionDocumentFormViewComponent extends BaseModelFormViewComponent
     if(!document.documentType.name) document.documentTypeId = null;
 
     if(existingType || !document.documentType.name) document.documentType = null;
-    console.log(document.file)
     const file = document.file;
     delete document.file;
-    console.log(file);
     return {entity: document, file};
   }
 

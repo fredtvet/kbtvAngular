@@ -7,11 +7,12 @@ import { MissionImage, ModelFile } from 'src/app/core/models';
 import { DeviceInfoService, DownloaderService, NotificationService } from 'src/app/core/services';
 import { FormService } from 'src/app/core/services/form/form.service';
 import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
-import { MainNavService, TopDefaultNavConfig } from 'src/app/layout';
-import { appFileUrl } from 'src/app/shared-app/app-file-url.helper';
+import { MainNavService } from 'src/app/layout';
+import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces';
-import { ConfirmDialogComponent, ConfirmDialogConfig, SelectableListBase } from 'src/app/shared/components';
+import { ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent, SelectableListBase } from 'src/app/shared/components';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav/main-top-nav-config.interface';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MailImageFormComponent } from '../mail-image-form.component';
 import { MissionImageListStore } from '../mission-image-list.store';
@@ -58,7 +59,7 @@ export class MissionImageListComponent {
     private router: Router) {}
 
   ngOnInit() { 
-    this.configureMainNav(this.missionId);
+    this.configureMainNav();
     this.images$ = this.store.getByMissionId$(this.missionId).pipe(
       tap(this.updateMainNav)
     );
@@ -94,9 +95,9 @@ export class MissionImageListComponent {
     let totalFabCount = this.staticFabs.length + this.selectedItemsFabs.length;
 
     if(this.currentSelections.length === 0 && fabs.length === totalFabCount) //If no selections remove fabs if existing
-      this.mainNavService.removeFabsByIcons(this.selectedItemsFabs.map(x => x.icon))
+      this.mainNavService.removeFabsByCallback(this.selectedItemsFabs.map(x => x.callback))
     else if (this.currentSelections.length > 0 && fabs.length === this.staticFabs.length)
-      this.mainNavService.addFabs(this.selectedItemsFabs);
+      this.mainNavService.updateConfig({fabs: this.selectedItemsFabs});
   }
 
   private deleteSelectedImages = () => {
@@ -126,27 +127,30 @@ export class MissionImageListComponent {
   private downloadImages = (imgs: MissionImage[]) => 
     this.downloaderService.downloadUrls(imgs.map(x => appFileUrl(x.fileName, "images")));
 
-  private onBack = (missionId: string) => this.router.navigate(['/oppdrag', missionId, 'detaljer']);
+  private onBack = () => this.router.navigate(['/oppdrag', this.missionId, 'detaljer']);
 
-  private configureMainNav(missionId: string){
-    let cfg = {
-      title:  "Bilder",
-      backFn: this.onBack,
-      backFnParams: [missionId]
-    } as TopDefaultNavConfig;
-
-    this.mainNavService.addConfig({default: cfg}, this.staticFabs);
+  private configureMainNav(){
+    this.mainNavService.addConfig({
+      fabs: this.staticFabs,
+      topNavComponent: MainTopNavComponent, 
+      topNavConfig: {
+        title:  "Bilder",
+        backFn: this.onBack
+      }
+    });
   }
 
   private updateMainNav = (images: MissionImage[]) => {
-    let cfg = this.mainNavService.topDefaultNavConfig; 
-    cfg.bottomSheetButtons = [
+    let topNavConfig = this.mainNavService.getTopNavConfig<MainTopNavConfig>(); 
+
+    topNavConfig.bottomSheetButtons = [
       {icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, 
       params: [images.map(x => x.id)], allowedRoles: RolePresets.Authority},
       {icon: "cloud_download", text: "Last ned alle", callback: this.downloadImages, 
       params: [images]},
     ]
-    this.mainNavService.addConfig({default: cfg}, this.staticFabs);
+    
+    this.mainNavService.updateConfig({topNavConfig});
   }  
 
 

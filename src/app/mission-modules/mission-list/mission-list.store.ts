@@ -18,10 +18,10 @@ import { NotificationType } from 'src/app/core/services/notification/notificatio
 import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
 import { StateAction } from 'src/app/core/state';
 import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
-import { ImageExtensions } from 'src/app/shared/constants/file-extension-groups';
+import { ImageFileExtensions } from 'src/app/shared/constants/image-file-extensions.const';
+import { validateFileExtension } from 'src/app/shared/helpers';
 import { MissionCriteria } from 'src/app/shared/interfaces';
 import { MissionFilter } from 'src/app/shared/mission-filter.model';
-import { validateFileExtension } from 'src/app/shared/validators/file-extension.validator';
 import { StoreState } from './interfaces/store-state';
 import { MissionFilterViewConfig } from './mission-filter-view/mission-filter-view-config.interface';
 
@@ -84,7 +84,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
     this._setStateVoid({ missionTypes: [...this.getStateProperty<any[]>("missionTypes", true), {id:"test", name: "test"}] });
 
   updateHeaderImage(id: string, file: File): void {
-    if(!validateFileExtension(file, ImageExtensions)) 
+    if(!validateFileExtension(file, ImageFileExtensions)) 
       return this.notificationService.notify(
           {title: "Filtypen er ikke tillatt.", type: NotificationType.Error}
       );  

@@ -1,4 +1,4 @@
-<mat-toolbar #navBar class="toolbar-slim bg-primary mat-elevation-z4 color-foreground">
+<mat-toolbar #navBar class="toolbar-slim bg-primary mat-elevation-z4 color-foreground" *ngIf="config">
 
   <ng-container *ngIf="searchBarHidden || !config?.searchBar else searchBarContent">
     <app-button *ngIf="config?.backFn else menuBtn" [config]="{
@@ -38,7 +38,7 @@
     <app-button *ngFor="let button of config?.buttons | transformButtons: ButtonTypes.Icon" [config]="button">
     </app-button>
 
-    <button mat-icon-button *ngIf="(config?.bottomSheetButtons | checkRolesInButtons : currentUserRole)"
+    <button mat-icon-button *ngIf="(config?.bottomSheetButtons | checkRolesInButtons : config.userRole)"
       (click)="openBottomSheet(config.bottomSheetButtons)">
 
       <mat-icon>more_vert</mat-icon>
