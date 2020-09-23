@@ -3,7 +3,6 @@ import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from 'rxjs';
 import { map, takeUntil } from "rxjs/operators";
-import { Timesheet } from 'src/app/core/models';
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
 import { MainNavService } from 'src/app/layout';
@@ -33,7 +32,7 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
   isXs$ = this.deviceInfoService.isXs$;
 
   summaries$: Observable<{ [key: number]: TimesheetSummary }> = this.store.timesheetSummaries$.pipe(
-    map(x => this.dateTimeService.mapObjectsToWeekdays(x, "date"))
+    map(x => this.dateTimeService.mapObjectsToWeekdays(x, "date")),
   );
 
   constructor(

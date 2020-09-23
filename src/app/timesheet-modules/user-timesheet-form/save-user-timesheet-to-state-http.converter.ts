@@ -34,7 +34,7 @@ export class SaveUserTimesheetToStateHttpConverter<TState extends StateCurrentUs
         if(inputTimesheet)
             modifiedTimesheet = {...inputTimesheet,
                 status: TimesheetStatus.Open,
-                userName: state?.currentUser,
+                userName: state?.currentUser?.userName,
                 startTime: new Date(inputTimesheet.startTime).toISOString(),     
                 endTime: new Date(inputTimesheet.endTime).toISOString(),
                 totalHours: 
