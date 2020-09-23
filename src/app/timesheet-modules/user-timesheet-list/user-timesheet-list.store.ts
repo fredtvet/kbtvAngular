@@ -38,7 +38,7 @@ export class UserTimesheetListStore extends BaseExtendedStore<StoreState>
     this.stateSlice$(["userTimesheets", "userTimesheetListCriteria", "missions"]).pipe(
           filter(x => x.userTimesheets != null && x.userTimesheetListCriteria != null),
           map(state => { 
-            const relationCfg = new GetWithRelationsConfig("userTimesheets", null, {include: {mission: true}})
+            const relationCfg = new GetWithRelationsConfig("userTimesheets", null, {include: {missions: true}})
             const filter = new TimesheetFilter(state.userTimesheetListCriteria);
             return {
               criteria: filter.criteria,
@@ -62,7 +62,7 @@ export class UserTimesheetListStore extends BaseExtendedStore<StoreState>
   constructor(
     apiService: ApiService,
     arrayHelperService: ArrayHelperService,
-    private getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>,
+    private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
     private weekToTimesheetCriteriaConverter: WeekToTimesheetCriteriaConverter,
     private timesheetSummaryAggregator: TimesheetSummaryAggregator
   ) {

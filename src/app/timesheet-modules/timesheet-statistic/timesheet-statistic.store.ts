@@ -44,7 +44,7 @@ export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState>
         apiService: ApiService,        
         dateTimeService: DateTimeService,
         summaryAggregator: TimesheetSummaryAggregator,
-        getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>,
+        getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
     ){
         super(
             arrayHelperService, 

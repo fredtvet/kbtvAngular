@@ -1,7 +1,8 @@
+import { Prop } from '../../model/state.types';
 import { StoreState } from './interfaces/store-state';
 
 export const SyncStateConfig = 
-    <{[key in keyof Omit<StoreState, "timestamps" | "syncConfig">]: {responseKey: string, requestKey: string}}>
+    <{[key in Prop<Omit<StoreState, "timestamps" | "syncConfig">>]: {responseKey: string, requestKey: string}}>
 {
     missions: {responseKey: 'missionSync', requestKey: 'missionTimestamp'},
     missionTypes: {responseKey: 'missionTypeSync', requestKey: 'missionTypeTimestamp'},

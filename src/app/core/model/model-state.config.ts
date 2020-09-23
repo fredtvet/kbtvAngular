@@ -1,28 +1,28 @@
 
 import { ApiUrl } from '../api-url.enum';
 import { ModelState } from './model.state';
-import { StateProp } from './state.types';
+import { Prop } from './state.types';
 
-export interface ModelConfig<TState> { 
+export interface ModelConfig { 
     apiUrl: ApiUrl, 
     identifier: string, 
     notPersisted?: boolean, 
     foreignProp?: string,
     foreignKey?: string,
     displayProp?: string,
-    children?: StateProp<TState>[],
-    foreigns?: StateProp<TState>[]
+    children?: Prop<ModelState>[],
+    foreigns?: Prop<ModelState>[]
 }
 
 export class ModelStateConfig {
-    static get<TState>(prop: StateProp<TState>): ModelConfig<TState>{
+    static get(prop: Prop<ModelState>): ModelConfig{
         const cfg = ModelStateConfigData[prop];
         if(!cfg) console.error(`No model state config for property ${prop}`);
-        return cfg as any;
+        return cfg;
     }
 }
 
-export const ModelStateConfigData: {[key in keyof ModelState]: ModelConfig<ModelState>} = {
+export const ModelStateConfigData: {[key in Prop<ModelState>]: ModelConfig} = {
     missions: {
         apiUrl: ApiUrl.Mission, 
         identifier: "id", 

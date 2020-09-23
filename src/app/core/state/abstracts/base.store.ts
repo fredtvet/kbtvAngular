@@ -2,7 +2,7 @@ import { ObservableStore } from '@codewithdan/observable-store';
 import { stateFunc } from '@codewithdan/observable-store/dist/observable-store';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, skip } from 'rxjs/operators';
-import { StateProp } from '../../model/state.types';
+import { Prop } from '../../model/state.types';
 import { ApiService } from '../../services/api.service';
 import { ArrayHelperService } from '../../services/utility/array-helper.service';
 
@@ -14,14 +14,14 @@ export abstract class BaseStore<TState> extends ObservableStore<TState>  {
         super({logStateChanges: true, trackStateHistory: false});
     }
     
-    property$<T>(property: StateProp<TState>): Observable<T>{ 
+    property$<T>(property: Prop<TState>): Observable<T>{ 
         return  this.globalStateWithPropertyChanges.pipe(
             map(({state}) => state ? state[property as string] : null),
             distinctUntilChanged()
         )
     }
 
-    propertyChanges$<T>(property: StateProp<TState>): Observable<T>{ 
+    propertyChanges$<T>(property: Prop<TState>): Observable<T>{ 
         return  this.globalStateWithPropertyChanges.pipe(
             skip(1), //Skip initial value
             filter(({stateChanges}) => stateChanges.hasOwnProperty(property)), 

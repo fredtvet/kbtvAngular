@@ -59,7 +59,7 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
         apiService: ApiService,    
         protected dateTimeService: DateTimeService,
         private timesheetSummaryAggregator: TimesheetSummaryAggregator,
-        private getRangeWithRelationsHelper: GetRangeWithRelationsHelper<TState>,
+        private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
         private settings: BaseTimesheetStoreSettings<TState>) {
             super(arrayHelperService, apiService)           
             this._setStateVoid(settings.initialState);
@@ -109,7 +109,7 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
   }
 
   private addMissionToTimesheets(state: {timesheets: Timesheet[], missions: Mission[]}): Timesheet[]{
-    const relationCfg = new GetWithRelationsConfig("timesheets", null, {include:{mission: true}});
+    const relationCfg = new GetWithRelationsConfig("timesheets", null, {include:{missions: true}});
     return this.getRangeWithRelationsHelper.get(state, relationCfg);
   }
    

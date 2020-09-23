@@ -41,6 +41,6 @@ export class DeleteModelToStateHttpConverter<TState, TCommand extends DeleteMode
     }
 
     protected modifyState(state: TState, command: TCommand): Partial<TState>{  
-        return this.deleteModelWithChildrenHelper.delete(state, command.stateProp as keyof TState, command)    
+        return this.deleteModelWithChildrenHelper.delete(state, command.stateProp, command)    
     }
 }

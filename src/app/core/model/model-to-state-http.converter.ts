@@ -5,13 +5,13 @@ import { ModelStateCommand } from './interfaces';
 export abstract class ModelToStateHttpConverter<TState, TCommand extends ModelStateCommand> 
     extends BaseStateToHttpConverter<TState, TCommand> implements StateHttpConverter<TState, TCommand>{
 
-    protected modelConfig: ModelConfig<TState>;
+    protected modelConfig: ModelConfig;
 
     constructor(){ super(); }
 
     protected setupCommand(command: TCommand): TCommand {     
         if(!command.stateProp) console.error(`State property is required`);
-        this.modelConfig = ModelStateConfig.get<TState>(command.stateProp as any);
+        this.modelConfig = ModelStateConfig.get(command.stateProp);
         return command;
     }
 

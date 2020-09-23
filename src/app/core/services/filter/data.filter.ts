@@ -1,3 +1,5 @@
+import { Prop } from '../../model/state.types';
+
 export abstract class DataFilter<TRecord, TCriteria>{
 
     activeCriteriaCount: number;
@@ -24,7 +26,7 @@ export abstract class DataFilter<TRecord, TCriteria>{
         return true; 
     }
 
-    protected activeCriteriaCountIgnoreCheck(value: any, key: keyof TCriteria): boolean{
+    protected activeCriteriaCountIgnoreCheck(value: any, key: Prop<TCriteria>): boolean{
         return false;
     }
 

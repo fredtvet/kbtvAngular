@@ -6,16 +6,16 @@ import { ModelState } from '../model.state';
 import { ModelStateConfig } from '../model-state.config';
 
 @Injectable({providedIn: "root"})
-export class GetWithRelationsHelper<TState>  {
+export class GetWithRelationsHelper  {
 
     constructor( private arrayHelperService: ArrayHelperService) { }
 
     get<TModel extends Model>( 
         state: Partial<ModelState>,
-        cfg: GetWithRelationsConfig<TState>,
+        cfg: GetWithRelationsConfig,
         id: any, 
     ): TModel{
-        const modelCfg = ModelStateConfig.get<TState>(cfg.modelProp); 
+        const modelCfg = ModelStateConfig.get(cfg.modelProp); 
 
         const modelState = state[cfg.modelProp] as TModel[];
         if(!modelState || modelState.length == 0) return null;
@@ -24,14 +24,14 @@ export class GetWithRelationsHelper<TState>  {
         if(!entity) return entity;
 
         for(const fkStateProp of cfg.includedForeignProps){
-            const fkPropConfig = ModelStateConfig.get(fkStateProp as string);
+            const fkPropConfig = ModelStateConfig.get(fkStateProp);
             entity[fkPropConfig.foreignProp] = //Set object prop in detail prop equals to object with ID = fk id
-                this.arrayHelperService.find(state[fkStateProp as string], entity[fkPropConfig.foreignKey], fkPropConfig.identifier);
+                this.arrayHelperService.find<any>(state[fkStateProp], entity[fkPropConfig.foreignKey], fkPropConfig.identifier);
         }
 
         for(const childStateProp of cfg.includedChildProps){
-            entity[childStateProp as string] = //Set object prop in detail prop equals to object with ID = fk id
-                this.arrayHelperService.filter(state[childStateProp as string], (x) => x[modelCfg.foreignKey] === id);
+            entity[childStateProp] = //Set object prop in detail prop equals to object with ID = fk id
+                this.arrayHelperService.filter<any>(state[childStateProp], (x) => x[modelCfg.foreignKey] === id);
         }
 
         return entity;

@@ -1,6 +1,7 @@
 import { merge, Observable, of } from 'rxjs';
 import { filter, map, skip, take, tap } from 'rxjs/operators';
-import { StateProp } from '../../model/state.types';
+import { ModelState } from '../../model/model.state';
+import { Prop } from '../../model/state.types';
 import { ApiService } from '../../services/api.service';
 import { ArrayHelperService } from '../../services/utility/array-helper.service';
 import { BaseStore } from './base.store';
@@ -13,12 +14,12 @@ export abstract class BaseExtendedStore<TState> extends BaseStore<TState>  {
         super(arrayHelperService, apiService);
     }
     
-    property$ =   <T>(property: StateProp<TState>, fetch$?: Observable<T>): Observable<T> => { 
+    property$ =   <T>(property: Prop<TState>, fetch$?: Observable<T>): Observable<T> => { 
        if(fetch$) return this._propertyWithFetch$(property, fetch$);
        return super.property$(property);
     }
 
-    stateSlice$ = (properties: StateProp<TState>[]): Observable<Partial<TState>> => { 
+    stateSlice$ = (properties: Prop<TState>[]): Observable<Partial<TState>> => { 
         if(!properties || properties.length === 0) return of(null);
         return  this.globalStateWithPropertyChanges.pipe(
             map(({state}) => {
@@ -29,7 +30,7 @@ export abstract class BaseExtendedStore<TState> extends BaseStore<TState>  {
         )
     }
 
-    stateSliceChanges$ = (properties: StateProp<TState>[]): Observable<Partial<TState>> => { 
+    stateSliceChanges$ = (properties: Prop<TState>[]): Observable<Partial<TState>> => { 
         if(!properties || properties.length === 0) return of(null);
         return  this.globalStateWithPropertyChanges.pipe( //State changes
             skip(1), //Skip initial value
@@ -46,7 +47,7 @@ export abstract class BaseExtendedStore<TState> extends BaseStore<TState>  {
         )
     }
 
-    protected getProperties = (properties: StateProp<TState>[], deepClone?: boolean): Partial<TState> => {
+    protected getProperties = (properties: Prop<TState>[], deepClone?: boolean): Partial<TState> => {
         const state: Partial<TState> = {};
         for(let prop of properties) { 
             state[prop] = this.getStateProperty(prop, deepClone) 
@@ -54,7 +55,7 @@ export abstract class BaseExtendedStore<TState> extends BaseStore<TState>  {
         return state;
     }
 
-    private _propertyWithFetch$<T>(property: StateProp<TState>, fetch$: Observable<T>): Observable<T>{
+    private _propertyWithFetch$<T>(property: Prop<TState>, fetch$: Observable<T>): Observable<T>{
         const fetchData$ = fetch$.pipe(take(1),filter(x => x != null), tap(arr => {
                 let state = {} as Partial<TState>;
                 state[property] = arr as any;

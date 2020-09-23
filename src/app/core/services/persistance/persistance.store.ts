@@ -7,6 +7,7 @@ import { BaseStore } from '../../state/abstracts/base.store';
 import { ArrayHelperService } from '../utility/array-helper.service';
 import { ApiService } from '../api.service';
 import { StateLastAction } from '../../state';
+import { Prop } from '../../model/state.types';
 
 const InitializeAction = "initalize_persistedState";
 
@@ -36,7 +37,7 @@ export class PersistanceStore extends BaseStore<Object & StateLastAction> {
         ).subscribe();
     }
 
-    private set<T>(property: keyof typeof PersistedStateConfig, payload: T): void{
+    private set<T>(property: Prop<typeof PersistedStateConfig>, payload: T): void{
         this.removePayloadTempProps(payload);
         if(PersistedStateConfig[property]) 
             from(set(property, payload, this.dbStore))
@@ -45,7 +46,7 @@ export class PersistanceStore extends BaseStore<Object & StateLastAction> {
             window.localStorage.setItem(property as string, payload ? JSON.stringify(payload) : null)
     }
 
-    private get$<T>(property: keyof typeof PersistedStateConfig): Observable<T>{
+    private get$<T>(property: Prop<typeof PersistedStateConfig>): Observable<T>{
         return from(get<T>(property, this.dbStore))
     }
 

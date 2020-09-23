@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { GenericModelFormConfig, ModelFormViewConfig, ModelFormWrapperConfig } from 'src/app/core/model/form';
+import { ModelState } from 'src/app/core/model/model.state';
+import { Prop } from 'src/app/core/model/state.types';
 import { Model } from 'src/app/core/models';
 import { ModelFormService } from 'src/app/core/services/model';
 import { StateAction } from 'src/app/core/state';
@@ -40,7 +42,8 @@ constructor(
     this.configureMainNav();
   }
 
-  updateSelectedProperty = (prop: keyof StoreState) => this.store.updateSelectedProperty(prop);
+  updateSelectedProperty = (prop: Prop<ModelState>) => 
+    this.store.updateSelectedProperty(prop);
   
   updateItem(command: any): void{
     if(!command || command === null) return;

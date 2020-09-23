@@ -4,15 +4,16 @@ import { ArrayHelperService } from '../../services/utility/array-helper.service'
 import { Model } from '../../models';
 import { ModelState } from '../model.state';
 import { ModelStateConfig, ModelConfig } from '../model-state.config';
+import { Prop } from '../state.types';
 
 @Injectable({providedIn: "root"})
-export class GetRangeWithRelationsHelper<TState>  {
+export class GetRangeWithRelationsHelper  {
 
     constructor(private arrayHelperService: ArrayHelperService) {}
 
     get<TModel extends Model>(
         state: Partial<ModelState>,
-        cfg: GetWithRelationsConfig<TState>,
+        cfg: GetWithRelationsConfig,
         filter?: (value: TModel, index?: number, Array?: any[]) => boolean, 
     ): TModel[] {
         const modelCfg = ModelStateConfig.get(cfg.modelProp); 
@@ -48,7 +49,7 @@ export class GetRangeWithRelationsHelper<TState>  {
     
     //Lookup of children grouped by foreign key
     private createGroupedLookups(
-        props: (keyof Partial<ModelState>)[], 
+        props: Prop<ModelState>[], 
         groupBy: string, state: Object
     ): {[key: string]: {[key: string]: Object[]}}{
         const lookups = {} as {[key: string]: {[key: string]: Object[]}}
@@ -60,31 +61,31 @@ export class GetRangeWithRelationsHelper<TState>  {
 
     //Lookup of foreign entities by identifier
     private createStatePropertyLookups(
-        props: (keyof Partial<ModelState>)[], 
+        props: Prop<ModelState>[], 
         state: Object
     ): {[key: string]: Object}{
-        const lookups = {} as {[key: string]: Object};
+        const lookups: {[key: string]: Object} = {};
         for(const prop of props){ //Convert foreign state props to lookup tables
-            const cfg = ModelStateConfig.get(prop as string); 
+            const cfg = ModelStateConfig.get(prop); 
             lookups[prop] = this.arrayHelperService.convertArrayToObject(state[prop], cfg.identifier);
         }
         return lookups;
     }
 
     private mapForeignsToEntity<T>(
-        props: (keyof Partial<ModelState>)[], 
+        props: Prop<ModelState>[], 
         lookups: {[key: string]: Object}, 
         entity: T
     ): void{
         for(const foreignProp of props){ //Map foreign entity to entity
-            const foreignCfg = ModelStateConfig.get(foreignProp as string);
+            const foreignCfg = ModelStateConfig.get(foreignProp);
             entity[foreignCfg.foreignProp] = lookups[foreignProp][entity[foreignCfg.foreignKey]]
         }
     }
 
     private mapChildrenToEntity<T>(
-        props: (keyof Partial<ModelState>)[], 
-        propCfg: ModelConfig<TState>, 
+        props: Prop<ModelState>[], 
+        propCfg: ModelConfig, 
         lookups: {[key: string]: Object}, 
         entity: T
     ): void{

@@ -21,7 +21,7 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
   rowData: any = [];
 
   //Create map with foreignProp as key, to lookup via model class properties
-  private propCfgMap: {[foreignKey: string]: ModelConfig<ModelState> & {stateProp: string}} = {};
+  private propCfgMap: {[foreignKey: string]: ModelConfig & {stateProp: string}} = {};
   private foreignsIdMap: {[foreignKey: string]: {[id: string]: Model}} = {}
   private foreignsDisplayMap: {[foreignKey: string]: {[displayProp: string]: Model}} = {}
 
@@ -49,9 +49,9 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
         const entities = cfg.foreigns[fkStateKey];
         if(entities){
           this.foreignsIdMap[fkCfg.foreignKey] = 
-            this.arrayHelperService.convertArrayToObject(entities, fkCfg.identifier);
+            this.arrayHelperService.convertArrayToObject<Model>(entities, fkCfg.identifier);
           this.foreignsDisplayMap[fkCfg.foreignKey] = 
-            this.arrayHelperService.convertArrayToObject(entities, fkCfg.displayProp);
+            this.arrayHelperService.convertArrayToObject<Model>(entities, fkCfg.displayProp);
         }
       };
     }

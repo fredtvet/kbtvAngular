@@ -1,21 +1,22 @@
 import { ModelConfig, ModelStateConfig } from '../model-state.config';
 import { RelationIncludeConfig } from '../../state';
-import { StateProp } from '../state.types';
+import { Prop } from '../state.types';
+import { ModelState } from '../model.state';
 
-export class GetWithRelationsConfig<TState> {
+export class GetWithRelationsConfig {
 
-  private propConfig: ModelConfig<TState>;
+  private propConfig: ModelConfig;
 
-  includedForeignProps: StateProp<TState>[];
-  includedChildProps: StateProp<TState>[];
-  includedProps: StateProp<TState>[];
+  includedForeignProps: Prop<ModelState>[];
+  includedChildProps: Prop<ModelState>[];
+  includedProps: Prop<ModelState>[];
 
   constructor(
-    readonly modelProp: StateProp<TState>,
+    readonly modelProp: Prop<ModelState>,
     childrenCfg?: RelationIncludeConfig,
     foreignsCfg?: RelationIncludeConfig
   ) {
-    this.propConfig = ModelStateConfig.get<TState>(this.modelProp);
+    this.propConfig = ModelStateConfig.get(this.modelProp);
 
     this.includedForeignProps = 
         this.getIncludedProps(foreignsCfg, this.propConfig.foreigns)
@@ -26,8 +27,8 @@ export class GetWithRelationsConfig<TState> {
     this.includedProps = [modelProp, ...this.includedChildProps, ...this.includedForeignProps]
   }
 
-  private getIncludedProps(cfg: RelationIncludeConfig, props: StateProp<TState>[]): StateProp<TState>[]{
-    let included: StateProp<TState>[] = [];
+  private getIncludedProps(cfg: RelationIncludeConfig, props: Prop<ModelState>[]): Prop<ModelState>[]{
+    let included: Prop<ModelState>[] = [];
     if(!cfg || !props) return included; 
 
     if(cfg.includeAll)

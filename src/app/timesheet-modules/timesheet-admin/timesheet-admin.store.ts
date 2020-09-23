@@ -43,7 +43,7 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implemen
         apiService: ApiService,
         dateTimeService: DateTimeService,
         summaryAggregator: TimesheetSummaryAggregator,
-        getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>,
+        getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
         private stateHttpCommandHandler: StateHttpCommandHandler,
         private weekToTimesheetCriteriaConverter: WeekToTimesheetCriteriaConverter,
         private saveStateHttpConverter: SaveModelToStateHttpConverter<StoreState, SaveModelStateCommand<Timesheet>>

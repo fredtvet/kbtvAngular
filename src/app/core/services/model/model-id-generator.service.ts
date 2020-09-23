@@ -10,8 +10,9 @@ export class ModelIdGeneratorService {
 
   constructor(private idGenerator: IdGeneratorService) {}
 
- generateOnEntity<TModel extends Model>(entity: TModel, modelCfg: ModelConfig<any>, ignoreForeigns?: boolean): TModel{
+ generateOnEntity<TModel extends Model>(entity: TModel, modelCfg: ModelConfig): TModel{
     if(!modelCfg) console.trace("No model state config provided");
+    
     if(!entity[modelCfg.identifier]) //If entity no id, generate id
         entity[modelCfg.identifier] = this.idGenerator.generate();
 

@@ -1,1 +1,1 @@
-export type StateProp<TState> = Extract<keyof TState, string>
+export type Prop<T> = Extract<keyof T, string>

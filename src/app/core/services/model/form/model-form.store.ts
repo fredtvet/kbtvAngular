@@ -19,7 +19,7 @@ export class ModelFormStore extends BaseModelFormStore<ModelState, Model> {
     stateHttpCommandHandler: StateHttpCommandHandler,
     saveStateHttpConverter: SaveModelToStateHttpConverter<ModelState, SaveModelStateCommand<Model>>,
     deleteStateHttpConverter: DeleteModelToStateHttpConverter<ModelState, DeleteModelStateCommand>, 
-    getWithRelationsHelper: GetWithRelationsHelper<ModelState>
+    getWithRelationsHelper: GetWithRelationsHelper
   ) {
     super(apiService, arrayHelperService, stateHttpCommandHandler, saveStateHttpConverter, getWithRelationsHelper, deleteStateHttpConverter);
   }

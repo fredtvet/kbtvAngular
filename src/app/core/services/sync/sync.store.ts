@@ -16,6 +16,9 @@ import { SyncStoreTimestamps } from './interfaces/sync-store-timestamps.interfac
 import { SyncStateConfig } from './sync-state.config';
 import { ModelStateConfig } from '../../model/model-state.config';
 import { AuthStoreActions } from '../auth/auth-store-actions.enum';
+import { Prop } from '../../model/state.types';
+import { ModelState } from '../../model/model.state';
+import { Model } from '../../models';
 
 @Injectable({
   providedIn: 'root'
@@ -106,14 +109,14 @@ export class SyncStore extends BaseStore<StoreState>{
     this.syncCurrentUser(response[SyncStateConfig.currentUser.responseKey], state);
 
     Object.keys(SyncStateConfig).filter(x => x !== "currentUser").forEach(prop => 
-      this.syncLocalEntityResponse(prop, response[SyncStateConfig[prop]?.responseKey], state));
+      this.syncLocalEntityResponse(prop as Prop<ModelState>, response[SyncStateConfig[prop]?.responseKey], state));
 
     this._setStateVoid(state);
 
     this.hasInitialSyncedSubject.value ? null : this.hasInitialSyncedSubject.next(true);
   }
 
-  private syncLocalEntityResponse(prop: string, response: EntitySyncResponse, state: Partial<StoreState>): void{
+  private syncLocalEntityResponse(prop: Prop<ModelState>, response: EntitySyncResponse, state: Partial<StoreState>): void{
     if(!response || !prop) return;
     
     state.syncTimestamps[prop] = response.timestamp; //Update given timestamp
@@ -123,11 +126,11 @@ export class SyncStore extends BaseStore<StoreState>{
 
     if(response.deletedEntities?.length > 0)
       state[prop] = 
-          this.arrayHelperService.removeRangeByIdentifier(state[prop], response.deletedEntities, id);
+          this.arrayHelperService.removeRangeByIdentifier<any>(state[prop], response.deletedEntities, id);
 
     if(response.entities?.length > 0)
       state[prop] = 
-          this.arrayHelperService.addOrUpdateRange(state[prop], response.entities, id); 
+          this.arrayHelperService.addOrUpdateRange<any>(state[prop], response.entities, id); 
     
   } 
 

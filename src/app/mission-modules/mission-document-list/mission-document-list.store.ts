@@ -24,8 +24,8 @@ export class MissionDocumentListStore extends BaseExtendedStore<StoreState>  {
     arrayHelperService: ArrayHelperService,
     private stateHttpCommandHandler: StateHttpCommandHandler,
     private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>,
-    private getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>,  
-    private getWithRelationsHelper: GetWithRelationsHelper<StoreState>
+    private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,  
+    private getWithRelationsHelper: GetWithRelationsHelper
   ) {
     super(arrayHelperService, apiService);
   }

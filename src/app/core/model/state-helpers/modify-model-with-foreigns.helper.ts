@@ -1,6 +1,8 @@
 import { ArrayHelperService } from '../../services/utility/array-helper.service';
 import { Injectable } from '@angular/core';
 import { ModelStateConfig } from '../model-state.config';
+import { Prop } from '../state.types';
+import { ModelState } from '../model.state';
 
 @Injectable({providedIn: "root"})
 export class ModifyModelWithForeignsHelper{
@@ -9,12 +11,12 @@ export class ModifyModelWithForeignsHelper{
 
     modify<TState>(
         state: TState, 
-        stateProp: keyof TState, 
+        stateProp: Prop<ModelState>, 
         entity: any, 
         entityFn: (entity: any, stateSlice: any) => any
         ): Partial<TState>{
 
-        const propCfg = ModelStateConfig.get(stateProp as string);
+        const propCfg = ModelStateConfig.get(stateProp);
         if(!entity[propCfg.identifier]) console.error(`Trying to modify entity with no ID from property ${stateProp}`)
         let newState: Partial<TState> = {};
         

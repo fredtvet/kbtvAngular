@@ -29,7 +29,7 @@ export class MissionImageListStore extends BaseExtendedStore<StoreState>  {
     private stateHttpCommandHandler: StateHttpCommandHandler,
     private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>,
     private createStateHttpConverter: CreateMissionImagesToStateHttpConverter,
-    private getWithRelationsHelper: GetWithRelationsHelper<StoreState>
+    private getWithRelationsHelper: GetWithRelationsHelper
   ) {
     super(arrayHelperService, apiService);
   }

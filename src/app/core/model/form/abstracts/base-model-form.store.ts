@@ -10,7 +10,8 @@ import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-
 import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
 import { StateHttpConverter } from 'src/app/core/state/state-http-converter';
-import { StateProp } from '../../state.types';
+import { ModelState } from '../../model.state';
+import { Prop } from '../../state.types';
 
 export abstract class BaseModelFormStore<
     TState,
@@ -22,18 +23,18 @@ export abstract class BaseModelFormStore<
     arrayHelperService: ArrayHelperService,
     private stateHttpCommandHandler: StateHttpCommandHandler,
     private saveStateHttpConverter: StateHttpConverter<any, any>,
-    private getWithRelationsHelper?: GetWithRelationsHelper<TState>,
+    private getWithRelationsHelper?: GetWithRelationsHelper,
     private deleteStateHttpConverter?: StateHttpConverter<any, any>, 
   ) {
     super(arrayHelperService, apiService);
   }
 
-  getWithForeigns$ = (modelProp: StateProp<TState>, id: string): Observable<ModelWithRelations<TModel>> => {
+  getWithForeigns$ = (modelProp: Prop<ModelState>, id: string): Observable<ModelWithRelations<TModel>> => {
     if(!this.getWithRelationsHelper) console.error('Get with relation helper required for forms with update');
-    const modelCfg = ModelStateConfig.get<TState>(modelProp);
-    let stateSlice = [modelProp];
+    const modelCfg = ModelStateConfig.get(modelProp);
+    let stateSlice = [modelProp]; 
     if(modelCfg.foreigns) stateSlice = stateSlice.concat(modelCfg.foreigns);
-    return this.stateSlice$(stateSlice).pipe(map(state => {
+    return this.stateSlice$(stateSlice as Prop<TState>[]).pipe(map(state => {
         let entity = this.getWithRelationsHelper.get<TModel>(state as any, new GetWithRelationsConfig(modelProp, null, {includeAll: true}), id);
         let result: ModelWithRelations<TModel> = {entity, foreigns: {}};
         if(modelCfg.foreigns)
@@ -42,9 +43,9 @@ export abstract class BaseModelFormStore<
     }));
   }
 
-  getForeigns$ = (modelProp: StateProp<TState>): Observable<Partial<TState>> => {
-    const modelCfg = ModelStateConfig.get<TState>(modelProp);
-    return this.stateSlice$(modelCfg.foreigns);
+  getForeigns$ = (modelProp: Prop<ModelState>): Observable<Partial<TState>> => {
+    const modelCfg = ModelStateConfig.get(modelProp);
+    return this.stateSlice$(modelCfg.foreigns as Prop<TState>[]);
   }
 
   save = (command: any): void =>

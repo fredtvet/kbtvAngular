@@ -1,6 +1,7 @@
 import { Mission } from '../core/models';
 import { MissionCriteria } from './interfaces';
 import { DataFilter } from '../core/services/filter/data.filter';
+import { Prop } from '../core/model/state.types';
 
 export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
 
@@ -47,7 +48,7 @@ export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
             m.id.includes(this.searchStringLower);
     }  
 
-    protected activeCriteriaCountIgnoreCheck(value: any, key:  keyof MissionCriteria): boolean{
+    protected activeCriteriaCountIgnoreCheck(value: any, key:  Prop<MissionCriteria>): boolean{
         return (key === "finished" && value === false)   
     } 
        

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Prop } from '../../model/state.types';
 
 @Injectable({ providedIn: 'root' })
 export class SorterService {
@@ -23,7 +24,7 @@ export class SorterService {
         });
     }
 
-    sortByDate<T>(collection: T[], prop: keyof T, direction: "asc" | "desc" = "desc"): void{
+    sortByDate<T>(collection: T[], prop: Prop<T>, direction: "asc" | "desc" = "desc"): void{
         if(!collection || collection === null) return;
         collection.sort((a: any, b: any) => {
             if(!a[prop]) return 1;

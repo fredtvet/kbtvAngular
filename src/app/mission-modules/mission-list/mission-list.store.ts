@@ -61,7 +61,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
     private notificationService: NotificationService,
     private stateHttpCommandHandler: StateHttpCommandHandler,
     private saveWithFileStateHttpConverter: SaveModelFileToStateHttpConverter<StoreState, SaveModelWithFileStateCommand<Mission>>,
-    private getWithRelationsHelper: GetWithRelationsHelper<StoreState>,
+    private getWithRelationsHelper: GetWithRelationsHelper,
   ) {
     super(arrayHelperService, apiService);
     this.initState();
