@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CssLoaderService } from '../core/services';
+import { CssLoaderService } from '../core/services/css-loader.service';
 import { LazyStyles } from '../shared-app/enums';
 
 

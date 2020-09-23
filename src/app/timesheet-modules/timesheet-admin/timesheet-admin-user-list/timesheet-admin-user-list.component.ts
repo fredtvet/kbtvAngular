@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingService } from 'src/app/core/services';
+import { LoadingService } from 'src/app/core/services/loading.service';
 import { MainNavService } from 'src/app/layout';
 import { MainTopNavComponent } from 'src/app/shared/components';
 import { TimesheetAdminStore } from '../timesheet-admin.store';

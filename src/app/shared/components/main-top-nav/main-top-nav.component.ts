@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Observable } from 'rxjs';
-import { LoadingService } from 'src/app/core/services';
+import { LoadingService } from 'src/app/core/services/loading.service';
 import { BaseTopNavComponent } from 'src/app/shared-app/components/base-top-nav.component';
 import { ButtonTypes } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces';

@@ -6,11 +6,9 @@ import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-respon
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { Timesheet } from "src/app/core/models";
-import {
-  ApiService,
-  ArrayHelperService,
-  TimesheetSummaryAggregator
-} from "src/app/core/services";
+import { ApiService } from 'src/app/core/services/api.service';
+import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
+import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
 import { WeekToTimesheetCriteriaConverter } from 'src/app/core/services/utility/week-to-timesheet-criteria.converter';
 import { BaseExtendedStore } from 'src/app/core/state/abstracts/base.extended.store';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';

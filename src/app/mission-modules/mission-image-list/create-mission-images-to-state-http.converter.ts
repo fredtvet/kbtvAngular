@@ -5,8 +5,7 @@ import { ModelFileWrapper } from 'src/app/core/model/model-file.wrapper';
 import { Injectable } from '@angular/core';
 import { MissionImage } from 'src/app/core/models';
 import { StateMissionImages } from 'src/app/core/state';
-import { ArrayHelperService } from 'src/app/core/services';
-import { DomSanitizer } from '@angular/platform-browser';
+import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 
 export interface CreateMissionImagesStateCommand extends StateCommand{
     missionId: string;

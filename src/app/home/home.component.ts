@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
-import { SorterService } from 'src/app/core/services';
 import { SyncStore } from 'src/app/core/services/sync';
 import { MainNavService } from 'src/app/layout';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
+import { SorterService } from '../core/services/utility/sorter.service';
 import { HomeTopNavComponent } from './home-top-nav.component';
 
 @Component({

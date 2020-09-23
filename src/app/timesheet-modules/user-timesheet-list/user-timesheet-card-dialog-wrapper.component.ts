@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map } from 'rxjs/operators';
-import { ArrayHelperService } from 'src/app/core/services';
+import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 import { UserTimesheetListStore } from './user-timesheet-list.store';
 
 @Component({

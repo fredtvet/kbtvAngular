@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
-import { DownloaderService } from 'src/app/core/services';
 import { Roles } from 'src/app/shared-app/enums';
 import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
 import { MissionImageListStore } from '../mission-image-list.store';
 import { ModelFile } from 'src/app/core/models';
 import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
+import { DownloaderService } from 'src/app/core/services/downloader.service';
 
 @Component({
   selector: 'app-timesheet-card-dialog-wrapper',

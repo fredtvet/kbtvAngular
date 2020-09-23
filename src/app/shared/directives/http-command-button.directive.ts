@@ -1,6 +1,6 @@
 import { Directive, ElementRef } from '@angular/core';
-import { LoadingService } from 'src/app/core/services';
 import { Subscription } from 'rxjs';
+import { LoadingService } from 'src/app/core/services/loading.service';
 import { BaseLoadingOverlayDirective } from './base-loading-overlay.directive';
 
 @Directive({

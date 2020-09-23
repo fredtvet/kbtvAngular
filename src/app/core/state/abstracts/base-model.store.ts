@@ -1,8 +1,9 @@
 import { Observable } from 'rxjs';
-import { ApiService, ArrayHelperService } from 'src/app/core/services';
 import { ModelStateConfig } from '../../model/model-state.config';
 import { StateProp } from '../../model/state.types';
 import { Model } from '../../models';
+import { ApiService } from '../../services/api.service';
+import { ArrayHelperService } from '../../services/utility/array-helper.service';
 import { BaseExtendedStore } from './base.extended.store';
 
 export abstract class BaseModelStore<TState> extends BaseExtendedStore<TState>  {

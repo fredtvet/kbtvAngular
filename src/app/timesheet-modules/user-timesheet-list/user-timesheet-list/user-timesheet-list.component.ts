@@ -12,6 +12,7 @@ import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/component
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
 import { MainTopNavComponent } from 'src/app/shared/components';
+import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetForm } from '../../user-timesheet-form/user-timesheet-form-view/timesheet-form.interface';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
 
@@ -57,7 +58,7 @@ export class UserTimesheetListComponent implements OnInit {
     }});
   }
   
-  trackByTimesheet = (index: number, timesheet: Timesheet) => timesheet.id
+  trackByTimesheet = TrackByModel("timesheets")
 
   private onBack = () => {
     let returnUrl: string = this.route.snapshot.params.returnUrl;

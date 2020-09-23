@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Mission } from 'src/app/core/models';
 import { Roles } from 'src/app/shared-app/enums';
+import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 
 @Component({
   selector: 'app-mission-list-view',
@@ -14,5 +15,5 @@ export class MissionListViewComponent {
 
   constructor() { }
 
-  trackByFn = (index: number, mission: Mission) => mission.id;
+  trackByFn = TrackByModel("missions");
 }

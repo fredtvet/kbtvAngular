@@ -6,11 +6,13 @@ import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-respon
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { Mission, Timesheet, User } from 'src/app/core/models';
-import { ApiService, ArrayHelperService, DateTimeService, TimesheetSummaryAggregator } from 'src/app/core/services';
-import { FilterStateHelper } from 'src/app/core/services/filter';
+import { ApiService } from 'src/app/core/services/api.service';
+import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
+import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
+import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
 import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
-import { GroupByPeriod } from 'src/app/shared/enums';
 import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
+import { GroupByPeriod } from 'src/app/shared/enums';
 import { TimesheetCriteria } from '../interfaces/timesheet-criteria.interface';
 import { TimesheetSummary } from '../interfaces/timesheet-summary.interface';
 import { BaseTimesheetStoreSettings } from './base-timesheet-store-settings.interface';
@@ -58,7 +60,6 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
         protected dateTimeService: DateTimeService,
         private timesheetSummaryAggregator: TimesheetSummaryAggregator,
         private getRangeWithRelationsHelper: GetRangeWithRelationsHelper<TState>,
-        private filterStateHelper: FilterStateHelper,
         private settings: BaseTimesheetStoreSettings<TState>) {
             super(arrayHelperService, apiService)           
             this._setStateVoid(settings.initialState);

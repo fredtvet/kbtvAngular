@@ -27,9 +27,8 @@ export class MainNavService {
     this.deviceInfoService.isXs$, 
     this.sideNavConfig$
     ]).pipe(
-      debounceTime(5),
+      debounceTime(5),//currently needed to detect changes coming to fast
       map(([config, isXs, sideNavConfig]) => {return {...config, isXs, sideNavConfig} }),
-      tap(console.log)
   );
 
   constructor(

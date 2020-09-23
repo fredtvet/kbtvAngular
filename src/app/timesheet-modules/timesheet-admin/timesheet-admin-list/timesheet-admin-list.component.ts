@@ -3,14 +3,15 @@ import { Router } from '@angular/router';
 import { pluck, tap } from 'rxjs/operators';
 import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
 import { Timesheet } from 'src/app/core/models';
-import { LoadingService } from 'src/app/core/services';
 import { FilterSheetService } from 'src/app/core/services/filter';
+import { LoadingService } from 'src/app/core/services/loading.service';
 import { MainNavService } from 'src/app/layout';
 import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
 import { MainTopNavComponent } from 'src/app/shared/components';
 import { TimesheetStatus } from 'src/app/shared/enums';
+import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
 @Component({
@@ -57,5 +58,5 @@ export class TimesheetAdminListComponent{
     this.router.navigate(["timeadministrering/uker"])
   }
   
-  trackById = (index:number, timesheet:Timesheet): string => timesheet.id;
+  trackById = TrackByModel("timesheets");
 }

@@ -1,7 +1,7 @@
 import { Directive, EmbeddedViewRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { concat, Observable, of, merge } from 'rxjs';
-import { debounceTime, filter, tap, map } from 'rxjs/operators';
-import { ArrayHelperService } from 'src/app/core/services';
+import { merge, of } from 'rxjs';
+import { debounceTime, filter, map } from 'rxjs/operators';
+import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 import { ActiveStringFilterConfig } from '../interfaces/active-string-filter-config.interface';
 
 @Directive({

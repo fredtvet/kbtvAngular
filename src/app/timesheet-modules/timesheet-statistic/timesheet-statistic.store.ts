@@ -3,8 +3,10 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interface';
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
-import { ApiService, ArrayHelperService, DateTimeService, TimesheetSummaryAggregator } from 'src/app/core/services';
-import { FilterStateHelper } from 'src/app/core/services/filter';
+import { ApiService } from 'src/app/core/services/api.service';
+import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
+import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
+import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
 import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
@@ -43,7 +45,6 @@ export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState>
         dateTimeService: DateTimeService,
         summaryAggregator: TimesheetSummaryAggregator,
         getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>,
-        filterStateHelper: FilterStateHelper,
     ){
         super(
             arrayHelperService, 
@@ -51,7 +52,6 @@ export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState>
             dateTimeService, 
             summaryAggregator, 
             getRangeWithRelationsHelper, 
-            filterStateHelper, 
             TimesheetStatisticStoreSettings
         )
     }

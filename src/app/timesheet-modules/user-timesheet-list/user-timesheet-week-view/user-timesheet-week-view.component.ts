@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from 'rxjs';
 import { map, takeUntil } from "rxjs/operators";
 import { Timesheet } from 'src/app/core/models';
-import { DateTimeService, DeviceInfoService } from "src/app/core/services";
+import { DeviceInfoService } from 'src/app/core/services/device-info.service';
+import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
 import { MainNavService } from 'src/app/layout';
 import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
 import { DateParams } from "src/app/shared-app/interfaces";
@@ -12,6 +13,7 @@ import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-vi
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { MainTopNavComponent } from 'src/app/shared/components';
 import { GroupByPeriod } from 'src/app/shared/enums';
+import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetForm } from '../../user-timesheet-form/user-timesheet-form-view/timesheet-form.interface';
 import { UserTimesheetCardDialogWrapperComponent } from '../user-timesheet-card-dialog-wrapper.component';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
@@ -82,7 +84,7 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
     this.dialog.open(UserTimesheetCardDialogWrapperComponent, {
       data: timesheetId, panelClass: 'extended-dialog'});
 
-  trackByTimesheet = (index: number, timesheet: Timesheet) => timesheet.id
+  trackByTimesheet = TrackByModel("timesheets");
 
   private goToTimesheetList = () => {
       const dp = this.weekCriteria;

@@ -4,7 +4,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule, OwlDateTimeIntl, OWL_DATE_T
 import { DefaultOwlDateTimeIntl } from './default-owl-date-time-intl';
 import { DEFAULT_OWL_DATE_TIME_FORMATS } from './default-owl-date-time-formats';
 import { LazyStyles } from '../shared-app/enums';
-import { CssLoaderService } from '../core/services';
+import { CssLoaderService } from '../core/services/css-loader.service';
 
 
 

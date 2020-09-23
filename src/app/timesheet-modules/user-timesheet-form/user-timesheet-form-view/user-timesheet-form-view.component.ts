@@ -4,6 +4,7 @@ import { BaseModelFormViewComponent, ModelFormViewConfig } from 'src/app/core/mo
 import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { Mission, Timesheet } from "src/app/core/models";
 import { ActiveStringFilterConfig } from 'src/app/shared/interfaces/active-string-filter-config.interface';
+import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { dateRangeValidator } from 'src/app/shared/validators/date-range.validator';
 import { isObjectValidator } from 'src/app/shared/validators/is-object.validator';
 import { TimesheetForm } from './timesheet-form.interface';
@@ -30,7 +31,7 @@ export class UserTimesheetFormViewComponent
   displayMissionAddress = (mission: Mission): string => 
     mission ? mission.address : null;
 
-  trackByMission = (index: number, mission: Mission) => mission.id;
+  trackByMission = TrackByModel("missions");
 
   protected _onConfigChanges(){
     super._onConfigChanges();

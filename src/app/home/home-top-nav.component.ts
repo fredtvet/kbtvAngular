@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { LoadingService } from 'src/app/core/services';
 import { SyncStore } from 'src/app/core/services/sync';
+import { LoadingService } from '../core/services/loading.service';
 import { BaseTopNavComponent } from '../shared-app/components/base-top-nav.component';
 
 @Component({

@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { ModifyModelWithForeignsHelper } from 'src/app/core/model/state-helpers/modify-model-with-foreigns.helper';
 import { Timesheet } from 'src/app/core/models';
-import { ArrayHelperService } from 'src/app/core/services';
 import { ModelIdGeneratorService } from 'src/app/core/services/model';
 import { SaveModelToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-to-state-http.converter';
+import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 import { StateCurrentUser } from 'src/app/core/state';
 import { TimesheetStatus } from 'src/app/shared/enums';
 

@@ -6,10 +6,12 @@ import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interfa
 import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
 import { Timesheet, User } from 'src/app/core/models';
-import { ApiService, ArrayHelperService, DateTimeService, TimesheetSummaryAggregator } from 'src/app/core/services';
-import { FilterStateHelper } from 'src/app/core/services/filter';
+import { ApiService } from 'src/app/core/services/api.service';
 import { SaveModelToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-to-state-http.converter';
 import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
+import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
+import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
+import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
 import { WeekToTimesheetCriteriaConverter } from 'src/app/core/services/utility/week-to-timesheet-criteria.converter';
 import { StateAction } from 'src/app/core/state';
 import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
@@ -42,13 +44,12 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implemen
         dateTimeService: DateTimeService,
         summaryAggregator: TimesheetSummaryAggregator,
         getRangeWithRelationsHelper: GetRangeWithRelationsHelper<StoreState>,
-        filterStateHelper: FilterStateHelper,
         private stateHttpCommandHandler: StateHttpCommandHandler,
         private weekToTimesheetCriteriaConverter: WeekToTimesheetCriteriaConverter,
         private saveStateHttpConverter: SaveModelToStateHttpConverter<StoreState, SaveModelStateCommand<Timesheet>>
     ){
         super(arrayHelperService, apiService, dateTimeService, summaryAggregator, getRangeWithRelationsHelper, 
-            filterStateHelper, TimesheetAdminStoreSettings)
+            TimesheetAdminStoreSettings)
     }
     
     addFilterCriteria(criteria: WeekCriteria): void{

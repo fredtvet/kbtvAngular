@@ -3,7 +3,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { RouterOutlet } from "@angular/router";
 import { Observable } from 'rxjs';
 import { ButtonTypes } from 'src/app/shared-app/enums';
-import { AppButton } from 'src/app/shared-app/interfaces';
+import { TrackByAppButton } from 'src/app/shared-app/track-by-app-button';
 import { MainNavConfig } from '../interfaces/main-nav-config.interface';
 import { MainNavService } from '../main-nav.service';
 import { routeAnimation } from '../route.animation';
@@ -32,6 +32,6 @@ export class MainNavComponent {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['page'];
   }
 
-  trackByFab = (index: number, fab: AppButton) => fab.callback.prototype.constructor;
+  trackByFab = TrackByAppButton;
 
 }

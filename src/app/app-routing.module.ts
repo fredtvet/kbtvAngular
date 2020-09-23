@@ -5,8 +5,8 @@ import { PageNotFoundComponent } from './shared-app/components/page-not-found.co
 import { AuthGuard, NoAuthGuard } from './core/services/auth';
 import { MainNavComponent } from './layout/main-nav/main-nav.component';
 import { RolePresets } from './shared-app/enums';
-import { RolePreloadService } from './core/services';
 import { HomeComponent } from './home/home.component';
+import { RolePreloadService } from './core/services/role-preload.service';
 
 const routes: Routes = [
   {
@@ -47,7 +47,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes,  {
-      // preloadingStrategy: RolePreloadService
+      preloadingStrategy: RolePreloadService
   })],
   exports: [RouterModule]
 })

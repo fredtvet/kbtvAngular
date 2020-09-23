@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angul
 import { ModelConfig, ModelStateConfig, ModelStateConfigData } from 'src/app/core/model/model-state.config';
 import { ModelState } from 'src/app/core/model/model.state';
 import { Model } from 'src/app/core/models/base-entity.interface';
-import { ArrayHelperService } from 'src/app/core/services';
 import { translations } from 'src/app/shared/translations';
 import { AgGridTableComponent } from 'src/app/shared/components/abstracts/ag-grid-table.component';
 import { DataConfig } from '../../interfaces/data-config.interface';
 import { DataTableConfig } from './data-table.config';
+import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 
 @Component({
   selector: 'app-data-table',
