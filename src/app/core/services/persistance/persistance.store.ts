@@ -37,30 +37,31 @@ export class PersistanceStore extends BaseStore<Object & StateLastAction> {
         ).subscribe();
     }
 
-    private set<T>(property: Prop<typeof PersistedStateConfig>, payload: T): void{
-        this.removePayloadTempProps(payload);
-        if(PersistedStateConfig[property]) 
-            from(set(property, payload, this.dbStore))
-                .subscribe(() => {}, err => console.log(err))
-        else if(PersistedInitialStateConfig[property]) 
-            window.localStorage.setItem(property as string, payload ? JSON.stringify(payload) : null)
-    }
-
-    private get$<T>(property: Prop<typeof PersistedStateConfig>): Observable<T>{
-        return from(get<T>(property, this.dbStore))
-    }
-
     private persistStateChanges = (stateChanges: Partial<Object>): void => {
         for(const prop in stateChanges){
             this.set(prop, stateChanges[prop]);
         }
     }
 
+    private set<T>(property: Prop<typeof PersistedStateConfig>, payload: T): void{
+        var clone = typeof payload === "object" ? JSON.parse(JSON.stringify(payload)) : payload;
+        this.removePayloadTempProps(clone);
+        if(PersistedStateConfig[property]) 
+            from(set(property, clone, this.dbStore))
+                .subscribe(() => {}, err => console.log(err))
+        else if(PersistedInitialStateConfig[property]) 
+            window.localStorage.setItem(property as string, JSON.stringify(clone))
+    }
+
+    private get$<T>(property: Prop<typeof PersistedStateConfig>): Observable<T>{
+        return from(get<T>(property, this.dbStore))
+    }
+
     private initalizeInitialState(): void{
         const state = {};
         for(var prop in PersistedInitialStateConfig){
             const value = window.localStorage.getItem(prop);
-            state[prop] = JSON.parse(value);
+            state[prop] = value ? JSON.parse(value) : null;
         }
         this._setStateVoid(state, InitializeAction);
     }

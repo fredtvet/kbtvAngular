@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { ApplicationRef, Injectable } from '@angular/core';
 import { BehaviorSubject, concat, interval, Observable, zip } from 'rxjs';
-import { distinctUntilKeyChanged, first, skip, tap } from 'rxjs/operators';
+import { distinctUntilKeyChanged, filter, first, skip, tap } from 'rxjs/operators';
 import { User } from '../../models/user.interface';
 import { BaseStore } from '../../state/abstracts/base.store';
 import { ApiService } from '../api.service';
@@ -157,6 +157,7 @@ export class SyncStore extends BaseStore<StoreState>{
 
   private initConfigObserver() {
     const syncIfConfigChanges$ = this.property$<SyncStoreConfig>("syncConfig").pipe(
+      filter(x => x != null),
       distinctUntilKeyChanged("initialNumberOfMonths"),skip(1),
       tap(x => {
         this.purgeSyncState();
