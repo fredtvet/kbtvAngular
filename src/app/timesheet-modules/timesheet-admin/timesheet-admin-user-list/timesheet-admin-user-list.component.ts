@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { MainNavService } from 'src/app/layout';
 import { MainTopNavComponent } from 'src/app/shared/components';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav/main-top-nav-config.interface';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
 @Component({
@@ -32,7 +33,7 @@ export class TimesheetAdminUserListComponent implements OnInit {
   }
 
   private configureMainNav(){
-    this.mainNavService.addConfig({
+    this.mainNavService.addConfig<MainTopNavConfig>({
       topNavComponent: MainTopNavComponent, 
       topNavConfig: {title:  "Administrer timer"}
     });

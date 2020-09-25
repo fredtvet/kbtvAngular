@@ -3,6 +3,7 @@ import { AuthStore } from 'src/app/core/services/auth';
 import { FormService } from 'src/app/core/services/form/form.service';
 import { MainNavService } from 'src/app/layout';
 import { MainTopNavComponent } from 'src/app/shared/components';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav/main-top-nav-config.interface';
 import { PasswordFormComponent } from '../password-form/password-form.component';
 import { ProfileFormComponent } from '../profile-form/profile-form.component';
 
@@ -31,7 +32,7 @@ export class ProfileComponent {
   logout = () => this.authStore.logout();
 
   private configureMainNav(){
-    this.mainNavService.addConfig({
+    this.mainNavService.addConfig<MainTopNavConfig>({
       topNavComponent: MainTopNavComponent, 
       topNavConfig: {title:  "Profil"}
     });

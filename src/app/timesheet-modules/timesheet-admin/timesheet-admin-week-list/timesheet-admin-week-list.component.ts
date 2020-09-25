@@ -76,7 +76,7 @@ export class TimesheetAdminWeekListComponent extends SubscriptionComponent{
       topNavComponent: MainTopNavComponent, 
       topNavConfig: {
         title:  "Uker",
-        subTitle: this.store.weekCriteria?.year || '' + ' - ' + this.store.weekCriteria?.userName || '',
+        subTitle: (this.store.weekCriteria?.year || '') + ' - ' + (this.store.weekCriteria?.userName || ''),
         backFn: this.onBack,
         buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]
       }

@@ -11,6 +11,7 @@ import { ModelFormService } from 'src/app/core/services/model';
 import { StateAction } from 'src/app/core/state';
 import { MainNavService } from 'src/app/layout';
 import { ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent } from 'src/app/shared/components';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav/main-top-nav-config.interface';
 import { DataManagementStore } from '../data-management.store';
 import { DataConfig } from '../interfaces/data-config.interface';
 import { StoreState } from '../interfaces/store-state';
@@ -79,7 +80,7 @@ constructor(
   }
 
   private configureMainNav(){
-    this.mainNavService.addConfig({
+    this.mainNavService.addConfig<MainTopNavConfig>({
       topNavComponent: MainTopNavComponent, 
       topNavConfig: {title:  "Data"}
     });
