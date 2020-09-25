@@ -12,7 +12,7 @@ export abstract class BaseExtendedStore<TState> extends ObservableStore<TState> 
         base: ObservableStoreBase,
         protected arrayHelperService: ArrayHelperService,
         protected apiService: ApiService) {  
-        super(base, {logStateChanges: true});
+        super(base);
     }
     
     property$ = <T>(property: Prop<TState>, fetch$?: Observable<T>): Observable<T> => { 

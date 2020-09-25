@@ -64,7 +64,7 @@ export class UserTimesheetListStore extends ObservableStore<StoreState>
     private weekToTimesheetCriteriaConverter: WeekToTimesheetCriteriaConverter,
     private timesheetSummaryAggregator: TimesheetSummaryAggregator
   ) {
-    super(base, {logStateChanges: true});
+    super(base);
   }
 
   addWeekFilterCriteria(weekCriteria: WeekCriteria): void{

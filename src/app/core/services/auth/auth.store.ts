@@ -31,7 +31,7 @@ export class AuthStore extends ObservableStore<StoreState>{
     private deviceInfoService: DeviceInfoService,
     private router: Router,
   ) {
-    super(base, {logStateChanges: true});
+    super(base);
   }
 
   get refreshToken(): string {  return this.getStateProperty<string>("refreshToken", false) }

@@ -16,7 +16,7 @@ export class MissionNoteListStore extends ObservableStore<StoreState>  {
     base: ObservableStoreBase,
     private arrayHelperService: ArrayHelperService
   ) {
-    super(base, {logStateChanges: true});
+    super(base);
   }
 
   getByMissionId$ = (id: string): Observable<MissionNote[]> => 

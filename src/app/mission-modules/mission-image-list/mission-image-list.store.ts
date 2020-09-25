@@ -29,7 +29,7 @@ export class MissionImageListStore extends ObservableStore<StoreState>  {
     private createStateHttpConverter: CreateMissionImagesToStateHttpConverter,
     private getWithRelationsHelper: GetWithRelationsHelper
   ) {
-    super(base, {logStateChanges: true});
+    super(base);
   }
 
   getByMissionId$ = (id: string): Observable<MissionImage[]> => 

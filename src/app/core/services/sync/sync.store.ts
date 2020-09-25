@@ -45,7 +45,7 @@ export class SyncStore extends ObservableStore<StoreState>{
     private deviceInfoService: DeviceInfoService,
     private persistanceStore: PersistanceStore,
     private authStore: AuthStore,) { 
-    super(base, {logStateChanges: true});
+    super(base);
   }
 
   init(){

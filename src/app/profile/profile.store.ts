@@ -18,7 +18,7 @@ export class ProfileStore extends ObservableStore<StoreState>  {
     base: ObservableStoreBase,     
     private stateHttpCommandHandler: StateHttpCommandHandler,
   ) {
-    super(base, {logStateChanges: true});
+    super(base);
   }
   
   updateCurrentUser(user: User): void {

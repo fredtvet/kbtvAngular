@@ -19,9 +19,9 @@ export abstract class ObservableStore<TState> {
     
     constructor(
         private base: ObservableStoreBase,
-        settings: ObservableStoreSettings
+        settings?: ObservableStoreSettings
     ) {
-        this._settings = { ...base.settingsDefaults, ...settings };        
+        this._settings = { ...base.settingsDefaults, ...(settings || {}) };        
     }
 
     protected stateProperty$<TProp>(prop: Prop<TState>, deepCloneReturnedState: boolean = true): Observable<TProp>{

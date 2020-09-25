@@ -25,7 +25,7 @@ export class MissionDocumentListStore extends ObservableStore<StoreState>  {
     private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,  
     private getWithRelationsHelper: GetWithRelationsHelper
   ) {
-    super(base, {logStateChanges: true});
+    super(base);
   }
 
   getByMissionIdWithType$(id: string): Observable<MissionDocument[]>{

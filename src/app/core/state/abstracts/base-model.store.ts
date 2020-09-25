@@ -13,7 +13,7 @@ export abstract class BaseModelStore<TState> extends ObservableStore<TState>  {
     constructor(
         base: ObservableStoreBase,
         protected apiService: ApiService) {  
-        super(base, {logStateChanges: true});
+        super(base);
     }
 
     modelProperty$ =   <T extends Model[]>(property: Prop<ModelState>): Observable<T> => { 

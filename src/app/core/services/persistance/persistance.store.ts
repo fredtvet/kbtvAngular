@@ -21,7 +21,7 @@ export class PersistanceStore extends ObservableStore<Object> {
     constructor(
         base: ObservableStoreBase,
         private clonerService: ClonerService,) { 
-        super(base, {logStateChanges: true});
+        super(base);
     }
 
     init(): void{
