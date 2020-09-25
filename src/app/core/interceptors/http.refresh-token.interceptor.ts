@@ -1,7 +1,7 @@
 import { HttpHandler, HttpHeaderResponse, HttpInterceptor, HttpProgressEvent, HttpRequest, HttpResponse, HttpSentEvent, HttpUserEvent } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { map, pluck, switchMap, take } from 'rxjs/operators';
+import { map, pluck, switchMap, take, tap } from 'rxjs/operators';
 import { AuthStore } from '../services/auth/auth.store';
 import { ApiUrl } from '../api-url.enum';
 

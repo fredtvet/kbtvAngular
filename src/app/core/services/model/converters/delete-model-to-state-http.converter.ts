@@ -4,6 +4,7 @@ import { DeleteModelStateCommand } from 'src/app/core/model/interfaces';
 import { DeleteModelWithChildrenHelper } from 'src/app/core/model/state-helpers/delete-model-with-children.helper';
 import { StateHttpConverter } from 'src/app/core/state/state-http-converter';
 import { translations } from 'src/app/shared/translations';
+import { Prop } from 'src/app/core/model/state.types';
 
 @Injectable({providedIn: 'root'})
 export class DeleteModelToStateHttpConverter<TState, TCommand extends DeleteModelStateCommand>  
@@ -24,7 +25,7 @@ export class DeleteModelToStateHttpConverter<TState, TCommand extends DeleteMode
             translations[multi ? command.stateProp : this.modelConfig.foreignProp]?.toLowerCase();
         
         return `Sletting av ${command.ids?.length || ''} ${entityWord} med id ${command.ids || command.id} er reversert!`;
-     }
+    }
   
     protected createHttpBody(command: TCommand): {ids: any[]} {
         return command.id ? null : {ids: command.ids};
@@ -38,6 +39,15 @@ export class DeleteModelToStateHttpConverter<TState, TCommand extends DeleteMode
 
     protected createHttpMethod(command: TCommand): "DELETE" | "POST" {
         return command.id ? "DELETE" : "POST";
+    }
+
+    //Include state prop and children
+    protected createProperties(command: TCommand): Prop<TState>[]{
+        const props: any[] = [command.stateProp];
+        if(this.modelConfig.children) 
+            props.push(this.modelConfig.children);
+
+        return props;
     }
 
     protected modifyState(state: TState, command: TCommand): Partial<TState>{  

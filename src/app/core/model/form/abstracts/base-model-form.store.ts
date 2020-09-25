@@ -5,9 +5,9 @@ import { ModelStateConfig } from 'src/app/core/model/model-state.config';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-with-relations.helper';
 import { Model } from 'src/app/core/models';
+import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
 import { ApiService } from 'src/app/core/services/api.service';
 import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
 import { StateHttpConverter } from 'src/app/core/state/state-http-converter';
 import { ModelState } from '../../model.state';
@@ -20,13 +20,13 @@ export abstract class BaseModelFormStore<
 
   constructor(
     apiService: ApiService,
-    arrayHelperService: ArrayHelperService,
+    base: ObservableStoreBase,
     private stateHttpCommandHandler: StateHttpCommandHandler,
     private saveStateHttpConverter: StateHttpConverter<any, any>,
     private getWithRelationsHelper?: GetWithRelationsHelper,
     private deleteStateHttpConverter?: StateHttpConverter<any, any>, 
   ) {
-    super(arrayHelperService, apiService);
+    super(base, apiService);
   }
 
   getWithForeigns$ = (modelProp: Prop<ModelState>, id: string): Observable<ModelWithRelations<TModel>> => {

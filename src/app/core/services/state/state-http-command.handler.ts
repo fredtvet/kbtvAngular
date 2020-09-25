@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ObservableStore } from '@codewithdan/observable-store';
+import { AnyAaaaRecord } from 'dns';
 import { BehaviorSubject, concat, EMPTY, Observable } from 'rxjs';
 import { catchError, filter, first, map, tap } from 'rxjs/operators';
 import { User } from '../../models/user.interface';
+import { ObservableStore } from '../../observable-store/observable-store';
+import { ObservableStoreBase } from '../../observable-store/observable-store-base';
 import { StateCurrentUser } from '../../state';
 import { IStateHttpCommandHandler } from '../../state/interfaces/state-http-command-handler.interface';
 import { StateHttpCommand } from '../../state/state-http-converter/state-http-command.interface';
@@ -27,17 +29,18 @@ export class StateHttpCommandHandler extends ObservableStore<State>
     private nextInQueueSubject = new BehaviorSubject<boolean>(null);
     
     private nextInQueue$ = this.nextInQueueSubject.asObservable().pipe(
-      map(x => this.requestQueue[0]), //add null check
+      map(x => this.requestQueue[0]),
       filter(x => x != null),
       tap(cmd => this.dispatchHttp(cmd.command)),
     );
 
     constructor(
+      base: ObservableStoreBase,
       private apiService: ApiService, 
       private notificationService: NotificationService,
       private deviceInfoService: DeviceInfoService,
       syncStore: SyncStore){ 
-      super({logStateChanges: true, trackStateHistory: false});
+      super(base, {logStateChanges: true});
 
       syncStore.hasInitialSynced$.subscribe(x => {
         this.checkForGhostErrors();
@@ -46,7 +49,7 @@ export class StateHttpCommandHandler extends ObservableStore<State>
 
     }
 
-    dispatch(command: StateHttpCommand<any>): void {   
+    dispatch<TState>(command: StateHttpCommand<TState>): void {   
       if(!command) console.error("No state http command provided")
       //If no state changes, ignore queue and run request
       const stateFunc = command.stateFunc; 
@@ -58,12 +61,13 @@ export class StateHttpCommandHandler extends ObservableStore<State>
 
       delete command.stateFunc; //Dont store state func
 
-      let request = {command, state: this.getOptimisticState()};
+      let request = {command: {...command}, state: this.getOptimisticState()};
 
       const requestQueue = this.requestQueue;
       requestQueue.push(request)
       
-      this.setState({...stateFunc(this.getState(false)), requestQueue}, null, true, false)
+      this.setStateWithStateFunc(command.properties as any, stateFunc, null, true)
+      this.setState({requestQueue}, null, false) //No need to deep clone request queue
 
       if(requestQueue.length === 1) this.nextInQueueSubject.next(true);  
     }
@@ -81,7 +85,7 @@ export class StateHttpCommandHandler extends ObservableStore<State>
     private onHttpSuccess(){
       const requestQueue = this.requestQueue;
       requestQueue.shift()
-      this.setState({requestQueue}, null, true, false);
+      this.setState({requestQueue}, null, false);
       this.nextInQueueSubject.next(true);
     }
 
@@ -90,7 +94,7 @@ export class StateHttpCommandHandler extends ObservableStore<State>
         const currentRequest = requestQueue[0];
 
         if(currentRequest.state) 
-          this.setState({...currentRequest.state, requestQueue: []}, null, true, false)
+          this.setState({...currentRequest.state, requestQueue: []}, null, true)
         
         let errorMessages = requestQueue.map(x => x.command.cancelMessage);
 
@@ -104,12 +108,7 @@ export class StateHttpCommandHandler extends ObservableStore<State>
     }
 
     private getOptimisticState(): Object{
-      let state = this.getState(false);
-      let optimisticState = {};
-      for(let prop in state){
-        if(OptimisticStateConfig[prop]) optimisticState[prop] = state[prop]
-      }
-      return optimisticState;
+      return this.getStateProperties(Object.keys(OptimisticStateConfig) as any, false);
     }
 
     //Checks if there are unhandled http errors when initalizing. 

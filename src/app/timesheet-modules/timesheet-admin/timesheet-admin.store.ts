@@ -6,6 +6,7 @@ import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interfa
 import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
 import { Timesheet, User } from 'src/app/core/models';
+import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
 import { ApiService } from 'src/app/core/services/api.service';
 import { SaveModelToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-to-state-http.converter';
 import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
@@ -35,10 +36,11 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implemen
 
     filterConfig$: Observable<WeekFilterViewConfig> = combineLatest([
         this.modelProperty$<User[]>("users"), 
-        this.property$("timesheetAdminCriteria")
+        this.stateProperty$("timesheetAdminCriteria")
     ]).pipe(map(([users]) => { return {criteria: this.weekCriteria, users}}))
 
     constructor(
+        base: ObservableStoreBase,
         arrayHelperService: ArrayHelperService,
         apiService: ApiService,
         dateTimeService: DateTimeService,
@@ -48,7 +50,7 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implemen
         private weekToTimesheetCriteriaConverter: WeekToTimesheetCriteriaConverter,
         private saveStateHttpConverter: SaveModelToStateHttpConverter<StoreState, SaveModelStateCommand<Timesheet>>
     ){
-        super(arrayHelperService, apiService, dateTimeService, summaryAggregator, getRangeWithRelationsHelper, 
+        super(base, apiService, arrayHelperService, dateTimeService, summaryAggregator, getRangeWithRelationsHelper, 
             TimesheetAdminStoreSettings)
     }
     
@@ -76,7 +78,8 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implemen
         this.stateHttpCommandHandler.dispatch({
             httpMethod: "PUT", 
             httpBody: {ids, status}, 
-            apiUrl: `${ApiUrl.Timesheet}/Status`, 
+            apiUrl: `${ApiUrl.Timesheet}/Status`,
+            properties: ["timesheets"], 
             stateFunc
         });      
     }

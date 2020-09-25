@@ -7,27 +7,25 @@ import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/ge
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-with-relations.helper';
 import { Employer, Mission, MissionDocument } from "src/app/core/models";
-import { ApiService } from 'src/app/core/services/api.service';
+import { ObservableStore } from 'src/app/core/observable-store/observable-store';
+import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
 import { DeleteModelToStateHttpConverter } from 'src/app/core/services/model/converters/delete-model-to-state-http.converter';
 import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
-import { BaseExtendedStore } from 'src/app/core/state/abstracts/base.extended.store';
 import { StoreState } from './store-state';
 
 @Injectable({
   providedIn: 'any',
 })
-export class MissionDocumentListStore extends BaseExtendedStore<StoreState>  {
+export class MissionDocumentListStore extends ObservableStore<StoreState>  {
 
   constructor(
-    apiService: ApiService,
-    arrayHelperService: ArrayHelperService,
+    base: ObservableStoreBase,
     private stateHttpCommandHandler: StateHttpCommandHandler,
     private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>,
     private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,  
     private getWithRelationsHelper: GetWithRelationsHelper
   ) {
-    super(arrayHelperService, apiService);
+    super(base, {logStateChanges: true});
   }
 
   getByMissionIdWithType$(id: string): Observable<MissionDocument[]>{
@@ -39,8 +37,9 @@ export class MissionDocumentListStore extends BaseExtendedStore<StoreState>  {
 
   getMissionEmployer(missionId: string): Employer{  
     const relationCfg = new GetWithRelationsConfig("missions", null, {include: {employers: true}})
-    let state = this.getProperties(["missions", "employers"]);
-    return this.getWithRelationsHelper.get<Mission>(state, relationCfg, missionId)?.employer
+    let state = this.getStateProperties(["missions", "employers"], false);
+    const employer = this.getWithRelationsHelper.get<Mission>(state, relationCfg, missionId)?.employer;
+    return employer ? {...employer} : null;
   }
 
   delete = (command: DeleteModelStateCommand): void => 

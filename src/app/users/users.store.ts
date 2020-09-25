@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { ApiUrl } from 'src/app/core/api-url.enum';
 import { User } from "src/app/core/models";
+import { ObservableStoreBase } from '../core/observable-store/observable-store-base';
 import { ApiService } from '../core/services/api.service';
 import { ArrayHelperService } from '../core/services/utility/array-helper.service';
 import { BaseModelStore } from '../core/state/abstracts/base-model.store';
@@ -15,13 +16,15 @@ import { StoreState } from './store-state';
 export class UsersStore extends BaseModelStore<StoreState> {
 
   sortedUsers$: Observable<User[]>;
+  
   get users(): User[]{ return this.getStateProperty("users"); }
 
   constructor(
+    base: ObservableStoreBase,
     apiService: ApiService,
-    arrayHelperService: ArrayHelperService,
+    private arrayHelperService: ArrayHelperService,
   ) {
-    super(arrayHelperService, apiService);
+    super(base, apiService);
 
     this.sortedUsers$ = this.modelProperty$("users").pipe(map(this.sortByRole));
   }

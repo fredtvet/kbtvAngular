@@ -7,7 +7,7 @@ export class SorterService {
     constructor(){}
 
     sort<T>(collection: T[], prop: string, direction: "asc" | "desc" = "desc"): void {
-        if(!collection || collection === null) return;
+        if(!collection) return;
         collection.sort((a: any, b: any) => {
             if(!a[prop]) return 1;
             if(!b[prop]) return -1;
@@ -25,7 +25,7 @@ export class SorterService {
     }
 
     sortByDate<T>(collection: T[], prop: Prop<T>, direction: "asc" | "desc" = "desc"): void{
-        if(!collection || collection === null) return;
+        if(!collection) return;
         collection.sort((a: any, b: any) => {
             if(!a[prop]) return 1;
             if(!b[prop]) return -1;

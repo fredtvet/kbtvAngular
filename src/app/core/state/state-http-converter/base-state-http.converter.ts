@@ -1,6 +1,7 @@
 import { StateCommand } from './state-command.interface';
 import { StateHttpConverter } from './state-http-converter.interface';
 import { StateHttpCommand } from './state-http-command.interface';
+import { Prop } from '../../model/state.types';
 
 export abstract class BaseStateToHttpConverter<TState, TCommand extends StateCommand> implements StateHttpConverter<TState, TCommand>{
 
@@ -15,6 +16,7 @@ export abstract class BaseStateToHttpConverter<TState, TCommand extends StateCom
             apiUrl: overrideApiUrl || this.createApiUrl(input),
             httpBody: this.createHttpBody(this.cloneInput(input)),
             stateFunc: (state: TState) => this.modifyState(state, input),
+            properties: this.createProperties(input),
             cancelMessage: this.createCancelMessage(input)
         };
 
@@ -27,6 +29,10 @@ export abstract class BaseStateToHttpConverter<TState, TCommand extends StateCom
 
     protected setupCommand(command: TCommand): TCommand {
         return command;
+    }
+
+    protected createProperties(command: TCommand): Prop<TState>[]{
+        return null;
     }
 
     protected createCancelMessage(command: TCommand): string{

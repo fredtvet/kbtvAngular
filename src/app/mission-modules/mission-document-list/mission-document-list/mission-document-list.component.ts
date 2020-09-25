@@ -74,7 +74,9 @@ export class MissionDocumentListComponent {
     if(this.currentSelections.length === 0 && fabs.length === totalFabCount) //If no selections remove fabs if existing
       this.mainNavService.removeFabsByCallback(this.selectedItemsFabs.map(x => x.callback))
     else if (this.currentSelections.length > 0 && fabs.length === this.staticFabs.length)
-      this.mainNavService.updateConfig({fabs: this.selectedItemsFabs});
+      this.mainNavService.updateConfig(
+        {fabs: this.mainNavService.getFabs().concat(this.selectedItemsFabs)}
+      );
   }
 
   private deleteSelectedDocuments = () => {

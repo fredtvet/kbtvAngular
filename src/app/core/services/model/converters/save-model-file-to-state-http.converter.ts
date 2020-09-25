@@ -33,7 +33,7 @@ export class SaveModelFileToStateHttpConverter<TState, TCommand extends SaveMode
     }
 
     protected createHttpBody(command: TCommand): FormData {
-        const httpBody: FormData = new FormData(); 
+        const httpBody: FormData = new FormData();   
         if(command.file) httpBody.append("files", command.file, command.file.name);
         httpBody.append("command", JSON.stringify(command.entity));
         return httpBody;

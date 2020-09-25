@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interface';
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
+import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
 import { ApiService } from 'src/app/core/services/api.service';
 import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
@@ -40,6 +41,7 @@ export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState>
         }));
 
     constructor(
+        base: ObservableStoreBase,
         arrayHelperService: ArrayHelperService,
         apiService: ApiService,        
         dateTimeService: DateTimeService,
@@ -47,8 +49,9 @@ export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState>
         getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
     ){
         super(
-            arrayHelperService, 
+            base,
             apiService, 
+            arrayHelperService, 
             dateTimeService, 
             summaryAggregator, 
             getRangeWithRelationsHelper, 

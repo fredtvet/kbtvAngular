@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { PreloadingStrategy, Route } from '@angular/router';
 import { EMPTY, from, Observable, timer } from 'rxjs';
-import { mergeMap, switchMap } from 'rxjs/operators';
+import { first, mergeMap, switchMap } from 'rxjs/operators';
 import { Roles } from 'src/app/shared-app/enums';
-import { AuthStore } from './auth/auth.store';
 import { AppPages } from 'src/app/shared-app/enums/app-pages.enum';
+import { AuthStore } from './auth/auth.store';
 
 const strategies = new Map([ 
     [Roles.Oppdragsgiver, 
@@ -43,7 +43,7 @@ export class RolePreloadService implements PreloadingStrategy {
     constructor(private authStore: AuthStore){ }
 
     preload(route: Route, load: () => Observable<any>): Observable<any> {
-      return this.authStore.currentUser$.pipe(
+      return this.authStore.currentUser$.pipe(first(x => x != null),
         switchMap(user => {
           let routes: OnDemandRolePreloadOptions[] =  [];
           if(user && strategies.get(user.role as Roles))

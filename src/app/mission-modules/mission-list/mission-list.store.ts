@@ -8,6 +8,7 @@ import { SaveModelWithFileStateCommand } from 'src/app/core/model/interfaces';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-with-relations.helper';
 import { Mission } from "src/app/core/models";
+import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
 import { ApiService } from 'src/app/core/services/api.service';
 import { SaveModelFileToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-file-to-state-http.converter';
 import { NotificationService } from 'src/app/core/services/notification';
@@ -57,13 +58,14 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
 
   constructor(
     apiService: ApiService,
-    arrayHelperService: ArrayHelperService, 
+    base: ObservableStoreBase,
+    private arrayHelperService: ArrayHelperService, 
     private notificationService: NotificationService,
     private stateHttpCommandHandler: StateHttpCommandHandler,
     private saveWithFileStateHttpConverter: SaveModelFileToStateHttpConverter<StoreState, SaveModelWithFileStateCommand<Mission>>,
     private getWithRelationsHelper: GetWithRelationsHelper,
   ) {
-    super(arrayHelperService, apiService);
+    super(base, apiService);
     this.initState();
   }
 
@@ -76,11 +78,8 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
   }
 
   addFilterCriteria = (missionCriteria: MissionCriteria): void => 
-    this._setStateVoid({ missionCriteria });
+    this.setState({ missionCriteria });
     
-  addsd = (): void => 
-    this._setStateVoid({ missionTypes: [...this.getStateProperty<any[]>("missionTypes", true), {id:"test", name: "test"}] });
-
   updateHeaderImage(id: string, file: File): void {
     if(!validateFileExtension(file, ImageFileExtensions)) 
       return this.notificationService.notify(
@@ -103,13 +102,13 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
     const mission = {...missions[index]};
     mission.lastVisited = new Date().toISOString(); 
     missions[index] = mission;
-    this._setStateVoid({missions})
+    this.setState({missions})
   }
 
   private initState(): void {
-    this._setStateVoid({
+    this.setState({
       missionCriteria: {finished: false,employerId: undefined,missionTypeId: undefined,searchString: undefined},
-    });
+    }, null, false);
   }
 
 }

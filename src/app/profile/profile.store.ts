@@ -2,25 +2,23 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { User } from "src/app/core/models";
 import { ApiUrl } from '../core/api-url.enum';
-import { ApiService } from '../core/services/api.service';
+import { ObservableStore } from '../core/observable-store/observable-store';
+import { ObservableStoreBase } from '../core/observable-store/observable-store-base';
 import { StateHttpCommandHandler } from '../core/services/state/state-http-command.handler';
-import { ArrayHelperService } from '../core/services/utility/array-helper.service';
-import { BaseExtendedStore } from '../core/state/abstracts/base.extended.store';
 import { StoreState } from './store-state';
 
 @Injectable({
   providedIn: 'any',
 })
-export class ProfileStore extends BaseExtendedStore<StoreState>  {
+export class ProfileStore extends ObservableStore<StoreState>  {
 
-  currentUser$: Observable<User> = this.property$("currentUser");
+  currentUser$: Observable<User> = this.stateProperty$("currentUser");
 
   constructor(
-    apiService: ApiService,
-    arrayHelperService: ArrayHelperService,        
+    base: ObservableStoreBase,     
     private stateHttpCommandHandler: StateHttpCommandHandler,
   ) {
-    super(arrayHelperService, apiService);
+    super(base, {logStateChanges: true});
   }
   
   updateCurrentUser(user: User): void {
@@ -28,6 +26,7 @@ export class ProfileStore extends BaseExtendedStore<StoreState>  {
       httpMethod: "PUT", 
       httpBody: user, 
       apiUrl: ApiUrl.Auth, 
+      properties: ["currentUser"],
       stateFunc: (s: StoreState) => { return {currentUser: {...s.currentUser, ...user}} },
       cancelMessage: "Oppdatering av profil er reversert"
     });

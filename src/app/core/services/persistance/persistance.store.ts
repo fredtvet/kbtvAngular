@@ -1,56 +1,53 @@
 import { Injectable } from '@angular/core';
 import { get, set, Store } from 'idb-keyval';
-import { forkJoin, from, Observable, BehaviorSubject, throwError } from 'rxjs';
-import { PersistedStateConfig, PersistedInitialStateConfig } from './persisted-state.config';
-import { tap, filter, first, catchError, skip } from 'rxjs/operators';
-import { BaseStore } from '../../state/abstracts/base.store';
-import { ArrayHelperService } from '../utility/array-helper.service';
-import { ApiService } from '../api.service';
-import { StateLastAction } from '../../state';
+import { BehaviorSubject, forkJoin, from, Observable, throwError } from 'rxjs';
+import { catchError, filter, first, tap } from 'rxjs/operators';
 import { Prop } from '../../model/state.types';
+import { ObservableStore } from '../../observable-store/observable-store';
+import { ObservableStoreBase } from '../../observable-store/observable-store-base';
+import { ClonerService } from '../../observable-store/utilities/cloner.service';
+import { PersistedInitialStateConfig, PersistedStateConfig } from './persisted-state.config';
 
 const InitializeAction = "initalize_persistedState";
 
-@Injectable({
-  providedIn: 'root'
-})
-export class PersistanceStore extends BaseStore<Object & StateLastAction> {
+@Injectable({providedIn: 'root'})
+export class PersistanceStore extends ObservableStore<Object> {
 
     private stateInitalizedSubject = new BehaviorSubject<boolean>(false);
     stateInitalized$: Observable<boolean> = this.stateInitalizedSubject.asObservable().pipe(first(x => x === true));
 
     private dbStore: Store = new Store("kbtvDb", "state");
 
-    constructor(        
-        arrayHelperService: ArrayHelperService,
-        apiService: ApiService) { 
-        super(arrayHelperService, apiService);
+    constructor(
+        base: ObservableStoreBase,
+        private clonerService: ClonerService,) { 
+        super(base, {logStateChanges: true});
     }
 
     init(): void{
         this.initalizeInitialState();
         this.initalizeState();
 
-        this.globalStateWithPropertyChanges.pipe(
-            filter(x => x != null && x.stateChanges.lastAction !== InitializeAction),
+        this.globalStateChanges$.pipe(
+            filter(x => x != null && x.action !== InitializeAction),
             tap(x => this.persistStateChanges(x.stateChanges))
         ).subscribe();
     }
 
     private persistStateChanges = (stateChanges: Partial<Object>): void => {
-        for(const prop in stateChanges){
-            this.set(prop, stateChanges[prop]);
+        var clone = this.clonerService.deepClone(stateChanges);
+        for(const prop in clone){
+            this.set(prop, clone[prop]);
         }
     }
 
     private set<T>(property: Prop<typeof PersistedStateConfig>, payload: T): void{
-        var clone = typeof payload === "object" ? JSON.parse(JSON.stringify(payload)) : payload;
-        this.removePayloadTempProps(clone);
+        this.removePayloadTempProps(payload);
         if(PersistedStateConfig[property]) 
-            from(set(property, clone, this.dbStore))
+            from(set(property, payload, this.dbStore))
                 .subscribe(() => {}, err => console.log(err))
         else if(PersistedInitialStateConfig[property]) 
-            window.localStorage.setItem(property as string, JSON.stringify(clone))
+            window.localStorage.setItem(property as string, JSON.stringify(payload))
     }
 
     private get$<T>(property: Prop<typeof PersistedStateConfig>): Observable<T>{
@@ -63,7 +60,7 @@ export class PersistanceStore extends BaseStore<Object & StateLastAction> {
             const value = window.localStorage.getItem(prop);
             state[prop] = value ? JSON.parse(value) : null;
         }
-        this._setStateVoid(state, InitializeAction);
+        this.setState(state, InitializeAction, false);
     }
 
     private initalizeState(): void{
@@ -80,7 +77,7 @@ export class PersistanceStore extends BaseStore<Object & StateLastAction> {
 
         return forkJoin(propDbObservables).pipe(
             catchError(error => {console.log(error); return throwError(error)}),
-            tap(state => this._setStateVoid(this.mapStateArrToStateObj(state, props), InitializeAction))
+            tap(state => this.setState(this.mapStateArrToStateObj(state, props), InitializeAction, false))
         )
     }
 

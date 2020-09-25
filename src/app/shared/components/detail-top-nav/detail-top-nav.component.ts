@@ -28,8 +28,6 @@ export class DetailTopNavComponent extends BaseTopNavComponent<DetailTopNavConfi
     }
   
   onMenuButtonClick = () => this.toggleDrawer.emit();
-
-  random = () => Math.random() * 1000;
   
   openBottomSheet = (buttons: AppButton[]) => this._bottomSheet.open(BottomSheetMenuComponent, { data: buttons });
 }

@@ -1,6 +1,7 @@
 import { BaseStateToHttpConverter, StateHttpConverter } from '../state/state-http-converter';
 import { ModelConfig, ModelStateConfig } from './model-state.config';
 import { ModelStateCommand } from './interfaces';
+import { Prop } from './state.types';
 
 export abstract class ModelToStateHttpConverter<TState, TCommand extends ModelStateCommand> 
     extends BaseStateToHttpConverter<TState, TCommand> implements StateHttpConverter<TState, TCommand>{
@@ -13,6 +14,10 @@ export abstract class ModelToStateHttpConverter<TState, TCommand extends ModelSt
         if(!command.stateProp) console.error(`State property is required`);
         this.modelConfig = ModelStateConfig.get(command.stateProp);
         return command;
+    }
+
+    protected createProperties(command: TCommand): Prop<TState>[]{
+        return [command.stateProp as any];
     }
 
 }

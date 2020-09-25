@@ -6,11 +6,10 @@ import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-respon
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { Timesheet } from "src/app/core/models";
-import { ApiService } from 'src/app/core/services/api.service';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
+import { ObservableStore } from 'src/app/core/observable-store/observable-store';
+import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
 import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
 import { WeekToTimesheetCriteriaConverter } from 'src/app/core/services/utility/week-to-timesheet-criteria.converter';
-import { BaseExtendedStore } from 'src/app/core/state/abstracts/base.extended.store';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
@@ -21,7 +20,7 @@ import { StoreState } from './store-state';
 @Injectable({
   providedIn: 'any',
 })
-export class UserTimesheetListStore extends BaseExtendedStore<StoreState> 
+export class UserTimesheetListStore extends ObservableStore<StoreState> 
   implements FilterStore<TimesheetCriteria, TimesheetFilterViewConfig> {
 
   private _weekCriteria: WeekCriteria;
@@ -30,9 +29,9 @@ export class UserTimesheetListStore extends BaseExtendedStore<StoreState>
 
   get criteria(){return this.getStateProperty<TimesheetCriteria>("userTimesheetListCriteria") || {}} 
 
-  groupBy$ = this.property$<GroupByPeriod>("userTimesheetListGroupBy");
+  groupBy$ = this.stateProperty$<GroupByPeriod>("userTimesheetListGroupBy");
 
-  criteria$ = this.property$<TimesheetCriteria>("userTimesheetListCriteria");
+  criteria$ = this.stateProperty$<TimesheetCriteria>("userTimesheetListCriteria");
 
   filteredTimesheets$: Observable<FilteredResponse<TimesheetCriteria, Timesheet>> = 
     this.stateSlice$(["userTimesheets", "userTimesheetListCriteria", "missions"]).pipe(
@@ -60,15 +59,13 @@ export class UserTimesheetListStore extends BaseExtendedStore<StoreState>
     }));
 
   constructor(
-    apiService: ApiService,
-    arrayHelperService: ArrayHelperService,
+    base: ObservableStoreBase,
     private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
     private weekToTimesheetCriteriaConverter: WeekToTimesheetCriteriaConverter,
     private timesheetSummaryAggregator: TimesheetSummaryAggregator
   ) {
-    super(arrayHelperService, apiService);
+    super(base, {logStateChanges: true});
   }
-
 
   addWeekFilterCriteria(weekCriteria: WeekCriteria): void{
     this._weekCriteria = weekCriteria;
@@ -76,11 +73,11 @@ export class UserTimesheetListStore extends BaseExtendedStore<StoreState>
   }
 
   addFilterCriteria(criteria: TimesheetCriteria){
-    this._setStateVoid({userTimesheetListCriteria: criteria});
+    this.setState({userTimesheetListCriteria: criteria});
   }
 
   addGroupBy(type: GroupByPeriod){
-    this._setStateVoid({userTimesheetListGroupBy: type});
+    this.setState({userTimesheetListGroupBy: type});
   }
 
 }

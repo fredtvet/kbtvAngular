@@ -6,32 +6,30 @@ import { DeleteModelStateCommand } from 'src/app/core/model/interfaces';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-with-relations.helper';
 import { Mission, MissionImage } from "src/app/core/models";
-import { ApiService } from 'src/app/core/services/api.service';
+import { ObservableStore } from 'src/app/core/observable-store/observable-store';
+import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
 import { DeleteModelToStateHttpConverter } from 'src/app/core/services/model/converters/delete-model-to-state-http.converter';
 import { NotificationService, NotificationType } from 'src/app/core/services/notification';
 import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
-import { BaseExtendedStore } from 'src/app/core/state/abstracts/base.extended.store';
 import { ImageFileExtensions } from 'src/app/shared/constants/image-file-extensions.const';
 import { validateFileExtension } from 'src/app/shared/helpers';
 import { CreateMissionImagesStateCommand, CreateMissionImagesToStateHttpConverter } from './create-mission-images-to-state-http.converter';
 import { StoreState } from './store-state';
 
 @Injectable({providedIn: 'any'})
-export class MissionImageListStore extends BaseExtendedStore<StoreState>  {
+export class MissionImageListStore extends ObservableStore<StoreState>  {
 
   mission: Mission;
 
   constructor(
-    apiService: ApiService,
-    arrayHelperService: ArrayHelperService,   
+    base: ObservableStoreBase,
     private notificationService: NotificationService,     
     private stateHttpCommandHandler: StateHttpCommandHandler,
     private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>,
     private createStateHttpConverter: CreateMissionImagesToStateHttpConverter,
     private getWithRelationsHelper: GetWithRelationsHelper
   ) {
-    super(arrayHelperService, apiService);
+    super(base, {logStateChanges: true});
   }
 
   getByMissionId$ = (id: string): Observable<MissionImage[]> => 

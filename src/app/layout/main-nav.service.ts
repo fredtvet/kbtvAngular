@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { debounceTime, delay, map, tap } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 import { AuthStore } from '../core/services/auth/auth.store';
 import { DeviceInfoService } from '../core/services/device-info.service';
 import { AppButton } from '../shared-app/interfaces';
+import { TopNavConfig } from '../shared/interfaces';
 import { MainNavConfig } from './interfaces/main-nav-config.interface';
-import { MainSideNavConfig } from './interfaces/main-side-nav-config.interface';
 import { SideNavNavigations } from './side-nav-navigations';
 
 @Injectable({
@@ -13,22 +13,19 @@ import { SideNavNavigations } from './side-nav-navigations';
 })
 export class MainNavService {
 
-  private sideNavConfig$: Observable<MainSideNavConfig> = combineLatest([
-    this.deviceInfoService.isOnline$, 
-    this.authStore.currentUser$
-    ]).pipe(
-      map(([isOnline, user]) => { return {isOnline, user, navigations: SideNavNavigations} })
-    );
-
   private configSubject =  new BehaviorSubject<MainNavConfig<any>>(null);
   
-  config$: Observable<MainNavConfig<any>> = combineLatest([
+  config$: Observable<MainNavConfig<TopNavConfig>> = combineLatest([
     this.configSubject.asObservable(), 
     this.deviceInfoService.isXs$, 
-    this.sideNavConfig$
+    this.authStore.currentUser$,
+    this.deviceInfoService.isOnline$, 
     ]).pipe(
       debounceTime(5),//currently needed to detect changes coming to fast
-      map(([config, isXs, sideNavConfig]) => {return {...config, isXs, sideNavConfig} }),
+      map(([config, isXs, user, isOnline]) => {
+        if(config?.topNavConfig) config.topNavConfig.userRole = user?.role;
+        return {...config, isXs, sideNavConfig: {user, isOnline, navigations: SideNavNavigations}} 
+      }),
   );
 
   constructor(
@@ -39,21 +36,26 @@ export class MainNavService {
       return this.configSubject.value.fabs.slice();
   }
 
-  getConfig(): MainNavConfig<any> { 
+  getConfig(): MainNavConfig<TopNavConfig> { 
     if(!this.configSubject.value) return {};
     return {...this.configSubject.value} 
   }
   
-  getTopNavConfig<TConfig extends Object>(): TConfig{
+  getTopNavConfig<TConfig extends TopNavConfig>(): TConfig {
     if(!this.configSubject.value?.topNavConfig) return {} as TConfig;
     return {...this.configSubject.value.topNavConfig};
   }
 
-  addConfig<TTopConfig>(cfg: MainNavConfig<TTopConfig>): void{
+  getFabs(): AppButton[]{
+    if(!this.configSubject.value?.fabs) return []; 
+    return [...this.configSubject.value.fabs];
+  }
+
+  addConfig<TTopConfig extends TopNavConfig>(cfg: MainNavConfig<TTopConfig>): void{
     this.configSubject.next(cfg);
   }
 
-  updateConfig<TTopConfig>(cfg: Partial<MainNavConfig<TTopConfig>>){
+  updateConfig<TTopConfig extends TopNavConfig>(cfg: Partial<MainNavConfig<TTopConfig>>){
     this.configSubject.next({...this.configSubject.value, ...cfg});
   }
 

@@ -1,10 +1,16 @@
 import { HttpParams } from '@angular/common/http';
 import { ApplicationRef, Injectable } from '@angular/core';
 import { BehaviorSubject, concat, interval, Observable, zip } from 'rxjs';
-import { distinctUntilKeyChanged, filter, first, skip, tap } from 'rxjs/operators';
+import { distinctUntilKeyChanged, filter, first, pluck, skip, tap } from 'rxjs/operators';
+import { ModelStateConfig } from '../../model/model-state.config';
+import { ModelState } from '../../model/model.state';
+import { Prop } from '../../model/state.types';
+import { Mission } from '../../models';
 import { User } from '../../models/user.interface';
-import { BaseStore } from '../../state/abstracts/base.store';
+import { ObservableStore } from '../../observable-store/observable-store';
+import { ObservableStoreBase } from '../../observable-store/observable-store-base';
 import { ApiService } from '../api.service';
+import { AuthStoreActions } from '../auth/auth-store-actions.enum';
 import { AuthStore } from '../auth/auth.store';
 import { DeviceInfoService } from '../device-info.service';
 import { PersistanceStore } from '../persistance/persistance.store';
@@ -14,35 +20,32 @@ import { EntitySyncResponse, SyncResponse } from './interfaces/sync-response.int
 import { SyncStoreConfig } from './interfaces/sync-store-config.interface';
 import { SyncStoreTimestamps } from './interfaces/sync-store-timestamps.interface';
 import { SyncStateConfig } from './sync-state.config';
-import { ModelStateConfig } from '../../model/model-state.config';
-import { AuthStoreActions } from '../auth/auth-store-actions.enum';
-import { Prop } from '../../model/state.types';
-import { ModelState } from '../../model/model.state';
-import { Model } from '../../models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SyncStore extends BaseStore<StoreState>{
+export class SyncStore extends ObservableStore<StoreState>{
   
   private hasInitialSyncedSubject = new BehaviorSubject<boolean>(false);
   hasInitialSynced$: Observable<boolean> = this.hasInitialSyncedSubject.asObservable().pipe(first(x => x === true));
 
-  syncConfig$: Observable<SyncStoreConfig> = this.property$("syncConfig");
+  syncConfig$: Observable<SyncStoreConfig> = this.stateProperty$("syncConfig");
+
+  missions$: Observable<Mission[]> = this.stateProperty$("missions");
 
   get syncConfig(): SyncStoreConfig { return this.getStateProperty("syncConfig"); }
 
   get syncTimestamps(): SyncStoreTimestamps { return this.getStateProperty("syncTimestamps"); } 
 
   constructor(
-    apiService: ApiService,
-    arrayHelperService: ArrayHelperService,
+    base: ObservableStoreBase,
+    private apiService: ApiService,
+    private arrayHelperService: ArrayHelperService,
     private appRef: ApplicationRef,
     private deviceInfoService: DeviceInfoService,
     private persistanceStore: PersistanceStore,
-    private authStore: AuthStore,
-  ){
-    super(arrayHelperService, apiService);
+    private authStore: AuthStore,) { 
+    super(base, {logStateChanges: true});
   }
 
   init(){
@@ -52,8 +55,7 @@ export class SyncStore extends BaseStore<StoreState>{
 
     this.continousSync$.subscribe();
 
-    this.property$<AuthStoreActions>("lastAction")
-      .subscribe(action => this.handleAuthActions(action))
+    this.globalStateChanges$.subscribe(x => this.handleAuthActions(x?.action))
   }
 
   syncAll() : void{
@@ -63,9 +65,9 @@ export class SyncStore extends BaseStore<StoreState>{
     if(!this.authStore.hasTokens) return;
 
     params = params.set("initialNumberOfMonths", this.syncConfig?.initialNumberOfMonths)
-
+    const timestamps = this.syncTimestamps || [];
     Object.keys(SyncStateConfig).forEach(prop => {
-      let timestamp = this.syncTimestamps ? this.syncTimestamps[prop] : null;
+      let timestamp = timestamps[prop];
       params = params.set(SyncStateConfig[prop]?.requestKey, timestamp ? timestamp.toString() : null);
     });
 
@@ -79,24 +81,26 @@ export class SyncStore extends BaseStore<StoreState>{
     this.persistanceStore.stateInitalized$.subscribe(x => {
       let state = {syncTimestamps: {}};
       Object.keys(SyncStateConfig).forEach(prop => state[prop] = null);
-      this._setStateVoid(state)
+      this.setState(state)
     })
   };
 
   purgeSyncAndLocal = () => {
     this.persistanceStore.stateInitalized$.subscribe(x => {
-      let state = this.getState(false);
+      let state = {...this.getStateProperties(null, false)}; //Shallow copy sufficient
       let ignoredProps = {refreshToken: true, accessToken: true, currentUser: true};
 
-      for(const key in state)
+      for(const key in state){
         if(!ignoredProps[key]) state[key] = null;
+        else delete state[key];
+      }
       
-      this._setStateVoid(state)
+      this.setState(state)
     })
   };
 
   updateSyncConfig = (syncConfig: SyncStoreConfig): void =>
-    this._setStateVoid({syncConfig});
+    this.setState({syncConfig});
 
   private syncIfTimePassed = (): void => {
     const timestamp = this.getEarliestTimestamp();
@@ -105,13 +109,16 @@ export class SyncStore extends BaseStore<StoreState>{
   }
 
   private setSyncResponseState(response: SyncResponse){
+    const syncProps = Object.keys(SyncStateConfig) as Prop<StoreState>[];
+
     let state = {syncTimestamps: {}};
+
     this.syncCurrentUser(response[SyncStateConfig.currentUser.responseKey], state);
 
-    Object.keys(SyncStateConfig).filter(x => x !== "currentUser").forEach(prop => 
+    syncProps.filter(x => x !== "currentUser").forEach(prop => 
       this.syncLocalEntityResponse(prop as Prop<ModelState>, response[SyncStateConfig[prop]?.responseKey], state));
 
-    this._setStateVoid(state);
+    this.setState(state);
 
     this.hasInitialSyncedSubject.value ? null : this.hasInitialSyncedSubject.next(true);
   }
@@ -122,15 +129,13 @@ export class SyncStore extends BaseStore<StoreState>{
     state.syncTimestamps[prop] = response.timestamp; //Update given timestamp
     const id = ModelStateConfig.get(prop)?.identifier;
 
-    state[prop] = this.getStateProperty<any[]>(prop) || [];
-
     if(response.deletedEntities?.length > 0)
       state[prop] = 
-          this.arrayHelperService.removeRangeByIdentifier<any>(state[prop], response.deletedEntities, id);
+          this.arrayHelperService.removeRangeByIdentifier<any>(this.getStateProperty(prop), response.deletedEntities, id);
 
-    if(response.entities?.length > 0)
+    if(response.entities?.length > 0)//If no delete operation, get state again
       state[prop] = 
-          this.arrayHelperService.addOrUpdateRange<any>(state[prop], response.entities, id); 
+          this.arrayHelperService.addOrUpdateRange<any>(state[prop] || this.getStateProperty(prop), response.entities, id); 
     
   } 
 
@@ -139,7 +144,7 @@ export class SyncStore extends BaseStore<StoreState>{
     if(response?.entities?.length > 0) state.currentUser = response.entities[0] as User;
   }
 
-  private handleAuthActions(action: AuthStoreActions){
+  private handleAuthActions(action: string){
     switch(action){
       case AuthStoreActions.Login: this.syncAll(); break;
       case AuthStoreActions.NewLogin: {
@@ -152,11 +157,13 @@ export class SyncStore extends BaseStore<StoreState>{
     }
   }
 
-  private getEarliestTimestamp = (): number =>
-    this.syncTimestamps ? Object.values(this.syncTimestamps).sort(function(a,b) {return a - b})[0] : 0; 
+  private getEarliestTimestamp = (): number =>{
+    const timestamps = this.syncTimestamps;
+    return timestamps ? Object.values(timestamps).sort(function(a,b) {return a - b})[0] : 0; 
+  }
 
   private initConfigObserver() {
-    const syncIfConfigChanges$ = this.property$<SyncStoreConfig>("syncConfig").pipe(
+    const syncIfConfigChanges$ = this.stateProperty$<SyncStoreConfig>("syncConfig").pipe(
       filter(x => x != null),
       distinctUntilKeyChanged("initialNumberOfMonths"),skip(1),
       tap(x => {
@@ -173,10 +180,10 @@ export class SyncStore extends BaseStore<StoreState>{
 
   private initConfigIfNull(): void {
     if(this.getStateProperty("syncConfig", false)) return;
-    this._setStateVoid({syncConfig: {
+    this.setState({syncConfig: {
       refreshTime: 60*30, 
       initialNumberOfMonths: '48',
-    }});
+    }}, null, false);
   }
 
   private get continousSync$(){

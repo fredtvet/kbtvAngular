@@ -6,6 +6,7 @@ import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-respon
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { Mission, Timesheet, User } from 'src/app/core/models';
+import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
 import { ApiService } from 'src/app/core/services/api.service';
 import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
@@ -24,9 +25,9 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
 
     users$ = this.modelProperty$<User[]>("users" as any);
 
-    groupBy$ = this.property$<GroupByPeriod>(this.settings.groupByProp); 
+    groupBy$ = this.stateProperty$<GroupByPeriod>(this.settings.groupByProp); 
 
-    criteria$ = this.property$<TimesheetCriteria>(this.settings.criteriaProp);
+    criteria$ = this.stateProperty$<TimesheetCriteria>(this.settings.criteriaProp);
 
     filteredTimesheets$: Observable<FilteredResponse<TimesheetCriteria, Timesheet>> = 
       this.stateSlice$(["timesheets" as any, this.settings.criteriaProp]).pipe(
@@ -55,14 +56,15 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
         );
 
     constructor(
-        arrayHelperService: ArrayHelperService,
-        apiService: ApiService,    
+        base: ObservableStoreBase,
+        apiService: ApiService,         
+        protected arrayHelperService: ArrayHelperService,  
         protected dateTimeService: DateTimeService,
         private timesheetSummaryAggregator: TimesheetSummaryAggregator,
         private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
         private settings: BaseTimesheetStoreSettings<TState>) {
-            super(arrayHelperService, apiService)           
-            this._setStateVoid(settings.initialState);
+            super(base, apiService)           
+            this.setState(settings.initialState, null, false);
     }
 
   addTimesheetCriteria(criteria: TimesheetCriteria){
@@ -72,13 +74,13 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
     const filter = new TimesheetFilter(criteria);
 
     //If current filter  data is contained in base, dont fetch http dataand use state. 
-    if(filter.containedIn(BaseTimesheetStore.baseCriteria)) this._setStateVoid(state);
+    if(filter.containedIn(BaseTimesheetStore.baseCriteria)) this.setState(state);
     else {
         BaseTimesheetStore.baseCriteria = criteria;
         this.get$(criteria).pipe(take(1), tap(timesheets => {
             state.timesheets = this.arrayHelperService.addOrUpdateRange(
                 this.getStateProperty<Timesheet[]>("timesheets" as any), timesheets, "id");
-            this._setStateVoid(state);
+            this.setState(state, null, false);
         })).subscribe()
     }
   }
@@ -86,7 +88,7 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
   addGroupBy(type: GroupByPeriod){
     let state: Partial<TState> = {};
     state[this.settings.groupByProp] = type as any; 
-    this._setStateVoid(state);
+    this.setState(state);
   }
 
   get$ = (filter: TimesheetCriteria):Observable<Timesheet[]> => {

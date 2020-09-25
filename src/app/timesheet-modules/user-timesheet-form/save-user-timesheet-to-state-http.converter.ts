@@ -10,7 +10,7 @@ import { TimesheetStatus } from 'src/app/shared/enums';
 
 @Injectable({providedIn: 'any'})
 export class SaveUserTimesheetToStateHttpConverter<TState extends StateCurrentUser>
-    extends SaveModelToStateHttpConverter<TState, SaveModelStateCommand<Timesheet>>{
+    extends SaveModelToStateHttpConverter<TState, SaveModelStateCommand<Timesheet>> {
 
     constructor(
         arrayHelperService: ArrayHelperService,

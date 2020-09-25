@@ -1,26 +1,26 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { MissionNote } from "src/app/core/models";
-import { StoreState } from './store-state';
 import { map } from 'rxjs/operators';
-import { BaseExtendedStore } from 'src/app/core/state/abstracts/base.extended.store';
-import { ApiService } from 'src/app/core/services/api.service';
+import { MissionNote } from "src/app/core/models";
+import { ObservableStore } from 'src/app/core/observable-store/observable-store';
+import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
 import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
+import { StoreState } from './store-state';
 
 @Injectable({
   providedIn: 'any',
 })
-export class MissionNoteListStore extends BaseExtendedStore<StoreState>  {
+export class MissionNoteListStore extends ObservableStore<StoreState>  {
 
   constructor(
-    apiService: ApiService,
-    arrayHelperService: ArrayHelperService
+    base: ObservableStoreBase,
+    private arrayHelperService: ArrayHelperService
   ) {
-    super(arrayHelperService, apiService);
+    super(base, {logStateChanges: true});
   }
 
   getByMissionId$ = (id: string): Observable<MissionNote[]> => 
-    this.property$<MissionNote[]>("missionNotes").pipe(map(arr => 
+    this.stateProperty$<MissionNote[]>("missionNotes").pipe(map(arr => 
       this.arrayHelperService.filter<MissionNote>(arr, (x: MissionNote) => x.missionId === id)
   )) 
 

@@ -11,7 +11,6 @@ export class BaseTopNavComponent<TConfig> implements TopNavComponent<TConfig>{
 
     set config(value: TConfig) {
         if(value === this._config) return;
-        
         this._config = value;
         this.onConfigChanges(value);  
         this.changeDetectorRef.markForCheck();
@@ -21,7 +20,5 @@ export class BaseTopNavComponent<TConfig> implements TopNavComponent<TConfig>{
 
     constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
-    protected onConfigChanges(config: TConfig): void{
-    }
-
+    protected onConfigChanges(config: TConfig): void {}
 }

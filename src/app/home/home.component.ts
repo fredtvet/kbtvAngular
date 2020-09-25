@@ -27,10 +27,10 @@ export class HomeComponent {
   }
 
   ngOnInit() {
-    this.missionHistory$ = this.syncStore.property$<Mission[]>("missions").pipe(
+    this.missionHistory$ = this.syncStore.missions$.pipe(
       filter(x => x != null),
       map(x => {
-        this.sorterService.sortByDate(x, "lastVisited", "desc");
+        this.sorterService.sortByDate([...x], "lastVisited", "desc");
         return x.slice(0,4);
     }))
   }

@@ -16,7 +16,7 @@ export class ModelIdGeneratorService {
     if(!entity[modelCfg.identifier]) //If entity no id, generate id
         entity[modelCfg.identifier] = this.idGenerator.generate();
 
-    for(var fkProp of modelCfg.foreigns || []){ //Run through fks, check if exist in object, create id if no id. 
+    for(var fkProp of modelCfg.foreigns || []){ //Run through fks, check if exist in object, create id if no id.
         const fkPropConfig = ModelStateConfig.get(fkProp); 
         const foreignEntity = entity[fkPropConfig.foreignProp];
         if(!foreignEntity || foreignEntity[fkPropConfig.identifier]) continue; //If no fk entity, or entity has ID already, continue
