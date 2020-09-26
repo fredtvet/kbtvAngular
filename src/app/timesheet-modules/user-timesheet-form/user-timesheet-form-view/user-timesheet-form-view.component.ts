@@ -1,5 +1,6 @@
+import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { BaseModelFormViewComponent, ModelFormViewConfig } from 'src/app/core/model/form';
 import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { Mission, Timesheet } from "src/app/core/models";
@@ -15,7 +16,8 @@ type Response = SaveModelStateCommand<Timesheet>;
 @Component({
   selector: 'app-user-timesheet-form-view',
   templateUrl: './user-timesheet-form-view.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DatePipe]
 })
 export class UserTimesheetFormViewComponent 
   extends BaseModelFormViewComponent<TimesheetForm, Timesheet, ViewConfig, Response>{
@@ -23,7 +25,7 @@ export class UserTimesheetFormViewComponent
   initTime: Date = new Date();
   stringFilterConfig: ActiveStringFilterConfig<Mission>;
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(private _formBuilder: FormBuilder, private datePipe: DatePipe,) {
     super();
     this.initTime.setHours(6,0,0,0);
   }
@@ -55,11 +57,15 @@ export class UserTimesheetFormViewComponent
       ]],
       date: [{value: lockedValues?.date || (t?.startTime ? new Date(t.startTime) : null), disabled: lockedValues?.date}, [
         Validators.required
-      ]],
-      timeRange: [(t?.startTime && t?.endTime) ? [new Date(t.startTime), new Date(t.endTime)] : [],[
+      ]],   
+      startTime: [t?.startTime, [
         Validators.required,
-        dateRangeValidator()
-      ]],
+        // dateRangeValidator()
+      ]],      
+      endTime: [t?.endTime, [
+        Validators.required,
+        // dateRangeValidator()
+      ]],    
       comment: [t?.comment, [
         Validators.required,
         Validators.maxLength(400)
@@ -74,8 +80,8 @@ export class UserTimesheetFormViewComponent
       id: formData.id,
       missionId: formData.mission.id,
       comment: formData.comment,
-      startTime: new Date(date + " " + formData.timeRange[0].toTimeString()).toString(),
-      endTime: new Date(date + " " + formData.timeRange[1].toTimeString()).toString(),
+      startTime: new Date(date + " " + new Date(formData.startTime).toTimeString()).toString(),
+      endTime: new Date(date + " " + new Date(formData.endTime).toTimeString()).toString(),
     }};   
   }
 
@@ -87,10 +93,12 @@ export class UserTimesheetFormViewComponent
     return this.form.get('date')
   }
 
-  get timeRange(){
-    return this.form.get('timeRange')
+  get startTime(){
+    return this.form.get('startTime')
   }
-
+  get endTime(){
+    return this.form.get('endTime')
+  }
   get comment(){
     return this.form.get('comment')
   }

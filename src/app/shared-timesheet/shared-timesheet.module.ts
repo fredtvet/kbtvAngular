@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
-
-import { 
-  TimesheetCardComponent, 
-  WeekFilterViewComponent,  
-  TimesheetSummaryCardContentComponent, 
-} from './components';
-
-import { GetDateByDateParamsPipe, ArrayIncludesPipe, ReadableDurationPipe } from './pipes';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { AppOwlDateTimeModule } from 'src/app/app-owl-date-time/app-owl-date-time.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import {
+  TimesheetCardComponent,
+
+  TimesheetSummaryCardContentComponent, WeekFilterViewComponent
+} from './components';
 import { TimesheetFilterViewComponent } from './components/timesheet-filter-view/timesheet-filter-view.component';
+import { ArrayIncludesPipe, GetDateByDateParamsPipe, ReadableDurationPipe } from './pipes';
+
 
 @NgModule({
   declarations: [
@@ -35,6 +34,6 @@ import { TimesheetFilterViewComponent } from './components/timesheet-filter-view
     GetDateByDateParamsPipe,   
     ArrayIncludesPipe,
     ReadableDurationPipe,
-  ]
+  ],
 })
 export class SharedTimesheetModule { }

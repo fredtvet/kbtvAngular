@@ -1,19 +1,19 @@
 import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import norwayLocale from '@angular/common/locales/nb';
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule, HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { AppHammerConfig } from './shared-app/app-hammer-config';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { AppLayoutModule } from './layout/app-layout.module';
-import { HomeComponent } from './home/home.component';
-import { SharedAppModule } from './shared-app/shared-app.module';
 import { HomeTopNavComponent } from './home/home-top-nav.component';
+import { HomeComponent } from './home/home.component';
+import { AppLayoutModule } from './layout/app-layout.module';
+import { AppHammerConfig } from './shared-app/app-hammer-config';
+import { SharedAppModule } from './shared-app/shared-app.module';
 
 registerLocaleData(norwayLocale, 'nb-NO');
 
@@ -38,6 +38,6 @@ registerLocaleData(norwayLocale, 'nb-NO');
     { provide: LOCALE_ID, useValue: "nb-NO" }, 
     { provide: HAMMER_GESTURE_CONFIG, useClass: AppHammerConfig}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
