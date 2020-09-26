@@ -8,7 +8,7 @@ import { FormComponent } from 'src/app/core/form/form-component.interface';
 @Component({
   selector: 'app-profile-form',
   template: `
-  <app-profile-form-view
+  <app-profile-form-view class="m-2"
     [user]="user$ | async"
     (formSubmitted)="onSubmit($event)">
   </app-profile-form-view>
