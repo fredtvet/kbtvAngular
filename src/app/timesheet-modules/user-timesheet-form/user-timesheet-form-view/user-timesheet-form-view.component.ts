@@ -1,12 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BaseModelFormViewComponent, ModelFormViewConfig } from 'src/app/core/model/form';
 import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { Mission, Timesheet } from "src/app/core/models";
 import { ActiveStringFilterConfig } from 'src/app/shared/interfaces/active-string-filter-config.interface';
 import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
-import { dateRangeValidator } from 'src/app/shared/validators/date-range.validator';
 import { isObjectValidator } from 'src/app/shared/validators/is-object.validator';
 import { TimesheetForm } from './timesheet-form.interface';
 
@@ -25,7 +24,7 @@ export class UserTimesheetFormViewComponent
   initTime: Date = new Date();
   stringFilterConfig: ActiveStringFilterConfig<Mission>;
 
-  constructor(private _formBuilder: FormBuilder, private datePipe: DatePipe,) {
+  constructor(private _formBuilder: FormBuilder) {
     super();
     this.initTime.setHours(6,0,0,0);
   }
@@ -58,7 +57,7 @@ export class UserTimesheetFormViewComponent
       date: [{value: lockedValues?.date || (t?.startTime ? new Date(t.startTime) : null), disabled: lockedValues?.date}, [
         Validators.required
       ]],   
-      startTime: [t?.startTime, [
+      startTime: [t?.startTime || this.initTime.toISOString(), [
         Validators.required,
         // dateRangeValidator()
       ]],      

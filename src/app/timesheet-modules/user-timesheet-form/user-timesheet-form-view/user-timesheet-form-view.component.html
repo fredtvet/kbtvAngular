@@ -26,12 +26,12 @@
       <owl-date-time pickerType="calendar" start #d3></owl-date-time>
     </label>
   
-    <app-ion-date-picker fxFlex=20 format="HH:mm" 
+    <app-ion-date-picker fxFlex=20 ionFormat="HH:mm" minuteValues="0,15,30,45" placeholder="start"
       [value]="startTime.value" 
       (valueChanged)="startTime.setValue($event);startTime.markAsDirty()">
     </app-ion-date-picker>
  
-    <app-ion-date-picker fxFlex=20 format="HH:mm" 
+    <app-ion-date-picker fxFlex=20 ionFormat="HH:mm" minuteValues="0,15,30,45" placeholder="slutt"
       [value]="endTime.value" 
       (valueChanged)="endTime.setValue($event);endTime.markAsDirty()">
     </app-ion-date-picker>
