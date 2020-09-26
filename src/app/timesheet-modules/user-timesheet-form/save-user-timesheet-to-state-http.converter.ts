@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { ModifyModelWithForeignsHelper } from 'src/app/core/model/state-helpers/modify-model-with-foreigns.helper';
+import { Prop } from 'src/app/core/model/state.types';
 import { Timesheet } from 'src/app/core/models';
 import { ModelIdGeneratorService } from 'src/app/core/services/model';
 import { SaveModelToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-to-state-http.converter';
@@ -28,6 +29,10 @@ export class SaveUserTimesheetToStateHttpConverter<TState extends StateCurrentUs
           }
     }
 
+    protected createProperties(command: SaveModelStateCommand<Timesheet>): Prop<TState>[]{
+        return ["currentUser" as any, ...super.createProperties(command)]
+     }
+
     protected modifyState(state: TState, command: SaveModelStateCommand<Timesheet>): Partial<TState>{
         let inputTimesheet = command.entity;
         let modifiedTimesheet = {};
@@ -38,10 +43,10 @@ export class SaveUserTimesheetToStateHttpConverter<TState extends StateCurrentUs
                 startTime: new Date(inputTimesheet.startTime).toISOString(),     
                 endTime: new Date(inputTimesheet.endTime).toISOString(),
                 totalHours: 
-                Math.abs(
+                Math.round((Math.abs(
                     new Date(inputTimesheet.startTime).getTime() - 
                     new Date(inputTimesheet.endTime).getTime()
-                ) / 36e5
+                ) / 36e5)* 10) / 10
             };
 
         command.entity = modifiedTimesheet;
