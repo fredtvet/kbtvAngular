@@ -32,7 +32,6 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
   isXs$ = this.deviceInfoService.isXs$;
 
   summaries$: Observable<{ [key: number]: TimesheetSummary }> = this.store.timesheetSummaries$.pipe(
-    tap(console.log),
     map(x => this.dateTimeService.mapObjectsToWeekdays(x, "date")),
   );
 

@@ -1,22 +1,28 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-ion-date-picker',
   template:`
    <span (click)="dateTime.click()">
       <mat-form-field class="w-100" style="pointer-events:none!important" >
-        <input matInput [value]="value | date : displayFormat || ionFormat"  required [placeholder]="placeholder" aria-label="Velg sluttidspunkt">
+        <input matInput required 
+          [value]="control?.value | date : datePipeFormat || ionFormat" 
+          [placeholder]="placeholder" 
+          [attr.aria-label]="ariaLabel">     
       </mat-form-field>
       <ion-datetime #dateTime fxHide 
         cancel-text="Avbryt" done-text="Ferdig"
+        [attr.max]="max"
+        [attr.min]="min"
         [attr.day-names]="dayNames"
         [attr.day-short-names]="dayShortNames"
         [attr.month-names]="monthNames"
         [attr.month-short-names]="monthShortNames"
         [attr.display-format]="ionFormat"
         [attr.minute-values]="minuteValues"
-        [value]="value"
-        (ionChange)="valueChanged.emit($event.detail.value)">
+        [value]="control?.value"
+        (ionChange)="control?.setValue($event.detail.value);control?.markAsDirty()">
       </ion-datetime>
     </span>
   `,
@@ -24,12 +30,14 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 })
 export class IonDatePickerComponent {
 
-  @Input() value: string;
+  @Input() control: FormControl;
   @Input() placeholder: string;
+  @Input() ariaLabel: string;
   @Input() ionFormat: string;
-  @Input() displayFormat: string;
+  @Input() datePipeFormat: string;
   @Input() minuteValues?: number[];
-  @Output() valueChanged  = new EventEmitter<string>();
+  @Input() min: string;
+  @Input() max: string;
 
   dayNames = ["Søndag", "Mandag", "Tirsdag", "Onsdag","Torsdag", "Fredag", "Lørdag"]
   dayShortNames = ["Søn", "Man", "Tir", "Ons","Tor", "Fre", "Lør"]

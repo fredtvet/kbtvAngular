@@ -15,7 +15,7 @@
 
   <span fxLayout="row" fxLayoutAlign="space-between start">
 
-    <label fxFlex=42>
+    <!-- <label fxFlex=42>
       <mat-form-field class="w-100">
         <input matInput placeholder="Dato" formControlName="date" aria-label="Velg dato" required
           [owlDateTimeTrigger]="d3" [owlDateTime]="d3" >
@@ -24,16 +24,18 @@
           </mat-error>
       </mat-form-field>
       <owl-date-time pickerType="calendar" start #d3></owl-date-time>
-    </label>
-  
-    <app-ion-date-picker fxFlex=20 ionFormat="HH:mm" minuteValues="0,15,30,45" placeholder="start"
-      [value]="startTime.value" 
-      (valueChanged)="startTime.setValue($event);startTime.markAsDirty()">
+    </label> -->
+
+    <app-ion-date-picker fxFlex=42 ionFormat="YYYY-MMMM-DD" datePipeFormat="MMM d, y" placeholder="dato"
+      [control]="date" >
     </app-ion-date-picker>
- 
-    <app-ion-date-picker fxFlex=20 ionFormat="HH:mm" minuteValues="0,15,30,45" placeholder="slutt"
-      [value]="endTime.value" 
-      (valueChanged)="endTime.setValue($event);endTime.markAsDirty()">
+
+    <app-ion-date-picker fxFlex=20 ionFormat="HH:mm" minuteValues="0,15,30,45" placeholder="starttid"
+      [control]="startTime" [max]="endTime.value">
+    </app-ion-date-picker>
+
+    <app-ion-date-picker fxFlex=20 ionFormat="HH:mm" minuteValues="0,15,30,45" placeholder="sluttid"
+      [control]="endTime" [min]="startTime.value">
     </app-ion-date-picker>
 
     <!-- <label fxFlex=46>

@@ -54,8 +54,8 @@ export class UserTimesheetFormViewComponent
         Validators.required,
         isObjectValidator()
       ]],
-      date: [{value: lockedValues?.date || (t?.startTime ? new Date(t.startTime) : null), disabled: lockedValues?.date}, [
-        Validators.required
+      date: [{value: lockedValues?.date ? new Date(lockedValues.date).toISOString() : t?.startTime, disabled: lockedValues?.date}, [
+        Validators.required,
       ]],   
       startTime: [t?.startTime || this.initTime.toISOString(), [
         Validators.required,

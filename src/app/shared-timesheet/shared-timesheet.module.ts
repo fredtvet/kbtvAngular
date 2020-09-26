@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { AppOwlDateTimeModule } from 'src/app/app-owl-date-time/app-owl-date-time.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import {
   TimesheetCardComponent,
-
   TimesheetSummaryCardContentComponent, WeekFilterViewComponent
 } from './components';
 import { TimesheetFilterViewComponent } from './components/timesheet-filter-view/timesheet-filter-view.component';
@@ -35,5 +34,6 @@ import { ArrayIncludesPipe, GetDateByDateParamsPipe, ReadableDurationPipe } from
     ArrayIncludesPipe,
     ReadableDurationPipe,
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class SharedTimesheetModule { }
