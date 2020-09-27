@@ -2,7 +2,9 @@ import { BaseFormViewComponent } from 'src/app/core/form/abstracts/base-form-vie
 import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { Model } from 'src/app/core/models';
 import { ModelFormViewConfig } from '../interfaces/model-form-view-config.interface';
+import { Directive } from "@angular/core";
 
+@Directive()
 export abstract class BaseModelFormViewComponent<TFormState, TModel extends Model, 
     TConfig extends ModelFormViewConfig<TModel, TFormState>, TSave extends SaveModelStateCommand<TModel>> 
     extends BaseFormViewComponent<TConfig, TSave> {

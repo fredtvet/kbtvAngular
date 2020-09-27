@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, ViewContainerRef, Directive } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { FormComponent } from '../form-component.interface';
 import { FormSheetWrapperConfig } from '../form-sheet-wrapper-config.interface';
 import { FormSheetWrapperResult } from '../form-sheet-wrapper-result.interface';
 
+@Directive()
 export abstract class BaseFormSheetWrapperComponent<TWrapperConfig extends FormSheetWrapperConfig<any, FormComponent>> {
 
   constructor(

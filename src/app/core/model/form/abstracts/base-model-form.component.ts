@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, ViewContainerRef, Directive } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { BaseFormComponent } from 'src/app/core/form/abstracts/base-form.component';
@@ -11,6 +11,7 @@ import { ModelForm } from '../interfaces/model-form.interface';
 import { BaseModelFormViewComponent } from './base-model-form-view.component';
 import { BaseModelFormStore } from './base-model-form.store';
 
+@Directive()
 export abstract class BaseModelFormComponent<  
     TModel extends Model,
     TFormState, 

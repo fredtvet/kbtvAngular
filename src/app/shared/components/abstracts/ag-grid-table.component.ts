@@ -1,7 +1,8 @@
-import { Input, ViewChild } from '@angular/core';
+import { Input, ViewChild, Directive } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import { AgGridConfig } from './ag-grid-config.interface';
 
+@Directive()
 export abstract class AgGridTableComponent<TRecord, TConfig extends AgGridConfig<TRecord>> {
   @ViewChild('dataGrid') dataGrid: AgGridAngular;
 

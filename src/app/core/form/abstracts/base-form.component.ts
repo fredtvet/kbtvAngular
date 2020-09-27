@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, ComponentRef, EventEmitter, Input, Output, Type, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, ComponentRef, EventEmitter, Input, Output, Type, ViewContainerRef, Directive } from '@angular/core';
 import { Observable } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { SaveAction } from 'src/app/core/state';
@@ -6,6 +6,7 @@ import { SubscriptionComponent } from 'src/app/shared-app/components';
 import { FormComponent } from '../form-component.interface';
 import { BaseFormViewComponent } from './base-form-view-component';
 
+@Directive()
 export abstract class BaseFormComponent<  
     TResult,
     TViewConfig,
