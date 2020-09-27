@@ -10,7 +10,7 @@ import { MainNavService } from 'src/app/layout';
 import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces';
-import { ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent, SelectableListBase } from 'src/app/shared/components';
+import { ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent, SelectableListComponent } from 'src/app/shared/components';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav/main-top-nav-config.interface';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MailImageFormComponent } from '../mail-image-form.component';
@@ -18,6 +18,7 @@ import { MissionImageListStore } from '../mission-image-list.store';
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { DownloaderService } from 'src/app/core/services/downloader.service';
 import { NotificationService } from 'src/app/core/services/notification';
+import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
 
 @Component({
   selector: "app-mission-image-list",
@@ -25,52 +26,40 @@ import { NotificationService } from 'src/app/core/services/notification';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class MissionImageListComponent {
-  @ViewChild('imageList') imageList: SelectableListBase<ModelFile>;
+export class MissionImageListComponent extends SelectableListContainerComponent{
+  @ViewChild('imageList') imageList: SelectableListComponent;
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
-
-  currentSelections: string[] = [];
 
   images$: Observable<MissionImage[]>;
   isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
 
-  get missionId() {
-    return this.route.snapshot.paramMap.get('id');
-  }
-
-  get selectedItemsFabs(): AppButton[] {
-    return [
-      {icon: "send", aria: 'Send', colorClass: 'bg-accent', callback: this.openMailImageSheet, allowedRoles: [Roles.Leder]}, 
-      {icon: "delete_forever", aria: 'Slett', colorClass: 'bg-warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
-    ]
-  }
-
-  get staticFabs(): AppButton[] {
-    return [{icon: "camera_enhance", aria: 'Ta bilde', colorClass: 'bg-accent', callback: this.openImageInput, allowedRoles: RolePresets.Internal}]
-  }
-
-  constructor(
+  get missionId() { return this.route.snapshot.paramMap.get('id'); }
+  
+  constructor( 
+    mainNavService: MainNavService,
     private downloaderService: DownloaderService,
     private deviceInfoService: DeviceInfoService,
     private formService: FormService,
     private dialog: MatDialog,
-    private mainNavService: MainNavService,
     private store: MissionImageListStore,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private router: Router) {}
+    private router: Router) {
+      super(mainNavService);
+      this.staticFabs = [
+        {icon: "camera_enhance", aria: 'Ta bilde', colorClass: 'bg-accent', callback: this.openImageInput, allowedRoles: RolePresets.Internal}
+      ];
+      this.selectedItemsFabs = [
+        {icon: "send", aria: 'Send', colorClass: 'bg-accent', callback: this.openMailImageSheet, allowedRoles: [Roles.Leder]}, 
+        {icon: "delete_forever", aria: 'Slett', colorClass: 'bg-warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
+      ]
+    }
 
   ngOnInit() { 
     this.configureMainNav();
     this.images$ = this.store.getByMissionId$(this.missionId).pipe(
       tap(this.updateMainNav)
     );
-  }
-
-  onSelectionChange(selections: string[]){
-    if(!selections) return undefined;
-    this.currentSelections = selections;
-    this.updateFabs();
   }
 
   openImageViewer(image: ModelFile, images: ModelFile[]) {
@@ -91,20 +80,9 @@ export class MissionImageListComponent {
     
     this.imageInput.nativeElement.click()
   };
-  
-  private updateFabs(){
-    let fabs = this.mainNavService.currentFabs;
-    let totalFabCount = this.staticFabs.length + this.selectedItemsFabs.length;
-
-    if(this.currentSelections.length === 0 && fabs.length === totalFabCount) //If no selections remove fabs if existing
-      this.mainNavService.removeFabsByCallback(this.selectedItemsFabs.map(x => x.callback))
-    else if (this.currentSelections.length > 0 && fabs.length === this.staticFabs.length)
-      this.mainNavService.updateConfig(
-        {fabs: this.mainNavService.getFabs().concat(this.selectedItemsFabs)}
-      );
-  }
 
   private deleteSelectedImages = () => {
+    this.currentSelections;
     this.store.delete({ids: this.currentSelections});     
     this.imageList.clearSelections();
   }

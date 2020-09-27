@@ -4,80 +4,57 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { MissionDocument } from 'src/app/core/models';
-import { FormService } from 'src/app/core/services/form/form.service';
-import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
-import { MainNavService } from 'src/app/layout';
-import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
-import { Roles } from 'src/app/shared-app/enums';
-import { AppButton } from 'src/app/shared-app/interfaces';
-import { ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent, SelectableListBase } from 'src/app/shared/components';
-import { MailDocumentFormComponent } from '../mail-document-form.component';
-import { MissionDocumentListStore } from '../mission-document-list.store';
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { DownloaderService } from 'src/app/core/services/downloader.service';
+import { FormService } from 'src/app/core/services/form/form.service';
 import { NotificationService } from 'src/app/core/services/notification';
+import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
+import { MainNavService } from 'src/app/layout';
+import { Roles } from 'src/app/shared-app/enums';
+import { AppButton } from 'src/app/shared-app/interfaces';
+import { ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent, SelectableListComponent } from 'src/app/shared/components';
+import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
+import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
+import { MailDocumentFormComponent } from '../mail-document-form.component';
+import { MissionDocumentListStore } from '../mission-document-list.store';
 
 @Component({
   selector: 'app-mission-document-list',
   templateUrl: './mission-document-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MissionDocumentListComponent {
-  @ViewChild('documentList') documentList: SelectableListBase<MissionDocument>;
+export class MissionDocumentListComponent extends SelectableListContainerComponent {
+  @ViewChild('documentList') documentList: SelectableListComponent;
 
   documentsWithType$: Observable<MissionDocument[]> = this.store.getByMissionIdWithType$(this.missionId);
   isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
 
-  private currentSelections: string[] = [];
-  
-  get missionId() {
-    return this.route.snapshot.paramMap.get('id');
-  }
+  get missionId() { return this.route.snapshot.paramMap.get('id') }
 
-  get selectedItemsFabs(): AppButton[] {
-    return [
-      {icon: "send", aria: 'Send', colorClass: 'bg-accent', callback: this.openMailDocumentSheet, allowedRoles: [Roles.Leder]}, 
-      {icon: "delete_forever", aria: 'Slett', colorClass: 'bg-warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
-    ]
-  }
-
-  get staticFabs(): AppButton[] {
-    return [{icon: "note_add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openDocumentForm, allowedRoles: [Roles.Leder]}]
-  }
-
-  constructor(
+  constructor( 
+    mainNavService: MainNavService,
     private deviceInfoService: DeviceInfoService,     
     private formService: FormService, 
     private downloaderService: DownloaderService,
     private store: MissionDocumentListStore,
-    private mainNavService: MainNavService,
     private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
-    private dialog: MatDialog) {}
+    private dialog: MatDialog) {
+      super(mainNavService);
+      this.staticFabs = [
+        {icon: "note_add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openDocumentForm, allowedRoles: [Roles.Leder]}
+      ];
+      this.selectedItemsFabs = [
+        {icon: "send", aria: 'Send', colorClass: 'bg-accent', callback: this.openMailDocumentSheet, allowedRoles: [Roles.Leder]}, 
+        {icon: "delete_forever", aria: 'Slett', colorClass: 'bg-warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
+      ]
+    }
  
   ngOnInit() { this.configureMainNav() }
 
-  onSelectionChange(selections: string[]){
-    if(!selections) return undefined;
-    this.currentSelections = selections;
-    this.updateFabs();
-  }
-
   downloadDocument = (document: MissionDocument) => 
     this.downloaderService.downloadUrl(appFileUrl(document.fileName, "documents"));
-
-  private updateFabs(){
-    let fabs = this.mainNavService.currentFabs;
-    let totalFabCount = this.staticFabs.length + this.selectedItemsFabs.length;
-
-    if(this.currentSelections.length === 0 && fabs.length === totalFabCount) //If no selections remove fabs if existing
-      this.mainNavService.removeFabsByCallback(this.selectedItemsFabs.map(x => x.callback))
-    else if (this.currentSelections.length > 0 && fabs.length === this.staticFabs.length)
-      this.mainNavService.updateConfig(
-        {fabs: this.mainNavService.getFabs().concat(this.selectedItemsFabs)}
-      );
-  }
 
   private deleteSelectedDocuments = () => {
     this.store.delete({ids: this.currentSelections});    
@@ -124,4 +101,5 @@ export class MissionDocumentListComponent {
       }
     });
   }
+  
 }

@@ -10,6 +10,7 @@ import {
   MailToFormViewComponent,
   MainTopNavComponent,
   SelectableCardComponent,
+  SelectableListComponent,
   SimpleTopNavComponent
 } from './components';
 import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective  } from './directives';
@@ -26,7 +27,8 @@ import { AppLayoutModule } from '../layout/app-layout.module';
     MainTopNavComponent,
     DetailTopNavComponent,
     BottomSheetMenuComponent,
-
+    SelectableListComponent,
+    
     TransformButtonPipe,
     ArraySlicePipe,
     TranslatePipe,
@@ -64,6 +66,7 @@ import { AppLayoutModule } from '../layout/app-layout.module';
     MailToFormViewComponent,
     SelectableCardComponent,
     BottomSheetMenuComponent,
+    SelectableListComponent,
 
     TransformButtonPipe,
     ArraySlicePipe,

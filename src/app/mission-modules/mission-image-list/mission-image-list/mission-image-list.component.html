@@ -1,8 +1,15 @@
-<app-image-list #imageList *ngIf="images$ | async; let images"
+<app-selectable-list #imageList 
+    *ngIf="images$ | async; let images" identifier="id"
     [totalRows]="(isXs$ | async) ? 2 : 4"
     [entities]="images" 
+    [itemTemplate]="imgTemplate"
     (selectionChanged)="onSelectionChange($event)"
-    (imageClicked)="openImageViewer($event, images)">
-</app-image-list>
+    (itemClicked)="openImageViewer($event, images)">
+</app-selectable-list>
+
+<ng-template #imgTemplate let-entity>
+    <img appImageErrorReloader class="entity-card fadeIn"  alt="oppdragsbilde"
+                [src]="entity | appFileUrl: 'thumbnails'"/> 
+</ng-template>
 
 <input type="file" style="display:none" multiple #imageInput (change)="uploadImages($event.target.files)">

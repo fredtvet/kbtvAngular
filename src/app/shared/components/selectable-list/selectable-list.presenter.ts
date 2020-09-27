@@ -16,12 +16,16 @@ export class SelectableListPresenter<T> extends SubscriptionComponent{
     selectableEntities$: Observable<SelectableEntity<T>[]> = combineLatest([this.entities$, this.selectedIds$]).pipe(
         map(([entities, selectedIds]) => this.getSelectableEntities(entities, selectedIds))
     )
-    private identfier = "id"; //Add config injector?
+
+    private identifier:string; 
+
     constructor(){super();}
     
     get entities(){
         return [...this.entitiesSubject.value]
     }
+
+    setIdentifier(identifier: string){ this.identifier = identifier; }
 
     addEntities(entities: T[]){
         this.entitiesSubject.next(entities);
@@ -44,7 +48,7 @@ export class SelectableListPresenter<T> extends SubscriptionComponent{
     private getSelectableEntities(entities:T[], selectedIds:any[]): SelectableEntity<T>[]{
         let result = [];
         for(let i = 0; i < entities.length; i++){
-            let isSelected = selectedIds.includes(entities[i][this.identfier]);
+            let isSelected = selectedIds.includes(entities[i][this.identifier]);
             result.push({entity: entities[i], selected:isSelected})
         }
         return result;

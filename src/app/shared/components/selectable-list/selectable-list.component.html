@@ -1,0 +1,13 @@
+<div class="entity-row">
+    <div class="entity-column" *ngFor="let i of totalRows | arrayFromNumber">
+        <app-selectable-card selectedText="Bilde valgt" selectedIcon="check_circle"
+            *ngFor="let selectable of (selectableEntities$ | async) | arrayslice: i:totalRows;let i = index;trackBy: trackByFn"
+            [isSelected]="selectable.selected" 
+            (selected)="toggleSelect(selectable)"
+            (click)="onItemClick(selectable.entity)">
+
+            <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit: selectable.entity}"></ng-container>
+
+        </app-selectable-card>
+    </div>
+</div>
