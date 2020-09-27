@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MissionFormRoutingModule } from './mission-form-routing.module';
 import { MissionFormViewComponent } from './mission-form-view/mission-form-view.component';
@@ -7,7 +8,8 @@ import { MissionFormViewComponent } from './mission-form-view/mission-form-view.
     declarations: [MissionFormViewComponent],
     imports: [
       SharedModule,
-      MissionFormRoutingModule
+      MissionFormRoutingModule,   
+      GooglePlaceModule,   
     ]
   })
 export class MissionFormModule { }

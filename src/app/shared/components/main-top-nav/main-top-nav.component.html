@@ -38,11 +38,6 @@
     <app-button *ngFor="let button of config?.buttons | transformButtons: ButtonTypes.Icon" [config]="button">
     </app-button>
 
-    <button mat-icon-button *ngIf="(config?.bottomSheetButtons | checkRolesInButtons : config.userRole)"
-      (click)="openBottomSheet(config.bottomSheetButtons)">
-
-      <mat-icon>more_vert</mat-icon>
-    </button>
   </ng-container>
 
 </mat-toolbar>

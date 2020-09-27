@@ -8,10 +8,11 @@ import { NotificationService } from 'src/app/core/services/notification/notifica
 import { MainNavService } from 'src/app/layout';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { AppFileUrlPipe } from 'src/app/shared/pipes/app-file-url.pipe';
-import { DetailTopNavComponent } from 'src/app/shared/components';
+import { BottomSheetMenuComponent, DetailTopNavComponent } from 'src/app/shared/components';
 import { DetailTopNavConfig } from 'src/app/shared/components/detail-top-nav/detail-top-nav-config.interface';
 import { MissionListStore } from '../mission-list.store';
 import { TimesheetStatus } from 'src/app/shared/enums';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-mission-details',
@@ -34,6 +35,7 @@ export class MissionDetailsComponent{
     private route: ActivatedRoute,
     private router: Router,
     private appFileUrl: AppFileUrlPipe,
+    private matBottomSheet: MatBottomSheet,
     private notificationService: NotificationService,
   ){ }
 
@@ -56,22 +58,26 @@ export class MissionDetailsComponent{
       initialFilter: JSON.stringify({mission, status: TimesheetStatus.Open})
     }]);
 
-  private configureMainNav(mission: Mission){
-    let topNavConfig: DetailTopNavConfig = {
-      title: mission?.address?.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
-      subTitle: (mission?.finished ? 'Oppdrag ferdig! ' : '') + 'ID: ' + mission?.id,
-      subIcon: mission?.finished ? 'check' : '',
-      imgSrc: this.appFileUrl.transform(mission, "missionheader"),
-      backFn: this.onBack
-    };
-
-    topNavConfig.bottomSheetButtons = [  
+  private openBottomSheetMenu = (mission: Mission) => {   
+    this.matBottomSheet.open(BottomSheetMenuComponent, { data: [
       {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal},
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission?.id], allowedRoles: [Roles.Leder]},
       {text: `${mission?.fileName ? 'Oppdater' : 'Legg til'} forsidebilde`, icon: "add_photo_alternate", callback: this.openHeaderImageInput, allowedRoles: [Roles.Leder]},
-    ];
- 
-    this.mainNavService.addConfig({topNavComponent: DetailTopNavComponent, topNavConfig});
+    ]});
+  }
+
+  private configureMainNav(mission: Mission){
+    const isEmployer = this.store.currentUser?.role === Roles.Oppdragsgiver;
+    this.mainNavService.addConfig({
+      topNavComponent: DetailTopNavComponent, 
+      topNavConfig: {
+        title: mission?.address?.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
+        subTitle: (mission?.finished ? 'Oppdrag ferdig! ' : '') + 'ID: ' + mission?.id,
+        subIcon: mission?.finished ? 'check' : '',
+        imgSrc: this.appFileUrl.transform(mission, "missionheader"),
+        backFn: this.onBack,
+        buttons: isEmployer ? null : [{icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission]}]
+    }});
   }
 
   private onBack = () => this.router.navigate(['/oppdrag'])

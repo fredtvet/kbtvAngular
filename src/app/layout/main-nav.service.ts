@@ -23,7 +23,6 @@ export class MainNavService {
     ]).pipe(
       debounceTime(5),//currently needed to detect changes coming to fast
       map(([config, isXs, user, isOnline]) => {
-        if(config?.topNavConfig) config.topNavConfig.userRole = user?.role;
         return {...config, isXs, sideNavConfig: {user, isOnline, navigations: SideNavNavigations}} 
       }),
   );

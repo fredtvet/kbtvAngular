@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from "@angu
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, tap } from "rxjs/operators";
+import { filter, take, tap } from "rxjs/operators";
 import { MissionImage, ModelFile } from 'src/app/core/models';
 import { FormService } from 'src/app/core/services/form/form.service';
 import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
@@ -10,7 +10,7 @@ import { MainNavService } from 'src/app/layout';
 import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces';
-import { ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent, SelectableListComponent } from 'src/app/shared/components';
+import { BottomSheetMenuComponent, ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent, SelectableListComponent } from 'src/app/shared/components';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav/main-top-nav-config.interface';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MailImageFormComponent } from '../mail-image-form.component';
@@ -19,6 +19,7 @@ import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { DownloaderService } from 'src/app/core/services/downloader.service';
 import { NotificationService } from 'src/app/core/services/notification';
 import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: "app-mission-image-list",
@@ -30,7 +31,12 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   @ViewChild('imageList') imageList: SelectableListComponent;
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
 
-  images$: Observable<MissionImage[]>;
+  images$: Observable<MissionImage[]> = this.store.getByMissionId$(this.missionId).pipe(
+    tap(x => this.images = x)
+  );
+
+  private images: MissionImage[];
+
   isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
 
   get missionId() { return this.route.snapshot.paramMap.get('id'); }
@@ -39,6 +45,7 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
     mainNavService: MainNavService,
     private downloaderService: DownloaderService,
     private deviceInfoService: DeviceInfoService,
+    private matBottomSheet: MatBottomSheet,
     private formService: FormService,
     private dialog: MatDialog,
     private store: MissionImageListStore,
@@ -55,12 +62,7 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
       ]
     }
 
-  ngOnInit() { 
-    this.configureMainNav();
-    this.images$ = this.store.getByMissionId$(this.missionId).pipe(
-      tap(this.updateMainNav)
-    );
-  }
+  ngOnInit() { this.configureMainNav(); }
 
   openImageViewer(image: ModelFile, images: ModelFile[]) {
     this.dialog.open(ImageViewerDialogWrapperComponent, {
@@ -106,6 +108,13 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
       .subscribe((x) => this.imageList.clearSelections());
   }
 
+  private openBottomSheetMenu = () => {   
+    this.matBottomSheet.open(BottomSheetMenuComponent, { data: [
+      {icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, allowedRoles: RolePresets.Authority},
+      {icon: "cloud_download", text: "Last ned alle", callback: this.downloadImages, params: [this.images]},
+    ]});
+  }
+
   private downloadImages = (imgs: MissionImage[]) => 
     this.downloaderService.downloadUrls(imgs.map(x => appFileUrl(x.fileName, "images")));
 
@@ -117,23 +126,10 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
       topNavComponent: MainTopNavComponent, 
       topNavConfig: {
         title:  "Bilder",
-        backFn: this.onBack
+        backFn: this.onBack,
+        buttons: [{icon: "more_vert", callback: this.openBottomSheetMenu}],
       }
     });
   }
-
-  private updateMainNav = (images: MissionImage[]) => {
-    let topNavConfig = this.mainNavService.getTopNavConfig<MainTopNavConfig>(); 
-
-    topNavConfig.bottomSheetButtons = [
-      {icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, 
-      params: [images.map(x => x.id)], allowedRoles: RolePresets.Authority},
-      {icon: "cloud_download", text: "Last ned alle", callback: this.downloadImages, 
-      params: [images]},
-    ]
-    
-    this.mainNavService.updateConfig({topNavConfig});
-  }  
-
 
 }

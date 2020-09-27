@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
@@ -41,7 +40,7 @@ import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
     MatButtonModule,
     MatDividerModule,
     MatRippleModule,
-    MatBottomSheetModule,
+
     MatIconModule,
     MatProgressSpinnerModule,
   ],

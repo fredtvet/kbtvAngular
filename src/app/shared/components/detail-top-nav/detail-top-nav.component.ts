@@ -1,11 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Observable } from 'rxjs';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { BaseTopNavComponent } from 'src/app/shared-app/components/base-top-nav.component';
 import { ButtonTypes } from 'src/app/shared-app/enums';
-import { AppButton } from 'src/app/shared-app/interfaces';
-import { BottomSheetMenuComponent } from '../bottom-sheet-menu/bottom-sheet-menu.component';
 import { DetailTopNavConfig } from './detail-top-nav-config.interface';
 
 @Component({
@@ -22,12 +19,9 @@ export class DetailTopNavComponent extends BaseTopNavComponent<DetailTopNavConfi
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
-    private _bottomSheet: MatBottomSheet,
     private loadingService: LoadingService) { 
       super(changeDetectorRef);
     }
   
   onMenuButtonClick = () => this.toggleDrawer.emit();
-  
-  openBottomSheet = (buttons: AppButton[]) => this._bottomSheet.open(BottomSheetMenuComponent, { data: buttons });
 }

@@ -7,7 +7,7 @@ import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-respon
 import { SaveModelWithFileStateCommand } from 'src/app/core/model/interfaces';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { GetWithRelationsHelper } from 'src/app/core/model/state-helpers/get-with-relations.helper';
-import { Mission } from "src/app/core/models";
+import { Mission, User } from "src/app/core/models";
 import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
 import { ApiService } from 'src/app/core/services/api.service';
 import { SaveModelFileToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-file-to-state-http.converter';
@@ -51,6 +51,8 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
             records: this.arrayHelperService.filter(state.missions, (entity) => filter.check(entity)),
         }})
       );
+      
+  currentUser: User = this.getStateProperty<User>("currentUser");
 
   get criteria(): MissionCriteria {
     return this.getStateProperty("missionCriteria");

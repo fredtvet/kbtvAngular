@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import {
@@ -48,7 +47,6 @@ import { AppLayoutModule } from '../layout/app-layout.module';
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    GooglePlaceModule,   
     SharedAppModule,
     AppLayoutModule,
   ],
@@ -56,7 +54,6 @@ import { AppLayoutModule } from '../layout/app-layout.module';
     FormsModule,    
     ReactiveFormsModule,
     AngularMaterialModule,
-    GooglePlaceModule,
     SharedAppModule,
 
     ConfirmDialogComponent,

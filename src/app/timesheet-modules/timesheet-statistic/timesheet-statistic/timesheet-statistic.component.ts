@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { map } from 'rxjs/operators';
 import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
 import { FilterSheetService } from 'src/app/core/services/filter';
@@ -8,7 +9,7 @@ import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/t
 import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view.component';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces/timesheet-criteria.interface';
 import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
-import { MainTopNavComponent } from 'src/app/shared/components';
+import { BottomSheetMenuComponent, MainTopNavComponent } from 'src/app/shared/components';
 import { GroupByPeriod } from 'src/app/shared/enums';
 import { TimesheetStatisticStore } from '../timesheet-statistic.store';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
@@ -32,6 +33,7 @@ export class TimesheetStatisticComponent extends SubscriptionComponent {
   constructor(
     private mainNavService: MainNavService,
     private store: TimesheetStatisticStore,
+    private matBottomSheet: MatBottomSheet,
     private filterService: FilterSheetService
     ) { super(); }
 
@@ -56,15 +58,19 @@ export class TimesheetStatisticComponent extends SubscriptionComponent {
       }
     });
   }
+  
+  private openBottomSheetMenu = () => {   
+    this.matBottomSheet.open(BottomSheetMenuComponent, { data: [
+      {icon: "import_export", text: "Eksporter timer til CSV", callback: this.exportAsCsv}
+    ]});
+  }
 
   private configureMainNav(){
     this.mainNavService.addConfig({
       topNavComponent: MainTopNavComponent, 
       topNavConfig: {
         title:  "Timestatistikk",
-        bottomSheetButtons: [
-          {icon: "import_export", text: "Eksporter timer til CSV", callback: this.exportAsCsv}
-        ]
+        buttons: [{icon: "more_vert", callback: this.openBottomSheetMenu}]
       }
     });
   }

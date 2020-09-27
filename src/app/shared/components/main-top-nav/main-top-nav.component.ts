@@ -4,14 +4,13 @@ import { Observable } from 'rxjs';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { BaseTopNavComponent } from 'src/app/shared-app/components/base-top-nav.component';
 import { ButtonTypes } from 'src/app/shared-app/enums';
-import { AppButton } from 'src/app/shared-app/interfaces';
-import { BottomSheetMenuComponent } from '../bottom-sheet-menu/bottom-sheet-menu.component';
 import { MainTopNavConfig } from './main-top-nav-config.interface';
 
 @Component({
   selector: 'app-main-top-nav',
   templateUrl: './main-top-nav.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers:[MatBottomSheet]
 })
 export class MainTopNavComponent extends BaseTopNavComponent<MainTopNavConfig>{
   @ViewChild('searchInput') searchInput: ElementRef;
@@ -25,14 +24,11 @@ export class MainTopNavComponent extends BaseTopNavComponent<MainTopNavConfig>{
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
-    private _bottomSheet: MatBottomSheet,
     private loadingService: LoadingService) {
       super(changeDetectorRef);
   }
 
   onMenuButtonClick = () => this.toggleDrawer.emit();
-  
-  openBottomSheet = (buttons: AppButton[]) => this._bottomSheet.open(BottomSheetMenuComponent, { data: buttons });
 
   toggleSearchBar = () => {
     if(!this.searchBarHidden) this.resetSearch(); //Reset criteria when hiding

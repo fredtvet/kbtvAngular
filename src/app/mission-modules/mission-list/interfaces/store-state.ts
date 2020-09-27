@@ -1,4 +1,4 @@
-import { StateEmployers, StateMissionDocuments, StateMissionImages, StateMissionNotes, StateMissions, StateMissionTypes } from 'src/app/core/state';
+import { StateCurrentUser, StateEmployers, StateMissionDocuments, StateMissionImages, StateMissionNotes, StateMissions, StateMissionTypes } from 'src/app/core/state';
 import { MissionCriteria } from '../../../shared/interfaces/mission-filter-criteria.interface';
 
 export interface StoreState extends
@@ -7,6 +7,7 @@ export interface StoreState extends
     StateMissionTypes,
     StateMissionImages,
     StateMissionDocuments,
-    StateMissionNotes {
+    StateMissionNotes,
+    StateCurrentUser {
     missionCriteria: MissionCriteria;
 } 
