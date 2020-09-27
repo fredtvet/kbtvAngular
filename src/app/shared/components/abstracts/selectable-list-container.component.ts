@@ -5,7 +5,6 @@ export abstract class SelectableListContainerComponent {
 
     protected staticFabs: AppButton[];
     protected selectedItemsFabs: AppButton[];
-
     protected currentSelections: string[] = [];
 
     constructor(protected mainNavService: MainNavService) {}

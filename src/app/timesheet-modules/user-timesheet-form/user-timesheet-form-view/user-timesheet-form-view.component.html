@@ -15,17 +15,6 @@
 
   <span fxLayout="row" fxLayoutAlign="space-between start">
 
-    <!-- <label fxFlex=42>
-      <mat-form-field class="w-100">
-        <input matInput placeholder="Dato" formControlName="date" aria-label="Velg dato" required
-          [owlDateTimeTrigger]="d3" [owlDateTime]="d3" >
-          <mat-error *ngIf="date.errors">
-            Velg en dato
-          </mat-error>
-      </mat-form-field>
-      <owl-date-time pickerType="calendar" start #d3></owl-date-time>
-    </label> -->
-
     <app-ion-date-picker fxFlex=42 ionFormat="YYYY-MMMM-DD" datePipeFormat="MMM d, y" placeholder="dato"
       [control]="date" >
     </app-ion-date-picker>
@@ -38,17 +27,6 @@
       [control]="endTime" [min]="startTime.value">
     </app-ion-date-picker>
 
-    <!-- <label fxFlex=46>
-      <mat-form-field class="w-100">
-        <input matInput placeholder="Arbeidstid" formControlName="timeRange" required selectMode="range"
-          [owlDateTimeTrigger]="t1" [owlDateTime]="t1">
-          <mat-error *ngIf="timeRange.errors">
-            Velg start- og sluttidspunkt
-          </mat-error>
-      </mat-form-field>
-      <owl-date-time pickerType="timer"  stepMinute="15" [startAt]="config?.entity?.startTime || initTime" #t1>
-      </owl-date-time>
-    </label> -->
   </span>
 
   <mat-form-field>

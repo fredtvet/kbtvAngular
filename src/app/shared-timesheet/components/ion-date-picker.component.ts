@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-ion-date-picker',
   template:`
-   <span (click)="dateTime.click()">
+   <div (click)="dateTime.click()">
       <mat-form-field class="w-100" style="pointer-events:none!important" >
         <input matInput required 
           [value]="control?.value | date : datePipeFormat || ionFormat" 
@@ -24,7 +24,7 @@ import { FormControl } from '@angular/forms';
         [value]="control?.value"
         (ionChange)="control?.setValue($event.detail.value);control?.markAsDirty()">
       </ion-datetime>
-    </span>
+    </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
