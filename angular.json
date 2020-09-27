@@ -39,11 +39,7 @@
                 "bundleName": "mat-styles",
                 "inject": false
               },
-              {
-                "input": "src/styles/lazy-styles/owl-date-time.scss",
-                "bundleName": "owl-date-time",
-                "inject": false
-              }
+              
             ],
             "scripts": []
           },
