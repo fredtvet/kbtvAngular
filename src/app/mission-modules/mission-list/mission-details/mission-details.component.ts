@@ -3,16 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
+import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
 import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
 import { NotificationService } from 'src/app/core/services/notification/notification.service';
 import { MainNavService } from 'src/app/layout';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
-import { AppFileUrlPipe } from 'src/app/shared/pipes/app-file-url.pipe';
-import { BottomSheetMenuComponent, DetailTopNavComponent } from 'src/app/shared/components';
-import { DetailTopNavConfig } from 'src/app/shared/components/detail-top-nav/detail-top-nav-config.interface';
-import { MissionListStore } from '../mission-list.store';
+import { DetailTopNavComponent } from 'src/app/shared/components';
 import { TimesheetStatus } from 'src/app/shared/enums';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { AppFileUrlPipe } from 'src/app/shared/pipes/app-file-url.pipe';
+import { MissionListStore } from '../mission-list.store';
 
 @Component({
   selector: 'app-mission-details',
@@ -35,7 +34,7 @@ export class MissionDetailsComponent{
     private route: ActivatedRoute,
     private router: Router,
     private appFileUrl: AppFileUrlPipe,
-    private matBottomSheet: MatBottomSheet,
+    private menuService: BottomSheetMenuService,
     private notificationService: NotificationService,
   ){ }
 
@@ -59,11 +58,11 @@ export class MissionDetailsComponent{
     }]);
 
   private openBottomSheetMenu = (mission: Mission) => {   
-    this.matBottomSheet.open(BottomSheetMenuComponent, { data: [
+    this.menuService.open([
       {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal},
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission?.id], allowedRoles: [Roles.Leder]},
       {text: `${mission?.fileName ? 'Oppdater' : 'Legg til'} forsidebilde`, icon: "add_photo_alternate", callback: this.openHeaderImageInput, allowedRoles: [Roles.Leder]},
-    ]});
+    ]);
   }
 
   private configureMainNav(mission: Mission){

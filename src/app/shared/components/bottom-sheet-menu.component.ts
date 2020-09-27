@@ -4,7 +4,16 @@ import { AppButton } from 'src/app/shared-app/interfaces';
 
 @Component({
   selector: 'app-bottom-sheet-menu',
-  templateUrl: './bottom-sheet-menu.component.html',
+  template:`
+  <span class="nav-list mat-subheading-2">
+    <ng-container #navs *ngFor="let button of buttons">
+        <a *ifRole="button.allowedRoles" (click)="handleFn(button.callback, button.params)">
+            <mat-icon>{{ button.icon }}</mat-icon>
+            <span class="ml-2 mr-2">{{ button.text }}</span>
+        </a>
+    </ng-container>
+  </span>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BottomSheetMenuComponent {
@@ -17,6 +26,5 @@ export class BottomSheetMenuComponent {
     this.close();
   };
 
-  close = () => this._bottomSheetRef.dismiss();
-  
+  close = () => this._bottomSheetRef.dismiss(); 
 }

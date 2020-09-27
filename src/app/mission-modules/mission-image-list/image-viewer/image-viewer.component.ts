@@ -1,9 +1,8 @@
-import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { AppButton } from 'src/app/shared-app/interfaces';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
 import { ModelFile } from 'src/app/core/models';
-import { BottomSheetMenuComponent } from 'src/app/shared/components';
+import { AppButton } from 'src/app/shared-app/interfaces';
 
 @Component({
   selector: 'app-image-viewer',
@@ -54,7 +53,7 @@ export class ImageViewerComponent {
 
   index: number;
 
-  constructor(private bottomSheet: MatBottomSheet){};
+  constructor(private menuService: BottomSheetMenuService){};
 
   ngOnInit() {
     if(this.currentImage)
@@ -81,6 +80,6 @@ export class ImageViewerComponent {
 
   finished = () => this.close.emit();
 
-  openBottomSheet = () => this.bottomSheet.open(BottomSheetMenuComponent, { data: this.actions });
+  openBottomSheet = () => this.menuService.open(this.actions);
  
 }

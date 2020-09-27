@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { filter } from 'rxjs/operators';
-import { Roles } from 'src/app/shared-app/enums';
-import { ConfirmDialogComponent, ConfirmDialogConfig } from 'src/app/shared/components';
-import { MissionImageListStore } from '../mission-image-list.store';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModelFile } from 'src/app/core/models';
-import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
 import { DownloaderService } from 'src/app/core/services/downloader.service';
+import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
+import { Roles } from 'src/app/shared-app/enums';
+import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
+import { MissionImageListStore } from '../mission-image-list.store';
 
 @Component({
   selector: 'app-timesheet-card-dialog-wrapper',
@@ -32,7 +31,7 @@ export class ImageViewerDialogWrapperComponent {
   }
 
   constructor( 
-    private dialog: MatDialog,
+    private confirmService: ConfirmDialogService,
     private downloaderService: DownloaderService,
     private store: MissionImageListStore,
     private dialogRef: MatDialogRef<ImageViewerDialogWrapperComponent>,
@@ -50,9 +49,10 @@ export class ImageViewerDialogWrapperComponent {
       this.downloaderService.downloadUrl(appFileUrl(this.data.currentImage.fileName, "images"))
     
     private openConfirmDeleteDialog = () => {  
-      let config: ConfirmDialogConfig = {message: 'Slett bilde?', confirmText: 'Slett'};
-      const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
-      deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteCurrentImage());
+      this.confirmService.open({
+        message: 'Slett bilde?', confirmText: 'Slett',
+        confirmCallback: () => this.deleteCurrentImage()
+      });
     }
   
 }

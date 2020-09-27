@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -9,10 +8,10 @@ import { DownloaderService } from 'src/app/core/services/downloader.service';
 import { FormService } from 'src/app/core/services/form/form.service';
 import { NotificationService } from 'src/app/core/services/notification';
 import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
+import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { MainNavService } from 'src/app/layout';
 import { Roles } from 'src/app/shared-app/enums';
-import { AppButton } from 'src/app/shared-app/interfaces';
-import { ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent, SelectableListComponent } from 'src/app/shared/components';
+import { ConfirmDialogConfig, MainTopNavComponent, SelectableListComponent } from 'src/app/shared/components';
 import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
 import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
 import { MailDocumentFormComponent } from '../mail-document-form.component';
@@ -40,7 +39,7 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
-    private dialog: MatDialog) {
+    private confirmService: ConfirmDialogService,) {
       super(mainNavService);
       this.staticFabs = [
         {icon: "note_add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openDocumentForm, allowedRoles: [Roles.Leder]}
@@ -62,9 +61,10 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
   }
 
   private openConfirmDeleteDialog = () => {   
-    let config: ConfirmDialogConfig = {message: 'Slett dokument?', confirmText: 'Slett'};
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
-    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteSelectedDocuments());
+    this.confirmService.open({
+      message: 'Slett utvalgte dokumenter?', confirmText: 'Slett',
+      confirmCallback: this.deleteSelectedDocuments
+    })
   }
   
   private openMailDocumentSheet = () => {
@@ -101,5 +101,5 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
       }
     });
   }
-  
+
 }

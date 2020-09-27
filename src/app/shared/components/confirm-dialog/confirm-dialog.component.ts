@@ -13,7 +13,7 @@ export class ConfirmDialogComponent {
     @Inject(MAT_DIALOG_DATA) public config: ConfirmDialogConfig) {}
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 }
 
@@ -22,4 +22,6 @@ export interface ConfirmDialogConfig {
   message?: string,
   discardText?: string,
   confirmText: string,
+  confirmCallback?: Function,
+  cancelCallback?: Function,
 }

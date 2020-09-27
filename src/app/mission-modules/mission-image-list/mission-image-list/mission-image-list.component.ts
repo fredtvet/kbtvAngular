@@ -1,25 +1,24 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, take, tap } from "rxjs/operators";
+import { filter, tap } from "rxjs/operators";
 import { MissionImage, ModelFile } from 'src/app/core/models';
+import { DeviceInfoService } from 'src/app/core/services/device-info.service';
+import { DownloaderService } from 'src/app/core/services/downloader.service';
 import { FormService } from 'src/app/core/services/form/form.service';
+import { NotificationService } from 'src/app/core/services/notification';
 import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
+import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
+import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { MainNavService } from 'src/app/layout';
-import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
-import { AppButton } from 'src/app/shared-app/interfaces';
-import { BottomSheetMenuComponent, ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent, SelectableListComponent } from 'src/app/shared/components';
-import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav/main-top-nav-config.interface';
+import { ConfirmDialogConfig, MainTopNavComponent, SelectableListComponent } from 'src/app/shared/components';
+import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
+import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MailImageFormComponent } from '../mail-image-form.component';
 import { MissionImageListStore } from '../mission-image-list.store';
-import { DeviceInfoService } from 'src/app/core/services/device-info.service';
-import { DownloaderService } from 'src/app/core/services/downloader.service';
-import { NotificationService } from 'src/app/core/services/notification';
-import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: "app-mission-image-list",
@@ -45,8 +44,9 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
     mainNavService: MainNavService,
     private downloaderService: DownloaderService,
     private deviceInfoService: DeviceInfoService,
-    private matBottomSheet: MatBottomSheet,
+    private menuService: BottomSheetMenuService,
     private formService: FormService,
+    private confirmService: ConfirmDialogService,
     private dialog: MatDialog,
     private store: MissionImageListStore,
     private route: ActivatedRoute,
@@ -90,9 +90,10 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   }
 
   private  openConfirmDeleteDialog = () => {   
-    let config: ConfirmDialogConfig = {message: 'Slett utvalgte bilder?', confirmText: 'Slett'};
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
-    deleteDialogRef.afterClosed().pipe(filter(res => res)).subscribe(res => this.deleteSelectedImages());
+    this.confirmService.open({
+      message: 'Slett utvalgte bilder?', confirmText: 'Slett',
+      confirmCallback: this.deleteSelectedImages
+    })
   }
   
   private openMailImageSheet = () => {
@@ -109,10 +110,10 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   }
 
   private openBottomSheetMenu = () => {   
-    this.matBottomSheet.open(BottomSheetMenuComponent, { data: [
+    this.menuService.open([
       {icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, allowedRoles: RolePresets.Authority},
       {icon: "cloud_download", text: "Last ned alle", callback: this.downloadImages, params: [this.images]},
-    ]});
+    ]);
   }
 
   private downloadImages = (imgs: MissionImage[]) => 

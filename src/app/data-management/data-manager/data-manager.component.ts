@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -8,13 +7,13 @@ import { ModelState } from 'src/app/core/model/model.state';
 import { Prop } from 'src/app/core/model/state.types';
 import { Model } from 'src/app/core/models';
 import { ModelFormService } from 'src/app/core/services/model';
+import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { StateAction } from 'src/app/core/state';
 import { MainNavService } from 'src/app/layout';
-import { ConfirmDialogComponent, ConfirmDialogConfig, MainTopNavComponent } from 'src/app/shared/components';
+import { ConfirmDialogConfig, MainTopNavComponent } from 'src/app/shared/components';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav/main-top-nav-config.interface';
 import { DataManagementStore } from '../data-management.store';
 import { DataConfig } from '../interfaces/data-config.interface';
-import { StoreState } from '../interfaces/store-state';
 import { DataTableComponent } from './data-table/data-table.component';
 import { PropertyFormMap } from './property-form.map';
 
@@ -38,7 +37,7 @@ constructor(
   private store: DataManagementStore,
   private mainNavService: MainNavService,
   private router: Router,    
-  private dialog: MatDialog,
+  private confirmService: ConfirmDialogService,
   private formService: ModelFormService) { 
     this.configureMainNav();
   }
@@ -51,15 +50,14 @@ constructor(
     this.store.save({entity: command.data, saveAction: StateAction.Update}); 
   }
 
-  openDeleteDialog = () => {
+  openDeleteDialog = (): void => {
     let nodes = this.dataTable.dataGrid.api.getSelectedNodes();
-    if(nodes?.length == 0) return null;
-    
-    let config: ConfirmDialogConfig = {message: 'Slett ressurs(er)?', confirmText: 'Slett'};
-    const deleteDialogRef = this.dialog.open(ConfirmDialogComponent, {data: config});
+    if(nodes?.length == 0) return;
 
-    deleteDialogRef.afterClosed().pipe(filter(res => res))
-      .subscribe(res =>  this.deleteItems(nodes.map(node => node.data['id'])));
+    this.confirmService.open({
+      message: 'Slett ressurs(er)?',  confirmText: 'Slett',
+      confirmCallback: () => this.deleteItems(nodes.map(node => node.data['id']))
+    })
   }
 
   openCreateForm(): void{

@@ -1,5 +1,6 @@
 
     <app-mission-details-view *ngIf="mission$ | async; let mission" [mission]="mission">
     </app-mission-details-view>
+
     <input type="file" style="display:none" #imageInput (change)="updateHeaderImage($event.target.files)">
     <router-outlet></router-outlet>

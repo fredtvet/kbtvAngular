@@ -25,8 +25,8 @@ import { AppLayoutModule } from '../layout/app-layout.module';
     SimpleTopNavComponent,
     MainTopNavComponent,
     DetailTopNavComponent,
-    BottomSheetMenuComponent,
     SelectableListComponent,
+    BottomSheetMenuComponent,
     
     TransformButtonPipe,
     ArraySlicePipe,
