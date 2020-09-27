@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { OwlDateTimeComponent } from 'ng-pick-datetime';
 import { FilterComponent } from 'src/app/core/filter/interfaces/filter-component.interface';
 import { BaseFormViewComponent } from 'src/app/core/form/abstracts/base-form-view-component';
 import { Mission } from 'src/app/core/models';
@@ -9,7 +8,6 @@ import { DateRangePresets } from 'src/app/shared-app/enums';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetStatus } from 'src/app/shared/enums';
 import { ActiveStringFilterConfig } from 'src/app/shared/interfaces/active-string-filter-config.interface';
-import { dateRangeValidator } from 'src/app/shared/validators/date-range.validator';
 import { isObjectValidator } from 'src/app/shared/validators/is-object.validator';
 import { TimesheetFilterViewConfig } from './timesheet-filter-view-config.interface';
 
@@ -33,19 +31,21 @@ export class TimesheetFilterViewComponent extends BaseFormViewComponent<Timeshee
   displayMissionAddress = (mission: Mission): string => 
     mission ? mission.address : null;
 
-  selectMonthHandler(date: Date, datepicker: OwlDateTimeComponent<Date>) {
-    this.dateRange.setValue(this.dateTimeService.getMonthRange(date));
-    datepicker.close();
-  }
-
+  selectMonthHandler = (date: Date): void =>  
+    this.setDateRange(this.dateTimeService.getMonthRange(date))
+  
   onSubmit = () => {
     const preset = this.dateRangePreset.value;
-    
-    if(preset !== DateRangePresets.Custom && preset !== DateRangePresets.CustomMonth )
-      this.dateRange.setValue(this.dateTimeService.getRangeByDateRangePreset(preset));
 
+    if(preset !== DateRangePresets.Custom && preset !== DateRangePresets.CustomMonth )
+      this.setDateRange(this.dateTimeService.getRangeByDateRangePreset(preset));
+
+    const res = this.form.value;
+    res.dateRange = [new Date(res.dateRange?.start), new Date(res.dateRange?.end)];
+
+    console.log(res);
     if(this.form.valid && this.form.dirty) 
-        this.formSubmitted.emit(this.form.value);
+        this.formSubmitted.emit(res);
   };
   
   reset = () => {
@@ -74,17 +74,30 @@ export class TimesheetFilterViewComponent extends BaseFormViewComponent<Timeshee
     const criteria = cfg?.criteria;
     const disabled = cfg?.disabledFilters;
 
+    const dateRange = criteria?.dateRange;
+    const startDateIso = dateRange && dateRange[0] ? new Date(dateRange[0]).toISOString() : null;
+    const endDateIso = dateRange && dateRange[1] ? new Date(dateRange[1]).toISOString() : null;
+
     return this._formBuilder.group({
       userName: [{value: criteria?.userName, disabled: disabled?.includes("userName")}],
       mission: [{value: criteria?.mission, disabled: disabled?.includes("mission")}, [
         isObjectValidator(true)
       ]],
       dateRangePreset: [{value: criteria?.dateRangePreset || DateRangePresets.CurrentMonth, disabled: disabled?.includes("dateRangePreset")}],
-      dateRange: [{value: criteria?.dateRange, disabled: disabled?.includes("dateRange")}, [
-        dateRangeValidator(true)
-      ]],  
+      dateRange: this._formBuilder.group({
+        start: [{value: startDateIso, disabled: disabled?.includes("dateRange")}],
+        end: [{value: endDateIso, disabled: disabled?.includes("dateRange")}],
+      }),
       status: [{value: criteria?.status, disabled: disabled?.includes("status")}],
     });
+  }
+
+  private setDateRange(dateRange: Date[]){
+    if(!dateRange) return;
+    this.dateRange.setValue({
+      start: new Date(dateRange[0]).toISOString(), 
+      end: new Date(dateRange[1]).toISOString()
+    })
   }
 
   get userName(){
@@ -98,6 +111,12 @@ export class TimesheetFilterViewComponent extends BaseFormViewComponent<Timeshee
   }
   get dateRange(){
     return this.form.get('dateRange')
+  }  
+  get startDate(){
+    return this.form.get(['dateRange', 'start'])
+  }  
+  get endDate(){
+    return this.form.get(['dateRange','end'])
   }
   get status(){
     return this.form.get('status')

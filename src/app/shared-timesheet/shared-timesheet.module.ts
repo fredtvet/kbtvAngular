@@ -5,6 +5,7 @@ import {
   TimesheetCardComponent,
   TimesheetSummaryCardContentComponent, WeekFilterViewComponent
 } from './components';
+import { IonDatePickerComponent } from './components/ion-date-picker.component';
 import { TimesheetFilterViewComponent } from './components/timesheet-filter-view/timesheet-filter-view.component';
 import { ArrayIncludesPipe, GetDateByDateParamsPipe, ReadableDurationPipe } from './pipes';
 
@@ -18,6 +19,7 @@ import { ArrayIncludesPipe, GetDateByDateParamsPipe, ReadableDurationPipe } from
     GetDateByDateParamsPipe,   
     ArrayIncludesPipe,
     ReadableDurationPipe,
+    IonDatePickerComponent
   ],
   imports: [
     SharedModule,
@@ -33,6 +35,7 @@ import { ArrayIncludesPipe, GetDateByDateParamsPipe, ReadableDurationPipe } from
     GetDateByDateParamsPipe,   
     ArrayIncludesPipe,
     ReadableDurationPipe,
+    IonDatePickerComponent
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

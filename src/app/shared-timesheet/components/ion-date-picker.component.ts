@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-ion-date-picker',
   template:`
-   <div (click)="dateTime.click()">
+   <div (click)="dateTime.click()" class="w-100">
       <mat-form-field class="w-100" style="pointer-events:none!important" >
         <input matInput required 
           [value]="control?.value | date : datePipeFormat || ionFormat" 
@@ -22,7 +22,7 @@ import { FormControl } from '@angular/forms';
         [attr.display-format]="ionFormat"
         [attr.minute-values]="minuteValues"
         [value]="control?.value"
-        (ionChange)="control?.setValue($event.detail.value);control?.markAsDirty()">
+        (ionChange)="onChange($event.detail.value);">
       </ion-datetime>
     </div>
   `,
@@ -38,12 +38,21 @@ export class IonDatePickerComponent {
   @Input() minuteValues?: number[];
   @Input() min: string;
   @Input() max: string;
+  @Input() valueSetter: (value: any) => void;
 
   dayNames = ["Søndag", "Mandag", "Tirsdag", "Onsdag","Torsdag", "Fredag", "Lørdag"]
   dayShortNames = ["Søn", "Man", "Tir", "Ons","Tor", "Fre", "Lør"]
   monthNames = ["Januar", "Februar", "Mars", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Desember"];
   monthShortNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des"]
 
-  constructor() { }
+  onChange(val: any){
+
+    if(this.valueSetter) 
+      this.valueSetter(val);
+    else
+      this.control?.setValue(val);
+    
+    this.control?.markAsDirty()
+  }
 
 }
