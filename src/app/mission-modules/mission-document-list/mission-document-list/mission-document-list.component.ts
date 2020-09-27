@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { MissionDocument } from 'src/app/core/models';
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { DownloaderService } from 'src/app/core/services/downloader.service';
@@ -11,7 +10,7 @@ import { AppNotifications } from 'src/app/core/services/notification/app.notific
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { MainNavService } from 'src/app/layout';
 import { Roles } from 'src/app/shared-app/enums';
-import { ConfirmDialogConfig, MainTopNavComponent, SelectableListComponent } from 'src/app/shared/components';
+import { MainTopNavComponent } from 'src/app/shared/components';
 import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
 import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
 import { MailDocumentFormComponent } from '../mail-document-form.component';
@@ -23,7 +22,6 @@ import { MissionDocumentListStore } from '../mission-document-list.store';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionDocumentListComponent extends SelectableListContainerComponent {
-  @ViewChild('documentList') documentList: SelectableListComponent;
 
   documentsWithType$: Observable<MissionDocument[]> = this.store.getByMissionIdWithType$(this.missionId);
   isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
@@ -57,7 +55,7 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
 
   private deleteSelectedDocuments = () => {
     this.store.delete({ids: this.currentSelections});    
-    this.documentList.clearSelections();
+    this.selectableList.clearSelections();
   }
 
   private openConfirmDeleteDialog = () => {   
@@ -68,15 +66,10 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
   }
   
   private openMailDocumentSheet = () => {
-    let botRef = this.formService.open({
+    this.formService.open({
       formComponent: MailDocumentFormComponent,
       formConfig: { toEmailPreset: this.store.getMissionEmployer(this.missionId)?.email, ids: this.currentSelections },
-    });
-
-    botRef
-      .afterDismissed()
-      .pipe(filter(result => result?.action != null))
-      .subscribe((x) => this.documentList.clearSelections());
+    }).afterDismissed().subscribe(x => x?.action ? this.selectableList.clearSelections() : null);
   }
 
   private openDocumentForm = (): void => {

@@ -1,7 +1,10 @@
+import { ViewChild } from '@angular/core';
 import { MainNavService } from 'src/app/layout';
 import { AppButton } from 'src/app/shared-app/interfaces';
+import { SelectableListComponent } from '../selectable-list/selectable-list.component';
 
 export abstract class SelectableListContainerComponent {
+    @ViewChild('selectableList') selectableList: SelectableListComponent;
 
     protected staticFabs: AppButton[];
     protected selectedItemsFabs: AppButton[];

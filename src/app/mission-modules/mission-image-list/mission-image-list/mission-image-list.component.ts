@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from "@angu
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, tap } from "rxjs/operators";
+import { tap } from "rxjs/operators";
 import { MissionImage, ModelFile } from 'src/app/core/models';
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { DownloaderService } from 'src/app/core/services/downloader.service';
@@ -13,7 +13,7 @@ import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-me
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { MainNavService } from 'src/app/layout';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
-import { ConfirmDialogConfig, MainTopNavComponent, SelectableListComponent } from 'src/app/shared/components';
+import { MainTopNavComponent } from 'src/app/shared/components';
 import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
 import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
@@ -27,7 +27,6 @@ import { MissionImageListStore } from '../mission-image-list.store';
 })
 
 export class MissionImageListComponent extends SelectableListContainerComponent{
-  @ViewChild('imageList') imageList: SelectableListComponent;
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
 
   images$: Observable<MissionImage[]> = this.store.getByMissionId$(this.missionId).pipe(
@@ -86,7 +85,7 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   private deleteSelectedImages = () => {
     this.currentSelections;
     this.store.delete({ids: this.currentSelections});     
-    this.imageList.clearSelections();
+    this.selectableList.clearSelections();
   }
 
   private  openConfirmDeleteDialog = () => {   
@@ -97,16 +96,11 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   }
   
   private openMailImageSheet = () => {
-    let botRef = this.formService.open({
+    this.formService.open({
       customTitle: "Send bilder",
       formComponent: MailImageFormComponent,
       formConfig: { toEmailPreset: this.store.mission?.employer?.email, ids: this.currentSelections },
-    });
-
-    botRef
-      .afterDismissed()
-      .pipe(filter(result => result?.action != null))
-      .subscribe((x) => this.imageList.clearSelections());
+    }).afterDismissed().subscribe(x => x?.action ? this.selectableList.clearSelections() : null);
   }
 
   private openBottomSheetMenu = () => {   
