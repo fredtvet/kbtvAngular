@@ -53,10 +53,13 @@ export class SaveModelToStateHttpConverter<TState, TCommand extends SaveModelSta
    //Add state prop in addition to fk props where entity has foreign value set
    protected createProperties(command: TCommand): Prop<TState>[]{
       const props: string[] = [command.stateProp];
-      for(const fkProp of this.modelConfig.foreigns){
-         const fkCfg = ModelStateConfig.get(fkProp as any);
-         if(command.entity[fkCfg.displayProp]) props.push(fkProp);
-      }
+
+      if(this.modelConfig.foreigns)
+         for(const fkProp of this.modelConfig.foreigns){
+            const fkCfg = ModelStateConfig.get(fkProp as any);
+            if(command.entity[fkCfg.displayProp]) props.push(fkProp);
+         }
+
       return props as Prop<TState>[];
    }
 
