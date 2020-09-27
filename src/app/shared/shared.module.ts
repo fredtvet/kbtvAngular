@@ -16,6 +16,7 @@ import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloade
 import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButtonsPipe, IsTodayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { AppLayoutModule } from '../layout/app-layout.module';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 @NgModule({
   declarations: [
@@ -49,12 +50,14 @@ import { AppLayoutModule } from '../layout/app-layout.module';
     AngularMaterialModule,
     SharedAppModule,
     AppLayoutModule,
+    GooglePlaceModule
   ],
   exports: [
     FormsModule,    
     ReactiveFormsModule,
     AngularMaterialModule,
     SharedAppModule,
+    GooglePlaceModule,
 
     ConfirmDialogComponent,
     SimpleTopNavComponent,

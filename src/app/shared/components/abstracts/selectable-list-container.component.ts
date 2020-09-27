@@ -1,8 +1,9 @@
-import { ViewChild } from '@angular/core';
+import { Directive, ViewChild } from '@angular/core';
 import { MainNavService } from 'src/app/layout';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { SelectableListComponent } from '../selectable-list/selectable-list.component';
 
+@Directive()
 export abstract class SelectableListContainerComponent {
     @ViewChild('selectableList') selectableList: SelectableListComponent;
 
