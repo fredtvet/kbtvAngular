@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { EMPTY, Observable, throwError } from 'rxjs';
-import { catchError, finalize, map, skip, tap } from 'rxjs/operators';
+import { catchError, finalize, map, retryWhen, skip, tap } from 'rxjs/operators';
 import { User } from 'src/app/core/models';
 import { ApiUrl } from '../../api-url.enum';
 import { ApiService } from '../api.service';
@@ -13,6 +13,7 @@ import { AccessToken, TokenResponse } from './interfaces/tokens.interface';
 import { Credentials } from './interfaces/credentials.interface';
 import { ObservableStore } from '../../observable-store/observable-store';
 import { ObservableStoreBase } from '../../observable-store/observable-store-base';
+import { httpRetryStrategy } from 'src/app/shared-app/http-retry.strategy';
 
 @Injectable({
   providedIn: 'root'
@@ -82,13 +83,9 @@ export class AuthStore extends ObservableStore<StoreState>{
           this.setState({accessToken: tokens.accessToken, refreshToken:tokens.refreshToken}, AuthStoreActions.RefreshToken)
           return tokens;
         }), 
-        catchError(err => { //If refresh returns errors, logout
-          this._logout();
-          return throwError(err);
-        }),
-        finalize(() => {
-            this._isRefreshingToken = false;
-        })
+        retryWhen(httpRetryStrategy({excludedStatusCodes: [400]})), 
+        catchError(err => { this._logout(); return throwError(err) }),
+        finalize(() => this._isRefreshingToken = false)
       );
   }
 
