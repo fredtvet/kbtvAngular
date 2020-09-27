@@ -26,7 +26,7 @@ export class UserTimesheetFormViewComponent
 
   constructor(private _formBuilder: FormBuilder) {
     super();
-    this.initTime.setHours(6,0,0,0);
+    this.initTime.setHours(7,0,0,0);
   }
   
   displayMissionAddress = (mission: Mission): string => 
