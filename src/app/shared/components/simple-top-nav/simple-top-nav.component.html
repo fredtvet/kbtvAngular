@@ -3,7 +3,7 @@
     <app-button [config]="config.leftBtn | transformButton : ButtonTypes.Icon"></app-button>
 
     <span class="mr-auto">
-        <span class="ml-1">{{ config.title }}</span>
+        <span ngClass.xs="ml-1" ngClass.gt-xs="ml-2">{{ config.title }}</span>
     </span>
 
     <app-button *ngFor="let button of config.buttons | transformButtons : ButtonTypes.Icon" [config]="button">

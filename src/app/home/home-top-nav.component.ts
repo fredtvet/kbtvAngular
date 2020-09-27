@@ -13,7 +13,7 @@ import { BaseTopNavComponent } from '../shared-app/components/base-top-nav.compo
     </button>
 
     <span class="mr-auto">
-        <span class="ml-1">Hjem</span>
+        <span ngClass.xs="ml-1" ngClass.gt-xs="ml-2">Hjem</span>
     </span>
     
     <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>

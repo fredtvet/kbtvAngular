@@ -18,9 +18,9 @@
 
     <span class="mr-auto">
       <ng-container>
-        <span *ngIf="!config?.backFn else noLinkTitle" class="ml-1"
+        <span *ngIf="!config?.backFn else noLinkTitle" ngClass.xs="ml-1" ngClass.gt-xs="ml-2"
           [routerLink]="['/hjem']">{{ config?.title || "Hjem" }}</span>
-        <ng-template #noLinkTitle><span class="ml-1">{{ config.title }}</span></ng-template>
+        <ng-template #noLinkTitle><span ngClass.xs="ml-1" ngClass.gt-xs="ml-2">{{ config.title }}</span></ng-template>
       </ng-container>
       <mat-icon *ngIf="config?.subIcon" class="scale-75">{{ config.subIcon }}</mat-icon>
       <span class="ml-1 mat-caption">{{ config?.subTitle }}</span>
