@@ -38,8 +38,8 @@ export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
     }
 
     protected addInitialChecks(mission: Mission): boolean{
-        let exp = new Date(mission.updatedAt).getTime() >= this.sixtyDaysAgo; //Grab missions updated last 30 days
-        exp = exp || new Date(mission.lastVisited).getTime() >= this.sixtyDaysAgo;//Grab missions visited last 30 days
+        let exp = mission.updatedAt >= this.sixtyDaysAgo; //Grab missions updated last 30 days
+        exp = exp || mission.lastVisited >= this.sixtyDaysAgo;//Grab missions visited last 30 days
         return exp;
     }
     

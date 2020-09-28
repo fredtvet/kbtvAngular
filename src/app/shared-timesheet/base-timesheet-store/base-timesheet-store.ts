@@ -96,10 +96,10 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
     if(filter.userName) params = params.set('UserName', filter.userName);
 
     if(filter.dateRange){
-      if(typeof filter.dateRange[0] !== 'undefined') 
-        params = params.set('StartDate', (filter.dateRange[0].getTime()/1000).toString());
-      if(typeof filter.dateRange[1] !== 'undefined') 
-        params = params.set('EndDate', (filter.dateRange[1].getTime()/1000).toString());     
+      if(filter.dateRange[0]) 
+        params = params.set('StartDate', (filter.dateRange[0].getTime()).toString());
+      if(filter.dateRange[1]) 
+        params = params.set('EndDate', (filter.dateRange[1].getTime()).toString());     
     }
     if(filter.mission) params = params.set('MissionId', filter.mission.id.toString());
 

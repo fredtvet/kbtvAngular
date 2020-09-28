@@ -49,8 +49,8 @@ export class TimesheetStatisticTableComponent extends AgGridTableComponent<Times
     return columnDefs;
   } 
 
-  private convertMonthIndex = (params) => 
-    params?.value ? this.datePipe.transform(new Date().setMonth(params.value), 'MMM') : undefined;
+  private convertMonthIndex = (params) =>  
+    params?.value != null ? this.datePipe.transform(new Date().setMonth(params.value), 'MMM') : undefined;
 
   private convertDate = (params) => 
     params?.value ? this.datePipe.transform(params.value) : undefined;

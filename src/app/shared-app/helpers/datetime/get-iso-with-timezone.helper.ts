@@ -1,4 +1,4 @@
-export function _getISOWithTimezone(date: Date | string): string{
+export function _getISOWithTimezone(date: Date | string | number): string{
     if(!date) return;
     const _date = new Date(date);
     const timezone = _date.getTimezoneOffset();

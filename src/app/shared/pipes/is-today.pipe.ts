@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class IsTodayPipe implements PipeTransform {
 
-  transform(value: Date | string): any {
+  transform(value: Date | string | number): any {
     const today = new Date();
     const date = new Date(value);
     return date.getDate() === today.getDate() &&

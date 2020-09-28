@@ -47,7 +47,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         (this.getStartOfDayTime(baseDateRange[1]) >= this.getStartOfDayTime(dateRange[1]))
     }
 
-    private getStartOfDayTime(date: Date | string): number{
+    private getStartOfDayTime(date: Date | string | number): number{
         if(!date) return
         const newDate = new Date(date);
         newDate.setHours(0,0,0,0);

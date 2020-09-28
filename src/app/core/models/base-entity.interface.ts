@@ -1,1 +1,3 @@
-export interface Model{}
+export interface Model{
+    updatedAt?: number;
+}

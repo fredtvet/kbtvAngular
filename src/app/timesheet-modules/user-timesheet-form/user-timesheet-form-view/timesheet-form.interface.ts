@@ -2,8 +2,9 @@ import { Mission } from 'src/app/core/models';
 
 export interface TimesheetForm {
     id?: string;
-    date?: Date;
+    date?: number;
     mission?: Mission;
-    timeRange?: Date[];
+    startTime?: string;
+    endTime?: string;
     comment?: string;
 }

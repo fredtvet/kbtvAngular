@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { pluck, tap } from 'rxjs/operators';
 import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
-import { Timesheet } from 'src/app/core/models';
 import { FilterSheetService } from 'src/app/core/services/filter';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { MainNavService } from 'src/app/layout';

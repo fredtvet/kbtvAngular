@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { combineLatest, Observable } from "rxjs";
-import { filter, map } from "rxjs/operators";
+import { filter, map, tap } from "rxjs/operators";
 import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interface';
 import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-response.interface';
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
@@ -51,7 +51,7 @@ export class UserTimesheetListStore extends ObservableStore<StoreState>
       combineLatest([this.filteredTimesheets$, this.groupBy$]).pipe(
           filter(([filtered]) => filtered != null || filtered.records != null),
           map(([filtered, groupBy]) => this.timesheetSummaryAggregator.groupByType(groupBy, filtered.records)),
-      );
+      ).pipe(tap(console.log));
 
   filterConfig$: Observable<TimesheetFilterViewConfig> = 
     this.stateSlice$(["missions", "userTimesheetListCriteria"]).pipe(map(state => {

@@ -17,15 +17,6 @@ export class SaveUserTimesheetToStateHttpConverter<TState extends StateCurrentUs
         modifyModelWithForeignsHelper: ModifyModelWithForeignsHelper
     ){ super(modelIdGenerator, modifyModelWithForeignsHelper); }
 
-    
-    protected createHttpBody(command: SaveModelStateCommand<Timesheet>){
-        let timesheet = command.entity;;
-        if(timesheet)
-          return {...timesheet, 
-            startTime: new Date(timesheet.startTime).getTime() / 1000, 
-            endTime: new Date(timesheet.endTime).getTime() / 1000
-          }
-    }
 
     protected createProperties(command: SaveModelStateCommand<Timesheet>): Prop<TState>[]{
         return ["currentUser" as any, ...super.createProperties(command)]
@@ -38,13 +29,12 @@ export class SaveUserTimesheetToStateHttpConverter<TState extends StateCurrentUs
             modifiedTimesheet = {...inputTimesheet,
                 status: TimesheetStatus.Open,
                 userName: state?.currentUser?.userName,
-                startTime: new Date(inputTimesheet.startTime).toISOString(),     
-                endTime: new Date(inputTimesheet.endTime).toISOString(),
                 totalHours: 
-                Math.round((Math.abs(
-                    new Date(inputTimesheet.startTime).getTime() - 
-                    new Date(inputTimesheet.endTime).getTime()
-                ) / 36e5)* 10) / 10
+                Math.round(
+                    (Math.abs(
+                        inputTimesheet.startTime - 
+                        inputTimesheet.endTime
+                    ) / 36e5)* 10) / 10
             };
             
         command.entity = modifiedTimesheet;

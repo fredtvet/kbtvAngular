@@ -26,7 +26,7 @@ const TimesheetStatisticStoreSettings: BaseTimesheetStoreSettings<StoreState> = 
 export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState> 
     implements FilterStore<TimesheetCriteria, TimesheetFilterViewConfig> {
 
-    tableData$ = this.timesheetSummaries$.pipe(map(data => {return {data}}))
+    tableData$ = this.timesheetSummaries$.pipe(map(data => { return {data} }))
      
     filterConfig$: Observable<TimesheetFilterViewConfig> = 
         this.stateSlice$(["missions", "users", "timesheetStatisticCriteria"]).pipe(map(state => {

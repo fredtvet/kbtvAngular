@@ -1,4 +1,4 @@
-export function _getWeekOfYear(date: Date | string = new Date()): number {
+export function _getWeekOfYear(date: Date | string | number = new Date()): number {
     var d = new Date(+date);
     d.setHours(0,0,0,0);
     d.setDate(d.getDate()+4-(d.getDay()||7));

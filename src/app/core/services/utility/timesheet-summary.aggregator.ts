@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Timesheet } from 'src/app/core/models';
-import { _getWeekAndYearFromString } from 'src/app/shared-app/helpers/datetime/get-week-and-year-from-string.helper';
-import { _getWeekOfYear } from 'src/app/shared-app/helpers/datetime/get-week-of-year.helper';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces/timesheet-summary.interface';
 import { GroupByPeriod } from 'src/app/shared/enums/group-by-period.enum';
 import { TimesheetStatus } from 'src/app/shared/enums/timesheet-status.enum';
+import { _getWeekAndYearFromDate } from 'src/app/shared-app/helpers/datetime/get-week-and-year-from-date.helper';
+import { _getWeekOfYear } from 'src/app/shared-app/helpers/datetime/get-week-of-year.helper';
 
 @Injectable({
   providedIn: "root",
@@ -28,8 +28,8 @@ export class TimesheetSummaryAggregator {
   groupByDay(t: Timesheet[]): TimesheetSummary[] {
     if(!t) return undefined;
     const obj_arr = t.reduce((groups, timesheet) => {
-      const date = timesheet.startTime.split("T")[0];
-      const index = date + "-" + timesheet.userName;
+      const date = new Date(timesheet.startTime);
+      const index = date.toLocaleDateString() + "-" + timesheet.userName;
       if (!groups[index]) {
         groups[index] = {
           userName: timesheet.userName,
@@ -49,7 +49,8 @@ export class TimesheetSummaryAggregator {
 
       return groups;
     }, {});
-    return Object.values(obj_arr);;
+    
+    return Object.values(obj_arr);
   }
 
   groupByWeek(t: Timesheet[]): TimesheetSummary[] {
@@ -57,7 +58,7 @@ export class TimesheetSummaryAggregator {
     let groups = {} as {[key: string]: TimesheetSummary};
     for(let i = 0; i < t.length; i++){
       let timesheet = t[i];
-      const wy = _getWeekAndYearFromString(timesheet.startTime);
+      const wy = _getWeekAndYearFromDate(timesheet.startTime);
       const index = wy.year + "-" + wy.week + "-" + timesheet.userName;
 
       if (!groups[index]) {

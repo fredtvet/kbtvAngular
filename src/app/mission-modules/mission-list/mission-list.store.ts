@@ -101,7 +101,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
     let index = missions.findIndex(x => x.id == id);
     if(!missions[index]) return;
     const mission = {...missions[index]};
-    mission.lastVisited = new Date().toISOString(); 
+    mission.lastVisited = new Date().getTime(); 
     missions[index] = mission;
     this.setState({missions})
   }

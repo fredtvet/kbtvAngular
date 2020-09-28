@@ -13,7 +13,7 @@ export interface Timesheet extends MissionChild, UserForeign {
     status?: TimesheetStatus;
     comment?: string;
     
-    startTime?: string;
-    endTime?: string;
+    startTime?: number;
+    endTime?: number;
     totalHours?: number;
 }

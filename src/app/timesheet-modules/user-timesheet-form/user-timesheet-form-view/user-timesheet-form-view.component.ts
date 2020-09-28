@@ -23,7 +23,7 @@ export class UserTimesheetFormViewComponent
   extends BaseModelFormViewComponent<TimesheetForm, Timesheet, ViewConfig, Response>{
 
   initTime: string = this.getISODate(7)
-  minTime: string = this.getISODate(1)
+
   stringFilterConfig: ActiveStringFilterConfig<Mission>;
 
   constructor(private _formBuilder: FormBuilder) {super();}
@@ -35,6 +35,7 @@ export class UserTimesheetFormViewComponent
 
   protected _onConfigChanges(){
     super._onConfigChanges();
+
     this.stringFilterConfig = {
       data: this.config?.foreigns?.missions,
       stringProps: ['id', 'address'],
@@ -47,20 +48,23 @@ export class UserTimesheetFormViewComponent
   protected _initalizeForm(cfg: ViewConfig): FormGroup { 
     const t = cfg.entity;
     const lockedValues = cfg?.lockedValues;
+    const startTimeIso = t?.startTime ? new Date(t?.startTime).toISOString() : null;
+    const date = lockedValues?.date;
+
     return this._formBuilder.group({
       id: t ? t.id : null,
       mission:[{value: lockedValues?.mission || t?.mission, disabled: lockedValues?.mission}, [
         Validators.required,
         isObjectValidator()
       ]],
-      date:[{value: _getISOWithTimezone(lockedValues?.date) || t?.startTime, disabled: lockedValues?.date}, [
+      date:[{value: date ? new Date(date).toISOString() : startTimeIso, disabled: date}, [
         Validators.required,
       ]],   
-      startTime: [t?.startTime || this.initTime, [
+      startTime: [startTimeIso || this.initTime, [
         Validators.required,
         // dateRangeValidator()
       ]],      
-      endTime: [t?.endTime, [
+      endTime: [t?.endTime ? new Date(t.endTime).toISOString() : null, [
         Validators.required,
         // dateRangeValidator()
       ]],    
@@ -72,21 +76,28 @@ export class UserTimesheetFormViewComponent
   }
 
   protected _convertFormDataToResponse(): Response{
-    let formData = this.form.getRawValue();
-    let date = new Date(formData.date).toDateString();
-    return {entity: {
+    let formData: TimesheetForm = this.form.getRawValue();
+    const res = {entity: {
       id: formData.id,
       missionId: formData.mission.id,
       comment: formData.comment,
-      startTime: new Date(date + " " + new Date(formData.startTime).toTimeString()).toString(),
-      endTime: new Date(date + " " + new Date(formData.endTime).toTimeString()).toString(),
+      startTime: this.mergeDateAndTime(formData.date, formData.startTime).getTime(),
+      endTime:  this.mergeDateAndTime(formData.date, formData.endTime).getTime(),
     }};   
+    return res;
+  }
+
+  private mergeDateAndTime(date: any, time:any): Date{
+    const d = new Date(date);
+    const t = new Date(time);
+    d.setHours(t.getHours(), t.getMinutes(), t.getSeconds());
+    return d;
   }
 
   private getISODate(hours: number = 0, minutes: number = 0, seconds: number = 0){
     var date  = new Date();
     date.setHours(hours,minutes,seconds,0);
-    return _getISOWithTimezone(date);
+    return _getISOWithTimezone(date)
   }
 
   get mission(){

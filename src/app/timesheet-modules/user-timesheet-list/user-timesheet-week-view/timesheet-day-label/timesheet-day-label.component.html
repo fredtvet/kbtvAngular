@@ -1,6 +1,6 @@
 <span class="mat-elevation-z2 pt-2" fxLayout="column" fxLayoutAlign="start center" matRipple 
   [ngClass]="(date | isToday) ? 'bg-accent' : 'bg-foreground'"
-  (click)="labelClicked.emit(date)">
+  (click)="labelClicked.emit(date.getTime())">
 
     <div fxLayout="column" fxLayoutAlign="center center" *ngIf="date" >
       <span class="mat-h3 m-0 line-height-100">
