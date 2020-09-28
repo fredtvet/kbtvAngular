@@ -20,7 +20,7 @@
     </app-ion-date-picker>
 
     <app-ion-date-picker fxFlex=20 ionFormat="HH:mm" minuteValues="0,15,30,45" placeholder="starttid"
-      [control]="startTime" [max]="endTime.value">
+      [control]="startTime" [min]="minTime" [max]="endTime.value">
     </app-ion-date-picker>
 
     <app-ion-date-picker fxFlex=20 ionFormat="HH:mm" minuteValues="0,15,30,45" placeholder="sluttid"

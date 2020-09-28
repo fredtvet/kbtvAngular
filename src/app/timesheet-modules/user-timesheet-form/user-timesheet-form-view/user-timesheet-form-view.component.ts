@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BaseModelFormViewComponent, ModelFormViewConfig } from 'src/app/core/model/form';
 import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { Mission, Timesheet } from "src/app/core/models";
+import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
 import { ActiveStringFilterConfig } from 'src/app/shared/interfaces/active-string-filter-config.interface';
 import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { isObjectValidator } from 'src/app/shared/validators/is-object.validator';
@@ -21,14 +22,17 @@ type Response = SaveModelStateCommand<Timesheet>;
 export class UserTimesheetFormViewComponent 
   extends BaseModelFormViewComponent<TimesheetForm, Timesheet, ViewConfig, Response>{
 
-  initTime: Date = new Date();
+  initTime: string = this.getISODate(7)
+  minTime: string = this.getISODate(1)
   stringFilterConfig: ActiveStringFilterConfig<Mission>;
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(
+    private _formBuilder: FormBuilder,
+    private dateHelper: DateTimeService,
+    ) {
     super();
-    this.initTime.setHours(7,0,0,0);
   }
-  
+
   displayMissionAddress = (mission: Mission): string => 
     mission ? mission.address : null;
 
@@ -50,14 +54,14 @@ export class UserTimesheetFormViewComponent
     const lockedValues = cfg?.lockedValues;
     return this._formBuilder.group({
       id: t ? t.id : null,
-      mission: [{value: lockedValues?.mission || t?.mission, disabled: lockedValues?.mission}, [
+      mission:[{value: lockedValues?.mission || t?.mission, disabled: lockedValues?.mission}, [
         Validators.required,
         isObjectValidator()
       ]],
-      date: [{value: lockedValues?.date ? new Date(lockedValues.date).toISOString() : t?.startTime, disabled: lockedValues?.date}, [
+      date:[{value: this.dateHelper.getISOWithTimezone(lockedValues?.date) || t?.startTime, disabled: lockedValues?.date}, [
         Validators.required,
       ]],   
-      startTime: [t?.startTime || this.initTime.toISOString(), [
+      startTime: [t?.startTime || this.initTime, [
         Validators.required,
         // dateRangeValidator()
       ]],      
@@ -82,6 +86,12 @@ export class UserTimesheetFormViewComponent
       startTime: new Date(date + " " + new Date(formData.startTime).toTimeString()).toString(),
       endTime: new Date(date + " " + new Date(formData.endTime).toTimeString()).toString(),
     }};   
+  }
+
+  private getISODate(hours: number = 0, minutes: number = 0, seconds: number = 0){
+    var date  = new Date();
+    date.setHours(hours,minutes,seconds,0);
+    return this.dateHelper.getISOWithTimezone(date);
   }
 
   get mission(){
