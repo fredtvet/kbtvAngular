@@ -12,7 +12,7 @@ import { DeleteModelToStateHttpConverter } from 'src/app/core/services/model/con
 import { NotificationService, NotificationType } from 'src/app/core/services/notification';
 import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
 import { ImageFileExtensions } from 'src/app/shared/constants/image-file-extensions.const';
-import { validateFileExtension } from 'src/app/shared/helpers';
+import { _validateFileExtension } from 'src/app/shared-app/helpers/validate-file-extension.helper';
 import { CreateMissionImagesStateCommand, CreateMissionImagesToStateHttpConverter } from './create-mission-images-to-state-http.converter';
 import { StoreState } from './store-state';
 
@@ -42,7 +42,7 @@ export class MissionImageListStore extends ObservableStore<StoreState>  {
  
   add = (command: CreateMissionImagesStateCommand): void =>{
     for(var  i = 0; i < command.files.length; i++){
-      if(validateFileExtension(command.files[i], ImageFileExtensions)) continue;
+      if(_validateFileExtension(command.files[i], ImageFileExtensions)) continue;
       return this.notificationService.notify(
         {title: "Filtype ikke tillatt for en eller flere filer", type: NotificationType.Error}
       );  

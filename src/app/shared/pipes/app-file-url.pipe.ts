@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { FileFolders } from '../constants/file-folders.const';
-import { appFileUrl } from '../helpers/app-file-url.helper';
 import { ModelFile } from 'src/app/core/models';
 import { DomSanitizer } from '@angular/platform-browser';
+import { _appFileUrl } from 'src/app/shared-app/helpers/app-file-url.helper';
 
 @Pipe({
   name: 'appFileUrl'
@@ -16,7 +16,7 @@ export class AppFileUrlPipe implements PipeTransform {
     if(modelFile.temp_localFileUrl) 
       return this.domSanitizer.bypassSecurityTrustResourceUrl(modelFile.temp_localFileUrl); 
     if(modelFile.fileName)
-      return appFileUrl(modelFile.fileName, folder, disableCache);
+      return _appFileUrl(modelFile.fileName, folder, disableCache);
   }
 
 }

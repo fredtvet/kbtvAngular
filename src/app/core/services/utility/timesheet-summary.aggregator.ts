@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Timesheet } from 'src/app/core/models';
-import { DateTimeService } from './date-time.service';
+import { _getWeekAndYearFromString } from 'src/app/shared-app/helpers/datetime/get-week-and-year-from-string.helper';
+import { _getWeekOfYear } from 'src/app/shared-app/helpers/datetime/get-week-of-year.helper';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces/timesheet-summary.interface';
-import { TimesheetStatus } from 'src/app/shared/enums/timesheet-status.enum';
 import { GroupByPeriod } from 'src/app/shared/enums/group-by-period.enum';
+import { TimesheetStatus } from 'src/app/shared/enums/timesheet-status.enum';
 
 @Injectable({
   providedIn: "root",
 })
 export class TimesheetSummaryAggregator {
-  constructor(private dateTimeService: DateTimeService) {}
+  constructor() {}
 
   groupByType(type: GroupByPeriod, t: Timesheet[]): TimesheetSummary[] {
     switch (type) {
@@ -56,7 +57,7 @@ export class TimesheetSummaryAggregator {
     let groups = {} as {[key: string]: TimesheetSummary};
     for(let i = 0; i < t.length; i++){
       let timesheet = t[i];
-      const wy = this.dateTimeService.getWeekAndYearFromString(timesheet.startTime);
+      const wy = _getWeekAndYearFromString(timesheet.startTime);
       const index = wy.year + "-" + wy.week + "-" + timesheet.userName;
 
       if (!groups[index]) {
@@ -86,7 +87,7 @@ export class TimesheetSummaryAggregator {
       if(timesheet.status == excludeStatus) return groups;
       const date = new Date(timesheet.startTime);
       if(date.getFullYear() !== year) return groups;
-      const weekNr = this.dateTimeService.getWeekOfYear(date);
+      const weekNr = _getWeekOfYear(date);
       if (weekNr >= startWeek && weekNr <= endWeek) {
         if (!groups[weekNr])
           groups[weekNr] = { week: weekNr,timesheets: [],openHours: 0,confirmedHours: 0,} as TimesheetSummary;

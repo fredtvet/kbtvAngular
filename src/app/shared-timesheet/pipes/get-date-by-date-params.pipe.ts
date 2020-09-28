@@ -1,20 +1,21 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
+import { _getDateOfWeek } from 'src/app/shared-app/helpers/datetime/get-date-of-week.helper';
+import { _getWeekRange } from 'src/app/shared-app/helpers/datetime/get-week-range.helper';
 import { DateParams } from 'src/app/shared-app/interfaces';
 
 @Pipe({
   name: 'getDateByDateParams'
 })
 export class GetDateByDateParamsPipe implements PipeTransform {
-  constructor(private dateTimeService: DateTimeService){}
+  constructor(){}
 
-  transform(dateParams: DateParams, weekDayOverride: number): Date {
-    if(!dateParams || Object.keys(dateParams).length === 0) return new Date();
+  transform(dp: DateParams, weekDayOverride: number): Date {
+    if(!dp || Object.keys(dp).length === 0) return new Date();
     
-    let date = this.dateTimeService.getWeekRangeByDateParams(dateParams)[0];
+    let date = _getWeekRange(_getDateOfWeek(dp.weekNr, dp.year))[0];
 
-    if(weekDayOverride || dateParams.weekDay)
-      date.setDate(date.getDate() + (weekDayOverride - 1) || dateParams.weekDay);
+    if(weekDayOverride || dp.weekDay)
+      date.setDate(date.getDate() + (weekDayOverride - 1) || dp.weekDay);
 
     return date;
   }

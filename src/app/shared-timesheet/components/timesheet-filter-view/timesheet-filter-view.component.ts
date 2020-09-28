@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { FilterComponent } from 'src/app/core/filter/interfaces/filter-component.interface';
 import { BaseFormViewComponent } from 'src/app/core/form/abstracts/base-form-view-component';
 import { Mission } from 'src/app/core/models';
-import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
 import { DateRangePresets } from 'src/app/shared-app/enums';
+import { _getMonthRange } from 'src/app/shared-app/helpers/datetime/get-month-range.helper';
+import { _getRangeByDateRangePreset } from 'src/app/shared-app/helpers/datetime/get-range-by-date-range-preset.helper';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetStatus } from 'src/app/shared/enums';
 import { ActiveStringFilterConfig } from 'src/app/shared/interfaces/active-string-filter-config.interface';
@@ -24,21 +25,19 @@ export class TimesheetFilterViewComponent extends BaseFormViewComponent<Timeshee
 
   stringFilterConfig: ActiveStringFilterConfig<Mission>;
 
-  constructor(
-    private dateTimeService: DateTimeService,
-    private _formBuilder: FormBuilder) { super(); }
+  constructor(private _formBuilder: FormBuilder) { super(); }
   
   displayMissionAddress = (mission: Mission): string => 
     mission ? mission.address : null;
 
   selectMonthHandler = (date: Date): void =>  
-    this.setDateRange(this.dateTimeService.getMonthRange(date))
+    this.setDateRange(_getMonthRange(date))
   
   onSubmit = () => {
     const preset = this.dateRangePreset.value;
 
     if(preset !== DateRangePresets.Custom && preset !== DateRangePresets.CustomMonth )
-      this.setDateRange(this.dateTimeService.getRangeByDateRangePreset(preset));
+      this.setDateRange(_getRangeByDateRangePreset(preset));
 
     const res = this.form.value;
     res.dateRange = [new Date(res.dateRange?.start), new Date(res.dateRange?.end)];

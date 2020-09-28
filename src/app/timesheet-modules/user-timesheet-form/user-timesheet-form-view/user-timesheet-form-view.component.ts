@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BaseModelFormViewComponent, ModelFormViewConfig } from 'src/app/core/model/form';
 import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { Mission, Timesheet } from "src/app/core/models";
-import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
+import { _getISOWithTimezone } from 'src/app/shared-app/helpers/datetime/get-iso-with-timezone.helper';
 import { ActiveStringFilterConfig } from 'src/app/shared/interfaces/active-string-filter-config.interface';
 import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { isObjectValidator } from 'src/app/shared/validators/is-object.validator';
@@ -26,12 +26,7 @@ export class UserTimesheetFormViewComponent
   minTime: string = this.getISODate(1)
   stringFilterConfig: ActiveStringFilterConfig<Mission>;
 
-  constructor(
-    private _formBuilder: FormBuilder,
-    private dateHelper: DateTimeService,
-    ) {
-    super();
-  }
+  constructor(private _formBuilder: FormBuilder) {super();}
 
   displayMissionAddress = (mission: Mission): string => 
     mission ? mission.address : null;
@@ -58,7 +53,7 @@ export class UserTimesheetFormViewComponent
         Validators.required,
         isObjectValidator()
       ]],
-      date:[{value: this.dateHelper.getISOWithTimezone(lockedValues?.date) || t?.startTime, disabled: lockedValues?.date}, [
+      date:[{value: _getISOWithTimezone(lockedValues?.date) || t?.startTime, disabled: lockedValues?.date}, [
         Validators.required,
       ]],   
       startTime: [t?.startTime || this.initTime, [
@@ -91,7 +86,7 @@ export class UserTimesheetFormViewComponent
   private getISODate(hours: number = 0, minutes: number = 0, seconds: number = 0){
     var date  = new Date();
     date.setHours(hours,minutes,seconds,0);
-    return this.dateHelper.getISOWithTimezone(date);
+    return _getISOWithTimezone(date);
   }
 
   get mission(){

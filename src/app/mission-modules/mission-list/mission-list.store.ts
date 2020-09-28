@@ -18,7 +18,7 @@ import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.s
 import { StateAction } from 'src/app/core/state';
 import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
 import { ImageFileExtensions } from 'src/app/shared/constants/image-file-extensions.const';
-import { validateFileExtension } from 'src/app/shared/helpers';
+import { _validateFileExtension } from 'src/app/shared-app/helpers/validate-file-extension.helper';
 import { MissionCriteria } from 'src/app/shared/interfaces';
 import { MissionFilter } from 'src/app/shared/mission-filter.model';
 import { StoreState } from './interfaces/store-state';
@@ -83,7 +83,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
     this.setState({ missionCriteria });
     
   updateHeaderImage(id: string, file: File): void {
-    if(!validateFileExtension(file, ImageFileExtensions)) 
+    if(!_validateFileExtension(file, ImageFileExtensions)) 
       return this.notificationService.notify(
           {title: "Filtypen er ikke tillatt.", type: NotificationType.Error}
       );  

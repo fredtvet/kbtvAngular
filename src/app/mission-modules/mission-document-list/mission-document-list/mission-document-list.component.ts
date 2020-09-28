@@ -12,7 +12,7 @@ import { MainNavService } from 'src/app/layout';
 import { Roles } from 'src/app/shared-app/enums';
 import { MainTopNavComponent } from 'src/app/shared/components';
 import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
-import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
+import { _appFileUrl } from 'src/app/shared-app/helpers/app-file-url.helper';
 import { MailDocumentFormComponent } from '../mail-document-form.component';
 import { MissionDocumentListStore } from '../mission-document-list.store';
 
@@ -51,7 +51,7 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
   ngOnInit() { this.configureMainNav() }
 
   downloadDocument = (document: MissionDocument) => 
-    this.downloaderService.downloadUrl(appFileUrl(document.fileName, "documents"));
+    this.downloaderService.downloadUrl(_appFileUrl(document.fileName, "documents"));
 
   private deleteSelectedDocuments = () => {
     this.store.delete({ids: this.currentSelections});    

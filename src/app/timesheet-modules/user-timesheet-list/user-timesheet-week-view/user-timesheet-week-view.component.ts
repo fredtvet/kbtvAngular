@@ -2,12 +2,15 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from 'rxjs';
-import { map, takeUntil, tap } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
-import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
 import { MainNavService } from 'src/app/layout';
 import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
-import { DateParams } from "src/app/shared-app/interfaces";
+import { _getDateOfWeek } from 'src/app/shared-app/helpers/datetime/get-date-of-week.helper';
+import { _getWeekOfYear } from 'src/app/shared-app/helpers/datetime/get-week-of-year.helper';
+import { _getWeekRange } from 'src/app/shared-app/helpers/datetime/get-week-range.helper';
+import { _getWeeksInYear } from 'src/app/shared-app/helpers/datetime/get-weeks-in-year.helper';
+import { _mapObjectsToWeekdays } from 'src/app/shared-app/helpers/object/map-objects-to-weekdays.helper';
 import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { MainTopNavComponent } from 'src/app/shared/components';
@@ -24,7 +27,7 @@ import { UserTimesheetListStore } from '../user-timesheet-list.store';
 })
 export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
 
-  currentWeekNr: number = this.dateTimeService.getWeekOfYear();
+  currentWeekNr: number = _getWeekOfYear();
   currentYear: number = new Date().getFullYear();
 
   get weekCriteria(): WeekCriteria { return this.store.weekCriteria };
@@ -33,7 +36,7 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
 
   summaries$: Observable<{ [key: number]: TimesheetSummary }> = this.store.timesheetSummaries$.pipe(
     tap(x => this.configureMainNav()),
-    map(x => this.dateTimeService.mapObjectsToWeekdays(x, "date")),
+    map(x => _mapObjectsToWeekdays(x, "date")),
   );
 
   constructor(
@@ -42,7 +45,6 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private deviceInfoService: DeviceInfoService,
-    private dateTimeService: DateTimeService,
     private store: UserTimesheetListStore,
   ) { super(); }
 
@@ -57,7 +59,7 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
     let currFilter = this.weekCriteria;
     if(currFilter.year >= this.currentYear && currFilter.weekNr >= this.currentWeekNr) return;
 
-    if(currFilter.weekNr >= this.dateTimeService.getWeeksInYear(currFilter.year)){   
+    if(currFilter.weekNr >= _getWeeksInYear(currFilter.year)){   
       currFilter.year++; //New year if week nr is over total weeks for year
       currFilter.weekNr = 1; //Start of new year     
     }
@@ -70,7 +72,7 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
     let currFilter = this.weekCriteria;
     if(currFilter.weekNr <= 1) {
       currFilter.year--; //Go to previous year if new week is less than 1
-      currFilter.weekNr = this.dateTimeService.getWeeksInYear(currFilter.year); //Set to max week in previous year
+      currFilter.weekNr = _getWeeksInYear(currFilter.year); //Set to max week in previous year
     }
     else currFilter.weekNr--;  
     this.store.addWeekFilterCriteria(currFilter);
@@ -91,7 +93,9 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
         "mine-timer/liste",
         {
           returnUrl: this.router.url,
-          initialFilter: JSON.stringify({dateRange: this.dateTimeService.getWeekRangeByDateParams(dp)})
+          initialFilter: JSON.stringify({
+            dateRange: _getWeekRange(_getDateOfWeek(dp.weekNr, dp.year))
+          })
         }
       ]);
   };

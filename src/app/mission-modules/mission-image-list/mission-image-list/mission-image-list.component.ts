@@ -15,7 +15,7 @@ import { MainNavService } from 'src/app/layout';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { MainTopNavComponent } from 'src/app/shared/components';
 import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
-import { appFileUrl } from 'src/app/shared/helpers/app-file-url.helper';
+import { _appFileUrl } from 'src/app/shared-app/helpers/app-file-url.helper';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MailImageFormComponent } from '../mail-image-form.component';
 import { MissionImageListStore } from '../mission-image-list.store';
@@ -111,7 +111,7 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   }
 
   private downloadImages = (imgs: MissionImage[]) => 
-    this.downloaderService.downloadUrls(imgs.map(x => appFileUrl(x.fileName, "images")));
+    this.downloaderService.downloadUrls(imgs.map(x => _appFileUrl(x.fileName, "images")));
 
   private onBack = () => this.router.navigate(['/oppdrag', this.missionId, 'detaljer']);
 

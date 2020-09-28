@@ -9,7 +9,6 @@ import { Mission, Timesheet, User } from 'src/app/core/models';
 import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
 import { ApiService } from 'src/app/core/services/api.service';
 import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
-import { DateTimeService } from 'src/app/core/services/utility/date-time.service';
 import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
 import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
 import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
@@ -59,7 +58,6 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
         base: ObservableStoreBase,
         apiService: ApiService,         
         protected arrayHelperService: ArrayHelperService,  
-        protected dateTimeService: DateTimeService,
         private timesheetSummaryAggregator: TimesheetSummaryAggregator,
         private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
         private settings: BaseTimesheetStoreSettings<TState>) {
