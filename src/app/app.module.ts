@@ -1,4 +1,4 @@
-import { registerLocaleData } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import norwayLocale from '@angular/common/locales/nb';
 import { LOCALE_ID, NgModule } from '@angular/core';
@@ -36,7 +36,8 @@ registerLocaleData(norwayLocale, 'nb-NO');
   ],
   providers: [ 
     { provide: LOCALE_ID, useValue: "nb-NO" }, 
-    { provide: HAMMER_GESTURE_CONFIG, useClass: AppHammerConfig}
+    { provide: HAMMER_GESTURE_CONFIG, useClass: AppHammerConfig},
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent],
 })
