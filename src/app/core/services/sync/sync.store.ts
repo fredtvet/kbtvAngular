@@ -2,6 +2,8 @@ import { HttpParams } from '@angular/common/http';
 import { ApplicationRef, Injectable } from '@angular/core';
 import { BehaviorSubject, concat, interval, Observable, zip } from 'rxjs';
 import { distinctUntilKeyChanged, filter, first, skip, tap } from 'rxjs/operators';
+import { _addOrUpdateRange } from 'src/app/shared-app/helpers/array/add-or-update-range.helper';
+import { _removeRangeByIdentifier } from 'src/app/shared-app/helpers/array/remove-range-by-identifier.helper';
 import { ModelStateConfig } from '../../model/model-state.config';
 import { ModelState } from '../../model/model.state';
 import { Prop } from '../../model/state.types';
@@ -14,7 +16,6 @@ import { AuthStoreActions } from '../auth/auth-store-actions.enum';
 import { AuthStore } from '../auth/auth.store';
 import { DeviceInfoService } from '../device-info.service';
 import { PersistanceStore } from '../persistance/persistance.store';
-import { ArrayHelperService } from '../utility/array-helper.service';
 import { StoreState } from './interfaces/store-state';
 import { EntitySyncResponse, SyncResponse } from './interfaces/sync-response.interface';
 import { SyncStoreConfig } from './interfaces/sync-store-config.interface';
@@ -40,7 +41,6 @@ export class SyncStore extends ObservableStore<StoreState>{
   constructor(
     base: ObservableStoreBase,
     private apiService: ApiService,
-    private arrayHelperService: ArrayHelperService,
     private appRef: ApplicationRef,
     private deviceInfoService: DeviceInfoService,
     private persistanceStore: PersistanceStore,
@@ -131,11 +131,11 @@ export class SyncStore extends ObservableStore<StoreState>{
 
     if(response.deletedEntities?.length > 0)
       state[prop] = 
-          this.arrayHelperService.removeRangeByIdentifier<any>(this.getStateProperty(prop), response.deletedEntities, id);
+          _removeRangeByIdentifier<any>(this.getStateProperty(prop), response.deletedEntities, id);
 
     if(response.entities?.length > 0)//If no delete operation, get state again
       state[prop] = 
-          this.arrayHelperService.addOrUpdateRange<any>(state[prop] || this.getStateProperty(prop), response.entities, id); 
+          _addOrUpdateRange<any>(state[prop] || this.getStateProperty(prop), response.entities, id); 
     
   } 
 

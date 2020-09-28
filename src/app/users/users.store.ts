@@ -5,9 +5,9 @@ import { ApiUrl } from 'src/app/core/api-url.enum';
 import { User } from "src/app/core/models";
 import { ObservableStoreBase } from '../core/observable-store/observable-store-base';
 import { ApiService } from '../core/services/api.service';
-import { ArrayHelperService } from '../core/services/utility/array-helper.service';
 import { BaseModelStore } from '../core/state/abstracts/base-model.store';
 import { Roles } from '../shared-app/enums';
+import { _groupBy } from '../shared-app/helpers/array/group-by.helper';
 import { StoreState } from './store-state';
 
 @Injectable({
@@ -22,7 +22,6 @@ export class UsersStore extends BaseModelStore<StoreState> {
   constructor(
     base: ObservableStoreBase,
     apiService: ApiService,
-    private arrayHelperService: ArrayHelperService,
   ) {
     super(base, apiService);
 
@@ -37,7 +36,7 @@ export class UsersStore extends BaseModelStore<StoreState> {
   private sortByRole = (users: User[]): User[] => {
     if(!users) return [];
 
-    let grouped = this.arrayHelperService.groupBy(users, "role"); 
+    let grouped = _groupBy(users, "role"); 
     let result = [];
 
     for(let role of Object.keys(Roles).map(key => Roles[key])) 

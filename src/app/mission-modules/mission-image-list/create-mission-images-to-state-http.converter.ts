@@ -1,11 +1,11 @@
-import { StateCommand, BaseStateToHttpConverter } from 'src/app/core/state/state-http-converter';
-import { ApiUrl } from 'src/app/core/api-url.enum';
-import { IdGeneratorService } from 'src/app/core/services/id-generator.service';
-import { ModelFileWrapper } from 'src/app/core/model/model-file.wrapper';
 import { Injectable } from '@angular/core';
+import { ApiUrl } from 'src/app/core/api-url.enum';
+import { ModelFileWrapper } from 'src/app/core/model/model-file.wrapper';
 import { MissionImage } from 'src/app/core/models';
+import { IdGeneratorService } from 'src/app/core/services/id-generator.service';
 import { StateMissionImages } from 'src/app/core/state';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
+import { BaseStateToHttpConverter, StateCommand } from 'src/app/core/state/state-http-converter';
+import { _addOrUpdateRange } from 'src/app/shared-app/helpers/array/add-or-update-range.helper';
 
 export interface CreateMissionImagesStateCommand extends StateCommand{
     missionId: string;
@@ -17,10 +17,7 @@ interface InternalCommand extends CreateMissionImagesStateCommand { fileWrappers
 @Injectable({providedIn: 'any'})
 export class CreateMissionImagesToStateHttpConverter extends BaseStateToHttpConverter<StateMissionImages, CreateMissionImagesStateCommand>{
 
-    constructor(
-        private idGenerator: IdGeneratorService,
-        private arrayHelperService: ArrayHelperService
-        ){ super(); }
+    constructor(private idGenerator: IdGeneratorService){ super(); }
 
     protected cloneInput(command: InternalCommand): InternalCommand{
         const files = command.fileWrappers; //Ignore cloning file
@@ -71,7 +68,7 @@ export class CreateMissionImagesToStateHttpConverter extends BaseStateToHttpConv
                 temp_localFileUrl: URL.createObjectURL(wrapper.modifiedFile)
             })
         }
-        return {missionImages: this.arrayHelperService.addOrUpdateRange(state.missionImages, entities, "id")};
+        return {missionImages: _addOrUpdateRange(state.missionImages, entities, "id")};
     }
 }    
 

@@ -5,18 +5,18 @@ import { ModifyModelWithForeignsHelper } from 'src/app/core/model/state-helpers/
 import { Model } from 'src/app/core/models';
 import { StateAction } from 'src/app/core/state';
 import { StateHttpConverter } from 'src/app/core/state/state-http-converter';
-import { ArrayHelperService } from '../../utility/array-helper.service';
 import { ModelIdGeneratorService } from '../model-id-generator.service';
 import { translations } from 'src/app/shared/translations';
 import { Prop } from 'src/app/core/model/state.types';
 import { ModelStateConfig } from 'src/app/core/model/model-state.config';
+import { _add } from 'src/app/shared-app/helpers/array/add.helper';
+import { _update } from 'src/app/shared-app/helpers/array/update.helper';
 
 @Injectable({providedIn: 'root'})
 export class SaveModelToStateHttpConverter<TState, TCommand extends SaveModelStateCommand<Model>> 
    extends ModelToStateHttpConverter<TState, TCommand> implements StateHttpConverter<TState, TCommand>{
 
    constructor(
-      private arrayHelperService: ArrayHelperService,
       private modelIdGenerator: ModelIdGeneratorService,
       private modifyModelWithForeignsHelper: ModifyModelWithForeignsHelper
    ){ super(); }
@@ -71,8 +71,8 @@ export class SaveModelToStateHttpConverter<TState, TCommand extends SaveModelSta
    }
 
    private updateFunc = (entity: Model, entities: Model[]) =>
-      this.arrayHelperService.update(entities, entity, this.modelConfig.identifier)
+      _update(entities, entity, this.modelConfig.identifier)
 
    private createFunc = (entity: Model, entities: Model[]) =>
-      this.arrayHelperService.add(entities, entity)
+      _add(entities, entity)
 }

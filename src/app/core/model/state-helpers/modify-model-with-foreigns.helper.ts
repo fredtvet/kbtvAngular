@@ -1,13 +1,13 @@
-import { ArrayHelperService } from '../../services/utility/array-helper.service';
 import { Injectable } from '@angular/core';
 import { ModelStateConfig } from '../model-state.config';
 import { Prop } from '../state.types';
 import { ModelState } from '../model.state';
+import { _add } from 'src/app/shared-app/helpers/array/add.helper';
 
 @Injectable({providedIn: "root"})
 export class ModifyModelWithForeignsHelper{
 
-    constructor(private arrayHelperService: ArrayHelperService){}
+    constructor(){}
 
     modify<TState>(
         state: TState, 
@@ -30,7 +30,7 @@ export class ModifyModelWithForeignsHelper{
                 entity[fkPropConfig.foreignProp] = null;
                 continue
             };
-            newState[fkProp] = this.arrayHelperService.add(state[fkProp], foreignEntity); //Add new fk entity
+            newState[fkProp] = _add(state[fkProp], foreignEntity); //Add new fk entity
             entity[fkPropConfig.foreignKey] = foreignEntityId; //Set foreign key on entity
             entity[fkPropConfig.foreignProp] = null; //Remove foreign entity to prevent duplicate data    
         }

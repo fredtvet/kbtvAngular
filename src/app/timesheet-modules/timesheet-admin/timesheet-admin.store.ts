@@ -10,10 +10,10 @@ import { ObservableStoreBase } from 'src/app/core/observable-store/observable-st
 import { ApiService } from 'src/app/core/services/api.service';
 import { SaveModelToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-to-state-http.converter';
 import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
 import { WeekToTimesheetCriteriaConverter } from 'src/app/core/services/utility/week-to-timesheet-criteria.converter';
 import { StateAction } from 'src/app/core/state';
+import { _addOrUpdateRange } from 'src/app/shared-app/helpers/array/add-or-update-range.helper';
 import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { GroupByPeriod, TimesheetStatus } from 'src/app/shared/enums';
@@ -40,7 +40,6 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implemen
 
     constructor(
         base: ObservableStoreBase,
-        arrayHelperService: ArrayHelperService,
         apiService: ApiService,
         summaryAggregator: TimesheetSummaryAggregator,
         getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
@@ -48,7 +47,7 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implemen
         private weekToTimesheetCriteriaConverter: WeekToTimesheetCriteriaConverter,
         private saveStateHttpConverter: SaveModelToStateHttpConverter<StoreState, SaveModelStateCommand<Timesheet>>
     ){
-        super(base, apiService, arrayHelperService, summaryAggregator, getRangeWithRelationsHelper, 
+        super(base, apiService, summaryAggregator, getRangeWithRelationsHelper, 
             TimesheetAdminStoreSettings)
     }
     
@@ -70,7 +69,7 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implemen
         const updatedTimesheets = ids.map(id => { return {id, status} });
 
         const stateFunc = (state: StoreState) => { return {
-                timesheets: this.arrayHelperService.addOrUpdateRange(state.timesheets, updatedTimesheets, "id")
+                timesheets: _addOrUpdateRange(state.timesheets, updatedTimesheets, "id")
             }};
 
         this.stateHttpCommandHandler.dispatch({

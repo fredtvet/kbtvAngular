@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { ModelConfig, ModelStateConfig, ModelStateConfigData } from 'src/app/core/model/model-state.config';
-import { ModelState } from 'src/app/core/model/model.state';
 import { Model } from 'src/app/core/models/base-entity.interface';
-import { translations } from 'src/app/shared/translations';
+import { _convertArrayToObject } from 'src/app/shared-app/helpers/array/convert-array-to-object.helper';
 import { AgGridTableComponent } from 'src/app/shared/components/abstracts/ag-grid-table.component';
+import { translations } from 'src/app/shared/translations';
 import { DataConfig } from '../../interfaces/data-config.interface';
 import { DataTableConfig } from './data-table.config';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 
 @Component({
   selector: 'app-data-table',
@@ -25,7 +24,7 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
   private foreignsIdMap: {[foreignKey: string]: {[id: string]: Model}} = {}
   private foreignsDisplayMap: {[foreignKey: string]: {[displayProp: string]: Model}} = {}
 
-  constructor(private arrayHelperService: ArrayHelperService) { 
+  constructor() { 
     super(); 
 
     for(let modelKey in ModelStateConfigData){
@@ -49,9 +48,9 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
         const entities = cfg.foreigns[fkStateKey];
         if(entities){
           this.foreignsIdMap[fkCfg.foreignKey] = 
-            this.arrayHelperService.convertArrayToObject<Model>(entities, fkCfg.identifier);
+            _convertArrayToObject<Model>(entities, fkCfg.identifier);
           this.foreignsDisplayMap[fkCfg.foreignKey] = 
-            this.arrayHelperService.convertArrayToObject<Model>(entities, fkCfg.displayProp);
+            _convertArrayToObject<Model>(entities, fkCfg.displayProp);
         }
       };
     }

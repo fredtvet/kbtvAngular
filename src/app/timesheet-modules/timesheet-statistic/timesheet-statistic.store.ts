@@ -5,7 +5,6 @@ import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interfa
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
 import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
 import { ApiService } from 'src/app/core/services/api.service';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
 import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
@@ -41,7 +40,6 @@ export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState>
 
     constructor(
         base: ObservableStoreBase,
-        arrayHelperService: ArrayHelperService,
         apiService: ApiService,        
         summaryAggregator: TimesheetSummaryAggregator,
         getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
@@ -49,7 +47,6 @@ export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState>
         super(
             base,
             apiService, 
-            arrayHelperService, 
             summaryAggregator, 
             getRangeWithRelationsHelper, 
             TimesheetStatisticStoreSettings

@@ -1,7 +1,7 @@
 import { Directive, EmbeddedViewRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 import { merge, of } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
+import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
 import { ActiveStringFilterConfig } from '../interfaces/active-string-filter-config.interface';
 
 @Directive({
@@ -21,7 +21,6 @@ export class ActiveStringFilterDirective<TRecord> {
     private checkCount: number = 0;
 
     constructor(    
-        private arrayHelperService: ArrayHelperService, 
         _viewContainer: ViewContainerRef,
         _template: TemplateRef<any>) { 
         this.viewRef = _viewContainer.createEmbeddedView(_template);
@@ -41,7 +40,7 @@ export class ActiveStringFilterDirective<TRecord> {
                 this._config.data?.slice(0, this._config.maxChecks) : this._config.data; 
             else {
                 this.searchLower = criteria.toLowerCase();
-                return this.arrayHelperService.filter(this._config.data, this.filterRecord);
+                return _filter(this._config.data, this.filterRecord);
             }
         }))
     }

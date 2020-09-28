@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { MissionNote } from "src/app/core/models";
 import { ObservableStore } from 'src/app/core/observable-store/observable-store';
 import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
+import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
 import { StoreState } from './store-state';
 
 @Injectable({
@@ -12,16 +12,11 @@ import { StoreState } from './store-state';
 })
 export class MissionNoteListStore extends ObservableStore<StoreState>  {
 
-  constructor(
-    base: ObservableStoreBase,
-    private arrayHelperService: ArrayHelperService
-  ) {
-    super(base);
-  }
+  constructor(base: ObservableStoreBase) { super(base); }
 
   getByMissionId$ = (id: string): Observable<MissionNote[]> => 
     this.stateProperty$<MissionNote[]>("missionNotes").pipe(map(arr => 
-      this.arrayHelperService.filter<MissionNote>(arr, (x: MissionNote) => x.missionId === id)
+      _filter<MissionNote>(arr, (x: MissionNote) => x.missionId === id)
   )) 
 
 }

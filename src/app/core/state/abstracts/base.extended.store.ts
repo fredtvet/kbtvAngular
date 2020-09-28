@@ -1,16 +1,14 @@
-import { Observable, of } from 'rxjs';
-import { filter, map, skip, take, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { filter, take, tap } from 'rxjs/operators';
 import { Prop } from '../../model/state.types';
 import { ObservableStore } from '../../observable-store/observable-store';
 import { ObservableStoreBase } from '../../observable-store/observable-store-base';
 import { ApiService } from '../../services/api.service';
-import { ArrayHelperService } from '../../services/utility/array-helper.service';
 
 export abstract class BaseExtendedStore<TState> extends ObservableStore<TState>  {
 
     constructor(
         base: ObservableStoreBase,
-        protected arrayHelperService: ArrayHelperService,
         protected apiService: ApiService) {  
         super(base);
     }

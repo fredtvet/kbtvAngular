@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BaseModelFormViewComponent, ModelFormViewConfig } from 'src/app/core/model/form';
 import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { Employer, Mission, MissionType } from 'src/app/core/models';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
+import { _find } from 'src/app/shared-app/helpers/array/find.helper';
 
 type ViewConfig = ModelFormViewConfig<Mission, Mission>;
 type Response = SaveModelStateCommand<Mission>;
@@ -22,7 +22,7 @@ export class MissionFormViewComponent extends BaseModelFormViewComponent<Mission
   
   isStreetAddress = false;
 
-  constructor(private arrayHelperService: ArrayHelperService, private _formBuilder: FormBuilder) { super(); }
+  constructor(private _formBuilder: FormBuilder) { super(); }
 
   handleAddressChange(googleAddress){
     this.form?.controls['address']
@@ -62,9 +62,9 @@ export class MissionFormViewComponent extends BaseModelFormViewComponent<Mission
 
     if(this.config?.foreigns){
       existingType = 
-        this.arrayHelperService.find(this.config.foreigns.missionTypes, mission.missionType.name, "name");
+        _find(this.config.foreigns.missionTypes, mission.missionType.name, "name");
       existingEmployer = 
-        this.arrayHelperService.find(this.config.foreigns.employers, mission.employer.name, "name");
+        _find(this.config.foreigns.employers, mission.employer.name, "name");
     }
    
     if(existingType) mission.missionTypeId = existingType.id;

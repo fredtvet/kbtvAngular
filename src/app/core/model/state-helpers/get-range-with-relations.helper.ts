@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { GetWithRelationsConfig } from './get-with-relations.config';
-import { ArrayHelperService } from '../../services/utility/array-helper.service';
+import { _convertArrayToObject } from 'src/app/shared-app/helpers/array/convert-array-to-object.helper';
+import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
+import { _groupBy } from 'src/app/shared-app/helpers/array/group-by.helper';
 import { Model } from '../../models';
+import { ModelConfig, ModelStateConfig } from '../model-state.config';
 import { ModelState } from '../model.state';
-import { ModelStateConfig, ModelConfig } from '../model-state.config';
 import { Prop } from '../state.types';
+import { GetWithRelationsConfig } from './get-with-relations.config';
 
 @Injectable({providedIn: "root"})
 export class GetRangeWithRelationsHelper  {
 
-    constructor(private arrayHelperService: ArrayHelperService) {}
+    constructor() {}
 
     get<TModel extends Model>(
         state: Partial<ModelState>,
@@ -21,7 +23,7 @@ export class GetRangeWithRelationsHelper  {
         let modelState = state[cfg.modelProp] as TModel[];
         
         if(filter)
-            modelState = this.arrayHelperService.filter(modelState, filter);
+            modelState = _filter(modelState, filter);
 
         if(!modelState || modelState.length == 0) return modelState;
 
@@ -53,9 +55,9 @@ export class GetRangeWithRelationsHelper  {
         groupBy: string, state: Object
     ): {[key: string]: {[key: string]: Object[]}}{
         const lookups = {} as {[key: string]: {[key: string]: Object[]}}
-        for(const prop of props){
-            lookups[prop] = this.arrayHelperService.groupBy(state[prop], groupBy);
-        }
+
+        for(const prop of props) lookups[prop] = _groupBy(state[prop], groupBy);
+        
         return lookups;
     }
 
@@ -67,7 +69,7 @@ export class GetRangeWithRelationsHelper  {
         const lookups: {[key: string]: Object} = {};
         for(const prop of props){ //Convert foreign state props to lookup tables
             const cfg = ModelStateConfig.get(prop); 
-            lookups[prop] = this.arrayHelperService.convertArrayToObject(state[prop], cfg.identifier);
+            lookups[prop] = _convertArrayToObject(state[prop], cfg.identifier);
         }
         return lookups;
     }

@@ -8,9 +8,11 @@ import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-wit
 import { Mission, Timesheet, User } from 'src/app/core/models';
 import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
 import { ApiService } from 'src/app/core/services/api.service';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
 import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
+import { _addOrUpdateRange } from 'src/app/shared-app/helpers/array/add-or-update-range.helper';
+import { _convertArrayToObject } from 'src/app/shared-app/helpers/array/convert-array-to-object.helper';
+import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
 import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
 import { GroupByPeriod } from 'src/app/shared/enums';
 import { TimesheetCriteria } from '../interfaces/timesheet-criteria.interface';
@@ -36,7 +38,7 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
               return {
                 criteria: filter.criteria,
                 activeCriteriaCount: filter.activeCriteriaCount,
-                records: this.arrayHelperService.filter(state.timesheets, (entity) => filter.check(entity))
+                records: _filter(state.timesheets, (entity) => filter.check(entity))
               }
             }),       
         );
@@ -57,7 +59,6 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
     constructor(
         base: ObservableStoreBase,
         apiService: ApiService,         
-        protected arrayHelperService: ArrayHelperService,  
         private timesheetSummaryAggregator: TimesheetSummaryAggregator,
         private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
         private settings: BaseTimesheetStoreSettings<TState>) {
@@ -76,7 +77,7 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
     else {
         BaseTimesheetStore.baseCriteria = criteria;
         this.get$(criteria).pipe(take(1), tap(timesheets => {
-            state.timesheets = this.arrayHelperService.addOrUpdateRange(
+            state.timesheets = _addOrUpdateRange(
                 this.getStateProperty<Timesheet[]>("timesheets" as any), timesheets, "id");
             this.setState(state, null, false);
         })).subscribe()
@@ -115,7 +116,7 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
    
   private addFullNameToSummaries(summaries: TimesheetSummary[], users: User[]): TimesheetSummary[]{
     if(!summaries || !users) return summaries;
-    let usersObj = this.arrayHelperService.convertArrayToObject(users, 'userName');
+    let usersObj = _convertArrayToObject(users, 'userName');
 
     return summaries.map(s => {
       const user = usersObj[s.userName];

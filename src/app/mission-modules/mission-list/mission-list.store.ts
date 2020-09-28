@@ -14,7 +14,6 @@ import { SaveModelFileToStateHttpConverter } from 'src/app/core/services/model/c
 import { NotificationService } from 'src/app/core/services/notification';
 import { NotificationType } from 'src/app/core/services/notification/notification-type.enum';
 import { StateHttpCommandHandler } from 'src/app/core/services/state/state-http-command.handler';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 import { StateAction } from 'src/app/core/state';
 import { BaseModelStore } from 'src/app/core/state/abstracts/base-model.store';
 import { ImageFileExtensions } from 'src/app/shared/constants/image-file-extensions.const';
@@ -23,6 +22,7 @@ import { MissionCriteria } from 'src/app/shared/interfaces';
 import { MissionFilter } from 'src/app/shared/mission-filter.model';
 import { StoreState } from './interfaces/store-state';
 import { MissionFilterViewConfig } from './mission-filter-view/mission-filter-view-config.interface';
+import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
 
 @Injectable({
   providedIn: 'any',
@@ -48,7 +48,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
         return {
             criteria: state.missionCriteria,
             activeCriteriaCount: filter.activeCriteriaCount,
-            records: this.arrayHelperService.filter(state.missions, (entity) => filter.check(entity)),
+            records: _filter(state.missions, (entity) => filter.check(entity)),
         }})
       );
       
@@ -61,7 +61,6 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
   constructor(
     apiService: ApiService,
     base: ObservableStoreBase,
-    private arrayHelperService: ArrayHelperService, 
     private notificationService: NotificationService,
     private stateHttpCommandHandler: StateHttpCommandHandler,
     private saveWithFileStateHttpConverter: SaveModelFileToStateHttpConverter<StoreState, SaveModelWithFileStateCommand<Mission>>,

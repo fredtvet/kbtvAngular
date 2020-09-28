@@ -5,7 +5,6 @@ import { Prop } from 'src/app/core/model/state.types';
 import { Timesheet } from 'src/app/core/models';
 import { ModelIdGeneratorService } from 'src/app/core/services/model';
 import { SaveModelToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-to-state-http.converter';
-import { ArrayHelperService } from 'src/app/core/services/utility/array-helper.service';
 import { StateCurrentUser } from 'src/app/core/state';
 import { TimesheetStatus } from 'src/app/shared/enums';
 
@@ -14,10 +13,9 @@ export class SaveUserTimesheetToStateHttpConverter<TState extends StateCurrentUs
     extends SaveModelToStateHttpConverter<TState, SaveModelStateCommand<Timesheet>> {
 
     constructor(
-        arrayHelperService: ArrayHelperService,
         modelIdGenerator: ModelIdGeneratorService,
         modifyModelWithForeignsHelper: ModifyModelWithForeignsHelper
-    ){ super(arrayHelperService, modelIdGenerator, modifyModelWithForeignsHelper); }
+    ){ super(modelIdGenerator, modifyModelWithForeignsHelper); }
 
     
     protected createHttpBody(command: SaveModelStateCommand<Timesheet>){
