@@ -16,8 +16,9 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
             exp = exp && record.userName === this.criteria.userName;
 
         if(this.criteria.dateRange && this.criteria.dateRange.length > 1) {
-            let startTime = new Date(record.startTime).getTime();
-            exp = exp && startTime >= new Date(this.criteria.dateRange[0]).getTime() && startTime <= new Date(this.criteria.dateRange[1]).getTime(); 
+            let startTime = this.getStartOfDayTime(record.startTime);
+            exp = exp && startTime >= this.getStartOfDayTime(this.criteria.dateRange[0]) 
+                && startTime <= this.getStartOfDayTime(this.criteria.dateRange[1]); 
         }
     
         if(this.criteria.mission) 
@@ -42,7 +43,15 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         if(!baseDateRange || baseDateRange.length < 2) return true; //No range means all, in which it will always be contained. 
         const dateRange = this.criteria.dateRange;
         if(!dateRange || dateRange.length < 2) return false; 
-        return (baseDateRange[0].getTime() <= dateRange[0].getTime()) && (baseDateRange[1].getTime() >= dateRange[1].getTime())
+        return (this.getStartOfDayTime(baseDateRange[0]) <= this.getStartOfDayTime(dateRange[0])) && 
+        (this.getStartOfDayTime(baseDateRange[1]) >= this.getStartOfDayTime(dateRange[1]))
+    }
+
+    private getStartOfDayTime(date: Date | string): number{
+        if(!date) return
+        const newDate = new Date(date);
+        newDate.setHours(0,0,0,0);
+        return newDate.getTime();
     }
 
     protected activeCriteriaCountIgnoreCheck(value: any, key: Prop<TimesheetCriteria>): boolean{
