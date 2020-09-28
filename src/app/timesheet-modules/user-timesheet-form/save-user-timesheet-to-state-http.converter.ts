@@ -46,7 +46,7 @@ export class SaveUserTimesheetToStateHttpConverter<TState extends StateCurrentUs
                     new Date(inputTimesheet.endTime).getTime()
                 ) / 36e5)* 10) / 10
             };
-
+            
         command.entity = modifiedTimesheet;
         return super.modifyState(state, command);
     }

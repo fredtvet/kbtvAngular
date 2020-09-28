@@ -3,17 +3,17 @@ import { Router } from '@angular/router';
 import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError, finalize, map, retryWhen, skip, tap } from 'rxjs/operators';
 import { User } from 'src/app/core/models';
+import { _getUnixTimeSeconds } from 'src/app/shared-app/helpers/datetime/get-unix-time-seconds.helper';
+import { httpRetryStrategy } from 'src/app/shared-app/http-retry.strategy';
 import { ApiUrl } from '../../api-url.enum';
+import { ObservableStore } from '../../observable-store/observable-store';
+import { ObservableStoreBase } from '../../observable-store/observable-store-base';
 import { ApiService } from '../api.service';
 import { DeviceInfoService } from '../device-info.service';
 import { AuthStoreActions } from './auth-store-actions.enum';
+import { Credentials } from './interfaces/credentials.interface';
 import { StoreState } from './interfaces/store-state';
 import { AccessToken, TokenResponse } from './interfaces/tokens.interface';
-import { Credentials } from './interfaces/credentials.interface';
-import { ObservableStore } from '../../observable-store/observable-store';
-import { ObservableStoreBase } from '../../observable-store/observable-store-base';
-import { httpRetryStrategy } from 'src/app/shared-app/http-retry.strategy';
-import { _getNowInUnixTimeSeconds } from 'src/app/shared-app/helpers/datetime/get-now-in-unix-time-seconds.helper';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +32,7 @@ export class AuthStore extends ObservableStore<StoreState>{
     private router: Router,
   ) {
     super(base);
+    
   }
 
   get refreshToken(): string {  return this.getStateProperty<string>("refreshToken", false) }
@@ -43,7 +44,7 @@ export class AuthStore extends ObservableStore<StoreState>{
   get hasAccessTokenExpired(): boolean{
     const expiresIn = this.getStateProperty<AccessToken>("accessToken", false)?.expiresIn
     if(!expiresIn) return true; //If no access token expiration set
-    if (_getNowInUnixTimeSeconds() >= expiresIn) return true; //If access token expired
+    if (_getUnixTimeSeconds() >= expiresIn) return true; //If access token expired
     return false;
   }
 
@@ -106,7 +107,7 @@ export class AuthStore extends ObservableStore<StoreState>{
   }
   
   private setAccessTokenExpiration = (accessToken: AccessToken): void => {
-    accessToken.expiresIn = _getNowInUnixTimeSeconds() + accessToken.expiresIn;
+    accessToken.expiresIn = _getUnixTimeSeconds() + accessToken.expiresIn;
   }
 }
 

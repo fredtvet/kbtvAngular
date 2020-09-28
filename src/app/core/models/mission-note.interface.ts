@@ -6,6 +6,5 @@ export interface MissionNote extends MissionChild{
     content: string;
     pinned: boolean;
 
-    createdAt: string;
     createdBy: string;
 };
