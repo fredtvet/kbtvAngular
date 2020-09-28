@@ -42,8 +42,6 @@ export class TimesheetFilterViewComponent extends BaseFormViewComponent<Timeshee
 
     const res = this.form.value;
     res.dateRange = [new Date(res.dateRange?.start), new Date(res.dateRange?.end)];
-
-    console.log(res);
     if(this.form.valid && this.form.dirty) 
         this.formSubmitted.emit(res);
   };

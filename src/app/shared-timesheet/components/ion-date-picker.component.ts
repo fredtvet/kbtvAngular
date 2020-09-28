@@ -46,7 +46,7 @@ export class IonDatePickerComponent {
   monthShortNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des"]
 
   onChange(val: any){
-
+    
     if(this.valueSetter) 
       this.valueSetter(val);
     else

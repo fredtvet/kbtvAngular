@@ -1,6 +1,6 @@
 <ng-container *ngIf="timesheet">
     <div class="mission-bar mat-elevation-z1" fxLayout="column" fxLayoutAlign="center center" 
-        [style.height.px]="(timesheet.totalHours / 14)*300"
+        [style.height.px]="(timesheet.totalHours / 18)*300"
         [ngClass]="{
             'bg-accent-light': timesheet.status == 2, 
             'bg-warn-light': timesheet.status == 0

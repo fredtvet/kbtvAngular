@@ -27,11 +27,12 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
   currentWeekNr: number = this.dateTimeService.getWeekOfYear();
   currentYear: number = new Date().getFullYear();
 
-  get weekCriteria(): WeekCriteria { return this.store.weekCriteria};
+  get weekCriteria(): WeekCriteria { return this.store.weekCriteria };
 
   isXs$ = this.deviceInfoService.isXs$;
 
   summaries$: Observable<{ [key: number]: TimesheetSummary }> = this.store.timesheetSummaries$.pipe(
+    tap(x => this.configureMainNav()),
     map(x => this.dateTimeService.mapObjectsToWeekdays(x, "date")),
   );
 
@@ -50,7 +51,6 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
     let initFilter = this.route.snapshot.params.initialFilter;
     initFilter = initFilter ? JSON.parse(initFilter) : {year: this.currentYear, weekNr: this.currentWeekNr};
     this.store.addWeekFilterCriteria(initFilter);
-    this.store.criteria$.pipe(takeUntil(this.unsubscribe)).subscribe(x => this.configureMainNav(this.weekCriteria))
   }
 
   nextWeek(): void{
@@ -97,14 +97,14 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
   };
 
   private goToWeekList = () => 
-    this.router.navigate(['mine-timer/ukeliste', {initialFilter: JSON.stringify({year: this.weekCriteria.year})}])
+    this.router.navigate(['mine-timer/ukeliste', {initialFilter: JSON.stringify({year: this.weekCriteria?.year})}])
 
-  private configureMainNav(dp: DateParams){
+  private configureMainNav(){
     this.mainNavService.addConfig({
       topNavComponent: MainTopNavComponent, 
       topNavConfig: {
-        title:  "Uke " + dp?.weekNr || "",
-        subTitle: dp?.year?.toString() || "",
+        title:  "Uke " + this.weekCriteria?.weekNr || "",
+        subTitle: this.weekCriteria?.year?.toString() || "",
         backFn: this.goToWeekList,
         buttons: [{icon: "list", callback: this.goToTimesheetList}]
       }
