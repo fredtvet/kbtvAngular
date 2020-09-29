@@ -22,7 +22,7 @@ type Response = SaveModelStateCommand<Timesheet>;
 export class UserTimesheetFormViewComponent 
   extends BaseModelFormViewComponent<TimesheetForm, Timesheet, ViewConfig, Response>{
 
-  initTime: string = this.getISODate(7)
+  initTime: string = _getISOWithTimezone(this.getDateWithTime(7))
 
   stringFilterConfig: ActiveStringFilterConfig<Mission>;
 
@@ -59,14 +59,13 @@ export class UserTimesheetFormViewComponent
       ]],
       date:[{value: date ? new Date(date).toISOString() : startTimeIso, disabled: date}, [
         Validators.required,
+        
       ]],   
       startTime: [startTimeIso || this.initTime, [
         Validators.required,
-        // dateRangeValidator()
       ]],      
       endTime: [t?.endTime ? new Date(t.endTime).toISOString() : null, [
         Validators.required,
-        // dateRangeValidator()
       ]],    
       comment: [t?.comment, [
         Validators.required,
@@ -94,10 +93,10 @@ export class UserTimesheetFormViewComponent
     return d;
   }
 
-  private getISODate(hours: number = 0, minutes: number = 0, seconds: number = 0){
-    var date  = new Date();
-    date.setHours(hours,minutes,seconds,0);
-    return _getISOWithTimezone(date)
+  private getDateWithTime(date: any, hours: number = 0, minutes: number = 0, seconds: number = 0){
+    var d  = date ? new Date(date) : new Date();
+    d.setHours(hours,minutes,seconds,0);
+    return d;
   }
 
   get mission(){

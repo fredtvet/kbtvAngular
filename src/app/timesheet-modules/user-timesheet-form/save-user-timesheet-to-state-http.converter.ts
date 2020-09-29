@@ -6,6 +6,7 @@ import { Timesheet } from 'src/app/core/models';
 import { ModelIdGeneratorService } from 'src/app/core/services/model';
 import { SaveModelToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-to-state-http.converter';
 import { StateCurrentUser } from 'src/app/core/state';
+import { _getTotalHours } from 'src/app/shared-app/helpers/datetime/get-total-hours.helper';
 import { TimesheetStatus } from 'src/app/shared/enums';
 
 @Injectable({providedIn: 'any'})
@@ -29,12 +30,7 @@ export class SaveUserTimesheetToStateHttpConverter<TState extends StateCurrentUs
             modifiedTimesheet = {...inputTimesheet,
                 status: TimesheetStatus.Open,
                 userName: state?.currentUser?.userName,
-                totalHours: 
-                Math.round(
-                    (Math.abs(
-                        inputTimesheet.startTime - 
-                        inputTimesheet.endTime
-                    ) / 36e5)* 10) / 10
+                totalHours: _getTotalHours(inputTimesheet.startTime,inputTimesheet.endTime)
             };
             
         command.entity = modifiedTimesheet;

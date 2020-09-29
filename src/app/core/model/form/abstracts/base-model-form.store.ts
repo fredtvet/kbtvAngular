@@ -35,17 +35,15 @@ export abstract class BaseModelFormStore<
     let stateSlice = [modelProp]; 
     if(modelCfg.foreigns) stateSlice = stateSlice.concat(modelCfg.foreigns);
     return this.stateSlice$(stateSlice as Prop<TState>[]).pipe(map(state => {
-        let entity = this.getWithRelationsHelper.get<TModel>(state as any, new GetWithRelationsConfig(modelProp, null, {includeAll: true}), id);
-        let result: ModelWithRelations<TModel> = {entity, foreigns: {}};
-        if(modelCfg.foreigns)
-          for(var fkProp of modelCfg.foreigns) { result.foreigns[fkProp] = state[fkProp] }; //Map foreign state to response
-        return result;
+      const relationCfg = new GetWithRelationsConfig(modelProp, null, {includeAll: true});
+      const entity = this.getWithRelationsHelper.get<TModel>(state, relationCfg, id);
+      return {entity, foreigns: state};
     }));
   }
 
   getForeigns$ = (modelProp: Prop<ModelState>): Observable<Partial<TState>> => {
     const modelCfg = ModelStateConfig.get(modelProp);
-    return this.stateSlice$(modelCfg.foreigns as Prop<TState>[]);
+    return this.stateSlice$([...modelCfg.foreigns, modelProp] as Prop<TState>[]);
   }
 
   save = (command: any): void =>
