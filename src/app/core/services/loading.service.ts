@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,8 @@ export class LoadingService {
 
   private queryLoadingSubject = new BehaviorSubject<boolean>(false);
   queryLoading$ = this.queryLoadingSubject.asObservable().pipe(distinctUntilChanged());
+
+  loading$ = combineLatest([this.queryLoading$, this.commandLoading$]).pipe(map(x => (x[0] || x[1])))
 
   constructor() { }
 

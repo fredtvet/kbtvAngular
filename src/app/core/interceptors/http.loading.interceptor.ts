@@ -15,6 +15,7 @@ export class HttpLoadingInterceptor implements HttpInterceptor {
     constructor(private loadingService: LoadingService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler) {   
+      if(request.responseType != "json") return next.handle(request);
       if(request.method === "GET"){
         this.totalQueryRequests++;
         this.loadingService.setQueryLoading(true);
@@ -24,15 +25,6 @@ export class HttpLoadingInterceptor implements HttpInterceptor {
         this.loadingService.setCommandLoading(true);
         return next.handle(request).pipe(finalize(() => this.decreaseCommandRequests()));
       }
-        // tap(res => {
-        //   if (res instanceof HttpResponse) {
-        //     this.decreaseRequests();
-        //   }
-        // }),
-        // catchError(err => {
-        //   this.decreaseRequests(); 
-        //   throw err;
-        // })
     }  
 
     private decreaseCommandRequests() {

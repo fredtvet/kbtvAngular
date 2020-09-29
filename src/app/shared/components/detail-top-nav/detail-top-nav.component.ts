@@ -15,7 +15,7 @@ import { DetailTopNavConfig } from './detail-top-nav-config.interface';
 export class DetailTopNavComponent extends BaseTopNavComponent<DetailTopNavConfig>{
   ButtonTypes = ButtonTypes;
   
-  loading$: Observable<boolean> = this.loadingService.queryLoading$;
+  loading$: Observable<boolean> = this.loadingService.loading$;
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,

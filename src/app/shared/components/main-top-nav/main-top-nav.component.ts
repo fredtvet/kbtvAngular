@@ -18,7 +18,7 @@ export class MainTopNavComponent extends BaseTopNavComponent<MainTopNavConfig>{
 
   ButtonTypes = ButtonTypes;
   
-  loading$: Observable<boolean> = this.loadingService.queryLoading$;
+  loading$: Observable<boolean> = this.loadingService.loading$;
 
   searchBarHidden: boolean = true;
 
