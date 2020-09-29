@@ -1,5 +1,5 @@
 <form [formGroup]="authForm" (ngSubmit)="submitForm()" fxLayout="column" >
-  <span class="mat-subheading-2 mb-2">Logg på</span>
+  <span class="mat-subheading-2 mb-2">Logg inn</span>
 
   <mat-form-field>
     <mat-icon matSuffix color="primary">person</mat-icon>
@@ -13,7 +13,7 @@
     <input matInput formControlName="password" placeholder="Passord" [type]="hidePassword ? 'password' : 'text'" />
   </mat-form-field>
 
-  <button mat-raised-button color="accent" [disabled]="!authForm.valid" type="submit">
+  <button appHttpCommandButton mat-raised-button color="accent" [disabled]="!authForm.valid" type="submit">
     <mat-icon>lock_open</mat-icon>
     Logg inn
   </button>

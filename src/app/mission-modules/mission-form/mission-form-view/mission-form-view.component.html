@@ -45,7 +45,7 @@
 
   <mat-checkbox *ngIf="!isCreateForm" formControlName="finished" color="primary" class="mb-2">Er oppdraget ferdig?</mat-checkbox>
 
-  <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
+  <button mat-raised-button class="w-100" color="primary" 
     [disabled]="form.invalid || (form.pristine)"
     (click)="onSubmit()">
     {{ isCreateForm ? 'Legg til' : 'Oppdater' }}    

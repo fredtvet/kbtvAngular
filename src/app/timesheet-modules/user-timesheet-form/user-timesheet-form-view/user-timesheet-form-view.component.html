@@ -37,7 +37,7 @@
       </mat-error>
   </mat-form-field>
 
-  <button appHttpCommandButton mat-raised-button class="w-100" color="primary" 
+  <button mat-raised-button class="w-100" color="primary" 
     [disabled]="form.invalid || form.pristine"
     (click)="onSubmit()">
     {{ isCreateForm ? 'Legg til' : 'Oppdater' }} 

@@ -51,7 +51,7 @@ export class UserTimesheetListStore extends ObservableStore<StoreState>
       combineLatest([this.filteredTimesheets$, this.groupBy$]).pipe(
           filter(([filtered]) => filtered != null || filtered.records != null),
           map(([filtered, groupBy]) => this.timesheetSummaryAggregator.groupByType(groupBy, filtered.records)),
-      ).pipe(tap(console.log));
+      );
 
   filterConfig$: Observable<TimesheetFilterViewConfig> = 
     this.stateSlice$(["missions", "userTimesheetListCriteria"]).pipe(map(state => {

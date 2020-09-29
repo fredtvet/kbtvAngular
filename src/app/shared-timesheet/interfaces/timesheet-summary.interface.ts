@@ -9,5 +9,5 @@ export interface TimesheetSummary{
     year?: number;
     month?: number;
     week?: number;
-    date?: string;
+    date?: Date;
 }
