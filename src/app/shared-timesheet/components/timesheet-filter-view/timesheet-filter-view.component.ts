@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FilterComponent } from 'src/app/core/filter/interfaces/filter-component.interface';
 import { BaseFormViewComponent } from 'src/app/core/form/abstracts/base-form-view-component';
 import { Mission } from 'src/app/core/models';
@@ -41,8 +41,8 @@ export class TimesheetFilterViewComponent extends BaseFormViewComponent<Timeshee
 
     const res = this.form.value;
 
-    if(res.dateRange && res.dateRange.start && res.dateRange.end)
-      res.dateRange = [new Date(res.dateRange.start), new Date(res.dateRange.end)];
+    if(res.dateRange && (res.dateRange.start || res.dateRange.end))
+      res.dateRange = [new Date(res.dateRange.start), new Date(res.dateRange.end || new Date())];
     else res.dateRange = null;
 
     if(this.form.valid && this.form.dirty) 
@@ -72,24 +72,24 @@ export class TimesheetFilterViewComponent extends BaseFormViewComponent<Timeshee
   }
 
   protected _initalizeForm(cfg: TimesheetFilterViewConfig): FormGroup { 
-    const criteria = cfg?.criteria;
     const disabled = cfg?.disabledFilters;
+    const template = cfg?.criteria || {};
 
-    const dateRange = criteria?.dateRange;
+    const dateRange = template?.dateRange;
     const startDateIso = dateRange && dateRange[0] ? new Date(dateRange[0]).toISOString() : null;
     const endDateIso = dateRange && dateRange[1] ? new Date(dateRange[1]).toISOString() : null;
-
+   
     return this._formBuilder.group({
-      userName: [{value: criteria?.userName, disabled: disabled?.includes("userName")}],
-      mission: [{value: criteria?.mission, disabled: disabled?.includes("mission")}, [
+      userName: [{value: template.userName, disabled: disabled?.includes("userName")}],
+      mission: [{value: template.mission, disabled: disabled?.includes("mission")}, [
         isObjectValidator(true)
       ]],
-      dateRangePreset: [{value: criteria?.dateRangePreset || DateRangePresets.CurrentMonth, disabled: disabled?.includes("dateRangePreset")}],
+      dateRangePreset: [{value: template.dateRangePreset, disabled: disabled?.includes("dateRangePreset")}],
       dateRange: this._formBuilder.group({
         start: [{value: startDateIso, disabled: disabled?.includes("dateRange")}],
         end: [{value: endDateIso, disabled: disabled?.includes("dateRange")}],
       }),
-      status: [{value: criteria?.status, disabled: disabled?.includes("status")}],
+      status: [{value: template.status, disabled: disabled?.includes("status")}],
     });
   }
 
