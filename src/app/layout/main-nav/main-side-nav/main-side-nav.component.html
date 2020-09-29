@@ -1,5 +1,5 @@
 
-  <span fxLayout="column" fxLayoutAlign="center start" class="p-2 pl-4 mat-elevation-z1">
+  <mat-toolbar fxLayout="column" fxLayoutAlign="center start" class="bg-primary mat-elevation-z1">
 
     <ng-container *ngIf="config.isOnline else offlineHeader">
       <span class="mat-small color-success"> Tilkoblet internett </span>
@@ -12,7 +12,7 @@
       {{ config.user.firstName }} {{ config.user.lastName }}
     </span>
 
-  </span>
+  </mat-toolbar>
 
   <div class="nav-list">
     <ng-container *ngFor="let navButton of config.navigations">
