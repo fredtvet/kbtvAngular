@@ -30,6 +30,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       (err: any) => {
       if (err instanceof HttpErrorResponse) { 
         var error = err.error as AppErrorResponse;
+        console.log(error);
         this.notificationService.notify({ 
           title: error.detail || error.title || "Noe gikk feil! Vennligst prøv igjen.",  
           details: this.convertErrorsToStringArray(error.errors),

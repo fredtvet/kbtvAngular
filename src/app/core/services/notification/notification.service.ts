@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppNotification } from 'src/app/core/services/notification/app-notification.interface';
 import { NotificationComponent } from 'src/app/shared-app/components/notification.component';
+import { NotificationDuration } from './notification-duration.enum';
 import { NotificationType } from './notification-type.enum';
 
 @Injectable({
@@ -22,32 +23,31 @@ export class NotificationService {
         this.queue.push(notification);    
   }
 
+  private setNotification = (input: AppNotification) => {
+    this.currentNotification = input;
+
+    switch(input?.type){
+      case NotificationType.Success:
+        this.openSnackBar(input.title, input.details, 'check_circle', input.duration ?? NotificationDuration.Short, 'notification-success');
+        break;
+      case NotificationType.Error:
+        this.openSnackBar(input.title, input.details, 'error', input.duration ?? NotificationDuration.Long, 'notification-error');
+        break;
+      case NotificationType.Warning:
+        this.openSnackBar(input.title, input.details, 'warning', input.duration ?? NotificationDuration.Medium, 'notification-warn');
+        break;
+    }
+  }
+
   private openSnackBar(title: string, details: string[], icon:string, duration: number, panelClass:string){
+    console.log(duration || null);
     let ref = this.snackBar.openFromComponent(NotificationComponent, {
       data : { title, details, icon },
-      duration: duration,
+      duration: duration || null,
       panelClass: panelClass
     });
 
     ref.afterDismissed().subscribe(x => this.setNotification(this.queue.shift()))
   }
-   
-  private setNotification = (notification: AppNotification) => {
-    this.currentNotification = notification;
-
-    switch(notification?.type){
-      case NotificationType.Success:
-        this.openSnackBar(notification.title, notification.details, 'check_circle', 2000, 'notification-success');
-        break;
-      case NotificationType.Error:
-        this.openSnackBar(notification.title, notification.details, 'error', 3500, 'notification-error');
-        break;
-      case NotificationType.Warning:
-        this.openSnackBar(notification.title, notification.details, 'warning', 3500, 'notification-warn');
-        break;
-    }
-  }
-
-
 
 }
