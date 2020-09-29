@@ -6,7 +6,7 @@
 
     <mat-toolbar *ngIf="config" 
         [ngClass]="config.imgSrc ? 'overlay overlay-top' : 'bg-primary'"
-        class="toolbar-slim color-foreground slideInDown">
+        class="color-foreground slideInDown">
 
         <app-button *ngIf="config.backFn else menuBtn" [config]="{
                     callback: config.backFn, 

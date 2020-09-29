@@ -6,7 +6,7 @@ import { BaseTopNavComponent } from '../shared-app/components/base-top-nav.compo
 @Component({
   selector: 'app-home',
   template: `
-  <mat-toolbar *ngIf="config" class="toolbar-slim mat-elevation-z2 bg-primary">
+  <mat-toolbar *ngIf="config" class="mat-elevation-z2 bg-primary">
 
     <button mat-icon-button aria-label="Toggle sidenav" (click)="toggleDrawer.emit()" fxHide fxShow.xs>
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
