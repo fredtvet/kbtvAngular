@@ -40,7 +40,6 @@ export class NotificationService {
   }
 
   private openSnackBar(title: string, details: string[], icon:string, duration: number, panelClass:string){
-    console.log(duration || null);
     let ref = this.snackBar.openFromComponent(NotificationComponent, {
       data : { title, details, icon },
       duration: duration || null,
