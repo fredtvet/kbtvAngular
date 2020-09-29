@@ -27,41 +27,41 @@ export class TimesheetSummaryAggregator {
 
   groupByDay(t: Timesheet[]): TimesheetSummary[] {
     if(!t) return undefined;
-    const obj_arr = t.reduce((groups, timesheet) => {
+    const groups = {};
+    for(let i = t.length; i--;){
+      const timesheet = t[i];
       const date = new Date(timesheet.startTime);
-      const index = date.toLocaleDateString() + "-" + timesheet.userName;
-      if (!groups[index]) {
+      const index = date.toDateString() + "-" + timesheet.userName;
+      if(groups[index] === undefined) {
         groups[index] = {
           userName: timesheet.userName,
           date,
           openHours: 0,
           confirmedHours: 0,
           timesheets: [],
-        };
+        } as TimesheetSummary;
       }
 
-      if (timesheet.status == TimesheetStatus.Open)
-        groups[index].openHours += timesheet.totalHours;
-      else if (timesheet.status == TimesheetStatus.Confirmed)
-        groups[index].confirmedHours += timesheet.totalHours;
+      if (timesheet.status === TimesheetStatus.Open)
+        groups[index].openHours += Math.round(timesheet.totalHours * 10) / 10;
+      else
+        groups[index].confirmedHours += Math.round(timesheet.totalHours * 10) / 10;
 
       groups[index].timesheets.push(timesheet);
-
-      return groups;
-    }, {});
-    
-    return Object.values(obj_arr);
+    }
+    const res = Object.values(groups) as TimesheetSummary[]; 
+    return res
   }
 
   groupByWeek(t: Timesheet[]): TimesheetSummary[] {
     if(!t) return undefined;
-    let groups = {} as {[key: string]: TimesheetSummary};
-    for(let i = 0; i < t.length; i++){
-      let timesheet = t[i];
+    const groups = {} as {[key: string]: TimesheetSummary};
+    for(let i = t.length; i--;){
+      const timesheet = t[i];
       const wy = _getWeekAndYearFromDate(timesheet.startTime);
       const index = wy.year + "-" + wy.week + "-" + timesheet.userName;
 
-      if (!groups[index]) {
+      if (groups[index] === undefined) {
         groups[index] = {
           userName: timesheet.userName,
           year: wy.year,
@@ -82,38 +82,41 @@ export class TimesheetSummaryAggregator {
     return Object.values(groups);
   }
 
-  groupByWeekRange(timesheets: Timesheet[],startWeek: number, endWeek: number, year: number, excludeStatus?: TimesheetStatus): TimesheetSummary[] {
-    if(!timesheets) return undefined;
-    const obj_arr = timesheets.reduce((groups, timesheet) => {
-      if(timesheet.status == excludeStatus) return groups;
+  groupByWeekRange(t: Timesheet[],startWeek: number, endWeek: number, year: number, excludeStatus?: TimesheetStatus): TimesheetSummary[] {
+    if(!t) return undefined;
+    const groups = {};
+    for(let i = t.length; i--;){
+      const timesheet = t[i];
+      if(timesheet.status === excludeStatus) continue;
       const date = new Date(timesheet.startTime);
-      if(date.getFullYear() !== year) return groups;
+      if(date.getFullYear() !== year) continue;
       const weekNr = _getWeekOfYear(date);
       if (weekNr >= startWeek && weekNr <= endWeek) {
-        if (!groups[weekNr])
+        if (groups[weekNr] === undefined)
           groups[weekNr] = { week: weekNr,timesheets: [],openHours: 0,confirmedHours: 0,} as TimesheetSummary;
 
         groups[weekNr].timesheets.push(timesheet);
 
-        if (timesheet.status == TimesheetStatus.Open)
-          groups[weekNr].openHours += timesheet.totalHours;
-        else if (timesheet.status == TimesheetStatus.Confirmed)
-          groups[weekNr].confirmedHours += timesheet.totalHours;
+        if (timesheet.status === TimesheetStatus.Open)
+          groups[weekNr].openHours += Math.round(timesheet.totalHours * 10) / 10;
+        else
+          groups[weekNr].confirmedHours += Math.round(timesheet.totalHours * 10) / 10;
       }
-      return groups;
-    }, {});
+    };
 
-    return Object.values(obj_arr);
+    return Object.values(groups);
   }
 
   groupByMonth(t: Timesheet[]): TimesheetSummary[] {
     if(!t) return undefined;
-    const obj_arr = t.reduce((groups, timesheet) => {
+    const groups = {};
+    for(let i = t.length; i--;){
+      const timesheet = t[i];
       const date = new Date(timesheet.startTime);
       const month = date.getMonth();
       const year = date.getFullYear();
       const index = year + "-" + month + "-" + timesheet.userName;
-      if (!groups[index]) {
+      if (groups[index] === undefined) {
         groups[index] = {
           userName: timesheet.userName,
           year,
@@ -123,45 +126,40 @@ export class TimesheetSummaryAggregator {
         };
       }
 
-      if (timesheet.status == TimesheetStatus.Open)
+      if (timesheet.status === TimesheetStatus.Open)
         groups[index].openHours += timesheet.totalHours;
-      else if (timesheet.status == TimesheetStatus.Confirmed)
+      else
         groups[index].confirmedHours += timesheet.totalHours;
 
       groups[index].timesheets.push(timesheet);
+    };
 
-      return groups;
-    }, []);
-
-    return Object.values(obj_arr);
+    return Object.values(groups);
   }
 
   groupByYear(t: Timesheet[]): TimesheetSummary[] {
     if(!t) return undefined;
-    const obj_arr = t.reduce((groups, timesheet) => {
+    const groups = {};
+    for(let i = t.length; i--;){
+      const timesheet = t[i];
       const year = new Date(timesheet.startTime).getFullYear();
       const index = year + "-" + timesheet.userName;
 
-      if (!groups[index]) {
+      if (groups[index] === undefined) {
         groups[index] = {
-          userName: timesheet.userName,
-          year,
-          openHours: 0, confirmedHours: 0,
-          timesheets: [],
+          userName: timesheet.userName, year, 
+          openHours: 0, confirmedHours: 0, timesheets: [],
         };
       }
 
-      if (timesheet.status == TimesheetStatus.Open)
+      if (timesheet.status === TimesheetStatus.Open)
         groups[index].openHours += timesheet.totalHours;
-      else if (timesheet.status == TimesheetStatus.Confirmed)
+      else
         groups[index].confirmedHours += timesheet.totalHours;
 
       groups[index].timesheets.push(timesheet);
-
-      return groups;
-    }, []);
-
-    return Object.values(obj_arr);;
+    };
+    return Object.values(groups);
   }
 
 }
