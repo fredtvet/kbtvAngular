@@ -73,9 +73,9 @@ export class TimesheetSummaryAggregator {
       }  
 
       if (timesheet.status === TimesheetStatus.Open)
-        groups[index].openHours += timesheet.totalHours;
+        groups[index].openHours += Math.round(timesheet.totalHours * 10) / 10;
       else
-        groups[index].confirmedHours += timesheet.totalHours;
+        groups[index].confirmedHours += Math.round(timesheet.totalHours * 10) / 10;
 
       groups[index].timesheets.push(timesheet);
     }
@@ -127,9 +127,9 @@ export class TimesheetSummaryAggregator {
       }
 
       if (timesheet.status === TimesheetStatus.Open)
-        groups[index].openHours += timesheet.totalHours;
+        groups[index].openHours += Math.round(timesheet.totalHours * 10) / 10;
       else
-        groups[index].confirmedHours += timesheet.totalHours;
+        groups[index].confirmedHours += Math.round(timesheet.totalHours * 10) / 10;
 
       groups[index].timesheets.push(timesheet);
     };
@@ -153,9 +153,9 @@ export class TimesheetSummaryAggregator {
       }
 
       if (timesheet.status === TimesheetStatus.Open)
-        groups[index].openHours += timesheet.totalHours;
+        groups[index].openHours += Math.round(timesheet.totalHours * 10) / 10;
       else
-        groups[index].confirmedHours += timesheet.totalHours;
+        groups[index].confirmedHours += Math.round(timesheet.totalHours * 10) / 10;
 
       groups[index].timesheets.push(timesheet);
     };
