@@ -16,14 +16,22 @@ export class TimesheetStatisticTableComponent extends AgGridTableComponent<Times
 
   protected initNgGrid(cfg: AgGridConfig<TimesheetSummary>): void{
     super.initNgGrid(cfg);
+    if(!cfg?.data || cfg.data.length === 0) return;
 
-    let totalOpenHrs = cfg?.data?.reduce((total, summary) => { return total + summary.openHours }, 0);
-    let totalConfirmedHrs = cfg?.data?.reduce((total, summary) => { return total + summary.confirmedHours }, 0);
-
-    if(this.dataGrid){
-      this.dataGrid.api.setPinnedBottomRowData([{openHours: totalOpenHrs, confirmedHours: totalConfirmedHrs, fullName: "Sum av timer", timesheets: []}]);
+    let openHrs = 0, confirmedHrs = 0;
+    for(let  i = cfg.data.length; i--;){
+      const summary = cfg.data[i];
+      openHrs += summary.openHours;
+      confirmedHrs += summary.confirmedHours;
     }
 
+    if(this.dataGrid){
+      this.dataGrid.api.setPinnedBottomRowData([{
+        openHours: Math.round(openHrs * 10) / 10, 
+        confirmedHours: Math.round(confirmedHrs * 10) / 10, 
+        fullName: "Sum av timer", timesheets: []
+      }]);
+    }
   }
 
   protected addColDefs(object: Object): any[]{
@@ -48,7 +56,6 @@ export class TimesheetStatisticTableComponent extends AgGridTableComponent<Times
 
     return columnDefs;
   } 
-
   private convertMonthIndex = (params) =>  
     params?.value != null ? this.datePipe.transform(new Date().setMonth(params.value), 'MMM') : undefined;
 
