@@ -75,7 +75,7 @@ export class StateHttpCommandHandler extends ObservableStore<State>
       concat(
         this.deviceInfoService.isOnline$.pipe(first(x => x === true)),
         this.getHttpCommandObserver(command).pipe(
-          catchError(err => this.onHttpError()), 
+          catchError(err => this.onHttpError(true)), 
           tap(x => this.onHttpSuccess()) //Add next id to queue
         )
       ).subscribe();
@@ -88,7 +88,7 @@ export class StateHttpCommandHandler extends ObservableStore<State>
       this.nextInQueueSubject.next(true);
     }
 
-    private onHttpError(): Observable<void> {
+    private onHttpError(ignoreInitial?: boolean, customTitle?: string): Observable<void> {
         const requestQueue = this.requestQueue;
         const currentRequest = requestQueue[0];
 
@@ -96,13 +96,15 @@ export class StateHttpCommandHandler extends ObservableStore<State>
           this.setState({...currentRequest.state, requestQueue: []}, null, true)
         
         let errorMessages = requestQueue.map(x => x.command.cancelMessage);
+        if(ignoreInitial) errorMessages.shift();
 
-        this.notificationService.notify({ 
-          title: "Følgefeil!",  
-          details: errorMessages,
-          type: NotificationType.Error
-        });
-   
+        if(errorMessages.length > 0)
+          this.notificationService.notify({ 
+            title: customTitle || "Følgefeil!",  
+            details: errorMessages,
+            type: NotificationType.Error
+          });
+    
         return EMPTY;
     }
 
@@ -118,12 +120,12 @@ export class StateHttpCommandHandler extends ObservableStore<State>
         this.getStateProperty<User>("currentUser")?.lastCommandStatus;
 
       if(!lastCommandStatus && this.requestQueue.length > 0) 
-        this.onHttpError();   
+        this.onHttpError(false, "Noe gikk feil ved forrige økt!");   
     }
 
     private getHttpCommandObserver(command: {httpMethod: "POST" | "PUT" | "DELETE", apiUrl: string, httpBody: any}){
       switch(command.httpMethod){
-          case "POST": return this.apiService.post(command.apiUrl, command.httpBody);
+          case "POST": return this.apiService.post(command.apiUrl, {});
           case "PUT": return this.apiService.put(command.apiUrl, command.httpBody);
           case "DELETE": return this.apiService.delete(command.apiUrl);
       }
