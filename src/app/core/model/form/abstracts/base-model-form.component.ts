@@ -34,11 +34,8 @@ export abstract class BaseModelFormComponent<
       super.ngOnInit();
     }
 
-    protected onSubmit(result: TSave): void{
-      if(!result || result == null) this.formSubmitted.emit(null);
-      else {
-        this.saveEntity({...result, stateProp: this.config.stateProp, saveAction: this.isCreateForm ? StateAction.Create : StateAction.Update})  
-      }
+    protected onSubmit(result: TSave): void{   
+      this.saveEntity({...result, stateProp: this.config.stateProp, saveAction: this.isCreateForm ? StateAction.Create : StateAction.Update})       
     }
 
     private saveEntity(command: TSave): void{

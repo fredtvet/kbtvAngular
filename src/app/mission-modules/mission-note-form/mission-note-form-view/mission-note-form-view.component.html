@@ -10,7 +10,7 @@
     <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" #content cdkAutosizeMinRows="4"
       placeholder="Innhold" formControlName="content" required>
         </textarea>
-    <mat-hint>{{content.value.length}} / 400 tegn</mat-hint>
+    <mat-hint>{{content.value?.length}} / 400 tegn</mat-hint>
     <mat-error *ngIf="content.invalid">
       Innhold er ett obligatorisk felt på maks 400 tegn.
     </mat-error>
@@ -19,10 +19,11 @@
   <mat-checkbox formControlName="pinned">Viktig?</mat-checkbox>
   <br />
 
-  <button mat-raised-button class="w-100" color="primary" 
-    [disabled]="form.invalid || form.pristine"
-    (click)="onSubmit()">
-    {{ isCreateForm ? 'Legg til' : 'Oppdater' }}  
-  </button>
+  <app-form-actions 
+    [submitDisabled]="form.pristine || form.invalid" 
+    [submitText]="isCreateForm ? 'Legg til' : 'Oppdater'" 
+    (submitted)="onSubmit()" 
+    (canceled)="formSubmitted.emit(null)">
+  </app-form-actions>
 
 </form>

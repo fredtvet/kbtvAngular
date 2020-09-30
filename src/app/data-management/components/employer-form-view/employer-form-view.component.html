@@ -19,6 +19,7 @@
     <mat-error *ngIf="this.address.invalid">
       Adresse kan maks ha 100 tegn.
     </mat-error>
+    <mat-hint>F.eks. Furuberget 17, 1940 Bjørkelangen</mat-hint>
   </mat-form-field>
 
   <mat-form-field>
@@ -28,9 +29,10 @@
     </mat-error>
   </mat-form-field>
 
-  <button mat-raised-button class="w-100" color="primary" 
-    [disabled]="form.invalid || form.pristine"
-    (click)="onSubmit()">
-    {{ isCreateForm ? 'Legg til' : 'Oppdater' }} 
-  </button>
+  <app-form-actions 
+    [submitDisabled]="form.pristine || form.invalid" 
+    [submitText]="isCreateForm ? 'Legg til' : 'Oppdater'" 
+    (submitted)="onSubmit()" 
+    (canceled)="formSubmitted.emit(null)">
+  </app-form-actions>
 </form>

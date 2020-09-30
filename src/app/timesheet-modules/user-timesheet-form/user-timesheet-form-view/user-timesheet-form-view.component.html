@@ -7,7 +7,6 @@
           ({{ mission.id }}) {{ mission.address }}
         </mat-option>
       </mat-autocomplete>
-
     <mat-error *ngIf="mission.errors">
       Velg ett oppdrag fra listen
     </mat-error>
@@ -32,14 +31,16 @@
   <mat-form-field>
     <textarea matInput placeholder="Kommentar" formControlName="comment" aria-label="Kommentar" required
       maxlength="400"></textarea>
-      <mat-error *ngIf="comment.errors">
-        Vennligst skriv en kommentar om arbeidet som er utført. 
-      </mat-error>
+    <mat-hint>{{comment.value?.length}} / 400 tegn</mat-hint>
+    <mat-error *ngIf="comment.errors">
+       Vennligst skriv en kommentar om arbeidet som er utført. 
+    </mat-error>
   </mat-form-field>
 
-  <button mat-raised-button class="w-100" color="primary" 
-    [disabled]="form.invalid || form.pristine"
-    (click)="onSubmit()">
-    {{ isCreateForm ? 'Legg til' : 'Oppdater' }} 
-  </button>
+  <app-form-actions 
+    [submitDisabled]="form.pristine || form.invalid" 
+    [submitText]="isCreateForm ? 'Legg til' : 'Oppdater'" 
+    (submitted)="onSubmit()" 
+    (canceled)="formSubmitted.emit(null)">
+  </app-form-actions>
 </form>

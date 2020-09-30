@@ -25,9 +25,10 @@
       Epostadressen er ikke gyldig.
     </mat-error>
   </mat-form-field>
-
-  <button mat-raised-button class="w-100" color="primary"
-    [disabled]="profileForm.invalid || profileForm.pristine" (click)="onSubmit()">
-    Lagre
-  </button>
+  
+  <app-form-actions submitText="Oppdater" 
+    [submitDisabled]="profileForm.pristine || profileForm.invalid" 
+    (submitted)="onSubmit()" 
+    (canceled)="formSubmitted.emit(null)">
+  </app-form-actions>
 </form>

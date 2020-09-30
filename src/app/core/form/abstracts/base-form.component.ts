@@ -43,7 +43,8 @@ export abstract class BaseFormComponent<
     protected initViewComponent(){
       const factory = this.componentFactoryResolver.resolveComponentFactory(this.formViewComponent);
       this.formViewRef = this.viewContainerRef.createComponent(factory);
-      this.formViewRef.instance.formSubmitted.pipe(takeUntil(this.unsubscribe)).subscribe(x => this.onSubmit(x))
+      this.formViewRef.instance.formSubmitted.pipe(takeUntil(this.unsubscribe))
+        .subscribe(x => x ? this.onSubmit(x) : this.formSubmitted.emit(null))
     } 
 
     protected onSubmit(result: TResult): void{

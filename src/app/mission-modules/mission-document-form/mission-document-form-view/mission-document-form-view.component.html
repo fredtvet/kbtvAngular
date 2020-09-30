@@ -7,7 +7,6 @@
                 {{type.name}}
             </mat-option>
         </mat-autocomplete>
-        
         <mat-error *ngIf="documentTypeName.errors?.required">Velg eller lag ny dokumenttype.</mat-error>      
         <mat-error *ngIf="documentTypeName.errors?.maxlength">Navn kan maks være 45 tegn.</mat-error>  
     </mat-form-field>
@@ -20,11 +19,11 @@
     <mat-error *ngIf="file.dirty && file.errors?.fileExtensionInvalid">Filtypen er ikke tillatt.</mat-error>  
 
     <br />
-
-    <button mat-raised-button class="w-100" color="primary" 
-        [disabled]="form.invalid || form.pristine"
-        (click)="onSubmit()">
-        <mat-icon>cloud_upload</mat-icon>
-        Last opp   
-    </button>
+    
+    <app-form-actions 
+        [submitDisabled]="form.pristine || form.invalid" 
+        [submitText]="isCreateForm ? 'Legg til' : 'Oppdater'" 
+        (submitted)="onSubmit()" 
+        (canceled)="formSubmitted.emit(null)">
+    </app-form-actions>
 </form>

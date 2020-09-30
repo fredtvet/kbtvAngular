@@ -8,6 +8,7 @@ import {
   BottomSheetMenuComponent,
   ConfirmDialogComponent,
   DetailTopNavComponent,
+  FormActionsComponent,
   MailToFormViewComponent,
   MainTopNavComponent,
   SelectableCardComponent,
@@ -28,6 +29,8 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     DetailTopNavComponent,
     SelectableListComponent,
     BottomSheetMenuComponent,
+    FormActionsComponent,
+    
     TransformButtonPipe,
     ArraySlicePipe,
     TranslatePipe,
@@ -66,7 +69,8 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     SelectableCardComponent,
     BottomSheetMenuComponent,
     SelectableListComponent,
-
+    FormActionsComponent,
+    
     TransformButtonPipe,
     ArraySlicePipe,
     TranslatePipe,

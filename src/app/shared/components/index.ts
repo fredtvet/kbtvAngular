@@ -8,3 +8,4 @@ export * from './abstracts/ag-grid-table.component';
 export * from './main-top-nav/main-top-nav.component';
 export * from './detail-top-nav/detail-top-nav.component';
 export * from './bottom-sheet-menu.component';
+export * from './form-actions.component';

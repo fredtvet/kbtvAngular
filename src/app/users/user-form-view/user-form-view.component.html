@@ -15,7 +15,6 @@
     <mat-error *ngIf="password.errors?.required">Passord er ett obligatorisk felt.</mat-error>  
     <mat-error *ngIf="password.errors?.minlength">Passord må ha minst 7 tegn.</mat-error>
     <mat-error *ngIf="password.errors?.maxlength">Passord kan ha maks 100 tegn.</mat-error>
-    
     <mat-icon matSuffix (click)="hidePassword = !hidePassword">
       {{hidePassword ? 'visibility_off' : 'visibility'}}
     </mat-icon>
@@ -36,7 +35,7 @@
   <mat-form-field>
     <mat-select placeholder="Rolle" (change)="changeRole($event)" formControlName="role" required>
       <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
-    </mat-select>
+    </mat-select> 
     <mat-error *ngIf="role.errors?.required">Rolle er ett obligatorisk felt.</mat-error>
   </mat-form-field>
 
@@ -57,9 +56,10 @@
     <mat-error *ngIf="email.errors?.email">Epost adressen er ugyldig.</mat-error>
   </mat-form-field>
 
-  <button mat-raised-button class="w-100" color="primary" 
-    [disabled]="form.invalid || form.pristine"
-    (click)="onSubmit()">
-    {{ isCreateForm ? 'Legg til' : 'Oppdater' }} 
-  </button>
+  <app-form-actions 
+    [submitDisabled]="form.pristine || form.invalid" 
+    [submitText]="isCreateForm ? 'Legg til' : 'Oppdater'" 
+    (submitted)="onSubmit()" 
+    (canceled)="formSubmitted.emit(null)">
+  </app-form-actions>
 </form>
