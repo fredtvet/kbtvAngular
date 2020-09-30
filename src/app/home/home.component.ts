@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
 import { SyncStore } from 'src/app/core/services/sync';
 import { MainNavService } from 'src/app/layout';
@@ -15,11 +15,11 @@ import { HomeTopNavComponent } from './home-top-nav.component';
 })
 export class HomeComponent {
   Roles = Roles;
-  
+
   rolePresets = RolePresets;
 
   missionHistory$: Observable<Mission[]> = this.syncStore.missions$.pipe(
-    map(x => _sortByDate(x, "lastVisited", "desc")?.slice(0,4))
+    map(x => _sortByDate(x, "lastVisited")?.slice(0,4))
   )
 
   constructor(

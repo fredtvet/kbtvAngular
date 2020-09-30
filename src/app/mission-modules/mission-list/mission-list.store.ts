@@ -50,7 +50,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
         return {
             criteria: state.missionCriteria,
             activeCriteriaCount: filter.activeCriteriaCount,
-            records: _sortByDate(filtered, "updatedAt", "desc") 
+            records: _sortByDate(filtered, "updatedAt") 
         }})
       );
       

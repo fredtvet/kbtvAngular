@@ -13,7 +13,7 @@
 
             <div class="w-100" style="padding: 0 2px 0 2px; z-index:0" 
               fxLayout="column" fxLayoutAlign="start stretch" fxFlex>
-              <ng-container *ngFor="let timesheet of summaries[weekDay]?.timesheets | sortByDate: 'startTime'; trackBy: trackByTimesheet;" >
+              <ng-container *ngFor="let timesheet of summaries[weekDay]?.timesheets | sortByDate: 'startTime' : 'asc'; trackBy: trackByTimesheet;" >
                 <app-timesheet-mission-bar class="mb-1 fadeInDown"                      
                   [timesheet]="timesheet"
                   (barClicked)="timesheet.status ? openTimesheetCard(timesheet.id) : openTimesheetForm(timesheet.id)">

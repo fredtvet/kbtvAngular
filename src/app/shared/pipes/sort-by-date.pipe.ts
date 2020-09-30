@@ -7,7 +7,7 @@ import { _sortByDate } from 'src/app/shared-app/helpers/array/sort-by-date.helpe
 
 export class SortByDatePipe implements PipeTransform {
 
-  transform(entities: any[], dateProperty: string, order: "asc" | "desc" = "asc"): any {
+  transform(entities: any[], dateProperty: string, order: "asc" | "desc" = "desc"): any {
     if(!entities) return entities;
     return _sortByDate(entities, dateProperty, order)
   }
