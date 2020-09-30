@@ -23,6 +23,7 @@ import { MissionFilter } from 'src/app/shared/mission-filter.model';
 import { StoreState } from './interfaces/store-state';
 import { MissionFilterViewConfig } from './mission-filter-view/mission-filter-view-config.interface';
 import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
+import { _sortByDate } from 'src/app/shared-app/helpers/array/sort-by-date.helper';
 
 @Injectable({
   providedIn: 'any',
@@ -45,10 +46,11 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
     this.stateSlice$(["missions", "missionCriteria"]).pipe(
         map(state => {
         const filter = new MissionFilter(state.missionCriteria, null, true);
+        const filtered = _filter(state.missions, (entity) => filter.check(entity));
         return {
             criteria: state.missionCriteria,
             activeCriteriaCount: filter.activeCriteriaCount,
-            records: _filter(state.missions, (entity) => filter.check(entity)),
+            records: _sortByDate(filtered, "updatedAt", "desc") 
         }})
       );
       
@@ -96,13 +98,10 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
   }
 
   private updateLastVisited(id: string){
-    let missions = this.getStateProperty<Mission[]>("missions", false);
-    if(!missions) return;
-    let index = missions.findIndex(x => x.id == id);
-    if(!missions[index]) return;
-    const mission = {...missions[index]};
-    mission.lastVisited = new Date().getTime(); 
-    missions[index] = mission;
+    const missions = this.getStateProperty<Mission[]>("missions", false);
+    const index = missions?.findIndex(x => x.id == id);
+    if(!index || !missions[index]) return;
+    missions[index] = {...missions[index], lastVisited: new Date().getTime()};
     this.setState({missions})
   }
 
