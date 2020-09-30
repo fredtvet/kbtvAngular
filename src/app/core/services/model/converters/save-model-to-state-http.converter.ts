@@ -11,6 +11,7 @@ import { Prop } from 'src/app/core/model/state.types';
 import { ModelStateConfig } from 'src/app/core/model/model-state.config';
 import { _add } from 'src/app/shared-app/helpers/array/add.helper';
 import { _update } from 'src/app/shared-app/helpers/array/update.helper';
+import { _getUnixTimeSeconds } from 'src/app/shared-app/helpers/datetime/get-unix-time-seconds.helper';
 
 @Injectable({providedIn: 'root'})
 export class SaveModelToStateHttpConverter<TState, TCommand extends SaveModelStateCommand<Model>> 
@@ -63,7 +64,8 @@ export class SaveModelToStateHttpConverter<TState, TCommand extends SaveModelSta
       return props as Prop<TState>[];
    }
 
-   protected modifyState(state: TState, command: TCommand): Partial<TState>{    
+   protected modifyState(state: TState, command: TCommand): Partial<TState>{ 
+      command.entity.updatedAt = new Date().getTime();  
       return this.modifyModelWithForeignsHelper.modify(
          state, command.stateProp as any, command.entity,
          (command.saveAction === StateAction.Update)? this.updateFunc : this.createFunc
