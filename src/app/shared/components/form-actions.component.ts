@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 @Component({
   selector: 'app-form-actions',
   template:`
-  <div fxLayout="row" fxLayoutAlign="start start" class="mt-2">  
+  <div fxLayout="row" fxLayoutAlign="start start" class="mt-3">  
     <button mat-raised-button fxFlex=40 color="accent" 
     [disabled]="submitDisabled"
     (click)="submitted.emit()">
