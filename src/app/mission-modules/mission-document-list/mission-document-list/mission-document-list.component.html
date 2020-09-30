@@ -9,7 +9,7 @@
 </app-main-top-nav>
 
 <ng-template #documentTemplate let-entity>
-    <div class="bg-foreground text-center mat-elevation-z2 p-2 pt-6 pb-6 m-1 fadeIn">
+    <div class="bg-foreground text-center mat-elevation-z2 p-2 pt-6 pb-6 m-1">
         <mat-icon [svgIcon]="entity.fileName | fileExtension | fileExtensionIcon" class="scale-150 mb-2"></mat-icon>
         <div>{{ entity.documentType?.name }}</div>
 

@@ -1,6 +1,6 @@
 <app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig">
 
-    <div class="h-100 fadeInLeft max-width" fxLayout="column" fxLayoutAlign="start stretch">
+    <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch">
 
         <cdk-virtual-scroll-viewport itemSize="78" maxBufferPx="800" minBufferPx="800" fxFlex 
             *ngIf="vm.content?.length else noContent">
