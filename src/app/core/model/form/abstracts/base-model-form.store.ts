@@ -43,7 +43,7 @@ export abstract class BaseModelFormStore<
 
   getForeigns$ = (modelProp: Prop<ModelState>): Observable<Partial<TState>> => {
     const modelCfg = ModelStateConfig.get(modelProp);
-    return this.stateSlice$([...modelCfg.foreigns, modelProp] as Prop<TState>[]);
+    return this.stateSlice$([...modelCfg.foreigns || [], modelProp] as Prop<TState>[]);
   }
 
   save = (command: any): void =>
