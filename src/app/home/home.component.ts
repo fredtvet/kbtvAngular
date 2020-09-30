@@ -15,21 +15,17 @@ import { HomeTopNavComponent } from './home-top-nav.component';
 })
 export class HomeComponent {
   Roles = Roles;
+  
   rolePresets = RolePresets;
 
-  missionHistory$: Observable<Mission[]>;
+  missionHistory$: Observable<Mission[]> = this.syncStore.missions$.pipe(
+    map(x => _sortByDate(x, "lastVisited", "desc")?.slice(0,4))
+  )
 
   constructor(
     private syncStore: SyncStore,
     private mainNavService: MainNavService) {
      this.configureMainNav();
-  }
-
-  ngOnInit() {
-    this.missionHistory$ = this.syncStore.missions$.pipe(
-      filter(x => x != null),
-      map(x => _sortByDate(x, "lastVisited", "desc").slice(0,4))
-    )
   }
   
   private configureMainNav(){
@@ -38,5 +34,4 @@ export class HomeComponent {
     });
   }
   
-
 }
