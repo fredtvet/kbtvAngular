@@ -31,8 +31,6 @@ export class UserTimesheetListStore extends ObservableStore<StoreState>
 
   groupBy$ = this.stateProperty$<GroupByPeriod>("userTimesheetListGroupBy");
 
-  criteria$ = this.stateProperty$<TimesheetCriteria>("userTimesheetListCriteria");
-
   filteredTimesheets$: Observable<FilteredResponse<TimesheetCriteria, Timesheet>> = 
     this.stateSlice$(["userTimesheets", "userTimesheetListCriteria", "missions"]).pipe(
           filter(x => x.userTimesheets != null && x.userTimesheetListCriteria != null),

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
 import { FilterSheetService } from 'src/app/core/services/filter';
 import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
@@ -22,19 +23,20 @@ export class TimesheetStatisticComponent {
 
   groupByTypes = GroupByPeriod;
 
-  navConfig: MainTopNavConfig;
-  
   vm$: Observable<FilteredAndGroupedSummaries> = this.store.timesheetSummaries$;
 
+  get navConfig() : MainTopNavConfig {
+    return {
+      title:  "Timestatistikk",
+      buttons: [{icon: "more_vert", callback: this.openBottomSheetMenu}]
+    }
+  };
+  
   constructor( 
     private store: TimesheetStatisticStore,
     private menuService: BottomSheetMenuService,
     private filterService: FilterSheetService
     ) { 
-    this.navConfig = {
-      title:  "Timestatistikk",
-      buttons: [{icon: "more_vert", callback: this.openBottomSheetMenu}]
-    }
   }
     
   changeGroupingType = (type: GroupByPeriod) => this.store.addGroupBy(type);

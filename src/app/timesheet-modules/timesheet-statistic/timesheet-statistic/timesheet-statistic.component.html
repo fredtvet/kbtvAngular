@@ -11,13 +11,13 @@
             </mat-button-toggle-group>  
     
             <button mat-raised-button class="bg-accent" (click)="openBottomSheet()"
-            [matBadge]="vm.activeCriteriaCount | async" matBadgeSize="small">
+                [matBadge]="vm.activeCriteriaCount" matBadgeSize="small">
                 <mat-icon>filter_list</mat-icon>
             </button>  
         </span>
     
         <app-timesheet-statistic-table #statTable class="mat-elevation-z2" fxFlex 
-            [config]="vm.records">
+            [config]="{data: vm.records}">
         </app-timesheet-statistic-table>
     
     </div>
