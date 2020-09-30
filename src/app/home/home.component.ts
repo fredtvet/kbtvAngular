@@ -5,7 +5,7 @@ import { Mission } from 'src/app/core/models';
 import { SyncStore } from 'src/app/core/services/sync';
 import { MainNavService } from 'src/app/layout';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
-import { SorterService } from '../core/services/utility/sorter.service';
+import { _sortByDate } from '../shared-app/helpers/array/sort-by-date.helper';
 import { HomeTopNavComponent } from './home-top-nav.component';
 
 @Component({
@@ -21,18 +21,15 @@ export class HomeComponent {
 
   constructor(
     private syncStore: SyncStore,
-    private mainNavService: MainNavService,
-    private sorterService: SorterService) {
+    private mainNavService: MainNavService) {
      this.configureMainNav();
   }
 
   ngOnInit() {
     this.missionHistory$ = this.syncStore.missions$.pipe(
       filter(x => x != null),
-      map(x => {
-        this.sorterService.sortByDate(x, "lastVisited", "desc");
-        return x.slice(0,4);
-    }))
+      map(x => _sortByDate(x, "lastVisited", "desc").slice(0,4))
+    )
   }
   
   private configureMainNav(){
