@@ -102,7 +102,8 @@ export class StateHttpCommandHandler extends ObservableStore<State>
           this.notificationService.notify({ 
             title: customTitle || "Følgefeil!",  
             details: errorMessages,
-            type: NotificationType.Error
+            type: NotificationType.Error,
+            duration: errorMessages.length * 2500
           });
     
         return EMPTY;
