@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppNotification } from 'src/app/core/services/notification/app-notification.interface';
 import { NotificationComponent } from 'src/app/shared-app/components/notification.component';
-import { NotificationDuration } from './notification-duration.enum';
 import { NotificationType } from './notification-type.enum';
 
 @Injectable({
@@ -28,13 +27,13 @@ export class NotificationService {
 
     switch(input?.type){
       case NotificationType.Success:
-        this.openSnackBar(input.title, input.details, 'check_circle', input.duration ?? NotificationDuration.Short, 'notification-success');
+        this.openSnackBar(input.title, input.details, 'check_circle', input.duration || 2000, 'notification-success');
         break;
       case NotificationType.Error:
-        this.openSnackBar(input.title, input.details, 'error', input.duration ?? NotificationDuration.Long, 'notification-error');
+        this.openSnackBar(input.title, input.details, 'error', input.duration || 5000, 'notification-error');
         break;
       case NotificationType.Warning:
-        this.openSnackBar(input.title, input.details, 'warning', input.duration ?? NotificationDuration.Medium, 'notification-warn');
+        this.openSnackBar(input.title, input.details, 'warning', input.duration || 3500, 'notification-warn');
         break;
     }
   }
