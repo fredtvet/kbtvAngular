@@ -3,6 +3,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { filter, map, take, tap, withLatestFrom } from 'rxjs/operators';
 import { ApiUrl } from 'src/app/core/api-url.enum';
 import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-response.interface';
+import { GroupedResponse } from 'src/app/core/filter/interfaces/grouped-response.interface';
 import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from 'src/app/core/model/state-helpers/get-with-relations.config';
 import { Mission, Timesheet, User } from 'src/app/core/models';
@@ -19,6 +20,9 @@ import { TimesheetCriteria } from '../interfaces/timesheet-criteria.interface';
 import { TimesheetSummary } from '../interfaces/timesheet-summary.interface';
 import { BaseTimesheetStoreSettings } from './base-timesheet-store-settings.interface';
 import { BaseTimesheetStoreState } from './base-timesheet-store-state';
+
+export type FilteredAndGroupedSummaries = 
+  GroupedResponse<GroupByPeriod, TimesheetSummary> & FilteredResponse<TimesheetCriteria, TimesheetSummary>
 
 export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetStoreState>> extends BaseModelStore<TState>{
     
@@ -43,7 +47,7 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
             }),       
         );
 
-    timesheetSummaries$: Observable<TimesheetSummary[]> = 
+    timesheetSummaries$: Observable<FilteredAndGroupedSummaries> = 
         combineLatest([
             this.filteredTimesheets$, 
             this.groupBy$,
@@ -51,8 +55,13 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
         ]).pipe(
             filter(([filtered]) => filtered != null && filtered.records != null),
             map(([filtered, groupBy, users]) => {
-                let summaries = this.timesheetSummaryAggregator.groupByType(groupBy, filtered.records);
-                return this.addFullNameToSummaries(summaries, users);
+                const summaries = this.timesheetSummaryAggregator.groupByType(groupBy, filtered.records);
+                return {
+                  groupBy, 
+                  activeCriteriaCount: filtered.activeCriteriaCount,
+                  criteria: filtered.criteria,
+                  records: this.addFullNameToSummaries(summaries, users),
+                }
             })
         );
 

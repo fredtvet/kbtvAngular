@@ -1,7 +1,12 @@
+<app-main-top-nav  *ngIf="vm$ | async; let vm" 
+  [config]="vm.navConfig">
 
- <app-mission-list-view *ngIf="filteredMissions$ | async; let filteredMissions"
-  [missions]="filteredMissions?.records" 
-  (search)="searchMissions($event)">
-</app-mission-list-view>
+  <app-mission-list-view 
+    [missions]="vm.content" 
+    (search)="searchMissions($event)">
+  </app-mission-list-view>
+
+</app-main-top-nav>
+
 
 <router-outlet></router-outlet>

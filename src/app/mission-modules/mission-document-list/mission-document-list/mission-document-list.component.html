@@ -1,11 +1,12 @@
-<app-selectable-list #documentList  
-    *ngIf="documentsWithType$ | async; let documents" identifier="id"
-    [totalRows]="(isXs$ | async) ? 2 : 4"
-    [entities]="documents" 
-    [itemTemplate]="documentTemplate"
-    (selectionChanged)="onSelectionChange($event)"
-    (itemClicked)="downloadDocument($event)">
-</app-selectable-list>
+<app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig">
+    <app-selectable-list #documentList *ngIf="vm.content.documents" identifier="id"
+        [totalRows]="vm.content.isXs ? 2 : 4"
+        [entities]="vm.content.documents" 
+        [itemTemplate]="documentTemplate"
+        (selectionChanged)="onSelectionChange($event)"
+        (itemClicked)="downloadDocument($event)">
+    </app-selectable-list>
+</app-main-top-nav>
 
 <ng-template #documentTemplate let-entity>
     <div class="bg-foreground text-center mat-elevation-z2 p-2 pt-6 pb-6 m-1 fadeIn">

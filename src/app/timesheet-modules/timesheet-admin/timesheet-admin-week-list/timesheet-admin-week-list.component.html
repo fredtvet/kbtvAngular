@@ -1,20 +1,22 @@
-<div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="summaries$ | async else loading; let summaries">
+<app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig">
+    <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="vm.content else loading">
     
-    <ng-container *ngIf="summaries?.length == 0" [ngTemplateOutlet]="noContent"></ng-container>
-
-    <cdk-virtual-scroll-viewport itemSize="82" maxBufferPx="800" minBufferPx="800" fxFlex>
-        <app-swipe-card *cdkVirtualFor="let summary of summaries; trackBy: trackByWeek; templateCacheSize:0"
-            [navButton]="{callback: selectWeek, params: summary.week}" [swipeEnabled]="summary.openHours > 0"
-            [swipeButton]="{
-                        callback: changeTimesheetStatuses, 
-                        params: [summary.timesheets], 
-                        icon: summary.openHours > 0 ? 'lock_open' : 'lock', 
-                        colorClass: summary.openHours > 0 ? 'bg-warn' : 'bg-success'}">
-            <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
-        </app-swipe-card>
-    </cdk-virtual-scroll-viewport>
-  
-</div>
+        <ng-container *ngIf="vm.content?.length == 0" [ngTemplateOutlet]="noContent"></ng-container>
+    
+        <cdk-virtual-scroll-viewport itemSize="82" maxBufferPx="800" minBufferPx="800" fxFlex>
+            <app-swipe-card *cdkVirtualFor="let summary of vm.content; trackBy: trackByWeek; templateCacheSize:0"
+                [navButton]="{callback: selectWeek, params: summary.week}" [swipeEnabled]="summary.openHours > 0"
+                [swipeButton]="{
+                            callback: changeTimesheetStatuses, 
+                            params: [summary.timesheets], 
+                            icon: summary.openHours > 0 ? 'lock_open' : 'lock', 
+                            colorClass: summary.openHours > 0 ? 'bg-warn' : 'bg-success'}">
+                <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
+            </app-swipe-card>
+        </cdk-virtual-scroll-viewport>
+      
+    </div>
+</app-main-top-nav>
 
 <ng-template #noContent>
     <div class="w-100 text-center mt-2 mat-h3">Fant ingen timer!</div>

@@ -1,17 +1,21 @@
-import { Directive, ViewChild } from '@angular/core';
-import { MainNavService } from 'src/app/layout';
+import { Directive, OnInit, ViewChild } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { SelectableListComponent } from '../selectable-list/selectable-list.component';
 
 @Directive()
-export abstract class SelectableListContainerComponent {
+export abstract class SelectableListContainerComponent implements OnInit {
     @ViewChild('selectableList') selectableList: SelectableListComponent;
+
+    private currentFabsSubject = new BehaviorSubject(null);
+    currentFabs$: Observable<AppButton[]> = this.currentFabsSubject.asObservable();
 
     protected staticFabs: AppButton[];
     protected selectedItemsFabs: AppButton[];
+
     protected currentSelections: string[] = [];
 
-    constructor(protected mainNavService: MainNavService) {}
+    ngOnInit() { this.currentFabsSubject.next(this.staticFabs) }
 
     onSelectionChange(selections: string[]): void{
         if(!selections) return;
@@ -20,15 +24,12 @@ export abstract class SelectableListContainerComponent {
     }
 
     private updateFabs(){
-        let fabs = this.mainNavService.currentFabs;
-        let totalFabCount = this.staticFabs.length + this.selectedItemsFabs.length;
+        let fabs = this.staticFabs;
 
-        if(this.currentSelections.length === 0 && fabs.length === totalFabCount) //If no selections remove fabs if existing
-        this.mainNavService.removeFabsByCallback(this.selectedItemsFabs.map(x => x.callback))
-        else if (this.currentSelections.length > 0 && fabs.length === this.staticFabs.length)
-        this.mainNavService.updateConfig(
-            {fabs: this.mainNavService.getFabs().concat(this.selectedItemsFabs)}
-        );
+        if(this.currentSelections.length > 0) 
+            fabs = [...this.staticFabs, ...this.selectedItemsFabs]
+
+        this.currentFabsSubject.next(fabs);
     }
 
 }

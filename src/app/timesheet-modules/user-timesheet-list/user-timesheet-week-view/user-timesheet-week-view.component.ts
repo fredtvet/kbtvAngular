@@ -2,10 +2,8 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from 'rxjs';
-import { map, tap } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
-import { MainNavService } from 'src/app/layout';
-import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
 import { _getDateOfWeek } from 'src/app/shared-app/helpers/datetime/get-date-of-week.helper';
 import { _getWeekOfYear } from 'src/app/shared-app/helpers/datetime/get-week-of-year.helper';
 import { _getWeekRange } from 'src/app/shared-app/helpers/datetime/get-week-range.helper';
@@ -13,8 +11,8 @@ import { _getWeeksInYear } from 'src/app/shared-app/helpers/datetime/get-weeks-i
 import { _mapObjectsToWeekdays } from 'src/app/shared-app/helpers/object/map-objects-to-weekdays.helper';
 import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
-import { MainTopNavComponent } from 'src/app/shared/components';
 import { GroupByPeriod } from 'src/app/shared/enums';
+import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
 import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetForm } from '../../user-timesheet-form/user-timesheet-form-view/timesheet-form.interface';
 import { UserTimesheetCardDialogWrapperComponent } from '../user-timesheet-card-dialog-wrapper.component';
@@ -25,7 +23,7 @@ import { UserTimesheetListStore } from '../user-timesheet-list.store';
   templateUrl: "./user-timesheet-week-view.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
+export class UserTimesheetWeekViewComponent {
 
   currentWeekNr: number = _getWeekOfYear();
   currentYear: number = new Date().getFullYear();
@@ -34,19 +32,20 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
 
   isXs$ = this.deviceInfoService.isXs$;
 
-  summaries$: Observable<{ [key: number]: TimesheetSummary }> = this.store.timesheetSummaries$.pipe(
-    tap(x => this.configureMainNav()),
-    map(x => _mapObjectsToWeekdays(x, "date")),
+  vm$: Observable<ViewModel<{ [key: number]: TimesheetSummary }>> = this.store.timesheetSummaries$.pipe(
+    map(x => { return {
+      navConfig: this.getNavConfig(),
+      content: _mapObjectsToWeekdays(x, "date")
+    }}),
   );
 
   constructor(
-    private mainNavService: MainNavService,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private deviceInfoService: DeviceInfoService,
     private store: UserTimesheetListStore,
-  ) { super(); }
+  ) { }
 
   ngOnInit() {
     this.store.addGroupBy(GroupByPeriod.Day) 
@@ -103,15 +102,12 @@ export class UserTimesheetWeekViewComponent extends SubscriptionComponent {
   private goToWeekList = () => 
     this.router.navigate(['mine-timer/ukeliste', {initialFilter: JSON.stringify({year: this.weekCriteria?.year})}])
 
-  private configureMainNav(){
-    this.mainNavService.addConfig({
-      topNavComponent: MainTopNavComponent, 
-      topNavConfig: {
-        title:  "Uke " + this.weekCriteria?.weekNr || "",
-        subTitle: this.weekCriteria?.year?.toString() || "",
-        backFn: this.goToWeekList,
-        buttons: [{icon: "list", callback: this.goToTimesheetList}]
-      }
-    });
+  private getNavConfig(){
+    return {
+      title:  "Uke " + this.weekCriteria?.weekNr || "",
+      subTitle: this.weekCriteria?.year?.toString() || "",
+      backFn: this.goToWeekList,
+      buttons: [{icon: "list", callback: this.goToTimesheetList}]
+    }
   }
 }

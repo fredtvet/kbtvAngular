@@ -1,22 +1,24 @@
-<div fxLayout="column" fxLayoutGap="8px" class="h-100 p-2">
+<app-main-top-nav [config]="navConfig">
+    <div fxLayout="column" fxLayoutGap="8px" class="h-100 p-2" *ngIf="vm$ | async; let vm">
 
-    <span fxLayout="row" fxLayoutAlign="space-between center" class="fadeInLeft">  
-        <mat-button-toggle-group aria-label="Grupper etter tidsperiode" [ngModel]="groupBy$ | async"
-            (ngModelChange)="changeGroupingType($event)">
-            <mat-button-toggle [value]="groupByTypes.Day">Dag</mat-button-toggle>
-            <mat-button-toggle [value]="groupByTypes.Week">Uke</mat-button-toggle>
-            <mat-button-toggle [value]="groupByTypes.Month">Måned</mat-button-toggle>
-            <mat-button-toggle [value]="groupByTypes.Year">År</mat-button-toggle>
-        </mat-button-toggle-group>  
-
-        <button mat-raised-button class="bg-accent" (click)="openBottomSheet()"
-        [matBadge]="activeCriteriaCount$ | async" matBadgeSize="small">
-            <mat-icon>filter_list</mat-icon>
-        </button>  
-    </span>
-
-    <app-timesheet-statistic-table #statTable class="mat-elevation-z2" fxFlex 
-        [config]="tableData$ | async">
-    </app-timesheet-statistic-table>
-
-</div>
+        <span fxLayout="row" fxLayoutAlign="space-between center" class="fadeInLeft">  
+            <mat-button-toggle-group aria-label="Grupper etter tidsperiode" [ngModel]="vm.groupBy"
+                (ngModelChange)="changeGroupingType($event)">
+                <mat-button-toggle [value]="groupByTypes.Day">Dag</mat-button-toggle>
+                <mat-button-toggle [value]="groupByTypes.Week">Uke</mat-button-toggle>
+                <mat-button-toggle [value]="groupByTypes.Month">Måned</mat-button-toggle>
+                <mat-button-toggle [value]="groupByTypes.Year">År</mat-button-toggle>
+            </mat-button-toggle-group>  
+    
+            <button mat-raised-button class="bg-accent" (click)="openBottomSheet()"
+            [matBadge]="vm.activeCriteriaCount | async" matBadgeSize="small">
+                <mat-icon>filter_list</mat-icon>
+            </button>  
+        </span>
+    
+        <app-timesheet-statistic-table #statTable class="mat-elevation-z2" fxFlex 
+            [config]="vm.records">
+        </app-timesheet-statistic-table>
+    
+    </div>
+</app-main-top-nav>

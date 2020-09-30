@@ -7,14 +7,15 @@ import { AngularMaterialModule } from './angular-material.module';
 import {
   BottomSheetMenuComponent,
   ConfirmDialogComponent,
-  DetailTopNavComponent,
   FormActionsComponent,
   MailToFormViewComponent,
-  MainTopNavComponent,
   SelectableCardComponent,
   SelectableListComponent,
   SimpleTopNavComponent
 } from './components';
+import { DetailTopNavBarComponent } from './components/main-top-nav/detail-top-nav-bar/detail-top-nav-bar.component';
+import { MainTopNavBarComponent } from './components/main-top-nav/main-top-nav-bar/main-top-nav-bar.component';
+import { MainTopNavComponent } from './components/main-top-nav/main-top-nav.component';
 import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButtonsPipe, IsTodayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
@@ -25,12 +26,13 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     MailToFormViewComponent,
     SelectableCardComponent,
     SimpleTopNavComponent,
-    MainTopNavComponent,
-    DetailTopNavComponent,
     SelectableListComponent,
     BottomSheetMenuComponent,
     FormActionsComponent,
-    
+    MainTopNavComponent,
+    MainTopNavBarComponent,
+    DetailTopNavBarComponent,
+
     TransformButtonPipe,
     ArraySlicePipe,
     TranslatePipe,
@@ -63,14 +65,13 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
 
     ConfirmDialogComponent,
     SimpleTopNavComponent,
-    MainTopNavComponent,
-    DetailTopNavComponent,
     MailToFormViewComponent,
     SelectableCardComponent,
     BottomSheetMenuComponent,
     SelectableListComponent,
     FormActionsComponent,
-    
+    MainTopNavComponent,
+
     TransformButtonPipe,
     ArraySlicePipe,
     TranslatePipe,

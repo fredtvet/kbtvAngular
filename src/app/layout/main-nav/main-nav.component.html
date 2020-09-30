@@ -14,23 +14,12 @@
 
   <mat-sidenav-content fxLayout="column" style="overflow-x:hidden;" class="h-100 bg-primary-light">
 
-    <app-main-top-nav-wrapper [config]="config" (toggleDrawer)="toggleDrawer()">
-    </app-main-top-nav-wrapper>
-
     <!-- h-100 for iOS Safari fix -->
-    <div fxFlex style="overflow-y:auto;overflow-x:hidden;position:relative" [@routeAnimation]="prepareRoute(outlet)">
+    <div fxFlex style="overflow:hidden;" [@routeAnimation]="prepareRoute(outlet)">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
 
-    <div style="position:absolute;right:0;" class="m-2" *ngIf="config.fabs && config.fabs.length > 0"
-      fxLayout="column" fxLayoutGap="4px"
-      [style.bottom.px]="bottomNav.element.nativeElement.offsetHeight">  
-      <app-button class="fadeInRight" 
-        *ngFor="let fab of config.fabs | transformButtons : ButtonTypes.Fab | reverseArray; trackBy: trackByFab" 
-        [config]="fab"></app-button>
-    </div>
-
-    <app-main-bottom-nav #bottomNav fxHide fxShow.xs class="flex-nav"></app-main-bottom-nav>
+    <app-main-bottom-nav #bottomNav fxHide.gt-xs class="flex-nav"></app-main-bottom-nav>
 
   </mat-sidenav-content>
 

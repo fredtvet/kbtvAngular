@@ -1,11 +1,10 @@
-import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import { Injectable } from "@angular/core";
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { SelectableEntity } from 'src/app/shared/interfaces';
 
 @Injectable()
-export class SelectableListPresenter<T> extends SubscriptionComponent{
+export class SelectableListPresenter<T> {
 
     private selectedIdsSubject = new BehaviorSubject<any[]>([]);
     selectedIds$ = this.selectedIdsSubject.asObservable();
@@ -19,7 +18,7 @@ export class SelectableListPresenter<T> extends SubscriptionComponent{
 
     private identifier:string; 
 
-    constructor(){super();}
+    constructor(){}
     
     get entities(){
         return [...this.entitiesSubject.value]

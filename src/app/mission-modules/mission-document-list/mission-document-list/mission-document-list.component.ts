@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { MissionDocument } from 'src/app/core/models';
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { DownloaderService } from 'src/app/core/services/downloader.service';
@@ -10,11 +10,12 @@ import { AppNotifications } from 'src/app/core/services/notification/app.notific
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { MainNavService } from 'src/app/layout';
 import { Roles } from 'src/app/shared-app/enums';
-import { MainTopNavComponent } from 'src/app/shared/components';
 import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
 import { _appFileUrl } from 'src/app/shared-app/helpers/app-file-url.helper';
 import { MailDocumentFormComponent } from '../mail-document-form.component';
 import { MissionDocumentListStore } from '../mission-document-list.store';
+import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mission-document-list',
@@ -23,13 +24,20 @@ import { MissionDocumentListStore } from '../mission-document-list.store';
 })
 export class MissionDocumentListComponent extends SelectableListContainerComponent {
 
-  documentsWithType$: Observable<MissionDocument[]> = this.store.getByMissionIdWithType$(this.missionId);
-  isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
-
+  vm$: Observable<ViewModel<{documents: MissionDocument[], isXs: boolean}>> = combineLatest([
+    this.store.getByMissionIdWithType$(this.missionId),
+    this.deviceInfoService.isXs$,
+    this.currentFabs$
+  ]).pipe(
+    map(([documents, isXs, fabs]) => { return { 
+      content: {documents, isXs},
+      navConfig: {title:  "Dokumenter", backFn: this.onBack, fabs}
+    }})
+  )
+  
   get missionId() { return this.route.snapshot.paramMap.get('id') }
 
   constructor( 
-    mainNavService: MainNavService,
     private deviceInfoService: DeviceInfoService,     
     private formService: FormService, 
     private downloaderService: DownloaderService,
@@ -38,17 +46,17 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     private router: Router,
     private notificationService: NotificationService,
     private confirmService: ConfirmDialogService,) {
-      super(mainNavService);
+      super();
+
       this.staticFabs = [
         {icon: "note_add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openDocumentForm, allowedRoles: [Roles.Leder]}
       ];
+
       this.selectedItemsFabs = [
         {icon: "send", aria: 'Send', colorClass: 'bg-accent', callback: this.openMailDocumentSheet, allowedRoles: [Roles.Leder]}, 
         {icon: "delete_forever", aria: 'Slett', colorClass: 'bg-warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
       ]
     }
- 
-  ngOnInit() { this.configureMainNav() }
 
   downloadDocument = (document: MissionDocument) => 
     this.downloaderService.downloadUrl(_appFileUrl(document.fileName, "documents"));
@@ -82,17 +90,7 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     ], {relativeTo: this.route});
   }
 
-  private onBack = () => this.router.navigate(['/oppdrag', this.missionId, 'detaljer']);
-
-  private configureMainNav(){
-    this.mainNavService.addConfig({
-      fabs: this.staticFabs,
-      topNavComponent: MainTopNavComponent, 
-      topNavConfig: {
-        title:  "Dokumenter", 
-        backFn: this.onBack
-      }
-    });
-  }
+  private onBack = () => 
+   this.router.navigate(['/oppdrag', this.missionId, 'detaljer']);
 
 }

@@ -1,17 +1,18 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
-import { pluck, tap } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
+import { FilteredResponse } from 'src/app/core/filter/interfaces/filtered-response.interface';
 import { Timesheet } from "src/app/core/models";
 import { FilterSheetService } from 'src/app/core/services/filter';
-import { MainNavService } from 'src/app/layout/main-nav.service';
 import { DateRangePresets } from 'src/app/shared-app/enums';
+import { AppButton } from 'src/app/shared-app/interfaces';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view.component';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
-import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
-import { MainTopNavComponent } from 'src/app/shared/components';
+import { MainTopNavConfig } from 'src/app/shared/interfaces';
+import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
 import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetForm } from '../../user-timesheet-form/user-timesheet-form-view/timesheet-form.interface';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
@@ -23,11 +24,14 @@ import { UserTimesheetListStore } from '../user-timesheet-list.store';
 })
 export class UserTimesheetListComponent implements OnInit {
 
-  timesheets$: Observable<Timesheet[]> = 
-    this.store.filteredTimesheets$.pipe(tap(x => this.configureMainNav(x.criteria)), pluck("records"));
+  vm$: Observable<ViewModel<Timesheet[]>> = this.store.filteredTimesheets$.pipe(
+    map(x => { return {
+      navConfig: this.getTopNavConfig(x),
+      content: x.records,
+    }})
+  );
 
   constructor(
-    private mainNavService: MainNavService,
     private route: ActivatedRoute,
     private router: Router,
     private filterService: FilterSheetService,
@@ -66,27 +70,20 @@ export class UserTimesheetListComponent implements OnInit {
     else this.router.navigate(["/hjem"]);
   }
 
-  private configureMainNav = (criteria: TimesheetCriteria) => {
-    const activeCount = new TimesheetFilter(criteria).activeCriteriaCount;
-
-    this.mainNavService.addConfig({
-      topNavComponent: MainTopNavComponent,
-      topNavConfig: {
-        title:  "Timeliste", 
-        backFn: this.onBack,
-        buttons: [{
-          icon: 'filter_list', 
-          callback: this.openFilterSheet,
-          colorClass: activeCount ? "color-accent" : ""
-        }]
-      },
+  private getTopNavConfig = (res: FilteredResponse<TimesheetCriteria, Timesheet>): MainTopNavConfig => {
+    return {
+      title:  "Timeliste", 
+      backFn: this.onBack,
       fabs: [
         {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', 
-        callback: this.openTimesheetForm, 
-        params: [null, {mission: criteria?.mission}]}
-      ]
-    });
-    
+          callback: () => this.openTimesheetForm(null, {mission: res?.criteria?.mission})}
+      ],
+      buttons: [{
+        icon: 'filter_list', 
+        callback: this.openFilterSheet,
+        colorClass: (res && res.activeCriteriaCount && res.activeCriteriaCount > 0) ? "color-accent" : ""
+      }]
+    }
   }
 
 }

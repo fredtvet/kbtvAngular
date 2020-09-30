@@ -1,15 +1,15 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
-import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
 import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
 import { NotificationService } from 'src/app/core/services/notification/notification.service';
-import { MainNavService } from 'src/app/layout';
+import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
-import { DetailTopNavComponent } from 'src/app/shared/components';
 import { TimesheetStatus } from 'src/app/shared/enums';
+import { MainTopNavConfig } from 'src/app/shared/interfaces';
+import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
 import { AppFileUrlPipe } from 'src/app/shared/pipes/app-file-url.pipe';
 import { MissionListStore } from '../mission-list.store';
 
@@ -24,12 +24,16 @@ export class MissionDetailsComponent{
   RolePresets = RolePresets;
   Roles = Roles;
 
-  mission$: Observable<Mission> = this.store.getWithRelations$(this.missionId).pipe(tap(x => this.configureMainNav(x)));
+  vm$: Observable<ViewModel<Mission>> = this.store.getWithRelations$(this.missionId).pipe(
+    map(mission => { return {
+      navConfig: this.getNavConfig(mission),
+      content: mission
+    }})
+  );
 
   get missionId() { return this.route.snapshot.paramMap.get('id') }
 
   constructor(
-    private mainNavService: MainNavService,
     private store: MissionListStore,
     private route: ActivatedRoute,
     private router: Router,
@@ -65,18 +69,16 @@ export class MissionDetailsComponent{
     ]);
   }
 
-  private configureMainNav(mission: Mission){
+  private getNavConfig(mission: Mission): MainTopNavConfig {
     const isEmployer = this.store.currentUser?.role === Roles.Oppdragsgiver;
-    this.mainNavService.addConfig({
-      topNavComponent: DetailTopNavComponent, 
-      topNavConfig: {
-        title: mission?.address?.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
+    return {
+        longTitle: mission?.address?.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
         subTitle: (mission?.finished ? 'Oppdrag ferdig! ' : '') + 'ID: ' + mission?.id,
         subIcon: mission?.finished ? 'check' : '',
         imgSrc: this.appFileUrl.transform(mission, "missionheader"),
         backFn: this.onBack,
         buttons: isEmployer ? null : [{icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission]}]
-    }});
+    }
   }
 
   private onBack = () => this.router.navigate(['/oppdrag'])

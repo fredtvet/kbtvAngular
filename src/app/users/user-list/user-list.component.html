@@ -1,4 +1,6 @@
-<div class="p-2 max-width" *ngIf="users$ | async else loading; let users; let index = index">
+<app-main-top-nav [config]="navConfig">
+
+  <div class="p-2 max-width" *ngIf="users$ | async else loading; let users; let index = index">
 
     <app-user-card *ngFor="let user of users" 
       [user]="user"
@@ -16,8 +18,43 @@
         type: ButtonTypes.Icon
       }">
     </app-user-card>
+    <app-user-card *ngFor="let user of users" 
+      [user]="user"
+      [editButton]="{
+        icon: 'edit', 
+        allowedRoles: [Roles.Leder], 
+        callback: openUserForm, params: [user.userName],
+        type: ButtonTypes.Icon
+      }"
+      [newPasswordButton]="{
+        icon: 'vpn_key', 
+        colorClass: 'color-accent',
+        allowedRoles: [Roles.Leder], 
+        callback: openNewPasswordForm, params: [user.userName],
+        type: ButtonTypes.Icon
+      }">
+    </app-user-card>
+    <app-user-card *ngFor="let user of users" 
+    [user]="user"
+    [editButton]="{
+      icon: 'edit', 
+      allowedRoles: [Roles.Leder], 
+      callback: openUserForm, params: [user.userName],
+      type: ButtonTypes.Icon
+    }"
+    [newPasswordButton]="{
+      icon: 'vpn_key', 
+      colorClass: 'color-accent',
+      allowedRoles: [Roles.Leder], 
+      callback: openNewPasswordForm, params: [user.userName],
+      type: ButtonTypes.Icon
+    }">
+  </app-user-card>
+  </div>
+  
+</app-main-top-nav>
 
-</div>
+
 
 <ng-template #loading>
   <mat-spinner class="center-spinner" color="accent"></mat-spinner>

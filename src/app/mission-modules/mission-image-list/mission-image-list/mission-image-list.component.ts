@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from "@angular/core";
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { tap } from "rxjs/operators";
+import { combineLatest, Observable } from 'rxjs';
+import { map, tap } from "rxjs/operators";
 import { MissionImage, ModelFile } from 'src/app/core/models';
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { DownloaderService } from 'src/app/core/services/downloader.service';
@@ -13,9 +13,10 @@ import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-me
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { MainNavService } from 'src/app/layout';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
-import { MainTopNavComponent } from 'src/app/shared/components';
-import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
 import { _appFileUrl } from 'src/app/shared-app/helpers/app-file-url.helper';
+import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
+import { MainTopNavConfig } from 'src/app/shared/interfaces';
+import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MailImageFormComponent } from '../mail-image-form.component';
 import { MissionImageListStore } from '../mission-image-list.store';
@@ -29,18 +30,25 @@ import { MissionImageListStore } from '../mission-image-list.store';
 export class MissionImageListComponent extends SelectableListContainerComponent{
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
 
-  images$: Observable<MissionImage[]> = this.store.getByMissionId$(this.missionId).pipe(
-    tap(x => this.images = x)
-  );
+  get missionId() { return this.route.snapshot.paramMap.get('id'); }
+  
+  vm$: Observable<ViewModel<{images: MissionImage[], isXs: boolean}>> = combineLatest([
+    this.store.getByMissionId$(this.missionId),
+    this.deviceInfoService.isXs$,
+    this.currentFabs$
+  ]).pipe(
+    tap(x => this.images = x[0]),
+    map(([images, isXs, fabs]) => { return { 
+      content: {images, isXs}, 
+      navConfig: {...this.navConfig, fabs}
+    }})
+  )
+
+  private navConfig: MainTopNavConfig;
 
   private images: MissionImage[];
 
-  isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
-
-  get missionId() { return this.route.snapshot.paramMap.get('id'); }
-  
   constructor( 
-    mainNavService: MainNavService,
     private downloaderService: DownloaderService,
     private deviceInfoService: DeviceInfoService,
     private menuService: BottomSheetMenuService,
@@ -51,17 +59,22 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
     private route: ActivatedRoute,
     private notificationService: NotificationService,
     private router: Router) {
-      super(mainNavService);
+      super();
+      this.navConfig = {
+        title:  "Bilder",
+        backFn: this.onBack,
+        buttons: [{icon: "more_vert", callback: this.openBottomSheetMenu}],
+      }
+
       this.staticFabs = [
         {icon: "camera_enhance", aria: 'Ta bilde', colorClass: 'bg-accent', callback: this.openImageInput, allowedRoles: RolePresets.Internal}
       ];
+
       this.selectedItemsFabs = [
         {icon: "send", aria: 'Send', colorClass: 'bg-accent', callback: this.openMailImageSheet, allowedRoles: [Roles.Leder]}, 
         {icon: "delete_forever", aria: 'Slett', colorClass: 'bg-warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
       ]
     }
-
-  ngOnInit() { this.configureMainNav(); }
 
   openImageViewer(image: ModelFile, images: ModelFile[]) {
     this.dialog.open(ImageViewerDialogWrapperComponent, {
@@ -113,18 +126,6 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   private downloadImages = (imgs: MissionImage[]) => 
     this.downloaderService.downloadUrls(imgs.map(x => _appFileUrl(x.fileName, "images")));
 
-  private onBack = () => this.router.navigate(['/oppdrag', this.missionId, 'detaljer']);
-
-  private configureMainNav(){
-    this.mainNavService.addConfig({
-      fabs: this.staticFabs,
-      topNavComponent: MainTopNavComponent, 
-      topNavConfig: {
-        title:  "Bilder",
-        backFn: this.onBack,
-        buttons: [{icon: "more_vert", callback: this.openBottomSheetMenu}],
-      }
-    });
-  }
-
+  private onBack = () => this.router.navigate(['/oppdrag', this.missionId, 'detaljer']);  
+ 
 }

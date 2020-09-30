@@ -3,10 +3,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
 import { SyncStore } from 'src/app/core/services/sync';
-import { MainNavService } from 'src/app/layout';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { _sortByDate } from '../shared-app/helpers/array/sort-by-date.helper';
-import { HomeTopNavComponent } from './home-top-nav.component';
 
 @Component({
   selector: 'app-home',
@@ -22,16 +20,6 @@ export class HomeComponent {
     map(x => _sortByDate(x, "lastVisited")?.slice(0,4))
   )
 
-  constructor(
-    private syncStore: SyncStore,
-    private mainNavService: MainNavService) {
-     this.configureMainNav();
-  }
-  
-  private configureMainNav(){
-    this.mainNavService.addConfig({
-      topNavComponent: HomeTopNavComponent, topNavConfig: {}
-    });
-  }
+  constructor(private syncStore: SyncStore) {}
   
 }

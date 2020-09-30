@@ -1,0 +1,25 @@
+<div fxLayout="column" class="h-100" style="position:relative">
+
+    <mat-toolbar class="mat-elevation-z2 bg-primary">
+
+      <button mat-icon-button aria-label="Toggle sidenav" (click)="toggleDrawer()" fxHide.gt-xs>
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+
+      <span class="mr-auto">
+          <span ngClass.xs="ml-1" ngClass.gt-xs="ml-2">Hjem</span>
+      </span>
+      
+      <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>
+
+      <button mat-icon-button (click)="refresh()"><mat-icon>update</mat-icon></button>
+
+    </mat-toolbar>
+
+    <div fxFlex style="overflow-y:auto;">
+      <ng-content>
+
+      </ng-content>
+    </div>
+
+  </div>

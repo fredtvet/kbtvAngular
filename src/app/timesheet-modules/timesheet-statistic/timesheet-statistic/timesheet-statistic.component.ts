@@ -1,16 +1,14 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
+import { Observable } from 'rxjs';
 import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
 import { FilterSheetService } from 'src/app/core/services/filter';
-import { MainNavService } from 'src/app/layout';
-import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
+import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
+import { FilteredAndGroupedSummaries } from 'src/app/shared-timesheet/base-timesheet-store/base-timesheet-store';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view.component';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces/timesheet-criteria.interface';
-import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
-import { MainTopNavComponent } from 'src/app/shared/components';
 import { GroupByPeriod } from 'src/app/shared/enums';
+import { MainTopNavConfig } from 'src/app/shared/interfaces';
 import { TimesheetStatisticStore } from '../timesheet-statistic.store';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
 
@@ -19,26 +17,24 @@ import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/ti
   templateUrl: './timesheet-statistic.component.html',  
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimesheetStatisticComponent extends SubscriptionComponent {
+export class TimesheetStatisticComponent {
   @ViewChild('statTable') statTable: TimesheetStatisticTableComponent;
 
   groupByTypes = GroupByPeriod;
 
-  groupBy$ = this.store.groupBy$;
-  tableData$ = this.store.tableData$;
-  activeCriteriaCount$ = this.store.criteria$.pipe(
-    map(x => new TimesheetFilter(x).activeCriteriaCount)
-  );
+  navConfig: MainTopNavConfig;
+  
+  vm$: Observable<FilteredAndGroupedSummaries> = this.store.timesheetSummaries$;
 
-  constructor(
-    private mainNavService: MainNavService,
+  constructor( 
     private store: TimesheetStatisticStore,
     private menuService: BottomSheetMenuService,
     private filterService: FilterSheetService
-    ) { super(); }
-
-  ngOnInit(): void {
-    this.configureMainNav();
+    ) { 
+    this.navConfig = {
+      title:  "Timestatistikk",
+      buttons: [{icon: "more_vert", callback: this.openBottomSheetMenu}]
+    }
   }
     
   changeGroupingType = (type: GroupByPeriod) => this.store.addGroupBy(type);
@@ -63,15 +59,5 @@ export class TimesheetStatisticComponent extends SubscriptionComponent {
     this.menuService.open([
       {icon: "import_export", text: "Eksporter timer til CSV", callback: this.exportAsCsv}
     ]);
-  }
-
-  private configureMainNav(){
-    this.mainNavService.addConfig({
-      topNavComponent: MainTopNavComponent, 
-      topNavConfig: {
-        title:  "Timestatistikk",
-        buttons: [{icon: "more_vert", callback: this.openBottomSheetMenu}]
-      }
-    });
   }
 }

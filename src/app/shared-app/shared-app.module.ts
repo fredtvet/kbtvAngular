@@ -48,7 +48,7 @@ import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
     RouterModule,
     CommonModule, 
     FlexLayoutModule,
-
+    
     MatSnackBarModule,   
     MatToolbarModule,
     MatSidenavModule,

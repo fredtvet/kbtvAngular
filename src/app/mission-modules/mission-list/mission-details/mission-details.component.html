@@ -1,6 +1,9 @@
 
-    <app-mission-details-view *ngIf="mission$ | async; let mission" [mission]="mission">
-    </app-mission-details-view>
-
+    <app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig">
+        <app-mission-details-view [mission]="vm.content">
+        </app-mission-details-view>
+    </app-main-top-nav>
+  
     <input type="file" style="display:none" #imageInput (change)="updateHeaderImage($event.target.files)">
+    
     <router-outlet></router-outlet>

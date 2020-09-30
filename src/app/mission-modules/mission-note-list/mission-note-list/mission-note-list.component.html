@@ -1,7 +1,9 @@
-<div class="max-width">
-    <app-note-card *ngFor="let note of notes$ | async; trackBy: trackByNote" [note]="note" 
-        (editClicked)="openEditNoteForm($event)">
-    </app-note-card>
-</div>
+<app-main-top-nav [config]="navConfig">
+    <div class="max-width">
+        <app-note-card *ngFor="let note of notes$ | async; trackBy: trackByNote" [note]="note" 
+            (editClicked)="openEditNoteForm($event)">
+        </app-note-card>
+    </div>    
+</app-main-top-nav>
 
 <router-outlet></router-outlet>

@@ -1,12 +1,14 @@
-<div class="p-2">
-    <app-list-card [config]="{startIcon:'update'}" (click)="refresh()">Synkroniser manuelt
-    </app-list-card>
-
-    <app-list-card [config]="{startIcon:'delete_sweep'}" (click)="confirmPurge()">Slett lokal data
-    </app-list-card>
-
-    <div class="app-card mt-1 p-3">
-        <div class="mb-2">Konfigurasjon</div>
-        <app-app-config-form [syncConfig]="syncConfig$ | async" (formSubmitted)="updateSyncConfig($event)"></app-app-config-form>
+<app-main-top-nav [config]="{title:  'Innstillinger', backFn: onBack}">
+    <div class="p-2">
+        <app-list-card [config]="{startIcon:'update'}" (click)="refresh()">Synkroniser manuelt
+        </app-list-card>
+    
+        <app-list-card [config]="{startIcon:'delete_sweep'}" (click)="confirmPurge()">Slett lokal data
+        </app-list-card>
+    
+        <div class="app-card mt-1 p-3">
+            <div class="mb-2">Konfigurasjon</div>
+            <app-app-config-form [syncConfig]="syncConfig$ | async" (formSubmitted)="updateSyncConfig($event)"></app-app-config-form>
+        </div>
     </div>
-</div>
+</app-main-top-nav>

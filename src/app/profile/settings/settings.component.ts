@@ -2,8 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SyncStore, SyncStoreConfig } from 'src/app/core/services/sync';
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
-import { MainNavService } from 'src/app/layout';
-import { MainTopNavComponent } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-settings',
@@ -16,10 +14,9 @@ export class SettingsComponent {
 
   constructor(
     private router: Router,
-    private mainNavService: MainNavService,
     private confirmService: ConfirmDialogService,
     private syncStore: SyncStore
-  ) { this.configureMainNav(); }
+  ) {}
 
   confirmPurge = () => {
     this.confirmService.open({
@@ -38,17 +35,11 @@ export class SettingsComponent {
     this.syncStore.updateSyncConfig(cfg);
   }
 
+  onBack = () => this.router.navigate(['profil']);
+
   private reloadAllData = () => {
     this.syncStore.purgeSyncState();
     this.syncStore.syncAll();
   }  
 
-  private configureMainNav(){
-    this.mainNavService.addConfig({
-      topNavComponent: MainTopNavComponent, 
-      topNavConfig: {title:  "Innstillinger", backFn: this.onBack}
-    });
-  }
-
-  private onBack = () => this.router.navigate(['profil']);
 }

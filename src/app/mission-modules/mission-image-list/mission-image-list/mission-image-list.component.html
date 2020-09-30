@@ -1,11 +1,13 @@
-<app-selectable-list #imageList 
-    *ngIf="images$ | async; let images" identifier="id"
-    [totalRows]="(isXs$ | async) ? 2 : 4"
-    [entities]="images" 
-    [itemTemplate]="imgTemplate"
-    (selectionChanged)="onSelectionChange($event)"
-    (itemClicked)="openImageViewer($event, images)">
-</app-selectable-list>
+<app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig">
+    <app-selectable-list #imageList 
+        *ngIf="vm.content.images" identifier="id"
+        [totalRows]="vm.content.isXs ? 2 : 4"
+        [entities]="vm.content.images" 
+        [itemTemplate]="imgTemplate"
+        (selectionChanged)="onSelectionChange($event)"
+        (itemClicked)="openImageViewer($event, vm.content.images)">
+    </app-selectable-list>
+</app-main-top-nav>
 
 <ng-template #imgTemplate let-entity>
     <img appImageErrorReloader class="entity-card fadeIn"  alt="oppdragsbilde"
