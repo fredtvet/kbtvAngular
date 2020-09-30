@@ -15,11 +15,13 @@
   <mat-sidenav-content fxLayout="column" style="overflow-x:hidden;" class="h-100 bg-primary-light">
 
     <!-- h-100 for iOS Safari fix -->
-    <div fxFlex style="overflow:hidden;" [@routeAnimation]="prepareRoute(outlet)">
-      <router-outlet #outlet="outlet"></router-outlet>
+    <div fxFlex style="position:relative">
+      <div class="overflow-hidden h-100" [@routeAnimation]="prepareRoute(outlet)">
+        <router-outlet #outlet="outlet"></router-outlet>
+      </div> 
     </div>
 
-    <app-main-bottom-nav #bottomNav fxHide.gt-xs class="flex-nav"></app-main-bottom-nav>
+    <app-main-bottom-nav #bottomNav fxHide.gt-xs></app-main-bottom-nav>
 
   </mat-sidenav-content>
 
