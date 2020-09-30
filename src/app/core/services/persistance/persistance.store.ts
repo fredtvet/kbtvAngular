@@ -76,7 +76,7 @@ export class PersistanceStore extends ObservableStore<Object> {
         }
 
         return forkJoin(propDbObservables).pipe(
-            catchError(error => {console.log(error); return throwError(error)}),
+            catchError(error => { return throwError(error) }),
             tap(state => this.setState(this.mapStateArrToStateObj(state, props), InitializeAction, false))
         )
     }

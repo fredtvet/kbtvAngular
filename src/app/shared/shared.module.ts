@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { AppLayoutModule } from '../layout/app-layout.module';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import {
@@ -12,11 +14,9 @@ import {
   SelectableListComponent,
   SimpleTopNavComponent
 } from './components';
-import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective  } from './directives';
-import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButtonsPipe, IsTodayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
+import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
-import { AppLayoutModule } from '../layout/app-layout.module';
-import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButtonsPipe, IsTodayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,6 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
     DetailTopNavComponent,
     SelectableListComponent,
     BottomSheetMenuComponent,
-    
     TransformButtonPipe,
     ArraySlicePipe,
     TranslatePipe,

@@ -126,7 +126,7 @@ export class StateHttpCommandHandler extends ObservableStore<State>
 
     private getHttpCommandObserver(command: {httpMethod: "POST" | "PUT" | "DELETE", apiUrl: string, httpBody: any}){
       switch(command.httpMethod){
-          case "POST": return this.apiService.post(command.apiUrl, {});
+          case "POST": return this.apiService.post(command.apiUrl, command.httpBody);
           case "PUT": return this.apiService.put(command.apiUrl, command.httpBody);
           case "DELETE": return this.apiService.delete(command.apiUrl);
       }

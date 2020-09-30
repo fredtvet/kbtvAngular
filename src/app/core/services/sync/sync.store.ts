@@ -4,6 +4,7 @@ import { BehaviorSubject, concat, interval, Observable, zip } from 'rxjs';
 import { distinctUntilKeyChanged, filter, first, skip, tap } from 'rxjs/operators';
 import { _addOrUpdateRange } from 'src/app/shared-app/helpers/array/add-or-update-range.helper';
 import { _removeRangeByIdentifier } from 'src/app/shared-app/helpers/array/remove-range-by-identifier.helper';
+import { _getUnixTimeSeconds } from 'src/app/shared-app/helpers/datetime/get-unix-time-seconds.helper';
 import { ModelStateConfig } from '../../model/model-state.config';
 import { ModelState } from '../../model/model.state';
 import { Prop } from '../../model/state.types';
@@ -104,7 +105,7 @@ export class SyncStore extends ObservableStore<StoreState>{
 
   private syncIfTimePassed = (): void => {
     const timestamp = this.getEarliestTimestamp();
-    const timeSinceLastSync = (new Date().getTime() / 1000) - timestamp;
+    const timeSinceLastSync = _getUnixTimeSeconds() - timestamp;
     if(timeSinceLastSync > this.syncConfig?.refreshTime) this.syncAll();             
   }
 
