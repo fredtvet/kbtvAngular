@@ -1,5 +1,5 @@
 
-<div class="container mat-elevation-z3" *ngIf="config">
+<div class="container" *ngIf="config">
     
     <div *ngIf="config.imgSrc" class="img-container text-center mr-auto ml-auto ">
       <img appImageErrorReloader #img [src]="config.imgSrc" (error)="img.src = '/assets/notfound.png?'" alt="Forsidebilde" />

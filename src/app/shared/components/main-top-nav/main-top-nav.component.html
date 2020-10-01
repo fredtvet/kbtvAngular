@@ -1,12 +1,14 @@
 <div fxLayout="column" class="h-100" style="position:relative">
 
-  <app-detail-top-nav-bar *ngIf="config && (config.longTitle || config.imgSrc) else mainTopBar" 
-    [config]="config">
-  </app-detail-top-nav-bar>
+  <span class="mat-elevation-z3" style="z-index:3">
+    <app-detail-top-nav-bar *ngIf="config && (config.longTitle || config.imgSrc) else mainTopBar" 
+      [config]="config">
+    </app-detail-top-nav-bar>
 
-  <ng-template #mainTopBar>
-    <app-main-top-nav-bar [config]="config" stylingClass="bg-primary"></app-main-top-nav-bar>
-  </ng-template>
+    <ng-template #mainTopBar>
+      <app-main-top-nav-bar [config]="config" stylingClass="bg-primary"></app-main-top-nav-bar>
+    </ng-template>
+  </span>
 
   <div fxFlex style="overflow-y:auto;">
     <ng-content>
