@@ -1,5 +1,5 @@
-<mat-toolbar #imageToolBar class="image-toolbar color-accent" fxLayout="row" fxLayoutAlign="space-between center"
-[@showHideToolbar]="toolbarHidden ? 'hide' : 'show'">
+<mat-toolbar class="image-toolbar color-accent" fxLayout="row" fxLayoutAlign="space-between center" 
+    [fxHide]="toolbarHidden">
     <button mat-icon-button aria-label="Lukk" (click)="finished()">
         <mat-icon class="scale-150">chevron_left</mat-icon>
     </button>
@@ -12,7 +12,7 @@
   (swipeleft)="nextImage()" 
   [src]="currentImage | appFileUrl: 'images'" layout-fill/>
 
-<div class="page_counter" [@showHideCounter]="toolbarHidden ? 'hide' : 'show'">
+<div class="page_counter" [fxHide]="toolbarHidden">
   <h5>{{ index + 1 }} / {{ images.length }}</h5>
 </div>
 
