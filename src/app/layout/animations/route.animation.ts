@@ -1,7 +1,7 @@
 import {
-  transition,
-  trigger,
-  useAnimation
+    transition,
+    trigger,
+    useAnimation
 } from '@angular/animations';
 import { slideAnimation } from './slide.animation';
 

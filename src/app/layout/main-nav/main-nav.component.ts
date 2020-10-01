@@ -4,9 +4,9 @@ import { RouterOutlet } from "@angular/router";
 import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
+import { routeAnimation } from '../animations/route.animation';
 import { MainNavConfig } from '../interfaces/main-nav-config.interface';
 import { MainNavService } from '../main-nav.service';
-import { routeAnimation } from '../route.animation';
 
 @Component({
   selector: 'app-main-nav',
