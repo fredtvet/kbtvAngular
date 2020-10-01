@@ -17,7 +17,7 @@
             </button>
         </ng-template>
 
-        <span class="mr-auto" fxLayout="row" fxLayoutAlign="start center">
+        <span class="mr-auto">
             <ng-container *ngIf="config.title">
                 <span *ngIf="!config?.backFn else noLinkTitle" ngClass.xs="ml-1" ngClass.gt-xs="ml-2"
                     [routerLink]="['/hjem']">{{ config?.title || "Hjem" }}</span>
@@ -25,7 +25,7 @@
                 </ng-template>
             </ng-container>
             <mat-icon *ngIf="config?.subIcon" class="scale-75">{{ config.subIcon }}</mat-icon>
-            <span class="mat-caption">{{ config?.subTitle }}</span>
+            <span class="mat-caption ml-1">{{ config?.subTitle }}</span>
         </span>
 
         <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>
