@@ -63,21 +63,22 @@ export class MissionDetailsComponent{
 
   private openBottomSheetMenu = (mission: Mission) => {   
     this.menuService.open([
-      {text: "Registrer timer", icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal},
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission?.id], allowedRoles: [Roles.Leder]},
       {text: `${mission?.fileName ? 'Oppdater' : 'Legg til'} forsidebilde`, icon: "add_photo_alternate", callback: this.openHeaderImageInput, allowedRoles: [Roles.Leder]},
     ]);
   }
 
   private getNavConfig(mission: Mission): MainTopNavConfig {
-    const isEmployer = this.store.currentUser?.role === Roles.Oppdragsgiver;
     return {
         longTitle: mission?.address?.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
-        subTitle: (mission?.finished ? 'Oppdrag ferdig! ' : '') + 'ID: ' + mission?.id,
+        subTitle: mission?.finished ? 'Oppdrag ferdig!' : `ID: ${mission?.id}`,
         subIcon: mission?.finished ? 'check' : '',
         imgSrc: this.appFileUrl.transform(mission, "missionheader"),
         backFn: this.onBack,
-        buttons: isEmployer ? null : [{icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission]}]
+        buttons: [
+          {icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal},
+          {icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission], allowedRoles: RolePresets.Authority},
+        ]
     }
   }
 
