@@ -24,18 +24,3 @@
     }
   }
 }
-
-.mat-tab-group{
-    .mat-tab-header{
-      background-color:$primary;
-      color:white!important;
-      position:sticky!important;
-      width:100%;
-      z-index:2;
-      top:0;
-      overflow:hidden;
-      .mat-tab-label-content{
-        color:white;
-      }
-    }
-}
