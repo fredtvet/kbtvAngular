@@ -1,70 +1,27 @@
 import { Injectable } from '@angular/core';
 import { PreloadingStrategy, Route } from '@angular/router';
-import { EMPTY, from, Observable, timer } from 'rxjs';
-import { first, mergeMap, switchMap } from 'rxjs/operators';
-import { Roles } from 'src/app/shared-app/enums';
+import { EMPTY, Observable, timer } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { AppPages } from 'src/app/shared-app/enums/app-pages.enum';
 import { AuthStore } from './auth/auth.store';
-
-const strategies = new Map([ 
-    [Roles.Oppdragsgiver, 
-      [
-        AppPages.Mission, AppPages.MissionImages, AppPages.MissionDocuments, AppPages.Profile
-      ]
-    ],
-    [Roles.Ansatt, 
-      [
-        AppPages.Mission, AppPages.MissionImages, AppPages.Timesheet, AppPages.TimesheetForm, AppPages.MissionDocuments, 
-        AppPages.MissionNotes, AppPages.Profile,
-      ]
-    ],
-    [Roles.Mellomleder, 
-      [
-        AppPages.Mission, AppPages.MissionImages, AppPages.Timesheet, AppPages.TimesheetForm, AppPages.MissionDocuments, 
-        AppPages.MissionForm, AppPages.MissionNotes, AppPages.Profile
-      ]
-    ],  
-    [Roles.Leder, 
-      [ 
-        AppPages.Mission, AppPages.MissionImages, AppPages.MissionForm, AppPages.Timesheet, AppPages.TimesheetForm, 
-        AppPages.MissionDocuments, AppPages.MissionNotes, AppPages.TimesheetStatistic, AppPages.Users, AppPages.TimesheetAdmin, 
-        AppPages.DataManagement, AppPages.Profile
-      ]
-    ],  
-]);
 
 export interface OnDemandRolePreloadOptions { page: AppPages }
 
 @Injectable({ providedIn: 'root' })
 export class RolePreloadService implements PreloadingStrategy {  
 
-    private preloadedRoutes = {};
-
     constructor(private authStore: AuthStore){ }
 
     preload(route: Route, load: () => Observable<any>): Observable<any> {
-      return this.authStore.currentUser$.pipe(first(x => x != null),
-        switchMap(user => {
-          let routes: OnDemandRolePreloadOptions[] =  [];
-          if(user && strategies.get(user.role as Roles))
-            routes = strategies.get(user.role as Roles).map(page => {return {page}});
-          return from(routes);
-        }), 
-        mergeMap(options => {
-          const shouldPreload = this.preloadCheck(route, options);
-          if(!shouldPreload) return EMPTY;
-          this.preloadedRoutes[route.path] = true;
-          return timer(2000).pipe(switchMap(x => load()))
-        })
-      );
+      const user = this.authStore.getCurrentUser(false);
+      if(!this.preloadCheck(route, user?.role)) return EMPTY;
+      return timer(2000).pipe(switchMap(x => load()))
     }
   
-    private preloadCheck(route: Route, preloadRoleOptions: OnDemandRolePreloadOptions){
+    private preloadCheck(route: Route, role: string){
       return (
-        route.data &&
-        route.data['preload'] && 
-        route.data['page'] == preloadRoleOptions.page &&
-        !this.preloadedRoutes[route.path]
+        route.data && role &&
+        (!route.data['allowedRoles'] || route.data['allowedRoles'].includes(role))
       )
     }
   

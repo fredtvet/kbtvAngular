@@ -1,24 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router } from '@angular/router';
 import { NotificationService, NotificationType } from '../notification';
-import { PersistanceStore } from '../persistance/persistance.store';
 import { AuthStore } from './auth.store';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
+export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(
     private router: Router,
     private authStore: AuthStore,
     private notificaitonService: NotificationService,
   ) {}
-
-  canLoad(route: Route): boolean {
-    return this.authCheck(route.data['allowedRoles']);
-  }
 
   canActivate(route: ActivatedRouteSnapshot): boolean  {
     return this.authCheck(route.data['allowedRoles']);
