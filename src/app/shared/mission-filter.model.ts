@@ -1,7 +1,7 @@
 import { Mission } from '../core/models';
 import { MissionCriteria } from './interfaces';
 import { DataFilter } from '../core/services/filter/data.filter';
-import { Prop } from '../core/model/state.types';
+import { Prop } from '../shared-app/prop.type';
 
 export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
 

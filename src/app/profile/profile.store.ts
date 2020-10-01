@@ -2,9 +2,9 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { User } from "src/app/core/models";
 import { ApiUrl } from '../core/api-url.enum';
-import { ObservableStore } from '../core/observable-store/observable-store';
-import { ObservableStoreBase } from '../core/observable-store/observable-store-base';
-import { StateHttpCommandHandler } from '../core/services/state/state-http-command.handler';
+import { ObservableStore } from '../core/services/state/abstracts/observable-store';
+import { ObservableStoreBase } from '../core/services/state/observable-store-base';
+import { StateHttpCommandHandler } from "../core/services/state/state-http-command.handler";
 import { StoreState } from './store-state';
 
 @Injectable({

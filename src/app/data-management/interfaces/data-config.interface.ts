@@ -1,6 +1,7 @@
-import { ModelState } from 'src/app/core/model/model.state';
-import { Prop } from 'src/app/core/model/state.types';
+
 import { Model } from 'src/app/core/models/base-entity.interface';
+import { ModelState } from 'src/app/core/services/model/interfaces';
+import { Prop } from 'src/app/shared-app/prop.type';
 import { AgGridConfig } from 'src/app/shared/components/abstracts/ag-grid-config.interface';
 
 export interface DataConfig extends AgGridConfig<Model>{

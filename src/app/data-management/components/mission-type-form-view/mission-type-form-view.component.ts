@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { BaseModelFormViewComponent, ModelFormViewConfig } from 'src/app/core/model/form';
-import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { MissionType } from 'src/app/core/models';
+import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
+import { ModelFormViewConfig } from 'src/app/core/services/model/form/interfaces';
+import { SaveModelStateCommand } from 'src/app/core/services/model/interfaces';
 
 type ViewConfig = ModelFormViewConfig<MissionType, MissionType>;
 type Response = SaveModelStateCommand<MissionType>;

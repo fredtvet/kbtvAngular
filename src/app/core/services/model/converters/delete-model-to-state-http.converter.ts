@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ModelToStateHttpConverter } from 'src/app/core/model/model-to-state-http.converter';
-import { DeleteModelStateCommand } from 'src/app/core/model/interfaces';
-import { DeleteModelWithChildrenHelper } from 'src/app/core/model/state-helpers/delete-model-with-children.helper';
-import { StateHttpConverter } from 'src/app/core/state/state-http-converter';
+import { ModelToStateHttpConverter } from 'src/app/core/services/model/model-to-state-http.converter';
+import { Prop } from 'src/app/shared-app/prop.type';
 import { translations } from 'src/app/shared/translations';
-import { Prop } from 'src/app/core/model/state.types';
+import { StateHttpConverter } from '../../state/state-http-converter/state-http-converter.interface';
+import { DeleteModelStateCommand } from '../interfaces/delete-model-state-command.interface';
+import { DeleteModelWithChildrenHelper } from '../state-helpers/delete-model-with-children.helper';
 
 @Injectable({providedIn: 'root'})
 export class DeleteModelToStateHttpConverter<TState, TCommand extends DeleteModelStateCommand>  

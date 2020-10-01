@@ -1,4 +1,5 @@
-import { StateMissions, StateUsers, StateTimesheets } from 'src/app/core/state';
+
+import { StateUsers, StateMissions, StateTimesheets } from 'src/app/core/services/state/interfaces';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
 import { GroupByPeriod } from 'src/app/shared/enums';
 

@@ -1,5 +1,5 @@
-import { ModelState } from 'src/app/core/model/model.state';
-import { StateCurrentUser, StateSyncConfig } from 'src/app/core/state/interfaces/global.state';
+import { ModelState } from '../../model/interfaces/model-state.interface';
+import { StateCurrentUser, StateSyncConfig } from '../../state/interfaces/global-state.interfaces';
 import { SyncStoreConfig } from './sync-store-config.interface';
 import { SyncStoreTimestamps } from './sync-store-timestamps.interface';
 

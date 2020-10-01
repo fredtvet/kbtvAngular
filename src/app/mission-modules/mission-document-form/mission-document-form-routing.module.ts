@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ModelFormEntryComponent } from 'src/app/core/services/model/form/model-form-entry.component';
+import { ModelFormEntryComponent } from 'src/app/core/services/model/form/components/model-form-entry.component';
 import { MissionDocumentFormViewComponent } from './mission-document-form-view/mission-document-form-view.component';
 
 const routes: Routes = [

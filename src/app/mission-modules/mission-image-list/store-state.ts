@@ -1,4 +1,4 @@
-import { StateEmployers, StateMissionImages, StateMissions } from 'src/app/core/state';
+import { StateMissionImages, StateEmployers, StateMissions } from 'src/app/core/services/state/interfaces';
 
 export interface StoreState extends 
     StateMissionImages,

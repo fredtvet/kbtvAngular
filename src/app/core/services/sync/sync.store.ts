@@ -5,13 +5,10 @@ import { distinctUntilKeyChanged, filter, first, skip, tap } from 'rxjs/operator
 import { _addOrUpdateRange } from 'src/app/shared-app/helpers/array/add-or-update-range.helper';
 import { _removeRangeByIdentifier } from 'src/app/shared-app/helpers/array/remove-range-by-identifier.helper';
 import { _getUnixTimeSeconds } from 'src/app/shared-app/helpers/datetime/get-unix-time-seconds.helper';
-import { ModelStateConfig } from '../../model/model-state.config';
-import { ModelState } from '../../model/model.state';
-import { Prop } from '../../model/state.types';
 import { Mission } from '../../models';
 import { User } from '../../models/user.interface';
-import { ObservableStore } from '../../observable-store/observable-store';
-import { ObservableStoreBase } from '../../observable-store/observable-store-base';
+import { ObservableStore } from '../state/abstracts/observable-store';
+import { ObservableStoreBase } from '../state/observable-store-base';
 import { ApiService } from '../api.service';
 import { AuthStoreActions } from '../auth/auth-store-actions.enum';
 import { AuthStore } from '../auth/auth.store';
@@ -22,6 +19,9 @@ import { EntitySyncResponse, SyncResponse } from './interfaces/sync-response.int
 import { SyncStoreConfig } from './interfaces/sync-store-config.interface';
 import { SyncStoreTimestamps } from './interfaces/sync-store-timestamps.interface';
 import { SyncStateConfig } from './sync-state.config';
+import { ModelState } from '../model/interfaces/model-state.interface';
+import { Prop } from 'src/app/shared-app/prop.type';
+import { ModelStateConfig } from '../model/model-state.config';
 
 @Injectable({
   providedIn: 'root'

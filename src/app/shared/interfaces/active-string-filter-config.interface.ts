@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Prop } from 'src/app/core/model/state.types';
+import { Prop } from 'src/app/shared-app/prop.type';
 
 export interface ActiveStringFilterConfig<TRecord>{
     data: TRecord[];

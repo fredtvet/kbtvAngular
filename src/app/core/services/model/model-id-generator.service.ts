@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Model } from '../../models';
 import { IdGeneratorService } from '../id-generator.service';
-import { ModelConfig, ModelStateConfig } from '../../model/model-state.config';
+import { ModelConfig, ModelStateConfig } from './model-state.config';
 
 @Injectable({
   providedIn: 'root'

@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { FilterConfig } from 'src/app/core/filter/interfaces/filter-config.interface';
-import { FilterSheetService } from 'src/app/core/services/filter';
+import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
+import { FilterConfig } from 'src/app/core/services/filter/interfaces';
 import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
 import { FilteredAndGroupedSummaries } from 'src/app/shared-timesheet/base-timesheet-store/base-timesheet-store';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { BaseModelFormViewComponent } from 'src/app/core/model/form';
 import { User } from 'src/app/core/models';
+import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
 import { Roles } from 'src/app/shared-app/enums';
 import { isUniqueValidator } from 'src/app/shared/validators/is-unique.validator';
 import { SaveUserCommand } from './save-user-command.interface';

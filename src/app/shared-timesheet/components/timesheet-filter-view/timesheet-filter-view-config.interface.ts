@@ -1,5 +1,6 @@
-import { FilterViewConfig } from 'src/app/core/filter/interfaces/filter-view-config.interface';
-import { StateMissions, StateUsers } from 'src/app/core/state';
+
+import { FilterViewConfig } from 'src/app/core/services/filter/interfaces';
+import { StateUsers, StateMissions } from 'src/app/core/services/state/interfaces';
 import { TimesheetCriteria } from '../../interfaces/timesheet-criteria.interface';
 
 export interface TimesheetFilterViewConfig extends FilterViewConfig<TimesheetCriteria>{ 

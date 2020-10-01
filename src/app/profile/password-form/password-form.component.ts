@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { FormComponent } from 'src/app/core/services/form/interfaces';
+import { SaveAction } from 'src/app/core/services/state/interfaces';
 import { ProfileStore } from '../profile.store';
-import { SaveAction } from 'src/app/core/state';
-import { FormComponent } from 'src/app/core/form/form-component.interface';
 
 @Component({
   selector: 'app-password-form',

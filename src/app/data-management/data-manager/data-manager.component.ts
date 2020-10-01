@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { GenericModelFormConfig, ModelFormViewConfig, ModelFormWrapperConfig } from 'src/app/core/model/form';
-import { ModelState } from 'src/app/core/model/model.state';
-import { Prop } from 'src/app/core/model/state.types';
 import { Model } from 'src/app/core/models';
-import { ModelFormService } from 'src/app/core/services/model';
+import { GenericModelFormConfig, ModelFormViewConfig, ModelFormWrapperConfig } from 'src/app/core/services/model/form/interfaces';
+import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
+import { ModelState } from 'src/app/core/services/model/interfaces';
+import { StateAction } from 'src/app/core/services/state/state-action.enum';
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
-import { StateAction } from 'src/app/core/state';
+import { Prop } from 'src/app/shared-app/prop.type';
 import { DataManagementStore } from '../data-management.store';
 import { DataConfig } from '../interfaces/data-config.interface';
 import { DataTableComponent } from './data-table/data-table.component';

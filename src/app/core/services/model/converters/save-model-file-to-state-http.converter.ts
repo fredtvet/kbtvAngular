@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { SaveModelWithFileStateCommand } from 'src/app/core/model/interfaces';
-import { ModelFileWrapper } from 'src/app/core/model/model-file.wrapper';
-import { ModifyModelWithForeignsHelper } from 'src/app/core/model/state-helpers/modify-model-with-foreigns.helper';
+import { ModelFileWrapper } from 'src/app/core/services/model/model-file.wrapper';
 import { ModelFile } from 'src/app/core/models';
-import { StateHttpConverter } from 'src/app/core/state/state-http-converter';
 import { ModelIdGeneratorService } from '../model-id-generator.service';
 import { SaveModelToStateHttpConverter } from './save-model-to-state-http.converter';
+import { StateHttpConverter } from '../../state/state-http-converter/state-http-converter.interface';
+import { SaveModelWithFileStateCommand } from '../interfaces/save-model-with-file-state-command.interface';
+import { ModifyModelWithForeignsHelper } from '../state-helpers/modify-model-with-foreigns.helper';
 
 @Injectable({providedIn: 'root'})
 export class SaveModelFileToStateHttpConverter<TState, TCommand extends SaveModelWithFileStateCommand<ModelFile>>  

@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { BaseModelFormViewComponent, ModelFormViewConfig } from 'src/app/core/model/form';
-import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
 import { Employer, Mission, MissionType } from 'src/app/core/models';
+import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
+import { ModelFormViewConfig } from 'src/app/core/services/model/form/interfaces';
+import { SaveModelStateCommand } from 'src/app/core/services/model/interfaces';
 import { _find } from 'src/app/shared-app/helpers/array/find.helper';
 
 type ViewConfig = ModelFormViewConfig<Mission, Mission>;

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormComponent } from 'src/app/core/form/form-component.interface';
-import { StateAction, SaveAction } from 'src/app/core/state';
+import { FormComponent } from 'src/app/core/services/form/interfaces';
+import { SaveAction } from 'src/app/core/services/state/interfaces';
+import { StateAction } from 'src/app/core/services/state/state-action.enum';
 import { MissionImageListStore } from './mission-image-list.store';
 
 @Component({

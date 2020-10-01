@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { InboundEmailPassword } from 'src/app/core/models';
-import { ModelFormViewConfig, BaseModelFormViewComponent } from 'src/app/core/model/form';
-import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
+import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
+import { ModelFormViewConfig } from 'src/app/core/services/model/form/interfaces';
+import { SaveModelStateCommand } from 'src/app/core/services/model/interfaces';
 
 type ViewConfig = ModelFormViewConfig<InboundEmailPassword, InboundEmailPassword>;
 type Response = SaveModelStateCommand<InboundEmailPassword>;

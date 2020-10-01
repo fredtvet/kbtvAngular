@@ -1,5 +1,4 @@
-import { ModelState } from '../../model/model.state';
-import { Prop } from '../../model/state.types';
+import { ModelState } from '../../services/model/interfaces';
 
 export interface RelationIncludeConfig {
     includeAll?: boolean;

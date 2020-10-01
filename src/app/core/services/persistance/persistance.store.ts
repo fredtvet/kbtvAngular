@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { get, set, Store } from 'idb-keyval';
 import { BehaviorSubject, forkJoin, from, Observable, throwError } from 'rxjs';
 import { catchError, filter, first, tap } from 'rxjs/operators';
-import { Prop } from '../../model/state.types';
-import { ObservableStore } from '../../observable-store/observable-store';
-import { ObservableStoreBase } from '../../observable-store/observable-store-base';
-import { ClonerService } from '../../observable-store/utilities/cloner.service';
+import { Prop } from 'src/app/shared-app/prop.type';
+import { ObservableStore } from '../state/abstracts/observable-store';
+import { ObservableStoreBase } from '../state/observable-store-base';
+import { ClonerService } from '../utility/cloner.service';
 import { PersistedInitialStateConfig, PersistedStateConfig } from './persisted-state.config';
 
 const InitializeAction = "initalize_persistedState";
@@ -20,7 +20,7 @@ export class PersistanceStore extends ObservableStore<Object> {
 
     constructor(
         base: ObservableStoreBase,
-        private clonerService: ClonerService,) { 
+        private clonerService: ClonerService) { 
         super(base);
     }
 

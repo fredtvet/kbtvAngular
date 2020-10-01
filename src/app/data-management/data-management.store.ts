@@ -2,18 +2,17 @@ import { Injectable } from "@angular/core";
 import { combineLatest, Observable } from "rxjs";
 import { distinctUntilChanged, filter, map, switchMap } from "rxjs/operators";
 import { Model } from "src/app/core/models";
-import { DeleteModelStateCommand, SaveModelStateCommand } from '../core/model/interfaces';
-import { ModelState } from '../core/model/model.state';
-import { GetWithRelationsConfig } from '../core/model/state-helpers/get-with-relations.config';
-import { Prop } from '../core/model/state.types';
-import { ObservableStoreBase } from '../core/observable-store/observable-store-base';
+import { ObservableStoreBase } from '../core/services/state/observable-store-base';
 import { ApiService } from '../core/services/api.service';
 import { DeleteModelToStateHttpConverter } from '../core/services/model/converters/delete-model-to-state-http.converter';
 import { SaveModelToStateHttpConverter } from '../core/services/model/converters/save-model-to-state-http.converter';
-import { StateHttpCommandHandler } from '../core/services/state/state-http-command.handler';
-import { BaseModelStore } from '../core/state/abstracts/base-model.store';
+import { StateHttpCommandHandler } from "../core/services/state/state-http-command.handler";
 import { DataConfig } from './interfaces/data-config.interface';
 import { StoreState } from './interfaces/store-state';
+import { ModelState, SaveModelStateCommand, DeleteModelStateCommand } from '../core/services/model/interfaces';
+import { GetWithRelationsConfig } from '../core/services/model/state-helpers/get-with-relations.config';
+import { BaseModelStore } from '../core/services/state/abstracts/base-model.store';
+import { Prop } from '../shared-app/prop.type';
 
 @Injectable({
   providedIn: 'any',

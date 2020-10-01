@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ModelToStateHttpConverter } from 'src/app/core/model/model-to-state-http.converter';
-import { SaveModelStateCommand } from 'src/app/core/model/interfaces';
-import { ModifyModelWithForeignsHelper } from 'src/app/core/model/state-helpers/modify-model-with-foreigns.helper';
+import { ModelToStateHttpConverter } from 'src/app/core/services/model/model-to-state-http.converter';
 import { Model } from 'src/app/core/models';
-import { StateAction } from 'src/app/core/state';
-import { StateHttpConverter } from 'src/app/core/state/state-http-converter';
 import { ModelIdGeneratorService } from '../model-id-generator.service';
 import { translations } from 'src/app/shared/translations';
-import { Prop } from 'src/app/core/model/state.types';
-import { ModelStateConfig } from 'src/app/core/model/model-state.config';
 import { _add } from 'src/app/shared-app/helpers/array/add.helper';
 import { _update } from 'src/app/shared-app/helpers/array/update.helper';
 import { _getUnixTimeSeconds } from 'src/app/shared-app/helpers/datetime/get-unix-time-seconds.helper';
+import { Prop } from 'src/app/shared-app/prop.type';
+import { StateAction } from '../../state/state-action.enum';
+import { StateHttpConverter } from '../../state/state-http-converter';
+import { ModelStateConfig } from '../model-state.config';
+import { ModifyModelWithForeignsHelper } from '../state-helpers/modify-model-with-foreigns.helper';
+import { SaveModelStateCommand } from '../interfaces/save-model-state-command.interface';
 
 @Injectable({providedIn: 'root'})
 export class SaveModelToStateHttpConverter<TState, TCommand extends SaveModelStateCommand<Model>> 

@@ -1,4 +1,4 @@
-import { StateUsers, StateEmployers } from 'src/app/core/state';
+import { StateEmployers, StateUsers } from '../core/services/state/interfaces';
 
 export interface StoreState extends 
     StateUsers,

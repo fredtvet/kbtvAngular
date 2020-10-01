@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FilterStore } from 'src/app/core/filter/interfaces/filter-store.interface';
-import { GetRangeWithRelationsHelper } from 'src/app/core/model/state-helpers/get-range-with-relations.helper';
-import { ObservableStoreBase } from 'src/app/core/observable-store/observable-store-base';
+import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { ApiService } from 'src/app/core/services/api.service';
 import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
 import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
@@ -11,6 +9,8 @@ import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/t
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
 import { GroupByPeriod } from 'src/app/shared/enums';
 import { StoreState } from './store-state';
+import { FilterStore } from 'src/app/core/services/filter/interfaces';
+import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-range-with-relations.helper';
 
 const TimesheetStatisticStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
     criteriaProp: "timesheetStatisticCriteria", 

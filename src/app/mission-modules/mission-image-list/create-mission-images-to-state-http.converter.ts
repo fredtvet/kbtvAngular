@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ApiUrl } from 'src/app/core/api-url.enum';
-import { ModelFileWrapper } from 'src/app/core/model/model-file.wrapper';
+import { ModelFileWrapper } from 'src/app/core/services/model/model-file.wrapper';
 import { MissionImage } from 'src/app/core/models';
 import { IdGeneratorService } from 'src/app/core/services/id-generator.service';
-import { StateMissionImages } from 'src/app/core/state';
-import { BaseStateToHttpConverter, StateCommand } from 'src/app/core/state/state-http-converter';
 import { _addOrUpdateRange } from 'src/app/shared-app/helpers/array/add-or-update-range.helper';
+import { StateMissionImages } from 'src/app/core/services/state/interfaces';
+import { StateCommand, BaseStateToHttpConverter } from 'src/app/core/services/state/state-http-converter';
 
 export interface CreateMissionImagesStateCommand extends StateCommand{
     missionId: string;

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { BaseFormViewComponent } from 'src/app/core/form/abstracts/base-form-view-component';
 import { Mission } from 'src/app/core/models';
+import { BaseFormViewComponent } from 'src/app/core/services/form/abstracts/base-form-view-component';
 import { ActiveStringFilterConfig } from 'src/app/shared/interfaces/active-string-filter-config.interface';
 import { MissionCriteria } from 'src/app/shared/interfaces/mission-filter-criteria.interface';
 import { MissionFilterViewConfig } from './mission-filter-view-config.interface';

@@ -1,4 +1,4 @@
-import { Prop } from 'src/app/core/model/state.types';
+import { Prop } from '../../prop.type';
 
 export function _sortByDate<T>(collection: T[], prop: Prop<T>, direction: "asc" | "desc" = "desc"): T[]{
     if(!collection) return;

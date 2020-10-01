@@ -1,7 +1,7 @@
 import { Timesheet } from '../core/models';
+import { DataFilter } from '../core/services/filter/data.filter';
+import { Prop } from '../shared-app/prop.type';
 import { TimesheetCriteria } from './interfaces/timesheet-criteria.interface';
-import { DataFilter } from '../core/services/filter';
-import { Prop } from '../core/model/state.types';
 
 export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ModelFormEntryComponent } from 'src/app/core/services/model/form/model-form-entry.component';
+import { ModelFormEntryComponent } from 'src/app/core/services/model/form/components/model-form-entry.component';
 import { MissionNoteFormViewComponent } from './mission-note-form-view/mission-note-form-view.component';
 
 

@@ -1,4 +1,4 @@
-import { Prop } from 'src/app/core/model/state.types';
+import { Prop } from 'src/app/shared-app/prop.type';
 
 export interface BaseTimesheetStoreSettings<TState> {
     groupByProp: Prop<TState>,

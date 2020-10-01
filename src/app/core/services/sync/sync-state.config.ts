@@ -1,4 +1,4 @@
-import { Prop } from '../../model/state.types';
+import { Prop } from 'src/app/shared-app/prop.type';
 import { StoreState } from './interfaces/store-state';
 
 export const SyncStateConfig = 

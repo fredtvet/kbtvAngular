@@ -1,4 +1,4 @@
-import { Prop } from 'src/app/core/model/state.types';
+import { Prop } from '../../prop.type';
 
 export function _sortByBool<T>(collection: T[], prop: Prop<T>, trueFirst?: boolean): T[]{
     if(!collection) return;

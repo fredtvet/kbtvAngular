@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FilterComponent } from 'src/app/core/filter/interfaces/filter-component.interface';
-import { BaseFormViewComponent } from 'src/app/core/form/abstracts/base-form-view-component';
+import { FilterComponent } from 'src/app/core/services/filter/interfaces/filter-component.interface';
+import { BaseFormViewComponent } from 'src/app/core/services/form/abstracts/base-form-view-component';
 import { WeekCriteria, WeekFilterViewConfig } from './week-filter-view-config.interface';
 
 @Component({

@@ -1,25 +1,25 @@
 import { HttpParams } from "@angular/common/http";
 import { combineLatest, Observable } from "rxjs";
-import { filter, map, take, tap, withLatestFrom } from "rxjs/operators";
+import { map, take, tap, withLatestFrom } from "rxjs/operators";
 import { ApiUrl } from "src/app/core/api-url.enum";
-import { FilteredResponse } from "src/app/core/filter/interfaces/filtered-response.interface";
-import { GroupedResponse } from "src/app/core/filter/interfaces/grouped-response.interface";
-import { GetRangeWithRelationsHelper } from "src/app/core/model/state-helpers/get-range-with-relations.helper";
-import { GetWithRelationsConfig } from "src/app/core/model/state-helpers/get-with-relations.config";
 import { Mission, Timesheet, User } from "src/app/core/models";
-import { ObservableStoreBase } from "src/app/core/observable-store/observable-store-base";
+import { ObservableStoreBase } from "src/app/core/services/state/observable-store-base";
 import { ApiService } from "src/app/core/services/api.service";
 import { TimesheetSummaryAggregator } from "src/app/core/services/utility/timesheet-summary.aggregator";
-import { BaseModelStore } from "src/app/core/state/abstracts/base-model.store";
 import { _addOrUpdateRange } from "src/app/shared-app/helpers/array/add-or-update-range.helper";
 import { _convertArrayToObject } from "src/app/shared-app/helpers/array/convert-array-to-object.helper";
 import { _filter } from "src/app/shared-app/helpers/array/filter.helper";
+import { GroupedResponse } from 'src/app/shared-app/interfaces/grouped-response.interface';
 import { TimesheetFilter } from "src/app/shared-timesheet/timesheet-filter.model";
 import { GroupByPeriod } from "src/app/shared/enums";
 import { TimesheetCriteria } from "../interfaces/timesheet-criteria.interface";
 import { TimesheetSummary } from "../interfaces/timesheet-summary.interface";
 import { BaseTimesheetStoreSettings } from "./base-timesheet-store-settings.interface";
 import { BaseTimesheetStoreState } from "./base-timesheet-store-state";
+import { FilteredResponse } from 'src/app/core/services/filter/interfaces';
+import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-range-with-relations.helper';
+import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helpers/get-with-relations.config';
+import { BaseModelStore } from 'src/app/core/services/state/abstracts/base-model.store';
 
 export type FilteredAndGroupedSummaries = GroupedResponse<GroupByPeriod,TimesheetSummary> &
   FilteredResponse<TimesheetCriteria, TimesheetSummary>;

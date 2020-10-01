@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/core/models';
+import { FormComponent } from 'src/app/core/services/form/interfaces';
+import { SaveAction } from 'src/app/core/services/state/interfaces';
+import { StateAction } from 'src/app/core/services/state/state-action.enum';
 import { ProfileStore } from '../profile.store';
-import { StateAction, SaveAction } from 'src/app/core/state';
-import { FormComponent } from 'src/app/core/form/form-component.interface';
 
 @Component({
   selector: 'app-profile-form',

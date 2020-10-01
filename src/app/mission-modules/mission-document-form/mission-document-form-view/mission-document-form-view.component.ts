@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BaseModelFormViewComponent, ModelFormViewConfig } from 'src/app/core/model/form';
-import { SaveModelWithFileStateCommand } from 'src/app/core/model/interfaces';
 import { AppDocumentType, MissionDocument } from 'src/app/core/models';
+import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
+import { ModelFormViewConfig } from 'src/app/core/services/model/form/interfaces';
+import { SaveModelWithFileStateCommand } from 'src/app/core/services/model/interfaces';
 import { DocumentFileExtensions } from 'src/app/shared/constants/document-file-extensions.const';
 import { fileExtensionValidator } from 'src/app/shared/validators/file-extension.validator';
 import { MissionDocumentFormState } from './mission-document-form-state.interface';
@@ -16,8 +17,6 @@ type Response = SaveModelWithFileStateCommand<MissionDocument>;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionDocumentFormViewComponent extends BaseModelFormViewComponent<MissionDocumentFormState, MissionDocument, ViewConfig, Response> {
-
-
 
   constructor(private _formBuilder: FormBuilder) { super(); }
 
