@@ -1,4 +1,4 @@
-import { RolePresets, Roles } from 'src/app/shared-app/enums';
+import { RolePresets } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces';
 
 export const SideNavNavigations: AppButton[] = [
@@ -21,7 +21,7 @@ export const SideNavNavigations: AppButton[] = [
   {
     icon: "dns",
     text: "Administrering",
-    allowedRoles: [Roles.Leder],
+    allowedRoles: RolePresets.Authority,
     children: [
       {
         icon: "dns",
@@ -43,7 +43,7 @@ export const SideNavNavigations: AppButton[] = [
   {
     icon: "assessment",
     text: "Statistikk",
-    allowedRoles: [Roles.Leder],
+    allowedRoles: RolePresets.Authority,
     children: [
       {
         icon: "assessment",

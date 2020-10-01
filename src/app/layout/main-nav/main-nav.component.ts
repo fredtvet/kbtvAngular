@@ -30,7 +30,7 @@ export class MainNavComponent extends SubscriptionComponent {
 
   prepareRoute(outlet: RouterOutlet) {
     // console.log(outlet && outlet.activatedRouteData && outlet.activatedRouteData['page']);
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['page'];
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['depth'];
   }
 
 }

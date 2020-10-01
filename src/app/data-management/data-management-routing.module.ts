@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { RolePresets } from '../shared-app/enums';
 import { DataManagerComponent } from './data-manager/data-manager.component';
-import { RolePresets, Roles } from '../shared-app/enums';
 
 
 const routes: Routes = [

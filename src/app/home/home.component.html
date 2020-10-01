@@ -2,17 +2,17 @@
   <div class="p-2 max-width" style="position:relative">
 
     <div fxLayout="row" fxLayoutGap="8px">
-      <span class="mat-elevation-z2 bg-foreground route-anim-block text-center p-6" fxFlex="50" matRipple
+      <span class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50" matRipple
         [routerLink]="['/oppdrag']">
         <mat-icon class="scale-150 mb-1">view_list</mat-icon><br />
         <span>Oppdrag</span>
       </span>
-      <span *ifRole="rolePresets.Internal" class="mat-elevation-z2 bg-foreground route-anim-block text-center p-6"
+      <span *ifRole="rolePresets.Internal" class="mat-elevation-z2 bg-foreground text-center p-6"
         fxFlex="50" matRipple [routerLink]="['/mine-timer']">
         <mat-icon class="scale-150 mb-1">timer</mat-icon><br />
         <span>Timer</span>
       </span>
-      <span *ifRole="rolePresets.External" class="mat-elevation-z2 bg-foreground route-anim-block text-center p-6"
+      <span *ifRole="rolePresets.External" class="mat-elevation-z2 bg-foreground text-center p-6"
         fxFlex="50" matRipple [routerLink]="['/profil']">
         <mat-icon class="scale-150">person</mat-icon><br />
         <span>Profil</span>
@@ -20,34 +20,34 @@
     </div>
   
     <ng-container *ifRole="[Roles.Leder]">
-      <span class="mat-body-2 route-anim-block">Administrering</span>
+      <span class="mat-body-2">Administrering</span>
   
       <app-list-card 
-        [config]="{startIcon:'date_range', panelClass:'route-anim-block'}" 
+        [config]="{startIcon:'date_range'}" 
         [routerLink]="['/timeadministrering']">Administrer timer
       </app-list-card>
   
       <app-list-card
-        [config]="{startIcon:'dns', panelClass:'route-anim-block'}" 
+        [config]="{startIcon:'dns'}" 
         [routerLink]="['/data']">Administrer data
       </app-list-card>
   
       <app-list-card
-        [config]="{startIcon:'people', panelClass:'route-anim-block'}" 
+        [config]="{startIcon:'people'}" 
         [routerLink]="['/brukere']">Administrer brukere
       </app-list-card>
   
-      <span class="mat-body-2 route-anim-block">Statistikk</span>
+      <span class="mat-body-2">Statistikk</span>
   
       <app-list-card
-        [config]="{startIcon:'assessment', panelClass:'route-anim-block'}" 
+        [config]="{startIcon:'assessment'}" 
         [routerLink]="['/timestatistikk']">Timestatistikk
       </app-list-card>
     </ng-container>
   
-    <span class="mat-body-2 route-anim-block">Sist besøkte oppdrag</span>
+    <span class="mat-body-2">Sist besøkte oppdrag</span>
     <app-list-card *ngFor="let mission of missionHistory$ | async" 
-      [config]="{startIcon:'history', panelClass:'route-anim-block', endIcon: mission.finished ? 'check':'chevron_right'}" 
+      [config]="{startIcon:'history', endIcon: mission.finished ? 'check':'chevron_right'}" 
       [routerLink]="['/oppdrag', mission.id, 'detaljer']">{{mission.address}}
     </app-list-card>
   
