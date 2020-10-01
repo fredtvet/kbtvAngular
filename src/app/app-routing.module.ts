@@ -39,7 +39,7 @@ const routes: Routes = [
     ],
   },
   
-  {path: 'login', canActivate: [NoAuthGuard], data: {depth: 0}, 
+  {path: 'login', canActivate: [NoAuthGuard], 
     loadChildren: () => import('./login-prompt/login-prompt.module').then(m => m.LoginPromptModule)},   
 
   {path: '**', component: PageNotFoundComponent},

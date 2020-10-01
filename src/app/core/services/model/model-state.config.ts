@@ -29,7 +29,7 @@ export const ModelStateConfigData: {[key in Prop<ModelState>]: ModelConfig} = {
         displayProp: "address",
         foreignProp: "mission",
         foreignKey: "missionId",
-        children: ["missionImages", "missionDocuments", "missionNotes"], 
+        children: ["missionImages", "missionDocuments", "missionNotes", "timesheets"], 
         foreigns: ["missionTypes","employers"],       
     },
     missionTypes: {

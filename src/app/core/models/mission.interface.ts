@@ -4,6 +4,7 @@ import { MissionNote } from './mission-note.interface';
 import { EmployerForeign } from './relationships/employer-foreign.interface';
 import { MissionTypeForeign } from './relationships/mission-type-foreign.interface';
 import { ModelFile } from './base-entity-file.interface';
+import { Timesheet } from './timesheet.interface';
 
 export interface Mission extends ModelFile, EmployerForeign, MissionTypeForeign {
     id?: string;
@@ -15,8 +16,9 @@ export interface Mission extends ModelFile, EmployerForeign, MissionTypeForeign 
     fileName?: string;
 
     lastVisited?: number;
-
+    
     missionImages?: MissionImage[];
     missionDocuments?: MissionDocument[];
     missionNotes?: MissionNote[];
+    timesheets?: Timesheet[];
 };
