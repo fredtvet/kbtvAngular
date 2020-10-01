@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
-import { Roles } from 'src/app/shared-app/enums';
+import { RolePresets } from 'src/app/shared-app/enums';
 
 
 const routes: Routes = [
@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     component: MissionDocumentListComponent,
     children: [
-      {path: 'skjema', data: {allowedRoles: [Roles.Leder]}, 
+      {path: 'skjema', data: {allowedRoles: RolePresets.Authority}, 
       loadChildren: () => import('src/app/mission-modules/mission-document-form/mission-document-form.module').then(m => m.MissionDocumentFormModule)},
     ],
   },

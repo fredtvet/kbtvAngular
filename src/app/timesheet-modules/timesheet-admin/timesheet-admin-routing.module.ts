@@ -1,26 +1,24 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { TimesheetAdminListComponent } from './timesheet-admin-list/timesheet-admin-list.component';
 import { TimesheetAdminUserListComponent } from './timesheet-admin-user-list/timesheet-admin-user-list.component';
-import { AppPages } from 'src/app/shared-app/enums/app-pages.enum';
-import { Roles } from 'src/app/shared-app/enums';
 import { TimesheetAdminWeekListComponent } from './timesheet-admin-week-list/timesheet-admin-week-list.component';
 
 const routes: Routes = [
   {
     path: '',
     component: TimesheetAdminUserListComponent,
-    data: {allowedRoles: [Roles.Leder], page: AppPages.TimesheetAdminUserList}
+    data: {depth: 2},
   },  
   {
     path: 'uker',
     component: TimesheetAdminWeekListComponent,
-    data: {allowedRoles: [Roles.Leder], page: AppPages.TimesheetAdminWeekList}
+    data: {depth: 3},
   },
   {
     path: 'uker/timer',
     component: TimesheetAdminListComponent,
-    data: {allowedRoles: [Roles.Leder], page: AppPages.TimesheetAdminList}
+    data: {depth: 4},
   },
 ];
 

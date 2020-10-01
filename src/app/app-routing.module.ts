@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppPages } from './shared-app/enums/app-pages.enum';
-import { PageNotFoundComponent } from './shared-app/components/page-not-found.component';
 import { AuthGuard, NoAuthGuard } from './core/services/auth';
-import { MainNavComponent } from './layout/main-nav/main-nav.component';
-import { RolePresets } from './shared-app/enums';
-import { HomeComponent } from './home/home.component';
 import { RolePreloadService } from './core/services/role-preload.service';
+import { HomeComponent } from './home/home.component';
+import { MainNavComponent } from './layout/main-nav/main-nav.component';
+import { PageNotFoundComponent } from './shared-app/components/page-not-found.component';
+import { RolePresets } from './shared-app/enums';
 
 const routes: Routes = [
   {
@@ -15,32 +14,33 @@ const routes: Routes = [
       {path: '', redirectTo: 'hjem', pathMatch: 'full'},
 
       {path: 'hjem',     component: HomeComponent,
-       data: {preload: true, page: AppPages.Home}},  
+       data: {depth: 1}},  
 
-      {path: 'profil', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule), 
-        data: {preload: true, page: AppPages.Profile}},
+      {path: 'profil', data: {depth: 2}, 
+        loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)},
 
-      {path: 'mine-timer', loadChildren: () => import('./timesheet-modules/user-timesheet-list/user-timesheet-list.module').then(m => m.UserTimesheetListModule), 
-        data: {preload: true, allowedRoles: RolePresets.Internal, page: AppPages.Timesheet}},
+      {path: 'mine-timer', data: {depth: 2, allowedRoles: RolePresets.Internal}, 
+        loadChildren: () => import('./timesheet-modules/user-timesheet-list/user-timesheet-list.module').then(m => m.UserTimesheetListModule)},
 
       {path: 'oppdrag', loadChildren: () => import('./mission-modules/mission-list/mission-list.module').then(m => m.MissionListModule),
-        data: {preload: true, page: AppPages.Mission}},
+        data: {depth: 1}},
 
-      {path: 'brukere', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), 
-        data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.Users}},
+      {path: 'brukere', data: {depth: 2, allowedRoles: RolePresets.Authority}, 
+        loadChildren: () => import('./users/users.module').then(m => m.UsersModule)},
 
-      {path: 'data', loadChildren: () => import('./data-management/data-management.module').then(m => m.DataManagementModule), 
-        data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.DataManagement}},
+      {path: 'data', data: {depth: 2, allowedRoles: RolePresets.Authority}, 
+        loadChildren: () => import('./data-management/data-management.module').then(m => m.DataManagementModule)},
 
-      {path: 'timeadministrering', loadChildren: () => import('./timesheet-modules/timesheet-admin/timesheet-admin.module').then(m => m.TimesheetAdminModule), 
-        data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.TimesheetAdmin}},
+      {path: 'timeadministrering', data: {depth: 2, allowedRoles: RolePresets.Authority},
+        loadChildren: () => import('./timesheet-modules/timesheet-admin/timesheet-admin.module').then(m => m.TimesheetAdminModule)},
 
-      {path: 'timestatistikk', loadChildren: () => import('./timesheet-modules/timesheet-statistic/timesheet-statistic.module').then(m => m.TimesheetStatisticModule), 
-        data: {preload: true, allowedRoles: RolePresets.Authority, page: AppPages.TimesheetStatistic}},
+      {path: 'timestatistikk', data: {depth: 2, allowedRoles: RolePresets.Authority}, 
+        loadChildren: () => import('./timesheet-modules/timesheet-statistic/timesheet-statistic.module').then(m => m.TimesheetStatisticModule)},
     ],
   },
-  {path: 'login', loadChildren: () => import('./login-prompt/login-prompt.module').then(m => m.LoginPromptModule),
-    canActivate: [NoAuthGuard], data: {preload: true, page: AppPages.Login}},
+  
+  {path: 'login', canActivate: [NoAuthGuard], data: {depth: 0}, 
+    loadChildren: () => import('./login-prompt/login-prompt.module').then(m => m.LoginPromptModule)},   
 
   {path: '**', component: PageNotFoundComponent},
 ];

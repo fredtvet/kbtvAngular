@@ -9,5 +9,6 @@ export const RolePresets = {
   All: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt, Roles.Oppdragsgiver],
   Internal: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt],
   External: [Roles.Oppdragsgiver],
+  Management: [Roles.Mellomleder, Roles.Leder],
   Authority: [Roles.Leder]
 }
