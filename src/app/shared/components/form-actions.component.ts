@@ -3,15 +3,15 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 @Component({
   selector: 'app-form-actions',
   template:`
-  <div fxLayout="row" fxLayoutAlign="start start" class="mt-3">  
-    <button mat-raised-button fxFlex=40 color="accent" 
-    [disabled]="submitDisabled"
-    (click)="submitted.emit()">
-    {{ submitText }}    
-    </button>
+  <div fxLayout="row" fxLayoutAlign="end start" class="mt-3"> 
     <button mat-button fxFlex=35 color="warn" 
       (click)="canceled.emit()">
       Avbryt    
+    </button> 
+    <button mat-raised-button fxFlex=40 color="accent" 
+      [disabled]="submitDisabled"
+      (click)="submitted.emit()">
+      {{ submitText }}    
     </button>
   </div>
   `,

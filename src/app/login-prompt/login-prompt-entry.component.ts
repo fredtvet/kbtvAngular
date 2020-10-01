@@ -1,28 +1,26 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { LoginPromptComponent } from './login-prompt/login-prompt.component';
 
 @Component({
-  template: ``,
+  template: `
+  <div class="h-100" fxLayout="row" fxLayoutAlign="center center">
+    <app-login-prompt [returnUrl]="returnUrl">
+    </app-login-prompt>
+  </div>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class LoginPromptEntryComponent {
 
+  get returnUrl(): string{
+    let url = this.route.snapshot.queryParams['returnUrl']
+    if(url === this.router.url.split('?')[0]) url = undefined;
+    return url;
+  }
+
   constructor(
-    private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router
-    ) { this.openDialog() }
+  ) {}
 
-  openDialog = () => {
-    let returnUrl = this.route.snapshot.queryParams['returnUrl']
-    if(returnUrl === this.router.url.split('?')[0]) returnUrl = undefined;
-    this.dialog.open(LoginPromptComponent, {
-      data: {returnUrl},
-      disableClose: true, 
-      panelClass: 'extended-dialog'
-    });
-  };
 }

@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { AuthStore, Credentials } from 'src/app/core/services/auth';
@@ -11,19 +10,18 @@ import { AuthStore, Credentials } from 'src/app/core/services/auth';
 })
 export class LoginPromptComponent {
 
+  @Input() returnUrl: string;
+
   constructor(    
     private router: Router,
-    private authStore: AuthStore,
-    private dialogRef: MatDialogRef<LoginPromptComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {returnUrl: string}) { }
+    private authStore: AuthStore) { }
 
   authenticate(credentials: Credentials) {
     this.authStore
     .attemptAuth$(credentials).pipe(
       tap(x => {
-        if(this.data.returnUrl) this.router.navigateByUrl(this.data.returnUrl); 
+        if(this.returnUrl) this.router.navigateByUrl(this.returnUrl); 
         else this.router.navigate(["/"])    
-        this.dialogRef.close(true);
       })
     ).subscribe();
   }
