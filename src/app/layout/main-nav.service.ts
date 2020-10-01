@@ -3,6 +3,7 @@ import { combineLatest, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthStore } from '../core/services/auth/auth.store';
 import { DeviceInfoService } from '../core/services/device-info.service';
+import { BottomNavNavigations } from './bottom-nav-navigations';
 import { MainNavConfig } from './interfaces/main-nav-config.interface';
 import { SideNavNavigations } from './side-nav-navigations';
 
@@ -20,7 +21,11 @@ export class MainNavService {
     this.deviceInfoService.isOnline$, 
     ]).pipe(
       map(([isXs, user, isOnline]) => {
-        return {isXs, sideNavConfig: {user, isOnline, navigations: SideNavNavigations}} 
+        return {
+          isXs, 
+          sideNavConfig: {user, isOnline, navigations: SideNavNavigations},
+          bottomNavConfig: {navigations: BottomNavNavigations}
+        } 
       }),
   );
 

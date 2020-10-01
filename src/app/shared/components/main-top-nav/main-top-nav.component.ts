@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ButtonTypes } from 'src/app/shared-app/enums';
-import { TrackByAppButton } from 'src/app/shared-app/track-by-app-button';
+import { AppButton } from 'src/app/shared-app/interfaces/app-button.interface';
+import { TrackByCallback } from 'src/app/shared-app/track-by-callback';
 import { MainTopNavConfig } from './main-top-nav-config.interface';
 
 @Component({
@@ -15,5 +16,5 @@ export class MainTopNavComponent{
 
   @Input() config: MainTopNavConfig;
   
-  trackByFab = TrackByAppButton;
+  trackByFab = (index: number, fab:AppButton) => TrackByCallback(index, fab.callback);
 }

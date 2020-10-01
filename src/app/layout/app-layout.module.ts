@@ -3,12 +3,14 @@ import { MainBottomNavComponent } from './main-nav/main-bottom-nav/main-bottom-n
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { MainSideNavComponent } from './main-nav/main-side-nav/main-side-nav.component';
+import { MainBottomNavButtonComponent } from './main-nav/main-bottom-nav/main-bottom-nav-button.component';
 
 @NgModule({
   declarations: [
     MainNavComponent,
     MainBottomNavComponent,
     MainSideNavComponent,
+    MainBottomNavButtonComponent,
   ],
   imports: [
     SharedAppModule

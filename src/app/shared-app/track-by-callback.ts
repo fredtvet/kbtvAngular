@@ -1,0 +1,1 @@
+export const TrackByCallback = (index: number, fn: Function) => fn.prototype.constructor;
