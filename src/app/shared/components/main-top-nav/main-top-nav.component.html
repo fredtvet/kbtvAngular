@@ -1,6 +1,6 @@
 <div fxLayout="column" class="h-100" style="position:relative">
 
-  <span class="mat-elevation-z3" style="z-index:3">
+  <span class="mat-elevation-z3 bg-primary" style="z-index:3">
     <app-detail-top-nav-bar *ngIf="config && (config.longTitle || config.imgSrc) else mainTopBar" 
       [config]="config">
     </app-detail-top-nav-bar>
@@ -8,6 +8,10 @@
     <ng-template #mainTopBar>
       <app-main-top-nav-bar [config]="config" stylingClass="bg-primary"></app-main-top-nav-bar>
     </ng-template>
+
+    <app-chips-bar *ngFor="let chips of config.chips" [chips]="chips">
+    </app-chips-bar>
+
   </span>
 
   <div fxFlex style="overflow-y:auto;">

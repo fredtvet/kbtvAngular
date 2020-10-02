@@ -15,6 +15,6 @@ export class MainTopNavComponent{
   ButtonTypes = ButtonTypes;
 
   @Input() config: MainTopNavConfig;
-  
+
   trackByFab = (index: number, fab:AppButton) => TrackByCallback(index, fab.callback);
 }
