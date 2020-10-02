@@ -73,7 +73,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
 
   getWithRelations$(id: string, trackHistory: boolean = true):Observable<Mission>{
     if(trackHistory) this.updateLastVisited(id);
-    
+
     let relationCfg = new GetWithRelationsConfig("missions", 
       {include: {missionNotes: true, missionDocuments: true, missionImages: true}});
 
@@ -109,7 +109,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
 
   private initState(): void {
     this.setState({
-      missionCriteria: {finished: false,employerId: undefined,missionTypeId: undefined,searchString: undefined},
+      missionCriteria: {finished: false, employer: undefined, missionType: undefined, searchString: undefined},
     }, null, false);
   }
 

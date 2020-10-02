@@ -13,6 +13,7 @@ import {
   SelectableListComponent,
   SimpleTopNavComponent
 } from './components';
+import { ChipsBarComponent } from './components/main-top-nav/chips-bar.component';
 import { DetailTopNavBarComponent } from './components/main-top-nav/detail-top-nav-bar/detail-top-nav-bar.component';
 import { MainTopNavBarComponent } from './components/main-top-nav/main-top-nav-bar/main-top-nav-bar.component';
 import { MainTopNavComponent } from './components/main-top-nav/main-top-nav.component';
@@ -32,6 +33,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     MainTopNavComponent,
     MainTopNavBarComponent,
     DetailTopNavBarComponent,
+    ChipsBarComponent,
 
     TransformButtonPipe,
     ArraySlicePipe,

@@ -1,8 +1,8 @@
 <form fxLayout="column" fxLayoutAlign="space-around stretch" *ngIf="form" [formGroup]="form" class="m-3">
-  <ng-container *ngIf="!(config?.disabledFilters | arrayIncludes : 'userName')">
+  <ng-container *ngIf="!(config?.disabledFilters | arrayIncludes : 'user')">
     <mat-form-field>
-      <mat-select formControlName="userName" placeholder="Velg ansatt">
-        <mat-option *ngFor="let user of config.users" [value]="user.userName">
+      <mat-select formControlName="user" placeholder="Velg ansatt" [compareWith]="compareUser">
+        <mat-option *ngFor="let user of config.users" [value]="user">
           {{ user.firstName }} {{ user.lastName }}
         </mat-option>
       </mat-select>

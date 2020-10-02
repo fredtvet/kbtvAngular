@@ -5,6 +5,7 @@ import { map } from "rxjs/operators";
 import { Mission } from "src/app/core/models";
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilteredResponse } from 'src/app/core/services/filter/interfaces';
+import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
 import { Roles } from "src/app/shared-app/enums";
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { MainTopNavConfig } from "src/app/shared/components/main-top-nav/main-top-nav-config.interface";
@@ -32,6 +33,7 @@ export class MissionListComponent {
 
   constructor(
     private filterSheetService: FilterSheetService,
+    private chipsFactory: ChipsFactoryService,
     private store: MissionListStore,
     private router: Router,
     private route: ActivatedRoute
@@ -71,6 +73,21 @@ export class MissionListComponent {
         placeholder: "Søk med adresse eller id",
       },
       fabs: this.fabs,
+      chips: [
+        this.chipsFactory.createFilterChips(
+          this.formatCriteriaChips(res.criteria), 
+          (prop) => this.resetCriteriaProp(prop, res.criteria)
+        )
+      ]
     };
+  }
+
+  private resetCriteriaProp(prop: string, criteria: MissionCriteria){
+    criteria[prop] = null;
+    this.store.addFilterCriteria(criteria);
+  }
+
+  private formatCriteriaChips(criteria: MissionCriteria): MissionCriteria{
+    return {...criteria, finished: criteria.finished ? "Ferdig" : null as any};
   }
 }

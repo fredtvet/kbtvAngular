@@ -10,20 +10,18 @@
     </mat-form-field>
 
     <mat-form-field>
-        <mat-select formControlName="employerId" placeholder="Velg oppdragsgiver">
+        <mat-select formControlName="employer" placeholder="Velg oppdragsgiver" [compareWith]="compareIds">
             <mat-option>Ingen</mat-option>
-            <mat-option *ngFor="let employer of config?.state?.employers" [value]="employer.id">
+            <mat-option *ngFor="let employer of config?.state?.employers" [value]="employer">
                 {{ employer.name }}
             </mat-option>
         </mat-select>
     </mat-form-field>
 
-    <mat-divider></mat-divider>
-
     <mat-form-field>
-        <mat-select formControlName="missionTypeId" placeholder="Velg oppdragstype">
+        <mat-select formControlName="missionType" placeholder="Velg oppdragstype" [compareWith]="compareIds">
             <mat-option>Ingen</mat-option>
-            <mat-option *ngFor="let type of config?.state?.missionTypes" [value]="type.id">
+            <mat-option *ngFor="let type of config?.state?.missionTypes" [value]="type">
                 {{ type.name }}
             </mat-option>
         </mat-select>

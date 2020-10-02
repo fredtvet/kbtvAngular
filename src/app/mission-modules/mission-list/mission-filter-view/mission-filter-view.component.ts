@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Mission } from 'src/app/core/models';
+import { Mission, Model } from 'src/app/core/models';
 import { BaseFormViewComponent } from 'src/app/core/services/form/abstracts/base-form-view-component';
 import { ActiveStringFilterConfig } from 'src/app/shared/interfaces/active-string-filter-config.interface';
 import { MissionCriteria } from 'src/app/shared/interfaces/mission-filter-criteria.interface';
@@ -28,6 +28,8 @@ export class MissionFilterViewComponent extends BaseFormViewComponent<MissionFil
     }
   }
 
+  compareIds = (option: {id: any}, value: {id: any}) => option?.id === value?.id;
+
   protected _onConfigChanges(){
     super._onConfigChanges();
     this.stringFilterConfig = {
@@ -43,20 +45,20 @@ export class MissionFilterViewComponent extends BaseFormViewComponent<MissionFil
     const criteria = cfg?.criteria;
     return this._formBuilder.group({
       searchString: [criteria?.searchString],     
-      employerId: [criteria?.employerId],
-      missionTypeId: [criteria?.missionTypeId],    
-      finished: [criteria?.finished || false],
+      employer: [criteria?.employer],
+      missionType: [criteria?.missionType],    
+      finished: [criteria?.finished],
     });
   }
 
   get searchString(){
     return this.form.get('searchString')
   }
-  get employerId(){
-    return this.form.get('employerId')
+  get employer(){
+    return this.form.get('employer')
   }  
-  get missionTypeId(){
-    return this.form.get('missionTypeId')
+  get missionType(){
+    return this.form.get('missionType')
   }  
   get finished(){
     return this.form.get('finished')

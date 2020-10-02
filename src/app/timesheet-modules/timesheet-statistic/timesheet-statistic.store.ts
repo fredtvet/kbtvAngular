@@ -51,7 +51,7 @@ export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState>
         )
     }
 
-    addFilterCriteria(criteria: TimesheetCriteria){
+    addFilterCriteria = (criteria: TimesheetCriteria) => {
         super.addTimesheetCriteria(criteria);
     }
 }

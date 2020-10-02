@@ -50,7 +50,7 @@ export class TimesheetAdminListComponent{
   private getTopNavConfig(): MainTopNavConfig {
     return {
       title:  "Uke " + this.store.weekCriteria.weekNr || "",
-      subTitle: (this.store.weekCriteria.year || "") + ' - ' + (this.store.weekCriteria.userName || ""),
+      subTitle: (this.store.weekCriteria.year || "") + ' - ' + (this.store.weekCriteria.user?.userName || ""),
       backFn: this.onBack,
       backFnParams: [null],
       buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]

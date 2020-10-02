@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FilterComponent } from 'src/app/core/services/filter/interfaces/filter-component.interface';
-import { Mission } from 'src/app/core/models';
+import { Mission, User } from 'src/app/core/models';
 import { DateRangePresets } from 'src/app/shared-app/enums';
 import { _getMonthRange } from 'src/app/shared-app/helpers/datetime/get-month-range.helper';
 import { _getRangeByDateRangePreset } from 'src/app/shared-app/helpers/datetime/get-range-by-date-range-preset.helper';
@@ -60,6 +60,8 @@ export class TimesheetFilterViewComponent extends BaseFormViewComponent<Timeshee
     }
   }
 
+  compareUser = (opt: User, val: User) => opt?.userName === val?.userName;
+
   protected _onConfigChanges(){
     super._onConfigChanges();
     this.stringFilterConfig = {
@@ -80,11 +82,13 @@ export class TimesheetFilterViewComponent extends BaseFormViewComponent<Timeshee
     const endDateIso = dateRange && dateRange[1] ? new Date(dateRange[1]).toISOString() : null;
    
     return this._formBuilder.group({
-      userName: [{value: template.userName, disabled: disabled?.includes("userName")}],
+      user: [{value: template.user, disabled: disabled?.includes("user")}],
       mission: [{value: template.mission, disabled: disabled?.includes("mission")}, [
         isObjectValidator(true)
       ]],
-      dateRangePreset: [{value: template.dateRangePreset, disabled: disabled?.includes("dateRangePreset")}],
+      dateRangePreset: [{value: template.dateRangePreset, disabled: disabled?.includes("dateRangePreset")}, [
+        Validators.required
+      ]],
       dateRange: this._formBuilder.group({
         start: [{value: startDateIso, disabled: disabled?.includes("dateRange")}],
         end: [{value: endDateIso, disabled: disabled?.includes("dateRange")}],
@@ -101,8 +105,8 @@ export class TimesheetFilterViewComponent extends BaseFormViewComponent<Timeshee
     })
   }
 
-  get userName(){
-    return this.form.get('userName')
+  get user(){
+    return this.form.get('user')
   }
   get mission(){
     return this.form.get('mission')

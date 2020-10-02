@@ -9,6 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CssLoaderService } from '../core/services/css-loader.service';
@@ -29,6 +30,7 @@ import { LazyStyles } from '../shared-app/enums';
       MatButtonToggleModule,
       MatDialogModule,
       MatBottomSheetModule,
+      MatChipsModule,
    ],
    exports: [
       MatBadgeModule,
@@ -42,7 +44,8 @@ import { LazyStyles } from '../shared-app/enums';
       ScrollingModule, 
       MatButtonToggleModule,
       MatDialogModule,
-      MatBottomSheetModule
+      MatBottomSheetModule,
+      MatChipsModule
    ],
 })
 

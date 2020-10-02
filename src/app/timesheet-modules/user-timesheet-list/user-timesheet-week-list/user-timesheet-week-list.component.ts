@@ -50,7 +50,7 @@ export class UserTimesheetWeekListComponent implements OnInit {
     let ref = this.filterService.open<WeekCriteria, WeekFilterViewConfig>({
       formConfig: {
         criteria: this.store.weekCriteria, 
-        disabledFilters: ["weekNr","userName"]
+        disabledFilters: ["weekNr","user"]
       },
       formComponent: WeekFilterViewComponent
     });

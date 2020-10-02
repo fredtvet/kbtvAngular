@@ -13,6 +13,7 @@
 @include mat-radio-theme($kbtv-client-theme);
 @include mat-select-theme($kbtv-client-theme);
 @include mat-bottom-sheet-theme($kbtv-client-theme); // d
+@include mat-chips-theme($kbtv-client-theme); // d
 
 //Customizations
 .mat-button-toggle-group{
@@ -24,3 +25,14 @@
     }
   }
 }
+
+.horizontal-chips{
+  .mat-chip-list-wrapper {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    margin:2px; 
+    .mat-chip{
+      max-width:50%;
+    }
+  }
+} 

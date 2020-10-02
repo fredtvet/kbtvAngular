@@ -74,7 +74,7 @@ export class TimesheetAdminWeekListComponent {
   private getNavConfig(): MainTopNavConfig {
     return {
       title:  "Uker",
-      subTitle: (this.store.weekCriteria?.year || '') + ' - ' + (this.store.weekCriteria?.userName || ''),
+      subTitle: (this.store.weekCriteria?.year || '') + ' - ' + (this.store.weekCriteria?.user?.userName || ''),
       backFn: this.onBack,
       buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]
     }

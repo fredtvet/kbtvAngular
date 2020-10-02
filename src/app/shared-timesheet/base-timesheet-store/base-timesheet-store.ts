@@ -58,7 +58,7 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
         criteria: filtered.criteria,
         records: this.addFullNameToSummaries(summaries, users),
       };
-    })
+    }),
   );
 
   constructor(
@@ -108,7 +108,7 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
   get$ = (filter: TimesheetCriteria): Observable<Timesheet[]> => {
     let params = new HttpParams();
 
-    if (filter.userName) params = params.set("UserName", filter.userName);
+    if (filter.user?.userName) params = params.set("UserName", filter.user.userName);
 
     if (filter.dateRange) {
       if (filter.dateRange[0])

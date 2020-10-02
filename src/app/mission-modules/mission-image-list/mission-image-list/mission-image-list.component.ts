@@ -11,7 +11,6 @@ import { NotificationService } from 'src/app/core/services/notification';
 import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
 import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
-import { MainNavService } from 'src/app/layout';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { _appFileUrl } from 'src/app/shared-app/helpers/app-file-url.helper';
 import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';

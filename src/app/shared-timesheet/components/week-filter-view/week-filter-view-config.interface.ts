@@ -11,5 +11,5 @@ export interface WeekCriteria extends DateParams{
     year?: number, 
     weekNr?: number, 
     weekDay?: number,
-    userName?: string
+    user?: User
 }

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/core/models';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
@@ -19,8 +20,8 @@ export class TimesheetAdminUserListComponent {
     private router: Router,
   ) {}
 
-  goToWeekList(userName: string){
-    this.store.addFilterCriteria({userName, year: new Date().getFullYear()})
+  goToWeekList(user: User){
+    this.store.addFilterCriteria({user, year: new Date().getFullYear()})
     this.router.navigate(["/timeadministrering/uker"]);
   }
 }

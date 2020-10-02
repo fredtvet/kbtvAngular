@@ -38,7 +38,7 @@ export class SaveModelToStateHttpConverter<TState, TCommand extends SaveModelSta
    protected createCancelMessage(command: TCommand): string{
       const saveWord = command.saveAction === StateAction.Update ? "Oppdatering" : "Oppretting";
       const entityWord = translations[this.modelConfig.foreignProp].toLowerCase();
-      const displayPropWord = translations[this.modelConfig.displayProp || this.modelConfig.identifier].toLowerCase();
+      const displayPropWord = translations[this.modelConfig.displayProp].toLowerCase();
       const displayPropValue = command.entity[this.modelConfig.displayProp];
       return `${saveWord} av ${entityWord} med ${displayPropWord} ${displayPropValue} er reversert!`;
    }

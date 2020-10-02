@@ -32,22 +32,20 @@ export class UserTimesheetListStore extends ObservableStore<StoreState>
 
   filteredTimesheets$: Observable<FilteredResponse<TimesheetCriteria, Timesheet>> = 
     this.stateSlice$(["userTimesheets", "userTimesheetListCriteria", "missions"]).pipe(
-          filter(x => x.userTimesheets != null && x.userTimesheetListCriteria != null),
           map(state => { 
             const relationCfg = new GetWithRelationsConfig("userTimesheets", null, {include: {missions: true}})
             const filter = new TimesheetFilter(state.userTimesheetListCriteria);
             return {
-              criteria: filter.criteria,
-              activeCriteriaCount: filter.activeCriteriaCount,
-              records: this.getRangeWithRelationsHelper.get(state as any, relationCfg, filter.check)
+              criteria: filter?.criteria,
+              activeCriteriaCount: filter?.activeCriteriaCount,
+              records: this.getRangeWithRelationsHelper.get(state as any, relationCfg, filter?.check)
             }
           }),       
       );
 
   timesheetSummaries$: Observable<TimesheetSummary[]> = 
       combineLatest([this.filteredTimesheets$, this.groupBy$]).pipe(
-          filter(([filtered]) => filtered != null || filtered.records != null),
-          map(([filtered, groupBy]) => this.timesheetSummaryAggregator.groupByType(groupBy, filtered.records)),
+          map(([filtered, groupBy]) => this.timesheetSummaryAggregator.groupByType(groupBy, filtered?.records)),
       );
 
   filterConfig$: Observable<TimesheetFilterViewConfig> = 
@@ -69,9 +67,8 @@ export class UserTimesheetListStore extends ObservableStore<StoreState>
     this.addFilterCriteria(this.weekToTimesheetCriteriaConverter.convert(weekCriteria))
   }
 
-  addFilterCriteria(criteria: TimesheetCriteria){
+  addFilterCriteria = (criteria: TimesheetCriteria) => 
     this.setState({userTimesheetListCriteria: criteria});
-  }
 
   addGroupBy(type: GroupByPeriod){
     this.setState({userTimesheetListGroupBy: type});

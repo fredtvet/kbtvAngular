@@ -16,7 +16,7 @@ export class WeekToTimesheetCriteriaConverter implements Converter<WeekCriteria,
         if(!input) return;
         
         const result: TimesheetCriteria = {
-            userName: input.userName,
+            user: input.user,
             dateRangePreset: DateRangePresets.Custom
         };
 

@@ -12,8 +12,8 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         if(this.criteria.status || this.criteria.status === 0){
             exp = exp && record.status === this.criteria.status;
         }
-        if(this.criteria.userName)
-            exp = exp && record.userName === this.criteria.userName;
+        if(this.criteria.user?.userName)
+            exp = exp && record.userName === this.criteria.user.userName;
 
         if(this.criteria.dateRange && this.criteria.dateRange.length > 1) {
             let startTime = this.getStartOfDayTime(record.startTime);
@@ -42,7 +42,8 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
     private isDateRangeContainedIn(baseDateRange: Date[]): boolean{
         if(!baseDateRange || baseDateRange.length < 2) return true; //No range means all, in which it will always be contained. 
         const dateRange = this.criteria.dateRange;
-        if(!dateRange || dateRange.length < 2) return false; 
+        if(!dateRange) return true; 
+        if(dateRange.length < 2) return false; 
         return (this.getStartOfDayTime(baseDateRange[0]) <= this.getStartOfDayTime(dateRange[0])) && 
         (this.getStartOfDayTime(baseDateRange[1]) >= this.getStartOfDayTime(dateRange[1]))
     }

@@ -5,10 +5,12 @@ import { map } from "rxjs/operators";
 import { Timesheet } from "src/app/core/models";
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilterConfig, FilteredResponse } from 'src/app/core/services/filter/interfaces';
+import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
 import { DateRangePresets } from 'src/app/shared-app/enums';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view.component';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
+import { TimesheetStatus } from 'src/app/shared/enums';
 import { MainTopNavConfig } from 'src/app/shared/interfaces';
 import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
 import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
@@ -33,17 +35,18 @@ export class UserTimesheetListComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private filterService: FilterSheetService,
-    private store: UserTimesheetListStore
+    private store: UserTimesheetListStore,
+    private chipsFactory: ChipsFactoryService,
   ) {}
 
   ngOnInit() { 
     let initFilter = this.route.snapshot.params.initialFilter;
 
     const criteria: TimesheetCriteria = initFilter ? JSON.parse(initFilter) : {};
-
+    
     if(criteria.dateRange && !criteria.dateRangePreset) 
       criteria.dateRangePreset = DateRangePresets.Custom
-
+    console.log(criteria);
     this.store.addFilterCriteria(criteria);
   }
 
@@ -54,7 +57,7 @@ export class UserTimesheetListComponent implements OnInit {
     this.filterService.open<TimesheetCriteria, FilterConfig<TimesheetFilterViewConfig>>(
       {formConfig:{  
         filterConfig: {
-            disabledFilters: ['userName'], 
+            disabledFilters: ['user'], 
         },
         viewComponent: TimesheetFilterViewComponent
     }});
@@ -74,14 +77,38 @@ export class UserTimesheetListComponent implements OnInit {
       backFn: this.onBack,
       fabs: [
         {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', 
-          callback: () => this.openTimesheetForm(null, {mission: res?.criteria?.mission})}
+          callback: this.openTimesheetForm,
+          params: [null, {mission: res?.criteria?.mission}]}
       ],
       buttons: [{
         icon: 'filter_list', 
         callback: this.openFilterSheet,
         colorClass: (res && res.activeCriteriaCount && res.activeCriteriaCount > 0) ? "color-accent" : ""
-      }]
+      }],
+      chips: [
+        this.chipsFactory.createFilterChips(
+          this.formatCriteriaChips(res.criteria), 
+          (prop) => this.resetCriteriaProp(prop, res.criteria)
+        )
+      ]
+
     }
+  }
+
+  private resetCriteriaProp(prop: string, criteria: TimesheetCriteria){
+    criteria[prop] = null;
+    this.store.addFilterCriteria(criteria);
+  }
+
+  private formatCriteriaChips(criteria: TimesheetCriteria): TimesheetCriteria{
+    if(!criteria) return;
+    let clone = {...criteria};
+
+    if(clone.status === TimesheetStatus.Open) clone.status = "Åpen" as any;
+    else if(clone.status === TimesheetStatus.Confirmed) clone.status = "Låst" as any;
+    else clone.status = null;
+
+    return clone;
   }
 
 }

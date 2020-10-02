@@ -16,8 +16,11 @@
 </app-main-top-nav>
 
 <ng-template #noContent>
-    <span class="ppt-5 text-center w-100">
+    <span class="text-center w-100">
         <p>Finner ingen timer med gitte filtre. </p>
-        <button mat-raised-button color="accent" class="bounceIn" (click)="openWeekFilter()">Åpne filter</button>
+        <button mat-raised-button color="accent" class="bounceIn" (click)="openWeekFilter()">
+            <mat-icon>filter_list</mat-icon>
+            Åpne filter
+        </button>
     </span>
 </ng-template>

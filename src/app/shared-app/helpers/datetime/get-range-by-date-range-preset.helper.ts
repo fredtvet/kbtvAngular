@@ -11,6 +11,8 @@ export function _getRangeByDateRangePreset(preset: DateRangePresets): Date[] {
         return _getMonthRange();
       case DateRangePresets.CurrentYear:
         return _getYearRange();
+      case DateRangePresets.ShowAll:
+        return [new Date(0), new Date()];
       default: return undefined;
     }
   }

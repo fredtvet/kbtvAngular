@@ -17,10 +17,12 @@ export const translations: { [key: string]: string } = {
   lastName: "Etternavn",
   email: "Epost",
   role: "Rolle",
+  none: "Ingen",
   year: "År",
   month: "Måned",
   week: "Uke",
   date: "Dato",
+  day: "Dag",
   fullName: "Navn",
   confirmedHours: "Låste timer",
   openHours: "Åpne timer",
@@ -57,5 +59,6 @@ export const translations: { [key: string]: string } = {
   inboundEmailPassword: "Epostpassord",
   inboundEmailPasswordId: "Epostpassord",
   inboundEmailPasswords: "Epostpassord",
+
   
 };

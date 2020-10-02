@@ -27,9 +27,7 @@ export class ModelStateConfig {
 
     static getBy(prop: string, key: Prop<ModelConfig>): ModelConfig{
         if(!this.configMaps[key]) this.configMaps[key] = this.createModelStateConfigMap(key);
-        const cfg = this.configMaps[key][prop];
-        if(!cfg) console.log(`No model state config for ${key} ${prop}`);
-        return cfg;
+        return this.configMaps[key][prop];
     }
 
     private static createModelStateConfigMap(prop: Prop<ModelConfig>): ModelConfigMap  {
@@ -99,6 +97,7 @@ const ModelStateConfigData: ModelConfig[] = [
         stateProp: "missionNotes",
         apiUrl: ApiUrl.MissionNote, 
         identifier: "id",    
+        displayProp: "id",  
         foreignProp: "missionNote",
         foreignKey: "missionNoteId",
     },
@@ -106,6 +105,7 @@ const ModelStateConfigData: ModelConfig[] = [
         stateProp: "users",
         apiUrl: ApiUrl.Users, 
         identifier: "userName", 
+        displayProp: "userName",  
         notPersisted: true,
         foreignProp: "user",
         foreignKey: "userName",     
@@ -124,6 +124,7 @@ const ModelStateConfigData: ModelConfig[] = [
         stateProp: "userTimesheets",
         apiUrl: ApiUrl.UserTimesheet, 
         identifier: "id",
+        displayProp: "id",  
         foreignProp: "timesheet",
         foreignKey: "timesheetId",
         foreigns: ["missions", "users"],  
@@ -132,6 +133,7 @@ const ModelStateConfigData: ModelConfig[] = [
         stateProp: "timesheets",
         apiUrl: ApiUrl.Timesheet, 
         identifier: "id", 
+        displayProp: "id",  
         notPersisted: true,
         foreignProp: "timesheet",
         foreignKey: "timesheetId",
