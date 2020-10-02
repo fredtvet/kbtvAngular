@@ -4,6 +4,7 @@ import { ModelState } from './interfaces/model-state.interface';
 
 
 export interface ModelConfig { 
+    stateProp: Prop<ModelState>,
     apiUrl: ApiUrl, 
     identifier: string, 
     notPersisted?: boolean, 
@@ -14,16 +15,37 @@ export interface ModelConfig {
     foreigns?: Prop<ModelState>[]
 }
 
+export type ModelConfigMap = {[key: string]: ModelConfig};
+
 export class ModelStateConfig {
+
+    private static configMaps: {[key: string]: ModelConfigMap} = {};
+
     static get(prop: Prop<ModelState>): ModelConfig{
-        const cfg = ModelStateConfigData[prop];
-        if(!cfg) console.error(`No model state config for property ${prop}`);
+        return this.getBy(prop, "stateProp");
+    }
+
+    static getBy(prop: string, key: Prop<ModelConfig>): ModelConfig{
+        if(!this.configMaps[key]) this.configMaps[key] = this.createModelStateConfigMap(key);
+        const cfg = this.configMaps[key][prop];
+        if(!cfg) console.log(`No model state config for ${key} ${prop}`);
         return cfg;
+    }
+
+    private static createModelStateConfigMap(prop: Prop<ModelConfig>): ModelConfigMap  {
+        const map: ModelConfigMap = {};
+    
+        for(let config of ModelStateConfigData){
+            map[config[prop] as string] = config;
+        }
+    
+        return map;
     }
 }
 
-export const ModelStateConfigData: {[key in Prop<ModelState>]: ModelConfig} = {
-    missions: {
+const ModelStateConfigData: ModelConfig[] = [
+    {
+        stateProp: "missions",
         apiUrl: ApiUrl.Mission, 
         identifier: "id", 
         displayProp: "address",
@@ -32,35 +54,40 @@ export const ModelStateConfigData: {[key in Prop<ModelState>]: ModelConfig} = {
         children: ["missionImages", "missionDocuments", "missionNotes", "timesheets"], 
         foreigns: ["missionTypes","employers"],       
     },
-    missionTypes: {
+    {
+        stateProp: "missionTypes",
         apiUrl: ApiUrl.MissionType, 
         identifier: "id", 
         displayProp: "name",   
         foreignProp: "missionType",
         foreignKey: "missionTypeId",
     },
-    employers: {
+    {
+        stateProp: "employers",
         apiUrl: ApiUrl.Employer, 
         identifier: "id",  
         displayProp: "name",    
         foreignProp: "employer",
         foreignKey: "employerId",
     },
-    documentTypes: {
+    {
+        stateProp: "documentTypes",
         apiUrl: ApiUrl.DocumentType, 
         identifier: "id",   
         displayProp: "name",   
         foreignProp: "documentType",
         foreignKey: "documentTypeId",
     }, 
-    missionImages:  {
+    {
+        stateProp: "missionImages",
         apiUrl: ApiUrl.MissionImage, 
         identifier: "id",  
         displayProp: "fileName",    
         foreignProp: "missionImage",
         foreignKey: "missionImageId",
     },    
-    missionDocuments:  {
+    {
+        stateProp: "missionDocuments",
         apiUrl: ApiUrl.MissionDocument, 
         identifier: "id", 
         displayProp: "fileName",   
@@ -68,13 +95,15 @@ export const ModelStateConfigData: {[key in Prop<ModelState>]: ModelConfig} = {
         foreignKey: "missionDocumentId",
         foreigns: ["documentTypes"]
     },    
-    missionNotes:  {
+    {
+        stateProp: "missionNotes",
         apiUrl: ApiUrl.MissionNote, 
         identifier: "id",    
         foreignProp: "missionNote",
         foreignKey: "missionNoteId",
     },
-    users: {
+    {
+        stateProp: "users",
         apiUrl: ApiUrl.Users, 
         identifier: "userName", 
         notPersisted: true,
@@ -82,7 +111,8 @@ export const ModelStateConfigData: {[key in Prop<ModelState>]: ModelConfig} = {
         foreignKey: "userName",     
         foreigns: ["employers"]
     },      
-    inboundEmailPasswords: {
+    {
+        stateProp: "inboundEmailPasswords",
         apiUrl: ApiUrl.InboundEmailPassword, 
         identifier: "id", 
         displayProp: "password",      
@@ -90,19 +120,21 @@ export const ModelStateConfigData: {[key in Prop<ModelState>]: ModelConfig} = {
         foreignKey: "inboundEmailPasswordId",      
         notPersisted: true,    
     }, 
-    userTimesheets: {
+    {
+        stateProp: "userTimesheets",
         apiUrl: ApiUrl.UserTimesheet, 
         identifier: "id",
         foreignProp: "timesheet",
         foreignKey: "timesheetId",
         foreigns: ["missions", "users"],  
     },    
-    timesheets: {
+    {
+        stateProp: "timesheets",
         apiUrl: ApiUrl.Timesheet, 
         identifier: "id", 
         notPersisted: true,
         foreignProp: "timesheet",
         foreignKey: "timesheetId",
-        foreigns: ["missions"],  
+        foreigns: ["missions", "users"],  
     }, 
-}
+]

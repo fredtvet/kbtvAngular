@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { Model } from 'src/app/core/models/base-entity.interface';
-import { ModelConfig, ModelStateConfig, ModelStateConfigData } from 'src/app/core/services/model/model-state.config';
+import { ModelStateConfig } from 'src/app/core/services/model/model-state.config';
 import { _convertArrayToObject } from 'src/app/shared-app/helpers/array/convert-array-to-object.helper';
 import { AgGridTableComponent } from 'src/app/shared/components/abstracts/ag-grid-table.component';
 import { translations } from 'src/app/shared/translations';
@@ -19,18 +19,12 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
   columnDefs: any = [];
   rowData: any = [];
 
-  //Create map with foreignProp as key, to lookup via model class properties
-  private propCfgMap: {[foreignKey: string]: ModelConfig & {stateProp: string}} = {};
-  private foreignsIdMap: {[foreignKey: string]: {[id: string]: Model}} = {}
-  private foreignsDisplayMap: {[foreignKey: string]: {[displayProp: string]: Model}} = {}
+  private fkModelIdMap: {[foreignKey: string]: {[id: string]: Model}} = {}
+
+  private fkModelDisplayPropMap: {[foreignKey: string]: {[displayProp: string]: Model}} = {}
 
   constructor() { 
     super(); 
-
-    for(let modelKey in ModelStateConfigData){
-      const modelCfg = ModelStateConfigData[modelKey];
-      this.propCfgMap[modelCfg.foreignKey] = {...modelCfg, stateProp: modelKey};
-    }
   }
 
   editCell = (e:any) => {
@@ -47,9 +41,9 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
         const fkCfg = ModelStateConfig.get(fkStateKey);
         const entities = cfg.foreigns[fkStateKey];
         if(entities){
-          this.foreignsIdMap[fkCfg.foreignKey] = 
+          this.fkModelIdMap[fkCfg.foreignKey] = 
             _convertArrayToObject<Model>(entities, fkCfg.identifier);
-          this.foreignsDisplayMap[fkCfg.foreignKey] = 
+          this.fkModelDisplayPropMap[fkCfg.foreignKey] = 
             _convertArrayToObject<Model>(entities, fkCfg.displayProp);
         }
       };
@@ -95,27 +89,27 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
 
     if(DataTableConfig.noEditProperties[name]) def['editable'] = false;
 
-    const fkModelCfg = this.propCfgMap[name];
+    const fkModelCfg = ModelStateConfig.getBy(name, "foreignKey");
 
     if(fkModelCfg){
       const fkIdProp = name;
 
       def['cellEditor'] = 'agSelectCellEditor';
       def['cellEditorParams'] = { 
-        values: Object.keys(this.foreignsDisplayMap[fkIdProp] || {}), 
+        values: Object.keys(this.fkModelDisplayPropMap[fkIdProp] || {}), 
       }
 
       def['valueGetter'] = (params) => { //Get name of fkId and display
         const fkId = params.data[fkIdProp];
         if(fkId){
-          const fkEntity = this.foreignsIdMap[fkIdProp][fkId];
+          const fkEntity = this.fkModelIdMap[fkIdProp][fkId];
           return fkEntity ? fkEntity[fkModelCfg.displayProp || fkModelCfg.identifier] : null;
         }
         else return ''
       };
 
       def['valueSetter'] = (params) => {
-        const hit = this.foreignsDisplayMap[fkIdProp][params.newValue]
+        const hit = this.fkModelDisplayPropMap[fkIdProp][params.newValue];
         if(hit) params.data[fkIdProp] = hit[fkModelCfg.identifier];
         else return false;
         return true;
