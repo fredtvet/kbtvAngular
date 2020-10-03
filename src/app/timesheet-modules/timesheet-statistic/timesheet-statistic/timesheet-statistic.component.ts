@@ -21,7 +21,7 @@ import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/ti
 export class TimesheetStatisticComponent {
   @ViewChild('statTable') statTable: TimesheetStatisticTableComponent;
 
-  vm$: Observable<ViewModel<FilteredAndGroupedSummaries>> = this.store.timesheetSummaries$.pipe(map(x => {console.log(x)
+  vm$: Observable<ViewModel<FilteredAndGroupedSummaries>> = this.store.timesheetSummaries$.pipe(map(x => {
     return {content: x, 
       navConfig: {
         title:  "Timestatistikk",
@@ -29,18 +29,19 @@ export class TimesheetStatisticComponent {
           {icon: "filter_list", colorClass: x.activeCriteriaCount && x.activeCriteriaCount > 0 ? "color-accent" : "", 
             callback: this.openBottomSheet},
           {icon: "cloud_download", callback: this.exportAsCsv}     
-        ],
-        chips: [ 
-          this.chipsFactory.createEnumSelectionChips(GroupByPeriod, x.groupBy, this.addGroupBy),
-          x.activeCriteriaCount > 0 ? 
-            this.chipsFactory.createFilterChips(
-              this.formatCriteriaChips(x.criteria), 
-              (prop) => this.resetCriteriaProp(prop, x.criteria)
-            ) 
-            : [{text: "Åpne filter", color:"accent", onClick: this.openBottomSheet}] 
         ]
-      }
+      },
+      chipRows: [ 
+        this.chipsFactory.createEnumSelectionChips(GroupByPeriod, x.groupBy, this.addGroupBy),
+        x.activeCriteriaCount > 0 ? 
+          this.chipsFactory.createFilterChips(
+            this.formatCriteriaChips(x.criteria), 
+            (prop) => this.resetCriteriaProp(prop, x.criteria)
+          ) 
+          : [{text: "Åpne filter", color:"accent", onClick: this.openBottomSheet}] 
+      ]
     }
+   
   }));
   
   constructor( 

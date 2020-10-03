@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { Mission } from "src/app/core/models";
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilteredResponse } from 'src/app/core/services/filter/interfaces';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
 import { Roles } from "src/app/shared-app/enums";
+import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
+import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 import { MainTopNavConfig } from "src/app/shared/components/main-top-nav/main-top-nav-config.interface";
 import { MissionCriteria } from "src/app/shared/interfaces/mission-filter-criteria.interface";
 import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
@@ -22,12 +24,15 @@ import { MissionListStore } from "../mission-list.store";
 export class MissionListComponent {
   Roles = Roles;
 
-  vm$: Observable<ViewModel<Mission[]>> = this.store.filteredMissions$.pipe(
-    map((x) => {return {
-        content: x.records,
-        navConfig: this.getTopNavConfig(x),
-    }})
-  );
+  private navVm$: Observable<ViewModel<any>> = this.store.criteria$.pipe(map(x => { return {
+    chipRows: [this.getCriteriaChips(x)],
+    navConfig: this.getTopNavConfig(x)
+  }}))
+
+  vm$: Observable<ViewModel<Mission[]>> = combineLatest([
+    this.store.filteredMissions$,
+    this.navVm$
+  ]).pipe(map(([filtered, vm]) => { return {...vm, fabs: this.fabs, content: filtered.records} }));
 
   private fabs: AppButton[];
 
@@ -59,27 +64,27 @@ export class MissionListComponent {
     });
   };
 
-  private getTopNavConfig(res: FilteredResponse<MissionCriteria, Mission>): MainTopNavConfig {
+  private getTopNavConfig(criteria: MissionCriteria): MainTopNavConfig {
     return {
       title: "Oppdrag",
       buttons: [
         {icon: "filter_list",
           callback: this.openMissionFilter,
-          colorClass: res?.activeCriteriaCount ? "color-accent" : "",},
+          colorClass: _getSetPropCount(criteria, {finished:false}) ? "color-accent" : ""},
       ],
       searchBar: {
         callback: this.searchMissions,
-        initialValue: res?.criteria?.searchString,
+        initialValue: criteria?.searchString,
         placeholder: "Søk med adresse eller id",
       },
-      fabs: this.fabs,
-      chips: [
-        this.chipsFactory.createFilterChips(
-          this.formatCriteriaChips(res.criteria), 
-          (prop) => this.resetCriteriaProp(prop, res.criteria)
-        )
-      ]
     };
+  }
+
+  private getCriteriaChips(criteria: MissionCriteria){
+    return this.chipsFactory.createFilterChips(
+      this.formatCriteriaChips(criteria), 
+      (prop) => this.resetCriteriaProp(prop, criteria)
+    )
   }
 
   private resetCriteriaProp(prop: string, criteria: MissionCriteria){

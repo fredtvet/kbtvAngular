@@ -1,6 +1,5 @@
 import { Timesheet } from '../core/models';
 import { DataFilter } from '../core/services/filter/data.filter';
-import { Prop } from '../shared-app/prop.type';
 import { TimesheetCriteria } from './interfaces/timesheet-criteria.interface';
 
 export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
@@ -55,7 +54,4 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         return newDate.getTime();
     }
 
-    protected activeCriteriaCountIgnoreCheck(value: any, key: Prop<TimesheetCriteria>): boolean{
-        return key === "dateRangePreset"    
-    } 
 };

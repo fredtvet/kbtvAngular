@@ -1,4 +1,4 @@
-<app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig">
+<app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig" [chipRows]="vm.chipRows">
     <div fxLayout="column" fxLayoutGap="8px" class="h-100">
 
         <app-timesheet-statistic-table #statTable class="mat-elevation-z2" fxFlex 

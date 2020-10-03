@@ -23,6 +23,7 @@ import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helper
 import { GetWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-with-relations.helper';
 import { BaseModelStore } from 'src/app/core/services/state/abstracts/base-model.store';
 import { StateAction } from 'src/app/core/services/state/state-action.enum';
+import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 
 @Injectable({
   providedIn: 'any',
@@ -48,10 +49,12 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
         const filtered = _filter(state.missions, (entity) => filter.check(entity));
         return {
             criteria: state.missionCriteria,
-            activeCriteriaCount: filter.activeCriteriaCount,
+            activeCriteriaCount: _getSetPropCount(state.missionCriteria, {finished:false}),
             records: _sortByDate(filtered, "updatedAt") 
         }})
       );
+
+  criteria$: Observable<MissionCriteria> = this.stateProperty$("missionCriteria");
       
   currentUser: User = this.getStateProperty<User>("currentUser");
 

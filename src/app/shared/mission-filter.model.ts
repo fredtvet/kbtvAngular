@@ -1,7 +1,6 @@
 import { Mission } from '../core/models';
 import { MissionCriteria } from './interfaces';
 import { DataFilter } from '../core/services/filter/data.filter';
-import { Prop } from '../shared-app/prop.type';
 
 export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
 
@@ -46,10 +45,6 @@ export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
     private filterSearchString(m: Mission): boolean{
         return m.address.toLowerCase().includes(this.searchStringLower) || 
             m.id.includes(this.searchStringLower);
-    }  
-
-    protected activeCriteriaCountIgnoreCheck(value: any, key:  Prop<MissionCriteria>): boolean{
-        return (key === "finished" && value === false)   
-    } 
+    }   
        
 };

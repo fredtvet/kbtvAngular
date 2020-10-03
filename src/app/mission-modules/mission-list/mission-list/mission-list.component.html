@@ -1,4 +1,4 @@
-<app-main-top-nav  *ngIf="vm$ | async; let vm" 
+<app-main-top-nav  *ngIf="vm$ | async; let vm" [fabs]="vm.fabs" [chipRows]="vm.chipRows"
   [config]="vm.navConfig">
 
   <app-mission-list-view 

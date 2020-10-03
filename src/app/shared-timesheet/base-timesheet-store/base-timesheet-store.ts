@@ -20,6 +20,7 @@ import { FilteredResponse } from 'src/app/core/services/filter/interfaces';
 import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helpers/get-with-relations.config';
 import { BaseModelStore } from 'src/app/core/services/state/abstracts/base-model.store';
+import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 
 export type FilteredAndGroupedSummaries = GroupedResponse<GroupByPeriod,TimesheetSummary> &
   FilteredResponse<TimesheetCriteria, TimesheetSummary>;
@@ -37,7 +38,7 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
         const filter = new TimesheetFilter(state[this.settings.criteriaProp]);
         return {
           criteria: filter.criteria,
-          activeCriteriaCount: filter.activeCriteriaCount,
+          activeCriteriaCount: _getSetPropCount(filter.criteria, {dateRangePreset:null}),
           records: _filter(state.timesheets, (entity) => filter.check(entity)),
         };
       })
