@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ButtonTypes } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces/app-button.interface';
+import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 import { TrackByCallback } from 'src/app/shared-app/track-by-callback';
 import { MainTopNavConfig } from './main-top-nav-config.interface';
 
@@ -15,6 +16,9 @@ export class MainTopNavComponent{
   ButtonTypes = ButtonTypes;
 
   @Input() config: MainTopNavConfig;
+  @Input() fabs: AppButton[];
+  @Input() chipRows: AppChip[][];
 
   trackByFab = (index: number, fab:AppButton) => TrackByCallback(index, fab.callback);
+
 }

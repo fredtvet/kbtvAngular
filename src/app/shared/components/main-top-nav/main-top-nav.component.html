@@ -1,6 +1,6 @@
 <div fxLayout="column" class="h-100" style="position:relative">
 
-  <span class="mat-elevation-z3 bg-primary" style="z-index:3">
+  <span class="mat-elevation-z3 bg-primary" style="z-index:3;padding-bottom:1px">
     <app-detail-top-nav-bar *ngIf="config && (config.longTitle || config.imgSrc) else mainTopBar" 
       [config]="config">
     </app-detail-top-nav-bar>
@@ -9,7 +9,7 @@
       <app-main-top-nav-bar [config]="config" stylingClass="bg-primary"></app-main-top-nav-bar>
     </ng-template>
 
-    <app-chips-bar *ngFor="let chips of config.chips" [chips]="chips">
+    <app-chips-bar *ngFor="let chips of chipRows" [chips]="chips">
     </app-chips-bar>
 
   </span>
@@ -20,10 +20,10 @@
     </ng-content>
   </div>
 
-  <div style="position:absolute;right:0;bottom:0;" class="m-2" *ngIf="config.fabs"
+  <div style="position:absolute;right:0;bottom:0;" class="m-2" *ngIf="fabs"
       fxLayout="column" fxLayoutGap="4px">  
       <app-button class="fadeInRight" 
-        *ngFor="let fab of config.fabs | transformButtons : ButtonTypes.Fab | reverseArray; trackBy: trackByFab" 
+        *ngFor="let fab of fabs | transformButtons : ButtonTypes.Fab | reverseArray; trackBy: trackByFab" 
         [config]="fab">
       </app-button>
   </div>

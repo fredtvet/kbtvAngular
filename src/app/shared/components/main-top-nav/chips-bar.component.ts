@@ -5,7 +5,7 @@ import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 @Component({
   selector: 'app-chips-bar',
   template: `
-     <div style="overflow-x:auto!important;">
+     <div class="horizontal-chips-container">
 
         <mat-chip-list aria-orientation="horizontal" class="horizontal-chips">
 
@@ -31,5 +31,5 @@ export class ChipsBarComponent{
   trackByChip = (index: number, chip:AppButton) => chip.text;
 
   handleFn = (fn: Function): void => fn ? fn() : null;
-  
+
 }
