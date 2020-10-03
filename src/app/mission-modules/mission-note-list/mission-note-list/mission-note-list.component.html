@@ -1,4 +1,4 @@
-<app-main-top-nav [config]="navConfig">
+<app-main-top-nav [config]="navConfig" [fabs]="fabs">
     <div class="max-width">
         <app-note-card *ngFor="let note of notes$ | async; trackBy: trackByNote" [note]="note" 
             (editClicked)="openEditNoteForm($event)">

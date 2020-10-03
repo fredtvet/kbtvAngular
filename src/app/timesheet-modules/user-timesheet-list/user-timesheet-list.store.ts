@@ -9,6 +9,7 @@ import { ObservableStore } from 'src/app/core/services/state/abstracts/observabl
 import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
 import { WeekToTimesheetCriteriaConverter } from 'src/app/core/services/utility/week-to-timesheet-criteria.converter';
+import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
@@ -37,7 +38,7 @@ export class UserTimesheetListStore extends ObservableStore<StoreState>
             const filter = new TimesheetFilter(state.userTimesheetListCriteria);
             return {
               criteria: filter?.criteria,
-              activeCriteriaCount: filter?.activeCriteriaCount,
+              activeCriteriaCount: _getSetPropCount(filter.criteria, {dateRangePreset:null}),
               records: this.getRangeWithRelationsHelper.get(state as any, relationCfg, filter?.check)
             }
           }),       

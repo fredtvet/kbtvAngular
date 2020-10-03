@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { MissionNote } from 'src/app/core/models';
 import { RolePresets } from 'src/app/shared-app/enums';
 import { _sortByBool } from 'src/app/shared-app/helpers/array/sort-by-bool.helper';
+import { AppButton } from 'src/app/shared-app/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/interfaces';
 import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { MissionNoteListStore } from '../mission-note-list.store';
@@ -20,8 +21,9 @@ export class MissionNoteListComponent {
     map(x => _sortByBool<MissionNote>(x, "pinned", true))
   );
 
-  navConfig: MainTopNavConfig;
-
+  navConfig: MainTopNavConfig; 
+  fabs: AppButton[];
+  
   get missionId() { return this.route.snapshot.paramMap.get('id'); }
 
   constructor( 
@@ -29,13 +31,11 @@ export class MissionNoteListComponent {
     private route: ActivatedRoute,
     private router: Router,
     ) {  
-    this.navConfig = {
-      title:  "Notater", backFn: this.onBack,
-      fabs:  [
-        {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', 
-        callback: this.openCreateNoteForm, allowedRoles: RolePresets.Internal}
-      ]
-    }
+    this.navConfig = {title:  "Notater", backFn: this.onBack};
+    this.fabs = [
+      {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', 
+      callback: this.openCreateNoteForm, allowedRoles: RolePresets.Internal}
+    ]
   }
  
   openEditNoteForm = (entityId: number) => 

@@ -27,7 +27,18 @@ export class UserTimesheetListComponent implements OnInit {
   vm$: Observable<ViewModel<Timesheet[]>> = this.store.filteredTimesheets$.pipe(
     map(x => { return {
       navConfig: this.getTopNavConfig(x),
-      content: x.records,
+      content: x.records,      
+      fabs: [
+        {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', 
+          callback: this.openTimesheetForm,
+          params: [null, {mission: x.criteria?.mission}]}
+      ],
+      chipRows: [
+        this.chipsFactory.createFilterChips(
+          this.formatCriteriaChips(x.criteria), 
+          (prop) => this.resetCriteriaProp(prop, x.criteria)
+        )
+      ]
     }})
   );
 
@@ -46,7 +57,7 @@ export class UserTimesheetListComponent implements OnInit {
     
     if(criteria.dateRange && !criteria.dateRangePreset) 
       criteria.dateRangePreset = DateRangePresets.Custom
-    console.log(criteria);
+
     this.store.addFilterCriteria(criteria);
   }
 
@@ -74,24 +85,12 @@ export class UserTimesheetListComponent implements OnInit {
   private getTopNavConfig = (res: FilteredResponse<TimesheetCriteria, Timesheet>): MainTopNavConfig => {
     return {
       title:  "Timeliste", 
-      backFn: this.onBack,
-      fabs: [
-        {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', 
-          callback: this.openTimesheetForm,
-          params: [null, {mission: res?.criteria?.mission}]}
-      ],
+      backFn: this.onBack,     
       buttons: [{
         icon: 'filter_list', 
         callback: this.openFilterSheet,
         colorClass: (res && res.activeCriteriaCount && res.activeCriteriaCount > 0) ? "color-accent" : ""
       }],
-      chips: [
-        this.chipsFactory.createFilterChips(
-          this.formatCriteriaChips(res.criteria), 
-          (prop) => this.resetCriteriaProp(prop, res.criteria)
-        )
-      ]
-
     }
   }
 
