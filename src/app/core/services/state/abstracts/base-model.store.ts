@@ -19,7 +19,7 @@ export abstract class BaseModelStore<TState> extends ObservableStore<TState>  {
     modelProperty$ =   <T extends Model[]>(property: Prop<ModelState>): Observable<T> => { 
         const modelCfg = ModelStateConfig.get(property);
 
-        if(modelCfg.notPersisted) 
+        if(modelCfg?.notPersisted) 
             return this._propertyWithFetch$(property as Prop<TState>, this.apiService.get(modelCfg.apiUrl));
 
         return super.stateProperty$(property as any);

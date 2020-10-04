@@ -16,13 +16,14 @@ export class GetWithRelationsConfig {
     childrenCfg?: RelationIncludeConfig,
     foreignsCfg?: RelationIncludeConfig
   ) {
+
     this.propConfig = ModelStateConfig.get(this.modelProp);
 
     this.includedForeignProps = 
-        this.getIncludedProps(foreignsCfg, this.propConfig.foreigns)
+        this.getIncludedProps(foreignsCfg, this.propConfig?.foreigns)
 
     this.includedChildProps = 
-        this.getIncludedProps(childrenCfg, this.propConfig.children)
+        this.getIncludedProps(childrenCfg, this.propConfig?.children)
 
     this.includedProps = [modelProp, ...this.includedChildProps, ...this.includedForeignProps]
   }
