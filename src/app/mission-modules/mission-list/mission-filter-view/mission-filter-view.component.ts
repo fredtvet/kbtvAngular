@@ -4,6 +4,7 @@ import { Mission, Model } from 'src/app/core/models';
 import { BaseFormViewComponent } from 'src/app/core/services/form/abstracts/base-form-view-component';
 import { ActiveStringFilterConfig } from 'src/app/shared/interfaces/active-string-filter-config.interface';
 import { MissionCriteria } from 'src/app/shared/interfaces/mission-filter-criteria.interface';
+import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { MissionFilterViewConfig } from './mission-filter-view-config.interface';
 
 @Component({
@@ -27,6 +28,8 @@ export class MissionFilterViewComponent extends BaseFormViewComponent<MissionFil
       if(this.form.value[key]) return true;
     }
   }
+
+  trackByMission = TrackByModel("missions");
 
   compareIds = (option: {id: any}, value: {id: any}) => option?.id === value?.id;
 

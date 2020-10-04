@@ -3,7 +3,7 @@
     <mat-form-field  *appActiveStringFilter="let entities$; config: stringFilterConfig">
         <input matInput placeholder="Søk med adresse eller id" formControlName="searchString" [matAutocomplete]="auto1">
         <mat-autocomplete #auto1="matAutocomplete">
-          <mat-option *ngFor="let mission of entities$ | async" [value]="mission.address">
+          <mat-option *ngFor="let mission of entities$ | async; trackBy: trackByMission" [value]="mission.address">
             ({{ mission.id }}) {{ mission.address }}
           </mat-option>
         </mat-autocomplete>
