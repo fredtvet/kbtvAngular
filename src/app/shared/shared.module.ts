@@ -55,7 +55,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     ReactiveFormsModule,
     AngularMaterialModule,
     SharedAppModule,
-    AppLayoutModule,
     GooglePlaceModule
   ],
   exports: [

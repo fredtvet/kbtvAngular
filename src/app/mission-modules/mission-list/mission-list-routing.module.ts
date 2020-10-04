@@ -10,7 +10,7 @@ const routes: Routes = [
     component: MissionListComponent,
     data: {depth: 2},
     children: [
-      {path: 'ny', data: {allowedRoles: RolePresets.Management}, 
+      {path: 'ny', data: {allowedRoles: RolePresets.Management.valueOf()}, 
       loadChildren: () => import('src/app/mission-modules/mission-form/mission-form.module').then(m => m.MissionFormModule)},
     ],
   },
@@ -19,7 +19,7 @@ const routes: Routes = [
     component: MissionDetailsComponent,
     data: {depth: 3},
     children: [
-      {path: 'rediger', data: {allowedRoles: RolePresets.Authority},
+      {path: 'rediger', data: {allowedRoles: RolePresets.Authority.valueOf()},
       loadChildren: () => import('src/app/mission-modules/mission-form/mission-form.module').then(m => m.MissionFormModule)},
     ],
   },
@@ -30,13 +30,13 @@ const routes: Routes = [
   },
   {
     path: ':id/dokumenter',
-    data: {allowedRoles: RolePresets.Internal, depth: 4},
+    data: {allowedRoles: RolePresets.Internal.valueOf(), depth: 4},
     loadChildren: () => import('src/app/mission-modules/mission-document-list/mission-document-list.module').then(m => m.MissionDocumentListModule),
 
   },
   {
     path: ':id/notater',
-    data: {allowedRoles: RolePresets.Internal, depth: 4},
+    data: {allowedRoles: RolePresets.Internal.valueOf(), depth: 4},
     loadChildren: () => import('src/app/mission-modules/mission-note-list/mission-note-list.module').then(m => m.MissionNoteListModule),
   },
 ];

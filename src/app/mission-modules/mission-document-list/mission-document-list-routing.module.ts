@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     component: MissionDocumentListComponent,
     children: [
-      {path: 'skjema', data: {allowedRoles: RolePresets.Authority}, 
+      {path: 'skjema', data: {allowedRoles: RolePresets.Authority.valueOf()}, 
       loadChildren: () => import('src/app/mission-modules/mission-document-form/mission-document-form.module').then(m => m.MissionDocumentFormModule)},
     ],
   },
