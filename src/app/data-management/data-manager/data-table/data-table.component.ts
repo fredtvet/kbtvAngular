@@ -36,7 +36,7 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
   protected initNgGrid(cfg: DataConfig): void{
     if(!cfg) return super.initNgGrid(cfg);
     const modelCfg = ModelStateConfig.get(cfg.selectedProp);
-    if(modelCfg.foreigns){
+    if(modelCfg?.foreigns){
       for(const fkStateKey of modelCfg.foreigns){
         const fkCfg = ModelStateConfig.get(fkStateKey);
         const entities = cfg.foreigns[fkStateKey];

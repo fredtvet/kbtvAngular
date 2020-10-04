@@ -26,7 +26,6 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
 
     dataConfig$ = this.selectedProperty$.pipe(
         distinctUntilChanged(), 
-        filter(x => x != null), 
         switchMap(x => this.getDataConfig$(x)));
 
     get selectedProperty() {

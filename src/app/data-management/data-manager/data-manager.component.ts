@@ -1,20 +1,22 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Model } from 'src/app/core/models';
-import { GenericModelFormConfig, ModelFormViewConfig, ModelFormWrapperConfig } from 'src/app/core/services/model/form/interfaces';
+import { ModelFormWrapperConfig } from 'src/app/core/services/model/form/interfaces';
 import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
 import { ModelState } from 'src/app/core/services/model/interfaces';
 import { StateAction } from 'src/app/core/services/state/state-action.enum';
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { Prop } from 'src/app/shared-app/prop.type';
+import { MainTopNavConfig } from 'src/app/shared/interfaces';
+import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { DataManagementStore } from '../data-management.store';
 import { DataConfig } from '../interfaces/data-config.interface';
 import { DataTableComponent } from './data-table/data-table.component';
 import { PropertyFormMap } from './property-form.map';
 
-type FormConfig = GenericModelFormConfig<Model,any, ModelFormViewConfig<Model, any>>
-type WrapperConfig = ModelFormWrapperConfig<FormConfig>
+type ViewModel = BaseViewModel & DataConfig
 
 @Component({
   selector: 'app-data-manager',
@@ -23,9 +25,14 @@ type WrapperConfig = ModelFormWrapperConfig<FormConfig>
 })
 export class DataManagerComponent {
 @ViewChild('dataTable') dataTable: DataTableComponent;
-dataConfig$:Observable<DataConfig> = this.store.dataConfig$;
 
-selectedProperty$ = this.store.selectedProperty$;
+vm$:Observable<ViewModel> = combineLatest([
+  this.store.dataConfig$,
+  this.store.selectedProperty$.pipe(map(x => this.getNavConfig(x)))
+]).pipe(
+  map(([dataConfig, navConfig]) => { return {...dataConfig, navConfig}})
+);
+
 properties = this.store.properties;
 
 constructor(
@@ -42,7 +49,7 @@ constructor(
     this.store.save({entity: command.data, saveAction: StateAction.Update}); 
   }
 
-  openDeleteDialog = (): void => {
+  private openDeleteDialog = (): void => {
     let nodes = this.dataTable.dataGrid.api.getSelectedNodes();
     if(nodes?.length == 0) return;
 
@@ -52,13 +59,13 @@ constructor(
     })
   }
 
-  openCreateForm(): void{
+  private openCreateForm = (): void => {
     if(this.store.selectedProperty === "missions"){ //Lazy loaded form
       this.router.navigate(['data/ny/oppdrag']);
       return;
     }
 
-    this.formService.open<any, Model, WrapperConfig>({formConfig: {
+    this.formService.open<any, Model, ModelFormWrapperConfig<any>>({formConfig: {
       stateProp: this.store.selectedProperty,
       viewComponent: PropertyFormMap[this.store.selectedProperty]
     }})
@@ -68,6 +75,15 @@ constructor(
     if(ids?.length == 0) return false;
     this.store.delete({ids});   
   }
-}
 
+  private getNavConfig(selectedProp: string){
+    return { 
+      title: "Data", 
+      buttons: selectedProp ? [
+        {icon: "add", callback: this.openCreateForm},
+        {icon: "delete_forever", callback: this.openDeleteDialog} 
+      ] : null
+    };
+  }
+}
 

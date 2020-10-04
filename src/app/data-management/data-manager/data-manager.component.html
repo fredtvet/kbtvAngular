@@ -1,25 +1,16 @@
-<app-main-top-nav [config]="{title: 'Data'}">
-  <div class="h-100 p-2" fxLayout="column" fxLayoutGap="8px">
+<app-main-top-nav *ngIf="vm$ | async; let vm"  [config]="vm.navConfig">
+  <div class="h-100 p-2" fxLayout="column" fxLayoutGap="8px" >
+
     <app-data-property-picker
       [properties]="properties" 
-      [selectedProperty]="selectedProperty$ | async" 
+      [selectedProperty]="vm.selectedProp" 
       (propertySelected)="updateSelectedProperty($event)">
     </app-data-property-picker>
 
     <app-data-table fxLayout="column" fxLayoutGap="8px" class="h-100" #dataTable
-      [config]="dataConfig$ | async"
+      [config]="vm"
       (itemEdited)="updateItem($event)">
     </app-data-table>
-
-    <span fxLayout="row" fxLayoutAlign="space-between none">
-      <button mat-raised-button aria-label="Slett" class="backInUp" color="warn" [disabled]="!(selectedProperty$ | async)" (click)="openDeleteDialog()">
-          <mat-icon>delete_forever</mat-icon>
-      </button>
-
-      <button mat-raised-button aria-label="Ny" class="backInUp" color="accent" [disabled]="!(selectedProperty$ | async)" (click)="openCreateForm()">
-          <mat-icon>add</mat-icon>
-      </button>
-    </span>
 
   </div>
 </app-main-top-nav>
