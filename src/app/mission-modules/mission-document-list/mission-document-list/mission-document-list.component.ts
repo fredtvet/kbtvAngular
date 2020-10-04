@@ -16,6 +16,7 @@ import { MailDocumentFormComponent } from '../mail-document-form.component';
 import { MissionDocumentListStore } from '../mission-document-list.store';
 import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
 import { map } from 'rxjs/operators';
+import { MainTopNavConfig } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-mission-document-list',
@@ -31,9 +32,11 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
   ]).pipe(
     map(([documents, isXs, fabs]) => { return { 
       content: {documents, isXs},
-      navConfig: {title:  "Dokumenter", backFn: this.onBack, fabs}
+      fabs,
     }})
   )
+
+  navConfig: MainTopNavConfig;
   
   get missionId() { return this.route.snapshot.paramMap.get('id') }
 
@@ -47,7 +50,7 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     private notificationService: NotificationService,
     private confirmService: ConfirmDialogService,) {
       super();
-
+      this.navConfig = {title:  "Dokumenter", backFn: this.onBack, }
       this.staticFabs = [
         {icon: "note_add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openDocumentForm, allowedRoles: [Roles.Leder]}
       ];

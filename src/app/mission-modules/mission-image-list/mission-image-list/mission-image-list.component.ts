@@ -39,11 +39,11 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
     tap(x => this.images = x[0]),
     map(([images, isXs, fabs]) => { return { 
       content: {images, isXs}, 
-      navConfig: {...this.navConfig, fabs}
+      fabs: fabs
     }})
   )
 
-  private navConfig: MainTopNavConfig;
+  navConfig: MainTopNavConfig;
 
   private images: MissionImage[];
 
