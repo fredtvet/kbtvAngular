@@ -29,9 +29,7 @@ export class MainTopNavBarComponent {
       private mainNavService: MainNavService,
       private loadingService: LoadingService
     ) {}
-    ngOnChanges(): void {
-      console.log('MainTopNavBarComponent')
-    }
+
   onMenuButtonClick = () => this.mainNavService.toggleDrawer();
 
   toggleSearchBar = () => {

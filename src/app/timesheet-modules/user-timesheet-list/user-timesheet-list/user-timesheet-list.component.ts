@@ -56,9 +56,6 @@ export class UserTimesheetListComponent implements OnInit {
     private chipsFactory: ChipsFactoryService,
   ) {}
 
-  ngOnChanges(): void {
-    console.log('UserTimesheetListComponent')
-  }
   ngOnInit() { 
     let initFilter = this.route.snapshot.params.initialFilter;
 

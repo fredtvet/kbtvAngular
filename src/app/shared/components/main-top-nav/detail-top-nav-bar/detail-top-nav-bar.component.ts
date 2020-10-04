@@ -11,7 +11,4 @@ import { MainTopNavConfig } from '../main-top-nav-config.interface';
 })
 export class DetailTopNavBarComponent{
   @Input() config: MainTopNavConfig;    
-  ngOnChanges(): void {
-    console.log('DetailTopNavBarComponent')
-  }
 }

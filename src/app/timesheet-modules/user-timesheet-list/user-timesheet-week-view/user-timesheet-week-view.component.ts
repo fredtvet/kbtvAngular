@@ -50,16 +50,11 @@ export class UserTimesheetWeekViewComponent {
     private store: UserTimesheetListStore,
   ) {
    }
-
-  ngOnChanges(): void {
-    console.log('UserTimesheetWeekViewComponent')
-  }
   
   ngOnInit() {
     this.store.addGroupBy(GroupByPeriod.Day) 
     let initFilter = this.route.snapshot.params.initialFilter;
     initFilter = initFilter ? JSON.parse(initFilter) : {year: this.currentYear, weekNr: this.currentWeekNr};
-    console.log(initFilter);
     this.store.addWeekFilterCriteria(initFilter);
   }
 

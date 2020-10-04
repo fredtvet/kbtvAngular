@@ -26,9 +26,7 @@ import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 export class ChipsBarComponent{
 
   @Input() chips: AppChip[];
-  ngOnChanges(): void {
-    console.log('ChipsBarComponent')
-  }
+
   trackByChip = (index: number, chip:AppChip) => chip.text;
 
   handleFn = (fn: Function): void => fn ? fn() : null;

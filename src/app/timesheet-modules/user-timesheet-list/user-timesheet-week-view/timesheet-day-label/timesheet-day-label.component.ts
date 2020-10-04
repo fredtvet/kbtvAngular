@@ -13,7 +13,5 @@ export class TimesheetDayLabelComponent {
   @Output() labelClicked = new EventEmitter();
 
   constructor(public dialog: MatDialog) {}
-  ngOnChanges(): void {
-    console.log('TimesheetDayLabelComponent')
-  }
+
 }
