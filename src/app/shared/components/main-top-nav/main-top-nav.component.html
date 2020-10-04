@@ -9,7 +9,7 @@
       <app-main-top-nav-bar [config]="config" stylingClass="bg-primary"></app-main-top-nav-bar>
     </ng-template>
 
-    <app-chips-bar *ngFor="let chips of chipRows" [chips]="chips">
+    <app-chips-bar *ngFor="let chips of chipRows; trackBy: trackByChipRow" [chips]="chips.arr">
     </app-chips-bar>
 
   </span>

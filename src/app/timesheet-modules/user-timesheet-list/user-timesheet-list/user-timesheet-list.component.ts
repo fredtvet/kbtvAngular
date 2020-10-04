@@ -34,10 +34,10 @@ export class UserTimesheetListComponent implements OnInit {
           params: [null, {mission: x.criteria?.mission}]}
       ],
       chipRows: [
-        this.chipsFactory.createFilterChips(
+        {id: 1, arr: this.chipsFactory.createFilterChips(
           this.formatCriteriaChips(x.criteria), 
           (prop) => this.resetCriteriaProp(prop, x.criteria)
-        )
+        )}
       ]
     }})
   );

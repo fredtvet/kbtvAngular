@@ -32,13 +32,13 @@ export class TimesheetStatisticComponent {
         ]
       },
       chipRows: [ 
-        this.chipsFactory.createEnumSelectionChips(GroupByPeriod, x.groupBy, this.addGroupBy),
-        x.activeCriteriaCount > 0 ? 
+        {id: 1, arr: this.chipsFactory.createEnumSelectionChips(GroupByPeriod, x.groupBy, this.addGroupBy)},
+        {id: 1, arr: x.activeCriteriaCount > 0 ? 
           this.chipsFactory.createFilterChips(
             this.formatCriteriaChips(x.criteria), 
             (prop) => this.resetCriteriaProp(prop, x.criteria)
           ) 
-          : [{text: "Åpne filter", color:"accent", onClick: this.openBottomSheet}] 
+          : [{text: "Åpne filter", color:"accent", onClick: this.openBottomSheet}]}
       ]
     }
    

@@ -4,12 +4,10 @@ import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { Mission } from "src/app/core/models";
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
-import { FilteredResponse } from 'src/app/core/services/filter/interfaces';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
 import { Roles } from "src/app/shared-app/enums";
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
-import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 import { MainTopNavConfig } from "src/app/shared/components/main-top-nav/main-top-nav-config.interface";
 import { MissionCriteria } from "src/app/shared/interfaces/mission-filter-criteria.interface";
 import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
@@ -25,7 +23,7 @@ export class MissionListComponent {
   Roles = Roles;
 
   private navVm$: Observable<ViewModel<any>> = this.store.criteria$.pipe(map(x => { return {
-    chipRows: [this.getCriteriaChips(x)],
+    chipRows: [{id: 1, arr: this.getCriteriaChips(x)}],
     navConfig: this.getTopNavConfig(x)
   }}))
 

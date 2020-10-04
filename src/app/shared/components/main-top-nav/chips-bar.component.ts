@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { AppButton } from 'src/app/shared-app/interfaces/app-button.interface';
 import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 
 @Component({
@@ -28,7 +27,7 @@ export class ChipsBarComponent{
 
   @Input() chips: AppChip[];
 
-  trackByChip = (index: number, chip:AppButton) => chip.text;
+  trackByChip = (index: number, chip:AppChip) => chip.text;
 
   handleFn = (fn: Function): void => fn ? fn() : null;
 
