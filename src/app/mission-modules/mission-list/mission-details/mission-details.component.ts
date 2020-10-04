@@ -22,8 +22,6 @@ interface ViewModel extends BaseViewModel { mission: Mission }
 })
 export class MissionDetailsComponent{
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
-  RolePresets = RolePresets;
-  Roles = Roles;
 
   vm$: Observable<ViewModel> = this.store.getWithRelations$(this.missionId).pipe(
     map(mission => { return {

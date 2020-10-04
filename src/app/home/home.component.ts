@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
 import { SyncStore } from 'src/app/core/services/sync';
-import { RolePresets, Roles } from 'src/app/shared-app/enums';
+import { RolePresets } from 'src/app/shared-app/enums';
 import { _sortByDate } from '../shared-app/helpers/array/sort-by-date.helper';
 
 @Component({
@@ -12,9 +12,7 @@ import { _sortByDate } from '../shared-app/helpers/array/sort-by-date.helper';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
-  Roles = Roles;
-
-  rolePresets = RolePresets;
+  RolePresets = RolePresets;
 
   missionHistory$: Observable<Mission[]> = this.syncStore.missions$.pipe(
     map(x => _sortByDate(x, "lastVisited")?.slice(0,4))

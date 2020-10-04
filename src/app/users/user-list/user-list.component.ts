@@ -5,6 +5,7 @@ import { FormService } from 'src/app/core/services/form/form.service';
 import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
 import { ButtonTypes, Roles } from 'src/app/shared-app/enums';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav/main-top-nav-config.interface';
+import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { NewPasswordFormComponent } from '../new-password-form/new-password-form.component';
 import { UserFormViewConfig } from '../user-form-view/user-form-view-config.interface';
 import { UserFormViewComponent } from '../user-form-view/user-form-view.component';
@@ -52,5 +53,7 @@ export class UserListComponent {
       title: "Oppdater passord", 
       formComponent: NewPasswordFormComponent
     })
+
+  trackByUser = TrackByModel("users")
 
 }

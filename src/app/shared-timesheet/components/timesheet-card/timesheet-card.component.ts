@@ -1,6 +1,5 @@
-import { Component, Input, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Timesheet } from 'src/app/core/models';
-import { Roles } from 'src/app/shared-app/enums';
 import { TimesheetStatus } from 'src/app/shared/enums';
 
 @Component({
@@ -10,8 +9,6 @@ import { TimesheetStatus } from 'src/app/shared/enums';
 })
 
 export class TimesheetCardComponent {
-  Roles = Roles;
-  
   @Input() adminView: boolean = false;
   @Input() timesheet: Timesheet;
   @Input() loading: boolean;

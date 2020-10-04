@@ -22,8 +22,7 @@ interface ViewModel extends BaseViewModel { missions: Mission[] }
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MissionListComponent {
-  Roles = Roles;
-
+  
   private navVm$: Observable<BaseViewModel> = this.store.criteria$.pipe(map(x => { return {
     chipRows: [{id: 1, arr: this.getCriteriaChips(x)}],
     navConfig: this.getTopNavConfig(x)
