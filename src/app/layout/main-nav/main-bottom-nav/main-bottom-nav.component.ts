@@ -17,7 +17,7 @@ import { AppButton } from 'src/app/shared-app/interfaces';
 })
 export class MainBottomNavComponent {
 
-  @Input() config: {navigations: AppButton[]}
+  @Input() config: { navigations: AppButton[] }
 
   constructor() {}
 }

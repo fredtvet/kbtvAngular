@@ -3,7 +3,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ButtonTypes } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces/app-button.interface';
 import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
-import { TrackByCallback } from 'src/app/shared-app/track-by-callback';
+import { TrackByAppButton } from 'src/app/shared-app/track-by-app-button';
 import { ArrayRow } from '../../interfaces/array-row.interface';
 import { MainTopNavConfig } from './main-top-nav-config.interface';
 
@@ -20,7 +20,7 @@ export class MainTopNavComponent{
   @Input() fabs: AppButton[];
   @Input() chipRows: ArrayRow<AppChip>[];
 
-  trackByFab = (index: number, fab:AppButton) => TrackByCallback(index, fab.callback);
+  trackByFab = TrackByAppButton;
 
   trackByChipRow = (index: number, row: ArrayRow<any>) =>  row.id
 

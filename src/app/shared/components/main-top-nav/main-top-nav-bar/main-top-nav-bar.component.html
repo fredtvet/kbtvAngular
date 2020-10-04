@@ -37,7 +37,7 @@
             icon: 'search'}">
         </app-button>
 
-        <app-button *ngFor="let button of config?.buttons | transformButtons: ButtonTypes.Icon" [config]="button">
+        <app-button *ngFor="let button of config?.buttons | transformButtons: ButtonTypes.Icon; trackBy: TrackByButton" [config]="button">
         </app-button>
 
     </ng-container>
