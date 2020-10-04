@@ -29,7 +29,7 @@ export class MainNavComponent extends SubscriptionComponent {
   toggleDrawer = () => this.drawer.toggle();
 
   prepareRoute(outlet: RouterOutlet) {
-    // console.log(outlet && outlet.activatedRouteData && outlet.activatedRouteData['page']);
+    console.log(outlet && outlet.activatedRouteData && outlet.activatedRouteData['depth']);
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['depth'];
   }
 

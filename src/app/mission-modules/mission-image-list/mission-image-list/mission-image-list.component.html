@@ -1,11 +1,11 @@
-<app-main-top-nav *ngIf="vm$ | async; let vm" [config]="navConfig" [fabs]="vm.fabs">
+<app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig" [fabs]="vm.fabs">
     <app-selectable-list #imageList 
-        *ngIf="vm.content.images" identifier="id"
-        [totalRows]="vm.content.isXs ? 2 : 4"
-        [entities]="vm.content.images" 
+        *ngIf="vm.images" identifier="id"
+        [totalRows]="vm.isXs ? 2 : 4"
+        [entities]="vm.images" 
         [itemTemplate]="imgTemplate"
         (selectionChanged)="onSelectionChange($event)"
-        (itemClicked)="openImageViewer($event, vm.content.images)">
+        (itemClicked)="openImageViewer($event, vm.images)">
     </app-selectable-list>
 </app-main-top-nav>
 

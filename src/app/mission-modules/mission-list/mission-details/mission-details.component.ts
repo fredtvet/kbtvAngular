@@ -9,25 +9,25 @@ import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-me
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { TimesheetStatus } from 'src/app/shared/enums';
 import { MainTopNavConfig } from 'src/app/shared/interfaces';
-import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
+import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { AppFileUrlPipe } from 'src/app/shared/pipes/app-file-url.pipe';
 import { MissionListStore } from '../mission-list.store';
+
+interface ViewModel extends BaseViewModel { mission: Mission }
 
 @Component({
   selector: 'app-mission-details',
   templateUrl: './mission-details.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class MissionDetailsComponent{
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
   RolePresets = RolePresets;
   Roles = Roles;
 
-  vm$: Observable<ViewModel<Mission>> = this.store.getWithRelations$(this.missionId).pipe(
+  vm$: Observable<ViewModel> = this.store.getWithRelations$(this.missionId).pipe(
     map(mission => { return {
-      navConfig: this.getNavConfig(mission),
-      content: mission
+      navConfig: this.getNavConfig(mission), mission
     }})
   );
 

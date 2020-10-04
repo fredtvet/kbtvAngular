@@ -49,7 +49,6 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
         const filtered = _filter(state.missions, (entity) => filter.check(entity));
         return {
             criteria: state.missionCriteria,
-            activeCriteriaCount: _getSetPropCount(state.missionCriteria, {finished:false}),
             records: _sortByDate(filtered, "updatedAt") 
         }})
       );

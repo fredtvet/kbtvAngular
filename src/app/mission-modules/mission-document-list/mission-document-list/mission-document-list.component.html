@@ -1,7 +1,7 @@
-<app-main-top-nav *ngIf="vm$ | async; let vm" [fabs]="vm.fabs" [config]="navConfig">
-    <app-selectable-list #documentList *ngIf="vm.content.documents" identifier="id"
-        [totalRows]="vm.content.isXs ? 2 : 4"
-        [entities]="vm.content.documents" 
+<app-main-top-nav *ngIf="vm$ | async; let vm" [fabs]="vm.fabs" [config]="vm.navConfig">
+    <app-selectable-list #documentList *ngIf="vm.documents" identifier="id"
+        [totalRows]="vm.isXs ? 2 : 4"
+        [entities]="vm.documents" 
         [itemTemplate]="documentTemplate"
         (selectionChanged)="onSelectionChange($event)"
         (itemClicked)="downloadDocument($event)">

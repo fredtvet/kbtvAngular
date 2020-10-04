@@ -11,8 +11,10 @@ import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/com
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetStatus } from 'src/app/shared/enums';
 import { MainTopNavConfig } from 'src/app/shared/interfaces';
-import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
+import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
+
+interface ViewModel extends BaseViewModel { summaries: TimesheetSummary[] }
 
 @Component({
   selector: 'app-timesheet-admin-week-list',
@@ -23,10 +25,10 @@ export class TimesheetAdminWeekListComponent {
    
   loading$ = this.loadingService.queryLoading$;
 
-  vm$: Observable<ViewModel<TimesheetSummary[]>> = this.store.timesheetSummaries$.pipe(
+  vm$: Observable<ViewModel> = this.store.timesheetSummaries$.pipe(
     map(response => { return {
       navConfig: this.getNavConfig(),
-      content: response.records?.sort((a, b) => b.week - a.week)
+      summaries: response.records?.sort((a, b) => b.week - a.week)
     }})
   );
 

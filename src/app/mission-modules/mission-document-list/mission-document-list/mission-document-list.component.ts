@@ -14,9 +14,11 @@ import { SelectableListContainerComponent } from 'src/app/shared/components/abst
 import { _appFileUrl } from 'src/app/shared-app/helpers/app-file-url.helper';
 import { MailDocumentFormComponent } from '../mail-document-form.component';
 import { MissionDocumentListStore } from '../mission-document-list.store';
-import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
 import { map } from 'rxjs/operators';
 import { MainTopNavConfig } from 'src/app/shared/interfaces';
+import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
+
+interface ViewModel extends BaseViewModel { documents: MissionDocument[], isXs: boolean }
 
 @Component({
   selector: 'app-mission-document-list',
@@ -25,21 +27,21 @@ import { MainTopNavConfig } from 'src/app/shared/interfaces';
 })
 export class MissionDocumentListComponent extends SelectableListContainerComponent {
 
-  vm$: Observable<ViewModel<{documents: MissionDocument[], isXs: boolean}>> = combineLatest([
+  vm$: Observable<ViewModel> = combineLatest([
     this.store.getByMissionIdWithType$(this.missionId),
     this.deviceInfoService.isXs$,
     this.currentFabs$
   ]).pipe(
     map(([documents, isXs, fabs]) => { return { 
-      content: {documents, isXs},
-      fabs,
+      documents, isXs, fabs, navConfig: this.navConfig
     }})
   )
 
-  navConfig: MainTopNavConfig;
-  
+
   get missionId() { return this.route.snapshot.paramMap.get('id') }
 
+  private navConfig: MainTopNavConfig;
+  
   constructor( 
     private deviceInfoService: DeviceInfoService,     
     private formService: FormService, 

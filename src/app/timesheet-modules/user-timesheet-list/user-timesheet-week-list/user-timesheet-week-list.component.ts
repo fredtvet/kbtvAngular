@@ -8,8 +8,10 @@ import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/com
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { GroupByPeriod } from 'src/app/shared/enums';
 import { MainTopNavConfig } from 'src/app/shared/interfaces';
-import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
+import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
+
+interface ViewModel extends BaseViewModel { summaries: TimesheetSummary[] }
 
 @Component({
   selector: 'app-user-timesheet-week-list',
@@ -18,10 +20,10 @@ import { UserTimesheetListStore } from '../user-timesheet-list.store';
 })
 export class UserTimesheetWeekListComponent implements OnInit {
 
-  vm$: Observable<ViewModel<TimesheetSummary[]>> = this.store.timesheetSummaries$.pipe(
+  vm$: Observable<ViewModel> = this.store.timesheetSummaries$.pipe(
     map(arr => { return {
       navConfig: this.getTopNavConfig(),
-      content: arr.sort((a,b) => b.week - a.week)
+      summaries: arr.sort((a,b) => b.week - a.week)
     }})
   );
 

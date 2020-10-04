@@ -38,7 +38,6 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
         const filter = new TimesheetFilter(state[this.settings.criteriaProp]);
         return {
           criteria: filter.criteria,
-          activeCriteriaCount: _getSetPropCount(filter.criteria, {dateRangePreset:null}),
           records: _filter(state.timesheets, (entity) => filter.check(entity)),
         };
       })
@@ -51,11 +50,9 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
   ]).pipe(
     map(([filtered, groupBy, users]) => {
       const summaries = 
-        this.timesheetSummaryAggregator.groupByType(groupBy, filtered.records);
-        
+        this.timesheetSummaryAggregator.groupByType(groupBy, filtered.records);       
       return {
         groupBy,
-        activeCriteriaCount: filtered.activeCriteriaCount,
         criteria: filtered.criteria,
         records: this.addFullNameToSummaries(summaries, users),
       };
@@ -95,8 +92,7 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
             );
             this.setState(state, null, false);
           })
-        )
-        .subscribe();
+        ).subscribe();
     }
   }
 

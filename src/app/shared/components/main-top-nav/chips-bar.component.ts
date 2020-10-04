@@ -8,7 +8,7 @@ import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 
         <mat-chip-list aria-orientation="horizontal" class="horizontal-chips">
 
-        <mat-chip *ngFor="let chip of chips; trackBy: trackByChip" selected="true"
+        <mat-chip *ngFor="let chip of chips; trackBy: trackByChip" selected="true" class="fadeIn"
             [color]="chip.color || 'background'"
             [removable]="chip.onRemoved"  
             (click)="handleFn(chip.onClick)"
@@ -26,7 +26,9 @@ import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 export class ChipsBarComponent{
 
   @Input() chips: AppChip[];
-
+  ngOnChanges(): void {
+    console.log('ChipsBarComponent')
+  }
   trackByChip = (index: number, chip:AppChip) => chip.text;
 
   handleFn = (fn: Function): void => fn ? fn() : null;

@@ -10,5 +10,8 @@ import { MainTopNavConfig } from '../main-top-nav-config.interface';
   providers:[MatBottomSheet]
 })
 export class DetailTopNavBarComponent{
-  @Input() config: MainTopNavConfig;
+  @Input() config: MainTopNavConfig;    
+  ngOnChanges(): void {
+    console.log('DetailTopNavBarComponent')
+  }
 }

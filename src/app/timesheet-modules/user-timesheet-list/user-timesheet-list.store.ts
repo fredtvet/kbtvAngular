@@ -22,12 +22,12 @@ import { StoreState } from './store-state';
 })
 export class UserTimesheetListStore extends ObservableStore<StoreState> 
   implements FilterStore<TimesheetCriteria, TimesheetFilterViewConfig> {
-
-  private _weekCriteria: WeekCriteria;
   
-  get weekCriteria(): WeekCriteria { return {...this._weekCriteria} };
-
-  get criteria(){return this.getStateProperty<TimesheetCriteria>("userTimesheetListCriteria") || {}} 
+  criteria$ = this.stateProperty$<TimesheetCriteria>("userTimesheetListCriteria");
+  get criteria(): TimesheetCriteria{ return this.getStateProperty("userTimesheetListCriteria") || {}} 
+  
+  weekCriteria$ = this.stateProperty$<WeekCriteria>("userTimesheetListWeekCriteria");
+  get weekCriteria(): WeekCriteria { return this.getStateProperty("userTimesheetListWeekCriteria") };
 
   groupBy$ = this.stateProperty$<GroupByPeriod>("userTimesheetListGroupBy");
 
@@ -38,7 +38,6 @@ export class UserTimesheetListStore extends ObservableStore<StoreState>
             const filter = new TimesheetFilter(state.userTimesheetListCriteria);
             return {
               criteria: filter?.criteria,
-              activeCriteriaCount: _getSetPropCount(filter.criteria, {dateRangePreset:null}),
               records: this.getRangeWithRelationsHelper.get(state as any, relationCfg, filter?.check)
             }
           }),       
@@ -63,17 +62,19 @@ export class UserTimesheetListStore extends ObservableStore<StoreState>
     super(base);
   }
 
-  addWeekFilterCriteria(weekCriteria: WeekCriteria): void{
-    this._weekCriteria = weekCriteria;
-    this.addFilterCriteria(this.weekToTimesheetCriteriaConverter.convert(weekCriteria))
-  }
+  addWeekFilterCriteria = (weekCriteria: WeekCriteria): void => 
+    this.setState({
+      userTimesheetListWeekCriteria: weekCriteria,
+      userTimesheetListCriteria: this.weekToTimesheetCriteriaConverter.convert(weekCriteria)
+    });
+  
 
-  addFilterCriteria = (criteria: TimesheetCriteria) => 
+  addFilterCriteria = (criteria: TimesheetCriteria): void => 
     this.setState({userTimesheetListCriteria: criteria});
 
-  addGroupBy(type: GroupByPeriod){
+  addGroupBy = (type: GroupByPeriod): void =>
     this.setState({userTimesheetListGroupBy: type});
-  }
+  
 
 }
 

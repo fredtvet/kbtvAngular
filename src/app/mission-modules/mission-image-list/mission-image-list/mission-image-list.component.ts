@@ -15,35 +15,35 @@ import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { _appFileUrl } from 'src/app/shared-app/helpers/app-file-url.helper';
 import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
 import { MainTopNavConfig } from 'src/app/shared/interfaces';
-import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
+import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MailImageFormComponent } from '../mail-image-form.component';
 import { MissionImageListStore } from '../mission-image-list.store';
+
+interface ViewModel extends BaseViewModel { images: MissionImage[], isXs: boolean }
 
 @Component({
   selector: "app-mission-image-list",
   templateUrl: "./mission-image-list.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class MissionImageListComponent extends SelectableListContainerComponent{
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
 
   get missionId() { return this.route.snapshot.paramMap.get('id'); }
   
-  vm$: Observable<ViewModel<{images: MissionImage[], isXs: boolean}>> = combineLatest([
+  vm$: Observable<ViewModel> = combineLatest([
     this.store.getByMissionId$(this.missionId),
     this.deviceInfoService.isXs$,
     this.currentFabs$
   ]).pipe(
     tap(x => this.images = x[0]),
     map(([images, isXs, fabs]) => { return { 
-      content: {images, isXs}, 
-      fabs: fabs
+      images, isXs, fabs, navConfig: this.navConfig
     }})
   )
 
-  navConfig: MainTopNavConfig;
+  private navConfig: MainTopNavConfig;
 
   private images: MissionImage[];
 

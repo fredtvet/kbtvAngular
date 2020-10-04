@@ -9,10 +9,12 @@ import { Roles } from "src/app/shared-app/enums";
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { MainTopNavConfig } from "src/app/shared/components/main-top-nav/main-top-nav-config.interface";
+import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { MissionCriteria } from "src/app/shared/interfaces/mission-filter-criteria.interface";
-import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
 import { MissionFilterViewComponent } from "../mission-filter-view/mission-filter-view.component";
 import { MissionListStore } from "../mission-list.store";
+
+interface ViewModel extends BaseViewModel { missions: Mission[] }
 
 @Component({
   selector: "app-mission-list",
@@ -22,15 +24,15 @@ import { MissionListStore } from "../mission-list.store";
 export class MissionListComponent {
   Roles = Roles;
 
-  private navVm$: Observable<ViewModel<any>> = this.store.criteria$.pipe(map(x => { return {
+  private navVm$: Observable<Partial<ViewModel>> = this.store.criteria$.pipe(map(x => { return {
     chipRows: [{id: 1, arr: this.getCriteriaChips(x)}],
     navConfig: this.getTopNavConfig(x)
   }}))
 
-  vm$: Observable<ViewModel<Mission[]>> = combineLatest([
+  vm$: Observable<ViewModel> = combineLatest([
     this.store.filteredMissions$,
     this.navVm$
-  ]).pipe(map(([filtered, vm]) => { return {...vm, fabs: this.fabs, content: filtered.records} }));
+  ]).pipe(map(([filtered, vm]) => { return {...vm, fabs: this.fabs, missions: filtered.records} }));
 
   private fabs: AppButton[];
 

@@ -15,5 +15,7 @@ export class TimesheetMissionBarComponent {
   constructor() { }
   
   clickBar(): void { this.barClicked.emit(); }
-
+  ngOnChanges(): void {
+    console.log('TimesheetMissionBarComponent')
+  }
 }

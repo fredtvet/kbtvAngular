@@ -1,21 +1,24 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Observable } from "rxjs";
+import { combineLatest, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Timesheet } from "src/app/core/models";
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
-import { FilterConfig, FilteredResponse } from 'src/app/core/services/filter/interfaces';
+import { FilterConfig } from 'src/app/core/services/filter/interfaces';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
 import { DateRangePresets } from 'src/app/shared-app/enums';
+import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view.component';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetStatus } from 'src/app/shared/enums';
 import { MainTopNavConfig } from 'src/app/shared/interfaces';
-import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
+import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetForm } from '../../user-timesheet-form/user-timesheet-form-view/timesheet-form.interface';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
+
+interface ViewModel extends BaseViewModel { timesheets: Timesheet[] }
 
 @Component({
   selector: "app-user-timesheet-list",
@@ -24,22 +27,25 @@ import { UserTimesheetListStore } from '../user-timesheet-list.store';
 })
 export class UserTimesheetListComponent implements OnInit {
 
-  vm$: Observable<ViewModel<Timesheet[]>> = this.store.filteredTimesheets$.pipe(
-    map(x => { return {
-      navConfig: this.getTopNavConfig(x),
-      content: x.records,      
+  private navView$: Observable<BaseViewModel> = this.store.criteria$.pipe(
+    map(criteria => { return {
+      navConfig: this.getTopNavConfig(criteria),
       fabs: [
         {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', 
           callback: this.openTimesheetForm,
-          params: [null, {mission: x.criteria?.mission}]}
+          params: [null, {mission: criteria?.mission}]}
       ],
       chipRows: [
         {id: 1, arr: this.chipsFactory.createFilterChips(
-          this.formatCriteriaChips(x.criteria), 
-          (prop) => this.resetCriteriaProp(prop, x.criteria)
+          this.formatCriteriaChips(criteria), 
+          (prop) => this.resetCriteriaProp(prop, criteria)
         )}
       ]
     }})
+  )
+
+  vm$: Observable<ViewModel> = combineLatest([this.store.filteredTimesheets$, this.navView$]).pipe(
+    map(([filtered, vm]) => { return {...vm, timesheets: filtered.records}})
   );
 
   constructor(
@@ -50,6 +56,9 @@ export class UserTimesheetListComponent implements OnInit {
     private chipsFactory: ChipsFactoryService,
   ) {}
 
+  ngOnChanges(): void {
+    console.log('UserTimesheetListComponent')
+  }
   ngOnInit() { 
     let initFilter = this.route.snapshot.params.initialFilter;
 
@@ -82,14 +91,15 @@ export class UserTimesheetListComponent implements OnInit {
     else this.router.navigate(["/hjem"]);
   }
 
-  private getTopNavConfig = (res: FilteredResponse<TimesheetCriteria, Timesheet>): MainTopNavConfig => {
+  private getTopNavConfig = (criteria: TimesheetCriteria): MainTopNavConfig => {
+    let activeCriteriaCount = _getSetPropCount(criteria, {dateRangePreset:null})
     return {
       title:  "Timeliste", 
       backFn: this.onBack,     
       buttons: [{
         icon: 'filter_list', 
         callback: this.openFilterSheet,
-        colorClass: (res && res.activeCriteriaCount && res.activeCriteriaCount > 0) ? "color-accent" : ""
+        colorClass: (activeCriteriaCount && activeCriteriaCount > 0) ? "color-accent" : ""
       }],
     }
   }

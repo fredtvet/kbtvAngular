@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { _getDateOfWeek } from 'src/app/shared-app/helpers/datetime/get-date-of-week.helper';
@@ -12,11 +12,15 @@ import { _mapObjectsToWeekdays } from 'src/app/shared-app/helpers/object/map-obj
 import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { GroupByPeriod } from 'src/app/shared/enums';
-import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
+import { MainTopNavConfig } from 'src/app/shared/interfaces';
+import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetForm } from '../../user-timesheet-form/user-timesheet-form-view/timesheet-form.interface';
 import { UserTimesheetCardDialogWrapperComponent } from '../user-timesheet-card-dialog-wrapper.component';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
+
+interface ViewModel extends BaseViewModel 
+  { summaries: {[key: number]: TimesheetSummary}, weekCriteria: WeekCriteria, isXs: boolean }
 
 @Component({
   selector: "app-user-timesheet-week-view",
@@ -30,13 +34,12 @@ export class UserTimesheetWeekViewComponent {
 
   get weekCriteria(): WeekCriteria { return this.store.weekCriteria };
 
-  isXs$ = this.deviceInfoService.isXs$;
-
-  vm$: Observable<ViewModel<{ [key: number]: TimesheetSummary }>> = this.store.timesheetSummaries$.pipe(
-    map(x => { return {
-      navConfig: this.getNavConfig(),
-      content: _mapObjectsToWeekdays(x, "date")
-    }}),
+  vm$: Observable<ViewModel> = combineLatest([
+    this.store.timesheetSummaries$.pipe(map(x => _mapObjectsToWeekdays(x, "date"))),
+    this.store.weekCriteria$.pipe(map(x => [x, this.getNavConfig(x) as any])),
+    this.deviceInfoService.isXs$
+  ]).pipe(
+    map(([summaries, [weekCriteria, navConfig], isXs]) => { return { navConfig, isXs, summaries, weekCriteria }}),
   );
 
   constructor(
@@ -45,12 +48,18 @@ export class UserTimesheetWeekViewComponent {
     private dialog: MatDialog,
     private deviceInfoService: DeviceInfoService,
     private store: UserTimesheetListStore,
-  ) { }
+  ) {
+   }
 
+  ngOnChanges(): void {
+    console.log('UserTimesheetWeekViewComponent')
+  }
+  
   ngOnInit() {
     this.store.addGroupBy(GroupByPeriod.Day) 
     let initFilter = this.route.snapshot.params.initialFilter;
     initFilter = initFilter ? JSON.parse(initFilter) : {year: this.currentYear, weekNr: this.currentWeekNr};
+    console.log(initFilter);
     this.store.addWeekFilterCriteria(initFilter);
   }
 
@@ -102,10 +111,10 @@ export class UserTimesheetWeekViewComponent {
   private goToWeekList = () => 
     this.router.navigate(['mine-timer/ukeliste', {initialFilter: JSON.stringify({year: this.weekCriteria?.year})}])
 
-  private getNavConfig(){
-    return {
-      title:  "Uke " + this.weekCriteria?.weekNr || "",
-      subTitle: this.weekCriteria?.year?.toString() || "",
+  private getNavConfig(weekCriteria: WeekCriteria): MainTopNavConfig{
+    return { 
+      title:  "Uke " + weekCriteria?.weekNr || "",
+      subTitle: weekCriteria?.year?.toString() || "",
       backFn: this.goToWeekList,
       buttons: [{icon: "list", callback: this.goToTimesheetList}]
     }

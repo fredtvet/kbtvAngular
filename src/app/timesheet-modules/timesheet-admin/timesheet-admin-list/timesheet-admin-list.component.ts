@@ -10,9 +10,11 @@ import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { TimesheetStatus } from 'src/app/shared/enums';
 import { MainTopNavConfig } from 'src/app/shared/interfaces';
-import { ViewModel } from 'src/app/shared/interfaces/view-model.interface';
+import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
+
+interface ViewModel extends BaseViewModel { timesheets: Timesheet[] }
 
 @Component({
   selector: 'app-timesheet-admin-list',
@@ -23,10 +25,10 @@ export class TimesheetAdminListComponent{
     
   loading$ = this.loadingService.queryLoading$;
 
-  vm$: Observable<ViewModel<Timesheet[]>> = this.store.filteredTimesheets$.pipe(
+  vm$: Observable<ViewModel> = this.store.filteredTimesheets$.pipe(
     map(x => { return {
       navConfig: this.getTopNavConfig(),
-      content: x.records
+      timesheets: x.records
     }})
   );
 

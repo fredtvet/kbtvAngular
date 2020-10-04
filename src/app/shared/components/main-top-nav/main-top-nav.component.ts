@@ -23,5 +23,7 @@ export class MainTopNavComponent{
   trackByFab = TrackByAppButton;
 
   trackByChipRow = (index: number, row: ArrayRow<any>) =>  row.id
-
+  ngOnChanges(): void {
+    console.log('MainTopNavComponent')
+  }
 }
