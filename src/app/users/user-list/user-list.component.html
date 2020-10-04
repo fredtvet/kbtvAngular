@@ -1,6 +1,6 @@
 <app-main-top-nav [config]="navConfig">
 
-  <div class="p-2 max-width" *ngIf="users$ | async else loading; let users; let index = index">
+  <div class="p-2 max-width" *ngIf="users$ | async else loading; let users;">
 
     <app-user-card *ngFor="let user of users; trackBy: trackByUser" 
       [user]="user"

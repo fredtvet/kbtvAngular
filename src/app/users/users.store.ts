@@ -3,19 +3,19 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { ApiUrl } from 'src/app/core/api-url.enum';
 import { User } from "src/app/core/models";
-import { ObservableStoreBase } from '../core/services/state/observable-store-base';
 import { ApiService } from '../core/services/api.service';
+import { BaseModelStore } from '../core/services/state/abstracts/base-model.store';
+import { ObservableStoreBase } from '../core/services/state/observable-store-base';
 import { Roles } from '../shared-app/enums';
 import { _groupBy } from '../shared-app/helpers/array/group-by.helper';
 import { StoreState } from './store-state';
-import { BaseModelStore } from '../core/services/state/abstracts/base-model.store';
 
 @Injectable({
   providedIn: 'any',
 })
 export class UsersStore extends BaseModelStore<StoreState> {
 
-  sortedUsers$: Observable<User[]>;
+  sortedUsers$: Observable<User[]> = this.modelProperty$<User[]>("users").pipe(map(x => this.sortByRole(x)));
   
   get users(): User[]{ return this.getStateProperty("users"); }
 
