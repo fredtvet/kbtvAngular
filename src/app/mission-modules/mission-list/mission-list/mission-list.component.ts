@@ -24,7 +24,7 @@ interface ViewModel extends BaseViewModel { missions: Mission[] }
 export class MissionListComponent {
   Roles = Roles;
 
-  private navVm$: Observable<Partial<ViewModel>> = this.store.criteria$.pipe(map(x => { return {
+  private navVm$: Observable<BaseViewModel> = this.store.criteria$.pipe(map(x => { return {
     chipRows: [{id: 1, arr: this.getCriteriaChips(x)}],
     navConfig: this.getTopNavConfig(x)
   }}))

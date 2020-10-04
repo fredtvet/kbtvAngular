@@ -4,7 +4,7 @@ import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 @Component({
   selector: 'app-chips-bar',
   template: `
-     <div class="horizontal-chips-container">
+     <div class="horizontal-chips-container" *ngIf="chips && chips.length > 0">
 
         <mat-chip-list aria-orientation="horizontal" class="horizontal-chips">
 
