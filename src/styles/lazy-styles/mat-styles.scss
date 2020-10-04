@@ -33,10 +33,13 @@
   width: 20px;
   height: 100%;
   z-index:1;
+  pointer-events:none!important;
 }
+
 .horizontal-chips-container:before {
   box-shadow: 15px 0 7px -12px inset $primary;
 }
+
 .horizontal-chips-container:after {
   box-shadow: -15px 0 7px -12px inset $primary;
   right:0;
@@ -58,10 +61,13 @@
       .mat-standard-chip{
         margin:2px;
       }    
-      :first-child{
-        margin-left:4px!important;
-      }
     }
-
+    //Janky way to add space before after chips
+    .mat-chip-list-wrapper:before,  .mat-chip-list-wrapper:after{
+      content: ".";
+      color:transparent;
+    }
   } 
+ 
 }
+
