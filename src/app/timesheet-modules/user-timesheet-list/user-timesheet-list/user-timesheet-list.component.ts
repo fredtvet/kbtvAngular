@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { combineLatest, Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { debounceTime, map } from "rxjs/operators";
 import { Timesheet } from "src/app/core/models";
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilterConfig } from 'src/app/core/services/filter/interfaces';
@@ -45,7 +45,7 @@ export class UserTimesheetListComponent implements OnInit {
   )
 
   vm$: Observable<ViewModel> = combineLatest([this.store.filteredTimesheets$, this.navView$]).pipe(
-    map(([filtered, vm]) => { return {...vm, timesheets: filtered.records}})
+    debounceTime(1), map(([filtered, vm]) => { return {...vm, timesheets: filtered.records}})
   );
 
   constructor(

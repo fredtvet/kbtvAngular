@@ -70,8 +70,8 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
     this.setState(settings.initialState, null, false);
   }
 
-  addTimesheetCriteria(criteria: TimesheetCriteria) {
-    let state: Partial<TState> = {};
+  addTimesheetCriteria(criteria: TimesheetCriteria, withState?: Partial<TState>) {
+    let state: Partial<TState> = withState || {};
     state[this.settings.criteriaProp] = criteria as any;
 
     const filter = new TimesheetFilter(criteria);

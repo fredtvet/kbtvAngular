@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilterConfig } from 'src/app/core/services/filter/interfaces';
@@ -25,12 +25,12 @@ export class TimesheetAdminWeekListComponent {
    
   loading$ = this.loadingService.queryLoading$;
 
-  vm$: Observable<ViewModel> = this.store.timesheetSummaries$.pipe(
-    map(response => { return {
-      navConfig: this.getNavConfig(),
-      summaries: response.records?.sort((a, b) => b.week - a.week)
-    }})
-  );
+  vm$: Observable<ViewModel> = combineLatest([
+    this.store.timesheetSummaries$.pipe(map(x => x.records?.sort((a, b) => b.week - a.week))),
+    this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x)))
+  ]).pipe(debounceTime(1),map(([summaries, navConfig]) => { 
+    return { summaries, navConfig }
+  }));
 
   constructor(
     private loadingService: LoadingService,
@@ -73,10 +73,10 @@ export class TimesheetAdminWeekListComponent {
     this.router.navigate(["timeadministrering"])
   }
 
-  private getNavConfig(): MainTopNavConfig {
+  private getNavConfig(weekCriteria: WeekCriteria): MainTopNavConfig {
     return {
       title:  "Uker",
-      subTitle: (this.store.weekCriteria?.year || '') + ' - ' + (this.store.weekCriteria?.user?.userName || ''),
+      subTitle: (weekCriteria?.year || '') + ' - ' + (weekCriteria?.user?.userName || ''),
       backFn: this.onBack,
       buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]
     }

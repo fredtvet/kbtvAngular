@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilterConfig } from 'src/app/core/services/filter/interfaces';
@@ -25,12 +25,12 @@ export class TimesheetAdminListComponent{
     
   loading$ = this.loadingService.queryLoading$;
 
-  vm$: Observable<ViewModel> = this.store.filteredTimesheets$.pipe(
-    map(x => { return {
-      navConfig: this.getTopNavConfig(),
-      timesheets: x.records
-    }})
-  );
+  vm$: Observable<ViewModel> = combineLatest([
+    this.store.filteredTimesheets$,
+    this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x)))
+  ]).pipe(debounceTime(1), map(([filtered, navConfig]) => { 
+    return { navConfig, timesheets: filtered.records }
+  }));
 
   constructor(
     private loadingService: LoadingService,
@@ -49,10 +49,10 @@ export class TimesheetAdminListComponent{
     });
   }
 
-  private getTopNavConfig(): MainTopNavConfig {
+  private getNavConfig(weekCriteria: WeekCriteria): MainTopNavConfig {
     return {
-      title:  "Uke " + this.store.weekCriteria.weekNr || "",
-      subTitle: (this.store.weekCriteria.year || "") + ' - ' + (this.store.weekCriteria.user?.userName || ""),
+      title:  "Uke " + weekCriteria.weekNr || "",
+      subTitle: (weekCriteria.year || "") + ' - ' + (weekCriteria.user?.userName || ""),
       backFn: this.onBack,
       backFnParams: [null],
       buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]

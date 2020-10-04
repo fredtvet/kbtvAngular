@@ -8,7 +8,6 @@ import { FormService } from 'src/app/core/services/form/form.service';
 import { NotificationService } from 'src/app/core/services/notification';
 import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
-import { MainNavService } from 'src/app/layout';
 import { Roles } from 'src/app/shared-app/enums';
 import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
 import { _appFileUrl } from 'src/app/shared-app/helpers/app-file-url.helper';
@@ -52,7 +51,9 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     private notificationService: NotificationService,
     private confirmService: ConfirmDialogService,) {
       super();
+      
       this.navConfig = {title:  "Dokumenter", backFn: this.onBack, }
+
       this.staticFabs = [
         {icon: "note_add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openDocumentForm, allowedRoles: [Roles.Leder]}
       ];

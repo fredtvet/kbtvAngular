@@ -74,7 +74,7 @@ export class MissionDetailsComponent{
         imgSrc: this.appFileUrl.transform(mission, "missionheader"),
         backFn: this.onBack,
         buttons: [
-          {icon: "timer", callback: this.goToTimesheets, params:[mission], allowedRoles: RolePresets.Internal},
+          {icon: "timer", callback: this.goToTimesheets, params: [mission], allowedRoles: RolePresets.Internal},
           {icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission], allowedRoles: RolePresets.Authority},
         ]
     }

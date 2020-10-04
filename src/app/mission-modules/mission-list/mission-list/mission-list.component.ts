@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { combineLatest, Observable } from 'rxjs';
-import { map } from "rxjs/operators";
+import { debounceTime, map } from "rxjs/operators";
 import { Mission } from "src/app/core/models";
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
@@ -22,7 +22,7 @@ interface ViewModel extends BaseViewModel { missions: Mission[] }
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MissionListComponent {
-  
+
   private navVm$: Observable<BaseViewModel> = this.store.criteria$.pipe(map(x => { return {
     chipRows: [{id: 1, arr: this.getCriteriaChips(x)}],
     navConfig: this.getTopNavConfig(x)
@@ -31,7 +31,11 @@ export class MissionListComponent {
   vm$: Observable<ViewModel> = combineLatest([
     this.store.filteredMissions$,
     this.navVm$
-  ]).pipe(map(([filtered, vm]) => { return {...vm, fabs: this.fabs, missions: filtered.records} }));
+  ]).pipe(debounceTime(1),
+    map(([filtered, vm]) => { 
+      return {...vm, fabs: this.fabs, missions: filtered.records} 
+    })
+  );
 
   private fabs: AppButton[];
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { debounceTime, filter, map } from 'rxjs/operators';
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
@@ -20,12 +20,12 @@ interface ViewModel extends BaseViewModel { summaries: TimesheetSummary[] }
 })
 export class UserTimesheetWeekListComponent implements OnInit {
 
-  vm$: Observable<ViewModel> = this.store.timesheetSummaries$.pipe(
-    map(arr => { return {
-      navConfig: this.getTopNavConfig(),
-      summaries: arr.sort((a,b) => b.week - a.week)
-    }})
-  );
+  vm$: Observable<ViewModel> = combineLatest([
+    this.store.timesheetSummaries$.pipe(map(x => x.sort((a,b) => b.week - a.week))),
+    this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x)))
+  ]).pipe(debounceTime(1), map(([summaries, navConfig]) => { 
+    return { navConfig, summaries }
+  }));
 
   constructor(
     private filterService: FilterSheetService,
@@ -62,8 +62,8 @@ export class UserTimesheetWeekListComponent implements OnInit {
       .subscribe(f => this.store.addWeekFilterCriteria(f));
   }
 
-  private getTopNavConfig = (): MainTopNavConfig => {  
-    const year = this.store.weekCriteria?.year; 
+  private getNavConfig = (weekCriteria: WeekCriteria): MainTopNavConfig => {  
+    const year = weekCriteria?.year; 
     return {
       title:  "Ukeliste", 
       subTitle: year ? year.toString() : "",

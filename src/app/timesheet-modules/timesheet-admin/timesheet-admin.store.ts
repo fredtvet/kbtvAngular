@@ -30,8 +30,8 @@ const TimesheetAdminStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
 })
 export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implements FilterStore<WeekCriteria, WeekFilterViewConfig>{
 
-    private _weekCriteria: WeekCriteria; 
-    get weekCriteria(): WeekCriteria { return {...this._weekCriteria} };
+    weekCriteria = this.getStateProperty<WeekCriteria>("timesheetAdminWeekCriteria");
+    weekCriteria$ = this.stateProperty$<WeekCriteria>("timesheetAdminWeekCriteria");
 
     filterConfig$: Observable<WeekFilterViewConfig> = combineLatest([
         this.modelProperty$<User[]>("users"), 
@@ -51,17 +51,17 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implemen
             TimesheetAdminStoreSettings)
     }
     
-    addFilterCriteria(criteria: WeekCriteria): void{
-        this._weekCriteria = criteria;
-        this.addTimesheetCriteria(this.weekToTimesheetCriteriaConverter.convert(criteria))
-    }
-
-    changeStatus(entity: Timesheet): void{
+    addFilterCriteria = (criteria: WeekCriteria): void =>       
+        this.addTimesheetCriteria(
+            this.weekToTimesheetCriteriaConverter.convert(criteria), 
+            {timesheetAdminWeekCriteria: criteria}
+        )
+    
+    changeStatus = (entity: Timesheet): void => 
         this.stateHttpCommandHandler.dispatch(this.saveStateHttpConverter.convert(
                 {entity, stateProp: "timesheets", saveAction: StateAction.Update},
                 `${ApiUrl.Timesheet}/${entity.id}/Status`
         ))
-    }
     
     changeStatuses(ids: string[], status: TimesheetStatus): void{
         if(ids.length == 0) return;
