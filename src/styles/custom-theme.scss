@@ -21,6 +21,7 @@
 @include mat-toolbar-theme($kbtv-client-theme); // d
 @include mat-progress-spinner-theme($kbtv-client-theme); // d   
 @include mat-divider-theme($kbtv-client-theme); // d
+@include mat-card-theme($kbtv-client-theme); // d
 
 //Fix for bug on iOs
 .mat-drawer-container {position: unset!important;}

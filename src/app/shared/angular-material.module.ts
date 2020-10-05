@@ -15,7 +15,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CssLoaderService } from '../core/services/css-loader.service';
 import { LazyStyles } from '../shared-app/enums';
 
-
 @NgModule({
    imports: [
       MatBadgeModule,
@@ -45,7 +44,7 @@ import { LazyStyles } from '../shared-app/enums';
       MatButtonToggleModule,
       MatDialogModule,
       MatBottomSheetModule,
-      MatChipsModule
+      MatChipsModule,
    ],
 })
 

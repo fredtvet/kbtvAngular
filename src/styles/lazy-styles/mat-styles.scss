@@ -26,6 +26,11 @@
   }
 }
 
+//Fix to keep items in CDK virtual scroll responsive 
+.cdk-virtual-scroll-content-wrapper{
+  width:100%;
+}
+
 .horizontal-chips-container:before, .horizontal-chips-container:after {
   content: " ";
   position: absolute;
@@ -62,22 +67,7 @@
       .mat-standard-chip{
         margin:2px;
       }    
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-  } 
- 
+    }  
+  }  
 }
 

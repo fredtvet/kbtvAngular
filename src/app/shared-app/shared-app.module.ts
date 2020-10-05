@@ -15,6 +15,7 @@ import { PageNotFoundComponent } from './components/page-not-found.component';
 import { IfRoleDirective, InputListenerDirective } from './directives';
 import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
 
+import { MatCardModule } from '@angular/material/card';
 @NgModule({
   declarations: [
     PageNotFoundComponent,  
@@ -40,6 +41,7 @@ import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
     MatButtonModule,
     MatDividerModule,
     MatRippleModule,
+    MatCardModule,
 
     MatIconModule,
     MatProgressSpinnerModule,
@@ -57,6 +59,7 @@ import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
     MatDividerModule,
     MatIconModule,
     MatProgressSpinnerModule,  
+    MatCardModule,
 
     PageNotFoundComponent,
     AppButtonComponent,  

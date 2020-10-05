@@ -3,7 +3,7 @@
     <app-main-top-nav-bar navbar [config]="navConfig" stylingClass="bg-primary">
     </app-main-top-nav-bar>
 
-    <div class="p-2 max-width" *ngIf="users$ | async else loading; let users">
+    <div class="pl-2 pr-2 max-width" *ngIf="users$ | async else loading; let users">
         <app-list-card *ngFor="let user of users" startIcon="person" endIcon="chevron_right"
             (click)="goToWeekList(user)"> 
                 {{user.firstName + ' ' +user.lastName}}

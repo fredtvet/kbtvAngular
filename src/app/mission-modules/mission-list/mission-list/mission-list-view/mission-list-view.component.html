@@ -2,13 +2,20 @@
   
     <p *ngIf="!missions || missions.length == 0" class="m-2">Fant ingen oppdrag</p>
 
-    <cdk-virtual-scroll-viewport itemSize="48" maxBufferPx="800" minBufferPx="800" fxFlex>
+    <cdk-virtual-scroll-viewport itemSize="56" maxBufferPx="800" minBufferPx="800" fxFlex>
         <ng-container *cdkVirtualFor="let mission of missions; trackBy: trackByFn;">
-            <app-list-card startIcon="home_work" panelClass="mt-1" 
+            <app-list-card startIcon="home_work"
                 [endIcon]="mission.finished ? 'check':'chevron_right'"
                 [routerLink]="['/oppdrag', mission.id, 'detaljer']">
                 <span fxHide.xs>{{'(' + mission.id + ') '}}</span>{{ mission.address }}
             </app-list-card>
+            <!-- <mat-card [routerLink]="['/oppdrag', mission.id, 'detaljer']" class="mt-1" matRipple 
+                fxLayout="row" fxLayoutAlign="space-between center"> 
+                <mat-icon>home_work</mat-icon>      
+                <span fxHide.xs class="ml-1"> {{'(' + mission.id + ') '}}</span>
+                <span class="ml-1 ellipsis">{{ mission.address }}</span>
+                <mat-icon class="ml-auto">{{ mission.finished ? 'check':'chevron_right' }}</mat-icon>
+            </mat-card> -->
         </ng-container>  
     </cdk-virtual-scroll-viewport>
 

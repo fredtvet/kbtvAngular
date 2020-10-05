@@ -130,10 +130,12 @@ a {
   margin-bottom:$bottom-nav-height + $gap-size * 2px!important;
   @extend .bg-warn;
 }
+
 .notification-success{
   margin-bottom:$bottom-nav-height + $gap-size * 2px!important;
   @extend .bg-success;
 }
+
 .notification-warn{
   margin-bottom:$bottom-nav-height + $gap-size * 2px!important;
   @extend .bg-accent;
@@ -169,9 +171,6 @@ a {
 
 .center-spinner{margin:$gap-size * 4px auto;}
 
-//Fix to keep items in CDK virtual scroll responsive 
-.cdk-virtual-scroll-content-wrapper{
-  width:100%;
-}
+
 
 

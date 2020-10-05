@@ -10,7 +10,6 @@ export class ListCardComponent {
 
   @Input() startIcon: string;
   @Input() endIcon: string;
-  @Input() panelClass: string;
   @Input() ellipsisDisabled: boolean;
 
   constructor() { }
