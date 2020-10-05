@@ -1,9 +1,11 @@
 <mat-card matRipple fxLayout="row" fxLayoutAlign="start center" class="mt-1"> 
+
     <mat-icon>{{ startIcon }}</mat-icon>  
 
-    <span class="ml-1" [ngClass]="ellipsisDisabled ? '':'ellipsis'">
+    <span class="ml-1 mr-auto" [ngClass]="ellipsisDisabled ? '':'ellipsis'">
         <ng-content></ng-content>
     </span>    
     
-    <mat-icon *ngIf="endIcon" class="ml-auto">{{ endIcon }}</mat-icon>
+    <ng-content select="[rightSide]"></ng-content>
+      
 </mat-card>

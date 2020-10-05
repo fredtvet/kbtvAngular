@@ -8,14 +8,8 @@
                 [endIcon]="mission.finished ? 'check':'chevron_right'"
                 [routerLink]="['/oppdrag', mission.id, 'detaljer']">
                 <span fxHide.xs>{{'(' + mission.id + ') '}}</span>{{ mission.address }}
+                <mat-icon rightSide>{{ mission.finished ? 'check':'chevron_right' }}</mat-icon>
             </app-list-card>
-            <!-- <mat-card [routerLink]="['/oppdrag', mission.id, 'detaljer']" class="mt-1" matRipple 
-                fxLayout="row" fxLayoutAlign="space-between center"> 
-                <mat-icon>home_work</mat-icon>      
-                <span fxHide.xs class="ml-1"> {{'(' + mission.id + ') '}}</span>
-                <span class="ml-1 ellipsis">{{ mission.address }}</span>
-                <mat-icon class="ml-auto">{{ mission.finished ? 'check':'chevron_right' }}</mat-icon>
-            </mat-card> -->
         </ng-container>  
     </cdk-virtual-scroll-viewport>
 

@@ -22,22 +22,26 @@
     <ng-container *ifRole="RolePresets.Authority">
       <span class="mat-body-2">Administrering</span>
   
-      <app-list-card startIcon="date_range" endIcon="chevron_right"
-        [routerLink]="['/timeadministrering']">Administrer timer
+      <app-list-card startIcon="date_range"
+        [routerLink]="['/timeadministrering']">
+        Administrer timer<mat-icon rightSide>chevron_right</mat-icon>
       </app-list-card>
   
-      <app-list-card startIcon="dns" endIcon="chevron_right"
-        [routerLink]="['/data']">Administrer data
+      <app-list-card startIcon="dns"
+        [routerLink]="['/data']">
+        Administrer data<mat-icon rightSide>chevron_right</mat-icon>
       </app-list-card>
   
-      <app-list-card startIcon="people" endIcon="chevron_right"
-        [routerLink]="['/brukere']">Administrer brukere
+      <app-list-card startIcon="people"
+        [routerLink]="['/brukere']">
+        Administrer brukere<mat-icon rightSide>chevron_right</mat-icon>
       </app-list-card>
   
       <span class="mat-body-2">Statistikk</span>
   
-      <app-list-card startIcon="assessment" endIcon="chevron_right"
-        [routerLink]="['/timestatistikk']">Timestatistikk
+      <app-list-card startIcon="assessment"
+        [routerLink]="['/timestatistikk']">
+        Timestatistikk<mat-icon rightSide>chevron_right</mat-icon>
       </app-list-card>
     </ng-container>
   
@@ -45,8 +49,9 @@
 
     <app-list-card *ngFor="let mission of missionHistory$ | async" 
       startIcon="history"
-      [endIcon]="mission.finished ? 'check':'chevron_right'" 
-      [routerLink]="['/oppdrag', mission.id, 'detaljer']">{{mission.address}}
+      [routerLink]="['/oppdrag', mission.id, 'detaljer']">
+      {{mission.address}}
+      <mat-icon rightSide>{{ mission.finished ? 'check':'chevron_right' }}</mat-icon>
     </app-list-card>
   
   </div>
