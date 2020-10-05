@@ -13,16 +13,16 @@ export class WeekToTimesheetCriteriaConverter implements Converter<WeekCriteria,
     constructor(){}
 
     convert(input: WeekCriteria): TimesheetCriteria {
-        if(!input) return;
+        if(!input) return null;
         
         const result: TimesheetCriteria = {
             user: input.user,
             dateRangePreset: DateRangePresets.Custom
         };
 
-        if(input?.weekNr) 
+        if(input.weekNr && input.year) 
             result.dateRange = _getWeekRange(_getDateOfWeek(input.weekNr, input.year));
-        else if(input?.year){
+        else if(input.year){
             let date = new Date();
             date.setFullYear(input.year);
             result.dateRange = _getYearRange(date);
