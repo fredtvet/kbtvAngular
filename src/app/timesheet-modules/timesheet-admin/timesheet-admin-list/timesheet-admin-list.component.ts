@@ -8,13 +8,12 @@ import { FilterConfig } from 'src/app/core/services/filter/interfaces';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetStatus } from 'src/app/shared/enums';
-import { MainTopNavConfig } from 'src/app/shared/interfaces';
-import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
-interface ViewModel extends BaseViewModel { timesheets: Timesheet[] }
+interface ViewModel { timesheets: Timesheet[],  navConfig: MainTopNavConfig  }
 
 @Component({
   selector: 'app-timesheet-admin-list',

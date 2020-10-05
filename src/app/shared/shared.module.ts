@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
-import { AppLayoutModule } from '../layout/app-layout.module';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import {
@@ -13,10 +12,10 @@ import {
   SelectableListComponent,
   SimpleTopNavComponent
 } from './components';
-import { ChipsBarComponent } from './components/main-top-nav/chips-bar.component';
-import { DetailTopNavBarComponent } from './components/main-top-nav/detail-top-nav-bar/detail-top-nav-bar.component';
-import { MainTopNavBarComponent } from './components/main-top-nav/main-top-nav-bar/main-top-nav-bar.component';
-import { MainTopNavComponent } from './components/main-top-nav/main-top-nav.component';
+import { ChipsBarComponent } from './components/chips-bar.component';
+import { DetailTopNavBarComponent } from './components/detail-top-nav-bar/detail-top-nav-bar.component';
+import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.component';
+import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
 import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButtonsPipe, IsTodayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
@@ -30,7 +29,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     SelectableListComponent,
     BottomSheetMenuComponent,
     FormActionsComponent,
-    MainTopNavComponent,
+    MainSkeletonComponent,
     MainTopNavBarComponent,
     DetailTopNavBarComponent,
     ChipsBarComponent,
@@ -71,7 +70,10 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     BottomSheetMenuComponent,
     SelectableListComponent,
     FormActionsComponent,
-    MainTopNavComponent,
+    MainSkeletonComponent,    
+    MainTopNavBarComponent,
+    DetailTopNavBarComponent,
+    ChipsBarComponent,
 
     TransformButtonPipe,
     ArraySlicePipe,

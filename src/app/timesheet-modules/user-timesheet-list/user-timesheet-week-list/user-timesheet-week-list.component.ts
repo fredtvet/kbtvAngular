@@ -6,12 +6,11 @@ import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.se
 import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { GroupByPeriod } from 'src/app/shared/enums';
-import { MainTopNavConfig } from 'src/app/shared/interfaces';
-import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
 
-interface ViewModel extends BaseViewModel { summaries: TimesheetSummary[] }
+interface ViewModel{ summaries: TimesheetSummary[], navConfig: MainTopNavConfig  }
 
 @Component({
   selector: 'app-user-timesheet-week-list',

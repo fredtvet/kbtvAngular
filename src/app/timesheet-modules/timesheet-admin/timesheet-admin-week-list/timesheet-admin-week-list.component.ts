@@ -10,12 +10,11 @@ import { LoadingService } from 'src/app/core/services/loading.service';
 import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetStatus } from 'src/app/shared/enums';
-import { MainTopNavConfig } from 'src/app/shared/interfaces';
-import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
-interface ViewModel extends BaseViewModel { summaries: TimesheetSummary[], isXs: boolean }
+interface ViewModel { summaries: TimesheetSummary[], isXs: boolean,  navConfig: MainTopNavConfig  }
 
 @Component({
   selector: 'app-timesheet-admin-week-list',

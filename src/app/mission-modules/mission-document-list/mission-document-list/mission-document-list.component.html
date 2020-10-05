@@ -1,4 +1,8 @@
-<app-main-top-nav *ngIf="vm$ | async; let vm" [fabs]="vm.fabs" [config]="vm.navConfig">
+<app-main-skeleton *ngIf="vm$ | async; let vm" [fabs]="vm.fabs">
+
+    <app-main-top-nav-bar navbar [config]="vm.navConfig" stylingClass="bg-primary">
+    </app-main-top-nav-bar>
+
     <app-selectable-list #documentList *ngIf="vm.documents" identifier="id"
         [totalRows]="vm.isXs ? 2 : 4"
         [entities]="vm.documents" 
@@ -6,7 +10,8 @@
         (selectionChanged)="onSelectionChange($event)"
         (itemClicked)="downloadDocument($event)">
     </app-selectable-list>
-</app-main-top-nav>
+
+</app-main-skeleton>
 
 <ng-template #documentTemplate let-entity>
     <div class="bg-foreground text-center mat-elevation-z2 p-2 pt-6 pb-6 m-1">

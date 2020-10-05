@@ -1,4 +1,8 @@
-<app-main-top-nav [config]="{title:  'Innstillinger', backFn: onBack}">
+<app-main-skeleton>
+
+    <app-main-top-nav-bar navbar [config]="navConfig" stylingClass="bg-primary">
+    </app-main-top-nav-bar>
+
     <div class="p-2">
         <app-list-card startIcon='update' (click)="refresh()">Synkroniser manuelt
         </app-list-card>
@@ -11,4 +15,5 @@
             <app-app-config-form [syncConfig]="syncConfig$ | async" (formSubmitted)="updateSyncConfig($event)"></app-app-config-form>
         </div>
     </div>
-</app-main-top-nav>
+
+</app-main-skeleton>

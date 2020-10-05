@@ -1,4 +1,7 @@
-<app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig">
+<app-main-skeleton *ngIf="vm$ | async; let vm">
+
+  <app-main-top-nav-bar [config]="vm.navConfig" stylingClass="bg-primary">
+  </app-main-top-nav-bar>
 
   <div style="min-height:100%" fxLayout="row"
     (swiperight)="previousWeek()" 
@@ -29,6 +32,6 @@
 
   </div>
 
-</app-main-top-nav>
+</app-main-skeleton>
 
 <router-outlet></router-outlet>

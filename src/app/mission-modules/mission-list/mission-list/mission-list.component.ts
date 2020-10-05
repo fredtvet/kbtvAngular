@@ -8,13 +8,13 @@ import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.serv
 import { Roles } from "src/app/shared-app/enums";
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
-import { MainTopNavConfig } from "src/app/shared/components/main-top-nav/main-top-nav-config.interface";
-import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
+import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { MissionCriteria } from "src/app/shared/interfaces/mission-filter-criteria.interface";
 import { MissionFilterViewComponent } from "../mission-filter-view/mission-filter-view.component";
 import { MissionListStore } from "../mission-list.store";
 
-interface ViewModel extends BaseViewModel { missions: Mission[] }
+interface ViewModel{ missions: Mission[], chips?: AppChip[], fabs: AppButton[], navConfig?: MainTopNavConfig }
 
 @Component({
   selector: "app-mission-list",
@@ -23,8 +23,8 @@ interface ViewModel extends BaseViewModel { missions: Mission[] }
 })
 export class MissionListComponent {
 
-  private navVm$: Observable<BaseViewModel> = this.store.criteria$.pipe(map(x => { return {
-    chipRows: [{id: 1, arr: this.getCriteriaChips(x)}],
+  private navVm$: Observable<Partial<ViewModel>> = this.store.criteria$.pipe(map(x => { return {
+    chips: this.getCriteriaChips(x),
     navConfig: this.getTopNavConfig(x)
   }}))
 

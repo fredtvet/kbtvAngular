@@ -14,10 +14,10 @@ import { _appFileUrl } from 'src/app/shared-app/helpers/app-file-url.helper';
 import { MailDocumentFormComponent } from '../mail-document-form.component';
 import { MissionDocumentListStore } from '../mission-document-list.store';
 import { map } from 'rxjs/operators';
-import { MainTopNavConfig } from 'src/app/shared/interfaces';
-import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
+import { AppButton } from 'src/app/shared-app/interfaces';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 
-interface ViewModel extends BaseViewModel { documents: MissionDocument[], isXs: boolean }
+interface ViewModel { documents: MissionDocument[], isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig}
 
 @Component({
   selector: 'app-mission-document-list',
@@ -35,7 +35,6 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
       documents, isXs, fabs, navConfig: this.navConfig
     }})
   )
-
 
   get missionId() { return this.route.snapshot.paramMap.get('id') }
 

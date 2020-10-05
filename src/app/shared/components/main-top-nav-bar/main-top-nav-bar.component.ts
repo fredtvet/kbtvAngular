@@ -5,7 +5,7 @@ import { LoadingService } from 'src/app/core/services/loading.service';
 import { MainNavService } from 'src/app/layout/main-nav.service';
 import { ButtonTypes } from 'src/app/shared-app/enums';
 import { TrackByAppButton } from 'src/app/shared-app/track-by-app-button';
-import { MainTopNavConfig } from '../main-top-nav-config.interface';
+import { MainTopNavConfig } from './main-top-nav.config';
 
 @Component({
   selector: 'app-main-top-nav-bar',

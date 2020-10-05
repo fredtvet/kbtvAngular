@@ -1,10 +1,7 @@
 import { AppButton } from 'src/app/shared-app/interfaces';
-import { SearchBarConfig } from '../../interfaces/search-bar-config.interface';
+import { SearchBarConfig } from './search-bar-config.interface';
 
-export interface MainTopNavConfig{
-    title?: string;
-    longTitle?: string[];
-    
+export interface TopNavConfig{
     searchBar?: SearchBarConfig;
     imgSrc?: string;
 

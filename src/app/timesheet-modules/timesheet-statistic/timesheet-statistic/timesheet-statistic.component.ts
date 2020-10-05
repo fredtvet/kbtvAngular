@@ -10,14 +10,14 @@ import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/t
 import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view.component';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces/timesheet-criteria.interface';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { GroupByPeriod } from 'src/app/shared/enums';
-import { MainTopNavConfig } from 'src/app/shared/interfaces';
 import { ArrayRow } from 'src/app/shared/interfaces/array-row.interface';
-import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
+import { _trackById } from 'src/app/shared/trackby/track-by-id.helper';
 import { TimesheetStatisticStore } from '../timesheet-statistic.store';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
 
-interface ViewModel extends BaseViewModel { data: TimesheetSummary[] }
+interface ViewModel { data: TimesheetSummary[], chipRows: ArrayRow<AppChip>[],  navConfig?: MainTopNavConfig }
 
 @Component({
   selector: 'app-timesheet-statistic',
@@ -27,7 +27,7 @@ interface ViewModel extends BaseViewModel { data: TimesheetSummary[] }
 export class TimesheetStatisticComponent {
   @ViewChild('statTable') statTable: TimesheetStatisticTableComponent;
 
-  private navVm$: Observable<BaseViewModel> = this.store.criteria$.pipe(map(criteria => { 
+  private navVm$: Observable<Partial<ViewModel>> = this.store.criteria$.pipe(map(criteria => { 
     const activeCriteriaCount = _getSetPropCount(criteria, {dateRangePreset: null})
     return {
       chipRows: [this.getCriteriaChips(criteria, activeCriteriaCount)], 
@@ -58,6 +58,8 @@ export class TimesheetStatisticComponent {
       viewComponent: TimesheetFilterViewComponent     
     }});
   }
+
+  trackByChipRow = _trackById;
 
   private resetCriteriaProp(prop: string, criteria: TimesheetCriteria){
     criteria[prop] = null;

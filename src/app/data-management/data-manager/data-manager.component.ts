@@ -9,13 +9,13 @@ import { ModelState } from 'src/app/core/services/model/interfaces';
 import { StateAction } from 'src/app/core/services/state/state-action.enum';
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { Prop } from 'src/app/shared-app/prop.type';
-import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { DataManagementStore } from '../data-management.store';
 import { DataConfig } from '../interfaces/data-config.interface';
 import { DataTableComponent } from './data-table/data-table.component';
 import { PropertyFormMap } from './property-form.map';
 
-type ViewModel = BaseViewModel & DataConfig
+type ViewModel = {navConfig: MainTopNavConfig} & DataConfig
 
 @Component({
   selector: 'app-data-manager',

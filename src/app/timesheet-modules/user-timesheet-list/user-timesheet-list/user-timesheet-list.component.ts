@@ -8,17 +8,18 @@ import { FilterConfig } from 'src/app/core/services/filter/interfaces';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
 import { DateRangePresets } from 'src/app/shared-app/enums';
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
+import { AppButton } from 'src/app/shared-app/interfaces';
+import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view.component';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetStatus } from 'src/app/shared/enums';
-import { MainTopNavConfig } from 'src/app/shared/interfaces';
-import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetForm } from '../../user-timesheet-form/user-timesheet-form-view/timesheet-form.interface';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
 
-interface ViewModel extends BaseViewModel { timesheets: Timesheet[] }
+interface ViewModel { timesheets: Timesheet[], fabs?: AppButton[], chips?: AppChip[], navConfig?: MainTopNavConfig  }
 
 @Component({
   selector: "app-user-timesheet-list",
@@ -27,7 +28,7 @@ interface ViewModel extends BaseViewModel { timesheets: Timesheet[] }
 })
 export class UserTimesheetListComponent implements OnInit {
 
-  private navView$: Observable<BaseViewModel> = this.store.criteria$.pipe(
+  private navView$: Observable<Partial<ViewModel>> = this.store.criteria$.pipe(
     map(criteria => { return {
       navConfig: this.getTopNavConfig(criteria),
       fabs: [
@@ -35,12 +36,10 @@ export class UserTimesheetListComponent implements OnInit {
           callback: this.openTimesheetForm,
           params: [null, {mission: criteria?.mission}]}
       ],
-      chipRows: [
-        {id: 1, arr: this.chipsFactory.createFilterChips(
+      chips: this.chipsFactory.createFilterChips(
           this.formatCriteriaChips(criteria), 
           (prop) => this.resetCriteriaProp(prop, criteria)
-        )}
-      ]
+        )
     }})
   )
 

@@ -1,4 +1,8 @@
-<app-main-top-nav [config]="{title:  'Profil'}">
+<app-main-skeleton>
+
+  <app-main-top-nav-bar navbar [config]="navConfig" stylingClass="bg-primary">
+  </app-main-top-nav-bar>
+
   <div class="p-2 max-width h-100" fxLayout="column" fxLayoutAlign="space-between stretch">
     <span>
       <app-list-card startIcon='account_circle' (click)="updateProfile()">Oppdater profil
@@ -14,5 +18,6 @@
     </app-list-card>
     
   </div>
-</app-main-top-nav>
+  
+</app-main-skeleton>
 

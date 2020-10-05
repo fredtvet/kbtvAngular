@@ -9,12 +9,12 @@
         [stylingClass]="config.imgSrc ? 'detail-navbar-overlay detail-navbar-overlay-top' : 'bg-primary'">
     </app-main-top-nav-bar>
   
-    <mat-toolbar *ngIf="config?.longTitle && config.longTitle.length > 0" 
+    <mat-toolbar *ngIf="config?.titleLines && config.titleLines.length > 0" 
       [ngClass]="config.imgSrc ? 'detail-navbar-overlay detail-navbar-overlay-bottom' : 'bg-primary'"
       class="detail-nav color-foreground">
   
       <span class="ml-6 mb-2">
-          <ng-container *ngFor="let line of config.longTitle; let last = last">
+          <ng-container *ngFor="let line of config.titleLines; let last = last">
               <div [ngClass]="config.imgSrc ? 'img-title-overlay' : ''" class="title-line pl-2 pr-2">{{ line }}</div><br />
           </ng-container>
       </span>

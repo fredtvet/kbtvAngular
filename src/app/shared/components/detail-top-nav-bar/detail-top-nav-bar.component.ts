@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MainTopNavConfig } from '../main-top-nav-config.interface';
+import { DetailTopNavConfig } from './detail-top-nav.config';
 
 @Component({
   selector: 'app-detail-top-nav-bar',
@@ -10,5 +10,5 @@ import { MainTopNavConfig } from '../main-top-nav-config.interface';
   providers:[MatBottomSheet]
 })
 export class DetailTopNavBarComponent{
-  @Input() config: MainTopNavConfig;    
+  @Input() config: DetailTopNavConfig;    
 }

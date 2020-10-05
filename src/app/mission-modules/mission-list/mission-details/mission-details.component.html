@@ -1,8 +1,13 @@
 
-    <app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig">
+    <app-main-skeleton *ngIf="vm$ | async; let vm">
+
+        <app-detail-top-nav-bar navbar [config]="vm.navConfig" stylingClass="bg-primary">
+        </app-detail-top-nav-bar>
+
         <app-mission-details-view [mission]="vm.mission">
         </app-mission-details-view>
-    </app-main-top-nav>
+
+    </app-main-skeleton>
   
     <input type="file" style="display:none" #imageInput (change)="updateHeaderImage($event.target.files)">
     

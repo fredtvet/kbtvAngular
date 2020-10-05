@@ -13,14 +13,14 @@ import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-me
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { _appFileUrl } from 'src/app/shared-app/helpers/app-file-url.helper';
+import { AppButton } from 'src/app/shared-app/interfaces';
 import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
-import { MainTopNavConfig } from 'src/app/shared/interfaces';
-import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MailImageFormComponent } from '../mail-image-form.component';
 import { MissionImageListStore } from '../mission-image-list.store';
 
-interface ViewModel extends BaseViewModel { images: MissionImage[], isXs: boolean }
+interface ViewModel { images: MissionImage[], isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig }
 
 @Component({
   selector: "app-mission-image-list",

@@ -1,4 +1,7 @@
-<app-main-top-nav [config]="navConfig">
+<app-main-skeleton>
+
+  <app-main-top-nav-bar navbar [config]="navConfig" stylingClass="bg-primary">
+  </app-main-top-nav-bar>
 
   <div class="p-2 max-width" *ngIf="users$ | async else loading; let users;">
 
@@ -21,7 +24,7 @@
 
   </div>
   
-</app-main-top-nav>
+</app-main-skeleton>
 
 <ng-template #loading>
   <mat-spinner class="center-spinner" color="accent"></mat-spinner>

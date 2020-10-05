@@ -1,4 +1,8 @@
-<app-main-top-nav *ngIf="vm$ | async; let vm"  [config]="vm.navConfig">
+<app-main-skeleton *ngIf="vm$ | async; let vm">
+
+  <app-main-top-nav-bar navbar [config]="vm.navConfig" stylingClass="bg-primary">
+  </app-main-top-nav-bar>
+
   <div class="h-100 p-2" fxLayout="column" fxLayoutGap="8px" >
 
     <app-data-property-picker
@@ -13,6 +17,7 @@
     </app-data-table>
 
   </div>
-</app-main-top-nav>
+
+</app-main-skeleton>
 
 <router-outlet></router-outlet>

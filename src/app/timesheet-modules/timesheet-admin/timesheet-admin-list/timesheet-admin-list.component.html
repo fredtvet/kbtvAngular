@@ -1,4 +1,8 @@
-<app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig">
+<app-main-skeleton *ngIf="vm$ | async; let vm">
+
+    <app-main-top-nav-bar navbar [config]="vm.navConfig" stylingClass="bg-primary">
+    </app-main-top-nav-bar>
+
     <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="vm.timesheets?.length else loading">  
         <cdk-virtual-scroll-viewport itemSize="108" maxBufferPx="800" minBufferPx="800" fxFlex>
             <div class="m-1" *cdkVirtualFor="let timesheet of vm.timesheets; trackBy: trackById">
@@ -8,7 +12,8 @@
             </div>
         </cdk-virtual-scroll-viewport>
     </div>
-</app-main-top-nav>
+
+</app-main-skeleton>
 
 <ng-template #loading>
     <mat-spinner *ngIf="loading$ | async else noContent" class="center-spinner" color="accent"></mat-spinner>

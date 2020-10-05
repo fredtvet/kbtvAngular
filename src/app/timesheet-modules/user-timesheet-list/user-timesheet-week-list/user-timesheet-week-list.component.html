@@ -1,4 +1,7 @@
-<app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig">
+<app-main-skeleton *ngIf="vm$ | async; let vm">
+
+    <app-main-top-nav-bar navbar [config]="vm.navConfig" stylingClass="bg-primary">
+    </app-main-top-nav-bar>
 
     <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch">
 
@@ -13,7 +16,7 @@
   
     </div>
 
-</app-main-top-nav>
+</app-main-skeleton>
 
 <ng-template #noContent>
     <span class="text-center w-100">

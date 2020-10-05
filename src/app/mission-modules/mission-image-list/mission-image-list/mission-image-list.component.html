@@ -1,4 +1,8 @@
-<app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig" [fabs]="vm.fabs">
+<app-main-skeleton *ngIf="vm$ | async; let vm" [fabs]="vm.fabs">
+
+    <app-main-top-nav-bar navbar [config]="vm.navConfig" stylingClass="bg-primary">
+    </app-main-top-nav-bar>
+
     <app-selectable-list #imageList 
         *ngIf="vm.images" identifier="id"
         [totalRows]="vm.isXs ? 2 : 4"
@@ -7,7 +11,7 @@
         (selectionChanged)="onSelectionChange($event)"
         (itemClicked)="openImageViewer($event, vm.images)">
     </app-selectable-list>
-</app-main-top-nav>
+</app-main-skeleton>
 
 <ng-template #imgTemplate let-entity>
     <img appImageErrorReloader class="entity-card"  alt="oppdragsbilde"

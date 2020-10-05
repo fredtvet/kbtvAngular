@@ -1,9 +1,14 @@
-<app-main-top-nav [config]="navConfig" [fabs]="fabs">
+<app-main-skeleton [fabs]="fabs">
+
+    <app-main-top-nav-bar navbar [config]="navConfig" stylingClass="bg-primary">
+    </app-main-top-nav-bar>
+
     <div class="max-width">
         <app-note-card *ngFor="let note of notes$ | async; trackBy: trackByNote" [note]="note" 
             (editClicked)="openEditNoteForm($event)">
         </app-note-card>
-    </div>    
-</app-main-top-nav>
+    </div>   
+
+</app-main-skeleton>
 
 <router-outlet></router-outlet>

@@ -1,4 +1,12 @@
-<app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig" [chipRows]="vm.chipRows">
+<app-main-skeleton *ngIf="vm$ | async; let vm">
+
+    <ng-container navbar>
+        <app-main-top-nav-bar [config]="vm.navConfig" stylingClass="bg-primary">
+        </app-main-top-nav-bar>
+        <app-chips-bar *ngFor="let chips of vm.chipRows; trackBy: trackByChipRow" [chips]="chips.arr">
+        </app-chips-bar>
+    </ng-container>
+
     <div fxLayout="column" fxLayoutGap="8px" class="h-100">
 
         <app-timesheet-statistic-table #statTable class="mat-elevation-z2" fxFlex 
@@ -6,4 +14,4 @@
         </app-timesheet-statistic-table>
 
     </div>
-</app-main-top-nav>
+</app-main-skeleton>

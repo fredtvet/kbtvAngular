@@ -1,4 +1,8 @@
-<app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig">
+<app-main-skeleton *ngIf="vm$ | async; let vm">
+
+    <app-main-top-nav-bar navbar [config]="vm.navConfig" stylingClass="bg-primary">
+    </app-main-top-nav-bar>
+
     <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="vm.summaries?.length else loading">
     
         <cdk-virtual-scroll-viewport itemSize="82" maxBufferPx="800" minBufferPx="800" fxFlex>
@@ -15,7 +19,7 @@
         </cdk-virtual-scroll-viewport>
       
     </div>
-</app-main-top-nav>
+</app-main-skeleton>
 
 <ng-template #noContent>
     <div class="w-100 text-center mt-2 mat-h3">Fant ingen timer!</div>

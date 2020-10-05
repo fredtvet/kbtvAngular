@@ -7,13 +7,12 @@ import { AppNotifications } from 'src/app/core/services/notification/app.notific
 import { NotificationService } from 'src/app/core/services/notification/notification.service';
 import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
+import { DetailTopNavConfig } from 'src/app/shared/components/detail-top-nav-bar/detail-top-nav.config';
 import { TimesheetStatus } from 'src/app/shared/enums';
-import { MainTopNavConfig } from 'src/app/shared/interfaces';
-import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { AppFileUrlPipe } from 'src/app/shared/pipes/app-file-url.pipe';
 import { MissionListStore } from '../mission-list.store';
 
-interface ViewModel extends BaseViewModel { mission: Mission }
+interface ViewModel { mission: Mission, navConfig: DetailTopNavConfig }
 
 @Component({
   selector: 'app-mission-details',
@@ -66,9 +65,9 @@ export class MissionDetailsComponent{
     ]);
   }
 
-  private getNavConfig(mission: Mission): MainTopNavConfig {
+  private getNavConfig(mission: Mission): DetailTopNavConfig {
     return {
-        longTitle: mission?.address?.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
+        titleLines: mission?.address?.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
         subTitle: mission?.finished ? 'Oppdrag ferdig!' : `ID: ${mission?.id}`,
         subIcon: mission?.finished ? 'check' : '',
         imgSrc: this.appFileUrl.transform(mission, "missionheader"),

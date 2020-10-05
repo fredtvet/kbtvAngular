@@ -1,12 +1,17 @@
-<app-main-top-nav  *ngIf="vm$ | async; let vm" [fabs]="vm.fabs" [chipRows]="vm.chipRows"
-  [config]="vm.navConfig">
+<app-main-skeleton  *ngIf="vm$ | async; let vm" [fabs]="vm.fabs">
+
+  <ng-container navbar>
+    <app-main-top-nav-bar [config]="vm.navConfig" stylingClass="bg-primary">
+    </app-main-top-nav-bar>
+    <app-chips-bar [chips]="vm.chips"></app-chips-bar>
+  </ng-container>
 
   <app-mission-list-view 
     [missions]="vm.missions" 
     (search)="searchMissions($event)">
   </app-mission-list-view>
 
-</app-main-top-nav>
+</app-main-skeleton>
 
 
 <router-outlet></router-outlet>

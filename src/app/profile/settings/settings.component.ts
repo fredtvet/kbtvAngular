@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SyncStore, SyncStoreConfig } from 'src/app/core/services/sync';
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 
 @Component({
   selector: 'app-settings',
@@ -12,11 +13,15 @@ export class SettingsComponent {
 
   syncConfig$ = this.syncStore.syncConfig$;
 
+  navConfig: MainTopNavConfig;
+
   constructor(
     private router: Router,
     private confirmService: ConfirmDialogService,
     private syncStore: SyncStore
-  ) {}
+  ) {
+    this.navConfig = {title:  'Innstillinger', backFn: this.onBack}
+  }
 
   confirmPurge = () => {
     this.confirmService.open({

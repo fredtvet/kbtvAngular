@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { take } from 'rxjs/operators';
-import { SimpleNavConfig } from 'src/app/shared/interfaces';
 import { SimpleTopNavComponent } from 'src/app/shared/components';
+import { SimpleNavConfig } from 'src/app/shared/components/simple-top-nav/simple-nav-config.interface';
 import { FilterSheetWrapperConfig } from '../../filter/interfaces/filter-sheet-wrapper-config.interface';
 import { FilterFormComponent } from './filter-form.component';
 

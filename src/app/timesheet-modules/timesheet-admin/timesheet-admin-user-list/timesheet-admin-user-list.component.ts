@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/models';
 import { LoadingService } from 'src/app/core/services/loading.service';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
 @Component({
@@ -13,6 +14,7 @@ export class TimesheetAdminUserListComponent {
 
   users$ = this.store.users$;
   loading$ = this.loadingService.queryLoading$;
+  navConfig: MainTopNavConfig = {title: 'Administrer timer'};
 
   constructor(
     private loadingService: LoadingService,

@@ -1,16 +1,8 @@
 <div fxLayout="column" class="h-100" style="position:relative">
 
   <span class="mat-elevation-z2 bg-primary" style="z-index:3;padding-bottom:1px">
-    <app-detail-top-nav-bar *ngIf="config && (config.longTitle || config.imgSrc) else mainTopBar" 
-      [config]="config">
-    </app-detail-top-nav-bar>
-
-    <ng-template #mainTopBar>
-      <app-main-top-nav-bar [config]="config" stylingClass="bg-primary"></app-main-top-nav-bar>
-    </ng-template>
-
-    <app-chips-bar *ngFor="let chips of chipRows; trackBy: trackByChipRow" [chips]="chips.arr">
-    </app-chips-bar>
+    
+    <ng-content select="[navbar]"></ng-content>
 
   </span>
 
