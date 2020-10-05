@@ -1,5 +1,6 @@
 import { Timesheet } from '../core/models';
 import { DataFilter } from '../core/services/filter/data.filter';
+import { ModelStateConfig } from '../core/services/model/model-state.config';
 import { TimesheetCriteria } from './interfaces/timesheet-criteria.interface';
 
 export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
@@ -33,16 +34,34 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         if(!this.isDateRangeContainedIn(baseCriteria.dateRange)) return false;
         for(const prop in this.criteria){
             if(prop === "dateRange" || prop === "dateRangePreset") continue;
-            if(baseCriteria[prop] && this.criteria[prop] !== baseCriteria[prop]) return false;
+            const baseValue = baseCriteria[prop];
+            if(!baseValue) continue; 
+            const value =  this.criteria[prop];
+            if(typeof value === "object") {
+                if(!this.isObjectContainedIn(baseValue, prop)) return false;
+            }
+            else if(this.criteria[prop] !== baseValue) return false;     
         }
         return true;
     }
+    
+    private isObjectContainedIn(baseValue: Object, prop: string){
+        const modelCfg = ModelStateConfig.getBy(prop, "foreignProp");
+        const value = this.criteria[prop];
+        console.log(baseValue, value, modelCfg)
+        if(modelCfg && value[modelCfg.identifier] !== baseValue[modelCfg.identifier]) 
+            return false
+
+        else if(!modelCfg && value !== baseValue) return false;
+        
+        return true
+    }
 
     private isDateRangeContainedIn(baseDateRange: Date[]): boolean{
-        if(!baseDateRange || baseDateRange.length < 2) return true; //No range means all, in which it will always be contained. 
+        if(!baseDateRange || baseDateRange.length < 2) return false; //No range means all, in which it will always be contained. 
         const dateRange = this.criteria.dateRange;
         if(!dateRange) return true; 
-        if(dateRange.length < 2) return false; 
+        if(dateRange.length < 2) return true; 
         return (this.getStartOfDayTime(baseDateRange[0]) <= this.getStartOfDayTime(dateRange[0])) && 
         (this.getStartOfDayTime(baseDateRange[1]) >= this.getStartOfDayTime(dateRange[1]))
     }
