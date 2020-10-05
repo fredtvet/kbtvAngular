@@ -35,6 +35,8 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
   filteredTimesheets$: Observable<FilteredResponse<TimesheetCriteria, Timesheet>> = 
     this.stateSlice$(["timesheets" as any, this.settings.criteriaProp]).pipe(
       map((state) => {
+        const criteria = state[this.settings.criteriaProp];
+        if(!criteria) return {criteria: null, records: null};
         const filter = new TimesheetFilter(state[this.settings.criteriaProp]);
         return {
           criteria: filter.criteria,
@@ -77,7 +79,7 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
     const filter = new TimesheetFilter(criteria);
 
     //If current filter  data is contained in base, dont fetch http dataand use state.
-    if (filter.containedIn(BaseTimesheetStore.baseCriteria))
+    if(filter.containedIn(BaseTimesheetStore.baseCriteria))
       this.setState(state);
     else {
       BaseTimesheetStore.baseCriteria = criteria;
