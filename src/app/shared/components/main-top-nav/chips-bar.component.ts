@@ -8,7 +8,7 @@ import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 
         <mat-chip-list aria-orientation="horizontal" class="horizontal-chips">
 
-        <mat-chip *ngFor="let chip of chips; trackBy: trackByChip" selected="true" class="fadeIn"
+        <mat-chip *ngFor="let chip of chips; trackBy: trackByChip" selected="true"
             [color]="chip.color || 'background'"
             [removable]="chip.onRemoved"  
             (click)="handleFn(chip.onClick)"
