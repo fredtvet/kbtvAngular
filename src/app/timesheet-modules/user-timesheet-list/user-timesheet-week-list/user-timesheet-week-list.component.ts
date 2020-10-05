@@ -39,13 +39,9 @@ export class UserTimesheetWeekListComponent implements OnInit {
     this.store.addWeekFilterCriteria(initFilter);
   }
 
-  goToWeekView = (year: number, weekNr: number) => {
+  goToWeekView = ({year, weekNr}) => {
     this.router.navigate(['/mine-timer/ukevisning', {filter: JSON.stringify({year, weekNr})}])
   }
-
-  trackByWeekNr(summary:TimesheetSummary): number {
-    return summary.week;
-  } 
 
   openWeekFilter = () => { 
     let ref = this.filterService.open<WeekCriteria, WeekFilterViewConfig>({

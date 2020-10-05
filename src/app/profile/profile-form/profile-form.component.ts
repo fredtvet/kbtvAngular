@@ -9,7 +9,7 @@ import { ProfileStore } from '../profile.store';
 @Component({
   selector: 'app-profile-form',
   template: `
-  <app-profile-form-view class="m-2"
+  <app-profile-form-view
     [user]="user$ | async"
     (formSubmitted)="onSubmit($event)">
   </app-profile-form-view>

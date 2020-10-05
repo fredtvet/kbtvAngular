@@ -21,9 +21,9 @@ export class ProfileComponent {
     private authStore: AuthStore,
   ){}
 
-  updateProfile = () => this.formService.open({formComponent: ProfileFormComponent, title: "Oppdater profil"});
+  updateProfile = () => this.formService.open({formComponent: ProfileFormComponent, customTitle: "Oppdater profil"});
   
-  updatePassword = () => this.formService.open({formComponent: PasswordFormComponent, title: "Oppdater passord"});
+  updatePassword = () => this.formService.open({formComponent: PasswordFormComponent, customTitle: "Oppdater passord"});
 
   logout = () => this.authStore.logout();
 }

@@ -8,12 +8,16 @@ import { UserTimesheetListStore } from './user-timesheet-list.store';
 import { TimesheetDayLabelComponent } from './user-timesheet-week/timesheet-day-label/timesheet-day-label.component';
 import { TimesheetMissionBarComponent } from './user-timesheet-week/timesheet-mission-bar/timesheet-mission-bar.component';
 import { UserTimesheetWeekComponent } from './user-timesheet-week/user-timesheet-week.component';
+import { UserTimesheetWeekListViewComponent } from './user-timesheet-week-list/user-timesheet-week-list-view/user-timesheet-week-list-view.component';
+import { UserTimesheetListViewComponent } from './user-timesheet-list/user-timesheet-list-view/user-timesheet-list-view.component';
 
 @NgModule({
   declarations: [
     UserTimesheetWeekListComponent,
+    UserTimesheetWeekListViewComponent,
     UserTimesheetWeekComponent,
     UserTimesheetListComponent,
+    UserTimesheetListViewComponent,
     UserTimesheetCardDialogWrapperComponent,
     TimesheetDayLabelComponent,
     TimesheetMissionBarComponent,

@@ -3,27 +3,10 @@
     <app-main-top-nav-bar navbar [config]="vm.navConfig" stylingClass="bg-primary">
     </app-main-top-nav-bar>
 
-    <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch">
-
-        <cdk-virtual-scroll-viewport itemSize="68" maxBufferPx="800" minBufferPx="800" fxFlex 
-            *ngIf="vm.summaries?.length else noContent">
-            <div class="app-card mat-elevation-z2 m-1" matRipple
-                *cdkVirtualFor="let summary of vm.summaries; trackBy: trackByWeekNr; templateCacheSize:0" 
-                (click)="goToWeekView(summary.year, summary.week)">
-                <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
-            </div>
-        </cdk-virtual-scroll-viewport>
-  
-    </div>
+    <app-user-timesheet-week-list-view 
+        [summaries]="vm.summaries" 
+        (summaryClicked)="goToWeekView($event)"
+        (filterClicked)="openWeekFilter()">
+    </app-user-timesheet-week-list-view>
 
 </app-main-skeleton>
-
-<ng-template #noContent>
-    <span class="text-center w-100">
-        <p>Finner ingen timer med gitte filtre. </p>
-        <button mat-raised-button color="accent" class="bounceIn" (click)="openWeekFilter()">
-            <mat-icon>filter_list</mat-icon>
-            Åpne filter
-        </button>
-    </span>
-</ng-template>

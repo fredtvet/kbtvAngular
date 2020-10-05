@@ -1,0 +1,24 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="h-100 max-width">
+    <cdk-virtual-scroll-viewport *ngIf="timesheets?.length else noContent"
+        itemSize="104" maxBufferPx="800" minBufferPx="800" fxFlex>
+        <div class="m-1" *cdkVirtualFor="let timesheet of timesheets | sortByDate : 'startTime'; trackBy: trackByTimesheet">
+            <app-timesheet-card [timesheet]="timesheet" 
+                [actionButton]="timesheet.status ? null : { 
+                    icon: 'edit', 
+                    colorClass: 'color-accent',
+                    callback: editTimesheet, params: [timesheet.id]
+                }">
+            </app-timesheet-card>
+        </div>
+    </cdk-virtual-scroll-viewport>
+</div> 
+
+<ng-template #noContent>
+    <span class="text-center w-100">
+        <p>Finner ingen timer med gitte filtre. </p>
+        <button mat-raised-button color="accent" class="bounceIn" (click)="filterClicked.emit()">
+            <mat-icon>filter_list</mat-icon>
+            Åpne filter
+        </button>
+    </span>
+</ng-template>

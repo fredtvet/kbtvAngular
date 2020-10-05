@@ -7,11 +7,8 @@
         </app-chips-bar>
     </ng-container>
 
-    <div fxLayout="column" fxLayoutGap="8px" class="h-100">
-
-        <app-timesheet-statistic-table #statTable class="mat-elevation-z2" fxFlex 
-            [config]="vm">
-        </app-timesheet-statistic-table>
-
-    </div>
+    <app-timesheet-statistic-table #statTable class="mat-elevation-z2" fxFlex 
+        [config]="vm">
+    </app-timesheet-statistic-table>
+  
 </app-main-skeleton>

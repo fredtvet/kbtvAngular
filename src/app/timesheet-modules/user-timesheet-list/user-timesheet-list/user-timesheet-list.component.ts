@@ -78,8 +78,7 @@ export class UserTimesheetListComponent implements OnInit {
         viewComponent: TimesheetFilterViewComponent
     }});
   }
-  
-  trackByTimesheet = TrackByModel("timesheets")
+
 
   private onBack = () => {
     let returnUrl: string = this.route.snapshot.params.returnUrl;
