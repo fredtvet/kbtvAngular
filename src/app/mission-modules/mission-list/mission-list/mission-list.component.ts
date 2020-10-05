@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { combineLatest, Observable } from 'rxjs';
-import { debounceTime, map } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { Mission } from "src/app/core/models";
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
@@ -31,10 +31,10 @@ export class MissionListComponent {
   vm$: Observable<ViewModel> = combineLatest([
     this.store.filteredMissions$,
     this.navVm$
-  ]).pipe(debounceTime(1),
+  ]).pipe(
     map(([filtered, vm]) => { 
       return {...vm, fabs: this.fabs, missions: filtered.records} 
-    })
+    }),
   );
 
   private fabs: AppButton[];

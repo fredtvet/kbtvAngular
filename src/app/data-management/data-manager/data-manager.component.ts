@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Model } from 'src/app/core/models';
 import { ModelFormWrapperConfig } from 'src/app/core/services/model/form/interfaces';
 import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
@@ -9,7 +9,6 @@ import { ModelState } from 'src/app/core/services/model/interfaces';
 import { StateAction } from 'src/app/core/services/state/state-action.enum';
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { Prop } from 'src/app/shared-app/prop.type';
-import { MainTopNavConfig } from 'src/app/shared/interfaces';
 import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { DataManagementStore } from '../data-management.store';
 import { DataConfig } from '../interfaces/data-config.interface';
@@ -29,7 +28,7 @@ export class DataManagerComponent {
 vm$:Observable<ViewModel> = combineLatest([
   this.store.dataConfig$,
   this.store.selectedProperty$.pipe(map(x => this.getNavConfig(x)))
-]).pipe(debounceTime(1),
+]).pipe(
   map(([dataConfig, navConfig]) => { return {...dataConfig, navConfig}})
 );
 

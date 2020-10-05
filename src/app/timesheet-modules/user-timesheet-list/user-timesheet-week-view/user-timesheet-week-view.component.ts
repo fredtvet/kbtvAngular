@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { combineLatest, Observable } from 'rxjs';
-import { debounceTime, map } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { _getDateOfWeek } from 'src/app/shared-app/helpers/datetime/get-date-of-week.helper';
 import { _getWeekOfYear } from 'src/app/shared-app/helpers/datetime/get-week-of-year.helper';
@@ -38,7 +38,7 @@ export class UserTimesheetWeekViewComponent {
     this.store.timesheetSummaries$.pipe(map(x => _mapObjectsToWeekdays(x, "date"))),
     this.store.weekCriteria$.pipe(map(x => [x, this.getNavConfig(x) as any])),
     this.deviceInfoService.isXs$
-  ]).pipe(debounceTime(1),
+  ]).pipe(
     map(([summaries, [weekCriteria, navConfig], isXs]) => { return { navConfig, isXs, summaries, weekCriteria }}),
   );
 

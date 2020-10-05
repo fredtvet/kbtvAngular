@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilterConfig } from 'src/app/core/services/filter/interfaces';
@@ -28,7 +28,7 @@ export class TimesheetAdminListComponent{
   vm$: Observable<ViewModel> = combineLatest([
     this.store.filteredTimesheets$,
     this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x)))
-  ]).pipe(debounceTime(1), map(([filtered, navConfig]) => { 
+  ]).pipe(map(([filtered, navConfig]) => { 
     return { navConfig, timesheets: filtered.records }
   }));
 

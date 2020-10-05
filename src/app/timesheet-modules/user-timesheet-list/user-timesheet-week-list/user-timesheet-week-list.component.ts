@@ -23,7 +23,7 @@ export class UserTimesheetWeekListComponent implements OnInit {
   vm$: Observable<ViewModel> = combineLatest([
     this.store.timesheetSummaries$.pipe(map(x => x.sort((a,b) => b.week - a.week))),
     this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x)))
-  ]).pipe(debounceTime(1), map(([summaries, navConfig]) => { 
+  ]).pipe(map(([summaries, navConfig]) => { 
     return { navConfig, summaries }
   }));
 

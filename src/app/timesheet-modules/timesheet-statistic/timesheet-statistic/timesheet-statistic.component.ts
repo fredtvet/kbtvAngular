@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilterConfig } from 'src/app/core/services/filter/interfaces';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
@@ -39,10 +39,9 @@ export class TimesheetStatisticComponent {
     this.store.timesheetSummaries$,
     this.store.groupBy$.pipe(map(x => this.getGroupByChips(x))),
     this.navVm$
-  ]).pipe(debounceTime(1),
+  ]).pipe(
     map(([filtered, groupByChips, navVm]) => {
       const chipRows = [...navVm.chipRows, groupByChips];
-      console.log(groupByChips)
       return {data: filtered.records, ...navVm, chipRows}
     })
   )

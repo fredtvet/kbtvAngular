@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { debounceTime, map, tap } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
@@ -30,7 +30,7 @@ export class TimesheetAdminWeekListComponent {
     this.store.timesheetSummaries$.pipe(map(x => x.records?.sort((a, b) => b.week - a.week))),
     this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x))),
     this.deviceInfoService.isXs$
-  ]).pipe(debounceTime(1),map(([summaries, navConfig, isXs]) => { 
+  ]).pipe(map(([summaries, navConfig, isXs]) => { 
     return { summaries, navConfig, isXs }
   }));
 
