@@ -5,5 +5,5 @@
         <ng-content></ng-content>
     </span>    
     
-    <mat-icon class="ml-auto">{{ endIcon || 'chevron_right' }}</mat-icon>
+    <mat-icon *ngIf="endIcon" class="ml-auto">{{ endIcon }}</mat-icon>
 </mat-card>

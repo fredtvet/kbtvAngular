@@ -4,10 +4,10 @@
     </app-main-top-nav-bar>
 
     <div class="pl-2 pr-2 max-width">
-        <app-list-card startIcon='update' (click)="refresh()">Synkroniser manuelt
+        <app-list-card startIcon='update' endIcon="chevron_right" (click)="refresh()">Synkroniser manuelt
         </app-list-card>
     
-        <app-list-card startIcon='delete_sweep' (click)="confirmPurge()">Slett lokal data
+        <app-list-card startIcon='delete_sweep' endIcon="chevron_right" (click)="confirmPurge()">Slett lokal data
         </app-list-card>
     
         <div class="app-card mt-1 p-3">

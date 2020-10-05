@@ -23,19 +23,19 @@
 
   </div>
 
-  <app-list-card startIcon="photo_library" ellipsisDisabled="true"  
+  <app-list-card startIcon="photo_library" endIcon="chevron_right" ellipsisDisabled="true"  
     [routerLink]="['/oppdrag', mission?.id, 'bilder']">
     <span [matBadge]="mission.missionImages ? mission.missionImages.length : 0" 
       matBadgeOverlap="false" matBadgeColor="accent">Bilder</span>
   </app-list-card>
 
-  <app-list-card *ifRole="RolePresets.Internal" startIcon="folder" ellipsisDisabled="true"  
+  <app-list-card *ifRole="RolePresets.Internal" startIcon="folder" endIcon="chevron_right" ellipsisDisabled="true"  
     [routerLink]="['/oppdrag', mission?.id, 'dokumenter']">
     <span [matBadge]="mission.missionDocuments ? mission.missionDocuments.length : 0" 
       matBadgeOverlap="false" matBadgeColor="accent">Dokumenter</span>
   </app-list-card>
 
-  <app-list-card *ifRole="RolePresets.Internal" startIcon="rate_review" ellipsisDisabled="true"
+  <app-list-card *ifRole="RolePresets.Internal" startIcon="rate_review" endIcon="chevron_right" ellipsisDisabled="true"
     [routerLink]="['/oppdrag', mission?.id, 'notater']">
     <span [matBadge]="mission.missionNotes ? mission.missionNotes.length : 0" 
       matBadgeOverlap="false" matBadgeColor="accent">Notater</span>
