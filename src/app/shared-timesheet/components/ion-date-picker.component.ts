@@ -21,7 +21,7 @@ import { FormControl } from '@angular/forms';
         [attr.month-short-names]="monthShortNames"
         [attr.display-format]="ionFormat"
         [attr.minute-values]="minuteValues"
-        [value]="control?.value"
+        [value]="control?.value || defaultValue"
         (ionChange)="onChange($event.detail.value);">
       </ion-datetime>
     </div>
@@ -31,6 +31,7 @@ import { FormControl } from '@angular/forms';
 export class IonDatePickerComponent {
 
   @Input() control: FormControl;
+  @Input() defaultValue: any;
   @Input() placeholder: string;
   @Input() ariaLabel: string;
   @Input() ionFormat: string;

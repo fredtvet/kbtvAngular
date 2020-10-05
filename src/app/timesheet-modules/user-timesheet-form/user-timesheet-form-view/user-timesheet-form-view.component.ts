@@ -23,7 +23,7 @@ type Response = SaveModelStateCommand<Timesheet>;
 export class UserTimesheetFormViewComponent 
   extends BaseModelFormViewComponent<TimesheetForm, Timesheet, ViewConfig, Response>{
 
-  initTime: string = _getISOWithTimezone(this.getDateWithTime(7))
+  endTimeDefault: string = _getISOWithTimezone(this.getDateWithTime(null, 12))
 
   stringFilterConfig: ActiveStringFilterConfig<Mission>;
 
@@ -50,6 +50,7 @@ export class UserTimesheetFormViewComponent
     const t = cfg.entity;
     const lockedValues = cfg?.lockedValues;
     const startTimeIso = t?.startTime ? new Date(t?.startTime).toISOString() : null;
+    const endTimeIso = t?.endTime ? new Date(t.endTime).toISOString() : null;
     const date = lockedValues?.date;
 
     return this._formBuilder.group({
@@ -62,10 +63,10 @@ export class UserTimesheetFormViewComponent
         Validators.required,
         
       ]],   
-      startTime: [startTimeIso || this.initTime, [
+      startTime: [startTimeIso || _getISOWithTimezone(this.getDateWithTime(null, 7)), [
         Validators.required,
       ]],      
-      endTime: [t?.endTime ? new Date(t.endTime).toISOString() : null, [
+      endTime: [endTimeIso || null, [
         Validators.required,
       ]],    
       comment: [t?.comment, [
