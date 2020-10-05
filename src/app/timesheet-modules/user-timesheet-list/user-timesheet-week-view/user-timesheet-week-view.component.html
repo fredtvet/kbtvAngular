@@ -1,6 +1,6 @@
-<app-main-skeleton *ngIf="vm$ | async; let vm">
+<app-main-skeleton *ngIf="vm$ | async; let vm" disableElevation="true">
 
-  <app-main-top-nav-bar [config]="vm.navConfig" stylingClass="bg-primary">
+  <app-main-top-nav-bar navbar [config]="vm.navConfig" stylingClass="bg-primary">
   </app-main-top-nav-bar>
 
   <div style="min-height:100%" fxLayout="row"
@@ -11,7 +11,7 @@
 
         <div class="w-100" fxLayout="column" fxLayoutAlign="start stretch">
 
-          <app-timesheet-day-label class="w-100 mb-1" style="z-index:1"
+          <app-timesheet-day-label class="w-100 mb-1" style="z-index:1;position:sticky;top:0"
             [date]="vm.weekCriteria | getDateByDateParams : weekDay"
             (labelClicked)="openTimesheetForm(null, {date: $event})">
           </app-timesheet-day-label>

@@ -15,6 +15,7 @@ export class MainSkeletonComponent{
   ButtonTypes = ButtonTypes;
 
   @Input() fabs: AppButton[];
+  @Input() disableElevation: boolean;
 
 
   trackByFab = TrackByAppButton;

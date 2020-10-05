@@ -1,6 +1,7 @@
 <div fxLayout="column" class="h-100" style="position:relative">
 
-  <span class="mat-elevation-z3 bg-primary">
+  <span class="bg-primary" style="z-index:3;" 
+    [ngClass]="disableElevation ? '' : 'mat-elevation-z3'" >
     
     <ng-content select="[navbar]"></ng-content>
 
