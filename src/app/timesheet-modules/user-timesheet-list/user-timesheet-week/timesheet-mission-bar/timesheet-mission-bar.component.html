@@ -8,7 +8,7 @@
         (click)="clickBar()" matRipple>
 
         <span class="mat-body-strong">
-            {{ timesheet.totalHours }}t
+            {{ timesheet.totalHours | number : '1.0-1' }}t
         </span>
     </div>
 </ng-container>
