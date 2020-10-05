@@ -41,8 +41,11 @@ export class TimesheetAdminListComponent{
       this.store.addFilterCriteria(filter ? JSON.parse(filter) : {});    
     }
 
-  changeTimesheetStatus = (id: string, status: TimesheetStatus): void => 
-    this.store.changeStatus({id, status});
+  toggleTimesheetStatus = (timesheet: Timesheet): void => 
+    this.store.changeStatus({
+      id: timesheet.id, 
+      status: timesheet.status ? TimesheetStatus.Open : TimesheetStatus.Confirmed
+    });
 
   trackById = TrackByModel("timesheets");
   

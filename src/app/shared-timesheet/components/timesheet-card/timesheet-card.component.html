@@ -1,9 +1,10 @@
-<div fxLayout="column" fxLayoutAlign="space-between start" class="app-card p-2 mat-elevation-z2"
+<mat-card fxLayout="column" fxLayoutAlign="space-between start"
    *ngIf="timesheet">
 
   <span fxLayout="row" fxLayoutAlign="space-between stretch" class="w-100">
 
-    <span fxLayout="column" fxLayoutAlign="start start">
+    <span fxLayout="column" fxLayoutAlign="start start" class="ellipsis">
+
       <span class="mat-body-2 p-0">
         {{ this.timesheet.startTime | date : 'longDate'}}
         {{ this.timesheet.startTime | date : 'shortTime' }} - {{ this.timesheet.endTime | date : 'shortTime' }}
@@ -20,38 +21,25 @@
 
     </span>
 
-    <span *ngIf="timesheet.status === 0; else closedTimesheet" class="color-warn" fxLayout="column" fxLayoutAlign="space-between center">
-      <span fxLayout="column" fxLayoutAlign="start center">
+    <span fxLayout="column" fxLayoutAlign="space-between center">
+
+      <span *ngIf="!timesheet.status else closedIcon" 
+        fxLayout="column" fxLayoutAlign="start center" class="color-warn">
         <mat-icon>lock_open</mat-icon>
         <span class="mat-caption">åpen</span>
       </span>
 
-      <button *ngIf="adminView; else buttons" mat-icon-button (click)="changeStatus()">
-        <mat-icon>check_circle_outline</mat-icon>
-      </button> 
+      <app-button *ngIf="actionButton" [config]="actionButton | transformButton : ButtonTypes.Icon"></app-button>
 
-      <ng-template #buttons>
-        <button mat-icon-button color="accent" (click)="editTimesheet()">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </ng-template>
     </span>
 
-    <ng-template #closedTimesheet>   
-      <span class="color-success" fxLayout="column" fxLayoutAlign="space-between center">
-        <span fxLayout="column" fxLayoutAlign="start center">
-          <mat-icon>lock</mat-icon>
-          <span class="mat-caption">låst</span>
-        </span>
-        <mat-spinner *ngIf="loading"></mat-spinner>
-        <button *ngIf="adminView && !loading" mat-icon-button (click)="changeStatus()">
-          <mat-icon>check_circle</mat-icon>
-        </button> 
+    <ng-template #closedIcon>   
+      <span fxLayout="column" fxLayoutAlign="start center" class="color-success">
+        <mat-icon>lock</mat-icon>
+        <span class="mat-caption">låst</span>
       </span>
-
     </ng-template>
-
 
   </span>
 
-</div>
+</mat-card>

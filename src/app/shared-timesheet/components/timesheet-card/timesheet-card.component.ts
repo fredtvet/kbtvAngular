@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Timesheet } from 'src/app/core/models';
+import { ButtonTypes } from 'src/app/shared-app/enums';
+import { AppButton } from 'src/app/shared-app/interfaces';
 import { TimesheetStatus } from 'src/app/shared/enums';
 
 @Component({
@@ -8,19 +10,13 @@ import { TimesheetStatus } from 'src/app/shared/enums';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class TimesheetCardComponent {
-  @Input() adminView: boolean = false;
+export class TimesheetCardComponent { 
+  ButtonTypes = ButtonTypes;
+  Status = TimesheetStatus;
+  
   @Input() timesheet: Timesheet;
-  @Input() loading: boolean;
-  @Output() statusChanged = new EventEmitter<{id: string, status: TimesheetStatus}>();
-  @Output() editClicked = new EventEmitter<string>();
+  @Input() actionButton: AppButton;
 
   constructor() { }
 
-  editTimesheet = () =>  this.editClicked.emit(this.timesheet.id);
-  
-  changeStatus = () => {
-    let status = (this.timesheet.status === TimesheetStatus.Open) ? TimesheetStatus.Confirmed : TimesheetStatus.Open;
-    this.statusChanged.emit({id: this.timesheet.id, status})
-  };
 }

@@ -6,8 +6,12 @@
     <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="vm.timesheets?.length else loading">  
         <cdk-virtual-scroll-viewport itemSize="104" maxBufferPx="800" minBufferPx="800" fxFlex>
             <div class="m-1" *cdkVirtualFor="let timesheet of vm.timesheets; trackBy: trackById">
-                <app-timesheet-card adminView="true" [timesheet]="timesheet"
-                    (statusChanged)="changeTimesheetStatus($event.id, $event.status)">
+                <app-timesheet-card [timesheet]="timesheet"
+                    [actionButton]="{ 
+                        icon: timesheet.status ? 'check_circle' : 'check_circle_outline', 
+                        colorClass: timesheet.status ? 'color-success' : 'color-warn',
+                        callback: toggleTimesheetStatus, params: [timesheet]
+                    }">
                 </app-timesheet-card>
             </div>
         </cdk-virtual-scroll-viewport>
