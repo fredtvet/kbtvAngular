@@ -56,7 +56,7 @@ export class MissionDetailsComponent{
   private goToTimesheets = (mission: Mission) => 
     this.router.navigate(['mine-timer/liste', {
       returnUrl: this.router.url, 
-      initialFilter: JSON.stringify({mission, status: TimesheetStatus.Open})
+      filter: JSON.stringify({mission, status: TimesheetStatus.Open})
     }]);
 
   private openBottomSheetMenu = (mission: Mission) => {   

@@ -57,9 +57,9 @@ export class UserTimesheetListComponent implements OnInit {
   ) {}
 
   ngOnInit() { 
-    let initFilter = this.route.snapshot.params.initialFilter;
+    let filter = this.route.snapshot.params.filter;
 
-    const criteria: TimesheetCriteria = initFilter ? JSON.parse(initFilter) : {};
+    const criteria: TimesheetCriteria = filter ? JSON.parse(filter) : {};
     
     if(criteria.dateRange && !criteria.dateRangePreset) 
       criteria.dateRangePreset = DateRangePresets.Custom

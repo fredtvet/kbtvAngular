@@ -28,9 +28,7 @@ export class TimesheetStatisticComponent {
   @ViewChild('statTable') statTable: TimesheetStatisticTableComponent;
 
   private navVm$: Observable<BaseViewModel> = this.store.criteria$.pipe(map(criteria => { 
-    console.log(criteria);
     const activeCriteriaCount = _getSetPropCount(criteria, {dateRangePreset: null})
-    console.log(activeCriteriaCount);
     return {
       chipRows: [this.getCriteriaChips(criteria, activeCriteriaCount)], 
       navConfig: this.getNavConfig(activeCriteriaCount)

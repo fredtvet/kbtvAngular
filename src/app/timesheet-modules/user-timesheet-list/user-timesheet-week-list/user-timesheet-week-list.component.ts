@@ -35,13 +35,13 @@ export class UserTimesheetWeekListComponent implements OnInit {
     { this.store.addGroupBy(GroupByPeriod.Week)}
 
   ngOnInit() {
-    let initFilter = this.route.snapshot.params.initialFilter;
+    let initFilter = this.route.snapshot.params.filter;
     initFilter = initFilter ? JSON.parse(initFilter) : {year: new Date().getFullYear()};
     this.store.addWeekFilterCriteria(initFilter);
   }
 
   goToWeekView = (year: number, weekNr: number) => {
-    this.router.navigate(['/mine-timer/ukevisning', {initialFilter: JSON.stringify({year, weekNr})}])
+    this.router.navigate(['/mine-timer/ukevisning', {filter: JSON.stringify({year, weekNr})}])
   }
 
   trackByWeekNr(summary:TimesheetSummary): number {

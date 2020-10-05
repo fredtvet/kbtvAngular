@@ -53,7 +53,7 @@ export class UserTimesheetWeekViewComponent {
   
   ngOnInit() {
     this.store.addGroupBy(GroupByPeriod.Day) 
-    let initFilter = this.route.snapshot.params.initialFilter;
+    let initFilter = this.route.snapshot.params.filter;
     initFilter = initFilter ? JSON.parse(initFilter) : {year: this.currentYear, weekNr: this.currentWeekNr};
     this.store.addWeekFilterCriteria(initFilter);
   }
@@ -96,7 +96,7 @@ export class UserTimesheetWeekViewComponent {
         "mine-timer/liste",
         {
           returnUrl: this.router.url,
-          initialFilter: JSON.stringify({
+          filter: JSON.stringify({
             dateRange: _getWeekRange(_getDateOfWeek(dp.weekNr, dp.year))
           })
         }
@@ -104,7 +104,7 @@ export class UserTimesheetWeekViewComponent {
   };
 
   private goToWeekList = () => 
-    this.router.navigate(['mine-timer/ukeliste', {initialFilter: JSON.stringify({year: this.weekCriteria?.year})}])
+    this.router.navigate(['mine-timer/ukeliste', {filter: JSON.stringify({year: this.weekCriteria?.year})}])
 
   private getNavConfig(weekCriteria: WeekCriteria): MainTopNavConfig{
     return { 
