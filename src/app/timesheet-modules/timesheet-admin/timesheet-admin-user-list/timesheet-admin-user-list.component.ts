@@ -18,10 +18,13 @@ export class TimesheetAdminUserListComponent {
     private loadingService: LoadingService,
     private store: TimesheetAdminStore,
     private router: Router,
-  ) {}
+  ) {
+    this.store.addFilterCriteria(null);
+  }
 
   goToWeekList(user: User){
-    this.store.addFilterCriteria({user, year: new Date().getFullYear()})
-    this.router.navigate(["/timeadministrering/uker"]);
+    this.router.navigate(['timeadministrering/uker', {
+      filter: JSON.stringify({user, year: new Date().getFullYear()})
+    }])
   }
 }

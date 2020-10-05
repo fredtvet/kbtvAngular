@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
@@ -36,7 +36,11 @@ export class TimesheetAdminListComponent{
     private loadingService: LoadingService,
     private store: TimesheetAdminStore,
     private router: Router,
-    private filterService: FilterSheetService) {}
+    private route: ActivatedRoute,
+    private filterService: FilterSheetService) {
+      let filter = this.route.snapshot.params.filter;
+      this.store.addFilterCriteria(filter ? JSON.parse(filter) : {});    
+    }
 
   changeTimesheetStatus = (id: string, status: TimesheetStatus): void => 
     this.store.changeStatus({id, status});
@@ -51,8 +55,8 @@ export class TimesheetAdminListComponent{
 
   private getNavConfig(weekCriteria: WeekCriteria): MainTopNavConfig {
     return {
-      title:  "Uke " + weekCriteria.weekNr || "",
-      subTitle: (weekCriteria.year || "") + ' - ' + (weekCriteria.user?.userName || ""),
+      title:  "Uke " + weekCriteria?.weekNr || "",
+      subTitle: (weekCriteria?.year || "") + ' - ' + (weekCriteria?.user?.userName || ""),
       backFn: this.onBack,
       backFnParams: [null],
       buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]
@@ -60,8 +64,9 @@ export class TimesheetAdminListComponent{
   }
 
   private onBack = () => {
-    this.store.addFilterCriteria({...this.store.weekCriteria, weekNr: null});
-    this.router.navigate(["timeadministrering/uker"])
+    this.router.navigate(['timeadministrering/uker', {
+      filter: JSON.stringify({...this.store.weekCriteria, weekNr: null})
+    }])
   }
 
 }

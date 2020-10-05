@@ -30,7 +30,7 @@ const TimesheetAdminStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
 })
 export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implements FilterStore<WeekCriteria, WeekFilterViewConfig>{
 
-    weekCriteria = this.getStateProperty<WeekCriteria>("timesheetAdminWeekCriteria");
+    get weekCriteria(){ return this.getStateProperty<WeekCriteria>("timesheetAdminWeekCriteria"); } 
     weekCriteria$ = this.stateProperty$<WeekCriteria>("timesheetAdminWeekCriteria");
 
     filterConfig$: Observable<WeekFilterViewConfig> = combineLatest([

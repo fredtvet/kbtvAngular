@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
@@ -39,7 +39,11 @@ export class TimesheetAdminWeekListComponent {
     private store: TimesheetAdminStore,
     private filterService: FilterSheetService,
     private router: Router,
-    private deviceInfoService: DeviceInfoService) { }
+    private route: ActivatedRoute,
+    private deviceInfoService: DeviceInfoService) {
+      let filter = this.route.snapshot.params.filter;
+      this.store.addFilterCriteria(filter ? JSON.parse(filter) : {});
+    }
 
   changeTimesheetStatuses = (timesheets: Timesheet[]): void => {
     if(!timesheets) return;
@@ -55,8 +59,9 @@ export class TimesheetAdminWeekListComponent {
   }
 
   selectWeek = (weekNr: number) => {
-    this.store.addFilterCriteria({...this.store.weekCriteria, weekNr})
-    this.router.navigate(["timeadministrering/uker/timer"])
+    this.router.navigate(['timeadministrering/uker/timer', {
+      filter: JSON.stringify({...this.store.weekCriteria, weekNr})
+    }])
   }
 
   trackByWeek = (index:number, summary:TimesheetSummary): number => summary.week;
@@ -71,7 +76,6 @@ export class TimesheetAdminWeekListComponent {
   }
 
   private onBack = () => { 
-    this.store.addFilterCriteria(null);
     this.router.navigate(["timeadministrering"])
   }
 
