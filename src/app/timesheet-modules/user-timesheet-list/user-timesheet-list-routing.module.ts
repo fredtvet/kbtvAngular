@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserTimesheetListComponent } from './user-timesheet-list/user-timesheet-list.component';
 import { UserTimesheetWeekListComponent } from './user-timesheet-week-list/user-timesheet-week-list.component';
-import { UserTimesheetWeekViewComponent } from './user-timesheet-week-view/user-timesheet-week-view.component';
+import { UserTimesheetWeekComponent } from './user-timesheet-week/user-timesheet-week.component';
 
 
 const routes: Routes = [
@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'ukevisning',
-    component: UserTimesheetWeekViewComponent,
+    component: UserTimesheetWeekComponent,
     data: {depth: 3},
     children: [
       {path: 'skjema', loadChildren: () => import('src/app/timesheet-modules/user-timesheet-form/user-timesheet-form.module')

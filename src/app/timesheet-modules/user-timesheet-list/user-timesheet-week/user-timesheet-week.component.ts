@@ -10,27 +10,20 @@ import { _getWeekRange } from 'src/app/shared-app/helpers/datetime/get-week-rang
 import { _getWeeksInYear } from 'src/app/shared-app/helpers/datetime/get-weeks-in-year.helper';
 import { _mapObjectsToWeekdays } from 'src/app/shared-app/helpers/object/map-objects-to-weekdays.helper';
 import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
-import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { GroupByPeriod } from 'src/app/shared/enums';
 import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetForm } from '../../user-timesheet-form/user-timesheet-form-view/timesheet-form.interface';
 import { UserTimesheetCardDialogWrapperComponent } from '../user-timesheet-card-dialog-wrapper.component';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
-
-interface ViewModel{ 
-  summaries: {[key: number]: TimesheetSummary}, 
-  weekCriteria: WeekCriteria, 
-  isXs: boolean, 
-  navConfig: MainTopNavConfig 
-}
+import { ViewModel } from './view-model.interface';
 
 @Component({
-  selector: "app-user-timesheet-week-view",
-  templateUrl: "./user-timesheet-week-view.component.html",
+  selector: "app-user-timesheet-week",
+  templateUrl: "./user-timesheet-week.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserTimesheetWeekViewComponent {
+export class UserTimesheetWeekComponent {
 
   currentWeekNr: number = _getWeekOfYear();
   currentYear: number = new Date().getFullYear();
