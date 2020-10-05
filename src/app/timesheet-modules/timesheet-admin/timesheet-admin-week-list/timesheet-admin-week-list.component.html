@@ -1,11 +1,10 @@
 <app-main-top-nav *ngIf="vm$ | async; let vm" [config]="vm.navConfig">
-    <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="vm.summaries else loading">
-    
-        <ng-container *ngIf="vm.summaries?.length == 0" [ngTemplateOutlet]="noContent"></ng-container>
+    <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="vm.summaries?.length else loading">
     
         <cdk-virtual-scroll-viewport itemSize="82" maxBufferPx="800" minBufferPx="800" fxFlex>
             <app-swipe-card *cdkVirtualFor="let summary of vm.summaries; trackBy: trackByWeek; templateCacheSize:0"
-                [navButton]="{callback: selectWeek, params: summary.week}" [swipeEnabled]="summary.openHours > 0"
+                [lockPosition]="!vm.isXs ? 'open' : summary.openHours === 0 ? 'close' : null"
+                [navButton]="{callback: selectWeek, params: summary.week}"
                 [swipeButton]="{
                             callback: changeTimesheetStatuses, 
                             params: [summary.timesheets], 

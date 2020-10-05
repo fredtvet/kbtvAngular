@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
+import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilterConfig } from 'src/app/core/services/filter/interfaces';
 import { LoadingService } from 'src/app/core/services/loading.service';
@@ -14,7 +15,7 @@ import { MainTopNavConfig } from 'src/app/shared/interfaces';
 import { BaseViewModel } from 'src/app/shared/interfaces/base-view-model.interface';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
-interface ViewModel extends BaseViewModel { summaries: TimesheetSummary[] }
+interface ViewModel extends BaseViewModel { summaries: TimesheetSummary[], isXs: boolean }
 
 @Component({
   selector: 'app-timesheet-admin-week-list',
@@ -27,16 +28,18 @@ export class TimesheetAdminWeekListComponent {
 
   vm$: Observable<ViewModel> = combineLatest([
     this.store.timesheetSummaries$.pipe(map(x => x.records?.sort((a, b) => b.week - a.week))),
-    this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x)))
-  ]).pipe(debounceTime(1),map(([summaries, navConfig]) => { 
-    return { summaries, navConfig }
+    this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x))),
+    this.deviceInfoService.isXs$
+  ]).pipe(debounceTime(1),map(([summaries, navConfig, isXs]) => { 
+    return { summaries, navConfig, isXs }
   }));
 
   constructor(
     private loadingService: LoadingService,
     private store: TimesheetAdminStore,
     private filterService: FilterSheetService,
-    private router: Router) {  }
+    private router: Router,
+    private deviceInfoService: DeviceInfoService) {  }
 
 
   changeTimesheetStatuses = (timesheets: Timesheet[]): void => {

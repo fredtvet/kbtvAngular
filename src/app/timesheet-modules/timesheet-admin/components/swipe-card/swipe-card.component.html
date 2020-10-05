@@ -11,7 +11,7 @@
   <div class="bg-foreground" style="position:relative;z-index:1!important" fxFlex
     matRipple [matRippleDisabled]="!navButton"
     (click)="handleNavClick($event)"
-    [@showHideConfirm]="((isXs$ | async) && isSwipeButtonHidden) ? 'hide' : 'show'"
+    [@openCloseConfirm]="lockPosition || (isClosed ? 'close' : 'open')"
     (swiperight)="hideSwipeAction($event, false)" (swipeleft)="hideSwipeAction($event, true)">
     <ng-content>
       
