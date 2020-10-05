@@ -43,7 +43,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
     }));
 
   filteredMissions$: Observable<FilteredResponse<MissionCriteria, Mission>> = 
-    this.stateSlice$(["missions", "missionCriteria"], false).pipe(
+    this.stateSlice$(["missions", "missionCriteria"]).pipe(
         map(state => {
         const filter = new MissionFilter(state.missionCriteria, null, true);
         const filtered = _filter(state.missions, (entity) => filter.check(entity));

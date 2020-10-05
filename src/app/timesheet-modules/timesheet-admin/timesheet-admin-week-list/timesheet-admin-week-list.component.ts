@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
-import { debounceTime, map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
@@ -39,8 +39,7 @@ export class TimesheetAdminWeekListComponent {
     private store: TimesheetAdminStore,
     private filterService: FilterSheetService,
     private router: Router,
-    private deviceInfoService: DeviceInfoService) {  }
-
+    private deviceInfoService: DeviceInfoService) { }
 
   changeTimesheetStatuses = (timesheets: Timesheet[]): void => {
     if(!timesheets) return;

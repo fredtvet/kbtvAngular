@@ -22,32 +22,30 @@
     <ng-container *ifRole="RolePresets.Authority">
       <span class="mat-body-2">Administrering</span>
   
-      <app-list-card 
-        [config]="{startIcon:'date_range'}" 
+      <app-list-card startIcon="date_range" 
         [routerLink]="['/timeadministrering']">Administrer timer
       </app-list-card>
   
-      <app-list-card
-        [config]="{startIcon:'dns'}" 
+      <app-list-card startIcon="dns" 
         [routerLink]="['/data']">Administrer data
       </app-list-card>
   
-      <app-list-card
-        [config]="{startIcon:'people'}" 
+      <app-list-card startIcon="people" 
         [routerLink]="['/brukere']">Administrer brukere
       </app-list-card>
   
       <span class="mat-body-2">Statistikk</span>
   
-      <app-list-card
-        [config]="{startIcon:'assessment'}" 
+      <app-list-card startIcon="assessment" 
         [routerLink]="['/timestatistikk']">Timestatistikk
       </app-list-card>
     </ng-container>
   
     <span class="mat-body-2">Sist besøkte oppdrag</span>
+    
     <app-list-card *ngFor="let mission of missionHistory$ | async" 
-      [config]="{startIcon:'history', endIcon: mission.finished ? 'check':'chevron_right'}" 
+      startIcon="history"
+      [endIcon]="mission.finished ? 'check':'chevron_right'" 
       [routerLink]="['/oppdrag', mission.id, 'detaljer']">{{mission.address}}
     </app-list-card>
   

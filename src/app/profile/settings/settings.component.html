@@ -1,9 +1,9 @@
 <app-main-top-nav [config]="{title:  'Innstillinger', backFn: onBack}">
     <div class="p-2">
-        <app-list-card [config]="{startIcon:'update'}" (click)="refresh()">Synkroniser manuelt
+        <app-list-card startIcon='update' (click)="refresh()">Synkroniser manuelt
         </app-list-card>
     
-        <app-list-card [config]="{startIcon:'delete_sweep'}" (click)="confirmPurge()">Slett lokal data
+        <app-list-card startIcon='delete_sweep' (click)="confirmPurge()">Slett lokal data
         </app-list-card>
     
         <div class="app-card mt-1 p-3">

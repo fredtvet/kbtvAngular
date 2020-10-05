@@ -8,15 +8,11 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 export class ListCardComponent {
 
-  @Input() config: ListCardConfig;
-  
+  @Input() startIcon: string;
+  @Input() endIcon: string;
+  @Input() panelClass: string;
+  @Input() ellipsisDisabled: boolean;
+
   constructor() { }
 
 }
-
-export interface ListCardConfig{ 
-  startIcon: string;
-  endIcon: string;
-  panelClass: string;
-  ellipsisDisabled: boolean;
-} 
