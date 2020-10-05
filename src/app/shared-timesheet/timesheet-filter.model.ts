@@ -37,10 +37,10 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
             const baseValue = baseCriteria[prop];
             if(!baseValue) continue; 
             const value =  this.criteria[prop];
-            if(typeof value === "object") {
+            if(value && typeof value === "object") {
                 if(!this.isObjectContainedIn(baseValue, prop)) return false;
             }
-            else if(this.criteria[prop] !== baseValue) return false;     
+            else if(value !== baseValue) return false;     
         }
         return true;
     }
@@ -48,7 +48,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
     private isObjectContainedIn(baseValue: Object, prop: string){
         const modelCfg = ModelStateConfig.getBy(prop, "foreignProp");
         const value = this.criteria[prop];
-        console.log(baseValue, value, modelCfg)
+
         if(modelCfg && value[modelCfg.identifier] !== baseValue[modelCfg.identifier]) 
             return false
 
