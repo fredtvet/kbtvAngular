@@ -8,7 +8,7 @@
 
     <div fxLayout="column" fxLayoutAlign="start stretch" class="h-100 max-width">
         <cdk-virtual-scroll-viewport *ngIf="vm.timesheets?.length else noContent"
-            itemSize="148" maxBufferPx="800" minBufferPx="800" fxFlex>
+            itemSize="104" maxBufferPx="800" minBufferPx="800" fxFlex>
             <div class="m-1" *cdkVirtualFor="let timesheet of vm.timesheets | sortByDate : 'startTime'; trackBy: trackByTimesheet">
                 <app-timesheet-card [timesheet]="timesheet" (editClicked)="openTimesheetForm($event)">
                 </app-timesheet-card>

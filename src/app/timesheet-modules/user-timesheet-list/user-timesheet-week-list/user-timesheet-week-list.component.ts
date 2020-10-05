@@ -20,7 +20,7 @@ interface ViewModel{ summaries: TimesheetSummary[], navConfig: MainTopNavConfig 
 export class UserTimesheetWeekListComponent implements OnInit {
 
   vm$: Observable<ViewModel> = combineLatest([
-    this.store.timesheetSummaries$.pipe(map(x => x.sort((a,b) => b.week - a.week))),
+    this.store.timesheetSummaries$.pipe(map(x => x?.sort((a,b) => b.week - a.week))),
     this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x)))
   ]).pipe(map(([summaries, navConfig]) => { 
     return { navConfig, summaries }

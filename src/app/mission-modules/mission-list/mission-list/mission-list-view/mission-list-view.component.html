@@ -2,7 +2,7 @@
   
     <p *ngIf="!missions || missions.length == 0" class="m-2">Fant ingen oppdrag</p>
 
-    <cdk-virtual-scroll-viewport itemSize="60" maxBufferPx="800" minBufferPx="800" fxFlex>
+    <cdk-virtual-scroll-viewport itemSize="48" maxBufferPx="800" minBufferPx="800" fxFlex>
         <ng-container *cdkVirtualFor="let mission of missions; trackBy: trackByFn;">
             <app-list-card startIcon="home_work" panelClass="mt-1" 
                 [endIcon]="mission.finished ? 'check':'chevron_right'"
