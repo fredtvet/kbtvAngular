@@ -4,7 +4,7 @@
     </app-main-top-nav-bar>
 
     <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="vm.timesheets?.length else loading">  
-        <cdk-virtual-scroll-viewport itemSize="108" maxBufferPx="800" minBufferPx="800" fxFlex>
+        <cdk-virtual-scroll-viewport itemSize="104" maxBufferPx="800" minBufferPx="800" fxFlex>
             <div class="m-1" *cdkVirtualFor="let timesheet of vm.timesheets; trackBy: trackById">
                 <app-timesheet-card adminView="true" [timesheet]="timesheet"
                     (statusChanged)="changeTimesheetStatus($event.id, $event.status)">
