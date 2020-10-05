@@ -11,7 +11,7 @@
         </div>
       </ng-template>
     
-      <span fxLayout="column" fxLayoutAlign="center start" class="ellipsis">
+      <span fxLayout="column" fxLayoutAlign="center start">
         <span *ngIf="summary.openHours > 0; else confirmed" class="mat-subheading-2 m-0 color-warn line-height-100">
           Åpen
         </span>
@@ -26,8 +26,8 @@
         <span class="mat-body m-0 line-height-100"
           >{{ summary.confirmedHours }} timer låst
         </span>
-        <span *ngIf="summary.fullName" class="mat-body-2 m-0 line-height-100">{{
-          summary.fullName}}
+        <span *ngIf="summary.fullName" class="mat-body-2 m-0 line-height-100">
+          {{summary.fullName}}
         </span>
       </span>
     
