@@ -3,7 +3,7 @@
     <app-main-top-nav-bar navbar [config]="vm.navConfig" stylingClass="bg-primary">
     </app-main-top-nav-bar>
 
-    <app-selectable-list #imageList 
+    <app-selectable-list #selectableList 
         *ngIf="vm.images" identifier="id"
         [totalRows]="vm.isXs ? 2 : 4"
         [entities]="vm.images" 

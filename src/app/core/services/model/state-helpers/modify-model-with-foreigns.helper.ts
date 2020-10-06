@@ -36,7 +36,7 @@ export class ModifyModelWithForeignsHelper{
         }
 
         newState[stateProp as string] = entityFn(entity, state[stateProp]);
-        
+
         return newState;
     }
 }   

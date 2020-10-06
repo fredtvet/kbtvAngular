@@ -58,7 +58,7 @@ export class SaveModelToStateHttpConverter<TState, TCommand extends SaveModelSta
       if(this.modelConfig.foreigns)
          for(const fkProp of this.modelConfig.foreigns){
             const fkCfg = ModelStateConfig.get(fkProp as any);
-            if(command.entity[fkCfg.displayProp]) props.push(fkProp);
+            if(command.entity[fkCfg.foreignProp]) props.push(fkProp);
          }
 
       return props as Prop<TState>[];
