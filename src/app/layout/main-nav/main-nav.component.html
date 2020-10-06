@@ -16,7 +16,7 @@
 
     <!-- h-100 for iOS Safari fix -->
     <div fxFlex style="position:relative">
-      <div class="overflow-hidden h-100">
+      <div class="overflow-hidden h-100" [@routeAnimation]="prepareRoute(outlet)">
         <router-outlet #outlet="outlet"></router-outlet>
       </div> 
     </div>

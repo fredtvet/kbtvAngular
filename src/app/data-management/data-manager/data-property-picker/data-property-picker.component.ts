@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-data-property-picker',
@@ -6,16 +6,13 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
   styleUrls: ['./data-property-picker.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataPropertyPickerComponent implements OnInit {
+export class DataPropertyPickerComponent {
   
   @Input() properties: string[];
   @Input() selectedProperty: string;
   @Output() propertySelected = new EventEmitter<string>();
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   changeProperty = (property:string) => this.propertySelected.emit(property);
 }

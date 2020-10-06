@@ -1,9 +1,9 @@
 <app-main-skeleton *ngIf="vm$ | async; let vm">
 
-  <app-main-top-nav-bar navbar [config]="vm.navConfig" stylingClass="bg-primary">
-  </app-main-top-nav-bar>
+  <ng-container navbar>
 
-  <div class="h-100 p-2" fxLayout="column" fxLayoutGap="8px" >
+    <app-main-top-nav-bar [config]="vm.navConfig" stylingClass="bg-primary">
+    </app-main-top-nav-bar>
 
     <app-data-property-picker
       [properties]="properties" 
@@ -11,12 +11,12 @@
       (propertySelected)="updateSelectedProperty($event)">
     </app-data-property-picker>
 
-    <app-data-table fxLayout="column" fxLayoutGap="8px" class="h-100" #dataTable
-      [config]="vm"
-      (itemEdited)="updateItem($event)">
-    </app-data-table>
+  </ng-container>
 
-  </div>
+  <app-data-table class="h-100" #dataTable
+    [config]="vm"
+    (itemEdited)="updateItem($event)">
+  </app-data-table>
 
 </app-main-skeleton>
 
