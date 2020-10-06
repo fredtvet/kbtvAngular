@@ -42,8 +42,8 @@ export class TimesheetStatisticTableComponent extends AgGridTableComponent<Times
     if(object['month'])
       columnDefs.push({field: 'month',headerName: translations['month'] || 'month', sortable: true, valueFormatter: this.convertMonthIndex});
 
-    if(object['week'])
-      columnDefs.push({field: 'week',headerName: translations['week'] || 'week',sortable: true});
+    if(object['weekNr'])
+      columnDefs.push({field: 'weekNr',headerName: translations['weekNr'] || 'weekNr',sortable: true});
 
     if(object['date'])
       columnDefs.push({field: 'date',headerName: translations['date'] || 'date',sortable: true, valueFormatter: this.convertDate});

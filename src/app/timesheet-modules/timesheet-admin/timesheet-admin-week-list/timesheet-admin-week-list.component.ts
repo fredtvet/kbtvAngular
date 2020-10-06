@@ -26,7 +26,7 @@ export class TimesheetAdminWeekListComponent {
   loading$ = this.loadingService.queryLoading$;
 
   vm$: Observable<ViewModel> = combineLatest([
-    this.store.timesheetSummaries$.pipe(map(x => x.records?.sort((a, b) => b.week - a.week))),
+    this.store.timesheetSummaries$.pipe(map(x => x.records?.sort((a, b) => b.weekNr - a.weekNr))),
     this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x))),
     this.deviceInfoService.isXs$
   ]).pipe(map(([summaries, navConfig, isXs]) => { 
@@ -63,7 +63,7 @@ export class TimesheetAdminWeekListComponent {
     }])
   }
 
-  trackByWeek = (index:number, summary:TimesheetSummary): number => summary.week;
+  trackByWeek = (index:number, summary:TimesheetSummary): number => summary.weekNr;
 
   private openWeekFilter = () => {
     this.filterService.open<WeekCriteria, FilterConfig<WeekFilterViewConfig>>({

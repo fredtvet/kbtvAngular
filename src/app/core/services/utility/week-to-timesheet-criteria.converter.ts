@@ -27,7 +27,6 @@ export class WeekToTimesheetCriteriaConverter implements Converter<WeekCriteria,
             date.setFullYear(input.year);
             result.dateRange = _getYearRange(date);
         }
-
         return result;    
     }
 

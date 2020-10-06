@@ -8,6 +8,6 @@ export interface TimesheetSummary{
     fullName?: string;
     year?: number;
     month?: number;
-    week?: number;
+    weekNr?: number;
     date?: Date;
 }

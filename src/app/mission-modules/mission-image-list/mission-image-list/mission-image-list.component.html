@@ -14,8 +14,8 @@
 </app-main-skeleton>
 
 <ng-template #imgTemplate let-entity>
-    <img appImageErrorReloader class="entity-card"  alt="oppdragsbilde"
-                [src]="entity | appFileUrl: 'thumbnails'"/> 
+        <img appImageErrorReloader class="entity-card"  alt="oppdragsbilde"
+        [src]="entity | appFileUrl: 'thumbnails'"/> 
 </ng-template>
 
 <input type="file" style="display:none" multiple #imageInput (change)="uploadImages($event.target.files)">

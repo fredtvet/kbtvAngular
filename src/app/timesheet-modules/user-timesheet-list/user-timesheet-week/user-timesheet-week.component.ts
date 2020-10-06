@@ -45,14 +45,11 @@ export class UserTimesheetWeekComponent {
     private deviceInfoService: DeviceInfoService,
     private store: UserTimesheetListStore,
   ) {
-   }
-  
-  ngOnInit() {
     this.store.addGroupBy(GroupByPeriod.Day) 
     let initFilter = this.route.snapshot.params.filter;
     initFilter = initFilter ? JSON.parse(initFilter) : {year: this.currentYear, weekNr: this.currentWeekNr};
     this.store.addWeekFilterCriteria(initFilter);
-  }
+   }
 
   nextWeek(): void{
     let currFilter = this.weekCriteria;

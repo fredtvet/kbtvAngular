@@ -17,10 +17,10 @@ interface ViewModel{ summaries: TimesheetSummary[], navConfig: MainTopNavConfig 
   templateUrl: './user-timesheet-week-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserTimesheetWeekListComponent implements OnInit {
+export class UserTimesheetWeekListComponent {
 
   vm$: Observable<ViewModel> = combineLatest([
-    this.store.timesheetSummaries$.pipe(map(x => x?.sort((a,b) => b.week - a.week))),
+    this.store.timesheetSummaries$.pipe(map(x => x?.sort((a,b) => b.weekNr - a.weekNr))),
     this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x)))
   ]).pipe(map(([summaries, navConfig]) => { 
     return { navConfig, summaries }
@@ -31,16 +31,15 @@ export class UserTimesheetWeekListComponent implements OnInit {
     private store: UserTimesheetListStore,
     private route: ActivatedRoute,
     private router: Router) 
-    { this.store.addGroupBy(GroupByPeriod.Week)}
+    { 
+      this.store.addGroupBy(GroupByPeriod.Week);
+      let initFilter = this.route.snapshot.params.filter;
+      initFilter = initFilter ? JSON.parse(initFilter) : {year: new Date().getFullYear()};
+      this.store.addWeekFilterCriteria(initFilter);
+    }
 
-  ngOnInit() {
-    let initFilter = this.route.snapshot.params.filter;
-    initFilter = initFilter ? JSON.parse(initFilter) : {year: new Date().getFullYear()};
-    this.store.addWeekFilterCriteria(initFilter);
-  }
-
-  goToWeekView = ({year, weekNr}) => {
-    this.router.navigate(['/mine-timer/ukevisning', {filter: JSON.stringify({year, weekNr})}])
+  goToWeekView = (weekCriteria: WeekCriteria) => {
+    this.router.navigate(['/mine-timer/ukevisning', {filter: JSON.stringify(weekCriteria)}])
   }
 
   openWeekFilter = () => { 

@@ -13,7 +13,7 @@ export class GetDateByDateParamsPipe implements PipeTransform {
     if(!dp || Object.keys(dp).length === 0) return new Date();
     
     let date = _getWeekRange(_getDateOfWeek(dp.weekNr, dp.year))[0];
-
+    
     if(weekDayOverride || dp.weekDay)
       date.setDate(date.getDate() + (weekDayOverride - 1) || dp.weekDay);
 

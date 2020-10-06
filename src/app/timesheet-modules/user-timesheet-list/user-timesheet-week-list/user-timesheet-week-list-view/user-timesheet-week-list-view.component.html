@@ -4,7 +4,7 @@
         *ngIf="summaries?.length else noContent">
         <div class="app-card mat-elevation-z2 m-1" matRipple
             *cdkVirtualFor="let summary of summaries; trackBy: trackByWeekNr; templateCacheSize:0" 
-            (click)="summaryClicked.emit(summary)">
+            (click)="summaryClicked.emit({weekNr: summary.weekNr, year: summary.year})">
             <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
         </div>
     </cdk-virtual-scroll-viewport>

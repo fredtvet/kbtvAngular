@@ -20,6 +20,7 @@ export const translations: { [key: string]: string } = {
   none: "Ingen",
   year: "År",
   month: "Måned",
+  weekNr: "Uke",
   week: "Uke",
   date: "Dato",
   day: "Dag",

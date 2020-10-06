@@ -58,13 +58,13 @@ export class TimesheetSummaryAggregator {
     for(let i = t.length; i--;){
       const timesheet = t[i];
       const wy = _getWeekAndYearFromDate(timesheet.startTime);
-      const index = wy.year + "-" + wy.week + "-" + timesheet.userName;
+      const index = wy.year + "-" + wy.weekNr + "-" + timesheet.userName;
       let summary = groups[index];
       if (summary === undefined) {
         groups[index] = {
           userName: timesheet.userName,
           year: wy.year,
-          week: wy.week,
+          weekNr: wy.weekNr,
           openHours: 0,
           confirmedHours: 0,
           timesheets: [],
@@ -93,7 +93,7 @@ export class TimesheetSummaryAggregator {
         let summary = groups[weekNr];
         if (summary === undefined){
           groups[weekNr] = 
-            {week: weekNr, timesheets: [],openHours: 0,confirmedHours: 0,};    
+            {weekNr, timesheets: [],openHours: 0,confirmedHours: 0,};    
           summary = groups[weekNr];  
         }
 
