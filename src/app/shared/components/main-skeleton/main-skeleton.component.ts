@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ButtonTypes } from 'src/app/shared-app/enums';
 import { AppButton } from 'src/app/shared-app/interfaces/app-button.interface';
-import { TrackByAppButton } from 'src/app/shared-app/track-by-app-button';
+import { _trackByAppButton } from 'src/app/shared-app/track-by-app-button';
 import { _trackById } from '../../trackby/track-by-id.helper';
 
 @Component({
@@ -16,7 +16,7 @@ export class MainSkeletonComponent{
   @Input() disableElevation: boolean;
 
 
-  trackByFab = TrackByAppButton;
+  trackByFab = _trackByAppButton;
 
   trackByChipRow = _trackById
 }

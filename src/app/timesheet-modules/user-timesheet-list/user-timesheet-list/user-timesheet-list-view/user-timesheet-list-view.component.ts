@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Timesheet } from 'src/app/core/models';
-import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
+import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 
 @Component({
   selector: 'app-user-timesheet-list-view',
@@ -15,5 +15,5 @@ export class UserTimesheetListViewComponent {
 
   editTimesheet = (id: string) => this.editClicked.emit(id);
   
-  trackByTimesheet = TrackByModel("timesheets")
+  trackByTimesheet = _trackByModel("timesheets")
 }

@@ -12,7 +12,7 @@ import { _mapObjectsToWeekdays } from 'src/app/shared-app/helpers/object/map-obj
 import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { GroupByPeriod } from 'src/app/shared/enums';
-import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
+import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetForm } from '../../user-timesheet-form/user-timesheet-form-view/timesheet-form.interface';
 import { UserTimesheetCardDialogWrapperComponent } from '../user-timesheet-card-dialog-wrapper.component';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
@@ -81,7 +81,7 @@ export class UserTimesheetWeekComponent {
     this.dialog.open(UserTimesheetCardDialogWrapperComponent, {
       data: timesheetId, panelClass: 'extended-dialog'});
 
-  trackByTimesheet = TrackByModel("timesheets");
+  trackByTimesheet = _trackByModel("timesheets");
 
   private goToTimesheetList = () => {
       const dp = this.weekCriteria;

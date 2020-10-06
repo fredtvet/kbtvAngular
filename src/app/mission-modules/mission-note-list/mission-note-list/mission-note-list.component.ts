@@ -7,7 +7,7 @@ import { RolePresets } from 'src/app/shared-app/enums';
 import { _sortByBool } from 'src/app/shared-app/helpers/array/sort-by-bool.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
-import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
+import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { MissionNoteListStore } from '../mission-note-list.store';
 
 @Component({
@@ -44,7 +44,7 @@ export class MissionNoteListComponent {
       {relativeTo: this.route}
     );
 
-  trackByNote = TrackByModel("missionNotes")
+  trackByNote = _trackByModel("missionNotes")
   
   private openCreateNoteForm = () => 
     this.router.navigate(

@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Mission, Model } from 'src/app/core/models';
+import { Mission } from 'src/app/core/models';
 import { BaseFormViewComponent } from 'src/app/core/services/form/abstracts/base-form-view-component';
 import { ActiveStringFilterConfig } from 'src/app/shared/interfaces/active-string-filter-config.interface';
 import { MissionCriteria } from 'src/app/shared/interfaces/mission-filter-criteria.interface';
-import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
+import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { MissionFilterViewConfig } from './mission-filter-view-config.interface';
 
 @Component({
@@ -29,7 +29,7 @@ export class MissionFilterViewComponent extends BaseFormViewComponent<MissionFil
     }
   }
 
-  trackByMission = TrackByModel("missions");
+  trackByMission = _trackByModel("missions");
 
   compareIds = (option: {id: any}, value: {id: any}) => option?.id === value?.id;
 

@@ -5,7 +5,7 @@ import { FormService } from 'src/app/core/services/form/form.service';
 import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
 import { ButtonTypes, Roles } from 'src/app/shared-app/enums';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
-import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
+import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { NewPasswordFormComponent } from '../new-password-form/new-password-form.component';
 import { UserFormViewConfig } from '../user-form-view/user-form-view-config.interface';
 import { UserFormViewComponent } from '../user-form-view/user-form-view.component';
@@ -54,6 +54,6 @@ export class UserListComponent {
       formComponent: NewPasswordFormComponent
     })
 
-  trackByUser = TrackByModel("users")
+  trackByUser = _trackByModel("users")
 
 }

@@ -10,7 +10,7 @@ import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetStatus } from 'src/app/shared/enums';
-import { TrackByModel } from 'src/app/shared/trackby/track-by-model.helper';
+import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
 interface ViewModel { timesheets: Timesheet[],  navConfig: MainTopNavConfig  }
@@ -47,7 +47,7 @@ export class TimesheetAdminListComponent{
       status: timesheet.status ? TimesheetStatus.Open : TimesheetStatus.Confirmed
     });
 
-  trackById = TrackByModel("timesheets");
+  trackById = _trackByModel("timesheets");
   
   private openWeekFilter = () => {
     this.filterService.open<WeekCriteria, FilterConfig<WeekFilterViewConfig>>({
