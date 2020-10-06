@@ -1,0 +1,16 @@
+@import '../../../../../styles/variables';
+
+::ng-deep .swipe-card{
+    padding:0!important;  
+    margin: $gap-size * 1px;
+    .swipe-hidden-content{
+        position:relative;
+        width:86px!important
+    }    
+    .swipe-content{
+        position:relative;
+        z-index:1!important;
+        background:inherit;
+        padding: $gap-size * 3px;
+    }
+}

@@ -1,14 +1,14 @@
-<div class="app-card mat-elevation-z2 m-1"
-    fxLayout="row" fxLayoutAlign="start stretch">
+<mat-card
+    fxLayout="row" fxLayoutAlign="start stretch" class="swipe-card">
 
-  <div fxLayout="column" fxLayoutAlign="center center" matRipple
-    style="position:relative;width:86px!important"
+  <div class="swipe-hidden-content" matRipple 
+    fxLayout="column" fxLayoutAlign="center center"
     [ngClass]="swipeButton.colorClass" 
     (press)="handleSwipeBtnClick($event)">
         <mat-icon class="scale-125">{{ swipeButton.icon }}</mat-icon>
   </div>
 
-  <div class="bg-foreground" style="position:relative;z-index:1!important" fxFlex
+  <div fxFlex class="swipe-content"
     matRipple [matRippleDisabled]="!navButton"
     (click)="handleNavClick($event)"
     [@openCloseConfirm]="lockPosition || (isClosed ? 'close' : 'open')"
@@ -18,4 +18,4 @@
     </ng-content>
   </div>
 
-</div>
+</mat-card>

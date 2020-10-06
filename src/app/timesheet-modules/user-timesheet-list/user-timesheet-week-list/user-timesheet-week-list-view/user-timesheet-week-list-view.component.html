@@ -1,12 +1,12 @@
 <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch">
 
-    <cdk-virtual-scroll-viewport itemSize="68" maxBufferPx="800" minBufferPx="800" fxFlex 
+    <cdk-virtual-scroll-viewport itemSize="76" maxBufferPx="800" minBufferPx="800" fxFlex 
         *ngIf="summaries?.length else noContent">
-        <div class="app-card mat-elevation-z2 m-1" matRipple
+        <mat-card class="m-1" matRipple
             *cdkVirtualFor="let summary of summaries; trackBy: trackByWeekNr; templateCacheSize:0" 
             (click)="summaryClicked.emit({weekNr: summary.weekNr, year: summary.year})">
             <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
-        </div>
+        </mat-card>
     </cdk-virtual-scroll-viewport>
 
 </div>

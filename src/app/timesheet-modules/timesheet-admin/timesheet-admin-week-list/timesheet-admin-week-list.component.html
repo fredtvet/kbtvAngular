@@ -7,7 +7,7 @@
     
         <cdk-virtual-scroll-viewport itemSize="82" maxBufferPx="800" minBufferPx="800" fxFlex>
             <app-swipe-card *cdkVirtualFor="let summary of vm.summaries; trackBy: trackByWeek; templateCacheSize:0"
-                [lockPosition]="!vm.isXs ? 'open' : summary.openHours === 0 ? 'close' : null"
+                [lockPosition]="!vm.isXs ? 'open' : summary.openHours === 0 ? 'close' : null" 
                 [navButton]="{callback: selectWeek, params: summary.weekNr}"
                 [swipeButton]="{
                             callback: changeTimesheetStatuses, 

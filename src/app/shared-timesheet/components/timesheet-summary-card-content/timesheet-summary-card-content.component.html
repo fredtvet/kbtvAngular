@@ -1,4 +1,4 @@
-  <div class="p-3" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" *ngIf="summary">
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" *ngIf="summary">
     <div fxLayout="column" fxLayoutAlign="center center" *ngIf="summary.weekNr; else yearView">
         <span class="mat-body m-0 line-height-100">Uke</span>
         <span class="mat-headline m-0 line-height-100">{{ summary.weekNr }}</span>
@@ -11,7 +11,7 @@
         </div>
       </ng-template>
     
-      <span fxLayout="column" fxLayoutAlign="center start">
+      <span fxLayout="column" fxLayoutAlign="center start" class="ellipsis">
         <span *ngIf="summary.openHours > 0; else confirmed" class="mat-subheading-2 m-0 color-warn line-height-100">
           Åpen
         </span>

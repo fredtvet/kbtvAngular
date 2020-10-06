@@ -21,6 +21,7 @@ import { AppButton } from 'src/app/shared-app/interfaces';
       transition('void => *', animate(0)),
     ])
   ],
+  styleUrls: ['./swipe-card.component.scss'],
   templateUrl: './swipe-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
