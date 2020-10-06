@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Timesheet } from 'src/app/core/models';
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilterConfig } from 'src/app/core/services/filter/interfaces';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
@@ -17,7 +18,7 @@ import { _trackById } from 'src/app/shared/trackby/track-by-id.helper';
 import { TimesheetStatisticStore } from '../timesheet-statistic.store';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
 
-interface ViewModel { data: TimesheetSummary[], chipRows: ArrayRow<AppChip>[],  navConfig?: MainTopNavConfig }
+interface ViewModel { data: (TimesheetSummary | Timesheet)[], chipRows: ArrayRow<AppChip>[],  navConfig?: MainTopNavConfig }
 
 @Component({
   selector: 'app-timesheet-statistic',
@@ -36,13 +37,13 @@ export class TimesheetStatisticComponent {
   }))
 
   vm$: Observable<ViewModel> = combineLatest([
-    this.store.timesheetSummaries$,
+    this.store.tableData$,
     this.store.groupBy$.pipe(map(x => this.getGroupByChips(x))),
     this.navVm$
   ]).pipe(
-    map(([filtered, groupByChips, navVm]) => {
+    map(([data, groupByChips, navVm]) => {
       const chipRows = [groupByChips, ...navVm.chipRows];
-      return {data: filtered.records, ...navVm, chipRows}
+      return {data, ...navVm, chipRows}
     })
   )
   

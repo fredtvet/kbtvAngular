@@ -1,65 +1,70 @@
-import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { translations } from 'src/app/shared/translations';
-import { AgGridTableComponent } from 'src/app/shared/components/abstracts/ag-grid-table.component';
+import { ColDef } from 'ag-grid-community';
+import { Timesheet } from 'src/app/core/models';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { AgGridConfig } from 'src/app/shared/components/abstracts/ag-grid-config.interface';
+import { AgGridTableComponent } from 'src/app/shared/components/abstracts/ag-grid-table.component';
+import { ColDefsFactoryService } from './col-defs-factory.service';
 
 @Component({
   selector: 'app-timesheet-statistic-table',
   templateUrl: './timesheet-statistic-table.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ColDefsFactoryService]
 })
-export class TimesheetStatisticTableComponent extends AgGridTableComponent<TimesheetSummary, AgGridConfig<TimesheetSummary>> {
+export class TimesheetStatisticTableComponent extends AgGridTableComponent<TimesheetSummary | Timesheet, AgGridConfig<TimesheetSummary | Timesheet>> {
 
-  constructor(private datePipe: DatePipe) { super() }
+  private isSummaryData: boolean;
 
-  protected initNgGrid(cfg: AgGridConfig<TimesheetSummary>): void{
-    super.initNgGrid(cfg);
+  constructor(private colDefsFactory: ColDefsFactoryService) { super(); }
+
+  protected initNgGrid(cfg: AgGridConfig<TimesheetSummary | Timesheet>): void{
     if(!cfg?.data || cfg.data.length === 0) return;
+    const sample = cfg.data[0];
+    this.isSummaryData = (sample['confirmedHours'] || sample['openHours']) ? true : false
 
+    super.initNgGrid(cfg);
+    
+    this.dataGrid?.api.setPinnedBottomRowData(
+      this.isSummaryData ? this.addSummaryBottomRow(cfg as any) : this.addTimesheetBottomRow(cfg as any));  
+  }
+
+  protected addColDefs(object: TimesheetSummary | Timesheet): ColDef[]{
+    if(this.isSummaryData) 
+      return this.colDefsFactory.createSummaryColDefs(object as any);
+      
+    return this.colDefsFactory.createTimesheetColDefs(object)
+  } 
+
+  private addSummaryBottomRow(cfg: AgGridConfig<TimesheetSummary>): TimesheetSummary[]{
     let openHrs = 0, confirmedHrs = 0;
+    
     for(let  i = cfg.data.length; i--;){
       const summary = cfg.data[i];
       openHrs += summary.openHours;
       confirmedHrs += summary.confirmedHours;
     }
-
-    if(this.dataGrid){
-      this.dataGrid.api.setPinnedBottomRowData([{
-        openHours: Math.round(openHrs * 10) / 10, 
-        confirmedHours: Math.round(confirmedHrs * 10) / 10, 
-        fullName: "Sum av timer", timesheets: []
-      }]);
-    }
+ 
+    return [{
+      openHours: Math.round(openHrs * 10) / 10, 
+      confirmedHours: Math.round(confirmedHrs * 10) / 10, 
+      fullName: "Sum av timer", timesheets: []
+    }];   
   }
 
-  protected addColDefs(object: Object): any[]{
-    const columnDefs = [];
-    if(object['year'])
-      columnDefs.push({field: 'year', headerName: translations['year'] || 'year', sortable: true});
+  private addTimesheetBottomRow(cfg: AgGridConfig<Timesheet>): any[]{
+    let totalHours = 0;
+    
+    for(let  i = cfg.data.length; i--;){
+      const timesheet = cfg.data[i];
+      totalHours += timesheet.totalHours;
+    }
+ 
+    return [{
+      totalHours: Math.round(totalHours * 10) / 10, 
+      fullName: "Sum av timer",
+    }];   
+  }
 
-    if(object['month'])
-      columnDefs.push({field: 'month',headerName: translations['month'] || 'month', sortable: true, valueFormatter: this.convertMonthIndex});
-
-    if(object['weekNr'])
-      columnDefs.push({field: 'weekNr',headerName: translations['weekNr'] || 'weekNr',sortable: true});
-
-    if(object['date'])
-      columnDefs.push({field: 'date',headerName: translations['date'] || 'date',sortable: true, valueFormatter: this.convertDate});
-
-    columnDefs.push({field: 'fullName',headerName: translations['fullName'] || 'fullName',sortable: true});
-
-    columnDefs.push({field: 'confirmedHours',headerName: translations['confirmedHours'] || 'confirmedHours',sortable: true});
-
-    columnDefs.push({field: 'openHours',headerName: translations['openHours'] || 'openHours',sortable: true});
-
-    return columnDefs;
-  } 
-  private convertMonthIndex = (params) =>  
-    params?.value != null ? this.datePipe.transform(new Date().setMonth(params.value), 'MMM') : undefined;
-
-  private convertDate = (params) => 
-    params?.value ? this.datePipe.transform(params.value) : undefined;
-
+   
 }

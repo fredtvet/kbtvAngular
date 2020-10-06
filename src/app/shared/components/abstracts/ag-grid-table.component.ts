@@ -1,5 +1,6 @@
 import { Input, ViewChild, Directive } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
+import { ColDef } from 'ag-grid-community';
 import { AgGridConfig } from './ag-grid-config.interface';
 
 @Directive()
@@ -14,9 +15,9 @@ export abstract class AgGridTableComponent<TRecord, TConfig extends AgGridConfig
       this.initNgGrid(value);
   }
 
-  columnDefs: any = [];
+  columnDefs: ColDef[] = [];
 
-  rowData: any = [];
+  rowData: any[] = [];
 
   private currentObject: TRecord;
 
@@ -27,7 +28,7 @@ export abstract class AgGridTableComponent<TRecord, TConfig extends AgGridConfig
     this.dataGrid.columnApi.autoSizeColumns(cols);
   }
 
-  protected abstract addColDefs(object: Object): any[];
+  protected abstract addColDefs(object: Object): ColDef[];
 
   protected initNgGrid(cfg: TConfig): void{
     
@@ -46,7 +47,7 @@ export abstract class AgGridTableComponent<TRecord, TConfig extends AgGridConfig
     this.rowData = cfg.data;
   }
 
-  private hasSameObjectProps(obj1: Object, obj2: Object): boolean{
+  protected hasSameObjectProps(obj1: Object, obj2: Object): boolean{
     let objProps1 = Object.keys(obj1 || {});
 
     if(objProps1.length !== Object.keys(obj2 || {}).length) return false;

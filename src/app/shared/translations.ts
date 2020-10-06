@@ -28,6 +28,11 @@ export const translations: { [key: string]: string } = {
   confirmedHours: "Låste timer",
   openHours: "Åpne timer",
   password: "Passord",
+  status: "Status",
+  startTime: "Starttid",
+  endTime: "Sluttid",
+  totalHours: "Timer",
+  comment: "Kommentar",
 
   timesheet: "Time",
   timesheetId: "Time",

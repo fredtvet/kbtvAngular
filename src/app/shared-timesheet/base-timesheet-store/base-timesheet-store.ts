@@ -1,6 +1,6 @@
 import { HttpParams } from "@angular/common/http";
 import { combineLatest, Observable } from "rxjs";
-import { map, take, tap, withLatestFrom } from "rxjs/operators";
+import { map, shareReplay, take, tap, withLatestFrom } from "rxjs/operators";
 import { ApiUrl } from "src/app/core/api-url.enum";
 import { Mission, Timesheet, User } from "src/app/core/models";
 import { ObservableStoreBase } from "src/app/core/services/state/observable-store-base";
@@ -22,13 +22,13 @@ import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helper
 import { BaseModelStore } from 'src/app/core/services/state/abstracts/base-model.store';
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 
-export type FilteredAndGroupedSummaries = GroupedResponse<GroupByPeriod,TimesheetSummary> &
-  FilteredResponse<TimesheetCriteria, TimesheetSummary>;
+export type FilteredAndGroupedSummaries = GroupedResponse<GroupByPeriod, TimesheetSummary> &
+  FilteredResponse<TimesheetCriteria,  TimesheetSummary>;
 
 export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetStoreState>> extends BaseModelStore<TState> {
   private static baseCriteria: TimesheetCriteria;
 
-  users$ = this.modelProperty$<User[]>("users" as any);
+  users$ = this.modelProperty$<User[]>("users" as any).pipe(shareReplay());
 
   groupBy$ = this.stateProperty$<GroupByPeriod>(this.settings.groupByProp);
 
@@ -42,7 +42,7 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
           criteria: filter.criteria,
           records: _filter(state.timesheets, (entity) => filter.check(entity)),
         };
-      })
+      }), shareReplay()
     );
 
   timesheetSummaries$: Observable<FilteredAndGroupedSummaries> = combineLatest([
@@ -51,12 +51,11 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
     this.users$,
   ]).pipe(
     map(([filtered, groupBy, users]) => {
-      const summaries = 
-        this.timesheetSummaryAggregator.groupByType(groupBy, filtered.records);       
+      const entities = this.timesheetSummaryAggregator.groupByType(groupBy, filtered.records);    
       return {
         groupBy,
         criteria: filtered.criteria,
-        records: this.addFullNameToSummaries(summaries, users),
+        records: this.addFullNameToEntities(entities, users) as any,
       };
     }),
   );
@@ -142,14 +141,14 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
     return this.getRangeWithRelationsHelper.get(state, relationCfg);
   }
 
-  private addFullNameToSummaries(
-    summaries: TimesheetSummary[],
+  protected addFullNameToEntities(
+    entities: (TimesheetSummary | Timesheet)[],
     users: User[]
-  ): TimesheetSummary[] {
-    if (!summaries || !users) return summaries;
+  ): (TimesheetSummary | Timesheet)[] {
+    if (!entities || !users) return entities;
     let usersObj = _convertArrayToObject(users, "userName");
 
-    return summaries.map((s) => {
+    return entities.map((s) => {
       const user = usersObj[s.userName];
       if (user) s.fullName = user.firstName + " " + user.lastName;
       return s;
