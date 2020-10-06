@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DetailTopNavConfig } from './detail-top-nav.config';
 
 @Component({
@@ -7,7 +6,6 @@ import { DetailTopNavConfig } from './detail-top-nav.config';
   templateUrl: './detail-top-nav-bar.component.html',
   styleUrls: ['detail-top-nav-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers:[MatBottomSheet]
 })
 export class DetailTopNavBarComponent{
   @Input() config: DetailTopNavConfig;    

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Observable } from 'rxjs';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { MainNavService } from 'src/app/layout/main-nav.service';
@@ -11,7 +10,6 @@ import { MainTopNavConfig } from './main-top-nav.config';
   selector: 'app-main-top-nav-bar',
   templateUrl: './main-top-nav-bar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers:[MatBottomSheet]
 })
 export class MainTopNavBarComponent {
   @ViewChild('searchInput') searchInput: ElementRef;
