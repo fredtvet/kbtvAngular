@@ -32,17 +32,11 @@ export class MainTopNavBarComponent {
 
   onMenuButtonClick = () => this.mainNavService.toggleDrawer();
 
-  toggleSearchBar = () => {
-    if(!this.searchBarHidden) this.resetSearch(); //Reset criteria when hiding
+  toggleSearchBar = () => 
     this.searchBarHidden = !this.searchBarHidden
-  };
 
   handleSearchFn = (criteria: string) => this.config.searchBar.callback(criteria);
 
   TrackByButton = TrackByAppButton
 
-  private resetSearch(){
-    if(this.searchInput.nativeElement.value) this.handleSearchFn(null); 
-    this.searchInput.nativeElement.value = "";
-  }
 }
