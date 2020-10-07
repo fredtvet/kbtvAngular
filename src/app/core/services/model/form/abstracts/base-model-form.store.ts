@@ -6,12 +6,12 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { StateHttpCommandHandler } from "src/app/core/services/state/state-http-command.handler";
 import { GetWithRelationsHelper } from '../../state-helpers/get-with-relations.helper';
 import { StateHttpConverter } from '../../../state/state-http-converter/state-http-converter.interface';
-import { BaseModelStore } from 'src/app/core/state/base-model.store';
 import { ModelWithRelations } from '../../interfaces/model-with-relations.interface';
 import { ModelStateConfig } from '../../model-state.config';
 import { ModelState } from '../../interfaces/model-state.interface';
 import { Prop } from 'src/app/shared-app/prop.type';
 import { GetWithRelationsConfig } from '../../state-helpers/get-with-relations.config';
+import { BaseModelStore } from '../../../state/abstracts/base-model.store';
 
 export abstract class BaseModelFormStore<
     TState,

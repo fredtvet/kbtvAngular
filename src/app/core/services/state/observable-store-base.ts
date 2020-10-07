@@ -45,9 +45,8 @@ export class ObservableStoreBase {
         this.globalStateChangesSubject.next({stateChanges, action});
     }
 
-    deepClone(obj: Object) {
+    private deepClone(obj: Object) {
         return this.clonerService.deepClone(obj);
     }
-
 
 }
