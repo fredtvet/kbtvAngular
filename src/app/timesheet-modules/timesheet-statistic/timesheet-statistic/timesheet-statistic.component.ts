@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ValueFormatterParams } from 'ag-grid-community';
 import { combineLatest, Observable } from 'rxjs';
-import { debounceTime, map, tap } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilterConfig } from 'src/app/core/services/filter/interfaces';
@@ -51,7 +52,7 @@ export class TimesheetStatisticComponent {
   constructor( 
     private store: TimesheetStatisticStore,
     private filterService: FilterSheetService,
-    private chipsFactory: ChipsFactoryService,
+    private chipsFactory: ChipsFactoryService
   ) { }
   
   openBottomSheet = (): void => {
@@ -70,9 +71,19 @@ export class TimesheetStatisticComponent {
 
   private exportAsCsv = () => {
     this.statTable.dataGrid.api.exportDataAsCsv({
-      processCellCallback: (cell) => {
-        if(cell.column.getColId() === "month" && cell.value) return cell.value + 1;
-        return cell.value
+      processCellCallback: (params) => {
+        const colDef = params.column.getColDef()
+        // Use coldef value formatter in export
+        if (colDef.valueFormatter instanceof Function) {
+          const valueFormatterParams: ValueFormatterParams = {
+            ...params,
+            data: params.node.data,
+            node: params.node!,
+            colDef: params.column.getColDef()
+          };
+          return colDef.valueFormatter(valueFormatterParams);
+        }
+        return params.value;
       }
     });
   }
