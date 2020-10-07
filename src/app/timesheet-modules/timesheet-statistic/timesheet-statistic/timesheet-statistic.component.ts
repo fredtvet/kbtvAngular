@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { debounceTime, map, tap } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilterConfig } from 'src/app/core/services/filter/interfaces';
@@ -11,6 +11,7 @@ import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/t
 import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view.component';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces/timesheet-criteria.interface';
+import { AgGridConfig } from 'src/app/shared/components/abstracts/ag-grid-config.interface';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { GroupByPeriod } from 'src/app/shared/enums';
 import { ArrayRow } from 'src/app/shared/interfaces/array-row.interface';
@@ -18,7 +19,7 @@ import { _trackById } from 'src/app/shared/trackby/track-by-id.helper';
 import { TimesheetStatisticStore } from '../timesheet-statistic.store';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
 
-interface ViewModel { data: (TimesheetSummary | Timesheet)[], chipRows: ArrayRow<AppChip>[],  navConfig?: MainTopNavConfig }
+interface ViewModel { tableConfig: AgGridConfig<TimesheetSummary | Timesheet>, chipRows: ArrayRow<AppChip>[],  navConfig?: MainTopNavConfig }
 
 @Component({
   selector: 'app-timesheet-statistic',
@@ -37,14 +38,14 @@ export class TimesheetStatisticComponent {
   }))
 
   vm$: Observable<ViewModel> = combineLatest([
-    this.store.filteredAndGroupedTimesheets$.pipe(map(x => x.records)),
+    this.store.filteredAndGroupedTimesheets$.pipe(map(x => { return {data: x.records} })),
     this.store.groupBy$.pipe(map(x => this.getGroupByChips(x))),
     this.navVm$
-  ]).pipe(
-    map(([data, groupByChips, navVm]) => {
+  ]).pipe(debounceTime(1),
+    map(([tableConfig, groupByChips, navVm]) => {
       const chipRows = [groupByChips, ...navVm.chipRows];
-      return {data, ...navVm, chipRows}
-    })
+      return {...navVm, tableConfig, chipRows}
+    }), 
   )
   
   constructor( 

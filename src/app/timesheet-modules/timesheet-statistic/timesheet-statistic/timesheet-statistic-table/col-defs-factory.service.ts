@@ -22,7 +22,7 @@ export class ColDefsFactoryService {
       { field: "openHours" },
       { field: "confirmedHours" },
     ];
-    console.log('xd')
+
     this.timesheetColDefs = [
       {  field: "startTime", headerName: translations["date"], valueFormatter: this.convertDate},
       { field: "fullName" },

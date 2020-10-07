@@ -80,7 +80,7 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
     //If current filter  data is contained in base, dont fetch http dataand use state.
     if(filter.containedIn(BaseTimesheetStore.baseCriteria))
       this.setState(state);
-    else { console.log('notContained')
+    else { 
       BaseTimesheetStore.baseCriteria = criteria;
       this.get$(criteria)
         .pipe(
