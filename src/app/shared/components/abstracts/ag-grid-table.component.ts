@@ -35,13 +35,14 @@ export abstract class AgGridTableComponent<TRecord, TConfig extends AgGridConfig
     if(!cfg?.data || cfg.data.length === 0){ //Reset grid if no data
       this.columnDefs = [];
       this.rowData = [];
+      this.currentObject = null;
       return;
     };
 
     const record = cfg.data[0];
     if(!this.hasSameObjectProps(record, this.currentObject)){
       this.currentObject = record;
-      this.columnDefs = this.addColDefs(record)   
+      this.columnDefs = this.addColDefs(record);
     }
 
     this.rowData = cfg.data;
