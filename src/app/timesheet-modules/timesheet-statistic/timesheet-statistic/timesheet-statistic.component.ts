@@ -37,7 +37,7 @@ export class TimesheetStatisticComponent {
   }))
 
   vm$: Observable<ViewModel> = combineLatest([
-    this.store.tableData$,
+    this.store.filteredAndGroupedTimesheets$.pipe(map(x => x.records)),
     this.store.groupBy$.pipe(map(x => this.getGroupByChips(x))),
     this.navVm$
   ]).pipe(

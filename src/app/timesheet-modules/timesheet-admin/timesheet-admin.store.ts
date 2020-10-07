@@ -18,6 +18,7 @@ import { FilterStore } from 'src/app/core/services/filter/interfaces';
 import { SaveModelStateCommand } from 'src/app/core/services/model/interfaces';
 import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-range-with-relations.helper';
 import { StateAction } from 'src/app/core/services/state/state-action.enum';
+import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 
 const TimesheetAdminStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
     criteriaProp: "timesheetAdminCriteria", 
@@ -37,6 +38,11 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implemen
         this.modelProperty$<User[]>("users"), 
         this.stateProperty$("timesheetAdminCriteria")
     ]).pipe(map(([users]) => { return {criteria: this.weekCriteria, users}}))
+
+
+    timesheetSummaries$: Observable<TimesheetSummary[]> = this.filteredAndGroupedTimesheets$.pipe(map(x => 
+        x.groupBy === GroupByPeriod.None ? null : x.records as any
+    ));
 
     constructor(
         base: ObservableStoreBase,

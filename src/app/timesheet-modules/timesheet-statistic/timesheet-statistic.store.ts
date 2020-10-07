@@ -39,15 +39,6 @@ export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState>
                 }}
         }));
 
-    tableData$: Observable<(Timesheet | TimesheetSummary)[]> = combineLatest([
-        this.users$,
-        this.timesheetSummaries$,
-        this.filteredTimesheets$
-    ]).pipe(map(([users, grouped, filtered]) => {
-        if(grouped.groupBy === GroupByPeriod.None) return this.addFullNameToEntities(filtered.records, users);
-        else return grouped.records;
-    }))
-
     constructor(
         base: ObservableStoreBase,
         apiService: ApiService,        

@@ -22,8 +22,8 @@ import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helper
 import { BaseModelStore } from 'src/app/core/services/state/abstracts/base-model.store';
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 
-export type FilteredAndGroupedSummaries = GroupedResponse<GroupByPeriod, TimesheetSummary> &
-  FilteredResponse<TimesheetCriteria,  TimesheetSummary>;
+export type FilteredAndGrouped<T> = GroupedResponse<GroupByPeriod, T> &
+  FilteredResponse<TimesheetCriteria,  T>;
 
 export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetStoreState>> extends BaseModelStore<TState> {
   private static baseCriteria: TimesheetCriteria;
@@ -45,17 +45,17 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
       }), shareReplay()
     );
 
-  timesheetSummaries$: Observable<FilteredAndGroupedSummaries> = combineLatest([
+  filteredAndGroupedTimesheets$: Observable<FilteredAndGrouped<Timesheet | TimesheetSummary>> = combineLatest([
     this.filteredTimesheets$,
     this.groupBy$,
     this.users$,
   ]).pipe(
     map(([filtered, groupBy, users]) => {
-      const entities = this.timesheetSummaryAggregator.groupByType(groupBy, filtered.records);    
+      const entities = this.timesheetSummaryAggregator.groupByType(groupBy, filtered.records) || filtered.records;    
       return {
         groupBy,
         criteria: filtered.criteria,
-        records: this.addFullNameToEntities(entities, users) as any,
+        records: this.addFullNameToEntities(entities, users),
       };
     }),
   );
@@ -80,7 +80,7 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
     //If current filter  data is contained in base, dont fetch http dataand use state.
     if(filter.containedIn(BaseTimesheetStore.baseCriteria))
       this.setState(state);
-    else {
+    else { console.log('notContained')
       BaseTimesheetStore.baseCriteria = criteria;
       this.get$(criteria)
         .pipe(
@@ -141,7 +141,7 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
     return this.getRangeWithRelationsHelper.get(state, relationCfg);
   }
 
-  protected addFullNameToEntities(
+  private addFullNameToEntities(
     entities: (TimesheetSummary | Timesheet)[],
     users: User[]
   ): (TimesheetSummary | Timesheet)[] {

@@ -26,7 +26,7 @@ export class TimesheetAdminWeekListComponent {
   loading$ = this.loadingService.queryLoading$;
 
   vm$: Observable<ViewModel> = combineLatest([
-    this.store.timesheetSummaries$.pipe(map(x => x.records?.sort((a, b) => b.weekNr - a.weekNr))),
+    this.store.timesheetSummaries$.pipe(map(x => x?.sort((a, b) => b.weekNr - a.weekNr))),
     this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x))),
     this.deviceInfoService.isXs$
   ]).pipe(map(([summaries, navConfig, isXs]) => { 
