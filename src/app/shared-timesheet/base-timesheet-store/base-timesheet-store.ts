@@ -21,6 +21,7 @@ import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-h
 import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helpers/get-with-relations.config';
 import { BaseModelStore } from 'src/app/core/services/state/abstracts/base-model.store';
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
+import { _find } from 'src/app/shared-app/helpers/array/find.helper';
 
 export type FilteredAndGrouped<T> = GroupedResponse<GroupByPeriod, T> &
   FilteredResponse<TimesheetCriteria,  T>;
@@ -148,10 +149,12 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
     if (!entities || !users) return entities;
     let usersObj = _convertArrayToObject(users, "userName");
 
-    return entities.map((s) => {
-      const user = usersObj[s.userName];
-      if (user) s.fullName = user.firstName + " " + user.lastName;
-      return s;
-    });
+    for(let i = 0; i < entities.length; i++){
+      let timesheet = entities[i];
+      const user = usersObj[timesheet.userName];
+      if (user) timesheet.fullName = user.firstName + " " + user.lastName;
+    }
+
+    return entities;
   }
 }
