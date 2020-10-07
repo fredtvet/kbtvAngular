@@ -5,10 +5,11 @@ import { TimesheetCriteria } from './interfaces/timesheet-criteria.interface';
 
 export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
 
-    constructor(criteria: TimesheetCriteria, maxChecks?: number){ super(criteria, maxChecks); }
+    constructor(criteria: TimesheetCriteria, maxChecks?: number){ super(criteria, maxChecks);}
 
     protected addChecks(record: Timesheet): boolean {
         let exp = true;
+        if(!this.criteria.dateRange) return false;
         if(this.criteria.status || this.criteria.status === 0){
             exp = exp && record.status === this.criteria.status;
         }

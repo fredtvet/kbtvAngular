@@ -19,7 +19,8 @@ export class TimesheetStatisticTableComponent extends AgGridTableComponent<Times
   constructor(private colDefsFactory: ColDefsFactoryService) { super(); }
 
   protected initNgGrid(cfg: AgGridConfig<TimesheetSummary | Timesheet>): void{
-    if(!cfg?.data || cfg.data.length === 0) return;
+    if(!cfg?.data || cfg.data.length === 0) return super.initNgGrid(cfg);
+    
     const sample = cfg.data[0];
     this.isSummaryData = (sample['confirmedHours'] || sample['openHours']) ? true : false
 
