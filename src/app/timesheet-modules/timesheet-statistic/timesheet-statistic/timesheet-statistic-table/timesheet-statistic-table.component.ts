@@ -31,10 +31,7 @@ export class TimesheetStatisticTableComponent extends AgGridTableComponent<Times
   }
 
   protected addColDefs(object: TimesheetSummary | Timesheet): ColDef[]{
-    if(this.isSummaryData) 
-      return this.colDefsFactory.createSummaryColDefs(object as any);
-      
-    return this.colDefsFactory.createTimesheetColDefs(object)
+    return this.colDefsFactory.createColDefs(object);
   } 
 
   private addSummaryBottomRow(cfg: AgGridConfig<TimesheetSummary>): TimesheetSummary[]{

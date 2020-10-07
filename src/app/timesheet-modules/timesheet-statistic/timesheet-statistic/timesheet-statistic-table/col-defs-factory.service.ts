@@ -24,7 +24,7 @@ export class ColDefsFactoryService {
     ];
 
     this.timesheetColDefs = [
-      {  field: "startTime", headerName: translations["date"], valueFormatter: this.convertDate},
+      { field: "startTime", headerName: translations["date"], valueFormatter: this.convertDate},
       { field: "fullName" },
       { field: "totalHours", maxWidth: 75 },
       { field: "startTime", valueFormatter: this.convertTime },
@@ -35,15 +35,13 @@ export class ColDefsFactoryService {
     ];
   }
 
-  createTimesheetColDefs(timesheet: Timesheet): ColDef[]  {
-    return this.createColDefs(timesheet, this.timesheetColDefs);
+  createColDefs(entity: TimesheetSummary | Timesheet): ColDef[]  {
+    const isSummary = (entity['confirmedHours'] || entity['openHours']) ? true : false;
+
+    return this._createColDefs(entity, isSummary ? this.summaryColDefs : this.timesheetColDefs);
   }
 
-  createSummaryColDefs(summary: TimesheetSummary): ColDef[]  {
-    return this.createColDefs(summary, this.summaryColDefs);
-  }
-
-  private createColDefs(object: Object, colDefs: ColDef[]): ColDef[] {
+  private _createColDefs(object: Object, colDefs: ColDef[]): ColDef[] {
     const result: ColDef[] = [];
     for (const colDef of colDefs) {
       if (object[colDef.field] != null)
