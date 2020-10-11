@@ -1,18 +1,19 @@
 import { Injectable } from "@angular/core";
 import { combineLatest, Observable } from "rxjs";
-import { distinctUntilChanged, filter, map, switchMap } from "rxjs/operators";
+import { distinctUntilChanged, map, switchMap } from "rxjs/operators";
 import { Model } from "src/app/core/models";
-import { ObservableStoreBase } from '../core/services/state/observable-store-base';
 import { ApiService } from '../core/services/api.service';
-import { DeleteModelToStateHttpConverter } from '../core/services/model/converters/delete-model-to-state-http.converter';
-import { SaveModelToStateHttpConverter } from '../core/services/model/converters/save-model-to-state-http.converter';
-import { StateHttpCommandHandler } from "../core/services/state/state-http-command.handler";
+import { FormToSaveModelStateCommandAdapter } from '../core/services/model/adapters/form-to-save-model-state-command.adapter';
+import { ModelState } from '../core/services/model/interfaces';
+import { GetWithRelationsConfig } from '../core/services/model/state-helpers/get-with-relations.config';
+import { DeleteModelAction } from '../core/services/model/state/delete-model/delete-model-state-command.interface';
+import { BaseModelStore } from '../core/services/state/abstracts/base-model.store';
+import { CommandDispatcher } from '../core/services/state/command.dispatcher';
+import { ObservableStoreBase } from '../core/services/state/observable-store-base';
+import { StateAction } from '../core/services/state/state-action.enum';
+import { Prop } from '../shared-app/prop.type';
 import { DataConfig } from './interfaces/data-config.interface';
 import { StoreState } from './interfaces/store-state';
-import { ModelState, SaveModelStateCommand, DeleteModelStateCommand } from '../core/services/model/interfaces';
-import { GetWithRelationsConfig } from '../core/services/model/state-helpers/get-with-relations.config';
-import { BaseModelStore } from '../core/services/state/abstracts/base-model.store';
-import { Prop } from '../shared-app/prop.type';
 
 @Injectable({
   providedIn: 'any',
@@ -34,26 +35,29 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
 
     constructor(
         apiService: ApiService,
-        base: ObservableStoreBase,
-        private stateHttpCommandHandler: StateHttpCommandHandler,
-        private saveStateHttpConverter: SaveModelToStateHttpConverter<StoreState, SaveModelStateCommand<Model>>,
-        private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>
+        base: ObservableStoreBase,  
+        private commandDispatcher: CommandDispatcher,
     ) {
         super(base, apiService);
     }
 
     updateSelectedProperty = (prop: Prop<ModelState>) => this.setState({selectedProperty: prop})
 
-    save = (command: SaveModelStateCommand<Model>): void =>{
-        command.stateProp = this.selectedProperty;
-        this.stateHttpCommandHandler.dispatch(this.saveStateHttpConverter.convert(command));
-    }
+    update = (formState: Model): void =>
+        this.commandDispatcher.dispatch(new FormToSaveModelStateCommandAdapter({
+            stateProp: this.selectedProperty, 
+            saveAction: StateAction.Update,
+            formState,
+        }))
+    
   
-    delete = (command: DeleteModelStateCommand): void => {
-        command.stateProp = this.selectedProperty;
-        this.stateHttpCommandHandler.dispatch(this.deleteStateHttpConverter.convert(command));
-    }
-
+    delete = (command: {id?: string, ids?: string[]}): void => 
+        this.commandDispatcher.dispatch({
+            ...command, 
+            stateProp: this.selectedProperty, 
+            action: DeleteModelAction
+        });
+ 
     private getDataConfig$(property: Prop<ModelState>): Observable<DataConfig>{        
         let relationCfg = new GetWithRelationsConfig(property, null, {includeAll: true});
         return combineLatest([

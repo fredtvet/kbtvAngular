@@ -26,7 +26,8 @@ export abstract class BaseFormViewComponent<TConfig, TResponse> {
     protected _addSubmitChecks = (): boolean => true;
   
     protected _initalizeForm(cfg: TConfig): FormGroup{ 
-      throw "Method not implemented";
+        console.error("Method not implemented");
+        return null;
     }
 
     protected _convertFormDataToResponse(): TResponse{

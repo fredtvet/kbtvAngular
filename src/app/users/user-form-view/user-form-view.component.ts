@@ -4,8 +4,8 @@ import { User } from 'src/app/core/models';
 import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
 import { Roles } from 'src/app/shared-app/enums';
 import { isUniqueValidator } from 'src/app/shared/validators/is-unique.validator';
-import { SaveUserCommand } from './save-user-command.interface';
-import { UserForm, UserFormViewConfig } from './user-form-view-config.interface';
+import { UserFormViewConfig } from './user-form-view-config.interface';
+import { UserForm } from './user-form.interface';
 
 @Component({
   selector: 'app-user-form-view',
@@ -13,7 +13,7 @@ import { UserForm, UserFormViewConfig } from './user-form-view-config.interface'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class UserFormViewComponent extends BaseModelFormViewComponent<UserForm, User, UserFormViewConfig, SaveUserCommand> {
+export class UserFormViewComponent extends BaseModelFormViewComponent<UserForm, User, UserFormViewConfig> {
     Roles = Roles;
     
     roles: string[] = Object.keys(Roles).map(key => Roles[key] as string);
@@ -57,13 +57,6 @@ export class UserFormViewComponent extends BaseModelFormViewComponent<UserForm, 
         employerId: [cfg?.entity?.employerId]
       });
     } 
-
-    protected _convertFormDataToResponse(): SaveUserCommand{
-      let value = this.form.getRawValue();
-      if(value.role !== Roles.Oppdragsgiver) value.employerId = null;
-      return {entity: {...value, password: null}, password: value.password};
-  }
-
 
     changeRole(e){
       this.role.setValue(e.target.value,{onlySelf: true});

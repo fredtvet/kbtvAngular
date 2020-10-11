@@ -29,7 +29,7 @@ export class TimesheetAdminWeekListComponent {
     this.store.timesheetSummaries$.pipe(map(x => x?.sort((a, b) => b.weekNr - a.weekNr))),
     this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x))),
     this.deviceInfoService.isXs$
-  ]).pipe(map(([summaries, navConfig, isXs]) => { 
+  ]).pipe(map(([summaries, navConfig, isXs]) => {
     return { summaries, navConfig, isXs }
   }));
 
@@ -48,13 +48,13 @@ export class TimesheetAdminWeekListComponent {
     if(!timesheets) return;
     
     let ids = timesheets.reduce((_ids, timesheet) => {
-      if(timesheet.status ==  TimesheetStatus.Open) _ids.push(timesheet.id);
+      if(timesheet.status == TimesheetStatus.Open) _ids.push(timesheet.id);
       return _ids
     }, []);
 
     if(ids.length == 0) return;
 
-    this.store.changeStatuses(ids, TimesheetStatus.Confirmed);
+    this.store.updateStatuses(ids, TimesheetStatus.Confirmed);
   }
 
   selectWeek = (weekNr: number) => {

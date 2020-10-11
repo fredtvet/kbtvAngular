@@ -1,17 +1,16 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
-import { ApiUrl } from 'src/app/core/api-url.enum';
 import { Employer, Mission, MissionDocument } from "src/app/core/models";
-import { ObservableStore } from 'src/app/core/services/state/abstracts/observable-store';
-import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
-import { DeleteModelToStateHttpConverter } from 'src/app/core/services/model/converters/delete-model-to-state-http.converter';
-import { StateHttpCommandHandler } from "src/app/core/services/state/state-http-command.handler";
-import { StoreState } from './store-state';
-import { DeleteModelStateCommand } from 'src/app/core/services/model/interfaces';
 import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helpers/get-with-relations.config';
 import { GetWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-with-relations.helper';
+import { DeleteModelAction, DeleteModelStateCommand } from 'src/app/core/services/model/state/delete-model/delete-model-state-command.interface';
+import { MailModelsAction, MailModelsStateCommand } from 'src/app/core/services/model/state/mail-models/mail-models-state-command.interface';
+import { ObservableStore } from 'src/app/core/services/state/abstracts/observable-store';
+import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
+import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
+import { StoreState } from './store-state';
 
 @Injectable({
   providedIn: 'any',
@@ -20,8 +19,7 @@ export class MissionDocumentListStore extends ObservableStore<StoreState>  {
 
   constructor(
     base: ObservableStoreBase,
-    private stateHttpCommandHandler: StateHttpCommandHandler,
-    private deleteStateHttpConverter: DeleteModelToStateHttpConverter<StoreState, DeleteModelStateCommand>,
+    private commandDispatcher: CommandDispatcher,
     private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,  
     private getWithRelationsHelper: GetWithRelationsHelper
   ) {
@@ -42,15 +40,19 @@ export class MissionDocumentListStore extends ObservableStore<StoreState>  {
     return employer ? {...employer} : null;
   }
 
-  delete = (command: DeleteModelStateCommand): void => 
-    this.stateHttpCommandHandler.dispatch(this.deleteStateHttpConverter.convert({...command, stateProp: "missionDocuments"}));
+  
+  delete = (command: {ids?: string[], id?: string}): void => 
+    this.commandDispatcher.dispatch<DeleteModelStateCommand>({
+      ...command, 
+      stateProp: "missionDocuments", 
+      action: DeleteModelAction
+    });
 
-  mailDocuments(toEmail: string, ids: string[]){
-    this.stateHttpCommandHandler.dispatch({
-      httpBody:{toEmail, ids},
-       httpMethod: "POST", 
-       apiUrl:`${ApiUrl.MissionDocument}/SendDocuments`
+  mailDocuments = (toEmail: string, ids: string[]): void => 
+    this.commandDispatcher.dispatch<MailModelsStateCommand>({
+      toEmail, ids, 
+      stateProp: "missionDocuments",
+      action: MailModelsAction 
     })
-  }
 }
 

@@ -3,17 +3,15 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MissionNote } from 'src/app/core/models';
 import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
 import { ModelFormViewConfig } from 'src/app/core/services/model/form/interfaces';
-import { SaveModelStateCommand } from 'src/app/core/services/model/interfaces';
 
 type ViewConfig = ModelFormViewConfig<MissionNote, MissionNote>;
-type Response = SaveModelStateCommand<MissionNote>;
 
 @Component({
   selector: 'app-mission-note-form-view',
   templateUrl: './mission-note-form-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MissionNoteFormViewComponent extends BaseModelFormViewComponent<MissionNote, MissionNote, ViewConfig, Response> {
+export class MissionNoteFormViewComponent extends BaseModelFormViewComponent<MissionNote, MissionNote, ViewConfig> {
 
   constructor(private _formBuilder: FormBuilder)  { super(); }
 

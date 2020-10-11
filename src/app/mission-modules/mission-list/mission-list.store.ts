@@ -3,27 +3,26 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { ApiUrl } from 'src/app/core/api-url.enum';
 import { Mission, User } from "src/app/core/models";
-import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { ApiService } from 'src/app/core/services/api.service';
-import { SaveModelFileToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-file-to-state-http.converter';
+import { FilteredResponse, FilterStore } from 'src/app/core/services/filter/interfaces';
+import { FormToSaveModelFileStateCommandAdapter } from 'src/app/core/services/model/adapters/form-to-save-model-file-state-command.adapter';
+import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helpers/get-with-relations.config';
+import { GetWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-with-relations.helper';
+import { SaveModelFileStateCommand } from 'src/app/core/services/model/state/save-model-file/save-model-file-state-command.interface';
 import { NotificationService } from 'src/app/core/services/notification';
 import { NotificationType } from 'src/app/core/services/notification/notification-type.enum';
-import { StateHttpCommandHandler } from "src/app/core/services/state/state-http-command.handler";
-import { ImageFileExtensions } from 'src/app/shared/constants/image-file-extensions.const';
+import { BaseModelStore } from 'src/app/core/services/state/abstracts/base-model.store';
+import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
+import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
+import { StateAction } from 'src/app/core/services/state/state-action.enum';
+import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
+import { _sortByDate } from 'src/app/shared-app/helpers/array/sort-by-date.helper';
 import { _validateFileExtension } from 'src/app/shared-app/helpers/validate-file-extension.helper';
+import { ImageFileExtensions } from 'src/app/shared/constants/image-file-extensions.const';
 import { MissionCriteria } from 'src/app/shared/interfaces';
 import { MissionFilter } from 'src/app/shared/mission-filter.model';
 import { StoreState } from './interfaces/store-state';
 import { MissionFilterViewConfig } from './mission-filter-view/mission-filter-view-config.interface';
-import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
-import { _sortByDate } from 'src/app/shared-app/helpers/array/sort-by-date.helper';
-import { FilterStore, FilteredResponse } from 'src/app/core/services/filter/interfaces';
-import { SaveModelWithFileStateCommand } from 'src/app/core/services/model/interfaces';
-import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helpers/get-with-relations.config';
-import { GetWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-with-relations.helper';
-import { BaseModelStore } from 'src/app/core/services/state/abstracts/base-model.store';
-import { StateAction } from 'src/app/core/services/state/state-action.enum';
-import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 
 @Injectable({
   providedIn: 'any',
@@ -65,8 +64,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
     apiService: ApiService,
     base: ObservableStoreBase,
     private notificationService: NotificationService,
-    private stateHttpCommandHandler: StateHttpCommandHandler,
-    private saveWithFileStateHttpConverter: SaveModelFileToStateHttpConverter<StoreState, SaveModelWithFileStateCommand<Mission>>,
+    private commandDispatcher: CommandDispatcher,
     private getWithRelationsHelper: GetWithRelationsHelper,
   ) {
     super(base, apiService);
@@ -92,13 +90,16 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
       return this.notificationService.notify(
           {title: "Filtypen er ikke tillatt.", type: NotificationType.Error}
       );  
-    
-    this.stateHttpCommandHandler.dispatch(
-      this.saveWithFileStateHttpConverter.convert(
-        {stateProp: "missions", entity: {id}, file, saveAction: StateAction.Update},
-        `${ApiUrl.Mission}/${id}/UpdateHeaderImage`
-      )
-    )
+
+    let command: SaveModelFileStateCommand<Mission> = new FormToSaveModelFileStateCommandAdapter({
+      formState: {id, file},
+      stateProp: "missions",
+      saveAction: StateAction.Update
+    });
+
+    command.apiUrlOverride = `${ApiUrl.Mission}/${id}/UpdateHeaderImage`;
+
+    this.commandDispatcher.dispatch(command);
   }
 
   private updateLastVisited(id: string){

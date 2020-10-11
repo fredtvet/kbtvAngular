@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Mission, Timesheet } from "src/app/core/models";
 import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
 import { ModelFormViewConfig } from 'src/app/core/services/model/form/interfaces';
-import { SaveModelStateCommand } from 'src/app/core/services/model/interfaces';
 import { _getISOWithTimezone } from 'src/app/shared-app/helpers/datetime/get-iso-with-timezone.helper';
 import { ActiveStringFilterConfig } from 'src/app/shared/interfaces/active-string-filter-config.interface';
 import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
@@ -12,7 +11,6 @@ import { isObjectValidator } from 'src/app/shared/validators/is-object.validator
 import { TimesheetForm } from './timesheet-form.interface';
 
 type ViewConfig = ModelFormViewConfig<Timesheet, TimesheetForm>;
-type Response = SaveModelStateCommand<Timesheet>;
 
 @Component({
   selector: 'app-user-timesheet-form-view',
@@ -21,7 +19,7 @@ type Response = SaveModelStateCommand<Timesheet>;
   providers: [DatePipe]
 })
 export class UserTimesheetFormViewComponent 
-  extends BaseModelFormViewComponent<TimesheetForm, Timesheet, ViewConfig, Response>{
+  extends BaseModelFormViewComponent<TimesheetForm, Timesheet, ViewConfig>{
 
   endTimeDefault: string = _getISOWithTimezone(this.getDateWithTime(null, 12))
 
@@ -74,25 +72,6 @@ export class UserTimesheetFormViewComponent
         Validators.maxLength(400)
       ]],
     });
-  }
-
-  protected _convertFormDataToResponse(): Response{
-    let formData: TimesheetForm = this.form.getRawValue();
-    const res = {entity: {
-      id: formData.id,
-      missionId: formData.mission.id,
-      comment: formData.comment,
-      startTime: this.mergeDateAndTime(formData.date, formData.startTime).getTime(),
-      endTime:  this.mergeDateAndTime(formData.date, formData.endTime).getTime(),
-    }};   
-    return res;
-  }
-
-  private mergeDateAndTime(date: any, time:any): Date{
-    const d = new Date(date);
-    const t = new Date(time);
-    d.setHours(t.getHours(), t.getMinutes(), t.getSeconds());
-    return d;
   }
 
   private getDateWithTime(date: any, hours: number = 0, minutes: number = 0, seconds: number = 0){

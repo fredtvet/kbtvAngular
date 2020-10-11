@@ -1,5 +1,5 @@
 import { HttpParams } from "@angular/common/http";
-import { combineLatest, Observable } from "rxjs";
+import { combineLatest, concat, Observable } from "rxjs";
 import { map, shareReplay, take, tap, withLatestFrom } from "rxjs/operators";
 import { ApiUrl } from "src/app/core/api-url.enum";
 import { Mission, Timesheet, User } from "src/app/core/models";
@@ -22,6 +22,7 @@ import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helper
 import { BaseModelStore } from 'src/app/core/services/state/abstracts/base-model.store';
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { _find } from 'src/app/shared-app/helpers/array/find.helper';
+import { PersistanceStore } from 'src/app/core/services/persistance/persistance.store';
 
 export type FilteredAndGrouped<T> = GroupedResponse<GroupByPeriod, T> &
   FilteredResponse<TimesheetCriteria,  T>;
@@ -64,6 +65,7 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
   constructor(
     base: ObservableStoreBase,
     apiService: ApiService,
+    private persistanceStore: PersistanceStore,
     private timesheetSummaryAggregator: TimesheetSummaryAggregator,
     private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
     private settings: BaseTimesheetStoreSettings<TState>
@@ -124,9 +126,12 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
     if (filter.mission)
       params = params.set("MissionId", filter.mission.id.toString());
 
-    return this.apiService.get(ApiUrl.Timesheet, params).pipe(
+    return combineLatest([
+      this.persistanceStore.stateInitalized$, 
+      this.apiService.get(ApiUrl.Timesheet, params)
+    ]).pipe(
       withLatestFrom(this.modelProperty$<Mission[]>("missions" as any)),
-      map(([timesheets, missions]) =>
+      map(([[stateInit, timesheets], missions]) =>
         this.addMissionToTimesheets({ timesheets, missions })
       )
     );
@@ -139,6 +144,7 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
     const relationCfg = new GetWithRelationsConfig("timesheets", null, {
       include: { missions: true },
     });
+
     return this.getRangeWithRelationsHelper.get(state, relationCfg);
   }
 

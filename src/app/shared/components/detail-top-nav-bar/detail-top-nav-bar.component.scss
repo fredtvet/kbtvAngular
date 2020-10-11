@@ -4,7 +4,6 @@
     position:relative;
     background-color:$primary; 
     min-height:100px;
-    max-height:40vh;
   }
 
 .img-container{
@@ -12,7 +11,7 @@
     overflow-x:hidden;
     width:100%;
     max-width:600px;
-    max-height:40vh; 
+    max-height:37vh; 
     //max-width:650px!important;
     img{
         max-width:100%;

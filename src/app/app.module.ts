@@ -34,11 +34,11 @@ registerLocaleData(norwayLocale, 'nb-NO');
     HammerModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  providers: [ 
+  providers: [     
     { provide: LOCALE_ID, useValue: "nb-NO" }, 
     { provide: HAMMER_GESTURE_CONFIG, useClass: AppHammerConfig},
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {  }

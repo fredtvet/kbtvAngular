@@ -2,19 +2,22 @@ import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, V
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { Model } from 'src/app/core/models';
-import { ModelFormStore } from 'src/app/core/services/model/form/model-form.store';
 import { SimpleNavConfig } from 'src/app/shared/components/simple-top-nav/simple-nav-config.interface';
 import { translations } from 'src/app/shared/translations';
 import { BaseFormSheetWrapperComponent } from '../../../form/abstracts/base-form-sheet-wrapper.component';
+import { CommandDispatcher } from '../../../state/command.dispatcher';
 import { StateAction } from '../../../state/state-action.enum';
 import { ConfirmDialogService } from '../../../ui/confirm-dialog.service';
 import { ModelStateConfig } from '../../model-state.config';
-import { GenericModelFormConfig } from '../interfaces/generic-model-form-config.interface';
+import { DeleteModelAction, DeleteModelStateCommand } from '../../state/delete-model/delete-model-state-command.interface';
+import { DeleteModelHttpEffect } from '../../state/delete-model/delete-model.http.effect';
+import { DeleteModelReducer } from '../../state/delete-model/delete-model.reducer';
+import { ModelFormConfig } from '../interfaces';
 import { ModelFormViewConfig } from '../interfaces/model-form-view-config.interface';
 import { ModelFormWrapperConfig } from '../interfaces/model-form-wrapper-config.interface';
 import { ModelFormComponent } from './model-form.component';
 
-type FormConfig = GenericModelFormConfig<Model, any, ModelFormViewConfig<Model, any>>
+type FormConfig = ModelFormConfig<Model, any, ModelFormViewConfig<Model, any>>
 type WrapperFormConfig = ModelFormWrapperConfig<FormConfig>
 
 @Component({
@@ -33,8 +36,10 @@ export class ModelFormSheetWrapperComponent extends BaseFormSheetWrapperComponen
     viewContainerRef: ViewContainerRef,
     router: Router,
     _bottomSheetRef: MatBottomSheetRef<any>,  
+    deleteReducer: DeleteModelReducer, 
+    deleteHttpEffect: DeleteModelHttpEffect,
     private confirmService: ConfirmDialogService,  
-    private store: ModelFormStore,
+    private commandDispatcher: CommandDispatcher,
     @Inject(MAT_BOTTOM_SHEET_DATA) config: WrapperFormConfig) { 
         super(componentFactoryResolver, viewContainerRef, router, _bottomSheetRef, config) 
     }
@@ -47,8 +52,12 @@ export class ModelFormSheetWrapperComponent extends BaseFormSheetWrapperComponen
     }
 
     private deleteEntity = () => {
-        this.close(StateAction.Delete)
-        this.store?.delete({id: this.formConfig.entityId, stateProp: this.formConfig.stateProp});
+        this.close(StateAction.Delete);
+        this.commandDispatcher.dispatch<DeleteModelStateCommand>({
+            stateProp: this.formConfig.stateProp, 
+            action: DeleteModelAction, 
+            id: this.formConfig.entityId
+        });
     };
 
     protected loadForm(){

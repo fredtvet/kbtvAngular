@@ -13,12 +13,8 @@ export class ModelFormService implements BaseFormService{
 
   constructor(private matBottomSheet: MatBottomSheet) {}
 
-  open<
-    TFormState,
-    TModel extends Model, 
-    TWrapperConfig extends ModelFormWrapperConfig<ModelFormConfig<TFormState, TModel, ModelFormViewConfig<TModel, TFormState>>>
-  >
-  (config: TWrapperConfig): MatBottomSheetRef<ModelFormSheetWrapperComponent, FormSheetWrapperResult> {
+  open<TFormConfig extends ModelFormConfig<any, Model, ModelFormViewConfig<Model, any>>>
+  (config: ModelFormWrapperConfig<TFormConfig>): MatBottomSheetRef<ModelFormSheetWrapperComponent, FormSheetWrapperResult> {
 
     return this.matBottomSheet.open(ModelFormSheetWrapperComponent, { data: config });
 

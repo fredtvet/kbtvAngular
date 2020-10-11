@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { User } from "src/app/core/models";
-import { ApiUrl } from '../core/api-url.enum';
 import { ObservableStore } from '../core/services/state/abstracts/observable-store';
+import { CommandDispatcher } from '../core/services/state/command.dispatcher';
 import { ObservableStoreBase } from '../core/services/state/observable-store-base';
-import { StateHttpCommandHandler } from "../core/services/state/state-http-command.handler";
+import { UpdateCurrentUserAction, UpdateCurrentUserStateCommand } from './state/update-current-user/update-current-user-state-command.interface';
+import { UpdatePasswordAction, UpdatePasswordStateCommand } from './state/update-password/update-password-state-command.interface';
 import { StoreState } from './store-state';
 
 @Injectable({
@@ -16,27 +17,20 @@ export class ProfileStore extends ObservableStore<StoreState>  {
 
   constructor(
     base: ObservableStoreBase,     
-    private stateHttpCommandHandler: StateHttpCommandHandler,
+    private commandDispatcher: CommandDispatcher,
   ) {
     super(base);
   }
   
   updateCurrentUser(user: User): void {
-    this.stateHttpCommandHandler.dispatch({
-      httpMethod: "PUT", 
-      httpBody: user, 
-      apiUrl: ApiUrl.Auth, 
-      properties: ["currentUser"],
-      stateFunc: (s: StoreState) => { return {currentUser: {...s.currentUser, ...user}} },
-      cancelMessage: "Oppdatering av profil er reversert"
+    this.commandDispatcher.dispatch<UpdateCurrentUserStateCommand>({
+      user, action: UpdateCurrentUserAction
     });
   }
 
-  updatePassword(oldPw: string, newPw: string){
-    this.stateHttpCommandHandler.dispatch({
-      httpMethod: "PUT", 
-      httpBody: {OldPassword: oldPw, NewPassword: newPw}, 
-      apiUrl: `${ApiUrl.Auth}/changePassword`
+  updatePassword(oldPassword: string, newPassword: string){
+    this.commandDispatcher.dispatch<UpdatePasswordStateCommand>({
+      oldPassword, newPassword, action: UpdatePasswordAction
     });
   }
 

@@ -33,7 +33,8 @@ export abstract class BaseFormComponent<
     }
 
     protected get formViewComponent(): Type<TViewComponent>{
-      throw "Method not implemented"
+      console.error("Method not implemented");
+      return null;
     }
  
     protected onViewConfigChanges(viewConfig: TViewConfig): void{
@@ -48,11 +49,13 @@ export abstract class BaseFormComponent<
     } 
 
     protected onSubmit(result: TResult): void{
-        throw "Method not implemented"
+      console.error("Method not implemented");
+      return null;
     }
 
     protected initViewConfig(): Observable<TViewConfig>{
-        throw "Method not implemented"
+      console.error("Method not implemented");
+      return null;
     }
 
 }

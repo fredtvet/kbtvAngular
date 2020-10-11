@@ -22,7 +22,7 @@ export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
         let exp = true;
 
         if(this.criteria.finished != null)
-            exp = exp && (mission.finished == null || mission.finished === this.criteria.finished);
+            exp = exp && ((mission.finished === this.criteria.finished) || (mission.finished === null && this.criteria.finished === false));
 
         if(this.criteria.searchString)
             exp = exp && this.filterSearchString(mission);

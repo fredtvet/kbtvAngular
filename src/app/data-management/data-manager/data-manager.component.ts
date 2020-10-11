@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Model } from 'src/app/core/models';
-import { ModelFormWrapperConfig } from 'src/app/core/services/model/form/interfaces';
+import { FormToSaveModelStateCommandAdapter } from 'src/app/core/services/model/adapters/form-to-save-model-state-command.adapter';
+import { ModelFormConfig, ModelFormWrapperConfig } from 'src/app/core/services/model/form/interfaces';
 import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
 import { ModelState } from 'src/app/core/services/model/interfaces';
 import { StateAction } from 'src/app/core/services/state/state-action.enum';
@@ -45,7 +46,7 @@ constructor(
   
   updateItem(command: any): void{
     if(!command || command === null) return;
-    this.store.save({entity: command.data, saveAction: StateAction.Update}); 
+    this.store.update(command.data); 
   }
 
   private openDeleteDialog = (): void => {
@@ -64,8 +65,9 @@ constructor(
       return;
     }
 
-    this.formService.open<any, Model, ModelFormWrapperConfig<any>>({formConfig: {
-      stateProp: this.store.selectedProperty,
+    this.formService.open<ModelFormConfig<any, Model, any>>({formConfig: {
+      stateProp: this.store.selectedProperty,    
+      adapter: FormToSaveModelStateCommandAdapter,
       viewComponent: PropertyFormMap[this.store.selectedProperty]
     }})
   }

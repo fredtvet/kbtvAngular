@@ -3,17 +3,15 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { InboundEmailPassword } from 'src/app/core/models';
 import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
 import { ModelFormViewConfig } from 'src/app/core/services/model/form/interfaces';
-import { SaveModelStateCommand } from 'src/app/core/services/model/interfaces';
 
 type ViewConfig = ModelFormViewConfig<InboundEmailPassword, InboundEmailPassword>;
-type Response = SaveModelStateCommand<InboundEmailPassword>;
 
 @Component({
   selector: 'app-inbound-email-password-form-view',
   templateUrl: './inbound-email-password-form-view.component.html'
 })
 export class InboundEmailPasswordFormViewComponent 
-  extends BaseModelFormViewComponent<InboundEmailPassword, InboundEmailPassword, ViewConfig, Response> {
+  extends BaseModelFormViewComponent<InboundEmailPassword, InboundEmailPassword, ViewConfig> {
 
   constructor(private _formBuilder: FormBuilder) { super(); }
 

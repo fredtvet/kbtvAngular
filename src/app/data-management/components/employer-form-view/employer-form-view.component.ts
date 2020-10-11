@@ -3,17 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Employer } from 'src/app/core/models';
 import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
 import { ModelFormViewConfig } from 'src/app/core/services/model/form/interfaces';
-import { SaveModelStateCommand } from 'src/app/core/services/model/interfaces';
 
 type ViewConfig = ModelFormViewConfig<Employer, Employer>;
-type Response = SaveModelStateCommand<Employer>;
 
 @Component({
   selector: 'app-employer-form-view',
   templateUrl: './employer-form-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EmployerFormViewComponent extends BaseModelFormViewComponent<Employer, Employer, ViewConfig, Response>
+export class EmployerFormViewComponent extends BaseModelFormViewComponent<Employer, Employer, ViewConfig>
 {
   googleOptions = {
     types: ['geocode'],

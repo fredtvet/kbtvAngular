@@ -5,7 +5,7 @@ import { DocumentTypeFormViewComponent } from '../components/document-type-form-
 import { MissionTypeFormViewComponent } from '../components/mission-type-form-view/mission-type-form-view.component';
 import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
 
-export const PropertyFormMap: {[key: string]: Type<BaseModelFormViewComponent<any, any, any, any>> } = {
+export const PropertyFormMap: {[key: string]: Type<BaseModelFormViewComponent<any, any, any>> } = {
     employers: EmployerFormViewComponent,
     missionTypes: MissionTypeFormViewComponent,
     documentTypes: DocumentTypeFormViewComponent,

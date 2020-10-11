@@ -5,20 +5,21 @@ import { ApiUrl } from 'src/app/core/api-url.enum';
 import { Timesheet, User } from 'src/app/core/models';
 import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { ApiService } from 'src/app/core/services/api.service';
-import { SaveModelToStateHttpConverter } from 'src/app/core/services/model/converters/save-model-to-state-http.converter';
-import { StateHttpCommandHandler } from "src/app/core/services/state/state-http-command.handler";
 import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
-import { WeekToTimesheetCriteriaConverter } from 'src/app/core/services/utility/week-to-timesheet-criteria.converter';
 import { _addOrUpdateRange } from 'src/app/shared-app/helpers/array/add-or-update-range.helper';
 import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
 import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { GroupByPeriod, TimesheetStatus } from 'src/app/shared/enums';
 import { StoreState } from './store-state';
 import { FilterStore } from 'src/app/core/services/filter/interfaces';
-import { SaveModelStateCommand } from 'src/app/core/services/model/interfaces';
 import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-range-with-relations.helper';
 import { StateAction } from 'src/app/core/services/state/state-action.enum';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
+import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
+import { SaveModelAction, SaveModelStateCommand } from 'src/app/core/services/model/state/save-model/save-model-state-command.interface';
+import { UpdateStatusesAction, UpdateStatusesStateCommand } from './update-statuses/update-statuses-state-command.interface';
+import { WeekToTimesheetCriteriaAdapter } from 'src/app/shared-timesheet/week-to-timesheet-criteria.adapter';
+import { PersistanceStore } from 'src/app/core/services/persistance/persistance.store';
 
 const TimesheetAdminStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
     criteriaProp: "timesheetAdminCriteria", 
@@ -47,43 +48,36 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implemen
     constructor(
         base: ObservableStoreBase,
         apiService: ApiService,
+        persistanceStore: PersistanceStore,
         summaryAggregator: TimesheetSummaryAggregator,
         getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
-        private stateHttpCommandHandler: StateHttpCommandHandler,
-        private weekToTimesheetCriteriaConverter: WeekToTimesheetCriteriaConverter,
-        private saveStateHttpConverter: SaveModelToStateHttpConverter<StoreState, SaveModelStateCommand<Timesheet>>
+        private commandDispatcher: CommandDispatcher,
     ){
-        super(base, apiService, summaryAggregator, getRangeWithRelationsHelper, 
+        super(base, apiService, persistanceStore, summaryAggregator, getRangeWithRelationsHelper, 
             TimesheetAdminStoreSettings)
     }
     
     addFilterCriteria = (criteria: WeekCriteria): void =>       
         this.addTimesheetCriteria(
-            this.weekToTimesheetCriteriaConverter.convert(criteria), 
+            new WeekToTimesheetCriteriaAdapter(criteria),
             {timesheetAdminWeekCriteria: criteria}
         )
     
-    changeStatus = (entity: Timesheet): void => 
-        this.stateHttpCommandHandler.dispatch(this.saveStateHttpConverter.convert(
-                {entity, stateProp: "timesheets", saveAction: StateAction.Update},
-                `${ApiUrl.Timesheet}/${entity.id}/Status`
-        ))
+    updateStatus = (entity: Timesheet): void => 
+        this.commandDispatcher.dispatch<SaveModelStateCommand<Timesheet>>({
+            entity,
+            stateProp: "timesheets",
+            action: SaveModelAction,
+            saveAction: StateAction.Update,
+            apiUrlOverride: `${ApiUrl.Timesheet}/${entity.id}/Status`                             
+        })
     
-    changeStatuses(ids: string[], status: TimesheetStatus): void{
+    updateStatuses(ids: string[], status: TimesheetStatus): void{
         if(ids.length == 0) return;
-
-        const updatedTimesheets = ids.map(id => { return {id, status} });
-
-        const stateFunc = (state: StoreState) => { return {
-                timesheets: _addOrUpdateRange(state.timesheets, updatedTimesheets, "id")
-            }};
-
-        this.stateHttpCommandHandler.dispatch({
-            httpMethod: "PUT", 
-            httpBody: {ids, status}, 
-            apiUrl: `${ApiUrl.Timesheet}/Status`,
-            properties: ["timesheets"], 
-            stateFunc
+        this.commandDispatcher.dispatch<UpdateStatusesStateCommand>({
+            ids, 
+            status,
+            action: UpdateStatusesAction,
         });      
     }
     

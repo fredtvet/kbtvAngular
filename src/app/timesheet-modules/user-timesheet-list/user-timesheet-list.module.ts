@@ -10,6 +10,8 @@ import { TimesheetMissionBarComponent } from './user-timesheet-week/timesheet-mi
 import { UserTimesheetWeekComponent } from './user-timesheet-week/user-timesheet-week.component';
 import { UserTimesheetWeekListViewComponent } from './user-timesheet-week-list/user-timesheet-week-list-view/user-timesheet-week-list-view.component';
 import { UserTimesheetListViewComponent } from './user-timesheet-list/user-timesheet-list-view/user-timesheet-list-view.component';
+import { SaveUserTimesheetHttpEffect } from './save-user-timesheet/save-user-timesheet.http.effect';
+import { SaveUserTimesheetReducer } from './save-user-timesheet/save-user-timesheet.reducer';
 
 @NgModule({
   declarations: [
@@ -30,4 +32,9 @@ import { UserTimesheetListViewComponent } from './user-timesheet-list/user-times
     UserTimesheetListRoutingModule
   ]
 })
-export class UserTimesheetListModule { }
+export class UserTimesheetListModule {
+  constructor(
+    saveUserTimesheetReducer: SaveUserTimesheetReducer, 
+    saveUserTimesheetHttpEffect: SaveUserTimesheetHttpEffect
+  ){}
+}

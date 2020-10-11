@@ -42,7 +42,7 @@ export class TimesheetAdminListComponent{
     }
 
   toggleTimesheetStatus = (timesheet: Timesheet): void => 
-    this.store.changeStatus({
+    this.store.updateStatus({
       id: timesheet.id, 
       status: timesheet.status ? TimesheetStatus.Open : TimesheetStatus.Confirmed
     });

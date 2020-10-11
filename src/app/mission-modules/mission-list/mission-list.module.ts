@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { SaveModelFileHttpEffect } from 'src/app/core/services/model/state/save-model-file/save-model-file.http.effect';
+import { SaveModelFileReducer } from 'src/app/core/services/model/state/save-model-file/save-model-file.reducer';
 import { AppFileUrlPipe } from 'src/app/shared/pipes/app-file-url.pipe';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
@@ -27,4 +29,9 @@ import { MissionListComponent } from './mission-list/mission-list.component';
     MissionListRoutingModule
   ]
 })
-export class MissionListModule { }
+export class MissionListModule { 
+  constructor(
+    saveModelFileReducer: SaveModelFileReducer,
+    saveModelFileHttpEffect: SaveModelFileHttpEffect
+  ){}
+}

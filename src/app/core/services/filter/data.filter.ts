@@ -15,7 +15,8 @@ export abstract class DataFilter<TRecord, TCriteria>{
     check: (record: TRecord) => boolean; 
 
     protected addChecks(record: TRecord): boolean{
-        throw 'Method not implemented' 
+        console.error("Method not implemented");
+        return null;
     }
 
     protected addInitialChecks(record: TRecord): boolean{

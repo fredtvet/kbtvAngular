@@ -1,6 +1,7 @@
-import { MissionDocument } from 'src/app/core/models';
+import { AppDocumentType, MissionDocument } from 'src/app/core/models';
 
 export interface MissionDocumentFormState extends Partial<MissionDocument>{
     missionId: string;
-    documentTypeName: string;
+    documentType: AppDocumentType;
+    file: File;
 }

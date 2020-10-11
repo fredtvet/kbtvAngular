@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { combineLatest, Observable } from "rxjs";
-import { filter, map } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { Timesheet } from "src/app/core/models";
 import { FilteredResponse, FilterStore } from 'src/app/core/services/filter/interfaces';
 import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-range-with-relations.helper';
@@ -8,12 +8,12 @@ import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helper
 import { ObservableStore } from 'src/app/core/services/state/abstracts/observable-store';
 import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
-import { WeekToTimesheetCriteriaConverter } from 'src/app/core/services/utility/week-to-timesheet-criteria.converter';
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
 import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
 import { TimesheetCriteria, TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetFilter } from 'src/app/shared-timesheet/timesheet-filter.model';
+import { WeekToTimesheetCriteriaAdapter } from 'src/app/shared-timesheet/week-to-timesheet-criteria.adapter';
 import { GroupByPeriod } from 'src/app/shared/enums';
 import { StoreState } from './store-state';
 
@@ -56,7 +56,6 @@ export class UserTimesheetListStore extends ObservableStore<StoreState>
   constructor(
     base: ObservableStoreBase,
     private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
-    private weekToTimesheetCriteriaConverter: WeekToTimesheetCriteriaConverter,
     private timesheetSummaryAggregator: TimesheetSummaryAggregator
   ) {
     super(base);
@@ -65,7 +64,7 @@ export class UserTimesheetListStore extends ObservableStore<StoreState>
   addWeekFilterCriteria = (weekCriteria: WeekCriteria): void => 
     this.setState({
       userTimesheetListWeekCriteria: weekCriteria,
-      userTimesheetListCriteria: this.weekToTimesheetCriteriaConverter.convert(weekCriteria)
+      userTimesheetListCriteria: new WeekToTimesheetCriteriaAdapter(weekCriteria)
     });
   
 

@@ -61,7 +61,7 @@ export class ClonerService {
                 else if (originalValue instanceof Set) {
                     copy[key] = new Set(originalValue);
                 }
-                else if (originalValue == null) {
+                else if (originalValue instanceof File || originalValue == null) {
                     copy[key] = originalValue;
                 }
                 else {

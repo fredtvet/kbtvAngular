@@ -1,20 +1,18 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Employer, Mission, MissionType } from 'src/app/core/models';
+import { Mission } from 'src/app/core/models';
 import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
 import { ModelFormViewConfig } from 'src/app/core/services/model/form/interfaces';
-import { SaveModelStateCommand } from 'src/app/core/services/model/interfaces';
 import { _find } from 'src/app/shared-app/helpers/array/find.helper';
 
 type ViewConfig = ModelFormViewConfig<Mission, Mission>;
-type Response = SaveModelStateCommand<Mission>;
 
 @Component({
   selector: 'app-mission-form-view',
   templateUrl: './mission-form-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MissionFormViewComponent extends BaseModelFormViewComponent<Mission, Mission, ViewConfig, Response>{
+export class MissionFormViewComponent extends BaseModelFormViewComponent<Mission, Mission, ViewConfig>{
 
   googleOptions = {
     types: ['geocode'],
@@ -53,34 +51,6 @@ export class MissionFormViewComponent extends BaseModelFormViewComponent<Mission
       }),
       finished: mission?.finished
     });
-  }
-
-  protected _convertFormDataToResponse(): Response{
-    let mission = this.form.getRawValue();
-
-    let existingType: MissionType;
-    let existingEmployer: Employer;
-
-    if(this.config?.foreigns){
-      existingType = 
-        _find(this.config.foreigns.missionTypes, mission.missionType.name, "name");
-      existingEmployer = 
-        _find(this.config.foreigns.employers, mission.employer.name, "name");
-    }
-   
-    if(existingType) mission.missionTypeId = existingType.id;
-    
-    if(!mission.missionType.name) mission.missionTypeId = null;
-
-    if(existingType || !mission.missionType.name) mission.missionType = null;
-
-    if(existingEmployer) mission.employerId = existingEmployer.id;
-
-    if(!mission.employer.name) mission.employerId = null;
-
-    if(existingEmployer || !mission.employer.name) mission.employer = null;
-
-    return {entity: mission};
   }
 
   get address(){

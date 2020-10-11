@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpRefreshTokenInterceptor, HttpLoadingInterceptor, HttpErrorInterceptor, HttpIsOnlineInterceptor } from './interceptors';
+import { NgModule } from '@angular/core';
+import { HttpErrorInterceptor, HttpIsOnlineInterceptor, HttpLoadingInterceptor, HttpRefreshTokenInterceptor } from './interceptors';
 
 
 @NgModule({

@@ -7,6 +7,10 @@ import { SwipeCardComponent } from './components/swipe-card/swipe-card.component
 import { SharedTimesheetModule } from 'src/app/shared-timesheet/shared-timesheet.module';
 import { TimesheetAdminWeekListComponent } from './timesheet-admin-week-list/timesheet-admin-week-list.component';
 import { TimesheetAdminStore } from './timesheet-admin.store';
+import { SaveModelHttpEffect } from 'src/app/core/services/model/state/save-model/save-model.http.effect';
+import { SaveModelReducer } from 'src/app/core/services/model/state/save-model/save-model.reducer';
+import { UpdateStatusesHttpEffect } from './update-statuses/update-statuses.http.effect';
+import { UpdateStatusesReducer } from './update-statuses/update-statuses.reducer';
 
 @NgModule({
   declarations: [
@@ -23,4 +27,11 @@ import { TimesheetAdminStore } from './timesheet-admin.store';
     TimesheetAdminRoutingModule
   ]
 })
-export class TimesheetAdminModule { }
+export class TimesheetAdminModule {
+  constructor(
+    updateStatusesHttpEffect: UpdateStatusesHttpEffect,
+    updateStatusesReducer: UpdateStatusesReducer,
+    saveModelHttpEffect:SaveModelHttpEffect,
+    saveModelReducer: SaveModelReducer
+  ){}
+}

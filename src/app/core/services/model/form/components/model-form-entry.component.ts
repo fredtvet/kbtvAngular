@@ -26,6 +26,7 @@ export class ModelFormEntryComponent<TWrapperConfig extends FormSheetWrapperConf
         config.formComponent = routeData?.formComponent;
         if(!config.formConfig) config.formConfig = {};
         config.formConfig.viewComponent = routeData?.viewComponent;
+        config.formConfig.adapter = routeData?.adapter;
         config.formConfig.stateProp = routeData?.stateProp; 
         return config;
     }
