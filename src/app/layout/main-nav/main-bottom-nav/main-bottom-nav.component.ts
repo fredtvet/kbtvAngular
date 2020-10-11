@@ -5,8 +5,8 @@ import { AppButton } from 'src/app/shared-app/interfaces';
   selector: 'app-main-bottom-nav',
   template: `
   <mat-toolbar class="mat-elevation-z4 bg-primary" style="padding:0!important;overflow:hidden" fxLayout="row" fxLayoutAlign="space-around center">
-    <ng-container *ngFor="let button of config.navigations;">
-      <app-main-bottom-nav-button fxFlex=25    
+    <ng-container *ngFor="let button of navigations;">
+      <app-main-bottom-nav-button fxFlex style="height:100%"
         *ifRole="button.allowedRoles" 
         [config]="button">
       </app-main-bottom-nav-button>
@@ -17,7 +17,7 @@ import { AppButton } from 'src/app/shared-app/interfaces';
 })
 export class MainBottomNavComponent {
 
-  @Input() config: { navigations: AppButton[] }
+  @Input() navigations: AppButton[];
 
   constructor() {}
 }

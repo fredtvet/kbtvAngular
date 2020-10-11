@@ -24,7 +24,7 @@ export class MainNavService {
         return {
           isXs, 
           sideNavConfig: {user, isOnline, navigations: SideNavNavigations},
-          bottomNavConfig: {navigations: BottomNavNavigations}
+          bottomNavigations: BottomNavNavigations
         } 
       }),
   );
