@@ -10,12 +10,12 @@ const routes: Routes = [
   {
     path: 'ukeliste', 
     component: UserTimesheetWeekListComponent,
-    data: {depth: 2},
+    data: {depth: 1},
   },
   {
     path: 'ukevisning',
     component: UserTimesheetWeekComponent,
-    data: {depth: 3},
+    data: {depth: 2},
     children: [
       {path: 'skjema', loadChildren: () => import('src/app/timesheet-modules/user-timesheet-form/user-timesheet-form.module')
         .then(m => m.UserTimesheetFormModule)}
@@ -24,7 +24,7 @@ const routes: Routes = [
   {
     path: 'liste',
     component: UserTimesheetListComponent,
-    data: {depth: 4},
+    data: {depth: 3},
     children: [
       {path: 'skjema', loadChildren: () => import('src/app/timesheet-modules/user-timesheet-form/user-timesheet-form.module')
         .then(m => m.UserTimesheetFormModule)},

@@ -8,6 +8,7 @@ import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserTimesheetWeekListViewComponent {
+  
     @Input() summaries: TimesheetSummary[];
     @Output() summaryClicked = new EventEmitter<WeekCriteria>();
     @Output() weekFilterClicked = new EventEmitter();

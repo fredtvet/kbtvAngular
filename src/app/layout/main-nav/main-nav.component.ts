@@ -19,6 +19,9 @@ export class MainNavComponent extends SubscriptionComponent {
 
   config$: Observable<MainNavConfig> = this.mainNavService.config$;
 
+  private spamProtection = false;
+  private currAnimationParams;
+
   constructor(private mainNavService: MainNavService) {
     super();
     this.mainNavService.toggleDrawer$.pipe(
@@ -29,8 +32,19 @@ export class MainNavComponent extends SubscriptionComponent {
   toggleDrawer = () => this.drawer.toggle();
 
   prepareRoute(outlet: RouterOutlet) {
-    // console.log(outlet && outlet.activatedRouteData && outlet.activatedRouteData['depth']);
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['depth'];
+    if(this.spamProtection) return this.currAnimationParams;
+    this.setSpamProtection();
+    if(!outlet || !outlet.activatedRouteData) return; 
+    const {depth, section} = outlet.activatedRouteData;
+    this.currAnimationParams = {depth, section};
+    if(!depth || !section) return;
+    return this.currAnimationParams;
+  }
+
+  //Prevent spam from multiple cd cycles on init. Mostly caused by pages with cdk virtual scroll ?
+  setSpamProtection(){
+    this.spamProtection = true;
+    setTimeout(() => this.spamProtection = false, 10)
   }
 
 }

@@ -22,7 +22,7 @@ export class UserTimesheetWeekListComponent {
   vm$: Observable<ViewModel> = combineLatest([
     this.store.timesheetSummaries$.pipe(map(x => x?.sort((a,b) => b.weekNr - a.weekNr))),
     this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x)))
-  ]).pipe(map(([summaries, navConfig]) => { 
+  ]).pipe(map(([summaries, navConfig]) => {
     return { navConfig, summaries }
   }));
 

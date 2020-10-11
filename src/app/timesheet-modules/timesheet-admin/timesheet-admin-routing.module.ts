@@ -8,17 +8,17 @@ const routes: Routes = [
   {
     path: '',
     component: TimesheetAdminUserListComponent,
-    data: {depth: 2},
+    data: {depth: 1},
   },  
   {
     path: 'uker',
     component: TimesheetAdminWeekListComponent,
-    data: {depth: 3},
+    data: {depth: 2},
   },
   {
     path: 'uker/timer',
     component: TimesheetAdminListComponent,
-    data: {depth: 4},
+    data: {depth: 3},
   },
 ];
 

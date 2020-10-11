@@ -7,12 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: ProfileComponent,
-    data: {depth: 2},
+    data: {depth: 1},
   },
   {
     path: 'innstillinger',
     component: SettingsComponent,
-    data: {depth: 3},
+    data: {depth: 2},
   }
 ];
 
