@@ -1,16 +1,16 @@
-<mat-sidenav-container class="h-100" *ngIf="config$ | async; let config">
+<mat-sidenav-container class="h-100" *ngIf="config$ | async; let config" style="position: unset!important">
 
-  <mat-sidenav fixedInViewport #drawer *ngIf="config" class="mat-elevation-z4 bg-primary" style="max-width:250px;min-width:200px"
+  <mat-sidenav fixedInViewport #drawer *ngIf="config" class="mat-elevation-z4 bg-primary" style="width:202px"
   [attr.role]="config.isXs ? 'dialog' : 'navigation'"
   [mode]="config.isXs ? 'over' : 'side'"
   [opened]="!config.isXs">
 
-    <app-main-side-nav
+    <app-main-side-nav 
       [config]="config.sideNavConfig"
       (navItemClicked)="config.isXs ? toggleDrawer() : null">
     </app-main-side-nav> 
 
-  </mat-sidenav>
+  </mat-sidenav>?
 
   <mat-sidenav-content fxLayout="column" style="overflow-x:hidden;" class="h-100 bg-primary-light">
 

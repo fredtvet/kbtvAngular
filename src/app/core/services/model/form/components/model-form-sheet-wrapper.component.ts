@@ -3,7 +3,6 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bott
 import { Router } from '@angular/router';
 import { Model } from 'src/app/core/models';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
-import { SimpleNavConfig } from 'src/app/shared/components/simple-top-nav/simple-nav-config.interface';
 import { translations } from 'src/app/shared/translations';
 import { BaseFormSheetWrapperComponent } from '../../../form/abstracts/base-form-sheet-wrapper.component';
 import { CommandDispatcher } from '../../../state/command.dispatcher';
