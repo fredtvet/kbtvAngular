@@ -4,8 +4,9 @@ import { AuthGuard, NoAuthGuard } from './core/services/auth';
 import { RolePreloadService } from './core/services/role-preload.service';
 import { HomeComponent } from './home/home.component';
 import { MainNavComponent } from './layout/main-nav/main-nav.component';
+import { AppSections } from './shared-app/app-sections.const';
 import { PageNotFoundComponent } from './shared-app/components/page-not-found.component';
-import { AppSections, RolePresets } from './shared-app/enums';
+import {  RolePresets } from './shared-app/enums';
 
 const routes: Routes = [
   {
