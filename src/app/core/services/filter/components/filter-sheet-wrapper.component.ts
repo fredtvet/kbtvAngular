@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, ViewContainerRef } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { take } from 'rxjs/operators';
-import { SimpleTopNavComponent } from 'src/app/shared/components';
-import { SimpleNavConfig } from 'src/app/shared/components/simple-top-nav/simple-nav-config.interface';
+import { MainTopNavBarComponent } from 'src/app/shared/components/main-top-nav-bar/main-top-nav-bar.component';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { FilterSheetWrapperConfig } from '../../filter/interfaces/filter-sheet-wrapper-config.interface';
 import { FilterFormComponent } from './filter-form.component';
 
@@ -24,14 +24,14 @@ export class FilterSheetWrapperComponent {
         this.loadFilter();
     }
 
-    private close(criteria: any){
+    private close = (criteria: any) => 
         this._bottomSheetRef.dismiss(criteria);
-    } 
 
     private loadNav(){
-        const factory = this.componentFactoryResolver.resolveComponentFactory(SimpleTopNavComponent);
+        const factory = this.componentFactoryResolver.resolveComponentFactory(MainTopNavBarComponent);
         let navRef = this.viewContainerRef.createComponent(factory);
         navRef.instance.config = this.navConfig; 
+        navRef.instance.stylingClass = "bg-accent mat-elevation-z1";
     }
 
     protected loadFilter = () => {
@@ -41,10 +41,11 @@ export class FilterSheetWrapperComponent {
         filterRef.instance.formSubmitted.pipe(take(1)).subscribe(x => this.close(x))
     }
 
-    protected get navConfig(): SimpleNavConfig{
+    protected get navConfig(): MainTopNavConfig{
         return {
             title: "Velg filtre",
-            leftBtn: {icon: 'close', callback: this.close},
+            backFn: this.close,
+            backIcon: "close",
         }
     }
 }

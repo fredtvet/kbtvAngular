@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, V
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { Model } from 'src/app/core/models';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { SimpleNavConfig } from 'src/app/shared/components/simple-top-nav/simple-nav-config.interface';
 import { translations } from 'src/app/shared/translations';
 import { BaseFormSheetWrapperComponent } from '../../../form/abstracts/base-form-sheet-wrapper.component';
@@ -65,13 +66,14 @@ export class ModelFormSheetWrapperComponent extends BaseFormSheetWrapperComponen
         super.loadForm();
     }
 
-    protected get navConfig(): SimpleNavConfig {
+    protected get navConfig(): MainTopNavConfig {
         const modelCfg = ModelStateConfig.get(this.config?.formConfig?.stateProp);
         this.translatedProp = translations[modelCfg.foreignProp]?.toLowerCase();
 
         return {
             title: this.config?.customTitle || `${this.formConfig.entityId ? "Oppdater" : "Registrer"} ${this.translatedProp}`,
-            leftBtn: {icon: 'close', callback: this.close},
+            backFn: this.close,
+            backIcon: "close",
             buttons: [
                 (this.config?.deleteDisabled || !this.formConfig.entityId) ? null : {icon: 'delete_forever', callback: this.confirmDelete}
             ]

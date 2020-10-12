@@ -9,8 +9,7 @@ import {
   FormActionsComponent,
   MailToFormViewComponent,
   SelectableCardComponent,
-  SelectableListComponent,
-  SimpleTopNavComponent
+  SelectableListComponent
 } from './components';
 import { ChipsBarComponent } from './components/chips-bar.component';
 import { DetailTopNavBarComponent } from './components/detail-top-nav-bar/detail-top-nav-bar.component';
@@ -25,7 +24,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     ConfirmDialogComponent,
     MailToFormViewComponent,
     SelectableCardComponent,
-    SimpleTopNavComponent,
     SelectableListComponent,
     BottomSheetMenuComponent,
     FormActionsComponent,
@@ -64,7 +62,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     GooglePlaceModule,
 
     ConfirmDialogComponent,
-    SimpleTopNavComponent,
     MailToFormViewComponent,
     SelectableCardComponent,
     BottomSheetMenuComponent,

@@ -1,14 +1,14 @@
 <mat-toolbar #navBar *ngIf="config" [ngClass]="stylingClass">
 
-    <ng-container *ngIf="searchBarHidden || !config?.searchBar else searchBarContent">
+    <ng-container *ngIf="searchBarHidden || !config.searchBar else searchBarContent">
         
-        <app-button *ngIf="config?.backFn else menuBtn" [config]="{
+        <app-button *ngIf="config.backFn else menuBtn" [config]="{
             callback: config.backFn, 
             params: config.backFnParams,
             type: ButtonTypes.Icon,
             aria: 'Tilbake',
-            icon: 'chevron_left',
-            iconSizeClass: 'scale-150'}">
+            icon: config.backIcon || 'chevron_left',
+            iconSizeClass: config.backIcon ? '' : 'scale-150'}">
         </app-button>
 
         <ng-template #menuBtn>
@@ -19,25 +19,25 @@
 
         <span class="mr-auto">
             <ng-container *ngIf="config.title">
-                <span *ngIf="!config?.backFn else noLinkTitle" ngClass.xs="ml-1" ngClass.gt-xs="ml-2"
-                    [routerLink]="['/hjem']">{{ config?.title || "Hjem" }}</span>
+                <span *ngIf="!config.backFn else noLinkTitle" ngClass.xs="ml-1" ngClass.gt-xs="ml-2"
+                    [routerLink]="['/hjem']">{{ config.title || "Hjem" }}</span>
                 <ng-template #noLinkTitle><span ngClass.xs="ml-1" ngClass.gt-xs="ml-2">{{ config.title }}</span>
                 </ng-template>
             </ng-container>
-            <mat-icon *ngIf="config?.subIcon" class="scale-75">{{ config.subIcon }}</mat-icon>
-            <span class="mat-caption ml-1">{{ config?.subTitle }}</span>
+            <mat-icon *ngIf="config.subIcon" class="scale-75">{{ config.subIcon }}</mat-icon>
+            <span class="mat-caption ml-1">{{ config.subTitle }}</span>
         </span>
 
         <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>
 
-        <app-button *ngIf="config?.searchBar" [config]="{
+        <app-button *ngIf="config.searchBar" [config]="{
             callback: toggleSearchBar, 
             type: ButtonTypes.Icon,
             aria: 'Søk',
             icon: 'search'}">
         </app-button>
 
-        <app-button *ngFor="let button of config?.buttons | transformButtons: ButtonTypes.Icon; trackBy: TrackByButton" [config]="button">
+        <app-button *ngFor="let button of config.buttons | transformButtons: ButtonTypes.Icon; trackBy: TrackByButton" [config]="button">
         </app-button>
 
     </ng-container>

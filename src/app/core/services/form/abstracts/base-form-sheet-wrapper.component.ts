@@ -1,13 +1,13 @@
-import { ComponentFactoryResolver, ViewContainerRef, Directive } from '@angular/core';
+import { ComponentFactoryResolver, Directive, ViewContainerRef } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
-import { SimpleTopNavComponent } from 'src/app/shared/components/simple-top-nav/simple-top-nav.component';
-import { SimpleNavConfig } from 'src/app/shared/components/simple-top-nav/simple-nav-config.interface';
-import { FormSheetWrapperConfig } from '../interfaces/form-sheet-wrapper-config.interface';
-import { FormComponent } from '../interfaces/form-component.interface';
-import { FormSheetWrapperResult } from '../interfaces/form-sheet-wrapper-result.interface';
+import { MainTopNavBarComponent } from 'src/app/shared/components/main-top-nav-bar/main-top-nav-bar.component';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { StateAction } from '../../state/state-action.enum';
+import { FormComponent } from '../interfaces/form-component.interface';
+import { FormSheetWrapperConfig } from '../interfaces/form-sheet-wrapper-config.interface';
+import { FormSheetWrapperResult } from '../interfaces/form-sheet-wrapper-result.interface';
 
 @Directive()
 export abstract class BaseFormSheetWrapperComponent<TWrapperConfig extends FormSheetWrapperConfig<any, FormComponent>> {
@@ -40,9 +40,10 @@ export abstract class BaseFormSheetWrapperComponent<TWrapperConfig extends FormS
     }
     
     private loadNav(){
-        const factory = this.componentFactoryResolver.resolveComponentFactory(SimpleTopNavComponent);
+        const factory = this.componentFactoryResolver.resolveComponentFactory(MainTopNavBarComponent);
         let navRef = this.viewContainerRef.createComponent(factory);
         navRef.instance.config = this.navConfig; 
+        navRef.instance.stylingClass = "bg-accent mat-elevation-z1";
     }
 
     protected loadForm(){
@@ -52,10 +53,11 @@ export abstract class BaseFormSheetWrapperComponent<TWrapperConfig extends FormS
         formRef.instance.formSubmitted.pipe(take(1)).subscribe(x => this.close(x))
     }
 
-    protected get navConfig(): SimpleNavConfig{
+    protected get navConfig(): MainTopNavConfig{
         return {
             title: this.config.customTitle,
-            leftBtn: {icon: 'close', callback: this.close},
+            backFn: () => this.close(null),
+            backIcon: "close",
         }
     }
 }

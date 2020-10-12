@@ -15,7 +15,7 @@ import { MissionImageListStore } from '../mission-image-list.store';
     [currentImage]="data.currentImage"
     [actions]="actions"
     (currentImageChanged)="data.currentImage = $event"
-    (close)="close()">
+    (closed)="close()">
   </app-image-viewer>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush

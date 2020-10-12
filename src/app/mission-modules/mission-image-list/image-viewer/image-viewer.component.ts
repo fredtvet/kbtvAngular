@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { ModelFile } from 'src/app/core/models';
 import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
 import { AppButton } from 'src/app/shared-app/interfaces';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 
 @Component({
   selector: 'app-image-viewer',
@@ -18,7 +19,7 @@ export class ImageViewerComponent {
   @Input() actions: AppButton[];
   
   @Output() currentImageChanged = new EventEmitter();
-  @Output() close = new EventEmitter();
+  @Output() closed = new EventEmitter();
 
   index: number;
 
@@ -47,8 +48,8 @@ export class ImageViewerComponent {
     this.changeCurrentImage(this.images[this.index]);
   }
 
-  finished = () => this.close.emit();
+  close = () => this.closed.emit();
 
   openBottomSheet = () => this.menuService.open(this.actions);
- 
+  
 }
