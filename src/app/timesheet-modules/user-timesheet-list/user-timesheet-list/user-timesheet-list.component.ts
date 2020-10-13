@@ -5,6 +5,7 @@ import { map } from "rxjs/operators";
 import { Timesheet } from "src/app/core/models";
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilterConfig } from 'src/app/core/services/filter/interfaces';
+import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
 import { DateRangePresets } from 'src/app/shared-app/enums';
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
@@ -15,7 +16,9 @@ import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/component
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetStatus } from 'src/app/shared/enums';
-import { TimesheetForm } from '../../user-timesheet-form/user-timesheet-form-view/timesheet-form.interface';
+import { TimesheetForm } from '../user-timesheet-form-view/timesheet-form.interface';
+import { UserTimesheetFormToSaveModelAdapter } from '../user-timesheet-form-view/user-timesheet-form-to-save-model.adapter';
+import { UserTimesheetFormViewComponent } from '../user-timesheet-form-view/user-timesheet-form-view.component';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
 
 interface ViewModel { timesheets: Timesheet[], fabs?: AppButton[], chips?: AppChip[], navConfig?: MainTopNavConfig  }
@@ -52,6 +55,7 @@ export class UserTimesheetListComponent implements OnInit {
     private filterService: FilterSheetService,
     private store: UserTimesheetListStore,
     private chipsFactory: ChipsFactoryService,
+    private modelFormService: ModelFormService
   ) {}
 
   ngOnInit() { 
@@ -65,8 +69,15 @@ export class UserTimesheetListComponent implements OnInit {
     this.store.addFilterCriteria(criteria);
   }
 
-  openTimesheetForm = (entityId?: string, lockedValues?: TimesheetForm) => 
-    this.router.navigate(['skjema', {config: JSON.stringify({formConfig: {entityId, viewConfig: {lockedValues}}})}], {relativeTo: this.route});
+  openTimesheetForm = (entityId?: string, lockedValues?: TimesheetForm): void => {
+    this.modelFormService.open({formConfig: {
+      viewComponent: UserTimesheetFormViewComponent, 
+      adapter: UserTimesheetFormToSaveModelAdapter, 
+      stateProp: "userTimesheets",
+      entityId, 
+      viewConfig: {lockedValues}
+    }})
+  };
 
   openFilterSheet = (): void => {
     this.filterService.open<TimesheetCriteria, FilterConfig<TimesheetFilterViewConfig>>(

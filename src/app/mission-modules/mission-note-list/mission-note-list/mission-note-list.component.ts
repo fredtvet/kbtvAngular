@@ -3,11 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MissionNote } from 'src/app/core/models';
+import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
 import { RolePresets } from 'src/app/shared-app/enums';
 import { _sortByBool } from 'src/app/shared-app/helpers/array/sort-by-bool.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
+import { MissionNoteFormViewComponent } from '../mission-note-form-view/mission-note-form-view.component';
 import { MissionNoteListStore } from '../mission-note-list.store';
 
 @Component({
@@ -30,6 +32,7 @@ export class MissionNoteListComponent {
     private store: MissionNoteListStore,
     private route: ActivatedRoute,
     private router: Router,
+    private modelFormService: ModelFormService
     ) {  
     this.navConfig = {title:  "Notater", backFn: this.onBack};
     this.fabs = [
@@ -47,10 +50,11 @@ export class MissionNoteListComponent {
   trackByNote = _trackByModel("missionNotes")
   
   private openCreateNoteForm = () => 
-    this.router.navigate(
-      ['skjema', {config: JSON.stringify({formConfig:{viewConfig:{lockedValues: {missionId: this.missionId}}}})}], 
-      {relativeTo: this.route}
-    );
+    this.modelFormService.open({formConfig: {
+      viewComponent: MissionNoteFormViewComponent,
+      stateProp: "missionNotes",
+      viewConfig:{lockedValues: {missionId: this.missionId}}
+    }});
 
   private onBack = () => this.router.navigate(['/oppdrag', this.missionId, 'detaljer']);
 

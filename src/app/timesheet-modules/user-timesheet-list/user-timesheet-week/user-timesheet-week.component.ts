@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
+import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
 import { _getDateOfWeek } from 'src/app/shared-app/helpers/datetime/get-date-of-week.helper';
 import { _getWeekOfYear } from 'src/app/shared-app/helpers/datetime/get-week-of-year.helper';
 import { _getWeekRange } from 'src/app/shared-app/helpers/datetime/get-week-range.helper';
@@ -13,8 +14,10 @@ import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-vi
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { GroupByPeriod } from 'src/app/shared/enums';
 import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
-import { TimesheetForm } from '../../user-timesheet-form/user-timesheet-form-view/timesheet-form.interface';
 import { UserTimesheetCardDialogWrapperComponent } from '../user-timesheet-card-dialog-wrapper.component';
+import { TimesheetForm } from '../user-timesheet-form-view/timesheet-form.interface';
+import { UserTimesheetFormToSaveModelAdapter } from '../user-timesheet-form-view/user-timesheet-form-to-save-model.adapter';
+import { UserTimesheetFormViewComponent } from '../user-timesheet-form-view/user-timesheet-form-view.component';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
 import { ViewModel } from './view-model.interface';
 
@@ -44,6 +47,7 @@ export class UserTimesheetWeekComponent {
     private dialog: MatDialog,
     private deviceInfoService: DeviceInfoService,
     private store: UserTimesheetListStore,
+    private modelFormService: ModelFormService
   ) {
     this.store.addGroupBy(GroupByPeriod.Day) 
     let initFilter = this.route.snapshot.params.filter;
@@ -73,9 +77,16 @@ export class UserTimesheetWeekComponent {
     else currFilter.weekNr--;  
     this.store.addWeekFilterCriteria(currFilter);
   }
-  
-  openTimesheetForm = (entityId?: string, lockedValues?: TimesheetForm) => 
-    this.router.navigate(['skjema', {config: JSON.stringify({formConfig: {entityId, viewConfig: {lockedValues}}})}], {relativeTo: this.route});
+
+  openTimesheetForm = (entityId?: string, lockedValues?: TimesheetForm): void => {
+    this.modelFormService.open({formConfig: {
+      viewComponent: UserTimesheetFormViewComponent, 
+      adapter: UserTimesheetFormToSaveModelAdapter, 
+      stateProp: "userTimesheets",
+      entityId, 
+      viewConfig: {lockedValues}
+    }})
+  };
 
   openTimesheetCard = (timesheetId: string) =>
     this.dialog.open(UserTimesheetCardDialogWrapperComponent, {

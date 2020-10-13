@@ -16,6 +16,8 @@ import { MissionDocumentListStore } from '../mission-document-list.store';
 import { map } from 'rxjs/operators';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { MissionDocumentFormViewComponent } from '../mission-document-form-view/mission-document-form-view.component';
+import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
 
 interface ViewModel { documents: MissionDocument[], isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig}
 
@@ -48,7 +50,8 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
-    private confirmService: ConfirmDialogService,) {
+    private confirmService: ConfirmDialogService,
+    private modelFormService: ModelFormService) {
       super();
       
       this.navConfig = {title:  "Dokumenter", backFn: this.onBack, }
@@ -88,11 +91,12 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
   private openDocumentForm = (): void => {
     if(!window.navigator.onLine)
       return this.notificationService.notify(AppNotifications.OnlineRequired)
-  
-    this.router.navigate([
-      'skjema', 
-      {config: JSON.stringify({formConfig:{viewConfig:{lockedValues: {missionId: this.missionId}}}})}
-    ], {relativeTo: this.route});
+
+    this.modelFormService.open({formConfig: {
+      viewComponent: MissionDocumentFormViewComponent,
+      stateProp: "missionDocuments",
+      viewConfig:{lockedValues: {missionId: this.missionId}}
+    }});
   }
 
   private onBack = () => 

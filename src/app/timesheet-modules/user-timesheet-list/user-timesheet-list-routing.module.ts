@@ -16,19 +16,11 @@ const routes: Routes = [
     path: 'ukevisning',
     component: UserTimesheetWeekComponent,
     data: {depth: 2},
-    children: [
-      {path: 'skjema', loadChildren: () => import('src/app/timesheet-modules/user-timesheet-form/user-timesheet-form.module')
-        .then(m => m.UserTimesheetFormModule)}
-    ],
   },
   {
     path: 'liste',
     component: UserTimesheetListComponent,
     data: {depth: 3},
-    children: [
-      {path: 'skjema', loadChildren: () => import('src/app/timesheet-modules/user-timesheet-form/user-timesheet-form.module')
-        .then(m => m.UserTimesheetFormModule)},
-    ],
   },
 ];
 

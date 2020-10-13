@@ -4,6 +4,7 @@ import { DeleteModelReducer } from 'src/app/core/services/model/state/delete-mod
 import { MailModelsHttpEffect } from 'src/app/core/services/model/state/mail-models/mail-models.http.effect';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MailDocumentFormComponent } from './mail-document-form.component';
+import { MissionDocumentFormViewComponent } from './mission-document-form-view/mission-document-form-view.component';
 import { MissionDocumentListRoutingModule } from './mission-document-list-routing.module';
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
 import { FileExtensionIconPipe } from './pipes/file-extension-icon.pipe';
@@ -14,6 +15,7 @@ import { FileExtensionPipe } from './pipes/file-extension.pipe';
   declarations: [
     MissionDocumentListComponent,
     MailDocumentFormComponent,
+    MissionDocumentFormViewComponent,
     FileExtensionIconPipe,
     FileExtensionPipe
   ],
