@@ -4,7 +4,7 @@
     </app-main-top-nav-bar>
 
     <app-selectable-list #selectableList 
-        *ngIf="vm.images" identifier="id"
+        *ngIf="vm.images" identifier="id" selectedText="Bilde valgt"
         [totalRows]="vm.isXs ? 2 : 4"
         [entities]="vm.images" 
         [itemTemplate]="imgTemplate"

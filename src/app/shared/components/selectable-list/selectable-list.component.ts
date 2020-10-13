@@ -21,6 +21,8 @@ export class SelectableListComponent extends SubscriptionComponent {
       this.selectableListPresenter.setIdentifier(value)
     }
 
+    @Input() selectedText: string;
+    @Input() selectedIcon: string;
     @Input() itemTemplate: TemplateRef<any>;
     @Input() totalRows: number = 2;  
     @Output() selectionChanged = new EventEmitter<string[]>();
