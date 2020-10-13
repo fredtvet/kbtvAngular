@@ -60,11 +60,6 @@ constructor(
   }
 
   private openCreateForm = (): void => {
-    if(this.store.selectedProperty === "missions"){ //Lazy loaded form
-      this.router.navigate(['data/ny/oppdrag']);
-      return;
-    }
-
     this.formService.open<ModelFormConfig<any, Model, any>>({formConfig: {
       stateProp: this.store.selectedProperty,    
       adapter: FormToSaveModelStateCommandAdapter,

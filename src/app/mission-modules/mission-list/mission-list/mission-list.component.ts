@@ -1,15 +1,17 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { Mission } from "src/app/core/models";
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
+import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
 import { Roles } from "src/app/shared-app/enums";
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { MissionFormViewComponent } from 'src/app/shared/components/mission-form-view/mission-form-view.component';
 import { MissionCriteria } from "src/app/shared/interfaces/mission-filter-criteria.interface";
 import { MissionFilterViewComponent } from "../mission-filter-view/mission-filter-view.component";
 import { MissionListStore } from "../mission-list.store";
@@ -44,8 +46,8 @@ export class MissionListComponent {
   constructor(
     private filterSheetService: FilterSheetService,
     private chipsFactory: ChipsFactoryService,
+    private modelFormService: ModelFormService,
     private store: MissionListStore,
-    private router: Router,
     private route: ActivatedRoute
   ) {
     this.fabs = [
@@ -60,7 +62,10 @@ export class MissionListComponent {
   };
 
   private openMissionForm = () => {
-    this.router.navigate(["ny"], { relativeTo: this.route });
+    this.modelFormService.open({formConfig: {
+      viewComponent: MissionFormViewComponent,
+      stateProp: "missions",
+    }})
   };
 
   private openMissionFilter = () => {

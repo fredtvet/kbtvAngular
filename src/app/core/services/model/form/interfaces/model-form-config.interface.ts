@@ -14,6 +14,6 @@ export interface ModelFormConfig<
     entityId?: any;
     stateProp: Prop<ModelState>;
     viewConfig?: TViewConfig;
-    adapter: ModelFormToSaveStateCommandAdapter<TFormState>
+    adapter?: ModelFormToSaveStateCommandAdapter<TFormState>
     viewComponent: Type<BaseModelFormViewComponent<TFormState, TModel, ModelFormViewConfig<TModel, TFormState>>>,
 }

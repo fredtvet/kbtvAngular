@@ -9,9 +9,6 @@ const routes: Routes = [
     path: '',
     component: DataManagerComponent,
     data: {allowedRoles: RolePresets.Authority},
-    children: [
-      {path: 'ny/oppdrag', loadChildren: () => import('src/app/mission-modules/mission-form/mission-form.module').then(m => m.MissionFormModule)},
-    ],
   },
 ];
 

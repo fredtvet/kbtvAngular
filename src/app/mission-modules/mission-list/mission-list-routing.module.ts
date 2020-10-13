@@ -9,19 +9,11 @@ const routes: Routes = [
     path: '',
     component: MissionListComponent,
     data: {depth: 1},
-    children: [
-      {path: 'ny', data: {allowedRoles: RolePresets.Management.valueOf()}, 
-      loadChildren: () => import('src/app/mission-modules/mission-form/mission-form.module').then(m => m.MissionFormModule)},
-    ],
   },
   {
     path: ':id/detaljer',
     component: MissionDetailsComponent,
     data: {depth: 2},
-    children: [
-      {path: 'rediger', data: {allowedRoles: RolePresets.Authority.valueOf()},
-      loadChildren: () => import('src/app/mission-modules/mission-form/mission-form.module').then(m => m.MissionFormModule)},
-    ],
   },
   {
     path: ':id/bilder',

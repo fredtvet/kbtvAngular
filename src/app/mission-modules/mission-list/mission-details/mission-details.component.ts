@@ -3,11 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
+import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
 import { AppNotifications } from 'src/app/core/services/notification/app.notifications';
 import { NotificationService } from 'src/app/core/services/notification/notification.service';
 import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
 import { RolePresets, Roles } from 'src/app/shared-app/enums';
 import { DetailTopNavConfig } from 'src/app/shared/components/detail-top-nav-bar/detail-top-nav.config';
+import { MissionFormViewComponent } from 'src/app/shared/components/mission-form-view/mission-form-view.component';
 import { TimesheetStatus } from 'src/app/shared/enums';
 import { AppFileUrlPipe } from 'src/app/shared/pipes/app-file-url.pipe';
 import { MissionListStore } from '../mission-list.store';
@@ -37,6 +39,7 @@ export class MissionDetailsComponent{
     private appFileUrl: AppFileUrlPipe,
     private menuService: BottomSheetMenuService,
     private notificationService: NotificationService,
+    private modelFormService: ModelFormService
   ){ }
 
   updateHeaderImage = (files: FileList): void => 
@@ -50,9 +53,16 @@ export class MissionDetailsComponent{
   }
   
   private openMissionForm = (entityId: number) => 
-    this.router.navigate(['rediger', {config: JSON.stringify({formConfig:{entityId}, onDeleteUri: "/oppdrag"})}], {relativeTo: this.route});
+    this.modelFormService.open({
+      onDeleteUri: "/oppdrag",
+      formConfig: {
+        viewComponent: MissionFormViewComponent,
+        stateProp: "missions",
+        entityId
+      }
+    })
 
-  private goToTimesheets = (mission: Mission) => 
+private goToTimesheets = (mission: Mission) => 
     this.router.navigate(['mine-timer/liste', {
       returnUrl: this.router.url, 
       filter: JSON.stringify({mission, status: TimesheetStatus.Open})

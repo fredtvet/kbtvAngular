@@ -15,6 +15,7 @@ import { ChipsBarComponent } from './components/chips-bar.component';
 import { DetailTopNavBarComponent } from './components/detail-top-nav-bar/detail-top-nav-bar.component';
 import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.component';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
+import { MissionFormViewComponent } from './components/mission-form-view/mission-form-view.component';
 import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButtonsPipe, IsTodayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
@@ -31,7 +32,8 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     MainTopNavBarComponent,
     DetailTopNavBarComponent,
     ChipsBarComponent,
-
+    MissionFormViewComponent,
+    
     TransformButtonPipe,
     ArraySlicePipe,
     TranslatePipe,
@@ -71,7 +73,8 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     MainTopNavBarComponent,
     DetailTopNavBarComponent,
     ChipsBarComponent,
-
+    MissionFormViewComponent,
+    
     TransformButtonPipe,
     ArraySlicePipe,
     TranslatePipe,

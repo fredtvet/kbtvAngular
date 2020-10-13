@@ -4,10 +4,12 @@ import { InboundEmailPasswordFormViewComponent } from '../components/inbound-ema
 import { DocumentTypeFormViewComponent } from '../components/document-type-form-view/document-type-form-view.component';
 import { MissionTypeFormViewComponent } from '../components/mission-type-form-view/mission-type-form-view.component';
 import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
+import { MissionFormViewComponent } from 'src/app/shared/components/mission-form-view/mission-form-view.component';
 
 export const PropertyFormMap: {[key: string]: Type<BaseModelFormViewComponent<any, any, any>> } = {
     employers: EmployerFormViewComponent,
     missionTypes: MissionTypeFormViewComponent,
     documentTypes: DocumentTypeFormViewComponent,
-    inboundEmailPasswords: InboundEmailPasswordFormViewComponent
+    inboundEmailPasswords: InboundEmailPasswordFormViewComponent,
+    missions: MissionFormViewComponent
 }
