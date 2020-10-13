@@ -79,6 +79,6 @@ export class MissionDetailsComponent{
     }
   }
 
-  private onBack = () => this.router.navigate(['/oppdrag'])
+  private onBack = () => this.router.navigate(['/oppdrag', {initialMissionId: this.missionId}])
 
 }

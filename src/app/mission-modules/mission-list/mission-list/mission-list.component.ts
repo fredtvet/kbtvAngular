@@ -37,6 +37,8 @@ export class MissionListComponent {
     }),
   );
 
+  get initialMissionId() { return this.route.snapshot.paramMap.get('initialMissionId') }
+
   private fabs: AppButton[];
 
   constructor(

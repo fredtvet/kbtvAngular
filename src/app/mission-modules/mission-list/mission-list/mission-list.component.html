@@ -6,7 +6,8 @@
     <app-chips-bar [chips]="vm.chips"></app-chips-bar>
   </ng-container>
 
-  <app-mission-list-view 
+  <app-mission-list-view *ngIf="vm.missions" 
+    [scrollToMissionId]="initialMissionId"
     [missions]="vm.missions" 
     (search)="searchMissions($event)">
   </app-mission-list-view>
