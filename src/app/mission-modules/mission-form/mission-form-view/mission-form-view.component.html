@@ -6,6 +6,9 @@
     <mat-error *ngIf="this.address.invalid">
       Adresse er ett obligatorisk felt på maks 100 tegn.
     </mat-error>
+    <button mat-button *ngIf="address.value" matSuffix mat-icon-button aria-label="Clear" (click)="address.setValue('')">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
 
   <mat-form-field>
@@ -32,7 +35,10 @@
       <mat-option *ngFor="let employer of config?.foreigns?.employers" [value]="employer.name">
         {{employer.name}}
       </mat-option>
-    </mat-autocomplete>   
+    </mat-autocomplete>  
+    <button mat-button *ngIf="employerName.value" matSuffix mat-icon-button aria-label="Clear" (click)="employerName.setValue('')">
+      <mat-icon>close</mat-icon>
+    </button> 
   </mat-form-field>
 
   <mat-form-field formGroupName="missionType">
@@ -43,6 +49,9 @@
         {{type.name}}
       </mat-option>
     </mat-autocomplete>
+    <button mat-button *ngIf="missionTypeName.value" matSuffix mat-icon-button aria-label="Clear" (click)="missionTypeName.setValue('')">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
 
   <mat-checkbox *ngIf="!isCreateForm" formControlName="finished" color="primary" class="mb-2">Er oppdraget ferdig?</mat-checkbox>

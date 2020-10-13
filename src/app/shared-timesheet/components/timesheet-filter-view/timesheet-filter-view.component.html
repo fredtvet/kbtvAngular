@@ -22,6 +22,9 @@
           ({{ mission.id }}) {{ mission.address }}
         </mat-option>
       </mat-autocomplete>
+      <button mat-button *ngIf="mission.value" matSuffix mat-icon-button aria-label="Clear" (click)="mission.setValue('')">
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-form-field>
     <mat-divider></mat-divider>
     <span class="mb-2"></span>

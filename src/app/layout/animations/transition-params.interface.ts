@@ -1,6 +1,7 @@
-import { AppSections } from 'src/app/shared-app/enums';
+import { AppSections } from 'src/app/shared-app/app-sections.const';
+
 
 export interface TransitionParams {
     depth: number;
-    section: AppSections;
+    section: keyof typeof AppSections;
 }

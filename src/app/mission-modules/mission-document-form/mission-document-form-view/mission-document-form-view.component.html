@@ -7,6 +7,9 @@
                 {{type.name}}
             </mat-option>
         </mat-autocomplete>
+        <button mat-button *ngIf="documentTypeName.value" matSuffix mat-icon-button aria-label="Clear" (click)="documentTypeName.setValue('')">
+            <mat-icon>close</mat-icon>
+        </button>
         <mat-error *ngIf="documentTypeName.errors?.required">Velg eller lag ny dokumenttype.</mat-error>      
         <mat-error *ngIf="documentTypeName.errors?.maxlength">Navn kan maks være 45 tegn.</mat-error>  
     </mat-form-field>

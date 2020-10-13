@@ -7,6 +7,9 @@
             ({{ mission.id }}) {{ mission.address }}
           </mat-option>
         </mat-autocomplete>
+        <button mat-button *ngIf="searchString.value" matSuffix mat-icon-button aria-label="Clear" (click)="searchString.setValue('')">
+            <mat-icon>close</mat-icon>
+        </button>
     </mat-form-field>
 
     <mat-form-field>
