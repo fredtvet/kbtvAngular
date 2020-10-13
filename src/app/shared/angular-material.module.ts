@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CssLoaderService } from '../core/services/css-loader.service';
 import { LazyStyles } from '../shared-app/enums';
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
    imports: [
@@ -30,6 +31,7 @@ import { LazyStyles } from '../shared-app/enums';
       MatDialogModule,
       MatBottomSheetModule,
       MatChipsModule,
+      MatSliderModule
    ],
    exports: [
       MatBadgeModule,
@@ -45,6 +47,7 @@ import { LazyStyles } from '../shared-app/enums';
       MatDialogModule,
       MatBottomSheetModule,
       MatChipsModule,
+      MatSliderModule
    ],
 })
 

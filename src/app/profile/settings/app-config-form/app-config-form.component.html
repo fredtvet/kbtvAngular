@@ -1,15 +1,31 @@
 <form *ngIf="settingsForm && syncConfig" [formGroup]="settingsForm" fxLayout="column">
-
-  <mat-form-field>
-    <input matInput placeholder="Synkroniseringsinterval (minutter)" type="tel" formControlName="refreshTime" required>
-  </mat-form-field>
-
-  <mat-form-field>
-    <input matInput placeholder="Antall måneder med data" type="tel" formControlName="initialNumberOfMonths" required>
-  </mat-form-field>
+  <span class="mat-body">Synkroniseringstid </span>
+  <span class="mat-caption">Hvor ofte skal det sjekkes etter oppdatert data?</span>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <span class="mat-body">{{ refreshTime.value }} min</span>
+    <mat-slider color="primary" formControlName="refreshTime" fxFlex
+      thumbLabel
+      tickInterval="5"
+      min="3"
+      max="60">
+    </mat-slider>
+  </div>
+  <mat-divider></mat-divider>
+  <span class="mat-body mt-3">Antall måneder med data</span>
+  <span class="mat-caption">Hvor mange måneder med data skal lastes inn?</span>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <span class="mat-body">{{ initialNumberOfMonths.value }} mnd</span>
+    <mat-slider color="primary" formControlName="initialNumberOfMonths" fxFlex
+      thumbLabel
+      tickInterval="4"
+      min="4"
+      max="80">
+    </mat-slider>
+  </div>
 
   <button mat-raised-button class="w-100" color="primary"
     [disabled]="settingsForm.invalid || settingsForm.pristine" (click)="onSubmit()">
     Lagre
   </button>
+
 </form>

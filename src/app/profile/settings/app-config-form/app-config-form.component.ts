@@ -34,7 +34,7 @@ export class AppConfigFormComponent implements OnChanges {
     const { value, valid } = this.settingsForm;
     if (valid) this.formSubmitted.emit(value);    
   }
-
+  
   get refreshTime() {
     return this.settingsForm.get("refreshTime");
   }

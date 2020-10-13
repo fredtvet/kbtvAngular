@@ -14,6 +14,7 @@
 @include mat-select-theme($kbtv-client-theme);
 @include mat-bottom-sheet-theme($kbtv-client-theme); // d
 @include mat-chips-theme($kbtv-client-theme); // d
+@include mat-slider-theme($kbtv-client-theme); // d
 
 //Customizations
 .mat-button-toggle-group{
