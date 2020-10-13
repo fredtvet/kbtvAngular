@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, concat, EMPTY, Observable } from 'rxjs';
-import { catchError, filter, first, map, tap } from 'rxjs/operators';
+import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
 import { User } from '../../models/user.interface';
 import { ObservableStore } from '../state/abstracts/observable-store';
 import { ObservableStoreBase } from '../state/observable-store-base';
@@ -14,7 +14,7 @@ import { HttpCommand } from './http-command.interface';
 
 interface State extends StateCurrentUser { requestQueue: QueuedCommand[]; };
 
-interface QueuedCommand { command: HttpCommand, stateSnapshot: any };
+interface QueuedCommand { command: HttpCommand, stateSnapshot: any, dispatched?: boolean };
 
 @Injectable({ providedIn: 'root' })
 export class HttpCommandHandler extends ObservableStore<State> {
@@ -40,7 +40,7 @@ export class HttpCommandHandler extends ObservableStore<State> {
     super(base);
 
     syncStore.hasInitialSynced$.subscribe(x => {
-      this.checkForGhostErrors();
+      this.checkDispatchedRequest();
       this.nextInQueue$.subscribe();
     });
 
@@ -49,6 +49,7 @@ export class HttpCommandHandler extends ObservableStore<State> {
   handle(command: HttpCommand, stateSnapshot?: any): void {
     if (!command)
       console.error("No state http command provided");
+
     //If no state changes, ignore queue and run request
     if (!stateSnapshot) {
       this.getHttpCommandObserver(command).subscribe();
@@ -65,13 +66,21 @@ export class HttpCommandHandler extends ObservableStore<State> {
   }
 
   private dispatchHttp(command: HttpCommand) {
-    concat(
-      this.deviceInfoService.isOnline$.pipe(first(x => x === true)),
-      this.getHttpCommandObserver(command).pipe(
-        catchError(err => this.onHttpError(true)),
-        tap(x => this.onHttpSuccess()) //Add next id to queue
-      )
+    this.deviceInfoService.isOnline$.pipe(
+      first(x => x === true), //Wait for online
+      tap(x => this.setFirstRequestDispatched()),
+      switchMap(x => this.getHttpCommandObserver(command)),
+      catchError(err => this.onHttpError(true)),
+      tap(x => this.onHttpSuccess()) //Add next id to queue)
     ).subscribe();
+  }
+
+  private setFirstRequestDispatched(): void{
+    const requestQueue = this.requestQueue;
+    const request = requestQueue[0];
+    if(!request) return;
+    requestQueue[0] = {...request, dispatched: true};
+    this.setState({ requestQueue }, null, false); //No need to deep clone request queue
   }
 
   private onHttpSuccess() {
@@ -103,14 +112,22 @@ export class HttpCommandHandler extends ObservableStore<State> {
     return EMPTY;
   }
 
-  //Checks if there are unhandled http errors when initalizing. 
-  //i.e. if app is closed while request is processing, and it returns error. 
+  //Checks if there are dispatched requests persisted when initalizing. 
+  //i.e. if app is closed while request is processing
   //Waits for sync call to provide last command status for user, to check if it was successful or not. 
-  private checkForGhostErrors(): void {
-    const lastCommandStatus = this.getStateProperty<User>("currentUser")?.lastCommandStatus;
+  private checkDispatchedRequest(): void {
+    const requestQueue = this.requestQueue
+    const firstRequest = requestQueue[0];
+    if(!firstRequest?.dispatched) return; //Only check dispatched requests
 
-    if (!lastCommandStatus && this.requestQueue.length > 0)
+    const lastCommandStatus = this.getStateProperty<User>("currentUser", false)?.lastCommandStatus;
+
+    if (!lastCommandStatus) 
       this.onHttpError(false, "Noe gikk feil ved forrige økt!");
+    else{
+      requestQueue.shift(); //If successfull just remove 
+      this.setState({requestQueue})
+    }
   }
 
   private getHttpCommandObserver(command: { httpMethod: "POST" | "PUT" | "DELETE"; apiUrl: string; httpBody: any; }) {
