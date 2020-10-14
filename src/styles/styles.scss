@@ -12,37 +12,70 @@
   --ion-color-primary: black;
 }
 
-html, body { height: 100%; background:$background-color;color:black;overflow:hidden;padding:0;margin:0; overflow-x:hidden;}
+html, body { height: 100%; overflow:hidden;padding:0;margin:0; overflow-x:hidden}
 body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 
-.bg-primary{background:$primary!important;color:white;}
-.bg-primary-light{background:$primary-light!important;color:black;}
+.primary{
+  background-color:$primary;
+  color: mat-color($app-primary, default-contrast);
+}
 
-.color-primary{color:$primary!important;}
+.primary-light{
+  background-color:$primary-light;
+  color: mat-color($app-primary, lighter-contrast);
+}
 
-.bg-accent{background:$accent!important;color:black!important;}
-.bg-accent-light{ background:$accent-light!important;color:black;}
+.color-primary{
+  color: $primary;
+}
 
-.color-accent{color:$accent!important;}
+.accent{
+  background-color:$accent;
+  color: mat-color($app-accent, default-contrast);
+}
 
-.bg-warn{background:$warn!important;color:black;}
-.bg-warn-light{background:$warn-light!important;color:black;}
+.accent-light{
+  background-color:$accent-light;
+  color: mat-color($app-accent, lighter-contrast);
+}
 
-.color-warn{color:$warn;}
+.color-accent{
+  color: $accent;
+}
 
-.bg-success{background:$success!important;color:black;}
-.bg-success-light{background:$success-light!important;color:black;}
 
-.color-success{color:$success;}
+.warn{
+  background-color:$warn;
+  color: mat-color($app-warn, default-contrast);
+}
 
-.bg-background{background:$background-color;color:black;}
-.color-background{color:$primary-light;}
-.bg-foreground{background:$foreground-color;color:black;}
-.color-foreground{color:white;}
+.warn-light{
+  background-color:$warn-light;
+  color: mat-color($app-warn, lighter-contrast);
+}
 
-.bg-transparent{background:transparent};
+.color-warn{
+  color: $warn;
+}
 
-.active{color: $accent !important;}
+.success{
+  background-color:$success;
+  color: mat-color($app-success, default-contrast);
+}
+
+.success-light{
+  background-color:$success-light;
+  color: mat-color($app-success, lighter-contrast);
+}
+
+.color-success{
+  color: $success;
+}
+
+
+.foreground-card{
+  background-color:mat-color($background, card);
+}
 
 .scale-150{transform:scale(1.5);}
 .scale-125{transform:scale(1.25);}
@@ -55,10 +88,6 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 .max-width{max-width:600px!important;margin:auto}
 
 .extended-dialog{max-width:90vw!important}
-
-.flex-nav{flex-shrink: 0;display: inline-flex;flex-direction: column;z-index:2}
-
-.float-right{float:right;}
 
 .h-100{height:100%;}
 
@@ -79,23 +108,6 @@ a {
   text-decoration: inherit; /* no underline */
 }
 
-//Entity -> used in selective list 
-.entity-row {
-  display: -ms-flexbox; /* IE10 */
-  display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-  max-width: 1000px;
-  padding:$gap-size * 0.25px;
-}
-
-/* Create four equal columns that sits next to each other */
-.entity-column {
-  -ms-flex: 25%; /* IE10 */
-  flex: 25%;
-  max-width: 25%;
-}
-
 .entity-card{  
   width:100%;
   vertical-align: middle;
@@ -104,52 +116,30 @@ a {
    box-sizing: border-box;
 }
 
-/* Responsive layout - makes a two column-layout instead of four columns */
-@media screen and (max-width: 600px) {
-  .entity-column {
-    -ms-flex: 50%;
-    flex: 50%;
-    max-width: 50%;
-  }
-}
-
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 300px) {
-  .entity-column {
-    -ms-flex: 100%;
-    flex: 100%;
-    max-width: 100%;
-  }
-}
-
 .image_viewer_dialog{max-width:none!important;}
 
 .image_viewer_dialog .mat-dialog-container{background-color:black!important;}
 
 .notification-error{
   margin-bottom:$bottom-nav-height + $gap-size * 2px!important;
-  @extend .bg-warn;
+  @extend .warn;
 }
 
 .notification-success{
   margin-bottom:$bottom-nav-height + $gap-size * 2px!important;
-  @extend .bg-success;
+  background-color:mat-color($app-success, A700);
+  color:mat-color($app-success, default-contrast);
 }
 
 .notification-warn{
   margin-bottom:$bottom-nav-height + $gap-size * 2px!important;
-  @extend .bg-accent;
+  @extend .accent;
 }
 
 .ellipsis{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.app-card{
-  background:white;
-  border-radius:5px;
 }
 
 .mid-divider{

@@ -43,7 +43,8 @@ export abstract class BaseFormSheetWrapperComponent<TWrapperConfig extends FormS
         const factory = this.componentFactoryResolver.resolveComponentFactory(MainTopNavBarComponent);
         let navRef = this.viewContainerRef.createComponent(factory);
         navRef.instance.config = this.navConfig; 
-        navRef.instance.stylingClass = "bg-accent mat-elevation-z1";
+        navRef.instance.stylingClass = "mat-elevation-z1";
+        navRef.instance.color = "accent"
     }
 
     protected loadForm(){

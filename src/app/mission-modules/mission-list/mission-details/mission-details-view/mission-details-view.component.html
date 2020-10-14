@@ -2,21 +2,21 @@
 
   <div fxLayout="row" fxLayoutGap="8px" class="mat-subheading-2 mb-2">
     
-    <a *ngIf="mission?.phoneNumber else noPhone" class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50"
+    <a *ngIf="mission?.phoneNumber else noPhone" class="mat-elevation-z2 foreground-card text-center p-6" fxFlex="50"
       href="tel:{{ mission?.phoneNumber }}"  matRipple>
       <mat-icon class="scale-150 mb-1">phone</mat-icon><br />
       <span>{{ mission?.phoneNumber || 'N/A' }} </span>
     </a>
 
     <ng-template #noPhone>
-      <span class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50">
+      <span class="mat-elevation-z2 foreground-card text-center p-6" fxFlex="50">
         <mat-icon class="scale-150 mb-1">phone</mat-icon><br />
         <span>{{ mission?.phoneNumber || 'N/A' }} </span>
       </span>
     </ng-template>
 
     <a href="https://www.google.com/maps/dir/?api=1&destination={{ mission?.address }}&travelmode=driving"
-      target="_blank" class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50" matRipple>
+      target="_blank" class="mat-elevation-z2 foreground-card text-center p-6" fxFlex="50" matRipple>
       <mat-icon class="scale-150">directions_car</mat-icon><br />
       <span>Veibeskrivelse</span>
     </a>

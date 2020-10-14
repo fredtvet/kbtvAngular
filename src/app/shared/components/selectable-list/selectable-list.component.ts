@@ -7,6 +7,7 @@ import { SelectableListPresenter } from './selectable-list.presenter';
 @Component({
   selector: 'app-selectable-list',
   templateUrl: './selectable-list.component.html',
+  styleUrls: ['./selectable-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers:[SelectableListPresenter]
 })

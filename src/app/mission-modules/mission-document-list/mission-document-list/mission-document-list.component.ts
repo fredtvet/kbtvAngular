@@ -57,12 +57,12 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
       this.navConfig = {title:  "Dokumenter", backFn: this.onBack, }
 
       this.staticFabs = [
-        {icon: "note_add", aria: 'Legg til', colorClass: 'bg-accent', callback: this.openDocumentForm, allowedRoles: [Roles.Leder]}
+        {icon: "note_add", aria: 'Legg til', color: 'accent', callback: this.openDocumentForm, allowedRoles: [Roles.Leder]}
       ];
 
       this.selectedItemsFabs = [
-        {icon: "send", aria: 'Send', colorClass: 'bg-accent', callback: this.openMailDocumentSheet, allowedRoles: [Roles.Leder]}, 
-        {icon: "delete_forever", aria: 'Slett', colorClass: 'bg-warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
+        {icon: "send", aria: 'Send', color: 'accent', callback: this.openMailDocumentSheet, allowedRoles: [Roles.Leder]}, 
+        {icon: "delete_forever", aria: 'Slett', color: 'warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
       ]
     }
 
@@ -76,7 +76,8 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
 
   private openConfirmDeleteDialog = () => {   
     this.confirmService.open({
-      message: 'Slett utvalgte dokumenter?', confirmText: 'Slett',
+      title: 'Slett utvalgte dokumenter?', 
+      confirmText: 'Slett',
       confirmCallback: this.deleteSelectedDocuments
     })
   }

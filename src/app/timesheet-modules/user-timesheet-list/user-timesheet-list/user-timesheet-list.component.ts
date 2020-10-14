@@ -34,7 +34,7 @@ export class UserTimesheetListComponent implements OnInit {
     map(criteria => { return {
       navConfig: this.getTopNavConfig(criteria),
       fabs: [
-        {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', 
+        {icon: "add", aria: 'Legg til', color: 'accent', 
           callback: this.openTimesheetForm,
           params: [null, {mission: criteria?.mission}]}
       ],
@@ -104,7 +104,7 @@ export class UserTimesheetListComponent implements OnInit {
       buttons: [{
         icon: 'filter_list', 
         callback: this.openFilterSheet,
-        colorClass: (activeCriteriaCount && activeCriteriaCount > 0) ? "color-accent" : ""
+        color: (activeCriteriaCount && activeCriteriaCount > 0) ? "accent" : null
       }],
     }
   }

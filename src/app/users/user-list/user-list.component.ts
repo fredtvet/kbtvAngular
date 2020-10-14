@@ -34,7 +34,6 @@ export class UserListComponent {
         title:  "Brukere",
         buttons: [{
           icon: "person_add", 
-          colorClass: "color-accent",
           aria: 'Ny bruker',
           callback: this.openUserForm, 
           allowedRoles: [Roles.Leder]

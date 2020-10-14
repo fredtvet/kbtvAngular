@@ -66,12 +66,12 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
       }
 
       this.staticFabs = [
-        {icon: "camera_enhance", aria: 'Ta bilde', colorClass: 'bg-accent', callback: this.openImageInput, allowedRoles: RolePresets.Internal}
+        {icon: "camera_enhance", aria: 'Ta bilde', color: 'accent', callback: this.openImageInput, allowedRoles: RolePresets.Internal}
       ];
 
       this.selectedItemsFabs = [
-        {icon: "send", aria: 'Send', colorClass: 'bg-accent', callback: this.openMailImageSheet, allowedRoles: [Roles.Leder]}, 
-        {icon: "delete_forever", aria: 'Slett', colorClass: 'bg-warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
+        {icon: "send", aria: 'Send', color: 'accent', callback: this.openMailImageSheet, allowedRoles: [Roles.Leder]}, 
+        {icon: "delete_forever", aria: 'Slett', color: 'warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
       ]
     }
 
@@ -102,7 +102,8 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
 
   private  openConfirmDeleteDialog = () => {   
     this.confirmService.open({
-      message: 'Slett utvalgte bilder?', confirmText: 'Slett',
+      title: "Slett utvalgte bilder?",
+      confirmText: 'Slett',
       confirmCallback: this.deleteSelectedImages
     })
   }

@@ -1,42 +1,26 @@
-<div fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="5px"
-    class="app-card m-1 p-2 mat-elevation-z2" *ngIf="note">
+<mat-card fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="5px" class="m-1"
+    [ngClass]="note.pinned ? 'border-primary' : null" *ngIf="note">
 
-    <ng-container *ngIf="note.title">
+    <mat-card-header *ngIf="note.title">
+        <mat-card-title>{{ note.title  }}</mat-card-title>
+    </mat-card-header>
 
-        <span class="mat-h2 w-100" fxLayout="row" fxLayoutAlign="space-between start">
-            {{ note.title  }}
-            <span class="ml-auto" *ngIf="note.pinned" fxLayout="column" fxLayoutAlign="center center">
-                <mat-icon color="accent">star</mat-icon>
-                <span class="mat-caption line-height-100">Viktig</span>
-            </span>
-        </span>
+    <mat-card-content>
+        <p>{{ note.content }}</p>
+    </mat-card-content>
 
-    </ng-container>
-
-    <span class="w-100 mt-1" fxLayout="row" fxLayoutAlign="space-between start">
-        {{ note.content }}
-        <span class="ml-auto" *ngIf="note.pinned && !note.title" fxLayout="column" fxLayoutAlign="center center">
-            <mat-icon color="accent">star</mat-icon>
-            <span class="mat-caption line-height-100">Viktig</span>
-        </span>
-    </span>
-
-    <mat-divider class="w-100 mb-0"></mat-divider>
-
-    <span class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
 
         <span>
             {{ note.updatedAt | date: 'dd.MMM yyyy' }} {{ note.createdBy ? ("av " + note.createdBy) : "" }}
         </span>
 
-        <ng-container *ifRole="RolePresets.Authority">
 
-            <button (click)="editNote()" mat-icon-button color="primary" aria-label="Rediger notat">
-                <mat-icon>edit</mat-icon>
-            </button>
+        <button *ifRole="RolePresets.Authority" (click)="editNote()" mat-icon-button color="primary"
+            aria-label="Rediger notat">
+            <mat-icon>edit</mat-icon>
+        </button>
 
-        </ng-container>
+    </div>
 
-    </span>
-
-</div>
+</mat-card>

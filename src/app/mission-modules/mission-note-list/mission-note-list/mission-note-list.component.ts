@@ -36,16 +36,18 @@ export class MissionNoteListComponent {
     ) {  
     this.navConfig = {title:  "Notater", backFn: this.onBack};
     this.fabs = [
-      {icon: "add", aria: 'Legg til', colorClass: 'bg-accent', 
+      {icon: "add", aria: 'Legg til', color: "accent", 
       callback: this.openCreateNoteForm, allowedRoles: RolePresets.Internal}
     ]
   }
  
   openEditNoteForm = (entityId: number) => 
-    this.router.navigate(
-      ['skjema', {config: JSON.stringify({formConfig:{entityId, viewConfig:{lockedValues: {missionId: this.missionId}}}})}], 
-      {relativeTo: this.route}
-    );
+    this.modelFormService.open({formConfig: {
+      viewComponent: MissionNoteFormViewComponent,
+      stateProp: "missionNotes",
+      entityId, 
+      viewConfig:{lockedValues: {missionId: this.missionId}}
+    }});
 
   trackByNote = _trackByModel("missionNotes")
   

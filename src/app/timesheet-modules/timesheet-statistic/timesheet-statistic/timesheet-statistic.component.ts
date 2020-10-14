@@ -93,7 +93,7 @@ export class TimesheetStatisticComponent {
   private getNavConfig(activeCriteriaCount: number): MainTopNavConfig {
     return { title:  "Timestatistikk",
       buttons: [
-        {icon: "filter_list", colorClass: activeCriteriaCount && activeCriteriaCount > 0 ? "color-accent" : "", 
+        {icon: "filter_list", color: activeCriteriaCount && activeCriteriaCount > 0 ? "accent" : null, 
           callback: this.openBottomSheet},
         {icon: "cloud_download", callback: this.exportAsCsv}     
       ]

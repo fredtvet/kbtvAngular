@@ -13,7 +13,7 @@ export interface AppButton{
 
     children?: AppButton[];
     svgIcon?: Icons;
-    colorClass?: string; 
+    color?: "primary" | "accent" | "warn"; 
     iconSizeClass?: string;
     aria?: string;
 }

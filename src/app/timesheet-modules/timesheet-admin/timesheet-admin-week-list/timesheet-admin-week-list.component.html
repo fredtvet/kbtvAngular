@@ -1,6 +1,6 @@
 <app-main-skeleton *ngIf="vm$ | async; let vm">
 
-    <app-main-top-nav-bar navbar [config]="vm.navConfig" stylingClass="bg-primary">
+    <app-main-top-nav-bar navbar [config]="vm.navConfig">
     </app-main-top-nav-bar>
 
     <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="vm.summaries?.length else loading">
@@ -13,7 +13,7 @@
                             callback: changeTimesheetStatuses, 
                             params: [summary.timesheets], 
                             icon: summary.openHours > 0 ? 'lock_open' : 'lock', 
-                            colorClass: summary.openHours > 0 ? 'bg-warn' : 'bg-success'}">
+                            color: summary.openHours > 0 ? 'warn' : 'success'}">
                 <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
             </app-swipe-card>
         </cdk-virtual-scroll-viewport>

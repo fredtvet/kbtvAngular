@@ -30,7 +30,7 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
         switchMap(x => this.getDataConfig$(x)));
 
     get selectedProperty() {
-        return this.getStateProperty<Prop<ModelState>>("selectedProperty")
+        return this.getStateProperty<Prop<ModelState>>("selectedProperty", false)
     }
 
     constructor(

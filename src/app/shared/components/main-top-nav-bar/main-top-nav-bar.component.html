@@ -1,4 +1,4 @@
-<mat-toolbar #navBar *ngIf="config" [ngClass]="stylingClass">
+<mat-toolbar #navBar *ngIf="config" [ngClass]="stylingClass" [color]="color">
 
     <ng-container *ngIf="searchBarHidden || !config.searchBar else searchBarContent">
         

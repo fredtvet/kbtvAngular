@@ -1,6 +1,6 @@
 <app-main-skeleton>
 
-    <app-main-top-nav-bar navbar [config]="navConfig" stylingClass="bg-primary">
+    <app-main-top-nav-bar navbar [config]="navConfig" >
     </app-main-top-nav-bar>
 
     <div class="pl-1 pr-1 max-width">
@@ -12,10 +12,14 @@
             Slett lokal data<mat-icon rightSide>chevron_right</mat-icon>
         </app-list-card>
     
-        <div class="app-card mt-1 p-3">
+        <mat-card class="mt-1">
             <div class="mb-2">Konfigurasjon</div>
-            <app-app-config-form [syncConfig]="syncConfig$ | async" (formSubmitted)="updateSyncConfig($event)"></app-app-config-form>
-        </div>
+            <app-app-config-form 
+                [syncConfig]="syncConfig$ | async" 
+                (formSubmitted)="updateSyncConfig($event)">
+            </app-app-config-form> 
+        </mat-card>
+   
     </div>
 
 </app-main-skeleton>

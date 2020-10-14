@@ -46,7 +46,9 @@ export class ModelFormSheetWrapperComponent extends BaseFormSheetWrapperComponen
 
     private confirmDelete = () => { 
         this.confirmService.open({
-            message: `Slett ${this.translatedProp}?`, confirmText: 'Slett',
+            title: `Slett ${this.translatedProp}?`, 
+            message: `bekreft at du ønsker å slette ${this.translatedProp} med id "${this.formConfig.entityId}"`, 
+            confirmText: 'Slett',
             confirmCallback: this.deleteEntity
         });
     }

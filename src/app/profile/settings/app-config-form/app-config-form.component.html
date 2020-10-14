@@ -1,4 +1,5 @@
 <form *ngIf="settingsForm && syncConfig" [formGroup]="settingsForm" fxLayout="column">
+  
   <span class="mat-body">Synkroniseringstid </span>
   <span class="mat-caption">Hvor ofte skal det sjekkes etter oppdatert data?</span>
   <div fxLayout="row" fxLayoutAlign="start center">
@@ -10,7 +11,7 @@
       max="60">
     </mat-slider>
   </div>
-  <mat-divider></mat-divider>
+
   <span class="mat-body mt-3">Antall måneder med data</span>
   <span class="mat-caption">Hvor mange måneder med data skal lastes inn?</span>
   <div fxLayout="row" fxLayoutAlign="start center">

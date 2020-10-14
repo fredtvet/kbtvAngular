@@ -61,7 +61,7 @@ export class TimesheetAdminListComponent{
       subTitle: (weekCriteria?.year || "") + ' - ' + (weekCriteria?.user?.userName || ""),
       backFn: this.onBack,
       backFnParams: [null],
-      buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]
+      buttons: [{icon: 'filter_list', color: 'accent', callback: this.openWeekFilter}]
     }
   }
 

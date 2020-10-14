@@ -7,7 +7,7 @@ import { AppButton } from "src/app/shared-app/interfaces";
     <button mat-button style="width:100%;height:100%"
       *ngIf="config"
       [routerLink]="config.routerLink"
-      [routerLinkActive]="['active']"
+      [routerLinkActive]="['color-accent']"
       [attr.aria-label]="config.aria">
 
       <span fxLayout="column" fxLayoutAlign="start center">

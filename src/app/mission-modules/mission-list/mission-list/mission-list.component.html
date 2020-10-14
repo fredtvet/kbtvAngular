@@ -1,7 +1,7 @@
 <app-main-skeleton  *ngIf="vm$ | async; let vm" [fabs]="vm.fabs">
 
   <ng-container navbar>
-    <app-main-top-nav-bar [config]="vm.navConfig" stylingClass="bg-primary">
+    <app-main-top-nav-bar [config]="vm.navConfig" >
     </app-main-top-nav-bar>
     <app-chips-bar [chips]="vm.chips"></app-chips-bar>
   </ng-container>

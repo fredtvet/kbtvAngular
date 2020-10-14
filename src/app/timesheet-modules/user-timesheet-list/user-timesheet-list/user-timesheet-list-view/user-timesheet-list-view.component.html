@@ -5,7 +5,7 @@
             <app-timesheet-card [timesheet]="timesheet" 
                 [actionButton]="timesheet.status ? null : { 
                     icon: 'edit', 
-                    colorClass: 'color-accent',
+                    color: 'accent',
                     callback: editTimesheet, params: [timesheet.id]
                 }">
             </app-timesheet-card>

@@ -11,6 +11,7 @@ import { StateAction } from 'src/app/core/services/state/state-action.enum';
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { Prop } from 'src/app/shared-app/prop.type';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { translations } from 'src/app/shared/translations';
 import { DataManagementStore } from '../data-management.store';
 import { DataConfig } from '../interfaces/data-config.interface';
 import { DataTableComponent } from './data-table/data-table.component';
@@ -52,9 +53,11 @@ constructor(
   private openDeleteDialog = (): void => {
     let nodes = this.dataTable.dataGrid.api.getSelectedNodes();
     if(nodes?.length == 0) return;
-
+    const translatedProp = translations[this.store.selectedProperty]?.toLowerCase();
     this.confirmService.open({
-      message: 'Slett ressurs(er)?',  confirmText: 'Slett',
+      title: `Slett ${nodes.length > 1 ? 'ressurser' : 'ressurs'}?`,
+      message: `Bekreft at du ønsker å slette ${nodes.length} ${translatedProp}`,  
+      confirmText: 'Slett',
       confirmCallback: () => this.deleteItems(nodes.map(node => node.data['id']))
     })
   }

@@ -50,7 +50,8 @@ export class ImageViewerDialogWrapperComponent {
     
     private openConfirmDeleteDialog = () => {  
       this.confirmService.open({
-        message: 'Slett bilde?', confirmText: 'Slett',
+        title: 'Slett bilde?', 
+        confirmText: 'Slett',
         confirmCallback: () => this.deleteCurrentImage()
       });
     }

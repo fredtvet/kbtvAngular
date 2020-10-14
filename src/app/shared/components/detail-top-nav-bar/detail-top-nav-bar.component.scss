@@ -2,7 +2,6 @@
 
 .container {
     position:relative;
-    background-color:$primary; 
     min-height:100px;
   }
 
@@ -33,19 +32,21 @@ mat-toolbar-single-row.detail-nav{
   height:auto!important;
   padding: 2px!important;
   min-height:40px!important;
+  background:inherit;
+  color:inherit;
 } 
 
 ::ng-deep.detail-navbar-overlay{
     position: absolute;
     left: 0;
     right: 0;
-    background-color:transparent;
+    background-color:transparent!important;
     color:white;
 }
 
 ::ng-deep.detail-navbar-overlay-top{
     top: 0;
-    background-color:rgba(0,0,0,.3);
+    background-color:rgba(0,0,0,.3)!important;
 }
 
 .detail-navbar-overlay-bottom{

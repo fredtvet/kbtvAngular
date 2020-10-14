@@ -1,9 +1,9 @@
 <ng-container *ngIf="config">
-    <button mat-button *ifRole="config.allowedRoles"
+    <button mat-button *ifRole="config.allowedRoles" 
+        [color]="config.color"
         [attr.aria-label]="config.aria"
         [ngClass]="[
-            buttonClass,
-            config.colorClass ? config.colorClass : '', 
+            buttonClass,  
             config.iconSizeClass ? config.iconSizeClass : ''
         ]"
         (click)="handleFn(config.callback)">

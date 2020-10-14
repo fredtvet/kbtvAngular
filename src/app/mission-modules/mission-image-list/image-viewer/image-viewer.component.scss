@@ -17,19 +17,19 @@ img{
     right:$gap-size * 2px;
 }
 
-.image-toolbar{
+.overlay_container{
+    background:rgba(0,0,0,0.5);
+    color: white;
     position: absolute;
-    left:0px;
     z-index:2;
-    overflow:hidden;
-    background:transparent!important;
+}
+
+.image_toolbar{
+    left:0px;
 }
 
 .page_counter{
   width:100%;
-  position:absolute;
+  justify-content:center;
   bottom:0px;
-  text-align:center;
-  color:white;
-  opacity:.5;
 }

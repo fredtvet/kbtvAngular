@@ -2,17 +2,17 @@
   <div class="p-1 max-width" style="position:relative">
 
     <div fxLayout="row" fxLayoutGap="8px">
-      <span class="mat-elevation-z2 bg-foreground text-center p-6" fxFlex="50" matRipple
+      <span class="mat-elevation-z2 foreground-card text-center p-6" fxFlex="50" matRipple
         [routerLink]="['/oppdrag']">
         <mat-icon class="scale-150 mb-1">view_list</mat-icon><br />
         <span>Oppdrag</span>
       </span>
-      <span *ifRole="RolePresets.Internal" class="mat-elevation-z2 bg-foreground text-center p-6"
+      <span *ifRole="RolePresets.Internal" class="mat-elevation-z2 foreground-card text-center p-6"
         fxFlex="50" matRipple [routerLink]="['/mine-timer']">
         <mat-icon class="scale-150 mb-1">timer</mat-icon><br />
         <span>Timer</span>
       </span>
-      <span *ifRole="RolePresets.External" class="mat-elevation-z2 bg-foreground text-center p-6"
+      <span *ifRole="RolePresets.External" class="mat-elevation-z2 foreground-card text-center p-6"
         fxFlex="50" matRipple [routerLink]="['/profil']">
         <mat-icon class="scale-150">person</mat-icon><br />
         <span>Profil</span>

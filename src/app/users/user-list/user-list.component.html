@@ -1,6 +1,6 @@
 <app-main-skeleton>
 
-  <app-main-top-nav-bar navbar [config]="navConfig" stylingClass="bg-primary">
+  <app-main-top-nav-bar navbar [config]="navConfig" >
   </app-main-top-nav-bar>
 
   <div class="pl-1 pr-1 pb-1 max-width" *ngIf="users$ | async else loading; let users;">
@@ -15,7 +15,7 @@
       }"
       [newPasswordButton]="{
         icon: 'vpn_key', 
-        colorClass: 'color-accent',
+        color: 'accent',
         allowedRoles: [Roles.Leder], 
         callback: openNewPasswordForm, params: [user.userName],
         type: ButtonTypes.Icon

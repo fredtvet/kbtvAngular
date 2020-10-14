@@ -1,6 +1,6 @@
 <app-main-skeleton *ngIf="vm$ | async; let vm">
 
-    <app-main-top-nav-bar navbar [config]="vm.navConfig" stylingClass="bg-primary">
+    <app-main-top-nav-bar navbar [config]="vm.navConfig" >
     </app-main-top-nav-bar>
 
     <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="vm.timesheets?.length else loading">  
@@ -9,7 +9,7 @@
                 <app-timesheet-card [timesheet]="timesheet"
                     [actionButton]="{ 
                         icon: timesheet.status ? 'check_circle' : 'check_circle_outline', 
-                        colorClass: timesheet.status ? 'color-success' : 'color-warn',
+                        color: timesheet.status ? 'accent' : 'warn',
                         callback: toggleTimesheetStatus, params: [timesheet]
                     }">
                 </app-timesheet-card>

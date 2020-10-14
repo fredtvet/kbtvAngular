@@ -64,7 +64,7 @@ export class UserTimesheetWeekListComponent {
       buttons: [{
         icon: 'filter_list', 
         callback: this.openWeekFilter,
-        colorClass: "color-accent"
+        color: "accent"
       }]
     }
   }

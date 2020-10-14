@@ -83,7 +83,7 @@ export class TimesheetAdminWeekListComponent {
       title:  "Uker",
       subTitle: (weekCriteria?.year || '') + ' - ' + (weekCriteria?.user?.userName || ''),
       backFn: this.onBack,
-      buttons: [{icon: 'filter_list', colorClass: 'color-accent', callback: this.openWeekFilter}]
+      buttons: [{icon: 'filter_list', color: 'accent', callback: this.openWeekFilter}]
     }
   }
   

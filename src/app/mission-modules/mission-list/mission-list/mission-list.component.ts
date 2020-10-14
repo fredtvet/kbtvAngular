@@ -51,7 +51,7 @@ export class MissionListComponent {
     private route: ActivatedRoute
   ) {
     this.fabs = [
-      {icon: "add", aria: "Legg til", colorClass: "bg-accent",
+      {icon: "add", aria: "Legg til", color: "accent",
         callback: this.openMissionForm,
         allowedRoles: [Roles.Leder, Roles.Mellomleder]}
     ];
@@ -80,7 +80,7 @@ export class MissionListComponent {
       buttons: [
         {icon: "filter_list",
           callback: this.openMissionFilter,
-          colorClass: _getSetPropCount(criteria, {finished:false}) ? "color-accent" : ""},
+          color: _getSetPropCount(criteria, {finished:false}) ? "accent" : null},
       ],
       searchBar: {
         callback: this.searchMissions,
