@@ -11,7 +11,8 @@ export class ListCardComponent {
   @Input() startIcon: string;
   @Input() endIcon: string;
   @Input() ellipsisDisabled: boolean;
-
+  @Input() rippleDisabled: boolean;
+  
   constructor() { }
 
 }
