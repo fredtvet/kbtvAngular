@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { ValueFormatterParams } from 'ag-grid-community';
 import { combineLatest, Observable } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
 import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
 import { FilterConfig } from 'src/app/core/services/filter/interfaces';
@@ -42,7 +42,7 @@ export class TimesheetStatisticComponent {
     this.store.filteredAndGroupedTimesheets$.pipe(map(x => { return {data: x.records} })),
     this.store.groupBy$.pipe(map(x => this.getGroupByChips(x))),
     this.navVm$
-  ]).pipe(debounceTime(1),
+  ]).pipe(
     map(([tableConfig, groupByChips, navVm]) => {
       const chipRows = [groupByChips, ...navVm.chipRows];
       return {...navVm, tableConfig, chipRows}

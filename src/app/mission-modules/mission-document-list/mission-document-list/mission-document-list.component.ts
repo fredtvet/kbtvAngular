@@ -18,6 +18,7 @@ import { AppButton } from 'src/app/shared-app/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { MissionDocumentFormViewComponent } from '../mission-document-form-view/mission-document-form-view.component';
 import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
+import { FormToSaveModelFileStateCommandAdapter } from 'src/app/core/services/model/adapters/form-to-save-model-file-state-command.adapter';
 
 interface ViewModel { documents: MissionDocument[], isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig}
 
@@ -95,6 +96,7 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
 
     this.modelFormService.open({formConfig: {
       viewComponent: MissionDocumentFormViewComponent,
+      adapter: FormToSaveModelFileStateCommandAdapter,
       stateProp: "missionDocuments",
       viewConfig:{lockedValues: {missionId: this.missionId}}
     }});
