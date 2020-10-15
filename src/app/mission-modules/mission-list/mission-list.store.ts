@@ -75,7 +75,7 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
     if(trackHistory) this.updateLastVisited(id);
 
     let relationCfg = new GetWithRelationsConfig("missions", 
-      {include: {missionNotes: true, missionDocuments: true, missionImages: true}});
+      ["missionNotes", "missionDocuments", "missionImages"]);
 
     return this.stateSlice$(relationCfg.includedProps as any).pipe(
       map(state => this.getWithRelationsHelper.get(state as any, relationCfg, id))

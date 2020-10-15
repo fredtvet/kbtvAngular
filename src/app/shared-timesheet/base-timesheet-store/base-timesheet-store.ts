@@ -141,10 +141,7 @@ export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetS
     timesheets: Timesheet[];
     missions: Mission[];
   }): Timesheet[] {
-    const relationCfg = new GetWithRelationsConfig("timesheets", null, {
-      include: { missions: true },
-    });
-
+    const relationCfg = new GetWithRelationsConfig("timesheets", null, ["missions"]);
     return this.getRangeWithRelationsHelper.get(state, relationCfg);
   }
 

@@ -28,13 +28,13 @@ export class MissionDocumentListStore extends ObservableStore<StoreState>  {
 
   getByMissionIdWithType$(id: string): Observable<MissionDocument[]>{
     return this.stateSlice$(["missionDocuments", "employers", "documentTypes"]).pipe(map(state => {
-      const relationCfg = new GetWithRelationsConfig("missionDocuments", null, {include: {documentTypes: true}})
+      const relationCfg = new GetWithRelationsConfig("missionDocuments", null, ["documentTypes"])
       return this.getRangeWithRelationsHelper.get(state, relationCfg, (x: MissionDocument) => x.missionId === id);
     }))
   } 
 
   getMissionEmployer(missionId: string): Employer{  
-    const relationCfg = new GetWithRelationsConfig("missions", null, {include: {employers: true}})
+    const relationCfg = new GetWithRelationsConfig("missions", null, ["employers"])
     let state = this.getStateProperties(["missions", "employers"], false);
     const employer = this.getWithRelationsHelper.get<Mission>(state, relationCfg, missionId)?.employer;
     return employer ? {...employer} : null;

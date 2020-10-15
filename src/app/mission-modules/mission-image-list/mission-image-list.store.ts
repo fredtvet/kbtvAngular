@@ -31,7 +31,7 @@ export class MissionImageListStore extends ObservableStore<StoreState>  {
 
   getByMissionId$ = (id: string): Observable<MissionImage[]> => 
     this.stateSlice$(["missions", "employers", "missionImages"]).pipe(map(state => {
-      const relationCfg = new GetWithRelationsConfig("missions", {include: {missionImages: true}}, {include: {employers: true}});
+      const relationCfg = new GetWithRelationsConfig("missions", ["missionImages"], ["employers"]);
       let mission = this.getWithRelationsHelper.get<Mission>(state, relationCfg, id);
       this.mission = mission;
       return mission?.missionImages;

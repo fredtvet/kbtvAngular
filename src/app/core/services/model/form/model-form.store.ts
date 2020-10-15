@@ -29,7 +29,7 @@ export class ModelFormStore extends BaseModelStore<ModelState> {
     let stateSlice = [modelProp]; 
     if(modelCfg.foreigns) stateSlice = stateSlice.concat(modelCfg.foreigns);
     return this.stateSlice$(stateSlice).pipe(map(state => {
-      const relationCfg = new GetWithRelationsConfig(modelProp, null, {includeAll: true});
+      const relationCfg = new GetWithRelationsConfig(modelProp, null, 'all');
       const entity = this.getWithRelationsHelper.get<Model>(state, relationCfg, id);
       return {entity, foreigns: state};
     }));

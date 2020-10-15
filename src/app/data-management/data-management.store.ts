@@ -59,7 +59,7 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
         });
  
     private getDataConfig$(property: Prop<ModelState>): Observable<DataConfig>{        
-        let relationCfg = new GetWithRelationsConfig(property, null, {includeAll: true});
+        let relationCfg = new GetWithRelationsConfig(property, null, "all");
         return combineLatest([
             this.modelProperty$(property), //Combine with modelprop to fetch from server if no neccesary
             this.stateSlice$(relationCfg.includedForeignProps as any)

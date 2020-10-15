@@ -34,7 +34,7 @@ export class UserTimesheetListStore extends ObservableStore<StoreState>
   filteredTimesheets$: Observable<FilteredResponse<TimesheetCriteria, Timesheet>> = 
     this.stateSlice$(["userTimesheets", "userTimesheetListCriteria", "missions"]).pipe(
           map(state => {
-            const relationCfg = new GetWithRelationsConfig("userTimesheets", null, {include: {missions: true}})
+            const relationCfg = new GetWithRelationsConfig("userTimesheets", null, ["missions"])
             const filter = new TimesheetFilter(state.userTimesheetListCriteria);
             return {
               criteria: filter?.criteria,
