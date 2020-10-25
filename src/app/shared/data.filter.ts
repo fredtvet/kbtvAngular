@@ -5,7 +5,10 @@ export abstract class DataFilter<TRecord, TCriteria>{
 
     protected get isCriteriaEmpty(): boolean{ return !this.criteria }
 
-    constructor(public readonly criteria: TCriteria, private maxChecks?: number, ignoreInital?: boolean){
+    criteria: TCriteria;
+
+    constructor(criteria: TCriteria, private maxChecks?: number, ignoreInital?: boolean){
+        this.criteria = criteria || {} as any;
         if(ignoreInital) 
             this.check = this.checkDefault
         else 

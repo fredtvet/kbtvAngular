@@ -80,9 +80,9 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
 
     private initalizeForm() {
         this.dynamicHost.viewContainerRef.clear();
-        console.time('test')
+
         this.form = this.getFormGroup(this._config.controls, this._config.disabledControls); //Add controls first
-        console.timeEnd('test')
+
         if(this._config.resettable)
             this.resetEnabled$ = this.form.valueChanges.pipe(
                 debounceTime(50),
