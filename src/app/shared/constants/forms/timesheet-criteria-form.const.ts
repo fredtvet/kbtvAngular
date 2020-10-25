@@ -107,7 +107,7 @@ const StatusControl = <DynamicControl<TimesheetCriteria>>{ name: "status",
     type: "control", questions: [{
         component:  RadioGroupQuestionComponent,
         question: <RadioGroupQuestion<TimesheetStatus>>{   
-            label: "Velg status", color:"primary",
+            label: "Velg status", color:"primary", defaultOption: "Begge",
             optionsGetter: [TimesheetStatus.Open, TimesheetStatus.Confirmed],
             valueFormatter: (val) => val === TimesheetStatus.Open ? "Åpen" : "Låst"
         }, 
