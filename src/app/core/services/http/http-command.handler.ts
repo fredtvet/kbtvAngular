@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, concat, EMPTY, Observable } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
+import { NotificationService, NotificationType } from 'src/app/shared-app/notification';
 import { User } from '../../models/user.interface';
-import { ObservableStore } from '../state/abstracts/observable-store';
-import { ObservableStoreBase } from '../state/observable-store-base';
 import { ApiService } from '../api.service';
 import { DeviceInfoService } from '../device-info.service';
-import { NotificationService } from '../notification';
-import { NotificationType } from '../notification/notification-type.enum';
-import { SyncStore } from '../sync';
+import { ObservableStore } from '../state/abstracts/observable-store';
 import { StateCurrentUser } from '../state/interfaces/global-state.interfaces';
+import { ObservableStoreBase } from '../state/observable-store-base';
+import { SyncStore } from '../sync';
 import { HttpCommand } from './http-command.interface';
 
 interface State extends StateCurrentUser { requestQueue: QueuedCommand[]; };

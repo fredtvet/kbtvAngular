@@ -10,19 +10,20 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { AppButtonComponent, ListCardComponent, NavItemComponent, NotificationComponent } from './components';
+import { AppButtonComponent, ListCardComponent, NavItemComponent } from './components';
 import { PageNotFoundComponent } from './components/page-not-found.component';
 import { IfRoleDirective, InputListenerDirective } from './directives';
 import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
-
 import { MatCardModule } from '@angular/material/card';
+import { NotificationComponent } from './notification/notification.component';
+
 @NgModule({
   declarations: [
     PageNotFoundComponent,  
     AppButtonComponent,  
     NavItemComponent,
-    NotificationComponent,
     ListCardComponent,
+    NotificationComponent,
 
     ReverseArrayPipe,
     TransformButtonsPipe,
@@ -65,7 +66,6 @@ import { MatCardModule } from '@angular/material/card';
     AppButtonComponent,  
     NavItemComponent,   
     ListCardComponent,
-    NotificationComponent,
 
     ReverseArrayPipe,
     TransformButtonsPipe,

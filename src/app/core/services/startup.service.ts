@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { skip } from 'rxjs/operators';
+import { NotificationService, NotificationType } from 'src/app/shared-app/notification';
 import { DeviceInfoService } from './device-info.service';
 import { IconService } from './icon.service';
-import { NotificationType } from './notification/notification-type.enum';
-import { NotificationService } from './notification/notification.service';
 import { PersistanceStore } from './persistance/persistance.store';
 import { SyncStore } from './sync/sync.store';
 

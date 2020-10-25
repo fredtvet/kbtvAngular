@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/core/models';
-import { FormService } from 'src/app/core/services/form/form.service';
-import { ModelFormService } from 'src/app/core/services/model/model-form.service';
 import { ButtonTypes, Roles } from 'src/app/shared-app/enums';
+import { _trackByModel } from 'src/app/shared-app/helpers/trackby/track-by-model.helper';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
-import { UserPasswordForm, UserPasswordFormState } from 'src/app/shared/forms/password-form.const';
-import { SaveModelFormState } from 'src/app/shared/model-form/interfaces';
-import { CreateUserForm, EditUserForm, UserForm } from 'src/app/shared/model-forms/save-user-forms.const';
-import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
+import { UserPasswordFormState, UserPasswordForm } from 'src/app/shared/constants/forms/password-form.const';
+import { UserForm, EditUserForm, CreateUserForm } from 'src/app/shared/constants/model-forms/save-user-forms.const';
+import { FormService } from 'src/app/shared/form';
+import { ModelFormService, SaveModelFormState } from 'src/app/shared/model-form';
 import { UserFormToSaveModelAdapter } from '../save-user/user-form-to-save-model.adapter';
 import { UsersStore } from '../users.store';
 

@@ -1,4 +1,4 @@
-import { AdapterConstructor } from 'src/app/core/services/form/interfaces/adapter-constructor.interface';
+import { AdapterConstructor } from 'src/app/shared/form/adapter-constructor.interface';
 import { ModelState } from 'src/app/core/services/model/interfaces';
 import { SaveAction } from 'src/app/core/services/state/interfaces';
 import { StateCommand } from 'src/app/core/services/state/interfaces/state-command.interface';

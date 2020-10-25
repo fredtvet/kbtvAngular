@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ButtonTypes } from 'src/app/shared-app/enums';
+import { _trackById } from 'src/app/shared-app/helpers/trackby/track-by-id.helper';
 import { AppButton } from 'src/app/shared-app/interfaces/app-button.interface';
 import { _trackByAppButton } from 'src/app/shared-app/track-by-app-button';
-import { _trackById } from '../../trackby/track-by-id.helper';
 
 @Component({
   selector: 'app-main-skeleton',

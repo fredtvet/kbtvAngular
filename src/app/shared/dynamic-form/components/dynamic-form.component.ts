@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactory
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, map, startWith, take } from 'rxjs/operators';
-import { FormComponent } from 'src/app/core/services/form/interfaces';
 import { _hasSameState } from 'src/app/shared-app/helpers/object/has-same-state.helper';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
+import { FormComponent } from '../../form';
 import { DynamicFormStore } from '../dynamic-form.store';
 import { DisabledObjectMap, DynamicControl, DynamicForm } from '../interfaces';
 import { ControlComponentLoaderComponent, ValidControl } from './control-component-loader.component';

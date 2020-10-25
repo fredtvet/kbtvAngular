@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { UserTimesheetCardDialogWrapperComponent } from './user-timesheet-card-dialog-wrapper.component';
-import { SharedTimesheetModule } from 'src/app/shared-timesheet/shared-timesheet.module';
 import { UserTimesheetListRoutingModule } from './user-timesheet-list-routing.module';
 import { UserTimesheetWeekListComponent } from './user-timesheet-week-list/user-timesheet-week-list.component';
 import { UserTimesheetListComponent } from './user-timesheet-list/user-timesheet-list.component';
@@ -12,6 +11,7 @@ import { UserTimesheetWeekListViewComponent } from './user-timesheet-week-list/u
 import { UserTimesheetListViewComponent } from './user-timesheet-list/user-timesheet-list-view/user-timesheet-list-view.component';
 import { SaveUserTimesheetHttpEffect } from './save-user-timesheet/save-user-timesheet.http.effect';
 import { SaveUserTimesheetReducer } from './save-user-timesheet/save-user-timesheet.reducer';
+import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 
 @NgModule({
   declarations: [

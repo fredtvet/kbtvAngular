@@ -1,5 +1,5 @@
 import { ModelFile } from 'src/app/core/models';
-import { ModelFormToSaveModelInput } from 'src/app/shared/model-form/interfaces';
+import { ModelFormToSaveModelInput } from 'src/app/shared/model-form/interfaces/model-form-to-state-command-adapter.interface';
 import { ModelFileWrapper } from '../model-file.wrapper';
 import { SaveModelFileStateCommand } from '../state/save-model-file/save-model-file-state-command.interface';
 import { BaseFormToSaveModelStateCommandAdapter } from './base-form-to-save-model-state-command.adapter';

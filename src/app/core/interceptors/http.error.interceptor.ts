@@ -8,7 +8,7 @@ import {
 } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { NotificationService, NotificationType } from '../services/notification';
+import { NotificationService, NotificationType } from 'src/app/shared-app/notification';
 
 export interface AppErrorResponse {
   status: number;

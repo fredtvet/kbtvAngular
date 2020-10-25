@@ -4,8 +4,8 @@ import { take, takeUntil, tap } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/shared-app/components';
 import { MainTopNavBarComponent } from 'src/app/shared/components/main-top-nav-bar/main-top-nav-bar.component';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
-import { FormSheetWrapperConfig } from '../../core/services/form/interfaces/form-sheet-wrapper-config.interface';
 import { DynamicHostDirective } from '../directives/dynamic-host.directive';
+import { FormSheetWrapperConfig } from '../form/form-sheet-wrapper-config.interface';
 
 type WrapperConfig = FormSheetWrapperConfig<any, any, any>;
 

@@ -1,8 +1,8 @@
 import { Timesheet } from 'src/app/core/models';
 import { BaseFormToSaveModelStateCommandAdapter } from 'src/app/core/services/model/abstracts/base-form-to-save-model-state-command.adapter';
 import { SaveModelStateCommand } from 'src/app/core/services/model/state/save-model/save-model-state-command.interface';
-import { ModelFormToSaveModelInput } from 'src/app/shared/model-form/interfaces';
-import { TimesheetForm } from 'src/app/shared/model-forms/save-user-timesheet-form.const';
+import { TimesheetForm } from 'src/app/shared/constants/model-forms/save-user-timesheet-form.const';
+import { ModelFormToSaveModelInput } from 'src/app/shared/model-form';
 import { SaveUserTimesheetAction } from '../save-user-timesheet/save-user-timesheet-state-command.interface';
 
 export class UserTimesheetFormToSaveModelAdapter extends BaseFormToSaveModelStateCommandAdapter<Timesheet, TimesheetForm>

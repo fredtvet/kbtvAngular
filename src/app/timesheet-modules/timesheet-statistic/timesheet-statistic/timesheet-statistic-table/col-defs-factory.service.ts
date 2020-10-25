@@ -2,9 +2,9 @@ import { DatePipe } from "@angular/common";
 import { Injectable } from "@angular/core";
 import { ColDef } from "ag-grid-community";
 import { Timesheet } from "src/app/core/models";
-import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetStatus } from "src/app/shared/enums";
 import { translations } from "src/app/shared/translations";
+import { TimesheetSummary } from 'src/app/timesheet-modules/shared-timesheet/interfaces';
 
 @Injectable()
 export class ColDefsFactoryService {

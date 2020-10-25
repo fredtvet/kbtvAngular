@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ColDef } from 'ag-grid-community';
 import { Timesheet } from 'src/app/core/models';
-import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { AgGridConfig } from 'src/app/shared/components/abstracts/ag-grid-config.interface';
 import { AgGridTableComponent } from 'src/app/shared/components/abstracts/ag-grid-table.component';
+import { TimesheetSummary } from 'src/app/timesheet-modules/shared-timesheet/interfaces';
 import { ColDefsFactoryService } from './col-defs-factory.service';
 
 @Component({

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { TimesheetSummary, WeekCriteria } from 'src/app/shared-timesheet/interfaces';
+import { TimesheetSummary, WeekCriteria } from 'src/app/timesheet-modules/shared-timesheet/interfaces';
 
 @Component({
   selector: 'app-user-timesheet-week-list-view',

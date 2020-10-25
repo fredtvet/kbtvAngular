@@ -3,13 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
-import { FormService } from 'src/app/core/services/form/form.service';
 import { LoadingService } from 'src/app/core/services/loading.service';
-import { WeekCriteria } from 'src/app/shared-timesheet/interfaces';
+import { _trackByModel } from 'src/app/shared-app/helpers/trackby/track-by-model.helper';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { WeekCriteriaFormState, WeekCriteriaForm } from 'src/app/shared/constants/forms/week-criteria-controls.const';
 import { TimesheetStatus } from 'src/app/shared/enums';
-import { WeekCriteriaForm, WeekCriteriaFormState } from 'src/app/shared/forms/week-criteria-controls.const';
-import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
+import { FormService } from 'src/app/shared/form';
+import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
 interface ViewModel { timesheets: Timesheet[],  navConfig: MainTopNavConfig  }

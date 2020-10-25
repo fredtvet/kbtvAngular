@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { filter, map, shareReplay, take, tap } from 'rxjs/operators';
-import { FormComponent } from 'src/app/core/services/form/interfaces';
+import { filter, map, shareReplay, take } from 'rxjs/operators';
 import { ModelState } from 'src/app/core/services/model/interfaces';
-import { ModelFormStore } from 'src/app/core/services/model/model-form.store';
+import { ModelFormStore } from 'src/app/shared/model-form/model-form.store';
 import { SaveModelHttpEffect } from 'src/app/core/services/model/state/save-model/save-model.http.effect';
 import { SaveModelReducer } from 'src/app/core/services/model/state/save-model/save-model.reducer';
 import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
@@ -13,6 +12,7 @@ import { DynamicForm } from '../../dynamic-form/interfaces';
 import { FormToSaveModelStateCommandAdapter } from '../adapters/form-to-save-model-state-command.adapter';
 import { ModelFormConfig } from '../interfaces/model-form-config.interface';
 import { SaveModelFormState } from '../interfaces/model-form-to-state-command-adapter.interface';
+import { FormComponent } from '../../form';
 
 @Component({
     selector: 'app-model-form',

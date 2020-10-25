@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Timesheet } from 'src/app/core/models';
-import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
+import { _trackByModel } from 'src/app/shared-app/helpers/trackby/track-by-model.helper';
 
 @Component({
   selector: 'app-user-timesheet-list-view',

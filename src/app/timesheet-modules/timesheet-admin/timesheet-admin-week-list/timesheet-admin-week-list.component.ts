@@ -4,12 +4,12 @@ import { combineLatest, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
-import { FormService } from 'src/app/core/services/form/form.service';
 import { LoadingService } from 'src/app/core/services/loading.service';
-import { TimesheetSummary, WeekCriteria } from 'src/app/shared-timesheet/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { WeekCriteriaFormState, WeekCriteriaForm } from 'src/app/shared/constants/forms/week-criteria-controls.const';
 import { TimesheetStatus } from 'src/app/shared/enums';
-import { WeekCriteriaForm, WeekCriteriaFormState } from 'src/app/shared/forms/week-criteria-controls.const';
+import { FormService } from 'src/app/shared/form';
+import { TimesheetSummary, WeekCriteria } from '../../shared-timesheet/interfaces';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
 interface ViewModel { summaries: TimesheetSummary[], isXs: boolean,  navConfig: MainTopNavConfig  }

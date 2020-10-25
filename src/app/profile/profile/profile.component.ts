@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { User } from 'src/app/core/models';
 import { AuthStore } from 'src/app/core/services/auth';
-import { FormService } from 'src/app/core/services/form/form.service';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
-import { CurrentUserPasswordForm, CurrentUserPasswordFormState } from 'src/app/shared/forms/password-form.const';
-import { ProfileForm } from 'src/app/shared/forms/profile-form.const';
+import { CurrentUserPasswordFormState, CurrentUserPasswordForm } from 'src/app/shared/constants/forms/password-form.const';
+import { ProfileForm } from 'src/app/shared/constants/forms/profile-form.const';
+import { FormService } from 'src/app/shared/form';
 import { ProfileStore } from '../profile.store';
 
 @Component({

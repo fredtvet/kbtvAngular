@@ -10,12 +10,13 @@ import { PersistanceStore } from 'src/app/core/services/persistance/persistance.
 import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
 import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { StateAction } from 'src/app/core/services/state/state-action.enum';
-import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
-import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
-import { TimesheetSummary, WeekCriteria } from 'src/app/shared-timesheet/interfaces';
-import { WeekToTimesheetCriteriaAdapter } from 'src/app/shared-timesheet/week-to-timesheet-criteria.adapter';
+import { WeekCriteriaFormState } from 'src/app/shared/constants/forms/week-criteria-controls.const';
 import { GroupByPeriod, TimesheetStatus } from 'src/app/shared/enums';
-import { WeekCriteriaFormState } from 'src/app/shared/forms/week-criteria-controls.const';
+import { BaseTimesheetStoreSettings, BaseTimesheetStore } from '../shared-timesheet/base-timesheet-store';
+import { TimesheetSummary } from '../shared-timesheet/interfaces';
+import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
+import { TimesheetSummaryAggregator } from '../shared-timesheet/services/timesheet-summary.aggregator';
+import { WeekToTimesheetCriteriaAdapter } from '../shared-timesheet/week-to-timesheet-criteria.adapter';
 import { StoreState } from './store-state';
 import { UpdateStatusesAction, UpdateStatusesStateCommand } from './update-statuses/update-statuses-state-command.interface';
 

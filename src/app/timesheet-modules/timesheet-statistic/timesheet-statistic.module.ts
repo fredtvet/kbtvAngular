@@ -5,9 +5,9 @@ import { TimesheetStatisticComponent } from './timesheet-statistic/timesheet-sta
 import { TimesheetStatisticTableComponent } from './timesheet-statistic/timesheet-statistic-table/timesheet-statistic-table.component';
 
 import { AppAgGridModule } from 'src/app/app-ag-grid/app-ag-grid.module';
-import { SharedTimesheetModule } from 'src/app/shared-timesheet/shared-timesheet.module';
 import { DatePipe } from '@angular/common';
 import { TimesheetStatisticStore } from './timesheet-statistic.store';
+import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 
 
 @NgModule({

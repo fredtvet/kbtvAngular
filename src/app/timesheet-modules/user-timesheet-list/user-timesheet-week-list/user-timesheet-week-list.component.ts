@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FormService } from 'src/app/core/services/form/form.service';
-import { TimesheetSummary, WeekCriteria } from 'src/app/shared-timesheet/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { WeekCriteriaForm } from 'src/app/shared/constants/forms/week-criteria-controls.const';
 import { GroupByPeriod } from 'src/app/shared/enums';
-import { WeekCriteriaForm } from 'src/app/shared/forms/week-criteria-controls.const';
+import { FormService } from 'src/app/shared/form';
+import { TimesheetSummary, WeekCriteria } from '../../shared-timesheet/interfaces';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
 
 interface ViewModel{ summaries: TimesheetSummary[], navConfig: MainTopNavConfig  }
