@@ -22,6 +22,7 @@ import { SyncStateConfig } from './sync-state.config';
 import { ModelState } from '../model/interfaces/model-state.interface';
 import { Prop } from 'src/app/shared-app/prop.type';
 import { ModelStateConfig } from '../model/model-state.config';
+import { DefaultSyncConfig } from './default-sync-config.const';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +31,6 @@ export class SyncStore extends ObservableStore<StoreState>{
   
   private hasInitialSyncedSubject = new BehaviorSubject<boolean>(false);
   hasInitialSynced$: Observable<boolean> = this.hasInitialSyncedSubject.asObservable().pipe(first(x => x === true));
-
-  syncConfig$: Observable<SyncStoreConfig> = this.stateProperty$("syncConfig");
 
   missions$: Observable<Mission[]> = this.stateProperty$("missions");
 
@@ -181,10 +180,7 @@ export class SyncStore extends ObservableStore<StoreState>{
 
   private initConfigIfNull(): void {
     if(this.getStateProperty("syncConfig", false)) return;
-    this.setState({syncConfig: {
-      refreshTime: 60*30, 
-      initialNumberOfMonths: '48',
-    }}, null, false);
+    this.setState({syncConfig: DefaultSyncConfig}, null, true);
   }
 
   private get continousSync$(){
