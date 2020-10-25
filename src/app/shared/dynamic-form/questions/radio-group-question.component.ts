@@ -6,6 +6,7 @@ import { BaseQuestionComponent } from './base-question.component';
 
 export interface RadioGroupQuestion<T> extends Question {
     optionsGetter: OptionsGetter<T>;
+    defaultOption?: string;
     valueFormatter?: (val: T) => any;
     valueSetter?: (val: T) => any;
     divider?: boolean;
@@ -17,6 +18,10 @@ export interface RadioGroupQuestion<T> extends Question {
     <div class="pb-2">
         <div class="mat-caption" *ngIf="question.label">{{ question.label }}</div>
         <mat-radio-group [formControl]="control" [color]="question.color" fxLayoutGap="8px">
+            <mat-radio-button *ngIf="question.defaultOption"
+              [checked]="control.value == null">
+            {{ question.defaultOption }}
+            </mat-radio-button>
             <mat-radio-button *ngFor="let option of options$ | async" 
                 [value]="(question.valueSetter | func : option) || option">
                 {{ (question.valueFormatter | func : option) || option }}
@@ -41,7 +46,9 @@ export class RadioGroupQuestionComponent extends BaseQuestionComponent<RadioGrou
   constructor(private formStore: DynamicFormStore<Object>) { super(); }
 
   ngOnInit(): void {
-    this.options$ = this.formStore.getOptions$(this.question.optionsGetter)
+    this.options$ = this.formStore.getOptions$(this.question.optionsGetter);
+    console.log(this.control.value)
+    this.control.valueChanges.subscribe(x => console.log(x))
   }
 
 }
