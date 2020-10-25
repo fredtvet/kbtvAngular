@@ -28,9 +28,9 @@ export class UsersStore extends BaseModelStore<StoreState> {
     this.sortedUsers$ = this.modelProperty$("users").pipe(map(this.sortByRole));
   }
 
-  updatePassord$(userName: string, newPassword: string): Observable<boolean>{
-    return this.apiService
-      .put(`${ApiUrl.Users}/${userName}/NewPassword`, {newPassword, userName});
+  updatePassword(userName: string, newPassword: string): void{
+    this.apiService
+      .put(`${ApiUrl.Users}/${userName}/NewPassword`, {newPassword, userName}).subscribe();
   }
   
   private sortByRole = (users: User[]): User[] => {

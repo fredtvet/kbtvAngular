@@ -52,7 +52,7 @@ export class ColDefsFactoryService {
 
   private mergeDefaultColDef(colDef: ColDef): ColDef {
     const genericColDef = {
-      headerName: translations[colDef.field],
+      headerName: translations[colDef.field.toLowerCase()],
       sortable: true,
     };
     return { ...genericColDef, ...colDef };
@@ -68,7 +68,7 @@ export class ColDefsFactoryService {
 
   private convertTime = (params) =>
     params?.value
-      ? this.datePipe.transform(params.value, "shortTime")
+      ? this.datePipe.transform(params.value, "shortTime", null, "nb-NO")
       : undefined;
 
   private convertStatus = (params) => {

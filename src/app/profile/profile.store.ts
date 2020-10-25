@@ -13,7 +13,9 @@ import { StoreState } from './store-state';
 })
 export class ProfileStore extends ObservableStore<StoreState>  {
 
-  currentUser$: Observable<User> = this.stateProperty$("currentUser");
+  get currentUser(): User{
+    return this.getStateProperty("currentUser")
+  };
 
   constructor(
     base: ObservableStoreBase,     

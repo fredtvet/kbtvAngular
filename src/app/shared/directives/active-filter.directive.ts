@@ -12,6 +12,7 @@ export class ActiveStringFilterDirective<TRecord> {
     private _config: ActiveStringFilterConfig<TRecord>;
     @Input('appActiveStringFilterConfig') set config(value: ActiveStringFilterConfig<TRecord>){
         this._config = value;
+        this.initalizeObserver();
     }
 
     private viewRef: EmbeddedViewRef<any>;
@@ -26,7 +27,8 @@ export class ActiveStringFilterDirective<TRecord> {
         this.viewRef = _viewContainer.createEmbeddedView(_template);
     }
 
-    ngOnInit(): void {
+    private initalizeObserver(): void {
+        if(!this._config) return;
         this.viewRef.context.$implicit = merge(
             of(this._config.initialString),
             this._config.stringChanges$

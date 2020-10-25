@@ -1,16 +1,12 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Model } from 'src/app/core/models';
-import { FormToSaveModelStateCommandAdapter } from 'src/app/core/services/model/adapters/form-to-save-model-state-command.adapter';
-import { ModelFormConfig, ModelFormWrapperConfig } from 'src/app/core/services/model/form/interfaces';
-import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
 import { ModelState } from 'src/app/core/services/model/interfaces';
-import { StateAction } from 'src/app/core/services/state/state-action.enum';
+import { ModelFormService } from 'src/app/core/services/model/model-form.service';
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { Prop } from 'src/app/shared-app/prop.type';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { FormToSaveModelStateCommandAdapter } from 'src/app/shared/model-form/adapters/form-to-save-model-state-command.adapter';
 import { translations } from 'src/app/shared/translations';
 import { DataManagementStore } from '../data-management.store';
 import { DataConfig } from '../interfaces/data-config.interface';
@@ -38,7 +34,6 @@ properties = this.store.properties;
 
 constructor(
   private store: DataManagementStore,
-  private router: Router,    
   private confirmService: ConfirmDialogService,
   private formService: ModelFormService) { }
 
@@ -53,7 +48,7 @@ constructor(
   private openDeleteDialog = (): void => {
     let nodes = this.dataTable.dataGrid.api.getSelectedNodes();
     if(nodes?.length == 0) return;
-    const translatedProp = translations[this.store.selectedProperty]?.toLowerCase();
+    const translatedProp = translations[this.store.selectedProperty.toLowerCase()]?.toLowerCase();
     this.confirmService.open({
       title: `Slett ${nodes.length > 1 ? 'ressurser' : 'ressurs'}?`,
       message: `Bekreft at du ønsker å slette ${nodes.length} ${translatedProp}`,  
@@ -63,10 +58,10 @@ constructor(
   }
 
   private openCreateForm = (): void => {
-    this.formService.open<ModelFormConfig<any, Model, any>>({formConfig: {
+    this.formService.open({formConfig: {
       stateProp: this.store.selectedProperty,    
       adapter: FormToSaveModelStateCommandAdapter,
-      viewComponent: PropertyFormMap[this.store.selectedProperty]
+      dynamicForm: PropertyFormMap[this.store.selectedProperty]
     }})
   }
 

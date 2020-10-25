@@ -2,16 +2,14 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/core/models';
 import { FormService } from 'src/app/core/services/form/form.service';
-import { ModelFormConfig } from 'src/app/core/services/model/form/interfaces';
-import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
+import { ModelFormService } from 'src/app/core/services/model/model-form.service';
 import { ButtonTypes, Roles } from 'src/app/shared-app/enums';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { UserPasswordForm, UserPasswordFormState } from 'src/app/shared/forms/password-form.const';
+import { SaveModelFormState } from 'src/app/shared/model-form/interfaces';
+import { CreateUserForm, EditUserForm, UserForm } from 'src/app/shared/model-forms/save-user-forms.const';
 import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
-import { NewPasswordFormComponent } from '../new-password-form/new-password-form.component';
-import { UserFormToSaveModelAdapter } from '../user-form-view/user-form-to-save-model.adapter';
-import { UserFormViewConfig } from '../user-form-view/user-form-view-config.interface';
-import { UserFormViewComponent } from '../user-form-view/user-form-view.component';
-import { UserForm } from '../user-form-view/user-form.interface';
+import { UserFormToSaveModelAdapter } from '../save-user/user-form-to-save-model.adapter';
 import { UsersStore } from '../users.store';
 
 @Component({
@@ -41,21 +39,22 @@ export class UserListComponent {
       };
     }
 
-  openUserForm = (userName?: string) => 
-    this.modelFormService.open<ModelFormConfig<UserForm, User, any>>({formConfig: {
-        entityId: userName, 
-        stateProp: "users", 
-        viewComponent: UserFormViewComponent,
-        adapter: UserFormToSaveModelAdapter,
-        viewConfig: {users: this.store.users} as UserFormViewConfig
-      }});
-
-  openNewPasswordForm = (userName?: string) => 
-    this.formService.open({
-      formConfig: {userName}, 
-      title: "Oppdater passord", 
-      formComponent: NewPasswordFormComponent
-    })
+  openUserForm = (userName?: string): void => {
+    this.modelFormService.open<UserForm, SaveModelFormState>({formConfig: {
+      entityId: userName, 
+      stateProp: "users", 
+      dynamicForm: userName ? EditUserForm : CreateUserForm,
+      adapter: UserFormToSaveModelAdapter,
+    }});
+  }
+  
+  openNewPasswordForm = (userName?: string): void => {
+    this.formService.open<UserPasswordFormState, any>({
+      formConfig: {...UserPasswordForm, initialValue: {userName}}, 
+      navConfig: {title: "Oppdater passord"},  
+      submitCallback: (val: UserPasswordFormState) => this.store.updatePassword(val.userName, val.newPassword)
+    });
+  }
 
   trackByUser = _trackByModel("users")
 

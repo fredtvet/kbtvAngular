@@ -1,0 +1,43 @@
+<ng-container *ngIf="vm$ | async; let vm">
+
+    <ng-container *ngIf="!vm.activeFilter else activeFilterView" 
+        [ngTemplateOutlet]="autocomplete"
+        [ngTemplateOutletContext]="{options: vm.options}">
+    </ng-container>
+
+    <ng-template #activeFilterView>
+        <ng-template *appActiveStringFilter="let options$; config: vm.activeFilter"
+            [ngTemplateOutlet]="autocomplete" 
+            [ngTemplateOutletContext]="{options:options$ | async}">
+        </ng-template>
+    </ng-template>
+    
+</ng-container>
+
+<ng-template #autocomplete let-options="options">
+    
+    <mat-form-field [color]="question.color" class="w-100">
+        <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
+        
+        <input matInput [placeholder]="question.placeholder" [formControl]="control" [required]="required"
+            [matAutocomplete]="auto1">
+
+        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="question.displayWith">
+            <mat-option *ngFor="let option of options" [value]="question.valueProp ? option[question.valueProp] : option">
+                {{ (question.valueFormatter | func : option) || option }}
+            </mat-option>
+        </mat-autocomplete>
+
+        <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>
+
+        <button mat-icon-button matSuffix *ngIf="question.resetable && !control.disabled && control.value" aria-label="Clear" 
+            (click)="control.setValue(''); control.markAsDirty()">
+            <mat-icon>close</mat-icon>
+        </button>
+
+        <mat-error *ngIf="control.dirty && control.invalid">
+            {{ getValidationErrorMessage() }}
+        </mat-error>
+    </mat-form-field>
+
+</ng-template>

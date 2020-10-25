@@ -1,5 +1,5 @@
 export enum TimesheetStatus {
-  Open,
+  Open = 0,
   Confirming,
   Confirmed
 }

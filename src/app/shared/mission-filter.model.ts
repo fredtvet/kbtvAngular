@@ -1,6 +1,6 @@
 import { Mission } from '../core/models';
 import { MissionCriteria } from './interfaces';
-import { DataFilter } from '../core/services/filter/data.filter';
+import { DataFilter } from './data.filter';
 
 export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
 
@@ -22,7 +22,7 @@ export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
         let exp = true;
 
         if(this.criteria.finished != null)
-            exp = exp && ((mission.finished === this.criteria.finished) || (mission.finished === null && this.criteria.finished === false));
+            exp = exp && ((mission.finished === this.criteria.finished) || (!mission.finished && this.criteria.finished === false));
 
         if(this.criteria.searchString)
             exp = exp && this.filterSearchString(mission);

@@ -2,20 +2,22 @@ import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { ValueFormatterParams } from 'ag-grid-community';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Timesheet } from 'src/app/core/models';
-import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
-import { FilterConfig } from 'src/app/core/services/filter/interfaces';
+import { Mission, Timesheet, User } from 'src/app/core/models';
+import { FormService } from 'src/app/core/services/form/form.service';
+import { _getModelDisplayValue } from 'src/app/core/services/model/helpers/get-model-property.helper';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
+import { _formatDateRange } from 'src/app/shared-app/helpers/datetime/format-date-range.helper';
+import { _formatShortDate } from 'src/app/shared-app/helpers/datetime/format-short-date.helper';
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
-import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
-import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view.component';
 import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces/timesheet-criteria.interface';
 import { AgGridConfig } from 'src/app/shared/components/abstracts/ag-grid-config.interface';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { GroupByPeriod } from 'src/app/shared/enums';
+import { TimesheetCriteriaForm, TimesheetCriteriaFormState } from 'src/app/shared/forms/timesheet-criteria-form.const';
 import { ArrayRow } from 'src/app/shared/interfaces/array-row.interface';
+import { DateRange } from 'src/app/shared/interfaces/date-range.interface';
 import { _trackById } from 'src/app/shared/trackby/track-by-id.helper';
 import { TimesheetStatisticStore } from '../timesheet-statistic.store';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
@@ -51,18 +53,22 @@ export class TimesheetStatisticComponent {
   
   constructor( 
     private store: TimesheetStatisticStore,
-    private filterService: FilterSheetService,
+    private formService: FormService,
     private chipsFactory: ChipsFactoryService
   ) { }
   
-  openBottomSheet = (): void => {
-    this.filterService.open<TimesheetCriteria, FilterConfig<TimesheetFilterViewConfig>>({formConfig: {
-      filterConfig: {disabledFilters: ['status']},
-      viewComponent: TimesheetFilterViewComponent     
-    }});
-  }
-
   trackByChipRow = _trackById;
+
+  private openTimesheetFilter = (): void => {
+    this.formService.open<TimesheetCriteria, TimesheetCriteriaFormState>({
+      formConfig: { ...TimesheetCriteriaForm, 
+        disabledControls: {status: true},
+        initialValue: this.store.getCriteria()}, 
+      formState: this.store.criteriaFormState$,
+      navConfig: {title: "Velg filtre"},
+      submitCallback: (val: TimesheetCriteria) => this.store.addFilterCriteria(val)
+    })
+  }
 
   private resetCriteriaProp(prop: string, criteria: TimesheetCriteria){
     criteria[prop] = null;
@@ -94,7 +100,7 @@ export class TimesheetStatisticComponent {
     return { title:  "Timestatistikk",
       buttons: [
         {icon: "filter_list", color: activeCriteriaCount && activeCriteriaCount > 0 ? "accent" : null, 
-          callback: this.openBottomSheet},
+          callback: this.openTimesheetFilter},
         {icon: "cloud_download", callback: this.exportAsCsv}     
       ]
     }
@@ -106,21 +112,21 @@ export class TimesheetStatisticComponent {
 
   private getCriteriaChips(criteria: TimesheetCriteria, activeCriteriaCount: number): ArrayRow<AppChip> {
     if(activeCriteriaCount === 0) 
-      return {id: 2, arr: [{text: "Åpne filter", color:"accent", onClick: this.openBottomSheet}]}
+      return {id: 2, arr: [{text: "Åpne filter", color:"accent", onClick: this.openTimesheetFilter}]}
   
-    return {id: 3, 
-      arr: this.chipsFactory.createFilterChips(
-        this.formatCriteriaChips(criteria), 
-        (prop) => this.resetCriteriaProp(prop, criteria)
+    return {
+      id: 3, 
+      arr: this.chipsFactory.createCriteriaChips(criteria, 
+        (prop) => this.resetCriteriaProp(prop, criteria),
+        {
+          user: {valueFormatter: (val: User) => val.lastName + ', ' + val.lastName}, 
+          mission: {valueFormatter: (val: Mission) => _getModelDisplayValue("missions", val)},
+          dateRange: {valueFormatter: (val: DateRange) => _formatDateRange(val, _formatShortDate)}, 
+          dateRangePreset: {ignored: true }
+        }
       )
     } 
-  }
 
-  private formatCriteriaChips(criteria: TimesheetCriteria){
-    const clone = {...criteria};
-    if(clone.user)
-      clone.user = clone.user.lastName + ', ' + clone.user.firstName as any
-   return clone
   }
 
 }

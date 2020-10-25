@@ -3,13 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
-import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
-import { FilterConfig } from 'src/app/core/services/filter/interfaces';
+import { FormService } from 'src/app/core/services/form/form.service';
 import { LoadingService } from 'src/app/core/services/loading.service';
-import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
-import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
+import { WeekCriteria } from 'src/app/shared-timesheet/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetStatus } from 'src/app/shared/enums';
+import { WeekCriteriaForm, WeekCriteriaFormState } from 'src/app/shared/forms/week-criteria-controls.const';
 import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
@@ -36,9 +35,9 @@ export class TimesheetAdminListComponent{
     private store: TimesheetAdminStore,
     private router: Router,
     private route: ActivatedRoute,
-    private filterService: FilterSheetService) {
-      let filter = this.route.snapshot.params.filter;
-      this.store.addFilterCriteria(filter ? JSON.parse(filter) : {});    
+    private formService: FormService) {
+      let filterState = this.route.snapshot.params.filter;
+      this.store.addFilterCriteria(filterState ? JSON.parse(filterState) : {});    
     }
 
   toggleTimesheetStatus = (timesheet: Timesheet): void => 
@@ -49,12 +48,14 @@ export class TimesheetAdminListComponent{
 
   trackById = _trackByModel("timesheets");
   
-  private openWeekFilter = () => {
-    this.filterService.open<WeekCriteria, FilterConfig<WeekFilterViewConfig>>({
-      formConfig: {viewComponent: WeekFilterViewComponent},
+  private openWeekFilter = () => 
+    this.formService.open<WeekCriteria, WeekCriteriaFormState>({
+      formConfig: {...WeekCriteriaForm, initialValue: this.store.weekCriteria}, 
+      formState: this.store.weekCriteriaFormState$,
+      navConfig: {title: "Velg filtre"},
+      submitCallback: (val: WeekCriteria) => this.store.addFilterCriteria(val)
     });
-  }
-
+  
   private getNavConfig(weekCriteria: WeekCriteria): MainTopNavConfig {
     return {
       title:  "Uke " + weekCriteria?.weekNr || "",

@@ -1,18 +1,18 @@
-import { Model, ModelFile } from 'src/app/core/models';
-import { ModelFormToSaveModelInput } from '../form/interfaces/model-form-to-state-command-adapter.interface';
+import { ModelFile } from 'src/app/core/models';
+import { ModelFormToSaveModelInput } from 'src/app/shared/model-form/interfaces';
 import { ModelFileWrapper } from '../model-file.wrapper';
 import { SaveModelFileStateCommand } from '../state/save-model-file/save-model-file-state-command.interface';
 import { BaseFormToSaveModelStateCommandAdapter } from './base-form-to-save-model-state-command.adapter';
 
 
-export abstract class BaseFormToSaveModelFileStateCommandAdapter<TModel extends Model, TFormState extends {file: File}> 
+export abstract class BaseFormToSaveModelFileStateCommandAdapter<TModel extends ModelFile, TFormState extends {file: File}> 
     extends BaseFormToSaveModelStateCommandAdapter<TModel, TFormState> implements SaveModelFileStateCommand<ModelFile> {
 
     fileWrapper: ModelFileWrapper;
     action: string;
 
     constructor(   
-        protected input: ModelFormToSaveModelInput<TFormState>  
+        protected input: ModelFormToSaveModelInput<TFormState>
     ){
         super(input);
     }

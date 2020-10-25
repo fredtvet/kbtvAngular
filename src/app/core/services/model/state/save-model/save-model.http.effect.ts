@@ -38,8 +38,8 @@ export class SaveModelHttpEffect {
 
     protected createCancelMessage(command: SaveModelStateCommand<Model>, modelConfig: ModelConfig): string{
         const saveWord = command.saveAction === StateAction.Update ? "Oppdatering" : "Oppretting";
-        const entityWord = translations[modelConfig.foreignProp].toLowerCase();
-        const displayPropWord = translations[modelConfig.displayProp].toLowerCase();
+        const entityWord = translations[modelConfig.foreignProp?.toLowerCase()].toLowerCase();
+        const displayPropWord = translations[modelConfig.displayProp?.toLowerCase()].toLowerCase();
         const displayPropValue = command.entity[modelConfig.displayProp];
         return `${saveWord} av ${entityWord} med ${displayPropWord} ${displayPropValue} er reversert!`;
     }

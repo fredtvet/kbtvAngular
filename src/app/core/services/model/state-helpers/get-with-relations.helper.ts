@@ -22,6 +22,7 @@ export class GetWithRelationsHelper  {
         if(!modelState || modelState.length == 0) return null;
 
         let entity = _find(modelState, id, modelCfg.identifier);
+        
         if(!entity) return entity;
 
         for(const fkStateProp of cfg.includedForeignProps){

@@ -1,6 +1,6 @@
 import { HttpParams } from "@angular/common/http";
 import { combineLatest, concat, Observable } from "rxjs";
-import { map, shareReplay, take, tap, withLatestFrom } from "rxjs/operators";
+import { first, map, shareReplay, take, tap, withLatestFrom } from "rxjs/operators";
 import { ApiUrl } from "src/app/core/api-url.enum";
 import { Mission, Timesheet, User } from "src/app/core/models";
 import { ObservableStoreBase } from "src/app/core/services/state/observable-store-base";
@@ -16,18 +16,18 @@ import { TimesheetCriteria } from "../interfaces/timesheet-criteria.interface";
 import { TimesheetSummary } from "../interfaces/timesheet-summary.interface";
 import { BaseTimesheetStoreSettings } from "./base-timesheet-store-settings.interface";
 import { BaseTimesheetStoreState } from "./base-timesheet-store-state";
-import { FilteredResponse } from 'src/app/core/services/filter/interfaces';
 import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helpers/get-with-relations.config';
 import { BaseModelStore } from 'src/app/core/services/state/abstracts/base-model.store';
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { _find } from 'src/app/shared-app/helpers/array/find.helper';
 import { PersistanceStore } from 'src/app/core/services/persistance/persistance.store';
+import { FilteredResponse } from 'src/app/shared/interfaces';
 
 export type FilteredAndGrouped<T> = GroupedResponse<GroupByPeriod, T> &
   FilteredResponse<TimesheetCriteria,  T>;
 
-export abstract class BaseTimesheetStore< TState extends Required<BaseTimesheetStoreState>> extends BaseModelStore<TState> {
+export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetStoreState>> extends BaseModelStore<TState> {
   private static baseCriteria: TimesheetCriteria;
 
   users$ = this.modelProperty$<User[]>("users" as any).pipe(shareReplay());

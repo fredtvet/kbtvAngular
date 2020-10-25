@@ -1,4 +1,7 @@
-import { BottomSheetChild } from 'src/app/shared-app/interfaces/bottom-sheet-child.inteface';
-import { SaveAction } from '../../state/interfaces/save-action.interface';
+import { EventEmitter } from '@angular/core';
 
-export interface FormComponent extends BottomSheetChild<any, SaveAction>{}
+export interface FormComponent<TConfig, TFormState, TResult> {
+    config: TConfig;
+    formState: TFormState;
+    formSubmitted: EventEmitter<TResult>;
+}

@@ -9,7 +9,7 @@
                 <app-timesheet-card [timesheet]="timesheet"
                     [actionButton]="{ 
                         icon: timesheet.status ? 'check_circle' : 'check_circle_outline', 
-                        color: timesheet.status ? 'accent' : 'warn',
+                        color: timesheet.status ? 'primary' : 'warn',
                         callback: toggleTimesheetStatus, params: [timesheet]
                     }">
                 </app-timesheet-card>

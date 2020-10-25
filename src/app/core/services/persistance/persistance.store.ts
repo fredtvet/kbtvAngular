@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { get, set, Store } from 'idb-keyval';
 import { BehaviorSubject, forkJoin, from, Observable, throwError } from 'rxjs';
 import { catchError, filter, first, tap } from 'rxjs/operators';
+import { _deepClone } from 'src/app/shared-app/helpers/deep-clone.helper';
 import { Prop } from 'src/app/shared-app/prop.type';
 import { ObservableStore } from '../state/abstracts/observable-store';
 import { ObservableStoreBase } from '../state/observable-store-base';
-import { ClonerService } from '../utility/cloner.service';
 import { PersistedInitialStateConfig, PersistedStateConfig } from './persisted-state.config';
 
 const InitializeAction = "initalize_persistedState";
@@ -18,9 +18,7 @@ export class PersistanceStore extends ObservableStore<Object> {
 
     private dbStore: Store = new Store("kbtvDb", "state");
 
-    constructor(
-        base: ObservableStoreBase,
-        private clonerService: ClonerService) { 
+    constructor(base: ObservableStoreBase) { 
         super(base);
     }
 
@@ -35,7 +33,7 @@ export class PersistanceStore extends ObservableStore<Object> {
     }
 
     private persistStateChanges = (stateChanges: Partial<Object>): void => {
-        var clone = this.clonerService.deepClone(stateChanges);
+        var clone = _deepClone(stateChanges);
         for(const prop in clone){
             this.set(prop, clone[prop]);
         }

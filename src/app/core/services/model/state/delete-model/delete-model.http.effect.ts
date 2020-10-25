@@ -40,7 +40,7 @@ export class DeleteModelHttpEffect extends ObservableStore<any>{
         const multi = command.ids?.length > 1;
 
         const entityWord = 
-            translations[multi ? command.stateProp : modelConfig.foreignProp]?.toLowerCase();
+            translations[(multi ? command.stateProp : modelConfig.foreignProp).toLowerCase()];
         
         return `Sletting av ${command.ids?.length || ''} ${entityWord} med id ${command.ids || command.id} er reversert!`;
     }

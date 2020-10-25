@@ -1,13 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
-import { debounceTime, filter, map } from 'rxjs/operators';
-import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
-import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
-import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
-import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
+import { map } from 'rxjs/operators';
+import { FormService } from 'src/app/core/services/form/form.service';
+import { TimesheetSummary, WeekCriteria } from 'src/app/shared-timesheet/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { GroupByPeriod } from 'src/app/shared/enums';
+import { WeekCriteriaForm } from 'src/app/shared/forms/week-criteria-controls.const';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
 
 interface ViewModel{ summaries: TimesheetSummary[], navConfig: MainTopNavConfig  }
@@ -27,7 +26,7 @@ export class UserTimesheetWeekListComponent {
   }));
 
   constructor(
-    private filterService: FilterSheetService,
+    private formService: FormService,
     private store: UserTimesheetListStore,
     private route: ActivatedRoute,
     private router: Router) 
@@ -42,18 +41,15 @@ export class UserTimesheetWeekListComponent {
     this.router.navigate(['/mine-timer/ukevisning', {filter: JSON.stringify(weekCriteria)}])
   }
 
-  openWeekFilter = () => { 
-    let ref = this.filterService.open<WeekCriteria, WeekFilterViewConfig>({
-      formConfig: {
-        criteria: this.store.weekCriteria, 
-        disabledFilters: ["weekNr","user"]
-      },
-      formComponent: WeekFilterViewComponent
+  openWeekFilter = (): void => { 
+    this.formService.open<WeekCriteria, any>({
+      formConfig: {...WeekCriteriaForm, 
+        disabledControls: {weekNr: true, user: true}, 
+        noRenderDisabledControls: true,  
+        initialValue: this.store.weekCriteria}, 
+      navConfig: {title: "Velg filtre"},
+      submitCallback: (val: WeekCriteria) => this.store.addWeekFilterCriteria(val)
     });
-
-    ref.afterDismissed()
-      .pipe(filter(f => f != null))
-      .subscribe(f => this.store.addWeekFilterCriteria(f));
   }
 
   private getNavConfig = (weekCriteria: WeekCriteria): MainTopNavConfig => {  

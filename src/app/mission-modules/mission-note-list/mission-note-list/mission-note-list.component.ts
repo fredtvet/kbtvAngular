@@ -3,13 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MissionNote } from 'src/app/core/models';
-import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
+import { ModelFormService } from 'src/app/core/services/model/model-form.service';
 import { RolePresets } from 'src/app/shared-app/enums';
 import { _sortByBool } from 'src/app/shared-app/helpers/array/sort-by-bool.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { CreateMissionNoteForm, EditMissionNoteForm } from 'src/app/shared/model-forms/save-mission-note-forms.const';
 import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
-import { MissionNoteFormViewComponent } from '../mission-note-form-view/mission-note-form-view.component';
 import { MissionNoteListStore } from '../mission-note-list.store';
 
 @Component({
@@ -43,20 +43,19 @@ export class MissionNoteListComponent {
  
   openEditNoteForm = (entityId: number) => 
     this.modelFormService.open({formConfig: {
-      viewComponent: MissionNoteFormViewComponent,
-      stateProp: "missionNotes",
-      entityId, 
-      viewConfig:{lockedValues: {missionId: this.missionId}}
+      dynamicForm: EditMissionNoteForm,
+      stateProp: "missionNotes", entityId
     }});
 
   trackByNote = _trackByModel("missionNotes")
   
   private openCreateNoteForm = () => 
-    this.modelFormService.open({formConfig: {
-      viewComponent: MissionNoteFormViewComponent,
-      stateProp: "missionNotes",
-      viewConfig:{lockedValues: {missionId: this.missionId}}
-    }});
+    this.modelFormService.open({
+      formConfig: {
+        dynamicForm: {...CreateMissionNoteForm, initialValue: {missionId: this.missionId}},
+        stateProp: "missionNotes",
+      },
+    });
 
   private onBack = () => this.router.navigate(['/oppdrag', this.missionId, 'detaljer']);
 

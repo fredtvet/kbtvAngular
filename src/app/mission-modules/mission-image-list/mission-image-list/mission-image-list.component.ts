@@ -16,8 +16,8 @@ import { _appFileUrl } from 'src/app/shared-app/helpers/app-file-url.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { SelectableListContainerComponent } from 'src/app/shared/components/abstracts/selectable-list-container.component';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { EmailForm } from 'src/app/shared/forms/email-form.const';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
-import { MailImageFormComponent } from '../mail-image-form.component';
 import { MissionImageListStore } from '../mission-image-list.store';
 
 interface ViewModel { images: MissionImage[], isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig }
@@ -110,10 +110,13 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   
   private openMailImageSheet = () => {
     this.formService.open({
-      customTitle: "Send bilder",
-      formComponent: MailImageFormComponent,
-      formConfig: { toEmailPreset: this.store.mission?.employer?.email, ids: this.currentSelections },
-    }).afterDismissed().subscribe(x => x?.action ? this.selectableList.clearSelections() : null);
+      formConfig: {...EmailForm, initialValue: {email: this.store.mission?.employer?.email }}, 
+      navConfig: {title: "Send bilder"},
+      submitCallback: (val: EmailForm) => { 
+        this.store.mailImages(val.email, this.currentSelections);
+        this.selectableList.clearSelections();
+      },
+    })
   }
 
   private openBottomSheetMenu = () => {   

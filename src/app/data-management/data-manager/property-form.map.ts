@@ -1,15 +1,15 @@
-import { EmployerFormViewComponent } from '../components/employer-form-view/employer-form-view.component';
-import { Type } from '@angular/core';
-import { InboundEmailPasswordFormViewComponent } from '../components/inbound-email-password-form-view/inbound-email-password-form-view.component';
-import { DocumentTypeFormViewComponent } from '../components/document-type-form-view/document-type-form-view.component';
-import { MissionTypeFormViewComponent } from '../components/mission-type-form-view/mission-type-form-view.component';
-import { BaseModelFormViewComponent } from 'src/app/core/services/model/form/abstracts/base-model-form-view.component';
-import { MissionFormViewComponent } from 'src/app/shared/components/mission-form-view/mission-form-view.component';
+import { DynamicForm } from 'src/app/shared/dynamic-form/interfaces';
+import { CreateDocumentTypeForm } from 'src/app/shared/model-forms/create-document-type-form.const';
+import { CreateEmployerForm } from 'src/app/shared/model-forms/create-employer-form.const';
+import { CreateInboundEmailPasswordForm } from 'src/app/shared/model-forms/create-inbound-email-password-form.const';
+import { CreateMissionTypeForm } from 'src/app/shared/model-forms/create-mission-type-form.const';
+import { CreateMissionForm } from 'src/app/shared/model-forms/save-mission-forms.const';
+import { SaveModelFormState } from 'src/app/shared/model-form/interfaces';
 
-export const PropertyFormMap: {[key: string]: Type<BaseModelFormViewComponent<any, any, any>> } = {
-    employers: EmployerFormViewComponent,
-    missionTypes: MissionTypeFormViewComponent,
-    documentTypes: DocumentTypeFormViewComponent,
-    inboundEmailPasswords: InboundEmailPasswordFormViewComponent,
-    missions: MissionFormViewComponent
+export const PropertyFormMap: {[key: string]: DynamicForm<any, SaveModelFormState> } = {
+    "employers": CreateEmployerForm,
+    "documentTypes": CreateDocumentTypeForm,
+    "missionTypes": CreateMissionTypeForm,
+    "inboundEmailPasswords": CreateInboundEmailPasswordForm,
+    "missions": CreateMissionForm,
 }

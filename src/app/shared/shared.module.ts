@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { SharedAppModule } from '../shared-app/shared-app.module';
@@ -6,8 +6,6 @@ import { AngularMaterialModule } from './angular-material.module';
 import {
   BottomSheetMenuComponent,
   ConfirmDialogComponent,
-  FormActionsComponent,
-  MailToFormViewComponent,
   SelectableCardComponent,
   SelectableListComponent
 } from './components';
@@ -15,15 +13,26 @@ import { ChipsBarComponent } from './components/chips-bar.component';
 import { DetailTopNavBarComponent } from './components/detail-top-nav-bar/detail-top-nav-bar.component';
 import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.component';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
-import { MissionFormViewComponent } from './components/mission-form-view/mission-form-view.component';
-import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
+import { AddToHomeScreenDirective, DynamicHostDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
-import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButtonsPipe, IsTodayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
+import { DynamicControlGroupComponent } from './dynamic-form/components/dynamic-control-group.component';
+import { DynamicFormComponent } from './dynamic-form/components/dynamic-form.component';
+import { FormActionsComponent } from './dynamic-form/components/form-actions.component';
+import { AutoCompleteQuestionComponent } from './dynamic-form/questions/auto-complete-question/auto-complete-question.component';
+import { CheckboxQuestionComponent } from './dynamic-form/questions/checkbox-question.component';
+import { FileQuestionComponent } from './dynamic-form/questions/file-question.component';
+import { GooglePlacesAutoCompleteQuestionComponent } from './dynamic-form/questions/google-places-autocomplete-question.component';
+import { InputQuestionComponent } from './dynamic-form/questions/input-question.component';
+import { IonDateQuestionComponent } from './dynamic-form/questions/ion-date-time-question.component';
+import { RadioGroupQuestionComponent } from './dynamic-form/questions/radio-group-question.component';
+import { SelectQuestionComponent } from './dynamic-form/questions/select-question.component';
+import { TextAreaQuestionComponent } from './dynamic-form/questions/text-area-question.component';
+import { ModelFormComponent } from './model-form/components/model-form.component';
+import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButtonsPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 
 @NgModule({
   declarations: [
     ConfirmDialogComponent,
-    MailToFormViewComponent,
     SelectableCardComponent,
     SelectableListComponent,
     BottomSheetMenuComponent,
@@ -32,7 +41,20 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     MainTopNavBarComponent,
     DetailTopNavBarComponent,
     ChipsBarComponent,
-    MissionFormViewComponent,
+    
+    ModelFormComponent,
+
+    DynamicFormComponent,
+    DynamicControlGroupComponent,
+    InputQuestionComponent,
+    SelectQuestionComponent,
+    AutoCompleteQuestionComponent,
+    CheckboxQuestionComponent,
+    TextAreaQuestionComponent,
+    GooglePlacesAutoCompleteQuestionComponent,
+    FileQuestionComponent,
+    IonDateQuestionComponent,
+    RadioGroupQuestionComponent,
     
     TransformButtonPipe,
     ArraySlicePipe,
@@ -42,12 +64,15 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     CheckRolesInButtonsPipe,
     ArrayFromNumberPipe,
     AppFileUrlPipe,
-
+    ObjectToArrayPipe,
+    FuncPipe,
+    
     AddToHomeScreenDirective,      
     HttpCommandButtonDirective,
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    
     ImageErrorReloaderDirective,  
+    DynamicHostDirective
   ],
   imports: [
     FormsModule,
@@ -61,19 +86,17 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     ReactiveFormsModule,
     AngularMaterialModule,
     SharedAppModule,
-    GooglePlaceModule,
+    GooglePlaceModule,    
+    DynamicFormComponent,
 
     ConfirmDialogComponent,
-    MailToFormViewComponent,
     SelectableCardComponent,
     BottomSheetMenuComponent,
     SelectableListComponent,
-    FormActionsComponent,
     MainSkeletonComponent,    
     MainTopNavBarComponent,
     DetailTopNavBarComponent,
     ChipsBarComponent,
-    MissionFormViewComponent,
     
     TransformButtonPipe,
     ArraySlicePipe,
@@ -83,13 +106,16 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     CheckRolesInButtonsPipe,
     ArrayFromNumberPipe,
     AppFileUrlPipe,
+    ObjectToArrayPipe,
 
     AddToHomeScreenDirective,      
     HttpCommandButtonDirective,
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    
     ImageErrorReloaderDirective,  
+    DynamicHostDirective
 
-  ]
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class SharedModule { }

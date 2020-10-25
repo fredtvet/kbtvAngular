@@ -1,30 +1,38 @@
 import { Injectable } from '@angular/core';
-import { _formatDateRange } from 'src/app/shared-app/helpers/datetime/format-date-range.helper';
-import { _formatShortDate } from 'src/app/shared-app/helpers/datetime/format-short-date.helper';
 import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
+import { Prop } from 'src/app/shared-app/prop.type';
 import { translations } from 'src/app/shared/translations';
-import { ModelStateConfig } from '../model/model-state.config';
+
+export interface CriteriaChipOptions {
+  valueFormatter?: ((val: any) => string | string),
+  ignored?: boolean,
+}
 
 @Injectable({ providedIn: "root" })
 export class ChipsFactoryService {
 
   constructor() {}
 
-  createFilterChips(criteria: Object, removeFn: (prop: string) => void): AppChip[] {
+  createCriteriaChips<TCriteria>(
+    criteria: TCriteria, 
+    removeFn: (prop: Prop<TCriteria>) => void,
+    options?: {[key in keyof TCriteria]: CriteriaChipOptions},
+): AppChip[] {
     if(!criteria) return;
 
     const chips: AppChip[] = [];
 
     for(let prop in criteria){
       const value = criteria[prop];
-      if(!value || prop === "dateRangePreset") continue;   
-      let text = value;
-      if(value instanceof Array && value.length > 1 && new Date(value[0]) instanceof Date) 
-        text = _formatDateRange(value, _formatShortDate);
-      else if(value instanceof Date) text = _formatShortDate(value);
-      else if(value instanceof Object){ 
-        const fkPropModelMap = ModelStateConfig.getBy(prop, "foreignProp")
-        text = fkPropModelMap ? value[fkPropModelMap.displayProp] : null;
+      if(!value) continue;
+
+      let text: string = value as any;
+      const chipOption = options[prop];
+      
+      if(chipOption){
+        if(chipOption.ignored) continue; 
+        if(chipOption.valueFormatter instanceof Function) text = chipOption.valueFormatter(value)
+        else if(chipOption.valueFormatter) text = chipOption.valueFormatter;
       }
 
       chips.push({text, color: "accent", onRemoved: () => removeFn(prop)})

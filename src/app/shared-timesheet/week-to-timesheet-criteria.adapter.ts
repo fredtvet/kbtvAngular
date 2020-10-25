@@ -3,13 +3,14 @@ import { DateRangePresets } from '../shared-app/enums';
 import { _getDateOfWeek } from '../shared-app/helpers/datetime/get-date-of-week.helper';
 import { _getWeekRange } from '../shared-app/helpers/datetime/get-week-range.helper';
 import { _getYearRange } from '../shared-app/helpers/datetime/get-year-range.helper';
-import { WeekCriteria } from './components/week-filter-view/week-filter-view-config.interface';
+import { DateRange } from '../shared/interfaces/date-range.interface';
 import { TimesheetCriteria } from './interfaces/timesheet-criteria.interface';
+import { WeekCriteria } from './interfaces/week-criteria.interface';
 
 export class WeekToTimesheetCriteriaAdapter implements TimesheetCriteria {
     
     user?: User;
-    dateRange?: Date[]; 
+    dateRange?: DateRange; 
     dateRangePreset?: DateRangePresets = DateRangePresets.Custom;
 
     constructor(input: WeekCriteria){

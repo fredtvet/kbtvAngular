@@ -8,7 +8,7 @@ import { translations } from 'src/app/shared/translations';
 export class TranslatePipe implements PipeTransform {
 
     transform(value: string): string {
-        return translations[value] || value;
+        return translations[value.toLowerCase()] || value;
     }
 
 }

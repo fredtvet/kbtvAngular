@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { ClonerService } from '../utility/cloner.service';
+import { _deepClone } from 'src/app/shared-app/helpers/deep-clone.helper';
 import { ObservableStore } from './abstracts/observable-store';
 import { StateCommand } from './interfaces/state-command.interface';
 import { ObservableStoreBase } from './observable-store-base';
@@ -15,10 +15,7 @@ export class CommandDispatcher extends ObservableStore<any> {
     private dispatchSubject = new Subject<DispatchedCommand<StateCommand>>();
     private dispatched$ = this.dispatchSubject.asObservable();
 
-    constructor(
-        base: ObservableStoreBase,
-        private clonerService: ClonerService,
-    ) {
+    constructor(base: ObservableStoreBase) {
         super(base);
     }
 
@@ -26,7 +23,7 @@ export class CommandDispatcher extends ObservableStore<any> {
         return this.dispatched$.pipe(
             filter(x => x.command.action === action),  
             map(x => { 
-                return {...x, command: this.clonerService.deepClone(x.command)}
+                return {...x, command: _deepClone(x.command)}
             }
         ));
     }

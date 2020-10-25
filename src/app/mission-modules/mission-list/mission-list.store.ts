@@ -4,8 +4,6 @@ import { map } from "rxjs/operators";
 import { ApiUrl } from 'src/app/core/api-url.enum';
 import { Mission, User } from "src/app/core/models";
 import { ApiService } from 'src/app/core/services/api.service';
-import { FilteredResponse, FilterStore } from 'src/app/core/services/filter/interfaces';
-import { FormToSaveModelFileStateCommandAdapter } from 'src/app/core/services/model/adapters/form-to-save-model-file-state-command.adapter';
 import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helpers/get-with-relations.config';
 import { GetWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-with-relations.helper';
 import { SaveModelFileStateCommand } from 'src/app/core/services/model/state/save-model-file/save-model-file-state-command.interface';
@@ -19,33 +17,22 @@ import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
 import { _sortByDate } from 'src/app/shared-app/helpers/array/sort-by-date.helper';
 import { _validateFileExtension } from 'src/app/shared-app/helpers/validate-file-extension.helper';
 import { ImageFileExtensions } from 'src/app/shared/constants/image-file-extensions.const';
-import { MissionCriteria } from 'src/app/shared/interfaces';
+import { MissionCriteriaFormState } from 'src/app/shared/forms/mission-criteria-form.const';
+import { FilteredResponse, MissionCriteria } from 'src/app/shared/interfaces';
 import { MissionFilter } from 'src/app/shared/mission-filter.model';
+import { FormToSaveModelFileStateCommandAdapter } from 'src/app/shared/model-form/adapters/form-to-save-model-file-state-command.adapter';
 import { StoreState } from './interfaces/store-state';
-import { MissionFilterViewConfig } from './mission-filter-view/mission-filter-view-config.interface';
 
 @Injectable({
   providedIn: 'any',
 })
-export class MissionListStore extends BaseModelStore<StoreState> implements FilterStore<MissionCriteria, MissionFilterViewConfig> {
-
-  filterConfig$: Observable<MissionFilterViewConfig> = 
-    this.stateSlice$(["missionCriteria","missionTypes", "employers", "missions"]).pipe(map(state => {
-      return {
-        criteria: state.missionCriteria,
-        state: {
-          missionTypes: state.missionTypes, 
-          employers: state.employers,
-          missions: state.missions
-        }
-      }
-    }));
+export class MissionListStore extends BaseModelStore<StoreState> {
 
   filteredMissions$: Observable<FilteredResponse<MissionCriteria, Mission>> = 
     this.stateSlice$(["missions", "missionCriteria"]).pipe(
         map(state => {
         const filter = new MissionFilter(state.missionCriteria, null, true);
-        const filtered = _filter(state.missions, (entity) => filter.check(entity));
+        const filtered = _filter<Mission>(state.missions, (entity) => filter.check(entity));
         return {
             criteria: state.missionCriteria,
             records: _sortByDate(filtered, "updatedAt") 
@@ -55,6 +42,11 @@ export class MissionListStore extends BaseModelStore<StoreState> implements Filt
   criteria$: Observable<MissionCriteria> = this.stateProperty$("missionCriteria");
       
   currentUser: User = this.getStateProperty<User>("currentUser");
+
+  criteriaFormState$: Observable<MissionCriteriaFormState> = 
+        this.stateSlice$(["missionTypes", "employers", "missions"]).pipe(
+          map(options => { return {options} as any})
+        )
 
   get criteria(): MissionCriteria {
     return this.getStateProperty("missionCriteria");

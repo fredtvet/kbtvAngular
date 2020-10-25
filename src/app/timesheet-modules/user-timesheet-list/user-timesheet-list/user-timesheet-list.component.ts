@@ -2,23 +2,28 @@ import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { combineLatest, Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { Timesheet } from "src/app/core/models";
-import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
-import { FilterConfig } from 'src/app/core/services/filter/interfaces';
-import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
+import { Mission, Timesheet } from "src/app/core/models";
+import { FormService } from 'src/app/core/services/form/form.service';
+import { _getModelDisplayValue } from 'src/app/core/services/model/helpers/get-model-property.helper';
+import { ModelFormService } from 'src/app/core/services/model/model-form.service';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
 import { DateRangePresets } from 'src/app/shared-app/enums';
+import { _formatDateRange } from 'src/app/shared-app/helpers/datetime/format-date-range.helper';
+import { _formatShortDate } from 'src/app/shared-app/helpers/datetime/format-short-date.helper';
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
-import { TimesheetFilterViewConfig } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view-config.interface';
-import { TimesheetFilterViewComponent } from 'src/app/shared-timesheet/components/timesheet-filter-view/timesheet-filter-view.component';
 import { TimesheetCriteria } from 'src/app/shared-timesheet/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { _objectToDisabledObjectMap } from 'src/app/shared/dynamic-form/helpers/disabled-control-map.helper';
+import { DynamicForm } from 'src/app/shared/dynamic-form/interfaces';
 import { TimesheetStatus } from 'src/app/shared/enums';
-import { TimesheetForm } from '../user-timesheet-form-view/timesheet-form.interface';
-import { UserTimesheetFormToSaveModelAdapter } from '../user-timesheet-form-view/user-timesheet-form-to-save-model.adapter';
-import { UserTimesheetFormViewComponent } from '../user-timesheet-form-view/user-timesheet-form-view.component';
+import { TimesheetCriteriaForm, TimesheetCriteriaFormState } from 'src/app/shared/forms/timesheet-criteria-form.const';
+import { DateRange } from 'src/app/shared/interfaces/date-range.interface';
+import { SaveModelFormState } from 'src/app/shared/model-form/interfaces';
+import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from 'src/app/shared/model-forms/save-user-timesheet-form.const';
+import { translations } from 'src/app/shared/translations';
+import { UserTimesheetFormToSaveModelAdapter } from '../save-user-timesheet/user-timesheet-form-to-save-model.adapter';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
 
 interface ViewModel { timesheets: Timesheet[], fabs?: AppButton[], chips?: AppChip[], navConfig?: MainTopNavConfig  }
@@ -38,9 +43,14 @@ export class UserTimesheetListComponent implements OnInit {
           callback: this.openTimesheetForm,
           params: [null, {mission: criteria?.mission}]}
       ],
-      chips: this.chipsFactory.createFilterChips(
-          this.formatCriteriaChips(criteria), 
-          (prop) => this.resetCriteriaProp(prop, criteria)
+      chips: this.chipsFactory.createCriteriaChips(criteria, 
+          (prop) => this.resetCriteriaProp(prop, criteria),
+          {
+            status: {valueFormatter: (val: TimesheetStatus) => val ? translations[TimesheetStatus[val].toLowerCase()] : null }, 
+            mission: {valueFormatter: (val: Mission) => _getModelDisplayValue("missions", val)},
+            dateRange: {valueFormatter: (val: DateRange) => _formatDateRange(val, _formatShortDate)}, 
+            dateRangePreset: {ignored: true}
+          }
         )
     }})
   )
@@ -52,7 +62,7 @@ export class UserTimesheetListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private filterService: FilterSheetService,
+    private formService: FormService,
     private store: UserTimesheetListStore,
     private chipsFactory: ChipsFactoryService,
     private modelFormService: ModelFormService
@@ -69,26 +79,30 @@ export class UserTimesheetListComponent implements OnInit {
     this.store.addFilterCriteria(criteria);
   }
 
-  openTimesheetForm = (entityId?: string, lockedValues?: TimesheetForm): void => {
-    this.modelFormService.open({formConfig: {
-      viewComponent: UserTimesheetFormViewComponent, 
-      adapter: UserTimesheetFormToSaveModelAdapter, 
-      stateProp: "userTimesheets",
-      entityId, 
-      viewConfig: {lockedValues}
-    }})
+  openTimesheetForm = (entityId?: string, initialValue?: TimesheetForm): void => {
+    let dynamicForm: DynamicForm<TimesheetForm, SaveModelFormState>;
+    if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _objectToDisabledObjectMap(initialValue)}
+    else dynamicForm = EditUserTimesheetForm
+
+    this.modelFormService.open<TimesheetForm, SaveModelFormState>({
+      formConfig:{
+        dynamicForm: {...dynamicForm, initialValue}, entityId,
+        adapter: UserTimesheetFormToSaveModelAdapter, 
+        stateProp: "userTimesheets",  
+      }
+    })
   };
 
-  openFilterSheet = (): void => {
-    this.filterService.open<TimesheetCriteria, FilterConfig<TimesheetFilterViewConfig>>(
-      {formConfig:{  
-        filterConfig: {
-            disabledFilters: ['user'], 
-        },
-        viewComponent: TimesheetFilterViewComponent
-    }});
+  openTimesheetFilter = (): void => {
+    this.formService.open<TimesheetCriteria, TimesheetCriteriaFormState>({
+      formConfig: { ...TimesheetCriteriaForm, 
+        disabledControls: {user: true},
+        initialValue: this.store.criteria}, 
+      formState: this.store.timesheetCriteriaFormState$,
+      navConfig: {title: "Velg filtre"},
+      submitCallback: (val: TimesheetCriteria) => this.store.addFilterCriteria(val)
+    });
   }
-
 
   private onBack = () => {
     let returnUrl: string = this.route.snapshot.params.returnUrl;
@@ -103,7 +117,7 @@ export class UserTimesheetListComponent implements OnInit {
       backFn: this.onBack,     
       buttons: [{
         icon: 'filter_list', 
-        callback: this.openFilterSheet,
+        callback: this.openTimesheetFilter,
         color: (activeCriteriaCount && activeCriteriaCount > 0) ? "accent" : null
       }],
     }

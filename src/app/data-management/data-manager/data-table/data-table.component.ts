@@ -65,7 +65,7 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
 
     let def = {
       field: name,
-      headerName: translations[name] || name,
+      headerName: translations[name?.toLowerCase()] || name,
       sortable: true,
       resizable: true,
       editable: true,

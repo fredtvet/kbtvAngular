@@ -12,7 +12,6 @@ import { UserTimesheetWeekListViewComponent } from './user-timesheet-week-list/u
 import { UserTimesheetListViewComponent } from './user-timesheet-list/user-timesheet-list-view/user-timesheet-list-view.component';
 import { SaveUserTimesheetHttpEffect } from './save-user-timesheet/save-user-timesheet.http.effect';
 import { SaveUserTimesheetReducer } from './save-user-timesheet/save-user-timesheet.reducer';
-import { UserTimesheetFormViewComponent } from './user-timesheet-form-view/user-timesheet-form-view.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +23,6 @@ import { UserTimesheetFormViewComponent } from './user-timesheet-form-view/user-
     UserTimesheetCardDialogWrapperComponent,
     TimesheetDayLabelComponent,
     TimesheetMissionBarComponent,
-    UserTimesheetFormViewComponent
   ],
   providers:[
     {provide: "FILTER_STORE", useExisting: UserTimesheetListStore}

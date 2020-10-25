@@ -1,25 +1,23 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiUrl } from 'src/app/core/api-url.enum';
 import { Timesheet, User } from 'src/app/core/models';
-import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { ApiService } from 'src/app/core/services/api.service';
-import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
-import { _addOrUpdateRange } from 'src/app/shared-app/helpers/array/add-or-update-range.helper';
-import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
-import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
-import { GroupByPeriod, TimesheetStatus } from 'src/app/shared/enums';
-import { StoreState } from './store-state';
-import { FilterStore } from 'src/app/core/services/filter/interfaces';
 import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-range-with-relations.helper';
-import { StateAction } from 'src/app/core/services/state/state-action.enum';
-import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
-import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
 import { SaveModelAction, SaveModelStateCommand } from 'src/app/core/services/model/state/save-model/save-model-state-command.interface';
-import { UpdateStatusesAction, UpdateStatusesStateCommand } from './update-statuses/update-statuses-state-command.interface';
-import { WeekToTimesheetCriteriaAdapter } from 'src/app/shared-timesheet/week-to-timesheet-criteria.adapter';
 import { PersistanceStore } from 'src/app/core/services/persistance/persistance.store';
+import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
+import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
+import { StateAction } from 'src/app/core/services/state/state-action.enum';
+import { TimesheetSummaryAggregator } from 'src/app/core/services/utility/timesheet-summary.aggregator';
+import { BaseTimesheetStore, BaseTimesheetStoreSettings } from 'src/app/shared-timesheet/base-timesheet-store';
+import { TimesheetSummary, WeekCriteria } from 'src/app/shared-timesheet/interfaces';
+import { WeekToTimesheetCriteriaAdapter } from 'src/app/shared-timesheet/week-to-timesheet-criteria.adapter';
+import { GroupByPeriod, TimesheetStatus } from 'src/app/shared/enums';
+import { WeekCriteriaFormState } from 'src/app/shared/forms/week-criteria-controls.const';
+import { StoreState } from './store-state';
+import { UpdateStatusesAction, UpdateStatusesStateCommand } from './update-statuses/update-statuses-state-command.interface';
 
 const TimesheetAdminStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
     criteriaProp: "timesheetAdminCriteria", 
@@ -30,20 +28,17 @@ const TimesheetAdminStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
 @Injectable({
   providedIn: 'any'
 })
-export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> implements FilterStore<WeekCriteria, WeekFilterViewConfig>{
+export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> {
 
     get weekCriteria(){ return this.getStateProperty<WeekCriteria>("timesheetAdminWeekCriteria"); } 
     weekCriteria$ = this.stateProperty$<WeekCriteria>("timesheetAdminWeekCriteria");
 
-    filterConfig$: Observable<WeekFilterViewConfig> = combineLatest([
-        this.modelProperty$<User[]>("users"), 
-        this.stateProperty$("timesheetAdminCriteria")
-    ]).pipe(map(([users]) => { return {criteria: this.weekCriteria, users}}))
-
-
     timesheetSummaries$: Observable<TimesheetSummary[]> = this.filteredAndGroupedTimesheets$.pipe(map(x => 
         x.groupBy === GroupByPeriod.None ? null : x.records as any
     ));
+
+    weekCriteriaFormState$: Observable<WeekCriteriaFormState> = 
+        this.modelProperty$<User[]>("users").pipe(map(x => { return {options: {users: x} }}))
 
     constructor(
         base: ObservableStoreBase,

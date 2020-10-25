@@ -2,18 +2,19 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
-import { Mission } from "src/app/core/models";
-import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
-import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
+import { Employer, Mission, MissionType } from "src/app/core/models";
+import { FormService } from 'src/app/core/services/form/form.service';
+import { _getModelDisplayValue } from 'src/app/core/services/model/helpers/get-model-property.helper';
+import { ModelFormService } from 'src/app/core/services/model/model-form.service';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
 import { Roles } from "src/app/shared-app/enums";
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
-import { MissionFormViewComponent } from 'src/app/shared/components/mission-form-view/mission-form-view.component';
+import { MissionCriteriaForm, MissionCriteriaFormState } from 'src/app/shared/forms/mission-criteria-form.const';
 import { MissionCriteria } from "src/app/shared/interfaces/mission-filter-criteria.interface";
-import { MissionFilterViewComponent } from "../mission-filter-view/mission-filter-view.component";
+import { CreateMissionForm } from 'src/app/shared/model-forms/save-mission-forms.const';
 import { MissionListStore } from "../mission-list.store";
 
 interface ViewModel{ missions: Mission[], chips?: AppChip[], fabs: AppButton[], navConfig?: MainTopNavConfig }
@@ -44,7 +45,7 @@ export class MissionListComponent {
   private fabs: AppButton[];
 
   constructor(
-    private filterSheetService: FilterSheetService,
+    private formService: FormService,
     private chipsFactory: ChipsFactoryService,
     private modelFormService: ModelFormService,
     private store: MissionListStore,
@@ -61,18 +62,19 @@ export class MissionListComponent {
     this.store.addFilterCriteria({ ...this.store.criteria, searchString });
   };
 
-  private openMissionForm = () => {
+  private openMissionForm = () => 
     this.modelFormService.open({formConfig: {
-      viewComponent: MissionFormViewComponent,
+      dynamicForm: CreateMissionForm,
       stateProp: "missions",
     }})
-  };
 
-  private openMissionFilter = () => {
-    this.filterSheetService.open({
-      formConfig: { viewComponent: MissionFilterViewComponent },
-    });
-  };
+  private openMissionFilter = () => 
+    this.formService.open<MissionCriteria, MissionCriteriaFormState>({
+        formConfig: {...MissionCriteriaForm, initialValue: this.store.criteria}, 
+        formState: this.store.criteriaFormState$,
+        navConfig: {title: "Velg filtre"},
+        submitCallback: (val: MissionCriteria) => this.store.addFilterCriteria(val),
+      });   
 
   private getTopNavConfig(criteria: MissionCriteria): MainTopNavConfig {
     return {
@@ -91,9 +93,13 @@ export class MissionListComponent {
   }
 
   private getCriteriaChips(criteria: MissionCriteria){
-    return this.chipsFactory.createFilterChips(
-      this.formatCriteriaChips(criteria), 
-      (prop) => this.resetCriteriaProp(prop, criteria)
+    return this.chipsFactory.createCriteriaChips(criteria, 
+      (prop) => this.resetCriteriaProp(prop, criteria),      
+      {
+        finished: {valueFormatter: (val: boolean) => val ? "Ferdig" : null},
+        employer: {valueFormatter: (val: Employer) => _getModelDisplayValue("employers", val)},
+        missionType: {valueFormatter: (val: MissionType) => _getModelDisplayValue("missionTypes", val)}
+      },
     )
   }
 
@@ -102,7 +108,4 @@ export class MissionListComponent {
     this.store.addFilterCriteria(criteria);
   }
 
-  private formatCriteriaChips(criteria: MissionCriteria): MissionCriteria{
-    return {...criteria, finished: criteria.finished ? "Ferdig" : null as any};
-  }
 }

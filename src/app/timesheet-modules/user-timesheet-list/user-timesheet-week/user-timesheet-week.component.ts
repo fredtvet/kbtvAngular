@@ -4,20 +4,22 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
-import { ModelFormService } from 'src/app/core/services/model/form/model-form.service';
+import { ModelFormService } from 'src/app/core/services/model/model-form.service';
 import { _getDateOfWeek } from 'src/app/shared-app/helpers/datetime/get-date-of-week.helper';
 import { _getWeekOfYear } from 'src/app/shared-app/helpers/datetime/get-week-of-year.helper';
 import { _getWeekRange } from 'src/app/shared-app/helpers/datetime/get-week-range.helper';
 import { _getWeeksInYear } from 'src/app/shared-app/helpers/datetime/get-weeks-in-year.helper';
 import { _mapObjectsToWeekdays } from 'src/app/shared-app/helpers/object/map-objects-to-weekdays.helper';
-import { WeekCriteria } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
+import { WeekCriteria } from 'src/app/shared-timesheet/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { _objectToDisabledObjectMap } from 'src/app/shared/dynamic-form/helpers/disabled-control-map.helper';
+import { DynamicForm } from 'src/app/shared/dynamic-form/interfaces';
 import { GroupByPeriod } from 'src/app/shared/enums';
+import { SaveModelFormState } from 'src/app/shared/model-form/interfaces';
+import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from 'src/app/shared/model-forms/save-user-timesheet-form.const';
 import { _trackByModel } from 'src/app/shared/trackby/track-by-model.helper';
+import { UserTimesheetFormToSaveModelAdapter } from '../save-user-timesheet/user-timesheet-form-to-save-model.adapter';
 import { UserTimesheetCardDialogWrapperComponent } from '../user-timesheet-card-dialog-wrapper.component';
-import { TimesheetForm } from '../user-timesheet-form-view/timesheet-form.interface';
-import { UserTimesheetFormToSaveModelAdapter } from '../user-timesheet-form-view/user-timesheet-form-to-save-model.adapter';
-import { UserTimesheetFormViewComponent } from '../user-timesheet-form-view/user-timesheet-form-view.component';
 import { UserTimesheetListStore } from '../user-timesheet-list.store';
 import { ViewModel } from './view-model.interface';
 
@@ -78,14 +80,18 @@ export class UserTimesheetWeekComponent {
     this.store.addWeekFilterCriteria(currFilter);
   }
 
-  openTimesheetForm = (entityId?: string, lockedValues?: TimesheetForm): void => {
-    this.modelFormService.open({formConfig: {
-      viewComponent: UserTimesheetFormViewComponent, 
-      adapter: UserTimesheetFormToSaveModelAdapter, 
-      stateProp: "userTimesheets",
-      entityId, 
-      viewConfig: {lockedValues}
-    }})
+  openTimesheetForm = (entityId?: string, form?: TimesheetForm): void => {
+    let dynamicForm: DynamicForm<TimesheetForm, SaveModelFormState>;
+    if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _objectToDisabledObjectMap(form)}
+    else dynamicForm = EditUserTimesheetForm
+
+    this.modelFormService.open<TimesheetForm, SaveModelFormState>({
+      formConfig: {
+        dynamicForm: {...dynamicForm, initialValue: form}, entityId,
+        adapter: UserTimesheetFormToSaveModelAdapter, 
+        stateProp: "userTimesheets",    
+      }, 
+    })
   };
 
   openTimesheetCard = (timesheetId: string) =>

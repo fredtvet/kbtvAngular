@@ -3,7 +3,6 @@ import { combineLatest, Observable } from "rxjs";
 import { distinctUntilChanged, map, switchMap } from "rxjs/operators";
 import { Model } from "src/app/core/models";
 import { ApiService } from '../core/services/api.service';
-import { FormToSaveModelStateCommandAdapter } from '../core/services/model/adapters/form-to-save-model-state-command.adapter';
 import { ModelState } from '../core/services/model/interfaces';
 import { GetWithRelationsConfig } from '../core/services/model/state-helpers/get-with-relations.config';
 import { DeleteModelAction } from '../core/services/model/state/delete-model/delete-model-state-command.interface';
@@ -12,6 +11,7 @@ import { CommandDispatcher } from '../core/services/state/command.dispatcher';
 import { ObservableStoreBase } from '../core/services/state/observable-store-base';
 import { StateAction } from '../core/services/state/state-action.enum';
 import { Prop } from '../shared-app/prop.type';
+import { FormToSaveModelStateCommandAdapter } from '../shared/model-form/adapters/form-to-save-model-state-command.adapter';
 import { DataConfig } from './interfaces/data-config.interface';
 import { StoreState } from './interfaces/store-state';
 
@@ -43,11 +43,11 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
 
     updateSelectedProperty = (prop: Prop<ModelState>) => this.setState({selectedProperty: prop})
 
-    update = (formState: Model): void =>
+    update = (form: Model): void =>
         this.commandDispatcher.dispatch(new FormToSaveModelStateCommandAdapter({
             stateProp: this.selectedProperty, 
             saveAction: StateAction.Update,
-            formState,
+            formState: form
         }))
     
   

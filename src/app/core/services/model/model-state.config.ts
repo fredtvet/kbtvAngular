@@ -36,7 +36,7 @@ export class ModelStateConfig {
         for(let config of ModelStateConfigData){
             map[config[prop] as string] = config;
         }
-    
+
         return map;
     }
 }

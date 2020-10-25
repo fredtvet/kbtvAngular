@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ClonerService } from '../utility/cloner.service';
+import { _deepClone } from 'src/app/shared-app/helpers/deep-clone.helper';
 import { ObservableStoreSettings } from './interfaces/observable-store-settings.interface';
 import { StateChanges } from './interfaces/state-changes.interface';
 
@@ -16,7 +16,7 @@ export class ObservableStoreBase {
     private globalStateChangesSubject = new BehaviorSubject<StateChanges<any>>({stateChanges: {}});
     globalStateChanges$ = this.globalStateChangesSubject.asObservable();
 
-    constructor(private clonerService: ClonerService){ }
+    constructor(){ }
 
     getStoreState(properties: string[]  = null, deepCloneReturnedState: boolean = true) {
         let state = null;
@@ -29,7 +29,7 @@ export class ObservableStoreBase {
         else state = this.storeState;
 
         if(state && deepCloneReturnedState) 
-            state = this.deepClone(state);
+            state = _deepClone(state);
         
         return state;
     }
@@ -38,15 +38,11 @@ export class ObservableStoreBase {
         if(!stateChanges) return;
         
         if(deepCloneReturnedState)
-            this.storeState = {...this.storeState, ...this.deepClone(stateChanges)}
+            this.storeState = {...this.storeState, ..._deepClone(stateChanges)}
         else
             this.storeState = {...this.storeState, ...stateChanges};
 
         this.globalStateChangesSubject.next({stateChanges, action});
-    }
-
-    private deepClone(obj: Object) {
-        return this.clonerService.deepClone(obj);
     }
 
 }

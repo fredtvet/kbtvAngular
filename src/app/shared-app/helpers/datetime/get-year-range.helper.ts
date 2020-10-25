@@ -1,9 +1,12 @@
+import { DateRange } from 'src/app/shared/interfaces/date-range.interface';
 import { _getFirstDayOfYear } from './get-first-day-of-year.helper';
 import { _getLastDayOfYear } from './get-last-day-of-year.helper';
 
-export function _getYearRange(date: Date = new Date()): Date[] {
-    var range = [];
-    range.push(_getFirstDayOfYear(date));
-    range.push(_getLastDayOfYear(date));
-    return range;
+export function _getYearRange(date: Date = new Date(), getISO?: boolean): DateRange {
+    const start = _getFirstDayOfYear(date);   
+    const end = _getLastDayOfYear(date);
+    return {
+      start: getISO ? start.toISOString() : start, 
+      end: getISO ? end.toISOString() : end
+    };
 }

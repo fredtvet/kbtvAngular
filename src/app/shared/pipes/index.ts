@@ -6,3 +6,5 @@ export * from './transform-button.pipe';
 export * from './is-today.pipe';
 export * from './app-file-url.pipe';
 export * from './check-roles-in-buttons.pipe';
+export * from './object-to-array.pipe';
+export * from './func.pipe';

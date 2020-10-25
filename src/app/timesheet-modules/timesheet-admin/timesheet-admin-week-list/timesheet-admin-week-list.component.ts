@@ -1,17 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
-import { FilterSheetService } from 'src/app/core/services/filter/filter-sheet.service';
-import { FilterConfig } from 'src/app/core/services/filter/interfaces';
+import { FormService } from 'src/app/core/services/form/form.service';
 import { LoadingService } from 'src/app/core/services/loading.service';
-import { WeekFilterViewComponent } from 'src/app/shared-timesheet/components';
-import { WeekCriteria, WeekFilterViewConfig } from 'src/app/shared-timesheet/components/week-filter-view/week-filter-view-config.interface';
-import { TimesheetSummary } from 'src/app/shared-timesheet/interfaces';
+import { TimesheetSummary, WeekCriteria } from 'src/app/shared-timesheet/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetStatus } from 'src/app/shared/enums';
+import { WeekCriteriaForm, WeekCriteriaFormState } from 'src/app/shared/forms/week-criteria-controls.const';
 import { TimesheetAdminStore } from '../timesheet-admin.store';
 
 interface ViewModel { summaries: TimesheetSummary[], isXs: boolean,  navConfig: MainTopNavConfig  }
@@ -36,12 +34,12 @@ export class TimesheetAdminWeekListComponent {
   constructor(
     private loadingService: LoadingService,
     private store: TimesheetAdminStore,
-    private filterService: FilterSheetService,
+    private formService: FormService,
     private router: Router,
     private route: ActivatedRoute,
     private deviceInfoService: DeviceInfoService) {
-      let filter = this.route.snapshot.params.filter;
-      this.store.addFilterCriteria(filter ? JSON.parse(filter) : {});
+      let filterState = this.route.snapshot.params.filter;
+      this.store.addFilterCriteria(filter ? JSON.parse(filterState) : {});
     }
 
   changeTimesheetStatuses = (timesheets: Timesheet[]): void => {
@@ -65,15 +63,18 @@ export class TimesheetAdminWeekListComponent {
 
   trackByWeek = (index:number, summary:TimesheetSummary): number => summary.weekNr;
 
-  private openWeekFilter = () => {
-    this.filterService.open<WeekCriteria, FilterConfig<WeekFilterViewConfig>>({
-      formConfig: {
-        filterConfig: {criteria: this.store.weekCriteria, disabledFilters: ["weekNr"]},
-        viewComponent: WeekFilterViewComponent
-      },
-    });
-  }
-
+  private openWeekFilter = (): void => {
+    this.formService.open<WeekCriteria, WeekCriteriaFormState>({
+      formConfig: {...WeekCriteriaForm, 
+        disabledControls: {weekNr: true}, 
+        noRenderDisabledControls: true,
+        initialValue: this.store.weekCriteria}, 
+      formState: this.store.weekCriteriaFormState$,
+      navConfig: {title: "Velg filtre"},
+      submitCallback: (val: WeekCriteria) => this.store.addFilterCriteria(val)
+    })
+  } 
+    
   private onBack = () => { 
     this.router.navigate(["timeadministrering"])
   }

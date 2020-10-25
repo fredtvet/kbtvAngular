@@ -1,20 +1,35 @@
-import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Injectable } from '@angular/core';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { Observable, of } from 'rxjs';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { DynamicFormComponent } from 'src/app/shared/dynamic-form/components/dynamic-form.component';
+import { DynamicForm } from 'src/app/shared/dynamic-form/interfaces';
 import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
-import { BaseFormService } from './interfaces/base-form-service.interface';
-import { FormComponent } from './interfaces/form-component.interface';
 import { FormSheetWrapperConfig } from './interfaces/form-sheet-wrapper-config.interface';
-import { FormSheetWrapperResult } from './interfaces/form-sheet-wrapper-result.interface';
+
+export interface FormServiceConfig<TForm, TFormState>{
+  formConfig: DynamicForm<TForm, TFormState>, 
+  navConfig: MainTopNavConfig,
+  formState?: TFormState | Observable<TFormState>,
+  submitCallback?: (val: TForm) => void
+}
 
 @Injectable({ providedIn: "any" })
-export class FormService implements BaseFormService {
+export class FormService {
 
   constructor(private matBottomSheet: MatBottomSheet) {}
 
-  open<TWrapperConfig extends FormSheetWrapperConfig<any, FormComponent>>(config: TWrapperConfig)
-    : MatBottomSheetRef<FormSheetWrapperComponent, FormSheetWrapperResult> {
-
-    return this.matBottomSheet.open(FormSheetWrapperComponent, { data: config });
-    
+  open<TForm, TFormState>(config: FormServiceConfig<TForm, TFormState>)
+  : MatBottomSheetRef<FormSheetWrapperComponent, TForm> {      
+    return this.matBottomSheet.open(FormSheetWrapperComponent, { 
+      data: <FormSheetWrapperConfig<DynamicForm<TForm, TFormState>, any, TForm>>{
+        formConfig: config.formConfig, 
+        navConfig: config.navConfig, 
+        submitCallback: config.submitCallback,
+        formComponent: DynamicFormComponent,
+        formState$: config.formState instanceof Observable ? config.formState : of(config.formState)
+      } 
+    });
   }
+
 }

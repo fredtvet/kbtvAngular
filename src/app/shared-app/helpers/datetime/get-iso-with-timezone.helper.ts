@@ -16,3 +16,9 @@ export function _getISOWithTimezone(date: Date | string | number): string{
     
     return result;
   }
+
+
+  export function _getISO(date: Date | string | number): string{
+    if(!date) return;
+    return new Date(date).toISOString()
+  }
