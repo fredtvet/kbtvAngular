@@ -16,7 +16,7 @@ export interface RadioGroupQuestion<T> extends Question {
   selector: 'app-radio-group-question',
   template: `
     <div class="pb-2">
-        <div class="mat-caption" *ngIf="question.label">{{ question.label }}</div>
+        <div class="mat-body" *ngIf="question.label">{{ question.label }}</div>
         <mat-radio-group [formControl]="control" [color]="question.color" fxLayoutGap="8px">
             <mat-radio-button *ngIf="question.defaultOption"
               [checked]="control.value == null">
@@ -47,8 +47,6 @@ export class RadioGroupQuestionComponent extends BaseQuestionComponent<RadioGrou
 
   ngOnInit(): void {
     this.options$ = this.formStore.getOptions$(this.question.optionsGetter);
-    console.log(this.control.value)
-    this.control.valueChanges.subscribe(x => console.log(x))
   }
 
 }

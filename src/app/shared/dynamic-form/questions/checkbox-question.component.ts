@@ -9,7 +9,7 @@ export interface CheckboxQuestion extends Question {
 @Component({
   selector: 'app-checkbox-question',
   template: `  
-    <div class="mat-caption" *ngIf="question.label">{{ question.label }}</div>
+    <div class="mat-body" *ngIf="question.label">{{ question.label }}</div>
     
     <mat-checkbox
         [color]="question.color" 
