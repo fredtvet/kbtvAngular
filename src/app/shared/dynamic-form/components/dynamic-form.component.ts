@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { debounceTime, map, startWith } from 'rxjs/operators';
+import { debounceTime, map, startWith, take } from 'rxjs/operators';
 import { FormComponent } from 'src/app/core/services/form/interfaces';
 import { _hasSameState } from 'src/app/shared-app/helpers/object/has-same-state.helper';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
@@ -53,13 +53,13 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
 
     @Output() formSubmitted = new EventEmitter<any>();
 
-    resetEnabled$: Observable<boolean>
+    resetEnabled$: Observable<boolean>;
 
     constructor(
         componentFactoryResolver: ComponentFactoryResolver,
         cdRef: ChangeDetectorRef,
-        private formBuilder: FormBuilder,
         private formStore: DynamicFormStore<Object>,
+        private formBuilder: FormBuilder,
     ) { super(componentFactoryResolver, cdRef, DynamicControlGroupComponent); }
   
     onSubmit(){
@@ -80,9 +80,9 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
 
     private initalizeForm() {
         this.dynamicHost.viewContainerRef.clear();
-        
+        console.time('test')
         this.form = this.getFormGroup(this._config.controls, this._config.disabledControls); //Add controls first
-
+        console.timeEnd('test')
         if(this._config.resettable)
             this.resetEnabled$ = this.form.valueChanges.pipe(
                 debounceTime(50),
@@ -118,14 +118,15 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         const value = 
             control.valueGetter instanceof Function ? control.valueGetter(this._config.initialValue || {}) : control.valueGetter;
   
-        const validators = control.validators || [];
-
+        const validators: ValidatorFn[] = control.validators || [];
         if(control.required) validators.push(Validators.required)
-        if(control.stateValidators) //Validators using state as input
-            for(const customValidator of control.stateValidators) 
-                validators.push(customValidator(this.formStore.formState)) //Need to support async validation
 
-        return this.formBuilder.control({value, disabled}, validators);
+        const asyncValidators: AsyncValidatorFn[] = [];
+        if(control.asyncStateValidators) //Validators using state as input
+            for(const customValidator of control.asyncStateValidators) 
+                asyncValidators.push(customValidator(this.formStore.formState$.pipe(take(1)))) 
+
+        return this.formBuilder.control({value, disabled}, validators, asyncValidators);
     }
 
 }

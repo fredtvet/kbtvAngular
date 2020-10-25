@@ -6,7 +6,7 @@ import { Prop } from 'src/app/shared-app/prop.type';
 import { ModelFormComponent } from 'src/app/shared/model-form/components/model-form.component';
 import { ModelFormConfig, SaveModelFormState } from 'src/app/shared/model-form/interfaces';
 import { translations } from 'src/app/shared/translations';
-import { FormSheetWrapperComponent } from '../form/form-sheet-wrapper.component';
+import { FormSheetWrapperComponent } from '../../../shared/components/form-sheet-wrapper.component';
 import { FormSheetWrapperConfig } from '../form/interfaces/form-sheet-wrapper-config.interface';
 import { CommandDispatcher } from '../state/command.dispatcher';
 import { StateAction } from '../state/state-action.enum';

@@ -44,7 +44,7 @@ export class MissionListStore extends BaseModelStore<StoreState> {
   currentUser: User = this.getStateProperty<User>("currentUser");
 
   criteriaFormState$: Observable<MissionCriteriaFormState> = 
-        this.stateSlice$(["missionTypes", "employers", "missions"]).pipe(
+        this.stateSlice$(["missionTypes", "employers", "missions"], false).pipe(
           map(options => { return {options} as any})
         )
 

@@ -9,8 +9,7 @@ export class DynamicFormStore<TFormState extends Object> {
     private formStateSubject = new BehaviorSubject<TFormState>(null);
     formState$ = this.formStateSubject.asObservable();
 
-    get formState(): TFormState {  return this.formStateSubject.value }
-
+    get formState(): TFormState {  return this.formStateSubject.value };
     constructor(){ }
 
     setFormState(formState: TFormState): void{ this.formStateSubject.next(formState); }

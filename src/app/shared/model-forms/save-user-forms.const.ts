@@ -1,11 +1,13 @@
 import { Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Employer, User } from 'src/app/core/models';
 import { Roles } from 'src/app/shared-app/enums';
 import { DynamicControl, DynamicForm } from '../dynamic-form/interfaces';
 import { InputQuestion, InputQuestionComponent } from '../dynamic-form/questions/input-question.component';
 import { SelectQuestion, SelectQuestionComponent } from '../dynamic-form/questions/select-question.component';
-import { isUniqueValidator } from '../dynamic-form/validators/is-unique.validator';
-import { SaveModelFormState } from '../model-form/interfaces';
+import { isUniqueAsyncValidator } from '../dynamic-form/validators/is-unique.async.validator';
+import { SaveModelFormState } from '../model-form/interfaces/model-form-to-state-command-adapter.interface';
 
 export interface UserForm extends User {
     password?: string;
@@ -20,8 +22,8 @@ const UserNameControl = <DynamicControl<UserForm>>{ name: "userName", required: 
         component:  InputQuestionComponent,
         question: <InputQuestion>{placeholder: "Brukernavn"}, 
     }], 
-    stateValidators: [
-        (s: FormState) => isUniqueValidator(s.foreigns?.users, "userName")
+    asyncStateValidators: [
+        (s$: Observable<FormState>) => isUniqueAsyncValidator(s$.pipe(map(s => s?.foreigns?.users)), "userName")
     ],
     validators: [
         Validators.pattern('^[a-zA-Z0-9_.-]*$'),

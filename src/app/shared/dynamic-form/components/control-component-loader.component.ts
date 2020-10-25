@@ -3,6 +3,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/shared-app/components';
 import { DynamicHostDirective } from 'src/app/shared/directives';
+import { DynamicFormStore } from '../dynamic-form.store';
 import { _getControlObserver$ } from '../helpers/get-control-observer.helper';
 import { ControlGroupComponent, ControlHook, DynamicControl, DynamicControlGroup, DynamicForm, QuestionComponent, QuestionWrapper } from '../interfaces';
 
@@ -15,7 +16,7 @@ export abstract class ControlComponentLoaderComponent extends SubscriptionCompon
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,  
-        private cdRef: ChangeDetectorRef,
+        private cdRef: ChangeDetectorRef,      
         private defaultControlGroupComponent: Type<ControlGroupComponent>,
     ) { super() }
 
@@ -44,7 +45,7 @@ export abstract class ControlComponentLoaderComponent extends SubscriptionCompon
         this.onQuestionComponentInit(componentRef, control);
 
         if(questionWrapper.hideOnValueChange)
-            this.initHideObserver(questionWrapper.hideOnValueChange, componentRef.location.nativeElement)
+            this.initHideObserver(questionWrapper.hideOnValueChange, componentRef.location.nativeElement);
     }
 
     private loadQuestionGroupComponent(controlGroup: DynamicControlGroup<any>, formConfig: DynamicForm<any,any>, nestedNames: string[] = []) {

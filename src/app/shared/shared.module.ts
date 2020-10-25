@@ -11,6 +11,7 @@ import {
 } from './components';
 import { ChipsBarComponent } from './components/chips-bar.component';
 import { DetailTopNavBarComponent } from './components/detail-top-nav-bar/detail-top-nav-bar.component';
+import { FormSheetWrapperComponent } from './components/form-sheet-wrapper.component';
 import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.component';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
 import { AddToHomeScreenDirective, DynamicHostDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
@@ -41,6 +42,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     MainTopNavBarComponent,
     DetailTopNavBarComponent,
     ChipsBarComponent,
+    FormSheetWrapperComponent,
     
     ModelFormComponent,
 

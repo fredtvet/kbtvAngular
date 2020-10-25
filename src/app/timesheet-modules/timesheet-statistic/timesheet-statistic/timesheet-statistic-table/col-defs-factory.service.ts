@@ -68,7 +68,7 @@ export class ColDefsFactoryService {
 
   private convertTime = (params) =>
     params?.value
-      ? this.datePipe.transform(params.value, "shortTime", null, "nb-NO")
+      ? this.datePipe.transform(params.value, "shortTime")
       : undefined;
 
   private convertStatus = (params) => {

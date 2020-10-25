@@ -1,5 +1,5 @@
 import { Type } from '@angular/core';
-import { AbstractControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Prop } from 'src/app/shared-app/prop.type';
 import { ValidationErrorMap } from './validator-error-messages.const';
@@ -42,7 +42,7 @@ export interface DynamicControl<TForm> {
     valueGetter?: ((form: TForm) => any) | any,
     questions?: QuestionWrapper[],
     validators?: ValidatorFn[],
-    stateValidators?: ((state: any) => ValidatorFn)[],
+    asyncStateValidators?: ((state: Observable<any>) => AsyncValidatorFn)[],
     validationErrorMessages?: ValidationErrorMap,
 }
 

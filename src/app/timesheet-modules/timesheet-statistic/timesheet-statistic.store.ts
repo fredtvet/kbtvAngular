@@ -30,8 +30,8 @@ export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState> {
 
     criteriaFormState$: Observable<TimesheetCriteriaFormState> = 
         combineLatest([
-            this.modelProperty$<Mission[]>("missions"),
-            this.modelProperty$<User[]>("users")
+            this.modelProperty$<Mission[]>("missions", false),
+            this.modelProperty$<User[]>("users", false)
         ]).pipe(map(([missions, users]) => { return {options: {missions, users}} }))
 
     constructor(

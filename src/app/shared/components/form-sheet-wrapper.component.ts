@@ -1,18 +1,27 @@
-import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { take, takeUntil, tap } from 'rxjs/operators';
 import { SubscriptionComponent } from 'src/app/shared-app/components';
 import { MainTopNavBarComponent } from 'src/app/shared/components/main-top-nav-bar/main-top-nav-bar.component';
-import { FormSheetWrapperConfig } from './interfaces/form-sheet-wrapper-config.interface';
+import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { FormSheetWrapperConfig } from '../../core/services/form/interfaces/form-sheet-wrapper-config.interface';
+import { DynamicHostDirective } from '../directives/dynamic-host.directive';
 
 type WrapperConfig = FormSheetWrapperConfig<any, any, any>;
 
 @Component({
-    selector: '',
+    selector: 'app-form-sheet-wrapper',
     template: ``,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormSheetWrapperComponent extends SubscriptionComponent {
+    @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
+    
+    navConfig: MainTopNavConfig = {
+        backFn: () => this.close(null), 
+        backIcon: "close", 
+        ...this.config.navConfig
+    }; 
     
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,

@@ -47,10 +47,10 @@ export class UserTimesheetListStore extends ObservableStore<StoreState> {
       );
 
   timesheetCriteriaFormState$: Observable<TimesheetCriteriaFormState> = 
-      this.stateProperty$<Mission[]>("missions").pipe(
+      this.stateProperty$<Mission[]>("missions", false).pipe(
         map(x => { return { options:{missions:x, users:null} } })
       )
-      
+
   constructor(
     base: ObservableStoreBase,
     private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,

@@ -38,7 +38,7 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> {
     ));
 
     weekCriteriaFormState$: Observable<WeekCriteriaFormState> = 
-        this.modelProperty$<User[]>("users").pipe(map(x => { return {options: {users: x} }}))
+        this.modelProperty$<User[]>("users", false).pipe(map(x => { return {options: {users: x} }}))
 
     constructor(
         base: ObservableStoreBase,

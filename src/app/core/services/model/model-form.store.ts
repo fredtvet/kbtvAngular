@@ -23,14 +23,14 @@ export class ModelFormStore extends ObservableStore<ModelState>  {
 
   getFormState$(modelProp: Prop<ModelState>): Observable<SaveModelFormState>{
     const modelCfg = ModelStateConfig.get(modelProp);
-    return this.stateSlice$([...(modelCfg.foreigns || []), modelProp]).pipe(
+    return this.stateSlice$([...(modelCfg.foreigns || []), modelProp], false).pipe(
       map(state => { return {foreigns: state} })
     )
   }
 
   getModelWithForeigns(id: string, modelProp: Prop<ModelState>, fkState: Partial<ModelState>): Model {
     const state = {...fkState};
-    state[modelProp] = this.getStateProperty(modelProp)
+    state[modelProp] = this.getStateProperty(modelProp, false)
     const relationCfg = new GetWithRelationsConfig(modelProp, null, 'all');
     return this.getWithRelationsHelper.get<Model>(state, relationCfg, id);
   }
