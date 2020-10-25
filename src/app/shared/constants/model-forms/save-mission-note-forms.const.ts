@@ -25,7 +25,7 @@ const ContentControl = <DynamicControl<MissionNote>>{ name: "content", required:
 const PinnedControl = <DynamicControl<MissionNote>>{ name: "pinned",
     type: "control", questions: [{
         component:  CheckboxQuestionComponent,
-        question: <CheckboxQuestion>{text: "Viktig?", color:"primary"}, 
+        question: <CheckboxQuestion>{text: "Viktig?", color:"accent"}, 
     }],
 }
 const MissionIdControl = <DynamicControl<MissionNote>>{ name: "missionId", required: true,

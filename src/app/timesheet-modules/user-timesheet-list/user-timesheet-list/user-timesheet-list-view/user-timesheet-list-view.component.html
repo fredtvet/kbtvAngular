@@ -3,7 +3,7 @@
         itemSize="104" maxBufferPx="800" minBufferPx="800" fxFlex>
         <div class="m-1" *cdkVirtualFor="let timesheet of timesheets | sortByDate : 'startTime'; trackBy: trackByTimesheet">
             <app-timesheet-card [timesheet]="timesheet" 
-                [actionButton]="timesheet.status ? null : { 
+                [actionButton]="timesheet.status === 1 ? null : { 
                     icon: 'edit', 
                     color: 'accent',
                     callback: editTimesheet, params: [timesheet.id]

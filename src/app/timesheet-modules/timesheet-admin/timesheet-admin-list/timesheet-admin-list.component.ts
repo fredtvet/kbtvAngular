@@ -43,7 +43,7 @@ export class TimesheetAdminListComponent{
   toggleTimesheetStatus = (timesheet: Timesheet): void => 
     this.store.updateStatus({
       id: timesheet.id, 
-      status: timesheet.status ? TimesheetStatus.Open : TimesheetStatus.Confirmed
+      status: timesheet.status === TimesheetStatus.Confirmed ? TimesheetStatus.Open : TimesheetStatus.Confirmed
     });
 
   trackById = _trackByModel("timesheets");

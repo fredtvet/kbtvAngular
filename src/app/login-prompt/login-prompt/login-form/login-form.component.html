@@ -2,12 +2,12 @@
   <span class="mat-subheading-2 mb-2">Logg inn</span>
 
   <mat-form-field>
-    <mat-icon matSuffix color="primary">person</mat-icon>
+    <mat-icon matSuffix color="accent">person</mat-icon>
     <input matInput formControlName="userName" placeholder="Brukernavn" type="text" />
   </mat-form-field>
 
   <mat-form-field>
-    <mat-icon matSuffix color="primary" (click)="hidePassword = !hidePassword">
+    <mat-icon matSuffix color="accent" (click)="hidePassword = !hidePassword">
       {{hidePassword ? 'visibility_off' : 'visibility'}}
     </mat-icon>
     <input matInput formControlName="password" placeholder="Passord" [type]="hidePassword ? 'password' : 'text'" />

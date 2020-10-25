@@ -1,4 +1,4 @@
-<app-main-skeleton *ngIf="vm$ | async; let vm">
+<app-main-skeleton *ngIf="vm$ | async; let vm" disableElevation="true">
 
     <ng-container navbar>
         <app-main-top-nav-bar [config]="vm.navConfig" >
@@ -7,7 +7,7 @@
         </app-chips-bar>
     </ng-container>
 
-    <app-timesheet-statistic-table #statTable class="mat-elevation-z2" fxFlex 
+    <app-timesheet-statistic-table #statTable fxFlex 
         [config]="vm.tableConfig">
     </app-timesheet-statistic-table>
   

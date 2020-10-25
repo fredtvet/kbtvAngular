@@ -20,7 +20,7 @@
             <app-timesheet-mission-bar class="fadeInDown" style="margin:2px" 
               *ngFor="let timesheet of vm.summaries[weekDay].timesheets | sortByDate: 'startTime' : 'asc'; trackBy: trackByTimesheet;"                   
               [timesheet]="timesheet"
-              (barClicked)="timesheet.status ? openTimesheetCard(timesheet.id) : openTimesheetForm(timesheet.id)">
+              (barClicked)="timesheet.status === 1 ? openTimesheetCard(timesheet.id) : openTimesheetForm(timesheet.id)">
             </app-timesheet-mission-bar>
           </ng-container>
 
