@@ -11,7 +11,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
     protected addChecks(record: Timesheet): boolean {
         let exp = true;
         if(!this.criteria.dateRange) return false;
-        if(this.criteria.status || this.criteria.status === 0){
+        if(this.criteria.status){
             exp = exp && record.status === this.criteria.status;
         }
         if(this.criteria.user?.userName)

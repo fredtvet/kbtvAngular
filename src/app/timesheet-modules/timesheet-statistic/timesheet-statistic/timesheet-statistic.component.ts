@@ -13,10 +13,11 @@ import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 import { AgGridConfig } from 'src/app/shared/components/abstracts/ag-grid-config.interface';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetCriteriaFormState, TimesheetCriteriaForm } from 'src/app/shared/constants/forms/timesheet-criteria-form.const';
-import { GroupByPeriod } from 'src/app/shared/enums';
+import { GroupByPeriod, TimesheetStatus } from 'src/app/shared/enums';
 import { FormService } from 'src/app/shared/form';
 import { ArrayRow } from 'src/app/shared/interfaces/array-row.interface';
 import { DateRange } from 'src/app/shared/interfaces/date-range.interface';
+import { translations } from 'src/app/shared/translations';
 import { TimesheetSummary, TimesheetCriteria } from '../../shared-timesheet/interfaces';
 import { TimesheetStatisticStore } from '../timesheet-statistic.store';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
@@ -119,7 +120,8 @@ export class TimesheetStatisticComponent {
           user: {valueFormatter: (val: User) => val.lastName + ', ' + val.lastName}, 
           mission: {valueFormatter: (val: Mission) => _getModelDisplayValue("missions", val)},
           dateRange: {valueFormatter: (val: DateRange) => _formatDateRange(val, _formatShortDate)}, 
-          dateRangePreset: {ignored: true }
+          dateRangePreset: {ignored: true},
+          status: {valueFormatter: (val: TimesheetStatus) => translations[TimesheetStatus[val]?.toLowerCase()]}, 
         }
       )
     } 

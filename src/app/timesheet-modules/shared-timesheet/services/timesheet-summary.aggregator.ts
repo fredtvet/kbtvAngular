@@ -162,10 +162,10 @@ export class TimesheetSummaryAggregator {
   }
 
   private addHoursToSummary(summary: TimesheetSummary, timesheet: Timesheet): void{
-    if (timesheet.status === TimesheetStatus.Open)
-      summary.openHours = Math.round((summary.openHours + timesheet.totalHours) * 10) / 10;
-    else
+    if (timesheet.status === TimesheetStatus.Confirmed)
       summary.confirmedHours = Math.round((summary.confirmedHours + timesheet.totalHours) * 10) / 10;
+    else   
+      summary.openHours = Math.round((summary.openHours + timesheet.totalHours) * 10) / 10;
   }
 
 }

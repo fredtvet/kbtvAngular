@@ -71,8 +71,6 @@ export class ColDefsFactoryService {
       ? this.datePipe.transform(params.value, "shortTime")
       : undefined;
 
-  private convertStatus = (params) => {
-    if (params?.value === TimesheetStatus.Open) return "Åpen";
-    if (params?.value === TimesheetStatus.Confirmed) return "Låst";
-  };
+  private convertStatus = (params) => 
+    translations[TimesheetStatus[params.value]?.toLowerCase()]
 }

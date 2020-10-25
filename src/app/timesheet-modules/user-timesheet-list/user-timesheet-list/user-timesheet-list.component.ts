@@ -127,15 +127,4 @@ export class UserTimesheetListComponent implements OnInit {
     this.store.addFilterCriteria(criteria);
   }
 
-  private formatCriteriaChips(criteria: TimesheetCriteria): TimesheetCriteria{
-    if(!criteria) return;
-    let clone = {...criteria};
-
-    if(clone.status === TimesheetStatus.Open) clone.status = "Åpen" as any;
-    else if(clone.status === TimesheetStatus.Confirmed) clone.status = "Låst" as any;
-    else clone.status = null;
-
-    return clone;
-  }
-
 }

@@ -46,7 +46,7 @@ export class TimesheetAdminWeekListComponent {
     if(!timesheets) return;
     
     let ids = timesheets.reduce((_ids, timesheet) => {
-      if(timesheet.status == TimesheetStatus.Open) _ids.push(timesheet.id);
+      if(timesheet.status === TimesheetStatus.Open) _ids.push(timesheet.id);
       return _ids
     }, []);
 
