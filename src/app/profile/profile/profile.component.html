@@ -12,17 +12,27 @@
       <app-list-card startIcon='vpn_key' (click)="updatePassword()">
         Oppdater passord<mat-icon rightSide>chevron_right</mat-icon>
       </app-list-card>
-      <app-list-card startIcon='settings' [routerLink]="['/profil/innstillinger']">
-        Innstillinger<mat-icon rightSide>chevron_right</mat-icon>
+      <app-list-card startIcon='settings' (click)="updateSyncConfig()">
+        Konfigurasjoner<mat-icon rightSide>chevron_right</mat-icon>
       </app-list-card>
       <app-list-card appAddToHomeScreen startIcon='get_app'>
         Legg til app<mat-icon rightSide>chevron_right</mat-icon>
       </app-list-card>
+
+      <app-list-card startIcon='update' (click)="refresh()">
+        Synkroniser data<mat-icon rightSide>chevron_right</mat-icon>
+      </app-list-card>
     </span>
   
-    <app-list-card startIcon='power_settings_new' (click)="logout()">
-      Logg ut<mat-icon rightSide>chevron_right</mat-icon>
-    </app-list-card>
+    <span>
+      <app-list-card startIcon='delete_sweep' (click)="confirmPurge()">
+        Slett lokal data<mat-icon rightSide>chevron_right</mat-icon>
+      </app-list-card>
+      <app-list-card startIcon='power_settings_new' (click)="logout()">
+        Logg ut<mat-icon rightSide>chevron_right</mat-icon>
+      </app-list-card>
+    </span>
+
     
   </div>
 

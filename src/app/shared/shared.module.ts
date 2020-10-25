@@ -27,6 +27,7 @@ import { InputQuestionComponent } from './dynamic-form/questions/input-question.
 import { IonDateQuestionComponent } from './dynamic-form/questions/ion-date-time-question.component';
 import { RadioGroupQuestionComponent } from './dynamic-form/questions/radio-group-question.component';
 import { SelectQuestionComponent } from './dynamic-form/questions/select-question.component';
+import { SliderQuestionComponent } from './dynamic-form/questions/slider-question.component';
 import { TextAreaQuestionComponent } from './dynamic-form/questions/text-area-question.component';
 import { ModelFormComponent } from './model-form/components/model-form.component';
 import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButtonsPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
@@ -57,6 +58,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     FileQuestionComponent,
     IonDateQuestionComponent,
     RadioGroupQuestionComponent,
+    SliderQuestionComponent,
     
     TransformButtonPipe,
     ArraySlicePipe,

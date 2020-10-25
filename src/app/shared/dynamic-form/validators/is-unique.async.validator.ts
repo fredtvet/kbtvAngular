@@ -10,7 +10,6 @@ import { map } from 'rxjs/operators';
               else findFunc = (x: any) => x === control.value;
               
               const invalid = data.find(findFunc); 
-              console.log(invalid)
               return invalid ? {'isunique': {value: control.value}} : null;
           }))
         };

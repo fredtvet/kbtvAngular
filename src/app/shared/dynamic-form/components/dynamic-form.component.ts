@@ -17,7 +17,6 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
         <ng-container *dynamicHost>
 
         </ng-container>
-        <mat-divider></mat-divider>
         <app-form-actions 
             [submitDisabled]="form.pristine || form.invalid" 
             [submitText]="config.submitText || 'Lagre'" 
