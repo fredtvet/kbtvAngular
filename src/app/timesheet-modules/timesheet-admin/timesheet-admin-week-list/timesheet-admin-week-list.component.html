@@ -13,7 +13,7 @@
                             callback: changeTimesheetStatuses, 
                             params: [summary.timesheets], 
                             icon: summary.openHours > 0 ? 'lock_open' : 'lock', 
-                            color: summary.openHours > 0 ? 'warn' : 'success'}">
+                            color: summary.openHours > 0 ? 'warn' : 'accent'}">
                 <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
             </app-swipe-card>
         </cdk-virtual-scroll-viewport>

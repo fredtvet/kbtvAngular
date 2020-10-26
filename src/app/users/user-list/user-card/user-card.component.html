@@ -3,7 +3,7 @@
     {{ user.lastName }}, {{ user.firstName }}
 
     <span rightSide fxLayout="row">
-        <a *ngIf="user.phoneNumber" class="color-success" mat-icon-button href="tel:{{ user.phoneNumber }}">
+        <a *ngIf="user.phoneNumber" style="color:green" mat-icon-button href="tel:{{ user.phoneNumber }}">
             <mat-icon>phone</mat-icon>
         </a>   
         <app-button *ngIf="newPasswordButton && user.role != Roles.Leder" [config]="newPasswordButton"></app-button>

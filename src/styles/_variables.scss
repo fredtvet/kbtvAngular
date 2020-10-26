@@ -3,7 +3,6 @@
 $app-primary: mat-palette($mat-blue-grey, 50);
 $app-accent:  mat-palette($mat-cyan, 800);
 $app-warn:    mat-palette($mat-red, A700);
-$app-success: mat-palette($mat-green, A700);
 
 $primary: mat-color($app-primary);
 $primary-light: mat-color($app-primary, lighter);
@@ -16,10 +15,6 @@ $accent-dark: mat-color($app-accent, darker);
 $warn: mat-color($app-warn);
 $warn-light: mat-color($app-warn, lighter);
 $warn-dark: mat-color($app-warn, darker);
-
-$success: mat-color($app-success);
-$success-light: mat-color($app-success, lighter);
-$success-dark: mat-color($app-success, darker);
 
 $kbtv-client-theme: mat-light-theme((
     color: (

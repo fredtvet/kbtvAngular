@@ -2,7 +2,7 @@
   <mat-toolbar fxLayout="column" fxLayoutAlign="center start" color="primary">
 
     <ng-container *ngIf="config.isOnline else offlineHeader">
-      <span class="mat-small color-success"> Tilkoblet internett </span>
+      <span class="mat-small color-accent"> Tilkoblet internett </span>
     </ng-container>
     <ng-template #offlineHeader>
       <span class="mat-small color-warn">Frakoblet internett</span>

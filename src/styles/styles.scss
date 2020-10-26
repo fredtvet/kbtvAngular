@@ -58,19 +58,6 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
   color: $warn;
 }
 
-.success{
-  background-color:$success;
-  color: mat-color($app-success, default-contrast);
-}
-
-.success-light{
-  background-color:$success-light;
-  color: mat-color($app-success, lighter-contrast);
-}
-
-.color-success{
-  color: $success;
-}
 
 
 .foreground-card{
@@ -127,8 +114,7 @@ a {
 
 .notification-success{
   margin-bottom:$bottom-nav-height + $gap-size * 2px!important;
-  background-color:mat-color($app-success, A700);
-  color:mat-color($app-success, default-contrast);
+  @extend .accent;
 }
 
 .notification-warn{
