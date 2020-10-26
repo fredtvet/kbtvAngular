@@ -42,7 +42,7 @@ export interface DynamicControl<TForm> {
     valueGetter?: ((form: TForm) => any) | any,
     questions?: QuestionWrapper[],
     validators?: ValidatorFn[],
-    asyncStateValidators?: ((state: Observable<any>) => AsyncValidatorFn)[],
+    asyncStateValidators?: ((state$: Observable<any>) => AsyncValidatorFn)[],
 }
 
 export interface DynamicControlGroupStyling {

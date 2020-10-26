@@ -60,6 +60,7 @@ const DateTimeControlGroup = <DynamicControlGroup<any>>{ type: "group", controls
                 placeholder: "Starttid", 
                 width: "20%",
                 ionFormat:"HH:mm",
+                datePipeFormat: "HH:mm",
                 minuteValues: [0,15,30,45],
                 defaultValueGetter:  (f: TimesheetForm) => _timeValueDefault(f?.date, 7),
                 max: {controlName: "endTime", callback: (val: any) => val}
@@ -74,6 +75,7 @@ const DateTimeControlGroup = <DynamicControlGroup<any>>{ type: "group", controls
                 placeholder: "Sluttid", 
                 width: "20%",
                 ionFormat:"HH:mm",
+                datePipeFormat: "HH:mm",
                 minuteValues: [0,15,30,45],  
                 defaultValueGetter:  (f: TimesheetForm) => _timeValueDefault(f.date, 12),          
                 min: {controlName: "startTime", callback: (val: any) => val}

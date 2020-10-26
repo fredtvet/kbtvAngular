@@ -8,12 +8,12 @@ import { BaseQuestionComponent } from './base-question.component';
 
 export interface IonDateQuestion extends Question {
     ionFormat: string;
-    datePipeFormat: string;
+    datePipeFormat?: string;
     minuteValues?: number[];
     defaultValueGetter?: ((form: any) => string) | string;
-    min: string | ControlHook<string>;
-    max: string | ControlHook<string>;
-    valueSetter: (value: any) => any;
+    min?: string | ControlHook<string>;
+    max?: string | ControlHook<string>;
+    valueSetter?: (value: any) => any;
     overrideValueSetterControl?: string;
 }
 
@@ -26,7 +26,7 @@ export interface IonDateQuestion extends Question {
         <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
         <input matInput required 
           [disabled]="control.disabled" 
-          [value]="(value$ | async) | date : question.datePipeFormat || question.ionFormat" 
+          [value]="question.datePipeFormat ? ((value$ | async) | date : question.datePipeFormat) : (value$ | async)" 
           [placeholder]="question.placeholder" 
           [attr.aria-label]="question.ariaLabel">  
             <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>

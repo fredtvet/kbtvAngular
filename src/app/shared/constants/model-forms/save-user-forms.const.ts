@@ -13,7 +13,7 @@ export interface UserForm extends User {
     password?: string;
 }
 
-type FormState = SaveModelFormState & {roles: string[]};
+type FormState = SaveModelFormState;
 
 const AvailableRoles = Object.keys(Roles).filter(x => x !== Roles.Leder).map(key => Roles[key] as string);
 
