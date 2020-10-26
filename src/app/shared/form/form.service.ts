@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { DynamicFormComponent } from 'src/app/shared/dynamic-form/components/dynamic-form.component';
 import { DynamicForm } from 'src/app/shared/dynamic-form/interfaces';
-import { FormSheetWrapperComponent } from '../components/form-sheet-wrapper.component';
+import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
 import { FormSheetWrapperConfig } from './form-sheet-wrapper-config.interface';
 
 export interface FormServiceConfig<TForm, TFormState>{

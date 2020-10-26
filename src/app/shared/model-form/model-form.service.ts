@@ -13,7 +13,7 @@ import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.se
 import { Prop } from 'src/app/shared-app/prop.type';
 import { ModelFormComponent } from 'src/app/shared/model-form/components/model-form.component';
 import { translations } from 'src/app/shared/translations';
-import { FormSheetWrapperComponent } from '../components/form-sheet-wrapper.component';
+import { FormSheetWrapperComponent } from '../form/form-sheet-wrapper.component';
 import { FormSheetWrapperConfig } from '../form';
 import { ModelFormConfig } from './interfaces/model-form-config.interface';
 import { SaveModelFormState } from './interfaces/model-form-to-state-command-adapter.interface';

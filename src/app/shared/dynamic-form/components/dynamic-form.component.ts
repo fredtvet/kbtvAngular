@@ -13,7 +13,7 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
 @Component({
   selector: 'app-dynamic-form',
   template: `
-    <form [formGroup]="form"  class="m-3" fxLayout="column">
+    <form [formGroup]="form" fxLayout="column">
         <ng-container *dynamicHost>
 
         </ng-container>

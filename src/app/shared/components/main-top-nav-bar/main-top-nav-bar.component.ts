@@ -16,7 +16,7 @@ export class MainTopNavBarComponent {
   
   @Input() config: MainTopNavConfig;
   @Input() stylingClass: string;
-  @Input() color: "primary" | "accent" | "warn" = "primary";
+  @Input() color: "primary" | "accent" | "warn" | "transparent" = "primary";
   ButtonTypes = ButtonTypes;
   
   loading$: Observable<boolean> = this.loadingService.loading$;

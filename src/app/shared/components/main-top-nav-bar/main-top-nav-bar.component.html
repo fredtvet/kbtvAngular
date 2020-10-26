@@ -1,4 +1,5 @@
-<mat-toolbar #navBar *ngIf="config" [ngClass]="stylingClass" [color]="color">
+<mat-toolbar #navBar *ngIf="config" [ngClass]="stylingClass" [color]="color" 
+    [ngStyle]="{background: color === 'transparent' ? 'transparent' : ''}">
 
     <ng-container *ngIf="searchBarHidden || !config.searchBar else searchBarContent">
         

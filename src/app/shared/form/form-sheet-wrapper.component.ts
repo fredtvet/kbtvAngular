@@ -5,7 +5,7 @@ import { SubscriptionComponent } from 'src/app/shared-app/components';
 import { MainTopNavBarComponent } from 'src/app/shared/components/main-top-nav-bar/main-top-nav-bar.component';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { DynamicHostDirective } from '../directives/dynamic-host.directive';
-import { FormSheetWrapperConfig } from '../form/form-sheet-wrapper-config.interface';
+import { FormSheetWrapperConfig } from './form-sheet-wrapper-config.interface';
 
 type WrapperConfig = FormSheetWrapperConfig<any, any, any>;
 
@@ -39,8 +39,7 @@ export class FormSheetWrapperComponent extends SubscriptionComponent {
         private loadNav(){
             const factory = this.componentFactoryResolver.resolveComponentFactory(MainTopNavBarComponent);
             let navRef = this.viewContainerRef.createComponent(factory);
-            navRef.instance.stylingClass = "mat-elevation-z1";
-            navRef.instance.color = "accent"
+            navRef.instance.color = "transparent";
             navRef.instance.config = {
                 backFn: () => this.close(null), 
                 backIcon: "close", 
@@ -51,7 +50,9 @@ export class FormSheetWrapperComponent extends SubscriptionComponent {
         private loadForm(){
             const factory = this.componentFactoryResolver.resolveComponentFactory(this.config.formComponent);
             let formRef = this.viewContainerRef.createComponent(factory);
-            formRef.instance.config = this.config.formConfig;
+            formRef.instance.config = this.config.formConfig;         
+            formRef.location.nativeElement.style.display = "block";
+            formRef.location.nativeElement.style.margin = "0px 12px 12px 12px";
 
             if(this.config.formState$)
                 this.config.formState$.pipe(takeUntil(this.unsubscribe))
