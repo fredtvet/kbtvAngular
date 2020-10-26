@@ -9,6 +9,7 @@ import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helper
 import { PersistanceStore } from 'src/app/core/services/persistance/persistance.store';
 import { BaseModelStore } from 'src/app/core/services/state/abstracts/base-model.store';
 import { ObservableStoreBase } from "src/app/core/services/state/observable-store-base";
+import { Roles } from 'src/app/shared-app/enums';
 import { _addOrUpdateRange } from "src/app/shared-app/helpers/array/add-or-update-range.helper";
 import { _convertArrayToObject } from "src/app/shared-app/helpers/array/convert-array-to-object.helper";
 import { _filter } from "src/app/shared-app/helpers/array/filter.helper";
@@ -28,7 +29,9 @@ export type FilteredAndGrouped<T> = GroupedResponse<GroupByPeriod, T> &
 export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetStoreState>> extends BaseModelStore<TState> {
   private static baseCriteria: TimesheetCriteria;
 
-  users$ = this.modelProperty$<User[]>("users" as any).pipe(shareReplay());
+  users$ = this.modelProperty$<User[]>("users" as any).pipe(shareReplay(),
+    map(x => _filter(x, (x) => x.role !== Roles.Oppdragsgiver))
+  );
 
   groupBy$ = this.stateProperty$<GroupByPeriod>(this.settings.groupByProp);
 

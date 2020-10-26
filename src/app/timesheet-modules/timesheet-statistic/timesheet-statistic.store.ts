@@ -6,9 +6,11 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-range-with-relations.helper';
 import { PersistanceStore } from 'src/app/core/services/persistance/persistance.store';
 import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
+import { Roles } from 'src/app/shared-app/enums';
+import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
 import { TimesheetCriteriaFormState } from 'src/app/shared/constants/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from 'src/app/shared/enums';
-import { BaseTimesheetStoreSettings, BaseTimesheetStore } from '../shared-timesheet/base-timesheet-store';
+import { BaseTimesheetStore, BaseTimesheetStoreSettings } from '../shared-timesheet/base-timesheet-store';
 import { TimesheetCriteria } from '../shared-timesheet/interfaces';
 import { TimesheetSummaryAggregator } from '../shared-timesheet/services/timesheet-summary.aggregator';
 import { StoreState } from './store-state';
@@ -31,7 +33,7 @@ export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState> {
     criteriaFormState$: Observable<TimesheetCriteriaFormState> = 
         combineLatest([
             this.modelProperty$<Mission[]>("missions", false),
-            this.modelProperty$<User[]>("users", false)
+            this.users$,
         ]).pipe(map(([missions, users]) => { return {options: {missions, users}} }))
 
     constructor(

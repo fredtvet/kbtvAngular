@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Type } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { finalize, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { WithUnsubscribe } from 'src/app/shared-app/mixins/with-unsubscribe.mixin';
 import { DynamicHostDirective } from 'src/app/shared/directives';
 import { _getControlObserver$ } from '../helpers/get-control-observer.helper';

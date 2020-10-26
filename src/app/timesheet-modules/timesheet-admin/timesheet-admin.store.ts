@@ -10,9 +10,11 @@ import { PersistanceStore } from 'src/app/core/services/persistance/persistance.
 import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
 import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { StateAction } from 'src/app/core/services/state/state-action.enum';
+import { Roles } from 'src/app/shared-app/enums';
+import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
 import { WeekCriteriaFormState } from 'src/app/shared/constants/forms/week-criteria-controls.const';
 import { GroupByPeriod, TimesheetStatus } from 'src/app/shared/enums';
-import { BaseTimesheetStoreSettings, BaseTimesheetStore } from '../shared-timesheet/base-timesheet-store';
+import { BaseTimesheetStore, BaseTimesheetStoreSettings } from '../shared-timesheet/base-timesheet-store';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetSummaryAggregator } from '../shared-timesheet/services/timesheet-summary.aggregator';
@@ -39,7 +41,7 @@ export class TimesheetAdminStore extends BaseTimesheetStore<StoreState> {
     ));
 
     weekCriteriaFormState$: Observable<WeekCriteriaFormState> = 
-        this.modelProperty$<User[]>("users", false).pipe(map(x => { return {options: {users: x} }}))
+        this.users$.pipe(map(x => { return { options: {users: x} } }))
 
     constructor(
         base: ObservableStoreBase,
