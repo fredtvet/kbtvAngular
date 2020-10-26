@@ -8,8 +8,8 @@
             <div class="m-1" *cdkVirtualFor="let timesheet of vm.timesheets; trackBy: trackById">
                 <app-timesheet-card [timesheet]="timesheet"
                     [actionButton]="{ 
-                        icon: timesheet.status === 1 ? 'check_circle' : 'check_circle_outline', 
-                        color: timesheet.status === 1 ? 'accent' : 'warn',
+                        icon: timesheet.status === 2 ? 'check_circle' : 'check_circle_outline', 
+                        color: timesheet.status === 2 ? 'accent' : 'warn',
                         callback: toggleTimesheetStatus, params: [timesheet]
                     }">
                 </app-timesheet-card>
