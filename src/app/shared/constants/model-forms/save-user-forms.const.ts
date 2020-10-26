@@ -6,7 +6,7 @@ import { Roles } from 'src/app/shared-app/enums';
 import { DynamicControl, DynamicForm } from '../../dynamic-form/interfaces';
 import { InputQuestionComponent, InputQuestion } from '../../dynamic-form/questions/input-question.component';
 import { SelectQuestionComponent, SelectQuestion } from '../../dynamic-form/questions/select-question.component';
-import { isUniqueAsyncValidator } from '../../dynamic-form/validators/is-unique.async.validator';
+import { isUniqueAsyncValidator } from '../../form/validators/is-unique.async.validator';
 import { SaveModelFormState } from '../../model-form';
 
 export interface UserForm extends User {

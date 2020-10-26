@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { startWith } from 'rxjs/operators';
-import {  Question, QuestionComponent } from '../interfaces';
+import { Question, QuestionComponent } from '../interfaces';
+import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '../validation-error-map.interface';
 import { BaseQuestionComponent } from './base-question.component';
 
 export interface SliderQuestion extends Question {
@@ -41,7 +42,9 @@ export class SliderQuestionComponent extends BaseQuestionComponent<SliderQuestio
 
     value$: Observable<any>;
 
-    constructor() { super() }
+    constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
+        super(validationErrorMessages) 
+    }
 
     updateValue(val: number){
         this.control.setValue(val);

@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
 import { Question, QuestionComponent } from '../interfaces';
+import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '../validation-error-map.interface';
 import { BaseQuestionComponent } from './base-question.component';
 
 export interface GooglePlacesAutoCompleteQuestion extends Question {
@@ -46,7 +47,9 @@ export class GooglePlacesAutoCompleteQuestionComponent extends BaseQuestionCompo
 
     addressFormatter = (address: Address) => address.formatted_address
 
-    constructor() { super() }
+    constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
+        super(validationErrorMessages) 
+    }
 
     onAddressChange(address: Address){
         this.control.setValue(this.addressFormatter(address))

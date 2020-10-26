@@ -40,9 +40,8 @@ export abstract class ControlComponentLoaderComponent extends SubscriptionCompon
         componentRef.instance.form = this.form;
         componentRef.instance.question = questionWrapper.question;  
         componentRef.instance.required = control.required;  
-        componentRef.instance.validationErrorMessages = control.validationErrorMessages;
         componentRef.location.nativeElement.style.marginBottom = "8px";
-        
+
         this.onQuestionComponentInit(componentRef, control);
 
         if(questionWrapper.hideOnValueChange)

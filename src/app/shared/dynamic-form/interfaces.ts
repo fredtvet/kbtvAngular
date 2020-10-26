@@ -2,7 +2,6 @@ import { Type } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Prop } from 'src/app/shared-app/prop.type';
-import { ValidationErrorMap } from './validator-error-messages.const';
 
 export type DisabledObjectMap<T> = { [key in keyof Partial<T>]: boolean };
 
@@ -21,6 +20,7 @@ export interface DynamicForm<TForm, TFormState>{
     getRawValue?: boolean;
     disabledControls?: DisabledObjectMap<TForm>;
     noRenderDisabledControls?: boolean;
+    validators?: ValidatorFn[];
     resettable?: boolean;
     resetState?: Partial<TForm>;
 }
@@ -43,7 +43,6 @@ export interface DynamicControl<TForm> {
     questions?: QuestionWrapper[],
     validators?: ValidatorFn[],
     asyncStateValidators?: ((state: Observable<any>) => AsyncValidatorFn)[],
-    validationErrorMessages?: ValidationErrorMap,
 }
 
 export interface DynamicControlGroupStyling {
@@ -73,7 +72,6 @@ export interface QuestionComponent {
     form: FormGroup;
     required: boolean;
     control: AbstractControl;
-    validationErrorMessages: ValidationErrorMap;
     hideField$: Observable<boolean>;
 }
 

@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { filter, startWith } from 'rxjs/operators';
-import { _getISO } from 'src/app/shared-app/helpers/datetime/get-iso-with-timezone.helper';
 import { _getControlObserver$ } from '../helpers/get-control-observer.helper';
 import { ControlHook, Question } from '../interfaces';
+import { ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from '../validation-error-map.interface';
 import { BaseQuestionComponent } from './base-question.component';
 
 export interface IonDateQuestion extends Question {
@@ -65,11 +65,8 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
 
   value$: Observable<string>;
 
-  protected onQuestionChanges(question: IonDateQuestion): void { 
-    super.onQuestionChanges(question);
-    this.value$ = this.control.valueChanges.pipe(startWith(this.control.value));
-    this.min$ = this.setMinMax(question, "min");
-    this.max$ = this.setMinMax(question, "max");
+  constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
+    super(validationErrorMessages) 
   }
 
   onChange(val: any){
@@ -83,6 +80,13 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
     control.markAsDirty();
   }
 
+  protected onQuestionChanges(question: IonDateQuestion): void { 
+    super.onQuestionChanges(question);
+    this.value$ = this.control.valueChanges.pipe(startWith(this.control.value));
+    this.min$ = this.setMinMax(question, "min");
+    this.max$ = this.setMinMax(question, "max");
+  }
+
   private setMinMax(question: IonDateQuestion, type: "min" | "max"): Observable<string>{
     if(!question) return;
   
@@ -92,6 +96,5 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
 
     return observer.pipe(filter(x => x != null));   
   }
-
 
 }

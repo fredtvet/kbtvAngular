@@ -6,7 +6,7 @@ import { AutoCompleteQuestionComponent } from '../../dynamic-form/questions/auto
 import { AutoCompleteQuestion } from '../../dynamic-form/questions/auto-complete-question/auto-complete-question.interface';
 import { IonDateQuestionComponent, IonDateQuestion } from '../../dynamic-form/questions/ion-date-time-question.component';
 import { TextAreaQuestionComponent, TextAreaQuestion } from '../../dynamic-form/questions/text-area-question.component';
-import { isObjectValidator } from '../../dynamic-form/validators/is-object.validator';
+import { isObjectValidator } from '../../form/validators/is-object.validator';
 import { SaveModelFormState } from '../../model-form';
 
 type FormState = SaveModelFormState & {defaultStartTime: string, defaultEndTime: string};

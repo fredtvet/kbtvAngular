@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Question, QuestionComponent } from '../interfaces';
+import { ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from '../validation-error-map.interface';
 import { BaseQuestionComponent } from './base-question.component';
 
 export interface InputQuestion extends Question {
@@ -16,12 +17,13 @@ export interface InputQuestion extends Question {
       <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
 
       <input matInput 
-        [type]="hideField ? 'password' : question.type" 
+        [type]="hideField ? 'password' : (question.type === 'password' ? 'text' : question.type)" 
         [placeholder]="question.placeholder" 
         [formControl]="control" 
         [required]="required" />
 
-      <mat-icon *ngIf="question.hideable" matSuffix (click)="hideField = !hideField">
+      <mat-icon *ngIf="question.hideable" [color]="question.color || 'accent'" matSuffix 
+        (click)="hideField = !hideField">
         {{hideField ? 'visibility_off' : 'visibility'}}
       </mat-icon>
 
@@ -44,7 +46,9 @@ export class InputQuestionComponent extends BaseQuestionComponent<InputQuestion>
 
   hideField: boolean;
 
-  constructor() { super(); }
+  constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
+    super(validationErrorMessages) 
+  }
 
   protected onQuestionChanges(question: InputQuestion): void { 
     super.onQuestionChanges(question);

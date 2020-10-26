@@ -14,6 +14,8 @@ import { HomeComponent } from './home/home.component';
 import { AppLayoutModule } from './layout/app-layout.module';
 import { AppHammerConfig } from './shared-app/app-hammer-config';
 import { SharedAppModule } from './shared-app/shared-app.module';
+import { ValidationErrorMessages } from './shared-app/validation-error-messages.const';
+import { VALIDATION_ERROR_MESSAGES } from './shared/dynamic-form/validation-error-map.interface';
 
 registerLocaleData(norwayLocale, 'nb-NO');
 
@@ -37,6 +39,7 @@ registerLocaleData(norwayLocale, 'nb-NO');
   providers: [     
     { provide: LOCALE_ID, useValue: "nb-NO" }, 
     { provide: HAMMER_GESTURE_CONFIG, useClass: AppHammerConfig},
+    { provide: VALIDATION_ERROR_MESSAGES, useValue: ValidationErrorMessages},
     {provide: LocationStrategy, useClass: HashLocationStrategy},
   ],
   bootstrap: [AppComponent],

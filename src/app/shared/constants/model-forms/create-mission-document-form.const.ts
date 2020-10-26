@@ -4,7 +4,7 @@ import { DynamicControlGroup, DynamicControl, DynamicForm } from '../../dynamic-
 import { AutoCompleteQuestionComponent } from '../../dynamic-form/questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../../dynamic-form/questions/auto-complete-question/auto-complete-question.interface';
 import { FileQuestionComponent } from '../../dynamic-form/questions/file-question.component';
-import { fileExtensionValidator } from '../../dynamic-form/validators/file-extension.validator';
+import { fileExtensionValidator } from '../../form/validators/file-extension.validator';
 import { SaveModelFormState } from '../../model-form';
 import { DocumentFileExtensions } from '../document-file-extensions.const';
 

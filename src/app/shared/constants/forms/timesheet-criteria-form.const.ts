@@ -11,8 +11,8 @@ import { AutoCompleteQuestion } from '../../dynamic-form/questions/auto-complete
 import { IonDateQuestionComponent, IonDateQuestion } from '../../dynamic-form/questions/ion-date-time-question.component';
 import { RadioGroupQuestionComponent, RadioGroupQuestion } from '../../dynamic-form/questions/radio-group-question.component';
 import { SelectQuestionComponent, SelectQuestion } from '../../dynamic-form/questions/select-question.component';
-import { isObjectValidator } from '../../dynamic-form/validators/is-object.validator';
 import { TimesheetStatus } from '../../enums';
+import { isObjectValidator } from '../../form/validators/is-object.validator';
 import { DateRange } from '../../interfaces/date-range.interface';
 import { translations } from '../../translations';
 

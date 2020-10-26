@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import {  Question, QuestionComponent } from '../interfaces';
+import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '../validation-error-map.interface';
 import { BaseQuestionComponent } from './base-question.component';
 
 export interface CheckboxQuestion extends Question {
@@ -29,6 +30,8 @@ export interface CheckboxQuestion extends Question {
 export class CheckboxQuestionComponent extends BaseQuestionComponent<CheckboxQuestion> 
     implements QuestionComponent {
 
-  constructor() { super() }
+  constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
+    super(validationErrorMessages) 
+  }
 
 }

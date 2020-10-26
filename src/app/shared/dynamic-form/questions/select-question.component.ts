@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Prop } from 'src/app/shared-app/prop.type';
 import { DynamicFormStore } from '../dynamic-form.store';
 import { OptionsGetter, Question, QuestionComponent } from '../interfaces';
+import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '../validation-error-map.interface';
 import { BaseQuestionComponent } from './base-question.component';
 
 export interface SelectQuestion<T> extends Question {
@@ -42,8 +43,12 @@ export class SelectQuestionComponent extends BaseQuestionComponent<SelectQuestio
 
   options$: Observable<any[]>;
 
-  constructor(private formStore: DynamicFormStore<any>) { super(); }
-
+  constructor(
+    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
+    private formStore: DynamicFormStore<any>) { 
+    super(validationErrorMessages) 
+  }
+  
   ngOnInit(): void {
     this.options$ = this.formStore.getOptions$(this.question.optionsGetter)
   }

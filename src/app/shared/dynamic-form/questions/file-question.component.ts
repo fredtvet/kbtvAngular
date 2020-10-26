@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Question, QuestionComponent } from '../interfaces';
+import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '../validation-error-map.interface';
 import { BaseQuestionComponent } from './base-question.component';
 
 export interface FileQuestion extends Question {
@@ -26,7 +27,9 @@ export interface FileQuestion extends Question {
 export class FileQuestionComponent extends BaseQuestionComponent<FileQuestion> 
   implements QuestionComponent {
 
-  constructor() { super() }
+  constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
+    super(validationErrorMessages) 
+  }
 
   onFileChange(e) {      
     if(!e.target.files) return this.control.reset()

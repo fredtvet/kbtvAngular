@@ -110,7 +110,7 @@ export class TimesheetStatisticComponent {
 
   private getCriteriaChips(criteria: TimesheetCriteria, activeCriteriaCount: number): ArrayRow<AppChip> {
     if(activeCriteriaCount === 0) 
-      return {id: 2, arr: [{text: "Åpne filter", onClick: this.openTimesheetFilter}]}
+      return {id: 2, arr: [{text: "Åpne filter", color: "accent", onClick: this.openTimesheetFilter}]}
   
     return {
       id: 3, 

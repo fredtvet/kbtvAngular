@@ -20,7 +20,7 @@ import { FormComponent } from '../../form';
       <app-dynamic-form 
         [config]="formConfig$ | async" 
         [formState]="formState$ | async" 
-        (formSubmitted)="onSubmit($event)">
+        (formSubmitted)="$event ? onSubmit($event) : onCancel()">
       </app-dynamic-form>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -81,6 +81,8 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<any, an
         this.commandDispatcher.dispatch(stateCommand); 
       })    
     }
+
+    onCancel = (): void => this.formSubmitted.emit(null); 
 
     private getFormConfig(state: Partial<ModelState>): DynamicForm<any, SaveModelFormState>{
       const dynamicForm = this.config.dynamicForm;

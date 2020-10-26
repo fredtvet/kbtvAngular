@@ -1,8 +1,9 @@
 import { Directive, HostBinding, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { _getValidationErrorMessage } from '../helpers/get-validation-error-message.helper';
 import { Question, QuestionComponent } from '../interfaces';
-import { ValidationErrorMap, ValidatorErrorMessages } from '../validator-error-messages.const';
+import { ValidationErrorMap } from '../validation-error-map.interface';
 
 @Directive()
 export abstract class BaseQuestionComponent<TQuestion extends Question>
@@ -10,7 +11,6 @@ export abstract class BaseQuestionComponent<TQuestion extends Question>
 
   @HostBinding('style.width') width: string;
 
-  validationErrorMessages: ValidationErrorMap;
   control: AbstractControl;
   form: FormGroup;
   required: boolean;
@@ -24,26 +24,10 @@ export abstract class BaseQuestionComponent<TQuestion extends Question>
       this.onQuestionChanges(value);  
   }
 
-  constructor() {}
+  constructor(private validationErrorMessages: ValidationErrorMap) {}
 
   getValidationErrorMessage(): string{
-    if(this.control.hasError('required')) return this.getErrorMessage('required');
-    for(const error of Object.keys(this.control.errors)){
-      const errMessage = this.getErrorMessage(error);
-      if(errMessage) return errMessage;
-    }
-  }
-
-  private getErrorMessage(err: any): string{
-    let errFn: (err: any) => string;
-
-    if(this.validationErrorMessages)
-      errFn = this.validationErrorMessages[err];
-
-    if(!errFn) 
-      errFn = ValidatorErrorMessages[err];
-
-    if(errFn) return errFn(this.control.errors[err])
+    return _getValidationErrorMessage(this.control.errors, this.validationErrorMessages)
   }
 
   protected onQuestionChanges(question: TQuestion): void { 

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Question, QuestionComponent } from '../interfaces';
+import { ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from '../validation-error-map.interface';
 import { BaseQuestionComponent } from './base-question.component';
 
 export interface TextAreaQuestion extends Question {
@@ -31,6 +32,8 @@ export interface TextAreaQuestion extends Question {
 export class TextAreaQuestionComponent extends BaseQuestionComponent<TextAreaQuestion> 
   implements QuestionComponent {
 
-  constructor() { super() }
+  constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
+    super(validationErrorMessages) 
+  }
 
 }

@@ -1,3 +1,4 @@
+import { Inject } from '@angular/core';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -6,7 +7,9 @@ import { _hasSameState } from 'src/app/shared-app/helpers/object/has-same-state.
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { FormComponent } from '../../form';
 import { DynamicFormStore } from '../dynamic-form.store';
+import { _getValidationErrorMessage } from '../helpers/get-validation-error-message.helper';
 import { DisabledObjectMap, DynamicControl, DynamicForm } from '../interfaces';
+import { ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from '../validation-error-map.interface';
 import { ControlComponentLoaderComponent, ValidControl } from './control-component-loader.component';
 import { DynamicControlGroupComponent } from './dynamic-control-group.component';
 
@@ -17,6 +20,11 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
         <ng-container *dynamicHost>
 
         </ng-container>
+
+        <mat-error *ngIf="form.dirty && form.invalid && form.errors">
+            {{ getValidationErrorMessage() }}
+        </mat-error>
+
         <app-form-actions 
             [submitDisabled]="form.pristine || form.invalid" 
             [submitText]="config.submitText || 'Lagre'" 
@@ -57,10 +65,18 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
     constructor(
         componentFactoryResolver: ComponentFactoryResolver,
         cdRef: ChangeDetectorRef,
+        @Inject(VALIDATION_ERROR_MESSAGES) private validationErrorMessages: ValidationErrorMap,
         private formStore: DynamicFormStore<Object>,
         private formBuilder: FormBuilder,
     ) { super(componentFactoryResolver, cdRef, DynamicControlGroupComponent); }
+
+    checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+    let pass = group.get('newPassword').value;
+    let confirmPass = group.get('confirmPassword').value;
   
+    return pass === confirmPass ? null : { notSame: true }     
+    }
+
     onSubmit(){
         let value = this._config.getRawValue ? this.form.getRawValue() : this.form.value;
         if(this._config.onSubmitFormatter)
@@ -76,11 +92,16 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         this.form.reset(this._config.resetState || {});
         this.form.markAsDirty()
     }
+    
+    getValidationErrorMessage(): string{
+        return _getValidationErrorMessage(this.form.errors, this.validationErrorMessages)
+    }
 
     private initalizeForm() {
         this.dynamicHost.viewContainerRef.clear();
 
         this.form = this.getFormGroup(this._config.controls, this._config.disabledControls); //Add controls first
+        this.form.setValidators(this.config.validators)
 
         if(this._config.resettable)
             this.resetEnabled$ = this.form.valueChanges.pipe(

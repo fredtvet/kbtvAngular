@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DynamicFormStore } from '../dynamic-form.store';
 import { OptionsGetter, Question, QuestionComponent } from '../interfaces';
+import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '../validation-error-map.interface';
 import { BaseQuestionComponent } from './base-question.component';
 
 export interface RadioGroupQuestion<T> extends Question {
@@ -43,7 +44,11 @@ export class RadioGroupQuestionComponent extends BaseQuestionComponent<RadioGrou
 
   options$: Observable<any[]>;
   
-  constructor(private formStore: DynamicFormStore<Object>) { super(); }
+  constructor(
+    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
+    private formStore: DynamicFormStore<Object>) { 
+    super(validationErrorMessages) 
+  }
 
   ngOnInit(): void {
     this.options$ = this.formStore.getOptions$(this.question.optionsGetter);
