@@ -21,7 +21,7 @@ export interface SliderQuestion extends Question {
     
     <div fxLayout="row" fxLayoutAlign="start center">
         <span class="mat-body">{{ control.value + " " + question.valueSuffix }}</span>
-        <mat-slider color="accent" fxFlex [value]="value$ | async" 
+        <mat-slider [color]="question.color || 'accent'" fxFlex [value]="value$ | async" 
             (input)="updateValue($event.value)"
             [thumbLabel]="question.thumbLabel"
             [tickInterval]="question.tickInterval || 1"

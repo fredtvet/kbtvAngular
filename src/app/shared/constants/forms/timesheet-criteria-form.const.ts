@@ -52,7 +52,7 @@ const DateRangePresetControl = <DynamicControl<TimesheetCriteria>>{ name: "dateR
     type: "control", questions: [{
         component:  RadioGroupQuestionComponent,
         question: <RadioGroupQuestion<DateRangePresets>>{   
-            label: "Velg tidsrom *", color:"accent",
+            label: "Velg tidsrom *",
             optionsGetter: Object.keys(DateRangePresets).filter(k => !isNaN(Number(k))).map(x =>  parseInt(x)),
             valueFormatter: (val: DateRangePresets) => translations[DateRangePresets[val].toLowerCase()] 
         }, 
@@ -107,7 +107,7 @@ const StatusControl = <DynamicControl<TimesheetCriteria>>{ name: "status",
     type: "control", questions: [{
         component:  RadioGroupQuestionComponent,
         question: <RadioGroupQuestion<TimesheetStatus>>{   
-            label: "Velg status", color:"accent", defaultOption: "Begge",
+            label: "Velg status", defaultOption: "Begge",
             optionsGetter: [TimesheetStatus.Open, TimesheetStatus.Confirmed],
             valueFormatter: (val) => translations[TimesheetStatus[val]?.toLowerCase()]
         }, 

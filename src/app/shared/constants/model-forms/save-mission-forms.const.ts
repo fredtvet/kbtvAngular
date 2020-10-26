@@ -76,7 +76,6 @@ const FinishedControl = <DynamicControl<Mission>>{ name: "finished",
         component:  CheckboxQuestionComponent,
         question: <CheckboxQuestion>{   
             text: "Er oppdraget ferdig?", 
-            color:"accent"
         }, 
     }], 
 }

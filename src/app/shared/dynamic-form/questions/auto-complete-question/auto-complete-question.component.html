@@ -16,7 +16,7 @@
 
 <ng-template #autocomplete let-options="options">
     
-    <mat-form-field [color]="question.color" class="w-100">
+    <mat-form-field [color]="question.color || 'accent'" class="w-100">
         <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
         
         <input matInput [placeholder]="question.placeholder" [formControl]="control" [required]="required"

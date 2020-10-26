@@ -12,7 +12,7 @@ export interface CheckboxQuestion extends Question {
     <div class="mat-body" *ngIf="question.label">{{ question.label }}</div>
     
     <mat-checkbox
-        [color]="question.color" 
+        [color]="question.color || 'accent'" 
         [formControl]="control" 
         [required]="required" >
         {{ question.text }}

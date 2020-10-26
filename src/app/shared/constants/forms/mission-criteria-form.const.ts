@@ -57,8 +57,7 @@ const FinishedControl = <DynamicControl<MissionCriteria>>{ name: "finished",
     type: "control", questions: [{
         component:  RadioGroupQuestionComponent,
         question: <RadioGroupQuestion<boolean>>{   
-            label: "Velg status", color:"accent",
-            optionsGetter: [false, true],
+            label: "Velg status", optionsGetter: [false, true],
             valueFormatter: (finished: boolean) => finished ? "Ferdig" : "Aktiv"
         }, 
     }], 

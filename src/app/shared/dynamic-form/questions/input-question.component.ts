@@ -12,7 +12,7 @@ export interface InputQuestion extends Question {
 @Component({
   selector: 'app-input-question',
   template: `
-    <mat-form-field [color]="question.color" class="w-100">
+    <mat-form-field [color]="question.color || 'accent'" class="w-100">
       <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
 
       <input matInput 

@@ -9,7 +9,7 @@ export interface TextAreaQuestion extends Question {
 @Component({
   selector: 'app-text-area-question',
   template: `
-    <mat-form-field [color]="question.color" class="w-100">
+    <mat-form-field [color]="question.color || 'accent'" class="w-100">
         <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
         
         <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" 

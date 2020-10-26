@@ -13,7 +13,7 @@ export interface GooglePlacesAutoCompleteQuestion extends Question {
 @Component({
   selector: 'app-google-places-autocomplete-question',
   template: `
-    <mat-form-field [color]="question.color" class="w-100">
+    <mat-form-field [color]="question.color || 'accent'" class="w-100">
         <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
         <input ngx-google-places-autocomplete
             [options]="googleOptions"

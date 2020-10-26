@@ -16,7 +16,7 @@ export interface SelectQuestion<T> extends Question {
 @Component({
   selector: 'app-select-question',
   template: `
-    <mat-form-field [color]="question.color" class="w-100">
+    <mat-form-field [color]="question.color || 'accent'" class="w-100">
         <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
         <mat-select [placeholder]="question.placeholder" [formControl]="control" [required]="required" [compareWith]="question.compareWith || defaultCompareWith">
             <mat-option *ngIf="question.defaultOption">{{ question.defaultOption }}</mat-option>

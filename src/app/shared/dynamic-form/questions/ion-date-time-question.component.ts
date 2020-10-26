@@ -22,7 +22,7 @@ export interface IonDateQuestion extends Question {
   template:`
    <div (click)="dateTime.click()" class="w-100" [ngStyle]="{'pointer-events': control.disabled ? 'none' : 'auto'}">
      
-      <mat-form-field style="pointer-events:none!important;" class="w-100">
+      <mat-form-field style="pointer-events:none!important;" class="w-100" [color]="question.color || 'accent'">
         <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
         <input matInput required 
           [disabled]="control.disabled" 
