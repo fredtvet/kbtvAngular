@@ -1,15 +1,14 @@
 import { ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Type } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
-import { SubscriptionComponent } from 'src/app/shared-app/components';
+import { finalize, takeUntil } from 'rxjs/operators';
+import { WithUnsubscribe } from 'src/app/shared-app/mixins/with-unsubscribe.mixin';
 import { DynamicHostDirective } from 'src/app/shared/directives';
-import { DynamicFormStore } from '../dynamic-form.store';
 import { _getControlObserver$ } from '../helpers/get-control-observer.helper';
 import { ControlGroupComponent, ControlHook, DynamicControl, DynamicControlGroup, DynamicForm, QuestionComponent, QuestionWrapper } from '../interfaces';
 
 export type ValidControl = DynamicControlGroup<any> | DynamicControl<any>;
 
-export abstract class ControlComponentLoaderComponent extends SubscriptionComponent {
+export abstract class ControlComponentLoaderComponent extends WithUnsubscribe() {
     dynamicHost: DynamicHostDirective;
 
     form: FormGroup;

@@ -3,7 +3,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { RouterOutlet } from "@angular/router";
 import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { SubscriptionComponent } from 'src/app/shared-app/components/subscription.component';
+import { WithUnsubscribe } from 'src/app/shared-app/mixins/with-unsubscribe.mixin';
 import { routeAnimation } from '../animations/route.animation';
 import { MainNavConfig } from '../interfaces/main-nav-config.interface';
 import { MainNavService } from '../main-nav.service';
@@ -14,7 +14,7 @@ import { MainNavService } from '../main-nav.service';
   animations: [ routeAnimation ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainNavComponent extends SubscriptionComponent {
+export class MainNavComponent extends WithUnsubscribe() {
   @ViewChild('drawer') drawer: MatDrawer;
 
   config$: Observable<MainNavConfig> = this.mainNavService.config$;

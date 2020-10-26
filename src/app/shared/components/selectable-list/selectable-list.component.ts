@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef } from "@angular/core";
 import { skip, takeUntil } from "rxjs/operators";
+import { WithUnsubscribe } from 'src/app/shared-app/mixins/with-unsubscribe.mixin';
 import { SelectableEntity } from 'src/app/shared/interfaces';
-import { SubscriptionComponent } from '../../../shared-app/components/subscription.component';
 import { SelectableListPresenter } from './selectable-list.presenter';
 
 @Component({
@@ -11,7 +11,7 @@ import { SelectableListPresenter } from './selectable-list.presenter';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers:[SelectableListPresenter]
 })
-export class SelectableListComponent extends SubscriptionComponent {
+export class SelectableListComponent extends WithUnsubscribe() {
     @Input('entities')
     set entities(value: any[]) {this.selectableListPresenter.addEntities(value)}
 
