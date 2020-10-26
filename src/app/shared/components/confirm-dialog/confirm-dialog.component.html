@@ -10,7 +10,7 @@
     <p>{{ config.message || 'Vennligst bekreft operasjonen.' }}</p>
   </mat-card-content>
 
-  <mat-card-actions>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
     <button mat-button (click)="onNoClick()">{{ config.discardText || 'Avbryt'}}</button>
     <button mat-button  [mat-dialog-close]="true" cdkFocusInitial>{{ config.confirmText }}</button>
   </mat-card-actions>

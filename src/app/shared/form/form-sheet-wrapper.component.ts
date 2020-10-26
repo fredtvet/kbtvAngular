@@ -17,12 +17,6 @@ type WrapperConfig = FormSheetWrapperConfig<any, any, any>;
 export class FormSheetWrapperComponent extends SubscriptionComponent {
     @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
     
-    navConfig: MainTopNavConfig = {
-        backFn: () => this.close(null), 
-        backIcon: "close", 
-        ...this.config.navConfig
-    }; 
-    
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,

@@ -57,7 +57,7 @@ export class ModelFormService {
           backIcon: "close",
           buttons: [
               (config.deleteDisabled || !(config.formConfig.entityId)) ? null : 
-                {icon: 'delete_forever', callback: () => this.confirmDelete(config.formConfig, config.onDeleteUri, ref)}
+                {icon: 'delete_forever', color: "warn", callback: () => this.confirmDelete(config.formConfig, config.onDeleteUri, ref)}
           ]
         },
       } 
@@ -83,7 +83,7 @@ export class ModelFormService {
     const translatedProp = this.translateStateProp(formConfig.stateProp)
     this.confirmService.open({
         title: `Slett ${translatedProp}?`, 
-        message: `bekreft at du ønsker å slette ${translatedProp} med id "${formConfig.entityId}"`, 
+        message: `Bekreft at du ønsker å slette ${translatedProp} med id "${formConfig.entityId}"`, 
         confirmText: 'Slett',
         confirmCallback: () => this.deleteEntity(formConfig, deleteUrl, ref)
     });
