@@ -17,6 +17,7 @@ export class MissionListViewComponent {
   constructor() { }
 
   checkCount = 0;
+
   ngAfterViewChecked(){ //First render doesnt work? Cant use afterViewInit. 
     this.checkCount++;
     if(this.checkCount !== 2) return;

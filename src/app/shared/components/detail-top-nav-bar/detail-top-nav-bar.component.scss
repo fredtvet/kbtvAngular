@@ -2,13 +2,13 @@
 
 .container {
     position:relative;
-    min-height:100px;
   }
 
 .img-container{
     overflow-y:auto;
     overflow-x:hidden;
     width:100%;
+    min-height:150px;
     max-width:600px;
     max-height:37vh; 
     //max-width:650px!important;
@@ -41,12 +41,12 @@ mat-toolbar-single-row.detail-nav{
     left: 0;
     right: 0;
     background-color:transparent!important;
-    color:white;
+    color:white!important;
 }
 
 ::ng-deep.detail-navbar-overlay-top{
     top: 0;
-    background-color:rgba(0,0,0,.3)!important;
+    background-color:rgba(0,0,0,.5)!important;
 }
 
 .detail-navbar-overlay-bottom{

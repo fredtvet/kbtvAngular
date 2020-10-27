@@ -10,7 +10,7 @@ import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
-import { MissionCriteriaFormState, MissionCriteriaForm } from 'src/app/shared/constants/forms/mission-criteria-form.const';
+import { MissionCriteriaForm, MissionCriteriaFormState } from 'src/app/shared/constants/forms/mission-criteria-form.const';
 import { CreateMissionForm } from 'src/app/shared/constants/model-forms/save-mission-forms.const';
 import { FormService } from 'src/app/shared/form';
 import { MissionCriteria } from "src/app/shared/interfaces/mission-criteria.interface";
