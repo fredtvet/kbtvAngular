@@ -1,7 +1,5 @@
-import { MissionChild } from './relationships/mission-child.interface';
 import { ModelFile } from './base-entity-file.interface';
+import { MissionChild } from './relationships/mission-child.interface';
 
 
-export interface MissionImage extends MissionChild, ModelFile{
-    id?: string,
-}
+export interface MissionImage extends MissionChild, ModelFile {}

@@ -21,10 +21,10 @@ export class ModelFormStore extends ObservableStore<ModelState>  {
     super(base);
   }
 
-  getFormState$(modelProp: Prop<ModelState>): Observable<SaveModelFormState>{
+  getFormState$(modelProp: Prop<ModelState>): Observable<SaveModelFormState<Partial<ModelState>>>{
     const modelCfg = ModelStateConfig.get(modelProp);
     return this.stateSlice$([...(modelCfg.foreigns || []), modelProp], false).pipe(
-      map(state => { return {foreigns: state} })
+      map(state => { return {options: state} })
     )
   }
 

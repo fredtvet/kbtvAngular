@@ -50,7 +50,7 @@ export abstract class BaseFormToSaveModelStateCommandAdapter<TModel extends Mode
                 this.entity[foreignKey] = null;
 
             const existingFkEntity = //Check if fkEntity with same display value exists
-                _find<Model>(this.input.foreigns[foreignStateProp], fkDisplayValue, displayProp)
+                _find<Model>(this.input.options[foreignStateProp], fkDisplayValue, displayProp)
 
             if(existingFkEntity) //If existing fkEntity, set foreign key on entity
                 this.entity[foreignKey] = existingFkEntity[identifier]; 

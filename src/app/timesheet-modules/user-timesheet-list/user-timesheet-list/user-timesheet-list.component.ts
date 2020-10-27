@@ -4,6 +4,7 @@ import { combineLatest, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Mission, Timesheet } from "src/app/core/models";
 import { _getModelDisplayValue } from 'src/app/core/services/model/helpers/get-model-property.helper';
+import { ModelState } from 'src/app/core/services/model/interfaces';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
 import { DateRangePresets } from 'src/app/shared-app/enums';
 import { _formatDateRange } from 'src/app/shared-app/helpers/datetime/format-date-range.helper';
@@ -79,11 +80,11 @@ export class UserTimesheetListComponent implements OnInit {
   }
 
   openTimesheetForm = (entityId?: string, initialValue?: TimesheetForm): void => {
-    let dynamicForm: DynamicForm<TimesheetForm, SaveModelFormState>;
+    let dynamicForm: DynamicForm<TimesheetForm, SaveModelFormState<Partial<ModelState>>>;
     if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _objectToDisabledObjectMap(initialValue)}
     else dynamicForm = EditUserTimesheetForm
 
-    this.modelFormService.open<TimesheetForm, SaveModelFormState>({
+    this.modelFormService.open<TimesheetForm>({
       formConfig:{
         dynamicForm: {...dynamicForm, initialValue}, entityId,
         adapter: UserTimesheetFormToSaveModelAdapter, 

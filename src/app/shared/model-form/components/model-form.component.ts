@@ -25,7 +25,7 @@ import { FormComponent } from '../../form';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModelFormComponent implements FormComponent<ModelFormConfig<any, any>, SaveModelFormState, SaveAction>{
+export class ModelFormComponent implements FormComponent<ModelFormConfig<any, any>, SaveModelFormState<Partial<ModelState>>, SaveAction>{
     @Output() formSubmitted = new EventEmitter<SaveAction>()
 
     @Input() config: ModelFormConfig<any, any>;
@@ -35,10 +35,10 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<any, an
       this.formStateSubject.next(value)
     }
   
-    private formStateSubject = new BehaviorSubject<SaveModelFormState>(null)
+    private formStateSubject = new BehaviorSubject<SaveModelFormState<Partial<ModelState>>>(null)
 
-    formState$: Observable<SaveModelFormState>;
-    formConfig$: Observable<DynamicForm<any, SaveModelFormState>>;
+    formState$: Observable<SaveModelFormState<Partial<ModelState>>>;
+    formConfig$: Observable<DynamicForm<any, SaveModelFormState<Partial<ModelState>>>>;
 
     private isCreateForm: boolean = false;
   
@@ -60,7 +60,7 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<any, an
       }), shareReplay(1));
 
       this.formConfig$ = this.formState$.pipe(filter(x => x != null),take(1), 
-        map(state => this.getFormConfig(state.foreigns))
+        map(state => this.getFormConfig(state.options))
       )
 
     }
@@ -73,7 +73,7 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<any, an
       this.formState$.pipe(take(1)).subscribe(state => {
         const stateCommand = new adapter({
           formState: result, 
-          foreigns: state.foreigns,
+          options: state.options,
           stateProp: this.config.stateProp, 
           saveAction, 
         })
@@ -84,7 +84,7 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<any, an
 
     onCancel = (): void => this.formSubmitted.emit(null); 
 
-    private getFormConfig(state: Partial<ModelState>): DynamicForm<any, SaveModelFormState>{
+    private getFormConfig(state: Partial<ModelState>): DynamicForm<any, SaveModelFormState<Partial<ModelState>>>{
       const dynamicForm = this.config.dynamicForm;
       if(dynamicForm.initialValue) return this.config.dynamicForm;
       return {

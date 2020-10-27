@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { ModelState } from 'src/app/core/services/model/interfaces';
 import { ModelStateConfig } from 'src/app/core/services/model/model-state.config';
-import { DeleteModelStateCommand, DeleteModelAction } from 'src/app/core/services/model/state/delete-model/delete-model-state-command.interface';
+import { DeleteModelAction, DeleteModelStateCommand } from 'src/app/core/services/model/state/delete-model/delete-model-state-command.interface';
 import { DeleteModelHttpEffect } from 'src/app/core/services/model/state/delete-model/delete-model.http.effect';
 import { DeleteModelReducer } from 'src/app/core/services/model/state/delete-model/delete-model.reducer';
 import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
@@ -13,12 +13,12 @@ import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.se
 import { Prop } from 'src/app/shared-app/prop.type';
 import { ModelFormComponent } from 'src/app/shared/model-form/components/model-form.component';
 import { translations } from 'src/app/shared/translations';
-import { FormSheetWrapperComponent } from '../form/form-sheet-wrapper.component';
 import { FormSheetWrapperConfig } from '../form';
+import { FormSheetWrapperComponent } from '../form/form-sheet-wrapper.component';
 import { ModelFormConfig } from './interfaces/model-form-config.interface';
 import { SaveModelFormState } from './interfaces/model-form-to-state-command-adapter.interface';
 
-export interface ModelFormServiceConfig<TForm, TFormState extends SaveModelFormState> {
+export interface ModelFormServiceConfig<TForm, TFormState extends  SaveModelFormState<Partial<ModelState>>> {
   formConfig: ModelFormConfig<TForm, TFormState>,  
   formState?: TFormState | Observable<TFormState>,
   onSaveUri?: string, 
@@ -40,11 +40,11 @@ export class ModelFormService {
     private commandDispatcher: CommandDispatcher,
   ) {}
 
-  open<TForm, TFormState extends SaveModelFormState>(
-    config: ModelFormServiceConfig<TForm, TFormState>
+  open<TForm>(
+    config: ModelFormServiceConfig<TForm, SaveModelFormState<Partial<ModelState>>>
   ): MatBottomSheetRef<FormSheetWrapperComponent, StateAction> {
     const ref =  this.matBottomSheet.open(FormSheetWrapperComponent, { 
-      data: <FormSheetWrapperConfig<ModelFormConfig<TForm, TFormState>, SaveModelFormState, any>>{
+      data: <FormSheetWrapperConfig<ModelFormConfig<TForm, SaveModelFormState<Partial<ModelState>>>, SaveModelFormState<Partial<ModelState>>, any>>{
         formConfig: config.formConfig, submitCallback: config.submitCallback,
         formComponent: ModelFormComponent,   
         formState$: config.formState instanceof Observable ? config.formState : of(config.formState),

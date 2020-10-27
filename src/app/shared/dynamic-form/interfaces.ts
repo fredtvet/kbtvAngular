@@ -15,7 +15,7 @@ export type OptionsGetter<T> = T[] | ((state: any) => T[]);
 export interface DynamicForm<TForm, TFormState>{
     initialValue?: Partial<TForm>;
     submitText?: string;
-    controls: (DynamicControlGroup<TForm> | DynamicControl<TForm>)[];
+    controls: (DynamicControlGroup<TForm> | DynamicControl<TForm,TFormState>)[];
     onSubmitFormatter?: (f: TForm, s: TFormState) => TForm;
     getRawValue?: boolean;
     disabledControls?: DisabledObjectMap<TForm>;
@@ -28,14 +28,14 @@ export interface DynamicForm<TForm, TFormState>{
 export interface DynamicControlGroup<TForm> {
     type: "group",
     name?: Prop<TForm>, 
-    controls: (DynamicControl<any> | DynamicControlGroup<any>)[],  
+    controls: (DynamicControl<any, any> | DynamicControlGroup<any>)[],  
     controlGroupComponent?: Type<ControlGroupComponent>,
     label?: string,
     styling?: DynamicControlGroupStyling,
     disabledControls?: DisabledObjectMap<TForm>;
 }
 
-export interface DynamicControl<TForm> {
+export interface DynamicControl<TForm, TFormState> {
     type: "control"
     name: Prop<TForm>, 
     required?: boolean,       

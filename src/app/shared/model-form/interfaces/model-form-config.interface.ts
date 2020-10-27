@@ -3,7 +3,7 @@ import { Prop } from 'src/app/shared-app/prop.type';
 import { DynamicForm } from '../../dynamic-form/interfaces';
 import { ModelFormToSaveStateCommandAdapter, SaveModelFormState } from './model-form-to-state-command-adapter.interface';
 
-export interface ModelFormConfig<TForm, TFormState extends SaveModelFormState>
+export interface ModelFormConfig<TForm, TFormState extends  SaveModelFormState<Partial<ModelState>>>
 {      
     entityId?: any;
     stateProp: Prop<ModelState>;

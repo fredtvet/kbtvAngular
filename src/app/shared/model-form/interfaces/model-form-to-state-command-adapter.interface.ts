@@ -3,14 +3,13 @@ import { ModelState } from 'src/app/core/services/model/interfaces';
 import { SaveAction } from 'src/app/core/services/state/interfaces';
 import { StateCommand } from 'src/app/core/services/state/interfaces/state-command.interface';
 import { Prop } from 'src/app/shared-app/prop.type';
+import { OptionsFormState } from '../../form/options-form-state.interface';
 
-export interface SaveModelFormState {
-    foreigns?: Partial<ModelState>
-}
+export interface SaveModelFormState<TOptions extends Partial<ModelState>> extends OptionsFormState<TOptions>{ }
 
 export interface ModelFormToSaveModelInput<TFormState> {
     formState: TFormState,
-    foreigns?: Partial<ModelState>,
+    options?: Partial<ModelState>,
     stateProp: Prop<ModelState>,
     saveAction: SaveAction,
 }

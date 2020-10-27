@@ -39,7 +39,7 @@ export class UserListComponent {
     }
 
   openUserForm = (userName?: string): void => {
-    this.modelFormService.open<UserForm, SaveModelFormState>({formConfig: {
+    this.modelFormService.open<UserForm>({formConfig: {
       entityId: userName, 
       stateProp: "users", 
       dynamicForm: userName ? EditUserForm : CreateUserForm,

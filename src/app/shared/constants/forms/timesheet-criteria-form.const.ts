@@ -1,4 +1,3 @@
-import { Mission, User } from 'src/app/core/models';
 import { StateMissions, StateUsers } from 'src/app/core/services/state/interfaces';
 import { DateRangePresets } from 'src/app/shared-app/enums';
 import { _getISO } from 'src/app/shared-app/helpers/datetime/get-iso-with-timezone.helper';
@@ -6,48 +5,19 @@ import { _getMonthRange } from 'src/app/shared-app/helpers/datetime/get-month-ra
 import { _getRangeByDateRangePreset } from 'src/app/shared-app/helpers/datetime/get-range-by-date-range-preset.helper';
 import { TimesheetCriteria } from 'src/app/timesheet-modules/shared-timesheet/interfaces';
 import { DynamicControl, DynamicControlGroup, DynamicForm } from '../../dynamic-form/interfaces';
-import { AutoCompleteQuestionComponent } from '../../dynamic-form/questions/auto-complete-question/auto-complete-question.component';
-import { AutoCompleteQuestion } from '../../dynamic-form/questions/auto-complete-question/auto-complete-question.interface';
-import { IonDateQuestionComponent, IonDateQuestion } from '../../dynamic-form/questions/ion-date-time-question.component';
-import { RadioGroupQuestionComponent, RadioGroupQuestion } from '../../dynamic-form/questions/radio-group-question.component';
-import { SelectQuestionComponent, SelectQuestion } from '../../dynamic-form/questions/select-question.component';
+import { IonDateQuestion, IonDateQuestionComponent } from '../../dynamic-form/questions/ion-date-time-question.component';
+import { RadioGroupQuestion, RadioGroupQuestionComponent } from '../../dynamic-form/questions/radio-group-question.component';
 import { TimesheetStatus } from '../../enums';
-import { isObjectValidator } from '../../form/validators/is-object.validator';
+import { OptionsFormState } from '../../form/options-form-state.interface';
 import { DateRange } from '../../interfaces/date-range.interface';
 import { translations } from '../../translations';
+import { MissionAutoCompleteControl, UserSelectControl } from '../common-controls.const';
 
-export interface TimesheetCriteriaFormState {
-    options: StateUsers & StateMissions
-}
+export interface TimesheetCriteriaFormState extends OptionsFormState<StateUsers & StateMissions>{}
 
-type FormState = TimesheetCriteriaFormState;
+type FormState = TimesheetCriteriaFormState;  
 
-const UserControl = <DynamicControl<TimesheetCriteria>>{ name: "user",
-    type: "control", questions: [{
-        component:  SelectQuestionComponent,
-        question: <SelectQuestion<User>>{
-            optionsGetter: (state: FormState) => state.options.users,
-            valueFormatter: (val: User) => val.firstName + ' ' + val.lastName,
-            placeholder: "Velg ansatt", defaultOption: "Ingen",
-        }, 
-    }], 
-}
-const MissionControl = <DynamicControl<TimesheetCriteria>>{ name: "mission", 
-    valueGetter: (s: TimesheetCriteria) => s.mission,
-    type: "control", questions: [{
-        component:  AutoCompleteQuestionComponent,
-        question: <AutoCompleteQuestion<Mission>>{
-            optionsGetter: (state: FormState) => state.options.missions,
-            placeholder: "Oppdrag",
-            valueFormatter: (val: Mission) => val.address,
-            displayWith: (mission: Mission) => mission ? mission.address : null,
-            resetable: true,
-            activeFilter: { stringProps: ["address"], maxChecks: 50 }
-        }, 
-    }],
-    validators: [isObjectValidator(true)], 
-}
-const DateRangePresetControl = <DynamicControl<TimesheetCriteria>>{ name: "dateRangePreset", required: true,
+const DateRangePresetControl = <DynamicControl<TimesheetCriteria, any>>{ name: "dateRangePreset", required: true,
     valueGetter: (s: TimesheetCriteria) => s.dateRangePreset, 
     type: "control", questions: [{
         component:  RadioGroupQuestionComponent,
@@ -58,9 +28,9 @@ const DateRangePresetControl = <DynamicControl<TimesheetCriteria>>{ name: "dateR
         }, 
     }], 
 }
-const DateTimeControlGroup = <DynamicControlGroup<TimesheetCriteria>>{ name: "dateRange", 
+const DateRangeControlGroup = <DynamicControlGroup<TimesheetCriteria>>{ name: "dateRange", 
     type: "group", controls: [
-        <DynamicControl<DateRange>>{ name: "start",
+        <DynamicControl<DateRange, any>>{ name: "start",
             valueGetter: (s: TimesheetCriteria) => _getISO(s.dateRange?.start),
             type: "control", questions: [
                 {component:  IonDateQuestionComponent,       
@@ -86,7 +56,7 @@ const DateTimeControlGroup = <DynamicControlGroup<TimesheetCriteria>>{ name: "da
                 }
             ], 
         },
-        <DynamicControl<DateRange>>{ name: "end",
+        <DynamicControl<DateRange, any>>{ name: "end",
             valueGetter: (s: TimesheetCriteria) => _getISO(s.dateRange?.end),
             type: "control", questions: [
                 {component:  IonDateQuestionComponent,              
@@ -102,7 +72,7 @@ const DateTimeControlGroup = <DynamicControlGroup<TimesheetCriteria>>{ name: "da
         },
     ]
 }
-const StatusControl = <DynamicControl<TimesheetCriteria>>{ name: "status",
+const StatusControl = <DynamicControl<TimesheetCriteria, any>>{ name: "status",
     valueGetter: (s: TimesheetCriteria) => s.status, 
     type: "control", questions: [{
         component:  RadioGroupQuestionComponent,
@@ -117,10 +87,10 @@ const StatusControl = <DynamicControl<TimesheetCriteria>>{ name: "status",
 export const TimesheetCriteriaForm: DynamicForm<TimesheetCriteria, FormState> = {
     submitText: "Bruk", noRenderDisabledControls: true, resettable: true,
     controls: [
-        UserControl,
-        MissionControl,
+        UserSelectControl,
+        MissionAutoCompleteControl,
         DateRangePresetControl,
-        DateTimeControlGroup,
+        DateRangeControlGroup,
         StatusControl
     ],
     onSubmitFormatter: (criteria: TimesheetCriteria): TimesheetCriteria => {

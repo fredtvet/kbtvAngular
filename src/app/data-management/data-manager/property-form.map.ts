@@ -1,3 +1,4 @@
+import { ModelState } from 'src/app/core/services/model/interfaces';
 import { CreateDocumentTypeForm } from 'src/app/shared/constants/model-forms/create-document-type-form.const';
 import { CreateEmployerForm } from 'src/app/shared/constants/model-forms/create-employer-form.const';
 import { CreateInboundEmailPasswordForm } from 'src/app/shared/constants/model-forms/create-inbound-email-password-form.const';
@@ -6,7 +7,7 @@ import { CreateMissionForm } from 'src/app/shared/constants/model-forms/save-mis
 import { DynamicForm } from 'src/app/shared/dynamic-form/interfaces';
 import { SaveModelFormState } from 'src/app/shared/model-form';
 
-export const PropertyFormMap: {[key: string]: DynamicForm<any, SaveModelFormState> } = {
+export const PropertyFormMap: {[key: string]: DynamicForm<any, SaveModelFormState<Partial<ModelState>>> } = {
     "employers": CreateEmployerForm,
     "documentTypes": CreateDocumentTypeForm,
     "missionTypes": CreateMissionTypeForm,

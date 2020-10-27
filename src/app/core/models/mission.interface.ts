@@ -5,15 +5,12 @@ import { EmployerForeign } from './relationships/employer-foreign.interface';
 import { MissionTypeForeign } from './relationships/mission-type-foreign.interface';
 import { ModelFile } from './base-entity-file.interface';
 import { Timesheet } from './timesheet.interface';
+import { IContactable } from './sub-interfaces/icontactable.interface';
+import { IAddress } from './sub-interfaces/iaddress.interface';
 
-export interface Mission extends ModelFile, EmployerForeign, MissionTypeForeign {
-    id?: string;
-    phoneNumber?: string;
+export interface Mission extends ModelFile, EmployerForeign, MissionTypeForeign, IContactable, IAddress {
     description?: string;
-    address?: string;
     finished?: boolean;
-
-    fileName?: string;
 
     lastVisited?: number;
     

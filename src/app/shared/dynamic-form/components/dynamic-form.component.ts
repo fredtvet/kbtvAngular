@@ -134,7 +134,7 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         return formGroup;
     }
 
-    private getControl(control: DynamicControl<any>, disabled: boolean): AbstractControl {
+    private getControl(control: DynamicControl<any, any>, disabled: boolean): AbstractControl {
         const value = 
             control.valueGetter instanceof Function ? control.valueGetter(this._config.initialValue || {}) : control.valueGetter;
   

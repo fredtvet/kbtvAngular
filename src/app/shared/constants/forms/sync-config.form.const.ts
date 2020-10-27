@@ -8,7 +8,7 @@ export const SyncConfigForm: DynamicForm<SyncStoreConfig, any> = {
     submitText: "Lagre", resettable: true, 
     resetState: {...DefaultSyncConfig, refreshTime: DefaultSyncConfig.refreshTime / 60}, 
     controls: [
-        <DynamicControl<SyncStoreConfig>>{ name: "refreshTime", required: true,
+        <DynamicControl<SyncStoreConfig, any>>{ name: "refreshTime", required: true,
             valueGetter: (s: SyncStoreConfig) => s.refreshTime,
             type: "control", questions: [{
                 component:  SliderQuestionComponent,
@@ -21,7 +21,7 @@ export const SyncConfigForm: DynamicForm<SyncStoreConfig, any> = {
             }], 
             validators: [Validators.min(1)] 
         },
-        <DynamicControl<SyncStoreConfig>>{ name: "initialNumberOfMonths", required: true,
+        <DynamicControl<SyncStoreConfig, any>>{ name: "initialNumberOfMonths", required: true,
         valueGetter: (s: SyncStoreConfig) => s.initialNumberOfMonths,
         type: "control", questions: [{
             component:  SliderQuestionComponent,

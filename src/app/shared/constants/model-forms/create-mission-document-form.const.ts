@@ -1,28 +1,30 @@
 import { Validators } from '@angular/forms';
 import { AppDocumentType, MissionDocument } from 'src/app/core/models';
+import { StateDocumentTypes } from 'src/app/core/services/state/interfaces';
 import { DynamicControlGroup, DynamicControl, DynamicForm } from '../../dynamic-form/interfaces';
 import { AutoCompleteQuestionComponent } from '../../dynamic-form/questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../../dynamic-form/questions/auto-complete-question/auto-complete-question.interface';
 import { FileQuestionComponent } from '../../dynamic-form/questions/file-question.component';
 import { fileExtensionValidator } from '../../form/validators/file-extension.validator';
 import { SaveModelFormState } from '../../model-form';
+import { HiddenMissionIdControl } from '../common-controls.const';
 import { DocumentFileExtensions } from '../document-file-extensions.const';
 
-type FormState = SaveModelFormState;
+type FormState = SaveModelFormState<StateDocumentTypes>;
 
-export interface MissionDocumentFormState extends Partial<MissionDocument>{
+export interface MissionDocumentForm extends Partial<MissionDocument>{
     missionId: string;
     documentType: AppDocumentType;
     file: File;
 }
 
-const DocumentTypeControl = <DynamicControlGroup<MissionDocumentFormState>>{ name: "documentType",
+const DocumentTypeControl = <DynamicControlGroup<MissionDocumentForm>>{ name: "documentType",
     type: "group", controls: [
-    <DynamicControl<AppDocumentType>>{ name: "name", required: true,
+    <DynamicControl<AppDocumentType, FormState>>{ name: "name", required: true,
         type: "control", questions: [{
             component:  AutoCompleteQuestionComponent,
             question: <AutoCompleteQuestion<AppDocumentType>>{
-                optionsGetter: (state: FormState) => state.foreigns.documentTypes,
+                optionsGetter: (state: FormState) => state.options.documentTypes,
                 placeholder: "Velg type dokument",
                 valueProp: "name",
                 valueFormatter: (val: AppDocumentType) => val.name, 
@@ -33,17 +35,14 @@ const DocumentTypeControl = <DynamicControlGroup<MissionDocumentFormState>>{ nam
         validators: [Validators.maxLength(45)]
     }],
 }
-const FileControl = <DynamicControl<MissionDocumentFormState>>{ name: "file", required: true,
+const FileControl = <DynamicControl<MissionDocumentForm, any>>{ name: "file", required: true,
     type: "control", questions: [{
         component:  FileQuestionComponent, question: {}
     }],
     validators: [fileExtensionValidator(DocumentFileExtensions)]
 }
-const MissionIdControl = <DynamicControl<MissionDocumentFormState>>{ name: "missionId", required: true,
-    type: "control", valueGetter: (s: MissionDocumentFormState) => s.missionId
-} 
 
-export const CreateMissionDocumentForm: DynamicForm<MissionDocumentFormState, FormState> = {
+export const CreateMissionDocumentForm: DynamicForm<MissionDocumentForm, FormState> = {
     submitText: "Legg til",
-    controls: [DocumentTypeControl, FileControl, MissionIdControl],
+    controls: [DocumentTypeControl, FileControl, HiddenMissionIdControl],
 }

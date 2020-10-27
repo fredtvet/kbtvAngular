@@ -8,7 +8,6 @@ import { BaseQuestionComponent } from './base-question.component';
 
 export interface SelectQuestion<T> extends Question {
   optionsGetter: OptionsGetter<T>;
-  defaultOption?: string;
   valueProp?: Prop<T>;
   valueFormatter?: (val: T) => any;
   compareWith?: (o1: any, o2: any) => boolean;
@@ -20,7 +19,7 @@ export interface SelectQuestion<T> extends Question {
     <mat-form-field [color]="question.color || 'accent'" class="w-100">
         <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
         <mat-select [placeholder]="question.placeholder" [formControl]="control" [required]="required" [compareWith]="question.compareWith || defaultCompareWith">
-            <mat-option *ngIf="question.defaultOption">{{ question.defaultOption }}</mat-option>
+            <mat-option *ngIf="!required">Ingen</mat-option>
             <mat-option *ngFor="let option of options$ | async" 
               [value]="question.valueProp ? option[question.valueProp] : option">
                 {{ (question.valueFormatter | func : option) || option }}
