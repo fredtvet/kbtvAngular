@@ -4,7 +4,6 @@ import { IId } from './sub-interfaces/iid.interface';
 export interface MissionNote extends MissionChild, IId{
     title: string;
     content: string;
-    pinned: boolean;
 
     createdBy: string;
 };

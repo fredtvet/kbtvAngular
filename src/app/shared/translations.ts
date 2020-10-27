@@ -8,7 +8,6 @@ export const translations: { [key: string]: string } = {
   content: "Innhold",
   createdat: "Opprettet",
   createdby: "Opprettet av",
-  pinned: "Festet",
   filename: "Lenke",
   description: "Beskrivelse",
   finished: "Ferdig",

@@ -1,5 +1,4 @@
-<mat-card fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="5px" class="m-1"
-    [ngClass]="note.pinned ? 'border-primary' : null" *ngIf="note">
+<mat-card *ngIf="note"fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="5px" class="m-1">
 
     <mat-card-header *ngIf="note.title">
         <mat-card-title>{{ note.title  }}</mat-card-title>

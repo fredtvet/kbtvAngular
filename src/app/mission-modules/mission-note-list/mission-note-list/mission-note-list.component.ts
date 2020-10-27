@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { MissionNote } from 'src/app/core/models';
 import { RolePresets } from 'src/app/shared-app/enums';
 import { _sortByBool } from 'src/app/shared-app/helpers/array/sort-by-bool.helper';
+import { _sortByDate } from 'src/app/shared-app/helpers/array/sort-by-date.helper';
 import { _trackByModel } from 'src/app/shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
@@ -20,7 +21,7 @@ import { MissionNoteListStore } from '../mission-note-list.store';
 export class MissionNoteListComponent {
   
   notes$: Observable<MissionNote[]> = this.store.getByMissionId$(this.missionId).pipe(
-    map(x => _sortByBool<MissionNote>(x, "pinned", true))
+    map(x => _sortByDate<MissionNote>(x, "updatedAt"))
   );
 
   navConfig: MainTopNavConfig; 

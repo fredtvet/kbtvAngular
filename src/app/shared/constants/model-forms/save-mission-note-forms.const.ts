@@ -1,7 +1,6 @@
 import { Validators } from '@angular/forms';
 import { MissionNote } from 'src/app/core/models';
 import { DynamicControl, DynamicForm } from '../../dynamic-form/interfaces';
-import { CheckboxQuestion, CheckboxQuestionComponent } from '../../dynamic-form/questions/checkbox-question.component';
 import { InputQuestion, InputQuestionComponent } from '../../dynamic-form/questions/input-question.component';
 import { TextAreaQuestion, TextAreaQuestionComponent } from '../../dynamic-form/questions/text-area-question.component';
 import { HiddenIdControl, HiddenMissionIdControl } from '../common-controls.const';
@@ -21,19 +20,12 @@ const ContentControl = <DynamicControl<MissionNote, any>>{ name: "content", requ
     }], 
     validators: [Validators.maxLength(ValidationRules.MissionNoteContentMaxLength)] 
 }
-const PinnedControl = <DynamicControl<MissionNote, any>>{ name: "pinned",
-    type: "control", valueGetter: (s: MissionNote) => s?.pinned, questions: [{
-        component:  CheckboxQuestionComponent,
-        question: <CheckboxQuestion>{text: "Viktig?"}, 
-    }],
-}
 
 export const CreateMissionNoteForm: DynamicForm<MissionNote, any> = {
     submitText: "Legg til",
     controls: [
         TitleControl, 
         ContentControl, 
-        PinnedControl, 
         HiddenMissionIdControl
     ],
 }
