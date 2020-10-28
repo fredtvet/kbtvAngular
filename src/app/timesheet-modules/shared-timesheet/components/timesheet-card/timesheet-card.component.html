@@ -23,7 +23,7 @@
 
     <span fxLayout="column" fxLayoutAlign="space-between center" style="min-width:40px">
 
-      <span *ngIf="!timesheet.status else closedIcon" 
+      <span *ngIf="timesheet.status === 1 else closedIcon" 
         fxLayout="column" fxLayoutAlign="start center" class="color-warn">
         <mat-icon>lock_open</mat-icon>
         <span class="mat-caption">åpen</span>

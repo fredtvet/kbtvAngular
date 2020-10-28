@@ -25,7 +25,6 @@ const UniqueUserNameControl = {...UserNameControl, required: true,
         isUniqueAsyncValidator(s$.pipe(map(s => s?.options?.users)), "userName")
     ],
 }
-
 const RoleControl = <DynamicControl<UserForm, FormState>>{ name: "role", required: true,
     type: "control", valueGetter: (s: UserForm) => s?.role, questions: [{
         component:  SelectQuestionComponent,
@@ -43,7 +42,6 @@ const PasswordControl = <DynamicControl<UserForm, FormState>>{ name: "password",
     }], 
     validators: [Validators.minLength(7), Validators.maxLength(100)] 
 }
-
 const EmployerControl = {
     ...EmployerSelectControl, 
     questions: [{...EmployerSelectControl.questions[0], 

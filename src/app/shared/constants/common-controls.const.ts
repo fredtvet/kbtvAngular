@@ -105,6 +105,7 @@ export const UserSelectControl = <DynamicControl<{user: User}, OptionsFormState<
         question: <SelectQuestion<User>>{
             optionsGetter: (state: OptionsFormState<StateUsers>) => state.options.users,
             valueFormatter: (val: User) => val.firstName + ' ' + val.lastName,
+            compareWith: _compareProp("userName"),
             placeholder: "Velg ansatt",
         }, 
     }], 
