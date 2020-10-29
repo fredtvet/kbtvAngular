@@ -1,5 +1,5 @@
 import { User } from 'src/app/core/models';
-import { DynamicForm } from '../../dynamic-form/interfaces';
+import { DynamicForm } from 'src/app/dynamic-forms/interfaces';
 import { EmailControl, FirstNameControl, LastNameControl, PhoneNumberControl, UserNameControl } from '../common-controls.const';
 
 export const ProfileForm: DynamicForm<User, any> = {

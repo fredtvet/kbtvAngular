@@ -4,12 +4,12 @@ import { IAddress } from 'src/app/core/models/sub-interfaces/iaddress.interface'
 import { IId } from 'src/app/core/models/sub-interfaces/iid.interface';
 import { IName } from 'src/app/core/models/sub-interfaces/iname.interface';
 import { StateEmployers, StateMissions, StateUsers } from 'src/app/core/services/state/interfaces';
-import { DynamicControl } from '../dynamic-form/interfaces';
-import { AutoCompleteQuestionComponent } from '../dynamic-form/questions/auto-complete-question/auto-complete-question.component';
-import { AutoCompleteQuestion } from '../dynamic-form/questions/auto-complete-question/auto-complete-question.interface';
-import { GooglePlacesAutoCompleteQuestion, GooglePlacesAutoCompleteQuestionComponent } from '../dynamic-form/questions/google-places-autocomplete-question.component';
-import { InputQuestion, InputQuestionComponent } from '../dynamic-form/questions/input-question.component';
-import { SelectQuestion, SelectQuestionComponent } from '../dynamic-form/questions/select-question.component';
+import { DynamicControl } from 'src/app/dynamic-forms/interfaces';
+import { AutoCompleteQuestionComponent } from '../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
+import { AutoCompleteQuestion } from '../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
+import { GooglePlacesAutoCompleteQuestionComponent, GooglePlacesAutoCompleteQuestion } from '../components/dynamic-form-questions/google-places-autocomplete-question.component';
+import { InputQuestionComponent, InputQuestion } from '../components/dynamic-form-questions/input-question.component';
+import { SelectQuestionComponent, SelectQuestion } from '../components/dynamic-form-questions/select-question.component';
 import { _compareProp } from '../form/helpers/compare-with-prop.helper';
 import { OptionsFormState } from '../form/options-form-state.interface';
 import { isObjectValidator } from '../form/validators/is-object.validator';

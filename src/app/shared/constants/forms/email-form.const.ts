@@ -1,4 +1,4 @@
-import { DynamicForm } from '../../dynamic-form/interfaces';
+import { DynamicForm } from 'src/app/dynamic-forms/interfaces';
 import { EmailControl } from '../common-controls.const';
 
 export interface EmailForm { email: string };

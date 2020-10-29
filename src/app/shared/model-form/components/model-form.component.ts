@@ -8,11 +8,11 @@ import { SaveModelReducer } from 'src/app/core/services/model/state/save-model/s
 import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
 import { SaveAction } from 'src/app/core/services/state/interfaces';
 import { StateAction } from 'src/app/core/services/state/state-action.enum';
-import { DynamicForm } from '../../dynamic-form/interfaces';
 import { FormToSaveModelStateCommandAdapter } from '../adapters/form-to-save-model-state-command.adapter';
 import { ModelFormConfig } from '../interfaces/model-form-config.interface';
 import { SaveModelFormState } from '../interfaces/model-form-to-state-command-adapter.interface';
 import { FormComponent } from '../../form';
+import { DynamicForm } from 'src/app/dynamic-forms/interfaces';
 
 @Component({
     selector: 'app-model-form',

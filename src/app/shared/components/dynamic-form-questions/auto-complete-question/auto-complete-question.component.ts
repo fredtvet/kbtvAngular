@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { DynamicFormStore } from 'src/app/dynamic-forms/dynamic-form.store';
+import { QuestionComponent } from 'src/app/dynamic-forms/interfaces';
+import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from 'src/app/dynamic-forms/validation-error-map.interface';
 import { ActiveStringFilterConfig } from '../../../interfaces';
-import { DynamicFormStore } from '../../dynamic-form.store';
-import { QuestionComponent } from '../../interfaces';
-import { ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from '../../validation-error-map.interface';
-import { BaseQuestionComponent } from '../base-question.component';
+import { BaseQuestionComponent } from '../../../../dynamic-forms/components/base-question.component';
 import { AutoCompleteQuestion } from './auto-complete-question.interface';
 
 export interface AutoCompleteViewModel { options: any[], activeFilter: ActiveStringFilterConfig<any> }

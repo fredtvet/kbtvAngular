@@ -1,10 +1,10 @@
 import { Mission, MissionType } from 'src/app/core/models';
 import { StateEmployers, StateMissions, StateMissionTypes } from 'src/app/core/services/state/interfaces';
-import { DynamicControl, DynamicForm } from '../../dynamic-form/interfaces';
-import { AutoCompleteQuestionComponent } from '../../dynamic-form/questions/auto-complete-question/auto-complete-question.component';
-import { AutoCompleteQuestion } from '../../dynamic-form/questions/auto-complete-question/auto-complete-question.interface';
-import { RadioGroupQuestion, RadioGroupQuestionComponent } from '../../dynamic-form/questions/radio-group-question.component';
-import { SelectQuestion, SelectQuestionComponent } from '../../dynamic-form/questions/select-question.component';
+import { DynamicControl, DynamicForm } from 'src/app/dynamic-forms/interfaces';
+import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
+import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
+import { RadioGroupQuestionComponent, RadioGroupQuestion } from '../../components/dynamic-form-questions/radio-group-question.component';
+import { SelectQuestionComponent, SelectQuestion } from '../../components/dynamic-form-questions/select-question.component';
 import { _compareProp } from '../../form/helpers/compare-with-prop.helper';
 import { OptionsFormState } from '../../form/options-form-state.interface';
 import { MissionCriteria } from '../../interfaces';
@@ -56,7 +56,7 @@ export const MissionCriteriaForm: DynamicForm<MissionCriteria, FormState> = {
     submitText: "Bruk", resettable: true, resetState: {finished: false},
     controls: [
         SearchStringControl,
-        {...EmployerSelectControl, required: true},
+        EmployerSelectControl,
         MissionTypeControl,
         FinishedControl
     ],

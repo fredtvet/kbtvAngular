@@ -8,6 +8,7 @@ import { AppAgGridModule } from 'src/app/app-ag-grid/app-ag-grid.module';
 import { DatePipe } from '@angular/common';
 import { TimesheetStatisticStore } from './timesheet-statistic.store';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
+import { DynamicFormsModule } from 'src/app/dynamic-forms/dynamic-forms.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.modu
   imports: [
     SharedTimesheetModule,
     TimesheetStatisticRoutingModule,
-    AppAgGridModule
+    AppAgGridModule,
+    DynamicFormsModule,
   ],
 })
 export class TimesheetStatisticModule { }

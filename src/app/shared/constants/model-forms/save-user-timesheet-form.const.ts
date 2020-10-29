@@ -1,10 +1,10 @@
 import { Validators } from '@angular/forms';
 import { Mission } from 'src/app/core/models';
 import { StateMissions } from 'src/app/core/services/state/interfaces';
+import { DynamicControlGroup, DynamicControl, DynamicForm } from 'src/app/dynamic-forms/interfaces';
 import { _getISO } from 'src/app/shared-app/helpers/datetime/get-iso-with-timezone.helper';
-import { DynamicControl, DynamicControlGroup, DynamicForm } from '../../dynamic-form/interfaces';
-import { IonDateQuestion, IonDateQuestionComponent } from '../../dynamic-form/questions/ion-date-time-question.component';
-import { TextAreaQuestion, TextAreaQuestionComponent } from '../../dynamic-form/questions/text-area-question.component';
+import { IonDateQuestionComponent, IonDateQuestion } from '../../components/dynamic-form-questions/ion-date-time-question.component';
+import { TextAreaQuestionComponent, TextAreaQuestion } from '../../components/dynamic-form-questions/text-area-question.component';
 import { SaveModelFormState } from '../../model-form';
 import { HiddenIdControl, MissionAutoCompleteControl } from '../common-controls.const';
 

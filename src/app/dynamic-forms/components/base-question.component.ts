@@ -1,9 +1,9 @@
 import { Directive, HostBinding, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { _getValidationErrorMessage } from '../helpers/get-validation-error-message.helper';
-import { Question, QuestionComponent } from '../interfaces';
-import { ValidationErrorMap } from '../validation-error-map.interface';
+import { _getValidationErrorMessage } from 'src/app/dynamic-forms/helpers/get-validation-error-message.helper';
+import { Question, QuestionComponent } from 'src/app/dynamic-forms/interfaces';
+import { ValidationErrorMap } from 'src/app/dynamic-forms/validation-error-map.interface';
 
 @Directive()
 export abstract class BaseQuestionComponent<TQuestion extends Question>

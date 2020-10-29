@@ -9,13 +9,13 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
+import { VALIDATION_ERROR_MESSAGES } from './dynamic-forms/validation-error-map.interface';
 import { HomeTopNavComponent } from './home/home-top-nav.component';
 import { HomeComponent } from './home/home.component';
 import { AppLayoutModule } from './layout/app-layout.module';
 import { AppHammerConfig } from './shared-app/app-hammer-config';
 import { SharedAppModule } from './shared-app/shared-app.module';
 import { ValidationErrorMessages } from './shared-app/validation-error-messages.const';
-import { VALIDATION_ERROR_MESSAGES } from './shared/dynamic-form/validation-error-map.interface';
 
 registerLocaleData(norwayLocale, 'nb-NO');
 

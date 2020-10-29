@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { AppAgGridModule } from '../app-ag-grid/app-ag-grid.module';
 import { DeleteModelHttpEffect } from '../core/services/model/state/delete-model/delete-model.http.effect';
 import { DeleteModelReducer } from '../core/services/model/state/delete-model/delete-model.reducer';
@@ -18,6 +19,7 @@ import { DataTableComponent } from './data-manager/data-table/data-table.compone
   ],
   imports: [
     SharedModule,
+    FormsModule,
     DataManagementRoutingModule,
     AppAgGridModule,
   ],

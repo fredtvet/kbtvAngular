@@ -1,8 +1,8 @@
 import { Validators } from '@angular/forms';
 import { SyncStoreConfig } from 'src/app/core/services/sync';
 import { DefaultSyncConfig } from 'src/app/core/services/sync/default-sync-config.const';
-import { DynamicControl, DynamicForm } from '../../dynamic-form/interfaces';
-import { SliderQuestion, SliderQuestionComponent } from '../../dynamic-form/questions/slider-question.component';
+import { DynamicForm, DynamicControl } from 'src/app/dynamic-forms/interfaces';
+import { SliderQuestionComponent, SliderQuestion } from '../../components/dynamic-form-questions/slider-question.component';
 
 export const SyncConfigForm: DynamicForm<SyncStoreConfig, any> = {
     submitText: "Lagre", resettable: true, 

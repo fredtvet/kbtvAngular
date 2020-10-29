@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { DynamicFormsModule } from '../dynamic-forms/dynamic-forms.module';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import {
@@ -11,24 +12,21 @@ import {
 } from './components';
 import { ChipsBarComponent } from './components/chips-bar.component';
 import { DetailTopNavBarComponent } from './components/detail-top-nav-bar/detail-top-nav-bar.component';
-import { FormSheetWrapperComponent } from './form/form-sheet-wrapper.component';
+import { AutoCompleteQuestionComponent } from './components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
+import { CheckboxQuestionComponent } from './components/dynamic-form-questions/checkbox-question.component';
+import { FileQuestionComponent } from './components/dynamic-form-questions/file-question.component';
+import { GooglePlacesAutoCompleteQuestionComponent } from './components/dynamic-form-questions/google-places-autocomplete-question.component';
+import { InputQuestionComponent } from './components/dynamic-form-questions/input-question.component';
+import { IonDateQuestionComponent } from './components/dynamic-form-questions/ion-date-time-question.component';
+import { RadioGroupQuestionComponent } from './components/dynamic-form-questions/radio-group-question.component';
+import { SelectQuestionComponent } from './components/dynamic-form-questions/select-question.component';
+import { SliderQuestionComponent } from './components/dynamic-form-questions/slider-question.component';
+import { TextAreaQuestionComponent } from './components/dynamic-form-questions/text-area-question.component';
 import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.component';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
-import { AddToHomeScreenDirective, DynamicHostDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
+import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
-import { DynamicControlGroupComponent } from './dynamic-form/components/dynamic-control-group.component';
-import { DynamicFormComponent } from './dynamic-form/components/dynamic-form.component';
-import { FormActionsComponent } from './dynamic-form/components/form-actions.component';
-import { AutoCompleteQuestionComponent } from './dynamic-form/questions/auto-complete-question/auto-complete-question.component';
-import { CheckboxQuestionComponent } from './dynamic-form/questions/checkbox-question.component';
-import { FileQuestionComponent } from './dynamic-form/questions/file-question.component';
-import { GooglePlacesAutoCompleteQuestionComponent } from './dynamic-form/questions/google-places-autocomplete-question.component';
-import { InputQuestionComponent } from './dynamic-form/questions/input-question.component';
-import { IonDateQuestionComponent } from './dynamic-form/questions/ion-date-time-question.component';
-import { RadioGroupQuestionComponent } from './dynamic-form/questions/radio-group-question.component';
-import { SelectQuestionComponent } from './dynamic-form/questions/select-question.component';
-import { SliderQuestionComponent } from './dynamic-form/questions/slider-question.component';
-import { TextAreaQuestionComponent } from './dynamic-form/questions/text-area-question.component';
+import { FormSheetWrapperComponent } from './form/form-sheet-wrapper.component';
 import { ModelFormComponent } from './model-form/components/model-form.component';
 import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButtonsPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 
@@ -38,7 +36,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     SelectableCardComponent,
     SelectableListComponent,
     BottomSheetMenuComponent,
-    FormActionsComponent,
     MainSkeletonComponent,
     MainTopNavBarComponent,
     DetailTopNavBarComponent,
@@ -47,8 +44,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     
     ModelFormComponent,
 
-    DynamicFormComponent,
-    DynamicControlGroupComponent,
     InputQuestionComponent,
     SelectQuestionComponent,
     AutoCompleteQuestionComponent,
@@ -76,22 +71,19 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    
     ImageErrorReloaderDirective,  
-    DynamicHostDirective
   ],
   imports: [
-    FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
     SharedAppModule,
-    GooglePlaceModule
+    GooglePlaceModule,
+    DynamicFormsModule,
   ],
   exports: [
-    FormsModule,    
     ReactiveFormsModule,
     AngularMaterialModule,
     SharedAppModule,
     GooglePlaceModule,    
-    DynamicFormComponent,
 
     ConfirmDialogComponent,
     SelectableCardComponent,
@@ -117,7 +109,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    
     ImageErrorReloaderDirective,  
-    DynamicHostDirective
 
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

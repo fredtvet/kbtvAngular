@@ -1,15 +1,17 @@
 import { ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Type } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { WithUnsubscribe } from 'src/app/shared-app/mixins/with-unsubscribe.mixin';
-import { DynamicHostDirective } from 'src/app/shared/directives';
+import { DynamicHostDirective } from '../dynamic-host.directive';
 import { _getControlObserver$ } from '../helpers/get-control-observer.helper';
 import { ControlGroupComponent, ControlHook, DynamicControl, DynamicControlGroup, DynamicForm, QuestionComponent, QuestionWrapper } from '../interfaces';
 
 export type ValidControl = DynamicControlGroup<any> | DynamicControl<any, any>;
 
-export abstract class ControlComponentLoaderComponent extends WithUnsubscribe() {
+export abstract class ControlComponentLoaderComponent {
     dynamicHost: DynamicHostDirective;
+
+    unsubscribe : Subject<void> = new Subject();
 
     form: FormGroup;
 
@@ -17,7 +19,12 @@ export abstract class ControlComponentLoaderComponent extends WithUnsubscribe() 
         private componentFactoryResolver: ComponentFactoryResolver,  
         private cdRef: ChangeDetectorRef,      
         private defaultControlGroupComponent: Type<ControlGroupComponent>,
-    ) { super() }
+    ) { }
+
+    ngOnDestroy(){
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
+    }
 
     protected loadComponents(controls: ValidControl[], form: DynamicForm<any,any>, nestedNames: string[] = []): void{
         for(const control of controls){

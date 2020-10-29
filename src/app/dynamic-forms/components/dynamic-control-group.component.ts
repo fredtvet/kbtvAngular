@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ViewChild } from '@angular/core';
-import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
+import { DynamicHostDirective } from '../dynamic-host.directive';
 import { ControlGroupComponent, DynamicControl, DynamicControlGroup, DynamicForm, QuestionComponent } from '../interfaces';
 import { ControlComponentLoaderComponent } from './control-component-loader.component';
 

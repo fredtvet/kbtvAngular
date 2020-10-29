@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Observable, of } from 'rxjs';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
-import { DynamicFormComponent } from 'src/app/shared/dynamic-form/components/dynamic-form.component';
-import { DynamicForm } from 'src/app/shared/dynamic-form/interfaces';
 import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
 import { FormSheetWrapperConfig } from './form-sheet-wrapper-config.interface';
+import { DynamicFormComponent } from 'src/app/dynamic-forms/components/dynamic-form.component';
+import { DynamicForm } from 'src/app/dynamic-forms/interfaces';
 
 export interface FormServiceConfig<TForm, TFormState>{
   formConfig: DynamicForm<TForm, TFormState>, 

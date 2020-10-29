@@ -1,10 +1,10 @@
 import { Validators } from '@angular/forms';
 import { AppDocumentType, MissionDocument } from 'src/app/core/models';
 import { StateDocumentTypes } from 'src/app/core/services/state/interfaces';
-import { DynamicControlGroup, DynamicControl, DynamicForm } from '../../dynamic-form/interfaces';
-import { AutoCompleteQuestionComponent } from '../../dynamic-form/questions/auto-complete-question/auto-complete-question.component';
-import { AutoCompleteQuestion } from '../../dynamic-form/questions/auto-complete-question/auto-complete-question.interface';
-import { FileQuestionComponent } from '../../dynamic-form/questions/file-question.component';
+import { DynamicControlGroup, DynamicControl, DynamicForm } from 'src/app/dynamic-forms/interfaces';
+import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
+import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
+import { FileQuestionComponent } from '../../components/dynamic-form-questions/file-question.component';
 import { fileExtensionValidator } from '../../form/validators/file-extension.validator';
 import { SaveModelFormState } from '../../model-form';
 import { HiddenMissionIdControl } from '../common-controls.const';

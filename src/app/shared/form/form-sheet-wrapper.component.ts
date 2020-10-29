@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, ViewContainerRef } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { take, takeUntil, tap } from 'rxjs/operators';
 import { WithUnsubscribe } from 'src/app/shared-app/mixins/with-unsubscribe.mixin';
 import { MainTopNavBarComponent } from 'src/app/shared/components/main-top-nav-bar/main-top-nav-bar.component';
-import { DynamicHostDirective } from '../directives/dynamic-host.directive';
 import { FormSheetWrapperConfig } from './form-sheet-wrapper-config.interface';
 
 type WrapperConfig = FormSheetWrapperConfig<any, any, any>;
@@ -14,7 +13,6 @@ type WrapperConfig = FormSheetWrapperConfig<any, any, any>;
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormSheetWrapperComponent extends WithUnsubscribe() {
-    @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
     
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,

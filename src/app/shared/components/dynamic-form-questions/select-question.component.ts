@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DynamicFormStore } from 'src/app/dynamic-forms/dynamic-form.store';
+import { Question, OptionsGetter, QuestionComponent } from 'src/app/dynamic-forms/interfaces';
+import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from 'src/app/dynamic-forms/validation-error-map.interface';
 import { Prop } from 'src/app/shared-app/prop.type';
-import { DynamicFormStore } from '../dynamic-form.store';
-import { OptionsGetter, Question, QuestionComponent } from '../interfaces';
-import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '../validation-error-map.interface';
-import { BaseQuestionComponent } from './base-question.component';
+import { BaseQuestionComponent } from '../../../dynamic-forms/components/base-question.component';
 
 export interface SelectQuestion<T> extends Question {
   optionsGetter: OptionsGetter<T>;

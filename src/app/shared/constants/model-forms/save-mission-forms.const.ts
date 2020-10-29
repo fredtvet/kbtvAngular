@@ -1,11 +1,11 @@
 import { Validators } from '@angular/forms';
 import { Employer, Mission, MissionType } from 'src/app/core/models';
 import { StateEmployers, StateMissionTypes } from 'src/app/core/services/state/interfaces';
-import { DynamicControl, DynamicControlGroup, DynamicForm } from '../../dynamic-form/interfaces';
-import { AutoCompleteQuestionComponent } from '../../dynamic-form/questions/auto-complete-question/auto-complete-question.component';
-import { AutoCompleteQuestion } from '../../dynamic-form/questions/auto-complete-question/auto-complete-question.interface';
-import { CheckboxQuestion, CheckboxQuestionComponent } from '../../dynamic-form/questions/checkbox-question.component';
-import { TextAreaQuestion, TextAreaQuestionComponent } from '../../dynamic-form/questions/text-area-question.component';
+import { DynamicControl, DynamicControlGroup, DynamicForm } from 'src/app/dynamic-forms/interfaces';
+import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
+import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
+import { CheckboxQuestionComponent, CheckboxQuestion } from '../../components/dynamic-form-questions/checkbox-question.component';
+import { TextAreaQuestionComponent, TextAreaQuestion } from '../../components/dynamic-form-questions/text-area-question.component';
 import { SaveModelFormState } from '../../model-form';
 import { GoogleAddressControl, HiddenIdControl, PhoneNumberControl } from '../common-controls.const';
 import { ValidationRules } from '../validation-rules.const';
