@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
-import { NotificationService, NotificationType } from 'src/app/shared-app/notification';
+import { NotificationService, NotificationType } from 'src/app/notification';
 import { User } from '../../models/user.interface';
 import { ApiService } from '../api.service';
 import { DeviceInfoService } from '../device-info.service';

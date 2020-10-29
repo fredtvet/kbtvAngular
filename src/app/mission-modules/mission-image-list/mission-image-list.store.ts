@@ -9,8 +9,8 @@ import { MailModelsAction, MailModelsStateCommand } from 'src/app/core/services/
 import { ObservableStore } from 'src/app/core/services/state/abstracts/observable-store';
 import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
 import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
+import { NotificationService, NotificationType } from 'src/app/notification';
 import { _validateFileExtension } from 'src/app/shared-app/helpers/validate-file-extension.helper';
-import { NotificationService, NotificationType } from 'src/app/shared-app/notification';
 import { ImageFileExtensions } from 'src/app/shared/constants/image-file-extensions.const';
 import { CreateMissionImagesForm, FormToCreateMissionImagesStateCommandAdapter } from './form-to-create-mission-images-state-command.adapter';
 import { StoreState } from './store-state';

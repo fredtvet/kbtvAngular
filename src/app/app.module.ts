@@ -15,7 +15,8 @@ import { HomeComponent } from './home/home.component';
 import { AppLayoutModule } from './layout/app-layout.module';
 import { AppHammerConfig } from './shared-app/app-hammer-config';
 import { SharedAppModule } from './shared-app/shared-app.module';
-import { ValidationErrorMessages } from './shared-app/validation-error-messages.const';
+import { ValidationErrorMessages } from './shared-app/const/validation-error-messages.const';
+import { NotificationModule } from './notification/notification.module';
 
 registerLocaleData(norwayLocale, 'nb-NO');
 
@@ -26,15 +27,17 @@ registerLocaleData(norwayLocale, 'nb-NO');
     HomeTopNavComponent,
   ],
   imports: [
-    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,   
     HttpClientModule, 
-    AppLayoutModule,
-    SharedAppModule,
     CoreModule, 
     HammerModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    
+    AppRoutingModule, 
+    AppLayoutModule,
+    SharedAppModule,
+    NotificationModule
   ],
   providers: [     
     { provide: LOCALE_ID, useValue: "nb-NO" }, 

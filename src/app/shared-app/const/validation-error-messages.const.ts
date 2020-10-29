@@ -1,4 +1,4 @@
-import { ValidationErrorMap } from '../dynamic-forms/validation-error-map.interface';
+import { ValidationErrorMap } from '../../dynamic-forms/validation-error-map.interface';
 
 export const ValidationErrorMessages: ValidationErrorMap = {
     required: (err: any) => "Dette feltet er obligatorisk.",

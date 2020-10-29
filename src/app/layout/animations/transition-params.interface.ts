@@ -1,4 +1,4 @@
-import { AppSections } from 'src/app/shared-app/app-sections.const';
+import { AppSections } from 'src/app/shared-app/const/app-sections.const';
 
 
 export interface TransitionParams {

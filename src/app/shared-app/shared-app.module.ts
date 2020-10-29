@@ -2,20 +2,18 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { AppButtonComponent, ListCardComponent, NavItemComponent } from './components';
 import { PageNotFoundComponent } from './components/page-not-found.component';
 import { IfRoleDirective, InputListenerDirective } from './directives';
 import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
-import { MatCardModule } from '@angular/material/card';
-import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +21,6 @@ import { NotificationComponent } from './notification/notification.component';
     AppButtonComponent,  
     NavItemComponent,
     ListCardComponent,
-    NotificationComponent,
 
     ReverseArrayPipe,
     TransformButtonsPipe,
@@ -36,7 +33,6 @@ import { NotificationComponent } from './notification/notification.component';
     CommonModule, 
     FlexLayoutModule,
     
-    MatSnackBarModule,      
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
@@ -52,7 +48,6 @@ import { NotificationComponent } from './notification/notification.component';
     CommonModule, 
     FlexLayoutModule,
     
-    MatSnackBarModule,   
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
