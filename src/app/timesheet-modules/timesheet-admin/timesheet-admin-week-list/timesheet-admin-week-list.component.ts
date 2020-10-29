@@ -45,12 +45,13 @@ export class TimesheetAdminWeekListComponent {
   changeTimesheetStatuses = (timesheets: Timesheet[]): void => {
     if(!timesheets) return;
     
-    let ids = timesheets.reduce((_ids, timesheet) => {
-      if(timesheet.status === TimesheetStatus.Open) _ids.push(timesheet.id);
-      return _ids
-    }, []);
+    let ids: string[] = [];
+    for(let i = 0; i < timesheets.length; i++){
+      const timesheet = timesheets[i];
+      if(timesheet.status === TimesheetStatus.Open) ids.push(timesheet.id);
+    }
 
-    if(ids.length == 0) return;
+    if(ids.length === 0) return;
 
     this.store.updateStatuses(ids, TimesheetStatus.Confirmed);
   }
