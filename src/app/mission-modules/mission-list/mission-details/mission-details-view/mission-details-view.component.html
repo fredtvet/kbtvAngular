@@ -23,25 +23,27 @@
 
   </div>
 
-  <app-list-card startIcon="photo_library" ellipsisDisabled="true"  
-    [routerLink]="['/oppdrag', mission?.id, 'bilder']">
+  <app-list-card ellipsisDisabled="true" [routerLink]="['/oppdrag', mission?.id, 'bilder']">
+    <mat-icon left-side>photo_library</mat-icon>
     <span [matBadge]="mission.missionImages ? mission.missionImages.length : 0" 
       matBadgeOverlap="false" matBadgeColor="accent">Bilder</span>
-    <mat-icon rightSide>chevron_right</mat-icon>
+    <mat-icon right-side>chevron_right</mat-icon>
   </app-list-card>
 
-  <app-list-card *ifRole="RolePresets.Internal" startIcon="folder" endIcon="chevron_right" ellipsisDisabled="true"  
+  <app-list-card *ifRole="RolePresets.Internal" ellipsisDisabled="true"  
     [routerLink]="['/oppdrag', mission?.id, 'dokumenter']">
+    <mat-icon left-side>folder</mat-icon>
     <span [matBadge]="mission.missionDocuments ? mission.missionDocuments.length : 0" 
       matBadgeOverlap="false" matBadgeColor="accent">Dokumenter</span>
-    <mat-icon rightSide>chevron_right</mat-icon>
+    <mat-icon right-side>chevron_right</mat-icon>
   </app-list-card>
 
-  <app-list-card *ifRole="RolePresets.Internal" startIcon="rate_review" endIcon="chevron_right" ellipsisDisabled="true"
+  <app-list-card *ifRole="RolePresets.Internal" ellipsisDisabled="true"
     [routerLink]="['/oppdrag', mission?.id, 'notater']">
+    <mat-icon left-side>rate_review</mat-icon>
     <span [matBadge]="mission.missionNotes ? mission.missionNotes.length : 0" 
       matBadgeOverlap="false" matBadgeColor="accent">Notater</span>
-    <mat-icon rightSide>chevron_right</mat-icon>
+    <mat-icon right-side>chevron_right</mat-icon>
   </app-list-card>
 
 

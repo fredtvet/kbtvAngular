@@ -6,30 +6,44 @@
   <div class="pl-1 pr-1 pb-1 max-width h-100" fxLayout="column" fxLayoutAlign="space-between stretch">
 
     <span>
-      <app-list-card startIcon='account_circle' (click)="updateProfile()">
-        Oppdater profil<mat-icon rightSide>chevron_right</mat-icon>
+      <app-list-card (click)="updateProfile()">
+        <mat-icon left-side>account_circle</mat-icon>
+        Oppdater profil
+        <mat-icon right-side>chevron_right</mat-icon>
       </app-list-card>
-      <app-list-card startIcon='vpn_key' (click)="updatePassword()">
-        Oppdater passord<mat-icon rightSide>chevron_right</mat-icon>
+      <app-list-card (click)="updatePassword()">
+        <mat-icon left-side>vpn_key</mat-icon>
+        Oppdater passord
+        <mat-icon right-side>chevron_right</mat-icon>
       </app-list-card>
-      <app-list-card startIcon='settings' (click)="updateSyncConfig()">
-        Konfigurasjoner<mat-icon rightSide>chevron_right</mat-icon>
+      <app-list-card (click)="updateSyncConfig()">
+        <mat-icon left-side>settings</mat-icon>
+        Konfigurasjoner
+        <mat-icon right-side>chevron_right</mat-icon>
       </app-list-card>
-      <app-list-card appAddToHomeScreen startIcon='get_app'>
-        Legg til app<mat-icon rightSide>chevron_right</mat-icon>
+      <app-list-card appAddToHomeScreen>
+        <mat-icon left-side>get_app</mat-icon>
+        Legg til app
+        <mat-icon right-side>chevron_right</mat-icon>
       </app-list-card>
 
-      <app-list-card startIcon='update' (click)="refresh()">
-        Synkroniser data<mat-icon rightSide>chevron_right</mat-icon>
+      <app-list-card (click)="refresh()">
+        <mat-icon left-side>update</mat-icon>
+        Synkroniser data
+        <mat-icon right-side>chevron_right</mat-icon>
       </app-list-card>
     </span>
   
     <span>
-      <app-list-card startIcon='delete_sweep' (click)="confirmPurge()">
-        Slett lokal data<mat-icon rightSide>chevron_right</mat-icon>
+      <app-list-card (click)="confirmPurge()">
+        <mat-icon left-side>delete_sweep</mat-icon>
+        Slett lokal data
+        <mat-icon right-side>chevron_right</mat-icon>
       </app-list-card>
-      <app-list-card startIcon='power_settings_new' (click)="logout()">
-        Logg ut<mat-icon rightSide>chevron_right</mat-icon>
+      <app-list-card (click)="logout()">
+        <mat-icon left-side>power_settings_new</mat-icon>
+        Logg ut
+        <mat-icon right-side>chevron_right</mat-icon>
       </app-list-card>
     </span>
 

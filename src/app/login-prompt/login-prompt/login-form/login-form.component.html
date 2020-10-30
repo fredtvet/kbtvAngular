@@ -1,12 +1,12 @@
 <form [formGroup]="authForm" (ngSubmit)="submitForm()" fxLayout="column" >
   <span class="mat-subheading-2 mb-2">Logg inn</span>
 
-  <mat-form-field>
+  <mat-form-field color="accent">
     <mat-icon matSuffix color="accent">person</mat-icon>
     <input matInput formControlName="userName" placeholder="Brukernavn" type="text" />
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field color="accent">
     <mat-icon matSuffix color="accent" (click)="hidePassword = !hidePassword">
       {{hidePassword ? 'visibility_off' : 'visibility'}}
     </mat-icon>

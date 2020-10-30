@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Type } from '@angular/core';
+import { ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, Type } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { ControlGroupComponent, ControlHook, DynamicControl, DynamicControlGroup
 
 export type ValidControl = DynamicControlGroup<any> | DynamicControl<any, any>;
 
+@Directive()
 export abstract class ControlComponentLoaderComponent {
     dynamicHost: DynamicHostDirective;
 

@@ -4,10 +4,11 @@
     </app-main-top-nav-bar>
 
     <div class="pl-1 pr-1 max-width" *ngIf="users$ | async else loading; let users">
-        <app-list-card *ngFor="let user of users" startIcon="person"
+        <app-list-card *ngFor="let user of users"
             (click)="goToWeekList(user)"> 
+                <mat-icon left-side>person</mat-icon>
                 {{user.firstName + ' ' +user.lastName}}
-                <mat-icon rightSide>chevron_right</mat-icon>
+                <mat-icon right-side>chevron_right</mat-icon>
         </app-list-card>
         <ng-container *ngIf="users.length == 0" [ngTemplateOutlet]="noUsers"></ng-container>
     </div>  

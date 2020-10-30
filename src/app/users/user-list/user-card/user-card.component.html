@@ -1,8 +1,9 @@
-<app-list-card [startIcon]="(user.role === Roles.Oppdragsgiver) ? 'work' : 'person'" rippleDisabled=true>
-
+<app-list-card rippleDisabled="true" >
+    <mat-icon left-side>{{ (user.role === Roles.Oppdragsgiver) ? 'work' : 'person' }}</mat-icon>
+    
     {{ user.lastName }}, {{ user.firstName }}
 
-    <span rightSide fxLayout="row">
+    <span right-side fxLayout="row">
         <a *ngIf="user.phoneNumber" style="color:green" mat-icon-button href="tel:{{ user.phoneNumber }}">
             <mat-icon>phone</mat-icon>
         </a>   

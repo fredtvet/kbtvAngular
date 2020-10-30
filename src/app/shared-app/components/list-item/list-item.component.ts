@@ -1,14 +1,15 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'app-list-card',
-  templateUrl: './list-card.component.html',
+  selector: 'app-list-item',
+  templateUrl: './list-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class ListCardComponent {
+export class ListItemComponent {
 
-  @Input() ellipsisDisabled: boolean;
+  @Input() startIcon: string;
+  @Input() endIcon: string;
   @Input() rippleDisabled: boolean;
   
   constructor() { }

@@ -11,6 +11,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { AppButtonComponent, ListCardComponent, NavItemComponent } from './components';
+import { ListItemComponent } from './components/list-item/list-item.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
 import { IfRoleDirective, InputListenerDirective } from './directives';
 import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
@@ -21,7 +22,7 @@ import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
     AppButtonComponent,  
     NavItemComponent,
     ListCardComponent,
-
+    ListItemComponent,
     ReverseArrayPipe,
     TransformButtonsPipe,
 
@@ -61,7 +62,8 @@ import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
     AppButtonComponent,  
     NavItemComponent,   
     ListCardComponent,
-
+    ListItemComponent,
+    
     ReverseArrayPipe,
     TransformButtonsPipe,
 
