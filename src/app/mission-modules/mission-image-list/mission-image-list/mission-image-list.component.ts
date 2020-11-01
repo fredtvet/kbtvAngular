@@ -129,6 +129,7 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   private downloadImages = (imgs: MissionImage[]) => 
     this.downloaderService.downloadUrls(imgs.map(x => _appFileUrl(x.fileName, "images")));
 
-  private onBack = () => this.router.navigate(['/oppdrag', this.missionId, 'detaljer']);  
+  private onBack = () => this.router.navigate(['../'], {relativeTo: this.route.parent});
+  
  
 }

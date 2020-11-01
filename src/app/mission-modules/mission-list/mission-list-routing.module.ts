@@ -9,28 +9,38 @@ const routes: Routes = [
     path: '',
     component: MissionListComponent,
     data: {depth: 1},
+    children: [
+      {
+        path: ':id/detaljer',
+        component: MissionDetailsComponent,
+        data: {child: true},
+        children: [
+          {
+            path: 'timer',
+            data: {child: true},
+            loadChildren: () => import('src/app/timesheet-modules/user-timesheet-list/user-timesheet-list.module').then(m => m.UserTimesheetListModule),
+          },
+          {
+            path: 'bilder',
+            data: {child: true},
+            loadChildren: () => import('src/app/mission-modules/mission-image-list/mission-image-list.module').then(m => m.MissionImageListModule),
+          },
+          {
+            path: 'dokumenter',
+            data: {allowedRoles: RolePresets.Internal.valueOf(), child: true},
+            loadChildren: () => import('src/app/mission-modules/mission-document-list/mission-document-list.module').then(m => m.MissionDocumentListModule),
+        
+          },
+          {
+            path: 'notater',
+            data: {allowedRoles: RolePresets.Internal.valueOf(), child: true},
+            loadChildren: () => import('src/app/mission-modules/mission-note-list/mission-note-list.module').then(m => m.MissionNoteListModule),
+          },
+        ]
+      },
+    ]
   },
-  {
-    path: ':id/detaljer',
-    component: MissionDetailsComponent,
-    data: {depth: 2},
-  },
-  {
-    path: ':id/bilder',
-    data: {depth: 3},
-    loadChildren: () => import('src/app/mission-modules/mission-image-list/mission-image-list.module').then(m => m.MissionImageListModule),
-  },
-  {
-    path: ':id/dokumenter',
-    data: {allowedRoles: RolePresets.Internal.valueOf(), depth: 3},
-    loadChildren: () => import('src/app/mission-modules/mission-document-list/mission-document-list.module').then(m => m.MissionDocumentListModule),
 
-  },
-  {
-    path: ':id/notater',
-    data: {allowedRoles: RolePresets.Internal.valueOf(), depth: 3},
-    loadChildren: () => import('src/app/mission-modules/mission-note-list/mission-note-list.module').then(m => m.MissionNoteListModule),
-  },
 ];
 
 

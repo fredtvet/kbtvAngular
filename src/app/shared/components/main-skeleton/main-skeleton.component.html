@@ -1,6 +1,5 @@
-<div fxLayout="column" class="h-100" style="position:relative">
-
-  <span style="z-index:3;" class="primary"
+<div fxLayout="column" class="h-100 primary-light" style="position:relative;z-index:1">
+  <span  class="primary" style="z-index:1"
     [ngClass]="disableElevation ? '' : 'mat-elevation-z2'" >
     
     <ng-content select="[navbar]"></ng-content>
@@ -20,5 +19,7 @@
         [config]="fab">
       </app-button>
   </div>
+
+  <router-outlet #outlet="outlet"></router-outlet>
 
 </div>

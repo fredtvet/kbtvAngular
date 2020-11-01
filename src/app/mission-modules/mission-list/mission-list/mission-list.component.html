@@ -1,6 +1,6 @@
 
 
-<app-main-skeleton  *ngIf="vm$ | async; let vm" [fabs]="vm.fabs">
+<app-main-skeleton *ngIf="vm$ | async; let vm" [fabs]="vm.fabs">
 
   <ng-container navbar>
     <app-main-top-nav-bar [config]="vm.navConfig" >
@@ -9,7 +9,6 @@
   </ng-container>
 
   <app-mission-list-view *ngIf="vm.missions" 
-    [scrollToMissionId]="initialMissionId"
     [missions]="vm.missions" 
     (search)="searchMissions($event)">
   </app-mission-list-view>
@@ -17,4 +16,7 @@
 </app-main-skeleton>
 
 
-<router-outlet></router-outlet>
+
+
+
+

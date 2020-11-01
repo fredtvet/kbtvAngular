@@ -1,6 +1,6 @@
-<app-main-skeleton *ngIf="vm$ | async; let vm">
+<app-main-skeleton *ngIf="vm$ | async; let vm" overlayMode="true">
 
-    <app-main-top-nav-bar navbar [config]="vm.navConfig" >
+    <app-main-top-nav-bar navbar [config]="vm.navConfig">
     </app-main-top-nav-bar>
 
     <div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch" *ngIf="vm.timesheets?.length else loading">  

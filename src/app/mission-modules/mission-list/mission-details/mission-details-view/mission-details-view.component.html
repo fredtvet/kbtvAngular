@@ -23,7 +23,7 @@
 
   </div>
 
-  <app-list-card ellipsisDisabled="true" [routerLink]="['/oppdrag', mission?.id, 'bilder']">
+  <app-list-card ellipsisDisabled="true" [routerLink]="['/oppdrag', mission?.id, 'detaljer','bilder']">
     <mat-icon left-side>photo_library</mat-icon>
     <span [matBadge]="mission.missionImages ? mission.missionImages.length : 0" 
       matBadgeOverlap="false" matBadgeColor="accent">Bilder</span>
@@ -31,7 +31,7 @@
   </app-list-card>
 
   <app-list-card *ifRole="RolePresets.Internal" ellipsisDisabled="true"  
-    [routerLink]="['/oppdrag', mission?.id, 'dokumenter']">
+    [routerLink]="['/oppdrag', mission?.id, 'detaljer','dokumenter']">
     <mat-icon left-side>folder</mat-icon>
     <span [matBadge]="mission.missionDocuments ? mission.missionDocuments.length : 0" 
       matBadgeOverlap="false" matBadgeColor="accent">Dokumenter</span>
@@ -39,7 +39,7 @@
   </app-list-card>
 
   <app-list-card *ifRole="RolePresets.Internal" ellipsisDisabled="true"
-    [routerLink]="['/oppdrag', mission?.id, 'notater']">
+    [routerLink]="['/oppdrag', mission?.id, 'detaljer','notater']">
     <mat-icon left-side>rate_review</mat-icon>
     <span [matBadge]="mission.missionNotes ? mission.missionNotes.length : 0" 
       matBadgeOverlap="false" matBadgeColor="accent">Notater</span>

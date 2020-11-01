@@ -1,4 +1,4 @@
-<app-main-skeleton *ngIf="vm$ | async; let vm" [fabs]="vm.fabs">
+<app-main-skeleton *ngIf="vm$ | async; let vm" [fabs]="vm.fabs" overlayMode="true">
 
     <ng-container navbar>
         <app-main-top-nav-bar [config]="vm.navConfig" >

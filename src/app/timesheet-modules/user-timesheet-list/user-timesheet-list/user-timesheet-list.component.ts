@@ -23,8 +23,8 @@ import { DateRange } from 'src/app/shared/interfaces/date-range.interface';
 import { ModelFormService, SaveModelFormState } from 'src/app/shared/model-form';
 import { translations } from 'src/app/shared/translations';
 import { TimesheetCriteria } from '../../shared-timesheet/interfaces';
-import { UserTimesheetFormToSaveModelAdapter } from '../save-user-timesheet/user-timesheet-form-to-save-model.adapter';
-import { UserTimesheetListStore } from '../user-timesheet-list.store';
+import { UserTimesheetFormToSaveModelAdapter } from '../../shared-timesheet/save-user-timesheet/user-timesheet-form-to-save-model.adapter';
+import { UserTimesheetStore } from '../../shared-timesheet/services/user-timesheet.store';
 
 interface ViewModel { timesheets: Timesheet[], fabs?: AppButton[], chips?: AppChip[], navConfig?: MainTopNavConfig  }
 
@@ -63,7 +63,7 @@ export class UserTimesheetListComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
-    private store: UserTimesheetListStore,
+    private store: UserTimesheetStore,
     private chipsFactory: ChipsFactoryService,
     private modelFormService: ModelFormService
   ) {}

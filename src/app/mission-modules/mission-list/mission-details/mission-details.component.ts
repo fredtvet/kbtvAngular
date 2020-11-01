@@ -63,10 +63,10 @@ export class MissionDetailsComponent{
     })
 
   private goToTimesheets = (mission: Mission) => 
-    this.router.navigate(['mine-timer/liste', {
+    this.router.navigate(['timer', {
       returnUrl: this.router.url, 
       filter: JSON.stringify({mission, status: TimesheetStatus.Open})
-    }]);
+    }], {relativeTo: this.route});
 
   private openBottomSheetMenu = (mission: Mission) => {   
     this.menuService.open([
@@ -89,6 +89,6 @@ export class MissionDetailsComponent{
     }
   }
 
-  private onBack = () => this.router.navigate(['/oppdrag', {initialMissionId: this.missionId}])
+  private onBack = () => this.router.navigate(['../../'], {relativeTo: this.route})
 
 }

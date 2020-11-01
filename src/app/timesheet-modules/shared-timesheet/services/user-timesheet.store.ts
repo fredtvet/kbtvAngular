@@ -1,25 +1,32 @@
 import { Injectable } from "@angular/core";
 import { combineLatest, Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { Mission, Timesheet } from "src/app/core/models";
+import { TimesheetCriteria, WeekCriteria, TimesheetSummary } from '../interfaces';
+import { TimesheetSummaryAggregator } from './timesheet-summary.aggregator';
+import { TimesheetFilter } from '../timesheet-filter.model';
+import { WeekToTimesheetCriteriaAdapter } from '../week-to-timesheet-criteria.adapter';
+import { Timesheet, Mission } from 'src/app/core/models';
 import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helpers/get-with-relations.config';
 import { ObservableStore } from 'src/app/core/services/state/abstracts/observable-store';
+import { StateUserTimesheets, StateMissions } from 'src/app/core/services/state/interfaces';
 import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
-import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { TimesheetCriteriaFormState } from 'src/app/shared/constants/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from 'src/app/shared/enums';
 import { FilteredResponse } from 'src/app/shared/interfaces';
-import { TimesheetCriteria, WeekCriteria, TimesheetSummary } from '../shared-timesheet/interfaces';
-import { TimesheetSummaryAggregator } from '../shared-timesheet/services/timesheet-summary.aggregator';
-import { TimesheetFilter } from '../shared-timesheet/timesheet-filter.model';
-import { WeekToTimesheetCriteriaAdapter } from '../shared-timesheet/week-to-timesheet-criteria.adapter';
-import { StoreState } from './store-state';
+
+export interface StoreState extends 
+    StateUserTimesheets,
+    StateMissions {
+        userTimesheetListCriteria: TimesheetCriteria,
+        userTimesheetListWeekCriteria: WeekCriteria,
+        userTimesheetListGroupBy: GroupByPeriod,
+}
 
 @Injectable({
   providedIn: 'any',
 })
-export class UserTimesheetListStore extends ObservableStore<StoreState> {
+export class UserTimesheetStore extends ObservableStore<StoreState> {
   
   criteria$ = this.stateProperty$<TimesheetCriteria>("userTimesheetListCriteria");
   get criteria(): TimesheetCriteria{ return this.getStateProperty("userTimesheetListCriteria") || {}} 

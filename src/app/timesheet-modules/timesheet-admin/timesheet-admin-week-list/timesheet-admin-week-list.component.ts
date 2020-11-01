@@ -57,9 +57,9 @@ export class TimesheetAdminWeekListComponent {
   }
 
   selectWeek = (weekNr: number) => {
-    this.router.navigate(['timeadministrering/uker/timer', {
+    this.router.navigate(['timer', {
       filter: JSON.stringify({...this.store.weekCriteria, weekNr})
-    }])
+    }], {relativeTo: this.route})
   }
 
   trackByWeek = (index:number, summary:TimesheetSummary): number => summary.weekNr;
@@ -77,7 +77,7 @@ export class TimesheetAdminWeekListComponent {
   } 
     
   private onBack = () => { 
-    this.router.navigate(["timeadministrering"])
+    this.router.navigate(["../"], {relativeTo: this.route})
   }
 
   private getNavConfig(weekCriteria: WeekCriteria): MainTopNavConfig {

@@ -20,7 +20,6 @@ import { MissionListComponent } from './mission-list/mission-list.component';
   ],
   providers: [
     AppFileUrlPipe,
-    {provide: "FILTER_STORE", useExisting: MissionListStore}
   ],
   imports: [
     SharedModule,

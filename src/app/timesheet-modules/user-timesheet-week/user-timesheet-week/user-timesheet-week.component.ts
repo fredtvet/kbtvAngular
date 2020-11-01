@@ -14,13 +14,15 @@ import { _getWeeksInYear } from 'src/app/shared-app/helpers/datetime/get-weeks-i
 import { _mapObjectsToWeekdays } from 'src/app/shared-app/helpers/object/map-objects-to-weekdays.helper';
 import { _trackByModel } from 'src/app/shared-app/helpers/trackby/track-by-model.helper';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
+import { WeekCriteriaForm } from 'src/app/shared/constants/forms/week-criteria-controls.const';
 import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from 'src/app/shared/constants/model-forms/save-user-timesheet-form.const';
 import { GroupByPeriod } from 'src/app/shared/enums';
+import { FormService } from 'src/app/shared/form';
 import { ModelFormService, SaveModelFormState } from 'src/app/shared/model-form';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
-import { UserTimesheetFormToSaveModelAdapter } from '../save-user-timesheet/user-timesheet-form-to-save-model.adapter';
+import { UserTimesheetFormToSaveModelAdapter } from '../../shared-timesheet/save-user-timesheet/user-timesheet-form-to-save-model.adapter';
+import { UserTimesheetStore } from '../../shared-timesheet/services/user-timesheet.store';
 import { UserTimesheetCardDialogWrapperComponent } from '../user-timesheet-card-dialog-wrapper.component';
-import { UserTimesheetListStore } from '../user-timesheet-list.store';
 import { ViewModel } from './view-model.interface';
 
 @Component({
@@ -48,8 +50,9 @@ export class UserTimesheetWeekComponent {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private deviceInfoService: DeviceInfoService,
-    private store: UserTimesheetListStore,
-    private modelFormService: ModelFormService
+    private store: UserTimesheetStore,
+    private modelFormService: ModelFormService,
+    private formService: FormService,
   ) {
     this.store.addGroupBy(GroupByPeriod.Day) 
     let initFilter = this.route.snapshot.params.filter;
@@ -102,26 +105,35 @@ export class UserTimesheetWeekComponent {
 
   private goToTimesheetList = () => {
       const dp = this.weekCriteria;
-      this.router.navigate([
-        "mine-timer/liste",
+      this.router.navigate(["liste",
         {
           returnUrl: this.router.url,
           filter: JSON.stringify({
             dateRange: _getWeekRange(_getDateOfWeek(dp.weekNr, dp.year))
           })
         }
-      ]);
+      ], {relativeTo: this.route});
   };
 
-  private goToWeekList = () => 
-    this.router.navigate(['mine-timer/ukeliste', {filter: JSON.stringify({year: this.weekCriteria?.year})}])
+  private openWeekFilter = (): void => { 
+    this.formService.open<WeekCriteria, any>({
+      formConfig: {...WeekCriteriaForm, 
+        disabledControls: {user: true}, 
+        noRenderDisabledControls: true,  
+        initialValue: this.store.weekCriteria}, 
+      navConfig: {title: "Velg filtre"},
+      submitCallback: (val: WeekCriteria) => this.store.addWeekFilterCriteria(val)
+    });
+  }
 
   private getNavConfig(weekCriteria: WeekCriteria): MainTopNavConfig{
     return { 
       title:  "Uke " + weekCriteria?.weekNr || "",
       subTitle: weekCriteria?.year?.toString() || "",
-      backFn: this.goToWeekList,
-      buttons: [{icon: "list", callback: this.goToTimesheetList}]
+      buttons: [  
+        {icon: "filter_list", color: 'accent', callback: this.openWeekFilter},
+        {icon: "list", callback: this.goToTimesheetList},
+      ]
     }
   }
 }

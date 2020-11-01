@@ -8,18 +8,22 @@ const routes: Routes = [
   {
     path: '',
     component: TimesheetAdminUserListComponent,
-    data: {depth: 1},
+    children:[
+      {
+        path: 'uker',
+        component: TimesheetAdminWeekListComponent,
+        data: {child: true},
+        children: [
+          {
+            path: 'timer',
+            component: TimesheetAdminListComponent,
+            data: {child: true},
+          },
+        ]
+      },
+    ]
   },  
-  {
-    path: 'uker',
-    component: TimesheetAdminWeekListComponent,
-    data: {depth: 2},
-  },
-  {
-    path: 'uker/timer',
-    component: TimesheetAdminListComponent,
-    data: {depth: 3},
-  },
+
 ];
 
 @NgModule({

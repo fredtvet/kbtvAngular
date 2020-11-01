@@ -5,7 +5,7 @@
     <cdk-virtual-scroll-viewport itemSize="56" maxBufferPx="800" minBufferPx="800" class="h-100">
  
             <app-list-card *cdkVirtualFor="let mission of missions; trackBy: trackByFn;" 
-                [routerLink]="['/oppdrag', mission.id, 'detaljer']">        
+                [routerLink]="[mission.id, 'detaljer']">        
                 <mat-icon left-side>home_work</mat-icon>
                 <span fxHide.xs>{{'(' + mission.id + ') '}}</span>{{ mission.address }}
                 <mat-icon right-side>{{ mission.finished ? 'check':'chevron_right' }}</mat-icon>

@@ -18,9 +18,7 @@ import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.modu
     SwipeCardComponent,
     TimesheetAdminWeekListComponent,
   ],
-  providers:[
-    {provide: "FILTER_STORE", useExisting: TimesheetAdminStore}
-  ],
+  providers:[],
   imports: [
     SharedTimesheetModule,
     TimesheetAdminRoutingModule

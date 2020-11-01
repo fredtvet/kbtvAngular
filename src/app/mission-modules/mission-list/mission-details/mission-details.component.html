@@ -1,14 +1,12 @@
 
-    <app-main-skeleton *ngIf="vm$ | async; let vm">
+<app-main-skeleton *ngIf="vm$ | async; let vm" overlayMode="true">
 
-        <app-detail-top-nav-bar navbar [config]="vm.navConfig" >
-        </app-detail-top-nav-bar>
+    <app-detail-top-nav-bar navbar [config]="vm.navConfig" >
+    </app-detail-top-nav-bar>
 
-        <app-mission-details-view [mission]="vm.mission">
-        </app-mission-details-view>
+    <app-mission-details-view [mission]="vm.mission">
+    </app-mission-details-view>
         
-    </app-main-skeleton>
+</app-main-skeleton>
   
-    <input type="file" style="display:none" #imageInput (change)="updateHeaderImage($event.target.files)">
-    
-    <router-outlet></router-outlet>
+<input type="file" style="display:none" #imageInput (change)="updateHeaderImage($event.target.files)">

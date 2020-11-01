@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map } from 'rxjs/operators';
 import { _find } from 'src/app/shared-app/helpers/array/find.helper';
-import { UserTimesheetListStore } from './user-timesheet-list.store';
+import { UserTimesheetStore } from '../shared-timesheet/services/user-timesheet.store';
 
 @Component({
   selector: 'app-timesheet-card-dialog-wrapper',
@@ -21,7 +21,7 @@ export class UserTimesheetCardDialogWrapperComponent {
   )
 
   constructor(
-    private store: UserTimesheetListStore,
+    private store: UserTimesheetStore,
     public dialogRef: MatDialogRef<UserTimesheetCardDialogWrapperComponent>,
     @Inject(MAT_DIALOG_DATA) public timesheetId: string
     ) {}

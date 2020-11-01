@@ -18,7 +18,6 @@ import { DynamicFormsModule } from 'src/app/dynamic-forms/dynamic-forms.module';
   ],
   providers:[
     DatePipe,
-    {provide: "FILTER_STORE", useExisting: TimesheetStatisticStore}
   ],
   imports: [
     SharedTimesheetModule,

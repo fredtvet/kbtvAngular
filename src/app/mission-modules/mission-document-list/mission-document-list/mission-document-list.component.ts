@@ -108,7 +108,6 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     });
   }
 
-  private onBack = () => 
-   this.router.navigate(['/oppdrag', this.missionId, 'detaljer']);
+  private onBack = () => this.router.navigate(['../'], {relativeTo: this.route.parent});
 
 }

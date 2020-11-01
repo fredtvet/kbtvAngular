@@ -66,10 +66,7 @@ export class TimesheetAdminListComponent{
     }
   }
 
-  private onBack = () => {
-    this.router.navigate(['timeadministrering/uker', {
-      filter: JSON.stringify({...this.store.weekCriteria, weekNr: null})
-    }])
-  }
-
+  private onBack = () => 
+    this.router.navigate(['../'], {relativeTo: this.route})
+  
 }

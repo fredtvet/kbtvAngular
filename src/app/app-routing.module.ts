@@ -21,7 +21,7 @@ const routes: Routes = [
         loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)},
 
       {path: 'mine-timer', data: {depth: 1, section: AppSections.UserTimesheet, allowedRoles: RolePresets.Internal}, 
-        loadChildren: () => import('./timesheet-modules/user-timesheet-list/user-timesheet-list.module').then(m => m.UserTimesheetListModule)},
+        loadChildren: () => import('./timesheet-modules/user-timesheet-week/user-timesheet-week.module').then(m => m.UserTimesheetWeekModule)},
 
       {path: 'oppdrag', loadChildren: () => import('./mission-modules/mission-list/mission-list.module').then(m => m.MissionListModule),
         data: {depth: 1, section: AppSections.Mission}},
