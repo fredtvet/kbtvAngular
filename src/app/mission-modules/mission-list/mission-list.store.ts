@@ -9,7 +9,6 @@ import { GetWithRelationsHelper } from 'src/app/core/services/model/state-helper
 import { SaveModelFileStateCommand } from 'src/app/core/services/model/state/save-model-file/save-model-file-state-command.interface';
 import { BaseModelStore } from 'src/app/core/services/state/abstracts/base-model.store';
 import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
-import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { StateAction } from 'src/app/core/services/state/state-action.enum';
 import { NotificationService, NotificationType } from 'src/app/notification';
 import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
@@ -53,12 +52,11 @@ export class MissionListStore extends BaseModelStore<StoreState> {
 
   constructor(
     apiService: ApiService,
-    base: ObservableStoreBase,
     private notificationService: NotificationService,
     private commandDispatcher: CommandDispatcher,
     private getWithRelationsHelper: GetWithRelationsHelper,
   ) {
-    super(base, apiService);
+    super(apiService);
     this.initState();
   }
 

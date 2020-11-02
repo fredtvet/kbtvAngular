@@ -4,7 +4,6 @@ import { filter, map } from 'rxjs/operators';
 import { _deepClone } from 'src/app/shared-app/helpers/deep-clone.helper';
 import { ObservableStore } from './abstracts/observable-store';
 import { StateCommand } from './interfaces/state-command.interface';
-import { ObservableStoreBase } from './observable-store-base';
 import { OptimisticStateConfig } from './optimistic-state.config';
 
 export interface DispatchedCommand<TCommand extends StateCommand> { command: TCommand, state: any };
@@ -15,9 +14,7 @@ export class CommandDispatcher extends ObservableStore<any> {
     private dispatchSubject = new Subject<DispatchedCommand<StateCommand>>();
     private dispatched$ = this.dispatchSubject.asObservable();
 
-    constructor(base: ObservableStoreBase) {
-        super(base);
-    }
+    constructor() { super() }
 
     listen$<TCommand extends StateCommand>(action: string): Observable<DispatchedCommand<TCommand>> {
         return this.dispatched$.pipe(
@@ -33,6 +30,8 @@ export class CommandDispatcher extends ObservableStore<any> {
         const state = noStateSnapshot ? null : this.getOptimisticState();
         this.dispatchSubject.next({ command, state })
     }
+
+    // select$(query: )
 
     private getOptimisticState(): Object {
         return this.getStateProperties(Object.keys(OptimisticStateConfig) as any, false);

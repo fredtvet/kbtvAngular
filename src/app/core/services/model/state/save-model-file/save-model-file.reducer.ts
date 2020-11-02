@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ModelFile } from '../../../../models';
 import { CommandDispatcher } from '../../../state/command.dispatcher';
-import { ObservableStoreBase } from '../../../state/observable-store-base';
 import { ModelConfig } from '../../model-state.config';
 import { ModifyModelWithForeignsHelper } from '../../state-helpers/modify-model-with-foreigns.helper';
 import { SaveModelReducer } from '../save-model/save-model.reducer';
@@ -10,12 +9,11 @@ import { SaveModelFileAction, SaveModelFileStateCommand } from './save-model-fil
 @Injectable({providedIn: 'root'})
 export class SaveModelFileReducer extends SaveModelReducer{
 
-    constructor(
-        base: ObservableStoreBase,
+    constructor( 
         commandDispatcher: CommandDispatcher,
         modifyModelWithForeignsHelper: ModifyModelWithForeignsHelper
     ){ 
-        super(base, commandDispatcher, modifyModelWithForeignsHelper);
+        super(commandDispatcher, modifyModelWithForeignsHelper);
     }
 
     protected initCommandListener(){

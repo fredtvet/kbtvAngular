@@ -1,24 +1,22 @@
 import { Injectable } from '@angular/core';
+import { _add } from 'src/app/shared-app/helpers/array/add.helper';
+import { _update } from 'src/app/shared-app/helpers/array/update.helper';
+import { Model } from '../../../../models';
 import { ObservableStore } from '../../../state/abstracts/observable-store';
 import { CommandDispatcher } from '../../../state/command.dispatcher';
-import { ObservableStoreBase } from '../../../state/observable-store-base';
-import { SaveModelAction, SaveModelStateCommand } from './save-model-state-command.interface';
+import { StateAction } from '../../../state/state-action.enum';
 import { ModelConfig, ModelStateConfig } from '../../model-state.config';
 import { ModifyModelWithForeignsHelper } from '../../state-helpers/modify-model-with-foreigns.helper';
-import { Model } from '../../../../models';
-import { StateAction } from '../../../state/state-action.enum';
-import { _update } from 'src/app/shared-app/helpers/array/update.helper';
-import { _add } from 'src/app/shared-app/helpers/array/add.helper';
+import { SaveModelAction, SaveModelStateCommand } from './save-model-state-command.interface';
 
 @Injectable({providedIn: 'root'})
 export class SaveModelReducer extends ObservableStore<any>{
 
     constructor(
-        base: ObservableStoreBase,
         protected commandDispatcher: CommandDispatcher,
         private modifyModelWithForeignsHelper: ModifyModelWithForeignsHelper
     ){ 
-        super(base);
+        super();
         this.initCommandListener();
     }
 

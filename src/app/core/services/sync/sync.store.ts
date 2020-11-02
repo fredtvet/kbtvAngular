@@ -5,24 +5,23 @@ import { distinctUntilKeyChanged, filter, first, skip, tap } from 'rxjs/operator
 import { _addOrUpdateRange } from 'src/app/shared-app/helpers/array/add-or-update-range.helper';
 import { _removeRangeByIdentifier } from 'src/app/shared-app/helpers/array/remove-range-by-identifier.helper';
 import { _getUnixTimeSeconds } from 'src/app/shared-app/helpers/datetime/get-unix-time-seconds.helper';
+import { Prop } from 'src/app/shared-app/prop.type';
 import { Mission } from '../../models';
 import { User } from '../../models/user.interface';
-import { ObservableStore } from '../state/abstracts/observable-store';
-import { ObservableStoreBase } from '../state/observable-store-base';
 import { ApiService } from '../api.service';
 import { AuthStoreActions } from '../auth/auth-store-actions.enum';
 import { AuthStore } from '../auth/auth.store';
 import { DeviceInfoService } from '../device-info.service';
+import { ModelState } from '../model/interfaces/model-state.interface';
+import { ModelStateConfig } from '../model/model-state.config';
 import { PersistanceStore } from '../persistance/persistance.store';
+import { ObservableStore } from '../state/abstracts/observable-store';
+import { DefaultSyncConfig } from './default-sync-config.const';
 import { StoreState } from './interfaces/store-state';
 import { EntitySyncResponse, SyncResponse } from './interfaces/sync-response.interface';
 import { SyncStoreConfig } from './interfaces/sync-store-config.interface';
 import { SyncStoreTimestamps } from './interfaces/sync-store-timestamps.interface';
 import { SyncStateConfig } from './sync-state.config';
-import { ModelState } from '../model/interfaces/model-state.interface';
-import { Prop } from 'src/app/shared-app/prop.type';
-import { ModelStateConfig } from '../model/model-state.config';
-import { DefaultSyncConfig } from './default-sync-config.const';
 
 @Injectable({
   providedIn: 'root'
@@ -39,13 +38,12 @@ export class SyncStore extends ObservableStore<StoreState>{
   get syncTimestamps(): SyncStoreTimestamps { return this.getStateProperty("syncTimestamps"); } 
 
   constructor(
-    base: ObservableStoreBase,
     private apiService: ApiService,
     private appRef: ApplicationRef,
     private deviceInfoService: DeviceInfoService,
     private persistanceStore: PersistanceStore,
     private authStore: AuthStore,) { 
-    super(base);
+    super();
   }
 
   init(){
@@ -55,7 +53,7 @@ export class SyncStore extends ObservableStore<StoreState>{
 
     this.continousSync$.subscribe();
 
-    this.globalStateChanges$.subscribe(x => this.handleAuthActions(x?.action))
+    this.stateChanges$.subscribe(x => this.handleAuthActions(x?.action))
   }
 
   syncAll() : void{

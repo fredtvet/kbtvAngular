@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ObservableStore } from 'src/app/core/services/state/abstracts/observable-store';
 import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
-import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
-import { UpdateCurrentUserStateCommand, UpdateCurrentUserAction } from './update-current-user-state-command.interface';
+import { UpdateCurrentUserAction, UpdateCurrentUserStateCommand } from './update-current-user-state-command.interface';
 
 @Injectable({providedIn: 'root'})
 export class UpdateCurrentUserReducer extends ObservableStore<any>{
 
-    constructor(
-        base: ObservableStoreBase,
-        private commandDispatcher: CommandDispatcher,
-    ){ 
-        super(base);
+    constructor(private commandDispatcher: CommandDispatcher){ 
+        super();
         this.initCommandListener();
     }
 

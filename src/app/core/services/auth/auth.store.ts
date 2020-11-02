@@ -6,10 +6,9 @@ import { User } from 'src/app/core/models';
 import { _getUnixTimeSeconds } from 'src/app/shared-app/helpers/datetime/get-unix-time-seconds.helper';
 import { httpRetryStrategy } from 'src/app/shared-app/http-retry.strategy';
 import { ApiUrl } from '../../api-url.enum';
-import { ObservableStore } from '../state/abstracts/observable-store';
-import { ObservableStoreBase } from '../state/observable-store-base';
 import { ApiService } from '../api.service';
 import { DeviceInfoService } from '../device-info.service';
+import { ObservableStore } from '../state/abstracts/observable-store';
 import { AuthStoreActions } from './auth-store-actions.enum';
 import { Credentials } from './interfaces/credentials.interface';
 import { StoreState } from './interfaces/store-state';
@@ -26,12 +25,11 @@ export class AuthStore extends ObservableStore<StoreState>{
   private _isRefreshingToken: boolean = false;//Prevent multiple refresh requests at once
 
   constructor (     
-    base: ObservableStoreBase,
     private apiService: ApiService,
     private deviceInfoService: DeviceInfoService,
     private router: Router,
   ) {
-    super(base);
+    super();
     
   }
 

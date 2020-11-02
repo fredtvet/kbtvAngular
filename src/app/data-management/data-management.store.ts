@@ -8,7 +8,6 @@ import { GetWithRelationsConfig } from '../core/services/model/state-helpers/get
 import { DeleteModelAction } from '../core/services/model/state/delete-model/delete-model-state-command.interface';
 import { BaseModelStore } from '../core/services/state/abstracts/base-model.store';
 import { CommandDispatcher } from '../core/services/state/command.dispatcher';
-import { ObservableStoreBase } from '../core/services/state/observable-store-base';
 import { StateAction } from '../core/services/state/state-action.enum';
 import { Prop } from '../shared-app/prop.type';
 import { FormToSaveModelStateCommandAdapter } from '../shared/model-form/adapters/form-to-save-model-state-command.adapter';
@@ -34,11 +33,10 @@ export class DataManagementStore extends BaseModelStore<StoreState>  {
     }
 
     constructor(
-        apiService: ApiService,
-        base: ObservableStoreBase,  
+        apiService: ApiService, 
         private commandDispatcher: CommandDispatcher,
     ) {
-        super(base, apiService);
+        super(apiService);
     }
 
     updateSelectedProperty = (prop: Prop<ModelState>) => this.setState({selectedProperty: prop})

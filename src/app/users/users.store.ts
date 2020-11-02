@@ -5,7 +5,6 @@ import { ApiUrl } from 'src/app/core/api-url.enum';
 import { User } from "src/app/core/models";
 import { ApiService } from '../core/services/api.service';
 import { BaseModelStore } from '../core/services/state/abstracts/base-model.store';
-import { ObservableStoreBase } from '../core/services/state/observable-store-base';
 import { Roles } from '../shared-app/enums';
 import { _groupBy } from '../shared-app/helpers/array/group-by.helper';
 import { StoreState } from './store-state';
@@ -19,12 +18,8 @@ export class UsersStore extends BaseModelStore<StoreState> {
   
   get users(): User[]{ return this.getStateProperty("users"); }
 
-  constructor(
-    base: ObservableStoreBase,
-    apiService: ApiService,
-  ) {
-    super(base, apiService);
-
+  constructor(apiService: ApiService) {
+    super(apiService);
     this.sortedUsers$ = this.modelProperty$("users").pipe(map(this.sortByRole));
   }
 

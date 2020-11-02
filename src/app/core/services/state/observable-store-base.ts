@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { _deepClone } from 'src/app/shared-app/helpers/deep-clone.helper';
 import { ObservableStoreSettings } from './interfaces/observable-store-settings.interface';
 import { StateChanges } from './interfaces/state-changes.interface';
 
-@Injectable({providedIn: "root"})
 export class ObservableStoreBase {  
 
     private storeState: any = null;
@@ -13,8 +11,8 @@ export class ObservableStoreBase {
         logStateChanges: false,
     };    
 
-    private globalStateChangesSubject = new BehaviorSubject<StateChanges<any>>({stateChanges: {}});
-    globalStateChanges$ = this.globalStateChangesSubject.asObservable();
+    private stateChangesSubject = new BehaviorSubject<StateChanges<any>>({stateChanges: {}});
+    stateChanges$ = this.stateChangesSubject.asObservable();
 
     constructor(){ }
 
@@ -42,7 +40,7 @@ export class ObservableStoreBase {
         else
             this.storeState = {...this.storeState, ...stateChanges};
 
-        this.globalStateChangesSubject.next({stateChanges, action});
+        this.stateChangesSubject.next({stateChanges, action});
     }
 
 }

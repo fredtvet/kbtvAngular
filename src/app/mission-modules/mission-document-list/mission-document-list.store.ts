@@ -9,7 +9,6 @@ import { DeleteModelAction, DeleteModelStateCommand } from 'src/app/core/service
 import { MailModelsAction, MailModelsStateCommand } from 'src/app/core/services/model/state/mail-models/mail-models-state-command.interface';
 import { ObservableStore } from 'src/app/core/services/state/abstracts/observable-store';
 import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
-import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { StoreState } from './store-state';
 
 @Injectable({
@@ -18,12 +17,11 @@ import { StoreState } from './store-state';
 export class MissionDocumentListStore extends ObservableStore<StoreState>  {
 
   constructor(
-    base: ObservableStoreBase,
     private commandDispatcher: CommandDispatcher,
     private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,  
     private getWithRelationsHelper: GetWithRelationsHelper
   ) {
-    super(base);
+    super();
   }
 
   getByMissionIdWithType$(id: string): Observable<MissionDocument[]>{

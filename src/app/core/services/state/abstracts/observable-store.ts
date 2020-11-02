@@ -5,7 +5,6 @@ import { ObservableStoreSettings } from '../interfaces/observable-store-settings
 import { StateChanges } from '../interfaces/state-changes.interface';
 import { ObservableStoreBase } from '../observable-store-base';
 
-
 /**
  * Executes a function on `state` and returns a version of T
  * @param state - the original state model
@@ -14,15 +13,14 @@ export type stateFunc<T> = (state: T) => Partial<T>;
 
 export abstract class ObservableStore<TState> {
 
+    private static base = new ObservableStoreBase();
+
     private _settings: ObservableStoreSettings;
 
-    globalStateChanges$: Observable<StateChanges<TState>> = this.base.globalStateChanges$;
+    stateChanges$: Observable<StateChanges<TState>> = ObservableStore.base.stateChanges$;
     
-    constructor(
-        private base: ObservableStoreBase,
-        settings?: ObservableStoreSettings
-    ) {
-        this._settings = { ...base.settingsDefaults, ...(settings || {}) };        
+    constructor(settings?: ObservableStoreSettings) {
+        this._settings = { ...ObservableStore.base.settingsDefaults, ...(settings || {}) };        
     }
 
     protected stateProperty$<TProp>(prop: Prop<TState>, deepCloneReturnedState: boolean = true): Observable<TProp>{
@@ -35,7 +33,7 @@ export abstract class ObservableStore<TState> {
 
     protected statePropertyChanges$<TProp>(prop: Prop<TState>, deepCloneReturnedState: boolean = true): Observable<TProp>{
         if(!prop) return of(null);
-        return this.base.globalStateChanges$.pipe(skip(1),
+        return ObservableStore.base.stateChanges$.pipe(skip(1),
             filter(({stateChanges}) => 
                 (stateChanges && stateChanges.hasOwnProperty(prop)) ? true : false
             ),
@@ -53,7 +51,7 @@ export abstract class ObservableStore<TState> {
 
     protected stateSliceChanges$(properties: Prop<TState>[], deepCloneReturnedState: boolean = true): Observable<Partial<TState>>{
         if(!properties || properties.length === 0) return of(null);
-        return this.globalStateChanges$.pipe(skip(1),
+        return this.stateChanges$.pipe(skip(1),
             filter(({stateChanges}) => {
                 for(const prop of properties)
                     if(stateChanges.hasOwnProperty(prop)) return true; 
@@ -64,11 +62,11 @@ export abstract class ObservableStore<TState> {
     }
 
     protected getStateProperties(properties: Prop<TState>[] = null, deepCloneReturnedState: boolean = true) : Partial<TState> {
-        return this.base.getStoreState(properties, deepCloneReturnedState);
+        return ObservableStore.base.getStoreState(properties, deepCloneReturnedState);
     }
 
     protected getStateProperty<TProp>(propertyName: Prop<TState>, deepCloneReturnedState: boolean = true) : TProp {
-        const state = this.base.getStoreState([propertyName], deepCloneReturnedState);
+        const state = ObservableStore.base.getStoreState([propertyName], deepCloneReturnedState);
         return state ? state[propertyName] : null;
     }
 
@@ -76,7 +74,7 @@ export abstract class ObservableStore<TState> {
         action?: string, 
         deepCloneState: boolean = true) : void { 
         
-        this.base.setStoreState(state, action, deepCloneState);
+        ObservableStore.base.setStoreState(state, action, deepCloneState);
 
         if (this._settings.logStateChanges) {
             const caller = (this.constructor) ? '\r\nCaller: ' + this.constructor.name : '';
@@ -89,7 +87,7 @@ export abstract class ObservableStore<TState> {
         action?: string, 
         deepCloneState: boolean = true): void {
         this.setState(
-            stateFunc(this.getStateProperties(properties, true)), 
+            stateFunc(this.getStateProperties(properties)), 
             action, 
             deepCloneState
         )

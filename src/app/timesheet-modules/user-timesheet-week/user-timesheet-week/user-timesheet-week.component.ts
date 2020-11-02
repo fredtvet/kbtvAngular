@@ -107,7 +107,6 @@ export class UserTimesheetWeekComponent {
       const dp = this.weekCriteria;
       this.router.navigate(["liste",
         {
-          returnUrl: this.router.url,
           filter: JSON.stringify({
             dateRange: _getWeekRange(_getDateOfWeek(dp.weekNr, dp.year))
           })

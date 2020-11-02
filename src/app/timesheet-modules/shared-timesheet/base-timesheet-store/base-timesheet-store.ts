@@ -8,7 +8,6 @@ import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-h
 import { GetWithRelationsConfig } from 'src/app/core/services/model/state-helpers/get-with-relations.config';
 import { PersistanceStore } from 'src/app/core/services/persistance/persistance.store';
 import { BaseModelStore } from 'src/app/core/services/state/abstracts/base-model.store';
-import { ObservableStoreBase } from "src/app/core/services/state/observable-store-base";
 import { Roles } from 'src/app/shared-app/enums';
 import { _addOrUpdateRange } from "src/app/shared-app/helpers/array/add-or-update-range.helper";
 import { _convertArrayToObject } from "src/app/shared-app/helpers/array/convert-array-to-object.helper";
@@ -16,10 +15,10 @@ import { _filter } from "src/app/shared-app/helpers/array/filter.helper";
 import { GroupedResponse } from 'src/app/shared-app/interfaces/grouped-response.interface';
 import { GroupByPeriod } from "src/app/shared/enums";
 import { FilteredResponse } from 'src/app/shared/interfaces';
-import { TimesheetCriteria } from "../interfaces/timesheet-criteria.interface";
 import { TimesheetSummary } from "../interfaces/timesheet-summary.interface";
 import { TimesheetSummaryAggregator } from '../services/timesheet-summary.aggregator';
-import { TimesheetFilter } from '../timesheet-filter.model';
+import { TimesheetCriteria } from '../timesheet-filter/timesheet-criteria.interface';
+import { TimesheetFilter } from '../timesheet-filter/timesheet-filter.model';
 import { BaseTimesheetStoreSettings } from "./base-timesheet-store-settings.interface";
 import { BaseTimesheetStoreState } from "./base-timesheet-store-state";
 
@@ -40,7 +39,7 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
       map((state) => {
         const criteria = state[this.settings.criteriaProp];
         if(!criteria) return {criteria: null, records: null};
-        const filter = new TimesheetFilter(state[this.settings.criteriaProp]);
+        const filter = new TimesheetFilter(criteria);
         return {
           criteria: filter.criteria,
           records: _filter(state.timesheets, (entity) => filter.check(entity)),
@@ -64,14 +63,13 @@ export abstract class BaseTimesheetStore<TState extends Required<BaseTimesheetSt
   );
 
   constructor(
-    base: ObservableStoreBase,
     apiService: ApiService,
     private persistanceStore: PersistanceStore,
     private timesheetSummaryAggregator: TimesheetSummaryAggregator,
     private getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
     private settings: BaseTimesheetStoreSettings<TState>
   ) {
-    super(base, apiService);
+    super(apiService);
     this.setState(settings.initialState, null, false);
   }
 

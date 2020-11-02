@@ -8,7 +8,6 @@ import { DeleteModelAction } from 'src/app/core/services/model/state/delete-mode
 import { MailModelsAction, MailModelsStateCommand } from 'src/app/core/services/model/state/mail-models/mail-models-state-command.interface';
 import { ObservableStore } from 'src/app/core/services/state/abstracts/observable-store';
 import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
-import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { NotificationService, NotificationType } from 'src/app/notification';
 import { _validateFileExtension } from 'src/app/shared-app/helpers/validate-file-extension.helper';
 import { ImageFileExtensions } from 'src/app/shared/constants/image-file-extensions.const';
@@ -21,12 +20,11 @@ export class MissionImageListStore extends ObservableStore<StoreState>  {
   mission: Mission;
 
   constructor(
-    base: ObservableStoreBase,
     private notificationService: NotificationService,     
     private commandDispatcher: CommandDispatcher,
     private getWithRelationsHelper: GetWithRelationsHelper
   ) {
-    super(base);
+    super();
   }
 
   getByMissionId$ = (id: string): Observable<MissionImage[]> => 

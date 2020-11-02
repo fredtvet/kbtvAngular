@@ -3,20 +3,14 @@ import { MissionImage } from 'src/app/core/models';
 import { ObservableStore } from 'src/app/core/services/state/abstracts/observable-store';
 import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
 import { StateMissionImages } from 'src/app/core/services/state/interfaces';
-import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { _addOrUpdateRange } from 'src/app/shared-app/helpers/array/add-or-update-range.helper';
-import { _add } from 'src/app/shared-app/helpers/array/add.helper';
-import { _update } from 'src/app/shared-app/helpers/array/update.helper';
 import { CreateMissionImagesAction, CreateMissionImagesStateCommand } from './create-mission-images-state-command.interface';
 
 @Injectable({providedIn: 'root'})
 export class CreateMissionImagesReducer extends ObservableStore<StateMissionImages>{
 
-    constructor(
-        base: ObservableStoreBase,
-        commandDispatcher: CommandDispatcher,
-    ){ 
-        super(base);
+    constructor(commandDispatcher: CommandDispatcher){ 
+        super();
         
         commandDispatcher
             .listen$<CreateMissionImagesStateCommand>(CreateMissionImagesAction)

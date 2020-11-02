@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ObservableStore } from '../../../state/abstracts/observable-store';
 import { CommandDispatcher } from '../../../state/command.dispatcher';
-import { ObservableStoreBase } from '../../../state/observable-store-base';
 import { ModelStateConfig } from '../../model-state.config';
 import { DeleteModelWithChildrenHelper } from '../../state-helpers/delete-model-with-children.helper';
 import { DeleteModelAction, DeleteModelStateCommand } from './delete-model-state-command.interface';
@@ -10,11 +9,10 @@ import { DeleteModelAction, DeleteModelStateCommand } from './delete-model-state
 export class DeleteModelReducer extends ObservableStore<any>{
 
     constructor(
-        base: ObservableStoreBase,
         private commandDispatcher: CommandDispatcher,
         private deleteModelWithChildrenHelper: DeleteModelWithChildrenHelper
     ){ 
-        super(base);
+        super();
         this.initCommandListener();
     }
 

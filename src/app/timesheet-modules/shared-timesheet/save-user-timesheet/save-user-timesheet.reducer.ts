@@ -3,7 +3,6 @@ import { ModelConfig } from 'src/app/core/services/model/model-state.config';
 import { ModifyModelWithForeignsHelper } from 'src/app/core/services/model/state-helpers/modify-model-with-foreigns.helper';
 import { SaveModelReducer } from 'src/app/core/services/model/state/save-model/save-model.reducer';
 import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
-import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { _getTotalHours } from 'src/app/shared-app/helpers/datetime/get-total-hours.helper';
 import { TimesheetStatus } from 'src/app/shared/enums';
 import { SaveUserTimesheetAction, SaveUserTimesheetStateCommand } from './save-user-timesheet-state-command.interface';
@@ -12,11 +11,10 @@ import { SaveUserTimesheetAction, SaveUserTimesheetStateCommand } from './save-u
 export class SaveUserTimesheetReducer extends SaveModelReducer {
 
     constructor(
-        base: ObservableStoreBase,
         commandDispatcher: CommandDispatcher,
         modifyModelWithForeignsHelper: ModifyModelWithForeignsHelper
     ){  
-        super(base, commandDispatcher, modifyModelWithForeignsHelper)
+        super(commandDispatcher, modifyModelWithForeignsHelper)
     }
 
     protected initCommandListener(){

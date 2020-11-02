@@ -7,7 +7,6 @@ import { ApiService } from '../api.service';
 import { DeviceInfoService } from '../device-info.service';
 import { ObservableStore } from '../state/abstracts/observable-store';
 import { StateCurrentUser } from '../state/interfaces/global-state.interfaces';
-import { ObservableStoreBase } from '../state/observable-store-base';
 import { SyncStore } from '../sync';
 import { HttpCommand } from './http-command.interface';
 
@@ -31,12 +30,11 @@ export class HttpCommandHandler extends ObservableStore<State> {
   );
 
   constructor(
-    base: ObservableStoreBase,
     private apiService: ApiService,
     private notificationService: NotificationService,
     private deviceInfoService: DeviceInfoService,
     syncStore: SyncStore) {
-    super(base);
+    super();
 
     syncStore.hasInitialSynced$.subscribe(x => {
       this.checkDispatchedRequest();

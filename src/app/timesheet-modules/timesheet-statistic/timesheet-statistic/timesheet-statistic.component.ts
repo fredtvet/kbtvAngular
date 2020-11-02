@@ -18,7 +18,9 @@ import { FormService } from 'src/app/shared/form';
 import { ArrayRow } from 'src/app/shared/interfaces/array-row.interface';
 import { DateRange } from 'src/app/shared/interfaces/date-range.interface';
 import { translations } from 'src/app/shared/translations';
-import { TimesheetSummary, TimesheetCriteria } from '../../shared-timesheet/interfaces';
+import { TimesheetSummary } from '../../shared-timesheet/interfaces';
+import { TimesheetCriteriaChipOptions } from '../../shared-timesheet/timesheet-filter/timesheet-criteria-chip-options.const';
+import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetStatisticStore } from '../timesheet-statistic.store';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
 
@@ -115,14 +117,8 @@ export class TimesheetStatisticComponent {
     return {
       id: 3, 
       arr: this.chipsFactory.createCriteriaChips(criteria, 
-        (prop) => this.resetCriteriaProp(prop, criteria),
-        {
-          user: {valueFormatter: (val: User) => val.lastName + ', ' + val.lastName}, 
-          mission: {valueFormatter: (val: Mission) => _getModelDisplayValue("missions", val)},
-          dateRange: {valueFormatter: (val: DateRange) => _formatDateRange(val, _formatShortDate)}, 
-          dateRangePreset: {ignored: true},
-          status: {valueFormatter: (val: TimesheetStatus) => translations[TimesheetStatus[val]?.toLowerCase()]}, 
-        }
+        (prop) => this.resetCriteriaProp(prop, criteria), 
+        TimesheetCriteriaChipOptions
       )
     } 
 

@@ -5,16 +5,11 @@ import { Prop } from 'src/app/shared-app/prop.type';
 import { ApiService } from '../../api.service';
 import { ModelState } from '../../model/interfaces';
 import { ModelStateConfig } from '../../model/model-state.config';
-import { ObservableStoreBase } from '../observable-store-base';
 import { ObservableStore } from './observable-store';
 
 export abstract class BaseModelStore<TState> extends ObservableStore<TState>  {
 
-    constructor(
-        base: ObservableStoreBase,
-        protected apiService: ApiService) {  
-        super(base);
-    }
+    constructor(protected apiService: ApiService) {  super() }
 
     modelProperty$ =   <T extends Model[]>(property: Prop<ModelState>, deepClone?: boolean): Observable<T> => { 
         const modelCfg = ModelStateConfig.get(property);

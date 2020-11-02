@@ -5,7 +5,6 @@ import { catchError, filter, first, tap } from 'rxjs/operators';
 import { _deepClone } from 'src/app/shared-app/helpers/deep-clone.helper';
 import { Prop } from 'src/app/shared-app/prop.type';
 import { ObservableStore } from '../state/abstracts/observable-store';
-import { ObservableStoreBase } from '../state/observable-store-base';
 import { PersistedInitialStateConfig, PersistedStateConfig } from './persisted-state.config';
 
 const InitializeAction = "initalize_persistedState";
@@ -18,15 +17,13 @@ export class PersistanceStore extends ObservableStore<Object> {
 
     private dbStore: Store = new Store("kbtvDb", "state");
 
-    constructor(base: ObservableStoreBase) { 
-        super(base);
-    }
+    constructor() { super() }
 
     init(): void{
         this.initalizeInitialState();
         this.initalizeState();
 
-        this.globalStateChanges$.pipe(
+        this.stateChanges$.pipe(
             filter(x => x != null && x.action !== InitializeAction),
             tap(x => this.persistStateChanges(x.stateChanges))
         ).subscribe();

@@ -2,7 +2,7 @@ import { Timesheet } from 'src/app/core/models';
 import { ModelStateConfig } from 'src/app/core/services/model/model-state.config';
 import { DataFilter } from 'src/app/shared/data.filter';
 import { DateRange } from 'src/app/shared/interfaces/date-range.interface';
-import { TimesheetCriteria } from './interfaces/timesheet-criteria.interface';
+import { TimesheetCriteria } from './timesheet-criteria.interface';
 
 export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
 

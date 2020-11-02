@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ObservableStore } from 'src/app/core/services/state/abstracts/observable-store';
 import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
-import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
 import { _addOrUpdateRange } from 'src/app/shared-app/helpers/array/add-or-update-range.helper';
 import { UpdateStatusesAction, UpdateStatusesStateCommand } from './update-statuses-state-command.interface';
 
 @Injectable({providedIn: 'root'})
 export class UpdateStatusesReducer extends ObservableStore<any>{
 
-    constructor(
-        base: ObservableStoreBase,
-        private commandDispatcher: CommandDispatcher,
-    ){ 
-        super(base);
+    constructor(private commandDispatcher: CommandDispatcher){ 
+        super();
         this.initCommandListener();
     }
 

@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Mission, User } from 'src/app/core/models';
+import { Mission } from 'src/app/core/models';
 import { ApiService } from 'src/app/core/services/api.service';
 import { GetRangeWithRelationsHelper } from 'src/app/core/services/model/state-helpers/get-range-with-relations.helper';
 import { PersistanceStore } from 'src/app/core/services/persistance/persistance.store';
-import { ObservableStoreBase } from 'src/app/core/services/state/observable-store-base';
-import { Roles } from 'src/app/shared-app/enums';
-import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
 import { TimesheetCriteriaFormState } from 'src/app/shared/constants/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from 'src/app/shared/enums';
 import { BaseTimesheetStore, BaseTimesheetStoreSettings } from '../shared-timesheet/base-timesheet-store';
-import { TimesheetCriteria } from '../shared-timesheet/interfaces';
 import { TimesheetSummaryAggregator } from '../shared-timesheet/services/timesheet-summary.aggregator';
+import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { StoreState } from './store-state';
 
 const TimesheetStatisticStoreSettings: BaseTimesheetStoreSettings<StoreState> = {
@@ -37,14 +34,12 @@ export class TimesheetStatisticStore extends BaseTimesheetStore<StoreState> {
         ]).pipe(map(([missions, users]) => { return {options: {missions, users}} }))
 
     constructor(
-        base: ObservableStoreBase,
         apiService: ApiService,     
         persistanceStore: PersistanceStore,   
         summaryAggregator: TimesheetSummaryAggregator,
         getRangeWithRelationsHelper: GetRangeWithRelationsHelper,
     ){
         super(
-            base,
             apiService, 
             persistanceStore,
             summaryAggregator, 

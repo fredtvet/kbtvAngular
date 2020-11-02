@@ -3,7 +3,6 @@ import { translations } from 'src/app/shared/translations';
 import { HttpCommandHandler } from '../../../http/http-command.handler';
 import { ObservableStore } from '../../../state/abstracts/observable-store';
 import { CommandDispatcher } from '../../../state/command.dispatcher';
-import { ObservableStoreBase } from '../../../state/observable-store-base';
 import { ModelConfig, ModelStateConfig } from '../../model-state.config';
 import { DeleteModelAction, DeleteModelStateCommand } from './delete-model-state-command.interface';
 
@@ -11,11 +10,10 @@ import { DeleteModelAction, DeleteModelStateCommand } from './delete-model-state
 export class DeleteModelHttpEffect extends ObservableStore<any>{
 
     constructor(
-        base: ObservableStoreBase,
         commandDispatcher: CommandDispatcher,
         private httpCommandHandler: HttpCommandHandler,
     ){ 
-        super(base);
+        super();
         
         commandDispatcher.listen$<DeleteModelStateCommand>(DeleteModelAction)
             .subscribe(res => this.handle(res.command, res.state))
