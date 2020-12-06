@@ -3,9 +3,9 @@ import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-shee
 import { Observable, of } from 'rxjs';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
-import { FormSheetWrapperConfig } from './form-sheet-wrapper-config.interface';
 import { DynamicFormComponent } from 'src/app/dynamic-forms/components/dynamic-form.component';
 import { DynamicForm } from 'src/app/dynamic-forms/interfaces';
+import { FormSheetWrapperConfig } from './interfaces';
 
 export interface FormServiceConfig<TForm, TFormState>{
   formConfig: DynamicForm<TForm, TFormState>, 

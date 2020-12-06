@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
+import { EffectsSubscriber } from 'src/app/state/effects.subscriber';
+import { Store } from 'src/app/state/store';
 import { IconService } from './icon.service';
-import { PersistanceStore } from './persistance/persistance.store';
-import { SyncStore } from './sync/sync.store';
+import { LoadPersistedStateActionId } from './persistance/state/actions.const';
 
-@Injectable({providedIn: 'root'})
+@Injectable({providedIn: "root"})
 export class StartupService {
 
   constructor(
-    syncStore: SyncStore,
-    persistanceStore: PersistanceStore,
+    effectsSubscriber: EffectsSubscriber,
+    store: Store<any>,
     iconService: IconService,
   ) { 
-    persistanceStore.init();
-    syncStore.init();
+    effectsSubscriber.onEffectsInit$.subscribe(x => store.dispatch({actionId: LoadPersistedStateActionId}))
     iconService.registerIcons();
   }
+  
 }

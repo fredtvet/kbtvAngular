@@ -5,7 +5,7 @@ import { DownloaderService } from 'src/app/core/services/downloader.service';
 import { ConfirmDialogService } from 'src/app/core/services/ui/confirm-dialog.service';
 import { Roles } from 'src/app/shared-app/enums';
 import { _appFileUrl } from 'src/app/shared-app/helpers/app-file-url.helper';
-import { MissionImageListStore } from '../mission-image-list.store';
+import { MissionImageListFacade } from '../mission-image-list.facade';
 
 @Component({
   selector: 'app-timesheet-card-dialog-wrapper',
@@ -33,7 +33,7 @@ export class ImageViewerDialogWrapperComponent {
   constructor( 
     private confirmService: ConfirmDialogService,
     private downloaderService: DownloaderService,
-    private store: MissionImageListStore,
+    private facade: MissionImageListFacade,
     private dialogRef: MatDialogRef<ImageViewerDialogWrapperComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {images: ModelFile[], currentImage: ModelFile}
     ) {}
@@ -42,7 +42,7 @@ export class ImageViewerDialogWrapperComponent {
     
     private deleteCurrentImage(): void{
       this.dialogRef.close();
-      this.store.delete({id: this.data.currentImage.id});
+      this.facade.delete({id: this.data.currentImage.id});
     }
     
     private downloadImage = () => 

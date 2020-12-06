@@ -1,14 +1,14 @@
 import { User } from 'src/app/core/models';
-import { BaseFormToSaveModelStateCommandAdapter } from 'src/app/core/services/model/abstracts/base-form-to-save-model-state-command.adapter';
+import { BaseFormToSaveModelStateCommandAdapter } from 'src/app/model/abstracts/base-form-to-save-model-state-command.adapter';
 import { Roles } from 'src/app/shared-app/enums';
 import { UserForm } from 'src/app/shared/constants/model-forms/save-user-forms.const';
 import { ModelFormToSaveModelInput } from 'src/app/shared/model-form';
-import { SaveUserAction, SaveUserStateCommand } from './save-user-state-command.interface';
+import { SaveUserActionId, SaveUserStateCommand } from './save-user-state-command.interface';
 
 export class UserFormToSaveModelAdapter extends BaseFormToSaveModelStateCommandAdapter<User, UserForm>
     implements SaveUserStateCommand{
 
-    action: string = SaveUserAction;
+    actionId: string = SaveUserActionId;
     password: string;
     
     constructor(input:  ModelFormToSaveModelInput<UserForm>){

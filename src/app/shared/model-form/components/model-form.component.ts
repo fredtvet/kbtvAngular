@@ -1,18 +1,15 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, shareReplay, take } from 'rxjs/operators';
-import { ModelState } from 'src/app/core/services/model/interfaces';
-import { ModelFormStore } from 'src/app/shared/model-form/model-form.store';
-import { SaveModelHttpEffect } from 'src/app/core/services/model/state/save-model/save-model.http.effect';
-import { SaveModelReducer } from 'src/app/core/services/model/state/save-model/save-model.reducer';
-import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
-import { SaveAction } from 'src/app/core/services/state/interfaces';
-import { StateAction } from 'src/app/core/services/state/state-action.enum';
+import { DynamicForm } from 'src/app/dynamic-forms/interfaces';
+import { ModelState } from 'src/app/model/interfaces';
+import { ActionType } from 'src/app/shared-app/enums';
+import { FormComponent } from '../../form';
+import { SaveAction } from '../../save-action.interface';
 import { FormToSaveModelStateCommandAdapter } from '../adapters/form-to-save-model-state-command.adapter';
 import { ModelFormConfig } from '../interfaces/model-form-config.interface';
 import { SaveModelFormState } from '../interfaces/model-form-to-state-command-adapter.interface';
-import { FormComponent } from '../../form';
-import { DynamicForm } from 'src/app/dynamic-forms/interfaces';
+import { ModelFormFacade } from '../model-form.facade';
 
 @Component({
     selector: 'app-model-form',
@@ -42,19 +39,14 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<any, an
 
     private isCreateForm: boolean = false;
   
-    constructor(
-        private commandDispatcher: CommandDispatcher,
-        private store: ModelFormStore,
-        saveModelReducer: SaveModelReducer,
-        saveModelHttpEffect: SaveModelHttpEffect, 
-    ) {}
+    constructor(private facade: ModelFormFacade) {}
   
     ngOnInit(): void {   
       if(!this.config.entityId) this.isCreateForm = true;
 
       this.formState$ = combineLatest([
         this.formStateSubject.asObservable(),
-        this.store.getFormState$(this.config.stateProp)
+        this.facade.getFormState$(this.config.stateProp)
       ]).pipe(map(([inputFormState, modelFormState]) => {
         return {...modelFormState, ...inputFormState}
       }), shareReplay(1));
@@ -66,7 +58,7 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<any, an
     }
 
     onSubmit(result: any): void{   
-      const saveAction = this.isCreateForm ? StateAction.Create : StateAction.Update;
+      const saveAction = this.isCreateForm ? ActionType.Create : ActionType.Update;
       this.formSubmitted.emit(saveAction);
       const adapter = this.config.adapter || FormToSaveModelStateCommandAdapter
 
@@ -78,7 +70,7 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<any, an
           saveAction, 
         })
 
-        this.commandDispatcher.dispatch(stateCommand); 
+        this.facade.save(stateCommand); 
       })    
     }
 
@@ -89,7 +81,7 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<any, an
       if(dynamicForm.initialValue) return this.config.dynamicForm;
       return {
         ...dynamicForm, 
-        initialValue:  this.store.getModelWithForeigns(this.config.entityId, this.config.stateProp, state)
+        initialValue:  this.facade.getModelWithForeigns(this.config.entityId, this.config.stateProp, state)
       }
     }
 }

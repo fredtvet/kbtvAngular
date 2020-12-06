@@ -1,3 +1,5 @@
+export type DataFilterConstructor<TCriteria>  = 
+    new (criteria: TCriteria, ...args: any[]) => DataFilter<any, TCriteria>;
 
 export abstract class DataFilter<TRecord, TCriteria>{
 

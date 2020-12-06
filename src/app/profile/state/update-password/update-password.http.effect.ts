@@ -1,30 +1,25 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 import { ApiUrl } from 'src/app/core/api-url.enum';
-import { HttpCommandHandler } from 'src/app/core/services/http/http-command.handler';
-import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
-import { UpdatePasswordAction, UpdatePasswordStateCommand } from './update-password-state-command.interface';
+import { ApiService } from 'src/app/core/services/api.service';
+import { DispatchedAction } from 'src/app/state/action-dispatcher';
+import { StateAction } from 'src/app/state/interfaces';
+import { Effect } from 'src/app/state/interfaces/effect.interface';
+import { listenTo } from 'src/app/state/operators/listen-to.operator';
+import { UpdatePasswordActionId, UpdatePasswordStateCommand } from './update-password-state-command.interface';
 
-@Injectable({providedIn: 'root'})
-export class UpdatePasswordHttpEffect {
+@Injectable()
+export class UpdatePasswordHttpEffect implements Effect<UpdatePasswordStateCommand> {
 
-    constructor(
-        private commandDispatcher: CommandDispatcher,
-        private httpCommandHandler: HttpCommandHandler,
-    ){  
-        this.initCommandListener();   
-    }
+    constructor(private apiService: ApiService){}
 
-    protected initCommandListener(){
-        this.commandDispatcher.listen$<UpdatePasswordStateCommand>(UpdatePasswordAction)
-            .subscribe(res => this.handle(res.command))
-    }
-
-    protected handle(command: UpdatePasswordStateCommand): void{
-        this.httpCommandHandler.handle({
-            httpMethod: "PUT", 
-            httpBody: command, 
-            apiUrl: `${ApiUrl.Auth}/changePassword`
-        })
+    handle$(actions$: Observable<DispatchedAction<UpdatePasswordStateCommand>>): Observable<StateAction> {
+        return actions$.pipe(
+            listenTo([UpdatePasswordActionId]),
+            mergeMap(({action}) => 
+                this.apiService.put(`${ApiUrl.Auth}/changePassword`, action)),
+        )
     }
 
 }

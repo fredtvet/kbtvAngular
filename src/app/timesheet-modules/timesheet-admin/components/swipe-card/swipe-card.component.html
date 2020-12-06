@@ -12,7 +12,8 @@
     matRipple [matRippleDisabled]="!navButton"
     (click)="handleNavClick($event)"
     [@openCloseConfirm]="lockPosition || (isClosed ? 'close' : 'open')"
-    (swiperight)="hideSwipeAction($event, false)" (swipeleft)="hideSwipeAction($event, true)">
+    (swiperight)="hideSwipeAction($event, false)" 
+    (swipeleft)="hideSwipeAction($event, true)">
     <ng-content>
       
     </ng-content>

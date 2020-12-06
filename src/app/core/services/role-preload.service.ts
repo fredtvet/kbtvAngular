@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { PreloadingStrategy, Route } from '@angular/router';
 import { EMPTY, Observable, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { AuthStore } from './auth/auth.store';
+import { AuthService } from './auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class RolePreloadService implements PreloadingStrategy {  
 
-    constructor(private authStore: AuthStore){ }
+    constructor(private authService: AuthService){ }
 
     preload(route: Route, load: () => Observable<any>): Observable<any> {
-      const user = this.authStore.getCurrentUser(false);
+      const user = this.authService.getCurrentUser(false);
       if(!this.preloadCheck(route, user?.role)) return EMPTY;
       return timer(2000).pipe(switchMap(x => load()))
     }

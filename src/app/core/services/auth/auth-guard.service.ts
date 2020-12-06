@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router } from '@angular/router';
 import { NotificationService, NotificationType } from 'src/app/notification';
-import { AuthStore } from './auth.store';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import { AuthStore } from './auth.store';
 export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(
     private router: Router,
-    private authStore: AuthStore,
+    private authService: AuthService,
     private notificaitonService: NotificationService,
   ) {}
 
@@ -22,16 +22,15 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   private authCheck(allowedRoles: string[]): boolean{
-    if(!this.authStore.hasTokens) {
-      this.authStore.logout();
+    if(!this.authService.isAuthorized) {
+      this.authService.logout();
       return false;
     }
-    else if(this.authStore.hasAccessTokenExpired){
-      this.authStore.refreshToken$().subscribe();
-    }
-
+    else if(this.authService.hasAccessTokenExpired)
+      this.authService.refreshToken();
+    
     if(allowedRoles){
-      const currentUser = this.authStore.getCurrentUser(false);
+      const currentUser = this.authService.getCurrentUser(false);
       if(currentUser && !allowedRoles.includes(currentUser?.role)){
         this.notificaitonService.notify({title: 'Du mangler riktig autorisasjon for å gå inn på denne siden.', type: NotificationType.Error})
         this.router.navigate(['/hjem']);

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Host, SkipSelf } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,7 +18,7 @@ import { CreateMissionDocumentForm } from 'src/app/shared/constants/model-forms/
 import { FormService } from 'src/app/shared/form';
 import { ModelFormService } from 'src/app/shared/model-form';
 import { FormToSaveModelFileStateCommandAdapter } from 'src/app/shared/model-form/adapters/form-to-save-model-file-state-command.adapter';
-import { MissionDocumentListStore } from '../mission-document-list.store';
+import { MissionDocumentListFacade } from '../mission-document-list.facade';
 
 interface ViewModel { documents: MissionDocument[], isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig}
 
@@ -30,7 +30,7 @@ interface ViewModel { documents: MissionDocument[], isXs: boolean,  fabs: AppBut
 export class MissionDocumentListComponent extends SelectableListContainerComponent {
 
   vm$: Observable<ViewModel> = combineLatest([
-    this.store.getByMissionIdWithType$(this.missionId),
+    this.facade.getMissionDocuments$(this.missionId),
     this.deviceInfoService.isXs$,
     this.currentFabs$
   ]).pipe(
@@ -39,7 +39,7 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     }})
   )
 
-  get missionId() { return this.route.snapshot.paramMap.get('id') }
+  private get missionId(): string { return this.route.parent.parent.snapshot.params.id }
 
   private navConfig: MainTopNavConfig;
   
@@ -47,7 +47,7 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     private deviceInfoService: DeviceInfoService,     
     private formService: FormService, 
     private downloaderService: DownloaderService,
-    private store: MissionDocumentListStore,
+    private facade: MissionDocumentListFacade,
     private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
@@ -71,7 +71,7 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     this.downloaderService.downloadUrl(_appFileUrl(document.fileName, "documents"));
 
   private deleteSelectedDocuments = () => {
-    this.store.delete({ids: this.currentSelections});    
+    this.facade.delete({ids: this.currentSelections});    
     this.selectableList.clearSelections();
   }
 
@@ -86,10 +86,10 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
   private openMailDocumentSheet = () => {
     this.formService.open({
       formConfig: {...EmailForm, 
-        initialValue: {email: this.store.getMissionEmployer(this.missionId)?.email}}, 
+        initialValue: {email: this.facade.getMissionEmployerEmail(this.missionId) }}, 
       navConfig: {title: "Send Dokumenter"},
       submitCallback: (val: EmailForm) => { 
-        this.store.mailDocuments(val.email, this.currentSelections);
+        this.facade.mailDocuments(val.email, this.currentSelections);
         this.selectableList.clearSelections();
       },
     })

@@ -1,18 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
-import { WeekCriteriaFormState, WeekCriteriaForm } from 'src/app/shared/constants/forms/week-criteria-controls.const';
+import { WeekCriteriaForm, WeekCriteriaFormState } from 'src/app/shared/constants/forms/week-criteria-controls.const';
 import { TimesheetStatus } from 'src/app/shared/enums';
 import { FormService } from 'src/app/shared/form';
-import { TimesheetSummary, WeekCriteria } from '../../shared-timesheet/interfaces';
-import { TimesheetAdminStore } from '../timesheet-admin.store';
-
-interface ViewModel { summaries: TimesheetSummary[], isXs: boolean,  navConfig: MainTopNavConfig  }
+import { WeekCriteria } from '../../shared-timesheet/interfaces';
+import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 
 @Component({
   selector: 'app-timesheet-admin-week-list',
@@ -23,26 +20,24 @@ export class TimesheetAdminWeekListComponent {
    
   loading$ = this.loadingService.queryLoading$;
 
-  vm$: Observable<ViewModel> = combineLatest([
-    this.store.timesheetSummaries$.pipe(map(x => x?.sort((a, b) => b.weekNr - a.weekNr))),
-    this.store.weekCriteria$.pipe(map(x => this.getNavConfig(x))),
-    this.deviceInfoService.isXs$
-  ]).pipe(map(([summaries, navConfig, isXs]) => { 
-    return { summaries, navConfig, isXs }
-  }));
+  summaries$ = this.facade.weeklySummaries$.pipe(map(x => x?.sort((a, b) => b.weekNr - a.weekNr)));
+
+  isXs$ = this.deviceInfoService.isXs$;
+
+  navConfig$ =  this.facade.weekCriteria$.pipe(map(x => this.getNavConfig(x)));
 
   constructor(
     private loadingService: LoadingService,
-    private store: TimesheetAdminStore,
+    private facade: TimesheetAdminFacade,
     private formService: FormService,
     private router: Router,
     private route: ActivatedRoute,
     private deviceInfoService: DeviceInfoService) {
-      let filterState = this.route.snapshot.params.filter;
-      this.store.addFilterCriteria(filter ? JSON.parse(filterState) : {});
+      const criteria = this.route.snapshot.params.criteria;
+      this.facade.updateCriteria(criteria ? JSON.parse(criteria) : {});
     }
 
-  changeTimesheetStatuses = (timesheets: Timesheet[]): void => {
+  confirmTimesheets = (timesheets: Timesheet[]): void => {
     if(!timesheets) return;
     
     let ids: string[] = [];
@@ -53,26 +48,21 @@ export class TimesheetAdminWeekListComponent {
 
     if(ids.length === 0) return;
 
-    this.store.updateStatuses(ids, TimesheetStatus.Confirmed);
+    this.facade.updateStatuses(ids, TimesheetStatus.Confirmed);
   }
 
-  selectWeek = (weekNr: number) => {
-    this.router.navigate(['timer', {
-      filter: JSON.stringify({...this.store.weekCriteria, weekNr})
-    }], {relativeTo: this.route})
-  }
-
-  trackByWeek = (index:number, summary:TimesheetSummary): number => summary.weekNr;
-
+  selectWeek = (weekNr: number) => 
+    this.router.navigate(['timer', {weekNr}], {relativeTo: this.route})
+  
   private openWeekFilter = (): void => {
     this.formService.open<WeekCriteria, WeekCriteriaFormState>({
       formConfig: {...WeekCriteriaForm, 
         disabledControls: {weekNr: true}, 
         noRenderDisabledControls: true,
-        initialValue: this.store.weekCriteria}, 
-      formState: this.store.weekCriteriaFormState$,
+        initialValue: this.facade.weekCriteria}, 
+      formState: this.facade.weekCriteriaFormState$,
       navConfig: {title: "Velg filtre"},
-      submitCallback: (val: WeekCriteria) => this.store.addFilterCriteria(val)
+      submitCallback: (val: WeekCriteria) => this.facade.updateCriteria(val)
     })
   } 
     

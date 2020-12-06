@@ -7,9 +7,9 @@ import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/mai
 import { UserPasswordFormState, UserPasswordForm } from 'src/app/shared/constants/forms/password-form.const';
 import { UserForm, EditUserForm, CreateUserForm } from 'src/app/shared/constants/model-forms/save-user-forms.const';
 import { FormService } from 'src/app/shared/form';
-import { ModelFormService, SaveModelFormState } from 'src/app/shared/model-form';
+import { ModelFormService } from 'src/app/shared/model-form';
 import { UserFormToSaveModelAdapter } from '../save-user/user-form-to-save-model.adapter';
-import { UsersStore } from '../users.store';
+import { UsersFacade } from '../users.facade';
 
 @Component({
   selector: 'app-user-list',
@@ -20,11 +20,11 @@ export class UserListComponent {
   Roles = Roles;
   ButtonTypes = ButtonTypes;
 
-  users$: Observable<User[]> = this.store.sortedUsers$;
+  users$: Observable<User[]> = this.facade.sortedUsers$;
   navConfig: MainTopNavConfig;
 
   constructor(
-    private store: UsersStore,
+    private facade: UsersFacade,
     private modelFormService: ModelFormService,
     private formService: FormService) {
       this.navConfig = {
@@ -51,7 +51,7 @@ export class UserListComponent {
     this.formService.open<UserPasswordFormState, any>({
       formConfig: {...UserPasswordForm, initialValue: {userName}}, 
       navConfig: {title: "Oppdater passord"},  
-      submitCallback: (val: UserPasswordFormState) => this.store.updatePassword(val.userName, val.newPassword)
+      submitCallback: (val: UserPasswordFormState) => this.facade.updatePassword(val.userName, val.newPassword)
     });
   }
 

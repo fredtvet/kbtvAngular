@@ -1,6 +1,6 @@
 import { User, Mission } from 'src/app/core/models';
-import { _getModelDisplayValue } from 'src/app/core/services/model/helpers/get-model-property.helper';
 import { CriteriaChipOptions } from 'src/app/core/services/ui/chips-factory.service';
+import { _getModelDisplayValue } from 'src/app/model/helpers/get-model-property.helper';
 import { _formatDateRange } from 'src/app/shared-app/helpers/datetime/format-date-range.helper';
 import { _formatShortDate } from 'src/app/shared-app/helpers/datetime/format-short-date.helper';
 import { TimesheetStatus } from 'src/app/shared/enums';

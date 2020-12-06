@@ -1,0 +1,17 @@
+<div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch">
+    
+    <cdk-virtual-scroll-viewport itemSize="82" maxBufferPx="800" minBufferPx="800" fxFlex>
+        <app-swipe-card *cdkVirtualFor="let summary of summaries; trackBy: trackByWeek; templateCacheSize:0" 
+            [lockPosition]="!isXs ? 'open' : summary.openHours === 0 ? 'close' : null" 
+            [navButton]="{callback: selectWeek, params: summary.weekNr}"
+            [swipeButton]="{
+                        callback: changeTimesheetStatuses, 
+                        params: [summary.timesheets], 
+                        icon: summary.openHours > 0 ? 'lock_open' : 'lock', 
+                        color: summary.openHours > 0 ? 'warn' : 'accent'}">
+            <app-timesheet-summary-card-content [summary]="summary"></app-timesheet-summary-card-content>
+        </app-swipe-card>
+    </cdk-virtual-scroll-viewport>
+  
+</div>
+

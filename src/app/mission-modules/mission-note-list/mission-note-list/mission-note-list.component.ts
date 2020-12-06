@@ -4,14 +4,13 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MissionNote } from 'src/app/core/models';
 import { RolePresets } from 'src/app/shared-app/enums';
-import { _sortByBool } from 'src/app/shared-app/helpers/array/sort-by-bool.helper';
 import { _sortByDate } from 'src/app/shared-app/helpers/array/sort-by-date.helper';
 import { _trackByModel } from 'src/app/shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
-import { EditMissionNoteForm, CreateMissionNoteForm } from 'src/app/shared/constants/model-forms/save-mission-note-forms.const';
+import { CreateMissionNoteForm, EditMissionNoteForm } from 'src/app/shared/constants/model-forms/save-mission-note-forms.const';
 import { ModelFormService } from 'src/app/shared/model-form';
-import { MissionNoteListStore } from '../mission-note-list.store';
+import { MissionNoteListFacade } from '../mission-note-list.facade';
 
 @Component({
   selector: 'app-mission-note-list',
@@ -20,17 +19,17 @@ import { MissionNoteListStore } from '../mission-note-list.store';
 })
 export class MissionNoteListComponent {
   
-  notes$: Observable<MissionNote[]> = this.store.getByMissionId$(this.missionId).pipe(
+  notes$: Observable<MissionNote[]> = this.facade.getByMissionId$(this.missionId).pipe(
     map(x => _sortByDate<MissionNote>(x, "updatedAt"))
   );
 
   navConfig: MainTopNavConfig; 
   fabs: AppButton[];
   
-  get missionId() { return this.route.snapshot.paramMap.get('id'); }
+  get missionId() { return this.route.parent.parent.snapshot.params.id }
 
   constructor( 
-    private store: MissionNoteListStore,
+    private facade: MissionNoteListFacade,
     private route: ActivatedRoute,
     private router: Router,
     private modelFormService: ModelFormService

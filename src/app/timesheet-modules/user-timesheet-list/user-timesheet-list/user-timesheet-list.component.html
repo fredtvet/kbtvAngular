@@ -1,13 +1,13 @@
-<app-main-skeleton *ngIf="vm$ | async; let vm" [fabs]="vm.fabs" overlayMode="true">
+<app-main-skeleton *ngIf="navVm$ | async; let navVm" [fabs]="navVm.fabs" overlayMode="true">
 
     <ng-container navbar>
-        <app-main-top-nav-bar [config]="vm.navConfig" >
+        <app-main-top-nav-bar [config]="navVm.navConfig" >
         </app-main-top-nav-bar>
-        <app-chips-bar [chips]="vm.chips"></app-chips-bar>
+        <app-chips-bar [chips]="navVm.criteriaChips"></app-chips-bar>
     </ng-container>
 
     <app-user-timesheet-list-view 
-        [timesheets]="vm.timesheets" 
+        [timesheets]="timesheets$ | async" 
         (editClicked)="openTimesheetForm($event)"
         (filterClicked)="openTimesheetFilter()">
     </app-user-timesheet-list-view>

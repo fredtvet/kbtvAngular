@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { DeleteModelHttpEffect } from 'src/app/core/services/model/state/delete-model/delete-model.http.effect';
-import { DeleteModelReducer } from 'src/app/core/services/model/state/delete-model/delete-model.reducer';
-import { MailModelsHttpEffect } from 'src/app/core/services/model/state/mail-models/mail-models.http.effect';
+import { SaveModelFileProviders, DeleteModelProviders, MailModelsProviders } from 'src/app/model/state/providers.const';
+import { ModelFormModule } from 'src/app/shared/model-form/model-form.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { StateModule } from 'src/app/state/state.module';
 import { MissionDocumentListRoutingModule } from './mission-document-list-routing.module';
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
 import { FileExtensionIconPipe } from './pipes/file-extension-icon.pipe';
@@ -16,14 +16,13 @@ import { FileExtensionPipe } from './pipes/file-extension.pipe';
     FileExtensionPipe,
   ],
   imports: [
-    SharedModule,
+    SharedModule,   
+    StateModule,
+    ModelFormModule,
     MissionDocumentListRoutingModule
-  ]
+  ],
+  providers: [
+    ...MailModelsProviders
+  ],
 })
-export class MissionDocumentListModule {
-  constructor(
-    deleteReducer: DeleteModelReducer, 
-    deleteHttpEffect: DeleteModelHttpEffect,
-    mailModelsHttpEffect: MailModelsHttpEffect
-  ){}
-}
+export class MissionDocumentListModule {}

@@ -18,7 +18,7 @@ import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/mai
 import { EmailForm } from 'src/app/shared/constants/forms/email-form.const';
 import { FormService } from 'src/app/shared/form';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
-import { MissionImageListStore } from '../mission-image-list.store';
+import { MissionImageListFacade } from '../mission-image-list.facade';
 
 interface ViewModel { images: MissionImage[], isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig }
 
@@ -30,10 +30,10 @@ interface ViewModel { images: MissionImage[], isXs: boolean,  fabs: AppButton[],
 export class MissionImageListComponent extends SelectableListContainerComponent{
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
 
-  get missionId() { return this.route.snapshot.paramMap.get('id'); }
+  get missionId() { return this.route.parent.parent.snapshot.params.id }
   
   vm$: Observable<ViewModel> = combineLatest([
-    this.store.getByMissionId$(this.missionId),
+    this.facade.getByMissionId$(this.missionId),
     this.deviceInfoService.isXs$,
     this.currentFabs$
   ]).pipe(
@@ -54,7 +54,7 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
     private formService: FormService,
     private confirmService: ConfirmDialogService,
     private dialog: MatDialog,
-    private store: MissionImageListStore,
+    private facade: MissionImageListFacade,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
     private router: Router) {
@@ -85,7 +85,7 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   }
 
   uploadImages = (files: FileList): void => 
-    this.store.add({missionId: this.missionId, files});
+    this.facade.add({missionId: this.missionId, files});
   
   private openImageInput = (): void =>{ 
     if(!window.navigator.onLine)
@@ -96,7 +96,7 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
 
   private deleteSelectedImages = () => {
     this.currentSelections;
-    this.store.delete({ids: this.currentSelections});     
+    this.facade.delete({ids: this.currentSelections});     
     this.selectableList.clearSelections();
   }
 
@@ -110,10 +110,10 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   
   private openMailImageSheet = () => {
     this.formService.open({
-      formConfig: {...EmailForm, initialValue: {email: this.store.mission?.employer?.email }}, 
+      formConfig: {...EmailForm, initialValue: {email: this.facade.mission?.employer?.email }}, 
       navConfig: {title: "Send bilder"},
       submitCallback: (val: EmailForm) => { 
-        this.store.mailImages(val.email, this.currentSelections);
+        this.facade.mailImages(val.email, this.currentSelections);
         this.selectableList.clearSelections();
       },
     })

@@ -1,15 +1,15 @@
 import { Validators } from '@angular/forms';
-import { SyncStoreConfig } from 'src/app/core/services/sync';
-import { DefaultSyncConfig } from 'src/app/core/services/sync/default-sync-config.const';
-import { DynamicForm, DynamicControl } from 'src/app/dynamic-forms/interfaces';
-import { SliderQuestionComponent, SliderQuestion } from '../../components/dynamic-form-questions/slider-question.component';
+import { SyncConfig } from 'src/app/core/services/sync/interfaces';
+import { DynamicControl, DynamicForm } from 'src/app/dynamic-forms/interfaces';
+import { DefaultState } from 'src/app/shared-app/const/default-state.const';
+import { SliderQuestion, SliderQuestionComponent } from '../../components/dynamic-form-questions/slider-question.component';
 
-export const SyncConfigForm: DynamicForm<SyncStoreConfig, any> = {
+export const SyncConfigForm: DynamicForm<SyncConfig, any> = {
     submitText: "Lagre", resettable: true, 
-    resetState: {...DefaultSyncConfig, refreshTime: DefaultSyncConfig.refreshTime / 60}, 
+    resetState: {...DefaultState.syncConfig, refreshTime: DefaultState.syncConfig.refreshTime / 60}, 
     controls: [
-        <DynamicControl<SyncStoreConfig, any>>{ name: "refreshTime", required: true,
-            valueGetter: (s: SyncStoreConfig) => s.refreshTime,
+        <DynamicControl<SyncConfig, any>>{ name: "refreshTime", required: true,
+            valueGetter: (s: SyncConfig) => s.refreshTime,
             type: "control", questions: [{
                 component:  SliderQuestionComponent,
                 question: <SliderQuestion>{
@@ -21,8 +21,8 @@ export const SyncConfigForm: DynamicForm<SyncStoreConfig, any> = {
             }], 
             validators: [Validators.min(1)] 
         },
-        <DynamicControl<SyncStoreConfig, any>>{ name: "initialNumberOfMonths", required: true,
-        valueGetter: (s: SyncStoreConfig) => s.initialNumberOfMonths,
+        <DynamicControl<SyncConfig, any>>{ name: "initialNumberOfMonths", required: true,
+        valueGetter: (s: SyncConfig) => s.initialNumberOfMonths,
         type: "control", questions: [{
             component:  SliderQuestionComponent,
             question: <SliderQuestion>{

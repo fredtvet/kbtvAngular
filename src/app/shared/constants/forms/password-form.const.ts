@@ -44,7 +44,7 @@ export const CurrentUserPasswordForm: DynamicForm<CurrentUserPasswordFormState, 
 
 export interface UserPasswordFormState extends PasswordForm { userName: string }
 export const UserPasswordForm: DynamicForm<UserPasswordFormState,  any> = {
-    submitText: "Oppdater", disabledControls: {userName: true},
+    submitText: "Oppdater", disabledControls: {userName: true}, getRawValue: true,
     controls: [
         UserNameControl,
         NewPasswordControl,

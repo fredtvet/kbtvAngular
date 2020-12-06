@@ -1,5 +1,5 @@
 import { Timesheet } from 'src/app/core/models';
-import { ModelStateConfig } from 'src/app/core/services/model/model-state.config';
+import { ModelStateConfig } from 'src/app/model/model-state.config';
 import { DataFilter } from 'src/app/shared/data.filter';
 import { DateRange } from 'src/app/shared/interfaces/date-range.interface';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
@@ -34,7 +34,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         if(!this.criteria) return true;
         if(!baseCriteria) return false;
         if(!this.isDateRangeContainedIn(baseCriteria.dateRange)) return false;
-        for(const prop in this.criteria){
+        for(const prop in baseCriteria){
             if(prop === "dateRange" || prop === "dateRangePreset") continue;
             const baseValue = baseCriteria[prop];
             if(!baseValue) continue; 

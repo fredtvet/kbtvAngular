@@ -1,12 +1,12 @@
 import { Mission, MissionType } from 'src/app/core/models';
-import { StateEmployers, StateMissions, StateMissionTypes } from 'src/app/core/services/state/interfaces';
 import { DynamicControl, DynamicForm } from 'src/app/dynamic-forms/interfaces';
+import { StateMissions, StateEmployers, StateMissionTypes } from 'src/app/state/interfaces';
 import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { RadioGroupQuestionComponent, RadioGroupQuestion } from '../../components/dynamic-form-questions/radio-group-question.component';
 import { SelectQuestionComponent, SelectQuestion } from '../../components/dynamic-form-questions/select-question.component';
 import { _compareProp } from '../../form/helpers/compare-with-prop.helper';
-import { OptionsFormState } from '../../form/options-form-state.interface';
+import { OptionsFormState } from '../../form/interfaces';
 import { MissionCriteria } from '../../interfaces';
 import { EmployerSelectControl } from '../common-controls.const';
 

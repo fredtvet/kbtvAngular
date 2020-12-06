@@ -1,9 +1,9 @@
-import { StateCommand } from 'src/app/core/services/state/interfaces/state-command.interface';
 import { TimesheetStatus } from 'src/app/shared/enums';
+import { StateAction } from 'src/app/state/interfaces';
 
-export const UpdateStatusesAction = "UPDATE_STATUSES"
+export const UpdateStatusesActionId = "UPDATE_STATUSES"
 
-export interface UpdateStatusesStateCommand extends StateCommand{
+export interface UpdateStatusesStateCommand extends StateAction{
     ids: string[];
     status: TimesheetStatus;
 }

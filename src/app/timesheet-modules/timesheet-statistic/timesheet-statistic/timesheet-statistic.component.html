@@ -1,14 +1,16 @@
-<app-main-skeleton *ngIf="vm$ | async; let vm" disableElevation="true">
+<app-main-skeleton disableElevation="true">
 
-    <ng-container navbar>
-        <app-main-top-nav-bar [config]="vm.navConfig" >
+    <ng-container navbar *ngIf="navVm$ | async; let navVm">
+        <app-main-top-nav-bar [config]="navVm.navConfig" >
         </app-main-top-nav-bar>
-        <app-chips-bar *ngFor="let chips of vm.chipRows; trackBy: trackByChipRow" [chips]="chips.arr">
+        <app-chips-bar [chips]="navVm.groupByChips">
+        </app-chips-bar>
+        <app-chips-bar [chips]="navVm.criteriaChips">
         </app-chips-bar>
     </ng-container>
 
     <app-timesheet-statistic-table #statTable fxFlex 
-        [config]="vm.tableConfig">
+        [config]="tableConfig$ | async">
     </app-timesheet-statistic-table>
   
 </app-main-skeleton>

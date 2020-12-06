@@ -1,9 +1,9 @@
-import { ModelFileWrapper } from 'src/app/core/services/model/model-file.wrapper';
-import { StateCommand } from 'src/app/core/services/state/interfaces/state-command.interface';
+import { ModelFileWrapper } from 'src/app/model/model-file.wrapper';
+import { StateAction } from 'src/app/state/interfaces';
 
-export const CreateMissionImagesAction = "CREATE_MISSION_IMAGES";
+export const CreateMissionImagesActionId = "CREATE_MISSION_IMAGES";
 
-export interface CreateMissionImagesStateCommand extends StateCommand {
+export interface CreateMissionImagesStateCommand extends StateAction {
     fileWrappers: ModelFileWrapper[];
     missionId: string;
 }

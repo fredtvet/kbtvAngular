@@ -1,7 +1,7 @@
 import { User } from 'src/app/core/models';
 
 
-export interface TokenResponse {
+export interface LoginResponse {
   accessToken: AccessToken;
   refreshToken: string;
   user: User;

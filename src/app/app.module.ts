@@ -9,14 +9,12 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { VALIDATION_ERROR_MESSAGES } from './dynamic-forms/validation-error-map.interface';
 import { HomeTopNavComponent } from './home/home-top-nav.component';
 import { HomeComponent } from './home/home.component';
 import { AppLayoutModule } from './layout/app-layout.module';
+import { NotificationModule } from './notification/notification.module';
 import { AppHammerConfig } from './shared-app/app-hammer-config';
 import { SharedAppModule } from './shared-app/shared-app.module';
-import { ValidationErrorMessages } from './shared-app/const/validation-error-messages.const';
-import { NotificationModule } from './notification/notification.module';
 
 registerLocaleData(norwayLocale, 'nb-NO');
 
@@ -39,11 +37,10 @@ registerLocaleData(norwayLocale, 'nb-NO');
     SharedAppModule,
     NotificationModule
   ],
-  providers: [     
-    { provide: LOCALE_ID, useValue: "nb-NO" }, 
+  providers:[ 
     { provide: HAMMER_GESTURE_CONFIG, useClass: AppHammerConfig},
-    { provide: VALIDATION_ERROR_MESSAGES, useValue: ValidationErrorMessages},
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LOCALE_ID, useValue: "nb-NO" }, 
   ],
   bootstrap: [AppComponent],
 })

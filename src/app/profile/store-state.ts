@@ -1,8 +1,8 @@
-import { StateCurrentUser, StateSyncConfig } from '../core/services/state/interfaces';
-import { SyncStoreConfig } from '../core/services/sync/interfaces/sync-store-config.interface';
+import { SyncConfig } from '../core/services/sync/interfaces';
+import { StateCurrentUser, StateSyncConfig } from '../state/interfaces';
 
 export interface StoreState extends 
     StateCurrentUser,
     StateSyncConfig {
-        syncConfig: SyncStoreConfig
+        syncConfig: SyncConfig
 } 

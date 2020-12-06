@@ -1,11 +1,10 @@
 import { Timesheet } from 'src/app/core/models';
+import { UserForeign } from 'src/app/core/models/relationships/user-foreign.interface';
 
-export interface TimesheetSummary{   
+export interface TimesheetSummary extends UserForeign {   
     timesheets: Timesheet[];
     openHours: number;
     confirmedHours: number;
-    userName?: string;
-    fullName?: string;
     year?: number;
     month?: number;
     weekNr?: number;

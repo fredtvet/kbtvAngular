@@ -1,8 +1,8 @@
 import { User } from 'src/app/core/models';
-import { StateCommand } from 'src/app/core/services/state/interfaces/state-command.interface';
+import { StateAction } from 'src/app/state/interfaces';
 
-export const UpdateCurrentUserAction = "UPDATE_CURRENT_USER"
+export const UpdateCurrentUserActionId = "UPDATE_CURRENT_USER"
 
-export interface UpdateCurrentUserStateCommand extends StateCommand{
+export interface UpdateCurrentUserStateCommand extends StateAction{
     user: User;
 }

@@ -1,5 +1,5 @@
-import { ModelState } from 'src/app/core/services/model/interfaces';
 import { DynamicForm } from 'src/app/dynamic-forms/interfaces';
+import { ModelState } from 'src/app/model/interfaces';
 import { CreateDocumentTypeForm } from 'src/app/shared/constants/model-forms/create-document-type-form.const';
 import { CreateEmployerForm } from 'src/app/shared/constants/model-forms/create-employer-form.const';
 import { CreateInboundEmailPasswordForm } from 'src/app/shared/constants/model-forms/create-inbound-email-password-form.const';

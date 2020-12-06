@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
-import { SaveUserTimesheetHttpEffect } from '../shared-timesheet/save-user-timesheet/save-user-timesheet.http.effect';
-import { SaveUserTimesheetReducer } from '../shared-timesheet/save-user-timesheet/save-user-timesheet.reducer';
+import { DeleteModelProviders } from 'src/app/model/state/providers.const';
+import { ModelFormModule } from 'src/app/shared/model-form/model-form.module';
+import { StateModule } from 'src/app/state/state.module';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
+import { SaveUserTimesheetProviders } from '../shared-timesheet/state/providers.const';
 import { UserTimesheetListRoutingModule } from './user-timesheet-list-routing.module';
 import { UserTimesheetListViewComponent } from './user-timesheet-list/user-timesheet-list-view/user-timesheet-list-view.component';
 import { UserTimesheetListComponent } from './user-timesheet-list/user-timesheet-list.component';
@@ -11,15 +13,17 @@ import { UserTimesheetListComponent } from './user-timesheet-list/user-timesheet
     UserTimesheetListComponent,
     UserTimesheetListViewComponent,
   ],
-  providers:[],
+  providers:[
+    ...SaveUserTimesheetProviders,
+    ...DeleteModelProviders,
+  ],
   imports: [
     SharedTimesheetModule,
-    UserTimesheetListRoutingModule
+    ModelFormModule,
+    StateModule,
+    UserTimesheetListRoutingModule,
   ]
 })
 export class UserTimesheetListModule {
-  constructor(
-    saveUserTimesheetReducer: SaveUserTimesheetReducer, 
-    saveUserTimesheetHttpEffect: SaveUserTimesheetHttpEffect
-  ){}
+  constructor(){}
 }

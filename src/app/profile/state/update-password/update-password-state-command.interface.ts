@@ -1,8 +1,8 @@
-import { StateCommand } from 'src/app/core/services/state/interfaces/state-command.interface';
+import { StateAction } from 'src/app/state/interfaces';
 
-export const UpdatePasswordAction = "UPDATE_PASSWORD";
+export const UpdatePasswordActionId = "UPDATE_CURRENT_USER_PASSWORD";
 
-export interface UpdatePasswordStateCommand extends StateCommand {
+export interface UpdatePasswordStateCommand extends StateAction {
     oldPassword: string, 
     newPassword: string
 }

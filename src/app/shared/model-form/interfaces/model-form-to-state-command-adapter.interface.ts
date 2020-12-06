@@ -1,9 +1,8 @@
-import { AdapterConstructor } from 'src/app/shared/form/adapter-constructor.interface';
-import { ModelState } from 'src/app/core/services/model/interfaces';
-import { SaveAction } from 'src/app/core/services/state/interfaces';
-import { StateCommand } from 'src/app/core/services/state/interfaces/state-command.interface';
 import { Prop } from 'src/app/shared-app/prop.type';
-import { OptionsFormState } from '../../form/options-form-state.interface';
+import { SaveAction } from '../../save-action.interface';
+import { ModelState } from 'src/app/model/interfaces';
+import { StateAction } from 'src/app/state/interfaces';
+import { AdapterConstructor, OptionsFormState } from '../../form/interfaces';
 
 export interface SaveModelFormState<TOptions extends Partial<ModelState>> extends OptionsFormState<TOptions>{ }
 
@@ -17,5 +16,5 @@ export interface ModelFormToSaveModelInput<TFormState> {
 export interface ModelFormToSaveStateCommandAdapter<TFormState> 
     extends AdapterConstructor<
         ModelFormToSaveModelInput<TFormState>, 
-        StateCommand
+        StateAction
     >{} 

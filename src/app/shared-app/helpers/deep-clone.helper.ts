@@ -1,4 +1,4 @@
-export function _deepClone(value) {
+export function _deepClone<T>(value: Readonly<T>): T {
     const type = typeof value;
     switch (type) {
         case 'object':
@@ -35,7 +35,7 @@ export function _deepClone(value) {
     }
 }
 
-function _fixPropertyValue(original, copy, key) {
+function _fixPropertyValue(original: Readonly<any>, copy: any, key: number | string): void {
     const originalValue = original[key];
     const originalType = typeof originalValue;
 
@@ -77,7 +77,7 @@ function _fixPropertyValue(original, copy, key) {
     }
 }
 
-function _fixTypes(original, copy) {
+function _fixTypes(original: Readonly<any>, copy: any): void {
     if (original instanceof Array) {
         for (let index = 0; index < original.length; index++) {
             _fixPropertyValue(original, copy, index);

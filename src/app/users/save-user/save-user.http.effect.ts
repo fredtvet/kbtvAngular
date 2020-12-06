@@ -1,27 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpCommandHandler } from 'src/app/core/services/http/http-command.handler';
-import { SaveModelHttpEffect } from 'src/app/core/services/model/state/save-model/save-model.http.effect';
-import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
-import { StateAction } from 'src/app/core/services/state/state-action.enum';
-import { SaveUserAction, SaveUserStateCommand } from './save-user-state-command.interface';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpActionId, HttpCommand } from 'src/app/core/services/http/state/http.effect';
+import { SaveModelHttpEffect } from 'src/app/model/state/save-model/save-model.http.effect';
+import { ActionType } from 'src/app/shared-app/enums';
+import { DispatchedAction } from 'src/app/state/action-dispatcher';
+import { StateAction } from 'src/app/state/interfaces';
+import { Effect } from 'src/app/state/interfaces/effect.interface';
+import { listenTo } from 'src/app/state/operators/listen-to.operator';
+import { SaveUserActionId, SaveUserStateCommand } from './save-user-state-command.interface';
 
 @Injectable({providedIn: 'root'})
-export class SaveUserHttpEffect extends SaveModelHttpEffect {
+export class SaveUserHttpEffect extends SaveModelHttpEffect implements Effect<SaveUserStateCommand> {
 
-    constructor(
-        commandDispatcher: CommandDispatcher,
-        httpCommandHandler: HttpCommandHandler,
-    ){  
-        super(commandDispatcher, httpCommandHandler)
-    }
+    constructor(){ super() }
 
-    protected initCommandListener(){
-        this.commandDispatcher.listen$<SaveUserStateCommand>(SaveUserAction)
-            .subscribe(res => this.handle(res.command, res.state))
+    handle$(actions$: Observable<DispatchedAction<SaveUserStateCommand>>): Observable<StateAction> {
+        return actions$.pipe(
+            listenTo([SaveUserActionId]),
+            map(x => { return <HttpCommand>{
+                actionId: HttpActionId, propagate: true,
+                request: super.createHttpRequest(x.action),
+                stateSnapshot: x.stateSnapshot
+            }}),
+        )
     }
 
     protected createHttpBody(command: SaveUserStateCommand): any {
-        if(command.saveAction === StateAction.Update) return command.entity;
+        if(command.saveAction === ActionType.Update) return command.entity;
         return {...command.entity, password: command.password};
     }
 

@@ -12,7 +12,7 @@ import { EditMissionForm } from 'src/app/shared/constants/model-forms/save-missi
 import { TimesheetStatus } from 'src/app/shared/enums';
 import { ModelFormService } from 'src/app/shared/model-form';
 import { AppFileUrlPipe } from 'src/app/shared/pipes/app-file-url.pipe';
-import { MissionListStore } from '../mission-list.store';
+import { MissionListFacade } from '../mission-list.facade';
 
 interface ViewModel { mission: Mission, navConfig: DetailTopNavConfig }
 
@@ -24,7 +24,7 @@ interface ViewModel { mission: Mission, navConfig: DetailTopNavConfig }
 export class MissionDetailsComponent{
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
 
-  vm$: Observable<ViewModel> = this.store.getWithRelations$(this.missionId).pipe(
+  vm$: Observable<ViewModel> = this.facade.getMissionDetails$(this.missionId).pipe(
     map(mission => { return {
       navConfig: this.getNavConfig(mission), mission
     }})
@@ -33,7 +33,7 @@ export class MissionDetailsComponent{
   get missionId() { return this.route.snapshot.paramMap.get('id') }
 
   constructor(
-    private store: MissionListStore,
+    private facade: MissionListFacade,
     private route: ActivatedRoute,
     private router: Router,
     private appFileUrl: AppFileUrlPipe,
@@ -43,7 +43,7 @@ export class MissionDetailsComponent{
   ){ }
 
   updateHeaderImage = (files: FileList): void => 
-    files && files[0] ? this.store.updateHeaderImage(this.missionId, files[0]) : null;
+    files && files[0] ? this.facade.updateHeaderImage(this.missionId, files[0]) : null;
   
   private openHeaderImageInput = (): void =>{ 
     if(!window.navigator.onLine)
@@ -65,7 +65,7 @@ export class MissionDetailsComponent{
   private goToTimesheets = (mission: Mission) => 
     this.router.navigate(['timer', {
       returnUrl: this.router.url, 
-      filter: JSON.stringify({mission, status: TimesheetStatus.Open})
+      criteria: JSON.stringify({mission, status: TimesheetStatus.Open})
     }], {relativeTo: this.route});
 
   private openBottomSheetMenu = (mission: Mission) => {   

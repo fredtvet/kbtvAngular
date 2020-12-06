@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SyncStore } from 'src/app/core/services/sync';
 import { LoadingService } from '../core/services/loading.service';
+import { SyncStateActionId } from '../core/services/sync/state/actions.const';
 import { MainNavService } from '../layout/main-nav.service';
+import { Store } from '../state/store';
 
 @Component({
   selector: 'app-home-top-nav',
@@ -13,12 +14,12 @@ export class HomeTopNavComponent{
     loading$ = this.loadingService.queryLoading$;
 
     constructor(
-        private syncStore: SyncStore,
+        private store: Store<any>,
         private loadingService: LoadingService,
         private mainNavService: MainNavService,
     ) {  }
 
     toggleDrawer = () => this.mainNavService.toggleDrawer();
 
-    refresh = () => this.syncStore.syncAll();
+    refresh = () => this.store.dispatch({ actionId: SyncStateActionId });
 }

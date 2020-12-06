@@ -11,9 +11,9 @@ export class NotificationService {
 
   private currentNotification: AppNotification;
 
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar) { }
 
-  notify = (notification: AppNotification) => {
+  notify = (notification: AppNotification) => { 
     if(!this.currentNotification && this.currentNotification !== null)
        this.setNotification(notification);      
     else if(JSON.stringify(notification) !== JSON.stringify(this.currentNotification))     

@@ -1,6 +1,6 @@
 import { _convertArrayToObject } from './convert-array-to-object.helper';
 
-export function _addOrUpdateRange<T>(originals: T[], newEntities: T[], identifier: string): T[]{       
+export function _addOrUpdateRange<T>(originals: ReadonlyArray<T>, newEntities: ReadonlyArray<T>, identifier: string): T[]{       
     if(!newEntities || newEntities.length == 0) return originals?.slice(); //If no entities, just return current val
     if(!originals || originals.length == 0) return newEntities.slice(); //If initial array empty, just return empty array
 
@@ -16,8 +16,10 @@ export function _addOrUpdateRange<T>(originals: T[], newEntities: T[], identifie
 
     let result: T[] = [];
     let keys = Object.keys(originalsObj);
+    
     for(let i = 0; i < keys.length;i++){
       result.push(originalsObj[keys[i]]);
     }
+
     return result;
 }

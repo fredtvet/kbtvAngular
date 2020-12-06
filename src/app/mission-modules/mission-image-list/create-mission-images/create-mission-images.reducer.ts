@@ -1,42 +1,29 @@
-import { Injectable } from '@angular/core';
 import { MissionImage } from 'src/app/core/models';
-import { ObservableStore } from 'src/app/core/services/state/abstracts/observable-store';
-import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
-import { StateMissionImages } from 'src/app/core/services/state/interfaces';
 import { _addOrUpdateRange } from 'src/app/shared-app/helpers/array/add-or-update-range.helper';
-import { CreateMissionImagesAction, CreateMissionImagesStateCommand } from './create-mission-images-state-command.interface';
+import { Reducer, StateMissionImages } from 'src/app/state/interfaces';
+import { CreateMissionImagesActionId, CreateMissionImagesStateCommand } from './create-mission-images-state-command.interface';
 
-@Injectable({providedIn: 'root'})
-export class CreateMissionImagesReducer extends ObservableStore<StateMissionImages>{
+export const CreateMissionImagesReducer: Reducer<StateMissionImages> = {
+    actionId: CreateMissionImagesActionId,
+    stateProperties: ["missionImages"],
+    reducerFn: _reducerFn,
+}
 
-    constructor(commandDispatcher: CommandDispatcher){ 
-        super();
-        
-        commandDispatcher
-            .listen$<CreateMissionImagesStateCommand>(CreateMissionImagesAction)
-            .subscribe(res => this.handle(res.command))
+function _reducerFn(state: StateMissionImages, action: CreateMissionImagesStateCommand): StateMissionImages{  
+    if(!action.fileWrappers || !action.missionId) 
+        console.error('no files or missionId provided');
+
+    const entities: MissionImage[] = [];
+    for(let i = 0; i < action.fileWrappers.length; i++){
+        const wrapper = action.fileWrappers[i];
+        const file = wrapper.modifiedFile;
+        entities.push({
+            id: wrapper.id, 
+            missionId: action.missionId, 
+            fileName: wrapper.modifiedFile.name,
+            temp_localFileUrl: URL.createObjectURL(file)
+        })
     }
-
-    private handle(command: CreateMissionImagesStateCommand): void{
-        if(!command.fileWrappers || !command.missionId) 
-            console.error('no files or missionId provided');
-
-        this.setStateWithStateFunc(["missionImages"], (state: any)  => this.modifyState(state, command));
-    }
-
-    private modifyState(state: any, command: CreateMissionImagesStateCommand): StateMissionImages{  
-        const entities: MissionImage[] = [];
-        for(let i = 0; i < command.fileWrappers.length; i++){
-            const wrapper = command.fileWrappers[i];
-            const file = wrapper.modifiedFile;
-            entities.push({
-                id: wrapper.id, 
-                missionId: command.missionId, 
-                fileName: wrapper.modifiedFile.name,
-                temp_localFileUrl: URL.createObjectURL(file)
-            })
-        }
-        return {missionImages: _addOrUpdateRange(state.missionImages, entities, "id")};
-    }
-    
+    state.missionImages = _addOrUpdateRange(state.missionImages, entities, "id");
+    return state;
 }

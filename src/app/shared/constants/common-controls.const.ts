@@ -3,15 +3,15 @@ import { Employer, Mission, MissionChild, User } from 'src/app/core/models';
 import { IAddress } from 'src/app/core/models/sub-interfaces/iaddress.interface';
 import { IId } from 'src/app/core/models/sub-interfaces/iid.interface';
 import { IName } from 'src/app/core/models/sub-interfaces/iname.interface';
-import { StateEmployers, StateMissions, StateUsers } from 'src/app/core/services/state/interfaces';
 import { DynamicControl } from 'src/app/dynamic-forms/interfaces';
+import { StateMissions, StateEmployers, StateUsers } from 'src/app/state/interfaces';
 import { AutoCompleteQuestionComponent } from '../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { GooglePlacesAutoCompleteQuestionComponent, GooglePlacesAutoCompleteQuestion } from '../components/dynamic-form-questions/google-places-autocomplete-question.component';
 import { InputQuestionComponent, InputQuestion } from '../components/dynamic-form-questions/input-question.component';
 import { SelectQuestionComponent, SelectQuestion } from '../components/dynamic-form-questions/select-question.component';
 import { _compareProp } from '../form/helpers/compare-with-prop.helper';
-import { OptionsFormState } from '../form/options-form-state.interface';
+import { OptionsFormState } from '../form/interfaces';
 import { isObjectValidator } from '../form/validators/is-object.validator';
 import { ValidationRules } from './validation-rules.const';
 

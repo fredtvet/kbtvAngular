@@ -1,14 +1,14 @@
-import { StateMissions, StateUsers } from 'src/app/core/services/state/interfaces';
 import { DynamicControl, DynamicControlGroup, DynamicForm } from 'src/app/dynamic-forms/interfaces';
 import { DateRangePresets } from 'src/app/shared-app/enums';
 import { _getISO } from 'src/app/shared-app/helpers/datetime/get-iso-with-timezone.helper';
 import { _getMonthRange } from 'src/app/shared-app/helpers/datetime/get-month-range.helper';
 import { _getRangeByDateRangePreset } from 'src/app/shared-app/helpers/datetime/get-range-by-date-range-preset.helper';
+import { StateUsers, StateMissions } from 'src/app/state/interfaces';
 import { TimesheetCriteria } from 'src/app/timesheet-modules/shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { IonDateQuestionComponent, IonDateQuestion } from '../../components/dynamic-form-questions/ion-date-time-question.component';
 import { RadioGroupQuestionComponent, RadioGroupQuestion } from '../../components/dynamic-form-questions/radio-group-question.component';
 import { TimesheetStatus } from '../../enums';
-import { OptionsFormState } from '../../form/options-form-state.interface';
+import { OptionsFormState } from '../../form/interfaces';
 import { DateRange } from '../../interfaces/date-range.interface';
 import { translations } from '../../translations';
 import { MissionAutoCompleteControl, UserSelectControl } from '../common-controls.const';

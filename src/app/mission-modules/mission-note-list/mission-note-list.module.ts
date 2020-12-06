@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { MissionNoteListRoutingModule } from './mission-note-list-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { NoteCardComponent } from './mission-note-list/note-card/note-card.component';
+import { MissionNoteListRoutingModule } from './mission-note-list-routing.module';
 import { MissionNoteListComponent } from './mission-note-list/mission-note-list.component';
+import { NoteCardComponent } from './mission-note-list/note-card/note-card.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +12,6 @@ import { MissionNoteListComponent } from './mission-note-list/mission-note-list.
   imports: [
     SharedModule,
     MissionNoteListRoutingModule
-  ]
+  ],
 })
 export class MissionNoteListModule { }

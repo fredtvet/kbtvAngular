@@ -3,8 +3,8 @@ import { ActivatedRoute } from "@angular/router";
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { Employer, Mission, MissionType } from "src/app/core/models";
-import { _getModelDisplayValue } from 'src/app/core/services/model/helpers/get-model-property.helper';
 import { ChipsFactoryService } from 'src/app/core/services/ui/chips-factory.service';
+import { _getModelDisplayValue } from 'src/app/model/helpers/get-model-property.helper';
 import { Roles } from "src/app/shared-app/enums";
 import { _getSetPropCount } from 'src/app/shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from 'src/app/shared-app/interfaces';
@@ -15,40 +15,35 @@ import { CreateMissionForm } from 'src/app/shared/constants/model-forms/save-mis
 import { FormService } from 'src/app/shared/form';
 import { MissionCriteria } from "src/app/shared/interfaces/mission-criteria.interface";
 import { ModelFormService } from 'src/app/shared/model-form';
-import { MissionListStore } from "../mission-list.store";
+import { MissionListFacade } from '../mission-list.facade';
+import { MissionListProviders } from './mission-list-providers.const';
 
-interface ViewModel{ missions: Mission[], chips?: AppChip[], fabs: AppButton[], navConfig?: MainTopNavConfig }
+interface NavViewModel{ criteriaChips?: AppChip[], navConfig?: MainTopNavConfig }
 
 @Component({
   selector: "app-mission-list",
   templateUrl: "./mission-list.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: MissionListProviders,
 })
 export class MissionListComponent {
 
-  private navVm$: Observable<Partial<ViewModel>> = this.store.criteria$.pipe(map(x => { return {
-    chips: this.getCriteriaChips(x),
+  navVm$: Observable<NavViewModel> = this.facade.criteria$.pipe(map(x => { return {
+    criteriaChips: this.getCriteriaChips(x),
     navConfig: this.getTopNavConfig(x)
   }}))
 
-  vm$: Observable<ViewModel> = combineLatest([
-    this.store.filteredMissions$,
-    this.navVm$
-  ]).pipe(
-    map(([filtered, vm]) => { 
-      return {...vm, fabs: this.fabs, missions: filtered.records} 
-    }),
-  );
+  missions$: Observable<Mission[]> = this.facade.filteredMissions$;
 
   get initialMissionId() { return this.route.snapshot.paramMap.get('initialMissionId') }
 
-  private fabs: AppButton[];
+  fabs: AppButton[];
 
   constructor(
     private formService: FormService,
     private chipsFactory: ChipsFactoryService,
     private modelFormService: ModelFormService,
-    private store: MissionListStore,
+    private facade: MissionListFacade,
     private route: ActivatedRoute
   ) {
     this.fabs = [
@@ -58,9 +53,8 @@ export class MissionListComponent {
     ];
   }
 
-  searchMissions = (searchString: string) => {
-    this.store.addFilterCriteria({ ...this.store.criteria, searchString });
-  };
+  searchMissions = (searchString: string) => 
+    this.facade.addCriteria({ ...this.facade.criteria, searchString });
 
   private openMissionForm = () => 
     this.modelFormService.open({formConfig: {
@@ -70,10 +64,10 @@ export class MissionListComponent {
 
   private openMissionFilter = () => 
     this.formService.open<MissionCriteria, MissionCriteriaFormState>({
-        formConfig: {...MissionCriteriaForm, initialValue: this.store.criteria}, 
-        formState: this.store.criteriaFormState$,
+        formConfig: {...MissionCriteriaForm, initialValue: this.facade.criteria}, 
+        formState: this.facade.criteriaFormState$,
         navConfig: {title: "Velg filtre"},
-        submitCallback: (val: MissionCriteria) => this.store.addFilterCriteria(val),
+        submitCallback: (val: MissionCriteria) => this.facade.addCriteria(val),
       });   
 
   private getTopNavConfig(criteria: MissionCriteria): MainTopNavConfig {
@@ -105,7 +99,7 @@ export class MissionListComponent {
 
   private resetCriteriaProp(prop: string, criteria: MissionCriteria){
     criteria[prop] = null;
-    this.store.addFilterCriteria(criteria);
+    this.facade.addCriteria(criteria);
   }
 
 }

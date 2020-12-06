@@ -1,37 +1,14 @@
-<app-main-skeleton *ngIf="vm$ | async; let vm" disableElevation="true" overlayMode="true">
+<app-main-skeleton disableElevation="true" overlayMode="true">
 
-  <app-main-top-nav-bar navbar [config]="vm.navConfig" >
+  <app-main-top-nav-bar navbar [config]="navConfig$ | async" >
   </app-main-top-nav-bar>
 
-  <div style="min-height:100%" fxLayout="row"
+  <app-user-timesheet-week-view [vm]="vm$ | async" style="height:100%;display:block"
     (swiperight)="previousWeek()" 
-    (swipeleft)="nextWeek()">
-
-    <ng-container *ngFor="let weekDay of (vm.isXs ? 5 : 7) | arrayFromNumber"> 
-
-        <div class="w-100" fxLayout="column" fxLayoutAlign="start stretch">
-
-          <app-timesheet-day-label class="w-100 mb-1" style="z-index:1;position:sticky;top:0"
-            [date]="vm.weekCriteria | getDateByDateParams : weekDay"
-            (labelClicked)="openTimesheetForm(null, {date: $event})">
-          </app-timesheet-day-label>
-
-          <ng-container *ngIf="vm.summaries && vm.summaries[weekDay]">
-            <app-timesheet-mission-bar class="fadeInDown" style="margin:2px" 
-              *ngFor="let timesheet of vm.summaries[weekDay].timesheets | sortByDate: 'startTime' : 'asc'; trackBy: trackByTimesheet;"                   
-              [timesheet]="timesheet"
-              (barClicked)="timesheet.status === 2 ? openTimesheetCard(timesheet.id) : openTimesheetForm(timesheet.id)">
-            </app-timesheet-mission-bar>
-          </ng-container>
-
-        </div>
-        
-        <mat-divider vertical="true" *ngIf="weekDay !== 7"></mat-divider>
-        
-    </ng-container>
-
-  </div>
+    (swipeleft)="nextWeek()"
+    (timesheetClicked)="$event?.status === 2 ? openTimesheetCard($event?.id) : openTimesheetForm($event?.id)"
+    (labelClicked)="openTimesheetForm(null, {date: $event})">
+  </app-user-timesheet-week-view>
 
 </app-main-skeleton>
 
-<router-outlet></router-outlet>

@@ -1,32 +1,38 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ApiUrl } from 'src/app/core/api-url.enum';
-import { User } from 'src/app/core/models';
-import { HttpCommandHandler } from 'src/app/core/services/http/http-command.handler';
-import { CommandDispatcher } from 'src/app/core/services/state/command.dispatcher';
-import { UpdateCurrentUserAction, UpdateCurrentUserStateCommand } from './update-current-user-state-command.interface';
+import { HttpRequest } from 'src/app/core/services/http/interfaces';
+import { HttpCommand, HttpActionId } from 'src/app/core/services/http/state/http.effect';
+import { DispatchedAction } from 'src/app/state/action-dispatcher';
+import { StateAction } from 'src/app/state/interfaces';
+import { Effect } from 'src/app/state/interfaces/effect.interface';
+import { listenTo } from 'src/app/state/operators/listen-to.operator';
+import { UpdateCurrentUserActionId, UpdateCurrentUserStateCommand } from './update-current-user-state-command.interface';
 
-@Injectable({providedIn: 'root'})
-export class UpdateCurrentUserHttpEffect {
+@Injectable()
+export class UpdateCurrentUserHttpEffect implements Effect<UpdateCurrentUserStateCommand> {
 
-    constructor(
-        private commandDispatcher: CommandDispatcher,
-        private httpCommandHandler: HttpCommandHandler,
-    ){  
-        this.initCommandListener();   
+    constructor(){}
+
+    handle$(actions$: Observable<DispatchedAction<UpdateCurrentUserStateCommand>>): Observable<StateAction> {
+        return actions$.pipe(
+            listenTo([UpdateCurrentUserActionId]),
+            map(x => { return <HttpCommand>{
+                actionId: HttpActionId, propagate: true,
+                request: this.createHttpRequest(x.action),
+                stateSnapshot: x.stateSnapshot
+            }}),  
+        )
     }
 
-    protected initCommandListener(){
-        this.commandDispatcher.listen$<UpdateCurrentUserStateCommand>(UpdateCurrentUserAction)
-            .subscribe(res => this.handle(res.command.user, res.state))
-    }
-
-    protected handle(user: User, stateSnapshot: any): void{
-        this.httpCommandHandler.handle({
-            httpMethod: "PUT", 
-            httpBody: user, 
+    protected createHttpRequest(action: UpdateCurrentUserStateCommand): HttpRequest{
+        return {
+            method: "PUT", 
+            body: action.user, 
             apiUrl: ApiUrl.Auth, 
             cancelMessage: "Oppdatering av profil er reversert"
-        }, stateSnapshot)
+        }
     }
 
 }

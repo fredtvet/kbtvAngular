@@ -1,0 +1,26 @@
+<div style="min-height:100%" fxLayout="row">
+
+  <ng-container *ngFor="let weekDay of (vm.isXs ? 5 : 7) | arrayFromNumber">
+
+    <div class="w-100" fxLayout="column" fxLayoutAlign="start stretch">
+
+      <app-timesheet-day-label class="w-100 mb-1" style="z-index:1;position:sticky;top:0"
+        [date]="vm.weekCriteria | getDateByDateParams : weekDay"
+        (labelClicked)="labelClicked.emit($event)">
+      </app-timesheet-day-label>
+
+      <ng-container *ngIf="vm.weekDaySummaries && vm.weekDaySummaries[weekDay]">
+        <app-timesheet-mission-bar class="fadeInDown" style="margin:2px"
+          *ngFor="let timesheet of vm.weekDaySummaries[weekDay].timesheets | sortByDate: 'startTime' : 'asc'; trackBy: trackByTimesheet;"
+          [timesheet]="timesheet"
+          (barClicked)="timesheetClicked.emit(timesheet)">
+        </app-timesheet-mission-bar>
+      </ng-container>
+
+    </div>
+
+    <mat-divider vertical="true" *ngIf="weekDay !== 7"></mat-divider>
+
+  </ng-container>
+
+</div>

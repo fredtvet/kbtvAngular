@@ -6,9 +6,10 @@ import { TimesheetStatisticTableComponent } from './timesheet-statistic/timeshee
 
 import { AppAgGridModule } from 'src/app/app-ag-grid/app-ag-grid.module';
 import { DatePipe } from '@angular/common';
-import { TimesheetStatisticStore } from './timesheet-statistic.store';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { DynamicFormsModule } from 'src/app/dynamic-forms/dynamic-forms.module';
+import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';
+import { StateModule } from 'src/app/state/state.module';
 
 
 @NgModule({
@@ -18,10 +19,12 @@ import { DynamicFormsModule } from 'src/app/dynamic-forms/dynamic-forms.module';
   ],
   providers:[
     DatePipe,
+    ...FetchTimesheetProviders,
   ],
   imports: [
     SharedTimesheetModule,
     TimesheetStatisticRoutingModule,
+    StateModule,
     AppAgGridModule,
     DynamicFormsModule,
   ],

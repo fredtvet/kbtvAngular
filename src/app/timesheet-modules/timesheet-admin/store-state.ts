@@ -1,14 +1,15 @@
 
-import { StateUsers, StateMissions, StateTimesheets } from 'src/app/core/services/state/interfaces';
-import { GroupByPeriod } from 'src/app/shared/enums';
+import { StateMissions, StateTimesheets, StateUsers } from 'src/app/state/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 
 export interface StoreState extends 
     StateUsers,
     StateMissions,
-    StateTimesheets {
-        timesheetAdminCriteria: TimesheetCriteria,
-        timesheetAdminGroupBy: GroupByPeriod,
-        timesheetAdminWeekCriteria: WeekCriteria
-     }
+    StateTimesheets {}
+
+export interface ComponentStoreState {
+        timesheetCriteria: TimesheetCriteria,
+        weekCriteria: Omit<WeekCriteria, "weekNr" | "weekDay">
+        selectedWeekNr: number;
+}

@@ -3,7 +3,7 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bott
 import { take, takeUntil, tap } from 'rxjs/operators';
 import { WithUnsubscribe } from 'src/app/shared-app/mixins/with-unsubscribe.mixin';
 import { MainTopNavBarComponent } from 'src/app/shared/components/main-top-nav-bar/main-top-nav-bar.component';
-import { FormSheetWrapperConfig } from './form-sheet-wrapper-config.interface';
+import { FormSheetWrapperConfig } from './interfaces';
 
 type WrapperConfig = FormSheetWrapperConfig<any, any, any>;
 

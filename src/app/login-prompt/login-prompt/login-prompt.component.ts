@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
-import { AuthStore, Credentials } from 'src/app/core/services/auth';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService, Credentials } from 'src/app/core/services/auth';
 
 @Component({
   selector: 'app-login-prompt',
@@ -13,17 +12,14 @@ export class LoginPromptComponent {
   @Input() returnUrl: string;
 
   constructor(    
-    private router: Router,
-    private authStore: AuthStore) { }
+    private route: ActivatedRoute,
+    private authService: AuthService) { }
 
   authenticate(credentials: Credentials) {
-    this.authStore
-    .attemptAuth$(credentials).pipe(
-      tap(x => {
-        if(this.returnUrl) this.router.navigateByUrl(this.returnUrl); 
-        else this.router.navigate(["/"])    
-      })
-    ).subscribe();
+    this.authService.login(
+      credentials, 
+      this.returnUrl || this.route.snapshot.root.url.toString()
+    );
   }
   
 }

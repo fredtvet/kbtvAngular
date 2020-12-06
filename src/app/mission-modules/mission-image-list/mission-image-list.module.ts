@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { DeleteModelHttpEffect } from 'src/app/core/services/model/state/delete-model/delete-model.http.effect';
-import { DeleteModelReducer } from 'src/app/core/services/model/state/delete-model/delete-model.reducer';
-import { MailModelsHttpEffect } from 'src/app/core/services/model/state/mail-models/mail-models.http.effect';
+import { DeleteModelProviders, MailModelsProviders } from 'src/app/model/state/providers.const';
+import { ModelFormModule } from 'src/app/shared/model-form/model-form.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { STORE_EFFECTS, STORE_REDUCERS } from 'src/app/state/injection-tokens';
+import { StateModule } from 'src/app/state/state.module';
 import { CreateMissionImagesHttpEffect } from './create-mission-images/create-mission-images.http.effect';
 import { CreateMissionImagesReducer } from './create-mission-images/create-mission-images.reducer';
 import { ImageViewerDialogWrapperComponent } from './image-viewer/image-viewer-dialog-wrapper.component';
@@ -19,15 +20,14 @@ import { MissionImageListComponent } from './mission-image-list/mission-image-li
   ],
   imports: [
     SharedModule,
-    MissionImageListRoutingModule
+    StateModule,
+    ModelFormModule,
+    MissionImageListRoutingModule,
+  ],
+  providers:[
+    { provide: STORE_REDUCERS, useValue: CreateMissionImagesReducer, multi: true},
+    { provide: STORE_EFFECTS, useClass: CreateMissionImagesHttpEffect, multi: true},
+    ...MailModelsProviders
   ]
 })
-export class MissionImageListModule {
-  constructor(
-    deleteReducer: DeleteModelReducer, 
-    deleteHttpEffect: DeleteModelHttpEffect,
-    mailModelsHttpEffect: MailModelsHttpEffect,
-    createMissionImagesReducer: CreateMissionImagesReducer,
-    createMissionImagesHttpEffect: CreateMissionImagesHttpEffect
-  ){}
- }
+export class MissionImageListModule {}

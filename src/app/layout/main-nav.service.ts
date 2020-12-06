@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthStore } from '../core/services/auth/auth.store';
+import { AuthService } from '../core/services/auth/auth.service';
 import { DeviceInfoService } from '../core/services/device-info.service';
 import { BottomNavNavigations } from './bottom-nav-navigations';
 import { MainNavConfig } from './interfaces/main-nav-config.interface';
 import { SideNavNavigations } from './side-nav-navigations';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class MainNavService {
 
   private toggleDrawerSubject = new Subject();
@@ -17,7 +15,7 @@ export class MainNavService {
 
   config$: Observable<MainNavConfig> = combineLatest([
     this.deviceInfoService.isXs$, 
-    this.authStore.currentUser$,
+    this.authService.currentUser$,
     this.deviceInfoService.isOnline$, 
     ]).pipe(
       map(([isXs, user, isOnline]) => {
@@ -30,7 +28,7 @@ export class MainNavService {
   );
 
   constructor(
-    private authStore: AuthStore,
+    private authService: AuthService,
     private deviceInfoService: DeviceInfoService) {}
 
   toggleDrawer(): void {

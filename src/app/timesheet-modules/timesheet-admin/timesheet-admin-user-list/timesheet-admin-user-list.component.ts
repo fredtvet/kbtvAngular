@@ -3,30 +3,32 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/core/models';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
-import { TimesheetAdminStore } from '../timesheet-admin.store';
+import { TimesheetAdminFacade } from '../timesheet-admin.facade';
+import { TimesheetAdminUserListProviders } from './timesheet-admin-user-list-providers.const';
 
 @Component({
   selector: 'app-timesheet-admin-user-list',
   templateUrl: './timesheet-admin-user-list.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: TimesheetAdminUserListProviders
 })
 export class TimesheetAdminUserListComponent {
 
-  users$ = this.store.users$;
+  users$ = this.facade.users$;
+
   loading$ = this.loadingService.queryLoading$;
+
   navConfig: MainTopNavConfig = {title: 'Administrer timer'};
 
   constructor(
     private loadingService: LoadingService,
-    private store: TimesheetAdminStore,
+    private facade: TimesheetAdminFacade,
     private router: Router,
-  ) {
-    this.store.addFilterCriteria(null);
-  }
+  ) {}
 
   goToWeekList(user: User){
     this.router.navigate(['timeadministrering/uker', {
-      filter: JSON.stringify({user, year: new Date().getFullYear()})
+      criteria: JSON.stringify({user, year: new Date().getFullYear()})
     }])
   }
 }
