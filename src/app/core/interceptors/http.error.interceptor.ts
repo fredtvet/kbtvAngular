@@ -1,14 +1,11 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
-  HttpInterceptor,
-  HttpEvent,
-  HttpErrorResponse
+  HttpErrorResponse, HttpEvent, HttpHandler,
+  HttpInterceptor, HttpRequest
 } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { NotificationService, NotificationType } from 'src/app/notification';
+import { tap } from 'rxjs/operators';
+import { AppNotification, NotificationService, NotificationType } from 'src/app/notification';
 
 export interface AppErrorResponse {
   status: number;
@@ -27,15 +24,27 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if(request.responseType != "json") return next.handle(request);
     return next.handle(request).pipe(tap(() => {},
-      (err: any) => {
+      (err: any) => { 
       if (err instanceof HttpErrorResponse) { 
+        var notification: AppNotification;
+
+        if(err.status === 504) 
+          notification = { title: 'Får ikke konkakt med serveren. Vennligst prøv igjen.', type: NotificationType.Error }
+
         var error = err.error as AppErrorResponse;
-        this.notificationService.notify({ 
-          title: error.detail || error.title || "Noe gikk feil! Vennligst prøv igjen.",  
-          details: this.convertErrorsToStringArray(error.errors),
-          type: NotificationType.Error,
-          duration: Object.keys(error.errors || {}).length * 2500
-        });
+
+        if(error)
+          notification = { 
+            title: error.detail || error.title || "En ukjent feil oppsto! Vennligst prøv igjen.",  
+            details: this.convertErrorsToStringArray(error.errors),
+            type: NotificationType.Error,
+            duration: this.calculateDuration(error.errors)
+          }
+
+        if(!notification) 
+          notification = { title: "En ukjent feil oppsto! Vennligst prøv igjen.", type: NotificationType.Error }
+
+        this.notificationService.notify(notification);
       }
     }));
   }
@@ -46,5 +55,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       result = result.concat(errors[key]);
     }
     return result;
+  }
+
+  private calculateDuration(errors: { [key: string]: string[] }): number{
+    const minValue = 5000;
+    const value = Object.keys(errors || {}).length * 2500;
+    return minValue > value ? minValue : value;
   }
 }
