@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Mission } from 'src/app/core/models';
 import { BottomSheetMenuService } from 'src/app/core/services/ui/bottom-sheet-menu.service';
 import { NotificationService } from 'src/app/notification';
@@ -24,13 +24,14 @@ interface ViewModel { mission: Mission, navConfig: DetailTopNavConfig }
 export class MissionDetailsComponent{
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
 
-  vm$: Observable<ViewModel> = this.facade.getMissionDetails$(this.missionId).pipe(
+  get missionId() { return this.route.snapshot.paramMap.get('id') }
+
+  vm$: Observable<ViewModel> =  this.route.paramMap.pipe(
+    switchMap(x =>  this.facade.getMissionDetails$(x.get('id'))),
     map(mission => { return {
       navConfig: this.getNavConfig(mission), mission
     }})
   );
-
-  get missionId() { return this.route.snapshot.paramMap.get('id') }
 
   constructor(
     private facade: MissionListFacade,

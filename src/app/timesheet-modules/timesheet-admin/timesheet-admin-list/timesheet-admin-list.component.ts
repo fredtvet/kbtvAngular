@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, takeUntil, tap } from 'rxjs/operators';
 import { Timesheet } from 'src/app/core/models';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { _getWeekOfYear } from 'src/app/shared-app/helpers/datetime/get-week-of-year.helper';
 import { _trackByModel } from 'src/app/shared-app/helpers/trackby/track-by-model.helper';
+import { WithUnsubscribe } from 'src/app/shared-app/mixins/with-unsubscribe.mixin';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
 import { WeekCriteriaForm, WeekCriteriaFormState } from 'src/app/shared/constants/forms/week-criteria-controls.const';
 import { TimesheetStatus } from 'src/app/shared/enums';
@@ -18,7 +19,7 @@ import { TimesheetAdminFacade } from '../timesheet-admin.facade';
   templateUrl: './timesheet-admin-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimesheetAdminListComponent{
+export class TimesheetAdminListComponent extends WithUnsubscribe() {
     
   loading$ = this.loadingService.queryLoading$;
 
@@ -35,7 +36,11 @@ export class TimesheetAdminListComponent{
     private router: Router,
     private route: ActivatedRoute,
     private formService: FormService) {
-      this.facade.updateWeekNr(this.route.snapshot.params.weekNr || _getWeekOfYear());    
+      super();
+      this.route.paramMap.pipe(
+        tap(x => this.facade.updateWeekNr(x.get('weekNr') || _getWeekOfYear())), 
+        takeUntil(this.unsubscribe)
+      ).subscribe();
     }
 
   toggleTimesheetStatus = (timesheet: Timesheet): void => 
