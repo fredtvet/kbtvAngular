@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
-import { DataFilterConstructor } from 'src/app/shared/data.filter';
-import { FilteredResponse } from 'src/app/shared/interfaces';
+import { _filter } from '@shared-app/helpers/array/filter.helper';
+import { DataFilterConstructor } from '@shared/data.filter';
+import { FilteredResponse } from '@shared/interfaces';
 
 export const filterRecords = <TRecord, TCriteria>(filterType: DataFilterConstructor<TCriteria>, ...filterArgs: any[]) => 
     (source: Observable<[TRecord[], TCriteria]> ): Observable<FilteredResponse<TCriteria, TRecord>> => 

@@ -1,3 +1,3 @@
-import { ActionType } from 'src/app/shared-app/enums';
+import { ActionType } from '@shared-app/enums';
 
 export type SaveAction = ActionType.Create | ActionType.Update;

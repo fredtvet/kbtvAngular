@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, ViewContainerRef } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { take, takeUntil, tap } from 'rxjs/operators';
-import { WithUnsubscribe } from 'src/app/shared-app/mixins/with-unsubscribe.mixin';
-import { MainTopNavBarComponent } from 'src/app/shared/components/main-top-nav-bar/main-top-nav-bar.component';
+import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
+import { MainTopNavBarComponent } from '@shared/components/main-top-nav-bar/main-top-nav-bar.component';
 import { FormSheetWrapperConfig } from './interfaces';
 
 type WrapperConfig = FormSheetWrapperConfig<any, any, any>;

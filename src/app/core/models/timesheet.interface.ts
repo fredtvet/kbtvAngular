@@ -1,5 +1,5 @@
 import { MissionChild } from './relationships/mission-child.interface';
-import { TimesheetStatus } from 'src/app/shared/enums';
+import { TimesheetStatus } from '@shared/enums';
 import { UserForeign } from './relationships/user-foreign.interface';
 import { User } from './user.interface';
 import { IId } from './sub-interfaces/iid.interface';

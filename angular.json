@@ -38,8 +38,7 @@
                 "input": "src/styles/lazy-styles/mat-styles.scss",
                 "bundleName": "mat-styles",
                 "inject": false
-              },
-              
+              } 
             ],
             "scripts": []
           },

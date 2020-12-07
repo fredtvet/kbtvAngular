@@ -1,6 +1,6 @@
-import { DynamicForm } from 'src/app/dynamic-forms/interfaces';
-import { ModelState } from 'src/app/model/interfaces';
-import { Prop } from 'src/app/shared-app/prop.type';
+import { DynamicForm } from '@dynamic-forms/interfaces';
+import { ModelState } from '@model/interfaces';
+import { Prop } from '@shared-app/prop.type';
 import { ModelFormToSaveStateCommandAdapter, SaveModelFormState } from './model-form-to-state-command-adapter.interface';
 
 export interface ModelFormConfig<TForm, TFormState extends  SaveModelFormState<Partial<ModelState>>>

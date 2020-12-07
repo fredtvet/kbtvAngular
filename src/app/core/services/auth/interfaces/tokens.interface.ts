@@ -1,4 +1,4 @@
-import { User } from 'src/app/core/models';
+import { User } from '@core/models';
 
 
 export interface LoginResponse {

@@ -2,8 +2,8 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
-import { SyncConfig, SyncHttpFetcher, SyncResponse, SyncStoreTimestamps } from './sync/interfaces';
-import { SyncStateConfig } from '../../shared-app/const/sync-state.config';
+import { SyncConfig, SyncHttpFetcher, SyncResponse, SyncStoreTimestamps } from '@sync/interfaces';
+import { SyncStateConfig } from '@shared-app/const/sync-state.config';
 
 @Injectable()
 export class SyncHttpFetcherService implements SyncHttpFetcher {

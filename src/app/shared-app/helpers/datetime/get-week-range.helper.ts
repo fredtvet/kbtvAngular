@@ -1,4 +1,4 @@
-import { DateRange } from 'src/app/shared/interfaces/date-range.interface';
+import { DateRange } from '@shared/interfaces/date-range.interface';
 import { _getFirstDayOfWeek } from './get-first-day-of-week.helper';
 import { _getLastDayOfWeek } from './get-last-day-of-week.helper';
 

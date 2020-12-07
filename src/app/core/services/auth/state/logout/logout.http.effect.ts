@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { ApiService } from 'src/app/core/services/api.service';
-import { DispatchedAction } from 'src/app/state/action-dispatcher';
-import { StateAction } from 'src/app/state/interfaces';
-import { Effect } from 'src/app/state/interfaces/effect.interface';
-import { listenTo } from 'src/app/state/operators/listen-to.operator';
+import { ApiService } from '@core/services/api.service';
+import { DispatchedAction } from '@state/action-dispatcher';
+import { StateAction } from '@state/interfaces';
+import { Effect } from '@state/interfaces/effect.interface';
+import { listenTo } from '@state/operators/listen-to.operator';
 import { LogoutActionId, LogoutCommand } from './logout-command.interface';
 import { WipeTokensActionId } from './wipe-tokens.reducer';
 

@@ -1,7 +1,7 @@
-import { Prop } from 'src/app/shared-app/prop.type';
+import { Prop } from '@shared-app/prop.type';
 import { SaveAction } from '../../save-action.interface';
-import { ModelState } from 'src/app/model/interfaces';
-import { StateAction } from 'src/app/state/interfaces';
+import { ModelState } from '@model/interfaces';
+import { StateAction } from '@state/interfaces';
 import { AdapterConstructor, OptionsFormState } from '../../form/interfaces';
 
 export interface SaveModelFormState<TOptions extends Partial<ModelState>> extends OptionsFormState<TOptions>{ }

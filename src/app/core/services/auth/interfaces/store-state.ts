@@ -1,4 +1,4 @@
-import { StateCurrentUser } from 'src/app/state/interfaces';
+import { StateCurrentUser } from '@state/interfaces';
 import { AccessToken } from './tokens.interface';
 
 export interface StoreState extends

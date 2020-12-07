@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { AppButton } from 'src/app/shared-app/interfaces';
-import { BottomSheetMenuComponent } from 'src/app/shared/components';
+import { AppButton } from '@shared-app/interfaces';
+import { BottomSheetMenuComponent } from '@shared/components';
 
 @Injectable({ providedIn: "any" })
 export class BottomSheetMenuService {

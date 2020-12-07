@@ -1,5 +1,5 @@
-import { MissionType } from 'src/app/core/models';
-import { DynamicForm } from 'src/app/dynamic-forms/interfaces';
+import { MissionType } from '@core/models';
+import { DynamicForm } from '@dynamic-forms/interfaces';
 import { NameControl } from '../common-controls.const';
 
 export const CreateMissionTypeForm: DynamicForm<MissionType, any> = {

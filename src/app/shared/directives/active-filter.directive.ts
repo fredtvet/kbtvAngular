@@ -1,7 +1,7 @@
 import { Directive, EmbeddedViewRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 import { merge, of } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
-import { _filter } from 'src/app/shared-app/helpers/array/filter.helper';
+import { _filter } from '@shared-app/helpers/array/filter.helper';
 import { ActiveStringFilterConfig } from '../interfaces/active-string-filter-config.interface';
 
 @Directive({

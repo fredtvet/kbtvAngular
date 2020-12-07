@@ -1,0 +1,83 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { Timesheet, User } from '@core/models';
+import { DeviceInfoService } from '@core/services/device-info.service';
+import { LoadingService } from '@core/services/loading.service';
+import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
+import { TimesheetStatus } from '@shared/enums';
+import { FormService } from '@shared/form';
+import { WeekCriteria } from '../../shared-timesheet/interfaces';
+import { TimesheetAdminFacade } from '../timesheet-admin.facade';
+
+@Component({
+  selector: 'app-timesheet-admin-week-list',
+  templateUrl: './timesheet-admin-week-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TimesheetAdminWeekListComponent {
+   
+  loading$ = this.loadingService.queryLoading$;
+
+  summaries$ = this.facade.weeklySummaries$.pipe(map(x => x?.sort((a, b) => b.weekNr - a.weekNr)));
+
+  isXs$ = this.deviceInfoService.isXs$;
+
+  navConfig$ =  this.facade.weekCriteria$.pipe(map(x => this.getNavConfig(x?.user, x?.year)));
+
+  constructor(
+    private loadingService: LoadingService,
+    private facade: TimesheetAdminFacade,
+    private formService: FormService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private deviceInfoService: DeviceInfoService) {
+      const criteria = this.route.snapshot.params.criteria;
+      this.facade.updateCriteria(criteria ? JSON.parse(criteria) : {});
+    }
+
+  confirmTimesheets = (timesheets: Timesheet[]): void => {
+    if(!timesheets) return;
+    
+    let ids: string[] = [];
+    for(let i = 0; i < timesheets.length; i++){
+      const timesheet = timesheets[i];
+      if(timesheet.status === TimesheetStatus.Open) ids.push(timesheet.id);
+    }
+
+    if(ids.length === 0) return;
+
+    this.facade.updateStatuses(ids, TimesheetStatus.Confirmed);
+  }
+
+  selectWeek = (weekNr: number) => 
+    this.router.navigate(['timer', {weekNr}], {relativeTo: this.route})
+  
+  private openWeekFilter = (): void => {
+    this.formService.open<WeekCriteria, WeekCriteriaFormState>({
+      formConfig: {...WeekCriteriaForm, 
+        disabledControls: {weekNr: true}, 
+        noRenderDisabledControls: true,
+        initialValue: this.facade.weekCriteria}, 
+      formState: this.facade.weekCriteriaFormState$,
+      navConfig: {title: "Velg filtre"},
+      submitCallback: (val: WeekCriteria) => this.facade.updateCriteria(val)
+    })
+  } 
+    
+  private onBack = () => { 
+    this.router.navigate(["../"], {relativeTo: this.route})
+  }
+
+  private getNavConfig(user: User, year: number): MainTopNavConfig {
+    const fullName = user ? (user.firstName + ' ' + user.lastName) : '';
+    return {
+      title:  "Uker",
+      subTitle: (year || '') + ' - ' + (fullName || ''),
+      backFn: this.onBack,
+      buttons: [{icon: 'filter_list', color: 'accent', callback: this.openWeekFilter}]
+    }
+  }
+  
+}

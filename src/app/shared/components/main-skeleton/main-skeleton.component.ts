@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
-import { DeviceInfoService } from 'src/app/core/services/device-info.service';
-import { ButtonTypes } from 'src/app/shared-app/enums';
-import { _trackById } from 'src/app/shared-app/helpers/trackby/track-by-id.helper';
-import { AppButton } from 'src/app/shared-app/interfaces/app-button.interface';
-import { _trackByAppButton } from 'src/app/shared-app/track-by-app-button';
+import { DeviceInfoService } from '@core/services/device-info.service';
+import { ButtonTypes } from '@shared-app/enums';
+import { _trackById } from '@shared-app/helpers/trackby/track-by-id.helper';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { _trackByAppButton } from '@shared-app/track-by-app-button';
 
 type DisplayMode = "overlay" | "side";
 

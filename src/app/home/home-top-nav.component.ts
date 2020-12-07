@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { LoadingService } from '../core/services/loading.service';
-import { SyncStateActionId } from '../core/services/sync/state/actions.const';
+import { LoadingService } from '@core/services/loading.service';
+import { SyncStateActionId } from '@sync/state/actions.const';
 import { MainNavService } from '../layout/main-nav.service';
-import { Store } from '../state/store';
+import { Store } from '@state/store';
 
 @Component({
   selector: 'app-home-top-nav',

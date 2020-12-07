@@ -1,5 +1,5 @@
-import { Model } from 'src/app/core/models';
-import { ModelConfig, ModelStateConfig } from 'src/app/model/model-state.config';
+import { Model } from '@core/models';
+import { ModelConfig, ModelStateConfig } from '@model/model-state.config';
 import { _idGenerator } from './id-generator.helper';
 
 export function _modelIdGenerator<TModel extends Model>(entity: TModel, modelCfg: ModelConfig<TModel>): TModel{

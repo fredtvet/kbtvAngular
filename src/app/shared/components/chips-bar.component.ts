@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
+import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 
 @Component({
   selector: 'app-chips-bar',

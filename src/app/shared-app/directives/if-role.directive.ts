@@ -1,6 +1,6 @@
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 import { skipWhile, take } from 'rxjs/operators';
-import { AuthService } from 'src/app/core/services/auth';
+import { AuthService } from '@core/services/auth';
 
 @Directive({
   selector: '[ifRole]'

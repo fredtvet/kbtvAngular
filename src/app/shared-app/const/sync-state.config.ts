@@ -1,5 +1,5 @@
-import { Prop } from 'src/app/shared-app/prop.type';
-import { StoreState, SyncStatePropConfig } from '../../core/services/sync/interfaces';
+import { Prop } from '@shared-app/prop.type';
+import { StoreState, SyncStatePropConfig } from '@sync/interfaces';
 
 export const SyncStateConfig = 
     <{[key in Prop<Omit<StoreState, "timestamps" | "syncConfig">>]: SyncStatePropConfig}>

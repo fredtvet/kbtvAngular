@@ -1,8 +1,8 @@
 import { Validators } from '@angular/forms';
-import { Mission } from 'src/app/core/models';
-import { DynamicControlGroup, DynamicControl, DynamicForm } from 'src/app/dynamic-forms/interfaces';
-import { _getISO } from 'src/app/shared-app/helpers/datetime/get-iso-with-timezone.helper';
-import { StateMissions } from 'src/app/state/interfaces';
+import { Mission } from '@core/models';
+import { DynamicControlGroup, DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
+import { _getISO } from '@shared-app/helpers/datetime/get-iso-with-timezone.helper';
+import { StateMissions } from '@state/interfaces';
 import { IonDateQuestionComponent, IonDateQuestion } from '../../components/dynamic-form-questions/ion-date-time-question.component';
 import { TextAreaQuestionComponent, TextAreaQuestion } from '../../components/dynamic-form-questions/text-area-question.component';
 import { SaveModelFormState } from '../../model-form';

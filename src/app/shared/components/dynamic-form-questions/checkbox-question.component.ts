@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { Question, QuestionComponent } from 'src/app/dynamic-forms/interfaces';
-import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from 'src/app/dynamic-forms/validation-error-map.interface';
-import { BaseQuestionComponent } from '../../../dynamic-forms/components/base-question.component';
+import { Question, QuestionComponent } from '@dynamic-forms/interfaces';
+import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '@dynamic-forms/validation-error-map.interface';
+import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.component';
 
 export interface CheckboxQuestion extends Question {
   text: string;

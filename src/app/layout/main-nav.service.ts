@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthService } from '../core/services/auth/auth.service';
-import { DeviceInfoService } from '../core/services/device-info.service';
+import { AuthService } from '@core/services/auth/auth.service';
+import { DeviceInfoService } from '@core/services/device-info.service';
 import { BottomNavNavigations } from './bottom-nav-navigations';
 import { MainNavConfig } from './interfaces/main-nav-config.interface';
 import { SideNavNavigations } from './side-nav-navigations';

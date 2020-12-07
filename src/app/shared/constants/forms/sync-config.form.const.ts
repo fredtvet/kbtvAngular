@@ -1,7 +1,7 @@
 import { Validators } from '@angular/forms';
-import { SyncConfig } from 'src/app/core/services/sync/interfaces';
-import { DynamicControl, DynamicForm } from 'src/app/dynamic-forms/interfaces';
-import { DefaultState } from 'src/app/shared-app/const/default-state.const';
+import { SyncConfig } from '@sync/interfaces';
+import { DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
+import { DefaultState } from '@shared-app/const/default-state.const';
 import { SliderQuestion, SliderQuestionComponent } from '../../components/dynamic-form-questions/slider-question.component';
 
 export const SyncConfigForm: DynamicForm<SyncConfig, any> = {

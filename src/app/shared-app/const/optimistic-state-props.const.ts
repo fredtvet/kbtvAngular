@@ -1,4 +1,4 @@
-import { OptimisticStateSelector } from 'src/app/core/services/http/interfaces';
+import { OptimisticStateSelector } from '@http/interfaces';
 
 export const AppOptimisticState: OptimisticStateSelector<any> = {
     strategy: "include",

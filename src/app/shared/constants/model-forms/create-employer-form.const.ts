@@ -1,5 +1,5 @@
-import { Employer } from 'src/app/core/models';
-import { DynamicForm } from 'src/app/dynamic-forms/interfaces';
+import { Employer } from '@core/models';
+import { DynamicForm } from '@dynamic-forms/interfaces';
 import { EmailControl, GoogleAddressControl, NameControl, PhoneNumberControl } from '../common-controls.const';
 
 export const CreateEmployerForm: DynamicForm<Employer, any> = {

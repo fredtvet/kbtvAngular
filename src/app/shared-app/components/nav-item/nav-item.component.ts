@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { halfwayRotate } from 'src/app/shared/animations';
+import { halfwayRotate } from '@shared/animations';
 import { AppButton } from '../../interfaces/app-button.interface';
 
 @Component({

@@ -18,30 +18,30 @@ const routes: Routes = [
        data: {depth: 1, section: AppSections.Home}},  
 
       {path: 'profil', data: {depth: 1, section: AppSections.Profile}, 
-        loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)},
+        loadChildren: () => import('src/app/feature-modules/profile/profile.module').then(m => m.ProfileModule)},
 
       {path: 'mine-timer', data: {depth: 1, section: AppSections.UserTimesheet, allowedRoles: RolePresets.Internal}, 
-        loadChildren: () => import('./timesheet-modules/user-timesheet-week/user-timesheet-week.module').then(m => m.UserTimesheetWeekModule)},
+        loadChildren: () => import('src/app/feature-modules/timesheet-modules/user-timesheet-week/user-timesheet-week.module').then(m => m.UserTimesheetWeekModule)},
 
-      {path: 'oppdrag', loadChildren: () => import('./mission-modules/mission-list/mission-list.module').then(m => m.MissionListModule),
+      {path: 'oppdrag', loadChildren: () => import('src/app/feature-modules/mission-modules/mission-list/mission-list.module').then(m => m.MissionListModule),
         data: {depth: 1, section: AppSections.Mission}},
 
       {path: 'brukere', data: {depth: 1, section: AppSections.Users, allowedRoles: RolePresets.Authority}, 
-        loadChildren: () => import('./users/users.module').then(m => m.UsersModule)},
+        loadChildren: () => import('src/app/feature-modules/users/users.module').then(m => m.UsersModule)},
 
       {path: 'data', data: {depth: 1, section: AppSections.DataManagement, allowedRoles: RolePresets.Authority}, 
-        loadChildren: () => import('./data-management/data-management.module').then(m => m.DataManagementModule)},
+        loadChildren: () => import('src/app/feature-modules/data-management/data-management.module').then(m => m.DataManagementModule)},
 
       {path: 'timeadministrering', data: {depth: 1, section: AppSections.TimesheetAdmin, allowedRoles: RolePresets.Authority},
-        loadChildren: () => import('./timesheet-modules/timesheet-admin/timesheet-admin.module').then(m => m.TimesheetAdminModule)},
+        loadChildren: () => import('src/app/feature-modules/timesheet-modules/timesheet-admin/timesheet-admin.module').then(m => m.TimesheetAdminModule)},
 
       {path: 'timestatistikk', data: {depth: 1, section: AppSections.TimesheetStatistic, allowedRoles: RolePresets.Authority}, 
-        loadChildren: () => import('./timesheet-modules/timesheet-statistic/timesheet-statistic.module').then(m => m.TimesheetStatisticModule)},
+        loadChildren: () => import('src/app/feature-modules/timesheet-modules/timesheet-statistic/timesheet-statistic.module').then(m => m.TimesheetStatisticModule)},
     ],
   },
   
   {path: 'login', canActivate: [NoAuthGuard], 
-    loadChildren: () => import('./login-prompt/login-prompt.module').then(m => m.LoginPromptModule)},   
+    loadChildren: () => import('src/app/feature-modules/login-prompt/login-prompt.module').then(m => m.LoginPromptModule)},   
 
   {path: '**', component: PageNotFoundComponent},
 ];

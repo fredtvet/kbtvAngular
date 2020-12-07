@@ -1,4 +1,4 @@
-import { Reducer, StateAction } from 'src/app/state/interfaces';
+import { Reducer, StateAction } from '@state/interfaces';
 import { StoreState } from '../../interfaces/store-state';
 
 export const WipeTokensActionId = "WIPE_TOKENS"; 

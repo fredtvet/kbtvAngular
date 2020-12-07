@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { LazyStyles } from 'src/app/shared-app/enums';
+import { LazyStyles } from '@shared-app/enums';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

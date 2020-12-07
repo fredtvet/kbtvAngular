@@ -1,4 +1,4 @@
-import { FileFolders } from 'src/app/shared/constants/file-folders.const';
+import { FileFolders } from '@shared/constants/file-folders.const';
 import { environment } from 'src/environments/environment';
 
 export function _appFileUrl(fileName: string, folder: typeof FileFolders[number], disableCache?: boolean): string{ 

@@ -1,5 +1,5 @@
-import { StateCurrentUser } from 'src/app/state/interfaces';
-import { User } from 'src/app/core/models';
+import { StateCurrentUser } from '@state/interfaces';
+import { User } from '@core/models';
 
 export interface StoreState extends
     StateCurrentUser {

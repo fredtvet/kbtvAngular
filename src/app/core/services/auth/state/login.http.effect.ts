@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { exhaustMap, map } from 'rxjs/operators';
-import { ApiUrl } from 'src/app/core/api-url.enum';
-import { ApiService } from 'src/app/core/services/api.service';
-import { DispatchedAction } from 'src/app/state/action-dispatcher';
-import { StateAction } from 'src/app/state/interfaces';
-import { Effect } from 'src/app/state/interfaces/effect.interface';
-import { listenTo } from 'src/app/state/operators/listen-to.operator';
+import { ApiUrl } from '@core/api-url.enum';
+import { ApiService } from '@core/services/api.service';
+import { DispatchedAction } from '@state/action-dispatcher';
+import { StateAction } from '@state/interfaces';
+import { Effect } from '@state/interfaces/effect.interface';
+import { listenTo } from '@state/operators/listen-to.operator';
 import { Credentials } from '../interfaces';
 import { LoginSuccessActionId, LoginSuccessCommand } from './login-success/login-success-command.interface';
 

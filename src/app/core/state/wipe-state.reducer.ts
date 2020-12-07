@@ -1,4 +1,4 @@
-import { Reducer, StateAction } from 'src/app/state/interfaces';
+import { Reducer, StateAction } from '@state/interfaces';
 
 export interface WipeStateCommand extends StateAction { defaultState: any }
 

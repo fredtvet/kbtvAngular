@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef } from "@angular/core";
 import { skip, takeUntil } from "rxjs/operators";
-import { WithUnsubscribe } from 'src/app/shared-app/mixins/with-unsubscribe.mixin';
-import { SelectableEntity } from 'src/app/shared/interfaces';
+import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
+import { SelectableEntity } from '@shared/interfaces';
 import { SelectableListPresenter } from './selectable-list.presenter';
 
 @Component({

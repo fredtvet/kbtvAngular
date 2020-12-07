@@ -1,7 +1,7 @@
 import { Validators } from '@angular/forms';
-import { AppDocumentType, MissionDocument } from 'src/app/core/models';
-import { DynamicControlGroup, DynamicControl, DynamicForm } from 'src/app/dynamic-forms/interfaces';
-import { StateDocumentTypes } from 'src/app/state/interfaces';
+import { AppDocumentType, MissionDocument } from '@core/models';
+import { DynamicControlGroup, DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
+import { StateDocumentTypes } from '@state/interfaces';
 import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { FileQuestionComponent } from '../../components/dynamic-form-questions/file-question.component';

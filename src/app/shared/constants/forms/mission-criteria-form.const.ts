@@ -1,6 +1,6 @@
-import { Mission, MissionType } from 'src/app/core/models';
-import { DynamicControl, DynamicForm } from 'src/app/dynamic-forms/interfaces';
-import { StateMissions, StateEmployers, StateMissionTypes } from 'src/app/state/interfaces';
+import { Mission, MissionType } from '@core/models';
+import { DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
+import { StateMissions, StateEmployers, StateMissionTypes } from '@state/interfaces';
 import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { RadioGroupQuestionComponent, RadioGroupQuestion } from '../../components/dynamic-form-questions/radio-group-question.component';

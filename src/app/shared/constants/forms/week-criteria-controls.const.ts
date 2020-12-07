@@ -1,6 +1,6 @@
-import { DynamicForm, DynamicControl } from 'src/app/dynamic-forms/interfaces';
-import { StateUsers } from 'src/app/state/interfaces';
-import { WeekCriteria } from 'src/app/timesheet-modules/shared-timesheet/interfaces';
+import { DynamicForm, DynamicControl } from '@dynamic-forms/interfaces';
+import { StateUsers } from '@state/interfaces';
+import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { InputQuestionComponent, InputQuestion } from '../../components/dynamic-form-questions/input-question.component';
 import { IonDateQuestionComponent, IonDateQuestion } from '../../components/dynamic-form-questions/ion-date-time-question.component';
 import { OptionsFormState } from '../../form/interfaces';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AppChip } from 'src/app/shared-app/interfaces/app-chip.interface';
-import { Prop } from 'src/app/shared-app/prop.type';
-import { translations } from 'src/app/shared/translations';
+import { AppChip } from '@shared-app/interfaces/app-chip.interface';
+import { Prop } from '@shared-app/prop.type';
+import { translations } from '@shared/translations';
 
 export interface CriteriaChipOptions {
   valueFormatter?: ((val: any) => string | string),

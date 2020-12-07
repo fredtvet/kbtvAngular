@@ -1,5 +1,5 @@
 import { FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Prop } from 'src/app/shared-app/prop.type';
+import { Prop } from '@shared-app/prop.type';
 
 export function isSamePasswordsValidator<TForm>(controlName1: Prop<TForm>, controlName2: Prop<TForm>): ValidatorFn {
     return (group: FormGroup): ValidationErrors => { 

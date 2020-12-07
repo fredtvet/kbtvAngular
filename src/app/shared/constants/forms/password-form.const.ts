@@ -1,5 +1,5 @@
 import { Validators } from '@angular/forms';
-import { DynamicControl, DynamicForm } from 'src/app/dynamic-forms/interfaces';
+import { DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
 import { InputQuestion, InputQuestionComponent } from '../../components/dynamic-form-questions/input-question.component';
 import { isSamePasswordsValidator } from '../../form/validators/is-same-passwords.validator';
 import { UserNameControl } from '../common-controls.const';

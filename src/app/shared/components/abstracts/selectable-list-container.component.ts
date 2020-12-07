@@ -1,6 +1,6 @@
 import { Directive, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AppButton } from 'src/app/shared-app/interfaces';
+import { AppButton } from '@shared-app/interfaces';
 import { SelectableListComponent } from '../selectable-list/selectable-list.component';
 
 @Directive()

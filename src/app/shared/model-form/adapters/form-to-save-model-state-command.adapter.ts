@@ -1,6 +1,6 @@
-import { Model } from 'src/app/core/models';
-import { BaseFormToSaveModelStateCommandAdapter } from 'src/app/model/abstracts/base-form-to-save-model-state-command.adapter';
-import { SaveModelStateCommand, SaveModelActionId } from 'src/app/model/state/save-model/save-model-action.const';
+import { Model } from '@core/models';
+import { BaseFormToSaveModelStateCommandAdapter } from '@model/abstracts/base-form-to-save-model-state-command.adapter';
+import { SaveModelStateCommand, SaveModelActionId } from '@model/state/save-model/save-model-action.const';
 import { ModelFormToSaveModelInput } from '../interfaces/model-form-to-state-command-adapter.interface';
 
 export class FormToSaveModelStateCommandAdapter<TModel extends Model> 

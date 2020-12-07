@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms';
-import { MissionNote } from 'src/app/core/models';
-import { DynamicControl, DynamicForm } from 'src/app/dynamic-forms/interfaces';
+import { MissionNote } from '@core/models';
+import { DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
 import { InputQuestionComponent, InputQuestion } from '../../components/dynamic-form-questions/input-question.component';
 import { TextAreaQuestionComponent, TextAreaQuestion } from '../../components/dynamic-form-questions/text-area-question.component';
 import { HiddenIdControl, HiddenMissionIdControl } from '../common-controls.const';

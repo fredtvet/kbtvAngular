@@ -1,5 +1,5 @@
 import { ValidatorFn, AbstractControl } from '@angular/forms';
-import { _validateFileExtension } from 'src/app/shared-app/helpers/validate-file-extension.helper';
+import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
 
 export function fileExtensionValidator(allowedExtensions: string[]): ValidatorFn{ 
     return (control: AbstractControl): {[key: string]: any} | null => {

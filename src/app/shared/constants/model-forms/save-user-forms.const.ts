@@ -1,10 +1,10 @@
 import { Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User } from 'src/app/core/models';
-import { DynamicControl, DynamicForm } from 'src/app/dynamic-forms/interfaces';
-import { Roles } from 'src/app/shared-app/enums';
-import { StateUsers, StateEmployers } from 'src/app/state/interfaces';
+import { User } from '@core/models';
+import { DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
+import { Roles } from '@shared-app/enums';
+import { StateUsers, StateEmployers } from '@state/interfaces';
 import { InputQuestionComponent, InputQuestion } from '../../components/dynamic-form-questions/input-question.component';
 import { SelectQuestionComponent, SelectQuestion } from '../../components/dynamic-form-questions/select-question.component';
 import { isUniqueAsyncValidator } from '../../form/validators/is-unique.async.validator';

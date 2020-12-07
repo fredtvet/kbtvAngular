@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { AppButton } from 'src/app/shared-app/interfaces';
+import { AppButton } from '@shared-app/interfaces';
 
 @Component({
   selector: 'app-main-bottom-nav',

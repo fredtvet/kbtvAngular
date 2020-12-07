@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { translations } from 'src/app/shared/translations';
+import { translations } from '@shared/translations';
 
 @Pipe({
   name: 'translate'

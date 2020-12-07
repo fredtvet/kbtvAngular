@@ -1,4 +1,4 @@
-import { Employer, MissionType } from 'src/app/core/models';
+import { Employer, MissionType } from '@core/models';
 
 export interface MissionCriteria {
     searchString?: string;    

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, shareReplay, take } from 'rxjs/operators';
-import { DynamicForm } from 'src/app/dynamic-forms/interfaces';
-import { ModelState } from 'src/app/model/interfaces';
-import { ActionType } from 'src/app/shared-app/enums';
+import { DynamicForm } from '@dynamic-forms/interfaces';
+import { ModelState } from '@model/interfaces';
+import { ActionType } from '@shared-app/enums';
 import { FormComponent } from '../../form';
 import { SaveAction } from '../../save-action.interface';
 import { FormToSaveModelStateCommandAdapter } from '../adapters/form-to-save-model-state-command.adapter';

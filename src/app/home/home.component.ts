@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Mission } from 'src/app/core/models';
-import { RolePresets } from 'src/app/shared-app/enums';
-import { _sortByDate } from '../shared-app/helpers/array/sort-by-date.helper';
-import { StateMissions } from '../state/interfaces';
-import { Store } from '../state/store';
+import { Mission } from '@core/models';
+import { RolePresets } from '@shared-app/enums';
+import { _sortByDate } from '@shared-app/helpers/array/sort-by-date.helper';
+import { StateMissions } from '@state/interfaces';
+import { Store } from '@state/store';
 
 @Component({
   selector: 'app-home',

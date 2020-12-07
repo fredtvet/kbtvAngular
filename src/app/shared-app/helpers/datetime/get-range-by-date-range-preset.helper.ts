@@ -1,5 +1,5 @@
-import { DateRangePresets } from "src/app/shared-app/enums/date-range-presets.enum";
-import { DateRange } from 'src/app/shared/interfaces/date-range.interface';
+import { DateRangePresets } from "@shared-app/enums/date-range-presets.enum";
+import { DateRange } from '@shared/interfaces/date-range.interface';
 import { _getLastDayOfYear } from './get-last-day-of-year.helper';
 import { _getMonthRange } from './get-month-range.helper';
 import { _getWeekRange } from './get-week-range.helper';

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, skip } from 'rxjs/operators';
-import { User } from 'src/app/core/models';
-import { _getUnixTimeSeconds } from 'src/app/shared-app/helpers/datetime/get-unix-time-seconds.helper';
-import { ActionDispatcher } from 'src/app/state/action-dispatcher';
-import { Store } from 'src/app/state/store';
+import { User } from '@core/models';
+import { _getUnixTimeSeconds } from '@shared-app/helpers/datetime/get-unix-time-seconds.helper';
+import { ActionDispatcher } from '@state/action-dispatcher';
+import { Store } from '@state/store';
 import { Credentials } from './interfaces/credentials.interface';
 import { StoreState } from './interfaces/store-state';
 import { AccessToken } from './interfaces/tokens.interface';

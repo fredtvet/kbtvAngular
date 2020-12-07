@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router } from '@angular/router';
-import { NotificationService, NotificationType } from 'src/app/notification';
+import { NotificationService, NotificationType } from '@notification/index';
 import { AuthService } from './auth.service';
 
 @Injectable({

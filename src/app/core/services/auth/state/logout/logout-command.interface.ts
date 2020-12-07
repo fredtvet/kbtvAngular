@@ -1,4 +1,4 @@
-import { StateAction } from 'src/app/state/interfaces';
+import { StateAction } from '@state/interfaces';
 
 export const LogoutActionId = "LOGOUT";
 

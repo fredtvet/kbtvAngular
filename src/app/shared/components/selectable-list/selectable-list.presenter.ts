@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SelectableEntity } from 'src/app/shared/interfaces';
+import { SelectableEntity } from '@shared/interfaces';
 
 @Injectable()
 export class SelectableListPresenter<T> {
