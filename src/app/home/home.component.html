@@ -1,5 +1,5 @@
 <app-home-top-nav>
-  <div class="p-1 max-width" style="position:relative">
+  <div class="p-1 max-width" style="position:relative" fxLayout="column" fxLayoutGap="8px">
 
     <div fxLayout="row" fxLayoutGap="8px">
       <span class="mat-elevation-z2 foreground-card text-center p-6" fxFlex="50" matRipple
@@ -20,44 +20,54 @@
     </div>
   
     <ng-container *ifRole="RolePresets.Authority">
-      <span class="mat-body-2">Administrering</span>
-  
-      <app-list-card [routerLink]="['/timeadministrering']">
-        <mat-icon left-side>date_range</mat-icon>
-        Administrer timer
-        <mat-icon right-side>chevron_right</mat-icon>
-      </app-list-card>
-  
-      <app-list-card [routerLink]="['/data']">
-        <mat-icon left-side>dns</mat-icon>
-        Administrer data
-        <mat-icon right-side>chevron_right</mat-icon>
-      </app-list-card>
-  
-      <app-list-card [routerLink]="['/brukere']">
-        <mat-icon left-side>people</mat-icon>
-        Administrer brukere
-        <mat-icon right-side>chevron_right</mat-icon>
-      </app-list-card>
-  
-      <span class="mat-body-2">Statistikk</span>
-  
-      <app-list-card [routerLink]="['/timestatistikk']">
-        <mat-icon left-side>assessment</mat-icon>
-        Timestatistikk
-        <mat-icon right-side>chevron_right</mat-icon>
-      </app-list-card>
+      <mat-card>
+
+        <span class="mat-body-2 mb-2"> Administrering</span>
+
+        <mat-divider inset="true"></mat-divider>
+
+        <app-list-item [routerLink]="['/timeadministrering']">
+          <mat-icon left-side>date_range</mat-icon>
+          Administrer timer
+          <mat-icon right-side>chevron_right</mat-icon>
+        </app-list-item>
+
+        <app-list-item [routerLink]="['/data']">
+          <mat-icon left-side>dns</mat-icon>
+          Administrer data
+          <mat-icon right-side>chevron_right</mat-icon>
+        </app-list-item>
+
+        <app-list-item [routerLink]="['/brukere']">
+          <mat-icon left-side>people</mat-icon>
+          Administrer brukere
+          <mat-icon right-side>chevron_right</mat-icon>
+        </app-list-item>
+
+      </mat-card>
+
+      <mat-card>
+
+        <span class="mat-body-2 mb-2"> Statistikk</span>
+
+        <mat-divider inset="true"></mat-divider>
+
+        <app-list-item [routerLink]="['/timestatistikk']">
+          <mat-icon left-side>assessment</mat-icon>
+          Timestatistikk
+          <mat-icon right-side>chevron_right</mat-icon>
+        </app-list-item>
+
+      </mat-card>
     </ng-container>
 
-    <mat-card class="mt-2">
+    <mat-card>
 
         <span class="mat-body-2 mb-2"> Sist besøkte oppdrag</span>
 
         <mat-divider inset="true"></mat-divider>
 
         <app-list-item *ngFor="let mission of missionHistory$ | async" 
-          startIcon="history"
-          endIcon="chevron_right"
           [routerLink]="['/oppdrag', mission.id, 'detaljer']">
           <mat-icon left-side>history</mat-icon>
           {{mission.address}}
@@ -65,8 +75,6 @@
         </app-list-item>
 
     </mat-card>
-  
-
   
   </div>
 </app-home-top-nav>
