@@ -27,7 +27,8 @@ import { MissionImageListComponent } from './mission-image-list/mission-image-li
   providers:[
     { provide: STORE_REDUCERS, useValue: CreateMissionImagesReducer, multi: true},
     { provide: STORE_EFFECTS, useClass: CreateMissionImagesHttpEffect, multi: true},
-    ...MailModelsProviders
+    ...MailModelsProviders,
+    ...DeleteModelProviders
   ]
 })
 export class MissionImageListModule {}

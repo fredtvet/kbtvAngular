@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SaveModelFileProviders, DeleteModelProviders, MailModelsProviders } from 'src/app/model/state/providers.const';
+import { DeleteModelProviders, MailModelsProviders, SaveModelFileProviders } from 'src/app/model/state/providers.const';
 import { ModelFormModule } from 'src/app/shared/model-form/model-form.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { StateModule } from 'src/app/state/state.module';
@@ -22,7 +22,9 @@ import { FileExtensionPipe } from './pipes/file-extension.pipe';
     MissionDocumentListRoutingModule
   ],
   providers: [
-    ...MailModelsProviders
+    ...MailModelsProviders,
+    ...SaveModelFileProviders,
+    ...DeleteModelProviders,
   ],
 })
 export class MissionDocumentListModule {}
