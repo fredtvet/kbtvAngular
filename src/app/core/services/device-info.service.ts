@@ -29,6 +29,12 @@ export class DeviceInfoService {
       shareReplay()
     )
 
+  isS$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small])
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    )
+
 
   deviceInfo$ = combineLatest([this.isOnline$, this.isXs$]).pipe(
     map(([isOnline, isXs])=> { return {isOnline, isXs} })

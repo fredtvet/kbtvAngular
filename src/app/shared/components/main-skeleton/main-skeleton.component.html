@@ -1,25 +1,33 @@
-<div fxLayout="column" class="h-100 primary-light" style="position:relative;z-index:1">
-  <span  class="primary" style="z-index:1"
-    [ngClass]="disableElevation ? '' : 'mat-elevation-z2'" >
-    
-    <ng-content select="[navbar]"></ng-content>
+<div class="main-container primary-light" fxLayout="row" *ngIf="childDisplayMode$ | async; let displayMode">
 
-  </span>
-
-  <div fxFlex style="overflow-y:auto;">
-    <ng-content>
+  <div fxLayout="column" class="main-container mat-elevation-z2" 
+    [fxHide]="outlet.isActivated && displayMode === 'overlay'"
+    [fxFlex]="(displayMode === 'side' && outlet.isActivated) ? (100 - childSize) : 100">
+    <span  class="primary" style="z-index:1"
+      [ngClass]="disableElevation ? '' : 'mat-elevation-z2'" >
+      
+      <ng-content select="[navbar]"></ng-content>
   
-    </ng-content>
+    </span>
+  
+    <div fxFlex style="overflow-y:auto;">
+      <ng-content>
+    
+      </ng-content>
+    </div>
+  
+    <div class="fab-container m-2" *ngIf="fabs"
+        fxLayout="column" fxLayoutGap="4px">  
+        <app-button class="fadeInRight" 
+          *ngFor="let fab of fabs | transformButtons : ButtonTypes.Fab | reverseArray; trackBy: trackByFab" 
+          [config]="fab">
+        </app-button>
+    </div>
   </div>
-
-  <div style="position:absolute;right:0;bottom:0;" class="m-2" *ngIf="fabs"
-      fxLayout="column" fxLayoutGap="4px">  
-      <app-button class="fadeInRight" 
-        *ngFor="let fab of fabs | transformButtons : ButtonTypes.Fab | reverseArray; trackBy: trackByFab" 
-        [config]="fab">
-      </app-button>
+  
+  <div [fxHide]="!outlet.isActivated" [fxFlex]="(displayMode === 'overlay') ? 100 : childSize">
+    <router-outlet #outlet="outlet"></router-outlet>
   </div>
-
-  <router-outlet #outlet="outlet"></router-outlet>
 
 </div>
+
