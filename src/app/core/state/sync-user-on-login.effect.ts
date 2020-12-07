@@ -19,7 +19,7 @@ export class SyncUserOnLoginEffect implements Effect<LoginSuccessCommand> {
             mergeMap(x => {
                 const actions: StateAction[] = [{actionId: SyncStateActionId}];
 
-                if(x.action.previousUser.userName !== x.action.user.userName) //Wipe before sync if new login
+                if(x.action.previousUser?.userName !== x.action.user.userName) //Wipe before sync if new login
                     actions.unshift(<WipeStateCommand>{actionId: WipeStateActionId, defaultState: Store.defaultState})
 
                 return of(...actions)
