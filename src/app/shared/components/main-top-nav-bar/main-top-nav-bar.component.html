@@ -18,7 +18,7 @@
             </button>
         </ng-template>
 
-        <span class="mr-auto">
+        <span class="mr-auto ellipsis">
             <ng-container *ngIf="config.title">
                 <span *ngIf="!config.backFn else noLinkTitle" ngClass.xs="ml-1" ngClass.gt-xs="ml-2"
                     [routerLink]="['/hjem']">{{ config.title || "Hjem" }}</span>
