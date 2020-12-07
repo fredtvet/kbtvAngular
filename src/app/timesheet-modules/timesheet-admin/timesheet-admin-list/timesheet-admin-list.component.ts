@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
-import { Timesheet } from 'src/app/core/models';
+import { Timesheet, User } from 'src/app/core/models';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { _getWeekOfYear } from 'src/app/shared-app/helpers/datetime/get-week-of-year.helper';
 import { _trackByModel } from 'src/app/shared-app/helpers/trackby/track-by-model.helper';
@@ -28,7 +28,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
   navConfig$: Observable<MainTopNavConfig> = combineLatest([
     this.facade.selectedWeekNr$,
     this.facade.weekCriteria$
-  ]).pipe(map(([weekNr, weekCriteria]) => this.getNavConfig({...weekCriteria, weekNr})))
+  ]).pipe(map(([weekNr, weekCriteria]) => this.getNavConfig(weekCriteria?.user, weekCriteria?.year, weekNr)))
 
   constructor(
     private loadingService: LoadingService,
@@ -62,10 +62,11 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
       }
     });
   
-  private getNavConfig(weekCriteria: WeekCriteria): MainTopNavConfig {
+  private getNavConfig(user: User, year: number, weekNr: number): MainTopNavConfig {
+    const fullName = user ? (user.firstName + ' ' + user.lastName) : '';
     return {
-      title:  "Uke " + weekCriteria?.weekNr || "",
-      subTitle: (weekCriteria?.year || "") + ' - ' + (weekCriteria?.user?.userName || ""),
+      title:  "Uke " + (weekNr || ""),
+      subTitle: (year || "") + ' - ' + (fullName || ""),
       backFn: this.onBack,
       backFnParams: [null],
       buttons: [{icon: 'filter_list', color: 'accent', callback: this.openWeekFilter}]

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { Timesheet } from 'src/app/core/models';
+import { Timesheet, User } from 'src/app/core/models';
 import { DeviceInfoService } from 'src/app/core/services/device-info.service';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { MainTopNavConfig } from 'src/app/shared/components/main-top-nav-bar/main-top-nav.config';
@@ -24,7 +24,7 @@ export class TimesheetAdminWeekListComponent {
 
   isXs$ = this.deviceInfoService.isXs$;
 
-  navConfig$ =  this.facade.weekCriteria$.pipe(map(x => this.getNavConfig(x)));
+  navConfig$ =  this.facade.weekCriteria$.pipe(map(x => this.getNavConfig(x?.user, x?.year)));
 
   constructor(
     private loadingService: LoadingService,
@@ -70,10 +70,11 @@ export class TimesheetAdminWeekListComponent {
     this.router.navigate(["../"], {relativeTo: this.route})
   }
 
-  private getNavConfig(weekCriteria: WeekCriteria): MainTopNavConfig {
+  private getNavConfig(user: User, year: number): MainTopNavConfig {
+    const fullName = user ? (user.firstName + ' ' + user.lastName) : '';
     return {
       title:  "Uker",
-      subTitle: (weekCriteria?.year || '') + ' - ' + (weekCriteria?.user?.userName || ''),
+      subTitle: (year || '') + ' - ' + (fullName || ''),
       backFn: this.onBack,
       buttons: [{icon: 'filter_list', color: 'accent', callback: this.openWeekFilter}]
     }
