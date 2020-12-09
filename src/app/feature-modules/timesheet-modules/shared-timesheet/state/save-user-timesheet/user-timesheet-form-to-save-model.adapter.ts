@@ -1,9 +1,9 @@
 import { Timesheet } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
+import { ModelFormToSaveModelInput } from '@model-form/interfaces';
 import { SaveModelStateCommand } from '@model/state/save-model/save-model-action.const';
 import { TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
 import { BaseFormToSaveModelStateCommandAdapter } from '@shared/form-adapters/base-form-to-save-model-state-command.adapter';
-import { ModelFormToSaveModelInput } from '@shared/model-form';
 import { SaveUserTimesheetActionId } from './save-user-timesheet-command.interface';
 
 export class UserTimesheetFormToSaveModelAdapter extends BaseFormToSaveModelStateCommandAdapter<Timesheet, TimesheetForm>

@@ -17,7 +17,7 @@ export class SaveUserTimesheetHttpEffect extends SaveModelHttpEffect implements 
     constructor(
         @Inject(COMMAND_API_MAP) apiMap: CommandApiMap,
         @Inject(MODEL_PROP_TRANSLATIONS) translations: Readonly<KeyVal<string>>
-    ){ super(apiMap, translations) }
+    ){ super(apiMap, translations); }
 
     handle$(actions$: Observable<DispatchedAction<SaveUserTimesheetCommand>>): Observable<StateAction> {
         return actions$.pipe(

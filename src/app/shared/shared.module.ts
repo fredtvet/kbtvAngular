@@ -1,12 +1,14 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { ConfirmDialogModule } from '@confirm-dialog/confirm-dialog.module';
 import { DynamicFormsModule } from '@dynamic-forms/dynamic-forms.module';
+import { FormSheetModule } from '@form-sheet/form-sheet.module';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import {
   BottomSheetMenuComponent,
-  ConfirmDialogComponent,
+
   SelectableCardComponent,
   SelectableListComponent
 } from './components';
@@ -26,13 +28,10 @@ import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
 import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
-import { FormSheetWrapperComponent } from './form/form-sheet-wrapper.component';
-import { ModelFormComponent } from './model-form/components/model-form.component';
 import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButtonsPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 
 @NgModule({
   declarations: [
-    ConfirmDialogComponent,
     SelectableCardComponent,
     SelectableListComponent,
     BottomSheetMenuComponent,
@@ -40,9 +39,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     MainTopNavBarComponent,
     DetailTopNavBarComponent,
     ChipsBarComponent,
-    FormSheetWrapperComponent,
-    
-    ModelFormComponent,
 
     InputQuestionComponent,
     SelectQuestionComponent,
@@ -77,7 +73,10 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     AngularMaterialModule,
     SharedAppModule,
     GooglePlaceModule,
+
     DynamicFormsModule,
+    ConfirmDialogModule,
+    FormSheetModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -85,7 +84,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     SharedAppModule,
     GooglePlaceModule,    
 
-    ConfirmDialogComponent,
     SelectableCardComponent,
     BottomSheetMenuComponent,
     SelectableListComponent,

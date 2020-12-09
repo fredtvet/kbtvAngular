@@ -1,8 +1,9 @@
 import { ModelFile } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { SaveModelFileActionId, SaveModelFileStateCommand } from '@core/state/save-model-file/save-model-file-action.const';
+import { ModelFormToSaveModelInput } from '@model-form/interfaces';
 import { BaseFormToSaveModelFileStateCommandAdapter } from '@shared/form-adapters/base-form-to-save-model-file-state-command.adapter';
-import { ModelFormToSaveModelInput } from '@shared/model-form';
+
 
 export class FormToSaveModelFileStateCommandAdapter
     extends BaseFormToSaveModelFileStateCommandAdapter<ModelFile, ModelFile & {file: File}> 

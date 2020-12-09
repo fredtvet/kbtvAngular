@@ -2,13 +2,13 @@ import { Validators } from '@angular/forms';
 import { User } from '@core/models';
 import { StateUsers, StateEmployers } from '@core/state/global-state.interfaces';
 import { DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
+import { OptionsFormState } from '@form-sheet/interfaces';
 import { Roles } from '@shared-app/enums';
-import { OptionsFormState } from '@shared/form';
+import { isUniqueAsyncValidator } from '@shared/validators/is-unique.async.validator';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { InputQuestion, InputQuestionComponent } from '../../components/dynamic-form-questions/input-question.component';
 import { SelectQuestion, SelectQuestionComponent } from '../../components/dynamic-form-questions/select-question.component';
-import { isUniqueAsyncValidator } from '../../form/validators/is-unique.async.validator';
 import { EmailControl, EmployerSelectControl, FirstNameControl, LastNameControl, PhoneNumberControl, UserNameControl } from '../common-controls.const';
 
 export interface UserForm extends User {

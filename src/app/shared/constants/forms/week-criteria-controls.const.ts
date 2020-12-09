@@ -1,9 +1,9 @@
 import { StateUsers } from '@core/state/global-state.interfaces';
 import { DynamicForm, DynamicControl } from '@dynamic-forms/interfaces';
+import { OptionsFormState } from '@form-sheet/interfaces';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { InputQuestionComponent, InputQuestion } from '../../components/dynamic-form-questions/input-question.component';
 import { IonDateQuestionComponent, IonDateQuestion } from '../../components/dynamic-form-questions/ion-date-time-question.component';
-import { OptionsFormState } from '../../form/interfaces';
 import { UserSelectControl } from '../common-controls.const';
 
 export interface WeekCriteriaFormState extends OptionsFormState<StateUsers>{ }

@@ -6,12 +6,12 @@ import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-
 import { IonDateQuestionComponent, IonDateQuestion } from '../../components/dynamic-form-questions/ion-date-time-question.component';
 import { RadioGroupQuestionComponent, RadioGroupQuestion } from '../../components/dynamic-form-questions/radio-group-question.component';
 import { TimesheetStatus } from '../../enums';
-import { OptionsFormState } from '../../form/interfaces';
 import { translations } from '../../translations';
 import { MissionAutoCompleteControl, UserSelectControl } from '../common-controls.const';
 import { DateRange } from '@datetime/interfaces';
 import { _getRangeByDateRangePreset } from '@shared-app/helpers/get-range-by-date-range-preset.helper';
 import { StateUsers, StateMissions } from '@core/state/global-state.interfaces';
+import { OptionsFormState } from '@form-sheet/interfaces';
 
 export interface TimesheetCriteriaFormState extends OptionsFormState<StateUsers & StateMissions>{}
 

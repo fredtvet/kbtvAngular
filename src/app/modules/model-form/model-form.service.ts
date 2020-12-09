@@ -1,18 +1,19 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { MatBottomSheet, MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { Router } from '@angular/router';
-import { ConfirmDialogService } from '@core/services/ui/confirm-dialog.service';
+import { FormSheetWrapperComponent } from '@form-sheet/form-sheet-wrapper.component';
+import { FormSheetWrapperConfig, OptionsFormState } from '@form-sheet/interfaces';
+import { MODEL_PROP_TRANSLATIONS } from '@model/injection-tokens.const';
+import { KeyVal } from '@model/interfaces';
 import { ModelCommand } from '@model/model-command.enum';
 import { ModelStateConfig } from '@model/model-state.config';
 import { DeleteModelActionId, DeleteModelStateCommand } from '@model/state/delete-model/delete-model-action.const';
 import { SaveAction } from '@model/state/save-model/save-model-action.const';
-import { translations } from '@shared/translations';
 import { Store } from '@state/store';
 import { Observable, of } from 'rxjs';
-import { FormSheetWrapperComponent } from '../form/form-sheet-wrapper.component';
-import { FormSheetWrapperConfig, OptionsFormState } from '../form/interfaces';
-import { ModelFormComponent } from './components/model-form.component';
-import { ModelFormConfig } from './interfaces/model-form-config.interface';
+import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
+import { ModelFormConfig } from './interfaces';
+import { ModelFormComponent } from './model-form.component';
 
 type FormState<TState> = OptionsFormState<Partial<TState>>;
 
@@ -34,6 +35,7 @@ export class ModelFormService {
     private router: Router,
     private confirmService: ConfirmDialogService,  
     private store: Store<any>,
+    @Inject(MODEL_PROP_TRANSLATIONS) private translations: KeyVal<string>
   ) {}
 
   open<TForm>(
@@ -53,10 +55,9 @@ export class ModelFormService {
              ${this.translateStateProp(config.formConfig.stateProp)}`,      
           backFn: () => this.close(null, ref),
           backIcon: "close",
-          buttons: [
-              (config.deleteDisabled || !(config.formConfig.entityId)) ? null : 
-                {icon: 'delete_forever', color: "warn", callback: () => this.confirmDelete(config.formConfig, config.onDeleteUri, ref)}
-          ]
+          buttons: (config.deleteDisabled || !(config.formConfig.entityId)) ? 
+              null : 
+              [{icon: 'delete_forever', color: "warn", callback: () => this.confirmDelete(config.formConfig, config.onDeleteUri, ref)}]    
         },
       } 
     });
@@ -73,7 +74,7 @@ export class ModelFormService {
   } 
 
   private translateStateProp = (prop: string): string => 
-    translations[ModelStateConfig.get(prop).foreignProp?.toLowerCase()]?.toLowerCase();
+    this.translations[ModelStateConfig.get(prop).foreignProp?.toLowerCase()]?.toLowerCase();
 
   private confirmDelete = (formConfig: ModelFormConfig<any, any, any>, deleteUrl: string, ref: MatBottomSheetRef<any, any>) => { 
     const translatedProp = this.translateStateProp(formConfig.stateProp)

@@ -2,7 +2,7 @@ import { Validators } from '@angular/forms';
 import { Employer, Mission, MissionType } from '@core/models';
 import { StateEmployers, StateMissionTypes } from '@core/state/global-state.interfaces';
 import { DynamicControl, DynamicControlGroup, DynamicForm } from '@dynamic-forms/interfaces';
-import { OptionsFormState } from '@shared/form';
+import { OptionsFormState } from '@form-sheet/interfaces';
 import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { CheckboxQuestion, CheckboxQuestionComponent } from '../../components/dynamic-form-questions/checkbox-question.component';

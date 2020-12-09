@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
-import { StateModule } from '@state/state.module';
 import {
   TimesheetCardComponent,
   TimesheetSummaryCardContentComponent
@@ -17,7 +16,6 @@ import { ArrayIncludesPipe, GetDateByDateParamsPipe, ReadableDurationPipe } from
   ],
   imports: [
     SharedModule,
-    StateModule,
   ],
   exports: [
     SharedModule,

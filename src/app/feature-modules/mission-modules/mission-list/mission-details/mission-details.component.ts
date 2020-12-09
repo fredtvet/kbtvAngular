@@ -10,9 +10,9 @@ import { RolePresets, Roles } from '@shared-app/enums';
 import { DetailTopNavConfig } from '@shared/components/detail-top-nav-bar/detail-top-nav.config';
 import { EditMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { TimesheetStatus } from '@shared/enums';
-import { ModelFormService } from '@shared/model-form';
 import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
 import { MissionListFacade } from '../mission-list.facade';
+import { ModelFormService } from '@model-form/model-form.service';
 
 interface ViewModel { mission: Mission, navConfig: DetailTopNavConfig }
 

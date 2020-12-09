@@ -7,9 +7,9 @@ import { LoadingService } from '@core/services/loading.service';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { TimesheetStatus } from '@shared/enums';
-import { FormService } from '@shared/form';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
+import { FormService } from '@form-sheet/form-sheet.service';
 
 @Component({
   selector: 'app-timesheet-admin-week-list',

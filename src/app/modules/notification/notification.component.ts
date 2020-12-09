@@ -4,7 +4,7 @@ import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar'
 @Component({
   selector: 'app-notification',
   template: `
-    <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="mb-1">
+    <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" style="margin-bottom:4px">
       <mat-icon>{{data.icon}}</mat-icon>
       <span *ngIf="data.title">{{ data.title }}</span>
     </span>

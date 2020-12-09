@@ -1,9 +1,9 @@
 import { User } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
+import { ModelFormToSaveModelInput } from '@model-form/interfaces';
 import { Roles } from '@shared-app/enums';
 import { UserForm } from '@shared/constants/model-forms/save-user-forms.const';
 import { BaseFormToSaveModelStateCommandAdapter } from '@shared/form-adapters/base-form-to-save-model-state-command.adapter';
-import { ModelFormToSaveModelInput } from '@shared/model-form';
 import { SaveUserActionId, SaveUserStateCommand } from './save-user-state-command.interface';
 
 export class UserFormToSaveModelAdapter extends BaseFormToSaveModelStateCommandAdapter<User, UserForm>

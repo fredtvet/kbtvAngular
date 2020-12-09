@@ -1,14 +1,26 @@
+import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { DynamicFormsModule } from '@dynamic-forms/dynamic-forms.module';
+import { FormSheetModule } from '@form-sheet/form-sheet.module';
+import { ConfirmDialogModule } from '../confirm-dialog/confirm-dialog.module';
 import { DEFAULT_SAVE_ADAPTER } from './injection-tokens.const';
-import { ModelFormToSaveStateCommandAdapter } from './interfaces/model-form-to-state-command-adapter.interface';
+import { ModelFormToSaveStateCommandAdapter } from './interfaces';
+import { ModelFormComponent } from './model-form.component';
 import { ModelFormFacade } from './model-form.facade';
 import { ModelFormService } from './model-form.service';
 
 @NgModule({
+    declarations: [ ModelFormComponent ],
+    imports: [
+        CommonModule,
+        DynamicFormsModule,
+        FormSheetModule,
+        ConfirmDialogModule,
+    ],
     providers: [
         ModelFormService,
         ModelFormFacade,
-    ]
+    ],
 })
 export class ModelFormModule { 
     static forFeature(defaultSaveAdapter: ModelFormToSaveStateCommandAdapter<any, any>): ModuleWithProviders<ModelFormModule> {

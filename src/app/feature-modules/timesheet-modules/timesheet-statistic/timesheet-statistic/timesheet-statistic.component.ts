@@ -10,13 +10,13 @@ import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interf
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetCriteriaForm, TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from '@shared/enums';
-import { FormService } from '@shared/form';
 import { TimesheetSummary } from '../../shared-timesheet/interfaces';
 import { TimesheetCriteriaChipOptions } from '../../shared-timesheet/timesheet-filter/timesheet-criteria-chip-options.const';
 import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetStatisticFacade } from '../timesheet-statistic.facade';
 import { TimesheetStatisticProviders } from './timesheet-statistic-providers.const';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
+import { FormService } from '@form-sheet/form-sheet.service';
 
 interface NavViewModel { groupByChips: AppChip[], criteriaChips: AppChip[],  navConfig: MainTopNavConfig }
 

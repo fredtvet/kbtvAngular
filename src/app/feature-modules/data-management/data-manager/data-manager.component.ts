@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ConfirmDialogService } from '@core/services/ui/confirm-dialog.service';
+import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
 import { Prop } from '@state/interfaces/prop.type';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { ModelFormService } from '@shared/model-form';
 import { translations } from '@shared/translations';
 import { STORE_REDUCERS } from '@state/injection-tokens';
 import { ComponentStoreProviders } from '@state/providers.const';
@@ -14,7 +13,7 @@ import { DataTableComponent } from './data-table/data-table.component';
 import { PropertyFormMap } from './property-form.map';
 import { UpdateSelectedPropertyReducer } from './state/update-selected-property.reducer';
 import { ModelState } from '@core/state/model-state.interface';
-import { FormToSaveModelStateCommandAdapter } from '@shared/form-adapters/form-to-save-model-state-command.adapter';
+import { ModelFormService } from '@model-form/model-form.service';
 
 type ViewModel = {navConfig: MainTopNavConfig} & DataConfig
 

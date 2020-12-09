@@ -9,7 +9,6 @@ import { DatePipe } from '@angular/common';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { DynamicFormsModule } from '@dynamic-forms/dynamic-forms.module';
 import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';
-import { StateModule } from '@state/state.module';
 
 
 @NgModule({
@@ -24,7 +23,6 @@ import { StateModule } from '@state/state.module';
   imports: [
     SharedTimesheetModule,
     TimesheetStatisticRoutingModule,
-    StateModule,
     AppAgGridModule,
     DynamicFormsModule,
   ],

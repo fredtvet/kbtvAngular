@@ -10,9 +10,9 @@ import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { TimesheetStatus } from '@shared/enums';
-import { FormService } from '@shared/form';
-import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
+import { FormService } from '@form-sheet/form-sheet.service';
+import { WeekCriteria } from '@shared-timesheet/interfaces';
 
 @Component({
   selector: 'app-timesheet-admin-list',

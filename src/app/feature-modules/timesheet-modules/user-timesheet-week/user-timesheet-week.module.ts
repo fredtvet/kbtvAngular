@@ -7,10 +7,9 @@ import { UserTimesheetWeekComponent } from './user-timesheet-week/user-timesheet
 import { UserTimesheetWeekViewComponent } from './user-timesheet-week/user-timesheet-week-view/user-timesheet-week-view.component';
 import { UserTimesheetWeekRoutingModule } from './user-timesheet-week-routing.module';
 import { SaveUserTimesheetProviders } from '../shared-timesheet/state/providers.const';
-import { ModelFormModule } from '@shared/model-form/model-form.module';
-import { StateModule } from '@state/state.module';
 import { DeleteModelProviders } from '@model/state/providers.const';
 import { UserTimesheetFormToSaveModelAdapter } from '@shared-timesheet/state/save-user-timesheet/user-timesheet-form-to-save-model.adapter';
+import { ModelFormModule } from '@model-form/model-form.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +26,6 @@ import { UserTimesheetFormToSaveModelAdapter } from '@shared-timesheet/state/sav
   imports: [
     SharedTimesheetModule,
     ModelFormModule.forFeature(UserTimesheetFormToSaveModelAdapter),
-    StateModule,
     UserTimesheetWeekRoutingModule
   ]
 })

@@ -1,0 +1,28 @@
+<style>
+    mat-toolbar { background: transparent }
+    .title{
+        margin-right:auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+
+<mat-toolbar #navBar *ngIf="config">
+
+    <button mat-icon-button aria-label="Lukk skjema"
+        (click)="closed.emit(true)">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <span class="title" *ngIf="config.title">
+        {{ config.title }}  dsad sadasd as dasd as dasds
+    </span> 
+
+    <button mat-icon-button *ngFor="let button of config.buttons || []"
+        [color]="button.color"
+        [attr.aria-label]="button.aria"
+        (click)="handleCallback(button.callback)">
+        <mat-icon>{{ button.icon }}</mat-icon>
+    </button>
+
+</mat-toolbar>

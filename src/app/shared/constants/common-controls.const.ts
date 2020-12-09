@@ -5,14 +5,14 @@ import { IId } from '@core/models/sub-interfaces/iid.interface';
 import { IName } from '@core/models/sub-interfaces/iname.interface';
 import { StateMissions, StateEmployers, StateUsers } from '@core/state/global-state.interfaces';
 import { DynamicControl } from '@dynamic-forms/interfaces';
+import { OptionsFormState } from '@form-sheet/interfaces';
+import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
+import { isObjectValidator } from '@shared/validators/is-object.validator';
 import { AutoCompleteQuestionComponent } from '../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { GooglePlacesAutoCompleteQuestionComponent, GooglePlacesAutoCompleteQuestion } from '../components/dynamic-form-questions/google-places-autocomplete-question.component';
 import { InputQuestionComponent, InputQuestion } from '../components/dynamic-form-questions/input-question.component';
 import { SelectQuestionComponent, SelectQuestion } from '../components/dynamic-form-questions/select-question.component';
-import { _compareProp } from '../form/helpers/compare-with-prop.helper';
-import { OptionsFormState } from '../form/interfaces';
-import { isObjectValidator } from '../form/validators/is-object.validator';
 import { ValidationRules } from './validation-rules.const';
 
 export const HiddenIdControl = <DynamicControl<IId>>{ name: "id", required: true,

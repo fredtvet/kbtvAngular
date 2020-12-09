@@ -1,7 +1,7 @@
 import { ModelFile } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { SaveModelFileStateCommand } from '@core/state/save-model-file/save-model-file-action.const';
-import { ModelFormToSaveModelInput } from '@shared/model-form/interfaces/model-form-to-state-command-adapter.interface';
+import { ModelFormToSaveModelInput } from '@model-form/interfaces';
 import { ModelFileWrapper } from '../../modules/model/model-file.wrapper';
 import { BaseFormToSaveModelStateCommandAdapter } from './base-form-to-save-model-state-command.adapter';
 

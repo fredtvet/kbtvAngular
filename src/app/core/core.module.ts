@@ -8,7 +8,6 @@ import { PersistedCriticalStateProps, PersistedStateProps } from '../shared-app/
 import { AppSyncStateConfig } from '../shared-app/const/sync-state.config';
 import { ValidationErrorMessages } from '../shared-app/const/validation-error-messages.const';
 import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS } from '@state/injection-tokens';
-import { StateModule } from '@state/state.module';
 import { HttpErrorInterceptor, HttpIsOnlineInterceptor, HttpLoadingInterceptor, HttpRefreshTokenInterceptor } from './interceptors';
 import { RedirectToUrlEffect } from './services/auth/state/login-success/redirect-to-url.effect';
 import { SetCredentialsReducer } from './services/auth/state/login-success/set-credentials.reducer';
@@ -36,7 +35,6 @@ import { translations } from '@shared/translations';
 @NgModule({
   declarations: [],
   imports: [
-    StateModule,
     SyncModule.forRoot({
       fetcher: SyncHttpFetcherService,
       config: AppSyncStateConfig

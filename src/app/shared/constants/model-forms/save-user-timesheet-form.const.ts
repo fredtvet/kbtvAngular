@@ -2,11 +2,11 @@ import { Validators } from '@angular/forms';
 import { Mission } from '@core/models';
 import { DynamicControl, DynamicControlGroup, DynamicForm } from '@dynamic-forms/interfaces';
 import { _getISO } from '@datetime/get-iso-with-timezone.helper';
-import { OptionsFormState } from '@shared/form';
 import { IonDateQuestion, IonDateQuestionComponent } from '../../components/dynamic-form-questions/ion-date-time-question.component';
 import { TextAreaQuestion, TextAreaQuestionComponent } from '../../components/dynamic-form-questions/text-area-question.component';
 import { HiddenIdControl, MissionAutoCompleteControl } from '../common-controls.const';
 import { StateMissions } from '@core/state/global-state.interfaces';
+import { OptionsFormState } from '@form-sheet/interfaces';
 
 type FormState = OptionsFormState<StateMissions> & {defaultStartTime: string, defaultEndTime: string};
 

@@ -1,15 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Optional, Output } from '@angular/core';
 import { DynamicForm, FormComponent } from '@dynamic-forms/interfaces';
+import { OptionsFormState } from '@form-sheet/interfaces';
 import { ModelCommand } from '@model/model-command.enum';
 import { SaveAction } from '@model/state/save-model/save-model-action.const';
-import { OptionsFormState } from '@shared/form';
-import { Optional } from 'ag-grid-community';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, shareReplay, take } from 'rxjs/operators';
-import { DEFAULT_SAVE_ADAPTER } from '../injection-tokens.const';
-import { ModelFormConfig } from '../interfaces/model-form-config.interface';
-import { ModelFormToSaveStateCommandAdapter } from '../interfaces/model-form-to-state-command-adapter.interface';
-import { ModelFormFacade } from '../model-form.facade';
+import { DEFAULT_SAVE_ADAPTER } from './injection-tokens.const';
+import { ModelFormConfig, ModelFormToSaveStateCommandAdapter } from './interfaces';
+import { ModelFormFacade } from './model-form.facade';
 
 @Component({
     selector: 'app-model-form',

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { STORE_EFFECTS, STORE_REDUCERS } from '@state/injection-tokens';
-import { StateModule } from '@state/state.module';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile/profile.component';
 import { UpdateCurrentUserHttpEffect } from './state/update-current-user/update-current-user.http.effect';
@@ -14,8 +13,7 @@ import { UpdatePasswordHttpEffect } from './state/update-password/update-passwor
   ],
   imports: [ 
     SharedModule,
-    StateModule,
-    ProfileRoutingModule
+    ProfileRoutingModule,
   ],
   providers: [
     { provide: STORE_EFFECTS, useClass: UpdateCurrentUserHttpEffect, multi: true },

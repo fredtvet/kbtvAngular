@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MissionDocument } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
-import { ConfirmDialogService } from '@core/services/ui/confirm-dialog.service';
+import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
 import { NotificationService } from '@notification/index';
 import { AppNotifications } from '@shared-app/const/app-notifications.const';
 import { Roles } from '@shared-app/enums';
@@ -13,12 +13,11 @@ import { SelectableListContainerComponent } from '@shared/components/abstracts/s
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EmailForm } from '@shared/constants/forms/email-form.const';
 import { CreateMissionDocumentForm, MissionDocumentForm } from '@shared/constants/model-forms/create-mission-document-form.const';
-import { FormService } from '@shared/form';
-import { FormToSaveModelFileStateCommandAdapter } from '@shared/form-adapters/form-to-save-model-file-state-command.adapter';
-import { ModelFormService } from '@shared/model-form';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MissionDocumentListFacade } from '../mission-document-list.facade';
+import { FormService } from '@form-sheet/form-sheet.service';
+import { ModelFormService } from '@model-form/model-form.service';
 
 interface ViewModel { documents: MissionDocument[], isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig}
 

@@ -7,7 +7,7 @@ import { MissionImage, ModelFile } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
-import { ConfirmDialogService } from '@core/services/ui/confirm-dialog.service';
+import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
 import { NotificationService } from '@notification/index';
 import { AppNotifications } from '@shared-app/const/app-notifications.const';
 import { RolePresets, Roles } from '@shared-app/enums';
@@ -16,9 +16,9 @@ import { AppButton } from '@shared-app/interfaces';
 import { SelectableListContainerComponent } from '@shared/components/abstracts/selectable-list-container.component';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EmailForm } from '@shared/constants/forms/email-form.const';
-import { FormService } from '@shared/form';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MissionImageListFacade } from '../mission-image-list.facade';
+import { FormService } from '@form-sheet/form-sheet.service';
 
 interface ViewModel { images: MissionImage[], isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig }
 

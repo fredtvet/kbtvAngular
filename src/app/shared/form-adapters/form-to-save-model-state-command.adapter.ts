@@ -1,7 +1,7 @@
 import { Model } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
+import { ModelFormToSaveModelInput } from '@model-form/interfaces';
 import { SaveModelStateCommand, SaveModelActionId } from '@model/state/save-model/save-model-action.const';
-import { ModelFormToSaveModelInput } from '@shared/model-form';
 import { BaseFormToSaveModelStateCommandAdapter } from './base-form-to-save-model-state-command.adapter';
 
 export class FormToSaveModelStateCommandAdapter

@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { User } from '@core/models';
+import { FormService } from '@form-sheet/form-sheet.service';
+import { ModelFormService } from '@model-form/model-form.service';
 import { ButtonTypes, Roles } from '@shared-app/enums';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { UserPasswordForm, UserPasswordFormState } from '@shared/constants/forms/password-form.const';
 import { CreateUserForm, EditUserForm, UserForm } from '@shared/constants/model-forms/save-user-forms.const';
-import { FormService } from '@shared/form';
-import { ModelFormService } from '@shared/model-form';
 import { Observable } from 'rxjs';
 import { UsersFacade } from '../users.facade';
 

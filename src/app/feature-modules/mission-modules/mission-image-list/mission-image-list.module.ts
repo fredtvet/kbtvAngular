@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { DeleteModelProviders, MailModelsProviders } from '@model/state/providers.const';
 import { SharedModule } from '@shared/shared.module';
 import { STORE_EFFECTS, STORE_REDUCERS } from '@state/injection-tokens';
-import { StateModule } from '@state/state.module';
 import { CreateMissionImagesHttpEffect } from './create-mission-images/create-mission-images.http.effect';
 import { CreateMissionImagesReducer } from './create-mission-images/create-mission-images.reducer';
 import { ImageViewerDialogWrapperComponent } from './image-viewer/image-viewer-dialog-wrapper.component';
@@ -19,7 +18,6 @@ import { MissionImageListComponent } from './mission-image-list/mission-image-li
   ],
   imports: [
     SharedModule,
-    StateModule,
     MissionImageListRoutingModule,
   ],
   providers:[

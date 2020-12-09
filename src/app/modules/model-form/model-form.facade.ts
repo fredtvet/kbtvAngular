@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
+import { OptionsFormState } from '@form-sheet/interfaces';
 import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
 import { ModelStateConfig } from '@model/model-state.config';
-import { OptionsFormState } from '@shared/form';
 import { StateAction } from '@state/interfaces';
 import { Store } from '@state/store';
 import { Observable } from 'rxjs';
