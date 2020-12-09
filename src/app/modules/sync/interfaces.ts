@@ -1,23 +1,19 @@
 import { Type } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ModelState } from '@model/interfaces';
-import { StateSyncConfig, StateCurrentUser } from '@state/interfaces';
 
-export interface StoreState extends Partial<ModelState>,
-    StateSyncConfig,
-    StateCurrentUser
-{
-    syncConfig: SyncConfig
-    syncTimestamps: SyncStoreTimestamps;
-}
+export interface StateSyncConfig { syncConfig: SyncConfig }
+export interface StateSyncTimestamps { syncTimestamps: SyncStoreTimestamps; }
+
+export interface StoreState extends StateSyncConfig, StateSyncTimestamps {}
 
 export type SyncStateConfig<TState> = {[key in keyof TState]: SyncStatePropConfig}
 
 export interface SyncStatePropConfig {
-    responseKey: string,
-    requestKey: string,
+    // responseKey: string,
+    // requestKey: string,
     singular?: boolean,
-    wipeable?: boolean
+    wipeable?: boolean,
+    identifier: string
 }
 
 export interface SyncConfig{
@@ -25,9 +21,7 @@ export interface SyncConfig{
     initialNumberOfMonths?: string;
 }
 
-export interface SyncResponse{
-    [key: string]: EntitySyncResponse
-}
+export type SyncResponse<TState> = {[key in keyof TState]: EntitySyncResponse}
 
 export interface EntitySyncResponse{
     entities: Object[];
@@ -39,8 +33,8 @@ export interface SyncStoreTimestamps{
     [stateProperty: string]: number;
 }
 
-export interface SyncHttpFetcher {
-    fetch$(config: SyncConfig, timestamps: SyncStoreTimestamps): Observable<SyncResponse>
+export interface SyncHttpFetcher<TState> {
+    fetch$(config: SyncConfig, timestamps: SyncStoreTimestamps): Observable<SyncResponse<TState>>
 }
 
-export interface CustomSyncProviders { fetcher: Type<SyncHttpFetcher>, config: SyncStateConfig<any> }
+export interface CustomSyncProviders { fetcher: Type<SyncHttpFetcher<any>>, config: SyncStateConfig<any> }

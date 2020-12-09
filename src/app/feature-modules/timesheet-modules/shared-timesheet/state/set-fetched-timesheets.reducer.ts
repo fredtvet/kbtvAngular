@@ -1,8 +1,9 @@
 import { Timesheet } from '@core/models';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
-import { GetWithRelationsConfig } from '@model/helpers/get-with-relations.config';
-import { _addOrUpdateRange } from '@shared-app/helpers/array/add-or-update-range.helper';
-import { Reducer, StateAction, StateMissions, StateTimesheets } from '@state/interfaces';
+import { GetWithRelationsConfig } from '@model/get-with-relations.config';
+import { _addOrUpdateRange } from '@array/add-or-update-range.helper';
+import { Reducer, StateAction } from '@state/interfaces';
+import { StateTimesheets, StateMissions } from '@core/state/global-state.interfaces';
 
 export const SetFetchedTimesheetsActionId = "SET_FETCHED_TIMESHEETS";
 

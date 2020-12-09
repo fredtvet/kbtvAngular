@@ -1,7 +1,6 @@
-import { Model } from '@core/models';
-import { ActionType } from '@shared-app/enums';
-import { _add } from '@shared-app/helpers/array/add.helper';
-import { _update } from '@shared-app/helpers/array/update.helper';
+import { ModelCommand } from '../../model-command.enum';
+import { _add } from '@array/add.helper';
+import { _update } from '@array/update.helper';
 import { Reducer } from '../../../state/interfaces/reducer.interface';
 import { _modifyModelWithForeigns } from '../../helpers/modify-model-with-foreigns.helper';
 import { ModelStateConfig } from '../../model-state.config';
@@ -13,29 +12,29 @@ export const SaveModelReducer: Reducer<any> = {
     stateProperties: _statePropertiesGetter
 }
 
-function _statePropertiesGetter(command: SaveModelStateCommand<Model>): string[]{
+function _statePropertiesGetter(command: SaveModelStateCommand<any, any>): string[]{
     const stateProps: string[] = [command.stateProp];
     const modelConfig = ModelStateConfig.get(command.stateProp); 
     if(modelConfig.foreigns)
        for(const fkProp of modelConfig.foreigns){
-          const fkCfg = ModelStateConfig.get(fkProp as any);
+          const fkCfg = ModelStateConfig.get(fkProp);
           if(command.entity[fkCfg.foreignProp]) stateProps.push(fkProp);
        }
 
     return stateProps;
 }
 
-function _reducerFn(state: any, command: SaveModelStateCommand<Model>): Partial<any>{  
+function _reducerFn(state: any, command: SaveModelStateCommand<any, any>): Partial<any>{  
     const modelConfig = ModelStateConfig.get(command.stateProp); 
 
-    command.entity.updatedAt = new Date().getTime();  
+    command.entity.updatedAt = new Date().getTime();  //Need to isolate and expose this
 
-    let modifyFn: (entity: Model, entities: Model[]) => void;
+    let modifyFn: (entity: any, entities: ReadonlyArray<Object>) => Object;
 
-    if(command.saveAction === ActionType.Update) 
-        modifyFn = (entity: Model, entities: Model[]) =>  _update(entities, entity, modelConfig.identifier)
+    if(command.saveAction === ModelCommand.Update) 
+        modifyFn = (entity: any, entities: any[]) =>  _update(entities, entity, modelConfig.identifier)
     else 
-        modifyFn = (entity: Model, entities: Model[]) =>  _add(entities, entity)
+        modifyFn = (entity: any, entities: any[]) =>  _add(entities, entity)
 
     return _modifyModelWithForeigns(state, command.stateProp, command.entity, modifyFn)          
 }

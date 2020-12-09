@@ -1,8 +1,8 @@
-import { ModelStateCommand } from '../interfaces/model-state-command.interface';
+import { ModelStateCommand } from '../../interfaces';
 
 export const MailModelsActionId = "MAIL_MODELS"
 
-export interface MailModelsStateCommand extends ModelStateCommand {
+export interface MailModelsStateCommand<TState> extends ModelStateCommand<TState> {
     ids: any[];
     toEmail: string;
 }

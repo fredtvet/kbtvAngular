@@ -1,7 +1,7 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { _deepClone } from '@shared-app/helpers/deep-clone.helper';
+import { _deepClone } from '@state/helpers/deep-clone.helper';
 import { DispatchedAction } from '@state/action-dispatcher';
 import { StateAction } from '@state/interfaces';
 import { Effect } from '@state/interfaces/effect.interface';

@@ -1,24 +1,27 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Model } from '@core/models';
+import { Inject, Injectable } from '@angular/core';
 import { HttpRequest } from '@http/interfaces';
 import { HttpActionId, HttpCommand } from '@http/state/http.effect';
-import { ActionType } from '@shared-app/enums';
-import { translations } from '@shared/translations';
 import { StateAction } from '@state/interfaces';
 import { Effect } from '@state/interfaces/effect.interface';
 import { listenTo } from '@state/operators/listen-to.operator';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { DispatchedAction } from '../../../state/action-dispatcher';
-import { ModelConfig, ModelStateConfig } from '../../model-state.config';
+import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens.const';
+import { CommandApiMap, KeyVal, ModelConfig } from '../../interfaces';
+import { ModelCommand } from '../../model-command.enum';
+import { ModelStateConfig } from '../../model-state.config';
 import { SaveModelActionId, SaveModelStateCommand } from './save-model-action.const';
 
 @Injectable()
-export class SaveModelHttpEffect implements Effect<SaveModelStateCommand<Model>> {
+export class SaveModelHttpEffect implements Effect<SaveModelStateCommand<any, any>> {
 
-    constructor(){ }
+    constructor(
+        @Inject(COMMAND_API_MAP) private apiMap: CommandApiMap,
+        @Inject(MODEL_PROP_TRANSLATIONS) private translations: Readonly<KeyVal<string>>
+    ){ }
 
-    handle$(actions$: Observable<DispatchedAction<SaveModelStateCommand<Model>>>): Observable<StateAction> {
+    handle$(actions$: Observable<DispatchedAction<SaveModelStateCommand<any, any>>>): Observable<StateAction> {
         return actions$.pipe(
             listenTo([SaveModelActionId]),
             map(x => { return <HttpCommand>{
@@ -29,38 +32,37 @@ export class SaveModelHttpEffect implements Effect<SaveModelStateCommand<Model>>
         )
     }
 
-    protected createHttpRequest(command: SaveModelStateCommand<Model>): HttpRequest{
+    protected createHttpRequest(command: SaveModelStateCommand<any, any>): HttpRequest{
         const modelConfig = ModelStateConfig.get(command.stateProp);
         if(!modelConfig) console.error(`No model config for property ${command.stateProp}`);
 
         return {
             apiUrl: command.apiUrlOverride || this.createApiUrl(command, modelConfig),
             body: this.createHttpBody(command),
-            method: this.createHttpMethod(command),
+            method: this.apiMap[command.saveAction].method,
             cancelMessage: this.createCancelMessage(command, modelConfig)
         }
     }
 
-    protected createCancelMessage(command: SaveModelStateCommand<Model>, modelConfig: ModelConfig<Model>): string{
-        const saveWord = command.saveAction === ActionType.Update ? "Oppdatering" : "Oppretting";
-        const entityWord = translations[modelConfig.foreignProp?.toLowerCase()].toLowerCase();
-        const displayPropWord = translations[modelConfig.displayProp?.toLowerCase()].toLowerCase();
+    protected createCancelMessage(command: SaveModelStateCommand<any, any>, modelConfig: ModelConfig<any, any>): string{
+        const saveWord = command.saveAction === ModelCommand.Update ? "Oppdatering" : "Oppretting";
+        const entityWord = this.translations[modelConfig.foreignProp?.toLowerCase()].toLowerCase();
+        const displayPropWord = this.translations[modelConfig.displayProp?.toLowerCase()].toLowerCase();
         const displayPropValue = command.entity[modelConfig.displayProp];
         return `${saveWord} av ${entityWord} med ${displayPropWord} ${displayPropValue} er reversert!`;
     }
   
-    protected createHttpBody(command: SaveModelStateCommand<Model>): any {
+    protected createHttpBody(command: SaveModelStateCommand<any, any>): any {
         return command.entity;
     }
 
-    protected createApiUrl(command: SaveModelStateCommand<Model>, modelConfig: ModelConfig<Model>): string {
-        const identfifier = modelConfig.identifier;
-        const endUri = (command.saveAction === ActionType.Update) ? `/${command.entity[identfifier]}` : "";
-        return modelConfig.apiUrl + endUri;
-    }
-
-    protected createHttpMethod(command: SaveModelStateCommand<Model>): "PUT" | "POST" {
-        return  command.saveAction === ActionType.Update ? "PUT" : "POST";
+    protected createApiUrl(command: SaveModelStateCommand<any, any>, modelConfig: ModelConfig<any, any>): string {
+        const suffix = this.apiMap[command.saveAction].suffix;
+        if(typeof suffix === "string") return modelConfig.apiUrl + suffix;
+        else{ 
+            const id = command.entity[modelConfig.identifier]
+            return modelConfig.apiUrl + suffix(id);
+        }
     }
 
 }

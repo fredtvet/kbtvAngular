@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { _getDateOfWeek } from '@shared-app/helpers/datetime/get-date-of-week.helper';
-import { _getFirstDayOfWeek } from '@shared-app/helpers/datetime/get-first-day-of-week.helper';
+import { _getDateOfWeek } from '@datetime/get-date-of-week.helper';
+import { _getFirstDayOfWeek } from '@datetime/get-first-day-of-week.helper';
 import { DateParams } from '@shared-app/interfaces';
 
 @Pipe({

@@ -1,8 +1,9 @@
 import { SaveModelReducer } from '@model/state/save-model/save-model.reducer';
-import { _getTotalHours } from '@shared-app/helpers/datetime/get-total-hours.helper';
+import { _getTotalHours } from '@datetime/get-total-hours.helper';
 import { TimesheetStatus } from '@shared/enums';
-import { Reducer, StateCurrentUser } from '@state/interfaces';
+import { Reducer } from '@state/interfaces';
 import { SaveUserTimesheetActionId, SaveUserTimesheetCommand } from './save-user-timesheet-command.interface';
+import { StateCurrentUser } from '@core/state/global-state.interfaces';
 
 export const SaveUserTimesheetReducer: Reducer<StateCurrentUser> = {
     actionId: SaveUserTimesheetActionId,

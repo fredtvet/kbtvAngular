@@ -1,9 +1,9 @@
+import { DateRange } from '@datetime/interfaces';
 import { DateRangePresets } from "@shared-app/enums/date-range-presets.enum";
-import { DateRange } from '@shared/interfaces/date-range.interface';
-import { _getLastDayOfYear } from './get-last-day-of-year.helper';
-import { _getMonthRange } from './get-month-range.helper';
-import { _getWeekRange } from './get-week-range.helper';
-import { _getYearRange } from './get-year-range.helper';
+import { _getLastDayOfYear } from '../../modules/utility/date-time-helpers/get-last-day-of-year.helper';
+import { _getMonthRange } from '../../modules/utility/date-time-helpers/get-month-range.helper';
+import { _getWeekRange } from '../../modules/utility/date-time-helpers/get-week-range.helper';
+import { _getYearRange } from '../../modules/utility/date-time-helpers/get-year-range.helper';
 
 export function _getRangeByDateRangePreset(preset: DateRangePresets, getISO?: boolean): DateRange {
     switch (preset) {

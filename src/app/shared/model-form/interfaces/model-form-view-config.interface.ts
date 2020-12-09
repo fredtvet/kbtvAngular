@@ -1,8 +1,7 @@
 import { Model } from '@core/models/base-entity.interface';
-import { ModelState } from '@model/interfaces';
 
-export interface ModelFormViewConfig<TModel extends Model, TFormState>{
+export interface ModelFormViewConfig<TModel extends Model, TState, TForm>{
     entity?: TModel;
-    foreigns?: Partial<ModelState>;
-    lockedValues?: Partial<TFormState>; 
+    foreigns?: Partial<TState>;
+    lockedValues?: Partial<TForm>; 
 }

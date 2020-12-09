@@ -1,5 +1,4 @@
-
-import { StateMissions, StateTimesheets, StateUsers } from '@state/interfaces';
+import { StateUsers, StateMissions, StateTimesheets } from '@core/state/global-state.interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 

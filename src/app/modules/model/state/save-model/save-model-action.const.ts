@@ -1,11 +1,11 @@
+import { ModelStateCommand } from '../../interfaces';
+import { ModelCommand } from '../../model-command.enum';
 
-import { Model } from '@core/models/base-entity.interface';
-import { SaveAction } from '@shared/save-action.interface';
-import { ModelStateCommand } from '../interfaces/model-state-command.interface';
+export type SaveAction = ModelCommand.Create | ModelCommand.Update;
 
 export const SaveModelActionId = "SAVE_MODEL";
 
-export interface SaveModelStateCommand<TModel extends Model> extends ModelStateCommand{
+export interface SaveModelStateCommand<TModel, TState> extends ModelStateCommand<TState>{
     saveAction?: SaveAction;
     entity: TModel;
     apiUrlOverride?: string;

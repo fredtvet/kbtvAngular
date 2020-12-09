@@ -1,6 +1,6 @@
+import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
 import { User } from '@core/models';
 import { UserForeign } from '@core/models/relationships/user-foreign.interface';
-import { _convertArrayToObject } from './array/convert-array-to-object.helper';
 
 export function _setFullNameOnUserForeigns<TEntity extends UserForeign>(
     entities: TEntity[],

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { DeleteModelProviders, MailModelsProviders } from '@model/state/providers.const';
-import { ModelFormModule } from '@shared/model-form/model-form.module';
 import { SharedModule } from '@shared/shared.module';
 import { STORE_EFFECTS, STORE_REDUCERS } from '@state/injection-tokens';
 import { StateModule } from '@state/state.module';
@@ -21,7 +20,6 @@ import { MissionImageListComponent } from './mission-image-list/mission-image-li
   imports: [
     SharedModule,
     StateModule,
-    ModelFormModule,
     MissionImageListRoutingModule,
   ],
   providers:[

@@ -30,6 +30,8 @@
       "@persistance/*": ["src/app/modules/persistance/*"],
       "@state/*": ["src/app/modules/state/*"],
       "@sync/*": ["src/app/modules/sync/*"],
+      "@array/*": ["src/app/modules/utility/array-helpers/*"],
+      "@datetime/*": ["src/app/modules/utility/date-time-helpers/*"],
     }
   },
   "angularCompilerOptions": {

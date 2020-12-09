@@ -1,7 +1,7 @@
 import { ApplicationRef, Injectable } from "@angular/core";
 import { interval, concat } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
-import { _getUnixTimeSeconds } from '@shared-app/helpers/datetime/get-unix-time-seconds.helper';
+import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper';
 import { Store } from '@state/store';
 import { StoreState, SyncConfig, SyncStoreTimestamps } from './interfaces';
 import { SyncStateActionId } from './state/actions.const';
@@ -36,7 +36,6 @@ export class ContinousSyncService {
       const timestamps =  this.store.selectProperty<SyncStoreTimestamps>("syncTimestamps");
       return timestamps ? Object.values(timestamps).sort(function(a,b) {return a - b})[0] : 0; 
     }
-
 
     private syncAll = () : void => 
         this.store.dispatch({ actionId: SyncStateActionId })

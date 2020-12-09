@@ -1,7 +1,6 @@
-import { Type } from '@angular/core';
+import { EventEmitter, Type } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Prop } from '@shared-app/prop.type';
 
 export type DisabledObjectMap<T> = { [key in keyof Partial<T>]: boolean };
 
@@ -15,7 +14,7 @@ export type OptionsGetter<T> = T[] | ((state: any) => T[]);
 export interface DynamicForm<TForm, TFormState>{
     initialValue?: Partial<TForm>;
     submitText?: string;
-    controls: (DynamicControlGroup<TForm> | DynamicControl<TForm,TFormState>)[];
+    controls: (DynamicControlGroup<TForm> | DynamicControl<TForm>)[];
     onSubmitFormatter?: (f: TForm, s: TFormState) => TForm;
     getRawValue?: boolean;
     disabledControls?: DisabledObjectMap<TForm>;
@@ -27,17 +26,17 @@ export interface DynamicForm<TForm, TFormState>{
 
 export interface DynamicControlGroup<TForm> {
     type: "group",
-    name?: Prop<TForm>, 
-    controls: (DynamicControl<any, any> | DynamicControlGroup<any>)[],  
+    name?: Extract<keyof TForm, string>, 
+    controls: (DynamicControl<any> | DynamicControlGroup<any>)[],  
     controlGroupComponent?: Type<ControlGroupComponent>,
     label?: string,
     styling?: DynamicControlGroupStyling,
     disabledControls?: DisabledObjectMap<TForm>;
 }
 
-export interface DynamicControl<TForm, TFormState> {
+export interface DynamicControl<TForm> {
     type: "control"
-    name: Prop<TForm>, 
+    name: Extract<keyof TForm, string>, 
     required?: boolean,       
     valueGetter?: ((form: TForm) => any) | any,
     questions?: QuestionWrapper[],
@@ -80,4 +79,10 @@ export interface ControlGroupComponent {
     controlGroup: DynamicControlGroup<any>;
     formConfig: DynamicForm<any, any>;
     nestedNames: string[];
+}
+
+export interface FormComponent<TConfig, TFormState, TResult> {
+    config: TConfig;
+    formState: TFormState;
+    formSubmitted: EventEmitter<TResult>;
 }

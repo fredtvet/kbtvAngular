@@ -1,4 +1,4 @@
-import { _getUnixTimeSeconds } from '@shared-app/helpers/datetime/get-unix-time-seconds.helper'
+import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper'
 import { Reducer, StateAction } from '@state/interfaces'
 import { RefreshTokenResponse } from '../interfaces'
 import { StoreState } from '../interfaces/store-state'

@@ -1,15 +1,15 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { distinctUntilChanged, map, switchMap } from "rxjs/operators";
 import { Model } from "@core/models";
-import { GetWithRelationsConfig } from '@model/helpers/get-with-relations.config';
-import { ModelState } from '@model/interfaces';
+import { ModelState } from '@core/state/model-state.interface';
+import { GetWithRelationsConfig } from '@model/get-with-relations.config';
+import { ModelCommand } from '@model/model-command.enum';
 import { DeleteModelActionId } from '@model/state/delete-model/delete-model-action.const';
-import { ActionType } from '@shared-app/enums';
-import { Prop } from '@shared-app/prop.type';
-import { FormToSaveModelStateCommandAdapter } from '@shared/model-form/adapters/form-to-save-model-state-command.adapter';
+import { Prop } from '@state/interfaces/prop.type';
+import { FormToSaveModelStateCommandAdapter } from '@shared/form-adapters/form-to-save-model-state-command.adapter';
 import { ComponentStore } from '@state/component.store';
 import { Store } from '@state/store';
+import { Observable } from "rxjs";
+import { distinctUntilChanged, map, switchMap } from "rxjs/operators";
 import { ComponentState } from '../interfaces/component-state.interface';
 import { DataConfig } from '../interfaces/data-config.interface';
 import { UpdateSelectedPropertyActionId } from './state/update-selected-property.reducer';
@@ -41,8 +41,8 @@ export class DataManagerFacade  {
     update = (form: Model): void =>
         this.store.dispatch(new FormToSaveModelStateCommandAdapter({
             stateProp: this.selectedProperty, 
-            saveAction: ActionType.Update,
-            formState: form
+            saveAction: ModelCommand.Update,
+            formValue: form
         }))
     
   

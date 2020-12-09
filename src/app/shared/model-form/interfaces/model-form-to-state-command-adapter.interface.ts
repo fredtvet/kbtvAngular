@@ -1,20 +1,17 @@
-import { Prop } from '@shared-app/prop.type';
-import { SaveAction } from '../../save-action.interface';
-import { ModelState } from '@model/interfaces';
+import { SaveAction } from '@model/state/save-model/save-model-action.const';
+import { Prop } from '@state/interfaces/prop.type';
 import { StateAction } from '@state/interfaces';
-import { AdapterConstructor, OptionsFormState } from '../../form/interfaces';
+import { AdapterConstructor } from '../../form/interfaces';
 
-export interface SaveModelFormState<TOptions extends Partial<ModelState>> extends OptionsFormState<TOptions>{ }
-
-export interface ModelFormToSaveModelInput<TFormState> {
-    formState: TFormState,
-    options?: Partial<ModelState>,
-    stateProp: Prop<ModelState>,
+export interface ModelFormToSaveModelInput<TForm, TState> {
+    formValue: TForm,
+    options?: Partial<TState>,
+    stateProp: Prop<TState>,
     saveAction: SaveAction,
 }
 
-export interface ModelFormToSaveStateCommandAdapter<TFormState> 
+export interface ModelFormToSaveStateCommandAdapter<TForm, TState> 
     extends AdapterConstructor<
-        ModelFormToSaveModelInput<TFormState>, 
+        ModelFormToSaveModelInput<TForm, TState>, 
         StateAction
     >{} 

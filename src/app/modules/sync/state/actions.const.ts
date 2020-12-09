@@ -5,7 +5,8 @@ export const SyncStateActionId = "SYNC_STATE";
 
 export const SyncStateSuccessActionId = "SYNC_STATE_SUCCESS";
 export interface SyncStateSuccessAction extends StateAction {
-    response: SyncResponse
+    response: SyncResponse<any>,
+    syncStateConfig: SyncStateConfig<any>,
 }   
 
 export const UpdateSyncConfigActionId = "UPDATE_SYNC_CONFIG"

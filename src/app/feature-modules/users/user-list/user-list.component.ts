@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs';
 import { User } from '@core/models';
 import { ButtonTypes, Roles } from '@shared-app/enums';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { UserPasswordFormState, UserPasswordForm } from '@shared/constants/forms/password-form.const';
-import { UserForm, EditUserForm, CreateUserForm } from '@shared/constants/model-forms/save-user-forms.const';
+import { UserPasswordForm, UserPasswordFormState } from '@shared/constants/forms/password-form.const';
+import { CreateUserForm, EditUserForm, UserForm } from '@shared/constants/model-forms/save-user-forms.const';
 import { FormService } from '@shared/form';
 import { ModelFormService } from '@shared/model-form';
-import { UserFormToSaveModelAdapter } from '../save-user/user-form-to-save-model.adapter';
+import { Observable } from 'rxjs';
 import { UsersFacade } from '../users.facade';
 
 @Component({
@@ -43,7 +42,6 @@ export class UserListComponent {
       entityId: userName, 
       stateProp: "users", 
       dynamicForm: userName ? EditUserForm : CreateUserForm,
-      adapter: UserFormToSaveModelAdapter,
     }});
   }
   

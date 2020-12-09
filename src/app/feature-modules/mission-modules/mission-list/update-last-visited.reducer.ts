@@ -1,4 +1,5 @@
-import { Reducer, StateAction, StateMissions } from '@state/interfaces';
+import { StateMissions } from '@core/state/global-state.interfaces';
+import { Reducer, StateAction } from '@state/interfaces';
 
 export interface UpdateLastVisitedCommand extends StateAction { id: string; }
 

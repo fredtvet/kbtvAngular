@@ -1,4 +1,4 @@
-import { _deepClone } from '@shared-app/helpers/deep-clone.helper';
+import { _deepClone } from './deep-clone.helper'
 import { Reducer, StateAction } from '../interfaces';
 
 export function _reduceStateFunc(reducers: Reducer<any>[], action: StateAction){

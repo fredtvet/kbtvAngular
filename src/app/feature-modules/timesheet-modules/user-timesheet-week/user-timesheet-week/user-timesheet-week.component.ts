@@ -1,23 +1,20 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
-import { combineLatest, Observable } from 'rxjs';
-import { map } from "rxjs/operators";
 import { DeviceInfoService } from '@core/services/device-info.service';
+import { ModelState } from '@core/state/model-state.interface';
 import { _objectToDisabledObjectMap } from '@dynamic-forms/helpers/disabled-control-map.helper';
 import { DynamicForm } from '@dynamic-forms/interfaces';
-import { ModelState } from '@model/interfaces';
-import { _getDateOfWeek } from '@shared-app/helpers/datetime/get-date-of-week.helper';
-import { _getWeekOfYear } from '@shared-app/helpers/datetime/get-week-of-year.helper';
-import { _getWeekRange } from '@shared-app/helpers/datetime/get-week-range.helper';
-import { _getWeeksInYear } from '@shared-app/helpers/datetime/get-weeks-in-year.helper';
+import { _getDateOfWeek } from '@datetime/get-date-of-week.helper';
+import { _getWeekRange } from '@datetime/get-week-range.helper';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { WeekCriteriaForm } from '@shared/constants/forms/week-criteria-controls.const';
 import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
-import { FormService } from '@shared/form';
-import { ModelFormService, SaveModelFormState } from '@shared/model-form';
+import { FormService, OptionsFormState } from '@shared/form';
+import { ModelFormService } from '@shared/model-form';
+import { combineLatest, Observable } from 'rxjs';
+import { map } from "rxjs/operators";
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
-import { UserTimesheetFormToSaveModelAdapter } from '../../shared-timesheet/state/save-user-timesheet/user-timesheet-form-to-save-model.adapter';
 import { UserTimesheetCardDialogWrapperComponent } from './user-timesheet-card-dialog-wrapper.component';
 import { UserTimesheetWeekProviders } from './user-timesheet-week-providers.const';
 import { UserTimesheetWeekFacade } from './user-timesheet-week.facade';
@@ -56,14 +53,13 @@ export class UserTimesheetWeekComponent {
   previousWeek = (): void => this.facade.previousWeek()
 
   openTimesheetForm = (entityId?: string, form?: TimesheetForm): void => {
-    let dynamicForm: DynamicForm<TimesheetForm,  SaveModelFormState<Partial<ModelState>>>;
+    let dynamicForm: DynamicForm<TimesheetForm,  OptionsFormState<Partial<ModelState>>>;
     if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _objectToDisabledObjectMap(form)}
     else dynamicForm = EditUserTimesheetForm
 
     this.modelFormService.open<TimesheetForm>({
       formConfig: {
         dynamicForm: {...dynamicForm, initialValue: form}, entityId,
-        adapter: UserTimesheetFormToSaveModelAdapter, 
         stateProp: "userTimesheets",    
       }, 
     })

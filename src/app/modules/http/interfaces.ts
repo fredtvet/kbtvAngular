@@ -1,5 +1,4 @@
-import { Prop } from '@shared-app/prop.type';
-import { StateCurrentUser } from '@state/interfaces';
+import { Prop } from '@state/interfaces/prop.type';
 
 export interface HttpRequest { 
     apiUrl: string; 
@@ -14,7 +13,7 @@ export interface QueuedCommand {
     dispatched?: boolean 
 };
 
-export interface State extends StateCurrentUser { 
+export interface StateRequestQueue { 
     requestQueue: QueuedCommand[]; 
 };
 

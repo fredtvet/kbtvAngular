@@ -1,23 +1,24 @@
 import { Injectable } from "@angular/core";
-import { combineLatest, Observable } from "rxjs";
-import { map } from "rxjs/operators";
 import { ApiUrl } from '@core/api-url.enum';
 import { Mission } from "@core/models";
-import { GetWithRelationsConfig } from '@model/helpers/get-with-relations.config';
+import { ModelState } from '@core/state/model-state.interface';
+import { SaveModelFileStateCommand } from '@core/state/save-model-file/save-model-file-action.const';
+import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
-import { SaveModelFileStateCommand } from '@model/state/save-model-file/save-model-file-action.const';
+import { ModelCommand } from '@model/model-command.enum';
 import { NotificationService, NotificationType } from '@notification/index';
-import { ActionType } from '@shared-app/enums';
-import { _sortByDate } from '@shared-app/helpers/array/sort-by-date.helper';
+import { _sortByDate } from '@array/sort-by-date.helper';
 import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
 import { MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { ImageFileExtensions } from '@shared/constants/image-file-extensions.const';
+import { FormToSaveModelFileStateCommandAdapter } from '@shared/form-adapters/form-to-save-model-file-state-command.adapter';
 import { MissionCriteria } from '@shared/interfaces';
 import { MissionFilter } from '@shared/mission-filter.model';
-import { FormToSaveModelFileStateCommandAdapter } from '@shared/model-form/adapters/form-to-save-model-file-state-command.adapter';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { ComponentStore } from '@state/component.store';
 import { Store } from '@state/store';
+import { combineLatest, Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { ComponentStoreState, StoreState } from './interfaces/store-state';
 import { SetMissionCriteriaActionId } from './set-mission-criteria.reducer';
 import { UpdateLastVisitedActionId, UpdateLastVisitedCommand } from './update-last-visited.reducer';
@@ -71,10 +72,10 @@ export class MissionListFacade {
           {title: "Filtypen er ikke tillatt.", type: NotificationType.Error}
       );  
 
-    let command: SaveModelFileStateCommand<Mission> = new FormToSaveModelFileStateCommandAdapter({
-      formState: {id, file},
+    let command: SaveModelFileStateCommand<Mission, ModelState> = new FormToSaveModelFileStateCommandAdapter({
+      formValue: {id, file},
       stateProp: "missions",
-      saveAction: ActionType.Update
+      saveAction: ModelCommand.Update
     });
 
     command.apiUrlOverride = `${ApiUrl.Mission}/${id}/UpdateHeaderImage`;

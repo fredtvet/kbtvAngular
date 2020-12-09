@@ -1,4 +1,4 @@
-import { _getUnixTimeSeconds } from '@shared-app/helpers/datetime/get-unix-time-seconds.helper'
+import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper'
 import { Reducer } from '@state/interfaces'
 import { StoreState } from '../../interfaces/store-state'
 import { LoginSuccessActionId, LoginSuccessCommand } from './login-success-command.interface'

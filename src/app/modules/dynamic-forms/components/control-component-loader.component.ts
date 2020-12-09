@@ -6,7 +6,7 @@ import { DynamicHostDirective } from '../dynamic-host.directive';
 import { _getControlObserver$ } from '../helpers/get-control-observer.helper';
 import { ControlGroupComponent, ControlHook, DynamicControl, DynamicControlGroup, DynamicForm, QuestionComponent, QuestionWrapper } from '../interfaces';
 
-export type ValidControl = DynamicControlGroup<any> | DynamicControl<any, any>;
+export type ValidControl = DynamicControlGroup<any> | DynamicControl<any>;
 
 @Directive()
 export abstract class ControlComponentLoaderComponent {
@@ -37,9 +37,9 @@ export abstract class ControlComponentLoaderComponent {
         }
     }
 
-    protected onQuestionComponentInit(componentRef: ComponentRef<QuestionComponent>, control: DynamicControl<any, any>): void {}
+    protected onQuestionComponentInit(componentRef: ComponentRef<QuestionComponent>, control: DynamicControl<any>): void {}
 
-    private loadQuestionComponent(questionWrapper: QuestionWrapper, control: DynamicControl<any, any>, formControl: AbstractControl, formConfig: DynamicForm<any,any>) {
+    private loadQuestionComponent(questionWrapper: QuestionWrapper, control: DynamicControl<any>, formControl: AbstractControl, formConfig: DynamicForm<any,any>) {
         if(formConfig.noRenderDisabledControls && formControl.disabled) return;
         
         const componentRef = this.loadComponent(questionWrapper.component);

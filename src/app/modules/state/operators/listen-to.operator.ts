@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { _deepClone } from '@shared-app/helpers/deep-clone.helper';
+import { _deepClone } from '../helpers/deep-clone.helper'
 import { DispatchedAction } from '../action-dispatcher';
 import { StateAction } from '../interfaces';
 

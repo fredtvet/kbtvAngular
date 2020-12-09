@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { mergeMap, tap } from 'rxjs/operators';
 import { DispatchedAction } from '@state/action-dispatcher';
 import { StateAction } from '@state/interfaces';
 import { Effect } from '@state/interfaces/effect.interface';
 import { listenTo } from '@state/operators/listen-to.operator';
+import { Observable, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 import { SYNC_STATE_CONFIG } from '../injection-tokens.const';
 import { SyncStateConfig } from '../interfaces';
 import { ReloadSyncStateActionId, SyncStateActionId, UpdateSyncConfigCommand, WipeSyncStateActionId } from './actions.const';

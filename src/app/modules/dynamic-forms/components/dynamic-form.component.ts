@@ -3,12 +3,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactory
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, map, startWith, take } from 'rxjs/operators';
-import { _hasSameState } from '@dynamic-forms/helpers/has-same-state.helper';
-import { FormComponent } from '@shared/form';
+import { _hasSameState } from '../helpers/has-same-state.helper';
 import { DynamicFormStore } from '../dynamic-form.store';
 import { DynamicHostDirective } from '../dynamic-host.directive';
 import { _getValidationErrorMessage } from '../helpers/get-validation-error-message.helper';
-import { DisabledObjectMap, DynamicControl, DynamicForm } from '../interfaces';
+import { DisabledObjectMap, DynamicControl, DynamicForm, FormComponent } from '../interfaces';
 import { ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from '../validation-error-map.interface';
 import { ControlComponentLoaderComponent, ValidControl } from './control-component-loader.component';
 import { DynamicControlGroupComponent } from './dynamic-control-group.component';
@@ -134,7 +133,7 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         return formGroup;
     }
 
-    private getControl(control: DynamicControl<any, any>, disabled: boolean): AbstractControl {
+    private getControl(control: DynamicControl<any>, disabled: boolean): AbstractControl {
         const value = 
             control.valueGetter instanceof Function ? control.valueGetter(this._config.initialValue || {}) : control.valueGetter;
   

@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core'
-import { combineLatest, Observable, of } from 'rxjs'
-import { finalize, map, mergeMap, tap } from 'rxjs/operators'
-import { ApiService } from '@core/services/api.service'
+import { HttpClient } from '@angular/common/http'
+import { Inject, Injectable } from '@angular/core'
+import { BASE_API_URL } from '@http/injection-tokens.const'
 import { QueryDispatcher } from '@state/query-dispatcher'
 import { Store } from '@state/store'
-import { ModelConfig, ModelStateConfig } from '../../model-state.config'
+import { combineLatest, Observable, of } from 'rxjs'
+import { finalize, map, mergeMap, tap } from 'rxjs/operators'
+import { ModelConfig } from '../../interfaces'
+import { ModelStateConfig } from '../../model-state.config'
 import { SetFetchedStateActionId, SetFetchedStateCommand } from './set-fetched-state.reducer'
 
 type StateSlice = {[key: string]: any};
@@ -15,7 +17,8 @@ export class ModelFetcherService {
     private pendingProperties: { [key: string]: boolean } = {}
 
     constructor(
-        private apiService: ApiService,
+        private httpClient: HttpClient,
+        @Inject(BASE_API_URL) private baseUrl: string,
         queryDispatcher: QueryDispatcher,
         store: Store<any>,
     ){
@@ -28,7 +31,7 @@ export class ModelFetcherService {
 
                 for(const prop of x.props){
                     if(state[prop] || this.pendingProperties[prop]) continue;
-                    const modelCfg = ModelStateConfig.get(prop as any);
+                    const modelCfg = ModelStateConfig.get(prop);
                     if(this.isFetchable(modelCfg))          
                         fetchers.push(this.getFetcher$(modelCfg, prop))     
                 }  
@@ -44,9 +47,9 @@ export class ModelFetcherService {
         ).subscribe();
     }
 
-    private getFetcher$(modelCfg: ModelConfig<any>, prop: string): Observable<StateSlice>{
+    private getFetcher$(modelCfg: ModelConfig<any, any>, prop: string): Observable<StateSlice>{
         this.pendingProperties[prop] = true;
-        return this.apiService.get(modelCfg.apiUrl).pipe(
+        return this.httpClient.get(this.baseUrl + modelCfg.apiUrl).pipe(
             map(data => {
                 const slice = {};
                 slice[prop] = data;
@@ -62,6 +65,6 @@ export class ModelFetcherService {
         return state;
     }
 
-    private isFetchable = (modelConfig: ModelConfig<any>): boolean => 
+    private isFetchable = (modelConfig: ModelConfig<any, any>): boolean => 
       modelConfig && modelConfig.apiUrl && modelConfig.autoFetch
 }

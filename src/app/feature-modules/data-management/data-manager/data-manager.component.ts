@@ -2,11 +2,9 @@ import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfirmDialogService } from '@core/services/ui/confirm-dialog.service';
-import { ModelState } from '@model/interfaces';
-import { Prop } from '@shared-app/prop.type';
+import { Prop } from '@state/interfaces/prop.type';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { ModelFormService } from '@shared/model-form';
-import { FormToSaveModelStateCommandAdapter } from '@shared/model-form/adapters/form-to-save-model-state-command.adapter';
 import { translations } from '@shared/translations';
 import { STORE_REDUCERS } from '@state/injection-tokens';
 import { ComponentStoreProviders } from '@state/providers.const';
@@ -15,6 +13,8 @@ import { DataManagerFacade } from './data-manager.facade';
 import { DataTableComponent } from './data-table/data-table.component';
 import { PropertyFormMap } from './property-form.map';
 import { UpdateSelectedPropertyReducer } from './state/update-selected-property.reducer';
+import { ModelState } from '@core/state/model-state.interface';
+import { FormToSaveModelStateCommandAdapter } from '@shared/form-adapters/form-to-save-model-state-command.adapter';
 
 type ViewModel = {navConfig: MainTopNavConfig} & DataConfig
 
@@ -68,7 +68,6 @@ constructor(
   private openCreateForm = (): void => {
     this.formService.open({formConfig: {
       stateProp: this.facade.selectedProperty,    
-      adapter: FormToSaveModelStateCommandAdapter,
       dynamicForm: PropertyFormMap[this.facade.selectedProperty]
     }})
   }

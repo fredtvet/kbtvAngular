@@ -1,18 +1,10 @@
 import { Injectable } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { Observable, of } from 'rxjs';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
 import { DynamicFormComponent } from '@dynamic-forms/components/dynamic-form.component';
 import { DynamicForm } from '@dynamic-forms/interfaces';
-import { FormSheetWrapperConfig } from './interfaces';
-
-export interface FormServiceConfig<TForm, TFormState>{
-  formConfig: DynamicForm<TForm, TFormState>, 
-  navConfig: MainTopNavConfig,
-  formState?: TFormState | Observable<TFormState>,
-  submitCallback?: (val: TForm) => void
-}
+import { Observable, of } from 'rxjs';
+import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
+import { FormServiceConfig, FormSheetWrapperConfig } from './interfaces';
 
 @Injectable({ providedIn: "any" })
 export class FormService {

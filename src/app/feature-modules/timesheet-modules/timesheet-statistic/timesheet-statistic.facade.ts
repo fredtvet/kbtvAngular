@@ -9,7 +9,6 @@ import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-cr
 import { GroupByPeriod } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { ComponentStore } from '@state/component.store';
-import { StateMissions, StateUsers } from '@state/interfaces';
 import { Store } from '@state/store';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { TimesheetSummaryAggregator } from '../shared-timesheet/services/timesheet-summary.aggregator';
@@ -19,6 +18,7 @@ import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timeshee
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { ComponentStoreState, StoreState } from './store-state';
 import { SetGroupByActionId } from './timesheet-statistic/component-state-reducers';
+import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
 
 type Record = Timesheet | TimesheetSummary;
 

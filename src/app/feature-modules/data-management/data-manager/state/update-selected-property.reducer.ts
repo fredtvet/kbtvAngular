@@ -1,5 +1,5 @@
-import { ModelState } from '@model/interfaces';
-import { Prop } from '@shared-app/prop.type';
+import { ModelState } from '@core/state/model-state.interface';
+import { Prop } from '@state/interfaces/prop.type';
 import { Reducer, StateAction } from '@state/interfaces';
 import { ComponentState } from '../../interfaces/component-state.interface';
 

@@ -1,20 +1,20 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from "rxjs";
-import { map } from 'rxjs/operators';
 import { Timesheet } from '@core/models';
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
+import { ModelState } from '@core/state/model-state.interface';
 import { _objectToDisabledObjectMap } from '@dynamic-forms/helpers/disabled-control-map.helper';
 import { DynamicForm } from '@dynamic-forms/interfaces';
-import { ModelState } from '@model/interfaces';
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from '@shared-app/interfaces';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetCriteriaForm, TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
-import { FormService } from '@shared/form';
-import { ModelFormService, SaveModelFormState } from '@shared/model-form';
+import { FormService, OptionsFormState } from '@shared/form';
+import { ModelFormService } from '@shared/model-form';
+import { Observable } from "rxjs";
+import { map } from 'rxjs/operators';
 import { UserTimesheetFormToSaveModelAdapter } from '../../shared-timesheet/state/save-user-timesheet/user-timesheet-form-to-save-model.adapter';
 import { TimesheetCriteriaChipOptions } from '../../shared-timesheet/timesheet-filter/timesheet-criteria-chip-options.const';
 import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
@@ -63,14 +63,13 @@ export class UserTimesheetListComponent {
   ) {}
   
   openTimesheetForm = (entityId?: string, initialValue?: TimesheetForm): void => {
-    let dynamicForm: DynamicForm<TimesheetForm, SaveModelFormState<Partial<ModelState>>>;
+    let dynamicForm: DynamicForm<TimesheetForm, OptionsFormState<Partial<ModelState>>>;
     if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _objectToDisabledObjectMap(initialValue)}
     else dynamicForm = EditUserTimesheetForm
 
     this.modelFormService.open<TimesheetForm>({
       formConfig:{
         dynamicForm: {...dynamicForm, initialValue}, entityId,
-        adapter: UserTimesheetFormToSaveModelAdapter, 
         stateProp: "userTimesheets",  
       }
     })

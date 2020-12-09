@@ -1,7 +1,8 @@
 import { MissionImage } from '@core/models';
-import { _addOrUpdateRange } from '@shared-app/helpers/array/add-or-update-range.helper';
-import { Reducer, StateMissionImages } from '@state/interfaces';
+import { _addOrUpdateRange } from '@array/add-or-update-range.helper';
+import { Reducer } from '@state/interfaces';
 import { CreateMissionImagesActionId, CreateMissionImagesStateCommand } from './create-mission-images-state-command.interface';
+import { StateMissionImages } from '@core/state/global-state.interfaces';
 
 export const CreateMissionImagesReducer: Reducer<StateMissionImages> = {
     actionId: CreateMissionImagesActionId,

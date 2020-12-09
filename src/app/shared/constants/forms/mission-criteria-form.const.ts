@@ -1,6 +1,6 @@
 import { Mission, MissionType } from '@core/models';
+import { StateMissions, StateEmployers, StateMissionTypes } from '@core/state/global-state.interfaces';
 import { DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
-import { StateMissions, StateEmployers, StateMissionTypes } from '@state/interfaces';
 import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { RadioGroupQuestionComponent, RadioGroupQuestion } from '../../components/dynamic-form-questions/radio-group-question.component';
@@ -15,7 +15,7 @@ export interface MissionCriteriaFormState
 
 type FormState = MissionCriteriaFormState;
 
-const SearchStringControl = <DynamicControl<MissionCriteria, FormState>>{ name: "searchString", 
+const SearchStringControl = <DynamicControl<MissionCriteria>>{ name: "searchString", 
     valueGetter: (s: MissionCriteria) => s.searchString,
     type: "control", questions: [{
         component:  AutoCompleteQuestionComponent,
@@ -29,7 +29,7 @@ const SearchStringControl = <DynamicControl<MissionCriteria, FormState>>{ name: 
         }, 
     }], 
 }
-const MissionTypeControl = <DynamicControl<MissionCriteria, FormState>>{ name: "missionType",
+const MissionTypeControl = <DynamicControl<MissionCriteria>>{ name: "missionType",
     valueGetter: (s: MissionCriteria) => s.missionType,
     type: "control", questions: [{
         component:  SelectQuestionComponent,
@@ -41,7 +41,7 @@ const MissionTypeControl = <DynamicControl<MissionCriteria, FormState>>{ name: "
         }, 
     }], 
 }
-const FinishedControl = <DynamicControl<MissionCriteria, FormState>>{ name: "finished",
+const FinishedControl = <DynamicControl<MissionCriteria>>{ name: "finished",
     valueGetter: (s: MissionCriteria) => s.finished, 
     type: "control", questions: [{
         component:  RadioGroupQuestionComponent,

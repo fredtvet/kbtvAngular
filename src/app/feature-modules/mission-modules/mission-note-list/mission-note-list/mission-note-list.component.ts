@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MissionNote } from '@core/models';
 import { RolePresets } from '@shared-app/enums';
-import { _sortByDate } from '@shared-app/helpers/array/sort-by-date.helper';
+import { _sortByDate } from '@array/sort-by-date.helper';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from '@shared-app/interfaces';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';

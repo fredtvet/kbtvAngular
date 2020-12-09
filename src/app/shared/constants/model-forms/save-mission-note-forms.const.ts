@@ -6,14 +6,14 @@ import { TextAreaQuestionComponent, TextAreaQuestion } from '../../components/dy
 import { HiddenIdControl, HiddenMissionIdControl } from '../common-controls.const';
 import { ValidationRules } from '../validation-rules.const';
 
-const TitleControl = <DynamicControl<MissionNote, any>>{ name: "title", 
+const TitleControl = <DynamicControl<MissionNote>>{ name: "title", 
     type: "control", valueGetter: (s: MissionNote) => s?.title, questions: [{
         component:  InputQuestionComponent,
         question: <InputQuestion>{placeholder: "Tittel"}, 
     }], 
     validators: [Validators.maxLength(ValidationRules.MissionNoteTitleMaxLength)] 
 }
-const ContentControl = <DynamicControl<MissionNote, any>>{ name: "content", required: true,
+const ContentControl = <DynamicControl<MissionNote>>{ name: "content", required: true,
     type: "control", valueGetter: (s: MissionNote) => s?.content, questions: [{
         component:  TextAreaQuestionComponent,
         question: <TextAreaQuestion>{placeholder: "Beskrivelse", minRows: 4}, 

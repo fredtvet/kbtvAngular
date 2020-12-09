@@ -4,7 +4,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { Timesheet, User } from '@core/models';
 import { LoadingService } from '@core/services/loading.service';
-import { _getWeekOfYear } from '@shared-app/helpers/datetime/get-week-of-year.helper';
+import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';

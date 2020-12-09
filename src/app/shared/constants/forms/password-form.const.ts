@@ -8,7 +8,7 @@ interface PasswordForm { newPassword: string, confirmPassword: string }
 
 export interface CurrentUserPasswordFormState extends PasswordForm { oldPassword: string }
 
-const NewPasswordControl = <DynamicControl<PasswordForm, any>>{ name: "newPassword", required: true,
+const NewPasswordControl = <DynamicControl<PasswordForm>>{ name: "newPassword", required: true,
     type: "control", questions: [{
         component:  InputQuestionComponent,
         question: <InputQuestion>{ 
@@ -17,7 +17,7 @@ const NewPasswordControl = <DynamicControl<PasswordForm, any>>{ name: "newPasswo
     }],
     validators: [Validators.minLength(7)] 
 }
-const ConfirmPasswordControl = <DynamicControl<PasswordForm, any>>{ name: "confirmPassword", required: true,
+const ConfirmPasswordControl = <DynamicControl<PasswordForm>>{ name: "confirmPassword", required: true,
     type: "control", questions: [{
         component:  InputQuestionComponent,
         question: <InputQuestion>{ 
@@ -28,7 +28,7 @@ const ConfirmPasswordControl = <DynamicControl<PasswordForm, any>>{ name: "confi
 
 export const CurrentUserPasswordForm: DynamicForm<CurrentUserPasswordFormState, any> = {
     submitText: "Oppdater", controls: [
-        <DynamicControl<CurrentUserPasswordFormState, any>>{ name: "oldPassword", required: true,
+        <DynamicControl<CurrentUserPasswordFormState>>{ name: "oldPassword", required: true,
             type: "control", questions: [{
                 component:  InputQuestionComponent,
                 question: <InputQuestion>{ 

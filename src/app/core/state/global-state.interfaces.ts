@@ -8,7 +8,6 @@ export interface StateMissionDocuments { missionDocuments: MissionDocument[] }
 export interface StateMissionNotes { missionNotes: MissionNote[] }
 export interface StateDocumentTypes { documentTypes: AppDocumentType[] }
 export interface StateUserTimesheets { userTimesheets: Timesheet[] }
-export interface StateSyncConfig { syncConfig: any }
 export interface StateCurrentUser { currentUser: User }
 export interface StateUsers { users: User[] }
 export interface StateInboundEmailPassword { inboundEmailPasswords: User[] }

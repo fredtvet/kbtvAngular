@@ -1,5 +1,5 @@
+import { StateUsers } from '@core/state/global-state.interfaces';
 import { DynamicForm, DynamicControl } from '@dynamic-forms/interfaces';
-import { StateUsers } from '@state/interfaces';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { InputQuestionComponent, InputQuestion } from '../../components/dynamic-form-questions/input-question.component';
 import { IonDateQuestionComponent, IonDateQuestion } from '../../components/dynamic-form-questions/ion-date-time-question.component';
@@ -13,7 +13,7 @@ type FormState = WeekCriteriaFormState;
 export const WeekCriteriaForm: DynamicForm<WeekCriteria, FormState> = {
     submitText: "Bruk", controls: [
         {...UserSelectControl, required: true},
-        <DynamicControl<WeekCriteria, any>>{ name: "year", required: true,
+        <DynamicControl<WeekCriteria>>{ name: "year", required: true,
             type: "control", valueGetter: (s: WeekCriteria) => s.year, questions: [{
                 component:  IonDateQuestionComponent,
                 question: <IonDateQuestion>{ 
@@ -23,7 +23,7 @@ export const WeekCriteriaForm: DynamicForm<WeekCriteria, FormState> = {
                 }, 
             }], 
         },
-        <DynamicControl<WeekCriteria, any>>{ name: "weekNr", required: true,
+        <DynamicControl<WeekCriteria>>{ name: "weekNr", required: true,
             type: "control", valueGetter: (s: WeekCriteria) => s.weekNr, questions: [{
                 component:  InputQuestionComponent,      
                 hideOnValueChange: {controlName: "weekNr", callback: (val: number) => val == null},

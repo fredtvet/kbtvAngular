@@ -1,9 +1,9 @@
 import { User } from '@core/models';
 import { DateRangePresets } from '@shared-app/enums';
-import { _getDateOfWeek } from '@shared-app/helpers/datetime/get-date-of-week.helper';
-import { _getWeekRange } from '@shared-app/helpers/datetime/get-week-range.helper';
-import { _getYearRange } from '@shared-app/helpers/datetime/get-year-range.helper';
-import { DateRange } from '@shared/interfaces/date-range.interface';
+import { _getDateOfWeek } from '@datetime/get-date-of-week.helper';
+import { _getWeekRange } from '@datetime/get-week-range.helper';
+import { _getYearRange } from '@datetime/get-year-range.helper';
+import { DateRange } from '@datetime/interfaces';
 import { WeekCriteria } from '../interfaces/week-criteria.interface';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
 

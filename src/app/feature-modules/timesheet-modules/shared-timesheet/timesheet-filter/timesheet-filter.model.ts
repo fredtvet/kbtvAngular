@@ -1,7 +1,7 @@
 import { Timesheet } from '@core/models';
 import { ModelStateConfig } from '@model/model-state.config';
 import { DataFilter } from '@shared/data.filter';
-import { DateRange } from '@shared/interfaces/date-range.interface';
+import { DateRange } from '@datetime/interfaces';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
 
 export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
@@ -54,7 +54,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         if(modelCfg && value[modelCfg.identifier] !== baseValue[modelCfg.identifier]) 
             return false
 
-        else if(!modelCfg && value !== baseValue) return false;
+        if(!modelCfg && value !== baseValue) return false;
         
         return true
     }

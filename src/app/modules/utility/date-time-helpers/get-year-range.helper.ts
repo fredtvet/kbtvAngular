@@ -1,4 +1,4 @@
-import { DateRange } from '@shared/interfaces/date-range.interface';
+import { DateRange } from './interfaces';;
 import { _getFirstDayOfYear } from './get-first-day-of-year.helper';
 import { _getLastDayOfYear } from './get-last-day-of-year.helper';
 

@@ -3,7 +3,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Timesheet, User } from '@core/models';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
-import { _find } from '@shared-app/helpers/array/find.helper';
+import { _find } from '@array/find.helper';
 import { WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { GroupByPeriod, TimesheetStatus } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';

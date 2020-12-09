@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map } from 'rxjs/operators';
-import { _find } from '@shared-app/helpers/array/find.helper';
+import { _find } from '@array/find.helper';
 import { Store } from '@state/store';
 import { StoreState } from '../store-state.interface';
 import { UserTimesheetWeekFacade } from './user-timesheet-week.facade';

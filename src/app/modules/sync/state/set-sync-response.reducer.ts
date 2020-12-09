@@ -1,22 +1,20 @@
-import { ModelStateConfig } from '@model/model-state.config';
-import { _addOrUpdateRange } from '@shared-app/helpers/array/add-or-update-range.helper';
-import { _removeRangeByIdentifier } from '@shared-app/helpers/array/remove-range-by-identifier.helper';
+import { _addOrUpdateRange } from '@array/add-or-update-range.helper';
+import { _removeRangeByIdentifier } from '@array/remove-range-by-identifier.helper';
 import { Reducer } from '@state/interfaces';
 import { StoreState } from '../interfaces';
-import { SyncStateConfig } from '@shared-app/const/sync-state.config';
 import { SyncStateSuccessAction, SyncStateSuccessActionId } from './actions.const';
 
 export const SetSyncResponseReducer: Reducer<any> = {
     actionId: SyncStateSuccessActionId, noDeepCloneAction: true, noDeepCloneState: true,
-    stateProperties: Object.keys(SyncStateConfig),
+    stateProperties: (action: SyncStateSuccessAction) => Object.keys(action.syncStateConfig),
     // stateProperties: (action: SyncStateSuccessAction) => Object.keys(action.response), //Krever samme navn på response & state props
     // stateProperties: , //bruk action && set sync states + evnt statiske sjekk dfuncjonene
     reducerFn: (unclonedState: StoreState, action: SyncStateSuccessAction): any => {
         const state = {...unclonedState, syncTimestamps: {}};
-        for(const prop in SyncStateConfig){
+        for(const prop in action.syncStateConfig){
 
-            const propCfg = SyncStateConfig[prop];
-            const propResponse = action.response[propCfg.responseKey];
+            const propCfg = action.syncStateConfig[prop] as any; //Replace with new logic
+            const propResponse = action.response[propCfg.responseKey]; //Bruk prop etterhvert
 
             if(!propResponse) continue;
 
@@ -27,7 +25,7 @@ export const SetSyncResponseReducer: Reducer<any> = {
                 continue;
             }
 
-            const id = ModelStateConfig.get(prop as any)?.identifier;
+            const id = action.syncStateConfig[prop]?.identifier;
 
             if(propResponse.deletedEntities?.length)
                 state[prop] = 

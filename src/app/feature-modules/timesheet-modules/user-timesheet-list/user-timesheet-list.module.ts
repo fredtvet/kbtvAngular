@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { DeleteModelProviders } from '@model/state/providers.const';
+import { UserTimesheetFormToSaveModelAdapter } from '@shared-timesheet/state/save-user-timesheet/user-timesheet-form-to-save-model.adapter';
 import { ModelFormModule } from '@shared/model-form/model-form.module';
 import { StateModule } from '@state/state.module';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
@@ -19,7 +20,7 @@ import { UserTimesheetListComponent } from './user-timesheet-list/user-timesheet
   ],
   imports: [
     SharedTimesheetModule,
-    ModelFormModule,
+    ModelFormModule.forFeature(UserTimesheetFormToSaveModelAdapter),
     StateModule,
     UserTimesheetListRoutingModule,
   ]

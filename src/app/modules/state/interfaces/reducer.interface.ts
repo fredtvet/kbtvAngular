@@ -1,4 +1,4 @@
-import { Prop } from '@shared-app/prop.type';
+import { Prop } from './prop.type';
 import { StateAction } from './state-action.interface';
 
 export type ReducerFn<TState, TAction> = (state: Partial<TState>, action: TAction) => Partial<TState>

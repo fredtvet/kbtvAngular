@@ -2,9 +2,9 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { MissionNote } from "@core/models";
-import { _filter } from '@shared-app/helpers/array/filter.helper';
-import { StateMissionNotes } from '@state/interfaces';
+import { _filter } from '@array/filter.helper';
 import { Store } from '@state/store';
+import { StateMissionNotes } from '@core/state/global-state.interfaces';
 
 @Injectable({
   providedIn: 'any',

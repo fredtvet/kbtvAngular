@@ -12,10 +12,10 @@ import { AppButton } from '@shared-app/interfaces';
 import { SelectableListContainerComponent } from '@shared/components/abstracts/selectable-list-container.component';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EmailForm } from '@shared/constants/forms/email-form.const';
-import { CreateMissionDocumentForm } from '@shared/constants/model-forms/create-mission-document-form.const';
+import { CreateMissionDocumentForm, MissionDocumentForm } from '@shared/constants/model-forms/create-mission-document-form.const';
 import { FormService } from '@shared/form';
+import { FormToSaveModelFileStateCommandAdapter } from '@shared/form-adapters/form-to-save-model-file-state-command.adapter';
 import { ModelFormService } from '@shared/model-form';
-import { FormToSaveModelFileStateCommandAdapter } from '@shared/model-form/adapters/form-to-save-model-file-state-command.adapter';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MissionDocumentListFacade } from '../mission-document-list.facade';
@@ -99,10 +99,9 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     if(!window.navigator.onLine)
       return this.notificationService.notify(AppNotifications.OnlineRequired)
 
-    this.modelFormService.open({
+    this.modelFormService.open<MissionDocumentForm>({
       formConfig: {
         dynamicForm: {...CreateMissionDocumentForm, initialValue: {missionId: this.missionId}},
-        adapter: FormToSaveModelFileStateCommandAdapter,
         stateProp: "missionDocuments",
       }
     });

@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { User } from "@core/models";
 import { Roles } from '@shared-app/enums';
-import { _groupBy } from '@shared-app/helpers/array/group-by.helper';
+import { _groupBy } from '@array/group-by.helper';
 import { Store } from '@state/store';
 import { StoreState } from './store-state';
 import { UpdateUserPasswordActionId, UpdateUserPasswordCommand } from './update-user-password.http.effect';

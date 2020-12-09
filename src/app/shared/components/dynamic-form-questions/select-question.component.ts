@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { DynamicFormStore } from '@dynamic-forms/dynamic-form.store';
 import { Question, OptionsGetter, QuestionComponent } from '@dynamic-forms/interfaces';
 import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '@dynamic-forms/validation-error-map.interface';
-import { Prop } from '@shared-app/prop.type';
+import { Prop } from '@state/interfaces/prop.type';
 import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.component';
 
 export interface SelectQuestion<T> extends Question {

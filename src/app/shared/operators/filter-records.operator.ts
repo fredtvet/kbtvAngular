@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { _filter } from '@shared-app/helpers/array/filter.helper';
+import { _filter } from '@array/filter.helper';
 import { DataFilterConstructor } from '@shared/data.filter';
 import { FilteredResponse } from '@shared/interfaces';
 

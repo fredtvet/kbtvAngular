@@ -3,8 +3,8 @@ import { Employer, Mission, MissionChild, User } from '@core/models';
 import { IAddress } from '@core/models/sub-interfaces/iaddress.interface';
 import { IId } from '@core/models/sub-interfaces/iid.interface';
 import { IName } from '@core/models/sub-interfaces/iname.interface';
+import { StateMissions, StateEmployers, StateUsers } from '@core/state/global-state.interfaces';
 import { DynamicControl } from '@dynamic-forms/interfaces';
-import { StateMissions, StateEmployers, StateUsers } from '@state/interfaces';
 import { AutoCompleteQuestionComponent } from '../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { GooglePlacesAutoCompleteQuestionComponent, GooglePlacesAutoCompleteQuestion } from '../components/dynamic-form-questions/google-places-autocomplete-question.component';
@@ -15,13 +15,13 @@ import { OptionsFormState } from '../form/interfaces';
 import { isObjectValidator } from '../form/validators/is-object.validator';
 import { ValidationRules } from './validation-rules.const';
 
-export const HiddenIdControl = <DynamicControl<IId, any>>{ name: "id", required: true,
+export const HiddenIdControl = <DynamicControl<IId>>{ name: "id", required: true,
     type: "control", valueGetter: (s: IId) => s.id,         
 }
-export const HiddenMissionIdControl = <DynamicControl<MissionChild, any>>{ name: "missionId", required: true,
+export const HiddenMissionIdControl = <DynamicControl<MissionChild>>{ name: "missionId", required: true,
     type: "control", valueGetter: (s: MissionChild) => s.missionId,         
 }
-export const PhoneNumberControl = <DynamicControl<{phoneNumber: string}, any>>{ name: "phoneNumber", 
+export const PhoneNumberControl = <DynamicControl<{phoneNumber: string}>>{ name: "phoneNumber", 
     type: "control", valueGetter: (s: {phoneNumber: string}) => s?.phoneNumber, 
     questions: [{
         component:  InputQuestionComponent,
@@ -32,7 +32,7 @@ export const PhoneNumberControl = <DynamicControl<{phoneNumber: string}, any>>{ 
         Validators.maxLength(ValidationRules.PhoneNumberMaxLength)
     ] 
 }
-export const EmailControl = <DynamicControl<{email: string}, any>>{ name: "email", 
+export const EmailControl = <DynamicControl<{email: string}>>{ name: "email", 
     type: "control", valueGetter: (s: {email: string}) => s?.email, 
     questions: [{
         component:  InputQuestionComponent,
@@ -40,7 +40,7 @@ export const EmailControl = <DynamicControl<{email: string}, any>>{ name: "email
     }], 
     validators: [Validators.email] 
 }
-export const GoogleAddressControl = <DynamicControl<IAddress, any>>{ name: "address",
+export const GoogleAddressControl = <DynamicControl<IAddress>>{ name: "address",
     type: "control", valueGetter: (s: IAddress) => s?.address, questions: [{
         component:  GooglePlacesAutoCompleteQuestionComponent,
         question: <GooglePlacesAutoCompleteQuestion>{
@@ -51,28 +51,28 @@ export const GoogleAddressControl = <DynamicControl<IAddress, any>>{ name: "addr
     }], 
     validators: [Validators.maxLength(ValidationRules.AddressMaxLength)] 
 }
-export const NameControl = <DynamicControl<IName, any>>{ name: "name",
+export const NameControl = <DynamicControl<IName>>{ name: "name",
     type: "control", valueGetter: (s: IName) => s?.name, questions: [{
         component:  InputQuestionComponent,
         question: <InputQuestion>{placeholder: "Navn"}, 
     }], 
     validators: [Validators.maxLength(ValidationRules.NameMaxLength)] 
 }
-export const FirstNameControl = <DynamicControl<{firstName: string}, any>>{ name: "firstName",
+export const FirstNameControl = <DynamicControl<{firstName: string}>>{ name: "firstName",
     type: "control", valueGetter: (s: {firstName: string}) => s?.firstName, 
     questions: [{
         component:  InputQuestionComponent,
         question: <InputQuestion>{placeholder: "Fornavn"}, 
     }], 
 }
-export const LastNameControl = <DynamicControl<{lastName: string}, any>>{ name: "lastName",
+export const LastNameControl = <DynamicControl<{lastName: string}>>{ name: "lastName",
     type: "control", valueGetter: (s: {lastName: string}) => s?.lastName, 
     questions: [{
         component:  InputQuestionComponent,
         question: <InputQuestion>{placeholder: "Etternavn"}, 
     }], 
 }
-export const MissionAutoCompleteControl = <DynamicControl<{mission: Mission}, OptionsFormState<StateMissions>>>{ name: "mission", 
+export const MissionAutoCompleteControl = <DynamicControl<{mission: Mission}>>{ name: "mission", 
     valueGetter: (s: {mission: Mission}) => s.mission,
     type: "control", questions: [{
         component:  AutoCompleteQuestionComponent,
@@ -87,7 +87,7 @@ export const MissionAutoCompleteControl = <DynamicControl<{mission: Mission}, Op
     }],
     validators: [isObjectValidator()], 
 }
-export const EmployerSelectControl = <DynamicControl<{employer: Employer}, OptionsFormState<StateEmployers>>>{ name: "employer",
+export const EmployerSelectControl = <DynamicControl<{employer: Employer}>>{ name: "employer",
     valueGetter: (s: {employer: Employer}) => s.employer,
     type: "control", questions: [{
         component:  SelectQuestionComponent,
@@ -99,7 +99,7 @@ export const EmployerSelectControl = <DynamicControl<{employer: Employer}, Optio
         }, 
     }], 
 }
-export const UserSelectControl = <DynamicControl<{user: User}, OptionsFormState<StateUsers>>>{ name: "user",
+export const UserSelectControl = <DynamicControl<{user: User}>>{ name: "user",
     type: "control", valueGetter: (s: {user: User}) => s.user, questions: [{
         component:  SelectQuestionComponent,
         question: <SelectQuestion<User>>{
@@ -110,7 +110,7 @@ export const UserSelectControl = <DynamicControl<{user: User}, OptionsFormState<
         }, 
     }], 
 } 
-export const UserNameControl = <DynamicControl<{userName: string}, any>>{ name: "userName", 
+export const UserNameControl = <DynamicControl<{userName: string}>>{ name: "userName", 
     type: "control", valueGetter: (s: {userName: string}) => s?.userName, questions: [{
         component:  InputQuestionComponent,
         question: <InputQuestion>{placeholder: "Brukernavn"}, 

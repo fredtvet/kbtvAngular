@@ -1,6 +1,7 @@
 
-import { _addOrUpdateRange } from '@shared-app/helpers/array/add-or-update-range.helper';
-import { Reducer, StateTimesheets } from '@state/interfaces';
+import { _addOrUpdateRange } from '@array/add-or-update-range.helper';
+import { StateTimesheets } from '@core/state/global-state.interfaces';
+import { Reducer } from '@state/interfaces';
 import { UpdateStatusesActionId, UpdateStatusesStateCommand } from './update-statuses-state-command.interface';
 
 export const UpdateStatusesReducer: Reducer<StateTimesheets> = {

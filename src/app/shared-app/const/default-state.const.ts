@@ -1,4 +1,4 @@
-import { StateSyncConfig } from '@state/interfaces';
+import { StateSyncConfig } from '@sync/interfaces';
 
 export const DefaultState: StateSyncConfig = {
     syncConfig: {

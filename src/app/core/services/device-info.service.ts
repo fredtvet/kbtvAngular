@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { fromEvent, Observable, merge, Observer, combineLatest } from 'rxjs';
+import { fromEvent, Observable, merge, combineLatest, of } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
@@ -18,10 +18,12 @@ export class DeviceInfoService {
   isOnline$ = merge<boolean>(
     fromEvent(window, 'offline').pipe(map(() => false)),
     fromEvent(window, 'online').pipe(map(() => true)),
-      new Observable((sub: Observer<boolean>) => {
-        sub.next(navigator.onLine);
-        sub.complete();
-    }));
+    of(navigator.onLine),
+    // new Observable((sub: Observer<boolean>) => {
+    //   sub.next(navigator.onLine);
+    //   sub.complete();
+    // })
+  );
 
   isXs$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.XSmall)
     .pipe(

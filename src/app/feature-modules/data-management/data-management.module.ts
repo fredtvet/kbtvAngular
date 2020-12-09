@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DeleteModelProviders, SaveModelProviders } from '@model/state/providers.const';
+import { FormToSaveModelStateCommandAdapter } from '@shared/form-adapters/form-to-save-model-state-command.adapter';
 import { ModelFormModule } from '@shared/model-form/model-form.module';
 import { SharedModule } from '@shared/shared.module';
 import { StateModule } from '@state/state.module';
@@ -20,7 +21,7 @@ import { DataTableComponent } from './data-manager/data-table/data-table.compone
     SharedModule,
     FormsModule,
     StateModule,
-    ModelFormModule,
+    ModelFormModule.forFeature(FormToSaveModelStateCommandAdapter),
     DataManagementRoutingModule,
     AppAgGridModule,
   ],

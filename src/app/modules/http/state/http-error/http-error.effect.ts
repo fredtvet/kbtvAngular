@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NotificationService, NotificationType } from '@notification/index';
 import { DispatchedAction } from '@state/action-dispatcher';
 import { Effect } from '@state/interfaces/effect.interface';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { HttpErrorActionId, HttpErrorCommand } from './http-error-command.interface';
+import { NotificationService, NotificationType } from '@notification/index';
 
 @Injectable()
 export class HttpErrorEffect implements Effect<HttpErrorCommand> {

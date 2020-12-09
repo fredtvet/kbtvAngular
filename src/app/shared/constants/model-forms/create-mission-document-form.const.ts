@@ -1,16 +1,16 @@
 import { Validators } from '@angular/forms';
 import { AppDocumentType, MissionDocument } from '@core/models';
+import { StateDocumentTypes } from '@core/state/global-state.interfaces';
 import { DynamicControlGroup, DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
-import { StateDocumentTypes } from '@state/interfaces';
+import { OptionsFormState } from '@shared/form';
 import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { FileQuestionComponent } from '../../components/dynamic-form-questions/file-question.component';
 import { fileExtensionValidator } from '../../form/validators/file-extension.validator';
-import { SaveModelFormState } from '../../model-form';
 import { HiddenMissionIdControl } from '../common-controls.const';
 import { DocumentFileExtensions } from '../document-file-extensions.const';
 
-type FormState = SaveModelFormState<StateDocumentTypes>;
+type FormState = OptionsFormState<StateDocumentTypes>;
 
 export interface MissionDocumentForm extends Partial<MissionDocument>{
     missionId: string;
@@ -20,7 +20,7 @@ export interface MissionDocumentForm extends Partial<MissionDocument>{
 
 const DocumentTypeControl = <DynamicControlGroup<MissionDocumentForm>>{ name: "documentType",
     type: "group", controls: [
-    <DynamicControl<AppDocumentType, FormState>>{ name: "name", required: true,
+    <DynamicControl<AppDocumentType>>{ name: "name", required: true,
         type: "control", questions: [{
             component:  AutoCompleteQuestionComponent,
             question: <AutoCompleteQuestion<AppDocumentType>>{
@@ -35,7 +35,7 @@ const DocumentTypeControl = <DynamicControlGroup<MissionDocumentForm>>{ name: "d
         validators: [Validators.maxLength(45)]
     }],
 }
-const FileControl = <DynamicControl<MissionDocumentForm, any>>{ name: "file", required: true,
+const FileControl = <DynamicControl<MissionDocumentForm>>{ name: "file", required: true,
     type: "control", questions: [{
         component:  FileQuestionComponent, question: {}
     }],

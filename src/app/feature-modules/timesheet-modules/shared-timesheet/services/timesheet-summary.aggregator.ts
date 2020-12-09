@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Timesheet } from '@core/models';
 import { GroupByPeriod } from '@shared/enums/group-by-period.enum';
 import { TimesheetStatus } from '@shared/enums/timesheet-status.enum';
-import { _getWeekAndYearFromDate } from '@shared-app/helpers/datetime/get-week-and-year-from-date.helper';
-import { _getWeekOfYear } from '@shared-app/helpers/datetime/get-week-of-year.helper';
+import { _getWeekAndYearFromDate } from '@datetime/get-week-and-year-from-date.helper';
+import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
 import { TimesheetSummary } from '../interfaces/timesheet-summary.interface';
 
 @Injectable({

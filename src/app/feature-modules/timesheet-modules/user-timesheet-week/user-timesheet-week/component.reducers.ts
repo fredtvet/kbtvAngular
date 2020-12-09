@@ -1,5 +1,5 @@
 import { StoreState } from '@core/services/auth/interfaces/store-state';
-import { _getWeeksInYear } from '@shared-app/helpers/datetime/get-weeks-in-year.helper';
+import { _getWeeksInYear } from '@datetime/get-weeks-in-year.helper';
 import { StateAction, Reducer } from '@state/interfaces';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { WeekToTimesheetCriteriaAdapter } from '../../shared-timesheet/timesheet-filter/week-to-timesheet-criteria.adapter';

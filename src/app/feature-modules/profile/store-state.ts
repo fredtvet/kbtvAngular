@@ -1,8 +1,4 @@
-import { SyncConfig } from '@sync/interfaces';
-import { StateCurrentUser, StateSyncConfig } from '@state/interfaces';
+import { StateCurrentUser } from '@core/state/global-state.interfaces';
+import { StateSyncConfig } from '@sync/interfaces';
 
-export interface StoreState extends 
-    StateCurrentUser,
-    StateSyncConfig {
-        syncConfig: SyncConfig
-} 
+export interface StoreState extends StateCurrentUser, StateSyncConfig {} 

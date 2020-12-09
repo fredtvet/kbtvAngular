@@ -3,9 +3,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Mission } from '@core/models';
 import { RolePresets } from '@shared-app/enums';
-import { _sortByDate } from '@shared-app/helpers/array/sort-by-date.helper';
-import { StateMissions } from '@state/interfaces';
+import { _sortByDate } from '@array/sort-by-date.helper';
 import { Store } from '@state/store';
+import { StateMissions } from '@core/state/global-state.interfaces';
 
 @Component({
   selector: 'app-home',

@@ -3,4 +3,3 @@ export * from './roles.enum';
 export * from './date-range-presets.enum';
 export * from './lazy-styles.enum';
 export * from './button-types.enum';
-export * from './action-type.enum';

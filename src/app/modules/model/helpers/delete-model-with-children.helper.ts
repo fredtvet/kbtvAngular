@@ -1,12 +1,11 @@
-import { _convertArrayToObject } from '@shared-app/helpers/array/convert-array-to-object.helper';
-import { _filter } from '@shared-app/helpers/array/filter.helper';
-import { Prop } from '@shared-app/prop.type';
-import { ModelState } from '../interfaces/model-state.interface';
 import { ModelStateConfig } from '../model-state.config';
+import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
+import { _filter } from '@array/filter.helper';
+import { Prop } from '@state/interfaces';
 
 export function _deleteModelWithChildren<TState>(
   state: TState, 
-  stateProp: Prop<ModelState>, 
+  stateProp: Prop<TState>, 
   cfg: {id?: string, ids?: string[]}
 ): Partial<TState>{
 
@@ -21,15 +20,15 @@ export function _deleteModelWithChildren<TState>(
   }
 
   const modelCfg = ModelStateConfig.get(stateProp);
-  const newState = {};
+  const newState: any = {};
 
   newState[stateProp] = 
-    _filter(state[stateProp], filterFactory(modelCfg.identifier));
+    _filter<any>(state[stateProp] as any, filterFactory(modelCfg.identifier));
 
   if(modelCfg.children?.length)
     for(var childProp of modelCfg.children)
       newState[childProp] = 
-        _filter(state[childProp], filterFactory(modelCfg.foreignKey));
+        _filter(state[childProp] as any, filterFactory(modelCfg.foreignKey));
 
   return newState;
 

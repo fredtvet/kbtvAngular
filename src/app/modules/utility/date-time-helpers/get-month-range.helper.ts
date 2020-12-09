@@ -1,4 +1,4 @@
-import { DateRange } from '@shared/interfaces/date-range.interface';
+import { DateRange } from './interfaces';;
 import { _getFirstDayOfMonth } from './get-first-day-of-month.helper';
 import { _getLastDayOfMonth } from './get-last-day-of-month.helper';
 

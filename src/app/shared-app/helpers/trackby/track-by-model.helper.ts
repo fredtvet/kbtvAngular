@@ -1,8 +1,8 @@
 
 import { Model } from '@core/models';
-import { ModelState } from '@model/interfaces';
+import { ModelState } from '@core/state/model-state.interface';
 import { ModelStateConfig } from '@model/model-state.config';
-import { Prop } from '@shared-app/prop.type';
+import { Prop } from '@state/interfaces/prop.type';
 
 export function _trackByModel(prop: Prop<ModelState>){
     const identifier = ModelStateConfig.get(prop).identifier;

@@ -1,6 +1,6 @@
 import { ModelFile } from '@core/models';
-import { Reducer } from '../../../state/interfaces/reducer.interface';
-import { SaveModelReducer } from '../save-model/save-model.reducer';
+import { SaveModelReducer } from '@model/state/save-model/save-model.reducer';
+import { Reducer } from '@state/interfaces';
 import { SaveModelFileActionId, SaveModelFileStateCommand } from './save-model-file-action.const';
 
 export const SaveModelFileReducer: Reducer<any> = {
@@ -9,7 +9,7 @@ export const SaveModelFileReducer: Reducer<any> = {
     stateProperties: SaveModelReducer.stateProperties
 }
 
-function _reducerFn(state: any, command: SaveModelFileStateCommand<ModelFile>): Partial<any>{  
+function _reducerFn(state: any, command: SaveModelFileStateCommand<ModelFile, any>): Partial<any>{  
 
     command.entity = {
         ...command.entity, 

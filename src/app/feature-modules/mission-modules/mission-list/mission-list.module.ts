@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
-import { DeleteModelProviders, SaveModelFileProviders, SaveModelProviders } from '@model/state/providers.const';
+import { SaveModelFileProviders } from '@core/state/save-model-file/save-model-file.providers';
+import { DeleteModelProviders, SaveModelProviders } from '@model/state/providers.const';
+import { FormToSaveModelStateCommandAdapter } from '@shared/form-adapters/form-to-save-model-state-command.adapter';
 import { ModelFormModule } from '@shared/model-form/model-form.module';
 import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
 import { SharedModule } from '@shared/shared.module';
 import { EffectsSubscriber } from '@state/effects.subscriber';
-import { STORE_DEFAULT_STATE, STORE_REDUCERS } from '@state/injection-tokens';
+import { STORE_REDUCERS } from '@state/injection-tokens';
 import { StateModule } from '@state/state.module';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
@@ -31,7 +33,7 @@ import { UpdateLastVisitedReducer } from './update-last-visited.reducer';
     SharedModule,
     MissionListRoutingModule,
     StateModule,
-    ModelFormModule,
+    ModelFormModule.forFeature(FormToSaveModelStateCommandAdapter),
   ]
 })
 export class MissionListModule { 

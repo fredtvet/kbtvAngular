@@ -1,7 +1,7 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { skip, tap } from 'rxjs/operators';
-import { _convertArrayToObject } from '@shared-app/helpers/array/convert-array-to-object.helper';
-import { _deepClone } from '@shared-app/helpers/deep-clone.helper';
+import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
+import { _deepClone } from '@state/helpers/deep-clone.helper';
 import { Store } from '@state/store';
 import { PERSISTED_STATE_PROPS, PERSISTED_CRITICAL_STATE_PROPS } from './injection-tokens.const';
 import { StateDbService } from './state-db.service';

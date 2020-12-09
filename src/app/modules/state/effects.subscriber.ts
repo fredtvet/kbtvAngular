@@ -1,26 +1,24 @@
 import { Inject, Injectable, Optional, Self } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError, first, takeUntil, tap } from 'rxjs/operators';
-import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { ActionDispatcher } from './action-dispatcher';
-import { tryWithLogging } from './helpers/try-log-error.helper';
 import { STORE_EFFECTS } from './injection-tokens';
 import { Effect } from './interfaces/effect.interface';
 import { Store } from './store';
 
 @Injectable()
-export class EffectsSubscriber extends WithUnsubscribe() {
+export class EffectsSubscriber {
 
     private effectsInitSubject = new BehaviorSubject<boolean>(false);
     onEffectsInit$ = this.effectsInitSubject.asObservable().pipe(first(x => x === true))
+
+    unsubscribe : Subject<void> = new Subject();
 
     constructor(
         private store: Store<any>,
         private dispatcher: ActionDispatcher,
         @Self() @Optional() @Inject(STORE_EFFECTS) effects: Effect<any>[]
-    ){ 
-        super(); 
-   
+    ){   
         if(effects)
             for(const effect of effects) this.handleEffect(effect);
         
@@ -42,5 +40,10 @@ export class EffectsSubscriber extends WithUnsubscribe() {
         this.handleEffect(effect); //Resubscribe on error
  
         return throwError(err)
+    }
+  
+    ngOnDestroy(){
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
     }
 }

@@ -1,14 +1,14 @@
 import { Validators } from '@angular/forms';
 import { Mission } from '@core/models';
-import { DynamicControlGroup, DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
-import { _getISO } from '@shared-app/helpers/datetime/get-iso-with-timezone.helper';
-import { StateMissions } from '@state/interfaces';
-import { IonDateQuestionComponent, IonDateQuestion } from '../../components/dynamic-form-questions/ion-date-time-question.component';
-import { TextAreaQuestionComponent, TextAreaQuestion } from '../../components/dynamic-form-questions/text-area-question.component';
-import { SaveModelFormState } from '../../model-form';
+import { DynamicControl, DynamicControlGroup, DynamicForm } from '@dynamic-forms/interfaces';
+import { _getISO } from '@datetime/get-iso-with-timezone.helper';
+import { OptionsFormState } from '@shared/form';
+import { IonDateQuestion, IonDateQuestionComponent } from '../../components/dynamic-form-questions/ion-date-time-question.component';
+import { TextAreaQuestion, TextAreaQuestionComponent } from '../../components/dynamic-form-questions/text-area-question.component';
 import { HiddenIdControl, MissionAutoCompleteControl } from '../common-controls.const';
+import { StateMissions } from '@core/state/global-state.interfaces';
 
-type FormState = SaveModelFormState<StateMissions> & {defaultStartTime: string, defaultEndTime: string};
+type FormState = OptionsFormState<StateMissions> & {defaultStartTime: string, defaultEndTime: string};
 
 const _timeValueDefault = (date: number, hours: number = 0, minutes: number = 0): string => 
     new Date((date ? new Date(date) : new Date).getFullYear(), 1, 1, hours, minutes, 0).toISOString();
@@ -23,7 +23,7 @@ export interface TimesheetForm {
 }
 
 const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm>>{ type: "group", controls: [
-    <DynamicControl<TimesheetForm, any>>{ name: "date", required: true, 
+    <DynamicControl<TimesheetForm>>{ name: "date", required: true, 
         valueGetter: (s: TimesheetForm) => _getISO(s.date) || _getISO(s.startTime),
         getRawValue:true,
         type: "control", questions: [{
@@ -36,7 +36,7 @@ const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm>>{ type: "group"
             }, 
         }], 
     } ,
-    <DynamicControl<TimesheetForm, any>>{ name: "startTime", required: true,
+    <DynamicControl<TimesheetForm>>{ name: "startTime", required: true,
         valueGetter: (f: TimesheetForm) => _getISO(f?.startTime),
         type: "control", questions: [{
             component:  IonDateQuestionComponent,
@@ -51,7 +51,7 @@ const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm>>{ type: "group"
             }, 
         }], 
     },
-    <DynamicControl<TimesheetForm, any>>{ name: "endTime", required: true,
+    <DynamicControl<TimesheetForm>>{ name: "endTime", required: true,
         valueGetter: (f: TimesheetForm) => _getISO(f?.endTime),
         type: "control", questions: [{
             component:  IonDateQuestionComponent,
@@ -67,7 +67,7 @@ const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm>>{ type: "group"
         }], 
     },
 ]}
-const CommentControl = <DynamicControl<TimesheetForm, any>>{ name: "comment", required: true,
+const CommentControl = <DynamicControl<TimesheetForm>>{ name: "comment", required: true,
     type: "control", valueGetter: (s: TimesheetForm) => s?.comment, questions: [{
         component:  TextAreaQuestionComponent,
         question: <TextAreaQuestion>{placeholder: "Kommentar"}, 

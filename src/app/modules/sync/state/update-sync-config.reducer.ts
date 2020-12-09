@@ -1,4 +1,6 @@
-import { Reducer, StateSyncConfig } from '@state/interfaces';
+
+import { Reducer } from '@state/interfaces';
+import { StateSyncConfig } from '../interfaces';
 import { UpdateSyncConfigActionId, UpdateSyncConfigCommand } from './actions.const';
 
 export const UpdateSyncConfigReducer: Reducer<StateSyncConfig> = {

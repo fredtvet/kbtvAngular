@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from "@angular/core";
 import { Timesheet } from '@core/models';
-import { _getWeekOfYear } from '@shared-app/helpers/datetime/get-week-of-year.helper';
+import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { ViewModel } from '../view-model.interface';
 

@@ -1,4 +1,4 @@
-import { _deepClone } from '@shared-app/helpers/deep-clone.helper';
+import { _deepClone } from '@state/helpers/deep-clone.helper';
 import { Reducer } from '@state/interfaces';
 import { HttpErrorActionId, HttpErrorCommand } from './http-error-command.interface';
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { Model } from '@core/models/base-entity.interface';
 import { ModelStateConfig } from '@model/model-state.config';
-import { _convertArrayToObject } from '@shared-app/helpers/array/convert-array-to-object.helper';
+import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
 import { AgGridTableComponent } from '@shared/components/abstracts/ag-grid-table.component';
 import { translations } from '@shared/translations';
 import { DataConfig } from '../../interfaces/data-config.interface';

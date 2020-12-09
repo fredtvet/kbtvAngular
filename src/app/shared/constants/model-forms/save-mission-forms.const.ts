@@ -1,18 +1,18 @@
 import { Validators } from '@angular/forms';
 import { Employer, Mission, MissionType } from '@core/models';
+import { StateEmployers, StateMissionTypes } from '@core/state/global-state.interfaces';
 import { DynamicControl, DynamicControlGroup, DynamicForm } from '@dynamic-forms/interfaces';
-import { StateEmployers, StateMissionTypes } from '@state/interfaces';
+import { OptionsFormState } from '@shared/form';
 import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
-import { CheckboxQuestionComponent, CheckboxQuestion } from '../../components/dynamic-form-questions/checkbox-question.component';
-import { TextAreaQuestionComponent, TextAreaQuestion } from '../../components/dynamic-form-questions/text-area-question.component';
-import { SaveModelFormState } from '../../model-form';
+import { CheckboxQuestion, CheckboxQuestionComponent } from '../../components/dynamic-form-questions/checkbox-question.component';
+import { TextAreaQuestion, TextAreaQuestionComponent } from '../../components/dynamic-form-questions/text-area-question.component';
 import { GoogleAddressControl, HiddenIdControl, PhoneNumberControl } from '../common-controls.const';
 import { ValidationRules } from '../validation-rules.const';
 
-type FormState = SaveModelFormState<StateEmployers & StateMissionTypes>;
+type FormState = OptionsFormState<StateEmployers & StateMissionTypes>;
 
-const DescriptionControl = <DynamicControl<Mission, any>>{ name: "description",
+const DescriptionControl = <DynamicControl<Mission>>{ name: "description",
     type: "control", questions: [{
         component:  TextAreaQuestionComponent,
         question: <TextAreaQuestion>{placeholder: "Beskrivelse"}, 
@@ -21,7 +21,7 @@ const DescriptionControl = <DynamicControl<Mission, any>>{ name: "description",
 }
 const EmployerControl = <DynamicControlGroup<Mission>>{ name: "employer",
     type: "group", controls: [
-    <DynamicControl<Employer, FormState>>{ name: "name",
+    <DynamicControl<Employer>>{ name: "name",
         valueGetter: (s: Mission) => s.employer?.name, 
         type: "control", questions: [{
             component:  AutoCompleteQuestionComponent,
@@ -38,7 +38,7 @@ const EmployerControl = <DynamicControlGroup<Mission>>{ name: "employer",
 }
 const MissionTypeControl = <DynamicControlGroup<Mission>>{ name: "missionType",
     type: "group", controls: [
-    <DynamicControl<MissionType, FormState>>{ name: "name",
+    <DynamicControl<MissionType>>{ name: "name",
         valueGetter: (s: Mission) => s.missionType?.name, 
         type: "control", questions: [{
             component:  AutoCompleteQuestionComponent,
@@ -53,7 +53,7 @@ const MissionTypeControl = <DynamicControlGroup<Mission>>{ name: "missionType",
         }], 
     }],
 }
-const FinishedControl = <DynamicControl<Mission, any>>{ name: "finished",
+const FinishedControl = <DynamicControl<Mission>>{ name: "finished",
     valueGetter: (s: Mission) => s.finished, 
     type: "control", questions: [{
         component:  CheckboxQuestionComponent,

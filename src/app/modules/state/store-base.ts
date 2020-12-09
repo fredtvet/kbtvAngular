@@ -1,7 +1,5 @@
+import { Prop } from './interfaces/prop.type';
 import { Observable } from 'rxjs';
-import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
-import { Prop } from '@shared-app/prop.type';
-import { _groupBy } from '@shared-app/helpers/array/group-by.helper';
 import { ActionDispatcher } from './action-dispatcher';
 import { _getReducerStateProps } from './helpers/get-reducer-state-props.helper';
 import { _reduceStateFunc } from './helpers/reduce-state-func.helper';
@@ -14,7 +12,7 @@ import { Store } from './store';
 
 export type stateFunc<T> = (state: Partial<T>) => Partial<T>;
 
-export abstract class StoreBase<TState> extends WithUnsubscribe() {
+export abstract class StoreBase<TState> {
 
     private reducerMap: ReducerMap = {};
 
@@ -30,8 +28,12 @@ export abstract class StoreBase<TState> extends WithUnsubscribe() {
         reducers: Reducer<any>[],
         settings?: StoreSettings,
     ) { 
-        super();
-        this.reducerMap = _groupBy(reducers, "actionId");
+        if(reducers)
+            for(const reducer of reducers){
+                let value = this.reducerMap[reducer.actionId];
+                this.reducerMap[reducer.actionId] = value ? [...value, reducer] : [reducer];
+            }
+
         this._settings = { logStateChanges: false, ...(settings || {}) };
     }
 

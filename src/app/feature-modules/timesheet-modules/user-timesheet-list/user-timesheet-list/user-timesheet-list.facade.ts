@@ -4,17 +4,17 @@ import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Mission, Timesheet } from '@core/models';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
-import { GetWithRelationsConfig } from '@model/helpers/get-with-relations.config';
+import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { DateRangePresets } from '@shared-app/enums';
 import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { ComponentStore } from '@state/component.store';
-import { StateMissions, StateUserTimesheets } from '@state/interfaces';
 import { Store } from '@state/store';
 import { SetTimesheetCriteriaActionId } from '../../shared-timesheet/state/set-timesheet-criteria.reducer';
 import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../../shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { UserTimesheetListState } from './user-timesheet-list.state';
+import { StateMissions, StateUserTimesheets } from '@core/state/global-state.interfaces';
 
 @Injectable()
 export class UserTimesheetListFacade {

@@ -1,6 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { _deepClone } from '@shared-app/helpers/deep-clone.helper';
+import { _deepClone } from './helpers/deep-clone.helper';
 import { StateChanges } from './interfaces/state-changes.interface';
 
 export class StateBase {  

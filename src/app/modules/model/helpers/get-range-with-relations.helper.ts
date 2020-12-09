@@ -1,20 +1,18 @@
-import { Model } from '@core/models/base-entity.interface';
-import { _convertArrayToObject } from '@shared-app/helpers/array/convert-array-to-object.helper';
-import { _filter } from '@shared-app/helpers/array/filter.helper';
-import { _groupBy } from '@shared-app/helpers/array/group-by.helper';
-import { Prop } from '@shared-app/prop.type';
-import { ModelState } from '../interfaces/model-state.interface';
-import { ModelConfig, ModelStateConfig } from '../model-state.config';
-import { GetWithRelationsConfig } from './get-with-relations.config';
+import { ModelStateConfig } from '../model-state.config';
+import { ModelConfig } from '../interfaces';
+import { GetWithRelationsConfig } from '../get-with-relations.config';
+import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
+import { _filter } from '@array/filter.helper';
+import { _groupBy } from '@array/group-by.helper';
 
-export function _getRangeWithRelations<TModel extends Model>(
-    state: Readonly<Partial<ModelState>>,
-    cfg: GetWithRelationsConfig,
+export function _getRangeWithRelations<TModel, TState>(
+    state: Readonly<Partial<TState>>,
+    cfg: GetWithRelationsConfig<TState>,
     filter?: (value: TModel, index?: number, Array?: any[]) => boolean, 
 ): TModel[] {
     const modelCfg = ModelStateConfig.get(cfg.modelProp); 
 
-    let modelState = state[cfg.modelProp] as TModel[];
+    let modelState = state[cfg.modelProp] as any;
     
     if(filter)
         modelState = _filter(modelState, filter);
@@ -45,7 +43,7 @@ export function _getRangeWithRelations<TModel extends Model>(
 
 //Lookup of children grouped by foreign key
 function _createGroupedLookups(
-    props: Prop<ModelState>[], 
+    props: string[], 
     groupBy: string, state: Object
 ): {[key: string]: {[key: string]: Object[]}}{
     const lookups = {} as {[key: string]: {[key: string]: Object[]}}
@@ -57,7 +55,7 @@ function _createGroupedLookups(
 
 //Lookup of foreign entities by identifier
 function _createStatePropertyLookups(
-    props: Prop<ModelState>[], 
+    props: string[], 
     state: Readonly<Object>
 ): {[key: string]: Object}{
     const lookups: {[key: string]: Readonly<Object>} = {};
@@ -69,7 +67,7 @@ function _createStatePropertyLookups(
 }
 
 function _mapForeignsToEntity<T>(
-    props: Prop<ModelState>[], 
+    props: string[], 
     lookups: {[key: string]: Readonly<Object>}, 
     entity: T
   ): void{
@@ -80,8 +78,8 @@ function _mapForeignsToEntity<T>(
 }
 
 function _mapChildrenToEntity<T>(
-    props: Prop<ModelState>[], 
-    propCfg: ModelConfig<T>, 
+    props: string[], 
+    propCfg: ModelConfig<T, any>, 
     lookups: {[key: string]: Readonly<Object>}, 
     entity: T
 ): void{

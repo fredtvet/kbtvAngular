@@ -33,7 +33,7 @@ export class DynamicControlGroupComponent extends ControlComponentLoaderComponen
         this.loadComponents(this.controlGroup.controls, this.formConfig, this.nestedNames);
     }
 
-    protected onQuestionComponentInit(componentRef: ComponentRef<QuestionComponent>, control: DynamicControl<any, any>): void {
+    protected onQuestionComponentInit(componentRef: ComponentRef<QuestionComponent>, control: DynamicControl<any>): void {
       componentRef.location.nativeElement.style.margin = this.controlGroup.styling?.itemMargin || "0 8px 0 0"
     }
 }

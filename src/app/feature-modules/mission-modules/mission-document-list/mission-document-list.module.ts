@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
-import { DeleteModelProviders, MailModelsProviders, SaveModelFileProviders } from '@model/state/providers.const';
+import { SaveModelFileProviders } from '@core/state/save-model-file/save-model-file.providers';
+import { DeleteModelProviders, MailModelsProviders } from '@model/state/providers.const';
+import { FormToSaveModelFileStateCommandAdapter } from '@shared/form-adapters/form-to-save-model-file-state-command.adapter';
 import { ModelFormModule } from '@shared/model-form/model-form.module';
 import { SharedModule } from '@shared/shared.module';
 import { StateModule } from '@state/state.module';
@@ -18,7 +20,7 @@ import { FileExtensionPipe } from './pipes/file-extension.pipe';
   imports: [
     SharedModule,   
     StateModule,
-    ModelFormModule,
+    ModelFormModule.forFeature(FormToSaveModelFileStateCommandAdapter),
     MissionDocumentListRoutingModule
   ],
   providers: [

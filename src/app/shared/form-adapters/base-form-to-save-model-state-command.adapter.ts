@@ -1,25 +1,24 @@
 
-import { Model } from '@core/models';
-import { _find } from '@shared-app/helpers/array/find.helper';
+import { ModelState } from '@core/state/model-state.interface';
+import { ModelConfig } from '@model/interfaces';
+import { ModelStateConfig } from '@model/model-state.config';
+import { SaveAction, SaveModelStateCommand } from '@model/state/save-model/save-model-action.const';
+import { _find } from '@array/find.helper';
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
-import { Prop } from '@shared-app/prop.type';
+import { Prop } from '@state/interfaces/prop.type';
 import { ModelFormToSaveModelInput } from '@shared/model-form/interfaces/model-form-to-state-command-adapter.interface';
-import { SaveAction } from '@shared/save-action.interface';
-import { ModelState } from '../interfaces';
-import { ModelConfig, ModelStateConfig } from '../model-state.config';
-import { SaveModelStateCommand } from '../state/save-model/save-model-action.const';
 
-export abstract class BaseFormToSaveModelStateCommandAdapter<TModel extends Model, TFormState> 
-    implements SaveModelStateCommand<TModel> {
+export abstract class BaseFormToSaveModelStateCommandAdapter<TModel, TForm> 
+    implements SaveModelStateCommand<TModel, ModelState> {
 
     actionId: string;
     entity: TModel;
     saveAction: SaveAction;
     stateProp: Prop<ModelState>;
 
-    protected modelConfig: ModelConfig<TModel>;
+    protected modelConfig: ModelConfig<TModel, ModelState>;
 
-    constructor(protected input: ModelFormToSaveModelInput<TFormState>){
+    constructor(protected input: ModelFormToSaveModelInput<TForm, ModelState>){
         this.adapt()
     }
     
@@ -50,7 +49,7 @@ export abstract class BaseFormToSaveModelStateCommandAdapter<TModel extends Mode
                 this.entity[foreignKey] = null;
 
             const existingFkEntity = //Check if fkEntity with same display value exists
-                _find<Model>(this.input.options[foreignStateProp], fkDisplayValue, displayProp)
+                _find(this.input.options[foreignStateProp] as any, fkDisplayValue, displayProp)
 
             if(existingFkEntity) //If existing fkEntity, set foreign key on entity
                 this.entity[foreignKey] = existingFkEntity[identifier]; 

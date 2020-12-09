@@ -5,7 +5,7 @@ import { ModelModule } from '@model/model.module';
 import { DefaultState } from '../shared-app/const/default-state.const';
 import { AppOptimisticState } from '../shared-app/const/optimistic-state-props.const';
 import { PersistedCriticalStateProps, PersistedStateProps } from '../shared-app/const/persisted-state-props.const';
-import { SyncStateConfig } from '../shared-app/const/sync-state.config';
+import { AppSyncStateConfig } from '../shared-app/const/sync-state.config';
 import { ValidationErrorMessages } from '../shared-app/const/validation-error-messages.const';
 import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS } from '@state/injection-tokens';
 import { StateModule } from '@state/state.module';
@@ -17,7 +17,7 @@ import { LogoutHttpEffect } from './services/auth/state/logout/logout.http.effec
 import { WipeTokensReducer } from './services/auth/state/logout/wipe-tokens.reducer';
 import { RefreshTokenSuccessReducer } from './services/auth/state/refresh-token-success.reducer';
 import { RefreshTokenHttpEffect } from './services/auth/state/refresh-token.http.effect';
-import { OPTIMISTIC_STATE_SELECTOR } from '@http/injection-tokens.const';
+import { BASE_API_URL, OPTIMISTIC_STATE_SELECTOR } from '@http/injection-tokens.const';
 import { OptimisticHttpModule } from '@http/optimistic-http.module';
 import { PERSISTED_CRITICAL_STATE_PROPS, PERSISTED_STATE_PROPS } from '@persistance/injection-tokens.const';
 import { PersistanceModule } from '@persistance/persistance.module';
@@ -27,6 +27,11 @@ import { SyncModule } from '@sync/sync.module';
 import { InitalizeHttpQueueEffect, InitalizeSyncEffect } from './state/initalizing.effects';
 import { SyncUserOnLoginEffect } from './state/sync-user-on-login.effect';
 import { WipeStateReducer } from './state/wipe-state.reducer';
+import { ModelConfigs } from '@shared-app/const/model-configs.const';
+import { COMMAND_API_MAP, MODEL_CONFIGS, MODEL_PROP_TRANSLATIONS } from '@model/injection-tokens.const';
+import { AppCommandApiMap } from '@shared-app/const/app-command-api-map.const';
+import { environment } from 'src/environments/environment';
+import { translations } from '@shared/translations';
 
 @NgModule({
   declarations: [],
@@ -34,7 +39,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
     StateModule,
     SyncModule.forRoot({
       fetcher: SyncHttpFetcherService,
-      config: SyncStateConfig
+      config: AppSyncStateConfig
     }),
     PersistanceModule,
     OptimisticHttpModule,
@@ -45,9 +50,16 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
     { provide: HTTP_INTERCEPTORS, useClass: HttpRefreshTokenInterceptor, multi: true },  
     { provide: HTTP_INTERCEPTORS, useClass: HttpIsOnlineInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpLoadingInterceptor, multi: true },
-  
+    
+    { provide: BASE_API_URL, useValue: environment.apiUrl},
+    { provide: MODEL_CONFIGS, useValue: ModelConfigs },
+    { provide: COMMAND_API_MAP, useValue: AppCommandApiMap },
+    { provide: MODEL_PROP_TRANSLATIONS, useValue: translations },
+
     { provide: VALIDATION_ERROR_MESSAGES, useValue: ValidationErrorMessages},
+
     { provide: OPTIMISTIC_STATE_SELECTOR, useValue: AppOptimisticState},
+
     { provide: PERSISTED_STATE_PROPS, useValue: PersistedStateProps},   
     { provide: PERSISTED_CRITICAL_STATE_PROPS, useValue: PersistedCriticalStateProps},
 

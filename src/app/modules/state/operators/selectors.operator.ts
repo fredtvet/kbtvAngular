@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { filter, map } from "rxjs/operators";
-import { _deepClone } from '@shared-app/helpers/deep-clone.helper';
+import { _deepClone } from '../helpers/deep-clone.helper'
 import { StateChanges } from '../interfaces/state-changes.interface';
 
 export const selectProp = <TResult>(prop: string, deepClone: boolean = true) => 

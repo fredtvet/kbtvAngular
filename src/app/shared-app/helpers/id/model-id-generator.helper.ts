@@ -1,8 +1,10 @@
 import { Model } from '@core/models';
-import { ModelConfig, ModelStateConfig } from '@model/model-state.config';
+import { ModelState } from '@core/state/model-state.interface';
+import { ModelConfig } from '@model/interfaces';
+import {  ModelStateConfig } from '@model/model-state.config';
 import { _idGenerator } from './id-generator.helper';
 
-export function _modelIdGenerator<TModel extends Model>(entity: TModel, modelCfg: ModelConfig<TModel>): TModel{
+export function _modelIdGenerator<TModel extends Model>(entity: TModel, modelCfg: ModelConfig<TModel, ModelState>): TModel{
     if(!modelCfg) console.trace("No model state config provided");
     
     const id = entity[modelCfg.identifier]
