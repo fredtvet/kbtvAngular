@@ -5,7 +5,7 @@ import { ModelStateConfig } from '@model/model-state.config';
 import { SaveAction, SaveModelStateCommand } from '@model/state/save-model/save-model-action.const';
 import { _find } from '@array/find.helper';
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
-import { Prop } from '@state/interfaces/prop.type';
+import { Prop } from '@state/interfaces';
 import { ModelFormToSaveModelInput } from '@model-form/interfaces';
 
 export abstract class BaseFormToSaveModelStateCommandAdapter<TModel, TForm> 

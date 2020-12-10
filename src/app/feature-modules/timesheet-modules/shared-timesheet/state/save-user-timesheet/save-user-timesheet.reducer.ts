@@ -5,7 +5,7 @@ import { Reducer } from '@state/interfaces';
 import { SaveUserTimesheetActionId, SaveUserTimesheetCommand } from './save-user-timesheet-command.interface';
 import { StateCurrentUser } from '@core/state/global-state.interfaces';
 
-export const SaveUserTimesheetReducer: Reducer<StateCurrentUser> = {
+export const SaveUserTimesheetReducer: Reducer<StateCurrentUser, SaveUserTimesheetCommand> = {
     actionId: SaveUserTimesheetActionId,
     reducerFn: _reducerFn,
     stateProperties: (action:  any) => ["currentUser", ...(<Function>SaveModelReducer.stateProperties)(action)],   

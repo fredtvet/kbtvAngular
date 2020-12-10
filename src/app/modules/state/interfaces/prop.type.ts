@@ -1,1 +1,0 @@
-export type Prop<T> = Extract<keyof T, string>

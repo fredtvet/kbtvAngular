@@ -1,5 +1,5 @@
 import { Provider } from '@angular/core';
-import { STORE_EFFECTS, STORE_REDUCERS } from '@state/injection-tokens';
+import { STORE_EFFECTS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { DeleteModelHttpEffect } from './delete-model/delete-model.http.effect';
 import { DeleteModelReducer } from './delete-model/delete-model.reducer';
 import { MailModelsHttpEffect } from './mail-models/mail-models.http.effect';

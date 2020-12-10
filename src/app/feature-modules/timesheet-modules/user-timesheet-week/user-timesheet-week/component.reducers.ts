@@ -9,7 +9,7 @@ export const SetTimesheetCriteriaActionId = "SET_TIMESHEET_CRITERIA";
 
 export interface SetTimesheetCriteriaCommand extends StateAction { weekCriteria: WeekCriteria }
 
-export const SetTimesheetCriteriaReducer: Reducer<any> = {
+export const SetTimesheetCriteriaReducer: Reducer<any, SetTimesheetCriteriaCommand> = {
     actionId: SetTimesheetCriteriaActionId,
     reducerFn: (state: StoreState, action: SetTimesheetCriteriaCommand) => {
         return {
@@ -22,7 +22,7 @@ export const SetTimesheetCriteriaReducer: Reducer<any> = {
 export const NextWeekActionId = "NEXT_WEEK";
 export interface NextWeekCommand extends StateAction { currYear: number, currWeekNr: number }
 
-export const NextWeekReducer: Reducer<any> = {
+export const NextWeekReducer: Reducer<any, NextWeekCommand> = {
     actionId: NextWeekActionId,
     stateProperties: ["weekCriteria"], //Ingen state trengs
     reducerFn: (state: ComponentStoreState, action: NextWeekCommand) => {
@@ -44,7 +44,7 @@ export const NextWeekReducer: Reducer<any> = {
 
 export const PreviousWeekActionId = "PREVIOUS_WEEK";
 
-export const PreviousWeekReducer: Reducer<any> = {
+export const PreviousWeekReducer: Reducer<any, StateAction> = {
     actionId: PreviousWeekActionId,
     stateProperties: ["weekCriteria"], //Ingen state trengs
     reducerFn: (state: ComponentStoreState, action: StateAction) => {

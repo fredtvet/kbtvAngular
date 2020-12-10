@@ -5,7 +5,7 @@ export const SetTimesheetCriteriaActionId = "SET_TIMESHEET_CRITERIA";
 
 export interface SetTimesheetCriteriaCommand extends StateAction { timesheetCriteria: TimesheetCriteria }
 
-export const SetTimesheetCriteriaReducer: Reducer<any> = {
+export const SetTimesheetCriteriaReducer: Reducer<any, SetTimesheetCriteriaCommand> = {
     actionId: SetTimesheetCriteriaActionId,
     reducerFn: (state: {timesheetCriteria: TimesheetCriteria}, action: SetTimesheetCriteriaCommand) => {
         return { timesheetCriteria: action.timesheetCriteria }

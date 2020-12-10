@@ -4,7 +4,7 @@ import { ModelState } from '@core/state/model-state.interface';
 import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { ModelCommand } from '@model/model-command.enum';
 import { DeleteModelActionId } from '@model/state/delete-model/delete-model-action.const';
-import { Prop } from '@state/interfaces/prop.type';
+import { Prop } from '@state/interfaces';
 import { FormToSaveModelStateCommandAdapter } from '@shared/form-adapters/form-to-save-model-state-command.adapter';
 import { ComponentStore } from '@state/component.store';
 import { Store } from '@state/store';

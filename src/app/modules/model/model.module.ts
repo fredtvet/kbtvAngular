@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { STORE_REDUCERS } from '../state/injection-tokens';
+import { STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { ModelStateConfig } from './model-state.config';
 import { ModelFetcherService } from './state/fetch-model/model-fetcher.service';
 import { SetFetchedStateReducer } from './state/fetch-model/set-fetched-state.reducer';

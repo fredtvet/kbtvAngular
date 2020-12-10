@@ -4,7 +4,7 @@ import { Reducer } from '@state/interfaces';
 import { StoreState } from '../interfaces';
 import { SyncStateSuccessAction, SyncStateSuccessActionId } from './actions.const';
 
-export const SetSyncResponseReducer: Reducer<any> = {
+export const SetSyncResponseReducer: Reducer<any, SyncStateSuccessAction> = {
     actionId: SyncStateSuccessActionId, noDeepCloneAction: true, noDeepCloneState: true,
     stateProperties: (action: SyncStateSuccessAction) => Object.keys(action.response.arrays),
     reducerFn: (unclonedState: Readonly<StoreState>, action: SyncStateSuccessAction): any => {

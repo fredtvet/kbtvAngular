@@ -1,10 +1,10 @@
-import { Prop } from './interfaces/prop.type';
 import { Observable } from 'rxjs';
 import { ActionDispatcher } from './action-dispatcher';
+import { _applyMetaReducers } from './helpers/apply-meta-reducers.helper';
 import { _getReducerStateProps } from './helpers/get-reducer-state-props.helper';
-import { _reduceStateFunc } from './helpers/reduce-state-func.helper';
+import { _mergeReducers } from './helpers/merge-reducers.helper';
 import { tryWithLogging } from './helpers/try-log-error.helper';
-import { Reducer, ReducerMap, StateAction, StateChanges, StoreSettings } from './interfaces';
+import { MetaReducer, Prop, Reducer, ReducerMap, StateAction, StateChanges, StoreSettings } from './interfaces';
 import { selectProp, selectSlice } from './operators/selectors.operator';
 import { QueryDispatcher } from './query-dispatcher';
 import { StateBase } from './state-base';
@@ -25,7 +25,8 @@ export abstract class StoreBase<TState> {
         private hostStore: Store<any>,
         private queryDispatcher: QueryDispatcher,
         private actionDispatcher: ActionDispatcher,
-        reducers: Reducer<any>[],
+        reducers: Reducer<any, StateAction>[],
+        private metaReducers: MetaReducer<any, StateAction>[],
         settings?: StoreSettings,
     ) { 
         if(reducers)
@@ -70,12 +71,15 @@ export abstract class StoreBase<TState> {
         const actionReducers = this.reducerMap[action?.actionId];
         if(!actionReducers?.length) return;
 
-        const reduceFunc = _reduceStateFunc(actionReducers, action);
-        const props = _getReducerStateProps(actionReducers, action); 
+        const mergedReducer = _mergeReducers(actionReducers);
+        console.log(this.metaReducers);
+        const modifiedReducer = _applyMetaReducers(mergedReducer, this.metaReducers);
+
+        const props = _getReducerStateProps(modifiedReducer, action); 
 
         const state = this.base.getStoreState((props === "all") ? null : props);
 
-        var newState = tryWithLogging(() => reduceFunc(state));
+        const newState = tryWithLogging(() => modifiedReducer.reducerFn(state, action));
         
         this.setState(newState, null, false) 
     }

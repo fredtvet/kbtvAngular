@@ -1,12 +1,12 @@
 import { ModelCommand } from '../../model-command.enum';
 import { _add } from '@array/add.helper';
 import { _update } from '@array/update.helper';
-import { Reducer } from '../../../state/interfaces/reducer.interface';
 import { _modifyModelWithForeigns } from '../../helpers/modify-model-with-foreigns.helper';
 import { ModelStateConfig } from '../../model-state.config';
 import { SaveModelActionId, SaveModelStateCommand } from './save-model-action.const';
+import { Reducer } from '@state/interfaces';
 
-export const SaveModelReducer: Reducer<any> = {
+export const SaveModelReducer: Reducer<any, SaveModelStateCommand<any, any>> = {
     actionId: SaveModelActionId,
     reducerFn: _reducerFn,
     stateProperties: _statePropertiesGetter

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
-import { STORE_EFFECTS, STORE_REDUCERS } from '@state/injection-tokens';
+import { STORE_EFFECTS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile/profile.component';
 import { UpdateCurrentUserHttpEffect } from './state/update-current-user/update-current-user.http.effect';

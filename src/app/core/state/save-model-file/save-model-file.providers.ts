@@ -1,5 +1,5 @@
 import { Provider } from '@angular/core';
-import { STORE_EFFECTS, STORE_REDUCERS } from '@state/injection-tokens';
+import { STORE_EFFECTS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { SaveModelFileHttpEffect } from './save-model-file.http.effect';
 import { SaveModelFileReducer } from './save-model-file.reducer';
 

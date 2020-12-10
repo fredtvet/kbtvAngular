@@ -4,9 +4,7 @@ import { map } from 'rxjs/operators';
 import { ApiUrl } from '@core/api-url.enum';
 import { HttpRequest } from '@http/interfaces';
 import { HttpActionId, HttpCommand } from '@http/state/http.effect';
-import { DispatchedAction } from '@state/action-dispatcher';
-import { StateAction } from '@state/interfaces';
-import { Effect } from '@state/interfaces/effect.interface';
+import { StateAction, Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { CreateMissionImagesActionId, CreateMissionImagesStateCommand } from './create-mission-images-state-command.interface';
 

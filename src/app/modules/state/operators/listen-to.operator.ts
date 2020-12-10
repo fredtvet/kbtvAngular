@@ -1,8 +1,7 @@
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { _deepClone } from '../helpers/deep-clone.helper'
-import { DispatchedAction } from '../action-dispatcher';
-import { StateAction } from '../interfaces';
+import { StateAction, DispatchedAction } from '../interfaces';
 
 export const listenTo = <TAction extends StateAction>(actionIds: string[], deepCloneAction: boolean = true) => 
     (source: Observable<DispatchedAction<TAction>> ): Observable<DispatchedAction<TAction>> => 

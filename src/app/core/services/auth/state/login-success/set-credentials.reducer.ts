@@ -3,7 +3,7 @@ import { Reducer } from '@state/interfaces'
 import { StoreState } from '../../interfaces/store-state'
 import { LoginSuccessActionId, LoginSuccessCommand } from './login-success-command.interface'
 
-export const SetCredentialsReducer: Reducer<StoreState> = {
+export const SetCredentialsReducer: Reducer<StoreState, LoginSuccessCommand> = {
     actionId: LoginSuccessActionId,
     reducerFn: (state: any, action: LoginSuccessCommand): Partial<StoreState>=> {
         var {accessToken, refreshToken, user} = action;

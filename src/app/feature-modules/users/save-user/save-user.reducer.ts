@@ -1,9 +1,9 @@
 
 import { SaveModelReducer } from '@model/state/save-model/save-model.reducer';
 import { Reducer } from '@state/interfaces';
-import { SaveUserActionId } from './save-user-state-command.interface';
+import { SaveUserActionId, SaveUserStateCommand } from './save-user-state-command.interface';
 
-export const SaveUserReducer: Reducer<any> = {  
+export const SaveUserReducer: Reducer<any, SaveUserStateCommand> = {  
     ...SaveModelReducer,
     actionId: SaveUserActionId
 }

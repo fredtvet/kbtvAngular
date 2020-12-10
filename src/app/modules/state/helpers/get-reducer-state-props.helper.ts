@@ -1,14 +1,16 @@
-import { Reducer, StateAction } from '../interfaces';
+import { StateAction, Reducer } from '../interfaces';
 
-export function _getReducerStateProps(reducers: ReadonlyArray<Reducer<any>>, action: Readonly<StateAction>): string[] | 'all' {
-    let props = [];
-    for(const reducer of reducers){
-        if(reducer.stateProperties === "all") return "all";
-        if(!reducer.stateProperties) continue;
-        if(reducer.stateProperties instanceof Function)
-            props = props.concat(reducer.stateProperties(action));
-        else 
-            props = props.concat(reducer.stateProperties)
-    }
-    return props;
+export function _getReducerStateProps(
+    reducer: Readonly<Reducer<any, StateAction>>, 
+    action: Readonly<StateAction>): string[] | 'all' {
+
+    if(!reducer.stateProperties) return;
+
+    if(reducer.stateProperties === "all") return "all";
+    
+    if(reducer.stateProperties instanceof Function)
+        return reducer.stateProperties(action);
+    else 
+        return reducer.stateProperties
 }
+

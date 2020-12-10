@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Prop } from '@state/interfaces/prop.type';
+import { Prop } from '@state/interfaces';
 
 export interface ActiveStringFilterConfig<TRecord>{
     data: TRecord[];

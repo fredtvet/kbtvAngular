@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { ModelFormModule } from '@model-form/model-form.module';
 import { DeleteModelProviders } from '@model/state/providers.const';
 import { SharedModule } from '@shared/shared.module';
-import { STORE_EFFECTS, STORE_REDUCERS } from '@state/injection-tokens';
+import { STORE_EFFECTS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { SaveUserHttpEffect } from './save-user/save-user.http.effect';
 import { SaveUserReducer } from './save-user/save-user.reducer';
 import { UserFormToSaveModelAdapter } from './save-user/user-form-to-save-model.adapter';

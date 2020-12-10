@@ -4,9 +4,7 @@ import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '@model/injection-token
 import { CommandApiMap, KeyVal } from '@model/interfaces';
 import { ModelCommand } from '@model/model-command.enum';
 import { SaveModelHttpEffect } from '@model/state/save-model/save-model.http.effect';
-import { DispatchedAction } from '@state/action-dispatcher';
-import { StateAction } from '@state/interfaces';
-import { Effect } from '@state/interfaces/effect.interface';
+import { StateAction, Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

@@ -3,7 +3,7 @@ import { SaveModelReducer } from '@model/state/save-model/save-model.reducer';
 import { Reducer } from '@state/interfaces';
 import { SaveModelFileActionId, SaveModelFileStateCommand } from './save-model-file-action.const';
 
-export const SaveModelFileReducer: Reducer<any> = {
+export const SaveModelFileReducer: Reducer<any, SaveModelFileStateCommand<ModelFile, any>> = {
     actionId: SaveModelFileActionId,
     reducerFn: _reducerFn,
     stateProperties: SaveModelReducer.stateProperties

@@ -5,7 +5,7 @@ export interface UpdateLastVisitedCommand extends StateAction { id: string; }
 
 export const UpdateLastVisitedActionId = "MISSION_LIST_UPDATE_LAST_VISITED";
 
-export const UpdateLastVisitedReducer: Reducer<StateMissions> = {
+export const UpdateLastVisitedReducer: Reducer<StateMissions, UpdateLastVisitedCommand> = {
     actionId: UpdateLastVisitedActionId,
     stateProperties: ["missions"],
     noDeepCloneState: true,

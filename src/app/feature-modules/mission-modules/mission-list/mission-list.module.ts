@@ -6,7 +6,7 @@ import { FormToSaveModelStateCommandAdapter } from '@shared/form-adapters/form-t
 import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
 import { SharedModule } from '@shared/shared.module';
 import { EffectsSubscriber } from '@state/effects.subscriber';
-import { STORE_REDUCERS } from '@state/injection-tokens';
+import { STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
 import { MissionListRoutingModule } from './mission-list-routing.module';

@@ -1,7 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { DispatchedAction } from '@state/action-dispatcher';
-import { StateAction } from '@state/interfaces';
-import { Effect } from '@state/interfaces/effect.interface';
+import { StateAction, DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { Store } from '@state/store';
 import { Observable } from 'rxjs';

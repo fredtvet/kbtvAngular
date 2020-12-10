@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { STORE_EFFECTS, STORE_REDUCERS } from '@state/injection-tokens';
+import { STORE_EFFECTS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { InitalizeStatePersisterEffect, LoadCriticalStateEffect, LoadStateEffect } from './state/effects';
 import { SetPersistedCriticalStateReducer, SetPersistedStateReducer } from './state/reducers';
 

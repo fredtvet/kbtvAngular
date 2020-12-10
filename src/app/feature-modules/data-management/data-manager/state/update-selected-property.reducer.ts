@@ -1,6 +1,5 @@
 import { ModelState } from '@core/state/model-state.interface';
-import { Prop } from '@state/interfaces/prop.type';
-import { Reducer, StateAction } from '@state/interfaces';
+import { Reducer, StateAction, Prop } from '@state/interfaces';
 import { ComponentState } from '../../interfaces/component-state.interface';
 
 export interface UpdateSelectedPropertyCommand extends StateAction {
@@ -9,7 +8,7 @@ export interface UpdateSelectedPropertyCommand extends StateAction {
 
 export const UpdateSelectedPropertyActionId = "UPDATE_SELECTED_PROPERTY";
 
-export const UpdateSelectedPropertyReducer: Reducer<ComponentState> = {
+export const UpdateSelectedPropertyReducer: Reducer<ComponentState, UpdateSelectedPropertyCommand> = {
     actionId: UpdateSelectedPropertyActionId,
     reducerFn: (state: ComponentState, action: UpdateSelectedPropertyCommand) => { 
         return {selectedProperty: action.selectedProperty}

@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DispatchedAction } from '@state/action-dispatcher';
-import { Effect } from '@state/interfaces/effect.interface';
+import { Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { LoginSuccessActionId, LoginSuccessCommand } from './login-success-command.interface';
 

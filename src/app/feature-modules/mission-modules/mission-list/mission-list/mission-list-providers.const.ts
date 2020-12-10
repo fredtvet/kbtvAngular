@@ -1,6 +1,6 @@
 import { Provider } from '@angular/core';
-import { ComponentStoreProviders } from '@state/providers.const';
-import { STORE_DEFAULT_STATE, STORE_REDUCERS } from '@state/injection-tokens';
+import { ComponentStoreProviders } from '@state/constants/providers.const';
+import { STORE_DEFAULT_STATE, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { MissionListFacade } from '../mission-list.facade';
 import { SetMissionCriteriaReducer } from '../set-mission-criteria.reducer';
 import { MissionListDefaultState } from './mission-list-default-state.const';

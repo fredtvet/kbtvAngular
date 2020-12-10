@@ -1,7 +1,7 @@
 import { Provider } from '@angular/core';
 import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
-import { STORE_DEFAULT_STATE, STORE_REDUCERS } from '@state/injection-tokens';
-import { ComponentStoreProviders } from '@state/providers.const';
+import { STORE_DEFAULT_STATE, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
+import { ComponentStoreProviders } from '@state/constants/providers.const';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { WeekToTimesheetCriteriaAdapter } from '../../shared-timesheet/timesheet-filter/week-to-timesheet-criteria.adapter';
 import { ComponentStoreState } from '../store-state.interface';

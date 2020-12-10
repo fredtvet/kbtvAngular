@@ -2,7 +2,7 @@ import { _deepClone } from '@state/helpers/deep-clone.helper';
 import { Reducer } from '@state/interfaces';
 import { HttpErrorActionId, HttpErrorCommand } from './http-error-command.interface';
 
-export const HttpErrorReducer: Reducer<any> = {
+export const HttpErrorReducer: Reducer<any, HttpErrorCommand> = {
     actionId: HttpErrorActionId, noDeepCloneState: true, 
     stateProperties: ['requestQueue'],
     reducerFn: (state: any, action: HttpErrorCommand) => {

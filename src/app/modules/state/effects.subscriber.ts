@@ -2,8 +2,8 @@ import { Inject, Injectable, Optional, Self } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError, first, takeUntil, tap } from 'rxjs/operators';
 import { ActionDispatcher } from './action-dispatcher';
-import { STORE_EFFECTS } from './injection-tokens';
-import { Effect } from './interfaces/effect.interface';
+import { STORE_EFFECTS } from './constants/injection-tokens.const';
+import { Effect } from './interfaces';
 import { Store } from './store';
 
 @Injectable()

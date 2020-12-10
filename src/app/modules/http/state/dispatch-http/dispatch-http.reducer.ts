@@ -2,7 +2,7 @@ import { _deepClone } from '@state/helpers/deep-clone.helper';
 import { Reducer } from '@state/interfaces';
 import { DispatchHttpActionId, DispatchHttpCommand } from './dispatch-http-command.interface';
 
-export const DispatchHttpReducer: Reducer<any> = {
+export const DispatchHttpReducer: Reducer<any, DispatchHttpCommand> = {
     actionId: DispatchHttpActionId, noDeepCloneState: true, 
     stateProperties: ['requestQueue'],
     reducerFn: (state: any, action: DispatchHttpCommand) => {

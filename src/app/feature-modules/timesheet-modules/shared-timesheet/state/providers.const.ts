@@ -1,5 +1,5 @@
 import { Provider } from '@angular/core';
-import { STORE_EFFECTS, STORE_REDUCERS } from '@state/injection-tokens';
+import { STORE_EFFECTS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { FetchTimesheetsHttpEffect } from './fetch-timesheets.http.effect';
 import { SaveUserTimesheetHttpEffect } from './save-user-timesheet/save-user-timesheet.http.effect';
 import { SaveUserTimesheetReducer } from './save-user-timesheet/save-user-timesheet.reducer';

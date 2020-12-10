@@ -3,7 +3,7 @@ import { StateRequestQueue } from '../interfaces';
 
 export const HttpQueueShiftActionId = "HTTP_QUEUE_SHIFT";
 
-export const HttpQueueShiftReducer: Reducer<StateRequestQueue> = {
+export const HttpQueueShiftReducer: Reducer<StateRequestQueue, StateAction> = {
     actionId: HttpQueueShiftActionId,
     stateProperties: ['requestQueue'],
     noDeepCloneState: true,

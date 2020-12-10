@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DispatchedAction } from '@state/action-dispatcher';
-import { Effect } from '@state/interfaces/effect.interface';
+import { Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { HttpErrorActionId, HttpErrorCommand } from './http-error-command.interface';
 import { NotificationService, NotificationType } from '@notification/index';

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SaveModelProviders } from '@model/state/providers.const';
-import { STORE_EFFECTS, STORE_REDUCERS } from '@state/injection-tokens';
+import { STORE_EFFECTS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';
 import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';

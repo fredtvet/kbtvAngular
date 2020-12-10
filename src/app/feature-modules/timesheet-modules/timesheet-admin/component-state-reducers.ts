@@ -7,7 +7,7 @@ export const SetTimesheetCriteriaActionId = "SET_TIMESHEET_CRITERIA";
 
 export interface SetTimesheetCriteriaCommand extends StateAction { weekCriteria: WeekCriteria }
 
-export const SetTimesheetCriteriaReducer: Reducer<any> = {
+export const SetTimesheetCriteriaReducer: Reducer<any, SetTimesheetCriteriaCommand> = {
     actionId: SetTimesheetCriteriaActionId,
     reducerFn: (state: StoreState, action: SetTimesheetCriteriaCommand) => {
         delete action.weekCriteria.weekNr;
@@ -22,7 +22,7 @@ export const SetSelectedWeekActionId = "SET_SELECTED_WEEK";
 
 export interface SetSelectedWeekCommand extends StateAction { weekNr: number }
 
-export const SetSelectedWeekReducer: Reducer<any> = {
+export const SetSelectedWeekReducer: Reducer<any, SetSelectedWeekCommand> = {
     actionId: SetSelectedWeekActionId,
     reducerFn: (state: StoreState, action: SetSelectedWeekCommand) => {
         return {selectedWeekNr: action.weekNr}

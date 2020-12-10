@@ -1,4 +1,4 @@
-import { Prop } from '@state/interfaces/prop.type';
+import { Prop } from '@state/interfaces';
 
 export interface HttpRequest { 
     apiUrl: string; 

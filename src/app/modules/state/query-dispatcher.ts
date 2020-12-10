@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-
-export interface Query { props: string[] };
+import { Query } from './interfaces';
 
 @Injectable({providedIn: "root"})
 export class QueryDispatcher {

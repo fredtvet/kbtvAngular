@@ -1,6 +1,6 @@
 import { Provider } from '@angular/core';
-import { ComponentStoreProviders } from '@state/providers.const';
-import { STORE_REDUCERS } from "@state/injection-tokens";
+import { ComponentStoreProviders } from '@state/constants/providers.const';
+import { STORE_REDUCERS } from "@state/constants/injection-tokens.const";
 import { SetTimesheetCriteriaReducer, SetSelectedWeekReducer } from "../component-state-reducers";
 import { TimesheetAdminFacade } from "../timesheet-admin.facade";
 

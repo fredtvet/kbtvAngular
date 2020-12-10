@@ -4,7 +4,7 @@ export interface WipeStateCommand extends StateAction { defaultState: any }
 
 export const WipeStateActionId = "WIPE_STATE";
 
-export const WipeStateReducer: Reducer<any> = {
+export const WipeStateReducer: Reducer<any, WipeStateCommand> = {
     actionId: WipeStateActionId, noDeepCloneState: true, stateProperties: "all",
     reducerFn: (state: any, action: WipeStateCommand): any => {
         const ignoredState = {refreshToken: true, accessToken: true, currentUser: true};

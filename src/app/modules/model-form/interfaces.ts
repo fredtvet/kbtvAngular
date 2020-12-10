@@ -1,6 +1,5 @@
 import { DynamicForm } from '@dynamic-forms/interfaces';
-import { Prop } from '@state/interfaces/prop.type';
-import { StateAction } from '@state/interfaces';
+import { StateAction, Prop } from '@state/interfaces';
 import { SaveAction } from '@model/state/save-model/save-model-action.const';
 import { OptionsFormState } from '@form-sheet/interfaces';
 

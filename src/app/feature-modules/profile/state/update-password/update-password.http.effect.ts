@@ -3,9 +3,7 @@ import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ApiUrl } from '@core/api-url.enum';
 import { ApiService } from '@core/services/api.service';
-import { DispatchedAction } from '@state/action-dispatcher';
-import { StateAction } from '@state/interfaces';
-import { Effect } from '@state/interfaces/effect.interface';
+import { StateAction, Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { UpdatePasswordActionId, UpdatePasswordStateCommand } from './update-password-state-command.interface';
 

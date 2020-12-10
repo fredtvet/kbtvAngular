@@ -1,5 +1,5 @@
 import { Question, OptionsGetter } from '@dynamic-forms/interfaces';
-import { Prop } from '@state/interfaces/prop.type';
+import { Prop } from '@state/interfaces';
 import { ActiveStringFilterConfig } from '@shared/interfaces';
 
 export interface AutoCompleteQuestion<T> extends Question {

@@ -7,7 +7,7 @@ import { AppOptimisticState } from '../shared-app/const/optimistic-state-props.c
 import { PersistedCriticalStateProps, PersistedStateProps } from '../shared-app/const/persisted-state-props.const';
 import { AppSyncStateConfig } from '../shared-app/const/sync-state.config';
 import { ValidationErrorMessages } from '../shared-app/const/validation-error-messages.const';
-import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS } from '@state/injection-tokens';
+import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_META_REDUCERS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { HttpErrorInterceptor, HttpIsOnlineInterceptor, HttpLoadingInterceptor, HttpRefreshTokenInterceptor } from './interceptors';
 import { RedirectToUrlEffect } from './services/auth/state/login-success/redirect-to-url.effect';
 import { SetCredentialsReducer } from './services/auth/state/login-success/set-credentials.reducer';

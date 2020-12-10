@@ -7,7 +7,7 @@ export const RefreshTokenSuccessActionId = "REFRESH_TOKEN_SUCCESS"
 
 export interface RefreshTokenSuccessCommand extends StateAction, RefreshTokenResponse { }
 
-export const RefreshTokenSuccessReducer: Reducer<StoreState> = {
+export const RefreshTokenSuccessReducer: Reducer<StoreState, RefreshTokenSuccessCommand> = {
     actionId: RefreshTokenSuccessActionId,
     reducerFn: (state: any, action: RefreshTokenSuccessCommand): Partial<StoreState>=> {
         action.accessToken.expiresIn = 

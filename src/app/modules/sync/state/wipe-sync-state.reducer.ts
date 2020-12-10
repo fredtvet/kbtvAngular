@@ -1,7 +1,7 @@
 import { Reducer } from '@state/interfaces';
 import { WipeSyncStateActionId, WipeSyncStateCommand } from './actions.const';
 
-export const WipeSyncStateReducer: Reducer<any> = {
+export const WipeSyncStateReducer: Reducer<any, WipeSyncStateCommand> = {
     actionId: WipeSyncStateActionId, 
     reducerFn: (state: any, action: WipeSyncStateCommand): any => {
 

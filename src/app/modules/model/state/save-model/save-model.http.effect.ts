@@ -1,12 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpRequest } from '@http/interfaces';
 import { HttpActionId, HttpCommand } from '@http/state/http.effect';
-import { StateAction } from '@state/interfaces';
-import { Effect } from '@state/interfaces/effect.interface';
+import { DispatchedAction, Effect, StateAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DispatchedAction } from '../../../state/action-dispatcher';
 import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens.const';
 import { CommandApiMap, KeyVal, ModelConfig } from '../../interfaces';
 import { ModelCommand } from '../../model-command.enum';

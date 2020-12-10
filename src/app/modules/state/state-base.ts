@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { _deepClone } from './helpers/deep-clone.helper';
-import { StateChanges } from './interfaces/state-changes.interface';
+import { StateChanges } from './interfaces';
 
 export class StateBase {  
 

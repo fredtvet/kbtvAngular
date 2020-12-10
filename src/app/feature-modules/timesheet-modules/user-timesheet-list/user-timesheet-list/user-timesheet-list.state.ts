@@ -1,6 +1,6 @@
 import { Provider } from '@angular/core';
-import { ComponentStoreProviders } from '@state/providers.const';
-import { STORE_REDUCERS } from '@state/injection-tokens';
+import { ComponentStoreProviders } from '@state/constants/providers.const';
+import { STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { UserTimesheetListFacade } from './user-timesheet-list.facade';
 import { SetTimesheetCriteriaReducer } from '../../shared-timesheet/state/set-timesheet-criteria.reducer';

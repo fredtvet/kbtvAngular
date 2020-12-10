@@ -4,7 +4,7 @@ import { Reducer } from '@state/interfaces';
 import { CreateMissionImagesActionId, CreateMissionImagesStateCommand } from './create-mission-images-state-command.interface';
 import { StateMissionImages } from '@core/state/global-state.interfaces';
 
-export const CreateMissionImagesReducer: Reducer<StateMissionImages> = {
+export const CreateMissionImagesReducer: Reducer<StateMissionImages, CreateMissionImagesStateCommand> = {
     actionId: CreateMissionImagesActionId,
     stateProperties: ["missionImages"],
     reducerFn: _reducerFn,

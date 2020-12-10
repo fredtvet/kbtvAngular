@@ -13,7 +13,7 @@ export interface SetFetchedTimesheetsCommand extends StateAction {
 
 type State = StateTimesheets & StateMissions;
 
-export const SetFetchedTimesheetsReducer: Reducer<State> = {
+export const SetFetchedTimesheetsReducer: Reducer<State, SetFetchedTimesheetsCommand> = {
     actionId: SetFetchedTimesheetsActionId,
     stateProperties: ["timesheets", "missions"],
     reducerFn: (state: State, action: SetFetchedTimesheetsCommand) => {
