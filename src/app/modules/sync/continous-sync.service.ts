@@ -3,12 +3,14 @@ import { interval, concat } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper';
 import { Store } from '@state/store';
-import { StoreState, SyncConfig, SyncStoreTimestamps } from './interfaces';
+import { StoreState, SyncConfig } from './interfaces';
 import { SyncStateActionId } from './state/actions.const';
 
 @Injectable({providedIn: "root"})
 export class ContinousSyncService {
-  
+
+    private get syncTimestamp(): number { return this.store.selectProperty("syncTimestamp") }
+
     constructor(
         private appRef: ApplicationRef,
         private store: Store<StoreState>,
@@ -26,15 +28,9 @@ export class ContinousSyncService {
     }
 
     private syncIfTimePassed = (): void => {
-      const timestamp = this.getEarliestTimestamp();
-      const timeSinceLastSync = _getUnixTimeSeconds() - timestamp;
+      const timeSinceLastSync = _getUnixTimeSeconds() - this.syncTimestamp;
       const syncConfig = this.store.selectProperty<SyncConfig>("syncConfig");
       if(timeSinceLastSync > syncConfig?.refreshTime) this.syncAll();             
-    }
-  
-    private getEarliestTimestamp = (): number =>{
-      const timestamps =  this.store.selectProperty<SyncStoreTimestamps>("syncTimestamps");
-      return timestamps ? Object.values(timestamps).sort(function(a,b) {return a - b})[0] : 0; 
     }
 
     private syncAll = () : void => 

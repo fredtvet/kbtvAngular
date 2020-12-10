@@ -7,7 +7,7 @@ import { Store } from '@state/store';
 import { Observable } from 'rxjs';
 import { exhaustMap, filter, map } from 'rxjs/operators';
 import { SYNC_HTTP_FETCHER, SYNC_STATE_CONFIG } from '../injection-tokens.const';
-import { StoreState, SyncConfig, SyncHttpFetcher, SyncStateConfig, SyncStoreTimestamps } from '../interfaces';
+import { StoreState, SyncConfig, SyncHttpFetcher, SyncStateConfig } from '../interfaces';
 import { SyncStateActionId, SyncStateSuccessAction, SyncStateSuccessActionId, WipeSyncStateActionId } from './actions.const';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class SyncStateHttpEffect implements Effect<StateAction> {
 
     private get syncConfig(): SyncConfig { return this.store.selectProperty("syncConfig") }
 
-    private get syncTimestamps(): SyncStoreTimestamps { return this.store.selectProperty("syncTimestamps") }
+    private get syncTimestamp(): number { return this.store.selectProperty("syncTimestamp") }
 
     constructor(
       @Inject(SYNC_HTTP_FETCHER) private httpFetcher: SyncHttpFetcher<any>,
@@ -27,7 +27,7 @@ export class SyncStateHttpEffect implements Effect<StateAction> {
         return actions$.pipe(
             listenTo([SyncStateActionId, WipeSyncStateActionId]),
             filter(x => navigator.onLine),
-            exhaustMap(x => this.httpFetcher.fetch$(this.syncConfig, this.syncTimestamps)),
+            exhaustMap(x => this.httpFetcher.fetch$(this.syncConfig, this.syncTimestamp)),
             map(x => { return <SyncStateSuccessAction>{
                 actionId: SyncStateSuccessActionId,
                 response: x,

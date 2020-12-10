@@ -6,36 +6,33 @@ import { SyncStateSuccessAction, SyncStateSuccessActionId } from './actions.cons
 
 export const SetSyncResponseReducer: Reducer<any> = {
     actionId: SyncStateSuccessActionId, noDeepCloneAction: true, noDeepCloneState: true,
-    stateProperties: (action: SyncStateSuccessAction) => Object.keys(action.syncStateConfig),
-    // stateProperties: (action: SyncStateSuccessAction) => Object.keys(action.response), //Krever samme navn på response & state props
-    // stateProperties: , //bruk action && set sync states + evnt statiske sjekk dfuncjonene
-    reducerFn: (unclonedState: StoreState, action: SyncStateSuccessAction): any => {
-        const state = {...unclonedState, syncTimestamps: {}};
-        for(const prop in action.syncStateConfig){
+    stateProperties: (action: SyncStateSuccessAction) => Object.keys(action.response.arrays),
+    reducerFn: (unclonedState: Readonly<StoreState>, action: SyncStateSuccessAction): any => {
+        const state = {...unclonedState, syncTimestamp: action.response.timestamp};
+
+        for(const prop in action.response.arrays){
 
             const propCfg = action.syncStateConfig[prop] as any; //Replace with new logic
-            const propResponse = action.response[propCfg.responseKey]; //Bruk prop etterhvert
+            if(!propCfg) console.error(`No sync state config for property ${prop}`);
 
-            if(!propResponse) continue;
-
-            state.syncTimestamps[prop] = propResponse.timestamp; //Update given timestamp
-
-            if(propCfg.singular && propResponse.entities?.length) {
-                state[prop] = propResponse.entities[0];
-                continue;
-            }
-
-            const id = action.syncStateConfig[prop]?.identifier;
-
-            if(propResponse.deletedEntities?.length)
+            const {deletedEntities, entities} = action.response.arrays[prop];
+  
+            if(deletedEntities?.length)
                 state[prop] = 
-                    _removeRangeByIdentifier<any>(state[prop]?.slice(), propResponse.deletedEntities, id);
+                    _removeRangeByIdentifier<any>(state[prop]?.slice(), deletedEntities, propCfg.identifier);
 
-            if(propResponse.entities?.length)
+            if(entities?.length)
                 state[prop] = 
-                    _addOrUpdateRange<any>(state[prop]?.slice(), propResponse.entities, id); 
+                    _addOrUpdateRange<any>(state[prop]?.slice(), entities, propCfg.identifier); 
+        }
+
+        for(const prop in action.response.values){
+            if(!action.syncStateConfig[prop]) console.error(`No sync state config for property ${prop}`);
+            const value = action.response.values[prop];
+            if(value) state[prop] = value;
         }
 
         return state;
     }
+    
 }

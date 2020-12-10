@@ -4,22 +4,17 @@ import { SyncStatePropConfig } from '@sync/interfaces';
 
 export type SyncModelState = Partial<ModelState> & StateCurrentUser;
 
-export interface AppSyncStatePropConfig extends SyncStatePropConfig {
-    responseKey: string,
-    requestKey: string,
-}
-
-export const AppSyncStateConfig: {[key in keyof SyncModelState]: AppSyncStatePropConfig} = 
+export const AppSyncStateConfig: {[key in keyof SyncModelState]: SyncStatePropConfig} = 
 {
-    missions: {identifier: "id", responseKey: 'missionSync', requestKey: 'missionTimestamp'},
-    missionTypes: {identifier: "id", responseKey: 'missionTypeSync', requestKey: 'missionTypeTimestamp'},
-    missionImages: {identifier: "id", responseKey: 'missionImageSync', requestKey: 'missionImageTimestamp'},
-    missionNotes: {identifier: "id", responseKey: 'missionNoteSync', requestKey: 'missionNoteTimestamp'},
-    missionDocuments: {identifier: "id", responseKey: 'missionDocumentSync', requestKey: 'missionDocumentTimestamp'},
-    employers: {identifier: "id", responseKey: 'employerSync', requestKey: 'employerTimestamp'},
-    documentTypes: {identifier: "id", responseKey: 'documentTypeSync', requestKey: 'documentTypeTimestamp'},     
-    userTimesheets: {identifier: "id", responseKey: 'userTimesheetSync', requestKey: 'userTimesheetTimestamp'}, 
-    currentUser: {identifier: "userName", responseKey: 'currentUserSync', requestKey: 'currentUserTimestamp', singular: true, wipeable: false}, 
+    missions: {identifier: "id", type: "array"},
+    missionTypes: {identifier: "id", type: "array"},
+    missionImages: {identifier: "id", type: "array"},
+    missionNotes: {identifier: "id", type: "array"},
+    missionDocuments: {identifier: "id", type: "array"},
+    employers: {identifier: "id", type: "array"},
+    documentTypes: {identifier: "id", type: "array"},     
+    userTimesheets: {identifier: "id", type: "array"}, 
+    currentUser: {identifier: "userName", type: "value", wipeable: false}, 
 };
 
 
