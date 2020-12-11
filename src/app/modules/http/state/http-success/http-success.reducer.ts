@@ -1,8 +1,8 @@
 import { Reducer } from '@state/interfaces';
 import { HttpQueueShiftReducer } from '../http-queue-shift.reducer';
-import { HttpSuccessActionId, HttpSuccessCommand } from './http-success-command.interface';
+import { HttpSuccessAction } from './http-success.action';
 
-export const HttpSuccessReducer: Reducer<any, HttpSuccessCommand> = {
+export const HttpSuccessReducer: Reducer<any, HttpSuccessAction> = {
     ...HttpQueueShiftReducer,
-    actionId: HttpSuccessActionId,
+    action: HttpSuccessAction,
 }    

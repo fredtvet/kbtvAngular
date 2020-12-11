@@ -1,15 +1,15 @@
 import { Reducer } from '@state/interfaces';
 import { _deleteModelWithChildren } from '../../helpers/delete-model-with-children.helper';
 import { ModelStateConfig } from '../../model-state.config';
-import { DeleteModelActionId, DeleteModelStateCommand } from './delete-model-action.const';
+import { DeleteModelAction } from './delete-model.action';
 
-export const DeleteModelReducer: Reducer<any, DeleteModelStateCommand<any>> = {
-    actionId: DeleteModelActionId,
-    reducerFn: (state: any, action: DeleteModelStateCommand<any>) => _deleteModelWithChildren(state, action.stateProp, action),
+export const DeleteModelReducer: Reducer<any, DeleteModelAction<any>> = {
+    action: DeleteModelAction,
+    reducerFn: (state: any, action: DeleteModelAction<any>) => _deleteModelWithChildren(state, action.stateProp, action.payload),
     stateProperties: _statePropertiesGetter
 }
 
-function _statePropertiesGetter(command: DeleteModelStateCommand<any>): string[]{
+function _statePropertiesGetter(command: DeleteModelAction<any>): string[]{
     const modelConfig = ModelStateConfig.get(command.stateProp);
 
     let stateProps: any[] = [command.stateProp];

@@ -1,15 +1,16 @@
 import { StateMissions } from '@core/state/global-state.interfaces';
-import { Reducer, StateAction } from '@state/interfaces';
+import { Reducer } from '@state/interfaces';
+import { StateAction } from '@state/state.action';
 
-export interface UpdateLastVisitedCommand extends StateAction { id: string; }
+export class UpdateLastVisitedAction extends StateAction { 
+    constructor(public id: string){ super() }; 
+}
 
-export const UpdateLastVisitedActionId = "MISSION_LIST_UPDATE_LAST_VISITED";
-
-export const UpdateLastVisitedReducer: Reducer<StateMissions, UpdateLastVisitedCommand> = {
-    actionId: UpdateLastVisitedActionId,
+export const UpdateLastVisitedReducer: Reducer<StateMissions, UpdateLastVisitedAction> = {
+    action: UpdateLastVisitedAction,
     stateProperties: ["missions"],
     noDeepCloneState: true,
-    reducerFn: (state: StateMissions, action: UpdateLastVisitedCommand): StateMissions => {
+    reducerFn: (state: StateMissions, action: UpdateLastVisitedAction): StateMissions => {
         const index = state.missions?.findIndex(x => x.id === action.id);
         if(!index || state.missions) return null;
         let mission = state.missions[index];

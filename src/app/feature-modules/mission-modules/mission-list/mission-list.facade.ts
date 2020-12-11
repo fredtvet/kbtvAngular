@@ -1,17 +1,16 @@
 import { Injectable } from "@angular/core";
+import { _sortByDate } from '@array/sort-by-date.helper';
 import { ApiUrl } from '@core/api-url.enum';
 import { Mission } from "@core/models";
-import { ModelState } from '@core/state/model-state.interface';
-import { SaveModelFileStateCommand } from '@core/state/save-model-file/save-model-file-action.const';
+import { SaveModelFileAction } from '@core/state/save-model-file/save-model-file.action';
 import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
 import { ModelCommand } from '@model/model-command.enum';
 import { NotificationService, NotificationType } from '@notification/index';
-import { _sortByDate } from '@array/sort-by-date.helper';
 import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
+import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { ImageFileExtensions } from '@shared/constants/image-file-extensions.const';
-import { FormToSaveModelFileStateCommandAdapter } from '@shared/form-adapters/form-to-save-model-file-state-command.adapter';
 import { MissionCriteria } from '@shared/interfaces';
 import { MissionFilter } from '@shared/mission-filter.model';
 import { filterRecords } from '@shared/operators/filter-records.operator';
@@ -20,8 +19,8 @@ import { Store } from '@state/store';
 import { combineLatest, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { ComponentStoreState, StoreState } from './interfaces/store-state';
-import { SetMissionCriteriaActionId } from './set-mission-criteria.reducer';
-import { UpdateLastVisitedActionId, UpdateLastVisitedCommand } from './update-last-visited.reducer';
+import { SetMissionCriteriaAction } from './set-mission-criteria.reducer';
+import { UpdateLastVisitedAction } from './update-last-visited.reducer';
 
 @Injectable()
 export class MissionListFacade {
@@ -64,7 +63,7 @@ export class MissionListFacade {
   }
 
   addCriteria = (missionCriteria: MissionCriteria): void => 
-    this.componentStore.dispatch({actionId: SetMissionCriteriaActionId, missionCriteria});
+    this.componentStore.dispatch(new SetMissionCriteriaAction(missionCriteria));
     
   updateHeaderImage(id: string, file: File): void {
     if(!_validateFileExtension(file, ImageFileExtensions)) 
@@ -72,20 +71,18 @@ export class MissionListFacade {
           {title: "Filtypen er ikke tillatt.", type: NotificationType.Error}
       );  
 
-    let command: SaveModelFileStateCommand<Mission, ModelState> = new FormToSaveModelFileStateCommandAdapter({
+    let action: SaveModelFileAction<Mission> = _formToSaveModelFileConverter({
       formValue: {id, file},
       stateProp: "missions",
       saveAction: ModelCommand.Update
     });
 
-    command.apiUrlOverride = `${ApiUrl.Mission}/${id}/UpdateHeaderImage`;
+    action.apiUrlOverride = `${ApiUrl.Mission}/${id}/UpdateHeaderImage`;
 
-    this.store.dispatch(command);
+    this.store.dispatch(action);
   }
 
   private updateLastVisited = (id: string): void => 
-    this.store.dispatch(<UpdateLastVisitedCommand>{
-      actionId: UpdateLastVisitedActionId, id
-    })
+    this.store.dispatch(new UpdateLastVisitedAction(id))
 
 }

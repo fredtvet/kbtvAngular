@@ -1,17 +1,18 @@
 import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper'
-import { Reducer, StateAction } from '@state/interfaces'
+import { Reducer } from '@state/interfaces'
+import { StateAction } from '@state/state.action'
 import { RefreshTokenResponse } from '../interfaces'
 import { StoreState } from '../interfaces/store-state'
 
-export const RefreshTokenSuccessActionId = "REFRESH_TOKEN_SUCCESS"
+export class RefreshTokenSuccessAction extends StateAction {
+    constructor(public response: RefreshTokenResponse){ super() } 
+}
 
-export interface RefreshTokenSuccessCommand extends StateAction, RefreshTokenResponse { }
-
-export const RefreshTokenSuccessReducer: Reducer<StoreState, RefreshTokenSuccessCommand> = {
-    actionId: RefreshTokenSuccessActionId,
-    reducerFn: (state: any, action: RefreshTokenSuccessCommand): Partial<StoreState>=> {
-        action.accessToken.expiresIn = 
-            _getUnixTimeSeconds() + action.accessToken.expiresIn;
-        return {accessToken: action.accessToken, refreshToken: action.refreshToken}
+export const RefreshTokenSuccessReducer: Reducer<StoreState, RefreshTokenSuccessAction> = {
+    action: RefreshTokenSuccessAction,
+    reducerFn: (state: any, action: RefreshTokenSuccessAction): Partial<StoreState>=> {
+        let {accessToken, refreshToken} = action.response;
+        accessToken.expiresIn =  _getUnixTimeSeconds() + accessToken.expiresIn;
+        return {accessToken, refreshToken}
     }
 }

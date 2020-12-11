@@ -12,12 +12,12 @@ import { Store } from '@state/store';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetSummaryAggregator } from '../shared-timesheet/services/timesheet-summary.aggregator';
-import { FetchTimesheetsActionId, FetchTimesheetsStateCommand } from '../shared-timesheet/state/fetch-timesheets.http.effect';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
-import { SetSelectedWeekActionId, SetTimesheetCriteriaActionId } from './component-state-reducers';
 import { ComponentStoreState, StoreState } from './store-state';
-import { UpdateStatusesActionId, UpdateStatusesStateCommand } from './update-statuses/update-statuses-state-command.interface';
+import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
+import { SetSelectedWeekAction, SetTimesheetCriteriaAction } from './component-state-reducers';
+import { UpdateTimesheetStatusesAction } from './update-timesheet-statuses/update-timesheet-statuses.action';
 
 @Injectable()
 export class TimesheetAdminFacade {
@@ -59,25 +59,20 @@ export class TimesheetAdminFacade {
         private store: Store<StoreState>,
         private componentStore: ComponentStore<ComponentStoreState>
     ){
-        this.componentStore.selectProperty$("timesheetCriteria").subscribe(timesheetCriteria => 
-            this.store.dispatch(<FetchTimesheetsStateCommand>{actionId: FetchTimesheetsActionId, timesheetCriteria}))
+        this.componentStore.selectProperty$("timesheetCriteria").subscribe(criteria => 
+            this.store.dispatch(new FetchTimesheetsAction(criteria)))
     }
     
     updateCriteria = (weekCriteria: WeekCriteria): void =>       
-        this.componentStore.dispatch({ actionId: SetTimesheetCriteriaActionId, weekCriteria })
+        this.componentStore.dispatch(new SetTimesheetCriteriaAction(weekCriteria))
 
-    updateWeekNr = (weekNr: number | string): void =>       
-        this.componentStore.dispatch({ 
-            actionId: SetSelectedWeekActionId, 
-            weekNr: (typeof weekNr === "number") ? weekNr : parseInt(weekNr)
-        })
+    updateWeekNr = (weekNr: number | string): void => {  
+        const parsedWeekNr = (typeof weekNr === "number") ? weekNr : parseInt(weekNr);
+        this.componentStore.dispatch(new SetSelectedWeekAction(parsedWeekNr))
+    }
     
     updateStatuses(ids: string[], status: TimesheetStatus): void{
         if(ids.length == 0) return;
-        this.store.dispatch<UpdateStatusesStateCommand>({
-            ids, 
-            status,
-            actionId: UpdateStatusesActionId,
-        });      
+        this.store.dispatch(new UpdateTimesheetStatusesAction(ids, status));      
     }
 }

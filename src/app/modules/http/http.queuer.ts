@@ -3,7 +3,7 @@ import { Store } from '@state/store';
 import { BehaviorSubject, fromEvent, merge, of } from 'rxjs';
 import { filter, first, map, switchMap, tap } from 'rxjs/operators';
 import { QueuedCommand, StateRequestQueue } from './interfaces';
-import { DispatchHttpActionId, DispatchHttpCommand } from './state/dispatch-http/dispatch-http-command.interface';
+import { DispatchHttpAction } from './state/dispatch-http/dispatch-http.action';
 
 @Injectable({ providedIn: 'root' })
 export class HttpQueuer {
@@ -19,10 +19,7 @@ export class HttpQueuer {
         of(navigator.onLine)
       ).pipe(
         first(x => x === true), //Wait for online
-        tap(x => this.store.dispatch(<DispatchHttpCommand>{
-          actionId: DispatchHttpActionId, 
-          request: queue[0].request
-        }))
+        tap(x => this.store.dispatch(new DispatchHttpAction(queue[0].request)))
       )
     )
   );

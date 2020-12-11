@@ -7,7 +7,7 @@ import { combineLatest, Observable, of } from 'rxjs'
 import { finalize, map, mergeMap, tap } from 'rxjs/operators'
 import { ModelConfig } from '../../interfaces'
 import { ModelStateConfig } from '../../model-state.config'
-import { SetFetchedStateActionId, SetFetchedStateCommand } from './set-fetched-state.reducer'
+import { SetFetchedStateAction } from './set-fetched-state.reducer'
 
 type StateSlice = {[key: string]: any};
 
@@ -40,10 +40,8 @@ export class ModelFetcherService {
 
                 return combineLatest(fetchers)     
             }),
-            tap(stateSlices => stateSlices ? store.dispatch(<SetFetchedStateCommand>{ 
-                actionId: SetFetchedStateActionId, 
-                state: this.mergeSlices(stateSlices)
-            }) : null)
+            tap(stateSlices => stateSlices ? 
+                store.dispatch(new SetFetchedStateAction(this.mergeSlices(stateSlices))) : null)
         ).subscribe();
     }
 

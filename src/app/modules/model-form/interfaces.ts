@@ -1,18 +1,20 @@
 import { DynamicForm } from '@dynamic-forms/interfaces';
-import { StateAction, Prop } from '@state/interfaces';
-import { SaveAction } from '@model/state/save-model/save-model-action.const';
 import { OptionsFormState } from '@form-sheet/interfaces';
+import { SaveAction } from '@model/interfaces';
+import { Prop } from '@state/interfaces';
+import { StateAction } from '@state/state.action';
 
-export interface AdapterConstructor<TInput, TOutput>{
-    new(input: TInput): TOutput;     
-}
+export type ActionConverter<TInput, TAction extends StateAction> = (input: TInput) => TAction;
+
+export type FormToSaveModelConverter<TForm, TState, TAction extends StateAction> = 
+    (input: ModelFormToSaveModelInput<TForm, TState>) => TAction
 
 export interface ModelFormConfig<TState, TForm, TFormState extends OptionsFormState<Partial<TState>>>
 {      
     entityId?: any;
     stateProp: Prop<TState>;
     dynamicForm: DynamicForm<TForm, TFormState>;
-    adapter?: ModelFormToSaveStateCommandAdapter<TForm, TState>
+    actionConverter?: FormToSaveModelConverter<TForm, TState, StateAction>
 }
 
 export interface ModelFormToSaveModelInput<TForm, TState> {
@@ -21,12 +23,6 @@ export interface ModelFormToSaveModelInput<TForm, TState> {
     stateProp: Prop<TState>,
     saveAction: SaveAction,
 }
-
-export interface ModelFormToSaveStateCommandAdapter<TForm, TState> 
-    extends AdapterConstructor<
-        ModelFormToSaveModelInput<TForm, TState>, 
-        StateAction
-    >{} 
 
 export interface ModelFormViewConfig<TModel, TState, TForm>{
     entity?: TModel;

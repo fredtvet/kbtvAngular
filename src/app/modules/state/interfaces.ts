@@ -1,4 +1,6 @@
+import { Type } from '@angular/core'
 import { Observable } from 'rxjs'
+import { StateAction } from './state.action'
 
 export type Prop<T> = Extract<keyof T, string>
 
@@ -16,7 +18,7 @@ export type ReducerFn<TState, TAction> = (state: Partial<TState>, action: TActio
 export type ReducerMap = {[key: string]: Reducer<any, StateAction>[]}
 
 export interface Reducer<TState, TAction extends StateAction> {
-    actionId: string;
+    action: Type<TAction>;
     reducerFn: ReducerFn<TState, TAction>;
     stateProperties?: ((action: Readonly<TAction>) => Prop<TState>[]) | Prop<TState>[] | 'all';
     noDeepCloneState?: boolean;
@@ -25,11 +27,6 @@ export interface Reducer<TState, TAction extends StateAction> {
 
 export type MetaReducer<TState, TAction extends StateAction> = 
     (reducer: Readonly<Reducer<TState, TAction>>) => Reducer<TState, TAction>
-
-export interface StateAction {
-    actionId: string;
-    propagate?: boolean;
-}
 
 export interface StateChanges<T> {
     action?: string,

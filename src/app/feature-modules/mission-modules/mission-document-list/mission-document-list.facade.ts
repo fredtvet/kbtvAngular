@@ -4,8 +4,8 @@ import { ModelState } from '@core/state/model-state.interface';
 import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
-import { DeleteModelActionId, DeleteModelStateCommand } from '@model/state/delete-model/delete-model-action.const';
-import { MailModelsActionId, MailModelsStateCommand } from '@model/state/mail-models/mail-models-state-command.interface';
+import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
+import { MailModelsAction } from '@model/state/mail-models/mail-models.action';
 import { Store } from '@state/store';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
@@ -32,17 +32,10 @@ export class MissionDocumentListFacade  {
   }
 
   delete = (command: {ids?: string[], id?: string}): void => 
-    this.store.dispatch<DeleteModelStateCommand<ModelState>>({
-      ...command, 
-      stateProp: "missionDocuments", 
-      actionId: DeleteModelActionId
-    });
+    this.store.dispatch(new DeleteModelAction<ModelState>("missionDocuments", command))
 
   mailDocuments = (toEmail: string, ids: string[]): void => 
-    this.store.dispatch<MailModelsStateCommand<ModelState>>({
-      toEmail, ids, 
-      stateProp: "missionDocuments",
-      actionId: MailModelsActionId 
-    })
+    this.store.dispatch(new MailModelsAction<ModelState>("missionDocuments", ids, toEmail))
+    
 }
 

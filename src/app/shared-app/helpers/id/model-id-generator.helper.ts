@@ -1,22 +1,25 @@
 import { Model } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { ModelConfig } from '@model/interfaces';
-import {  ModelStateConfig } from '@model/model-state.config';
+import { ModelStateConfig } from '@model/model-state.config';
+import { Prop } from '@state/interfaces';
 import { _idGenerator } from './id-generator.helper';
 
-export function _modelIdGenerator<TModel extends Model>(entity: TModel, modelCfg: ModelConfig<TModel, ModelState>): TModel{
-    if(!modelCfg) console.trace("No model state config provided");
+export function _modelIdGenerator<TModel extends Model>(stateProp: Prop<ModelState>, entity: Readonly<TModel>): TModel{
+    const modelCfg = ModelStateConfig.get<TModel, ModelState>(stateProp);
+  
+    const clone: TModel = {...entity}
+    const id = clone[modelCfg.identifier];
     
-    const id = entity[modelCfg.identifier]
-    if(!id) entity[modelCfg.identifier] = _idGenerator() as any;
+    if(!id) clone[modelCfg.identifier] = _idGenerator() as any;
 
     for(var fkProp of modelCfg.foreigns || []){ //Run through fks, check if exist in object, create id if no id.
         const fkPropConfig = ModelStateConfig.get(fkProp); 
-        const foreignEntity = entity[fkPropConfig.foreignProp];
+        const foreignEntity = clone[fkPropConfig.foreignProp];
         if(!foreignEntity || foreignEntity[fkPropConfig.identifier]) continue; //If no fk entity, or entity has ID already, continue
-        foreignEntity[fkPropConfig.identifier] = _idGenerator();    
-        entity[fkPropConfig.foreignProp] = foreignEntity;       
+        const foreignClone = {...foreignEntity};
+        foreignClone[fkPropConfig.identifier] = _idGenerator();    
+        clone[fkPropConfig.foreignProp] = foreignClone;       
     }
 
-    return entity;
+    return clone;
  }

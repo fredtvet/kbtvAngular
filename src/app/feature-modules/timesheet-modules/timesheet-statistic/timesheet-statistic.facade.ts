@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
 import { Timesheet, User } from '@core/models';
+import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
+import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
 import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { ComponentStore } from '@state/component.store';
 import { Store } from '@state/store';
+import { combineLatest, Observable } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { TimesheetSummaryAggregator } from '../shared-timesheet/services/timesheet-summary.aggregator';
-import { FetchTimesheetsActionId, FetchTimesheetsStateCommand } from '../shared-timesheet/state/fetch-timesheets.http.effect';
-import { SetTimesheetCriteriaActionId } from '../shared-timesheet/state/set-timesheet-criteria.reducer';
+import { SetTimesheetCriteriaAction } from '../shared-timesheet/state/set-timesheet-criteria.reducer';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { ComponentStoreState, StoreState } from './store-state';
-import { SetGroupByActionId } from './timesheet-statistic/component-state-reducers';
-import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
+import { SetGroupByAction } from './timesheet-statistic/component-state-reducers';
 
 type Record = Timesheet | TimesheetSummary;
 
@@ -60,14 +60,14 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
         private componentStore: ComponentStore<ComponentStoreState>
     ){
         super();
-        this.componentStore.selectProperty$("timesheetCriteria").pipe(takeUntil(this.unsubscribe)).subscribe(timesheetCriteria => 
-            this.store.dispatch(<FetchTimesheetsStateCommand>{actionId: FetchTimesheetsActionId, timesheetCriteria}))
+        this.componentStore.selectProperty$("timesheetCriteria").pipe(takeUntil(this.unsubscribe)).subscribe(criteria => 
+            this.store.dispatch(new FetchTimesheetsAction(criteria)))
     }
 
     updateCriteria = (timesheetCriteria: TimesheetCriteria): void =>       
-        this.componentStore.dispatch({actionId: SetTimesheetCriteriaActionId, timesheetCriteria})
+        this.componentStore.dispatch(new SetTimesheetCriteriaAction(timesheetCriteria))
 
     updateGroupBy = (groupBy: GroupByPeriod): void =>       
-        this.componentStore.dispatch({actionId: SetGroupByActionId, groupBy})
+        this.componentStore.dispatch(new SetGroupByAction(groupBy))
 
 }

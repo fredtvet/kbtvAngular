@@ -2,11 +2,11 @@ import { Injectable } from "@angular/core";
 import { User } from "@core/models";
 import { AuthService } from '@core/services/auth';
 import { SyncConfig } from '@sync/interfaces';
-import { ReloadSyncStateActionId, SyncStateActionId, UpdateSyncConfigActionId, UpdateSyncConfigCommand } from '@sync/state/actions.const';
 import { Store } from '@state/store';
-import { UpdateCurrentUserActionId, UpdateCurrentUserStateCommand } from './state/update-current-user/update-current-user-state-command.interface';
-import { UpdatePasswordActionId, UpdatePasswordStateCommand } from './state/update-password/update-password-state-command.interface';
 import { StoreState } from './store-state';
+import { UpdateSyncConfigAction, SyncStateAction, ReloadSyncStateAction } from '@sync/state/actions';
+import { UpdateCurrentUserAction } from './state/update-current-user/update-current-user.action';
+import { UpdatePasswordAction } from './state/update-password/update-password.action';
 
 @Injectable({providedIn: 'any'})
 export class ProfileFacade {
@@ -25,23 +25,17 @@ export class ProfileFacade {
   ) {}
   
   updateCurrentUser = (user: User): void => 
-    this.store.dispatch<UpdateCurrentUserStateCommand>({
-      actionId: UpdateCurrentUserActionId, user
-    });
+    this.store.dispatch(new UpdateCurrentUserAction(user));
   
   updatePassword = (oldPassword: string, newPassword: string) => 
-    this.store.dispatch<UpdatePasswordStateCommand>({
-      actionId: UpdatePasswordActionId, oldPassword, newPassword
-    });
+    this.store.dispatch(new UpdatePasswordAction(oldPassword, newPassword));
   
   updateSyncConfig = (syncConfig: SyncConfig) => 
-    this.store.dispatch<UpdateSyncConfigCommand>({
-      actionId: UpdateSyncConfigActionId, syncConfig, propagate: true
-    });
+    this.store.dispatch(new UpdateSyncConfigAction(syncConfig));
   
-  syncAll = () => this.store.dispatch({actionId: SyncStateActionId, propagate: true});
+  syncAll = () => this.store.dispatch(new SyncStateAction());
 
-  reloadData = () => this.store.dispatch({actionId: ReloadSyncStateActionId, propagate: true});
+  reloadData = () => this.store.dispatch(new ReloadSyncStateAction());
 
   logout = () => this.authService.logout(); 
 

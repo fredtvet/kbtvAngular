@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { StartupService } from './core/services/startup.service';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +9,4 @@ import { StartupService } from './core/services/startup.service';
 export class AppComponent {
   title = 'test-client';
   constructor(){ }
-
 }

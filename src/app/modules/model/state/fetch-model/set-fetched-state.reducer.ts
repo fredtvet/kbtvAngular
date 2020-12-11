@@ -1,10 +1,11 @@
-import { StateAction, Reducer } from '@state/interfaces';
+import { Reducer } from '@state/interfaces';
+import { StateAction } from '@state/state.action';
 
-export const SetFetchedStateActionId = "SET_FETCHED_STATE";
+export class SetFetchedStateAction extends StateAction { 
+    constructor(public state: Object){ super() } 
+}
 
-export interface SetFetchedStateCommand extends StateAction { state: Object }
-
-export const SetFetchedStateReducer: Reducer<any, SetFetchedStateCommand> = {
-    actionId: SetFetchedStateActionId,
-    reducerFn: (state: any, action: SetFetchedStateCommand): any => action.state,
+export const SetFetchedStateReducer: Reducer<any, SetFetchedStateAction> = {
+    action: SetFetchedStateAction,
+    reducerFn: (state: any, action: SetFetchedStateAction): any => action.state,
 }

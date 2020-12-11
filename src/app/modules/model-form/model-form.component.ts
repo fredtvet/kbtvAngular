@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Optional, Output } from '@angular/core';
 import { DynamicForm, FormComponent } from '@dynamic-forms/interfaces';
 import { OptionsFormState } from '@form-sheet/interfaces';
+import { SaveAction } from '@model/interfaces';
 import { ModelCommand } from '@model/model-command.enum';
-import { SaveAction } from '@model/state/save-model/save-model-action.const';
+import { StateAction } from '@state/state.action';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, shareReplay, take } from 'rxjs/operators';
-import { DEFAULT_SAVE_ADAPTER } from './injection-tokens.const';
-import { ModelFormConfig, ModelFormToSaveStateCommandAdapter } from './interfaces';
+import { DEFAULT_SAVE_CONVERTER } from './injection-tokens.const';
+import { FormToSaveModelConverter, ModelFormConfig } from './interfaces';
 import { ModelFormFacade } from './model-form.facade';
 
 @Component({
@@ -39,7 +40,7 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<any, an
   
     constructor(
       private facade: ModelFormFacade,
-      @Inject(DEFAULT_SAVE_ADAPTER) @Optional() private defaultSaveAdapter: ModelFormToSaveStateCommandAdapter<any, any>
+      @Inject(DEFAULT_SAVE_CONVERTER) @Optional() private defaultSaveConverter: FormToSaveModelConverter<any, any, StateAction>
     ) {}
   
     ngOnInit(): void {   
@@ -62,18 +63,17 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<any, an
     onSubmit(result: any): void{   
       const saveAction = this.isCreateForm ? ModelCommand.Create : ModelCommand.Update;
       this.formSubmitted.emit(saveAction);
-      const adapter = this.config.adapter || this.defaultSaveAdapter
 
-      this.formState$.pipe(take(1)).subscribe(state => {
-        const stateCommand = new adapter({
+      const converter = this.config.actionConverter || this.defaultSaveConverter
+
+      this.formState$.pipe(take(1)).subscribe(state => 
+        this.facade.save(converter({
           formValue: result, 
           options: state.options,
           stateProp: this.config.stateProp, 
           saveAction, 
-        })
-
-        this.facade.save(stateCommand); 
-      })    
+        }))
+      )    
     }
 
     onCancel = (): void => this.formSubmitted.emit(null); 

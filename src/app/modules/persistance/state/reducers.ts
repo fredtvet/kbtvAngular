@@ -1,13 +1,13 @@
 import { Reducer } from '@state/interfaces';
-import { SetPersistedCriticalStateActionId, SetPersistedStateActionId, SetStateCommand } from './actions.const';
+import { SetPersistedCriticalStateAction, SetPersistedStateAction } from './actions.const';
 
-export const SetPersistedCriticalStateReducer: Reducer<any, SetStateCommand> = {
-    actionId: SetPersistedCriticalStateActionId,
-    reducerFn: (state: any, action: SetStateCommand) => action.state,
+export const SetPersistedCriticalStateReducer: Reducer<any, SetPersistedCriticalStateAction> = {
+    action: SetPersistedCriticalStateAction,
+    reducerFn: (state: any, action: SetPersistedCriticalStateAction) => action.state,
     noDeepCloneAction: true,
 }
 
-export const SetPersistedStateReducer: Reducer<any, SetStateCommand> = {
+export const SetPersistedStateReducer: Reducer<any, SetPersistedStateAction> = {
     ...SetPersistedCriticalStateReducer,
-    actionId: SetPersistedStateActionId,
+    action: SetPersistedStateAction,
 }

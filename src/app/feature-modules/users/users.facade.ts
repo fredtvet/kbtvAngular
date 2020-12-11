@@ -6,7 +6,7 @@ import { Roles } from '@shared-app/enums';
 import { _groupBy } from '@array/group-by.helper';
 import { Store } from '@state/store';
 import { StoreState } from './store-state';
-import { UpdateUserPasswordActionId, UpdateUserPasswordCommand } from './update-user-password.http.effect';
+import { UpdateUserPasswordAction } from './update-user-password.http.effect';
 
 @Injectable({providedIn: 'any'})
 export class UsersFacade {
@@ -19,9 +19,7 @@ export class UsersFacade {
   constructor(private store: Store<StoreState>) { }
 
   updatePassword(userName: string, newPassword: string): void{
-    this.store.dispatch(<UpdateUserPasswordCommand>{
-      actionId: UpdateUserPasswordActionId, userName, newPassword
-    })
+    this.store.dispatch(new UpdateUserPasswordAction(newPassword, userName))
   }
   
   private sortByRole = (users: User[]): User[] => {

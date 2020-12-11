@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
+import { ModelFormModule } from '@model-form/model-form.module';
+import { DeleteModelProviders } from '@model/state/providers.const';
+import { _timesheetFormToSaveUserTimesheetConverter } from '@shared-timesheet/state/save-user-timesheet/timesheet-form-to-save-user-timesheet.converter';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
-import { UserTimesheetCardDialogWrapperComponent } from './user-timesheet-week/user-timesheet-card-dialog-wrapper.component';
+import { SaveUserTimesheetProviders } from '../shared-timesheet/state/providers.const';
+import { UserTimesheetWeekRoutingModule } from './user-timesheet-week-routing.module';
 import { TimesheetDayLabelComponent } from './user-timesheet-week/timesheet-day-label/timesheet-day-label.component';
 import { TimesheetMissionBarComponent } from './user-timesheet-week/timesheet-mission-bar/timesheet-mission-bar.component';
-import { UserTimesheetWeekComponent } from './user-timesheet-week/user-timesheet-week.component';
+import { UserTimesheetCardDialogWrapperComponent } from './user-timesheet-week/user-timesheet-card-dialog-wrapper.component';
 import { UserTimesheetWeekViewComponent } from './user-timesheet-week/user-timesheet-week-view/user-timesheet-week-view.component';
-import { UserTimesheetWeekRoutingModule } from './user-timesheet-week-routing.module';
-import { SaveUserTimesheetProviders } from '../shared-timesheet/state/providers.const';
-import { DeleteModelProviders } from '@model/state/providers.const';
-import { UserTimesheetFormToSaveModelAdapter } from '@shared-timesheet/state/save-user-timesheet/user-timesheet-form-to-save-model.adapter';
-import { ModelFormModule } from '@model-form/model-form.module';
+import { UserTimesheetWeekComponent } from './user-timesheet-week/user-timesheet-week.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { ModelFormModule } from '@model-form/model-form.module';
   ],
   imports: [
     SharedTimesheetModule,
-    ModelFormModule.forFeature(UserTimesheetFormToSaveModelAdapter),
+    ModelFormModule.forFeature(_timesheetFormToSaveUserTimesheetConverter),
     UserTimesheetWeekRoutingModule
   ]
 })

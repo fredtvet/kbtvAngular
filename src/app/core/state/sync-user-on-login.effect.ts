@@ -1,28 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { StateAction, Effect, DispatchedAction } from '@state/interfaces';
+import { Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { Store } from '@state/store';
-import { LoginSuccessActionId, LoginSuccessCommand } from '../../core/services/auth/state/login-success/login-success-command.interface';
-import { SyncStateActionId } from '@sync/state/actions.const';
-import { WipeStateActionId, WipeStateCommand } from './wipe-state.reducer';
+import { LoginSuccessAction } from '@core/services/auth/state/login-success/login-success.action';
+import { StateAction } from '@state/state.action';
+import { WipeStateAction } from './wipe-state.reducer';
+import { SyncStateAction } from '@sync/state/actions';
 
 @Injectable()
-export class SyncUserOnLoginEffect implements Effect<LoginSuccessCommand> {
+export class SyncUserOnLoginEffect implements Effect<LoginSuccessAction> {
 
-    handle$(actions$: Observable<DispatchedAction<LoginSuccessCommand>>): Observable<void | StateAction> {
+    handle$(actions$: Observable<DispatchedAction<LoginSuccessAction>>): Observable<void | StateAction> {
         return actions$.pipe(
-            listenTo([LoginSuccessActionId]),
-            mergeMap(x => {
-                const actions: StateAction[] = [{actionId: SyncStateActionId}];
+            listenTo([LoginSuccessAction]),
+            mergeMap(({action}) => {
+                const actions: StateAction[] = [new SyncStateAction()];
 
-                if(x.action.previousUser?.userName !== x.action.user.userName) //Wipe before sync if new login
-                    actions.unshift(<WipeStateCommand>{actionId: WipeStateActionId, defaultState: Store.defaultState})
+                if(action.previousUser?.userName !== action.response.user.userName) //Wipe before sync if new login
+                    actions.unshift(new WipeStateAction(Store.defaultState))
 
                 return of(...actions)
             }),
         ) 
     }
-
 }

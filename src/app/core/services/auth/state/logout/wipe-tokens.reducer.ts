@@ -1,11 +1,12 @@
-import { Reducer, StateAction } from '@state/interfaces';
+import { Reducer } from '@state/interfaces';
+import { StateAction } from '@state/state.action';
 import { StoreState } from '../../interfaces/store-state';
 
-export const WipeTokensActionId = "WIPE_TOKENS"; 
+export class WipeTokensAction extends StateAction {};
 
-export const WipeTokensReducer: Reducer<StoreState, StateAction> = {
-    actionId: WipeTokensActionId, noDeepCloneAction: true,
-    reducerFn: (state: any, action: StateAction): Partial<StoreState>=> {
+export const WipeTokensReducer: Reducer<StoreState, WipeTokensAction> = {
+    action: WipeTokensAction, noDeepCloneAction: true,
+    reducerFn: (state: any, action: WipeTokensAction): Partial<StoreState>=> {
         return {accessToken: null, refreshToken: null}
     }
 }

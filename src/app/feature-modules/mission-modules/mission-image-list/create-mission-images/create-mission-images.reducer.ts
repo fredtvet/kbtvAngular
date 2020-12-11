@@ -1,16 +1,16 @@
-import { MissionImage } from '@core/models';
 import { _addOrUpdateRange } from '@array/add-or-update-range.helper';
-import { Reducer } from '@state/interfaces';
-import { CreateMissionImagesActionId, CreateMissionImagesStateCommand } from './create-mission-images-state-command.interface';
+import { MissionImage } from '@core/models';
 import { StateMissionImages } from '@core/state/global-state.interfaces';
+import { Reducer } from '@state/interfaces';
+import { CreateMissionImagesAction } from './create-mission-images.action';
 
-export const CreateMissionImagesReducer: Reducer<StateMissionImages, CreateMissionImagesStateCommand> = {
-    actionId: CreateMissionImagesActionId,
+export const CreateMissionImagesReducer: Reducer<StateMissionImages, CreateMissionImagesAction> = {
+    action: CreateMissionImagesAction,
     stateProperties: ["missionImages"],
     reducerFn: _reducerFn,
 }
 
-function _reducerFn(state: StateMissionImages, action: CreateMissionImagesStateCommand): StateMissionImages{  
+function _reducerFn(state: StateMissionImages, action: CreateMissionImagesAction): StateMissionImages{  
     if(!action.fileWrappers || !action.missionId) 
         console.error('no files or missionId provided');
 

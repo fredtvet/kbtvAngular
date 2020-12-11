@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, skip } from 'rxjs/operators';
 import { User } from '@core/models';
 import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper';
 import { ActionDispatcher } from '@state/action-dispatcher';
 import { Store } from '@state/store';
+import { Observable } from 'rxjs';
+import { map, skip } from 'rxjs/operators';
 import { Credentials } from './interfaces/credentials.interface';
 import { StoreState } from './interfaces/store-state';
 import { AccessToken } from './interfaces/tokens.interface';
-import { LoginActionId, LoginCommand } from './state/login.http.effect';
-import { LogoutActionId, LogoutCommand } from './state/logout/logout-command.interface';
-import { RefreshTokenActionId, RefreshTokenCommand } from './state/refresh-token.http.effect';
+import { LoginAction } from './state/login.http.effect';
+import { LogoutAction } from './state/logout/logout.action';
+import { RefreshTokenAction } from './state/refresh-token.http.effect';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -47,18 +47,17 @@ export class AuthService {
     this.store.selectProperty<User>("currentUser", deepClone) 
   
   login = (credentials: Credentials, returnUrl?: string): void => 
-    this.store.dispatch(<LoginCommand>{actionId: LoginActionId, credentials, returnUrl})
+    this.store.dispatch(new LoginAction(credentials, returnUrl))
   
   logout = (returnUrl?: string): void =>
-    this.store.dispatch(<LogoutCommand>{actionId: LogoutActionId, refreshToken: this.getRefreshToken(), returnUrl})
+    this.store.dispatch(new LogoutAction(this.getRefreshToken(), returnUrl))
   
   refreshToken = (): void => 
-    this.store.dispatch(<RefreshTokenCommand>{
-      actionId: RefreshTokenActionId,
-      accessToken: this.getAccessToken(),
+    this.store.dispatch(new RefreshTokenAction({
+      accessToken: this.getAccessToken(), 
       refreshToken: this.getRefreshToken()
-    })
-    
+    }))
+
   private getRefreshToken = (): string => 
     this.store.selectProperty<string>("refreshToken", false) 
 }

@@ -14,6 +14,6 @@ export const PersistedCriticalStateProps: string[] = [
     "accessToken",
     "refreshToken",
     "currentUser",       
-    "syncTimestamps",
+    "syncTimestamp",
     "syncConfig", 
 ];  

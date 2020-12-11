@@ -1,18 +1,18 @@
-import { ModelCommand } from '../../model-command.enum';
 import { _add } from '@array/add.helper';
 import { _update } from '@array/update.helper';
-import { _modifyModelWithForeigns } from '../../helpers/modify-model-with-foreigns.helper';
-import { ModelStateConfig } from '../../model-state.config';
-import { SaveModelActionId, SaveModelStateCommand } from './save-model-action.const';
 import { Reducer } from '@state/interfaces';
+import { _modifyModelWithForeigns } from '../../helpers/modify-model-with-foreigns.helper';
+import { ModelCommand } from '../../model-command.enum';
+import { ModelStateConfig } from '../../model-state.config';
+import { SaveModelAction } from './save-model.action';
 
-export const SaveModelReducer: Reducer<any, SaveModelStateCommand<any, any>> = {
-    actionId: SaveModelActionId,
+export const SaveModelReducer: Reducer<any, SaveModelAction<any, any>> = {
+    action: SaveModelAction,
     reducerFn: _reducerFn,
     stateProperties: _statePropertiesGetter
 }
 
-function _statePropertiesGetter(command: SaveModelStateCommand<any, any>): string[]{
+function _statePropertiesGetter(command: SaveModelAction<any, any>): string[]{
     const stateProps: string[] = [command.stateProp];
     const modelConfig = ModelStateConfig.get(command.stateProp); 
     if(modelConfig.foreigns)
@@ -24,7 +24,7 @@ function _statePropertiesGetter(command: SaveModelStateCommand<any, any>): strin
     return stateProps;
 }
 
-function _reducerFn(state: any, command: SaveModelStateCommand<any, any>): Partial<any>{  
+function _reducerFn(state: any, command: SaveModelAction<any, any>): Partial<any>{  
     const modelConfig = ModelStateConfig.get(command.stateProp); 
 
     command.entity.updatedAt = new Date().getTime();  //Need to isolate and expose this

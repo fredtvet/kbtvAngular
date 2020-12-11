@@ -1,13 +1,14 @@
-import { StateAction, Reducer } from '@state/interfaces';
+import { Reducer } from '@state/interfaces';
+import { StateAction } from '@state/state.action';
 import { TimesheetCriteria } from '../timesheet-filter/timesheet-criteria.interface';
 
-export const SetTimesheetCriteriaActionId = "SET_TIMESHEET_CRITERIA";
+export class SetTimesheetCriteriaAction extends StateAction { 
+    constructor(public timesheetCriteria: TimesheetCriteria){ super() } 
+}
 
-export interface SetTimesheetCriteriaCommand extends StateAction { timesheetCriteria: TimesheetCriteria }
-
-export const SetTimesheetCriteriaReducer: Reducer<any, SetTimesheetCriteriaCommand> = {
-    actionId: SetTimesheetCriteriaActionId,
-    reducerFn: (state: {timesheetCriteria: TimesheetCriteria}, action: SetTimesheetCriteriaCommand) => {
+export const SetTimesheetCriteriaReducer: Reducer<any, SetTimesheetCriteriaAction> = {
+    action: SetTimesheetCriteriaAction,
+    reducerFn: (state: any, action: SetTimesheetCriteriaAction) => {
         return { timesheetCriteria: action.timesheetCriteria }
     }       
 }  

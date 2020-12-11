@@ -4,11 +4,10 @@ import { Router } from '@angular/router';
 import { FormSheetWrapperComponent } from '@form-sheet/form-sheet-wrapper.component';
 import { FormSheetWrapperConfig, OptionsFormState } from '@form-sheet/interfaces';
 import { MODEL_PROP_TRANSLATIONS } from '@model/injection-tokens.const';
-import { KeyVal } from '@model/interfaces';
+import { KeyVal, SaveAction } from '@model/interfaces';
 import { ModelCommand } from '@model/model-command.enum';
 import { ModelStateConfig } from '@model/model-state.config';
-import { DeleteModelActionId, DeleteModelStateCommand } from '@model/state/delete-model/delete-model-action.const';
-import { SaveAction } from '@model/state/save-model/save-model-action.const';
+import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
 import { Store } from '@state/store';
 import { Observable, of } from 'rxjs';
 import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
@@ -88,12 +87,7 @@ export class ModelFormService {
 
   private deleteEntity = (formConfig: ModelFormConfig<any, any, any>, deleteUrl: string, ref: MatBottomSheetRef<any, any>) => {
       this.close(ModelCommand.Delete, ref, deleteUrl);
-
-      this.store.dispatch<DeleteModelStateCommand<any>>({
-          stateProp: formConfig.stateProp, 
-          actionId: DeleteModelActionId, 
-          id: formConfig.entityId
-      });
+      this.store.dispatch( new DeleteModelAction(formConfig.stateProp, {id: formConfig.entityId}) );
   };
 
 }

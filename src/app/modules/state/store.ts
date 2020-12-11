@@ -1,9 +1,10 @@
 import { Inject, Injectable, Optional, Self, SkipSelf } from '@angular/core';
 import { ActionDispatcher } from './action-dispatcher';
 import { STORE_DEFAULT_STATE, STORE_META_REDUCERS, STORE_REDUCERS } from './constants/injection-tokens.const';
-import { MetaReducer, Reducer, StateAction } from './interfaces';
+import { MetaReducer, Reducer } from './interfaces';
 import { QueryDispatcher } from './query-dispatcher';
 import { StateBase } from './state-base';
+import { StateAction } from './state.action';
 import { StoreBase } from './store-base';
 
 const State = new StateBase();

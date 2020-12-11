@@ -2,63 +2,60 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpRequest } from '@http/interfaces';
-import { HttpActionId, HttpCommand } from '@http/state/http.effect';
-import { DispatchedAction, Effect, StateAction } from '@state/interfaces';
+import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { ModelStateConfig } from '../../model-state.config';
-import { DeleteModelActionId, DeleteModelStateCommand } from './delete-model-action.const';
 import { CommandApiMap, KeyVal, ModelConfig } from '../../interfaces';
 import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens.const';
-import { ModelCommand } from '../../model-command.enum';
+import { DeleteModelAction } from './delete-model.action';
+import { HttpAction } from '@http/state/http.effect';
+import { ModelCommand } from '@model/model-command.enum';
 
 @Injectable()
-export class DeleteModelHttpEffect implements Effect<DeleteModelStateCommand<any>>{
+export class DeleteModelHttpEffect implements Effect<DeleteModelAction<any>>{
 
     constructor(
         @Inject(COMMAND_API_MAP) private apiMap: CommandApiMap,    
         @Inject(MODEL_PROP_TRANSLATIONS) private translations: Readonly<KeyVal<string>>
     ){ }
 
-    handle$(actions$: Observable<DispatchedAction<DeleteModelStateCommand<any>>>): Observable<StateAction> {
+    handle$(actions$: Observable<DispatchedAction<DeleteModelAction<any>>>): Observable<HttpAction> {
         return actions$.pipe(
-            listenTo([DeleteModelActionId]),
-            map(x => { return <HttpCommand>{
-                actionId: HttpActionId, propagate: true,
-                request: this.createHttpRequest(x.action),
-                stateSnapshot: x.stateSnapshot
-            }}),  
+            listenTo([DeleteModelAction]),
+            map(x => new HttpAction(this.createHttpRequest(x.action), x.stateSnapshot)),  
         )
     }
 
-    private createHttpRequest(command: DeleteModelStateCommand<any>): HttpRequest {
-        const modelConfig = ModelStateConfig.get(command.stateProp);
-        if(!modelConfig) console.error(`No model config for property ${command.stateProp}`);
-        const modelCommand = command.id ? ModelCommand.Delete : ModelCommand.DeleteRange;
+    private createHttpRequest(action: DeleteModelAction<any>): HttpRequest {
+        const modelConfig = ModelStateConfig.get(action.stateProp);
+        if(!modelConfig) console.error(`No model config for property ${action.stateProp}`);
+        const modelCommand = action.payload.id ? ModelCommand.Delete : ModelCommand.DeleteRange;
         return {
-            apiUrl: this.createApiUrl(command, modelConfig, modelCommand),
-            body: this.createHttpBody(command),
+            apiUrl: this.createApiUrl(action, modelConfig, modelCommand),
+            body: this.createHttpBody(action),
             method: this.apiMap[modelCommand].method,
-            cancelMessage: this.createCancelMessage(command, modelConfig)
+            cancelMessage: this.createCancelMessage(action, modelConfig)
         }
     }
 
-    protected createCancelMessage(command: DeleteModelStateCommand<any>, modelConfig: ModelConfig<any, any>): string{
-        const multi = command.ids?.length > 1;
+    protected createCancelMessage(action: DeleteModelAction<any>, modelConfig: ModelConfig<any, any>): string{
+        const payload = action.payload;
+        const multi = payload.ids?.length > 1;
 
         const entityWord = 
-            this.translations[(multi ? command.stateProp : modelConfig.foreignProp).toLowerCase()];
+            this.translations[(multi ? action.stateProp : modelConfig.foreignProp).toLowerCase()];
         
-        return `Sletting av ${command.ids?.length || ''} ${entityWord} med id ${command.ids || command.id} er reversert!`;
+        return `Sletting av ${payload.ids?.length || ''} ${entityWord} med id ${payload.ids || payload.id} er reversert!`;
     }
   
-    protected createHttpBody(command: DeleteModelStateCommand<any>): {ids: any[]} {
-        return command.id ? null : {ids: command.ids};
+    protected createHttpBody(action: DeleteModelAction<any>): {ids: any[]} {
+        return action.payload.id ? null : {ids: action.payload.ids};
     }
 
-    protected createApiUrl(command: DeleteModelStateCommand<any>, modelConfig: ModelConfig<any, any>, commandType: ModelCommand): string {
-        const suffix = this.apiMap[commandType].suffix;
+    protected createApiUrl(action: DeleteModelAction<any>, modelConfig: ModelConfig<any, any>, actionType: ModelCommand): string {
+        const suffix = this.apiMap[actionType].suffix;
         if(typeof suffix === "string") return modelConfig.apiUrl + suffix
-        return modelConfig.apiUrl + suffix(command.id)
+        return modelConfig.apiUrl + suffix(action.payload.id)
     }
 
 }

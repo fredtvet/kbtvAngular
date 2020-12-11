@@ -3,7 +3,7 @@ import { OptionsFormState } from '@form-sheet/interfaces';
 import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
 import { ModelStateConfig } from '@model/model-state.config';
-import { StateAction } from '@state/interfaces';
+import { StateAction } from '@state/state.action';
 import { Store } from '@state/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

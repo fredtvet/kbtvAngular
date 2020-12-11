@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
+import { DispatchedAction, Effect } from '@state/interfaces';
+import { listenTo } from '@state/operators/listen-to.operator';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StateAction, Effect, DispatchedAction } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
 import { HttpQueuer } from '../../http.queuer';
-import { HttpSuccessActionId } from './http-success-command.interface';
+import { HttpSuccessAction } from './http-success.action';
 
 @Injectable()
-export class HttpSuccessEffect implements Effect<StateAction> {
+export class HttpSuccessEffect implements Effect<HttpSuccessAction> {
 
     constructor(private httpQueuer: HttpQueuer) {}
 
-    handle$(actions$: Observable<DispatchedAction<StateAction>>): Observable<void> {
+    handle$(actions$: Observable<DispatchedAction<HttpSuccessAction>>): Observable<void> {
         return actions$.pipe(
-            listenTo([HttpSuccessActionId], false),
+            listenTo([HttpSuccessAction], false),
             map(x => this.httpQueuer.next())
         )
     }

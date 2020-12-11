@@ -3,28 +3,24 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiUrl } from '@core/api-url.enum';
 import { HttpRequest } from '@http/interfaces';
-import { HttpCommand, HttpActionId } from '@http/state/http.effect';
-import { StateAction, Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
-import { UpdateCurrentUserActionId, UpdateCurrentUserStateCommand } from './update-current-user-state-command.interface';
+import { HttpAction } from '@http/state/http.effect';
+import { Effect, DispatchedAction } from '@state/interfaces';
+import { UpdateCurrentUserAction } from './update-current-user.action';
 
 @Injectable()
-export class UpdateCurrentUserHttpEffect implements Effect<UpdateCurrentUserStateCommand> {
+export class UpdateCurrentUserHttpEffect implements Effect<UpdateCurrentUserAction> {
 
     constructor(){}
 
-    handle$(actions$: Observable<DispatchedAction<UpdateCurrentUserStateCommand>>): Observable<StateAction> {
+    handle$(actions$: Observable<DispatchedAction<UpdateCurrentUserAction>>): Observable<HttpAction> {
         return actions$.pipe(
-            listenTo([UpdateCurrentUserActionId]),
-            map(x => { return <HttpCommand>{
-                actionId: HttpActionId, propagate: true,
-                request: this.createHttpRequest(x.action),
-                stateSnapshot: x.stateSnapshot
-            }}),  
+            listenTo([UpdateCurrentUserAction]),
+            map(x => new HttpAction(this.createHttpRequest(x.action), x.stateSnapshot)),  
         )
     }
 
-    protected createHttpRequest(action: UpdateCurrentUserStateCommand): HttpRequest{
+    protected createHttpRequest(action: UpdateCurrentUserAction): HttpRequest{
         return {
             method: "PUT", 
             body: action.user, 

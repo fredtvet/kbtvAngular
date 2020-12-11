@@ -3,34 +3,38 @@ import { Observable } from 'rxjs';
 import { exhaustMap, map } from 'rxjs/operators';
 import { ApiUrl } from '@core/api-url.enum';
 import { ApiService } from '@core/services/api.service';
-import { StateAction, Effect, DispatchedAction } from '@state/interfaces';
+import { Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { Credentials } from '../interfaces';
-import { LoginSuccessActionId, LoginSuccessCommand } from './login-success/login-success-command.interface';
+import { StateAction } from '@state/state.action';
+import { LoginSuccessAction } from './login-success/login-success.action';
 
-export const LoginActionId = "LOGIN";
-
-export interface LoginCommand extends StateAction { credentials: Credentials, returnUrl?: string }
+export class LoginAction extends StateAction { 
+    constructor(
+        public credentials: Credentials,
+        public returnUrl?: string 
+    ){ super() }   
+}
 
 @Injectable()
-export class LoginHttpEffect implements Effect<LoginCommand> {
+export class LoginHttpEffect implements Effect<LoginAction> {
 
     constructor(private apiService: ApiService){}
 
-    handle$(actions$: Observable<DispatchedAction<LoginCommand>>): Observable<StateAction> {
+    handle$(actions$: Observable<DispatchedAction<LoginAction>>): Observable<LoginSuccessAction> {
         return actions$.pipe(
-            listenTo([LoginActionId]),
+            listenTo([LoginAction]),
             exhaustMap(x => this.login$(x)),
         )
     }
 
-    private login$(dispatched: DispatchedAction<LoginCommand>): Observable<LoginSuccessCommand> {
+    private login$(dispatched: DispatchedAction<LoginAction>): Observable<LoginSuccessAction> {
         return this.apiService.post(ApiUrl.Auth + '/login', dispatched.action.credentials).pipe(
-            map(x => { return <LoginSuccessCommand>{
-                actionId: LoginSuccessActionId, 
-                previousUser: dispatched.stateSnapshot.currentUser,
-                ...x, 
-            }})
+            map(response => new LoginSuccessAction(
+                response, 
+                dispatched.stateSnapshot.currentUser,
+                dispatched.action.returnUrl
+            ))
         )
     }
 }

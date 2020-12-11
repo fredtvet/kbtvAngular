@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
-import { StateAction, DispatchedAction, Effect } from '@state/interfaces';
+import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
+import { StateAction } from '@state/state.action';
 import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { SYNC_STATE_CONFIG } from '../injection-tokens.const';
 import { SyncStateConfig } from '../interfaces';
-import { ReloadSyncStateActionId, SyncStateActionId, UpdateSyncConfigCommand, WipeSyncStateActionId } from './actions.const';
+import { ReloadSyncStateAction, SyncStateAction, WipeSyncStateAction } from './actions';
 
 @Injectable()
 export class ReloadSyncStateEffect implements Effect<StateAction> {
@@ -14,12 +15,12 @@ export class ReloadSyncStateEffect implements Effect<StateAction> {
       @Inject(SYNC_STATE_CONFIG) private syncStateConfig: SyncStateConfig<any>,
     ) { }
 
-    handle$(actions$: Observable<DispatchedAction<UpdateSyncConfigCommand>>): Observable<StateAction> {
+    handle$(actions$: Observable<DispatchedAction<ReloadSyncStateAction>>): Observable<WipeSyncStateAction | SyncStateAction> {
         return actions$.pipe(
-            listenTo([ReloadSyncStateActionId]), 
+            listenTo([ReloadSyncStateAction]), 
             mergeMap(x => of(
-                {actionId: WipeSyncStateActionId, syncStateConfig: this.syncStateConfig},
-                {actionId: SyncStateActionId}
+                new WipeSyncStateAction(this.syncStateConfig),
+                new SyncStateAction()
             )), 
         )
     }

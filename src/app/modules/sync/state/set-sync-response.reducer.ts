@@ -2,10 +2,10 @@ import { _addOrUpdateRange } from '@array/add-or-update-range.helper';
 import { _removeRangeByIdentifier } from '@array/remove-range-by-identifier.helper';
 import { Reducer } from '@state/interfaces';
 import { StoreState } from '../interfaces';
-import { SyncStateSuccessAction, SyncStateSuccessActionId } from './actions.const';
+import { SyncStateSuccessAction } from './actions';
 
 export const SetSyncResponseReducer: Reducer<any, SyncStateSuccessAction> = {
-    actionId: SyncStateSuccessActionId, noDeepCloneAction: true, noDeepCloneState: true,
+    action: SyncStateSuccessAction, noDeepCloneAction: true, noDeepCloneState: true,
     stateProperties: (action: SyncStateSuccessAction) => Object.keys(action.response.arrays),
     reducerFn: (unclonedState: Readonly<StoreState>, action: SyncStateSuccessAction): any => {
         const state = {...unclonedState, syncTimestamp: action.response.timestamp};

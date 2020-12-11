@@ -4,16 +4,16 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
-import { LoginSuccessActionId, LoginSuccessCommand } from './login-success-command.interface';
+import { LoginSuccessAction } from './login-success.action';
 
 @Injectable()
-export class RedirectToUrlEffect implements Effect<LoginSuccessCommand> {
+export class RedirectToUrlEffect implements Effect<LoginSuccessAction> {
 
     constructor(private router: Router){}
 
-    handle$(actions$: Observable<DispatchedAction<LoginSuccessCommand>>): Observable<void> {
+    handle$(actions$: Observable<DispatchedAction<LoginSuccessAction>>): Observable<void> {
         return actions$.pipe(
-            listenTo([LoginSuccessActionId]),
+            listenTo([LoginSuccessAction]),
             map(x => { 
                 if(x.action.returnUrl) this.router.navigateByUrl(x.action.returnUrl) 
                 else this.router.navigate(["/"])

@@ -2,43 +2,43 @@ import { Injectable } from '@angular/core';
 import { User } from '@core/models';
 import { HttpQueuer } from '@http/http.queuer';
 import { QueuedCommand, StateRequestQueue } from '@http/interfaces';
-import { HttpErrorActionId, HttpErrorCommand } from '@http/state/http-error/http-error-command.interface';
-import { HttpQueueShiftActionId } from '@http/state/http-queue-shift.reducer';
-import { SetPersistedStateActionId } from '@persistance/state/actions.const';
-import { StateAction, Effect, DispatchedAction } from '@state/interfaces';
+import { HttpErrorAction } from '@http/state/http-error/http-error.action';
+import { HttpQueueShiftAction } from '@http/state/http-queue-shift.reducer';
+import { SetPersistedStateAction } from '@persistance/state/actions.const';
+import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { Store } from '@state/store';
 import { ContinousSyncService } from '@sync/continous-sync.service';
-import { SyncStateSuccessActionId } from '@sync/state/actions.const';
+import { SyncStateSuccessAction } from '@sync/state/actions';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { StateCurrentUser } from './global-state.interfaces';
 
 @Injectable()
-export class InitalizeSyncEffect implements Effect<StateAction> {
+export class InitalizeSyncEffect implements Effect<SetPersistedStateAction> {
 
     constructor(private continousSyncService: ContinousSyncService) {}
 
-    handle$(actions$: Observable<DispatchedAction<StateAction>>): Observable<void> {
+    handle$(actions$: Observable<DispatchedAction<SetPersistedStateAction>>): Observable<void> {
         return actions$.pipe(
-            listenTo([SetPersistedStateActionId]),
+            listenTo([SetPersistedStateAction]),
             first(),
             map(x => this.continousSyncService.initalize()),
         ) 
     }
-
 }
+
 @Injectable()
-export class InitalizeHttpQueueEffect implements Effect<StateAction> {
+export class InitalizeHttpQueueEffect implements Effect<SyncStateSuccessAction> {
 
     constructor(
         private httpQueuer: HttpQueuer,
         private store: Store<StateRequestQueue & StateCurrentUser>
     ) {}
 
-    handle$(actions$: Observable<DispatchedAction<StateAction>>): Observable<void> {
+    handle$(actions$: Observable<DispatchedAction<SyncStateSuccessAction>>): Observable<void> {
         return actions$.pipe(
-            listenTo([SyncStateSuccessActionId]),
+            listenTo([SyncStateSuccessAction]),
             first(),
             map(x => {
                 this.checkForUnhandledRequests();
@@ -61,11 +61,8 @@ export class InitalizeHttpQueueEffect implements Effect<StateAction> {
         const lastCommandStatus = this.store.selectProperty<User>("currentUser", false)?.lastCommandStatus;
 
         if (!lastCommandStatus) 
-        this.store.dispatch<HttpErrorCommand>({
-            actionId: HttpErrorActionId, 
-            customErrorTitle: "Noe gikk feil ved forrige økt!"
-        })
+            this.store.dispatch(new HttpErrorAction(false, "Noe gikk feil ved forrige økt!"))
         else
-        this.store.dispatch({actionId: HttpQueueShiftActionId})   
+            this.store.dispatch(new HttpQueueShiftAction())   
     }
 }

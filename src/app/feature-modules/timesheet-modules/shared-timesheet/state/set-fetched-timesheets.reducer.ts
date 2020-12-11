@@ -2,21 +2,20 @@ import { Timesheet } from '@core/models';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
 import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _addOrUpdateRange } from '@array/add-or-update-range.helper';
-import { Reducer, StateAction } from '@state/interfaces';
+import { Reducer } from '@state/interfaces';
 import { StateTimesheets, StateMissions } from '@core/state/global-state.interfaces';
+import { StateAction } from '@state/state.action';
 
-export const SetFetchedTimesheetsActionId = "SET_FETCHED_TIMESHEETS";
-
-export interface SetFetchedTimesheetsCommand extends StateAction {
-    timesheets: Timesheet[];
+export class SetFetchedTimesheetsAction extends StateAction {
+    constructor(public timesheets: Timesheet[]){ super() };
 }
 
 type State = StateTimesheets & StateMissions;
 
-export const SetFetchedTimesheetsReducer: Reducer<State, SetFetchedTimesheetsCommand> = {
-    actionId: SetFetchedTimesheetsActionId,
+export const SetFetchedTimesheetsReducer: Reducer<State, SetFetchedTimesheetsAction> = {
+    action: SetFetchedTimesheetsAction,
     stateProperties: ["timesheets", "missions"],
-    reducerFn: (state: State, action: SetFetchedTimesheetsCommand) => {
+    reducerFn: (state: State, action: SetFetchedTimesheetsAction) => {
         
         const relationCfg = new GetWithRelationsConfig("timesheets", null, ["missions"]);
 

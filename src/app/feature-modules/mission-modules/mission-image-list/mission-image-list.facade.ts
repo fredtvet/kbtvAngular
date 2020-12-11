@@ -4,15 +4,15 @@ import { map } from 'rxjs/operators';
 import { Mission, MissionImage } from "@core/models";
 import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
-import { DeleteModelActionId } from '@model/state/delete-model/delete-model-action.const';
-import { MailModelsStateCommand, MailModelsActionId } from '@model/state/mail-models/mail-models-state-command.interface';
 import { NotificationService, NotificationType } from '@notification/index';
 import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
 import { ImageFileExtensions } from '@shared/constants/image-file-extensions.const';
 import { Store } from '@state/store';
-import { CreateMissionImagesForm, FormToCreateMissionImagesStateCommandAdapter } from './form-to-create-mission-images-state-command.adapter';
 import { StoreState } from './store-state';
 import { ModelState } from '@core/state/model-state.interface';
+import { CreateMissionImagesForm, _formToCreateMissionImagesConverter } from './form-to-create-mission-images.converter';
+import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
+import { MailModelsAction } from '@model/state/mail-models/mail-models.action';
 
 @Injectable({providedIn: 'any'})
 export class MissionImageListFacade {
@@ -39,21 +39,13 @@ export class MissionImageListFacade {
         {title: "Filtype ikke tillatt for en eller flere filer", type: NotificationType.Error}
       );  
     }
-    this.store.dispatch(new FormToCreateMissionImagesStateCommandAdapter(state));
+    this.store.dispatch(_formToCreateMissionImagesConverter(state));
   }
   
   delete = (command: {ids?: string[], id?: string}): void => 
-    this.store.dispatch({
-      ...command, 
-      stateProp: "missionImages", 
-      actionId: DeleteModelActionId
-    });
+    this.store.dispatch(new DeleteModelAction<ModelState>("missionImages", command));
 
   mailImages = (toEmail: string, ids: string[]): void => 
-    this.store.dispatch<MailModelsStateCommand<ModelState>>({
-      toEmail, ids, 
-      stateProp: "missionImages",
-      actionId: MailModelsActionId 
-    })
+    this.store.dispatch(new MailModelsAction<ModelState>("missionImages", ids, toEmail))
   
 }

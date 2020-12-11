@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SaveModelProviders } from '@model/state/providers.const';
+import { AppSaveModelProviders } from '@core/state/providers.const';
 import { STORE_EFFECTS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';
@@ -10,8 +10,8 @@ import { TimesheetAdminRoutingModule } from './timesheet-admin-routing.module';
 import { TimesheetAdminUserListComponent } from './timesheet-admin-user-list/timesheet-admin-user-list.component';
 import { TimesheetAdminWeekListViewComponent } from './timesheet-admin-week-list/timesheet-admin-week-list-view/timesheet-admin-week-list-view.component';
 import { TimesheetAdminWeekListComponent } from './timesheet-admin-week-list/timesheet-admin-week-list.component';
-import { UpdateStatusesHttpEffect } from './update-statuses/update-statuses.http.effect';
-import { UpdateStatusesReducer } from './update-statuses/update-statuses.reducer';
+import { UpdateTimesheetStatusesHttpEffect } from './update-timesheet-statuses/update-timesheet-statuses.http.effect';
+import { UpdateTimesheetStatusesReducer } from './update-timesheet-statuses/update-timesheet-statuses.reducer';
 
 @NgModule({
   declarations: [
@@ -23,9 +23,9 @@ import { UpdateStatusesReducer } from './update-statuses/update-statuses.reducer
     TimesheetAdminWeekListViewComponent
   ],
   providers:[
-    { provide: STORE_EFFECTS, useClass: UpdateStatusesHttpEffect, multi: true},
-    { provide: STORE_REDUCERS, useValue: UpdateStatusesReducer, multi: true},
-    ...SaveModelProviders,
+    { provide: STORE_EFFECTS, useClass: UpdateTimesheetStatusesHttpEffect, multi: true},
+    { provide: STORE_REDUCERS, useValue: UpdateTimesheetStatusesReducer, multi: true},
+    ...AppSaveModelProviders,
     ...FetchTimesheetProviders,
   ],
   imports: [

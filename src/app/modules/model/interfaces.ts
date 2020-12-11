@@ -1,9 +1,5 @@
-import { Prop, StateAction } from '@state/interfaces';
+import { Prop } from '@state/interfaces';
 import { ModelCommand } from './model-command.enum';
-
-export interface ModelStateCommand<TState> extends StateAction{
-    stateProp?: Prop<TState>;
-}
 
 export interface ModelConfig<TModel, TState> { 
     stateProp: Prop<TState>,
@@ -16,6 +12,8 @@ export interface ModelConfig<TModel, TState> {
     children?: Prop<TState>[],
     foreigns?: Prop<TState>[]
 }
+
+export type SaveAction = ModelCommand.Create | ModelCommand.Update;
 
 export type ModelConfigMap<TState> = {[key: string]: ModelConfig<any, TState>};
 

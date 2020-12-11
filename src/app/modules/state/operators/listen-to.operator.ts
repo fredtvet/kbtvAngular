@@ -1,20 +1,23 @@
+import { StateAction } from '../state.action';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { _deepClone } from '../helpers/deep-clone.helper'
-import { StateAction, DispatchedAction } from '../interfaces';
+import { DispatchedAction } from '../interfaces';
+import { Type } from '@angular/core';
+import { _cloneInstance } from '@state/helpers/clone-instance.helper';
 
-export const listenTo = <TAction extends StateAction>(actionIds: string[], deepCloneAction: boolean = true) => 
+export const listenTo = <TAction extends StateAction>(actions: Type<StateAction>[], deepCloneAction: boolean = true) => 
     (source: Observable<DispatchedAction<TAction>> ): Observable<DispatchedAction<TAction>> => 
         source.pipe(
             filter(dispatched => {
-                if(actionIds.length === 1) 
-                    return dispatched.action.actionId === actionIds[0]
-                return actionIds.find(id => id === dispatched.action.actionId) !== undefined
+                const actionName = dispatched.action.constructor.name;
+                if(actions.length === 1) return actionName === actions[0].name
+                return actions.find(action => action.name === actionName) !== undefined
             }),  
             map(dispatched => {
                 return {
                     ...dispatched, 
-                    action: deepCloneAction ? _deepClone<TAction>(dispatched.action) : {...dispatched.action}
+                    action: _cloneInstance<TAction>(dispatched.action, deepCloneAction)
                 }
             })
         )

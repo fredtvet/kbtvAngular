@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { SaveModelFileProviders } from '@core/state/save-model-file/save-model-file.providers';
+import { SaveModelFileProviders } from '@core/state/providers.const';
 import { ModelFormModule } from '@model-form/model-form.module';
 import { DeleteModelProviders, MailModelsProviders } from '@model/state/providers.const';
-import { FormToSaveModelFileStateCommandAdapter } from '@shared/form-adapters/form-to-save-model-file-state-command.adapter';
+import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { SharedModule } from '@shared/shared.module';
 import { MissionDocumentListRoutingModule } from './mission-document-list-routing.module';
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
@@ -18,7 +18,7 @@ import { FileExtensionPipe } from './pipes/file-extension.pipe';
   ],
   imports: [
     SharedModule,  
-    ModelFormModule.forFeature(FormToSaveModelFileStateCommandAdapter),
+    ModelFormModule.forFeature(_formToSaveModelFileConverter),
     MissionDocumentListRoutingModule
   ],
   providers: [

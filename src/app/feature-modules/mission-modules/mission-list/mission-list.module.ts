@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
-import { SaveModelFileProviders } from '@core/state/save-model-file/save-model-file.providers';
+import { AppSaveModelProviders, SaveModelFileProviders } from '@core/state/providers.const';
 import { ModelFormModule } from '@model-form/model-form.module';
-import { DeleteModelProviders, SaveModelProviders } from '@model/state/providers.const';
-import { FormToSaveModelStateCommandAdapter } from '@shared/form-adapters/form-to-save-model-state-command.adapter';
+import { DeleteModelProviders } from '@model/state/providers.const';
+import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
 import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
 import { SharedModule } from '@shared/shared.module';
-import { EffectsSubscriber } from '@state/effects.subscriber';
 import { STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
@@ -24,16 +23,14 @@ import { UpdateLastVisitedReducer } from './update-last-visited.reducer';
   providers: [
     AppFileUrlPipe,
     ...SaveModelFileProviders,
-    ...SaveModelProviders,
+    ...AppSaveModelProviders,
     ...DeleteModelProviders,
     {provide: STORE_REDUCERS, useValue: UpdateLastVisitedReducer, multi: true}
   ],
   imports: [
     SharedModule,
     MissionListRoutingModule,
-    ModelFormModule.forFeature(FormToSaveModelStateCommandAdapter),
+    ModelFormModule.forFeature(_formToSaveModelConverter),
   ]
 })
-export class MissionListModule { 
-  constructor(effectsSubscriber: EffectsSubscriber){}
-}
+export class MissionListModule {}

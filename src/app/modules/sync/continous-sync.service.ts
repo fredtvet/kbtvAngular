@@ -4,7 +4,7 @@ import { first, tap } from 'rxjs/operators';
 import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper';
 import { Store } from '@state/store';
 import { StoreState, SyncConfig } from './interfaces';
-import { SyncStateActionId } from './state/actions.const';
+import { SyncStateAction } from './state/actions';
 
 @Injectable({providedIn: "root"})
 export class ContinousSyncService {
@@ -33,6 +33,5 @@ export class ContinousSyncService {
       if(timeSinceLastSync > syncConfig?.refreshTime) this.syncAll();             
     }
 
-    private syncAll = () : void => 
-        this.store.dispatch({ actionId: SyncStateActionId })
+    private syncAll = () : void => this.store.dispatch(new SyncStateAction())
 }

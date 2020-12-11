@@ -1,11 +1,11 @@
 import { Reducer } from '@state/interfaces';
-import { WipeSyncStateActionId, WipeSyncStateCommand } from './actions.const';
+import { WipeSyncStateAction } from './actions';
 
-export const WipeSyncStateReducer: Reducer<any, WipeSyncStateCommand> = {
-    actionId: WipeSyncStateActionId, 
-    reducerFn: (state: any, action: WipeSyncStateCommand): any => {
+export const WipeSyncStateReducer: Reducer<any, WipeSyncStateAction> = {
+    action: WipeSyncStateAction, 
+    reducerFn: (state: any, action: WipeSyncStateAction): any => {
 
-        const deleteState = {syncTimestamps: {}};
+        const deleteState = {syncTimestamp: null};
 
         for(const prop in action.syncStateConfig){
             const propCfg = action.syncStateConfig[prop];

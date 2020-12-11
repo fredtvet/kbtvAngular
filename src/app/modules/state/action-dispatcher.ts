@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { DispatchedAction, StateAction } from './interfaces';
+import { DispatchedAction } from './interfaces';
+import { StateAction } from './state.action';
 
 @Injectable()
 export class ActionDispatcher {

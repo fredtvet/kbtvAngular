@@ -1,4 +1,5 @@
-import { StateAction, Reducer } from '../interfaces';
+import { Reducer } from '../interfaces';
+import { StateAction } from '../state.action';
 import { _getReducerStateProps } from './get-reducer-state-props.helper';
 
 export function _getReducersStateProps(

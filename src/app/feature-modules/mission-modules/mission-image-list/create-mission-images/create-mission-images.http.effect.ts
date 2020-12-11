@@ -3,28 +3,22 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiUrl } from '@core/api-url.enum';
 import { HttpRequest } from '@http/interfaces';
-import { HttpActionId, HttpCommand } from '@http/state/http.effect';
-import { StateAction, Effect, DispatchedAction } from '@state/interfaces';
+import { Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
-import { CreateMissionImagesActionId, CreateMissionImagesStateCommand } from './create-mission-images-state-command.interface';
+import { HttpAction } from '@http/state/http.effect';
+import { CreateMissionImagesAction } from './create-mission-images.action';
 
 @Injectable()
-export class CreateMissionImagesHttpEffect implements Effect<CreateMissionImagesStateCommand>{
+export class CreateMissionImagesHttpEffect implements Effect<CreateMissionImagesAction>{
 
-    constructor(){ }
-
-    handle$(actions$: Observable<DispatchedAction<CreateMissionImagesStateCommand>>): Observable<StateAction> {
+    handle$(actions$: Observable<DispatchedAction<CreateMissionImagesAction>>): Observable<HttpAction> {
         return actions$.pipe(
-            listenTo([CreateMissionImagesActionId]),
-            map(x => { return <HttpCommand>{
-                actionId: HttpActionId, propagate: true,
-                request: this.createHttpRequest(x.action),
-                stateSnapshot: x.stateSnapshot,
-            }}),        
+            listenTo([CreateMissionImagesAction]),
+            map(x => new HttpAction(this.createHttpRequest(x.action), x.stateSnapshot)),        
         )
     }
 
-    private createHttpRequest(command: CreateMissionImagesStateCommand): HttpRequest{
+    private createHttpRequest(command: CreateMissionImagesAction): HttpRequest{
         return {
             apiUrl: `${ApiUrl.MissionImage}?missionId=${command.missionId}`,
             body: this.createHttpBody(command),
@@ -33,7 +27,7 @@ export class CreateMissionImagesHttpEffect implements Effect<CreateMissionImages
         }
     }
 
-    private createHttpBody(command: CreateMissionImagesStateCommand): any {
+    private createHttpBody(command: CreateMissionImagesAction): any {
         const httpData: FormData = new FormData();
         for(let i = 0; i < command.fileWrappers.length; i++){
             const file = command.fileWrappers[i].modifiedFile;

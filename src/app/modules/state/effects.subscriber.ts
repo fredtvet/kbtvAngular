@@ -4,6 +4,7 @@ import { catchError, first, takeUntil, tap } from 'rxjs/operators';
 import { ActionDispatcher } from './action-dispatcher';
 import { STORE_EFFECTS } from './constants/injection-tokens.const';
 import { Effect } from './interfaces';
+import { StateAction } from './state.action';
 import { Store } from './store';
 
 @Injectable()
@@ -27,7 +28,7 @@ export class EffectsSubscriber {
 
     private handleEffect(effect: Effect<any>): void {
         effect.handle$(this.dispatcher.actions$).pipe(   
-            tap(x => (x && x.actionId) ? this.store.dispatch(x) : null),
+            tap(x => (x instanceof StateAction) ? this.store.dispatch(x) : null),
             takeUntil(this.unsubscribe),
             catchError(x => this.onEffectError$(x, effect))
         ).subscribe();

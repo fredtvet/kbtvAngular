@@ -1,23 +1,22 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import { Mission, Timesheet } from '@core/models';
-import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
-import { GetWithRelationsConfig } from '@model/get-with-relations.config';
-import { _find } from '@array/find.helper';
 import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
+import { GetWithRelationsConfig } from '@model/get-with-relations.config';
+import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
 import { _mapObjectsToWeekdays } from '@shared-app/helpers/object/map-objects-to-weekdays.helper';
+import { WeekCriteria } from '@shared-timesheet/interfaces/week-criteria.interface';
+import { TimesheetSummaryAggregator } from '@shared-timesheet/services/timesheet-summary.aggregator';
+import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
+import { TimesheetFilter } from '@shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { GroupByPeriod } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { ComponentStore } from '@state/component.store';
 import { Store } from '@state/store';
+import { combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { TimesheetSummary } from '../../shared-timesheet/interfaces';
-import { WeekCriteria } from '../../shared-timesheet/interfaces/week-criteria.interface';
-import { TimesheetSummaryAggregator } from '../../shared-timesheet/services/timesheet-summary.aggregator';
-import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
-import { TimesheetFilter } from '../../shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { ComponentStoreState, StoreState } from '../store-state.interface';
-import { NextWeekActionId, PreviousWeekActionId, SetTimesheetCriteriaActionId } from './component.reducers';
+import { NextWeekAction, PreviousWeekAction, SetTimesheetCriteriaAction } from './component.reducers';
 
 @Injectable()
 export class UserTimesheetWeekFacade {
@@ -52,15 +51,11 @@ export class UserTimesheetWeekFacade {
     ){}
      
     previousWeek = (): void =>  
-        this.componentStore.dispatch({ actionId: PreviousWeekActionId })
+        this.componentStore.dispatch(new PreviousWeekAction())
     
     nextWeek = (): void =>       
-        this.componentStore.dispatch({ 
-            actionId: NextWeekActionId, 
-            currYear: this.currentYear, 
-            currWeekNr: this.currentWeekNr 
-        })
+        this.componentStore.dispatch(new NextWeekAction(this.currentYear, this.currentWeekNr))
 
     updateCriteria = (weekCriteria: WeekCriteria) => 
-        this.componentStore.dispatch({ actionId: SetTimesheetCriteriaActionId, weekCriteria })
+        this.componentStore.dispatch(new SetTimesheetCriteriaAction(weekCriteria))
 }

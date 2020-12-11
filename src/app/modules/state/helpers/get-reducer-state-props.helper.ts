@@ -1,4 +1,5 @@
-import { StateAction, Reducer } from '../interfaces';
+import { Reducer } from '../interfaces';
+import { StateAction } from '../state.action';
 
 export function _getReducerStateProps(
     reducer: Readonly<Reducer<any, StateAction>>, 

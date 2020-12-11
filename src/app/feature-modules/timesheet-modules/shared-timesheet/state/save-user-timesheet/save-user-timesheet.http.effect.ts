@@ -1,30 +1,19 @@
-import { Inject, Injectable } from '@angular/core';
-import { HttpActionId, HttpCommand } from '@http/state/http.effect';
+import { Inject, Injectable, Type } from '@angular/core';
 import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '@model/injection-tokens.const';
 import { CommandApiMap, KeyVal } from '@model/interfaces';
 import { SaveModelHttpEffect } from '@model/state/save-model/save-model.http.effect';
-import { StateAction, Effect, DispatchedAction } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { SaveUserTimesheetActionId, SaveUserTimesheetCommand } from './save-user-timesheet-command.interface';
+import { Effect } from '@state/interfaces';
+import { StateAction } from '@state/state.action';
+import { SaveUserTimesheetAction } from './save-user-timesheet.action'
 
 @Injectable()
-export class SaveUserTimesheetHttpEffect extends SaveModelHttpEffect implements Effect<SaveUserTimesheetCommand> {
+export class SaveUserTimesheetHttpEffect extends SaveModelHttpEffect implements Effect<SaveUserTimesheetAction> {
+
+    protected action: Type<StateAction> = SaveUserTimesheetAction
 
     constructor(
         @Inject(COMMAND_API_MAP) apiMap: CommandApiMap,
         @Inject(MODEL_PROP_TRANSLATIONS) translations: Readonly<KeyVal<string>>
     ){ super(apiMap, translations); }
 
-    handle$(actions$: Observable<DispatchedAction<SaveUserTimesheetCommand>>): Observable<StateAction> {
-        return actions$.pipe(
-            listenTo([SaveUserTimesheetActionId]),
-            map(x => { return <HttpCommand>{
-                actionId: HttpActionId, propagate: true,
-                request: super.createHttpRequest(x.action),
-                stateSnapshot: x.stateSnapshot
-            }}), 
-        )
-    }
 }

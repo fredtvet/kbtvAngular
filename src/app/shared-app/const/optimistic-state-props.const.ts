@@ -12,6 +12,6 @@ export const AppOptimisticState: OptimisticStateSelector<any> = {
         "userTimesheets", 
         "documentTypes",
         "currentUser",
-        "syncTimestamps",
+        "syncTimestamp",
     ]
 }

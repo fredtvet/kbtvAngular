@@ -1,5 +1,6 @@
 import { InjectionToken } from '@angular/core';
-import { ModelFormToSaveStateCommandAdapter } from './interfaces';
+import { StateAction } from '@state/state.action';
+import { FormToSaveModelConverter } from './interfaces';
 
-export const DEFAULT_SAVE_ADAPTER = 
-    new InjectionToken<ModelFormToSaveStateCommandAdapter<any, any>>("DefaultSaveAdapter")
+export const DEFAULT_SAVE_CONVERTER = 
+    new InjectionToken<FormToSaveModelConverter<any, any, StateAction>>("DefaultSaveConverter")

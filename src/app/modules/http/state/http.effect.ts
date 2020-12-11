@@ -1,19 +1,23 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { _deepClone } from '@state/helpers/deep-clone.helper';
-import { StateAction, Effect, DispatchedAction } from '@state/interfaces';
+import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
+import { StateAction } from '@state/state.action';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { OPTIMISTIC_STATE_SELECTOR } from '../injection-tokens.const';
 import { HttpRequest, OptimisticStateSelector } from '../interfaces';
-import { HttpQueuePushActionId, HttpQueuePushCommand } from './http-queue-push/http-queue-push-command.interface';
+import { HttpQueuePushAction } from './http-queue-push/http-queue-push.action';
 
-export const HttpActionId = "HTTP";
-
-export interface HttpCommand extends StateAction { request: HttpRequest, stateSnapshot: Readonly<any> }
-
+export class HttpAction extends StateAction {
+    constructor(
+        public request: HttpRequest, 
+        public stateSnapshot: Readonly<any>
+    ){ super() }
+    
+    propagate: boolean = true;
+}
 @Injectable()
-export class HttpEffect implements Effect<HttpCommand> {
+export class HttpEffect implements Effect<HttpAction> {
 
     constructor(
         @Inject(OPTIMISTIC_STATE_SELECTOR) @Optional() private stateSelector: OptimisticStateSelector<any>
@@ -21,18 +25,13 @@ export class HttpEffect implements Effect<HttpCommand> {
         this.setOptimistictStateStrategy() 
     }
 
-    handle$(actions$: Observable<DispatchedAction<HttpCommand>>): Observable<HttpQueuePushCommand> {
+    handle$(actions$: Observable<DispatchedAction<HttpAction>>): Observable<HttpQueuePushAction> {
         return actions$.pipe(
-            listenTo([HttpActionId], false),
-            map(x => { 
-                return <HttpQueuePushCommand>{
-                    actionId: HttpQueuePushActionId,
-                    command: {
-                       request: x.action.request, 
-                       stateSnapshot: this.getOptimisticState(x.action.stateSnapshot)
-                    }
-                };
-            })
+            listenTo([HttpAction], false),
+            map(x => new HttpQueuePushAction({
+                request: x.action.request, 
+                stateSnapshot: this.getOptimisticState(x.action.stateSnapshot)
+            }))
         )
     }
     

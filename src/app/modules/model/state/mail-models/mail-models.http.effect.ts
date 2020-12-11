@@ -7,12 +7,12 @@ import { Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { MailModelsActionId, MailModelsStateCommand } from './mail-models-state-command.interface';
 import { ModelStateConfig } from '../../model-state.config';
 import { ModelCommand } from '../../model-command.enum';
+import { MailModelsAction } from './mail-models.action';
 
 @Injectable()
-export class MailModelsHttpEffect implements Effect<MailModelsStateCommand<any>>{
+export class MailModelsHttpEffect implements Effect<MailModelsAction<any>>{
 
     constructor(
         private httpClient: HttpClient,
@@ -20,9 +20,9 @@ export class MailModelsHttpEffect implements Effect<MailModelsStateCommand<any>>
         @Inject(COMMAND_API_MAP) private apiMap: CommandApiMap,
     ) {}
     
-    handle$(actions$: Observable<DispatchedAction<MailModelsStateCommand<any>>>): Observable<void> {
+    handle$(actions$: Observable<DispatchedAction<MailModelsAction<any>>>): Observable<void> {
         return actions$.pipe(
-            listenTo([MailModelsActionId]),
+            listenTo([MailModelsAction]),
             mergeMap(({action}) => 
                 this.httpClient.post<void>(
                     this.baseUrl + ModelStateConfig.get(action.stateProp).apiUrl + this.apiMap[ModelCommand.Mail].suffix, 

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
+import { LoadPersistedStateAction } from '@persistance/state/actions.const';
 import { EffectsSubscriber } from '@state/effects.subscriber';
 import { Store } from '@state/store';
 import { IconService } from './icon.service';
-import { LoadPersistedStateActionId } from '@persistance/state/actions.const';
 
 @Injectable({providedIn: "root"})
 export class StartupService {
@@ -12,7 +12,7 @@ export class StartupService {
     store: Store<any>,
     iconService: IconService,
   ) { 
-    effectsSubscriber.onEffectsInit$.subscribe(x => store.dispatch({actionId: LoadPersistedStateActionId}))
+    effectsSubscriber.onEffectsInit$.subscribe(x => store.dispatch(new LoadPersistedStateAction()))
     iconService.registerIcons();
   }
   

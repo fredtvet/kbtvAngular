@@ -1,17 +1,18 @@
 import { StoreState } from '@core/services/auth/interfaces/store-state';
 import { _getWeeksInYear } from '@datetime/get-weeks-in-year.helper';
-import { StateAction, Reducer } from '@state/interfaces';
+import { Reducer } from '@state/interfaces';
+import { StateAction } from '@state/state.action';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { WeekToTimesheetCriteriaAdapter } from '../../shared-timesheet/timesheet-filter/week-to-timesheet-criteria.adapter';
 import { ComponentStoreState } from '../store-state.interface';
 
-export const SetTimesheetCriteriaActionId = "SET_TIMESHEET_CRITERIA";
+export class SetTimesheetCriteriaAction extends StateAction { 
+    constructor(public weekCriteria: WeekCriteria){ super() } 
+}
 
-export interface SetTimesheetCriteriaCommand extends StateAction { weekCriteria: WeekCriteria }
-
-export const SetTimesheetCriteriaReducer: Reducer<any, SetTimesheetCriteriaCommand> = {
-    actionId: SetTimesheetCriteriaActionId,
-    reducerFn: (state: StoreState, action: SetTimesheetCriteriaCommand) => {
+export const SetTimesheetCriteriaReducer: Reducer<any, SetTimesheetCriteriaAction> = {
+    action: SetTimesheetCriteriaAction,
+    reducerFn: (state: StoreState, action: SetTimesheetCriteriaAction) => {
         return {
             timesheetCriteria: new WeekToTimesheetCriteriaAdapter(action.weekCriteria),
             weekCriteria: action.weekCriteria
@@ -19,13 +20,17 @@ export const SetTimesheetCriteriaReducer: Reducer<any, SetTimesheetCriteriaComma
     }       
 } 
 
-export const NextWeekActionId = "NEXT_WEEK";
-export interface NextWeekCommand extends StateAction { currYear: number, currWeekNr: number }
+export class NextWeekAction extends StateAction { 
+    constructor(
+        public currYear: number, 
+        public currWeekNr: number 
+    ){ super() }    
+}
 
-export const NextWeekReducer: Reducer<any, NextWeekCommand> = {
-    actionId: NextWeekActionId,
+export const NextWeekReducer: Reducer<any, NextWeekAction> = {
+    action: NextWeekAction,
     stateProperties: ["weekCriteria"], //Ingen state trengs
-    reducerFn: (state: ComponentStoreState, action: NextWeekCommand) => {
+    reducerFn: (state: ComponentStoreState, action: NextWeekAction) => {
         const {currYear, currWeekNr} = action; 
         if(state.weekCriteria.year >= currYear &&state. weekCriteria.weekNr >= currWeekNr) return;
     
@@ -42,12 +47,12 @@ export const NextWeekReducer: Reducer<any, NextWeekCommand> = {
     }       
 }  
 
-export const PreviousWeekActionId = "PREVIOUS_WEEK";
+export class PreviousWeekAction extends StateAction { }
 
-export const PreviousWeekReducer: Reducer<any, StateAction> = {
-    actionId: PreviousWeekActionId,
+export const PreviousWeekReducer: Reducer<any, PreviousWeekAction> = {
+    action: PreviousWeekAction,
     stateProperties: ["weekCriteria"], //Ingen state trengs
-    reducerFn: (state: ComponentStoreState, action: StateAction) => {
+    reducerFn: (state: ComponentStoreState, action: PreviousWeekAction) => {
         const {weekCriteria} = state;
         
         if(weekCriteria.weekNr <= 1) {

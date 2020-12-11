@@ -1,12 +1,13 @@
-import { Reducer, StateAction } from '@state/interfaces';
+import { Reducer } from '@state/interfaces';
+import { StateAction } from '@state/state.action';
 
-export interface WipeStateCommand extends StateAction { defaultState: any }
+export class WipeStateAction extends StateAction { 
+  constructor(public defaultState: any){ super() } 
+}
 
-export const WipeStateActionId = "WIPE_STATE";
-
-export const WipeStateReducer: Reducer<any, WipeStateCommand> = {
-    actionId: WipeStateActionId, noDeepCloneState: true, stateProperties: "all",
-    reducerFn: (state: any, action: WipeStateCommand): any => {
+export const WipeStateReducer: Reducer<any, WipeStateAction> = {
+    action: WipeStateAction, noDeepCloneState: true, stateProperties: "all",
+    reducerFn: (state: any, action: WipeStateAction): any => {
         const ignoredState = {refreshToken: true, accessToken: true, currentUser: true};
 
         const deleteState = {};

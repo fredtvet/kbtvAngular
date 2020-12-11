@@ -1,12 +1,12 @@
 import { Reducer } from '@state/interfaces';
 import { StateRequestQueue } from '../../interfaces';
-import { HttpQueuePushActionId, HttpQueuePushCommand } from './http-queue-push-command.interface';
+import { HttpQueuePushAction } from './http-queue-push.action';
 
-export const HttpQueuePushReducer: Reducer<StateRequestQueue, HttpQueuePushCommand> = {
-    actionId: HttpQueuePushActionId,
+export const HttpQueuePushReducer: Reducer<StateRequestQueue, HttpQueuePushAction> = {
+    action: HttpQueuePushAction,
     stateProperties: ['requestQueue'],
     noDeepCloneState: true, noDeepCloneAction: true,
-    reducerFn: (state: StateRequestQueue, action: HttpQueuePushCommand) => {
+    reducerFn: (state: StateRequestQueue, action: HttpQueuePushAction) => {
         return {requestQueue: [...(state.requestQueue || []), action.command]}
     }
 }

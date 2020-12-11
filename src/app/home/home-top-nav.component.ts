@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { LoadingService } from '@core/services/loading.service';
-import { SyncStateActionId } from '@sync/state/actions.const';
 import { MainNavService } from '../layout/main-nav.service';
 import { Store } from '@state/store';
+import { SyncStateAction } from '@sync/state/actions';
 
 @Component({
   selector: 'app-home-top-nav',
@@ -21,5 +21,5 @@ export class HomeTopNavComponent{
 
     toggleDrawer = () => this.mainNavService.toggleDrawer();
 
-    refresh = () => this.store.dispatch({ actionId: SyncStateActionId });
+    refresh = () => this.store.dispatch(new SyncStateAction());
 }

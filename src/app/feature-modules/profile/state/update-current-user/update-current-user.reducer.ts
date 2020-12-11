@@ -1,11 +1,11 @@
 import { StateCurrentUser } from '@core/state/global-state.interfaces';
 import { Reducer } from '@state/interfaces';
-import { UpdateCurrentUserActionId, UpdateCurrentUserStateCommand } from './update-current-user-state-command.interface';
+import { UpdateCurrentUserAction } from './update-current-user.action';
 
-export const UpdateCurrentUserReducer: Reducer<StateCurrentUser, UpdateCurrentUserStateCommand> = {
-    actionId: UpdateCurrentUserActionId,
+export const UpdateCurrentUserReducer: Reducer<StateCurrentUser, UpdateCurrentUserAction> = {
+    action: UpdateCurrentUserAction,
     stateProperties: ["currentUser"],
-    reducerFn: (state: StateCurrentUser, action: UpdateCurrentUserStateCommand) => {
+    reducerFn: (state: StateCurrentUser, action: UpdateCurrentUserAction) => {
         state.currentUser = {...state.currentUser, ...action.user}
         return state;
     }

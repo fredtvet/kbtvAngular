@@ -10,7 +10,7 @@ import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-cr
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { ComponentStore } from '@state/component.store';
 import { Store } from '@state/store';
-import { SetTimesheetCriteriaActionId } from '../../shared-timesheet/state/set-timesheet-criteria.reducer';
+import { SetTimesheetCriteriaAction } from '../../shared-timesheet/state/set-timesheet-criteria.reducer';
 import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../../shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { UserTimesheetListState } from './user-timesheet-list.state';
@@ -51,7 +51,7 @@ export class UserTimesheetListFacade {
       }
       
       updateCriteria = (timesheetCriteria: TimesheetCriteria) => 
-          this.componentStore.dispatch({ actionId: SetTimesheetCriteriaActionId, timesheetCriteria });
+          this.componentStore.dispatch(new SetTimesheetCriteriaAction(timesheetCriteria));
 
       private setInitialCriteria(){
         let rawCriteria = this.route.snapshot.params.criteria;

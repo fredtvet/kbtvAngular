@@ -1,14 +1,15 @@
 import { GroupByPeriod } from '@shared/enums';
-import { Reducer, StateAction } from '@state/interfaces';
+import { Reducer } from '@state/interfaces';
+import { StateAction } from '@state/state.action';
 import { StoreState } from '../store-state';
 
-export const SetGroupByActionId = "SET_GROUP_BY";
+export class SetGroupByAction extends StateAction { 
+    constructor(public groupBy: GroupByPeriod){ super() } 
+}
 
-export interface SetGroupByCommand extends StateAction { groupBy: GroupByPeriod }
-
-export const SetGroupByReducer: Reducer<any, SetGroupByCommand> = {
-    actionId: SetGroupByActionId,
-    reducerFn: (state: StoreState, action: SetGroupByCommand) => {
+export const SetGroupByReducer: Reducer<any, SetGroupByAction> = {
+    action: SetGroupByAction,
+    reducerFn: (state: StoreState, action: SetGroupByAction) => {
         return { timesheetGroupBy: action.groupBy }
     }       
 }  

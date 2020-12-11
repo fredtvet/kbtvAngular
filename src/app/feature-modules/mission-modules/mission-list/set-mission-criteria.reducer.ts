@@ -1,14 +1,15 @@
 import { StoreState } from '@core/services/auth/interfaces/store-state';
 import { MissionCriteria } from '@shared/interfaces';
-import { Reducer, StateAction } from '@state/interfaces';
+import { Reducer } from '@state/interfaces';
+import { StateAction } from '@state/state.action';
 
-export const SetMissionCriteriaActionId = "SET_MISSION_CRITERIA";
+export class SetMissionCriteriaAction extends StateAction { 
+    constructor(public missionCriteria: MissionCriteria){ super() } 
+}
 
-export interface SetMissionCriteriaCommand extends StateAction { missionCriteria: MissionCriteria }
-
-export const SetMissionCriteriaReducer: Reducer<any, SetMissionCriteriaCommand> = {
-    actionId: SetMissionCriteriaActionId,
-    reducerFn: (state: StoreState, action: SetMissionCriteriaCommand) => {
+export const SetMissionCriteriaReducer: Reducer<any, SetMissionCriteriaAction> = {
+    action: SetMissionCriteriaAction,
+    reducerFn: (state: StoreState, action: SetMissionCriteriaAction) => {
         return { missionCriteria: action.missionCriteria }
     }       
 }  

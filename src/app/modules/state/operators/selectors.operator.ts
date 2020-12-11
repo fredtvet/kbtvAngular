@@ -11,8 +11,8 @@ export const selectProp = <TResult>(prop: string, deepClone: boolean = true) =>
             map(({state}) => deepClone ? _deepClone(state[prop]) : state[prop])
         )
 
-export const selectSlice = <TState>(props: string[], deepClone: boolean = true) => 
-    (source: Observable<StateChanges<any>>): Observable<Partial<TState>> => 
+export const selectSlice = <TSlice>(props: string[], deepClone: boolean = true) => 
+    (source: Observable<StateChanges<any>>): Observable<TSlice> => 
         source.pipe(
             filter<StateChanges<any>>(({stateChanges}, index: number) => {
                 if(index === 0) return true;
@@ -21,10 +21,10 @@ export const selectSlice = <TState>(props: string[], deepClone: boolean = true) 
                 return false;
             }),
             map(({state}) => {
-                const slice: Partial<TState> = {};
+                const slice = {} as TSlice;
                 if(state)     
                     for(var prop of props || []) 
                         slice[prop] = state[prop]; 
-                return deepClone ? _deepClone<Partial<TState>>(slice) : slice;                                    
+                return deepClone ? _deepClone(slice) : slice;                                    
             })
         )

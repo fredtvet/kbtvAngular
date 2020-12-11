@@ -1,38 +1,37 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { filter, map, mergeMap, take } from 'rxjs/operators';
 import { ApiUrl } from '@core/api-url.enum';
 import { Timesheet } from '@core/models';
 import { ApiService } from '@core/services/api.service';
-import { StateAction, Effect, DispatchedAction } from '@state/interfaces';
+import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
+import { StateAction } from '@state/state.action';
+import { Observable, of } from 'rxjs';
+import { filter, map, mergeMap, take } from 'rxjs/operators';
 import { TimesheetCriteria } from '../timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../timesheet-filter/timesheet-filter.model';
-import { SetFetchedTimesheetsActionId } from './set-fetched-timesheets.reducer';
+import { SetFetchedTimesheetsAction } from './set-fetched-timesheets.reducer';
 
-export const FetchTimesheetsActionId = "FETCH_TIMESHEETS";
-
-export interface FetchTimesheetsStateCommand extends StateAction {
-    timesheetCriteria: TimesheetCriteria;
+export class FetchTimesheetsAction extends StateAction {
+    constructor(public timesheetCriteria: TimesheetCriteria){ super() };
 }
 
 @Injectable()
-export class FetchTimesheetsHttpEffect implements Effect<FetchTimesheetsStateCommand> {
+export class FetchTimesheetsHttpEffect implements Effect<FetchTimesheetsAction> {
 
   static baseCriteria: TimesheetCriteria;
 
   constructor(private apiService: ApiService){ }
 
-  handle$(actions$: Observable<DispatchedAction<FetchTimesheetsStateCommand>>): Observable<StateAction> {
+  handle$(actions$: Observable<DispatchedAction<FetchTimesheetsAction>>): Observable<StateAction> {
     return actions$.pipe(
-      listenTo([FetchTimesheetsActionId]),
+      listenTo([FetchTimesheetsAction]),
       filter(x => x.action.timesheetCriteria != null),
       mergeMap(x => this._handle$(x.action))
     )
   }
 
-  private _handle$(action: FetchTimesheetsStateCommand): Observable<StateAction>{
+  private _handle$(action: FetchTimesheetsAction): Observable<SetFetchedTimesheetsAction>{
         const filter = new TimesheetFilter(action.timesheetCriteria);
         //If resulting data is already in cache, dont fetch.
         if(filter.containedIn(FetchTimesheetsHttpEffect.baseCriteria)) return of(null);
@@ -40,9 +39,7 @@ export class FetchTimesheetsHttpEffect implements Effect<FetchTimesheetsStateCom
         FetchTimesheetsHttpEffect.baseCriteria = action.timesheetCriteria;
         return this.fetch$(action.timesheetCriteria).pipe(
             take(1),
-            map(timesheets => { return { 
-              actionId: SetFetchedTimesheetsActionId, timesheets 
-            }})
+            map(timesheets => new SetFetchedTimesheetsAction(timesheets))
         )        
   }
     

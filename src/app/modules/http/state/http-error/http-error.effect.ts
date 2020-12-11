@@ -3,19 +3,18 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
-import { HttpErrorActionId, HttpErrorCommand } from './http-error-command.interface';
 import { NotificationService, NotificationType } from '@notification/index';
+import { HttpErrorAction } from './http-error.action';
 
 @Injectable()
-export class HttpErrorEffect implements Effect<HttpErrorCommand> {
+export class HttpErrorEffect implements Effect<HttpErrorAction> {
 
     constructor(private notificationService: NotificationService) {}
 
-    handle$(actions$: Observable<DispatchedAction<HttpErrorCommand>>): Observable<void> {
+    handle$(actions$: Observable<DispatchedAction<HttpErrorAction>>): Observable<void> {
         return actions$.pipe(
-            listenTo([HttpErrorActionId]),
+            listenTo([HttpErrorAction]),
             map(x => {
-            
                 const errorMessages =
                     x.stateSnapshot.requestQueue?.map(x => x.request.cancelMessage);
     
