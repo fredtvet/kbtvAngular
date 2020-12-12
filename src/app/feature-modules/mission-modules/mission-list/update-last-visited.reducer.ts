@@ -8,14 +8,16 @@ export class UpdateLastVisitedAction extends StateAction {
 
 export const UpdateLastVisitedReducer: Reducer<StateMissions, UpdateLastVisitedAction> = {
     action: UpdateLastVisitedAction,
-    stateProperties: ["missions"],
-    noDeepCloneState: true,
+    stateProperties: ["missions"], noDeepCloneState: true,
     reducerFn: (state: StateMissions, action: UpdateLastVisitedAction): StateMissions => {
         const index = state.missions?.findIndex(x => x.id === action.id);
-        if(!index || state.missions) return null;
-        let mission = state.missions[index];
-        if(!index || !mission) return null;
-        mission = {...mission, lastVisited: new Date().getTime()};
-        return state;
+        if(!index) return;
+
+        const missions = [...state.missions];
+        let mission = missions[index];
+        if(!mission) return;
+
+        missions[index] = {...mission, lastVisited: new Date().getTime()};
+        return {missions};
     }
 }
