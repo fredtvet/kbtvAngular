@@ -1,19 +1,17 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
 import { Mission } from '@core/models';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
-import { NotificationService } from '@notification/index';
-import { AppNotifications } from '@shared-app/const/app-notifications.const';
+import { Immutable } from '@immutable/interfaces';
+import { ModelFormService } from '@model-form/model-form.service';
 import { RolePresets, Roles } from '@shared-app/enums';
 import { DetailTopNavConfig } from '@shared/components/detail-top-nav-bar/detail-top-nav.config';
 import { EditMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { TimesheetStatus } from '@shared/enums';
 import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { MissionListFacade } from '../mission-list.facade';
-import { ModelFormService } from '@model-form/model-form.service';
-import { Immutable } from '@immutable/interfaces';
 
 interface ViewModel { mission: Immutable<Mission>, navConfig: DetailTopNavConfig }
 
@@ -40,19 +38,13 @@ export class MissionDetailsComponent{
     private router: Router,
     private appFileUrl: AppFileUrlPipe,
     private menuService: BottomSheetMenuService,
-    private notificationService: NotificationService,
     private modelFormService: ModelFormService
   ){ }
 
   updateHeaderImage = (files: FileList): void => 
     files && files[0] ? this.facade.updateHeaderImage(this.missionId, files[0]) : null;
   
-  private openHeaderImageInput = (): void =>{ 
-    if(!window.navigator.onLine)
-      return this.notificationService.notify(AppNotifications.OnlineRequired)
-  
-    this.imageInput?.nativeElement?.click();
-  }
+  private openHeaderImageInput = (): void => this.imageInput?.nativeElement?.click();
   
   private openMissionForm = (entityId: number) => 
     this.modelFormService.open({ 

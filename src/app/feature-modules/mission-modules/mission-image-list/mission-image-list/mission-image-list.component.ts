@@ -1,25 +1,23 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from "@angular/core";
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, Observable } from 'rxjs';
-import { map, tap } from "rxjs/operators";
 import { MissionImage, ModelFile } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
-import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
-import { NotificationService } from '@notification/index';
-import { AppNotifications } from '@shared-app/const/app-notifications.const';
+import { FormService } from '@form-sheet/form-sheet.service';
+import { ImmutableArray } from '@immutable/interfaces';
 import { RolePresets, Roles } from '@shared-app/enums';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { AppButton } from '@shared-app/interfaces';
 import { SelectableListContainerComponent } from '@shared/components/abstracts/selectable-list-container.component';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EmailForm } from '@shared/constants/forms/email-form.const';
+import { combineLatest, Observable } from 'rxjs';
+import { map, tap } from "rxjs/operators";
+import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MissionImageListFacade } from '../mission-image-list.facade';
-import { FormService } from '@form-sheet/form-sheet.service';
-import { ImmutableArray } from '@immutable/interfaces';
 
 interface ViewModel { images: ImmutableArray<MissionImage>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig }
 
@@ -57,7 +55,6 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
     private dialog: MatDialog,
     private facade: MissionImageListFacade,
     private route: ActivatedRoute,
-    private notificationService: NotificationService,
     private router: Router) {
       super();
       this.navConfig = {
@@ -88,12 +85,7 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   uploadImages = (files: FileList): void => 
     this.facade.add({missionId: this.missionId, files});
   
-  private openImageInput = (): void =>{ 
-    if(!window.navigator.onLine)
-      return this.notificationService.notify(AppNotifications.OnlineRequired)
-    
-    this.imageInput.nativeElement.click()
-  };
+  private openImageInput = (): void => this.imageInput.nativeElement.click();
 
   private deleteSelectedImages = () => {
     this.currentSelections;

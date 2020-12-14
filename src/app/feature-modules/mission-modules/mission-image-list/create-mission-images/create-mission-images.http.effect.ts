@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiUrl } from '@core/api-url.enum';
-import { HttpRequest } from '@http/interfaces';
+import { FormDataEntry, HttpRequest } from '@http/interfaces';
 import { Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { HttpAction } from '@http/state/http.effect';
@@ -32,13 +32,13 @@ export class CreateMissionImagesHttpEffect implements Effect<CreateMissionImages
         }
     }
 
-    private createHttpBody(command: Immutable<CreateMissionImagesAction>): any {
-        const httpData: FormData = new FormData();
+    private createHttpBody(command: Immutable<CreateMissionImagesAction>): FormDataEntry[] {
+        const entries: FormDataEntry[] = [];
         for(let i = 0; i < command.fileWrappers.length; i++){
             const file = command.fileWrappers[i].modifiedFile;
-            httpData.append('file', file, file.name);
+            entries.push({name: "file", value: file})
         }
-        return httpData;
+        return entries;
     }
 
 }

@@ -1,8 +1,8 @@
 import { PersistanceConfig } from "@persistance/interfaces";
 
 export const AppPersistanceConfig: PersistanceConfig<any> = {
-    missions: {},
-    missionDocuments: {},
+    missions: {enableTempData: true},
+    missionDocuments: {enableTempData: true},
     missionImages: {enableTempData: true},
     missionNotes: {},
     missionTypes: {},

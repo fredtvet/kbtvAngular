@@ -13,7 +13,7 @@ export class ImageErrorReloaderDirective {
 
   @HostListener('error') onError() {
     if(this.retries >= this.maxRetries) return false;
-    setTimeout(this.resetSrc, 1000)
+    setTimeout(this.resetSrc, 2000)
   }
 
   private resetSrc = () => {

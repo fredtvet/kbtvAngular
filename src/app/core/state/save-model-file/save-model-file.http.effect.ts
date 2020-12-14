@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { ModelFile } from '@core/models';
+import { FormDataEntry } from '@http/interfaces';
 import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '@model/injection-tokens.const';
 import { CommandApiMap, KeyVal } from '@model/interfaces';
 import { SaveModelHttpEffect } from '@model/state/save-model/save-model.http.effect';
@@ -17,11 +18,10 @@ export class SaveModelFileHttpEffect extends SaveModelHttpEffect
         @Inject(MODEL_PROP_TRANSLATIONS) translations: Readonly<KeyVal<string>>
     ){ super(apiMap, translations) }
 
-    protected createHttpBody(command: SaveModelFileAction<ModelFile>): FormData {
-        const body: FormData = new FormData();   
+    protected createHttpBody(command: SaveModelFileAction<ModelFile>): FormDataEntry[] { 
         const file = command.fileWrapper.modifiedFile;
-        if(file) body.append("files", file, file.name);
-        body.append("command", JSON.stringify(command.entity));
-        return body;
+        const entries: FormDataEntry[] = [{name: "command", value: JSON.stringify(command.entity)}]
+        if(file) entries.push({name: "files", value: file})
+        return entries
     }
 }

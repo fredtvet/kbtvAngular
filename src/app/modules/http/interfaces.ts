@@ -1,10 +1,12 @@
 import { Immutable } from '@immutable/interfaces';
 import { Prop } from '@state/interfaces';
 
+export interface FormDataEntry { name: string, value: string | Blob }
+
 export interface HttpRequest { 
     apiUrl: string; 
     method: "POST" | "PUT" | "DELETE"; 
-    body: any; 
+    body: Object | FormDataEntry[]; 
     cancelMessage?: string; 
 };
 

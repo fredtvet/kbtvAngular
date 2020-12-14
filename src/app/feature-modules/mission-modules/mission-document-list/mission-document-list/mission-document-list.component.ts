@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MissionDocument } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
-import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
-import { NotificationService } from '@notification/index';
-import { AppNotifications } from '@shared-app/const/app-notifications.const';
+import { FormService } from '@form-sheet/form-sheet.service';
+import { ImmutableArray } from '@immutable/interfaces';
+import { ModelFormService } from '@model-form/model-form.service';
 import { Roles } from '@shared-app/enums';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { AppButton } from '@shared-app/interfaces';
@@ -15,10 +15,8 @@ import { EmailForm } from '@shared/constants/forms/email-form.const';
 import { CreateMissionDocumentForm, MissionDocumentForm } from '@shared/constants/model-forms/create-mission-document-form.const';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
 import { MissionDocumentListFacade } from '../mission-document-list.facade';
-import { FormService } from '@form-sheet/form-sheet.service';
-import { ModelFormService } from '@model-form/model-form.service';
-import { ImmutableArray } from '@immutable/interfaces';
 
 interface ViewModel { documents: ImmutableArray<MissionDocument>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig}
 
@@ -50,7 +48,6 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     private facade: MissionDocumentListFacade,
     private route: ActivatedRoute,
     private router: Router,
-    private notificationService: NotificationService,
     private confirmService: ConfirmDialogService,
     private modelFormService: ModelFormService) {
       super();
@@ -96,9 +93,6 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
   }
 
   private openDocumentForm = (): void => {
-    if(!window.navigator.onLine)
-      return this.notificationService.notify(AppNotifications.OnlineRequired)
-
     this.modelFormService.open<MissionDocumentForm>({
       formConfig: {
         dynamicForm: {...CreateMissionDocumentForm, initialValue: {missionId: this.missionId}},

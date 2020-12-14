@@ -44,14 +44,12 @@ export abstract class StoreBase<TState> {
             }  
              
         this._settings = { logStateChanges: false, strictImmutability: true, ...(settings || {}) };
-        console.log(this._settings);
+
         this.base.strictImmutability = this._settings.strictImmutability;
     }
 
     dispatch<TAction extends StateAction>(action: Immutable<TAction>): void {
-        console.time('freezer');
         if(this._settings.strictImmutability) _deepFreeze(action);
-        console.timeEnd('freezer');
         const stateSnapshot = this.base.getStoreState(null, false);
         this.reduceState(action);
         this.actionDispatcher.dispatch(action, stateSnapshot);
