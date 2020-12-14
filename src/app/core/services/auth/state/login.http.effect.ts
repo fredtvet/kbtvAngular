@@ -8,6 +8,7 @@ import { listenTo } from '@state/operators/listen-to.operator';
 import { Credentials } from '../interfaces';
 import { StateAction } from '@state/state.action';
 import { LoginSuccessAction } from './login-success/login-success.action';
+import { StateCurrentUser } from '@core/state/global-state.interfaces';
 
 export class LoginAction extends StateAction { 
     constructor(
@@ -21,14 +22,14 @@ export class LoginHttpEffect implements Effect<LoginAction> {
 
     constructor(private apiService: ApiService){}
 
-    handle$(actions$: Observable<DispatchedAction<LoginAction>>): Observable<LoginSuccessAction> {
+    handle$(actions$: Observable<DispatchedAction<LoginAction, StateCurrentUser>>): Observable<LoginSuccessAction> {
         return actions$.pipe(
             listenTo([LoginAction]),
             exhaustMap(x => this.login$(x)),
         )
     }
 
-    private login$(dispatched: DispatchedAction<LoginAction>): Observable<LoginSuccessAction> {
+    private login$(dispatched: DispatchedAction<LoginAction, StateCurrentUser>): Observable<LoginSuccessAction> {
         return this.apiService.post(ApiUrl.Auth + '/login', dispatched.action.credentials).pipe(
             map(response => new LoginSuccessAction(
                 response, 

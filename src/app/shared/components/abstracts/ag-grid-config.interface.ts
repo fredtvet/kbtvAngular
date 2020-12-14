@@ -1,3 +1,5 @@
+import { ImmutableArray } from '@immutable/interfaces';
+
 export interface AgGridConfig<TRecord>{
-    data: TRecord[];
+    data: ImmutableArray<TRecord>;
 }

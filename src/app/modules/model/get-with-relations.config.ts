@@ -1,4 +1,5 @@
 import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
+import { Immutable, ImmutableArray } from '@immutable/interfaces';
 import { Prop } from '@state/interfaces';
 import { ModelConfig } from './interfaces';
 import { ModelStateConfig } from './model-state.config';
@@ -7,11 +8,11 @@ type RelationInclude<TState> = Prop<TState>[] | "all";
 
 export class GetWithRelationsConfig<TState> {
 
-  private propConfig: ModelConfig<any, TState>;
+  private propConfig: Immutable<ModelConfig<any, TState>>;
 
-  includedForeignProps: Prop<TState>[];
-  includedChildProps: Prop<TState>[];
-  includedProps: Prop<TState>[];
+  includedForeignProps: ImmutableArray<Prop<TState>>;
+  includedChildProps: ImmutableArray<Prop<TState>>;
+  includedProps: ImmutableArray<Prop<TState>>;
 
   constructor(
     readonly modelProp: Prop<TState>,
@@ -19,7 +20,7 @@ export class GetWithRelationsConfig<TState> {
     foreigns?: RelationInclude<TState>
   ) {
 
-    this.propConfig = ModelStateConfig.get(this.modelProp);
+    this.propConfig = ModelStateConfig.get(modelProp);
 
     const fkProps = this.propConfig?.foreigns;
     this.includedForeignProps = 
@@ -29,19 +30,19 @@ export class GetWithRelationsConfig<TState> {
     this.includedChildProps = 
       children === "all" ? (childProps || []) : this.getProps(children, childProps) 
 
-    this.includedProps = [modelProp, ...this.includedChildProps, ...this.includedForeignProps]
+    this.includedProps = [modelProp as any, ...this.includedChildProps, ...this.includedForeignProps]
   }
 
-  private getProps(includes: Prop<TState>[], props: Prop<TState>[]): Prop<TState>[]{  
+  private getProps(includes: ImmutableArray<string>, props: ImmutableArray<string>): ImmutableArray<Prop<TState>>{  
     if(!props || !includes?.length) return []; 
     let included: Prop<TState>[] = []; 
-    const propMap = _convertArrayToObject(props);
+    const propMap = _convertArrayToObject<string>(props);
     for(const include of includes){
-      if(propMap[include]) included.push(include);
+      if(propMap[include]) included.push(include as any);
       else 
         console.error(`'${include}' not registered as a relation in model config for '${this.modelProp}'`)
     }
-    return included;    
+    return <ImmutableArray<any>> included;    
   }
 }
 

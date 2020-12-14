@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '@core/models';
 import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper';
+import { Immutable } from '@immutable/interfaces';
 import { ActionDispatcher } from '@state/action-dispatcher';
 import { Store } from '@state/store';
 import { Observable } from 'rxjs';
@@ -19,15 +20,14 @@ export class AuthService {
     map(state => (state.refreshToken != null) && (state.accessToken?.token != null))
   )
 
-  currentUser$: Observable<User> = 
-    this.store.selectProperty$<User>("currentUser"); //.pipe(distinctUntilChanged());
+  currentUser$ = this.store.selectProperty$<User>("currentUser");
 
-  newAccessToken$: Observable<AccessToken> = 
+  newAccessToken$ = 
     this.store.selectProperty$<AccessToken>("accessToken").pipe(skip(1));
 
   get hasAccessTokenExpired(): boolean{
     const expiresIn = 
-      this.store.selectProperty<AccessToken>("accessToken", false)?.expiresIn
+      this.store.selectProperty<AccessToken>("accessToken")?.expiresIn
 
     if(!expiresIn) return true; //If no access token expiration set
     if (_getUnixTimeSeconds() >= expiresIn) return true; //If access token expired
@@ -41,10 +41,10 @@ export class AuthService {
   constructor (private store: Store<StoreState>, private actionDispatcher: ActionDispatcher) { }
 
   getAccessToken = (): string => 
-    this.store.selectProperty<AccessToken>("accessToken", false)?.token 
+    this.store.selectProperty<AccessToken>("accessToken")?.token 
 
-  getCurrentUser = (deepClone: boolean = true): User => 
-    this.store.selectProperty<User>("currentUser", deepClone) 
+  getCurrentUser = (): Immutable<User> => 
+    this.store.selectProperty<User>("currentUser") 
   
   login = (credentials: Credentials, returnUrl?: string): void => 
     this.store.dispatch(new LoginAction(credentials, returnUrl))
@@ -59,6 +59,6 @@ export class AuthService {
     }))
 
   private getRefreshToken = (): string => 
-    this.store.selectProperty<string>("refreshToken", false) 
+    this.store.selectProperty<string>("refreshToken") 
 }
 

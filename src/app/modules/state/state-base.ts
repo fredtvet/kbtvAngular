@@ -1,3 +1,4 @@
+import { ImmutableArray } from '@immutable/interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { _deepClone } from './helpers/deep-clone.helper';
 import { StateChanges } from './interfaces';
@@ -15,7 +16,7 @@ export class StateBase {
         this.stateChanges$ = this.stateChangesSubject.asObservable();
     }
 
-    getStoreState(properties: string[]  = null, deepClone: boolean = true) {
+    getStoreState(properties: ImmutableArray<string>  = null, deepClone: boolean = true) {
         let state = null;
 
         if (this.storeState && properties) {      
@@ -35,7 +36,7 @@ export class StateBase {
 
     setStoreState(stateChanges: any, action?: string, deepClone: boolean = true, dispatchChanges: boolean = true) {
         if(!stateChanges) return;
-       
+
         if(deepClone)
             this.storeState = {...this.storeState, ..._deepClone(stateChanges)}
         else

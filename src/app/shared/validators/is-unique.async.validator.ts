@@ -1,8 +1,9 @@
 import { AbstractControl, AsyncValidatorFn } from '@angular/forms';
+import { ImmutableArray } from '@immutable/interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-    export function isUniqueAsyncValidator(data$: Observable<any[]>, identifier?: string): AsyncValidatorFn{ 
+    export function isUniqueAsyncValidator(data$: Observable<ImmutableArray<any>>, identifier?: string): AsyncValidatorFn{ 
         return (control: AbstractControl): Observable<{[key: string]: any} | null> => {
           return data$.pipe(map(data => {
               let findFunc: (x: any) => boolean;

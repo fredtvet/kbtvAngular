@@ -27,7 +27,7 @@ export class DataManagerFacade  {
         switchMap(x => this.getDataConfig$(x)));
 
     get selectedProperty() {
-        return this.componentStore.selectProperty<Prop<ModelState>>("selectedProperty", false);
+        return this.componentStore.selectProperty<Prop<ModelState>>("selectedProperty");
     }
 
     constructor(

@@ -27,7 +27,7 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
     super(); 
   }
 
-  editCell = (e:any) => {
+  editCell = (e: any) => {
     if(e.newValue !== e.oldValue){
       this.itemEdited.emit(e);
     }

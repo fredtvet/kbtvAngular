@@ -15,6 +15,7 @@ import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/times
 import { TimesheetFilter } from '../../shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { UserTimesheetListState } from './user-timesheet-list.state';
 import { StateMissions, StateUserTimesheets } from '@core/state/global-state.interfaces';
+import { Immutable } from '@immutable/interfaces';
 
 @Injectable()
 export class UserTimesheetListFacade {
@@ -22,12 +23,12 @@ export class UserTimesheetListFacade {
       get criteria(){ return this.componentStore.selectProperty<TimesheetCriteria>("timesheetCriteria"); } 
       criteria$ = this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria");
   
-      private filteredTimesheets$: Observable<Timesheet[]> = combineLatest([
+      private filteredTimesheets$ = combineLatest([
           this.store.selectProperty$<Timesheet[]>("userTimesheets"),
           this.criteria$
       ]).pipe(filterRecords(TimesheetFilter), map(x => x.records));
 
-      timesheets$: Observable<Timesheet[]> = combineLatest([
+      timesheets$ = combineLatest([
         this.filteredTimesheets$, 
         this.store.selectProperty$<Mission[]>("missions")
       ]).pipe(
@@ -50,7 +51,7 @@ export class UserTimesheetListFacade {
         this.setInitialCriteria(); 
       }
       
-      updateCriteria = (timesheetCriteria: TimesheetCriteria) => 
+      updateCriteria = (timesheetCriteria: Immutable<TimesheetCriteria>) => 
           this.componentStore.dispatch(new SetTimesheetCriteriaAction(timesheetCriteria));
 
       private setInitialCriteria(){

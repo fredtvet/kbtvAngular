@@ -3,6 +3,7 @@ import { merge, of } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
 import { _filter } from '@array/filter.helper';
 import { ActiveStringFilterConfig } from '../interfaces/active-string-filter-config.interface';
+import { Immutable } from '@immutable/interfaces';
 
 @Directive({
   selector: '[appActiveStringFilter]'
@@ -47,12 +48,13 @@ export class ActiveStringFilterDirective<TRecord> {
         }))
     }
 
-    private filterRecord = (record: TRecord): boolean => {
+    private filterRecord = (record: Immutable<TRecord>): boolean => {
         if(!record) return false;
         if(this._config.maxChecks && this.checkCount >= this._config.maxChecks) return false; 
         let exp = false;
         for(var i = this._config.stringProps.length; i--;){
-            exp = exp || (record[this._config.stringProps[i]] as any).toLowerCase().includes(this.searchLower)
+            const value = <string> record[this._config.stringProps[i]];
+            exp = exp || value.toLowerCase().includes(this.searchLower)
         }
         if(exp && this._config.maxChecks) this.checkCount++;
         return exp;

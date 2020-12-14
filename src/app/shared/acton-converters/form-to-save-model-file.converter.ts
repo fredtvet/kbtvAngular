@@ -11,15 +11,13 @@ export type ModelFileForm = ModelFile & {file: File};
 export const _formToSaveModelFileConverter: FormToSaveModelConverter<ModelFileForm, ModelState, SaveModelFileAction<ModelFile>> =
     <TForm extends ModelFileForm>(input: ModelFormToSaveModelInput<TForm, ModelState>): SaveModelFileAction<ModelFile> => {
 
-    const file = input.formValue.file;
-    delete input.formValue.file;
-    
-    var entity = _flattenExistingForeigns<ModelFile>(input.stateProp, input.formValue, input.options);
+    const clone = {...input.formValue, file: undefined};
+    var entity = _flattenExistingForeigns<ModelFile>(input.stateProp, clone, input.options);
     entity = _modelIdGenerator(input.stateProp, entity); 
 
     const modelCfg = ModelStateConfig.get(input.stateProp);
     const fileWrapper = 
-        new ModelFileWrapper(file, entity[modelCfg.identifier]);
+        new ModelFileWrapper(input.formValue.file, entity[modelCfg.identifier]);
 
     return new SaveModelFileAction<Model>(input.stateProp, entity, fileWrapper, input.saveAction)
 }

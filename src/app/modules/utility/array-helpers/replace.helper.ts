@@ -1,5 +1,7 @@
-export function _replace<T>(array: T[], obj: T, id: any, identifier: string){
-    if(!array || array.length == 0) return array;
+import { ImmutableArray, Immutable } from '@immutable/interfaces';
+
+export function _replace<T>(array: ImmutableArray<T>, obj: Immutable<T>, id: any, identifier: string): Immutable<T>[]{
+    if(!array?.length) return [];
     let arr = array.slice();
     for(let i = 0; i < arr.length; i++){
       let currObj = arr[i];

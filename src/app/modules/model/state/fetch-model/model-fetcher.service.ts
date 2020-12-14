@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Inject, Injectable } from '@angular/core'
 import { BASE_API_URL } from '@http/injection-tokens.const'
+import { Immutable } from '@immutable/interfaces'
 import { QueryDispatcher } from '@state/query-dispatcher'
 import { Store } from '@state/store'
 import { combineLatest, Observable, of } from 'rxjs'
@@ -27,7 +28,7 @@ export class ModelFetcherService {
                 if(!x.props?.length) return of(null);
                 
                 const fetchers: Observable<StateSlice>[] = [];
-                const state: Readonly<Object> = store.select(null, false);
+                const state = store.select(null);
 
                 for(const prop of x.props){
                     if(state[prop] || this.pendingProperties[prop]) continue;
@@ -45,7 +46,7 @@ export class ModelFetcherService {
         ).subscribe();
     }
 
-    private getFetcher$(modelCfg: ModelConfig<any, any>, prop: string): Observable<StateSlice>{
+    private getFetcher$(modelCfg: Immutable<ModelConfig<any, any>>, prop: string): Observable<StateSlice>{
         this.pendingProperties[prop] = true;
         return this.httpClient.get(this.baseUrl + modelCfg.apiUrl).pipe(
             map(data => {
@@ -63,6 +64,6 @@ export class ModelFetcherService {
         return state;
     }
 
-    private isFetchable = (modelConfig: ModelConfig<any, any>): boolean => 
+    private isFetchable = (modelConfig: Immutable<ModelConfig<any, any>>): boolean => 
       modelConfig && modelConfig.apiUrl && modelConfig.autoFetch
 }

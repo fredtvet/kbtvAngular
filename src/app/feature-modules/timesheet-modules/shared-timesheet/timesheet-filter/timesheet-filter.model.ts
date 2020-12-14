@@ -3,6 +3,7 @@ import { ModelStateConfig } from '@model/model-state.config';
 import { DataFilter } from '@shared/data.filter';
 import { DateRange } from '@datetime/interfaces';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
+import { Immutable } from '@immutable/interfaces';
 
 export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
 
@@ -67,9 +68,9 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         (this.getStartOfDayTime(baseDateRange.end) >= this.getStartOfDayTime(dateRange.end))
     }
 
-    private getStartOfDayTime(date: Date | string | number): number{
+    private getStartOfDayTime(date: Immutable<Date> | string | number): number{
         if(!date) return
-        const newDate = new Date(date);
+        const newDate = new Date(date as any);
         newDate.setHours(0,0,0,0);
         return newDate.getTime();
     }

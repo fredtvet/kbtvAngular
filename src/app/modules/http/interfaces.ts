@@ -1,3 +1,4 @@
+import { Immutable } from '@immutable/interfaces';
 import { Prop } from '@state/interfaces';
 
 export interface HttpRequest { 
@@ -8,8 +9,8 @@ export interface HttpRequest {
 };
 
 export interface QueuedCommand { 
-    request: HttpRequest, 
-    stateSnapshot: Readonly<any>, 
+    request: Immutable<HttpRequest>, 
+    stateSnapshot: Immutable<Object>, 
     dispatched?: boolean 
 };
 

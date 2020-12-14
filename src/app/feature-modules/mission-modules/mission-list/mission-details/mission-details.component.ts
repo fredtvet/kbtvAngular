@@ -13,8 +13,9 @@ import { TimesheetStatus } from '@shared/enums';
 import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
 import { MissionListFacade } from '../mission-list.facade';
 import { ModelFormService } from '@model-form/model-form.service';
+import { Immutable } from '@immutable/interfaces';
 
-interface ViewModel { mission: Mission, navConfig: DetailTopNavConfig }
+interface ViewModel { mission: Immutable<Mission>, navConfig: DetailTopNavConfig }
 
 @Component({
   selector: 'app-mission-details',
@@ -63,20 +64,20 @@ export class MissionDetailsComponent{
       }, 
     })
 
-  private goToTimesheets = (mission: Mission) => 
+  private goToTimesheets = (mission: Immutable<Mission>) => 
     this.router.navigate(['timer', {
       returnUrl: this.router.url, 
       criteria: JSON.stringify({mission, status: TimesheetStatus.Open})
     }], {relativeTo: this.route});
 
-  private openBottomSheetMenu = (mission: Mission) => {   
+  private openBottomSheetMenu = (mission: Immutable<Mission>) => {   
     this.menuService.open([
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission?.id], allowedRoles: [Roles.Leder]},
       {text: `${mission?.fileName ? 'Oppdater' : 'Legg til'} forsidebilde`, icon: "add_photo_alternate", callback: this.openHeaderImageInput, allowedRoles: [Roles.Leder]},
     ]);
   }
 
-  private getNavConfig(mission: Mission): DetailTopNavConfig {
+  private getNavConfig(mission: Immutable<Mission>): DetailTopNavConfig {
     return {
         titleLines: mission?.address?.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
         subTitle: mission?.finished ? 'Oppdrag ferdig!' : `ID: ${mission?.id}`,

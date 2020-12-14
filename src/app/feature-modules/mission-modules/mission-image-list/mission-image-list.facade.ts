@@ -1,30 +1,31 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { map } from 'rxjs/operators';
 import { Mission, MissionImage } from "@core/models";
+import { ModelState } from '@core/state/model-state.interface';
+import { Immutable, ImmutableArray } from '@immutable/interfaces';
 import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
+import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
+import { MailModelsAction } from '@model/state/mail-models/mail-models.action';
 import { NotificationService, NotificationType } from '@notification/index';
 import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
 import { ImageFileExtensions } from '@shared/constants/image-file-extensions.const';
 import { Store } from '@state/store';
-import { StoreState } from './store-state';
-import { ModelState } from '@core/state/model-state.interface';
+import { Observable } from "rxjs";
+import { map } from 'rxjs/operators';
 import { CreateMissionImagesForm, _formToCreateMissionImagesConverter } from './form-to-create-mission-images.converter';
-import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
-import { MailModelsAction } from '@model/state/mail-models/mail-models.action';
+import { StoreState } from './store-state';
 
 @Injectable({providedIn: 'any'})
 export class MissionImageListFacade {
 
-  mission: Mission;
+  mission: Immutable<Mission>;
 
   constructor(
     private notificationService: NotificationService,     
     private store: Store<StoreState>
   ) { }
 
-  getByMissionId$ = (id: string): Observable<MissionImage[]> => 
+  getByMissionId$ = (id: string): Observable<ImmutableArray<MissionImage>> => 
     this.store.select$(["missions", "employers", "missionImages"]).pipe(map(state => {
       const relationCfg = new GetWithRelationsConfig("missions", ["missionImages"], ["employers"]);
       let mission = _getWithRelations<Mission, ModelState>(state, relationCfg, id);

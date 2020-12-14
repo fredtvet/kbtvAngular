@@ -17,6 +17,7 @@ import { TimesheetStatisticFacade } from '../timesheet-statistic.facade';
 import { TimesheetStatisticProviders } from './timesheet-statistic-providers.const';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
 import { FormService } from '@form-sheet/form-sheet.service';
+import { Immutable } from '@immutable/interfaces';
 
 interface NavViewModel { groupByChips: AppChip[], criteriaChips: AppChip[],  navConfig: MainTopNavConfig }
 
@@ -64,7 +65,7 @@ export class TimesheetStatisticComponent {
     })
   }
 
-  private resetCriteriaProp(prop: string, criteria: TimesheetCriteria){
+  private resetCriteriaProp(prop: string, criteria: Immutable<TimesheetCriteria>){
     criteria[prop] = null;
     this.facade.updateCriteria(criteria);
   }
@@ -104,7 +105,7 @@ export class TimesheetStatisticComponent {
     return this.chipsFactory.createEnumSelectionChips(GroupByPeriod, groupBy, this.addGroupBy);
   }
 
-  private getCriteriaChips(criteria: TimesheetCriteria, activeCriteriaCount: number): AppChip[] {
+  private getCriteriaChips(criteria: Immutable<TimesheetCriteria>, activeCriteriaCount: number): AppChip[] {
     if(activeCriteriaCount === 0) 
       return [{text: "Åpne filter", color: "accent", onClick: this.openTimesheetFilter}]
   

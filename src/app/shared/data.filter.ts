@@ -1,5 +1,7 @@
+import { Immutable } from '@immutable/interfaces';
+
 export type DataFilterConstructor<TCriteria>  = 
-    new (criteria: TCriteria, ...args: any[]) => DataFilter<any, TCriteria>;
+    new (criteria: Immutable<TCriteria>, ...args: any[]) => DataFilter<Immutable<any>, Immutable<TCriteria>>;
 
 export abstract class DataFilter<TRecord, TCriteria>{
 
@@ -7,9 +9,9 @@ export abstract class DataFilter<TRecord, TCriteria>{
 
     protected get isCriteriaEmpty(): boolean{ return !this.criteria }
 
-    criteria: TCriteria;
+    criteria: Immutable<TCriteria>;
 
-    constructor(criteria: TCriteria, private maxChecks?: number, ignoreInital?: boolean){
+    constructor(criteria: Immutable<TCriteria>, private maxChecks?: number, ignoreInital?: boolean){
         this.criteria = criteria || {} as any;
         if(ignoreInital) 
             this.check = this.checkDefault
@@ -17,18 +19,18 @@ export abstract class DataFilter<TRecord, TCriteria>{
             this.check = this.isCriteriaEmpty ? this.checkInitial : this.checkDefault;
     }
 
-    check: (record: TRecord) => boolean; 
+    check: (record: Immutable<TRecord>) => boolean; 
 
-    protected addChecks(record: TRecord): boolean{
+    protected addChecks(record: Immutable<TRecord>): boolean{
         console.error("Method not implemented");
         return null;
     }
 
-    protected addInitialChecks(record: TRecord): boolean{
+    protected addInitialChecks(record: Immutable<TRecord>): boolean{
         return true; 
     }
 
-    private checkDefault = (record: TRecord): boolean => { 
+    private checkDefault = (record: Immutable<TRecord>): boolean => { 
         if(!record) return false;
         if(this.maxChecks && this.checksCount >= this.maxChecks) return false;
         
@@ -41,7 +43,7 @@ export abstract class DataFilter<TRecord, TCriteria>{
         return exp;
     }
 
-    private checkInitial = (record: TRecord): boolean => {
+    private checkInitial = (record: Immutable<TRecord>): boolean => {
         return this.addInitialChecks(record);
     }
 

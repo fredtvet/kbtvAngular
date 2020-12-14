@@ -5,14 +5,13 @@ import { TimesheetStatus } from '@shared/enums/timesheet-status.enum';
 import { _getWeekAndYearFromDate } from '@datetime/get-week-and-year-from-date.helper';
 import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
 import { TimesheetSummary } from '../interfaces/timesheet-summary.interface';
+import { Immutable, ImmutableArray } from '@immutable/interfaces';
 
-@Injectable({
-  providedIn: "root",
-})
+@Injectable({providedIn: "root"})
 export class TimesheetSummaryAggregator {
   constructor() {}
 
-  groupByType(type: GroupByPeriod, t: Timesheet[]): TimesheetSummary[] {
+  groupByType(type: GroupByPeriod, t: ImmutableArray<Timesheet>): Immutable<TimesheetSummary>[] {
     switch (type) {
       case GroupByPeriod.Day:
         return this.groupByDay(t);
@@ -25,7 +24,7 @@ export class TimesheetSummaryAggregator {
     }
   }
 
-  groupByDay(t: Timesheet[]): TimesheetSummary[] {
+  groupByDay(t: ImmutableArray<Timesheet>): Immutable<TimesheetSummary>[] {
     if(!t) return undefined;
     const groups = {};
     for(let i = t.length; i--;){
@@ -48,13 +47,13 @@ export class TimesheetSummaryAggregator {
 
       summary.timesheets.push(timesheet);
     }
-    const res = Object.values(groups) as TimesheetSummary[]; 
-    return res
+
+    return <TimesheetSummary[]> Object.values(groups); 
   }
 
-  groupByWeek(t: Timesheet[]): TimesheetSummary[] {
+  groupByWeek(t: ImmutableArray<Timesheet>): Immutable<TimesheetSummary>[] {
     if(!t) return undefined;
-    const groups = {} as {[key: string]: TimesheetSummary};
+    const groups = {};
     for(let i = t.length; i--;){
       const timesheet = t[i];
       const wy = _getWeekAndYearFromDate(timesheet.startTime);
@@ -77,10 +76,13 @@ export class TimesheetSummaryAggregator {
       summary.timesheets.push(timesheet);
     }
 
-    return Object.values(groups);
+    return <TimesheetSummary[]> Object.values(groups);
   }
 
-  groupByWeekRange(t: Timesheet[],startWeek: number, endWeek: number, year: number, excludeStatus?: TimesheetStatus): TimesheetSummary[] {
+  groupByWeekRange(
+    t: ImmutableArray<Timesheet>,
+    startWeek: number, endWeek: number, year: number, 
+    excludeStatus?: TimesheetStatus): Immutable<TimesheetSummary>[] {
     if(!t) return undefined;
     const groups = {};
     for(let i = t.length; i--;){
@@ -103,10 +105,10 @@ export class TimesheetSummaryAggregator {
       }
     };
 
-    return Object.values(groups);
+    return <TimesheetSummary[]> Object.values(groups);
   }
 
-  groupByMonth(t: Timesheet[]): TimesheetSummary[] {
+  groupByMonth(t: ImmutableArray<Timesheet>): Immutable<TimesheetSummary>[] {
     if(!t) return undefined;
     const groups = {};
     for(let i = t.length; i--;){
@@ -133,10 +135,10 @@ export class TimesheetSummaryAggregator {
       summary.timesheets.push(timesheet);
     };
 
-    return Object.values(groups);
+    return <TimesheetSummary[]> Object.values(groups);
   }
 
-  groupByYear(t: Timesheet[]): TimesheetSummary[] {
+  groupByYear(t: ImmutableArray<Timesheet>): Immutable<TimesheetSummary>[] {
     if(!t) return undefined;
     const groups = {};
     for(let i = t.length; i--;){
@@ -158,10 +160,10 @@ export class TimesheetSummaryAggregator {
 
       summary.timesheets.push(timesheet);
     };
-    return Object.values(groups);
+    return <TimesheetSummary[]> Object.values(groups);
   }
 
-  private addHoursToSummary(summary: TimesheetSummary, timesheet: Timesheet): void{
+  private addHoursToSummary(summary: TimesheetSummary, timesheet: Immutable<Timesheet>): void{
     if (timesheet.status === TimesheetStatus.Confirmed)
       summary.confirmedHours = Math.round((summary.confirmedHours + timesheet.totalHours) * 10) / 10;
     else   

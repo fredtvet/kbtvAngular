@@ -7,6 +7,7 @@ import { _objectToDisabledObjectMap } from '@dynamic-forms/helpers/disabled-cont
 import { DynamicForm } from '@dynamic-forms/interfaces';
 import { FormService } from '@form-sheet/form-sheet.service';
 import { OptionsFormState } from '@form-sheet/interfaces';
+import { Immutable, ImmutableArray } from '@immutable/interfaces';
 import { ModelFormService } from '@model-form/model-form.service';
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from '@shared-app/interfaces';
@@ -22,7 +23,7 @@ import { UserTimesheetListFacade } from './user-timesheet-list.facade';
 import { UserTimesheetListProviders } from './user-timesheet-list.state';
 
 interface ViewModel { 
-  timesheets: Timesheet[];
+  timesheets: ImmutableArray<Timesheet>;
   fabs: AppButton[], 
   criteriaChips: AppChip[], 
   navConfig: MainTopNavConfig  
@@ -51,7 +52,7 @@ export class UserTimesheetListComponent {
     }})
   )
 
-  timesheets$: Observable<Timesheet[]> = this.facade.timesheets$;
+  timesheets$ = this.facade.timesheets$;
 
   constructor(
     private facade: UserTimesheetListFacade,
@@ -90,7 +91,7 @@ export class UserTimesheetListComponent {
     this.router.navigate(['../'], { relativeTo: this.route.parent })
   }
 
-  private getTopNavConfig = (criteria: TimesheetCriteria): MainTopNavConfig => {
+  private getTopNavConfig = (criteria: Immutable<TimesheetCriteria>): MainTopNavConfig => {
     let activeCriteriaCount = _getSetPropCount(criteria, {dateRangePreset:null})
     return {
       title:  "Timeliste", 
@@ -103,7 +104,7 @@ export class UserTimesheetListComponent {
     }
   }
   
-  private resetCriteriaProp(prop: string, criteria: TimesheetCriteria){
+  private resetCriteriaProp(prop: string, criteria: Immutable<TimesheetCriteria>){
     criteria[prop] = null;
     this.facade.updateCriteria(criteria);
   }

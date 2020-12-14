@@ -15,7 +15,7 @@ import { StateMissions } from '@core/state/global-state.interfaces';
 export class HomeComponent {
   RolePresets = RolePresets;
 
-  missionHistory$: Observable<Mission[]> = 
+  missionHistory$ = 
     this.store.selectProperty$<Mission[]>("missions").pipe(
       map(x => _sortByDate(x, "lastVisited")?.slice(0,4))
     )

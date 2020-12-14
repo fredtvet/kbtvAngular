@@ -34,7 +34,8 @@
       "@model-form/*": ["src/app/modules/model-form/*"],
       "@confirm-dialog/*": ["src/app/modules/confirm-dialog/*"],
       "@array/*": ["src/app/modules/utility/array-helpers/*"],
-      "@datetime/*": ["src/app/modules/utility/date-time-helpers/*"],
+      "@datetime/*": ["src/app/modules/utility/date-time-helpers/*"],   
+      "@immutable/*": ["src/app/modules/immutable/*"],
     }
   },
   "angularCompilerOptions": {

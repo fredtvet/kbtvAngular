@@ -1,6 +1,7 @@
 import { Timesheet } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { _mergeDateAndTime } from '@datetime/merge-date-and-time.helper';
+import { Immutable } from '@immutable/interfaces';
 import { FormToSaveModelConverter, ModelFormToSaveModelInput } from '@model-form/interfaces';
 import { _flattenExistingForeigns } from '@shared-app/helpers/flatten-existing-foreigns.helper';
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
@@ -11,7 +12,7 @@ export const _timesheetFormToSaveUserTimesheetConverter: FormToSaveModelConverte
     (input: ModelFormToSaveModelInput<TimesheetForm, ModelState>): SaveUserTimesheetAction => {
         const value = input.formValue;
 
-        var entity: Timesheet = {
+        var entity: Immutable<Timesheet> = {
             id: value.id,
             missionId: value.mission.id,
             comment: value.comment,
@@ -20,7 +21,7 @@ export const _timesheetFormToSaveUserTimesheetConverter: FormToSaveModelConverte
         }; 
 
         entity = _flattenExistingForeigns<Timesheet>(input.stateProp, entity, input.options);
-        entity = _modelIdGenerator(input.stateProp, entity); 
+        entity = _modelIdGenerator<Timesheet>(input.stateProp, entity); 
 
         return new SaveUserTimesheetAction(entity, input.saveAction)
     }

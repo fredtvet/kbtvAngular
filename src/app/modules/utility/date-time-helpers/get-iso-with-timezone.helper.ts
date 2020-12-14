@@ -1,6 +1,8 @@
-export function _getISOWithTimezone(date: Date | string | number): string{
+import { Immutable } from '@immutable/interfaces';
+
+export function _getISOWithTimezone(date: Immutable<Date> | string | number): string{
     if(!date) return;
-    const _date = new Date(date);
+    const _date = new Date(date as Date);
     const timezone = _date.getTimezoneOffset();
 
     if(timezone == 0) return _date.toISOString();
@@ -17,8 +19,7 @@ export function _getISOWithTimezone(date: Date | string | number): string{
     return result;
   }
 
-
-  export function _getISO(date: Date | string | number): string{
+export function _getISO(date: Immutable<Date> | string | number): string{
     if(!date) return;
-    return new Date(date).toISOString()
-  }
+    return new Date(date as Date).toISOString()
+}

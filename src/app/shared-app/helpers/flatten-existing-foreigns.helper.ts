@@ -1,13 +1,14 @@
 import { _find } from '@array/find.helper';
 import { Model } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
+import { Immutable } from '@immutable/interfaces';
 import { ModelStateConfig } from '@model/model-state.config';
 import { Prop } from '@state/interfaces';
 
 export function _flattenExistingForeigns<TEntity>(
     prop: Prop<ModelState>, 
-    entity: Readonly<TEntity>, 
-    state: Partial<ModelState>): TEntity{
+    entity: Immutable<TEntity>, 
+    state: Immutable<Partial<ModelState>>): Immutable<TEntity>{
     
     const {foreigns} = ModelStateConfig.get(prop);
     

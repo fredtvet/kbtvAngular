@@ -1,9 +1,10 @@
+import { ImmutableArray } from '@immutable/interfaces';
 import { Observable } from 'rxjs';
 import { filter, map } from "rxjs/operators";
 import { _deepClone } from '../helpers/deep-clone.helper'
 import { StateChanges } from '../interfaces';
 
-export const selectProp = <TResult>(prop: string, deepClone: boolean = true) => 
+export const selectProp = <TResult>(prop: string, deepClone?: boolean) => 
     (source: Observable<StateChanges<any>>): Observable<TResult> => 
         source.pipe(
             filter<StateChanges<any>>(({stateChanges}, index: number) => 
@@ -11,7 +12,7 @@ export const selectProp = <TResult>(prop: string, deepClone: boolean = true) =>
             map(({state}) => deepClone ? _deepClone(state[prop]) : state[prop])
         )
 
-export const selectSlice = <TSlice>(props: string[], deepClone: boolean = true) => 
+export const selectSlice = <TSlice>(props: ImmutableArray<string>, deepClone?: boolean) => 
     (source: Observable<StateChanges<any>>): Observable<TSlice> => 
         source.pipe(
             filter<StateChanges<any>>(({stateChanges}, index: number) => {

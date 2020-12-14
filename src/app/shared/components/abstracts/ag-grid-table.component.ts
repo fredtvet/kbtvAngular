@@ -1,4 +1,5 @@
 import { Input, ViewChild, Directive } from '@angular/core';
+import { Immutable, ImmutableArray } from '@immutable/interfaces';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { AgGridConfig } from './ag-grid-config.interface';
@@ -17,9 +18,9 @@ export abstract class AgGridTableComponent<TRecord, TConfig extends AgGridConfig
 
   columnDefs: ColDef[] = [];
 
-  rowData: any[] = [];
+  rowData: ImmutableArray<TRecord> = [];
 
-  private currentObject: TRecord;
+  private currentObject: Immutable<TRecord>;
 
   constructor() { }
 

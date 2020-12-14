@@ -1,4 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
+import { Immutable } from '@immutable/interfaces';
 import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { StateAction } from '@state/state.action';
@@ -11,7 +12,7 @@ import { HttpQueuePushAction } from './http-queue-push/http-queue-push.action';
 export class HttpAction extends StateAction {
     constructor(
         public request: HttpRequest, 
-        public stateSnapshot: Readonly<any>
+        public stateSnapshot: Immutable<any>
     ){ super() }
     
     propagate: boolean = true;

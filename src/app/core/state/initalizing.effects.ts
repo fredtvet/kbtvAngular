@@ -51,14 +51,14 @@ export class InitalizeHttpQueueEffect implements Effect<SyncStateSuccessAction> 
     //i.e. if app is closed before receiving request response
     //Waits for sync call to provide last command status for user, to check if it was successful or not. 
     private checkForUnhandledRequests(): void {
-        const requestQueue = this.store.selectProperty<QueuedCommand[]>("requestQueue", false);
+        const requestQueue = this.store.selectProperty<QueuedCommand[]>("requestQueue");
 
         if(!requestQueue) return;
         const firstRequest = requestQueue[0];
 
         if(!firstRequest?.dispatched) return; //Only check dispatched requests
 
-        const lastCommandStatus = this.store.selectProperty<User>("currentUser", false)?.lastCommandStatus;
+        const lastCommandStatus = this.store.selectProperty<User>("currentUser")?.lastCommandStatus;
 
         if (!lastCommandStatus) 
             this.store.dispatch(new HttpErrorAction(false, "Noe gikk feil ved forrige økt!"))

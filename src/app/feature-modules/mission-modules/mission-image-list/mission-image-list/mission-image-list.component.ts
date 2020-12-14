@@ -19,8 +19,9 @@ import { EmailForm } from '@shared/constants/forms/email-form.const';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MissionImageListFacade } from '../mission-image-list.facade';
 import { FormService } from '@form-sheet/form-sheet.service';
+import { ImmutableArray } from '@immutable/interfaces';
 
-interface ViewModel { images: MissionImage[], isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig }
+interface ViewModel { images: ImmutableArray<MissionImage>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig }
 
 @Component({
   selector: "app-mission-image-list",
@@ -45,7 +46,7 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
 
   private navConfig: MainTopNavConfig;
 
-  private images: MissionImage[];
+  private images: ImmutableArray<MissionImage>;
 
   constructor( 
     private downloaderService: DownloaderService,

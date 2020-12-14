@@ -1,21 +1,22 @@
 import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
 import { User } from '@core/models';
 import { UserForeign } from '@core/models/relationships/user-foreign.interface';
+import { Immutable, ImmutableArray } from '@immutable/interfaces';
 
 export function _setFullNameOnUserForeigns<TEntity extends UserForeign>(
-    entities: TEntity[],
-    users: User[]
-  ): TEntity[] {
-
-    if (!entities || !users) return entities;
+    entities: ImmutableArray<TEntity>,
+    users: ImmutableArray<User>
+  ): Immutable<TEntity>[] {
+    const clone = entities?.slice();
+    if (!clone || !users) return clone;
 
     let usersObj = _convertArrayToObject(users, "userName");
 
-    for(let i = 0; i < entities.length; i++){
-      let entity = entities[i];
+    for(let i = 0; i < clone.length; i++){
+      const entity = clone[i];
       const user = usersObj[entity.userName];
-      if (user) entity.fullName = user.firstName + " " + user.lastName;
+      if(user) clone[i] = {...entity, fullName: user.firstName + " " + user.lastName};
     }
 
-    return entities;
+    return clone;
   }

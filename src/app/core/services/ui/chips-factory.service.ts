@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { Prop } from '@state/interfaces';
 import { translations } from '@shared/translations';
+import { Immutable } from '@immutable/interfaces';
 
 export interface CriteriaChipOptions {
-  valueFormatter?: ((val: any) => string | string),
+  valueFormatter?: ((val: Immutable<any>) => string | string),
   ignored?: boolean,
 }
 
@@ -14,9 +15,9 @@ export class ChipsFactoryService {
   constructor() {}
 
   createCriteriaChips<TCriteria>(
-    criteria: TCriteria, 
-    removeFn: (prop: Prop<TCriteria>) => void,
-    options?: {[key in keyof TCriteria]: CriteriaChipOptions},
+    criteria: Immutable<TCriteria>, 
+    removeFn: (prop: Prop<Immutable<TCriteria>>) => void,
+    options?: {[key in keyof Immutable<TCriteria>]: CriteriaChipOptions},
 ): AppChip[] {
     if(!criteria) return;
 
@@ -26,7 +27,7 @@ export class ChipsFactoryService {
       const value = criteria[prop];
       if(!value) continue;
 
-      let text: string = value as any;
+      let text: string = value as string;
       const chipOption = options[prop];
       
       if(chipOption){
@@ -44,7 +45,7 @@ export class ChipsFactoryService {
   createEnumSelectionChips<TEnum extends { [s: number]: string }>(
       _enum: TEnum, 
       currentSelection: any,
-      selectFn: (val: any) => void
+      selectFn: (val: Immutable<any>) => void
     ): AppChip[] {
     const chips: AppChip[] = [];
     const options = Object.keys(_enum).filter(key => isNaN(Number(_enum[key])));

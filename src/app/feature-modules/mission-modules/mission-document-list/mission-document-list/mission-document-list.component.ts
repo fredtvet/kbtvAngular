@@ -18,8 +18,9 @@ import { map } from 'rxjs/operators';
 import { MissionDocumentListFacade } from '../mission-document-list.facade';
 import { FormService } from '@form-sheet/form-sheet.service';
 import { ModelFormService } from '@model-form/model-form.service';
+import { ImmutableArray } from '@immutable/interfaces';
 
-interface ViewModel { documents: MissionDocument[], isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig}
+interface ViewModel { documents: ImmutableArray<MissionDocument>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig}
 
 @Component({
   selector: 'app-mission-document-list',

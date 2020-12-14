@@ -8,10 +8,8 @@ type Action = SaveModelAction<Model, ModelState>
 export function saveModelMetaReducer(reducer: Reducer<ModelState, Action>): Reducer<ModelState, Action> {
     if(!(reducer.action instanceof SaveModelAction)) return reducer;
 
-    const newReducerFn = (state: ModelState, action: Action) => {
-        action.entity.updatedAt = new Date().getTime(); 
-        return reducer.reducerFn(state, action)
-    }
- 
-    return {...reducer, reducerFn: newReducerFn}
+    return {...reducer, reducerFn: (state: ModelState, action: Action) => {
+        const newAction = {...action, entity: {...action.entity, updatedAt: new Date().getTime()}}
+        return reducer.reducerFn(state, newAction)
+    }}
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Timesheet, User } from '@core/models';
 import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
+import { Immutable } from '@immutable/interfaces';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
@@ -26,21 +27,21 @@ type Record = Timesheet | TimesheetSummary;
 export class TimesheetStatisticFacade extends WithUnsubscribe() {
      
     criteria$ = this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria");
-    get criteria(): TimesheetCriteria { return this.componentStore.selectProperty("timesheetCriteria") }
+    get criteria() { return this.componentStore.selectProperty<TimesheetCriteria>("timesheetCriteria") }
 
     criteriaFormState$: Observable<TimesheetCriteriaFormState> = 
-        this.store.select$(["missions", "users"]).pipe(
-            map(state => { return { options: <StateMissions & StateUsers> state  } })
+        this.store.select$<StateMissions & StateUsers>(["missions", "users"]).pipe(
+            map(state => { return { options: state  } })
         )
 
     groupBy$ = this.componentStore.selectProperty$<GroupByPeriod>("timesheetGroupBy");
 
-    private filteredTimesheets$: Observable<Timesheet[]> = combineLatest([
+    private filteredTimesheets$ = combineLatest([
         this.store.selectProperty$<Timesheet[]>("timesheets"),
         this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria")
-    ]).pipe( filterRecords(TimesheetFilter), map(x => x.records) );
+    ]).pipe(filterRecords(TimesheetFilter), map(x => x.records));
 
-    private groupedTimesheets$: Observable<Record[]> = combineLatest([
+    private groupedTimesheets$ = combineLatest([
         this.filteredTimesheets$,
         this.groupBy$
     ]).pipe(map(([timesheets, groupBy]) => {
@@ -64,7 +65,7 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
             this.store.dispatch(new FetchTimesheetsAction(criteria)))
     }
 
-    updateCriteria = (timesheetCriteria: TimesheetCriteria): void =>       
+    updateCriteria = (timesheetCriteria: Immutable<TimesheetCriteria>): void =>       
         this.componentStore.dispatch(new SetTimesheetCriteriaAction(timesheetCriteria))
 
     updateGroupBy = (groupBy: GroupByPeriod): void =>       

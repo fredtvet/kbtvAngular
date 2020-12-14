@@ -23,7 +23,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
     
   loading$ = this.loadingService.queryLoading$;
 
-  timesheets$: Observable<Timesheet[]> = this.facade.selectedWeekTimesheets$;
+  timesheets$ = this.facade.selectedWeekTimesheets$;
 
   navConfig$: Observable<MainTopNavConfig> = combineLatest([
     this.facade.selectedWeekNr$,

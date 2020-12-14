@@ -3,6 +3,7 @@ import { _sortByDate } from '@array/sort-by-date.helper';
 import { ApiUrl } from '@core/api-url.enum';
 import { Mission } from "@core/models";
 import { SaveModelFileAction } from '@core/state/save-model-file/save-model-file.action';
+import { Immutable } from '@immutable/interfaces';
 import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
 import { ModelCommand } from '@model/model-command.enum';
@@ -25,7 +26,7 @@ import { UpdateLastVisitedAction } from './update-last-visited.reducer';
 @Injectable()
 export class MissionListFacade {
 
-  filteredMissions$: Observable<Mission[]> = combineLatest([
+  filteredMissions$ = combineLatest([
     this.store.selectProperty$<Mission[]>("missions"),
     this.componentStore.selectProperty$<MissionCriteria>("missionCriteria")
   ]).pipe(
@@ -33,15 +34,15 @@ export class MissionListFacade {
     map(x => _sortByDate(x.records, "updatedAt") ),
   );
 
-  criteria$: Observable<MissionCriteria> = 
+  criteria$ = 
     this.componentStore.selectProperty$<MissionCriteria>("missionCriteria");
 
-  get criteria(): MissionCriteria {
+  get criteria() {
     return this.componentStore.selectProperty<MissionCriteria>("missionCriteria");
   }
 
   criteriaFormState$: Observable<MissionCriteriaFormState> = 
-    this.store.select$(["missionTypes", "employers", "missions"], false).pipe(
+    this.store.select$(["missionTypes", "employers", "missions"]).pipe(
       map(options => { return {options} as any})
     )
 
@@ -51,14 +52,14 @@ export class MissionListFacade {
     private componentStore: ComponentStore<ComponentStoreState>
   ) {}
 
-  getMissionDetails$(id: string): Observable<Mission> {
+  getMissionDetails$(id: string): Observable<Immutable<Mission>> {
     this.updateLastVisited(id);
 
     let relationCfg = new GetWithRelationsConfig("missions", 
       ["missionNotes", "missionDocuments", "missionImages"]);
 
     return this.store.select$(relationCfg.includedProps as any).pipe(
-      map(state => _getWithRelations(state, relationCfg, id))
+      map(state => _getWithRelations<Mission, StoreState>(state, relationCfg, id))
     )
   }
 

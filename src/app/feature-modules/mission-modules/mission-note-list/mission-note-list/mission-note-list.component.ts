@@ -19,7 +19,7 @@ import { ModelFormService } from '@model-form/model-form.service';
 })
 export class MissionNoteListComponent {
   
-  notes$: Observable<MissionNote[]> = this.facade.getByMissionId$(this.missionId).pipe(
+  notes$ = this.facade.getByMissionId$(this.missionId).pipe(
     map(x => _sortByDate<MissionNote>(x, "updatedAt"))
   );
 

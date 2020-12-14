@@ -1,11 +1,17 @@
+import { Immutable, ImmutableArray } from '@immutable/interfaces';
 import { _convertArrayToObject } from './convert-array-to-object.helper';
 
-export function _getRangeByIdentifier<T>(originals: T[], ids: any[], identifier: string): T[]{       
-    if(!ids || ids.length == 0) return originals.slice(); //If no deleted ids, just return originals
-    if(!originals || originals.length == 0) return []; //If initial array empty, just return empty array
+export function _getRangeByIdentifier<T>(
+  originals: ImmutableArray<T>, 
+  ids: ImmutableArray<any>, 
+  identifier: string): Immutable<T>[]{       
+    if(!originals?.length) return []; //If initial array empty, just return empty array  
+    if(!ids?.length) return originals.slice(); //If no deleted ids, just return originals
+    
 
     let originalsObj = _convertArrayToObject(originals, identifier);
-    let result: T[] = [];
+    let result: Immutable<T>[] = [];
+
     for(let i = 0; i < ids.length; i++){  
       let match = originalsObj[ids[i]];
       if(match) result.push(match)

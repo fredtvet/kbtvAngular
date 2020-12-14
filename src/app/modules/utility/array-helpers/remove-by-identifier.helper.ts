@@ -1,5 +1,10 @@
-export function _removeByIdentifier<T>(originals: T[], deletedId: any, identifier: string): T[]{       
-    if(!originals || originals.length == 0) return []; //If initial array empty, just return empty array
+import { Immutable, ImmutableArray } from '@immutable/interfaces';
+
+export function _removeByIdentifier<T>(
+  originals: ImmutableArray<T>, 
+  deletedId: ImmutableArray<any>, 
+  identifier: string): Immutable<T>[]{       
+    if(!originals?.length) return []; //If initial array empty, just return empty array
 
     let arr2 = originals.slice();
     for(var i = 0; i<arr2.length;i++){

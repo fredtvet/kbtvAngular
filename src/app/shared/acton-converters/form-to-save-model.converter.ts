@@ -6,9 +6,9 @@ import { _flattenExistingForeigns } from '@shared-app/helpers/flatten-existing-f
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
 
 export const _formToSaveModelConverter: FormToSaveModelConverter<any, ModelState, SaveModelAction<Model, ModelState>> =
-    <TForm>(input: ModelFormToSaveModelInput<TForm, ModelState>): SaveModelAction<Model, ModelState> => {
+    <TForm extends Model>(input: ModelFormToSaveModelInput<TForm, ModelState>): SaveModelAction<Model, ModelState> => {
 
-    var entity = _flattenExistingForeigns<Model>(input.stateProp, input.formValue, input.options);
+    var entity = _flattenExistingForeigns(input.stateProp, input.formValue, input.options);
     entity = _modelIdGenerator(input.stateProp, entity); 
     
     return new SaveModelAction<Model, ModelState>(input.stateProp, entity, input.saveAction)

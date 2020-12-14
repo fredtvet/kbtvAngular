@@ -1,24 +1,25 @@
 import { Type } from '@angular/core';
 import { DynamicForm, FormComponent } from '@dynamic-forms/interfaces';
+import { Immutable } from '@immutable/interfaces';
 import { Observable } from 'rxjs';
 
 export interface FormSheetWrapperConfig<TFormConfig, TFormState, TResult>{
     formConfig?: TFormConfig;
-    formState$?: Observable<TFormState>;
+    formState$?: Observable<Immutable<TFormState>>;
     navConfig?: FormSheetNavConfig;
     submitCallback?: (val: TResult) => void;
     formComponent?: Type<FormComponent<TFormConfig, TFormState, TResult>>;
 }
 
 export interface OptionsFormState<TOptions extends Object>{ 
-    options?: Readonly<TOptions>
+    options?: Immutable<TOptions>
 }
 
 export interface FormServiceConfig<TForm, TFormState>{
     formConfig: DynamicForm<TForm, TFormState>, 
     navConfig: FormSheetNavConfig,
-    formState?: TFormState | Observable<TFormState>,
-    submitCallback?: (val: TForm) => void
+    formState?: Immutable<TFormState> | Observable<Immutable<TFormState>>,
+    submitCallback?: (val: Immutable<TForm>) => void
 }
 
 export interface FormSheetNavConfig {

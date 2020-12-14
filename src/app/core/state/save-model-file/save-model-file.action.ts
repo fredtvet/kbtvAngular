@@ -1,4 +1,5 @@
 import { ModelFile } from '@core/models/base-entity-file.interface';
+import { Immutable } from '@immutable/interfaces';
 import { SaveAction } from '@model/interfaces';
 import { ModelFileWrapper } from '@model/model-file.wrapper';
 import { SaveModelAction } from '@model/state/save-model/save-model.action';
@@ -8,7 +9,7 @@ import { ModelState } from '../model-state.interface';
 export class SaveModelFileAction<TModel extends ModelFile> extends SaveModelAction<TModel, ModelState>{
     constructor(
         stateProp: Prop<ModelState>,
-        entity: TModel,
+        entity: Immutable<TModel>,
         public fileWrapper: ModelFileWrapper,
         saveAction: SaveAction,  
         apiUrlOverride?: string,   

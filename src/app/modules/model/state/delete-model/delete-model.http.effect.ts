@@ -10,6 +10,7 @@ import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens
 import { DeleteModelAction } from './delete-model.action';
 import { HttpAction } from '@http/state/http.effect';
 import { ModelCommand } from '@model/model-command.enum';
+import { Immutable } from '@immutable/interfaces';
 
 @Injectable()
 export class DeleteModelHttpEffect implements Effect<DeleteModelAction<any>>{
@@ -38,7 +39,7 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<any>>{
         }
     }
 
-    protected createCancelMessage(action: DeleteModelAction<any>, modelConfig: ModelConfig<any, any>): string{
+    protected createCancelMessage(action: DeleteModelAction<any>, modelConfig: Immutable<ModelConfig<any, any>>): string{
         const payload = action.payload;
         const multi = payload.ids?.length > 1;
 
@@ -52,7 +53,10 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<any>>{
         return action.payload.id ? null : {ids: action.payload.ids};
     }
 
-    protected createApiUrl(action: DeleteModelAction<any>, modelConfig: ModelConfig<any, any>, actionType: ModelCommand): string {
+    protected createApiUrl(
+        action: DeleteModelAction<any>, 
+        modelConfig: Immutable<ModelConfig<any, any>>, 
+        actionType: ModelCommand): string {
         const suffix = this.apiMap[actionType].suffix;
         if(typeof suffix === "string") return modelConfig.apiUrl + suffix
         return modelConfig.apiUrl + suffix(action.payload.id)

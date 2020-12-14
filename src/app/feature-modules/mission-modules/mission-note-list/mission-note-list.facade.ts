@@ -13,7 +13,7 @@ export class MissionNoteListFacade  {
 
   constructor(private store: Store<StateMissionNotes>) { }
 
-  getByMissionId$ = (id: string): Observable<MissionNote[]> => 
+  getByMissionId$ = (id: string) => 
     this.store.selectProperty$<MissionNote[]>("missionNotes").pipe(map(arr => 
       _filter<MissionNote>(arr, (x: MissionNote) => x.missionId === id)
   )) 

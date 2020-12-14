@@ -1,13 +1,15 @@
-import { Reducer } from '@state/interfaces';
-import { SetPersistedCriticalStateAction, SetPersistedStateAction } from './actions.const';
+import { _createReducer } from '@state/helpers/create-reducer.helper';
+import { Immutable } from '@immutable/interfaces';
+import { SetPersistedCriticalStateAction } from './actions.const';
 
-export const SetPersistedCriticalStateReducer: Reducer<any, SetPersistedCriticalStateAction> = {
-    action: SetPersistedCriticalStateAction,
-    reducerFn: (state: any, action: SetPersistedCriticalStateAction) => action.state,
-    noDeepCloneAction: true,
-}
+export const SetPersistedCriticalStateReducer = _createReducer(
+    SetPersistedCriticalStateAction,
+    (state: any, action: Immutable<SetPersistedCriticalStateAction>) => action.state,
+    false
+)
 
-export const SetPersistedStateReducer: Reducer<any, SetPersistedStateAction> = {
-    ...SetPersistedCriticalStateReducer,
-    action: SetPersistedStateAction,
-}
+export const SetPersistedStateReducer = _createReducer(
+    SetPersistedCriticalStateAction,
+    SetPersistedCriticalStateReducer.reducerFn,
+    false
+)

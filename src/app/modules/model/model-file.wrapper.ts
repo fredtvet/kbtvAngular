@@ -1,9 +1,11 @@
+import { Immutable } from '@immutable/interfaces';
+
 export class ModelFileWrapper{
 
     modifiedFile: File;
     id: any;
 
-    constructor(inputFile: File, id: any){
+    constructor(inputFile: Immutable<File>, id: any){
         if(!inputFile || !id) console.error( "File and Id are required");
         this.id = id;
         var type = inputFile.type;

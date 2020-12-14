@@ -2,12 +2,13 @@ import { ModelStateConfig } from '../model-state.config';
 import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
 import { _filter } from '@array/filter.helper';
 import { Prop } from '@state/interfaces';
+import { Immutable } from '@immutable/interfaces';
 
 export function _deleteModelWithChildren<TState>(
-  state: TState, 
+  state: Immutable<TState>, 
   stateProp: Prop<TState>, 
-  cfg: {id?: string, ids?: string[]}
-): Partial<TState>{
+  cfg: Immutable<{id?: string, ids?: string[]}>
+): Immutable<Partial<TState>> {
 
   if(!cfg.id && !cfg.ids) console.error("deleteEntityChildren config requires either id or ids property set.")       
   
@@ -23,13 +24,12 @@ export function _deleteModelWithChildren<TState>(
   const newState: any = {};
 
   newState[stateProp] = 
-    _filter<any>(state[stateProp] as any, filterFactory(modelCfg.identifier));
+    _filter<any>(state[stateProp as string], filterFactory(modelCfg.identifier));
 
   if(modelCfg.children?.length)
     for(var childProp of modelCfg.children)
       newState[childProp] = 
-        _filter(state[childProp] as any, filterFactory(modelCfg.foreignKey));
+        _filter(state[childProp as string], filterFactory(modelCfg.foreignKey));
 
-  return newState;
-
+  return <Immutable<Partial<TState>>> newState;
 }

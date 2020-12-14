@@ -5,16 +5,18 @@ import { Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { NotificationService, NotificationType } from '@notification/index';
 import { HttpErrorAction } from './http-error.action';
+import { StateRequestQueue } from '@http/interfaces';
 
 @Injectable()
 export class HttpErrorEffect implements Effect<HttpErrorAction> {
 
     constructor(private notificationService: NotificationService) {}
 
-    handle$(actions$: Observable<DispatchedAction<HttpErrorAction>>): Observable<void> {
+    handle$(actions$: Observable<DispatchedAction<HttpErrorAction, StateRequestQueue>>): Observable<void> {
         return actions$.pipe(
             listenTo([HttpErrorAction]),
             map(x => {
+                console.log('errefect', x);
                 const errorMessages =
                     x.stateSnapshot.requestQueue?.map(x => x.request.cancelMessage);
     

@@ -12,6 +12,7 @@ import { DateRange } from '@datetime/interfaces';
 import { _getRangeByDateRangePreset } from '@shared-app/helpers/get-range-by-date-range-preset.helper';
 import { StateUsers, StateMissions } from '@core/state/global-state.interfaces';
 import { OptionsFormState } from '@form-sheet/interfaces';
+import { Immutable } from '@immutable/interfaces';
 
 export interface TimesheetCriteriaFormState extends OptionsFormState<StateUsers & StateMissions>{}
 
@@ -93,10 +94,10 @@ export const TimesheetCriteriaForm: DynamicForm<TimesheetCriteria, FormState> = 
         DateRangeControlGroup,
         StatusControl
     ],
-    onSubmitFormatter: (criteria: TimesheetCriteria): TimesheetCriteria => {
+    onSubmitFormatter: (criteria: TimesheetCriteria): Immutable<TimesheetCriteria> => {
         const preset = criteria.dateRangePreset;  
         if(preset !== DateRangePresets.Custom && preset !== DateRangePresets.CustomMonth )
-        criteria.dateRange = _getRangeByDateRangePreset(preset);
+        criteria.dateRange = <DateRange> _getRangeByDateRangePreset(preset);
         
         const {start, end} = criteria.dateRange || {};
         if(start || end) criteria.dateRange = {start: new Date(start), end: new Date(end || new Date())};

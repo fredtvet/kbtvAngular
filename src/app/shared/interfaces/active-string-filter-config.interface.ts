@@ -1,9 +1,10 @@
 import { Observable } from 'rxjs';
 import { Prop } from '@state/interfaces';
+import { Immutable, ImmutableArray } from '@immutable/interfaces';
 
 export interface ActiveStringFilterConfig<TRecord>{
-    data: TRecord[];
-    stringProps: Prop<TRecord>[];  
+    data: ImmutableArray<TRecord>;
+    stringProps: Prop<Immutable<TRecord>>[];  
     stringChanges$: Observable<string>;
     initialString?: string;
     maxChecks?: number;

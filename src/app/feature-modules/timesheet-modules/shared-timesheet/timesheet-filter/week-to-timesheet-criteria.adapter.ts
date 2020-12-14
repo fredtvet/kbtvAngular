@@ -6,25 +6,26 @@ import { _getYearRange } from '@datetime/get-year-range.helper';
 import { DateRange } from '@datetime/interfaces';
 import { WeekCriteria } from '../interfaces/week-criteria.interface';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
+import { Immutable } from '@immutable/interfaces';
 
 export class WeekToTimesheetCriteriaAdapter implements TimesheetCriteria {
     
-    user?: User;
+    user?: Immutable<User>;
     dateRange?: DateRange; 
     dateRangePreset?: DateRangePresets = DateRangePresets.Custom;
 
-    constructor(input: WeekCriteria){
+    constructor(input: Immutable<WeekCriteria>){
         if(!input) return;
 
         this.user = input.user;
 
         if(input.weekNr && input.year) 
-            this.dateRange = _getWeekRange(_getDateOfWeek(input.weekNr, input.year));
+            this.dateRange = <DateRange> _getWeekRange(_getDateOfWeek(input.weekNr, input.year));
 
         else if(input.year){
             let date = new Date();
             date.setFullYear(input.year);
-            this.dateRange = _getYearRange(date);
+            this.dateRange = <DateRange> _getYearRange(date);
         }
     }
 

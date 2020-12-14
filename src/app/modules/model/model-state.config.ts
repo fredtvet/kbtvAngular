@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { Immutable } from '@immutable/interfaces';
 import { Prop } from '@state/interfaces';
 import { MODEL_CONFIGS } from './injection-tokens.const';
 import { ModelConfig, ModelConfigMap } from './interfaces';
@@ -14,11 +15,11 @@ export class ModelStateConfig {
         ModelStateConfig.modelConfigs = modelConfigs;
     }
 
-    static get<TModel, TState>(prop: Prop<TState>): ModelConfig<TModel, TState>{
+    static get<TModel, TState>(prop: Prop<TState>): Immutable<ModelConfig<TModel, TState>>{
         return this.getBy(prop, "stateProp");
     }
 
-    static getBy<TModel, TState>(prop: Prop<TState>, key: Prop<ModelConfig<TModel, TState>>): ModelConfig<TModel, TState>{
+    static getBy<TModel, TState>(prop: Prop<TState>, key: Prop<ModelConfig<TModel, TState>>): Immutable<ModelConfig<TModel, TState>>{
         if(!this.configMaps[key]) this.configMaps[key] = this.createModelStateConfigMap(key);
         return this.configMaps[key][prop];
     }

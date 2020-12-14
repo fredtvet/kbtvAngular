@@ -1,5 +1,7 @@
-export function _groupBy<T>(array: T[], key: string): {[key: string] : T[]}{
-    if(!array || array.length == 0) return {};
+import { ImmutableArray, Immutable } from '@immutable/interfaces';
+
+export function _groupBy<T>(array: ImmutableArray<T>, key: string): {[key: string] : Immutable<T>[]}{
+    if(!array?.length) return {};
     const result = {}; 
     for(var i = 0; i < array.length; i++){
       const entity = array[i];

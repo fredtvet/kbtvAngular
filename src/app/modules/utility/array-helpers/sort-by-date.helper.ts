@@ -1,6 +1,11 @@
-export function _sortByDate<T>(collection: T[], prop: Extract<keyof T, string>, direction: "asc" | "desc" = "desc"): T[]{
+import { Immutable, ImmutableArray } from '@immutable/interfaces';
+
+export function _sortByDate<T>(
+    collection: ImmutableArray<T>, 
+    prop: Extract<keyof T, string>, 
+    direction: "asc" | "desc" = "desc"): Immutable<T>[]{
     if(!collection) return;
-    return collection.sort((a: any, b: any) => {
+    return collection.slice().sort((a: any, b: any) => {
         if(!a[prop]) return 1;
         if(!b[prop]) return -1;
 

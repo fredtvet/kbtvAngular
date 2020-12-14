@@ -1,3 +1,4 @@
+import { Immutable } from '@immutable/interfaces';
 import { Prop } from '@state/interfaces';
 import { ModelCommand } from './model-command.enum';
 
@@ -15,16 +16,16 @@ export interface ModelConfig<TModel, TState> {
 
 export type SaveAction = ModelCommand.Create | ModelCommand.Update;
 
-export type ModelConfigMap<TState> = {[key: string]: ModelConfig<any, TState>};
+export type ModelConfigMap<TState> = {[key: string]: Immutable<ModelConfig<any, TState>>};
 
 export type CommandApiConfig<TSuffix> = {method: "POST" | "PUT" | "DELETE", suffix: TSuffix}
 
 export interface CommandApiMap {
-    [ModelCommand.Create]: CommandApiConfig<string>,
-    [ModelCommand.Update]: CommandApiConfig<(id: string) => string>,
-    [ModelCommand.Delete]: CommandApiConfig<(id: string) => string>,
-    [ModelCommand.DeleteRange]: CommandApiConfig<string>,
-    [ModelCommand.Mail]: CommandApiConfig<string>
+    [ModelCommand.Create]: Immutable<CommandApiConfig<string>>,
+    [ModelCommand.Update]: Immutable<CommandApiConfig<(id: string) => string>>,
+    [ModelCommand.Delete]: Immutable<CommandApiConfig<(id: string) => string>>,
+    [ModelCommand.DeleteRange]: Immutable<CommandApiConfig<string>>,
+    [ModelCommand.Mail]: Immutable<CommandApiConfig<string>>
 }
 
-export type KeyVal<T> = { [key: string]: T }
+export type KeyVal<T> = { [key: string]: Immutable<T> }

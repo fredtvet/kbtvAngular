@@ -33,7 +33,7 @@ export class MissionListComponent {
     navConfig: this.getTopNavConfig(x)
   }}))
 
-  missions$: Observable<Mission[]> = this.facade.filteredMissions$;
+  missions$ = this.facade.filteredMissions$;
 
   get initialMissionId() { return this.route.snapshot.paramMap.get('initialMissionId') }
 

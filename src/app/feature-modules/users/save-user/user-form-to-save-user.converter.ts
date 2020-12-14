@@ -10,14 +10,12 @@ import { SaveUserAction } from './save-user.action';
 export const _userFormToSaveUserConverter: FormToSaveModelConverter<UserForm, ModelState, SaveUserAction> =
     (input: ModelFormToSaveModelInput<UserForm, ModelState>): SaveUserAction => {
         
-    const password = input.formValue.password;
-    delete input.formValue.password;
-
-    var entity = _flattenExistingForeigns<User>(input.stateProp, input.formValue, input.options);
+    const clone = {...input.formValue, password: undefined}
+    var entity = _flattenExistingForeigns<User>(input.stateProp, clone, input.options);
     
-    if(entity.role !== Roles.Oppdragsgiver) entity.employerId = null;
+    if(entity.role !== Roles.Oppdragsgiver) entity = {...entity, employerId: null};
     
     entity = _modelIdGenerator(input.stateProp, entity); 
 
-    return new SaveUserAction(entity, password, input.saveAction)
+    return new SaveUserAction(entity, input.formValue.password, input.saveAction)
 }

@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { map } from 'rxjs/operators';
 import { _find } from '@array/find.helper';
 import { Store } from '@state/store';
+import { map } from 'rxjs/operators';
 import { StoreState } from '../store-state.interface';
-import { UserTimesheetWeekFacade } from './user-timesheet-week.facade';
 
 @Component({
   selector: 'app-timesheet-card-dialog-wrapper',
@@ -19,11 +18,10 @@ import { UserTimesheetWeekFacade } from './user-timesheet-week.facade';
 export class UserTimesheetCardDialogWrapperComponent {
 
   timesheet$ = 
-    this.store.select$(["userTimesheets", "missions"], false).pipe(map(state => {
+    this.store.select$(["userTimesheets", "missions"]).pipe(map(state => {
         const timesheet = _find(state.userTimesheets, this.timesheetId, "id");
-        if(!timesheet) return null;
-        timesheet.mission = _find(state.missions, timesheet.missionId, "id");
-        return timesheet;
+        if(!timesheet) return;
+        return {...timesheet, mission: _find(state.missions, timesheet.missionId, "id")};
     }))
 
   constructor(

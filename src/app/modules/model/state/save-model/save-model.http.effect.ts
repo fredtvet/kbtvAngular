@@ -1,6 +1,7 @@
 import { Inject, Injectable, Type } from '@angular/core';
 import { HttpRequest } from '@http/interfaces';
 import { HttpAction } from '@http/state/http.effect';
+import { Immutable } from '@immutable/interfaces';
 import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { StateAction } from '@state/state.action';
@@ -40,7 +41,10 @@ export class SaveModelHttpEffect implements Effect<SaveModelAction<any, any>> {
         }
     }
 
-    protected createCancelMessage(action: SaveModelAction<any, any>, modelConfig: ModelConfig<any, any>): string{
+    protected createCancelMessage(
+        action: SaveModelAction<any, any>, 
+        modelConfig: Immutable<ModelConfig<any, any>>
+    ): string{
         const saveWord = action.saveAction === ModelCommand.Update ? "Oppdatering" : "Oppretting";
         const entityWord = this.translations[modelConfig.foreignProp?.toLowerCase()].toLowerCase();
         const displayPropWord = this.translations[modelConfig.displayProp?.toLowerCase()].toLowerCase();
@@ -52,7 +56,10 @@ export class SaveModelHttpEffect implements Effect<SaveModelAction<any, any>> {
         return action.entity;
     }
 
-    protected createApiUrl(action: SaveModelAction<any, any>, modelConfig: ModelConfig<any, any>): string {
+    protected createApiUrl(
+        action: SaveModelAction<any, any>, 
+        modelConfig: Immutable<ModelConfig<any, any>>
+    ): string {
         const suffix = this.apiMap[action.saveAction].suffix;
         if(typeof suffix === "string") return modelConfig.apiUrl + suffix;
         else{ 

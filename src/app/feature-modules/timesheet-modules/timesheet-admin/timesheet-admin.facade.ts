@@ -18,6 +18,7 @@ import { ComponentStoreState, StoreState } from './store-state';
 import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
 import { SetSelectedWeekAction, SetTimesheetCriteriaAction } from './component-state-reducers';
 import { UpdateTimesheetStatusesAction } from './update-timesheet-statuses/update-timesheet-statuses.action';
+import { Immutable } from '@immutable/interfaces';
 
 @Injectable()
 export class TimesheetAdminFacade {
@@ -33,7 +34,7 @@ export class TimesheetAdminFacade {
     weekCriteriaFormState$: Observable<WeekCriteriaFormState> = 
         this.store.selectProperty$<User[]>("users").pipe(map(x => { return { options: {users: x} } }))
 
-    private _weeklySummaries$: Observable<TimesheetSummary[]> = combineLatest([
+    private _weeklySummaries$ = combineLatest([
         this.store.selectProperty$<Timesheet[]>("timesheets"),
         this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria")
     ]).pipe(
@@ -41,16 +42,15 @@ export class TimesheetAdminFacade {
         map(x => this.summaryAggregator.groupByType(GroupByPeriod.Week, x.records))
     );
 
-    weeklySummaries$: Observable<TimesheetSummary[]> = 
-        combineLatest([this._weeklySummaries$, this.users$]).pipe(
-            map(x =>  _setFullNameOnUserForeigns(x[0], x[1]))
-        );
+    weeklySummaries$ = combineLatest([this._weeklySummaries$, this.users$]).pipe(
+        map(x =>  _setFullNameOnUserForeigns<TimesheetSummary>(x[0], x[1]))
+    );
 
-    selectedWeekTimesheets$: Observable<Timesheet[]> = combineLatest([
+    selectedWeekTimesheets$: Observable<Immutable<Timesheet>[]> = combineLatest([
         this.weeklySummaries$,
         this.selectedWeekNr$
     ]).pipe(map(([summaries, weekNr]) => {
-        const summary = _find(summaries, weekNr, "weekNr");
+        const summary = _find<TimesheetSummary>(summaries, weekNr, "weekNr");
         return summary?.timesheets.map(x => { return {...x, fullName: summary.fullName}});
     }))
     

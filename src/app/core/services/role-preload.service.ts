@@ -10,7 +10,7 @@ export class RolePreloadService implements PreloadingStrategy {
     constructor(private authService: AuthService){ }
 
     preload(route: Route, load: () => Observable<any>): Observable<any> {
-      const user = this.authService.getCurrentUser(false);
+      const user = this.authService.getCurrentUser();
       if(!this.preloadCheck(route, user?.role)) return EMPTY;
       return timer(2000).pipe(switchMap(x => load()))
     }

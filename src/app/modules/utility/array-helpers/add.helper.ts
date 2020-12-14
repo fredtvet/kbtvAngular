@@ -1,5 +1,7 @@
-export function _add<T>(array: T[], value: T): T[]{
-    if(!array || array.length == 0) return array;
+import { Immutable, ImmutableArray } from '@immutable/interfaces';
+
+export function _add<T>(array: ImmutableArray<T>, value: Immutable<T>): Immutable<T>[]{
+    if(!array?.length) return [];
     let arr = array.slice();
     arr.unshift(value);
     return arr;

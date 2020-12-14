@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { OptionsFormState } from '@form-sheet/interfaces';
+import { Immutable } from '@immutable/interfaces';
 import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
 import { ModelStateConfig } from '@model/model-state.config';
@@ -13,16 +14,16 @@ export class ModelFormFacade {
 
   constructor(private store: Store<any>) {}
 
-  getFormState$(modelProp: string): Observable<Readonly<OptionsFormState<any>>>{
+  getFormState$(modelProp: string): Observable<Immutable<OptionsFormState<any>>>{
     const modelCfg = ModelStateConfig.get<any, any>(modelProp);
-    return this.store.select$(modelCfg.foreigns || [], false).pipe(
+    return this.store.select$(modelCfg.foreigns || []).pipe(
       map(state => { return {options: state} })
     )
   }
 
   getModelWithForeigns(id: string, modelProp: string, fkState: any): any {
     const state = {...fkState};
-    state[modelProp] = this.store.selectProperty(modelProp, false)
+    state[modelProp] = this.store.selectProperty(modelProp)
     const relationCfg = new GetWithRelationsConfig(modelProp, null, 'all');
     return _getWithRelations<any, any>(state, relationCfg, id);
   }

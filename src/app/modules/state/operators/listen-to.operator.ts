@@ -6,8 +6,8 @@ import { DispatchedAction } from '../interfaces';
 import { Type } from '@angular/core';
 import { _cloneInstance } from '@state/helpers/clone-instance.helper';
 
-export const listenTo = <TAction extends StateAction>(actions: Type<StateAction>[], deepCloneAction: boolean = true) => 
-    (source: Observable<DispatchedAction<TAction>> ): Observable<DispatchedAction<TAction>> => 
+export const listenTo = <TAction extends StateAction, TState>(actions: Type<StateAction>[], deepCloneAction: boolean = true) => 
+    (source: Observable<DispatchedAction<TAction, TState>> ): Observable<DispatchedAction<TAction, TState>> => 
         source.pipe(
             filter(dispatched => {
                 const actionName = dispatched.action.constructor.name;

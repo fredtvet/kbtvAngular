@@ -1,9 +1,10 @@
-import { Reducer } from '@state/interfaces';
+import { _createReducer } from '@state/helpers/create-reducer.helper';
+import { Immutable } from '@immutable/interfaces';
 import { WipeSyncStateAction } from './actions';
 
-export const WipeSyncStateReducer: Reducer<any, WipeSyncStateAction> = {
-    action: WipeSyncStateAction, 
-    reducerFn: (state: any, action: WipeSyncStateAction): any => {
+export const WipeSyncStateReducer= _createReducer(
+    WipeSyncStateAction, 
+    (state: any, action: Immutable<WipeSyncStateAction>): any => {
 
         const deleteState = {syncTimestamp: null};
 
@@ -13,5 +14,5 @@ export const WipeSyncStateReducer: Reducer<any, WipeSyncStateAction> = {
         }
 
         return deleteState;
-    },
-}
+    }, false
+)
