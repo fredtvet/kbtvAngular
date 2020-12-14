@@ -4,23 +4,25 @@ import { StateAction } from './state.action'
 
 export type Prop<T> = Extract<keyof T, string>
 
-export interface DispatchedAction<TAction extends StateAction, TState = {}> { action: TAction, stateSnapshot: Immutable<TState> };
+export interface DispatchedAction<TAction extends StateAction, TState = {}> { 
+    action: Immutable<TAction>, 
+    stateSnapshot: Immutable<TState> 
+};
 
 export interface Query { props: ImmutableArray<string> };
 
 export interface Effect<TAction extends StateAction> {
-    handle$(actions$: Observable<DispatchedAction<TAction>>): Observable<StateAction | void>
-    onErrorAction?: (err: any) => StateAction
+    handle$(actions$: Observable<DispatchedAction<TAction>>): Observable<Immutable<StateAction> | void>
+    onErrorAction?: (err: any) => Immutable<StateAction>
 }
 
-export type ReducerFn<TState, TAction> = (state: Immutable<TState>, action: Immutable<TAction>) => Partial<TState>
+export type ReducerFn<TState, TAction> = (state: Immutable<TState>, action: Immutable<TAction>) => Immutable<Partial<TState>>
 
 export type ReducerMap = {[key: string]: ImmutableArray<Reducer<any, StateAction>>}
 
 export interface Reducer<TState, TAction extends StateAction> {
     type: string;
     reducerFn: ReducerFn<TState, TAction>;
-    noDeepCloneAction?: boolean
 }
 
 export type MetaReducer<TState, TAction extends StateAction> = 

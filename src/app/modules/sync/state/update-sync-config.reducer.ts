@@ -6,7 +6,7 @@ import { UpdateSyncConfigAction } from './actions';
 
 export const UpdateSyncConfigReducer= _createReducer(
     UpdateSyncConfigAction,
-    (state: Immutable<StateSyncConfig>, action: UpdateSyncConfigAction) => {
+    (state: Immutable<StateSyncConfig>, action: Immutable<UpdateSyncConfigAction>) => {
         return {syncConfig: {...state.syncConfig, ...action.syncConfig} }
     }
 )

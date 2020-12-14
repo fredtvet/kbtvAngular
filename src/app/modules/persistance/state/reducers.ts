@@ -5,11 +5,9 @@ import { SetPersistedCriticalStateAction, SetPersistedStateAction } from './acti
 export const SetPersistedCriticalStateReducer = _createReducer(
     SetPersistedCriticalStateAction,
     (state: any, action: Immutable<SetPersistedCriticalStateAction>) => action.state,
-    false
 )
 
 export const SetPersistedStateReducer = _createReducer(
     SetPersistedStateAction,
     SetPersistedCriticalStateReducer.reducerFn,
-    false
 )

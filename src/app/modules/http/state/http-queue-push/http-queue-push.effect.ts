@@ -14,7 +14,7 @@ export class HttpQueuePushEffect implements Effect<HttpQueuePushAction> {
 
     handle$(actions$: Observable<DispatchedAction<HttpQueuePushAction, StateRequestQueue>>): Observable<void> {
         return actions$.pipe(
-            listenTo([HttpQueuePushAction], false),
+            listenTo([HttpQueuePushAction]),
             map(x => {
                 if(!x.stateSnapshot.requestQueue?.length)
                     this.httpQueuer.next();

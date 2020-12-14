@@ -13,7 +13,7 @@ export class HttpSuccessEffect implements Effect<HttpSuccessAction> {
 
     handle$(actions$: Observable<DispatchedAction<HttpSuccessAction>>): Observable<void> {
         return actions$.pipe(
-            listenTo([HttpSuccessAction], false),
+            listenTo([HttpSuccessAction]),
             map(x => this.httpQueuer.next())
         )
     }

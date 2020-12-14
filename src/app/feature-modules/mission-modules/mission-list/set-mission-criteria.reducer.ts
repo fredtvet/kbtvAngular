@@ -1,3 +1,4 @@
+import { Immutable } from '@immutable/interfaces';
 import { MissionCriteria } from '@shared/interfaces';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { StateAction } from '@state/state.action';
@@ -8,9 +9,9 @@ export interface SetMissionCriteriaAction extends StateAction {
     missionCriteria: MissionCriteria
 }
 
-export const SetMissionCriteriaReducer= _createReducer(
+export const SetMissionCriteriaReducer = _createReducer(
     SetMissionCriteriaAction,
-    (state: ComponentStoreState, action: SetMissionCriteriaAction) => {
+    (state: ComponentStoreState, action: Immutable<SetMissionCriteriaAction>) => {
         return { missionCriteria: action.missionCriteria }
     }       
 )  

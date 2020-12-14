@@ -7,5 +7,4 @@ export const DeleteModelReducer= _createReducer(
     DeleteModelAction,
     (state: Immutable<any>, action: Immutable<DeleteModelAction<any>>) => 
         _deleteModelWithChildren(state, action.stateProp, {...action.payload}),
-    false
 )

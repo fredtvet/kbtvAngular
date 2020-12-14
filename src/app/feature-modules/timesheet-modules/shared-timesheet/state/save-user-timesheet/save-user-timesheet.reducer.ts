@@ -20,5 +20,5 @@ export const SaveUserTimesheetReducer= _createReducer(
             };
 
         return SaveModelReducer.reducerFn(state, {...action, entity: modifiedTimesheet})
-    }, false
+    }
 )

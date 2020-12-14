@@ -45,7 +45,7 @@ export abstract class StoreBase<TState> {
         this._settings = { logStateChanges: false, ...(settings || {}) };
     }
 
-    dispatch<TAction extends StateAction>(action: TAction): void {
+    dispatch<TAction extends StateAction>(action: Immutable<TAction>): void {
         const stateSnapshot = this.base.getStoreState(null, false);
         this.reduceState(action);
         this.actionDispatcher.dispatch(action, stateSnapshot);
@@ -73,7 +73,7 @@ export abstract class StoreBase<TState> {
         return state ? state[prop] : null;
     }
 
-    private reduceState(action: StateAction): void{
+    private reduceState(action: Immutable<StateAction>): void{
         const actionReducers = this.reducerMap[action.type];
 
         if(!actionReducers?.length) return;

@@ -14,7 +14,7 @@ export interface SetFetchedTimesheetsAction extends StateAction {
 
 type State = Immutable<StateTimesheets & StateMissions>;
 
-export const SetFetchedTimesheetsReducer= _createReducer(
+export const SetFetchedTimesheetsReducer = _createReducer(
     SetFetchedTimesheetsAction,
     (state: State, action: Immutable<SetFetchedTimesheetsAction>): Partial<State> => {
         
@@ -26,5 +26,5 @@ export const SetFetchedTimesheetsReducer= _createReducer(
         }, relationCfg);
 
         return {timesheets: _addOrUpdateRange(state.timesheets, timesheets, "id")};
-    }, false
+    }
 )  

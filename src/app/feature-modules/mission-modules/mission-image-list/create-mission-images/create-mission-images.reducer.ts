@@ -7,7 +7,7 @@ import { CreateMissionImagesAction } from './create-mission-images.action';
 
 export const CreateMissionImagesReducer= _createReducer(
     CreateMissionImagesAction,
-    (state: Immutable<StateMissionImages>, action: CreateMissionImagesAction): Immutable<StateMissionImages> => {  
+    (state: Immutable<StateMissionImages>, action: Immutable<CreateMissionImagesAction>): Immutable<StateMissionImages> => {  
         if(!action.fileWrappers || !action.missionId) 
             console.error('no files or missionId provided');
     

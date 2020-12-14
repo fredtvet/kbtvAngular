@@ -10,5 +10,4 @@ export interface SetFetchedStateAction extends StateAction {
 export const SetFetchedStateReducer = _createReducer(
     SetFetchedStateAction,
     (state: any, action: Immutable<SetFetchedStateAction>) => action.state,
-    false
 )

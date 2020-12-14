@@ -32,5 +32,5 @@ export const SetSyncResponseReducer= _createReducer(
         }
 
         return newState;
-    }, false 
+    } 
 )

@@ -12,7 +12,7 @@ export interface UpdateSelectedPropertyAction extends StateAction {
 
 export const UpdateSelectedPropertyReducer = _createReducer(
     UpdateSelectedPropertyAction,
-    (state: Immutable<ComponentState>, action: UpdateSelectedPropertyAction) => { 
+    (state: Immutable<ComponentState>, action: Immutable<UpdateSelectedPropertyAction>) => { 
         return {selectedProperty: action.selectedProperty}
     }
 )

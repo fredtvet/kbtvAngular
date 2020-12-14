@@ -26,7 +26,7 @@ export class HttpEffect implements Effect<HttpAction> {
 
     handle$(actions$: Observable<DispatchedAction<HttpAction>>): Observable<HttpQueuePushAction> {
         return actions$.pipe(
-            listenTo([HttpAction], false),
+            listenTo([HttpAction]),
             map(x => <HttpQueuePushAction>{
                 type: HttpQueuePushAction,
                 command: {

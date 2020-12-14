@@ -13,7 +13,7 @@ export interface SetTimesheetCriteriaAction extends StateAction {
 
 export const SetTimesheetCriteriaReducer = _createReducer(
     SetTimesheetCriteriaAction,
-    (state: Immutable<ComponentStoreState>, action: SetTimesheetCriteriaAction) => {
+    (state: Immutable<ComponentStoreState>, action: Immutable<SetTimesheetCriteriaAction>) => {
         return {
             timesheetCriteria: new WeekToTimesheetCriteriaAdapter(action.weekCriteria),
             weekCriteria: action.weekCriteria
@@ -44,7 +44,7 @@ export const NextWeekReducer= _createReducer(
             timesheetCriteria: new WeekToTimesheetCriteriaAdapter(weekCriteria),
             weekCriteria
         }
-    }, false       
+    }       
 )  
 
 export const PreviousWeekAction = "PREVIOUS_WEEK_ACTION";
@@ -52,7 +52,7 @@ export interface PreviousWeekAction extends StateAction { }
 
 export const PreviousWeekReducer= _createReducer(
     PreviousWeekAction,
-    (state: Immutable<ComponentStoreState>, action: PreviousWeekAction) => {
+    (state: Immutable<ComponentStoreState>) => {
         const weekCriteria = {...state.weekCriteria};
         
         if(weekCriteria.weekNr <= 1) {

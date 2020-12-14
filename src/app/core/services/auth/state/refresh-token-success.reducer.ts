@@ -1,4 +1,5 @@
 import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper'
+import { Immutable } from '@immutable/interfaces'
 import { _createReducer } from '@state/helpers/create-reducer.helper'
 import { StateAction } from '@state/state.action'
 import { RefreshTokenResponse } from '../interfaces'
@@ -11,9 +12,11 @@ export interface RefreshTokenSuccessAction extends StateAction {
 
 export const RefreshTokenSuccessReducer = _createReducer(
     RefreshTokenSuccessAction,
-    (state: any, action: RefreshTokenSuccessAction): Partial<StoreState>=> {
-        let {accessToken, refreshToken} = action.response;
-        accessToken.expiresIn = _getUnixTimeSeconds() + accessToken.expiresIn;   
-        return {accessToken, refreshToken}
+    (state: any, action: Immutable<RefreshTokenSuccessAction>): Partial<StoreState>=> {
+        const {accessToken, refreshToken} = action.response;  
+        return {
+            accessToken: {...accessToken, expiresIn: _getUnixTimeSeconds() + accessToken.expiresIn},
+            refreshToken
+        }
     }
 )

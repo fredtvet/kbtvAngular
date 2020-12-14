@@ -4,14 +4,13 @@ import { StateAction } from '../state.action';
 import { _cloneInstance } from './clone-instance.helper';
 import { _deepClone } from './deep-clone.helper';
 
-export function _mergeReducers(reducers: ImmutableArray<Reducer<any, StateAction>>, type: string): Reducer<any, StateAction> {
-    return <Reducer<any, StateAction>>{type,
-        reducerFn: (state: Immutable<Object>, action: any): any => {
+export function _mergeReducers(reducers: ImmutableArray<Reducer<Object, StateAction>>, type: string): Reducer<Object, StateAction> {
+    return <Reducer<Object, StateAction>>{type,
+        reducerFn: (state: Immutable<Object>, action: Immutable<StateAction>): any => {
             let fullState: any = {...state};
             let newState: any; 
             for(const reducer of reducers) {
-                const inputAction = reducer.noDeepCloneAction ? _deepClone(action) : action;
-                const reducerState = reducer.reducerFn(fullState, inputAction);
+                const reducerState = reducer.reducerFn(fullState, action);
                 if(!reducerState) continue;
                 fullState = {...fullState, ...reducerState} //merge total state for next reducer
                 newState = {...newState || {}, ...reducerState} //Store all new state to prevent emitting entire state

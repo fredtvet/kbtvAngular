@@ -22,5 +22,5 @@ export const SaveModelReducer = _createReducer(
                 _add(entities, entity)
     
         return _modifyModelWithForeigns(state, command.stateProp as any, command.entity, modifyFn)          
-    }, false
+    }
 )

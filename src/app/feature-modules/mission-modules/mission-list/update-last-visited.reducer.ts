@@ -20,5 +20,5 @@ export const UpdateLastVisitedReducer= _createReducer(
 
         missions[index] = {...mission, lastVisited: new Date().getTime()};
         return {missions};
-    }, false
+    }
 )

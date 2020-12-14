@@ -11,5 +11,5 @@ export const DispatchHttpReducer= _createReducer(
         const request = requestQueue[0];
         if(request) requestQueue[0] = {...request, dispatched: true};
         return {requestQueue}
-    }, false
+    }
 )

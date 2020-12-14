@@ -7,15 +7,16 @@ import { StoreState } from './store-state';
 import { UpdateSyncConfigAction, SyncStateAction, ReloadSyncStateAction } from '@sync/state/actions';
 import { UpdateCurrentUserAction } from './state/update-current-user/update-current-user.action';
 import { UpdatePasswordAction } from './state/update-password/update-password.action';
+import { Immutable } from "@immutable/interfaces";
 
 @Injectable({providedIn: 'any'})
 export class ProfileFacade {
 
-  get currentUser(): User{
+  get currentUser() {
     return this.store.selectProperty<User>("currentUser")
   };
 
-  get syncConfig(): SyncConfig{
+  get syncConfig() {
     return this.store.selectProperty<SyncConfig>("syncConfig")
   };
 
@@ -24,13 +25,13 @@ export class ProfileFacade {
     private authService: AuthService
   ) {}
   
-  updateCurrentUser = (user: User): void => 
+  updateCurrentUser = (user: Immutable<User>): void => 
     this.store.dispatch(<UpdateCurrentUserAction>{ type: UpdateCurrentUserAction, user });
   
   updatePassword = (oldPassword: string, newPassword: string) => 
     this.store.dispatch(<UpdatePasswordAction>{ type: UpdatePasswordAction, oldPassword, newPassword });
   
-  updateSyncConfig = (syncConfig: SyncConfig) => 
+  updateSyncConfig = (syncConfig: Immutable<SyncConfig>) => 
     this.store.dispatch(<UpdateSyncConfigAction>{ type: UpdateSyncConfigAction, syncConfig, propagate: true });
   
   syncAll = () => this.store.dispatch(<SyncStateAction>{ type: SyncStateAction, propagate: true });

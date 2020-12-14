@@ -13,5 +13,5 @@ export const HttpQueueShiftReducer= _createReducer(
         const requestQueue = [...state.requestQueue];
         requestQueue.shift();
         return {requestQueue};
-    }, false
+    }
 )

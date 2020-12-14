@@ -18,7 +18,7 @@ export const WipeStateReducer = _createReducer(
           if(!ignoredState[key]) deleteState[key] = undefined;
 
         return {...deleteState, ...(action.defaultState || {})}
-    }, false
+    }
 )
 
 

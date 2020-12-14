@@ -14,5 +14,5 @@ export const WipeSyncStateReducer= _createReducer(
         }
 
         return deleteState;
-    }, false
+    }
 )

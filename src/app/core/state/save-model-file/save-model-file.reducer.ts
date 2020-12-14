@@ -7,7 +7,7 @@ import { SaveModelFileAction } from './save-model-file.action';
 
 export const SaveModelFileReducer = _createReducer(
     SaveModelFileAction, 
-    (state: Immutable<ModelState>, action: SaveModelFileAction<ModelFile>): Partial<ModelState> => {  
+    (state: Immutable<ModelState>, action: Immutable<SaveModelFileAction<ModelFile>>): Partial<ModelState> => {  
         
         const entity: Immutable<ModelFile> = {
             ...action.entity, 

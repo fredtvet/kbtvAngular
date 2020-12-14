@@ -18,7 +18,7 @@ export const SetTimesheetCriteriaReducer= _createReducer(
             timesheetCriteria: new WeekToTimesheetCriteriaAdapter(weekCriteria),
             weekCriteria
         }
-    }, false     
+    }     
 ) 
 
 export const SetSelectedWeekAction = "SET_SELECTED_WEEK_ACTION";
@@ -28,7 +28,7 @@ export interface SetSelectedWeekAction extends StateAction {
 
 export const SetSelectedWeekReducer= _createReducer(
     SetSelectedWeekAction,
-    (state: ComponentStoreState, action: SetSelectedWeekAction) => {
+    (state: ComponentStoreState, action: Immutable<SetSelectedWeekAction>) => {
         return {selectedWeekNr: action.weekNr}
-    }, false   
+    }   
 )

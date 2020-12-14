@@ -13,5 +13,5 @@ export const SetGroupByReducer= _createReducer(
     SetGroupByAction,
     (state: ComponentStoreState, action: Immutable<SetGroupByAction>) => {
         return { timesheetGroupBy: action.groupBy }
-    }, false  
+    }  
 )
