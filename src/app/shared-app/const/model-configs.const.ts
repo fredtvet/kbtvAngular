@@ -88,8 +88,8 @@ export const ModelConfigs: ModelConfig<any, ModelState>[] = [
         apiUrl: ApiUrl.UserTimesheet, 
         identifier: "id",
         displayProp: "id",  
-        foreignProp: "timesheet",
-        foreignKey: "timesheetId",
+        foreignProp: "userTimesheet",
+        foreignKey: "userTimesheetId",
         foreigns: ["missions"],  
     },    
     <ModelConfig<Timesheet, ModelState>>{

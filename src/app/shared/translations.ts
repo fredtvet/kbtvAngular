@@ -36,7 +36,11 @@ export const translations: { [key: string]: string } = {
   timesheet: "Time",
   timesheetid: "Time",
   timesheets: "Timer",
-  
+
+  userTimesheet: "Time",
+  userTimesheetid: "Time",
+  userTimesheets: "Timer",
+
   mission: "Oppdrag",   
   missionid: "Oppdrag",
   missions: "Oppdrag",
