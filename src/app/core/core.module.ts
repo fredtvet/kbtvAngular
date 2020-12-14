@@ -5,9 +5,10 @@ import { BASE_API_URL, OPTIMISTIC_STATE_SELECTOR } from '@http/injection-tokens.
 import { OptimisticHttpModule } from '@http/optimistic-http.module';
 import { COMMAND_API_MAP, MODEL_CONFIGS, MODEL_PROP_TRANSLATIONS } from '@model/injection-tokens.const';
 import { ModelModule } from '@model/model.module';
-import { PERSISTED_CRITICAL_STATE_PROPS, PERSISTED_STATE_PROPS } from '@persistance/injection-tokens.const';
+import { PERSISTANCE_CONFIG } from '@persistance/injection-tokens.const';
 import { PersistanceModule } from '@persistance/persistance.module';
 import { AppCommandApiMap } from '@shared-app/const/app-command-api-map.const';
+import { AppPersistanceConfig } from '@shared-app/const/app-persistance-config.const';
 import { ModelConfigs } from '@shared-app/const/model-configs.const';
 import { translations } from '@shared/translations';
 import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
@@ -15,7 +16,6 @@ import { SyncModule } from '@sync/sync.module';
 import { environment } from 'src/environments/environment';
 import { DefaultState } from '../shared-app/const/default-state.const';
 import { AppOptimisticState } from '../shared-app/const/optimistic-state-props.const';
-import { PersistedCriticalStateProps, PersistedStateProps } from '../shared-app/const/persisted-state-props.const';
 import { AppSyncStateConfig } from '../shared-app/const/sync-state.config';
 import { ValidationErrorMessages } from '../shared-app/const/validation-error-messages.const';
 import { HttpErrorInterceptor, HttpIsOnlineInterceptor, HttpLoadingInterceptor, HttpRefreshTokenInterceptor } from './interceptors';
@@ -58,8 +58,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
 
     { provide: OPTIMISTIC_STATE_SELECTOR, useValue: AppOptimisticState},
 
-    { provide: PERSISTED_STATE_PROPS, useValue: PersistedStateProps},   
-    { provide: PERSISTED_CRITICAL_STATE_PROPS, useValue: PersistedCriticalStateProps},
+    { provide: PERSISTANCE_CONFIG, useValue: AppPersistanceConfig},   
 
     { provide: STORE_DEFAULT_STATE, useValue: DefaultState },
 

@@ -1,26 +1,20 @@
-import { Inject, Injectable, Optional } from '@angular/core';
-import { skip, tap } from 'rxjs/operators';
-import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
+import { Inject, Injectable } from '@angular/core';
+import { Immutable } from '@immutable/interfaces';
 import { _deepClone } from '@state/helpers/deep-clone.helper';
 import { Store } from '@state/store';
-import { PERSISTED_STATE_PROPS, PERSISTED_CRITICAL_STATE_PROPS } from './injection-tokens.const';
+import { skip, tap } from 'rxjs/operators';
+import { PERSISTANCE_CONFIG } from './injection-tokens.const';
+import { PersistanceConfig } from './interfaces';
 import { StateDbService } from './state-db.service';
 
 @Injectable({providedIn: 'root'})
 export class StatePersisterService {
     
-    private stateMap: {[key: string]: any};
-    private criticalStateMap: {[key: string]: any};
-
     constructor(
         private store: Store<any>,  
         private stateDbService: StateDbService, 
-        @Inject(PERSISTED_STATE_PROPS) @Optional() stateProps: ReadonlyArray<string>,
-        @Inject(PERSISTED_CRITICAL_STATE_PROPS) @Optional() criticalStateProps: ReadonlyArray<string>,
-    ) { 
-        this.stateMap = _convertArrayToObject(stateProps)
-        this.criticalStateMap = _convertArrayToObject(criticalStateProps)
-    }
+        @Inject(PERSISTANCE_CONFIG) private persistanceConfig: PersistanceConfig<any>,
+    ) { }
 
     initalize(): void{
         this.store.stateChanges$.pipe(
@@ -29,27 +23,38 @@ export class StatePersisterService {
         ).subscribe();
     }
 
-    private persistStateChanges = (stateChanges: Partial<Object>): void => {
-        var clone = _deepClone(stateChanges);
-        for(const prop in clone){
-            const payload = clone[prop];
-            this.removePayloadTempProps(payload);
-            if(this.stateMap[prop]) 
+    private persistStateChanges = (stateChanges: Immutable<Object>): void => {
+        for(const prop in stateChanges){
+            const propCfg = this.persistanceConfig[prop];
+            if(!propCfg) continue;
+
+            let payload = stateChanges[prop];
+
+            if(propCfg.enableTempData)
+                payload = this.removePayloadTempProps(payload);
+
+            if(!propCfg.critical) 
                 this.stateDbService.set(prop, payload)
-            else if(this.criticalStateMap[prop]) 
+            else
                 window.localStorage.setItem(prop, JSON.stringify(payload))
         }
     }
 
-    private removePayloadTempProps<T>(payload: T): void{
-        if(Array.isArray(payload) && payload.length > 0 && typeof payload[0] === "object") 
-            for(var item of payload) this.removeObjectTempProps(item)
-        else if(typeof payload === "object") this.removeObjectTempProps(payload);
+    private removePayloadTempProps(payload: Immutable<any>): Immutable<any>{
+        if(Array.isArray(payload) && payload.length > 0 && typeof payload[0] === "object") {
+            const clone = [...payload];
+            for(var key in clone) clone[key] = this.removeObjectTempProps(clone[key])
+            return clone;
+        }
+        else if(typeof payload === "object") 
+            return this.removeObjectTempProps(payload);
     }
 
-    private removeObjectTempProps<T extends Object>(obj: T): void{
+    private removeObjectTempProps(obj: Immutable<Object>): Immutable<Object>{
+        var clone = {...obj};
         for(var key in obj)
-            if(key.indexOf("temp_") !== -1) delete obj[key]    
+            if(key.indexOf("temp_") !== -1) delete clone[key] 
+        return clone; 
     }
 }
 
