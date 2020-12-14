@@ -34,4 +34,4 @@ export interface StateChanges<T> {
     state: Immutable<T>;
 }
 
-export interface StoreSettings { logStateChanges?: boolean; }
+export interface StoreSettings { logStateChanges?: boolean, strictImmutability?: boolean; }

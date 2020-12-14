@@ -1,9 +1,12 @@
 import { ImmutableArray } from '@immutable/interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { _deepClone } from './helpers/deep-clone.helper';
+import { _deepFreeze } from './helpers/object-freezer.helper';
 import { StateChanges } from './interfaces';
 
 export class StateBase {  
+    
+    strictImmutability:boolean;
 
     private storeState: Object; 
 
@@ -41,6 +44,8 @@ export class StateBase {
             this.storeState = {...this.storeState, ..._deepClone(stateChanges)}
         else
             this.storeState = {...this.storeState, ...stateChanges};
+
+        if(this.strictImmutability) _deepFreeze(this.storeState);
 
         if(dispatchChanges)
             this.stateChangesSubject.next({stateChanges, action, state: this.storeState});

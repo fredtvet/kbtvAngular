@@ -9,9 +9,10 @@ import { PERSISTANCE_CONFIG } from '@persistance/injection-tokens.const';
 import { PersistanceModule } from '@persistance/persistance.module';
 import { AppCommandApiMap } from '@shared-app/const/app-command-api-map.const';
 import { AppPersistanceConfig } from '@shared-app/const/app-persistance-config.const';
+import { AppStoreSettings } from '@shared-app/const/app-store-settings.const';
 import { ModelConfigs } from '@shared-app/const/model-configs.const';
 import { translations } from '@shared/translations';
-import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
+import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS, STORE_SETTINGS } from '@state/constants/injection-tokens.const';
 import { SyncModule } from '@sync/sync.module';
 import { environment } from 'src/environments/environment';
 import { DefaultState } from '../shared-app/const/default-state.const';
@@ -48,7 +49,9 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
     { provide: HTTP_INTERCEPTORS, useClass: HttpRefreshTokenInterceptor, multi: true },  
     { provide: HTTP_INTERCEPTORS, useClass: HttpIsOnlineInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpLoadingInterceptor, multi: true },
-    
+
+    { provide: STORE_SETTINGS, useValue: AppStoreSettings},
+
     { provide: BASE_API_URL, useValue: environment.apiUrl},
     { provide: MODEL_CONFIGS, useValue: ModelConfigs },
     { provide: COMMAND_API_MAP, useValue: AppCommandApiMap },

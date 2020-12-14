@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ActionDispatcher } from './action-dispatcher';
 import { _applyMetaReducers } from './helpers/apply-meta-reducers.helper';
 import { _mergeReducers } from './helpers/merge-reducers.helper';
+import { _deepFreeze } from './helpers/object-freezer.helper';
 import { tryWithLogging } from './helpers/try-log-error.helper';
 import { MetaReducer, Prop, Reducer, ReducerMap, StateChanges, StoreSettings } from './interfaces';
 import { selectProp, selectSlice } from './operators/selectors.operator';
@@ -40,12 +41,17 @@ export abstract class StoreBase<TState> {
             for(const reducer of reducers){
                 const value = this.reducerMap[reducer.type];
                 this.reducerMap[reducer.type] = value ? [...value, reducer] : [reducer];
-            }
-
-        this._settings = { logStateChanges: false, ...(settings || {}) };
+            }  
+             
+        this._settings = { logStateChanges: false, strictImmutability: true, ...(settings || {}) };
+        console.log(this._settings);
+        this.base.strictImmutability = this._settings.strictImmutability;
     }
 
     dispatch<TAction extends StateAction>(action: Immutable<TAction>): void {
+        console.time('freezer');
+        if(this._settings.strictImmutability) _deepFreeze(action);
+        console.timeEnd('freezer');
         const stateSnapshot = this.base.getStoreState(null, false);
         this.reduceState(action);
         this.actionDispatcher.dispatch(action, stateSnapshot);
