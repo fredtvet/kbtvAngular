@@ -23,12 +23,10 @@ export function _deleteModelWithChildren<TState>(
 
   const modelCfg = ModelStateConfig.get(stateProp);
   const newState: any = {};
-
   const slice = state[stateProp as string];
   const filtered = _filter<any>(slice, filterFactory(modelCfg.identifier));
-  if(filtered?.length < slice?.length) newState[stateProp] = slice;
-   
-    
+
+  if(filtered?.length < slice?.length) newState[stateProp] = filtered;
 
   if(modelCfg.children?.length)
     for(var childProp of modelCfg.children){
