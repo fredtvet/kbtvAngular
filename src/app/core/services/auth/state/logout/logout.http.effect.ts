@@ -25,7 +25,7 @@ export class LogoutHttpEffect implements Effect<LogoutAction> {
                 if(x.action.refreshToken) 
                     this.apiService.post('/Auth/logout', {refreshToken: x.action.refreshToken}).subscribe()
 
-                return new WipeTokensAction()
+                return <WipeTokensAction>{ type: WipeTokensAction }
             })
         )
     }

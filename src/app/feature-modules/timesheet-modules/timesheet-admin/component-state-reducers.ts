@@ -5,8 +5,9 @@ import { WeekCriteria } from '../shared-timesheet/interfaces';
 import { WeekToTimesheetCriteriaAdapter } from '../shared-timesheet/timesheet-filter/week-to-timesheet-criteria.adapter';
 import { ComponentStoreState } from './store-state';
 
-export class SetTimesheetCriteriaAction extends StateAction {
-    constructor(public weekCriteria: WeekCriteria){ super() } 
+export const SetTimesheetCriteriaAction = "SET_TIMESHEET_CRITERIA_ACTION";
+export interface SetTimesheetCriteriaAction extends StateAction {
+    weekCriteria: WeekCriteria
 }
 
 export const SetTimesheetCriteriaReducer= _createReducer(
@@ -20,8 +21,9 @@ export const SetTimesheetCriteriaReducer= _createReducer(
     }, false     
 ) 
 
-export class SetSelectedWeekAction extends StateAction { 
-    constructor(public weekNr: number){ super() } 
+export const SetSelectedWeekAction = "SET_SELECTED_WEEK_ACTION";
+export interface SetSelectedWeekAction extends StateAction {
+    weekNr: number
 }
 
 export const SetSelectedWeekReducer= _createReducer(

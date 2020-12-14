@@ -19,7 +19,7 @@ export class UsersFacade {
   constructor(private store: Store<StoreState>) { }
 
   updatePassword(userName: string, newPassword: string): void{
-    this.store.dispatch(new UpdateUserPasswordAction(newPassword, userName))
+    this.store.dispatch(<UpdateUserPasswordAction>{ type: UpdateUserPasswordAction, newPassword, userName })
   }
   
   private sortByRole = (users: ImmutableArray<User>): Immutable<User>[] => {

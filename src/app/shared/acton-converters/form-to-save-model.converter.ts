@@ -11,5 +11,10 @@ export const _formToSaveModelConverter: FormToSaveModelConverter<any, ModelState
     var entity = _flattenExistingForeigns(input.stateProp, input.formValue, input.options);
     entity = _modelIdGenerator(input.stateProp, entity); 
     
-    return new SaveModelAction<Model, ModelState>(input.stateProp, entity, input.saveAction)
+    return <SaveModelAction<Model, ModelState>>{
+        type: SaveModelAction,
+        stateProp: input.stateProp, 
+        entity, 
+        saveAction: input.saveAction
+    }
 }

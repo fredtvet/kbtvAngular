@@ -13,5 +13,5 @@ export const _formToCreateMissionImagesConverter: ActionConverter<CreateMissionI
     for(let i = 0; i < input.files.length; i++)
         fileWrappers.push(new ModelFileWrapper(input.files[i], _idGenerator()));
     
-    return new CreateMissionImagesAction(fileWrappers, input.missionId)
+    return <CreateMissionImagesAction>{ type: CreateMissionImagesAction, fileWrappers, missionId: input.missionId }
 }

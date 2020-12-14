@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@angular/core";
 import { MatBottomSheet, MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { Router } from '@angular/router';
+import { ModelState } from '@core/state/model-state.interface';
 import { FormSheetWrapperComponent } from '@form-sheet/form-sheet-wrapper.component';
 import { FormSheetWrapperConfig, OptionsFormState } from '@form-sheet/interfaces';
 import { MODEL_PROP_TRANSLATIONS } from '@model/injection-tokens.const';
@@ -87,7 +88,11 @@ export class ModelFormService {
 
   private deleteEntity = (formConfig: ModelFormConfig<any, any, any>, deleteUrl: string, ref: MatBottomSheetRef<any, any>) => {
       this.close(ModelCommand.Delete, ref, deleteUrl);
-      this.store.dispatch( new DeleteModelAction(formConfig.stateProp, {id: formConfig.entityId}) );
+      this.store.dispatch(<DeleteModelAction<ModelState>>{ 
+        type: DeleteModelAction, 
+        stateProp: formConfig.stateProp, 
+        payload: { id: formConfig.entityId } 
+      });
   };
 
 }

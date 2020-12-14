@@ -3,7 +3,8 @@ import { Immutable } from '@immutable/interfaces';
 import { StateAction } from '@state/state.action';
 import { StateRequestQueue } from '../interfaces';
 
-export class HttpQueueShiftAction extends StateAction {}
+export const HttpQueueShiftAction = "HTTP_QUEUE_SHIFT_ACTION";
+export interface HttpQueueShiftAction extends StateAction {}
 
 export const HttpQueueShiftReducer= _createReducer(
     HttpQueueShiftAction,

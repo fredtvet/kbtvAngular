@@ -2,8 +2,9 @@ import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { Immutable } from '@immutable/interfaces';
 import { StateAction } from '@state/state.action';
 
-export class SetFetchedStateAction extends StateAction { 
-    constructor(public state: Object){ super() } 
+export const SetFetchedStateAction = "SET_FETCHED_STATE_ACTION";
+export interface SetFetchedStateAction extends StateAction {
+    state: Object
 }
 
 export const SetFetchedStateReducer = _createReducer(

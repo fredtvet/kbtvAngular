@@ -43,10 +43,10 @@ export class MissionImageListFacade {
     this.store.dispatch(_formToCreateMissionImagesConverter(state));
   }
   
-  delete = (command: {ids?: string[], id?: string}): void => 
-    this.store.dispatch(new DeleteModelAction<ModelState>("missionImages", command));
+  delete = (payload: {ids?: string[], id?: string}): void => 
+    this.store.dispatch(<DeleteModelAction<ModelState>>{type: DeleteModelAction, stateProp: "missionImages", payload});
 
   mailImages = (toEmail: string, ids: string[]): void => 
-    this.store.dispatch(new MailModelsAction<ModelState>("missionImages", ids, toEmail))
+    this.store.dispatch(<MailModelsAction<ModelState>>{type: MailModelsAction, stateProp: "missionImages", ids, toEmail})
   
 }

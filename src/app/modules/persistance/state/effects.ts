@@ -17,9 +17,10 @@ export class LoadCriticalStateEffect implements Effect<StateAction> {
         return actions$.pipe(
             listenTo([LoadPersistedStateAction]),
             first(),
-            map(x => 
-                new SetPersistedCriticalStateAction(this.stateReader.getCriticalState())
-            )
+            map(x => <SetPersistedCriticalStateAction>{ 
+                type: SetPersistedCriticalStateAction, 
+                state: this.stateReader.getCriticalState() 
+            })
         )
     }
 }
@@ -34,7 +35,7 @@ export class LoadStateEffect implements Effect<SetPersistedCriticalStateAction> 
             listenTo([SetPersistedCriticalStateAction]),
             first(), 
             switchMap(x => this.stateReader.getState$()),
-            map(state => new  SetPersistedStateAction(state))
+            map(state => <SetPersistedStateAction>{ type: SetPersistedStateAction, state })
         )
     }
 }

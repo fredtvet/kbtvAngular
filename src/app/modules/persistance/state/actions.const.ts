@@ -1,11 +1,14 @@
 import { StateAction } from '@state/state.action';
 
-export class LoadPersistedStateAction extends StateAction {}
+export const LoadPersistedStateAction = "LOAD_PERSISTED_STATE_ACTION";
+export interface LoadPersistedStateAction extends StateAction {}
 
-export class SetPersistedCriticalStateAction extends StateAction { 
-    constructor(public state: any){ super() } 
+export const SetPersistedCriticalStateAction = "SET_PERSISTED_CRITICAL_STATE_ACTION";
+export interface SetPersistedCriticalStateAction extends StateAction {
+    state: any
 }
 
-export class SetPersistedStateAction extends StateAction { 
-    constructor(public state: any){ super() } 
+export const SetPersistedStateAction = "SET_PERSISTED_STATE_ACTION";
+export interface SetPersistedStateAction extends StateAction {
+    state: any
 }

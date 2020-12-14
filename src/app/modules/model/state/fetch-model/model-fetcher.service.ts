@@ -42,7 +42,7 @@ export class ModelFetcherService {
                 return combineLatest(fetchers)     
             }),
             tap(stateSlices => stateSlices ? 
-                store.dispatch(new SetFetchedStateAction(this.mergeSlices(stateSlices))) : null)
+                store.dispatch(<SetFetchedStateAction>{ type: SetFetchedStateAction, state: this.mergeSlices(stateSlices) }) : null)
         ).subscribe();
     }
 

@@ -1,6 +1,6 @@
-import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { Immutable } from '@immutable/interfaces';
-import { SetPersistedCriticalStateAction } from './actions.const';
+import { _createReducer } from '@state/helpers/create-reducer.helper';
+import { SetPersistedCriticalStateAction, SetPersistedStateAction } from './actions.const';
 
 export const SetPersistedCriticalStateReducer = _createReducer(
     SetPersistedCriticalStateAction,
@@ -9,7 +9,7 @@ export const SetPersistedCriticalStateReducer = _createReducer(
 )
 
 export const SetPersistedStateReducer = _createReducer(
-    SetPersistedCriticalStateAction,
+    SetPersistedStateAction,
     SetPersistedCriticalStateReducer.reducerFn,
     false
 )

@@ -5,8 +5,9 @@ import { Prop } from '@state/interfaces';
 import { StateAction } from '@state/state.action';
 import { ComponentState } from '../../interfaces/component-state.interface';
 
-export class UpdateSelectedPropertyAction extends StateAction {
-    constructor(public selectedProperty: Prop<ModelState>){ super() }
+export const UpdateSelectedPropertyAction = "UPDATE_SELECTED_PROPERTY_ACTION";
+export interface UpdateSelectedPropertyAction extends StateAction {
+    selectedProperty: Prop<ModelState>
 }
 
 export const UpdateSelectedPropertyReducer = _createReducer(

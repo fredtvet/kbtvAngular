@@ -6,7 +6,7 @@ import { ModelState } from './model-state.interface';
 type Action = SaveModelAction<Model, ModelState>
 
 export function saveModelMetaReducer(reducer: Reducer<ModelState, Action>): Reducer<ModelState, Action> {
-    if(!(reducer.action instanceof SaveModelAction)) return reducer;
+    if(reducer.type.indexOf(SaveModelAction) === -1) return reducer;
 
     return {...reducer, reducerFn: (state: ModelState, action: Action) => {
         const newAction = {...action, entity: {...action.entity, updatedAt: new Date().getTime()}}

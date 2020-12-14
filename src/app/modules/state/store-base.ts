@@ -20,7 +20,7 @@ export abstract class StoreBase<TState> {
 
     private _settings: StoreSettings;
 
-    private metaReducers: MetaReducer<any, StateAction>[];
+    private metaReducers: Immutable<MetaReducer<any, StateAction>>[];
 
     stateChanges$: Observable<StateChanges<any>> = this.base.stateChanges$;
     
@@ -29,18 +29,17 @@ export abstract class StoreBase<TState> {
         private hostStore: Store<any>,
         private queryDispatcher: QueryDispatcher,
         private actionDispatcher: ActionDispatcher,
-        reducers: Reducer<any, StateAction>[],
-        metaReducers: MetaReducer<any, StateAction>[],
+        reducers: ImmutableArray<Reducer<any, StateAction>>,
+        metaReducers: ImmutableArray<MetaReducer<any, StateAction>>,
         settings?: StoreSettings,
     ) { 
+        //Get unique values
+        this.metaReducers = metaReducers?.filter((v, i, a) => a.indexOf(v) === i)
 
-        this.metaReducers = Object.values(_convertArrayToObject(metaReducers, (reducer) => reducer.constructor.name ));
- 
         if(reducers)
             for(const reducer of reducers){
-                const name = reducer.action.name;
-                const value = this.reducerMap[name];
-                this.reducerMap[name] = value ? [...value, reducer] : [reducer];
+                const value = this.reducerMap[reducer.type];
+                this.reducerMap[reducer.type] = value ? [...value, reducer] : [reducer];
             }
 
         this._settings = { logStateChanges: false, ...(settings || {}) };
@@ -65,24 +64,24 @@ export abstract class StoreBase<TState> {
 
     select<TResult = Partial<TState>>(props: ImmutableArray<Prop<TState>>): Immutable<TResult>{
         this.dispatchQuery(props)
-        return this.base.getStoreState(props);
+        return this.base.getStoreState(props, false);
     }
 
     selectProperty<TResult>(prop: Immutable<Prop<TState>>): Immutable<TResult>{
         this.dispatchQuery([prop])
-        const state = this.base.getStoreState([prop]);
+        const state = this.base.getStoreState([prop], false);
         return state ? state[prop] : null;
     }
 
     private reduceState(action: StateAction): void{
-        const actionReducers = this.reducerMap[action.constructor.name];
-        console.log(action, actionReducers);
+        const actionReducers = this.reducerMap[action.type];
+
         if(!actionReducers?.length) return;
-        const mergedReducer = _mergeReducers(actionReducers, action);
+        const mergedReducer = _mergeReducers(actionReducers, action.type);
 
         const modifiedReducer = _applyMetaReducers(mergedReducer, this.metaReducers);
 
-        const state = this.base.getStoreState();
+        const state = this.base.getStoreState(null, false);
 
         const newState = tryWithLogging(() => modifiedReducer.reducerFn(state, action));
         
@@ -95,7 +94,7 @@ export abstract class StoreBase<TState> {
     private setState(state: Partial<TState>, 
         action?: string, 
         deepCloneState: boolean = true) : void { 
-        
+
         this.base.setStoreState(state, action, deepCloneState);
 
         if (this._settings.logStateChanges) {

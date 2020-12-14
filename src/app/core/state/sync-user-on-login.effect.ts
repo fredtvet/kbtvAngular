@@ -16,10 +16,10 @@ export class SyncUserOnLoginEffect implements Effect<LoginSuccessAction> {
         return actions$.pipe(
             listenTo([LoginSuccessAction]),
             mergeMap(({action}) => {
-                const actions: StateAction[] = [new SyncStateAction()];
+                const actions: StateAction[] = [<SyncStateAction>{ type: SyncStateAction, propagate: true }];
 
                 if(action.previousUser?.userName !== action.response.user.userName) //Wipe before sync if new login
-                    actions.unshift(new WipeStateAction(Store.defaultState))
+                    actions.unshift(<WipeStateAction>{ type: WipeStateAction, defaultState: Store.defaultState })
 
                 return of(...actions)
             }),

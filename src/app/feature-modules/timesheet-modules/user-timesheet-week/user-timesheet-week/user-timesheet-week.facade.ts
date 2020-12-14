@@ -53,11 +53,15 @@ export class UserTimesheetWeekFacade {
     ){}
      
     previousWeek = (): void =>  
-        this.componentStore.dispatch(new PreviousWeekAction())
+        this.componentStore.dispatch(<PreviousWeekAction>{ type: PreviousWeekAction })
     
     nextWeek = (): void =>       
-        this.componentStore.dispatch(new NextWeekAction(this.currentYear, this.currentWeekNr))
+        this.componentStore.dispatch(<NextWeekAction>{ 
+            type: NextWeekAction, 
+            currYear: this.currentYear, 
+            currWeekNr: this.currentWeekNr 
+        })
 
     updateCriteria = (weekCriteria: WeekCriteria) => 
-        this.componentStore.dispatch(new SetTimesheetCriteriaAction(weekCriteria))
+        this.componentStore.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, weekCriteria })
 }

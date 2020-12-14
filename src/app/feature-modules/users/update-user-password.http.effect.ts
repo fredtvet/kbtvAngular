@@ -7,11 +7,10 @@ import { StateAction } from '@state/state.action';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-export class UpdateUserPasswordAction extends StateAction {
-    constructor(
-        public newPassword: string, 
-        public userName: string
-    ){ super() }
+export const UpdateUserPasswordAction = "UPDATE_USER_PASSWORD_ACTION";
+export interface UpdateUserPasswordAction extends StateAction {
+    newPassword: string, 
+    userName: string
 }
 
 @Injectable()
@@ -22,14 +21,15 @@ export class UpdateUserPasswordHttpEffect implements Effect<UpdateUserPasswordAc
     handle$(actions$: Observable<DispatchedAction<UpdateUserPasswordAction>>): Observable<HttpAction> {
         return actions$.pipe(
             listenTo([UpdateUserPasswordAction]),
-            map(x => new HttpAction(
-                {
+            map(x => <HttpAction>{
+                type: HttpAction, propagate: true,
+                request: {
                     apiUrl: `${ApiUrl.Users}/${x.action.userName}/NewPassword`,
                     method: "PUT", 
                     body: x.action
                 },
-                x.stateSnapshot
-            ))
+                stateSnapshot: x.stateSnapshot
+            })
         )
     }
 }

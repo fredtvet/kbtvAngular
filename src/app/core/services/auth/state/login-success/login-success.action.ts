@@ -3,10 +3,9 @@ import { Immutable } from '@immutable/interfaces';
 import { StateAction } from '@state/state.action';
 import { LoginResponse } from '../../interfaces';
 
-export class LoginSuccessAction extends StateAction { 
-    constructor(
-        public response: LoginResponse,
-        public previousUser?: Immutable<User>,
-        public returnUrl?: string
-    ){ super() }   
+export const LoginSuccessAction = "LOGIN_SUCCESS_ACTION";
+export interface LoginSuccessAction extends StateAction {
+    response: LoginResponse,
+    previousUser?: Immutable<User>,
+    returnUrl?: string  
 }

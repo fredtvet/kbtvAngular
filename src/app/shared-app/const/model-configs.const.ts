@@ -12,7 +12,7 @@ export const ModelConfigs: ModelConfig<any, ModelState>[] = [
         displayProp: "address",
         foreignProp: "mission",
         foreignKey: "missionId",
-        children: ["missionImages", "missionDocuments", "missionNotes", "timesheets"], 
+        children: ["missionImages", "missionDocuments", "missionNotes", "timesheets", "userTimesheets"], 
         foreigns: ["missionTypes","employers"],       
     },
     <ModelConfig<MissionType, ModelState>>{

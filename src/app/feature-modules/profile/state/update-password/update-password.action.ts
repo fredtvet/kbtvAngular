@@ -1,8 +1,7 @@
 import { StateAction } from '@state/state.action';
 
-export class UpdatePasswordAction extends StateAction {
-    constructor(
-        public oldPassword: string, 
-        public newPassword: string
-    ){ super() }
+export const UpdatePasswordAction = "UPDATE_PASSWORD_ACTION";
+export interface UpdatePasswordAction extends StateAction {
+    oldPassword: string, 
+    newPassword: string
 }

@@ -1,8 +1,7 @@
 import { StateAction } from '@state/state.action'
 
-export class LogoutAction extends StateAction { 
-    constructor(
-        public refreshToken?: string, 
-        public returnUrl?: string
-    ){ super() } 
+export const LogoutAction = "LOGOUT_ACTION";
+export interface LogoutAction extends StateAction {
+    refreshToken?: string, 
+    returnUrl?: string
 }

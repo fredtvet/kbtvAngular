@@ -7,8 +7,9 @@ import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { Immutable } from '@immutable/interfaces';
 import { StateAction } from '@state/state.action';
 
-export class SetFetchedTimesheetsAction extends StateAction {
-    constructor(public timesheets: Timesheet[]){ super() };
+export const SetFetchedTimesheetsAction = "SET_FETCHED_TIMESHEETS_ACTION";
+export interface SetFetchedTimesheetsAction extends StateAction {
+    timesheets: Timesheet[]
 }
 
 type State = Immutable<StateTimesheets & StateMissions>;

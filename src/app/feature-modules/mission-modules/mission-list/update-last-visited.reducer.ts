@@ -3,8 +3,9 @@ import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { Immutable } from '@immutable/interfaces';
 import { StateAction } from '@state/state.action';
 
-export class UpdateLastVisitedAction extends StateAction { 
-    constructor(public id: string){ super() }; 
+export const UpdateLastVisitedAction = "UPDATE_LAST_VISITED_ACTION";
+export interface UpdateLastVisitedAction extends StateAction {
+    id: string
 }
 
 export const UpdateLastVisitedReducer= _createReducer(

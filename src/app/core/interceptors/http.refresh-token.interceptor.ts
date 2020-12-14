@@ -20,7 +20,7 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
         }
 
         //Dont handle expired tokens on refresh requests, nor if any token is missing.
-        if(!this.isRefreshRequest(req) && this.authService.hasAccessTokenExpired){      
+        if(!this.isRefreshRequest(req) && this.authService.hasAccessTokenExpired){    
             return merge(
                 of(null).pipe(tap(x => this.authService.refreshToken())),
                 this.authService.newAccessToken$.pipe(take(1), pluck('token')),

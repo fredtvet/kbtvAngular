@@ -37,7 +37,7 @@ export class StatePersisterService {
             if(this.stateMap[prop]) 
                 this.stateDbService.set(prop, payload)
             else if(this.criticalStateMap[prop]) 
-                window.localStorage.setItem(prop as string, JSON.stringify(payload))
+                window.localStorage.setItem(prop, JSON.stringify(payload))
         }
     }
 

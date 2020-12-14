@@ -4,8 +4,9 @@ import { Immutable } from '@immutable/interfaces';
 import { StateAction } from '@state/state.action';
 import { ComponentStoreState } from '../store-state';
 
-export class SetGroupByAction extends StateAction { 
-    constructor(public groupBy: GroupByPeriod){ super() } 
+export const SetGroupByAction = "SET_GROUP_BY_ACTION";
+export interface SetGroupByAction extends StateAction {
+    groupBy: GroupByPeriod
 }
 
 export const SetGroupByReducer= _createReducer(

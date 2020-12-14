@@ -1,6 +1,7 @@
 import { StateAction } from '@state/state.action';
 import { QueuedCommand } from '../../interfaces';
 
-export class HttpQueuePushAction extends StateAction {
-    constructor(public command: QueuedCommand){ super() }
+export const HttpQueuePushAction = "HTTP_QUEUE_PUSH_ACTION";
+export interface HttpQueuePushAction extends StateAction {
+    command: QueuedCommand
 }

@@ -61,14 +61,14 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
         private componentStore: ComponentStore<ComponentStoreState>
     ){
         super();
-        this.componentStore.selectProperty$("timesheetCriteria").pipe(takeUntil(this.unsubscribe)).subscribe(criteria => 
-            this.store.dispatch(new FetchTimesheetsAction(criteria)))
+        this.componentStore.selectProperty$("timesheetCriteria").pipe(takeUntil(this.unsubscribe)).subscribe(timesheetCriteria => 
+            this.store.dispatch(<FetchTimesheetsAction>{ type: FetchTimesheetsAction, timesheetCriteria }))
     }
 
     updateCriteria = (timesheetCriteria: Immutable<TimesheetCriteria>): void =>       
-        this.componentStore.dispatch(new SetTimesheetCriteriaAction(timesheetCriteria))
+        this.componentStore.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, timesheetCriteria })
 
     updateGroupBy = (groupBy: GroupByPeriod): void =>       
-        this.componentStore.dispatch(new SetGroupByAction(groupBy))
+        this.componentStore.dispatch(<SetGroupByAction>{ type: SetGroupByAction, groupBy })
 
 }

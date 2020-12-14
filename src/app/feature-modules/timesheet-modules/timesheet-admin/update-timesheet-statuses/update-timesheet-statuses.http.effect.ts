@@ -16,7 +16,11 @@ export class UpdateTimesheetStatusesHttpEffect implements Effect<UpdateTimesheet
     handle$(actions$: Observable<DispatchedAction<UpdateTimesheetStatusesAction>>): Observable<HttpAction> {
         return actions$.pipe(
             listenTo([UpdateTimesheetStatusesAction]),
-            map(x => new HttpAction(this.createHttpRequest(x.action), x.stateSnapshot)),
+            map(x => <HttpAction>{ 
+                type: HttpAction, propagate: true,
+                request: this.createHttpRequest(x.action), 
+                stateSnapshot: x.stateSnapshot 
+            }),
         )
     }
 

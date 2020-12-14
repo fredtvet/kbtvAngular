@@ -19,8 +19,8 @@ export class ReloadSyncStateEffect implements Effect<StateAction> {
         return actions$.pipe(
             listenTo([ReloadSyncStateAction]), 
             mergeMap(x => of(
-                new WipeSyncStateAction(this.syncStateConfig),
-                new SyncStateAction()
+                <WipeSyncStateAction>{ type: WipeSyncStateAction, syncStateConfig: this.syncStateConfig },
+                <SyncStateAction>{ type: SyncStateAction }
             )), 
         )
     }

@@ -23,7 +23,11 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<any>>{
     handle$(actions$: Observable<DispatchedAction<DeleteModelAction<any>>>): Observable<HttpAction> {
         return actions$.pipe(
             listenTo([DeleteModelAction]),
-            map(x => new HttpAction(this.createHttpRequest(x.action), x.stateSnapshot)),  
+            map(x => <HttpAction>{ 
+                type: HttpAction, propagate: true,
+                request: this.createHttpRequest(x.action), 
+                stateSnapshot: x.stateSnapshot 
+            }),  
         )
     }
 

@@ -21,5 +21,5 @@ export class HomeTopNavComponent{
 
     toggleDrawer = () => this.mainNavService.toggleDrawer();
 
-    refresh = () => this.store.dispatch(new SyncStateAction());
+    refresh = () => this.store.dispatch(<SyncStateAction>{ type: SyncStateAction, propagate: true });
 }

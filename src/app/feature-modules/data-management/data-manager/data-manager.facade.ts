@@ -36,7 +36,7 @@ export class DataManagerFacade  {
     ) { }
 
     updateSelectedProperty = (prop: Prop<ModelState>) => 
-        this.componentStore.dispatch(new UpdateSelectedPropertyAction(prop))
+        this.componentStore.dispatch(<UpdateSelectedPropertyAction>{ type: UpdateSelectedPropertyAction, selectedProperty: prop })
 
     update = (form: Model): void =>
         this.store.dispatch(_formToSaveModelConverter({
@@ -46,8 +46,12 @@ export class DataManagerFacade  {
         }))
     
   
-    delete = (command: {id?: string, ids?: string[]}): void => 
-        this.store.dispatch(new DeleteModelAction(this.selectedProperty, command));
+    delete = (payload: {id?: string, ids?: string[]}): void => 
+        this.store.dispatch(<DeleteModelAction<ModelState>>{ 
+            type: DeleteModelAction, 
+            stateProp: this.selectedProperty, 
+            payload 
+        });
  
     private getDataConfig$(property: Prop<ModelState>): Observable<DataConfig>{        
         let relationCfg = new GetWithRelationsConfig(property, null, "all");

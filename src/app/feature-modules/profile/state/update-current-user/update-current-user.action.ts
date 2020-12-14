@@ -1,6 +1,7 @@
 import { User } from '@core/models';
 import { StateAction } from '@state/state.action';
 
-export class UpdateCurrentUserAction extends StateAction{
-    constructor(public user: User){ super() };
+export const UpdateCurrentUserAction = "UPDATE_CURRENT_USER_ACTION";
+export interface UpdateCurrentUserAction extends StateAction{
+    user: User
 }

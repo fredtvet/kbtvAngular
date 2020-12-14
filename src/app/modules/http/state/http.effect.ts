@@ -9,14 +9,12 @@ import { OPTIMISTIC_STATE_SELECTOR } from '../injection-tokens.const';
 import { HttpRequest, OptimisticStateSelector } from '../interfaces';
 import { HttpQueuePushAction } from './http-queue-push/http-queue-push.action';
 
-export class HttpAction extends StateAction {
-    constructor(
-        public request: HttpRequest, 
-        public stateSnapshot: Immutable<any>
-    ){ super() }
-    
-    propagate: boolean = true;
+export const HttpAction = "HTTP_ACTION";
+export interface HttpAction extends StateAction {
+    request: HttpRequest, 
+    stateSnapshot: Immutable<any>
 }
+
 @Injectable()
 export class HttpEffect implements Effect<HttpAction> {
 
@@ -29,10 +27,13 @@ export class HttpEffect implements Effect<HttpAction> {
     handle$(actions$: Observable<DispatchedAction<HttpAction>>): Observable<HttpQueuePushAction> {
         return actions$.pipe(
             listenTo([HttpAction], false),
-            map(x => new HttpQueuePushAction({
-                request: x.action.request, 
-                stateSnapshot: this.getOptimisticState(x.action.stateSnapshot)
-            }))
+            map(x => <HttpQueuePushAction>{
+                type: HttpQueuePushAction,
+                command: {
+                    request: x.action.request, 
+                    stateSnapshot: this.getOptimisticState(x.action.stateSnapshot)
+                }    
+            })
         )
     }
     

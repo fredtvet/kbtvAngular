@@ -14,7 +14,11 @@ export class CreateMissionImagesHttpEffect implements Effect<CreateMissionImages
     handle$(actions$: Observable<DispatchedAction<CreateMissionImagesAction>>): Observable<HttpAction> {
         return actions$.pipe(
             listenTo([CreateMissionImagesAction]),
-            map(x => new HttpAction(this.createHttpRequest(x.action), x.stateSnapshot)),        
+            map(x => <HttpAction>{ 
+                type: HttpAction, propagate: true,
+                request: this.createHttpRequest(x.action), 
+                stateSnapshot: x.stateSnapshot 
+            }),        
         )
     }
 

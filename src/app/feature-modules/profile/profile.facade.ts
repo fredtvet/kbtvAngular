@@ -25,17 +25,17 @@ export class ProfileFacade {
   ) {}
   
   updateCurrentUser = (user: User): void => 
-    this.store.dispatch(new UpdateCurrentUserAction(user));
+    this.store.dispatch(<UpdateCurrentUserAction>{ type: UpdateCurrentUserAction, user });
   
   updatePassword = (oldPassword: string, newPassword: string) => 
-    this.store.dispatch(new UpdatePasswordAction(oldPassword, newPassword));
+    this.store.dispatch(<UpdatePasswordAction>{ type: UpdatePasswordAction, oldPassword, newPassword });
   
   updateSyncConfig = (syncConfig: SyncConfig) => 
-    this.store.dispatch(new UpdateSyncConfigAction(syncConfig));
+    this.store.dispatch(<UpdateSyncConfigAction>{ type: UpdateSyncConfigAction, syncConfig, propagate: true });
   
-  syncAll = () => this.store.dispatch(new SyncStateAction());
+  syncAll = () => this.store.dispatch(<SyncStateAction>{ type: SyncStateAction, propagate: true });
 
-  reloadData = () => this.store.dispatch(new ReloadSyncStateAction());
+  reloadData = () => this.store.dispatch(<ReloadSyncStateAction>{ type: ReloadSyncStateAction, propagate: true });
 
   logout = () => this.authService.logout(); 
 

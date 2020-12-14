@@ -1,10 +1,9 @@
-import { Inject, Injectable, Type } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpRequest } from '@http/interfaces';
 import { HttpAction } from '@http/state/http.effect';
 import { Immutable } from '@immutable/interfaces';
 import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
-import { StateAction } from '@state/state.action';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens.const';
@@ -15,7 +14,7 @@ import { SaveModelAction } from './save-model.action';
 
 @Injectable()
 export class SaveModelHttpEffect implements Effect<SaveModelAction<any, any>> {
-    protected action: Type<StateAction> = SaveModelAction
+    protected type: string = SaveModelAction
     
     constructor(
         @Inject(COMMAND_API_MAP) private apiMap: CommandApiMap,
@@ -24,8 +23,12 @@ export class SaveModelHttpEffect implements Effect<SaveModelAction<any, any>> {
 
     handle$(actions$: Observable<DispatchedAction<SaveModelAction<any, any>>>): Observable<HttpAction> {
         return actions$.pipe(
-            listenTo([this.action]),
-            map(x => new HttpAction(this.createHttpRequest(x.action), x.stateSnapshot)),
+            listenTo([this.type]),
+            map(x => <HttpAction>{ 
+                type: HttpAction, propagate: true,
+                request: this.createHttpRequest(x.action), 
+                stateSnapshot: x.stateSnapshot 
+            }),
         )
     }
 

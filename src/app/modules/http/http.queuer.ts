@@ -19,7 +19,7 @@ export class HttpQueuer {
         of(navigator.onLine)
       ).pipe(
         first(x => x === true), //Wait for online
-        tap(x => this.store.dispatch(new DispatchHttpAction(queue[0].request)))
+        tap(x => this.store.dispatch(<DispatchHttpAction>{ type: DispatchHttpAction, request: queue[0].request }))
       )
     )
   );

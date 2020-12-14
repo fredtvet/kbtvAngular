@@ -1,3 +1,4 @@
 import { StateAction } from '@state/state.action';
 
-export class HttpSuccessAction extends StateAction {}
+export const HttpSuccessAction = "HTTP_SUCCESS_ACTION";
+export interface HttpSuccessAction extends StateAction {}

@@ -13,6 +13,7 @@ export function _deleteModelWithChildren<TState>(
   if(!cfg.id && !cfg.ids) console.error("deleteEntityChildren config requires either id or ids property set.")       
   
   let filterFactory: (key: string) => (x: Object) => boolean;
+
   if(cfg.id) 
     filterFactory = (key: string) => (x: Object) => x[key] !== cfg.id;  
   else if(cfg.ids) {

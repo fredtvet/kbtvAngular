@@ -17,5 +17,11 @@ export const _userFormToSaveUserConverter: FormToSaveModelConverter<UserForm, Mo
     
     entity = _modelIdGenerator(input.stateProp, entity); 
 
-    return new SaveUserAction(entity, input.formValue.password, input.saveAction)
+    return <SaveUserAction>{ 
+        type: SaveUserAction, 
+        entity, 
+        password: input.formValue.password, 
+        saveAction: input.saveAction,  
+        stateProp:"users" 
+    }
 }

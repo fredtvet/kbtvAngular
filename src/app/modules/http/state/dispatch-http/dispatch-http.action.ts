@@ -1,6 +1,7 @@
 import { StateAction } from '@state/state.action';
 import { HttpRequest } from '../../interfaces';
 
-export class DispatchHttpAction extends StateAction { 
-    constructor(public request: HttpRequest){ super() } 
+export const DispatchHttpAction = "DISPATCH_HTTP_ACTION";
+export interface DispatchHttpAction extends StateAction {
+    request: HttpRequest
 }

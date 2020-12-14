@@ -1,8 +1,7 @@
 import { StateAction } from '@state/state.action';
 
-export class HttpErrorAction extends StateAction {
-    constructor(
-        public ignoreInitialError?: boolean, 
-        public customErrorTitle?: string,
-    ){ super() }
+export const HttpErrorAction = "HTTP_ERROR_ACTION";
+export interface HttpErrorAction extends StateAction {
+    ignoreInitialError?: boolean, 
+    customErrorTitle?: string,
 }

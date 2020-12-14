@@ -16,7 +16,11 @@ export class UpdateCurrentUserHttpEffect implements Effect<UpdateCurrentUserActi
     handle$(actions$: Observable<DispatchedAction<UpdateCurrentUserAction>>): Observable<HttpAction> {
         return actions$.pipe(
             listenTo([UpdateCurrentUserAction]),
-            map(x => new HttpAction(this.createHttpRequest(x.action), x.stateSnapshot)),  
+            map(x => <HttpAction>{ 
+                type: HttpAction, propagate: true,
+                request: this.createHttpRequest(x.action), 
+                stateSnapshot: x.stateSnapshot 
+            }),  
         )
     }
 

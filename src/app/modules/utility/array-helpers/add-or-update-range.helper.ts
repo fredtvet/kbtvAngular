@@ -5,7 +5,7 @@ export function _addOrUpdateRange<T>(
     originals: ImmutableArray<T>, 
     newEntities: ImmutableArray<T>, 
     identifier: string): Immutable<T>[]{   
-          
+
     if(!newEntities?.length) return originals?.slice(); //If no entities, just return current val
     if(!originals?.length) return newEntities.slice(); //If initial array empty, just return empty array
 
@@ -15,7 +15,7 @@ export function _addOrUpdateRange<T>(
       let newObj = newEntities[i];
       const itemKey = identifier ? newObj[identifier] : newObj; //Use identifier as key else obj
       let existingObj = originalsObj[itemKey]; //Grab existing obj
-      if(existingObj) Object.assign(existingObj, newObj); //If obj exist, update it with new obj
+      if(existingObj) originalsObj[itemKey] = {...existingObj, ...newObj}; //If obj exist, update it with new obj
       else originalsObj[itemKey] = newObj;    
     } 
 

@@ -18,7 +18,7 @@ import { filterRecords } from '@shared/operators/filter-records.operator';
 import { ComponentStore } from '@state/component.store';
 import { Store } from '@state/store';
 import { combineLatest, Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { ComponentStoreState, StoreState } from './interfaces/store-state';
 import { SetMissionCriteriaAction } from './set-mission-criteria.reducer';
 import { UpdateLastVisitedAction } from './update-last-visited.reducer';
@@ -31,7 +31,7 @@ export class MissionListFacade {
     this.componentStore.selectProperty$<MissionCriteria>("missionCriteria")
   ]).pipe(
     filterRecords<Mission, MissionCriteria>(MissionFilter, null, true),   
-    map(x => _sortByDate(x.records, "updatedAt") ),
+    map(x => _sortByDate(x.records, "updatedAt") )
   );
 
   criteria$ = 
@@ -64,7 +64,7 @@ export class MissionListFacade {
   }
 
   addCriteria = (missionCriteria: MissionCriteria): void => 
-    this.componentStore.dispatch(new SetMissionCriteriaAction(missionCriteria));
+    this.componentStore.dispatch(<SetMissionCriteriaAction>{ type: SetMissionCriteriaAction, missionCriteria });
     
   updateHeaderImage(id: string, file: File): void {
     if(!_validateFileExtension(file, ImageFileExtensions)) 
@@ -84,6 +84,6 @@ export class MissionListFacade {
   }
 
   private updateLastVisited = (id: string): void => 
-    this.store.dispatch(new UpdateLastVisitedAction(id))
+    this.store.dispatch(<UpdateLastVisitedAction>{ type: UpdateLastVisitedAction, id })
 
 }

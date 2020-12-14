@@ -10,11 +10,10 @@ import { StateAction } from '@state/state.action';
 import { LoginSuccessAction } from './login-success/login-success.action';
 import { StateCurrentUser } from '@core/state/global-state.interfaces';
 
-export class LoginAction extends StateAction { 
-    constructor(
-        public credentials: Credentials,
-        public returnUrl?: string 
-    ){ super() }   
+export const LoginAction = "LOGIN_ACTION";
+export interface LoginAction extends StateAction {
+    credentials: Credentials,
+    returnUrl?: string  
 }
 
 @Injectable()
@@ -31,11 +30,12 @@ export class LoginHttpEffect implements Effect<LoginAction> {
 
     private login$(dispatched: DispatchedAction<LoginAction, StateCurrentUser>): Observable<LoginSuccessAction> {
         return this.apiService.post(ApiUrl.Auth + '/login', dispatched.action.credentials).pipe(
-            map(response => new LoginSuccessAction(
+            map(response => <LoginSuccessAction>{
+                type: LoginSuccessAction,
                 response, 
-                dispatched.stateSnapshot.currentUser,
-                dispatched.action.returnUrl
-            ))
+                previousUser: dispatched.stateSnapshot.currentUser,
+                returnUrl: dispatched.action.returnUrl
+            })
         )
     }
 }

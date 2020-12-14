@@ -4,8 +4,9 @@ import { StateAction } from '@state/state.action'
 import { RefreshTokenResponse } from '../interfaces'
 import { StoreState } from '../interfaces/store-state'
 
-export class RefreshTokenSuccessAction extends StateAction {
-    constructor(public response: RefreshTokenResponse){ super() } 
+export const RefreshTokenSuccessAction = "REFRESH_TOKEN_SUCCESS_ACTION";
+export interface RefreshTokenSuccessAction extends StateAction {
+    response: RefreshTokenResponse
 }
 
 export const RefreshTokenSuccessReducer = _createReducer(

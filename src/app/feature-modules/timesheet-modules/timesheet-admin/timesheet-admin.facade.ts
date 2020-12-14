@@ -59,20 +59,20 @@ export class TimesheetAdminFacade {
         private store: Store<StoreState>,
         private componentStore: ComponentStore<ComponentStoreState>
     ){
-        this.componentStore.selectProperty$("timesheetCriteria").subscribe(criteria => 
-            this.store.dispatch(new FetchTimesheetsAction(criteria)))
+        this.componentStore.selectProperty$("timesheetCriteria").subscribe(timesheetCriteria => 
+            this.store.dispatch(<FetchTimesheetsAction>{ type: FetchTimesheetsAction, timesheetCriteria }))
     }
     
     updateCriteria = (weekCriteria: WeekCriteria): void =>       
-        this.componentStore.dispatch(new SetTimesheetCriteriaAction(weekCriteria))
+        this.componentStore.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, weekCriteria })
 
     updateWeekNr = (weekNr: number | string): void => {  
-        const parsedWeekNr = (typeof weekNr === "number") ? weekNr : parseInt(weekNr);
-        this.componentStore.dispatch(new SetSelectedWeekAction(parsedWeekNr))
+        weekNr = (typeof weekNr === "number") ? weekNr : parseInt(weekNr);
+        this.componentStore.dispatch(<SetSelectedWeekAction>{ type: SetSelectedWeekAction, weekNr })
     }
     
     updateStatuses(ids: string[], status: TimesheetStatus): void{
         if(ids.length == 0) return;
-        this.store.dispatch(new UpdateTimesheetStatusesAction(ids, status));      
+        this.store.dispatch(<UpdateTimesheetStatusesAction>{ type: UpdateTimesheetStatusesAction, ids, status });      
     }
 }

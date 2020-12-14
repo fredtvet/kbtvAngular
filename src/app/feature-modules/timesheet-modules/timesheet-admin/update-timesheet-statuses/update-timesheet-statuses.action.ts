@@ -1,9 +1,8 @@
 import { TimesheetStatus } from '@shared/enums';
 import { StateAction } from '@state/state.action';
 
-export class UpdateTimesheetStatusesAction extends StateAction{
-    constructor(
-        public ids: string[],
-        public status: TimesheetStatus
-    ){ super() }
+export const UpdateTimesheetStatusesAction = "UPDATE_TIMESHEET_STATUSES_ACTION";
+export interface UpdateTimesheetStatusesAction extends StateAction{
+    ids: string[],
+    status: TimesheetStatus
 }

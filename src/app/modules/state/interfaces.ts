@@ -1,4 +1,3 @@
-import { Type } from '@angular/core'
 import { Immutable, ImmutableArray } from '@immutable/interfaces'
 import { Observable } from 'rxjs'
 import { StateAction } from './state.action'
@@ -16,13 +15,11 @@ export interface Effect<TAction extends StateAction> {
 
 export type ReducerFn<TState, TAction> = (state: Immutable<TState>, action: Immutable<TAction>) => Partial<TState>
 
-export type ReducerMap = {[key: string]: Reducer<any, StateAction>[]}
+export type ReducerMap = {[key: string]: ImmutableArray<Reducer<any, StateAction>>}
 
 export interface Reducer<TState, TAction extends StateAction> {
-    action: Type<TAction>;
+    type: string;
     reducerFn: ReducerFn<TState, TAction>;
-    // stateProperties?: ((action: Readonly<TAction>) => Prop<TState>[]) | Prop<TState>[] | 'all';
-    // noDeepCloneState?: boolean;
     noDeepCloneAction?: boolean
 }
 
@@ -30,7 +27,7 @@ export type MetaReducer<TState, TAction extends StateAction> =
     (reducer: Immutable<Reducer<TState, TAction>>) => Reducer<TState, TAction>
 
 export interface StateChanges<T> {
-    action?: string,
+    action?: string, //unuseD?
     stateChanges: Immutable<Partial<T>>;
     state: Immutable<T>;
 }

@@ -6,7 +6,6 @@ import { HttpErrorAction } from './http-error.action';
 export const HttpErrorReducer= _createReducer(
     HttpErrorAction,
     (state: Immutable<StateRequestQueue>, action) => {
-        console.log('error', state, action)
         if(!state.requestQueue) return null;
         const currentRequest = state.requestQueue[0];
         return { ...currentRequest.stateSnapshot, requestQueue: [] };

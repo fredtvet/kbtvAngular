@@ -52,7 +52,7 @@ export class UserTimesheetListFacade {
       }
       
       updateCriteria = (timesheetCriteria: Immutable<TimesheetCriteria>) => 
-          this.componentStore.dispatch(new SetTimesheetCriteriaAction(timesheetCriteria));
+          this.componentStore.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, timesheetCriteria });
 
       private setInitialCriteria(){
         let rawCriteria = this.route.snapshot.params.criteria;

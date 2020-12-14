@@ -23,5 +23,9 @@ export const _timesheetFormToSaveUserTimesheetConverter: FormToSaveModelConverte
         entity = _flattenExistingForeigns<Timesheet>(input.stateProp, entity, input.options);
         entity = _modelIdGenerator<Timesheet>(input.stateProp, entity); 
 
-        return new SaveUserTimesheetAction(entity, input.saveAction)
+        return <SaveUserTimesheetAction>{ 
+            type: SaveUserTimesheetAction, entity, 
+            stateProp: "userTimesheets",
+            saveAction: input.saveAction
+        }
     }

@@ -4,12 +4,11 @@ import { SaveAction } from '@model/interfaces';
 import { Prop } from '@state/interfaces';
 import { ModelStateAction } from '../model-state.action';
 
-export class SaveModelAction<TModel, TState> extends ModelStateAction<TState>{
-    constructor(
-        stateProp: Prop<TState>,
-        public entity: Immutable<TModel>,
-        public saveAction: SaveAction,  
-        public apiUrlOverride?: string
-    ){ super(stateProp) }
+export const SaveModelAction = "SAVE_MODEL_ACTION";
+export interface SaveModelAction<TModel, TState> extends ModelStateAction<TState>{
+    stateProp: Prop<TState>,
+    entity: Immutable<TModel>,
+    saveAction: SaveAction,  
+    apiUrlOverride?: string
 }
 

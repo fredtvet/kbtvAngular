@@ -18,9 +18,9 @@ export class DispatchHttpEffect implements Effect<DispatchHttpAction> {
         return actions$.pipe(
             listenTo([DispatchHttpAction], false),
             mergeMap(x => this.httpFactory.getObserver$(x.action.request)),
-            map(x => new HttpSuccessAction()) 
+            map(x => <HttpSuccessAction>{ type: HttpSuccessAction })
         )
     }
 
-    onErrorAction = (err: any) => new HttpErrorAction(true)
+    onErrorAction = (err: any) => <HttpErrorAction>{ type: HttpErrorAction, ignoreInitialError: true }
 }

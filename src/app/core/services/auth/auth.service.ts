@@ -38,7 +38,7 @@ export class AuthService {
     return this.getAccessToken() != null && this.getRefreshToken() != null;
   }
 
-  constructor (private store: Store<StoreState>, private actionDispatcher: ActionDispatcher) { }
+  constructor (private store: Store<StoreState>) { }
 
   getAccessToken = (): string => 
     this.store.selectProperty<AccessToken>("accessToken")?.token 
@@ -47,16 +47,18 @@ export class AuthService {
     this.store.selectProperty<User>("currentUser") 
   
   login = (credentials: Credentials, returnUrl?: string): void => 
-    this.store.dispatch(new LoginAction(credentials, returnUrl))
+    this.store.dispatch(<LoginAction>{ type: LoginAction, credentials, returnUrl })
   
   logout = (returnUrl?: string): void =>
-    this.store.dispatch(new LogoutAction(this.getRefreshToken(), returnUrl))
+    this.store.dispatch(<LogoutAction>{ type: LogoutAction, refreshToken: this.getRefreshToken(), returnUrl })
   
   refreshToken = (): void => 
-    this.store.dispatch(new RefreshTokenAction({
-      accessToken: this.getAccessToken(), 
-      refreshToken: this.getRefreshToken()
-    }))
+    this.store.dispatch(<RefreshTokenAction>{ type: RefreshTokenAction,
+      tokens: {
+        accessToken: this.getAccessToken(), 
+        refreshToken: this.getRefreshToken()
+      }
+    })
 
   private getRefreshToken = (): string => 
     this.store.selectProperty<string>("refreshToken") 

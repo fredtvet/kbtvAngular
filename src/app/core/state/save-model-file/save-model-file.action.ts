@@ -6,12 +6,11 @@ import { SaveModelAction } from '@model/state/save-model/save-model.action';
 import { Prop } from '@state/interfaces';
 import { ModelState } from '../model-state.interface';
 
-export class SaveModelFileAction<TModel extends ModelFile> extends SaveModelAction<TModel, ModelState>{
-    constructor(
+export const SaveModelFileAction = SaveModelAction+"_FILE";
+export interface SaveModelFileAction<TModel extends ModelFile> extends SaveModelAction<TModel, ModelState>{
         stateProp: Prop<ModelState>,
         entity: Immutable<TModel>,
-        public fileWrapper: ModelFileWrapper,
+        fileWrapper: ModelFileWrapper,
         saveAction: SaveAction,  
         apiUrlOverride?: string,   
-    ){ super(stateProp, entity, saveAction, apiUrlOverride) };
 }

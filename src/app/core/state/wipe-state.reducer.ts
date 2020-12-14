@@ -2,8 +2,9 @@ import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { Immutable } from '@immutable/interfaces';
 import { StateAction } from '@state/state.action';
 
-export class WipeStateAction extends StateAction { 
-  constructor(public defaultState: any){ super() } 
+export const WipeStateAction = "WIPE_STATE_ACTION";
+export interface WipeStateAction extends StateAction {
+  defaultState: any
 }
 
 export const WipeStateReducer = _createReducer(

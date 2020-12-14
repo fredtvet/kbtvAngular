@@ -27,7 +27,7 @@ export class SyncStateHttpEffect implements Effect<StateAction> {
             listenTo([SyncStateAction, WipeSyncStateAction]),
             filter(x => navigator.onLine),
             exhaustMap(x => this.httpFetcher.fetch$(this.syncConfig, this.syncTimestamp)),
-            map(response => new SyncStateSuccessAction(response, this.syncStateConfig))
+            map(response => <SyncStateSuccessAction>{ type: SyncStateSuccessAction, response, syncStateConfig: this.syncStateConfig })
         )
     }
 }

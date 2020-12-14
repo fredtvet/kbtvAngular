@@ -33,5 +33,5 @@ export class ContinousSyncService {
       if(timeSinceLastSync > syncConfig?.refreshTime) this.syncAll();             
     }
 
-    private syncAll = () : void => this.store.dispatch(new SyncStateAction())
+    private syncAll = () : void => this.store.dispatch(<SyncStateAction>{ type: SyncStateAction })
 }

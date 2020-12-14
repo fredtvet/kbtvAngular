@@ -1,6 +1,6 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { PERSISTED_CRITICAL_STATE_PROPS, PERSISTED_STATE_PROPS } from './injection-tokens.const';
 import { StateDbService } from './state-db.service';
 

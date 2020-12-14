@@ -1,23 +1,20 @@
-import { StateAction } from '../state.action';
+import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { _deepClone } from '../helpers/deep-clone.helper'
+import { _deepClone } from '../helpers/deep-clone.helper';
 import { DispatchedAction } from '../interfaces';
-import { Type } from '@angular/core';
-import { _cloneInstance } from '@state/helpers/clone-instance.helper';
+import { StateAction } from '../state.action';
 
-export const listenTo = <TAction extends StateAction, TState>(actions: Type<StateAction>[], deepCloneAction: boolean = true) => 
-    (source: Observable<DispatchedAction<TAction, TState>> ): Observable<DispatchedAction<TAction, TState>> => 
+export const listenTo = <TAction extends StateAction, TState>(types: string[], deepCloneAction: boolean = true) => {
+    const typeLookup: {[key: string]: string} = _convertArrayToObject(types);
+    return (source: Observable<DispatchedAction<TAction, TState>> ): Observable<DispatchedAction<TAction, TState>> => 
         source.pipe(
-            filter(dispatched => {
-                const actionName = dispatched.action.constructor.name;
-                if(actions.length === 1) return actionName === actions[0].name
-                return actions.find(action => action.name === actionName) !== undefined
-            }),  
-            map(dispatched => {
+            filter(dispatched => typeLookup[dispatched.action.type] !== undefined),  
+            map(dispatched => { 
                 return {
                     ...dispatched, 
-                    action: _cloneInstance<TAction>(dispatched.action, deepCloneAction)
+                    action: deepCloneAction ? _deepClone<TAction>(dispatched.action) : dispatched.action
                 }
             })
         )
+}

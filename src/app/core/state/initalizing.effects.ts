@@ -61,8 +61,12 @@ export class InitalizeHttpQueueEffect implements Effect<SyncStateSuccessAction> 
         const lastCommandStatus = this.store.selectProperty<User>("currentUser")?.lastCommandStatus;
 
         if (!lastCommandStatus) 
-            this.store.dispatch(new HttpErrorAction(false, "Noe gikk feil ved forrige økt!"))
+            this.store.dispatch(<HttpErrorAction>{ 
+                type: HttpErrorAction, 
+                ignoreInitialError: false, 
+                customErrorTitle: "Noe gikk feil ved forrige økt!" 
+            })
         else
-            this.store.dispatch(new HttpQueueShiftAction())   
+            this.store.dispatch(<HttpQueueShiftAction>{ type: HttpQueueShiftAction }) 
     }
 }

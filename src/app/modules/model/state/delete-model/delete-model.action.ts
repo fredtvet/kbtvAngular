@@ -1,9 +1,8 @@
 import { Prop } from '@state/interfaces';
 import { ModelStateAction } from '../model-state.action';
 
-export class DeleteModelAction<TState> extends ModelStateAction<TState>{
-    constructor(
-        stateProp: Prop<TState>,
-        public payload: {id?: any, ids?: any[]}
-    ){ super(stateProp) }
+export const DeleteModelAction = "DELETE_MODEL_ACTION";
+export interface DeleteModelAction<TState> extends ModelStateAction<TState>{
+    stateProp: Prop<TState>,
+    payload: {id?: any, ids?: any[]}
 }

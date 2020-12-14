@@ -12,8 +12,9 @@ import { TimesheetCriteria } from '../timesheet-filter/timesheet-criteria.interf
 import { TimesheetFilter } from '../timesheet-filter/timesheet-filter.model';
 import { SetFetchedTimesheetsAction } from './set-fetched-timesheets.reducer';
 
-export class FetchTimesheetsAction extends StateAction {
-    constructor(public timesheetCriteria: TimesheetCriteria){ super() };
+export const FetchTimesheetsAction = "FETCH_TIMESHEETS_ACTION";
+export interface FetchTimesheetsAction extends StateAction {
+    timesheetCriteria: TimesheetCriteria
 }
 
 @Injectable()
@@ -39,7 +40,7 @@ export class FetchTimesheetsHttpEffect implements Effect<FetchTimesheetsAction> 
         FetchTimesheetsHttpEffect.baseCriteria = action.timesheetCriteria;
         return this.fetch$(action.timesheetCriteria).pipe(
             take(1),
-            map(timesheets => new SetFetchedTimesheetsAction(timesheets))
+            map(timesheets => <SetFetchedTimesheetsAction>{ type: SetFetchedTimesheetsAction, timesheets })
         )        
   }
     

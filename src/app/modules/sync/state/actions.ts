@@ -1,22 +1,24 @@
 import { StateAction } from '@state/state.action';
 import { SyncConfig, SyncResponse, SyncStateConfig } from '../interfaces';
 
-export class SyncStateAction extends StateAction { propagate: boolean = true; }
+export const SyncStateAction = "SYNC_STATE_ACTION";
+export interface SyncStateAction extends StateAction { }
 
-export class SyncStateSuccessAction extends StateAction {
-    constructor(
-        public response: SyncResponse<any>,
-        public syncStateConfig: SyncStateConfig<any>,
-    ){ super() }
+export const SyncStateSuccessAction = "SYNC_STATE_SUCCESS_ACTION";
+export interface SyncStateSuccessAction extends StateAction {
+    response: SyncResponse<any>,
+    syncStateConfig: SyncStateConfig<any>
 }   
 
-export class UpdateSyncConfigAction extends StateAction { 
-    constructor(public syncConfig: SyncConfig){ super() }
-    propagate: boolean = true;
+export const UpdateSyncConfigAction = "UPDATE_SYNC_CONFIG_ACTION";
+export interface UpdateSyncConfigAction extends StateAction {
+    syncConfig: SyncConfig
 }   
 
-export class WipeSyncStateAction extends StateAction {
-    constructor(public syncStateConfig: SyncStateConfig<any>){ super() }
+export const WipeSyncStateAction = "WIPE_SYNC_STATE_ACTION";
+export interface WipeSyncStateAction extends StateAction {
+    syncStateConfig: SyncStateConfig<any>
 }
 
-export class ReloadSyncStateAction extends StateAction { propagate: boolean = true; }
+export const ReloadSyncStateAction = "RELOAD_SYNC_STATE_ACTION";
+export interface ReloadSyncStateAction extends StateAction { }
