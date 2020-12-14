@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Employer, Mission, MissionType } from "@core/models";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { FormService } from '@form-sheet/form-sheet.service';
+import { Immutable } from "@immutable/interfaces";
 import { ModelFormService } from '@model-form/model-form.service';
 import { _getModelDisplayValue } from '@model/helpers/get-model-property.helper';
 import { Roles } from "@shared-app/enums";
@@ -13,6 +14,7 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
+import { Prop } from "@state/interfaces";
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { MissionListFacade } from '../mission-list.facade';
@@ -70,7 +72,7 @@ export class MissionListComponent {
         submitCallback: (val: MissionCriteria) => this.facade.addCriteria(val),
       });   
 
-  private getTopNavConfig(criteria: MissionCriteria): MainTopNavConfig {
+  private getTopNavConfig(criteria: Immutable<MissionCriteria>): MainTopNavConfig {
     return {
       title: "Oppdrag",
       buttons: [
@@ -86,7 +88,7 @@ export class MissionListComponent {
     };
   }
 
-  private getCriteriaChips(criteria: MissionCriteria){
+  private getCriteriaChips(criteria: Immutable<MissionCriteria>){
     return this.chipsFactory.createCriteriaChips(criteria, 
       (prop) => this.resetCriteriaProp(prop, criteria),      
       {
@@ -97,9 +99,10 @@ export class MissionListComponent {
     )
   }
 
-  private resetCriteriaProp(prop: string, criteria: MissionCriteria){
-    criteria[prop] = null;
-    this.facade.addCriteria(criteria);
+  private resetCriteriaProp(prop: string, criteria: Immutable<MissionCriteria>){
+    const clone = {...criteria};
+    clone[prop] = null;
+    this.facade.addCriteria(clone);
   }
 
 }
