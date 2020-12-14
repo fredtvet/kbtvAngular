@@ -24,13 +24,19 @@ export function _deleteModelWithChildren<TState>(
   const modelCfg = ModelStateConfig.get(stateProp);
   const newState: any = {};
 
-  newState[stateProp] = 
-    _filter<any>(state[stateProp as string], filterFactory(modelCfg.identifier));
+  const slice = state[stateProp as string];
+  const filtered = _filter<any>(slice, filterFactory(modelCfg.identifier));
+  if(filtered?.length < slice?.length) newState[stateProp] = slice;
+   
+    
 
   if(modelCfg.children?.length)
-    for(var childProp of modelCfg.children)
-      newState[childProp] = 
-        _filter(state[childProp as string], filterFactory(modelCfg.foreignKey));
+    for(var childProp of modelCfg.children){
+      const childSlice = state[childProp as string];
+      const childFiltered = _filter<any>(childSlice, filterFactory(modelCfg.foreignKey));
+      if(childFiltered?.length < childSlice?.length) newState[childProp] = childFiltered;
+    }
 
   return <Immutable<Partial<TState>>> newState;
 }
+
