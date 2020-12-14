@@ -66,8 +66,9 @@ export class TimesheetStatisticComponent {
   }
 
   private resetCriteriaProp(prop: string, criteria: Immutable<TimesheetCriteria>){
-    criteria[prop] = null;
-    this.facade.updateCriteria(criteria);
+    const clone = {...criteria};
+    clone[prop] = null;
+    this.facade.updateCriteria(clone);
   }
 
   private exportAsCsv = () => {
