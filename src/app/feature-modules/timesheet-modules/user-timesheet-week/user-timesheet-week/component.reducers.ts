@@ -27,7 +27,7 @@ export interface NextWeekAction extends StateAction {
     currWeekNr: number
 }
 
-export const NextWeekReducer= _createReducer(
+export const NextWeekReducer = _createReducer(
     NextWeekAction,
     (state: Immutable<ComponentStoreState>, action: Immutable<NextWeekAction>) => {
         const {currYear, currWeekNr} = action; 
@@ -50,7 +50,7 @@ export const NextWeekReducer= _createReducer(
 export const PreviousWeekAction = "PREVIOUS_WEEK_ACTION";
 export interface PreviousWeekAction extends StateAction { }
 
-export const PreviousWeekReducer= _createReducer(
+export const PreviousWeekReducer = _createReducer(
     PreviousWeekAction,
     (state: Immutable<ComponentStoreState>) => {
         const weekCriteria = {...state.weekCriteria};

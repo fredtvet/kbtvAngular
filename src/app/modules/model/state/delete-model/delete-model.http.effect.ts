@@ -31,7 +31,7 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<any>>{
         )
     }
 
-    private createHttpRequest(action: DeleteModelAction<any>): HttpRequest {
+    private createHttpRequest(action: Immutable<DeleteModelAction<any>>): HttpRequest {
         const modelConfig = ModelStateConfig.get(action.stateProp);
         if(!modelConfig) console.error(`No model config for property ${action.stateProp}`);
         const modelCommand = action.payload.id ? ModelCommand.Delete : ModelCommand.DeleteRange;
@@ -43,7 +43,7 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<any>>{
         }
     }
 
-    protected createCancelMessage(action: DeleteModelAction<any>, modelConfig: Immutable<ModelConfig<any, any>>): string{
+    protected createCancelMessage(action: Immutable<DeleteModelAction<any>>, modelConfig: Immutable<ModelConfig<any, any>>): string{
         const payload = action.payload;
         const multi = payload.ids?.length > 1;
 
@@ -53,12 +53,12 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<any>>{
         return `Sletting av ${payload.ids?.length || ''} ${entityWord} med id ${payload.ids || payload.id} er reversert!`;
     }
   
-    protected createHttpBody(action: DeleteModelAction<any>): {ids: any[]} {
+    protected createHttpBody(action: Immutable<DeleteModelAction<any>>): Immutable<{ids: any[]}> {
         return action.payload.id ? null : {ids: action.payload.ids};
     }
 
     protected createApiUrl(
-        action: DeleteModelAction<any>, 
+        action: Immutable<DeleteModelAction<any>>, 
         modelConfig: Immutable<ModelConfig<any, any>>, 
         actionType: ModelCommand): string {
         const suffix = this.apiMap[actionType].suffix;

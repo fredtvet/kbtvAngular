@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiUrl } from '@core/api-url.enum';
 import { HttpRequest } from '@http/interfaces';
 import { HttpAction } from '@http/state/http.effect';
+import { Immutable } from '@immutable/interfaces';
 import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { Observable } from 'rxjs';
@@ -24,7 +25,7 @@ export class UpdateTimesheetStatusesHttpEffect implements Effect<UpdateTimesheet
         )
     }
 
-    protected createHttpRequest(command: UpdateTimesheetStatusesAction): HttpRequest{
+    protected createHttpRequest(command: Immutable<UpdateTimesheetStatusesAction>): HttpRequest{
         return {
             method: "PUT", 
             body: {ids: command.ids, status: command.status}, 

@@ -7,6 +7,7 @@ import { Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { HttpAction } from '@http/state/http.effect';
 import { CreateMissionImagesAction } from './create-mission-images.action';
+import { Immutable } from '@immutable/interfaces';
 
 @Injectable()
 export class CreateMissionImagesHttpEffect implements Effect<CreateMissionImagesAction>{
@@ -22,7 +23,7 @@ export class CreateMissionImagesHttpEffect implements Effect<CreateMissionImages
         )
     }
 
-    private createHttpRequest(command: CreateMissionImagesAction): HttpRequest{
+    private createHttpRequest(command: Immutable<CreateMissionImagesAction>): HttpRequest{
         return {
             apiUrl: `${ApiUrl.MissionImage}?missionId=${command.missionId}`,
             body: this.createHttpBody(command),
@@ -31,7 +32,7 @@ export class CreateMissionImagesHttpEffect implements Effect<CreateMissionImages
         }
     }
 
-    private createHttpBody(command: CreateMissionImagesAction): any {
+    private createHttpBody(command: Immutable<CreateMissionImagesAction>): any {
         const httpData: FormData = new FormData();
         for(let i = 0; i < command.fileWrappers.length; i++){
             const file = command.fileWrappers[i].modifiedFile;

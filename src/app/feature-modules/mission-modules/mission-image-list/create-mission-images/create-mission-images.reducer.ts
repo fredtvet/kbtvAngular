@@ -5,7 +5,7 @@ import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { Immutable } from '@immutable/interfaces';
 import { CreateMissionImagesAction } from './create-mission-images.action';
 
-export const CreateMissionImagesReducer= _createReducer(
+export const CreateMissionImagesReducer = _createReducer(
     CreateMissionImagesAction,
     (state: Immutable<StateMissionImages>, action: Immutable<CreateMissionImagesAction>): Immutable<StateMissionImages> => {  
         if(!action.fileWrappers || !action.missionId) 

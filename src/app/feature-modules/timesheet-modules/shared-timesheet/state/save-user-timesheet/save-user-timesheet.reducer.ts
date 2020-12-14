@@ -6,7 +6,7 @@ import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { Immutable } from '@immutable/interfaces';
 import { SaveUserTimesheetAction } from './save-user-timesheet.action';
 
-export const SaveUserTimesheetReducer= _createReducer(
+export const SaveUserTimesheetReducer = _createReducer(
     SaveUserTimesheetAction,
     (state: Immutable<StateCurrentUser>, action: Immutable<SaveUserTimesheetAction>): Partial<any> => { 
         let timesheet = action.entity;

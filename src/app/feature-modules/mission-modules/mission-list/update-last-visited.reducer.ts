@@ -8,7 +8,7 @@ export interface UpdateLastVisitedAction extends StateAction {
     id: string
 }
 
-export const UpdateLastVisitedReducer= _createReducer(
+export const UpdateLastVisitedReducer = _createReducer(
     UpdateLastVisitedAction,
     (state: Immutable<StateMissions>, action: Immutable<UpdateLastVisitedAction>): Immutable<StateMissions> => {
         const index = state.missions?.findIndex(x => x.id === action.id);

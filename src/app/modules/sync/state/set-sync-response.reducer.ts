@@ -5,7 +5,7 @@ import { Immutable } from '@immutable/interfaces';
 import { StoreState } from '../interfaces';
 import { SyncStateSuccessAction } from './actions';
 
-export const SetSyncResponseReducer= _createReducer(
+export const SetSyncResponseReducer = _createReducer(
     SyncStateSuccessAction,
     (state: Immutable<StoreState>, action: Immutable<SyncStateSuccessAction>): any => {
         const newState = {syncTimestamp: action.response.timestamp};

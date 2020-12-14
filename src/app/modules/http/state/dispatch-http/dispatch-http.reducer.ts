@@ -3,7 +3,7 @@ import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { Immutable } from '@immutable/interfaces';
 import { DispatchHttpAction } from './dispatch-http.action';
 
-export const DispatchHttpReducer= _createReducer(
+export const DispatchHttpReducer = _createReducer(
     DispatchHttpAction,
     (state: Immutable<StateRequestQueue>) => {
         if(!state.requestQueue) return null;

@@ -7,9 +7,9 @@ import { Immutable } from '@immutable/interfaces';
 
 export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
 
-    constructor(criteria: TimesheetCriteria, maxChecks?: number){ super(criteria, maxChecks);}
+    constructor(criteria: Immutable<TimesheetCriteria>, maxChecks?: number){ super(criteria, maxChecks);}
 
-    protected addChecks(record: Timesheet): boolean {
+    protected addChecks(record: Immutable<Timesheet>): boolean {
         let exp = true;
         if(!this.criteria.dateRange) return false;
         if(this.criteria.status){
@@ -31,7 +31,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
     }
 
     //Check if criteria is contained in base, meaning all potential timesheets has already been fetched. 
-    containedIn(baseCriteria: TimesheetCriteria): boolean{
+    containedIn(baseCriteria: Immutable<TimesheetCriteria>): boolean{
         if(!this.criteria) return true;
         if(!baseCriteria) return false;
         if(!this.isDateRangeContainedIn(baseCriteria.dateRange)) return false;
@@ -48,7 +48,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         return true;
     }
     
-    private isObjectContainedIn(baseValue: Object, prop: string){
+    private isObjectContainedIn(baseValue: Immutable<Object>, prop: string){
         const modelCfg = ModelStateConfig.getBy(prop, "foreignProp");
         const value = this.criteria[prop];
 
@@ -60,7 +60,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         return true
     }
 
-    private isDateRangeContainedIn(baseDateRange: DateRange): boolean{
+    private isDateRangeContainedIn(baseDateRange: Immutable<DateRange>): boolean{
         if(!baseDateRange || !baseDateRange.end || !baseDateRange.start) return false; //No range means all, in which it will always be contained. 
         const dateRange = this.criteria.dateRange;
         if(!dateRange || !dateRange.start || !dateRange.end) return true; 

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApiUrl } from '@core/api-url.enum';
 import { Timesheet } from '@core/models';
 import { ApiService } from '@core/services/api.service';
+import { Immutable } from '@immutable/interfaces';
 import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { StateAction } from '@state/state.action';
@@ -20,7 +21,7 @@ export interface FetchTimesheetsAction extends StateAction {
 @Injectable()
 export class FetchTimesheetsHttpEffect implements Effect<FetchTimesheetsAction> {
 
-  static baseCriteria: TimesheetCriteria;
+  static baseCriteria: Immutable<TimesheetCriteria>;
 
   constructor(private apiService: ApiService){ }
 
@@ -32,7 +33,7 @@ export class FetchTimesheetsHttpEffect implements Effect<FetchTimesheetsAction> 
     )
   }
 
-  private _handle$(action: FetchTimesheetsAction): Observable<SetFetchedTimesheetsAction>{
+  private _handle$(action: Immutable<FetchTimesheetsAction>): Observable<SetFetchedTimesheetsAction>{
         const filter = new TimesheetFilter(action.timesheetCriteria);
         //If resulting data is already in cache, dont fetch.
         if(filter.containedIn(FetchTimesheetsHttpEffect.baseCriteria)) return of(null);
@@ -44,7 +45,7 @@ export class FetchTimesheetsHttpEffect implements Effect<FetchTimesheetsAction> 
         )        
   }
     
-  private fetch$ = (criteria: TimesheetCriteria): Observable<Timesheet[]> => {
+  private fetch$ = (criteria: Immutable<TimesheetCriteria>): Observable<Timesheet[]> => {
         let params = new HttpParams();
     
         if (criteria.user?.userName) params = params.set("UserName", criteria.user.userName);
@@ -53,12 +54,12 @@ export class FetchTimesheetsHttpEffect implements Effect<FetchTimesheetsAction> 
           if (criteria.dateRange.start)
             params = params.set(
               "StartDate",
-              new Date(criteria.dateRange.start).getTime().toString()
+              new Date(criteria.dateRange.start as Date).getTime().toString()
             );
           if (criteria.dateRange.end)
             params = params.set(
               "EndDate",
-              new Date(criteria.dateRange.end).getTime().toString()
+              new Date(criteria.dateRange.end as Date).getTime().toString()
             );
         }
         if (criteria.mission)

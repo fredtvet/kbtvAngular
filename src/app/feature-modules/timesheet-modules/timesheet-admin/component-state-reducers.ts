@@ -10,7 +10,7 @@ export interface SetTimesheetCriteriaAction extends StateAction {
     weekCriteria: WeekCriteria
 }
 
-export const SetTimesheetCriteriaReducer= _createReducer(
+export const SetTimesheetCriteriaReducer = _createReducer(
     SetTimesheetCriteriaAction,
     (state: ComponentStoreState, action: Immutable<SetTimesheetCriteriaAction>): Partial<ComponentStoreState> => {
         const weekCriteria = {...action.weekCriteria, weekNr: undefined}
@@ -26,7 +26,7 @@ export interface SetSelectedWeekAction extends StateAction {
     weekNr: number
 }
 
-export const SetSelectedWeekReducer= _createReducer(
+export const SetSelectedWeekReducer = _createReducer(
     SetSelectedWeekAction,
     (state: ComponentStoreState, action: Immutable<SetSelectedWeekAction>) => {
         return {selectedWeekNr: action.weekNr}

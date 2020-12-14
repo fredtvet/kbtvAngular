@@ -3,7 +3,7 @@ import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { Immutable } from '@immutable/interfaces';
 import { HttpErrorAction } from './http-error.action';
 
-export const HttpErrorReducer= _createReducer(
+export const HttpErrorReducer = _createReducer(
     HttpErrorAction,
     (state: Immutable<StateRequestQueue>) => {
         if(!state.requestQueue) return null;

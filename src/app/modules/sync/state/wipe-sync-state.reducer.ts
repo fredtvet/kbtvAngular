@@ -2,7 +2,7 @@ import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { Immutable } from '@immutable/interfaces';
 import { WipeSyncStateAction } from './actions';
 
-export const WipeSyncStateReducer= _createReducer(
+export const WipeSyncStateReducer = _createReducer(
     WipeSyncStateAction, 
     (state: any, action: Immutable<WipeSyncStateAction>): any => {
 

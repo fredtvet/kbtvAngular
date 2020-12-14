@@ -6,7 +6,7 @@ import { StateRequestQueue } from '../interfaces';
 export const HttpQueueShiftAction = "HTTP_QUEUE_SHIFT_ACTION";
 export interface HttpQueueShiftAction extends StateAction {}
 
-export const HttpQueueShiftReducer= _createReducer(
+export const HttpQueueShiftReducer = _createReducer(
     HttpQueueShiftAction,
     (state: Immutable<StateRequestQueue>) => {
         if(!state.requestQueue) return null;

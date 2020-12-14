@@ -9,7 +9,7 @@ export interface SetGroupByAction extends StateAction {
     groupBy: GroupByPeriod
 }
 
-export const SetGroupByReducer= _createReducer(
+export const SetGroupByReducer = _createReducer(
     SetGroupByAction,
     (state: ComponentStoreState, action: Immutable<SetGroupByAction>) => {
         return { timesheetGroupBy: action.groupBy }
