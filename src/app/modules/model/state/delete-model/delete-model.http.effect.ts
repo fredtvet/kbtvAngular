@@ -48,7 +48,7 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<any>>{
         const multi = payload.ids?.length > 1;
 
         const entityWord = 
-            this.translations[(multi ? action.stateProp : modelConfig.foreignProp).toLowerCase()];
+            this.translations[(multi ? action.stateProp : modelConfig.foreignProp)?.toLowerCase()];
         
         return `Sletting av ${payload.ids?.length || ''} ${entityWord} med id ${payload.ids || payload.id} er reversert!`;
     }

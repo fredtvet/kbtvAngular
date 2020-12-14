@@ -18,4 +18,5 @@ export interface Mission extends ModelFile, EmployerForeign, MissionTypeForeign,
     missionDocuments?: MissionDocument[];
     missionNotes?: MissionNote[];
     timesheets?: Timesheet[];
+    userTimesheets?: Timesheet[];
 };

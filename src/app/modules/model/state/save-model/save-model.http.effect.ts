@@ -49,8 +49,8 @@ export class SaveModelHttpEffect implements Effect<SaveModelAction<any, any>> {
         modelConfig: Immutable<ModelConfig<any, any>>
     ): string{
         const saveWord = action.saveAction === ModelCommand.Update ? "Oppdatering" : "Oppretting";
-        const entityWord = this.translations[modelConfig.foreignProp?.toLowerCase()].toLowerCase();
-        const displayPropWord = this.translations[modelConfig.displayProp?.toLowerCase()].toLowerCase();
+        const entityWord = this.translations[modelConfig.foreignProp?.toLowerCase()]?.toLowerCase();
+        const displayPropWord = this.translations[modelConfig.displayProp?.toLowerCase()]?.toLowerCase();
         const displayPropValue = action.entity[modelConfig.displayProp];
         return `${saveWord} av ${entityWord} med ${displayPropWord} ${displayPropValue} er reversert!`;
     }
