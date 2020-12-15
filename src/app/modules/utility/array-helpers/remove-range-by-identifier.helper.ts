@@ -12,7 +12,7 @@ export function _removeRangeByIdentifier<T>(
 
     for(let i = 0; i < deletedIds.length; i++){  
       let id = deletedIds[i];  
-      delete originalsObj[id];
+      originalsObj[id] = undefined;
     } 
 
     let result: Immutable<T>[] = [];

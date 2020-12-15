@@ -53,7 +53,7 @@ export class StatePersisterService {
     private removeObjectTempProps(obj: Immutable<Object>): Immutable<Object>{
         var clone = {...obj};
         for(var key in obj)
-            if(key.indexOf("temp_") !== -1) delete clone[key] 
+            if(key.indexOf("temp_") !== -1) clone[key] = undefined 
         return clone; 
     }
 }

@@ -55,7 +55,7 @@ export class HttpEffect implements Effect<HttpAction> {
                 stateGetter = (state: Readonly<Object>) => {
                     let returnState = state;
                     for(const prop of this.stateSelector.props) 
-                        delete returnState[prop]
+                        returnState[prop] = undefined
                     return returnState;
                 }         
         else //If no custom props, use full state   
