@@ -21,7 +21,7 @@ const ContentControl = <DynamicControl<MissionNote>>{ name: "content", required:
     validators: [Validators.maxLength(ValidationRules.MissionNoteContentMaxLength)] 
 }
 
-export const CreateMissionNoteForm: DynamicForm<MissionNote, any> = {
+export const CreateMissionNoteForm: DynamicForm<MissionNote, unknown> = {
     submitText: "Legg til",
     controls: [
         TitleControl, 
@@ -30,7 +30,7 @@ export const CreateMissionNoteForm: DynamicForm<MissionNote, any> = {
     ],
 }
 
-export const EditMissionNoteForm: DynamicForm<MissionNote, any> = {
+export const EditMissionNoteForm: DynamicForm<MissionNote, unknown> = {
     submitText: "Oppdater",
     controls: [
         ...CreateMissionNoteForm.controls,

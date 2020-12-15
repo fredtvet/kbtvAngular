@@ -5,7 +5,7 @@ import { translations } from '@shared/translations';
 import { Immutable } from '@immutable/interfaces';
 
 export interface CriteriaChipOptions {
-  valueFormatter?: ((val: Immutable<any>) => string | string),
+  valueFormatter?: ((val: Immutable<unknown>) => string | string),
   ignored?: boolean,
 }
 
@@ -27,12 +27,12 @@ export class ChipsFactoryService {
       const value = criteria[prop];
       if(!value) continue;
 
-      let text: string = value as string;
+      let text = value as string;
       const chipOption = options[prop];
       
       if(chipOption){
         if(chipOption.ignored) continue; 
-        if(chipOption.valueFormatter instanceof Function) text = chipOption.valueFormatter(value)
+        if(chipOption.valueFormatter instanceof Function) text = chipOption.valueFormatter(text)
         else if(chipOption.valueFormatter) text = chipOption.valueFormatter;
       }
 
@@ -44,14 +44,14 @@ export class ChipsFactoryService {
 
   createEnumSelectionChips<TEnum extends { [s: number]: string }>(
       _enum: TEnum, 
-      currentSelection: any,
-      selectFn: (val: Immutable<any>) => void
+      currentSelection: unknown,
+      selectFn: (val: Immutable<unknown>) => void
     ): AppChip[] {
     const chips: AppChip[] = [];
     const options = Object.keys(_enum).filter(key => isNaN(Number(_enum[key])));
     for(const strVal of options){
       const value = parseInt(strVal);
-      const selected = (value === currentSelection as any)
+      const selected = (value === currentSelection as unknown)
       chips.push({ 
         text: translations[_enum[value].toLowerCase()] , color: selected ? "accent" : "background", 
         onClick: !selected ? () => selectFn(value) : null

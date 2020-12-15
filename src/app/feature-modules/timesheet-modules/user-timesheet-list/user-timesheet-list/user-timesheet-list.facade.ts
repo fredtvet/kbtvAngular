@@ -17,6 +17,8 @@ import { UserTimesheetListState } from './user-timesheet-list.state';
 import { StateMissions, StateUserTimesheets } from '@core/state/global-state.interfaces';
 import { Immutable } from '@immutable/interfaces';
 
+type State = StateMissions & StateUserTimesheets;
+
 @Injectable()
 export class UserTimesheetListFacade {
     
@@ -33,7 +35,7 @@ export class UserTimesheetListFacade {
         this.store.selectProperty$<Mission[]>("missions")
       ]).pipe(
           map(([userTimesheets, missions]) =>  {
-              const relationCfg = new GetWithRelationsConfig("userTimesheets", null, ["missions"]);
+              const relationCfg = new GetWithRelationsConfig<State>("userTimesheets", null, ["missions"]);
               return _getRangeWithRelations({userTimesheets, missions}, relationCfg);
           })
       );
@@ -44,7 +46,7 @@ export class UserTimesheetListFacade {
         )
 
       constructor(
-          private store: Store<StateMissions & StateUserTimesheets>,
+          private store: Store<State>,
           private componentStore: ComponentStore<UserTimesheetListState>,  
           private route: ActivatedRoute,
       ) { 

@@ -9,11 +9,11 @@ import { StateDbService } from './state-db.service';
 export class StateReaderService {
 
     constructor(
-        @Inject(PERSISTANCE_CONFIG) private persistanceConfig: PersistanceConfig<any>,
+        @Inject(PERSISTANCE_CONFIG) private persistanceConfig: PersistanceConfig<unknown>,
         private stateDbService: StateDbService, 
     ) { }
 
-    getCriticalState(): any{
+    getCriticalState(): unknown{
         const state = {};
         for(const prop in this.persistanceConfig){
             if(!this.persistanceConfig[prop].critical) continue;
@@ -23,7 +23,7 @@ export class StateReaderService {
         return state;
     }
 
-    getState$(): Observable<any> {       
+    getState$(): Observable<unknown> {       
         const propDbObservables = [];
         const propsInOrder = [];
         for(const prop in this.persistanceConfig){
@@ -38,7 +38,7 @@ export class StateReaderService {
         )
     }
 
-    private mapStateArrToStateObj(stateArr: any[], propsInOrder: ReadonlyArray<string>): Object{
+    private mapStateArrToStateObj(stateArr: unknown[], propsInOrder: ReadonlyArray<string>): Object{
         const stateObj = {};
         for(const index in propsInOrder)
             stateObj[propsInOrder[index]] = stateArr[index];

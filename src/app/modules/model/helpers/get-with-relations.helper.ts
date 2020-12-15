@@ -1,20 +1,21 @@
 import { _filter } from '@array/filter.helper';
 import { _find } from '@array/find.helper';
 import { Immutable } from '@immutable/interfaces';
+import { Prop } from '@state/interfaces';
 import { GetWithRelationsConfig } from '../get-with-relations.config';
 import { ModelStateConfig } from '../model-state.config';
 
 export function _getWithRelations<TModel extends Object, TState>( 
     state: Immutable<Partial<TState>>,
     cfg: GetWithRelationsConfig<TState>,
-    id: any, 
+    id: unknown, 
 ): Immutable<TModel>{
     const modelCfg = ModelStateConfig.get<TModel, TState>(cfg.modelProp); 
 
     const modelState = state[cfg.modelProp as string];
     if(!modelState || modelState.length == 0) return null;
 
-    const entity = _find<TModel>(modelState, id, modelCfg.identifier as any);
+    const entity = _find<TModel>(modelState, id, modelCfg.identifier as Prop<Immutable<TModel>>);
     
     if(!entity) return;
     let entityClone = {...entity};

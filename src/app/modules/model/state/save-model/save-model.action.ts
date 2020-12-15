@@ -1,13 +1,11 @@
 
 import { Immutable } from '@immutable/interfaces';
 import { SaveAction } from '@model/interfaces';
-import { Prop } from '@state/interfaces';
 import { ModelStateAction } from '../model-state.action';
 
 export const SaveModelAction = "SAVE_MODEL_ACTION";
 export interface SaveModelAction<TModel, TState> extends ModelStateAction<TState>{
-    stateProp: Prop<TState>,
-    entity: Immutable<TModel>,
+    entity: TModel,
     saveAction: SaveAction,  
     apiUrlOverride?: string
 }

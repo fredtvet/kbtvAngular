@@ -68,7 +68,7 @@ export class UserTimesheetListComponent {
     if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _objectToDisabledObjectMap(initialValue)}
     else dynamicForm = EditUserTimesheetForm
 
-    this.modelFormService.open<TimesheetForm>({
+    this.modelFormService.open<ModelState, TimesheetForm>({
       formConfig:{
         dynamicForm: {...dynamicForm, initialValue}, entityId,
         stateProp: "userTimesheets",  

@@ -1,7 +1,8 @@
 import { ValidatorFn, AbstractControl } from '@angular/forms';
+import { UnknownState } from '@model/interfaces';
 
 export function dateRangeValidator(allowNull?: boolean): ValidatorFn{ 
-    return (control: AbstractControl): {[key: string]: any} | null => {
+    return (control: AbstractControl): UnknownState | null => {
       let invalid: boolean;
       
       if(allowNull && control.value == null) invalid = false;

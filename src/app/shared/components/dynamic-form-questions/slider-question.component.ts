@@ -40,7 +40,7 @@ export interface SliderQuestion extends Question {
 export class SliderQuestionComponent extends BaseQuestionComponent<SliderQuestion> 
     implements QuestionComponent {
 
-    value$: Observable<any>;
+    value$: Observable<unknown>;
 
     constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
         super(validationErrorMessages) 

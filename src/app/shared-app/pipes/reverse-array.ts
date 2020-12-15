@@ -6,7 +6,7 @@ import { ImmutableArray } from '@immutable/interfaces';
 })
 export class ReverseArrayPipe implements PipeTransform {
 
-  transform(arr: ImmutableArray<any>) {
+  transform(arr: ImmutableArray<unknown>) {
     return arr?.slice().reverse();
   }
 

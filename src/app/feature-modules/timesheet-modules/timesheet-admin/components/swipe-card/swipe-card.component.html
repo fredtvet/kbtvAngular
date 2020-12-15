@@ -10,10 +10,10 @@
 
   <div fxFlex class="swipe-content"
     matRipple [matRippleDisabled]="!navButton"
-    (click)="handleNavClick($event)"
+    (click)="handleNavClick()"
     [@openCloseConfirm]="lockPosition || (isClosed ? 'close' : 'open')"
-    (swiperight)="hideSwipeAction($event, false)" 
-    (swipeleft)="hideSwipeAction($event, true)">
+    (swiperight)="hideSwipeAction(false)" 
+    (swipeleft)="hideSwipeAction(true)">
     <ng-content>
       
     </ng-content>

@@ -10,10 +10,10 @@ export interface IonDateQuestion extends Question {
     ionFormat: string;
     datePipeFormat?: string;
     minuteValues?: number[];
-    defaultValueGetter?: ((form: any) => string) | string;
+    defaultValueGetter?: ((form: unknown) => string) | string;
     min?: string | ControlHook<string>;
     max?: string | ControlHook<string>;
-    valueSetter?: (value: any) => any;
+    valueSetter?: (value: unknown) => unknown;
     overrideValueSetterControl?: string;
 }
 
@@ -69,7 +69,7 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
     super(validationErrorMessages) 
   }
 
-  onChange(val: any){
+  onChange(val: unknown){
     const value = this.question.valueSetter ? this.question.valueSetter(val) : val;
     let control = this.control;
 

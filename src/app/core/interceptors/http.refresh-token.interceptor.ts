@@ -11,7 +11,7 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
 
     constructor(private authService: AuthService) {}
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {  
+    intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<unknown> | HttpUserEvent<unknown>> {  
         if(req.responseType !== "json" || this.isLoginRequest(req)) return next.handle(req); //Dont mess with login requests
 
         if(!this.authService.isAuthorized){ //If one or more tokens are missing, logout
@@ -33,18 +33,18 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
         return next.handle(this.addToken(req, this.authService.getAccessToken()));
     }
 
-    private addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
+    private addToken(req: HttpRequest<unknown>, token: string): HttpRequest<unknown> {
         return req.clone({ setHeaders: {Authorization: `Bearer ${token}`} })
     }
 
-    private logoutUser(): Observable<any> {
+    private logoutUser(): Observable<HttpResponse<unknown>> {
         this.authService.logout();
         return throwError("Noe gikk galt. Du har blitt logget ut.");
     }
 
-    private isLoginRequest = (req: HttpRequest<any>) => req.url.includes(`${ApiUrl.Auth}/login`);
+    private isLoginRequest = (req: HttpRequest<unknown>) => req.url.includes(`${ApiUrl.Auth}/login`);
 
-    private isRefreshRequest = (req: HttpRequest<any>): boolean => req.url.includes(`${ApiUrl.Auth}/refresh`);
+    private isRefreshRequest = (req: HttpRequest<unknown>): boolean => req.url.includes(`${ApiUrl.Auth}/refresh`);
 
-    private isLogoutRequest = (req: HttpRequest<any>): boolean => req.url.includes(`${ApiUrl.Auth}/logout`);
+    private isLogoutRequest = (req: HttpRequest<unknown>): boolean => req.url.includes(`${ApiUrl.Auth}/logout`);
 }

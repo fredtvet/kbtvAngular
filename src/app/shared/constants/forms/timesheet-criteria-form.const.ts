@@ -18,7 +18,7 @@ export interface TimesheetCriteriaFormState extends OptionsFormState<StateUsers 
 
 type FormState = TimesheetCriteriaFormState;  
 
-const DateRangePresetControl = <DynamicControl<TimesheetCriteria>>{ name: "dateRangePreset", required: true,
+const DateRangePresetControl = <DynamicControl<TimesheetCriteria, FormState>>{ name: "dateRangePreset", required: true,
     valueGetter: (s: TimesheetCriteria) => s.dateRangePreset, 
     type: "control", questions: [{
         component:  RadioGroupQuestionComponent,
@@ -29,9 +29,9 @@ const DateRangePresetControl = <DynamicControl<TimesheetCriteria>>{ name: "dateR
         }, 
     }], 
 }
-const DateRangeControlGroup = <DynamicControlGroup<TimesheetCriteria>>{ name: "dateRange", 
+const DateRangeControlGroup = <DynamicControlGroup<TimesheetCriteria, FormState>>{ name: "dateRange", 
     type: "group", controls: [
-        <DynamicControl<DateRange>>{ name: "start",
+        <DynamicControl<DateRange, FormState>>{ name: "start",
             valueGetter: (s: TimesheetCriteria) => _getISO(s.dateRange?.start),
             type: "control", questions: [
                 {component:  IonDateQuestionComponent,       
@@ -41,7 +41,7 @@ const DateRangeControlGroup = <DynamicControlGroup<TimesheetCriteria>>{ name: "d
                         width: "45%",
                         ionFormat:"YYYY-MMMM-DD",
                         datePipeFormat: "MMM d, y",
-                        max: {controlName: ["dateRange", "end"], callback: (val: any) => val},
+                        max: {controlName: ["dateRange", "end"], callback: (val: unknown) => val},
                     }, 
                 },
                 {component:  IonDateQuestionComponent,        
@@ -57,7 +57,7 @@ const DateRangeControlGroup = <DynamicControlGroup<TimesheetCriteria>>{ name: "d
                 }
             ], 
         },
-        <DynamicControl<DateRange>>{ name: "end",
+        <DynamicControl<DateRange, FormState>>{ name: "end",
             valueGetter: (s: TimesheetCriteria) => _getISO(s.dateRange?.end),
             type: "control", questions: [
                 {component:  IonDateQuestionComponent,              
@@ -67,13 +67,13 @@ const DateRangeControlGroup = <DynamicControlGroup<TimesheetCriteria>>{ name: "d
                     width: "45%",
                     ionFormat:"YYYY-MMMM-DD",      
                     datePipeFormat: "MMM d, y", 
-                    min: {controlName: ["dateRange", "start"], callback: (val: any) => val},
+                    min: {controlName: ["dateRange", "start"], callback: (val: unknown) => val},
                 }, 
             }], 
         },
     ]
 }
-const StatusControl = <DynamicControl<TimesheetCriteria>>{ name: "status",
+const StatusControl = <DynamicControl<TimesheetCriteria, FormState>>{ name: "status",
     valueGetter: (s: TimesheetCriteria) => s.status, 
     type: "control", questions: [{
         component:  RadioGroupQuestionComponent,

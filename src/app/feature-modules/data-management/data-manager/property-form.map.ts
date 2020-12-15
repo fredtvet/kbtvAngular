@@ -1,3 +1,4 @@
+import { Model } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { DynamicForm } from '@dynamic-forms/interfaces';
 import { OptionsFormState } from '@form-sheet/interfaces';
@@ -7,7 +8,7 @@ import { CreateInboundEmailPasswordForm } from '@shared/constants/model-forms/cr
 import { CreateMissionTypeForm } from '@shared/constants/model-forms/create-mission-type-form.const';
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 
-export const PropertyFormMap: {[key: string]: DynamicForm<any, OptionsFormState<Partial<ModelState>>> } = {
+export const PropertyFormMap: {[key: string]: DynamicForm<Model, OptionsFormState<ModelState>> } = {
     "employers": CreateEmployerForm,
     "documentTypes": CreateDocumentTypeForm,
     "missionTypes": CreateMissionTypeForm,

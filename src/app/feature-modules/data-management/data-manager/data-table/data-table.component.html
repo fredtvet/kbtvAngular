@@ -1,12 +1,11 @@
-
-    <ag-grid-angular #dataGrid fxFlex
-        class="ag-theme-balham"
-        rowSelection="multiple"
-        suppressRowClickSelection="true"
-        suppressColumnVirtualisation="true"
-        overlayNoRowsTemplate="Tomt"
-        (modelUpdated)="autoSizeGrid()"
-        [rowData]="rowData"
-        [columnDefs]="columnDefs"   
-        (cellValueChanged)="editCell($event)">
-    </ag-grid-angular>
+<ag-grid-angular #dataGrid fxFlex
+    class="ag-theme-balham"
+    rowSelection="multiple"
+    suppressRowClickSelection="true"
+    suppressColumnVirtualisation="true"
+    overlayNoRowsTemplate="Tomt"
+    (modelUpdated)="autoSizeGrid()"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"   
+    (cellValueChanged)="editCell($event)">
+</ag-grid-angular>

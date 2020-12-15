@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ArrayIncludesPipe implements PipeTransform {
 
-  transform(arr: any[], item: any): any {
+  transform(arr: unknown[], item: unknown): unknown {
     if(arr === undefined || arr === null) return false;
     return arr.includes(item);
   }

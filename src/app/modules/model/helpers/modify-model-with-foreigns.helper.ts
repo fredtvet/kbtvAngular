@@ -3,15 +3,15 @@ import { Immutable, ImmutableArray } from '@immutable/interfaces';
 import { Prop } from '@state/interfaces';
 import { ModelStateConfig } from '../model-state.config';
 
-export function _modifyModelWithForeigns<TState>(
+export function _modifyModelWithForeigns<TState extends Object>(
     state: Immutable<TState>, 
-    stateProp: Prop<TState>, 
+    stateProp: Immutable<Prop<TState>>, 
     entity: Immutable<Object>, 
-    entityFn: <T>(entity: Immutable<T>, stateSlice: ImmutableArray<T>) => ImmutableArray<T>
-): Partial<Immutable<TState>>{
+    entityFn: (entity: Immutable<Object>, stateSlice: ImmutableArray<Object>) => ImmutableArray<Object>
+): Immutable<Partial<TState>>{
 
-    const propCfg = ModelStateConfig.get(stateProp);
-    const newState: any = {};
+    const propCfg = ModelStateConfig.get<Object, TState>(stateProp);
+    const newState: Partial<TState> = {};
     const entityClone = {...entity};
     
     for(var fkProp of propCfg.foreigns || []){
@@ -25,12 +25,12 @@ export function _modifyModelWithForeigns<TState>(
             continue
         };
 
-        newState[fkProp] = _add(state[fkProp as string], foreignEntity); //Add new fk entity
+        newState[fkProp as string] = _add(state[fkProp as string], foreignEntity); //Add new fk entity
         entityClone[fkPropConfig.foreignKey] = foreignEntityId; //Set foreign key on entity
         entityClone[fkPropConfig.foreignProp] = null; //Remove foreign entity to prevent duplicate data    
     }
     
-    newState[stateProp] = entityFn(entity, state[stateProp as string]);
+    newState[stateProp as string] = entityFn(entity, state[stateProp as string]);
 
-    return newState;
+    return <Immutable<Partial<TState>>> newState;
 }

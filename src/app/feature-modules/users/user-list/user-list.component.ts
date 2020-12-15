@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { User } from '@core/models';
+import { ModelState } from '@core/state/model-state.interface';
 import { FormService } from '@form-sheet/form-sheet.service';
 import { ModelFormService } from '@model-form/model-form.service';
 import { ButtonTypes, Roles } from '@shared-app/enums';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { UserPasswordForm, UserPasswordFormState } from '@shared/constants/forms/password-form.const';
+import { UserPasswordForm } from '@shared/constants/forms/password-form.const';
 import { CreateUserForm, EditUserForm, UserForm } from '@shared/constants/model-forms/save-user-forms.const';
 import { Observable } from 'rxjs';
 import { UsersFacade } from '../users.facade';
@@ -38,7 +39,7 @@ export class UserListComponent {
     }
 
   openUserForm = (userName?: string): void => {
-    this.modelFormService.open<UserForm>({formConfig: {
+    this.modelFormService.open<ModelState, UserForm>({formConfig: {
       entityId: userName, 
       stateProp: "users", 
       dynamicForm: userName ? EditUserForm : CreateUserForm,
@@ -46,10 +47,10 @@ export class UserListComponent {
   }
   
   openNewPasswordForm = (userName?: string): void => {
-    this.formService.open<UserPasswordFormState, any>({
+    this.formService.open<UserPasswordForm>({
       formConfig: {...UserPasswordForm, initialValue: {userName}}, 
       navConfig: {title: "Oppdater passord"},  
-      submitCallback: (val: UserPasswordFormState) => this.facade.updatePassword(val.userName, val.newPassword)
+      submitCallback: (val: UserPasswordForm) => this.facade.updatePassword(val.userName, val.newPassword)
     });
   }
 

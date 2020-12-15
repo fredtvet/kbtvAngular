@@ -16,7 +16,7 @@ export class UpdatePasswordHttpEffect implements Effect<UpdatePasswordAction> {
         return actions$.pipe(
             listenTo([UpdatePasswordAction]),
             mergeMap(({action}) => 
-                this.apiService.put(`${ApiUrl.Auth}/changePassword`, action)),
+                this.apiService.put<void>(`${ApiUrl.Auth}/changePassword`, action)),
         )
     }
 

@@ -10,12 +10,12 @@ export class StateBase {
 
     private storeState: Object; 
 
-    private stateChangesSubject: BehaviorSubject<StateChanges<any>>;
-    stateChanges$: Observable<StateChanges<any>>;
+    private stateChangesSubject: BehaviorSubject<StateChanges<unknown>>;
+    stateChanges$: Observable<StateChanges<unknown>>;
 
     constructor(defaultState?: Object){ 
         this.storeState = {...defaultState};
-        this.stateChangesSubject = new BehaviorSubject<StateChanges<any>>({stateChanges: {}, state: this.storeState});
+        this.stateChangesSubject = new BehaviorSubject<StateChanges<unknown>>({stateChanges: {}, state: this.storeState});
         this.stateChanges$ = this.stateChangesSubject.asObservable();
     }
 
@@ -37,7 +37,7 @@ export class StateBase {
         return state;
     }
 
-    setStoreState(stateChanges: any, action?: string, deepClone: boolean = true, dispatchChanges: boolean = true) {
+    setStoreState(stateChanges: Object, action?: string, deepClone: boolean = true, dispatchChanges: boolean = true) {
         if(!stateChanges) return;
 
         if(deepClone)

@@ -39,25 +39,25 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
   providers: [DynamicFormStore],
 })
 export class DynamicFormComponent extends ControlComponentLoaderComponent 
-    implements FormComponent<DynamicForm<any, any>, Object, any> {
+    implements FormComponent<DynamicForm<unknown, unknown>, Object, unknown> {
         
     @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
     
-    private _config: DynamicForm<any, any>;
+    private _config: DynamicForm<unknown, unknown>;
     @Input('config') 
-    set config(value: DynamicForm<any, any>) {
+    set config(value: DynamicForm<unknown, unknown>) {
       this._config = value;
       this.initalizeForm();
     }  
 
-    get config(): DynamicForm<any, any> { return this._config }
+    get config(): DynamicForm<unknown, unknown> { return this._config }
 
     @Input('formState') 
     set formState(value: Object) {
       this.formStore.setFormState(value)
     }
 
-    @Output() formSubmitted = new EventEmitter<any>();
+    @Output() formSubmitted = new EventEmitter<unknown>();
 
     resetEnabled$: Observable<boolean>;
 
@@ -112,7 +112,7 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         this.loadComponents(this._config.controls, this._config);
     }
 
-    private getFormGroup(controls: ValidControl[], disabledControls: DisabledObjectMap<any>): FormGroup{
+    private getFormGroup(controls: ValidControl[], disabledControls: DisabledObjectMap<unknown>): FormGroup{
         const formGroup = this.formBuilder.group({});
         for(const control of controls) {
             if(control.type === "group") {
@@ -133,7 +133,7 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         return formGroup;
     }
 
-    private getControl(control: DynamicControl<any>, disabled: boolean): AbstractControl {
+    private getControl(control: DynamicControl<unknown>, disabled: boolean): AbstractControl {
         const value = 
             control.valueGetter instanceof Function ? control.valueGetter(this._config.initialValue || {}) : control.valueGetter;
   

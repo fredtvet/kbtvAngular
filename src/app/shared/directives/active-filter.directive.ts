@@ -16,7 +16,7 @@ export class ActiveStringFilterDirective<TRecord> {
         this.initalizeObserver();
     }
 
-    private viewRef: EmbeddedViewRef<any>;
+    private viewRef: EmbeddedViewRef<{$implicit: unknown}>;
 
     private searchLower: string;
 
@@ -24,7 +24,7 @@ export class ActiveStringFilterDirective<TRecord> {
 
     constructor(    
         _viewContainer: ViewContainerRef,
-        _template: TemplateRef<any>) { 
+        _template: TemplateRef<{$implicit: unknown}>) { 
         this.viewRef = _viewContainer.createEmbeddedView(_template);
     }
 

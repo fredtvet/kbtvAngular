@@ -70,7 +70,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
 
     private getStartOfDayTime(date: Immutable<Date> | string | number): number{
         if(!date) return
-        const newDate = new Date(date as any);
+        const newDate = new Date(date as Date);
         newDate.setHours(0,0,0,0);
         return newDate.getTime();
     }

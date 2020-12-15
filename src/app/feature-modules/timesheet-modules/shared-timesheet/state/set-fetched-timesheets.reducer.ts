@@ -18,7 +18,7 @@ export const SetFetchedTimesheetsReducer = _createReducer(
     SetFetchedTimesheetsAction,
     (state: State, action: Immutable<SetFetchedTimesheetsAction>): Partial<State> => {
         
-        const relationCfg = new GetWithRelationsConfig("timesheets", null, ["missions"]);
+        const relationCfg = new GetWithRelationsConfig<State>("timesheets", null, ["missions"]);
 
         const timesheets = _getRangeWithRelations<Timesheet, State>({
             timesheets: action.timesheets, 

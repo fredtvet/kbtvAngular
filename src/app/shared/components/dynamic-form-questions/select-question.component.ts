@@ -9,8 +9,8 @@ import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.c
 export interface SelectQuestion<T> extends Question {
   optionsGetter: OptionsGetter<T>;
   valueProp?: Prop<T>;
-  valueFormatter?: (val: T) => any;
-  compareWith?: (o1: any, o2: any) => boolean;
+  valueFormatter?: (val: T) => unknown;
+  compareWith?: (o1: unknown, o2: unknown) => boolean;
 }
 
 @Component({
@@ -34,17 +34,17 @@ export interface SelectQuestion<T> extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectQuestionComponent extends BaseQuestionComponent<SelectQuestion<any>> implements QuestionComponent {
+export class SelectQuestionComponent extends BaseQuestionComponent<SelectQuestion<unknown>> implements QuestionComponent {
 
-  defaultCompareWith = (o1: any, o2: any) => o1 === o2;
+  defaultCompareWith = (o1: unknown, o2: unknown) => o1 === o2;
 
   state: Object = this.formStore.formState;
 
-  options$: Observable<any[]>;
+  options$: Observable<unknown[]>;
 
   constructor(
     @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
-    private formStore: DynamicFormStore<any>) { 
+    private formStore: DynamicFormStore<unknown>) { 
     super(validationErrorMessages) 
   }
   

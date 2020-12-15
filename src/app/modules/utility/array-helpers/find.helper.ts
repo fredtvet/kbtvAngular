@@ -2,7 +2,7 @@ import { Immutable, ImmutableArray } from '@immutable/interfaces';
 
 export function _find<T>(
   array: ImmutableArray<T>, 
-  value: any, 
+  value: unknown, 
   identifier: Extract<keyof Immutable<T>, string>): Immutable<T>{
     if(!array?.length || !value) return;
 

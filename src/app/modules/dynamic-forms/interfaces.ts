@@ -7,15 +7,15 @@ export type DisabledObjectMap<T> = { [key in keyof Partial<T>]: boolean };
 
 export interface ControlHook<TResponse>{
     controlName: string | string[], 
-    callback: (val: any) => TResponse
+    callback: (val: unknown) => TResponse
 }
 
-export type OptionsGetter<T> = T[] | ((state: any) => T[]);
+export type OptionsGetter<T> = T[] | ((state: unknown) => T[]);
 
 export interface DynamicForm<TForm, TFormState>{
     initialValue?: Immutable<Partial<TForm>>;
     submitText?: string;
-    controls: (DynamicControlGroup<TForm> | DynamicControl<TForm>)[];
+    controls: (DynamicControlGroup<TForm, TFormState> | DynamicControl<TForm, TFormState>)[];
     onSubmitFormatter?: (f: TForm, s: Immutable<TFormState>) => Immutable<TForm>;
     getRawValue?: boolean;
     disabledControls?: DisabledObjectMap<TForm>;
@@ -25,24 +25,24 @@ export interface DynamicForm<TForm, TFormState>{
     resetState?: Partial<TForm>;
 }
 
-export interface DynamicControlGroup<TForm> {
+export interface DynamicControlGroup<TForm, TFormState = unknown> {
     type: "group",
     name?: Extract<keyof TForm, string>, 
-    controls: (DynamicControl<any> | DynamicControlGroup<any>)[],  
+    controls: (DynamicControl<TForm, TFormState> | DynamicControlGroup<TForm, TFormState>)[],  
     controlGroupComponent?: Type<ControlGroupComponent>,
     label?: string,
     styling?: DynamicControlGroupStyling,
     disabledControls?: DisabledObjectMap<TForm>;
 }
 
-export interface DynamicControl<TForm> {
+export interface DynamicControl<TForm, TFormState = unknown> { //Keep TFromState to enforce same state on controls
     type: "control"
     name: Extract<keyof TForm, string>, 
     required?: boolean,       
-    valueGetter?: ((form: Immutable<TForm>) => any) | any,
+    valueGetter?: ((form: Immutable<TForm>) => unknown) | unknown,
     questions?: QuestionWrapper[],
     validators?: ValidatorFn[],
-    asyncStateValidators?: ((state$: Observable<any>) => AsyncValidatorFn)[],
+    asyncStateValidators?: ((state$: Observable<unknown>) => AsyncValidatorFn)[],
 }
 
 export interface DynamicControlGroupStyling {
@@ -77,8 +77,8 @@ export interface QuestionComponent {
 
 export interface ControlGroupComponent {
     form: FormGroup;
-    controlGroup: DynamicControlGroup<any>;
-    formConfig: DynamicForm<any, Immutable<any>>;
+    controlGroup: DynamicControlGroup<unknown>;
+    formConfig: DynamicForm<unknown, Immutable<unknown>>;
     nestedNames: string[];
 }
 

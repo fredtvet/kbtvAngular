@@ -6,7 +6,7 @@ import { SelectableEntity } from '@shared/interfaces';
 @Injectable()
 export class SelectableListPresenter<T> {
 
-    private selectedIdsSubject = new BehaviorSubject<any[]>([]);
+    private selectedIdsSubject = new BehaviorSubject<unknown[]>([]);
     selectedIds$ = this.selectedIdsSubject.asObservable();
 
     private entitiesSubject =  new BehaviorSubject<T[]>([]);
@@ -30,11 +30,11 @@ export class SelectableListPresenter<T> {
         this.entitiesSubject.next(entities);
     }
 
-    addSelections(ids: any[]){
+    addSelections(ids: unknown[]){
         this.selectedIdsSubject.next(ids);
     }
 
-    toggleEntity(id: any){
+    toggleEntity(id: unknown){
         let ids = [...this.selectedIdsSubject.value];
         let index = ids.findIndex(x => x == id);
         if(index == -1) ids.push(id); //if not selected
@@ -42,9 +42,9 @@ export class SelectableListPresenter<T> {
         this.selectedIdsSubject.next(ids);
     }
 
-    isEntitySelected = (id:any) => this.selectedIdsSubject.value.includes(id);
+    isEntitySelected = (id: unknown) => this.selectedIdsSubject.value.includes(id);
     
-    private getSelectableEntities(entities:T[], selectedIds:any[]): SelectableEntity<T>[]{
+    private getSelectableEntities(entities:T[], selectedIds: unknown[]): SelectableEntity<T>[]{
         let result = [];
         for(let i = 0; i < entities.length; i++){
             let isSelected = selectedIds.includes(entities[i][this.identifier]);

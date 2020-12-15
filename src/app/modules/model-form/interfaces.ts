@@ -12,7 +12,7 @@ export type FormToSaveModelConverter<TForm, TState, TAction extends StateAction>
 
 export interface ModelFormConfig<TState, TForm, TFormState extends OptionsFormState<Partial<TState>>>
 {      
-    entityId?: any;
+    entityId?: unknown;
     stateProp: Prop<TState>;
     dynamicForm: DynamicForm<TForm, TFormState>;
     actionConverter?: FormToSaveModelConverter<TForm, TState, StateAction>

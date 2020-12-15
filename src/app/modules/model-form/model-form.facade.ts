@@ -12,20 +12,20 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class ModelFormFacade {
 
-  constructor(private store: Store<any>) {}
+  constructor(private store: Store<{[key:string]: Object[]}>) {}
 
-  getFormState$(modelProp: string): Observable<Immutable<OptionsFormState<any>>>{
-    const modelCfg = ModelStateConfig.get<any, any>(modelProp);
+  getFormState$(modelProp: string): Observable<Immutable<OptionsFormState<Object>>>{
+    const modelCfg = ModelStateConfig.get(modelProp);
     return this.store.select$(modelCfg.foreigns || []).pipe(
       map(state => { return {options: state} })
     )
   }
 
-  getModelWithForeigns(id: string, modelProp: string, fkState: any): any {
+  getModelWithForeigns(id: string, modelProp: string, fkState: Object): Object {
     const state = {...fkState};
     state[modelProp] = this.store.selectProperty(modelProp)
     const relationCfg = new GetWithRelationsConfig(modelProp, null, 'all');
-    return _getWithRelations<any, any>(state, relationCfg, id);
+    return _getWithRelations(state, relationCfg, id);
   }
 
   save(action: StateAction): void {

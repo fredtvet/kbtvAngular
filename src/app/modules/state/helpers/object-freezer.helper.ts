@@ -8,7 +8,7 @@ export function _deepFreeze<T extends Object>(obj: Immutable<T>): Immutable<T> {
     else
         for(const prop in obj){
             const value = obj[prop];
-            if (typeof value === 'object' && !Object.isFrozen(value)) _deepFreeze<any>(value);
+            if (typeof value === 'object' && !Object.isFrozen(value)) _deepFreeze<unknown>(value);
         }
 
     return <Immutable<T>> Object.freeze(obj);

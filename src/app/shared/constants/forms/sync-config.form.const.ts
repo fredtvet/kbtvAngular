@@ -4,7 +4,7 @@ import { DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
 import { DefaultState } from '@shared-app/const/default-state.const';
 import { SliderQuestion, SliderQuestionComponent } from '../../components/dynamic-form-questions/slider-question.component';
 
-export const SyncConfigForm: DynamicForm<SyncConfig, any> = {
+export const SyncConfigForm: DynamicForm<SyncConfig, unknown> = {
     submitText: "Lagre", resettable: true, 
     resetState: {...DefaultState.syncConfig, refreshTime: DefaultState.syncConfig.refreshTime / 60}, 
     controls: [

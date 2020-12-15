@@ -5,10 +5,11 @@ import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '@model/injection-token
 import { CommandApiMap, KeyVal } from '@model/interfaces';
 import { SaveModelHttpEffect } from '@model/state/save-model/save-model.http.effect';
 import { Effect } from '@state/interfaces';
+import { ModelState } from '../model-state.interface';
 import { SaveModelFileAction } from './save-model-file.action';
 
 @Injectable()
-export class SaveModelFileHttpEffect extends SaveModelHttpEffect 
+export class SaveModelFileHttpEffect extends SaveModelHttpEffect<ModelFile, ModelState>
     implements Effect<SaveModelFileAction<ModelFile>>{
 
     protected type: string = SaveModelFileAction;

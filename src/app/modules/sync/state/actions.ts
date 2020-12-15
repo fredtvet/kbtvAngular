@@ -6,8 +6,8 @@ export interface SyncStateAction extends StateAction { }
 
 export const SyncStateSuccessAction = "SYNC_STATE_SUCCESS_ACTION";
 export interface SyncStateSuccessAction extends StateAction {
-    response: SyncResponse<any>,
-    syncStateConfig: SyncStateConfig<any>
+    response: SyncResponse<unknown>,
+    syncStateConfig: SyncStateConfig<unknown>
 }   
 
 export const UpdateSyncConfigAction = "UPDATE_SYNC_CONFIG_ACTION";
@@ -17,7 +17,7 @@ export interface UpdateSyncConfigAction extends StateAction {
 
 export const WipeSyncStateAction = "WIPE_SYNC_STATE_ACTION";
 export interface WipeSyncStateAction extends StateAction {
-    syncStateConfig: SyncStateConfig<any>
+    syncStateConfig: SyncStateConfig<unknown>
 }
 
 export const ReloadSyncStateAction = "RELOAD_SYNC_STATE_ACTION";

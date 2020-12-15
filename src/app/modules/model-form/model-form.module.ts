@@ -24,7 +24,7 @@ import { ModelFormService } from './model-form.service';
     ],
 })
 export class ModelFormModule { 
-    static forFeature(defaultSaveConverter: FormToSaveModelConverter<any, any, StateAction>): ModuleWithProviders<ModelFormModule> {
+    static forFeature<T, D>(defaultSaveConverter: FormToSaveModelConverter<T, D, StateAction>): ModuleWithProviders<ModelFormModule> {
         return {
             ngModule: ModelFormModule,
             providers: [

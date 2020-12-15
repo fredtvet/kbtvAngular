@@ -13,7 +13,7 @@ type FormState = WeekCriteriaFormState;
 export const WeekCriteriaForm: DynamicForm<WeekCriteria, FormState> = {
     submitText: "Bruk", controls: [
         {...UserSelectControl, required: true},
-        <DynamicControl<WeekCriteria>>{ name: "year", required: true,
+        <DynamicControl<WeekCriteria, FormState>>{ name: "year", required: true,
             type: "control", valueGetter: (s: WeekCriteria) => s.year, questions: [{
                 component:  IonDateQuestionComponent,
                 question: <IonDateQuestion>{ 
@@ -23,7 +23,7 @@ export const WeekCriteriaForm: DynamicForm<WeekCriteria, FormState> = {
                 }, 
             }], 
         },
-        <DynamicControl<WeekCriteria>>{ name: "weekNr", required: true,
+        <DynamicControl<WeekCriteria, FormState>>{ name: "weekNr", required: true,
             type: "control", valueGetter: (s: WeekCriteria) => s.weekNr, questions: [{
                 component:  InputQuestionComponent,      
                 hideOnValueChange: {controlName: "weekNr", callback: (val: number) => val == null},

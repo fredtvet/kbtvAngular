@@ -25,7 +25,7 @@ const UniqueUserNameControl = {...UserNameControl, required: true,
         isUniqueAsyncValidator(s$.pipe(map(s => s?.options?.users)), "userName")
     ],
 }
-const RoleControl = <DynamicControl<UserForm>>{ name: "role", required: true,
+const RoleControl = <DynamicControl<UserForm, StateUsers>>{ name: "role", required: true,
     type: "control", valueGetter: (s: UserForm) => s?.role, questions: [{
         component:  SelectQuestionComponent,
         question: <SelectQuestion<string>>{
@@ -35,7 +35,7 @@ const RoleControl = <DynamicControl<UserForm>>{ name: "role", required: true,
     }], 
     validators: [ Validators.maxLength(100)] 
 }
-const PasswordControl = <DynamicControl<UserForm>>{ name: "password", required: true,
+const PasswordControl = <DynamicControl<UserForm, FormState>>{ name: "password", required: true,
     type: "control", questions: [{
         component:  InputQuestionComponent,
         question: <InputQuestion>{placeholder: "Passord", hideable: true, defaultHidden: true}, 

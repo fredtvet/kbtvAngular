@@ -6,7 +6,7 @@ import { AppButton } from '../../shared-app/interfaces/app-button.interface';
 })
 export class CheckRolesInButtonsPipe implements PipeTransform {
 
-  transform(buttons: AppButton[], role: string): any {
+  transform(buttons: AppButton[], role: string): unknown {
     if(!buttons || buttons.length == 0) return false; //No buttons no roles
 
     let allowedRoles: string[] = [].concat

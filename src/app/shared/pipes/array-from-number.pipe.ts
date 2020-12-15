@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ArrayFromNumberPipe implements PipeTransform {
 
-  transform(value: number, includeZero: boolean = false): any {
+  transform(value: number, includeZero: boolean = false): unknown {
     let arr = [];
     let i = includeZero ? 0 : 1;
     for(i; i <= value; i++){

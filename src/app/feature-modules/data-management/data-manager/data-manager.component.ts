@@ -14,6 +14,8 @@ import { PropertyFormMap } from './property-form.map';
 import { UpdateSelectedPropertyReducer } from './state/update-selected-property.reducer';
 import { ModelState } from '@core/state/model-state.interface';
 import { ModelFormService } from '@model-form/model-form.service';
+import { CellValueChangedEvent } from 'ag-grid-community';
+import { Model } from '@core/models';
 
 type ViewModel = {navConfig: MainTopNavConfig} & DataConfig
 
@@ -47,9 +49,9 @@ constructor(
   updateSelectedProperty = (prop: Prop<ModelState>) => 
     this.facade.updateSelectedProperty(prop);
   
-  updateItem(command: any): void{
-    if(!command || command === null) return;
-    this.facade.update(command.data); 
+  updateItem(event: CellValueChangedEvent): void{
+    if(!event || event === null) return;
+    this.facade.update(event.data); 
   }
 
   private openDeleteDialog = (): void => {
@@ -65,7 +67,7 @@ constructor(
   }
 
   private openCreateForm = (): void => {
-    this.formService.open({formConfig: {
+    this.formService.open<ModelState, Model>({formConfig: {
       stateProp: this.facade.selectedProperty,    
       dynamicForm: PropertyFormMap[this.facade.selectedProperty]
     }})

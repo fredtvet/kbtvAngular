@@ -16,7 +16,7 @@ export const CreateMissionImagesReducer = _createReducer(
             const wrapper = action.fileWrappers[i];
             const file = wrapper.modifiedFile;
             entities.push({
-                id: wrapper.id, 
+                id: <string> wrapper.id, 
                 missionId: action.missionId, 
                 fileName: wrapper.modifiedFile.name,
                 temp_localFileUrl: URL.createObjectURL(file)

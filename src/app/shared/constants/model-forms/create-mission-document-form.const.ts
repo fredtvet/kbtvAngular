@@ -18,9 +18,9 @@ export interface MissionDocumentForm extends Partial<MissionDocument>{
     file: File;
 }
 
-const DocumentTypeControl = <DynamicControlGroup<MissionDocumentForm>>{ name: "documentType",
+const DocumentTypeControl = <DynamicControlGroup<MissionDocumentForm, FormState>>{ name: "documentType",
     type: "group", controls: [
-    <DynamicControl<AppDocumentType>>{ name: "name", required: true,
+    <DynamicControl<AppDocumentType, FormState>>{ name: "name", required: true,
         type: "control", questions: [{
             component:  AutoCompleteQuestionComponent,
             question: <AutoCompleteQuestion<AppDocumentType>>{
@@ -35,7 +35,7 @@ const DocumentTypeControl = <DynamicControlGroup<MissionDocumentForm>>{ name: "d
         validators: [Validators.maxLength(45)]
     }],
 }
-const FileControl = <DynamicControl<MissionDocumentForm>>{ name: "file", required: true,
+const FileControl = <DynamicControl<MissionDocumentForm, FormState>>{ name: "file", required: true,
     type: "control", questions: [{
         component:  FileQuestionComponent, question: {}
     }],

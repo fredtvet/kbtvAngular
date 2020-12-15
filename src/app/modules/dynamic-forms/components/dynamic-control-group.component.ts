@@ -21,8 +21,8 @@ import { ControlComponentLoaderComponent } from './control-component-loader.comp
 export class DynamicControlGroupComponent extends ControlComponentLoaderComponent implements ControlGroupComponent{
     @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
     
-    controlGroup: DynamicControlGroup<any>;
-    formConfig: DynamicForm<any, any>;
+    controlGroup: DynamicControlGroup<unknown>;
+    formConfig: DynamicForm<unknown, unknown>;
     nestedNames: string[] = [];
 
     constructor(componentFactoryResolver: ComponentFactoryResolver, cdRef: ChangeDetectorRef) {
@@ -33,7 +33,7 @@ export class DynamicControlGroupComponent extends ControlComponentLoaderComponen
         this.loadComponents(this.controlGroup.controls, this.formConfig, this.nestedNames);
     }
 
-    protected onQuestionComponentInit(componentRef: ComponentRef<QuestionComponent>, control: DynamicControl<any>): void {
+    protected onQuestionComponentInit(componentRef: ComponentRef<QuestionComponent>, control: DynamicControl<unknown>): void {
       componentRef.location.nativeElement.style.margin = this.controlGroup.styling?.itemMargin || "0 8px 0 0"
     }
 }

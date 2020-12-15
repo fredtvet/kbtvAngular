@@ -9,7 +9,7 @@ import { FormSheetNavConfig } from '../interfaces';
 export class FormSheetNavBarComponent {
 
   @Input() config: FormSheetNavConfig;
-  @Output() closed = new EventEmitter<any>()
+  @Output() closed = new EventEmitter<unknown>()
 
   constructor() {}
 

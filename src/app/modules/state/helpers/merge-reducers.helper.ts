@@ -6,9 +6,9 @@ import { _deepClone } from './deep-clone.helper';
 
 export function _mergeReducers(reducers: ImmutableArray<Reducer<Object, StateAction>>, type: string): Reducer<Object, StateAction> {
     return <Reducer<Object, StateAction>>{type,
-        reducerFn: (state: Immutable<Object>, action: Immutable<StateAction>): any => {
-            let fullState: any = {...state};
-            let newState: any; 
+        reducerFn: (state: Immutable<Object>, action: Immutable<StateAction>): unknown => {
+            let fullState: Object = {...state};
+            let newState: Object; 
             for(const reducer of reducers) {
                 const reducerState = reducer.reducerFn(fullState, action);
                 if(!reducerState) continue;

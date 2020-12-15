@@ -1,5 +1,5 @@
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 export interface BottomSheetService{
-    open(config: any): MatBottomSheetRef<any, any>;
+    open(config: unknown): MatBottomSheetRef<unknown, unknown>;
 }

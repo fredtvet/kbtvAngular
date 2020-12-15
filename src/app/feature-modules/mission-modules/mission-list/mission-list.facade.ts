@@ -43,7 +43,7 @@ export class MissionListFacade {
 
   criteriaFormState$: Observable<MissionCriteriaFormState> = 
     this.store.select$(["missionTypes", "employers", "missions"]).pipe(
-      map(options => { return {options} as any})
+      map(options => { return {options} as unknown})
     )
 
   constructor(
@@ -55,10 +55,10 @@ export class MissionListFacade {
   getMissionDetails$(id: string): Observable<Immutable<Mission>> {
     this.updateLastVisited(id);
 
-    let relationCfg = new GetWithRelationsConfig("missions", 
+    let relationCfg = new GetWithRelationsConfig<StoreState>("missions", 
       ["missionNotes", "missionDocuments", "missionImages"]);
 
-    return this.store.select$(relationCfg.includedProps as any).pipe(
+    return this.store.select$(relationCfg.includedProps).pipe(
       map(state => _getWithRelations<Mission, StoreState>(state, relationCfg, id))
     )
   }

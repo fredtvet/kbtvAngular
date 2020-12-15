@@ -6,21 +6,22 @@ import { _modifyModelWithForeigns } from '../../helpers/modify-model-with-foreig
 import { ModelCommand } from '../../model-command.enum';
 import { ModelStateConfig } from '../../model-state.config';
 import { SaveModelAction } from './save-model.action';
+import { UnknownState } from '@model/interfaces';
 
 export const SaveModelReducer = _createReducer(
     SaveModelAction,
-    (state: Immutable<any[]>, command: Immutable<SaveModelAction<any, any>>): Partial<any> => {  
+    (state: Immutable<UnknownState>, command: Immutable<SaveModelAction<UnknownState, UnknownState>>): Partial<UnknownState> => {  
         const modelConfig = ModelStateConfig.get(command.stateProp); 
     
-        let modifyFn: <T>(entity: Immutable<T>, entities: ImmutableArray<T>) => ImmutableArray<T>;
+        let modifyFn: (entity: Immutable<Object>, entities: ImmutableArray<Object>) => ImmutableArray<Object>;
     
         if(command.saveAction === ModelCommand.Update) 
-            modifyFn = (entity: Immutable<any>, entities: ImmutableArray<any>): ImmutableArray<any> => 
+            modifyFn = (entity: Immutable<Object>, entities: ImmutableArray<Object>): ImmutableArray<Object> => 
                 _update(entities, entity, modelConfig.identifier)
         else 
-            modifyFn = (entity: Immutable<any>, entities: ImmutableArray<any>): ImmutableArray<any> =>   
+            modifyFn = (entity: Immutable<Object>, entities: ImmutableArray<Object>): ImmutableArray<Object> =>   
                 _add(entities, entity)
     
-        return _modifyModelWithForeigns(state, command.stateProp as any, command.entity, modifyFn)          
+        return _modifyModelWithForeigns(state, command.stateProp, command.entity, modifyFn)          
     }
 )

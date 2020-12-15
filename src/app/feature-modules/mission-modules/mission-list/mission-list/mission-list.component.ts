@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Employer, Mission, MissionType } from "@core/models";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
+import { ModelState } from "@core/state/model-state.interface";
 import { FormService } from '@form-sheet/form-sheet.service';
 import { Immutable } from "@immutable/interfaces";
 import { ModelFormService } from '@model-form/model-form.service';
@@ -14,7 +15,6 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
-import { Prop } from "@state/interfaces";
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { MissionListFacade } from '../mission-list.facade';
@@ -59,7 +59,7 @@ export class MissionListComponent {
     this.facade.addCriteria({ ...this.facade.criteria, searchString });
 
   private openMissionForm = () => 
-    this.modelFormService.open({formConfig: {
+    this.modelFormService.open<ModelState, Mission>({formConfig: {
       dynamicForm: CreateMissionForm,
       stateProp: "missions",
     }})
@@ -93,8 +93,8 @@ export class MissionListComponent {
       (prop) => this.resetCriteriaProp(prop, criteria),      
       {
         finished: {valueFormatter: (val: boolean) => val ? "Ferdig" : null},
-        employer: {valueFormatter: (val: Employer) => _getModelDisplayValue("employers", val)},
-        missionType: {valueFormatter: (val: MissionType) => _getModelDisplayValue("missionTypes", val)}
+        employer: {valueFormatter: (val: Immutable<Employer>) => <string> _getModelDisplayValue("employers", val)},
+        missionType: {valueFormatter: (val: Immutable<MissionType>) => <string> _getModelDisplayValue("missionTypes", val)}
       },
     )
   }

@@ -14,7 +14,7 @@ export class HomeTopNavComponent{
     loading$ = this.loadingService.queryLoading$;
 
     constructor(
-        private store: Store<any>,
+        private store: Store<unknown>,
         private loadingService: LoadingService,
         private mainNavService: MainNavService,
     ) {  }

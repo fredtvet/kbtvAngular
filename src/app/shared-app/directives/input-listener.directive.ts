@@ -24,8 +24,8 @@ export class InputListenerDirective extends WithUnsubscribe(){
       ).subscribe();
   }
 
-  @HostListener("keyup", ["$event"]) onKeyUp(event: any) {
-    this.onInputChange(event.target.value)
+  @HostListener("keyup", ["$event"]) onKeyUp(event: KeyboardEvent) {
+    if(event.target instanceof HTMLInputElement) this.onInputChange(event.target.value)
   }
   
   onInputChange(input: string){

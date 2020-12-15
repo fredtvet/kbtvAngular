@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ObjectToArrayPipe implements PipeTransform {
 
-  transform(value: Object): any[] {
+  transform(value: Object): unknown[] {
     return value ? Object.keys(value) : null;
   }
 

@@ -1,4 +1,4 @@
 export interface ArrayRow<TRecord>{
-    id: any;
+    id: unknown;
     arr: TRecord[];
 }

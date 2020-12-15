@@ -7,7 +7,7 @@ import { Immutable, ImmutableArray } from '@immutable/interfaces';
 
 type Response<TRecord, TCriteria> = FilteredResponse<Immutable<TCriteria>, Immutable<TRecord>>;
 
-export const filterRecords = <TRecord, TCriteria>(filterType: DataFilterConstructor<TCriteria>, ...filterArgs: any[]) => 
+export const filterRecords = <TRecord, TCriteria>(filterType: DataFilterConstructor<TCriteria>, ...filterArgs: unknown[]) => 
     (source: Observable<[ImmutableArray<TRecord>, Immutable<TCriteria>]> ): Observable<Response<TRecord, TCriteria>> => 
         source.pipe(
             map(([timesheets, criteria]) => {

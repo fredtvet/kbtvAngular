@@ -11,9 +11,9 @@ import { StateDbService } from './state-db.service';
 export class StatePersisterService {
     
     constructor(
-        private store: Store<any>,  
+        private store: Store<unknown>,  
         private stateDbService: StateDbService, 
-        @Inject(PERSISTANCE_CONFIG) private persistanceConfig: PersistanceConfig<any>,
+        @Inject(PERSISTANCE_CONFIG) private persistanceConfig: PersistanceConfig<unknown>,
     ) { }
 
     initalize(): void{
@@ -40,7 +40,7 @@ export class StatePersisterService {
         }
     }
 
-    private removePayloadTempProps(payload: Immutable<any>): Immutable<any>{
+    private removePayloadTempProps(payload: Immutable<unknown>): Immutable<unknown>{
         if(Array.isArray(payload) && payload.length > 0 && typeof payload[0] === "object") {
             const clone = [...payload];
             for(var key in clone) clone[key] = this.removeObjectTempProps(clone[key])

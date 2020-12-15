@@ -4,7 +4,7 @@ import { WipeSyncStateAction } from './actions';
 
 export const WipeSyncStateReducer = _createReducer(
     WipeSyncStateAction, 
-    (state: any, action: Immutable<WipeSyncStateAction>): any => {
+    (state: unknown, action: Immutable<WipeSyncStateAction>): unknown => {
 
         const deleteState = {syncTimestamp: null};
 

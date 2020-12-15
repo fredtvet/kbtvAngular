@@ -6,7 +6,7 @@ import { LoginSuccessAction } from './login-success.action';
 
 export const SetCredentialsReducer = _createReducer(
     LoginSuccessAction,
-    (state: any, action: Immutable<LoginSuccessAction>): Partial<StoreState>=> {
+    (state: unknown, action: Immutable<LoginSuccessAction>): Partial<StoreState>=> {
         let {accessToken, refreshToken, user} = action.response;
         return {
             accessToken: {...accessToken,

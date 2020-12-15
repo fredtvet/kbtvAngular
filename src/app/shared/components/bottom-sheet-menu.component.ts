@@ -21,7 +21,7 @@ export class BottomSheetMenuComponent {
     private _bottomSheetRef: MatBottomSheetRef<BottomSheetMenuComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public buttons: AppButton[]) { }
 
-  handleFn = (fn: Function, parameters: any[] = []) => {
+  handleFn = (fn: Function, parameters: unknown[] = []) => {
     fn(...parameters);
     this.close();
   };

@@ -13,7 +13,7 @@ export class HttpFactoryService {
       @Inject(BASE_API_URL) private baseUrl: string
     ) {}
 
-    getObserver$(request: Immutable<HttpRequest>): Observable<any> {
+    getObserver$(request: Immutable<HttpRequest>): Observable<unknown> {
         switch (request.method) {
           case "POST": return this.httpClient.post(this.baseUrl + request.apiUrl, this.constructBody(request.body));
           case "PUT": return this.httpClient.put(this.baseUrl +request.apiUrl, this.constructBody(request.body));

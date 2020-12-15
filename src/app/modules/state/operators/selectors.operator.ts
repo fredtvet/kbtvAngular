@@ -5,17 +5,17 @@ import { _deepClone } from '../helpers/deep-clone.helper'
 import { StateChanges } from '../interfaces';
 
 export const selectProp = <TResult>(prop: string, deepClone?: boolean) => 
-    (source: Observable<StateChanges<any>>): Observable<TResult> => 
+    (source: Observable<StateChanges<unknown>>): Observable<TResult> => 
         source.pipe(
-            filter<StateChanges<any>>(({stateChanges}, index: number) => 
+            filter<StateChanges<unknown>>(({stateChanges}, index: number) => 
                 (index === 0 || stateChanges.hasOwnProperty(prop)) ? true : false),
             map(({state}) => deepClone ? _deepClone(state[prop]) : state[prop])
         )
 
 export const selectSlice = <TSlice>(props: ImmutableArray<string>, deepClone?: boolean) => 
-    (source: Observable<StateChanges<any>>): Observable<TSlice> => 
+    (source: Observable<StateChanges<unknown>>): Observable<TSlice> => 
         source.pipe(
-            filter<StateChanges<any>>(({stateChanges}, index: number) => {
+            filter<StateChanges<unknown>>(({stateChanges}, index: number) => {
                 if(index === 0) return true;
                 for(const prop of props)
                     if(stateChanges.hasOwnProperty(prop)) return true; 

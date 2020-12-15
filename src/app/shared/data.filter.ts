@@ -1,7 +1,7 @@
 import { Immutable } from '@immutable/interfaces';
 
 export type DataFilterConstructor<TCriteria>  = 
-    new (criteria: Immutable<TCriteria>, ...args: any[]) => DataFilter<Immutable<any>, Immutable<TCriteria>>;
+    new (criteria: Immutable<TCriteria>, ...args: unknown[]) => DataFilter<Immutable<unknown>, Immutable<TCriteria>>;
 
 export abstract class DataFilter<TRecord, TCriteria>{
 
@@ -9,10 +9,10 @@ export abstract class DataFilter<TRecord, TCriteria>{
 
     protected get isCriteriaEmpty(): boolean{ return !this.criteria }
 
-    criteria: Immutable<TCriteria>;
+    criteria: Immutable<Partial<TCriteria>>;
 
     constructor(criteria: Immutable<TCriteria>, private maxChecks?: number, ignoreInital?: boolean){
-        this.criteria = criteria || {} as any;
+        this.criteria = criteria || {} as Immutable<Partial<TCriteria>>;
         if(ignoreInital) 
             this.check = this.checkDefault
         else 

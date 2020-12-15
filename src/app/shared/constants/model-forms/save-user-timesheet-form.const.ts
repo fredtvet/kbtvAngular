@@ -22,8 +22,8 @@ export interface TimesheetForm {
     comment?: string;
 }
 
-const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm>>{ type: "group", controls: [
-    <DynamicControl<TimesheetForm>>{ name: "date", required: true, 
+const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm, FormState>>{ type: "group", controls: [
+    <DynamicControl<TimesheetForm, FormState>>{ name: "date", required: true, 
         valueGetter: (s: TimesheetForm) => _getISO(s.date) || _getISO(s.startTime),
         getRawValue:true,
         type: "control", questions: [{
@@ -36,7 +36,7 @@ const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm>>{ type: "group"
             }, 
         }], 
     } ,
-    <DynamicControl<TimesheetForm>>{ name: "startTime", required: true,
+    <DynamicControl<TimesheetForm, FormState>>{ name: "startTime", required: true,
         valueGetter: (f: TimesheetForm) => _getISO(f?.startTime),
         type: "control", questions: [{
             component:  IonDateQuestionComponent,
@@ -47,11 +47,11 @@ const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm>>{ type: "group"
                 datePipeFormat: "HH:mm",
                 minuteValues: [0,15,30,45],
                 defaultValueGetter:  (f: TimesheetForm) => _timeValueDefault(f?.date, 7),
-                max: {controlName: "endTime", callback: (val: any) => val}
+                max: {controlName: "endTime", callback: (val: unknown) => val}
             }, 
         }], 
     },
-    <DynamicControl<TimesheetForm>>{ name: "endTime", required: true,
+    <DynamicControl<TimesheetForm, FormState>>{ name: "endTime", required: true,
         valueGetter: (f: TimesheetForm) => _getISO(f?.endTime),
         type: "control", questions: [{
             component:  IonDateQuestionComponent,
@@ -62,12 +62,12 @@ const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm>>{ type: "group"
                 datePipeFormat: "HH:mm",
                 minuteValues: [0,15,30,45],  
                 defaultValueGetter:  (f: TimesheetForm) => _timeValueDefault(f.date, 12),          
-                min: {controlName: "startTime", callback: (val: any) => val}
+                min: {controlName: "startTime", callback: (val: unknown) => val}
             }, 
         }], 
     },
 ]}
-const CommentControl = <DynamicControl<TimesheetForm>>{ name: "comment", required: true,
+const CommentControl = <DynamicControl<TimesheetForm, FormState>>{ name: "comment", required: true,
     type: "control", valueGetter: (s: TimesheetForm) => s?.comment, questions: [{
         component:  TextAreaQuestionComponent,
         question: <TextAreaQuestion>{placeholder: "Kommentar"}, 

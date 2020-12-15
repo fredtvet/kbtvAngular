@@ -35,7 +35,7 @@ export function _deepClone<T>(value: Readonly<T>): T {
     }
 }
 
-function _fixPropertyValue(original: Readonly<any>, copy: any, key: number | string): void {
+function _fixPropertyValue(original: Readonly<unknown>, copy: unknown, key: number | string): void {
     const originalValue = original[key];
     const originalType = typeof originalValue;
 
@@ -77,7 +77,7 @@ function _fixPropertyValue(original: Readonly<any>, copy: any, key: number | str
     }
 }
 
-function _fixTypes(original: Readonly<any>, copy: any): void {
+function _fixTypes(original: Readonly<unknown>, copy: unknown): void {
     if (original instanceof Array) {
         for (let index = 0; index < original.length; index++) {
             _fixPropertyValue(original, copy, index);

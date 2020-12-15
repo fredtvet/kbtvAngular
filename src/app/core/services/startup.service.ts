@@ -9,7 +9,7 @@ export class StartupService {
 
   constructor(
     effectsSubscriber: EffectsSubscriber,
-    store: Store<any>,
+    store: Store<unknown>,
     iconService: IconService,
   ) { 
     effectsSubscriber.onEffectsInit$.subscribe(x => store.dispatch(<LoadPersistedStateAction> { type: LoadPersistedStateAction }))

@@ -39,7 +39,7 @@ export class UserTimesheetWeekFacade {
         this.store.selectProperty$<Mission[]>("missions")
     ]).pipe(
         map(([userTimesheets, missions]) =>  {
-            const relationCfg = new GetWithRelationsConfig("userTimesheets", null, ["missions"]);
+            const relationCfg = new GetWithRelationsConfig<StoreState>("userTimesheets", null, ["missions"]);
             const timesheets = _getRangeWithRelations<Timesheet, ModelState>({userTimesheets, missions}, relationCfg);
             const summaries = this.summaryAggregator.groupByType(GroupByPeriod.Day, timesheets);
             return _mapObjectsToWeekdays<TimesheetSummary>(summaries, "date")

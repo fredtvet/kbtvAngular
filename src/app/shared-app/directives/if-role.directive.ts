@@ -8,7 +8,7 @@ import { AuthService } from '@core/services/auth';
 export class IfRoleDirective {
 
   constructor(
-    private templateRef: TemplateRef<any>,
+    private templateRef: TemplateRef<unknown>,
     private viewContainer: ViewContainerRef,
     private authService: AuthService,
   ) {

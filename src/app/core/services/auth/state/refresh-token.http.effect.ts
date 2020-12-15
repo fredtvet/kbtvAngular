@@ -38,14 +38,14 @@ export class RefreshTokenHttpEffect implements Effect<RefreshTokenAction>{
         )
     }
 
-    onErrorAction = (err: any) => <LogoutAction>{ type: LogoutAction,  };
+    onErrorAction = (err: unknown) => <LogoutAction>{ type: LogoutAction };
 
     private refreshToken$(tokens: Tokens): Observable<RefreshTokenResponse> {
         if(this.isRefreshingToken || !this.deviceInfoService.isOnline) return EMPTY;
 
         this.isRefreshingToken = true;
     
-        return this.apiService.post(ApiUrl.Auth + '/refresh', tokens)
+        return this.apiService.post<RefreshTokenResponse>(ApiUrl.Auth + '/refresh', tokens)
           .pipe(
             retryWhen(httpRetryStrategy({excludedStatusCodes: [400]})), 
             finalize(() => this.isRefreshingToken = false)

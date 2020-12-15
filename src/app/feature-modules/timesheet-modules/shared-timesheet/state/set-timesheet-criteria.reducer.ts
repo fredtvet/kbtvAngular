@@ -10,7 +10,7 @@ export interface SetTimesheetCriteriaAction extends StateAction {
 
 export const SetTimesheetCriteriaReducer = _createReducer(
     SetTimesheetCriteriaAction,
-    (state: any, action: Immutable<SetTimesheetCriteriaAction>) => {
+    (state: unknown, action: Immutable<SetTimesheetCriteriaAction>) => {
         return { timesheetCriteria: action.timesheetCriteria }
     }       
 ) 

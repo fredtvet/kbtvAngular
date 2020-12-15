@@ -6,5 +6,5 @@ import { Prop } from '@state/interfaces';
 
 export function _trackByModel(prop: Prop<ModelState>){
     const identifier = ModelStateConfig.get(prop).identifier;
-    return (index:number, model:Model): any => model[identifier];
+    return (index:number, model:Model): unknown => model[identifier];
 }

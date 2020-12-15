@@ -1,6 +1,10 @@
+import { StateCurrentUser } from '@core/state/global-state.interfaces';
+import { ModelState } from '@core/state/model-state.interface';
 import { OptimisticStateSelector } from '@http/interfaces';
+import { StateSyncTimestamp } from '@sync/interfaces';
 
-export const AppOptimisticState: OptimisticStateSelector<any> = {
+type State = ModelState & StateSyncTimestamp & StateCurrentUser
+export const AppOptimisticState: OptimisticStateSelector<State> = {
     strategy: "include",
     props: [
         "missions",

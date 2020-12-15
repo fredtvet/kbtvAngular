@@ -13,7 +13,7 @@ import { ModelStateConfig } from '../../model-state.config';
 import { SaveModelAction } from './save-model.action';
 
 @Injectable()
-export class SaveModelHttpEffect implements Effect<SaveModelAction<any, any>> {
+export class SaveModelHttpEffect<TModel, TState> implements Effect<SaveModelAction<TModel, TState>> {
     protected type: string = SaveModelAction
     
     constructor(
@@ -21,7 +21,7 @@ export class SaveModelHttpEffect implements Effect<SaveModelAction<any, any>> {
         @Inject(MODEL_PROP_TRANSLATIONS) private translations: Readonly<KeyVal<string>>,
     ){ }
 
-    handle$(actions$: Observable<DispatchedAction<SaveModelAction<any, any>>>): Observable<HttpAction> {
+    handle$(actions$: Observable<DispatchedAction<SaveModelAction<TModel, TState>>>): Observable<HttpAction> {
         return actions$.pipe(
             listenTo([this.type]),
             map(x => <HttpAction>{ 
@@ -32,8 +32,8 @@ export class SaveModelHttpEffect implements Effect<SaveModelAction<any, any>> {
         )
     }
 
-    protected createHttpRequest(action: SaveModelAction<any, any>): HttpRequest{
-        const modelConfig = ModelStateConfig.get(action.stateProp);
+    protected createHttpRequest(action: Immutable<SaveModelAction<TModel, TState>>): HttpRequest{
+        const modelConfig = ModelStateConfig.get<TModel, TState>(action.stateProp);
         if(!modelConfig) console.error(`No model config for property ${action.stateProp}`);
 
         return {
@@ -45,28 +45,28 @@ export class SaveModelHttpEffect implements Effect<SaveModelAction<any, any>> {
     }
 
     protected createCancelMessage(
-        action: SaveModelAction<any, any>, 
-        modelConfig: Immutable<ModelConfig<any, any>>
+        action: Immutable<SaveModelAction<TModel, TState>>, 
+        modelConfig: Immutable<ModelConfig<TModel, TState>>
     ): string{
         const saveWord = action.saveAction === ModelCommand.Update ? "Oppdatering" : "Oppretting";
         const entityWord = this.translations[modelConfig.foreignProp?.toLowerCase()]?.toLowerCase();
         const displayPropWord = this.translations[modelConfig.displayProp?.toLowerCase()]?.toLowerCase();
-        const displayPropValue = action.entity[modelConfig.displayProp];
+        const displayPropValue = action.entity[modelConfig.displayProp as string];
         return `${saveWord} av ${entityWord} med ${displayPropWord} ${displayPropValue} er reversert!`;
     }
   
-    protected createHttpBody(action: SaveModelAction<any, any>): any {
+    protected createHttpBody(action: Immutable<SaveModelAction<TModel, TState>>): unknown {
         return action.entity;
     }
 
     protected createApiUrl(
-        action: SaveModelAction<any, any>, 
-        modelConfig: Immutable<ModelConfig<any, any>>
+        action: Immutable<SaveModelAction<TModel, TState>>, 
+        modelConfig: Immutable<ModelConfig<TModel, TState>>
     ): string {
         const suffix = this.apiMap[action.saveAction].suffix;
         if(typeof suffix === "string") return modelConfig.apiUrl + suffix;
         else{ 
-            const id = action.entity[modelConfig.identifier]
+            const id = action.entity[modelConfig.identifier as string]
             return modelConfig.apiUrl + suffix(id);
         }
     }

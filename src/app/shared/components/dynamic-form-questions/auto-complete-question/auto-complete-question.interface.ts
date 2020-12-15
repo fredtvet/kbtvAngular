@@ -6,7 +6,7 @@ export interface AutoCompleteQuestion<T> extends Question {
     optionsGetter: OptionsGetter<T>;
     valueProp?: Prop<T>;
     resetable?: boolean;
-    valueFormatter?: (val: T) => any;  
-    displayWith?: (value: any) => string;
+    valueFormatter?: (val: T) => unknown;  
+    displayWith?: (value: unknown) => string;
     activeFilter?: Omit<ActiveStringFilterConfig<T>, "stringChanges$" | "data">;
 }

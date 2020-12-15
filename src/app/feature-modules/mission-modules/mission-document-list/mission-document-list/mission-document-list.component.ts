@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MissionDocument } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
+import { ModelState } from '@core/state/model-state.interface';
 import { FormService } from '@form-sheet/form-sheet.service';
 import { ImmutableArray } from '@immutable/interfaces';
 import { ModelFormService } from '@model-form/model-form.service';
@@ -93,7 +94,7 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
   }
 
   private openDocumentForm = (): void => {
-    this.modelFormService.open<MissionDocumentForm>({
+    this.modelFormService.open<ModelState, MissionDocumentForm>({
       formConfig: {
         dynamicForm: {...CreateMissionDocumentForm, initialValue: {missionId: this.missionId}},
         stateProp: "missionDocuments",

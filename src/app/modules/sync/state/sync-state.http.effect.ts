@@ -17,8 +17,8 @@ export class SyncStateHttpEffect implements Effect<StateAction> {
     private get syncTimestamp() { return this.store.selectProperty<number>("syncTimestamp") }
 
     constructor(
-      @Inject(SYNC_HTTP_FETCHER) private httpFetcher: SyncHttpFetcher<any>,
-      @Inject(SYNC_STATE_CONFIG) private syncStateConfig: SyncStateConfig<any>,
+      @Inject(SYNC_HTTP_FETCHER) private httpFetcher: SyncHttpFetcher<unknown>,
+      @Inject(SYNC_STATE_CONFIG) private syncStateConfig: SyncStateConfig<unknown>,
       private store: Store<StoreState>,
     ) {}
 

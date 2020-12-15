@@ -16,9 +16,9 @@ export class EffectsSubscriber {
     unsubscribe : Subject<void> = new Subject();
 
     constructor(
-        private store: Store<any>,
+        private store: Store<unknown>,
         private dispatcher: ActionDispatcher,
-        @Self() @Optional() @Inject(STORE_EFFECTS) effects: Effect<any>[]
+        @Self() @Optional() @Inject(STORE_EFFECTS) effects: Effect<StateAction>[]
     ){   
         if(effects)
             for(const effect of effects) this.handleEffect(effect);
@@ -26,7 +26,7 @@ export class EffectsSubscriber {
         this.effectsInitSubject.next(true);
     }
 
-    private handleEffect(effect: Effect<any>): void {
+    private handleEffect(effect: Effect<StateAction>): void {
         effect.handle$(this.dispatcher.actions$).pipe(   
             tap(x => (x && x.type) ? this.store.dispatch(x) : null),
             takeUntil(this.unsubscribe),
@@ -34,7 +34,7 @@ export class EffectsSubscriber {
         ).subscribe();
     }
 
-    private onEffectError$(err: any, effect: Effect<any>): Observable<any> {
+    private onEffectError$(err: unknown, effect: Effect<StateAction>): Observable<unknown> {
         if(effect.onErrorAction) 
             this.store.dispatch(effect.onErrorAction(err))
       

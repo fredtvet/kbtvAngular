@@ -22,5 +22,5 @@ export class DispatchHttpEffect implements Effect<DispatchHttpAction> {
         )
     }
 
-    onErrorAction = (err: any) => <HttpErrorAction>{ type: HttpErrorAction, ignoreInitialError: true }
+    onErrorAction = (err: unknown) => <HttpErrorAction>{ type: HttpErrorAction, ignoreInitialError: true }
 }

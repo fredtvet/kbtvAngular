@@ -1,41 +1,37 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class ApiService {
 
-  constructor(
-    private http: HttpClient
-    ) {}
+  constructor(private http: HttpClient) {}
 
-  get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
-    return this.http.get(`${environment.apiUrl}${path}`, { params })
+  get<T>(path: string, params: HttpParams = new HttpParams()): Observable<T> {
+    return this.http.get<T>(`${environment.apiUrl}${path}`, { params })
       .pipe(catchError(x => this.handleErrors(x)));
   }
 
-  put(path: string, body: Object = {}): Observable<any> {
-    return this.http.put( `${environment.apiUrl}${path}`, body)
+  put<T>(path: string, body: unknown): Observable<T> {
+    return this.http.put<T>( `${environment.apiUrl}${path}`, body)
       .pipe(catchError(this.handleErrors))
     
   }
 
-  post(path: string, body: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}${path}`, body)
+  post<T>(path: string, body: unknown): Observable<T> {
+    return this.http.post<T>(`${environment.apiUrl}${path}`, body)
       .pipe(catchError(x => this.handleErrors(x)))
     
   }
 
-  delete(path: string): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}${path}`)
+  delete<T>(path: string): Observable<T> {
+    return this.http.delete<T>(`${environment.apiUrl}${path}`)
       .pipe(catchError(this.handleErrors)) 
   }
 
-  private handleErrors(response: any) {
+  private handleErrors(response: HttpErrorResponse) {
     return  throwError(response.error || 'HttpError ' + response.status);
   }
 }

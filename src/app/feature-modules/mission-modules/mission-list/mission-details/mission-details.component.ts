@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angu
 import { ActivatedRoute, Router } from '@angular/router';
 import { Mission } from '@core/models';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
+import { ModelState } from '@core/state/model-state.interface';
 import { Immutable } from '@immutable/interfaces';
 import { ModelFormService } from '@model-form/model-form.service';
 import { RolePresets, Roles } from '@shared-app/enums';
@@ -47,7 +48,7 @@ export class MissionDetailsComponent{
   private openHeaderImageInput = (): void => this.imageInput?.nativeElement?.click();
   
   private openMissionForm = (entityId: number) => 
-    this.modelFormService.open({ 
+    this.modelFormService.open<ModelState, Mission>({ 
       onDeleteUri: "/oppdrag",
       formConfig: {
         dynamicForm: EditMissionForm,

@@ -9,7 +9,7 @@ export interface AppButton{
     routerLink?: string;
 
     callback?: Function;
-    params?: any[];
+    params?: unknown[];
 
     children?: AppButton[];
     svgIcon?: Icons;

@@ -21,17 +21,17 @@ export abstract class StoreBase<TState> {
 
     private _settings: StoreSettings;
 
-    private metaReducers: Immutable<MetaReducer<any, StateAction>>[];
+    private metaReducers: Immutable<MetaReducer<unknown, StateAction>>[];
 
-    stateChanges$: Observable<StateChanges<any>> = this.base.stateChanges$;
+    stateChanges$: Observable<StateChanges<unknown>> = this.base.stateChanges$;
     
     constructor(
         private base: StateBase,
-        private hostStore: Store<any>,
+        private hostStore: Store<unknown>,
         private queryDispatcher: QueryDispatcher,
         private actionDispatcher: ActionDispatcher,
-        reducers: ImmutableArray<Reducer<any, StateAction>>,
-        metaReducers: ImmutableArray<MetaReducer<any, StateAction>>,
+        reducers: ImmutableArray<Reducer<unknown, StateAction>>,
+        metaReducers: ImmutableArray<MetaReducer<unknown, StateAction>>,
         settings?: StoreSettings,
     ) { 
         //Get unique values

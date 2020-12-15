@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceInfoService } from '@core/services/device-info.service';
-import { ModelState } from '@core/state/model-state.interface';
 import { _objectToDisabledObjectMap } from '@dynamic-forms/helpers/disabled-control-map.helper';
 import { DynamicForm } from '@dynamic-forms/interfaces';
 import { _getDateOfWeek } from '@datetime/get-date-of-week.helper';
@@ -20,6 +19,7 @@ import { ViewModel } from './view-model.interface';
 import { FormService } from '@form-sheet/form-sheet.service';
 import { OptionsFormState } from '@form-sheet/interfaces';
 import { ModelFormService } from '@model-form/model-form.service';
+import { ModelState } from "@core/state/model-state.interface";
 
 @Component({
   selector: "app-user-timesheet-week",
@@ -58,7 +58,7 @@ export class UserTimesheetWeekComponent {
     if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _objectToDisabledObjectMap(form)}
     else dynamicForm = EditUserTimesheetForm
 
-    this.modelFormService.open<TimesheetForm>({
+    this.modelFormService.open<ModelState, TimesheetForm>({
       formConfig: {
         dynamicForm: {...dynamicForm, initialValue: form}, entityId,
         stateProp: "userTimesheets",    
@@ -80,7 +80,7 @@ export class UserTimesheetWeekComponent {
   };
 
   private openWeekFilter = (): void => { 
-    this.formService.open<WeekCriteria, any>({
+    this.formService.open<WeekCriteria>({
       formConfig: {...WeekCriteriaForm, 
         disabledControls: {user: true}, 
         noRenderDisabledControls: true,  

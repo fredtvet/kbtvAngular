@@ -27,7 +27,7 @@ export interface SyncResponse<TState>{
 
 export type SyncArraysResponse<TState> = {[key in keyof TState]: SyncArrayResponse}
 
-export type SyncValuesResponse<TState> = {[key in keyof TState]: any}
+export type SyncValuesResponse<TState> = {[key in keyof TState]: unknown}
 
 export interface SyncArrayResponse{
     entities: Object[];
@@ -38,4 +38,4 @@ export interface SyncHttpFetcher<TState> {
     fetch$(config: SyncConfig, timestamp: number): Observable<SyncResponse<TState>>
 }
 
-export interface CustomSyncProviders { fetcher: Type<SyncHttpFetcher<any>>, config: SyncStateConfig<any> }
+export interface CustomSyncProviders { fetcher: Type<SyncHttpFetcher<unknown>>, config: SyncStateConfig<unknown> }

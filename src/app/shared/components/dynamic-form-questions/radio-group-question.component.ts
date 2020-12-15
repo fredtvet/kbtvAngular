@@ -8,8 +8,8 @@ import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.c
 export interface RadioGroupQuestion<T> extends Question {
     optionsGetter: OptionsGetter<T>;
     defaultOption?: string;
-    valueFormatter?: (val: T) => any;
-    valueSetter?: (val: T) => any;
+    valueFormatter?: (val: T) => unknown;
+    valueSetter?: (val: T) => unknown;
     divider?: boolean;
 }
 
@@ -37,12 +37,12 @@ export interface RadioGroupQuestion<T> extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RadioGroupQuestionComponent extends BaseQuestionComponent<RadioGroupQuestion<any>> 
+export class RadioGroupQuestionComponent extends BaseQuestionComponent<RadioGroupQuestion<unknown>> 
   implements QuestionComponent {
 
   hideField: boolean;
 
-  options$: Observable<any[]>;
+  options$: Observable<unknown[]>;
   
   constructor(
     @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,

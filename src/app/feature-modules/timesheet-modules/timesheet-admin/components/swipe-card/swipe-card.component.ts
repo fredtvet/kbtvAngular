@@ -38,12 +38,12 @@ export class SwipeCardComponent {
 
   constructor() { }
 
-  hideSwipeAction(e: any, state: boolean): void{
+  hideSwipeAction(state: boolean): void{
     if(this.lockPosition) return;
     this.isClosed = state;
   }
 
-  handleSwipeBtnClick = (e: any): void => { 
+  handleSwipeBtnClick = (e: Event): void => { 
     e.preventDefault(); 
     if(this.lockPosition === "close") return;
     this.navDisabled = true;
@@ -52,12 +52,12 @@ export class SwipeCardComponent {
     this.handleFn(this.swipeButton.callback, this.swipeButton.params);
   };
 
-  handleNavClick = (e: any): void => {
+  handleNavClick = (): void => {
     if(!this.navButton?.callback || this.navDisabled) return;
     this.handleFn(this.navButton.callback, this.navButton.params);
   }
 
-  private handleFn(fn: Function, parameters: any[]){
+  private handleFn(fn: Function, parameters: unknown[]){
     if(parameters) fn(...parameters);
     else fn();
   }

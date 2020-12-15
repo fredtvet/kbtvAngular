@@ -6,7 +6,9 @@ import { DynamicHostDirective } from '../dynamic-host.directive';
 import { _getControlObserver$ } from '../helpers/get-control-observer.helper';
 import { ControlGroupComponent, ControlHook, DynamicControl, DynamicControlGroup, DynamicForm, QuestionComponent, QuestionWrapper } from '../interfaces';
 
-export type ValidControl = DynamicControlGroup<any> | DynamicControl<any>;
+type Control = DynamicControl<unknown>;
+type ControlGroup = DynamicControlGroup<unknown>
+export type ValidControl = Control | ControlGroup;
 
 @Directive()
 export abstract class ControlComponentLoaderComponent {
@@ -27,7 +29,7 @@ export abstract class ControlComponentLoaderComponent {
         this.unsubscribe.complete();
     }
 
-    protected loadComponents(controls: ValidControl[], form: DynamicForm<any,any>, nestedNames: string[] = []): void{
+    protected loadComponents(controls: ValidControl[], form: DynamicForm<unknown,unknown>, nestedNames: string[] = []): void{
         for(const control of controls){
             if(control.type === "group")
                 this.loadQuestionGroupComponent(control, form, nestedNames)       
@@ -37,9 +39,9 @@ export abstract class ControlComponentLoaderComponent {
         }
     }
 
-    protected onQuestionComponentInit(componentRef: ComponentRef<QuestionComponent>, control: DynamicControl<any>): void {}
+    protected onQuestionComponentInit(componentRef: ComponentRef<QuestionComponent>, control: Control): void {}
 
-    private loadQuestionComponent(questionWrapper: QuestionWrapper, control: DynamicControl<any>, formControl: AbstractControl, formConfig: DynamicForm<any,any>) {
+    private loadQuestionComponent(questionWrapper: QuestionWrapper, control: Control, formControl: AbstractControl, formConfig: DynamicForm<unknown,unknown>) {
         if(formConfig.noRenderDisabledControls && formControl.disabled) return;
         
         const componentRef = this.loadComponent(questionWrapper.component);
@@ -55,7 +57,7 @@ export abstract class ControlComponentLoaderComponent {
             this.initHideObserver(questionWrapper.hideOnValueChange, componentRef.location.nativeElement);
     }
 
-    private loadQuestionGroupComponent(controlGroup: DynamicControlGroup<any>, formConfig: DynamicForm<any,any>, nestedNames: string[] = []) {
+    private loadQuestionGroupComponent(controlGroup: ControlGroup, formConfig: DynamicForm<unknown,unknown>, nestedNames: string[] = []) {
         const componentRef = this.loadComponent(controlGroup.controlGroupComponent || this.defaultControlGroupComponent);
         componentRef.instance.controlGroup = controlGroup;
         componentRef.instance.formConfig = formConfig;

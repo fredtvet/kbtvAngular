@@ -1,10 +1,10 @@
 import { ApiUrl } from '@core/api-url.enum';
-import { Mission, MissionType, Employer, AppDocumentType, MissionImage, MissionDocument, MissionNote, User, InboundEmailPassword, Timesheet } from '@core/models';
+import { Mission, MissionType, Employer, AppDocumentType, MissionImage, MissionDocument, MissionNote, User, InboundEmailPassword, Timesheet, Model } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { ModelConfig } from '@model/interfaces';
 
 
-export const ModelConfigs: ModelConfig<any, ModelState>[] = [
+export const ModelConfigs: unknown[] = [
     <ModelConfig<Mission, ModelState>>{
         stateProp: "missions",
         apiUrl: ApiUrl.Mission, 

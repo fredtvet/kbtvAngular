@@ -4,18 +4,18 @@ import { Prop } from '@state/interfaces';
 import { ModelConfig } from './interfaces';
 import { ModelStateConfig } from './model-state.config';
 
-type RelationInclude<TState> = Prop<TState>[] | "all";
+type RelationInclude<TState> = ImmutableArray<Prop<TState>> | "all";
 
 export class GetWithRelationsConfig<TState> {
 
-  private propConfig: Immutable<ModelConfig<any, TState>>;
+  private propConfig: Immutable<ModelConfig<unknown, TState>>;
 
   includedForeignProps: ImmutableArray<Prop<TState>>;
   includedChildProps: ImmutableArray<Prop<TState>>;
   includedProps: ImmutableArray<Prop<TState>>;
 
   constructor(
-    readonly modelProp: Prop<TState>,
+    readonly modelProp: Immutable<Prop<TState>>,
     children?: RelationInclude<TState>,
     foreigns?: RelationInclude<TState>
   ) {
@@ -30,19 +30,19 @@ export class GetWithRelationsConfig<TState> {
     this.includedChildProps = 
       children === "all" ? (childProps || []) : this.getProps(children, childProps) 
 
-    this.includedProps = [modelProp as any, ...this.includedChildProps, ...this.includedForeignProps]
+    this.includedProps = [modelProp, ...this.includedChildProps, ...this.includedForeignProps]
   }
 
-  private getProps(includes: ImmutableArray<string>, props: ImmutableArray<string>): ImmutableArray<Prop<TState>>{  
+  private getProps(includes: ImmutableArray<Prop<TState>>, props: ImmutableArray<Prop<TState>>): ImmutableArray<Prop<TState>>{  
     if(!props || !includes?.length) return []; 
-    let included: Prop<TState>[] = []; 
-    const propMap = _convertArrayToObject<string>(props);
+    let included: Immutable<Prop<TState>>[] = []; 
+    const propMap = _convertArrayToObject(props);
     for(const include of includes){
-      if(propMap[include]) included.push(include as any);
+      if(propMap[include]) included.push(include);
       else 
         console.error(`'${include}' not registered as a relation in model config for '${this.modelProp}'`)
     }
-    return <ImmutableArray<any>> included;    
+    return included;    
   }
 }
 

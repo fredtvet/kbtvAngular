@@ -6,9 +6,8 @@ import { UserNameControl } from '../common-controls.const';
 
 interface PasswordForm { newPassword: string, confirmPassword: string }
 
-export interface CurrentUserPasswordFormState extends PasswordForm { oldPassword: string }
-
-const NewPasswordControl = <DynamicControl<PasswordForm>>{ name: "newPassword", required: true,
+const NewPasswordControl = <DynamicControl<PasswordForm>>{ 
+    name: "newPassword", required: true,
     type: "control", questions: [{
         component:  InputQuestionComponent,
         question: <InputQuestion>{ 
@@ -17,7 +16,8 @@ const NewPasswordControl = <DynamicControl<PasswordForm>>{ name: "newPassword", 
     }],
     validators: [Validators.minLength(7)] 
 }
-const ConfirmPasswordControl = <DynamicControl<PasswordForm>>{ name: "confirmPassword", required: true,
+const ConfirmPasswordControl = <DynamicControl<PasswordForm>>{ 
+    name: "confirmPassword", required: true,
     type: "control", questions: [{
         component:  InputQuestionComponent,
         question: <InputQuestion>{ 
@@ -26,9 +26,11 @@ const ConfirmPasswordControl = <DynamicControl<PasswordForm>>{ name: "confirmPas
     }],
 }
 
-export const CurrentUserPasswordForm: DynamicForm<CurrentUserPasswordFormState, any> = {
+export interface CurrentUserPasswordForm extends PasswordForm { oldPassword: string }
+export const CurrentUserPasswordForm: DynamicForm<CurrentUserPasswordForm, unknown> = {
     submitText: "Oppdater", controls: [
-        <DynamicControl<CurrentUserPasswordFormState>>{ name: "oldPassword", required: true,
+        <DynamicControl<CurrentUserPasswordForm>>{ 
+            name: "oldPassword", required: true,
             type: "control", questions: [{
                 component:  InputQuestionComponent,
                 question: <InputQuestion>{ 
@@ -42,8 +44,8 @@ export const CurrentUserPasswordForm: DynamicForm<CurrentUserPasswordFormState, 
     ], validators: [isSamePasswordsValidator<PasswordForm>("newPassword", "confirmPassword")],
 }
 
-export interface UserPasswordFormState extends PasswordForm { userName: string }
-export const UserPasswordForm: DynamicForm<UserPasswordFormState,  any> = {
+export interface UserPasswordForm extends PasswordForm { userName: string }
+export const UserPasswordForm: DynamicForm<UserPasswordForm,  unknown> = {
     submitText: "Oppdater", disabledControls: {userName: true}, getRawValue: true,
     controls: [
         UserNameControl,

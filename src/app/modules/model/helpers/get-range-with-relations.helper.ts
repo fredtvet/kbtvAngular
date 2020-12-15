@@ -9,9 +9,9 @@ import { Immutable, ImmutableArray } from '@immutable/interfaces';
 export function _getRangeWithRelations<TModel, TState>(
     state: Immutable<Partial<TState>>,
     cfg: GetWithRelationsConfig<TState>,
-    filter?: (value: Immutable<TModel>, index?: number, Array?: any[]) => boolean, 
+    filter?: (value: Immutable<TModel>, index?: number, Array?: unknown[]) => boolean, 
 ): ImmutableArray<TModel> {
-    const modelCfg = ModelStateConfig.get(cfg.modelProp); 
+    const modelCfg = ModelStateConfig.get<TModel, TState>(cfg.modelProp); 
 
     let modelState = <ImmutableArray<TModel>> state[cfg.modelProp as string];
     
@@ -74,7 +74,7 @@ function _createStatePropertyLookups(
 function _mapForeignsToEntity<T>(
     props: ImmutableArray<string>, 
     lookups: {[key: string]: Immutable<Object>}, 
-    entity: T
+    entity: Immutable<T>
   ): void{
     for(const foreignProp of props){ //Map foreign entity to entity
         const foreignCfg = ModelStateConfig.get(foreignProp);
@@ -82,11 +82,11 @@ function _mapForeignsToEntity<T>(
     }
 }
 
-function _mapChildrenToEntity<T>(
+function _mapChildrenToEntity<T, TState>(
     props: ImmutableArray<string>, 
-    propCfg: Immutable<ModelConfig<T, any>>, 
+    propCfg: Immutable<ModelConfig<T, TState>>, 
     lookups: {[key: string]: Readonly<Object>}, 
-    entity: T
+    entity: Immutable<T>
 ): void{
     for(let childProp of props){
         const entityId = entity[propCfg.identifier as string];

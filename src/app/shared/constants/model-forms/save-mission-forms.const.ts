@@ -12,16 +12,16 @@ import { ValidationRules } from '../validation-rules.const';
 
 type FormState = OptionsFormState<StateEmployers & StateMissionTypes>;
 
-const DescriptionControl = <DynamicControl<Mission>>{ name: "description",
+const DescriptionControl = <DynamicControl<Mission, FormState>>{ name: "description",
     type: "control", questions: [{
         component:  TextAreaQuestionComponent,
         question: <TextAreaQuestion>{placeholder: "Beskrivelse"}, 
     }], 
     validators: [Validators.maxLength(ValidationRules.MissionDescriptionMaxLength)] 
 }
-const EmployerControl = <DynamicControlGroup<Mission>>{ name: "employer",
+const EmployerControl = <DynamicControlGroup<Mission, FormState>>{ name: "employer",
     type: "group", controls: [
-    <DynamicControl<Employer>>{ name: "name",
+    <DynamicControl<Employer, FormState>>{ name: "name",
         valueGetter: (s: Mission) => s.employer?.name, 
         type: "control", questions: [{
             component:  AutoCompleteQuestionComponent,
@@ -36,9 +36,9 @@ const EmployerControl = <DynamicControlGroup<Mission>>{ name: "employer",
         }], 
     }],
 }
-const MissionTypeControl = <DynamicControlGroup<Mission>>{ name: "missionType",
+const MissionTypeControl = <DynamicControlGroup<Mission, FormState>>{ name: "missionType",
     type: "group", controls: [
-    <DynamicControl<MissionType>>{ name: "name",
+    <DynamicControl<MissionType, FormState>>{ name: "name",
         valueGetter: (s: Mission) => s.missionType?.name, 
         type: "control", questions: [{
             component:  AutoCompleteQuestionComponent,
@@ -53,7 +53,7 @@ const MissionTypeControl = <DynamicControlGroup<Mission>>{ name: "missionType",
         }], 
     }],
 }
-const FinishedControl = <DynamicControl<Mission>>{ name: "finished",
+const FinishedControl = <DynamicControl<Mission, FormState>>{ name: "finished",
     valueGetter: (s: Mission) => s.finished, 
     type: "control", questions: [{
         component:  CheckboxQuestionComponent,

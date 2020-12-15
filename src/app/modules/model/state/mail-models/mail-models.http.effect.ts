@@ -12,7 +12,7 @@ import { ModelCommand } from '../../model-command.enum';
 import { MailModelsAction } from './mail-models.action';
 
 @Injectable()
-export class MailModelsHttpEffect implements Effect<MailModelsAction<any>>{
+export class MailModelsHttpEffect implements Effect<MailModelsAction<unknown>>{
 
     constructor(
         private httpClient: HttpClient,
@@ -20,7 +20,7 @@ export class MailModelsHttpEffect implements Effect<MailModelsAction<any>>{
         @Inject(COMMAND_API_MAP) private apiMap: CommandApiMap,
     ) {}
     
-    handle$(actions$: Observable<DispatchedAction<MailModelsAction<any>>>): Observable<void> {
+    handle$(actions$: Observable<DispatchedAction<MailModelsAction<unknown>>>): Observable<void> {
         return actions$.pipe(
             listenTo([MailModelsAction]),
             mergeMap(({action}) => 

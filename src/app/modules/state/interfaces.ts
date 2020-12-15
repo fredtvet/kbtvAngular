@@ -13,12 +13,12 @@ export interface Query { props: ImmutableArray<string> };
 
 export interface Effect<TAction extends StateAction> {
     handle$(actions$: Observable<DispatchedAction<TAction>>): Observable<Immutable<StateAction> | void>
-    onErrorAction?: (err: any) => Immutable<StateAction>
+    onErrorAction?: (err: unknown) => Immutable<StateAction>
 }
 
 export type ReducerFn<TState, TAction> = (state: Immutable<TState>, action: Immutable<TAction>) => Immutable<Partial<TState>>
 
-export type ReducerMap = {[key: string]: ImmutableArray<Reducer<any, StateAction>>}
+export type ReducerMap = {[key: string]: ImmutableArray<Reducer<unknown, StateAction>>}
 
 export interface Reducer<TState, TAction extends StateAction> {
     type: string;

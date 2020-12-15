@@ -5,6 +5,6 @@ import { DeleteModelAction } from './delete-model.action';
 
 export const DeleteModelReducer = _createReducer(
     DeleteModelAction,
-    (state: Immutable<any>, action: Immutable<DeleteModelAction<any>>) => 
+    (state: Immutable<Object>, action: Immutable<DeleteModelAction<Object>>) => 
         _deleteModelWithChildren(state, action.stateProp, {...action.payload}),
 )

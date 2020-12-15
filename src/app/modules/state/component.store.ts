@@ -12,11 +12,11 @@ import { StoreBase } from './store-base';
 export class ComponentStore<TState> extends StoreBase<TState> {
 
     constructor(
-        @SkipSelf() @Optional() hostStore: Store<any>,
+        @SkipSelf() @Optional() hostStore: Store<unknown>,
         queryDispatcher: QueryDispatcher,
         @Self() dispatcher: ActionDispatcher,
-        @Self() @Optional() @Inject(STORE_REDUCERS) reducers: Reducer<any, StateAction>[],
-        @Self() @Optional() @Inject(STORE_META_REDUCERS) metaReducers: MetaReducer<any, StateAction>[],
+        @Self() @Optional() @Inject(STORE_REDUCERS) reducers: Reducer<unknown, StateAction>[],
+        @Self() @Optional() @Inject(STORE_META_REDUCERS) metaReducers: MetaReducer<unknown, StateAction>[],
         @Self() @Optional() @Inject(STORE_DEFAULT_STATE) defaultState: Partial<TState>,
         @Optional() @Inject(STORE_SETTINGS) storeSettings: StoreSettings,
     ) { 

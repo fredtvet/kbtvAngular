@@ -8,7 +8,7 @@ export interface TopNavConfig{
     subIcon?: string;
 
     backFn?: Function;
-    backFnParams?: any[];
+    backFnParams?: unknown[];
     backIcon?: string;
 
     buttons?: AppButton[];

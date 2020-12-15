@@ -19,13 +19,13 @@ export class MissionDocumentListFacade  {
 
   getMissionDocuments$(missionId: string): Observable<ImmutableArray<MissionDocument>> {
     return this.store.select$(["missionDocuments", "employers", "documentTypes"]).pipe(map(state => {
-      const relationCfg = new GetWithRelationsConfig("missionDocuments", null, ["documentTypes"])
+      const relationCfg = new GetWithRelationsConfig<StoreState>("missionDocuments", null, ["documentTypes"])
       return _getRangeWithRelations(state, relationCfg, (x: MissionDocument) => x.missionId === missionId);
     }))
   }
 
   getMissionEmployerEmail(missionId: string): string{  
-    const relationCfg = new GetWithRelationsConfig("missions", null, ["employers"])
+    const relationCfg = new GetWithRelationsConfig<StoreState>("missions", null, ["employers"])
     let state = this.store.select(["missions", "employers"]);
     const mission = _getWithRelations<Mission, ModelState>(state, relationCfg, missionId);
     const email = mission?.employer?.email;

@@ -12,7 +12,7 @@ import { ReloadSyncStateAction, SyncStateAction, WipeSyncStateAction } from './a
 export class ReloadSyncStateEffect implements Effect<StateAction> {
 
     constructor(
-      @Inject(SYNC_STATE_CONFIG) private syncStateConfig: SyncStateConfig<any>,
+      @Inject(SYNC_STATE_CONFIG) private syncStateConfig: SyncStateConfig<unknown>,
     ) { }
 
     handle$(actions$: Observable<DispatchedAction<ReloadSyncStateAction>>): Observable<WipeSyncStateAction | SyncStateAction> {

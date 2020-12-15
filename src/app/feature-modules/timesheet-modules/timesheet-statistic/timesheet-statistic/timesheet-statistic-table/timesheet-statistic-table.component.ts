@@ -27,7 +27,10 @@ export class TimesheetStatisticTableComponent extends AgGridTableComponent<Times
     super.initNgGrid(cfg);
     
     this.dataGrid?.api.setPinnedBottomRowData(
-      this.isSummaryData ? this.addSummaryBottomRow(cfg as any) : this.addTimesheetBottomRow(cfg as any));  
+      this.isSummaryData ? 
+      this.addSummaryBottomRow(<AgGridConfig<TimesheetSummary>> cfg) : 
+      this.addTimesheetBottomRow(<AgGridConfig<Timesheet>> cfg) 
+    );  
   }
 
   protected addColDefs(object: TimesheetSummary | Timesheet): ColDef[]{
@@ -50,7 +53,7 @@ export class TimesheetStatisticTableComponent extends AgGridTableComponent<Times
     }];   
   }
 
-  private addTimesheetBottomRow(cfg: AgGridConfig<Timesheet>): any[]{
+  private addTimesheetBottomRow(cfg: AgGridConfig<Timesheet>): unknown[]{
     let totalHours = 0;
     
     for(let  i = cfg.data.length; i--;){

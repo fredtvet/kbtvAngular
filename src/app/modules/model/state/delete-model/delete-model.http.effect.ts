@@ -13,14 +13,14 @@ import { ModelCommand } from '@model/model-command.enum';
 import { Immutable } from '@immutable/interfaces';
 
 @Injectable()
-export class DeleteModelHttpEffect implements Effect<DeleteModelAction<any>>{
+export class DeleteModelHttpEffect implements Effect<DeleteModelAction<unknown>>{
 
     constructor(
         @Inject(COMMAND_API_MAP) private apiMap: CommandApiMap,    
         @Inject(MODEL_PROP_TRANSLATIONS) private translations: Readonly<KeyVal<string>>
     ){ }
 
-    handle$(actions$: Observable<DispatchedAction<DeleteModelAction<any>>>): Observable<HttpAction> {
+    handle$(actions$: Observable<DispatchedAction<DeleteModelAction<unknown>>>): Observable<HttpAction> {
         return actions$.pipe(
             listenTo([DeleteModelAction]),
             map(x => <HttpAction>{ 
@@ -31,7 +31,7 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<any>>{
         )
     }
 
-    private createHttpRequest(action: Immutable<DeleteModelAction<any>>): HttpRequest {
+    private createHttpRequest(action: Immutable<DeleteModelAction<unknown>>): HttpRequest {
         const modelConfig = ModelStateConfig.get(action.stateProp);
         if(!modelConfig) console.error(`No model config for property ${action.stateProp}`);
         const modelCommand = action.payload.id ? ModelCommand.Delete : ModelCommand.DeleteRange;
@@ -43,7 +43,7 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<any>>{
         }
     }
 
-    protected createCancelMessage(action: Immutable<DeleteModelAction<any>>, modelConfig: Immutable<ModelConfig<any, any>>): string{
+    protected createCancelMessage(action: Immutable<DeleteModelAction<unknown>>, modelConfig: Immutable<ModelConfig<unknown, unknown>>): string{
         const payload = action.payload;
         const multi = payload.ids?.length > 1;
 
@@ -53,13 +53,13 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<any>>{
         return `Sletting av ${payload.ids?.length || ''} ${entityWord} med id ${payload.ids || payload.id} er reversert!`;
     }
   
-    protected createHttpBody(action: Immutable<DeleteModelAction<any>>): Immutable<{ids: any[]}> {
+    protected createHttpBody(action: Immutable<DeleteModelAction<unknown>>): Immutable<{ids: unknown[]}> {
         return action.payload.id ? null : {ids: action.payload.ids};
     }
 
     protected createApiUrl(
-        action: Immutable<DeleteModelAction<any>>, 
-        modelConfig: Immutable<ModelConfig<any, any>>, 
+        action: Immutable<DeleteModelAction<Object>>, 
+        modelConfig: Immutable<ModelConfig<Object, Object>>, 
         actionType: ModelCommand): string {
         const suffix = this.apiMap[actionType].suffix;
         if(typeof suffix === "string") return modelConfig.apiUrl + suffix

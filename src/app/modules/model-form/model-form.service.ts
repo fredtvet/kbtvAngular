@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ModelState } from '@core/state/model-state.interface';
 import { FormSheetWrapperComponent } from '@form-sheet/form-sheet-wrapper.component';
 import { FormSheetWrapperConfig, OptionsFormState } from '@form-sheet/interfaces';
+import { Immutable } from "@immutable/interfaces";
 import { MODEL_PROP_TRANSLATIONS } from '@model/injection-tokens.const';
 import { KeyVal, SaveAction } from '@model/interfaces';
 import { ModelCommand } from '@model/model-command.enum';
@@ -19,12 +20,12 @@ type FormState<TState> = OptionsFormState<Partial<TState>>;
 
 export interface ModelFormServiceConfig<TState, TForm, TFormState extends FormState<TState>> {
   formConfig: ModelFormConfig<TState, TForm, TFormState>,  
-  formState?: TFormState | Observable<TFormState>,
+  formState?: Immutable<TFormState> | Observable<Immutable<TFormState>>,
   onSaveUri?: string, 
   onDeleteUri?: string, 
   deleteDisabled?: boolean, 
   customTitle?: string, 
-  submitCallback?: (val: any) => void
+  submitCallback?: (val: unknown) => void
 }
 
 @Injectable()
@@ -34,15 +35,15 @@ export class ModelFormService {
     private matBottomSheet: MatBottomSheet,
     private router: Router,
     private confirmService: ConfirmDialogService,  
-    private store: Store<any>,
+    private store: Store<unknown>,
     @Inject(MODEL_PROP_TRANSLATIONS) private translations: KeyVal<string>
   ) {}
 
-  open<TForm>(
-    config: ModelFormServiceConfig<any, TForm, FormState<any>>
+  open<TState, TForm>(
+    config: ModelFormServiceConfig<TState, TForm, FormState<TState>>
   ): MatBottomSheetRef<FormSheetWrapperComponent, ModelCommand> {
     const ref =  this.matBottomSheet.open(FormSheetWrapperComponent, { 
-      data: <FormSheetWrapperConfig<ModelFormConfig<any, TForm, FormState<any>>, FormState<any>, SaveAction>>{
+      data: <FormSheetWrapperConfig<ModelFormConfig<TState, TForm, FormState<TState>>, FormState<TState>, SaveAction>>{
         
         formConfig: config.formConfig, 
         submitCallback: config.submitCallback,
@@ -68,7 +69,7 @@ export class ModelFormService {
     return ref;
   }
 
-  close = (res: ModelCommand, ref: MatBottomSheetRef<any, any>, url?: string) => {
+  close = (res: ModelCommand, ref: MatBottomSheetRef<unknown, unknown>, url?: string) => {
     if(url) this.router.navigate([url]);
     ref.dismiss(res);
   } 
@@ -76,7 +77,10 @@ export class ModelFormService {
   private translateStateProp = (prop: string): string => 
     this.translations[ModelStateConfig.get(prop).foreignProp?.toLowerCase()]?.toLowerCase();
 
-  private confirmDelete = (formConfig: ModelFormConfig<any, any, any>, deleteUrl: string, ref: MatBottomSheetRef<any, any>) => { 
+  private confirmDelete = <TState, TForm>(
+    formConfig: ModelFormConfig<TState, TForm, FormState<TState>>, 
+    deleteUrl: string, 
+    ref: MatBottomSheetRef<unknown, unknown>) => { 
     const translatedProp = this.translateStateProp(formConfig.stateProp)
     this.confirmService.open({
         title: `Slett ${translatedProp}?`, 
@@ -86,7 +90,10 @@ export class ModelFormService {
     });
   }
 
-  private deleteEntity = (formConfig: ModelFormConfig<any, any, any>, deleteUrl: string, ref: MatBottomSheetRef<any, any>) => {
+  private deleteEntity = <TState, TForm>(
+    formConfig: ModelFormConfig<TState, TForm, FormState<TState>>, 
+    deleteUrl: string, 
+    ref: MatBottomSheetRef<unknown, unknown>) => {
       this.close(ModelCommand.Delete, ref, deleteUrl);
       this.store.dispatch(<DeleteModelAction<ModelState>>{ 
         type: DeleteModelAction, 

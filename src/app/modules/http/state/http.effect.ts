@@ -12,14 +12,14 @@ import { HttpQueuePushAction } from './http-queue-push/http-queue-push.action';
 export const HttpAction = "HTTP_ACTION";
 export interface HttpAction extends StateAction {
     request: HttpRequest, 
-    stateSnapshot: Immutable<any>
+    stateSnapshot: Immutable<unknown>
 }
 
 @Injectable()
 export class HttpEffect implements Effect<HttpAction> {
 
     constructor(
-        @Inject(OPTIMISTIC_STATE_SELECTOR) @Optional() private stateSelector: OptimisticStateSelector<any>
+        @Inject(OPTIMISTIC_STATE_SELECTOR) @Optional() private stateSelector: OptimisticStateSelector<{}>
     ) { 
         this.setOptimistictStateStrategy() 
     }
@@ -48,14 +48,14 @@ export class HttpEffect implements Effect<HttpAction> {
                 stateGetter = (state: Readonly<Object>) => {
                     let returnState = {};
                     for(const prop of this.stateSelector.props)
-                        returnState[prop] = state[prop]; 
+                        returnState[prop as string] = state[prop]; 
                     return returnState;
                 }       
             else
                 stateGetter = (state: Readonly<Object>) => {
                     let returnState = state;
                     for(const prop of this.stateSelector.props) 
-                        returnState[prop] = undefined
+                        returnState[prop as string] = undefined
                     return returnState;
                 }         
         else //If no custom props, use full state   

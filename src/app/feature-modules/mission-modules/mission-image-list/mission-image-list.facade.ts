@@ -27,7 +27,7 @@ export class MissionImageListFacade {
 
   getByMissionId$ = (id: string): Observable<ImmutableArray<MissionImage>> => 
     this.store.select$(["missions", "employers", "missionImages"]).pipe(map(state => {
-      const relationCfg = new GetWithRelationsConfig("missions", ["missionImages"], ["employers"]);
+      const relationCfg = new GetWithRelationsConfig<StoreState>("missions", ["missionImages"], ["employers"]);
       let mission = _getWithRelations<Mission, ModelState>(state, relationCfg, id);
       this.mission = mission;
       return mission?.missionImages;

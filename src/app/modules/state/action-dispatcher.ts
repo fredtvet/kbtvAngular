@@ -9,7 +9,7 @@ export class ActionDispatcher {
     private actionsSubject = new Subject<DispatchedAction<StateAction>>();
     actions$ = this.actionsSubject.asObservable();
 
-    dispatch(action: StateAction, stateSnapshot?: Readonly<any>){
+    dispatch(action: StateAction, stateSnapshot?: Readonly<unknown>){
         this.actionsSubject.next({action, stateSnapshot});
     }
     

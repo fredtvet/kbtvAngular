@@ -94,7 +94,7 @@ export const EmployerSelectControl = <DynamicControl<{employer: Employer}>>{ nam
         question: <SelectQuestion<Employer>>{
             optionsGetter: (s: OptionsFormState<StateEmployers>) => s.options.employers,
             valueFormatter: (val: Employer) => val.name,
-            compareWith: _compareProp("id"),
+            compareWith: _compareProp<Employer>("id"),
             placeholder: "Velg oppdragsgiver",
         }, 
     }], 
@@ -105,7 +105,7 @@ export const UserSelectControl = <DynamicControl<{user: User}>>{ name: "user",
         question: <SelectQuestion<User>>{
             optionsGetter: (state: OptionsFormState<StateUsers>) => state.options.users,
             valueFormatter: (val: User) => val.firstName + ' ' + val.lastName,
-            compareWith: _compareProp("userName"),
+            compareWith: _compareProp<User>("userName"),
             placeholder: "Velg ansatt",
         }, 
     }], 

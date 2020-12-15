@@ -3,11 +3,11 @@ import { User } from '@core/models';
 import { SyncConfig } from '@sync/interfaces';
 import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { CurrentUserPasswordForm, CurrentUserPasswordFormState } from '@shared/constants/forms/password-form.const';
 import { ProfileForm } from '@shared/constants/forms/profile-form.const';
 import { SyncConfigForm } from '@shared/constants/forms/sync-config.form.const';
 import { ProfileFacade } from '../profile.facade';
 import { FormService } from '@form-sheet/form-sheet.service';
+import { CurrentUserPasswordForm } from '@shared/constants/forms/password-form.const';
 
 @Component({
   selector: 'app-profile',
@@ -27,7 +27,7 @@ export class ProfileComponent {
   ){}
 
   updateProfile(): void{
-    this.formService.open<User, any>({
+    this.formService.open<User>({
       formConfig: {...ProfileForm, initialValue: this.facade.currentUser}, 
       navConfig: {title: "Oppdater profil"},
       submitCallback: (val: User) => this.facade.updateCurrentUser(val)
@@ -35,16 +35,16 @@ export class ProfileComponent {
   }
 
   updatePassword(): void {
-    this.formService.open<CurrentUserPasswordFormState, any>({
+    this.formService.open<CurrentUserPasswordForm>({
       formConfig: CurrentUserPasswordForm, 
       navConfig: {title: "Oppdater passord"},
-      submitCallback: (val: CurrentUserPasswordFormState) => this.facade.updatePassword(val.oldPassword, val.newPassword)
+      submitCallback: (val: CurrentUserPasswordForm) => this.facade.updatePassword(val.oldPassword, val.newPassword)
     })
   }
 
   updateSyncConfig(): void {
     const config = this.facade.syncConfig;
-    this.formService.open<SyncConfig, any>({
+    this.formService.open<SyncConfig, unknown>({
       formConfig: {...SyncConfigForm, initialValue: {...config, refreshTime: config.refreshTime / 60 }}, 
       navConfig: {title: "Konfigurasjoner"},
       submitCallback: (val: SyncConfig) => 

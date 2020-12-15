@@ -11,10 +11,10 @@ export class FormService {
 
   constructor(private matBottomSheet: MatBottomSheet) {}
 
-  open<TForm, TFormState>(config: FormServiceConfig<TForm, TFormState>)
+  open<TForm, TFormState = unknown>(config: FormServiceConfig<TForm, TFormState>)
   : MatBottomSheetRef<FormSheetWrapperComponent, TForm> {      
     return this.matBottomSheet.open(FormSheetWrapperComponent, { 
-      data: <FormSheetWrapperConfig<DynamicForm<TForm, TFormState>, any, TForm>>{
+      data: <FormSheetWrapperConfig<DynamicForm<TForm, TFormState>, unknown, TForm>>{
         formConfig: config.formConfig, 
         navConfig: config.navConfig, 
         submitCallback: config.submitCallback,

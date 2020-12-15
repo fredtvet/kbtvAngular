@@ -6,6 +6,7 @@ import { AgGridTableComponent } from '@shared/components/abstracts/ag-grid-table
 import { translations } from '@shared/translations';
 import { DataConfig } from '../../interfaces/data-config.interface';
 import { DataTableConfig } from './data-table.config';
+import { CellValueChangedEvent, ColDef } from 'ag-grid-community';
 
 @Component({
   selector: 'app-data-table',
@@ -16,8 +17,8 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
 
   @Output() itemEdited = new EventEmitter();
 
-  columnDefs: any = [];
-  rowData: any = [];
+  columnDefs: ColDef[] = [];
+  rowData: Model[] = [];
 
   private fkModelIdMap: {[foreignKey: string]: {[id: string]: Model}} = {}
 
@@ -27,7 +28,7 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
     super(); 
   }
 
-  editCell = (e: any) => {
+  editCell = (e: CellValueChangedEvent) => {
     if(e.newValue !== e.oldValue){
       this.itemEdited.emit(e);
     }
@@ -51,8 +52,8 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
     super.initNgGrid(cfg);
   }
 
-  protected addColDefs(object: Object): any[]{
-    const colDefs = [{colId: 'checkbox', checkboxSelection: true, width: 42, pinned: 'left', lockPosition: true}];
+  protected addColDefs(object: Object): ColDef[]{
+    const colDefs: ColDef[] = [{colId: 'checkbox', checkboxSelection: true, width: 42, pinned: 'left', lockPosition: true}];
     for(const prop in object){
       const colDef = this.addColDef(prop);
       if(colDef) colDefs.push(colDef)
@@ -60,7 +61,7 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
     return colDefs;
   }
 
-  private addColDef(name: string): any{
+  private addColDef(name: string): ColDef{
     if(DataTableConfig.ignoredProperties[name]) return null; //Ignored properties
 
     let def = {

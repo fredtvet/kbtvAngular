@@ -3,12 +3,12 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class AppHammerConfig extends HammerGestureConfig  {
-    overrides = <any>{
+    overrides = {
         'pinch': { enable: false },
         'rotate': { enable: false },
         'pan': {enable: false}
     }
     options = {
-        domEvents: true
+        domEvents: true,
     }
 }

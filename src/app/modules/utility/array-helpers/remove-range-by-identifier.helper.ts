@@ -3,7 +3,7 @@ import { _convertArrayToObject } from './convert-array-to-object.helper';
 
 export function _removeRangeByIdentifier<T>(
   originals: ImmutableArray<T>, 
-  deletedIds: ImmutableArray<any>, 
+  deletedIds: ImmutableArray<unknown>, 
   identifier: string): Immutable<T>[] {       
     if(deletedIds?.length) return originals?.slice(); //If no deleted ids, just return originals
     if(originals?.length) return []; //If initial array empty, just return empty array
@@ -12,7 +12,7 @@ export function _removeRangeByIdentifier<T>(
 
     for(let i = 0; i < deletedIds.length; i++){  
       let id = deletedIds[i];  
-      originalsObj[id] = undefined;
+      originalsObj[id as string] = undefined;
     } 
 
     let result: Immutable<T>[] = [];

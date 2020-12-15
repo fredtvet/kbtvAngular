@@ -13,7 +13,7 @@ import { SelectableListPresenter } from './selectable-list.presenter';
 })
 export class SelectableListComponent extends WithUnsubscribe() {
     @Input('entities')
-    set entities(value: any[]) {this.selectableListPresenter.addEntities(value)}
+    set entities(value: unknown[]) {this.selectableListPresenter.addEntities(value)}
 
     private _identifier: string;
     @Input('identifier') 
@@ -24,16 +24,16 @@ export class SelectableListComponent extends WithUnsubscribe() {
 
     @Input() selectedText: string;
     @Input() selectedIcon: string;
-    @Input() itemTemplate: TemplateRef<any>;
+    @Input() itemTemplate: TemplateRef<unknown>;
     @Input() totalRows: number = 2;  
-    @Output() selectionChanged = new EventEmitter<string[]>();
-    @Output() itemClicked = new EventEmitter<any>();
+    @Output() selectionChanged = new EventEmitter<unknown[]>();
+    @Output() itemClicked = new EventEmitter<unknown>();
   
     selectableEntities$ = this.selectableListPresenter.selectableEntities$;
 
     clickDisabled: boolean = false;
 
-    constructor(private selectableListPresenter: SelectableListPresenter<any>) {
+    constructor(private selectableListPresenter: SelectableListPresenter<unknown>) {
       super();
     }
     
@@ -44,20 +44,20 @@ export class SelectableListComponent extends WithUnsubscribe() {
         ).subscribe(x => this.selectionChanged.emit(x))
     }
 
-    onItemClick = (item: any): void => {
+    onItemClick = (item: unknown): void => {
       if(this.clickDisabled || this.selectableListPresenter.isEntitySelected(item[this._identifier] || item))
         return;
   
       this.itemClicked.emit(item)
     }
 
-    toggleSelect(selectable: SelectableEntity<any>) {
+    toggleSelect(selectable: SelectableEntity<unknown>) {
       this.clickDisabled = true;
       this.selectableListPresenter.toggleEntity(selectable.entity[this._identifier] || selectable.entity)
       setTimeout(() => (this.clickDisabled = false), 500);
     }
 
-    trackByFn = (index: number, selectable: SelectableEntity<any>): string => 
+    trackByFn = (index: number, selectable: SelectableEntity<unknown>): string => 
       selectable.entity[this._identifier];
     
     clearSelections = () => this.selectableListPresenter.addSelections([]);

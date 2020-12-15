@@ -21,26 +21,26 @@ import { ModelFormFacade } from './model-form.facade';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModelFormComponent implements FormComponent<ModelFormConfig<any, any, OptionsFormState<any>>, OptionsFormState<any>, SaveAction>{
+export class ModelFormComponent implements FormComponent<ModelFormConfig<unknown, unknown, OptionsFormState<unknown>>, OptionsFormState<unknown>, SaveAction>{
     @Output() formSubmitted = new EventEmitter<SaveAction>()
 
-    @Input() config: ModelFormConfig<any, any, OptionsFormState<any>>;
+    @Input() config: ModelFormConfig<unknown, unknown, OptionsFormState<unknown>>;
    
     @Input('formState') 
     set formState(value: Object) {
       this.formStateSubject.next(value)
     }
   
-    private formStateSubject = new BehaviorSubject<OptionsFormState<any>>(null)
+    private formStateSubject = new BehaviorSubject<OptionsFormState<Object>>(null)
 
-    formState$: Observable<OptionsFormState<any>>;
-    formConfig$: Observable<DynamicForm<any, OptionsFormState<any>>>;
+    formState$: Observable<OptionsFormState<Object>>;
+    formConfig$: Observable<DynamicForm<unknown, OptionsFormState<Object>>>;
 
     private isCreateForm: boolean = false;
   
     constructor(
       private facade: ModelFormFacade,
-      @Inject(DEFAULT_SAVE_CONVERTER) @Optional() private defaultSaveConverter: FormToSaveModelConverter<any, any, StateAction>
+      @Inject(DEFAULT_SAVE_CONVERTER) @Optional() private defaultSaveConverter: FormToSaveModelConverter<unknown, unknown, StateAction>
     ) {}
   
     ngOnInit(): void {   
@@ -60,7 +60,7 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<any, an
 
     }
 
-    onSubmit(result: any): void{   
+    onSubmit(result: unknown): void{   
       const saveAction = this.isCreateForm ? ModelCommand.Create : ModelCommand.Update;
       this.formSubmitted.emit(saveAction);
 
@@ -78,12 +78,12 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<any, an
 
     onCancel = (): void => this.formSubmitted.emit(null); 
 
-    private getFormConfig(state: Readonly<any>): DynamicForm<any, OptionsFormState<any>>{
+    private getFormConfig(state: Readonly<Object>): DynamicForm<Object, OptionsFormState<Object>>{
       const dynamicForm = this.config.dynamicForm;
       if(dynamicForm.initialValue) return this.config.dynamicForm;
       return {
         ...dynamicForm, 
-        initialValue:  this.facade.getModelWithForeigns(this.config.entityId, this.config.stateProp, state)
+        initialValue:  this.facade.getModelWithForeigns(this.config.entityId as string, this.config.stateProp, state)
       }
     }
 }

@@ -15,7 +15,7 @@ export interface MissionCriteriaFormState
 
 type FormState = MissionCriteriaFormState;
 
-const SearchStringControl = <DynamicControl<MissionCriteria>>{ name: "searchString", 
+const SearchStringControl = <DynamicControl<MissionCriteria, FormState>>{ name: "searchString", 
     valueGetter: (s: MissionCriteria) => s.searchString,
     type: "control", questions: [{
         component:  AutoCompleteQuestionComponent,
@@ -29,19 +29,19 @@ const SearchStringControl = <DynamicControl<MissionCriteria>>{ name: "searchStri
         }, 
     }], 
 }
-const MissionTypeControl = <DynamicControl<MissionCriteria>>{ name: "missionType",
+const MissionTypeControl = <DynamicControl<MissionCriteria, FormState>>{ name: "missionType",
     valueGetter: (s: MissionCriteria) => s.missionType,
     type: "control", questions: [{
         component:  SelectQuestionComponent,
         question: <SelectQuestion<MissionType>>{
             optionsGetter: (s: FormState) => s.options.missionTypes, 
             valueFormatter: (val: MissionType) => val.name,
-            compareWith: _compareProp("id"),
+            compareWith: _compareProp<MissionType>("id"),
             placeholder: "Velg oppdragstype",
         }, 
     }], 
 }
-const FinishedControl = <DynamicControl<MissionCriteria>>{ name: "finished",
+const FinishedControl = <DynamicControl<MissionCriteria, FormState>>{ name: "finished",
     valueGetter: (s: MissionCriteria) => s.finished, 
     type: "control", questions: [{
         component:  RadioGroupQuestionComponent,

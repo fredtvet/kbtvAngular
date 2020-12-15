@@ -9,13 +9,13 @@ export class RolePreloadService implements PreloadingStrategy {
 
     constructor(private authService: AuthService){ }
 
-    preload(route: Route, load: () => Observable<any>): Observable<any> {
+    preload(route: Route, load: () => Observable<unknown>): Observable<unknown> {
       const user = this.authService.getCurrentUser();
       if(!this.preloadCheck(route, user?.role)) return EMPTY;
       return timer(2000).pipe(switchMap(x => load()))
     }
   
-    private preloadCheck(route: Route, role: string){
+    private preloadCheck(route: Route, role: string): boolean {
       return (
         route.data && role &&
         (!route.data['allowedRoles'] || route.data['allowedRoles'].includes(role))

@@ -5,7 +5,7 @@ import { first, tap } from 'rxjs/operators';
 import { FormSheetNavBarComponent } from './form-sheet-nav-bar/form-sheet-nav-bar.component';
 import { FormSheetWrapperConfig } from './interfaces';
 
-type WrapperConfig = FormSheetWrapperConfig<any, any, any>;
+type WrapperConfig = FormSheetWrapperConfig<unknown, unknown, unknown>;
 
 @Component({
     selector: 'app-form-sheet-wrapper',
@@ -19,7 +19,7 @@ export class FormSheetWrapperComponent  {
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,
-        private _bottomSheetRef: MatBottomSheetRef<FormSheetWrapperComponent, any>, 
+        private _bottomSheetRef: MatBottomSheetRef<FormSheetWrapperComponent, unknown>, 
         @Inject(MAT_BOTTOM_SHEET_DATA) private config: WrapperConfig) { }
     
     ngOnInit() {
@@ -31,7 +31,7 @@ export class FormSheetWrapperComponent  {
         this.formStateSub?.unsubscribe();
     }
 
-    private close = (res: any): void => this._bottomSheetRef.dismiss(res);
+    private close = (res: unknown): void => this._bottomSheetRef.dismiss(res);
         
     private loadNav(){
         const factory = this.componentFactoryResolver.resolveComponentFactory(FormSheetNavBarComponent);

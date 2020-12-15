@@ -12,7 +12,7 @@ export interface RefreshTokenSuccessAction extends StateAction {
 
 export const RefreshTokenSuccessReducer = _createReducer(
     RefreshTokenSuccessAction,
-    (state: any, action: Immutable<RefreshTokenSuccessAction>): Partial<StoreState>=> {
+    (state: unknown, action: Immutable<RefreshTokenSuccessAction>): Partial<StoreState>=> {
         const {accessToken, refreshToken} = action.response;  
         return {
             accessToken: {...accessToken, expiresIn: _getUnixTimeSeconds() + accessToken.expiresIn},

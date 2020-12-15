@@ -5,10 +5,10 @@ export interface LoadPersistedStateAction extends StateAction {}
 
 export const SetPersistedCriticalStateAction = "SET_PERSISTED_CRITICAL_STATE_ACTION";
 export interface SetPersistedCriticalStateAction extends StateAction {
-    state: any
+    state: unknown
 }
 
 export const SetPersistedStateAction = "SET_PERSISTED_STATE_ACTION";
 export interface SetPersistedStateAction extends StateAction {
-    state: any
+    state: unknown
 }

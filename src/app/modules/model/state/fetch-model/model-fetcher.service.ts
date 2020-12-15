@@ -6,11 +6,9 @@ import { QueryDispatcher } from '@state/query-dispatcher'
 import { Store } from '@state/store'
 import { combineLatest, Observable, of } from 'rxjs'
 import { finalize, map, mergeMap, tap } from 'rxjs/operators'
-import { ModelConfig } from '../../interfaces'
+import { ModelConfig, UnknownState } from '../../interfaces'
 import { ModelStateConfig } from '../../model-state.config'
 import { SetFetchedStateAction } from './set-fetched-state.reducer'
-
-type StateSlice = {[key: string]: any};
 
 @Injectable({providedIn: "root"})
 export class ModelFetcherService {
@@ -21,13 +19,13 @@ export class ModelFetcherService {
         private httpClient: HttpClient,
         @Inject(BASE_API_URL) private baseUrl: string,
         queryDispatcher: QueryDispatcher,
-        store: Store<any>,
+        store: Store<unknown>,
     ){
         queryDispatcher.queries$.pipe(
             mergeMap(x => {
                 if(!x.props?.length) return of(null);
                 
-                const fetchers: Observable<StateSlice>[] = [];
+                const fetchers: Observable<UnknownState>[] = [];
                 const state = store.select(null);
 
                 for(const prop of x.props){
@@ -46,7 +44,7 @@ export class ModelFetcherService {
         ).subscribe();
     }
 
-    private getFetcher$(modelCfg: Immutable<ModelConfig<any, any>>, prop: string): Observable<StateSlice>{
+    private getFetcher$(modelCfg: Immutable<ModelConfig<unknown, {[key:string]:{}}>>, prop: string): Observable<UnknownState>{
         this.pendingProperties[prop] = true;
         return this.httpClient.get(this.baseUrl + modelCfg.apiUrl).pipe(
             map(data => {
@@ -58,12 +56,12 @@ export class ModelFetcherService {
         )
     }
 
-    private mergeSlices(slices: StateSlice[]): StateSlice {
+    private mergeSlices(slices: UnknownState[]): UnknownState {
         let state = {};
         for(const slice of slices) state = {...state, ...slice};
         return state;
     }
 
-    private isFetchable = (modelConfig: Immutable<ModelConfig<any, any>>): boolean => 
+    private isFetchable = (modelConfig: Immutable<ModelConfig<Object, {[key:string]:{}}>>): boolean => 
       modelConfig && modelConfig.apiUrl && modelConfig.autoFetch
 }

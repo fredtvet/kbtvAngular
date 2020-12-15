@@ -11,7 +11,7 @@ export function _modelIdGenerator<TModel extends Model>(stateProp: Prop<ModelSta
     const clone = <TModel>{...entity}
     const id = clone[modelCfg.identifier as string];
     
-    if(!id) clone[modelCfg.identifier as string] = _idGenerator() as any;
+    if(!id) clone[modelCfg.identifier as string] = _idGenerator() as unknown;
 
     for(var fkProp of modelCfg.foreigns || []){ //Run through fks, check if exist in object, create id if no id.
         const fkPropConfig = ModelStateConfig.get(fkProp); 

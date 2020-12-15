@@ -1,19 +1,20 @@
 import { Immutable, ImmutableArray } from '@immutable/interfaces';
 
+type Response<T> = { [key: string]: Immutable<T> }
 export function _convertArrayToObject<T>(
   array: ImmutableArray<T>, 
   key?: string | ( (entity: Immutable<T>) => string )
-): { [key: string]: Immutable<T> } {
+): Response<T> {
     if(!array?.length) return {};
-    const result = {}; 
-    let setter: (entity: Immutable<T>, result: Object) => void;
+    const result: Response<T> = {}; 
+    let setter: (entity: Immutable<T>, result: Response<T>) => void;
 
     if(!key) 
-      setter = (entity: Immutable<T>, result: Object) => result[entity as any] = entity
+      setter = (entity: Immutable<T>, result: Response<T>) => result[entity as unknown as string] = entity
     else if(typeof key === "string")
-      setter = (entity: Immutable<T>, result: Object) => result[entity[key]] = entity
+      setter = (entity: Immutable<T>, result: Response<T>) => result[entity[key]] = entity
     else if(typeof key === "function")
-      setter = (entity: Immutable<T>, result: Object) => result[key(entity)] = entity
+      setter = (entity: Immutable<T>, result: Response<T>) => result[key(entity)] = entity
 
     for(var i = 0; i < array.length; i++) setter(array[i], result);
 

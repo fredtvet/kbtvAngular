@@ -5,7 +5,7 @@ import { Prop } from '@state/interfaces';
 
 @Pipe({name: 'sortByDate'})
 export class SortByDatePipe implements PipeTransform {
-  transform<T>(entities: ImmutableArray<T>, dateProperty: Prop<T>, order: "asc" | "desc" = "desc"): Immutable<T>[] {
+  transform<T>(entities: ImmutableArray<T>, dateProperty: Prop<Immutable<T>>, order: "asc" | "desc" = "desc"): Immutable<T>[] {
     if(!entities) return null;
     return _sortByDate<T>(entities, dateProperty, order)
   }

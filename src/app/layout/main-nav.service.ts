@@ -11,7 +11,7 @@ import { SideNavNavigations } from './side-nav-navigations';
 export class MainNavService {
 
   private toggleDrawerSubject = new Subject();
-  toggleDrawer$: Observable<any> = this.toggleDrawerSubject.asObservable()
+  toggleDrawer$: Observable<unknown> = this.toggleDrawerSubject.asObservable()
 
   config$: Observable<MainNavConfig> = combineLatest([
     this.deviceInfoService.isXs$, 

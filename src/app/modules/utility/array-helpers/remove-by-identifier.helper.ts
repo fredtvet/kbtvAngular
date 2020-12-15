@@ -2,7 +2,7 @@ import { Immutable, ImmutableArray } from '@immutable/interfaces';
 
 export function _removeByIdentifier<T>(
   originals: ImmutableArray<T>, 
-  deletedId: ImmutableArray<any>, 
+  deletedId: ImmutableArray<unknown>, 
   identifier: string): Immutable<T>[]{       
     if(!originals?.length) return []; //If initial array empty, just return empty array
 

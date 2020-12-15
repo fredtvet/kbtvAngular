@@ -8,14 +8,14 @@ import { ActiveStringFilterConfig } from '../../../interfaces';
 import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.component';
 import { AutoCompleteQuestion } from './auto-complete-question.interface';
 
-export interface AutoCompleteViewModel { options: any[], activeFilter: ActiveStringFilterConfig<any> }
+export interface AutoCompleteViewModel { options: unknown[], activeFilter: ActiveStringFilterConfig<unknown> }
 
 @Component({
   selector: 'app-autocomplete-question',
   templateUrl: 'auto-complete-question.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AutoCompleteQuestionComponent extends BaseQuestionComponent<AutoCompleteQuestion<any>> 
+export class AutoCompleteQuestionComponent extends BaseQuestionComponent<AutoCompleteQuestion<unknown>> 
     implements QuestionComponent {
 
     vm$: Observable<AutoCompleteViewModel>;
