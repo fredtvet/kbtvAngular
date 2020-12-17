@@ -5,6 +5,7 @@ import { Question, OptionsGetter, QuestionComponent } from '@dynamic-forms/inter
 import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '@dynamic-forms/validation-error-map.interface';
 import { Prop } from '@state/interfaces';
 import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.component';
+import { Maybe, UnknownState } from '@global/interfaces';
 
 export interface SelectQuestion<T> extends Question {
   optionsGetter: OptionsGetter<T>;
@@ -26,7 +27,7 @@ export interface SelectQuestion<T> extends Question {
             </mat-option>
         </mat-select>
         <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>
-        <mat-error *ngIf="control.dirty && control.invalid">
+        <mat-error *ngIf="control && control.dirty && control.invalid">
           {{ getValidationErrorMessage() }}
         </mat-error>
 
@@ -34,17 +35,17 @@ export interface SelectQuestion<T> extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectQuestionComponent extends BaseQuestionComponent<SelectQuestion<unknown>> implements QuestionComponent {
+export class SelectQuestionComponent extends BaseQuestionComponent<SelectQuestion<UnknownState>> implements QuestionComponent {
 
   defaultCompareWith = (o1: unknown, o2: unknown) => o1 === o2;
 
-  state: Object = this.formStore.formState;
+  state: Maybe<UnknownState> = this.formStore.formState;
 
   options$: Observable<unknown[]>;
 
   constructor(
     @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
-    private formStore: DynamicFormStore<unknown>) { 
+    private formStore: DynamicFormStore<UnknownState>) { 
     super(validationErrorMessages) 
   }
   

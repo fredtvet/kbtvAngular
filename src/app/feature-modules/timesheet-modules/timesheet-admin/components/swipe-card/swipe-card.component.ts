@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Maybe } from '@global/interfaces';
 import { AppButton } from '@shared-app/interfaces';
 
 @Component({
@@ -49,7 +50,8 @@ export class SwipeCardComponent {
     this.navDisabled = true;
     setTimeout(() => this.navDisabled = false, 200); //Prevent click event from nav button to fire accidentally. 
     this.isClosed = true;
-    this.handleFn(this.swipeButton.callback, this.swipeButton.params);
+    if(this.swipeButton.callback) 
+      this.handleFn(this.swipeButton.callback, this.swipeButton.params);
   };
 
   handleNavClick = (): void => {
@@ -57,7 +59,7 @@ export class SwipeCardComponent {
     this.handleFn(this.navButton.callback, this.navButton.params);
   }
 
-  private handleFn(fn: Function, parameters: unknown[]){
+  private handleFn(fn: Function, parameters: Maybe<unknown[]>){
     if(parameters) fn(...parameters);
     else fn();
   }

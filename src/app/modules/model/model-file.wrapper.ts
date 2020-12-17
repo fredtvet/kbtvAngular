@@ -1,4 +1,4 @@
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 
 export class ModelFileWrapper{
 

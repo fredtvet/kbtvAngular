@@ -10,6 +10,7 @@ import { TimesheetStatus } from '@shared/enums';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { FormService } from '@form-sheet/form-sheet.service';
+import { Immutable, Maybe } from '@global/interfaces';
 
 @Component({
   selector: 'app-timesheet-admin-week-list',
@@ -20,7 +21,7 @@ export class TimesheetAdminWeekListComponent {
    
   loading$ = this.loadingService.queryLoading$;
 
-  summaries$ = this.facade.weeklySummaries$.pipe(map(x => x?.sort((a, b) => b.weekNr - a.weekNr)));
+  summaries$ = this.facade.weeklySummaries$.pipe(map(x => x?.sort((a, b) => (b.weekNr || 0) - (a.weekNr || 0) )));
 
   isXs$ = this.deviceInfoService.isXs$;
 
@@ -43,7 +44,7 @@ export class TimesheetAdminWeekListComponent {
     let ids: string[] = [];
     for(let i = 0; i < timesheets.length; i++){
       const timesheet = timesheets[i];
-      if(timesheet.status === TimesheetStatus.Open) ids.push(timesheet.id);
+      if(timesheet.id && timesheet.status === TimesheetStatus.Open) ids.push(timesheet.id);
     }
 
     if(ids.length === 0) return;
@@ -70,7 +71,7 @@ export class TimesheetAdminWeekListComponent {
     this.router.navigate(["../"], {relativeTo: this.route})
   }
 
-  private getNavConfig(user: User, year: number): MainTopNavConfig {
+  private getNavConfig(user: Maybe<Immutable<User>>, year: Maybe<number>): MainTopNavConfig {
     const fullName = user ? (user.firstName + ' ' + user.lastName) : '';
     return {
       title:  "Uker",

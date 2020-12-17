@@ -1,12 +1,12 @@
+import { Immutable, UnknownState } from '@global/interfaces';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable } from '@immutable/interfaces';
 import { WipeSyncStateAction } from './actions';
 
 export const WipeSyncStateReducer = _createReducer(
     WipeSyncStateAction, 
-    (state: unknown, action: Immutable<WipeSyncStateAction>): unknown => {
+    (state: unknown, action: Immutable<WipeSyncStateAction>) => {
 
-        const deleteState = {syncTimestamp: null};
+        const deleteState: UnknownState = {syncTimestamp: null};
 
         for(const prop in action.syncStateConfig){
             const propCfg = action.syncStateConfig[prop];

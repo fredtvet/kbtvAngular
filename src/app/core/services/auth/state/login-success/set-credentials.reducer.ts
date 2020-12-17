@@ -1,5 +1,5 @@
 import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { StoreState } from '../../interfaces/store-state';
 import { LoginSuccessAction } from './login-success.action';

@@ -1,18 +1,18 @@
-import { DynamicControl, DynamicControlGroup, DynamicForm } from '@dynamic-forms/interfaces';
-import { DateRangePresets } from '@shared-app/enums';
+import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
 import { _getISO } from '@datetime/get-iso-with-timezone.helper';
 import { _getMonthRange } from '@datetime/get-month-range.helper';
+import { DateRange } from '@datetime/interfaces';
+import { DynamicControl, DynamicControlGroup, DynamicForm } from '@dynamic-forms/interfaces';
+import { OptionsFormState } from '@form-sheet/interfaces';
+import { Immutable } from '@global/interfaces';
+import { DateRangePresets } from '@shared-app/enums';
+import { _getRangeByDateRangePreset } from '@shared-app/helpers/get-range-by-date-range-preset.helper';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
-import { IonDateQuestionComponent, IonDateQuestion } from '../../components/dynamic-form-questions/ion-date-time-question.component';
-import { RadioGroupQuestionComponent, RadioGroupQuestion } from '../../components/dynamic-form-questions/radio-group-question.component';
+import { IonDateQuestion, IonDateQuestionComponent } from '../../components/dynamic-form-questions/ion-date-time-question.component';
+import { RadioGroupQuestion, RadioGroupQuestionComponent } from '../../components/dynamic-form-questions/radio-group-question.component';
 import { TimesheetStatus } from '../../enums';
 import { translations } from '../../translations';
 import { MissionAutoCompleteControl, UserSelectControl } from '../common-controls.const';
-import { DateRange } from '@datetime/interfaces';
-import { _getRangeByDateRangePreset } from '@shared-app/helpers/get-range-by-date-range-preset.helper';
-import { StateUsers, StateMissions } from '@core/state/global-state.interfaces';
-import { OptionsFormState } from '@form-sheet/interfaces';
-import { Immutable } from '@immutable/interfaces';
 
 export interface TimesheetCriteriaFormState extends OptionsFormState<StateUsers & StateMissions>{}
 
@@ -100,8 +100,8 @@ export const TimesheetCriteriaForm: DynamicForm<TimesheetCriteria, FormState> = 
         criteria.dateRange = <DateRange> _getRangeByDateRangePreset(preset);
         
         const {start, end} = criteria.dateRange || {};
-        if(start || end) criteria.dateRange = {start: new Date(start), end: new Date(end || new Date())};
-        else criteria.dateRange = null;
+        if(start || end) criteria.dateRange = {start: new Date(start || 0), end: new Date(end || new Date())};
+        else criteria.dateRange = undefined;
 
         return criteria;
     }

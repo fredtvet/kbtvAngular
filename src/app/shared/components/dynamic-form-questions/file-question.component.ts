@@ -3,9 +3,7 @@ import { Question, QuestionComponent } from '@dynamic-forms/interfaces';
 import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '@dynamic-forms/validation-error-map.interface';
 import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.component';
 
-export interface FileQuestion extends Question {
-    multiple?: boolean;
-}
+export interface FileQuestion extends Question { multiple?: boolean; }
 
 @Component({
   selector: 'app-file-question',
@@ -17,7 +15,7 @@ export interface FileQuestion extends Question {
 
     <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>
 
-    <mat-error *ngIf="control.dirty && control.invalid">
+    <mat-error *ngIf="control && control.dirty && control.invalid">
       {{ getValidationErrorMessage() }}
     </mat-error>
   </div>
@@ -31,10 +29,12 @@ export class FileQuestionComponent extends BaseQuestionComponent<FileQuestion>
     super(validationErrorMessages) 
   }
 
-  onFileChange(e) {      
-    if(!e.target.files) return this.control.reset()
+  onFileChange(e: Event): void {  
+    if(!this.control) return;
+    const target = <HTMLInputElement> e.target;    
+    if(!target.files) return this.control.reset()
     this.control.markAsDirty();
-    this.control.setValue(this.question.multiple ? e.target.files : e.target.files[0]);
+    this.control.setValue(this.question.multiple ? target.files : target.files[0]);
   }
 
 }

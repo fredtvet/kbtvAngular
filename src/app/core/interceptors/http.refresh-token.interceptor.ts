@@ -26,11 +26,11 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
                 this.authService.newAccessToken$.pipe(take(1), pluck('token')),
             ).pipe(
                 filter(x => x != null),
-                switchMap(x =>{ return next.handle(this.addToken(req, x)) })
+                switchMap(x =>{ return next.handle(this.addToken(req, <string> x)) })
             )
         }  
 
-        return next.handle(this.addToken(req, this.authService.getAccessToken()));
+        return next.handle(this.addToken(req, this.authService.getAccessToken() || ""));
     }
 
     private addToken(req: HttpRequest<unknown>, token: string): HttpRequest<unknown> {

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Mission } from '@core/models';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { ModelState } from '@core/state/model-state.interface';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, Maybe } from '@global/interfaces';
 import { ModelFormService } from '@model-form/model-form.service';
 import { RolePresets, Roles } from '@shared-app/enums';
 import { DetailTopNavConfig } from '@shared/components/detail-top-nav-bar/detail-top-nav.config';
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { MissionListFacade } from '../mission-list.facade';
 
-interface ViewModel { mission: Immutable<Mission>, navConfig: DetailTopNavConfig }
+interface ViewModel { mission: Maybe<Immutable<Mission>>, navConfig: DetailTopNavConfig }
 
 @Component({
   selector: 'app-mission-details',
@@ -43,7 +43,7 @@ export class MissionDetailsComponent{
   ){ }
 
   updateHeaderImage = (files: FileList): void => 
-    files && files[0] ? this.facade.updateHeaderImage(this.missionId, files[0]) : null;
+    (files && files[0] && this.missionId) ? this.facade.updateHeaderImage(this.missionId, files[0]) : undefined;
   
   private openHeaderImageInput = (): void => this.imageInput?.nativeElement?.click();
   
@@ -70,12 +70,12 @@ export class MissionDetailsComponent{
     ]);
   }
 
-  private getNavConfig(mission: Immutable<Mission>): DetailTopNavConfig {
+  private getNavConfig(mission: Maybe<Immutable<Mission>>): DetailTopNavConfig {
     return {
         titleLines: mission?.address?.split(',').filter(x => x.toLowerCase().replace(/\s/g, '') !== 'norge'),
         subTitle: mission?.finished ? 'Oppdrag ferdig!' : `ID: ${mission?.id}`,
         subIcon: mission?.finished ? 'check' : '',
-        imgSrc: this.appFileUrl.transform(mission, "missionheader"),
+        imgSrc: this.appFileUrl.transform(mission, "missionheader") || undefined,
         backFn: this.onBack,
         buttons: [
           {icon: "timer", callback: this.goToTimesheets, params: [mission], allowedRoles: RolePresets.Internal},

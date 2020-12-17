@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpRequest } from '@http/interfaces';
 import { HttpAction } from '@http/state/http.effect';
-import { Immutable } from '@immutable/interfaces';
-import { DispatchedAction, Effect } from '@state/interfaces';
+import { Immutable } from '@global/interfaces';
+import { DispatchedAction, Effect, Prop } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { ModelStateConfig } from '../../model-state.config';
 import { SaveModelAction } from './save-model.action';
 
 @Injectable()
-export class SaveModelHttpEffect<TModel, TState> implements Effect<SaveModelAction<TModel, TState>> {
+export class SaveModelHttpEffect<TModel extends {}, TState extends {}> implements Effect<SaveModelAction<TModel, TState>> {
     protected type: string = SaveModelAction
     
     constructor(
@@ -49,13 +49,13 @@ export class SaveModelHttpEffect<TModel, TState> implements Effect<SaveModelActi
         modelConfig: Immutable<ModelConfig<TModel, TState>>
     ): string{
         const saveWord = action.saveAction === ModelCommand.Update ? "Oppdatering" : "Oppretting";
-        const entityWord = this.translations[modelConfig.foreignProp?.toLowerCase()]?.toLowerCase();
-        const displayPropWord = this.translations[modelConfig.displayProp?.toLowerCase()]?.toLowerCase();
-        const displayPropValue = action.entity[modelConfig.displayProp as string];
+        const entityWord = this.translations[<string> modelConfig.foreignProp?.toLowerCase()]?.toLowerCase();
+        const displayPropWord = this.translations[<string> modelConfig.displayProp?.toLowerCase()]?.toLowerCase();
+        const displayPropValue = action.entity[<Prop<Immutable<TModel>>> modelConfig.displayProp];
         return `${saveWord} av ${entityWord} med ${displayPropWord} ${displayPropValue} er reversert!`;
     }
   
-    protected createHttpBody(action: Immutable<SaveModelAction<TModel, TState>>): unknown {
+    protected createHttpBody(action: Immutable<SaveModelAction<TModel, TState>>): {} {
         return action.entity;
     }
 
@@ -66,7 +66,7 @@ export class SaveModelHttpEffect<TModel, TState> implements Effect<SaveModelActi
         const suffix = this.apiMap[action.saveAction].suffix;
         if(typeof suffix === "string") return modelConfig.apiUrl + suffix;
         else{ 
-            const id = action.entity[modelConfig.identifier as string]
+            const id = action.entity[<Prop<Immutable<TModel>>> modelConfig.identifier]
             return modelConfig.apiUrl + suffix(id);
         }
     }

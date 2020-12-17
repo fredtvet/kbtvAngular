@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from "@angular/core";
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, Maybe } from '@global/interfaces';
 import { Observable } from 'rxjs';
 import { BASE_API_URL } from './injection-tokens.const';
 import { FormDataEntry, HttpRequest } from './interfaces';
@@ -21,7 +21,7 @@ export class HttpFactoryService {
         }
     }
 
-    private constructBody(body: Object | FormDataEntry[]) : Object | FormData {
+    private constructBody(body: Maybe<{}> | FormDataEntry[]) : Maybe<{}> | FormData {
       if(!Array.isArray(body)) return body; //Assume all arrays are FormDataEntry
       const formData = new FormData(); //Hydrate form data object
 

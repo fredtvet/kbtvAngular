@@ -1,11 +1,13 @@
-import { UnknownState } from '@model/interfaces';
+import { ValidationErrors } from '@angular/forms';
+import { Maybe } from '@global/interfaces';
 import { ValidationErrorMap } from '../validation-error-map.interface';
 
-export function _getValidationErrorMessage(errors: UnknownState, messages: ValidationErrorMap): string{
+export function _getValidationErrorMessage(errors: Maybe<Maybe<ValidationErrors>>, messages: ValidationErrorMap): Maybe<string> {
     if(!errors) return;
     for(const error of Object.keys(errors)){
       const errFn = messages[error];
-      let msg = errFn ? errFn(errors[error]) : null;
+      let msg = errFn ? errFn(errors[error]) : undefined;
       if(msg) return msg;
     }
+    return;
 }

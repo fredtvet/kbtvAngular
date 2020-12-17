@@ -1,3 +1,4 @@
+import { UnknownState } from '@global/interfaces';
 import { StateAction } from '@state/state.action';
 import { SyncConfig, SyncResponse, SyncStateConfig } from '../interfaces';
 
@@ -6,8 +7,8 @@ export interface SyncStateAction extends StateAction { }
 
 export const SyncStateSuccessAction = "SYNC_STATE_SUCCESS_ACTION";
 export interface SyncStateSuccessAction extends StateAction {
-    response: SyncResponse<unknown>,
-    syncStateConfig: SyncStateConfig<unknown>
+    response: SyncResponse<UnknownState>,
+    syncStateConfig: SyncStateConfig<UnknownState>
 }   
 
 export const UpdateSyncConfigAction = "UPDATE_SYNC_CONFIG_ACTION";
@@ -17,7 +18,7 @@ export interface UpdateSyncConfigAction extends StateAction {
 
 export const WipeSyncStateAction = "WIPE_SYNC_STATE_ACTION";
 export interface WipeSyncStateAction extends StateAction {
-    syncStateConfig: SyncStateConfig<unknown>
+    syncStateConfig: SyncStateConfig<UnknownState>
 }
 
 export const ReloadSyncStateAction = "RELOAD_SYNC_STATE_ACTION";

@@ -1,6 +1,6 @@
 <ng-container *ngIf="timesheet">
     <div class="mission-bar mat-elevation-z1" fxLayout="column" fxLayoutAlign="center center" 
-        [style.height.px]="(timesheet.totalHours / 10)*300"
+        [style.height.px]="((timesheet.totalHours || 0) / 10)*300"
         [ngClass]="timesheet.status === 2 ? 'accent' : 'warn'"
         (click)="clickBar()" matRipple>
 

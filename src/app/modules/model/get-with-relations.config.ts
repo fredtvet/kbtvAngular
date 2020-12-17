@@ -1,10 +1,10 @@
 import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
-import { Immutable, ImmutableArray } from '@immutable/interfaces';
+import { Immutable, ImmutableArray } from '@global/interfaces';
 import { Prop } from '@state/interfaces';
 import { ModelConfig } from './interfaces';
 import { ModelStateConfig } from './model-state.config';
 
-type RelationInclude<TState> = ImmutableArray<Prop<TState>> | "all";
+type RelationInclude<TState> = ImmutableArray<Prop<TState>> | "all" | null;
 
 export class GetWithRelationsConfig<TState> {
 
@@ -24,11 +24,11 @@ export class GetWithRelationsConfig<TState> {
 
     const fkProps = this.propConfig?.foreigns;
     this.includedForeignProps = 
-      foreigns === "all" ? (fkProps || []) : this.getProps(foreigns, fkProps)
+      foreigns === "all" ? (fkProps || []) : this.getProps(foreigns || [], fkProps || [])
 
     const childProps = this.propConfig?.children
     this.includedChildProps = 
-      children === "all" ? (childProps || []) : this.getProps(children, childProps) 
+      children === "all" ? (childProps || []) : this.getProps(children || [], childProps || []) 
 
     this.includedProps = [modelProp, ...this.includedChildProps, ...this.includedForeignProps]
   }

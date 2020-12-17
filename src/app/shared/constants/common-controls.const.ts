@@ -77,7 +77,7 @@ export const MissionAutoCompleteControl = <DynamicControl<{mission: Mission}>>{ 
     type: "control", questions: [{
         component:  AutoCompleteQuestionComponent,
         question: <AutoCompleteQuestion<Mission>>{
-            optionsGetter: (state: OptionsFormState<StateMissions>) => state.options.missions,
+            optionsGetter: (state: OptionsFormState<StateMissions>) => state.options?.missions,
             placeholder: "Oppdrag",
             valueFormatter: (val: Mission) => val.address,
             displayWith: (mission: Mission) => mission ? mission.address : null,
@@ -87,12 +87,13 @@ export const MissionAutoCompleteControl = <DynamicControl<{mission: Mission}>>{ 
     }],
     validators: [isObjectValidator()], 
 }
-export const EmployerSelectControl = <DynamicControl<{employer: Employer}>>{ name: "employer",
+export const EmployerSelectControl = <DynamicControl<{employer: Employer}, OptionsFormState<StateEmployers>>>{ 
+    name: "employer",
     valueGetter: (s: {employer: Employer}) => s.employer,
     type: "control", questions: [{
         component:  SelectQuestionComponent,
         question: <SelectQuestion<Employer>>{
-            optionsGetter: (s: OptionsFormState<StateEmployers>) => s.options.employers,
+            optionsGetter: (s: OptionsFormState<StateEmployers>) => s.options?.employers,
             valueFormatter: (val: Employer) => val.name,
             compareWith: _compareProp<Employer>("id"),
             placeholder: "Velg oppdragsgiver",
@@ -103,7 +104,7 @@ export const UserSelectControl = <DynamicControl<{user: User}>>{ name: "user",
     type: "control", valueGetter: (s: {user: User}) => s.user, questions: [{
         component:  SelectQuestionComponent,
         question: <SelectQuestion<User>>{
-            optionsGetter: (state: OptionsFormState<StateUsers>) => state.options.users,
+            optionsGetter: (state: OptionsFormState<StateUsers>) => state.options?.users,
             valueFormatter: (val: User) => val.firstName + ' ' + val.lastName,
             compareWith: _compareProp<User>("userName"),
             placeholder: "Velg ansatt",

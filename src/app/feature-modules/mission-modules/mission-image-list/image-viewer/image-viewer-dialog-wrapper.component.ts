@@ -46,7 +46,8 @@ export class ImageViewerDialogWrapperComponent {
     }
     
     private downloadImage = () => 
-      this.downloaderService.downloadUrl(_appFileUrl(this.data.currentImage.fileName, "images"))
+      this.data.currentImage?.fileName ? 
+      this.downloaderService.downloadUrl(_appFileUrl(this.data.currentImage.fileName, "images")) : null
     
     private openConfirmDeleteDialog = () => {  
       this.confirmService.open({

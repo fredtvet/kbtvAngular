@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Maybe } from '@global/interfaces';
 import { AppNotification } from './app-notification.interface';
 import { NotificationType } from './notification-type.enum';
 import { NotificationComponent } from './notification.component';
@@ -20,7 +21,8 @@ export class NotificationService {
         this.queue.push(notification);    
   }
 
-  private setNotification = (input: AppNotification) => {
+  private setNotification = (input: Maybe<AppNotification>): void => {
+    if(!input) return;
     this.currentNotification = input;
 
     switch(input?.type){
@@ -36,10 +38,10 @@ export class NotificationService {
     }
   }
 
-  private openSnackBar(title: string, details: string[], icon:string, duration: number, panelClass:string){
+  private openSnackBar(title: Maybe<string>, details: Maybe<Maybe<string>[]>, icon:string, duration: number, panelClass:string){
     let ref = this.snackBar.openFromComponent(NotificationComponent, {
       data : { title, details, icon },
-      duration: duration || null,
+      duration: duration || undefined,
       panelClass: panelClass
     });
 

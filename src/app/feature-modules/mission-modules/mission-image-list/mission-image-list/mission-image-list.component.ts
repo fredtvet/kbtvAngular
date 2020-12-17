@@ -6,7 +6,7 @@ import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { FormService } from '@form-sheet/form-sheet.service';
-import { ImmutableArray } from '@immutable/interfaces';
+import { ImmutableArray, Maybe } from '@global/interfaces';
 import { RolePresets, Roles } from '@shared-app/enums';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { AppButton } from '@shared-app/interfaces';
@@ -19,7 +19,7 @@ import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dia
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MissionImageListFacade } from '../mission-image-list.facade';
 
-interface ViewModel { images: ImmutableArray<MissionImage>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig }
+interface ViewModel { images: Maybe<ImmutableArray<MissionImage>>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig }
 
 @Component({
   selector: "app-mission-image-list",
@@ -29,7 +29,7 @@ interface ViewModel { images: ImmutableArray<MissionImage>, isXs: boolean,  fabs
 export class MissionImageListComponent extends SelectableListContainerComponent{
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
 
-  get missionId() { return this.route.parent.parent.snapshot.params.id }
+  get missionId(): Maybe<string> { return this.route.parent?.parent?.snapshot.params.id }
   
   vm$: Observable<ViewModel> = combineLatest([
     this.facade.getByMissionId$(this.missionId),
@@ -37,14 +37,14 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
     this.currentFabs$
   ]).pipe(
     tap(x => this.images = x[0]),
-    map(([images, isXs, fabs]) => { return { 
+    map(([images, isXs, fabs]) => { return <ViewModel> { 
       images, isXs, fabs, navConfig: this.navConfig
     }})
   )
 
   private navConfig: MainTopNavConfig;
 
-  private images: ImmutableArray<MissionImage>;
+  private images: Maybe<ImmutableArray<MissionImage>>;
 
   constructor( 
     private downloaderService: DownloaderService,
@@ -83,7 +83,7 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   }
 
   uploadImages = (files: FileList): void => 
-    this.facade.add({missionId: this.missionId, files});
+    this.missionId ? this.facade.add({missionId: this.missionId, files}) : undefined;
   
   private openImageInput = (): void => this.imageInput.nativeElement.click();
 
@@ -120,7 +120,7 @@ export class MissionImageListComponent extends SelectableListContainerComponent{
   }
 
   private downloadImages = (imgs: MissionImage[]) => 
-    this.downloaderService.downloadUrls(imgs.map(x => _appFileUrl(x.fileName, "images")));
+    this.downloaderService.downloadUrls(imgs.map(x => x.fileName ? _appFileUrl(x.fileName, "images") : null));
 
   private onBack = () => this.router.navigate(['../'], {relativeTo: this.route.parent});
   

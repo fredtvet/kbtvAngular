@@ -1,4 +1,4 @@
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { StateAction } from '@state/state.action';
 import { TimesheetCriteria } from '../timesheet-filter/timesheet-criteria.interface';

@@ -6,7 +6,7 @@
             buttonClass,  
             config.iconSizeClass ? config.iconSizeClass : ''
         ]"
-        (click)="handleFn(config.callback)">
+        (click)="config.callback ? handleFn(config.callback) : null">
 
         <mat-icon *ngIf="config.icon">{{ config.icon }}</mat-icon>
         <mat-icon *ngIf="config.svgIcon" [svgIcon]="config.svgIcon"></mat-icon> 

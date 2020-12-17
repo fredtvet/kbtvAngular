@@ -1,4 +1,5 @@
 import { Type } from '@angular/core';
+import { Maybe, UnknownState } from '@global/interfaces';
 import { Observable } from 'rxjs';
 
 export interface StateSyncConfig { syncConfig: SyncConfig }
@@ -15,8 +16,8 @@ export interface SyncStatePropConfig {
 }
 
 export interface SyncConfig{
-    refreshTime?: number; 
-    initialNumberOfMonths?: string;
+    refreshTime: number; 
+    initialNumberOfMonths: string;
 }
 
 export interface SyncResponse<TState>{
@@ -30,12 +31,12 @@ export type SyncArraysResponse<TState> = {[key in keyof TState]: SyncArrayRespon
 export type SyncValuesResponse<TState> = {[key in keyof TState]: unknown}
 
 export interface SyncArrayResponse{
-    entities: Object[];
+    entities: UnknownState[];
     deletedEntities: number[];
 }
 
 export interface SyncHttpFetcher<TState> {
-    fetch$(config: SyncConfig, timestamp: number): Observable<SyncResponse<TState>>
+    fetch$(config: Maybe<SyncConfig>, timestamp: Maybe<number>): Observable<SyncResponse<TState>>
 }
 
 export interface CustomSyncProviders { fetcher: Type<SyncHttpFetcher<unknown>>, config: SyncStateConfig<unknown> }

@@ -7,7 +7,7 @@ import { Effect, DispatchedAction } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { HttpAction } from '@http/state/http.effect';
 import { CreateMissionImagesAction } from './create-mission-images.action';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 
 @Injectable()
 export class CreateMissionImagesHttpEffect implements Effect<CreateMissionImagesAction>{

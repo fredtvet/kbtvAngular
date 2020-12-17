@@ -1,13 +1,14 @@
 import { ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, Type } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { UnknownState } from '@global/interfaces';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DynamicHostDirective } from '../dynamic-host.directive';
 import { _getControlObserver$ } from '../helpers/get-control-observer.helper';
 import { ControlGroupComponent, ControlHook, DynamicControl, DynamicControlGroup, DynamicForm, QuestionComponent, QuestionWrapper } from '../interfaces';
 
-type Control = DynamicControl<unknown>;
-type ControlGroup = DynamicControlGroup<unknown>
+type Control = DynamicControl<UnknownState>;
+type ControlGroup = DynamicControlGroup<UnknownState>
 export type ValidControl = Control | ControlGroup;
 
 @Directive()
@@ -29,13 +30,15 @@ export abstract class ControlComponentLoaderComponent {
         this.unsubscribe.complete();
     }
 
-    protected loadComponents(controls: ValidControl[], form: DynamicForm<unknown,unknown>, nestedNames: string[] = []): void{
+    protected loadComponents(controls: ValidControl[], form: DynamicForm<{},{}>, nestedNames: string[] = []): void{
         for(const control of controls){
             if(control.type === "group")
                 this.loadQuestionGroupComponent(control, form, nestedNames)       
             else if(control.questions)
-                for(const question of control.questions)
-                    this.loadQuestionComponent(question, control, this.form.get([...nestedNames, control.name]), form);
+                for(const question of control.questions){
+                    const nestedControl = this.form.get([...nestedNames, control.name])
+                    if(nestedControl) this.loadQuestionComponent(question, control, nestedControl, form);
+                }
         }
     }
 
@@ -57,7 +60,7 @@ export abstract class ControlComponentLoaderComponent {
             this.initHideObserver(questionWrapper.hideOnValueChange, componentRef.location.nativeElement);
     }
 
-    private loadQuestionGroupComponent(controlGroup: ControlGroup, formConfig: DynamicForm<unknown,unknown>, nestedNames: string[] = []) {
+    private loadQuestionGroupComponent(controlGroup: ControlGroup, formConfig: DynamicForm<{},{}>, nestedNames: string[] = []) {
         const componentRef = this.loadComponent(controlGroup.controlGroupComponent || this.defaultControlGroupComponent);
         componentRef.instance.controlGroup = controlGroup;
         componentRef.instance.formConfig = formConfig;

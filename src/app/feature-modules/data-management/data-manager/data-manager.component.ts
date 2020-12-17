@@ -16,6 +16,7 @@ import { ModelState } from '@core/state/model-state.interface';
 import { ModelFormService } from '@model-form/model-form.service';
 import { CellValueChangedEvent } from 'ag-grid-community';
 import { Model } from '@core/models';
+import { Maybe } from '@global/interfaces';
 
 type ViewModel = {navConfig: MainTopNavConfig} & DataConfig
 
@@ -32,11 +33,11 @@ type ViewModel = {navConfig: MainTopNavConfig} & DataConfig
 export class DataManagerComponent {
 @ViewChild('dataTable') dataTable: DataTableComponent;
 
-vm$:Observable<ViewModel> = combineLatest([
+vm$: Observable<ViewModel> = combineLatest([
   this.facade.dataConfig$,
   this.facade.selectedProperty$.pipe(map(x => this.getNavConfig(x)))
 ]).pipe(
-  map(([dataConfig, navConfig]) => { return {...dataConfig, navConfig}})
+  map(([dataConfig, navConfig]) => { return <ViewModel> {...dataConfig || {}, navConfig}})
 );
 
 properties = this.facade.properties;
@@ -57,7 +58,7 @@ constructor(
   private openDeleteDialog = (): void => {
     let nodes = this.dataTable.dataGrid.api.getSelectedNodes();
     if(nodes?.length == 0) return;
-    const translatedProp = translations[this.facade.selectedProperty.toLowerCase()]?.toLowerCase();
+    const translatedProp = translations[<string> this.facade.selectedProperty?.toLowerCase()]?.toLowerCase();
     this.confirmService.open({
       title: `Slett ${nodes.length > 1 ? 'ressurser' : 'ressurs'}?`,
       message: `Bekreft at du ønsker å slette ${nodes.length} ${translatedProp}`,  
@@ -67,18 +68,19 @@ constructor(
   }
 
   private openCreateForm = (): void => {
+    this.facade.selectedProperty ? 
     this.formService.open<ModelState, Model>({formConfig: {
       stateProp: this.facade.selectedProperty,    
       dynamicForm: PropertyFormMap[this.facade.selectedProperty]
-    }})
+    }}) : undefined
   }
 
-  private deleteItems(ids: string[]): boolean{
-    if(ids?.length == 0) return false;
+  private deleteItems(ids: string[]): void{
+    if(ids?.length == 0) return;
     this.facade.delete({ids});   
   }
 
-  private getNavConfig(selectedProp: string){
+  private getNavConfig(selectedProp: Maybe<string>){
     return { 
       title: "Data", 
       buttons: selectedProp ? [

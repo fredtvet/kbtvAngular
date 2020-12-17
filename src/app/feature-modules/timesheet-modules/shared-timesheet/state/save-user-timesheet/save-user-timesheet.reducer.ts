@@ -3,23 +3,22 @@ import { _getTotalHours } from '@datetime/get-total-hours.helper';
 import { SaveModelReducer } from '@model/state/save-model/save-model.reducer';
 import { TimesheetStatus } from '@shared/enums';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 import { SaveUserTimesheetAction } from './save-user-timesheet.action';
 import { Timesheet } from '@core/models';
 
 export const SaveUserTimesheetReducer = _createReducer(
     SaveUserTimesheetAction,
-    (state: Immutable<StateCurrentUser & StateUserTimesheets>, action: Immutable<SaveUserTimesheetAction>): 
-    Partial<StateUserTimesheets> => { 
+    (state: Immutable<StateCurrentUser & StateUserTimesheets>, action: Immutable<SaveUserTimesheetAction>) => { 
         
         const timesheet = action.entity;
-        if(!action.entity) return null;
+        if(!action.entity) return;
         const modifiedTimesheet: Immutable<Timesheet> = {...timesheet,
                 status: TimesheetStatus.Open,
                 userName: state?.currentUser?.userName,
-                totalHours: _getTotalHours(timesheet.startTime, timesheet.endTime)
+                totalHours: _getTotalHours(timesheet.startTime || 0, timesheet.endTime || 0)
             };
 
-        return <Partial<StateUserTimesheets>> SaveModelReducer.reducerFn(state, {...action, entity: modifiedTimesheet})
+        return SaveModelReducer.reducerFn(state, <SaveUserTimesheetAction>{...action, entity: modifiedTimesheet})
     }
 )

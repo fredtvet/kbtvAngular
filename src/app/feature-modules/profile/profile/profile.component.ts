@@ -45,7 +45,7 @@ export class ProfileComponent {
   updateSyncConfig(): void {
     const config = this.facade.syncConfig;
     this.formService.open<SyncConfig, unknown>({
-      formConfig: {...SyncConfigForm, initialValue: {...config, refreshTime: config.refreshTime / 60 }}, 
+      formConfig: {...SyncConfigForm, initialValue: config ? {...config, refreshTime: config.refreshTime / 60 } : null}, 
       navConfig: {title: "Konfigurasjoner"},
       submitCallback: (val: SyncConfig) => 
         this.facade.updateSyncConfig({...val, refreshTime: val.refreshTime * 60})

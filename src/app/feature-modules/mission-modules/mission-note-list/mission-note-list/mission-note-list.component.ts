@@ -11,6 +11,7 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { CreateMissionNoteForm, EditMissionNoteForm } from '@shared/constants/model-forms/save-mission-note-forms.const';
 import { MissionNoteListFacade } from '../mission-note-list.facade';
 import { ModelFormService } from '@model-form/model-form.service';
+import { Maybe } from '@global/interfaces';
 
 @Component({
   selector: 'app-mission-note-list',
@@ -26,7 +27,7 @@ export class MissionNoteListComponent {
   navConfig: MainTopNavConfig; 
   fabs: AppButton[];
   
-  get missionId() { return this.route.parent.parent.snapshot.params.id }
+  get missionId(): Maybe<string> { return this.route.parent?.parent?.snapshot.params.id }
 
   constructor( 
     private facade: MissionNoteListFacade,
@@ -52,7 +53,7 @@ export class MissionNoteListComponent {
   private openCreateNoteForm = () => 
     this.modelFormService.open({
       formConfig: {
-        dynamicForm: {...CreateMissionNoteForm, initialValue: {missionId: this.missionId}},
+        dynamicForm: {...CreateMissionNoteForm, initialValue: {missionId: <string> this.missionId}},
         stateProp: "missionNotes",
       },
     });

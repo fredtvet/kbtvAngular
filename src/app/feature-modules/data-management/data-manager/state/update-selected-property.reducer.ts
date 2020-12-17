@@ -1,5 +1,5 @@
 import { ModelState } from '@core/state/model-state.interface';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { Prop } from '@state/interfaces';
 import { StateAction } from '@state/state.action';

@@ -1,10 +1,11 @@
-import { Immutable, ImmutableArray } from '@immutable/interfaces';
+import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
+import { Prop } from '@state/interfaces';
 
-export function _sortByDate<T extends Object>(
-    collection: ImmutableArray<T>, 
-    prop: Extract<keyof Immutable<T>, string>, 
-    direction: "asc" | "desc" = "desc"): Immutable<T>[]{
-    if(!collection) return;
+export function _sortByDate<T extends {}>(
+    collection: Maybe<ImmutableArray<T>>, 
+    prop: Prop<Immutable<T>>, 
+    direction: "asc" | "desc" = "desc"): Maybe<Immutable<T>[]> {
+    if(!collection) return null;
     return collection.slice().sort((a: Immutable<T>, b: Immutable<T>) => {
         if(!a[prop]) return 1;
         if(!b[prop]) return -1;

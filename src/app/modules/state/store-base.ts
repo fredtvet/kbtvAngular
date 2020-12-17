@@ -1,5 +1,5 @@
 import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
-import { Immutable, ImmutableArray } from '@immutable/interfaces';
+import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
 import { Observable } from 'rxjs';
 import { ActionDispatcher } from './action-dispatcher';
 import { _applyMetaReducers } from './helpers/apply-meta-reducers.helper';
@@ -56,25 +56,29 @@ export abstract class StoreBase<TState> {
         if(this.hostStore && action.propagate) this.hostStore.dispatch(action);
     }
 
-    select$<TResult = Partial<TState>>(props: ImmutableArray<Prop<TState>>): Observable<Immutable<TResult>>{
-        this.dispatchQuery(props)   
+    select$<TResult = Partial<TState>>(
+        props: Maybe<ImmutableArray<Prop<TState>>>
+    ): Observable<Maybe<Immutable<TResult>>>{
+        this.dispatchQuery(props || ["all"])   
         return this.stateChanges$.pipe(selectSlice<Immutable<TResult>>(props))
     }
 
-    selectProperty$<TResult>(prop: Immutable<Prop<TState>>): Observable<Immutable<TResult>>{
+    selectProperty$<TResult>(prop: Prop<Immutable<TState>>): Observable<Maybe<Immutable<TResult>>>{
         this.dispatchQuery([prop])
-        return this.stateChanges$.pipe(selectProp<Immutable<TResult>>(prop))
+        return this.stateChanges$.pipe(selectProp<Immutable<TResult>, TState>(prop))
     }
 
-    select<TResult = Partial<TState>>(props: ImmutableArray<Prop<TState>>): Immutable<TResult>{
-        this.dispatchQuery(props)
+    select<TResult = Partial<TState>>(
+        props: Maybe<ImmutableArray<Prop<TState>>>
+    ): Maybe<Immutable<TResult>> {
+        this.dispatchQuery(props || ["all"])
         return this.base.getStoreState(props, false);
     }
 
-    selectProperty<TResult>(prop: Immutable<Prop<TState>>): Immutable<TResult>{
+    selectProperty<TResult>(prop: Prop<Immutable<TState>>): Maybe<Immutable<TResult>> {
         this.dispatchQuery([prop])
-        const state = this.base.getStoreState([prop], false);
-        return state ? state[prop] : null;
+        const state = this.base.getStoreState<TState>([prop], false);
+        return state ? <Immutable<TResult>> state[prop] : undefined;
     }
 
     private reduceState(action: Immutable<StateAction>): void{
@@ -85,25 +89,24 @@ export abstract class StoreBase<TState> {
 
         const modifiedReducer = _applyMetaReducers(mergedReducer, this.metaReducers);
 
-        const state = this.base.getStoreState(null, false);
+        const state = this.base.getStoreState(undefined, false);
 
-        const newState = tryWithLogging(() => modifiedReducer.reducerFn(state, action));
+        const newState = tryWithLogging(() => modifiedReducer.reducerFn(<{}> state, action));
         
-        this.setState(newState, null, false) 
+        this.setState(<TState> newState, false) 
     }
 
-    private dispatchQuery = (props: ImmutableArray<Prop<TState>>): void => 
+    private dispatchQuery = (props: ImmutableArray<string>): void => 
         this.queryDispatcher.dispatch({ props });
 
-    private setState(state: Partial<TState>, 
-        action?: string, 
+    private setState(state: Maybe<Partial<TState>>, 
         deepCloneState: boolean = true) : void { 
 
-        this.base.setStoreState(state, action, deepCloneState);
+        this.base.setStoreState(state, deepCloneState);
 
         if (this._settings.logStateChanges) {
             const caller = (this.constructor) ? '\r\nCaller: ' + this.constructor.name : '';
-            console.log('%cSTATE CHANGED', 'font-weight: bold', '\r\nAction: ', action, caller, '\r\nState: ', state);
+            console.log('%cSTATE CHANGED', 'font-weight: bold', caller, '\r\nState: ', state);
         }
     }
 

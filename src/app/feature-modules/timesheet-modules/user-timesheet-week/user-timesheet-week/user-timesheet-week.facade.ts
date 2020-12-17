@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Mission, Timesheet } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, Maybe } from '@global/interfaces';
 import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
 import { _mapObjectsToWeekdays } from '@shared-app/helpers/object/map-objects-to-weekdays.helper';
@@ -29,18 +29,19 @@ export class UserTimesheetWeekFacade {
     get weekCriteria(){ return this.componentStore.selectProperty<WeekCriteria>("weekCriteria"); } 
     weekCriteria$ = this.componentStore.selectProperty$<WeekCriteria>("weekCriteria");
 
-    private filteredTimesheets$: Observable<Immutable<Timesheet>[]> = combineLatest([
+    private filteredTimesheets$: Observable<Maybe<Immutable<Timesheet>[]>> = combineLatest([
         this.store.selectProperty$<Timesheet[]>("userTimesheets"),
         this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria")
     ]).pipe(filterRecords(TimesheetFilter), map(x => x.records));
 
-    weekDaySummaries$: Observable<{ [key: number]: Immutable<TimesheetSummary> }> = combineLatest([
+    weekDaySummaries$: Observable<Maybe<{ [key: number]: Immutable<TimesheetSummary> }>> = combineLatest([
         this.filteredTimesheets$, 
         this.store.selectProperty$<Mission[]>("missions")
     ]).pipe(
         map(([userTimesheets, missions]) =>  {
+            if(!userTimesheets?.length) return;
             const relationCfg = new GetWithRelationsConfig<StoreState>("userTimesheets", null, ["missions"]);
-            const timesheets = _getRangeWithRelations<Timesheet, ModelState>({userTimesheets, missions}, relationCfg);
+            const timesheets = _getRangeWithRelations<Timesheet, ModelState>({userTimesheets, missions: missions || []}, relationCfg);
             const summaries = this.summaryAggregator.groupByType(GroupByPeriod.Day, timesheets);
             return _mapObjectsToWeekdays<TimesheetSummary>(summaries, "date")
         })

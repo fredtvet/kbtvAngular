@@ -5,7 +5,7 @@ import { first, tap } from 'rxjs/operators';
 import { FormSheetNavBarComponent } from './form-sheet-nav-bar/form-sheet-nav-bar.component';
 import { FormSheetWrapperConfig } from './interfaces';
 
-type WrapperConfig = FormSheetWrapperConfig<unknown, unknown, unknown>;
+type WrapperConfig = FormSheetWrapperConfig<{}, {}, unknown>;
 
 @Component({
     selector: 'app-form-sheet-wrapper',

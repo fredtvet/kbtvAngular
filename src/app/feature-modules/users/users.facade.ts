@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { _groupBy } from '@array/group-by.helper';
 import { User } from "@core/models";
-import { Immutable, ImmutableArray } from '@immutable/interfaces';
+import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
 import { Roles } from '@shared-app/enums';
 import { Store } from '@state/store';
 import { map } from "rxjs/operators";
@@ -22,13 +22,13 @@ export class UsersFacade {
     this.store.dispatch(<UpdateUserPasswordAction>{ type: UpdateUserPasswordAction, newPassword, userName })
   }
   
-  private sortByRole = (users: ImmutableArray<User>): Immutable<User>[] => {
+  private sortByRole = (users: Maybe<ImmutableArray<User>>): Immutable<User>[] => {
     if(!users) return [];
 
     let grouped = _groupBy(users, "role"); 
     let result: Immutable<User>[] = [];
 
-    for(let role of Object.keys(Roles).map(key => Roles[key])) 
+    for(let role of Object.keys(Roles).map(key => Roles[key as keyof typeof Roles])) 
       if(grouped[role]) result = result.concat(grouped[role])
 
     return result;

@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray } from '@immutable/interfaces'
+import { Immutable, ImmutableArray, Maybe } from '@global/interfaces'
 import { Observable } from 'rxjs'
 import { StateAction } from './state.action'
 
@@ -6,7 +6,7 @@ export type Prop<T> = Extract<keyof T, string>
 
 export interface DispatchedAction<TAction extends StateAction, TState = {}> { 
     action: Immutable<TAction>, 
-    stateSnapshot: Immutable<TState> 
+    stateSnapshot: Maybe<Immutable<TState>>
 };
 
 export interface Query { props: ImmutableArray<string> };
@@ -16,7 +16,7 @@ export interface Effect<TAction extends StateAction> {
     onErrorAction?: (err: unknown) => Immutable<StateAction>
 }
 
-export type ReducerFn<TState, TAction> = (state: Immutable<TState>, action: Immutable<TAction>) => Immutable<Partial<TState>>
+export type ReducerFn<TState, TAction> = (state: Immutable<TState>, action: Immutable<TAction>) => Maybe<Immutable<Partial<TState>>>
 
 export type ReducerMap = {[key: string]: ImmutableArray<Reducer<unknown, StateAction>>}
 

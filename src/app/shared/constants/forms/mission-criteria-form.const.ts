@@ -20,7 +20,7 @@ const SearchStringControl = <DynamicControl<MissionCriteria, FormState>>{ name: 
     type: "control", questions: [{
         component:  AutoCompleteQuestionComponent,
         question: <AutoCompleteQuestion<Mission>>{
-            optionsGetter: (s: FormState) => s.options.missions,
+            optionsGetter: (s: FormState) => s.options?.missions,
             valueFormatter: (val: Mission) => val.address,
             valueProp: "address",
             placeholder: "Søk med adresse",
@@ -34,7 +34,7 @@ const MissionTypeControl = <DynamicControl<MissionCriteria, FormState>>{ name: "
     type: "control", questions: [{
         component:  SelectQuestionComponent,
         question: <SelectQuestion<MissionType>>{
-            optionsGetter: (s: FormState) => s.options.missionTypes, 
+            optionsGetter: (s: FormState) => s.options?.missionTypes, 
             valueFormatter: (val: MissionType) => val.name,
             compareWith: _compareProp<MissionType>("id"),
             placeholder: "Velg oppdragstype",

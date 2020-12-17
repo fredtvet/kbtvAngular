@@ -1,6 +1,8 @@
+import { Maybe } from "@global/interfaces";
+
 //Hack for callback functions where errors are not automatically logged. 
-export function tryWithLogging<TResult>(func: () => TResult): TResult {
-    var result: TResult;
+export function tryWithLogging<TResult>(func: () => TResult): Maybe<TResult> {
+    var result: Maybe<TResult> = undefined;
     try{
         result = func()
     }catch(err){

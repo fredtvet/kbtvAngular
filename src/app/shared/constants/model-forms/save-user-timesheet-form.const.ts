@@ -7,10 +7,11 @@ import { TextAreaQuestion, TextAreaQuestionComponent } from '../../components/dy
 import { HiddenIdControl, MissionAutoCompleteControl } from '../common-controls.const';
 import { StateMissions } from '@core/state/global-state.interfaces';
 import { OptionsFormState } from '@form-sheet/interfaces';
+import { Maybe } from '@global/interfaces';
 
 type FormState = OptionsFormState<StateMissions> & {defaultStartTime: string, defaultEndTime: string};
 
-const _timeValueDefault = (date: number, hours: number = 0, minutes: number = 0): string => 
+const _timeValueDefault = (date: Maybe<number>, hours: number = 0, minutes: number = 0): string => 
     new Date((date ? new Date(date) : new Date).getFullYear(), 1, 1, hours, minutes, 0).toISOString();
 
 export interface TimesheetForm {

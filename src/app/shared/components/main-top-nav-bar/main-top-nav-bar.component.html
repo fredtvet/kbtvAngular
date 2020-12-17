@@ -36,10 +36,10 @@
             aria: 'Søk',
             icon: 'search'}">
         </app-button>
-
-        <app-button *ngFor="let button of config.buttons | transformButtons: ButtonTypes.Icon; trackBy: TrackByButton" [config]="button">
-        </app-button>
-
+        <ng-container *ngIf="config.buttons">
+            <app-button *ngFor="let button of config.buttons | transformButtons: ButtonTypes.Icon; trackBy: TrackByButton" [config]="button">
+            </app-button>
+        </ng-container>
     </ng-container>
 
 </mat-toolbar>
@@ -54,6 +54,6 @@
     </app-button>
 
     <input #searchInput appInputListener (inputChanged)="handleSearchFn($event);" fxFlex
-        [value]="config.searchBar.initialValue || ''" [placeholder]="config.searchBar.placeholder"
+        [value]="config.searchBar?.initialValue || ''" [placeholder]="config.searchBar?.placeholder"
         class="mt-1 mb-1 p-2 pl-3 mr-1" style="background:white;border:none;border-radius:10px;">
 </ng-template>

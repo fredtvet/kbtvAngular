@@ -21,8 +21,8 @@ import { ControlComponentLoaderComponent } from './control-component-loader.comp
 export class DynamicControlGroupComponent extends ControlComponentLoaderComponent implements ControlGroupComponent{
     @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
     
-    controlGroup: DynamicControlGroup<unknown>;
-    formConfig: DynamicForm<unknown, unknown>;
+    controlGroup: DynamicControlGroup<{}>;
+    formConfig: DynamicForm<{}, {}>;
     nestedNames: string[] = [];
 
     constructor(componentFactoryResolver: ComponentFactoryResolver, cdRef: ChangeDetectorRef) {

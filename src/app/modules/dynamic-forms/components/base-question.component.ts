@@ -1,5 +1,6 @@
 import { Directive, HostBinding, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { Maybe } from '@global/interfaces';
 import { Observable } from 'rxjs';
 import { _getValidationErrorMessage } from '../helpers/get-validation-error-message.helper';
 import { Question, QuestionComponent } from '../interfaces';
@@ -11,7 +12,7 @@ export abstract class BaseQuestionComponent<TQuestion extends Question>
 
   @HostBinding('style.width') width: string;
 
-  control: AbstractControl;
+  control: Maybe<AbstractControl>;
   form: FormGroup;
   required: boolean;
   hideField$: Observable<boolean>;
@@ -26,8 +27,8 @@ export abstract class BaseQuestionComponent<TQuestion extends Question>
 
   constructor(private validationErrorMessages: ValidationErrorMap) {}
 
-  getValidationErrorMessage(): string{
-    return _getValidationErrorMessage(this.control.errors, this.validationErrorMessages)
+  getValidationErrorMessage(): Maybe<string> {
+    return _getValidationErrorMessage(this.control?.errors, this.validationErrorMessages)
   }
 
   protected onQuestionChanges(question: TQuestion): void { 

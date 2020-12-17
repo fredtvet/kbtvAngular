@@ -30,12 +30,12 @@
 
         <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>
 
-        <button mat-icon-button matSuffix *ngIf="question.resetable && !control.disabled && control.value" aria-label="Clear" 
+        <button mat-icon-button matSuffix *ngIf="question.resetable && control && !control.disabled && control.value" aria-label="Clear" 
             (click)="control.setValue(''); control.markAsDirty()">
             <mat-icon>close</mat-icon>
         </button>
 
-        <mat-error *ngIf="control.dirty && control.invalid">
+        <mat-error *ngIf="control && control.dirty && control.invalid">
             {{ getValidationErrorMessage() }}
         </mat-error>
     </mat-form-field>

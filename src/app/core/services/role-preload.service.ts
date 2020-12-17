@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PreloadingStrategy, Route } from '@angular/router';
+import { Maybe } from '@global/interfaces';
 import { EMPTY, Observable, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AuthService } from './auth/auth.service';
@@ -15,7 +16,7 @@ export class RolePreloadService implements PreloadingStrategy {
       return timer(2000).pipe(switchMap(x => load()))
     }
   
-    private preloadCheck(route: Route, role: string): boolean {
+    private preloadCheck(route: Route, role: Maybe<string>): boolean {
       return (
         route.data && role &&
         (!route.data['allowedRoles'] || route.data['allowedRoles'].includes(role))

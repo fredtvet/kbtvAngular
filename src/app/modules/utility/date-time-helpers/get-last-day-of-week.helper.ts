@@ -1,4 +1,4 @@
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 
 export function _getLastDayOfWeek(date: Immutable<Date> = new Date()): Immutable<Date>  {
     let day = date.getDay();

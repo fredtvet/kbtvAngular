@@ -26,7 +26,7 @@ const EmployerControl = <DynamicControlGroup<Mission, FormState>>{ name: "employ
         type: "control", questions: [{
             component:  AutoCompleteQuestionComponent,
             question: <AutoCompleteQuestion<Employer>>{
-                optionsGetter: (state: FormState) => state.options.employers,
+                optionsGetter: (state: FormState) => state.options?.employers,
                 placeholder: "Oppdragsgiver",
                 valueProp: "name",
                 valueFormatter: (val: Employer) => val.name, 
@@ -43,7 +43,7 @@ const MissionTypeControl = <DynamicControlGroup<Mission, FormState>>{ name: "mis
         type: "control", questions: [{
             component:  AutoCompleteQuestionComponent,
             question: <AutoCompleteQuestion<MissionType>>{
-                optionsGetter: (state: FormState) => state.options.missionTypes,
+                optionsGetter: (state: FormState) => state.options?.missionTypes,
                 placeholder: "Oppdragstype",
                 valueProp: "name",
                 valueFormatter: (val: MissionType) => val.name, 

@@ -1,4 +1,7 @@
-export function _getWeeksInYear(year: number): number{
+import { Maybe } from "@global/interfaces";
+
+export function _getWeeksInYear(year: Maybe<number>): number{
+  if(!year) year = new Date().getFullYear();
   let d = new Date(year, 0, 1);
   let isLeap = new Date(year, 1, 29).getMonth() === 1;
 

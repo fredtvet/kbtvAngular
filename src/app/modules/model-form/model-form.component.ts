@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Optional, Output } from '@angular/core';
 import { DynamicForm, FormComponent } from '@dynamic-forms/interfaces';
 import { OptionsFormState } from '@form-sheet/interfaces';
+import { Immutable, Maybe } from '@global/interfaces';
 import { SaveAction } from '@model/interfaces';
 import { ModelCommand } from '@model/model-command.enum';
 import { StateAction } from '@state/state.action';
@@ -21,26 +22,27 @@ import { ModelFormFacade } from './model-form.facade';
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModelFormComponent implements FormComponent<ModelFormConfig<unknown, unknown, OptionsFormState<unknown>>, OptionsFormState<unknown>, SaveAction>{
-    @Output() formSubmitted = new EventEmitter<SaveAction>()
+export class ModelFormComponent 
+  implements FormComponent<ModelFormConfig<{}, {}, OptionsFormState<{}>>, OptionsFormState<{}>, SaveAction>{
+    @Output() formSubmitted = new EventEmitter<Maybe<SaveAction>>()
 
-    @Input() config: ModelFormConfig<unknown, unknown, OptionsFormState<unknown>>;
+    @Input() config: ModelFormConfig<{}, {}, OptionsFormState<{}>>;
    
     @Input('formState') 
-    set formState(value: Object) {
+    set formState(value: Immutable<OptionsFormState<{}>>) {
       this.formStateSubject.next(value)
     }
   
-    private formStateSubject = new BehaviorSubject<OptionsFormState<Object>>(null)
+    private formStateSubject = new BehaviorSubject<OptionsFormState<{}>>({options: {}})
 
-    formState$: Observable<OptionsFormState<Object>>;
-    formConfig$: Observable<DynamicForm<unknown, OptionsFormState<Object>>>;
+    formState$: Observable<OptionsFormState<{}>>;
+    formConfig$: Observable<DynamicForm<{}, OptionsFormState<{}>>>;
 
     private isCreateForm: boolean = false;
   
     constructor(
       private facade: ModelFormFacade,
-      @Inject(DEFAULT_SAVE_CONVERTER) @Optional() private defaultSaveConverter: FormToSaveModelConverter<unknown, unknown, StateAction>
+      @Inject(DEFAULT_SAVE_CONVERTER) @Optional() private defaultSaveConverter: FormToSaveModelConverter<{}, {}, StateAction>
     ) {}
   
     ngOnInit(): void {   
@@ -60,7 +62,7 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<unknown
 
     }
 
-    onSubmit(result: unknown): void{   
+    onSubmit(result: Immutable<{}>): void{   
       const saveAction = this.isCreateForm ? ModelCommand.Create : ModelCommand.Update;
       this.formSubmitted.emit(saveAction);
 
@@ -78,12 +80,12 @@ export class ModelFormComponent implements FormComponent<ModelFormConfig<unknown
 
     onCancel = (): void => this.formSubmitted.emit(null); 
 
-    private getFormConfig(state: Readonly<Object>): DynamicForm<Object, OptionsFormState<Object>>{
+    private getFormConfig(state: Maybe<Immutable<{}>>): DynamicForm<{}, OptionsFormState<{}>>{
       const dynamicForm = this.config.dynamicForm;
       if(dynamicForm.initialValue) return this.config.dynamicForm;
       return {
         ...dynamicForm, 
-        initialValue:  this.facade.getModelWithForeigns(this.config.entityId as string, this.config.stateProp, state)
+        initialValue:  this.facade.getModelWithForeigns(<string> this.config.entityId, this.config.stateProp, state || {})
       }
     }
 }

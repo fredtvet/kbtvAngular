@@ -10,7 +10,7 @@
         {{ this.timesheet.startTime | date : 'shortTime' }} - {{ this.timesheet.endTime | date : 'shortTime' }}
       </span>
       <span class="mat-small">
-        {{ this.timesheet.totalHours | readableDuration }} 
+        {{ (this.timesheet.totalHours || 0) | readableDuration }} 
       </span>
       <span class="mat-small">
         ({{this.timesheet.missionId}}) {{ this.timesheet.mission?.address }} 

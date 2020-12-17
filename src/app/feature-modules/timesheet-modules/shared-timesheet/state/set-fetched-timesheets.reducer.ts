@@ -4,7 +4,7 @@ import { StateMissions, StateTimesheets } from '@core/state/global-state.interfa
 import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 import { StateAction } from '@state/state.action';
 
 export const SetFetchedTimesheetsAction = "SET_FETCHED_TIMESHEETS_ACTION";

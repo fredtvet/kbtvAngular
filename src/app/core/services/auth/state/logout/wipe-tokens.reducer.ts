@@ -7,6 +7,6 @@ export interface WipeTokensAction extends StateAction {};
 
 export const WipeTokensReducer = _createReducer(
     WipeTokensAction, (): Partial<StoreState> => {
-        return {accessToken: null, refreshToken: null}
+        return {accessToken: undefined, refreshToken: undefined}
     }
 )

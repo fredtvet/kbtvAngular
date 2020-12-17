@@ -1,5 +1,5 @@
 
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 import { SaveAction } from '@model/interfaces';
 import { ModelStateAction } from '../model-state.action';
 

@@ -10,7 +10,7 @@ import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens
 import { DeleteModelAction } from './delete-model.action';
 import { HttpAction } from '@http/state/http.effect';
 import { ModelCommand } from '@model/model-command.enum';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, Maybe } from '@global/interfaces';
 
 @Injectable()
 export class DeleteModelHttpEffect implements Effect<DeleteModelAction<unknown>>{
@@ -45,15 +45,15 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<unknown>>
 
     protected createCancelMessage(action: Immutable<DeleteModelAction<unknown>>, modelConfig: Immutable<ModelConfig<unknown, unknown>>): string{
         const payload = action.payload;
-        const multi = payload.ids?.length > 1;
+        const multi = payload.ids && payload.ids.length > 1;
 
         const entityWord = 
-            this.translations[(multi ? action.stateProp : modelConfig.foreignProp)?.toLowerCase()];
+            this.translations[<string> (multi ? action.stateProp : modelConfig.foreignProp)?.toLowerCase()];
         
         return `Sletting av ${payload.ids?.length || ''} ${entityWord} med id ${payload.ids || payload.id} er reversert!`;
     }
   
-    protected createHttpBody(action: Immutable<DeleteModelAction<unknown>>): Immutable<{ids: unknown[]}> {
+    protected createHttpBody(action: Immutable<DeleteModelAction<unknown>>): Maybe<Immutable<{ids: Maybe<unknown[]>}>> {
         return action.payload.id ? null : {ids: action.payload.ids};
     }
 

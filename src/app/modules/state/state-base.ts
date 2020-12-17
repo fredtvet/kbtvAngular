@@ -1,4 +1,4 @@
-import { ImmutableArray } from '@immutable/interfaces';
+import { Immutable, ImmutableArray, Maybe, UnknownState } from '@global/interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { _deepClone } from './helpers/deep-clone.helper';
 import { _deepFreeze } from './helpers/object-freezer.helper';
@@ -6,9 +6,9 @@ import { StateChanges } from './interfaces';
 
 export class StateBase {  
     
-    strictImmutability:boolean;
+    strictImmutability: Maybe<boolean>;
 
-    private storeState: Object; 
+    private storeState: UnknownState; 
 
     private stateChangesSubject: BehaviorSubject<StateChanges<unknown>>;
     stateChanges$: Observable<StateChanges<unknown>>;
@@ -19,8 +19,8 @@ export class StateBase {
         this.stateChanges$ = this.stateChangesSubject.asObservable();
     }
 
-    getStoreState(properties: ImmutableArray<string>  = null, deepClone: boolean = true) {
-        let state = null;
+    getStoreState<T extends {}>(properties: Maybe<ImmutableArray<string>>, deepClone: boolean = true): Maybe<Immutable<T>> {
+        let state: Maybe<UnknownState> = null;
 
         if (this.storeState && properties) {      
             state = {};
@@ -30,25 +30,25 @@ export class StateBase {
         else state = this.storeState;
 
         if(state){
-            if(deepClone) state = _deepClone(state);
+            if(deepClone) state = <UnknownState> _deepClone(state);
             else state = {...state}
         }
 
-        return state;
+        return <Immutable<T>> state;
     }
 
-    setStoreState(stateChanges: Object, action?: string, deepClone: boolean = true, dispatchChanges: boolean = true) {
+    setStoreState(stateChanges: Maybe<{}>, deepClone: boolean = true, dispatchChanges: boolean = true): void {
         if(!stateChanges) return;
 
         if(deepClone)
-            this.storeState = {...this.storeState, ..._deepClone(stateChanges)}
+            this.storeState = {...this.storeState, ...<UnknownState>_deepClone(stateChanges)}
         else
             this.storeState = {...this.storeState, ...stateChanges};
 
         if(this.strictImmutability) _deepFreeze(this.storeState);
 
         if(dispatchChanges)
-            this.stateChangesSubject.next({stateChanges, action, state: this.storeState});
+            this.stateChangesSubject.next({stateChanges, state: this.storeState});
     }
 
 }

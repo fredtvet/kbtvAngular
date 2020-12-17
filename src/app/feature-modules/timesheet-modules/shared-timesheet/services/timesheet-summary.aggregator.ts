@@ -5,13 +5,13 @@ import { TimesheetStatus } from '@shared/enums/timesheet-status.enum';
 import { _getWeekAndYearFromDate } from '@datetime/get-week-and-year-from-date.helper';
 import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
 import { TimesheetSummary } from '../interfaces/timesheet-summary.interface';
-import { Immutable, ImmutableArray } from '@immutable/interfaces';
+import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
 
 @Injectable({providedIn: "root"})
 export class TimesheetSummaryAggregator {
   constructor() {}
 
-  groupByType(type: GroupByPeriod, t: ImmutableArray<Timesheet>): Immutable<TimesheetSummary>[] {
+  groupByType(type: Maybe<GroupByPeriod>, t: Maybe<ImmutableArray<Timesheet>>): Maybe<Immutable<TimesheetSummary>[]> {
     switch (type) {
       case GroupByPeriod.Day:
         return this.groupByDay(t);
@@ -21,15 +21,16 @@ export class TimesheetSummaryAggregator {
         return this.groupByMonth(t);
       case GroupByPeriod.Year:
         return this.groupByYear(t);
+      default: return null;
     }
   }
 
-  groupByDay(t: ImmutableArray<Timesheet>): Immutable<TimesheetSummary>[] {
-    if(!t) return undefined;
-    const groups = {};
+  groupByDay(t: Maybe<ImmutableArray<Timesheet>>): Maybe<Immutable<TimesheetSummary>[]> {
+    if(!t) return null;
+    const groups: {[key:string]: TimesheetSummary} = {};
     for(let i = t.length; i--;){
       const timesheet = t[i];
-      const date = new Date(timesheet.startTime);
+      const date = timesheet.startTime ? new Date(timesheet.startTime) : new Date();
       const index = date.toDateString() + "-" + timesheet.userName;
       let summary = groups[index];
       if(summary === undefined) {
@@ -45,15 +46,15 @@ export class TimesheetSummaryAggregator {
 
       this.addHoursToSummary(summary, timesheet)
 
-      summary.timesheets.push(timesheet);
+      summary.timesheets.push(<Timesheet> timesheet);
     }
 
-    return <TimesheetSummary[]> Object.values(groups); 
+    return <Immutable<TimesheetSummary>[]> Object.values(groups); 
   }
 
-  groupByWeek(t: ImmutableArray<Timesheet>): Immutable<TimesheetSummary>[] {
-    if(!t) return undefined;
-    const groups = {};
+  groupByWeek(t: Maybe<ImmutableArray<Timesheet>>): Maybe<Immutable<TimesheetSummary>[]> {
+    if(!t) return null;
+    const groups: {[key:string]: TimesheetSummary} = {};
     for(let i = t.length; i--;){
       const timesheet = t[i];
       const wy = _getWeekAndYearFromDate(timesheet.startTime);
@@ -73,22 +74,22 @@ export class TimesheetSummaryAggregator {
 
       this.addHoursToSummary(summary, timesheet)
 
-      summary.timesheets.push(timesheet);
+      summary.timesheets.push(<Timesheet> timesheet);
     }
 
-    return <TimesheetSummary[]> Object.values(groups);
+    return <Immutable<TimesheetSummary>[]> Object.values(groups);
   }
 
   groupByWeekRange(
-    t: ImmutableArray<Timesheet>,
+    t: Maybe<ImmutableArray<Timesheet>>,
     startWeek: number, endWeek: number, year: number, 
-    excludeStatus?: TimesheetStatus): Immutable<TimesheetSummary>[] {
-    if(!t) return undefined;
-    const groups = {};
+    excludeStatus?: TimesheetStatus): Maybe<Immutable<TimesheetSummary>[]> {
+    if(!t) return null;
+    const groups: {[key:string]: TimesheetSummary} = {};
     for(let i = t.length; i--;){
       const timesheet = t[i];
       if(timesheet.status === excludeStatus) continue;
-      const date = new Date(timesheet.startTime);
+      const date = timesheet.startTime ? new Date(timesheet.startTime) : new Date();
       if(date.getFullYear() !== year) continue;
       const weekNr = _getWeekOfYear(date);
       if (weekNr >= startWeek && weekNr <= endWeek) {
@@ -101,19 +102,19 @@ export class TimesheetSummaryAggregator {
 
         this.addHoursToSummary(summary, timesheet)
 
-        summary.timesheets.push(timesheet);
+        summary.timesheets.push(<Timesheet> timesheet);
       }
     };
 
-    return <TimesheetSummary[]> Object.values(groups);
+    return <Immutable<TimesheetSummary>[]> Object.values(groups);
   }
 
-  groupByMonth(t: ImmutableArray<Timesheet>): Immutable<TimesheetSummary>[] {
-    if(!t) return undefined;
-    const groups = {};
+  groupByMonth(t: Maybe<ImmutableArray<Timesheet>>): Maybe<Immutable<TimesheetSummary>[]> {
+    if(!t) return null;
+    const groups: {[key:string]: TimesheetSummary} = {};
     for(let i = t.length; i--;){
       const timesheet = t[i];
-      const date = new Date(timesheet.startTime);
+      const date = timesheet.startTime ? new Date(timesheet.startTime) : new Date();
       const month = date.getMonth();
       const year = date.getFullYear();
       const index = year + "-" + month + "-" + timesheet.userName;
@@ -132,18 +133,18 @@ export class TimesheetSummaryAggregator {
 
       this.addHoursToSummary(summary, timesheet)
 
-      summary.timesheets.push(timesheet);
+      summary.timesheets.push(<Timesheet> timesheet);
     };
 
-    return <TimesheetSummary[]> Object.values(groups);
+    return <Immutable<TimesheetSummary>[]> Object.values(groups);
   }
 
-  groupByYear(t: ImmutableArray<Timesheet>): Immutable<TimesheetSummary>[] {
-    if(!t) return undefined;
-    const groups = {};
+  groupByYear(t: Maybe<ImmutableArray<Timesheet>>): Maybe<Immutable<TimesheetSummary>[]> {
+    if(!t) return null;
+    const groups: {[key:string]: TimesheetSummary} = {};
     for(let i = t.length; i--;){
       const timesheet = t[i];
-      const year = new Date(timesheet.startTime).getFullYear();
+      const year = timesheet.startTime ? new Date(timesheet.startTime).getFullYear() : new Date().getFullYear();
       const index = year + "-" + timesheet.userName;
 
       let summary = groups[index];
@@ -158,16 +159,17 @@ export class TimesheetSummaryAggregator {
 
       this.addHoursToSummary(summary, timesheet)
 
-      summary.timesheets.push(timesheet);
+      summary.timesheets.push(<Timesheet> timesheet);
     };
-    return <TimesheetSummary[]> Object.values(groups);
+    return <Immutable<TimesheetSummary>[]> Object.values(groups);
   }
 
   private addHoursToSummary(summary: TimesheetSummary, timesheet: Immutable<Timesheet>): void{
+    if(!timesheet) return;
     if (timesheet.status === TimesheetStatus.Confirmed)
-      summary.confirmedHours = Math.round((summary.confirmedHours + timesheet.totalHours) * 10) / 10;
+      summary.confirmedHours = Math.round((summary.confirmedHours + <number> timesheet.totalHours) * 10) / 10;
     else   
-      summary.openHours = Math.round((summary.openHours + timesheet.totalHours) * 10) / 10;
+      summary.openHours = Math.round((summary.openHours + <number> timesheet.totalHours) * 10) / 10;
   }
 
 }

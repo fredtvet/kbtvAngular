@@ -1,4 +1,4 @@
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, ImmutableArray, UnknownState } from '@global/interfaces';
 import { Prop } from '@state/interfaces';
 import { ModelCommand } from './model-command.enum';
 
@@ -13,8 +13,6 @@ export interface ModelConfig<TModel, TState> {
     children?: Prop<TState>[],
     foreigns?: Prop<TState>[]
 }
-
-export type UnknownState = {[key: string]: unknown}
 
 export type SaveAction = ModelCommand.Create | ModelCommand.Update;
 
@@ -31,3 +29,5 @@ export interface CommandApiMap {
 }
 
 export type KeyVal<T> = { [key: string]: Immutable<T> }
+
+export type UnknownModelState = { [key: string]: UnknownState[] }

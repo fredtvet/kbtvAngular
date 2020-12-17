@@ -11,6 +11,7 @@ import { DisabledObjectMap, DynamicControl, DynamicForm, FormComponent } from '.
 import { ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from '../validation-error-map.interface';
 import { ControlComponentLoaderComponent, ValidControl } from './control-component-loader.component';
 import { DynamicControlGroupComponent } from './dynamic-control-group.component';
+import { Maybe, UnknownState } from '@global/interfaces';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -39,21 +40,21 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
   providers: [DynamicFormStore],
 })
 export class DynamicFormComponent extends ControlComponentLoaderComponent 
-    implements FormComponent<DynamicForm<unknown, unknown>, Object, unknown> {
+    implements FormComponent<DynamicForm<{}, {}>, {}, unknown> {
         
     @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
     
-    private _config: DynamicForm<unknown, unknown>;
+    private _config: DynamicForm<{}, {}>;
     @Input('config') 
-    set config(value: DynamicForm<unknown, unknown>) {
+    set config(value: DynamicForm<{}, {}>) {
       this._config = value;
       this.initalizeForm();
     }  
 
-    get config(): DynamicForm<unknown, unknown> { return this._config }
+    get config(): DynamicForm<{}, {}> { return this._config }
 
     @Input('formState') 
-    set formState(value: Object) {
+    set formState(value: {}) {
       this.formStore.setFormState(value)
     }
 
@@ -70,8 +71,8 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
     ) { super(componentFactoryResolver, cdRef, DynamicControlGroupComponent); }
 
     checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-    let pass = group.get('newPassword').value;
-    let confirmPass = group.get('confirmPassword').value;
+    let pass = group.get('newPassword')?.value;
+    let confirmPass = group.get('confirmPassword')?.value;
   
     return pass === confirmPass ? null : { notSame: true }     
     }
@@ -79,7 +80,7 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
     onSubmit(){
         let value = this._config.getRawValue ? this.form.getRawValue() : this.form.value;
         if(this._config.onSubmitFormatter)
-            value = this._config.onSubmitFormatter(value, this.formStore.formState);
+            value = this._config.onSubmitFormatter(value, this.formStore.formState || {});
         this.formSubmitted.emit(value);
     }
 
@@ -92,7 +93,7 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         this.form.markAsDirty()
     }
     
-    getValidationErrorMessage(): string{
+    getValidationErrorMessage(): Maybe<string>{
         return _getValidationErrorMessage(this.form.errors, this.validationErrorMessages)
     }
 
@@ -100,7 +101,8 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         this.dynamicHost.viewContainerRef.clear();
 
         this.form = this.getFormGroup(this._config.controls, this._config.disabledControls); //Add controls first
-        this.form.setValidators(this.config.validators)
+        
+        if(this.config.validators) this.form.setValidators(this.config.validators)
 
         if(this._config.resettable)
             this.resetEnabled$ = this.form.valueChanges.pipe(
@@ -112,7 +114,7 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         this.loadComponents(this._config.controls, this._config);
     }
 
-    private getFormGroup(controls: ValidControl[], disabledControls: DisabledObjectMap<unknown>): FormGroup{
+    private getFormGroup(controls: ValidControl[], disabledControls: Maybe<DisabledObjectMap<UnknownState>>): FormGroup{
         const formGroup = this.formBuilder.group({});
         for(const control of controls) {
             if(control.type === "group") {
@@ -133,7 +135,7 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         return formGroup;
     }
 
-    private getControl(control: DynamicControl<unknown>, disabled: boolean): AbstractControl {
+    private getControl(control: DynamicControl<{}>, disabled: boolean): AbstractControl {
         const value = 
             control.valueGetter instanceof Function ? control.valueGetter(this._config.initialValue || {}) : control.valueGetter;
   

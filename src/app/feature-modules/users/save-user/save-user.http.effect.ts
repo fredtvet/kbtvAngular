@@ -18,7 +18,7 @@ export class SaveUserHttpEffect extends SaveModelHttpEffect<User, ModelState> im
         @Inject(MODEL_PROP_TRANSLATIONS) translations: Readonly<KeyVal<string>>
     ){ super(apiMap, translations) }
 
-    protected createHttpBody(action: SaveUserAction): unknown {
+    protected createHttpBody(action: SaveUserAction): User & {password?: string} {
         if(action.saveAction === ModelCommand.Update) return action.entity;
         return {...action.entity, password: action.password};
     }

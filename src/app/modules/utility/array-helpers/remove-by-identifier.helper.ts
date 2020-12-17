@@ -1,9 +1,10 @@
-import { Immutable, ImmutableArray } from '@immutable/interfaces';
+import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
+import { Prop } from '@state/interfaces';
 
 export function _removeByIdentifier<T>(
-  originals: ImmutableArray<T>, 
+  originals: Maybe<ImmutableArray<T>>, 
   deletedId: ImmutableArray<unknown>, 
-  identifier: string): Immutable<T>[]{       
+  identifier: Prop<Immutable<T>>): Immutable<T>[]{       
     if(!originals?.length) return []; //If initial array empty, just return empty array
 
     let arr2 = originals.slice();

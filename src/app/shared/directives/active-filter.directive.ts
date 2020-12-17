@@ -3,7 +3,7 @@ import { merge, of } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
 import { _filter } from '@array/filter.helper';
 import { ActiveStringFilterConfig } from '../interfaces/active-string-filter-config.interface';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 
 @Directive({
   selector: '[appActiveStringFilter]'
@@ -37,14 +37,14 @@ export class ActiveStringFilterDirective<TRecord> {
             filter(x => !x || typeof x === "string"), 
             debounceTime(this._config.customDebounceTime || 400), 
             map(criteria => {
-            this.checkCount = 0; //reset check counter
-            if(!criteria) //If no search, just take first n items
-                return this._config.maxChecks ? 
-                this._config.data?.slice(0, this._config.maxChecks) : this._config.data; 
-            else {
-                this.searchLower = criteria.toLowerCase();
-                return _filter(this._config.data, this.filterRecord);
-            }
+                this.checkCount = 0; //reset check counter
+                if(!criteria) //If no search, just take first n items
+                    return this._config.maxChecks ? 
+                    this._config.data?.slice(0, this._config.maxChecks) : this._config.data; 
+                else {
+                    this.searchLower = criteria.toLowerCase();
+                    return _filter(this._config.data, this.filterRecord);
+                }
         }))
     }
 

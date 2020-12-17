@@ -20,6 +20,7 @@ import { FormService } from '@form-sheet/form-sheet.service';
 import { OptionsFormState } from '@form-sheet/interfaces';
 import { ModelFormService } from '@model-form/model-form.service';
 import { ModelState } from "@core/state/model-state.interface";
+import { Maybe } from "@global/interfaces";
 
 @Component({
   selector: "app-user-timesheet-week",
@@ -53,7 +54,7 @@ export class UserTimesheetWeekComponent {
 
   previousWeek = (): void => this.facade.previousWeek()
 
-  openTimesheetForm = (entityId?: string, form?: TimesheetForm): void => {
+  openTimesheetForm = (entityId?: Maybe<string>, form?: TimesheetForm): void => {
     let dynamicForm: DynamicForm<TimesheetForm,  OptionsFormState<Partial<ModelState>>>;
     if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _objectToDisabledObjectMap(form)}
     else dynamicForm = EditUserTimesheetForm
@@ -71,11 +72,11 @@ export class UserTimesheetWeekComponent {
       data: timesheetId, panelClass: 'extended-dialog'});
 
   private goToTimesheetList = () => {
-      const {weekNr, year} = this.facade.weekCriteria;
+      const {weekNr, year} = this.facade.weekCriteria || {};
       this.router.navigate(["liste", { 
-        criteria: JSON.stringify({
-            dateRange: _getWeekRange(_getDateOfWeek(weekNr, year))
-        })
+        criteria: (weekNr && year) ? JSON.stringify({
+            dateRange:  _getWeekRange(_getDateOfWeek(weekNr, year))
+        }) : null
       }], {relativeTo: this.route});
   };
 
@@ -90,7 +91,7 @@ export class UserTimesheetWeekComponent {
     });
   }
 
-  private getNavConfig(weekCriteria: WeekCriteria): MainTopNavConfig{
+  private getNavConfig(weekCriteria: Maybe<WeekCriteria>): MainTopNavConfig{
     return { 
       title:  "Uke " + weekCriteria?.weekNr || "",
       subTitle: weekCriteria?.year?.toString() || "",

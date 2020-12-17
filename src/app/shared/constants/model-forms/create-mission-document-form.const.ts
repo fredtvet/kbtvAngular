@@ -24,7 +24,7 @@ const DocumentTypeControl = <DynamicControlGroup<MissionDocumentForm, FormState>
         type: "control", questions: [{
             component:  AutoCompleteQuestionComponent,
             question: <AutoCompleteQuestion<AppDocumentType>>{
-                optionsGetter: (state: FormState) => state.options.documentTypes,
+                optionsGetter: (state: FormState) => state.options?.documentTypes,
                 placeholder: "Velg type dokument",
                 valueProp: "name",
                 valueFormatter: (val: AppDocumentType) => val.name, 

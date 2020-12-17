@@ -13,7 +13,7 @@ export const _userFormToSaveUserConverter: FormToSaveModelConverter<UserForm, Mo
     const clone = {...input.formValue, password: undefined}
     var entity = _flattenExistingForeigns<User>(input.stateProp, clone, input.options);
     
-    if(entity.role !== Roles.Oppdragsgiver) entity = {...entity, employerId: null};
+    if(entity.role !== Roles.Oppdragsgiver) entity = {...entity, employerId: undefined};
     
     entity = _modelIdGenerator(input.stateProp, entity); 
 

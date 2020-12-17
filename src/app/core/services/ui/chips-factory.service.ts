@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { Prop } from '@state/interfaces';
 import { translations } from '@shared/translations';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 
 export interface CriteriaChipOptions {
   valueFormatter?: ((val: Immutable<unknown>) => string | string),
@@ -19,8 +19,6 @@ export class ChipsFactoryService {
     removeFn: (prop: Prop<Immutable<TCriteria>>) => void,
     options?: {[key in keyof Immutable<TCriteria>]: CriteriaChipOptions},
 ): AppChip[] {
-    if(!criteria) return;
-
     const chips: AppChip[] = [];
 
     for(let prop in criteria){
@@ -28,12 +26,12 @@ export class ChipsFactoryService {
       if(!value) continue;
 
       let text = value as string;
-      const chipOption = options[prop];
-      
-      if(chipOption){
-        if(chipOption.ignored) continue; 
-        if(chipOption.valueFormatter instanceof Function) text = chipOption.valueFormatter(text)
-        else if(chipOption.valueFormatter) text = chipOption.valueFormatter;
+       
+      if(options && options[prop]){
+        const option = options[prop];
+        if(option.ignored) continue; 
+        if(option.valueFormatter instanceof Function) text = option.valueFormatter(text)
+        else if(option.valueFormatter) text = option.valueFormatter;
       }
 
       chips.push({text, color: "accent", onRemoved: () => removeFn(prop)})
@@ -48,13 +46,13 @@ export class ChipsFactoryService {
       selectFn: (val: Immutable<unknown>) => void
     ): AppChip[] {
     const chips: AppChip[] = [];
-    const options = Object.keys(_enum).filter(key => isNaN(Number(_enum[key])));
+    const options = Object.keys(_enum).filter(key => isNaN(Number(_enum[+key])));
     for(const strVal of options){
       const value = parseInt(strVal);
-      const selected = (value === currentSelection as unknown)
+      const selected = (value === currentSelection)
       chips.push({ 
         text: translations[_enum[value].toLowerCase()] , color: selected ? "accent" : "background", 
-        onClick: !selected ? () => selectFn(value) : null
+        onClick: !selected ? () => selectFn(value) : undefined
       })
     }
     return chips;

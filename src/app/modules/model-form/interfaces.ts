@@ -1,16 +1,16 @@
 import { DynamicForm } from '@dynamic-forms/interfaces';
 import { OptionsFormState } from '@form-sheet/interfaces';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, Maybe } from '@global/interfaces';
 import { SaveAction } from '@model/interfaces';
 import { Prop } from '@state/interfaces';
 import { StateAction } from '@state/state.action';
 
 export type ActionConverter<TInput, TAction extends StateAction> = (input: Immutable<TInput>) => TAction;
 
-export type FormToSaveModelConverter<TForm, TState, TAction extends StateAction> = 
+export type FormToSaveModelConverter<TForm extends {}, TState extends {}, TAction extends StateAction> = 
     (input: ModelFormToSaveModelInput<TForm, TState>) => TAction
 
-export interface ModelFormConfig<TState, TForm, TFormState extends OptionsFormState<Partial<TState>>>
+export interface ModelFormConfig<TState extends {}, TForm extends {}, TFormState extends OptionsFormState<Partial<TState>>>
 {      
     entityId?: unknown;
     stateProp: Prop<TState>;
@@ -18,14 +18,14 @@ export interface ModelFormConfig<TState, TForm, TFormState extends OptionsFormSt
     actionConverter?: FormToSaveModelConverter<TForm, TState, StateAction>
 }
 
-export interface ModelFormToSaveModelInput<TForm, TState> {
+export interface ModelFormToSaveModelInput<TForm extends {}, TState extends {}> {
     formValue: Immutable<TForm>,
-    options?: Immutable<Partial<TState>>,
+    options?: Maybe<Immutable<Partial<TState>>>,
     stateProp: Prop<TState>,
     saveAction: SaveAction,
 }
 
-export interface ModelFormViewConfig<TModel, TState, TForm>{
+export interface ModelFormViewConfig<TModel extends {}, TState extends {}, TForm extends {}>{
     entity?: Immutable<TModel>;
     foreigns?: Immutable<Partial<TState>>;
     lockedValues?: Immutable<Partial<TForm>>; 

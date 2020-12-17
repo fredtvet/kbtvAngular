@@ -1,5 +1,5 @@
 import { Input, ViewChild, Directive } from '@angular/core';
-import { Immutable, ImmutableArray } from '@immutable/interfaces';
+import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
 import { AgGridConfig } from './ag-grid-config.interface';
@@ -20,7 +20,7 @@ export abstract class AgGridTableComponent<TRecord, TConfig extends AgGridConfig
 
   rowData: ImmutableArray<TRecord> = [];
 
-  private currentObject: Immutable<TRecord>;
+  private currentObject: Maybe<Immutable<TRecord>>;
 
   constructor() { }
 
@@ -49,7 +49,9 @@ export abstract class AgGridTableComponent<TRecord, TConfig extends AgGridConfig
     this.rowData = cfg.data;
   }
 
-  protected hasSameObjectProps(obj1: Object, obj2: Object): boolean{
+  protected hasSameObjectProps(_obj1: Maybe<Object>, _obj2: Maybe<Object>): boolean{
+    const obj1 = _obj1 || {}
+    const obj2 = _obj2 || {}
     let objProps1 = Object.keys(obj1 || {});
 
     if(objProps1.length !== Object.keys(obj2 || {}).length) return false;

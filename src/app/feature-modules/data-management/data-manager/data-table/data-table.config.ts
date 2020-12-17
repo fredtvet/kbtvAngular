@@ -1,7 +1,9 @@
-export const DataTableConfig = {
-    ignoredProperties: {updatedAt: true, createdAt: true, lastVisited: true, employer: true, missionType: true, fileName: true}, 
+import { UnknownState } from "@global/interfaces";
 
-    noEditProperties: {id: true, password: true},
+export const DataTablePropConfig: {ignored:UnknownState, noEdit: UnknownState, boolean: UnknownState} = {
+    ignored: {updatedAt: true, createdAt: true, lastVisited: true, employer: true, missionType: true, fileName: true}, 
+
+    noEdit: {id: true, password: true},
     
-    booleanProperties: {finished: true},
+    boolean: {finished: true},
 }

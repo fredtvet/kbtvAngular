@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { _find } from '@array/find.helper';
+import { Timesheet } from '@core/models';
+import { Immutable, Maybe } from '@global/interfaces';
 import { Store } from '@state/store';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StoreState } from '../store-state.interface';
 
@@ -17,11 +20,11 @@ import { StoreState } from '../store-state.interface';
 
 export class UserTimesheetCardDialogWrapperComponent {
 
-  timesheet$ = 
+  timesheet$: Observable<Maybe<Immutable<Timesheet>>> = 
     this.store.select$(["userTimesheets", "missions"]).pipe(map(state => {
-        const timesheet = _find(state.userTimesheets, this.timesheetId, "id");
+        const timesheet = _find(state?.userTimesheets, this.timesheetId, "id");
         if(!timesheet) return;
-        return {...timesheet, mission: _find(state.missions, timesheet.missionId, "id")};
+        return {...timesheet, mission: _find(state?.missions, timesheet.missionId, "id")};
     }))
 
   constructor(

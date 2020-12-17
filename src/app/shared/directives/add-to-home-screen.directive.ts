@@ -6,7 +6,7 @@ import { BeforeInstallPromptEvent } from '@shared/interfaces/before-install-prom
 })
 export class AddToHomeScreenDirective {
   
-  deferredPrompt: BeforeInstallPromptEvent;
+  deferredPrompt: BeforeInstallPromptEvent | undefined;
   showButton = false;
 
   constructor(private elementRef: ElementRef) { 
@@ -22,11 +22,11 @@ export class AddToHomeScreenDirective {
     this.elementRef.nativeElement.style.display = 'inline-block';
   }
 
-  @HostListener('click') onClick() {
+  @HostListener('click') onClick(): void {
     // hide our user interface that shows our A2HS button
     this.elementRef.nativeElement.style.display = 'none';
 
-    if(!this.deferredPrompt) return undefined;
+    if(!this.deferredPrompt) return;
     
     // Show the prompt
     this.deferredPrompt.prompt();
@@ -38,7 +38,7 @@ export class AddToHomeScreenDirective {
         } else {
           console.log('User dismissed the A2HS prompt');
         }
-        this.deferredPrompt = null;
+        this.deferredPrompt = undefined;
       });
   }
 }

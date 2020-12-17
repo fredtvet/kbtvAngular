@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, UnknownState } from '@global/interfaces';
 import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { StateAction } from '@state/state.action';
@@ -12,14 +12,14 @@ import { HttpQueuePushAction } from './http-queue-push/http-queue-push.action';
 export const HttpAction = "HTTP_ACTION";
 export interface HttpAction extends StateAction {
     request: HttpRequest, 
-    stateSnapshot: Immutable<unknown>
+    stateSnapshot: Immutable<{}>
 }
 
 @Injectable()
 export class HttpEffect implements Effect<HttpAction> {
 
     constructor(
-        @Inject(OPTIMISTIC_STATE_SELECTOR) @Optional() private stateSelector: OptimisticStateSelector<{}>
+        @Inject(OPTIMISTIC_STATE_SELECTOR) @Optional() private stateSelector: OptimisticStateSelector<UnknownState>
     ) { 
         this.setOptimistictStateStrategy() 
     }
@@ -37,29 +37,29 @@ export class HttpEffect implements Effect<HttpAction> {
         )
     }
     
-    private getOptimisticState: (fullState: Readonly<Object>) => Object;
+    private getOptimisticState: (fullState: Immutable<{}>) => {};
 
     private setOptimistictStateStrategy(): void {
 
-        let stateGetter: (state: Readonly<Object>) => Object;
+        let stateGetter: (state: Immutable<{}>) => {};
 
         if(this.stateSelector) //Only get state from custom props
             if(this.stateSelector.strategy === "include")
-                stateGetter = (state: Readonly<Object>) => {
-                    let returnState = {};
+                stateGetter = (state: Immutable<UnknownState>) => {
+                    let returnState: UnknownState = {};
                     for(const prop of this.stateSelector.props)
-                        returnState[prop as string] = state[prop]; 
+                        returnState[prop] = state[prop]; 
                     return returnState;
                 }       
             else
-                stateGetter = (state: Readonly<Object>) => {
-                    let returnState = state;
+                stateGetter = (state: Immutable<UnknownState>) => {
+                    let returnState = {...state};
                     for(const prop of this.stateSelector.props) 
-                        returnState[prop as string] = undefined
+                        returnState[prop] = undefined
                     return returnState;
                 }         
         else //If no custom props, use full state   
-            stateGetter = (state: Readonly<Object>) => state;
+            stateGetter = (state: Immutable<UnknownState>) => state;
         
         this.getOptimisticState = stateGetter;
     }

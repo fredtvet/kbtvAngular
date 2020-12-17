@@ -1,9 +1,10 @@
 import { Timesheet } from '@core/models';
+import { DateRange } from '@datetime/interfaces';
+import { DateInput, Immutable, Maybe, UnknownObjectState } from '@global/interfaces';
 import { ModelStateConfig } from '@model/model-state.config';
 import { DataFilter } from '@shared/data.filter';
-import { DateRange } from '@datetime/interfaces';
+import { Prop } from '@state/interfaces';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
-import { Immutable } from '@immutable/interfaces';
 
 export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
 
@@ -19,6 +20,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
             exp = exp && record.userName === this.criteria.user.userName;
 
         if(this.criteria.dateRange && this.criteria.dateRange.start && this.criteria.dateRange.end) {
+            if(!record.startTime) return false;
             let startTime = this.getStartOfDayTime(record.startTime);
             exp = exp && startTime >= this.getStartOfDayTime(this.criteria.dateRange.start) 
                 && startTime <= this.getStartOfDayTime(this.criteria.dateRange.end); 
@@ -37,9 +39,9 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         if(!this.isDateRangeContainedIn(baseCriteria.dateRange)) return false;
         for(const prop in baseCriteria){
             if(prop === "dateRange" || prop === "dateRangePreset") continue;
-            const baseValue = baseCriteria[prop];
+            const baseValue = baseCriteria[<Prop<Immutable<TimesheetCriteria>>> prop];
             if(!baseValue) continue; 
-            const value =  this.criteria[prop];
+            const value =  this.criteria[<Prop<Immutable<TimesheetCriteria>>> prop];
             if(value && typeof value === "object") {
                 if(!this.isObjectContainedIn(baseValue, prop)) return false;
             }
@@ -48,9 +50,9 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         return true;
     }
     
-    private isObjectContainedIn(baseValue: Immutable<Object>, prop: string){
+    private isObjectContainedIn(baseValue: Immutable<{}>, prop: string): boolean{
         const modelCfg = ModelStateConfig.getBy(prop, "foreignProp");
-        const value = this.criteria[prop];
+        const value = (<UnknownObjectState>this.criteria)[prop];
 
         if(modelCfg && value[modelCfg.identifier] !== baseValue[modelCfg.identifier]) 
             return false
@@ -60,7 +62,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         return true
     }
 
-    private isDateRangeContainedIn(baseDateRange: Immutable<DateRange>): boolean{
+    private isDateRangeContainedIn(baseDateRange: Maybe<Immutable<DateRange>>): boolean{
         if(!baseDateRange || !baseDateRange.end || !baseDateRange.start) return false; //No range means all, in which it will always be contained. 
         const dateRange = this.criteria.dateRange;
         if(!dateRange || !dateRange.start || !dateRange.end) return true; 
@@ -68,8 +70,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         (this.getStartOfDayTime(baseDateRange.end) >= this.getStartOfDayTime(dateRange.end))
     }
 
-    private getStartOfDayTime(date: Immutable<Date> | string | number): number{
-        if(!date) return
+    private getStartOfDayTime(date: Immutable<DateInput>): number{
         const newDate = new Date(date as Date);
         newDate.setHours(0,0,0,0);
         return newDate.getTime();

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Prop } from '@state/interfaces';
-import { Immutable, ImmutableArray } from '@immutable/interfaces';
+import { Immutable, ImmutableArray } from '@global/interfaces';
 
 export interface ActiveStringFilterConfig<TRecord>{
     data: ImmutableArray<TRecord>;

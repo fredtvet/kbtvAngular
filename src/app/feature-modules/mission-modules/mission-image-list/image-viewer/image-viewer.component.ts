@@ -36,14 +36,14 @@ export class ImageViewerComponent {
     this.currentImageChanged.emit(image);
   }
 
-  nextImage(){
-    if(this.index >= this.images.length - 1) return null;
+  nextImage(): void{
+    if(this.index >= this.images.length - 1) return;
     this.index++
     this.changeCurrentImage(this.images[this.index]);
   }
 
-  previousImage(){
-    if(this.index <= 0) return null
+  previousImage(): void{
+    if(this.index <= 0) return
     this.index--;
     this.changeCurrentImage(this.images[this.index]);
   }

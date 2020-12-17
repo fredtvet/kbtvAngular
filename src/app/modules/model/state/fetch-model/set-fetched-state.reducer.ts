@@ -1,5 +1,5 @@
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 import { StateAction } from '@state/state.action';
 
 export const SetFetchedStateAction = "SET_FETCHED_STATE_ACTION";

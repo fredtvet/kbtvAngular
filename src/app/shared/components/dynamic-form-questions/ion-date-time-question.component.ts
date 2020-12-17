@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { filter, startWith } from 'rxjs/operators';
 import { _getControlObserver$ } from '@dynamic-forms/helpers/get-control-observer.helper';
 import { Question, ControlHook } from '@dynamic-forms/interfaces';
@@ -20,18 +20,18 @@ export interface IonDateQuestion extends Question {
 @Component({
   selector: 'app-ion-date-question',
   template:`
-   <div (click)="dateTime.click()" class="w-100" [ngStyle]="{'pointer-events': control.disabled ? 'none' : 'auto'}">
+   <div (click)="dateTime.click()" class="w-100" [ngStyle]="{'pointer-events': control?.disabled ? 'none' : 'auto'}">
      
       <mat-form-field style="pointer-events:none!important;" class="w-100" [color]="question.color || 'accent'">
         <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
         <input matInput required 
-          [disabled]="control.disabled" 
+          [disabled]="control?.disabled" 
           [value]="question.datePipeFormat ? ((value$ | async) | date : question.datePipeFormat) : (value$ | async)" 
           [placeholder]="question.placeholder" 
           [attr.aria-label]="question.ariaLabel">  
             <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>
 
-            <mat-error *ngIf="control.dirty && control.invalid">
+            <mat-error *ngIf="control && control.dirty && control.invalid">
               {{ getValidationErrorMessage() }}
             </mat-error>  
       </mat-form-field>
@@ -46,7 +46,7 @@ export interface IonDateQuestion extends Question {
         [attr.month-short-names]="monthShortNames"
         [attr.display-format]="question.ionFormat"
         [attr.minute-values]="question.minuteValues"
-        [value]="control.value || (question.defaultValueGetter | func : form.value) || question.defaultValueGetter"
+        [value]="control?.value || (question.defaultValueGetter | func : form.value) || question.defaultValueGetter"
         (ionChange)="onChange($event.detail.value);">
       </ion-datetime>
     </div>
@@ -70,25 +70,27 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
   }
 
   onChange(val: unknown){
-    const value = this.question.valueSetter ? this.question.valueSetter(val) : val;
-    let control = this.control;
-
     if(this.question.overrideValueSetterControl) 
-      control = this.form.get(this.question.overrideValueSetterControl)
+      this.control = this.form.get(this.question.overrideValueSetterControl)
 
-    control.setValue(value);  
-    control.markAsDirty();
+    if(!this.control) return;
+
+    const value = this.question.valueSetter ? this.question.valueSetter(val) : val;
+
+    this.control.setValue(value);  
+    this.control.markAsDirty();
   }
 
   protected onQuestionChanges(question: IonDateQuestion): void { 
     super.onQuestionChanges(question);
-    this.value$ = this.control.valueChanges.pipe(startWith(this.control.value));
+    if(this.control)
+      this.value$ = this.control.valueChanges.pipe(startWith(this.control.value));
     this.min$ = this.setMinMax(question, "min");
     this.max$ = this.setMinMax(question, "max");
   }
 
   private setMinMax(question: IonDateQuestion, type: "min" | "max"): Observable<string>{
-    if(!question) return;
+    if(!question) return throwError("No question provided");
   
     let observer = of(question[type] as string);
     if(typeof question[type] === "object") 

@@ -1,4 +1,4 @@
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, Maybe, UnknownState } from '@global/interfaces';
 import { Prop } from '@state/interfaces';
 
 export interface FormDataEntry { name: string, value: string | Blob }
@@ -6,13 +6,13 @@ export interface FormDataEntry { name: string, value: string | Blob }
 export interface HttpRequest { 
     apiUrl: string; 
     method: "POST" | "PUT" | "DELETE"; 
-    body: Object | FormDataEntry[]; 
+    body: {} | FormDataEntry[] | null | undefined; 
     cancelMessage?: string; 
 };
 
 export interface QueuedCommand { 
     request: Immutable<HttpRequest>, 
-    stateSnapshot: Immutable<Object>, 
+    stateSnapshot: Maybe<Immutable<UnknownState>>, 
     dispatched?: boolean 
 };
 

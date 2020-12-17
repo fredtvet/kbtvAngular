@@ -17,7 +17,8 @@ import { TimesheetStatisticFacade } from '../timesheet-statistic.facade';
 import { TimesheetStatisticProviders } from './timesheet-statistic-providers.const';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
 import { FormService } from '@form-sheet/form-sheet.service';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, Maybe } from '@global/interfaces';
+import { Prop } from '@state/interfaces';
 
 interface NavViewModel { groupByChips: AppChip[], criteriaChips: AppChip[],  navConfig: MainTopNavConfig }
 
@@ -31,9 +32,9 @@ export class TimesheetStatisticComponent {
   @ViewChild('statTable') statTable: TimesheetStatisticTableComponent;
 
   private partialVm$: Observable<Partial<NavViewModel>> = this.facade.criteria$.pipe(map(criteria => { 
-    const activeCriteriaCount = _getSetPropCount(criteria, {dateRangePreset: null})
+    const activeCriteriaCount = criteria ? _getSetPropCount(criteria, {dateRangePreset: null}) : 0
     return {
-      criteriaChips: this.getCriteriaChips(criteria, activeCriteriaCount), 
+      criteriaChips: this.getCriteriaChips(criteria || {}, activeCriteriaCount), 
       navConfig: this.getNavConfig(activeCriteriaCount)
     }
   }))
@@ -65,9 +66,9 @@ export class TimesheetStatisticComponent {
     })
   }
 
-  private resetCriteriaProp(prop: string, criteria: Immutable<TimesheetCriteria>){
-    const clone = {...criteria};
-    clone[prop] = null;
+  private resetCriteriaProp(prop: Prop<Immutable<TimesheetCriteria>>, criteria: Maybe<Immutable<TimesheetCriteria>>){
+    const clone = {...criteria || {}};
+    clone[prop] = undefined;
     this.facade.updateCriteria(clone);
   }
 
@@ -79,7 +80,7 @@ export class TimesheetStatisticComponent {
         if (colDef.valueFormatter instanceof Function) {
           const valueFormatterParams: ValueFormatterParams = {
             ...params,
-            data: params.node.data,
+            data: params.node?.data,
             node: params.node!,
             colDef: params.column.getColDef()
           };
@@ -95,14 +96,14 @@ export class TimesheetStatisticComponent {
   private getNavConfig(activeCriteriaCount: number): MainTopNavConfig {
     return { title:  "Timestatistikk",
       buttons: [
-        {icon: "filter_list", color: activeCriteriaCount && activeCriteriaCount > 0 ? "accent" : null, 
+        {icon: "filter_list", color: activeCriteriaCount && activeCriteriaCount > 0 ? "accent" : undefined, 
           callback: this.openTimesheetFilter},
         {icon: "cloud_download", callback: this.exportAsCsv}     
       ]
     }
   }
 
-  private getGroupByChips(groupBy: GroupByPeriod):  AppChip[] {
+  private getGroupByChips(groupBy: Maybe<GroupByPeriod>):  AppChip[] {
     return this.chipsFactory.createEnumSelectionChips(GroupByPeriod, groupBy, this.addGroupBy);
   }
 

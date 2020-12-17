@@ -3,6 +3,7 @@ import { skip, takeUntil } from "rxjs/operators";
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { SelectableEntity } from '@shared/interfaces';
 import { SelectableListPresenter } from './selectable-list.presenter';
+import { UnknownState } from "@global/interfaces";
 
 @Component({
   selector: 'app-selectable-list',
@@ -13,7 +14,7 @@ import { SelectableListPresenter } from './selectable-list.presenter';
 })
 export class SelectableListComponent extends WithUnsubscribe() {
     @Input('entities')
-    set entities(value: unknown[]) {this.selectableListPresenter.addEntities(value)}
+    set entities(value: UnknownState[]) {this.selectableListPresenter.addEntities(value)}
 
     private _identifier: string;
     @Input('identifier') 
@@ -33,7 +34,7 @@ export class SelectableListComponent extends WithUnsubscribe() {
 
     clickDisabled: boolean = false;
 
-    constructor(private selectableListPresenter: SelectableListPresenter<unknown>) {
+    constructor(private selectableListPresenter: SelectableListPresenter) {
       super();
     }
     
@@ -44,20 +45,20 @@ export class SelectableListComponent extends WithUnsubscribe() {
         ).subscribe(x => this.selectionChanged.emit(x))
     }
 
-    onItemClick = (item: unknown): void => {
+    onItemClick = (item: UnknownState): void => {
       if(this.clickDisabled || this.selectableListPresenter.isEntitySelected(item[this._identifier] || item))
         return;
   
       this.itemClicked.emit(item)
     }
 
-    toggleSelect(selectable: SelectableEntity<unknown>) {
+    toggleSelect(selectable: SelectableEntity<UnknownState>) {
       this.clickDisabled = true;
       this.selectableListPresenter.toggleEntity(selectable.entity[this._identifier] || selectable.entity)
       setTimeout(() => (this.clickDisabled = false), 500);
     }
 
-    trackByFn = (index: number, selectable: SelectableEntity<unknown>): string => 
+    trackByFn = (index: number, selectable: SelectableEntity<UnknownState>): unknown => 
       selectable.entity[this._identifier];
     
     clearSelections = () => this.selectableListPresenter.addSelections([]);

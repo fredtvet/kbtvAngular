@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AppNotification, NotificationService, NotificationType } from '@notification/index';
+import { Maybe } from '@global/interfaces';
 
 export interface AppErrorResponse {
   status: number;
@@ -26,7 +27,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(tap(() => {},
       (err: unknown) => { 
       if (err instanceof HttpErrorResponse) { 
-        var notification: AppNotification;
+        var notification: Maybe<AppNotification> = null;
 
         if(err.status === 504) 
           notification = { title: 'Får ikke konkakt med serveren. Vennligst prøv igjen.', type: NotificationType.Error }
@@ -36,7 +37,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         if(error)
           notification = { 
             title: error.detail || error.title || "En ukjent feil oppsto! Vennligst prøv igjen.",  
-            details: this.convertErrorsToStringArray(error.errors),
+            details: error.errors ? this.convertErrorsToStringArray(error.errors) : undefined,
             type: NotificationType.Error,
             duration: this.calculateDuration(error.errors)
           }
@@ -57,7 +58,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return result;
   }
 
-  private calculateDuration(errors: { [key: string]: string[] }): number{
+  private calculateDuration(errors: Maybe<{ [key: string]: string[] }>): number{
     const minValue = 5000;
     const value = Object.keys(errors || {}).length * 2500;
     return minValue > value ? minValue : value;

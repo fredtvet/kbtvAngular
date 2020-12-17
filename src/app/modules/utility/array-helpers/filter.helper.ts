@@ -1,7 +1,7 @@
-import { Immutable, ImmutableArray } from '@immutable/interfaces';
+import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
 
 export function _filter<T>(
-  originals: ImmutableArray<T>, 
+  originals: Maybe<ImmutableArray<T>>, 
   expression: (value: Immutable<T>, index?: number, Array?: unknown[]) => boolean): Immutable<T>[] {
     if(!originals?.length) return [];
     let filtered = [];

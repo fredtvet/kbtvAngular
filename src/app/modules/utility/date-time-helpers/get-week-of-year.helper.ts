@@ -1,6 +1,6 @@
-import { Immutable } from '@immutable/interfaces';
+import { DateInput, Immutable } from '@global/interfaces';
 
-export function _getWeekOfYear(date: Immutable<Date> | string | number = new Date()): number {
+export function _getWeekOfYear(date: Immutable<DateInput> = new Date()): number {
     var d = new Date(date as Date);
     d.setHours(0,0,0,0);
     d.setDate(d.getDate()+4-(d.getDay()||7));

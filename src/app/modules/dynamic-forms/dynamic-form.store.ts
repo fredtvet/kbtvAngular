@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
+import { Maybe } from '@global/interfaces';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { OptionsGetter } from './interfaces';
 
 @Injectable()
-export class DynamicFormStore<TFormState extends Object> {
+export class DynamicFormStore<TFormState extends {}> {
     
-    private formStateSubject = new BehaviorSubject<TFormState>(null);
+    private formStateSubject = new BehaviorSubject<Maybe<TFormState>>(null);
     formState$ = this.formStateSubject.asObservable();
 
-    get formState(): TFormState {  return this.formStateSubject.value };
+    get formState(): Maybe<TFormState> {  return this.formStateSubject.value };
+
     constructor(){ }
 
-    setFormState(formState: TFormState): void{ this.formStateSubject.next(formState); }
+    setFormState(formState: Maybe<TFormState>): void{ this.formStateSubject.next(formState); }
 
     getOptions$<T>(getter: OptionsGetter<T>): Observable<T[]> {
         if(getter && getter instanceof Function)

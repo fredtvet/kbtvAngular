@@ -1,10 +1,11 @@
 import { DatePipe } from "@angular/common";
 import { Injectable } from "@angular/core";
-import { ColDef } from "ag-grid-community";
 import { Timesheet } from "@core/models";
+import { UnknownState } from "@global/interfaces";
+import { TimesheetSummary } from '@shared-timesheet/interfaces';
 import { TimesheetStatus } from "@shared/enums";
 import { translations } from "@shared/translations";
-import { TimesheetSummary } from '@shared-timesheet/interfaces';
+import { ColDef, ValueFormatterParams } from "ag-grid-community";
 
 @Injectable()
 export class ColDefsFactoryService {
@@ -36,15 +37,15 @@ export class ColDefsFactoryService {
   }
 
   createColDefs(entity: TimesheetSummary | Timesheet): ColDef[]  {
-    const isSummary = (entity['confirmedHours'] || entity['openHours']) ? true : false;
+    const isSummary = ((<TimesheetSummary> entity).confirmedHours || (<TimesheetSummary> entity).openHours) ? true : false;
 
     return this._createColDefs(entity, isSummary ? this.summaryColDefs : this.timesheetColDefs);
   }
 
-  private _createColDefs(object: Object, colDefs: ColDef[]): ColDef[] {
+  private _createColDefs(object: {}, colDefs: ColDef[]): ColDef[] {
     const result: ColDef[] = [];
     for (const colDef of colDefs) {
-      if (object[colDef.field] != null)
+      if (colDef?.field && (<UnknownState>object)[colDef.field] != null)
         result.push(this.mergeDefaultColDef(colDef));
     }
     return result;
@@ -52,25 +53,27 @@ export class ColDefsFactoryService {
 
   private mergeDefaultColDef(colDef: ColDef): ColDef {
     const genericColDef = {
-      headerName: translations[colDef.field.toLowerCase()],
+      headerName: colDef.field ? translations[colDef.field.toLowerCase()] : "",
       sortable: true,
     };
     return { ...genericColDef, ...colDef };
   }
 
-  private convertMonthIndex = (params) =>
+  private convertMonthIndex = (params: ValueFormatterParams): string =>
     params?.value != null
-      ? this.datePipe.transform(new Date().setMonth(params.value), "MMM")
-      : undefined;
+      ? (this.datePipe.transform(new Date().setMonth(params.value), "MMM") || "")
+      : "";
 
-  private convertDate = (params) =>
-    params?.value ? this.datePipe.transform(params.value) : undefined;
+  private convertDate = (params: ValueFormatterParams): string =>
+    params?.value 
+      ? (this.datePipe.transform(params.value) || "")
+      : "";
 
-  private convertTime = (params) =>
+  private convertTime = (params: ValueFormatterParams): string =>
     params?.value
-      ? this.datePipe.transform(params.value, "shortTime")
-      : undefined;
+      ? (this.datePipe.transform(params.value, "shortTime") || "")
+      : "";
 
-  private convertStatus = (params) => 
+  private convertStatus = (params: ValueFormatterParams): string => 
     translations[TimesheetStatus[params.value]?.toLowerCase()]
 }

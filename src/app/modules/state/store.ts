@@ -1,4 +1,5 @@
 import { Inject, Injectable, Optional, Self, SkipSelf } from '@angular/core';
+import { UnknownState } from '@global/interfaces';
 import { ActionDispatcher } from './action-dispatcher';
 import { STORE_DEFAULT_STATE, STORE_META_REDUCERS, STORE_REDUCERS, STORE_SETTINGS } from './constants/injection-tokens.const';
 import { MetaReducer, Reducer, StoreSettings } from './interfaces';
@@ -27,15 +28,15 @@ export class Store<TState> extends StoreBase<TState> {
 
     static defaultState: Object;
 
-    static setDefaultState(defaultState: Object): void {
+    static setDefaultState(defaultState: UnknownState): void {
         Store.defaultState = {...Store.defaultState, ...defaultState}; //accumulate default state from feature modules to keep track
-        const currState = State.getStoreState(null, false);
-        const newState = {};
+        const currState = <UnknownState> State.getStoreState(null, false);
+        const newState: UnknownState = {};
         for(const prop in defaultState)
             if(currState[prop] === undefined) 
                 newState[prop] = defaultState[prop];
 
-        State.setStoreState(newState, null, false, true)
+        State.setStoreState(newState, false, true)
     }
 }
 

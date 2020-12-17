@@ -20,7 +20,7 @@ export interface RadioGroupQuestion<T> extends Question {
         <div class="mat-body" *ngIf="question.label">{{ question.label }}</div>
         <mat-radio-group [formControl]="control" [color]="question.color || 'accent'" fxLayoutGap="8px">
             <mat-radio-button *ngIf="question.defaultOption"
-              [checked]="control.value == null">
+              [checked]="control?.value == null">
             {{ question.defaultOption }}
             </mat-radio-button>
             <mat-radio-button *ngFor="let option of options$ | async" 
@@ -29,7 +29,7 @@ export interface RadioGroupQuestion<T> extends Question {
             </mat-radio-button>
         </mat-radio-group>
         <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>
-        <mat-error *ngIf="control.dirty && control.invalid">
+        <mat-error *ngIf="control && control.dirty && control.invalid">
           {{ getValidationErrorMessage() }}
         </mat-error>
         <mat-divider *ngIf="question.divider" style="margin-top:8px!important"></mat-divider>

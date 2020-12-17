@@ -2,13 +2,14 @@ import { Directive, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppButton } from '@shared-app/interfaces';
 import { SelectableListComponent } from '../selectable-list/selectable-list.component';
+import { Maybe } from '@global/interfaces';
 
 @Directive()
 export abstract class SelectableListContainerComponent implements OnInit {
     @ViewChild('selectableList') selectableList: SelectableListComponent;
 
-    private currentFabsSubject = new BehaviorSubject(null);
-    currentFabs$: Observable<AppButton[]> = this.currentFabsSubject.asObservable();
+    private currentFabsSubject: BehaviorSubject<Maybe<AppButton[]>> = new BehaviorSubject(null);
+    currentFabs$: Observable<Maybe<AppButton[]>> = this.currentFabsSubject.asObservable();
 
     protected staticFabs: AppButton[];
     protected selectedItemsFabs: AppButton[];

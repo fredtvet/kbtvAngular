@@ -1,7 +1,7 @@
 import { Timesheet } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { _mergeDateAndTime } from '@datetime/merge-date-and-time.helper';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 import { FormToSaveModelConverter, ModelFormToSaveModelInput } from '@model-form/interfaces';
 import { _flattenExistingForeigns } from '@shared-app/helpers/flatten-existing-foreigns.helper';
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
@@ -14,10 +14,10 @@ export const _timesheetFormToSaveUserTimesheetConverter: FormToSaveModelConverte
 
         var entity: Immutable<Timesheet> = {
             id: value.id,
-            missionId: value.mission.id,
+            missionId: value.mission?.id,
             comment: value.comment,
-            startTime: _mergeDateAndTime(value.date, value.startTime).getTime(),
-            endTime:  _mergeDateAndTime(value.date, value.endTime).getTime(),
+            startTime: value.startTime ? _mergeDateAndTime(value.date, value.startTime).getTime() : undefined,
+            endTime:  value.endTime ? _mergeDateAndTime(value.date, value.endTime).getTime() : undefined,
         }; 
 
         entity = _flattenExistingForeigns<Timesheet>(input.stateProp, entity, input.options);

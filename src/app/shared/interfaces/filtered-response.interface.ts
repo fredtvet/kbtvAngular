@@ -1,4 +1,6 @@
+import { Maybe } from "@global/interfaces";
+
 export interface FilteredResponse<TCriteria, TRecord>{
-    criteria: TCriteria,
-    records: TRecord[]
+    criteria: Maybe<TCriteria>,
+    records: Maybe<TRecord[]>
 }

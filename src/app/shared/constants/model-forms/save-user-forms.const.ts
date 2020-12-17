@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms';
-import { User } from '@core/models';
-import { StateUsers, StateEmployers } from '@core/state/global-state.interfaces';
+import { Employer, User } from '@core/models';
+import { StateEmployers, StateUsers } from '@core/state/global-state.interfaces';
 import { DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
 import { OptionsFormState } from '@form-sheet/interfaces';
 import { Roles } from '@shared-app/enums';
@@ -11,18 +11,16 @@ import { InputQuestion, InputQuestionComponent } from '../../components/dynamic-
 import { SelectQuestion, SelectQuestionComponent } from '../../components/dynamic-form-questions/select-question.component';
 import { EmailControl, EmployerSelectControl, FirstNameControl, LastNameControl, PhoneNumberControl, UserNameControl } from '../common-controls.const';
 
-export interface UserForm extends User {
-    password?: string;
-}
+export interface UserForm extends User { password?: string; }
 
 type FormState = OptionsFormState<StateUsers & StateEmployers>;
 
-const AvailableRoles = Object.keys(Roles).filter(x => x !== Roles.Leder).map(key => Roles[key] as string);
+const AvailableRoles = Object.keys(Roles).filter(x => x !== Roles.Leder).map(key => Roles[key as keyof typeof Roles]);
 
 const UniqueUserNameControl = {...UserNameControl, required: true,     
     asyncStateValidators: [
     (s$: Observable<FormState>) => 
-        isUniqueAsyncValidator(s$.pipe(map(s => s?.options?.users)), "userName")
+        isUniqueAsyncValidator<User>(s$.pipe(map(s => s?.options?.users)), "userName")
     ],
 }
 const RoleControl = <DynamicControl<UserForm, StateUsers>>{ name: "role", required: true,
@@ -30,7 +28,7 @@ const RoleControl = <DynamicControl<UserForm, StateUsers>>{ name: "role", requir
         component:  SelectQuestionComponent,
         question: <SelectQuestion<string>>{
             placeholder: "Rolle",
-            optionsGetter: (s: FormState) => AvailableRoles
+            optionsGetter: () => AvailableRoles
         }, 
     }], 
     validators: [ Validators.maxLength(100)] 
@@ -42,9 +40,9 @@ const PasswordControl = <DynamicControl<UserForm, FormState>>{ name: "password",
     }], 
     validators: [Validators.minLength(7), Validators.maxLength(100)] 
 }
-const EmployerControl = {
+const EmployerControl = <DynamicControl<{employer: Employer}, OptionsFormState<FormState>>>{
     ...EmployerSelectControl, 
-    questions: [{...EmployerSelectControl.questions[0], 
+    questions: [{...(EmployerSelectControl.questions ? EmployerSelectControl.questions[0] : null), 
         hideOnValueChange: {controlName: "role", callback: (role: string) => role !== Roles.Oppdragsgiver}}]
 }
 

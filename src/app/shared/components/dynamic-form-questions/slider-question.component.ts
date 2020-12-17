@@ -21,7 +21,7 @@ export interface SliderQuestion extends Question {
     <span *ngIf="question.hint" class="mat-caption">{{ question.hint }}</span>
     
     <div fxLayout="row" fxLayoutAlign="start center">
-        <span class="mat-body">{{ control.value + " " + question.valueSuffix }}</span>
+        <span class="mat-body">{{ (control?.value || '') + " " + (question?.valueSuffix || '') }}</span>
         <mat-slider [color]="question.color || 'accent'" fxFlex [value]="value$ | async" 
             (input)="updateValue($event.value)"
             [thumbLabel]="question.thumbLabel"
@@ -31,7 +31,7 @@ export interface SliderQuestion extends Question {
         </mat-slider>
     </div>
 
-    <mat-error *ngIf="control.dirty && control.invalid">
+    <mat-error *ngIf="control && control.dirty && control.invalid">
       {{ getValidationErrorMessage() }}
     </mat-error>
   `,
@@ -47,13 +47,15 @@ export class SliderQuestionComponent extends BaseQuestionComponent<SliderQuestio
     }
 
     updateValue(val: number){
+        if(!this.control) return;
         this.control.setValue(val);
         this.control.markAsDirty();
     }
 
     protected onQuestionChanges(question: SliderQuestion): void { 
         super.onQuestionChanges(question);
-        this.value$ = this.control.valueChanges.pipe(startWith(this.control.value));
+        if(this.control)
+          this.value$ = this.control.valueChanges.pipe(startWith(this.control.value));
     }
 
 }

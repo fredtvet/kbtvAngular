@@ -1,12 +1,12 @@
-export function _deepClone<T>(value: Readonly<T>): T {
+import { Immutable, UnknownState } from "@global/interfaces";
+
+export function _deepClone(value: Immutable<unknown>): unknown {
     const type = typeof value;
     switch (type) {
         case 'object':
-            // null and undefined
-            if (value == null) {
-                return value;
-            }
 
+            if (value == null)  return null;
+            
             let result;
 
             if (value instanceof Date) {
@@ -28,14 +28,14 @@ export function _deepClone<T>(value: Readonly<T>): T {
             }
 
             result = JSON.parse(JSON.stringify(value));
-            _fixTypes(value, result);
+            _fixTypes(<UnknownState> value, result);
             return result;
         default:
             return value;
     }
 }
 
-function _fixPropertyValue(original: Readonly<unknown>, copy: unknown, key: number | string): void {
+function _fixPropertyValue(original: Immutable<UnknownState>, copy: UnknownState, key: number | string): void {
     const originalValue = original[key];
     const originalType = typeof originalValue;
 
@@ -59,12 +59,12 @@ function _fixPropertyValue(original: Readonly<unknown>, copy: unknown, key: numb
                 copy[key] = originalValue;
             }
             else {
-                _fixTypes(originalValue, copy[key]);
+                _fixTypes(<UnknownState> originalValue, <UnknownState> copy[key]);
             }
             break;
 
         case 'number':
-            if (isNaN(originalValue)) {
+            if (isNaN(<number> originalValue)) {
                 copy[key] = NaN;
             }
             else if (originalValue == Infinity) {
@@ -77,7 +77,7 @@ function _fixPropertyValue(original: Readonly<unknown>, copy: unknown, key: numb
     }
 }
 
-function _fixTypes(original: Readonly<unknown>, copy: unknown): void {
+function _fixTypes(original: Immutable<UnknownState>, copy: UnknownState): void {
     if (original instanceof Array) {
         for (let index = 0; index < original.length; index++) {
             _fixPropertyValue(original, copy, index);
@@ -91,7 +91,7 @@ function _fixTypes(original: Readonly<unknown>, copy: unknown): void {
     }
 }
 
-function _newRegExp(value) {
+function _newRegExp(value: unknown) {
     const regexpText = String(value);
     const slashIndex = regexpText.lastIndexOf('/');
     return new RegExp(regexpText.slice(1, slashIndex), regexpText.slice(slashIndex + 1));

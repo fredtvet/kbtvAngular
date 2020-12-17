@@ -5,7 +5,7 @@ import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { FormService } from '@form-sheet/form-sheet.service';
-import { ImmutableArray } from '@immutable/interfaces';
+import { ImmutableArray, Maybe } from '@global/interfaces';
 import { ModelFormService } from '@model-form/model-form.service';
 import { Roles } from '@shared-app/enums';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
@@ -19,7 +19,7 @@ import { map } from 'rxjs/operators';
 import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
 import { MissionDocumentListFacade } from '../mission-document-list.facade';
 
-interface ViewModel { documents: ImmutableArray<MissionDocument>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig}
+interface ViewModel { documents: Maybe<ImmutableArray<MissionDocument>>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig}
 
 @Component({
   selector: 'app-mission-document-list',
@@ -33,12 +33,12 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     this.deviceInfoService.isXs$,
     this.currentFabs$
   ]).pipe(
-    map(([documents, isXs, fabs]) => { return { 
+    map(([documents, isXs, fabs]) => { return <ViewModel>{ 
       documents, isXs, fabs, navConfig: this.navConfig
     }})
   )
 
-  private get missionId(): string { return this.route.parent.parent.snapshot.params.id }
+  private get missionId(): Maybe<string> { return this.route.parent?.parent?.snapshot.params.id }
 
   private navConfig: MainTopNavConfig;
   
@@ -66,7 +66,8 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     }
 
   downloadDocument = (document: MissionDocument) => 
-    this.downloaderService.downloadUrl(_appFileUrl(document.fileName, "documents"));
+    document.fileName ? 
+    this.downloaderService.downloadUrl(_appFileUrl(document.fileName, "documents")) : null;
 
   private deleteSelectedDocuments = () => {
     this.facade.delete({ids: this.currentSelections});    
@@ -96,7 +97,7 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
   private openDocumentForm = (): void => {
     this.modelFormService.open<ModelState, MissionDocumentForm>({
       formConfig: {
-        dynamicForm: {...CreateMissionDocumentForm, initialValue: {missionId: this.missionId}},
+        dynamicForm: {...CreateMissionDocumentForm, initialValue: {missionId: this.missionId || undefined}},
         stateProp: "missionDocuments",
       }
     });

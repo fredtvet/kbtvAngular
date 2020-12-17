@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '@core/models';
 import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper';
-import { Immutable } from '@immutable/interfaces';
-import { ActionDispatcher } from '@state/action-dispatcher';
+import { Immutable, Maybe } from '@global/interfaces';
 import { Store } from '@state/store';
 import { Observable } from 'rxjs';
 import { map, skip } from 'rxjs/operators';
@@ -17,7 +16,7 @@ import { RefreshTokenAction } from './state/refresh-token.http.effect';
 export class AuthService {
 
   isAuthorized$: Observable<boolean> = this.store.select$(["accessToken", "refreshToken"]).pipe(
-    map(state => (state.refreshToken != null) && (state.accessToken?.token != null))
+    map(state => state != null && state.refreshToken != null && state.accessToken?.token != null)
   )
 
   currentUser$ = this.store.selectProperty$<User>("currentUser");
@@ -40,10 +39,10 @@ export class AuthService {
 
   constructor (private store: Store<StoreState>) { }
 
-  getAccessToken = (): string => 
+  getAccessToken = (): Maybe<string> => 
     this.store.selectProperty<AccessToken>("accessToken")?.token 
 
-  getCurrentUser = (): Immutable<User> => 
+  getCurrentUser = (): Maybe<Immutable<User>> => 
     this.store.selectProperty<User>("currentUser") 
   
   login = (credentials: Credentials, returnUrl?: string): void => 
@@ -60,7 +59,7 @@ export class AuthService {
       }
     })
 
-  private getRefreshToken = (): string => 
+  private getRefreshToken = (): Maybe<string> => 
     this.store.selectProperty<string>("refreshToken") 
 }
 

@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Maybe } from '@global/interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class DownloaderService {
@@ -18,10 +19,10 @@ export class DownloaderService {
     this.link.click();
   };
  
-  downloadUrls = (urls: string[]): void => {
+  downloadUrls = (urls: Maybe<string>[]): void => {
     let delay = 0;
     urls.forEach(url => {
-      setTimeout(() => this.downloadUrl(url), delay);
+      setTimeout(() => url ? this.downloadUrl(url) : null, delay);
       delay = delay + 500;
     })
   }

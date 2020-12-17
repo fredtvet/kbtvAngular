@@ -1,5 +1,5 @@
-import { ImmutableArray } from '@immutable/interfaces';
+import { ImmutableArray, Maybe } from '@global/interfaces';
 
 export interface AgGridConfig<TRecord>{
-    data: ImmutableArray<TRecord>;
+    data: Maybe<ImmutableArray<TRecord>>;
 }

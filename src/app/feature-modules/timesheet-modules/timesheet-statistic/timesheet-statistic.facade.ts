@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Timesheet, User } from '@core/models';
 import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
@@ -45,7 +45,7 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
         this.filteredTimesheets$,
         this.groupBy$
     ]).pipe(map(([timesheets, groupBy]) => {
-        return  this.summaryAggregator.groupByType(groupBy, timesheets) || timesheets;    
+        return this.summaryAggregator.groupByType(groupBy, timesheets) || timesheets;    
     }));
 
     tableConfig$: Observable<AgGridConfig<Record>> = combineLatest([

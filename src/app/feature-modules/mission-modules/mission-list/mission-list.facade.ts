@@ -3,7 +3,7 @@ import { _sortByDate } from '@array/sort-by-date.helper';
 import { ApiUrl } from '@core/api-url.enum';
 import { Mission } from "@core/models";
 import { SaveModelFileAction } from '@core/state/save-model-file/save-model-file.action';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, Maybe } from '@global/interfaces';
 import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
 import { ModelCommand } from '@model/model-command.enum';
@@ -17,8 +17,8 @@ import { MissionFilter } from '@shared/mission-filter.model';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { ComponentStore } from '@state/component.store';
 import { Store } from '@state/store';
-import { combineLatest, Observable } from "rxjs";
-import { map, tap } from "rxjs/operators";
+import { combineLatest, Observable, of } from "rxjs";
+import { map } from "rxjs/operators";
 import { ComponentStoreState, StoreState } from './interfaces/store-state';
 import { SetMissionCriteriaAction } from './set-mission-criteria.reducer';
 import { UpdateLastVisitedAction } from './update-last-visited.reducer';
@@ -43,7 +43,7 @@ export class MissionListFacade {
 
   criteriaFormState$: Observable<MissionCriteriaFormState> = 
     this.store.select$(["missionTypes", "employers", "missions"]).pipe(
-      map(options => { return {options} as unknown})
+      map(options => { return <MissionCriteriaFormState> {options}})
     )
 
   constructor(
@@ -52,7 +52,8 @@ export class MissionListFacade {
     private componentStore: ComponentStore<ComponentStoreState>
   ) {}
 
-  getMissionDetails$(id: string): Observable<Immutable<Mission>> {
+  getMissionDetails$(id: Maybe<string>): Observable<Maybe<Immutable<Mission>>> {
+    if(!id) return of(null);
     this.updateLastVisited(id);
 
     let relationCfg = new GetWithRelationsConfig<StoreState>("missions", 

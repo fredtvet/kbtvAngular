@@ -33,7 +33,7 @@ export class LoginHttpEffect implements Effect<LoginAction> {
             map(response => <LoginSuccessAction>{
                 type: LoginSuccessAction,
                 response, 
-                previousUser: dispatched.stateSnapshot.currentUser,
+                previousUser: dispatched.stateSnapshot?.currentUser,
                 returnUrl: dispatched.action.returnUrl
             })
         )

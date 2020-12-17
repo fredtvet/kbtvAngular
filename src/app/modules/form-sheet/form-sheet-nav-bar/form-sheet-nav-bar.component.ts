@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Maybe } from '@global/interfaces';
 import { FormSheetNavConfig } from '../interfaces';
 
 @Component({
@@ -8,7 +9,7 @@ import { FormSheetNavConfig } from '../interfaces';
 })
 export class FormSheetNavBarComponent {
 
-  @Input() config: FormSheetNavConfig;
+  @Input() config: Maybe<FormSheetNavConfig>;
   @Output() closed = new EventEmitter<unknown>()
 
   constructor() {}

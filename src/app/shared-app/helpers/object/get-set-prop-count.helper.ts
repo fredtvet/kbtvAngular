@@ -1,8 +1,7 @@
-import { Immutable } from '@immutable/interfaces';
-import { UnknownState } from '@model/interfaces';
+import { Immutable, UnknownState } from '@global/interfaces';
 import { _isNullOrEmpty } from '../is-null-or-empty.helper';
 
-export function _getSetPropCount(obj: Immutable<Object>, ignoredProps: UnknownState): number{
+export function _getSetPropCount(obj: Immutable<UnknownState>, ignoredProps: UnknownState): number{
     let setPropCount = 0;
     for(const key in obj){
         const value = obj[key];

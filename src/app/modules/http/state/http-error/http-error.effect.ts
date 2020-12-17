@@ -17,7 +17,9 @@ export class HttpErrorEffect implements Effect<HttpErrorAction> {
             listenTo([HttpErrorAction]),
             map(x => {
                 const errorMessages =
-                    x.stateSnapshot.requestQueue?.map(x => x.request.cancelMessage);
+                    x.stateSnapshot?.requestQueue?.map(x => x.request.cancelMessage);
+                    
+                if(!errorMessages) return;
     
                 if (x.action.ignoreInitialError) errorMessages.shift();
                 

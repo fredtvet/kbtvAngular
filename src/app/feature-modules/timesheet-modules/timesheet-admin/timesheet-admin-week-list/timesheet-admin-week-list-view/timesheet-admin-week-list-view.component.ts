@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Timesheet } from '@core/models';
+import { Maybe } from '@global/interfaces';
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
 
 @Component({
@@ -17,7 +18,7 @@ export class TimesheetAdminWeekListViewComponent {
 
   constructor() { }
 
-  trackByWeek = (index:number, summary: TimesheetSummary): number => summary.weekNr;
+  trackByWeek = (index:number, summary: TimesheetSummary): Maybe<number> => summary.weekNr;
 
   changeTimesheetStatuses = (timesheets: Timesheet[]): void => 
     this.timesheetsConfirmed.emit(timesheets)

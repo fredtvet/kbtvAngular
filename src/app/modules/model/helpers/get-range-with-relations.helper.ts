@@ -1,59 +1,60 @@
 import { ModelStateConfig } from '../model-state.config';
-import { ModelConfig } from '../interfaces';
+import { ModelConfig, UnknownModelState } from '../interfaces';
 import { GetWithRelationsConfig } from '../get-with-relations.config';
 import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
 import { _filter } from '@array/filter.helper';
 import { _groupBy } from '@array/group-by.helper';
-import { Immutable, ImmutableArray } from '@immutable/interfaces';
+import { Immutable, ImmutableArray, Maybe, UnknownState } from '@global/interfaces';
 
-export function _getRangeWithRelations<TModel, TState>(
+export function _getRangeWithRelations<TModel extends {}, TState>(
     state: Immutable<Partial<TState>>,
     cfg: GetWithRelationsConfig<TState>,
     filter?: (value: Immutable<TModel>, index?: number, Array?: unknown[]) => boolean, 
 ): ImmutableArray<TModel> {
-    const modelCfg = ModelStateConfig.get<TModel, TState>(cfg.modelProp); 
+    const modelCfg = ModelStateConfig.get<UnknownState, UnknownState>(cfg.modelProp); 
 
-    let modelState = <ImmutableArray<TModel>> state[cfg.modelProp as string];
+    let modelState = {...(<Immutable<UnknownModelState>> state)[cfg.modelProp] || []};
     
     if(filter)
         modelState = _filter(modelState, filter);
 
-    if(!modelState || modelState.length == 0) return modelState;
+    if(!modelState.length) return <ImmutableArray<TModel>> modelState;
 
     const hasChildren = cfg.includedChildProps && cfg.includedChildProps.length > 0;      
     const hasForeigns = cfg.includedForeignProps && cfg.includedForeignProps.length > 0;
 
     let foreignLookups = {};
     if(hasForeigns)
-        foreignLookups = _createStatePropertyLookups(cfg.includedForeignProps, state); 
+        foreignLookups = _createStatePropertyLookups(cfg.includedForeignProps, <UnknownState>state); 
 
     let childLookups = {};
     if(hasChildren) 
-        childLookups = _createGroupedLookups(cfg.includedChildProps, modelCfg.foreignKey, state) 
+        childLookups = _createGroupedLookups(cfg.includedChildProps, modelCfg.foreignKey, <UnknownState>state) 
 
     
     if(hasForeigns || hasChildren){
-        const newState = [];
+        const newState: unknown[] = [];
         for(var i = 0; i < modelState.length; i++){
-            let entityClone = {...modelState[i]};                   
+            let entityClone = {...<UnknownState>modelState[i]};                   
             _mapForeignsToEntity(cfg.includedForeignProps, foreignLookups, entityClone);        
             _mapChildrenToEntity(cfg.includedChildProps, modelCfg, childLookups, entityClone);
             newState[i] = entityClone;
         }
-        return newState
+        return <ImmutableArray<TModel>> newState
     }
-    return modelState;
+    return <ImmutableArray<TModel>> modelState;
     
 }
 
 //Lookup of children grouped by foreign key
 function _createGroupedLookups(
     props: ImmutableArray<string>, 
-    groupBy: string, state: Object
-): {[key: string]: {[key: string]: Object[]}}{
-    const lookups = {} as {[key: string]: {[key: string]: Object[]}}
-
-    for(const prop of props) lookups[prop] = _groupBy(state[prop], groupBy);
+    groupBy: Maybe<string>, 
+    state: Immutable<UnknownState>
+): {[key: string]: {[key: string]: unknown[]}}{
+    const lookups = {} as {[key: string]: {[key: string]: unknown[]}}
+    if(!groupBy) return lookups;
+    for(const prop of props) lookups[prop] = _groupBy(<[]> state[prop], groupBy);
         
     return lookups;
 }
@@ -61,35 +62,36 @@ function _createGroupedLookups(
 //Lookup of foreign entities by identifier
 function _createStatePropertyLookups(
     props: ImmutableArray<string>, 
-    state: Immutable<Object>
-): {[key: string]: Object}{
-    const lookups: {[key: string]: Immutable<Object>} = {};
+    state: Immutable<UnknownState>
+): {[key: string]: unknown}{
+    const lookups: {[key: string]: Immutable<unknown>} = {};
     for(const prop of props){ //Convert foreign state props to lookup tables
         const cfg = ModelStateConfig.get(prop); 
-        lookups[prop] = _convertArrayToObject(state[prop], cfg.identifier);
+        lookups[prop] = _convertArrayToObject(<[]> state[prop], cfg.identifier);
     }
     return lookups;
 }
 
-function _mapForeignsToEntity<T>(
+function _mapForeignsToEntity(
     props: ImmutableArray<string>, 
-    lookups: {[key: string]: Immutable<Object>}, 
-    entity: Immutable<T>
+    lookups: {[key: string]: Immutable<UnknownState>}, 
+    entity: UnknownState
   ): void{
     for(const foreignProp of props){ //Map foreign entity to entity
         const foreignCfg = ModelStateConfig.get(foreignProp);
-        entity[foreignCfg.foreignProp] = lookups[foreignProp][entity[foreignCfg.foreignKey]]
+        if(!foreignCfg.foreignProp || !foreignCfg.foreignKey) continue;
+        entity[foreignCfg.foreignProp] = lookups[foreignProp][<string> entity[foreignCfg.foreignKey]]
     }
 }
 
-function _mapChildrenToEntity<T, TState>(
+function _mapChildrenToEntity(
     props: ImmutableArray<string>, 
-    propCfg: Immutable<ModelConfig<T, TState>>, 
-    lookups: {[key: string]: Readonly<Object>}, 
-    entity: Immutable<T>
+    propCfg: Immutable<ModelConfig<UnknownState, UnknownState>>, 
+    lookups: {[key: string]: Readonly<UnknownState>}, 
+    entity: UnknownState
 ): void{
     for(let childProp of props){
-        const entityId = entity[propCfg.identifier as string];
-        entity[childProp] = lookups[childProp][entityId]
+        const entityId = entity[propCfg.identifier];
+        entity[childProp] = lookups[childProp][<string> entityId]
     }
 }

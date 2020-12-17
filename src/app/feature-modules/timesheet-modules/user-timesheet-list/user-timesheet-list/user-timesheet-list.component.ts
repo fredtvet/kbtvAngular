@@ -7,7 +7,7 @@ import { _objectToDisabledObjectMap } from '@dynamic-forms/helpers/disabled-cont
 import { DynamicForm } from '@dynamic-forms/interfaces';
 import { FormService } from '@form-sheet/form-sheet.service';
 import { OptionsFormState } from '@form-sheet/interfaces';
-import { Immutable, ImmutableArray } from '@immutable/interfaces';
+import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
 import { ModelFormService } from '@model-form/model-form.service';
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from '@shared-app/interfaces';
@@ -15,6 +15,7 @@ import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetCriteriaForm, TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
+import { Prop } from "@state/interfaces";
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { TimesheetCriteriaChipOptions } from '../../shared-timesheet/timesheet-filter/timesheet-criteria-chip-options.const';
@@ -91,22 +92,22 @@ export class UserTimesheetListComponent {
     this.router.navigate(['../'], { relativeTo: this.route.parent })
   }
 
-  private getTopNavConfig = (criteria: Immutable<TimesheetCriteria>): MainTopNavConfig => {
-    let activeCriteriaCount = _getSetPropCount(criteria, {dateRangePreset:null})
+  private getTopNavConfig = (criteria: Maybe<Immutable<TimesheetCriteria>>): MainTopNavConfig => {
+    let activeCriteriaCount = criteria ? _getSetPropCount(criteria, {dateRangePreset:null}) : 0
     return {
       title:  "Timeliste", 
       backFn: this.onBack,     
       buttons: [{
         icon: 'filter_list', 
         callback: this.openTimesheetFilter,
-        color: (activeCriteriaCount && activeCriteriaCount > 0) ? "accent" : null
+        color: (activeCriteriaCount && activeCriteriaCount > 0) ? "accent" : undefined
       }],
     }
   }
   
-  private resetCriteriaProp(prop: string, criteria: Immutable<TimesheetCriteria>){
-    const clone = {...criteria};
-    clone[prop] = null;
+  private resetCriteriaProp(prop: Prop<Immutable<TimesheetCriteria>>, criteria: Maybe<Immutable<TimesheetCriteria>>){
+    const clone = {...criteria || {}};
+    clone[prop] = undefined;
     this.facade.updateCriteria(clone);
   }
 }

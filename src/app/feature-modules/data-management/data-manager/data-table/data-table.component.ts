@@ -5,8 +5,9 @@ import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
 import { AgGridTableComponent } from '@shared/components/abstracts/ag-grid-table.component';
 import { translations } from '@shared/translations';
 import { DataConfig } from '../../interfaces/data-config.interface';
-import { DataTableConfig } from './data-table.config';
 import { CellValueChangedEvent, ColDef } from 'ag-grid-community';
+import { Immutable, Maybe } from '@global/interfaces';
+import { DataTablePropConfig } from './data-table.config';
 
 @Component({
   selector: 'app-data-table',
@@ -20,9 +21,9 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
   columnDefs: ColDef[] = [];
   rowData: Model[] = [];
 
-  private fkModelIdMap: {[foreignKey: string]: {[id: string]: Model}} = {}
+  private fkModelIdMap: {[foreignKey: string]: {[id: string]: Maybe<Immutable<Model>>}} = {}
 
-  private fkModelDisplayPropMap: {[foreignKey: string]: {[displayProp: string]: Model}} = {}
+  private fkModelDisplayPropMap: {[foreignKey: string]: {[displayProp: string]: Maybe<Immutable<Model>>}} = {}
 
   constructor() { 
     super(); 
@@ -42,9 +43,9 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
         const fkCfg = ModelStateConfig.get(fkStateKey);
         const entities = cfg.foreigns[fkStateKey];
         if(entities){
-          this.fkModelIdMap[fkCfg.foreignKey] = 
+          this.fkModelIdMap[<string> fkCfg.foreignKey] = 
             _convertArrayToObject<Model>(entities, fkCfg.identifier);
-          this.fkModelDisplayPropMap[fkCfg.foreignKey] = 
+          this.fkModelDisplayPropMap[<string> fkCfg.foreignKey] = 
             _convertArrayToObject<Model>(entities, fkCfg.displayProp);
         }
       };
@@ -61,10 +62,10 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
     return colDefs;
   }
 
-  private addColDef(name: string): ColDef{
-    if(DataTableConfig.ignoredProperties[name]) return null; //Ignored properties
+  private addColDef(name: string): Maybe<ColDef> {
+    if(DataTablePropConfig.ignored[name]) return; //Ignored properties
 
-    let def = {
+    let def: ColDef = {
       field: name,
       headerName: translations[name?.toLowerCase()] || name,
       sortable: true,
@@ -73,7 +74,7 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
       lockPosition: true
     };
 
-    if(DataTableConfig.booleanProperties[name]){
+    if(DataTablePropConfig.boolean[name]){
       def['cellEditor'] = 'agSelectCellEditor';
       def['cellEditorParams'] = { values: ['Ja', 'Nei'] }
 
@@ -88,7 +89,7 @@ export class DataTableComponent extends AgGridTableComponent<Model, DataConfig> 
       }
     }
 
-    if(DataTableConfig.noEditProperties[name]) def['editable'] = false;
+    if(DataTablePropConfig.noEdit[name]) def['editable'] = false;
 
     const fkModelCfg = ModelStateConfig.getBy(name, "foreignKey");
 

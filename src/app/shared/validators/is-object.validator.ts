@@ -1,5 +1,5 @@
 import { ValidatorFn, AbstractControl } from '@angular/forms';
-import { UnknownState } from '@model/interfaces';
+import { UnknownState } from '@global/interfaces';
 
 export function isObjectValidator(): ValidatorFn{ 
     return (control: AbstractControl): UnknownState | null => {

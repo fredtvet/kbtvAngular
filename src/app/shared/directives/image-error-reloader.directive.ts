@@ -5,18 +5,18 @@ import { Directive, HostListener, ElementRef, Input } from '@angular/core';
 })
 export class ImageErrorReloaderDirective {
 
-  @Input() maxRetries = 5;
+  @Input() maxRetries: number = 5;
 
-  private retries = 0;
+  private retries: number = 0;
 
   constructor(private el: ElementRef) {}
 
-  @HostListener('error') onError() {
-    if(this.retries >= this.maxRetries) return false;
+  @HostListener('error') onError(): void {
+    if(this.retries >= this.maxRetries) return;
     setTimeout(this.resetSrc, 2000)
   }
 
-  private resetSrc = () => {
+  private resetSrc = (): void => {
     this.el.nativeElement.src = this.el.nativeElement.src;
     this.retries++;
   }

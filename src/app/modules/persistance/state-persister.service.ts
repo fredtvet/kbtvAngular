@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, UnknownState } from '@global/interfaces';
 import { _deepClone } from '@state/helpers/deep-clone.helper';
 import { Store } from '@state/store';
 import { skip, tap } from 'rxjs/operators';
@@ -13,7 +13,7 @@ export class StatePersisterService {
     constructor(
         private store: Store<unknown>,  
         private stateDbService: StateDbService, 
-        @Inject(PERSISTANCE_CONFIG) private persistanceConfig: PersistanceConfig<unknown>,
+        @Inject(PERSISTANCE_CONFIG) private persistanceConfig: PersistanceConfig<UnknownState>,
     ) { }
 
     initalize(): void{
@@ -23,7 +23,7 @@ export class StatePersisterService {
         ).subscribe();
     }
 
-    private persistStateChanges = (stateChanges: Immutable<Object>): void => {
+    private persistStateChanges = (stateChanges: Immutable<UnknownState>): void => {
         for(const prop in stateChanges){
             const propCfg = this.persistanceConfig[prop];
             if(!propCfg) continue;
@@ -42,16 +42,17 @@ export class StatePersisterService {
 
     private removePayloadTempProps(payload: Immutable<unknown>): Immutable<unknown>{
         if(Array.isArray(payload) && payload.length > 0 && typeof payload[0] === "object") {
-            const clone = [...payload];
+            const clone: {}[] = [...payload];
             for(var key in clone) clone[key] = this.removeObjectTempProps(clone[key])
             return clone;
         }
         else if(typeof payload === "object") 
-            return this.removeObjectTempProps(payload);
+            return this.removeObjectTempProps(<{}> payload);
+        return
     }
 
-    private removeObjectTempProps(obj: Immutable<Object>): Immutable<Object>{
-        var clone = {...obj};
+    private removeObjectTempProps(obj: Immutable<{}>): Immutable<{}>{
+        var clone: UnknownState = {...obj};
         for(var key in obj)
             if(key.indexOf("temp_") !== -1) clone[key] = undefined 
         return clone; 

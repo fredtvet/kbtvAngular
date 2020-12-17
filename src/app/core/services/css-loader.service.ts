@@ -10,8 +10,8 @@ export class CssLoaderService {
 
     constructor(@Inject(DOCUMENT) private document: Document) {}
   
-    loadStyle(styleSheet: LazyStyles) {
-      if (this.document.getElementById(styleSheet))  return undefined;
+    loadStyle(styleSheet: LazyStyles): void {
+      if (this.document.getElementById(styleSheet)) return;
       else {     
         const head = this.document.getElementsByTagName('head')[0];
         const style = this.document.createElement('link');

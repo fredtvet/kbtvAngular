@@ -2,7 +2,7 @@ import { _addOrUpdateRange } from '@array/add-or-update-range.helper';
 import { MissionImage } from '@core/models';
 import { StateMissionImages } from '@core/state/global-state.interfaces';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 import { CreateMissionImagesAction } from './create-mission-images.action';
 
 export const CreateMissionImagesReducer = _createReducer(

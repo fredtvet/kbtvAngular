@@ -21,7 +21,7 @@ export interface CheckboxQuestion extends Question {
 
     <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>
 
-    <mat-error *ngIf="control.dirty && control.invalid">
+    <mat-error *ngIf="control && control.dirty && control.invalid">
       {{ getValidationErrorMessage() }}
     </mat-error>
   `,

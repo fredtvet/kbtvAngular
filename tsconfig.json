@@ -3,6 +3,13 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "strictNullChecks": true,
+
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -11,6 +18,12 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es5",
+
+    // "forceConsistentCasingInFileNames": true,
+    // "strict": true,
+    // "noImplicitReturns": true,
+    // "noFallthroughCasesInSwitch": true,
+
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -35,11 +48,13 @@
       "@confirm-dialog/*": ["src/app/modules/confirm-dialog/*"],
       "@array/*": ["src/app/modules/utility/array-helpers/*"],
       "@datetime/*": ["src/app/modules/utility/date-time-helpers/*"],   
-      "@immutable/*": ["src/app/modules/immutable/*"],
-    }
+      "@global/*": ["src/app/modules/global/*"],
+    },
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    // "strictInputAccessModifiers": true,
+    // "strictTemplates": true
   }
 }

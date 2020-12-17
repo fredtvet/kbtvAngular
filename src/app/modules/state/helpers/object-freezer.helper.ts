@@ -1,6 +1,6 @@
-import { Immutable } from "@immutable/interfaces";
+import { Immutable } from "@global/interfaces";
 
-export function _deepFreeze<T extends Object>(obj: Immutable<T>): Immutable<T> {
+export function _deepFreeze<T extends {}>(obj: Immutable<T>): Immutable<T> {
     if(typeof obj !== "object") return obj;
 
     if(Array.isArray(obj) && obj.length && typeof obj[0] === "object")
@@ -8,7 +8,7 @@ export function _deepFreeze<T extends Object>(obj: Immutable<T>): Immutable<T> {
     else
         for(const prop in obj){
             const value = obj[prop];
-            if (typeof value === 'object' && !Object.isFrozen(value)) _deepFreeze<unknown>(value);
+            if (typeof value === 'object' && !Object.isFrozen(value)) _deepFreeze(<{}> value);
         }
 
     return <Immutable<T>> Object.freeze(obj);

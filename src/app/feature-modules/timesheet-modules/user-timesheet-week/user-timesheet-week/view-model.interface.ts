@@ -1,8 +1,8 @@
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, Maybe } from '@global/interfaces';
 import { TimesheetSummary, WeekCriteria } from '../../shared-timesheet/interfaces';
 
 export interface ViewModel{ 
-    weekDaySummaries: {[key: number]: Immutable<TimesheetSummary>}, 
-    weekCriteria: Immutable<WeekCriteria>, 
+    weekDaySummaries: Maybe<{[key: number]: Immutable<TimesheetSummary>}>, 
+    weekCriteria: Maybe<Immutable<WeekCriteria>>, 
     isXs: boolean
 }

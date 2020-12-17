@@ -1,12 +1,12 @@
 import { DateRange } from '@datetime/interfaces';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, Maybe } from '@global/interfaces';
 import { DateRangePresets } from "@shared-app/enums/date-range-presets.enum";
 import { _getLastDayOfYear } from '../../modules/utility/date-time-helpers/get-last-day-of-year.helper';
 import { _getMonthRange } from '../../modules/utility/date-time-helpers/get-month-range.helper';
 import { _getWeekRange } from '../../modules/utility/date-time-helpers/get-week-range.helper';
 import { _getYearRange } from '../../modules/utility/date-time-helpers/get-year-range.helper';
 
-export function _getRangeByDateRangePreset(preset: DateRangePresets, getISO?: boolean): Immutable<DateRange> {
+export function _getRangeByDateRangePreset(preset: Maybe<DateRangePresets>, getISO?: boolean): Maybe<Immutable<DateRange>> {
     switch (preset) {
       case DateRangePresets.CurrentWeek:
         return _getWeekRange(new Date(), getISO);

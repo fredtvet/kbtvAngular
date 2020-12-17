@@ -13,6 +13,7 @@ import { TimesheetStatus } from '@shared/enums';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { FormService } from '@form-sheet/form-sheet.service';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
+import { Maybe, Immutable } from '@global/interfaces';
 
 @Component({
   selector: 'app-timesheet-admin-list',
@@ -44,8 +45,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
     }
 
   toggleTimesheetStatus = (timesheet: Timesheet): void => 
-    this.facade.updateStatuses(
-      [timesheet.id],  
+    this.facade.updateStatuses([<string> timesheet.id],  
       timesheet.status === TimesheetStatus.Confirmed ? TimesheetStatus.Open : TimesheetStatus.Confirmed
     );
 
@@ -53,16 +53,16 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
   
   private openWeekFilter = () => 
     this.formService.open<WeekCriteria, WeekCriteriaFormState>({
-      formConfig: {...WeekCriteriaForm, initialValue: {...this.facade.weekCriteria, weekNr: this.facade.selectedWeekNr}}, 
+      formConfig: {...WeekCriteriaForm, initialValue: {...this.facade.weekCriteria, weekNr: <number>this.facade.selectedWeekNr}}, 
       formState: this.facade.weekCriteriaFormState$,
       navConfig: {title: "Velg filtre"},
       submitCallback: (val: WeekCriteria): void => {
-        this.facade.updateWeekNr(val.weekNr)
+        if(val.weekNr) this.facade.updateWeekNr(val.weekNr)
         this.facade.updateCriteria(val)
       }
     });
   
-  private getNavConfig(user: User, year: number, weekNr: number): MainTopNavConfig {
+  private getNavConfig(user: Maybe<Immutable<User>>, year: Maybe<number>, weekNr: Maybe<number>): MainTopNavConfig {
     const fullName = user ? (user.firstName + ' ' + user.lastName) : '';
     return {
       title:  "Uke " + (weekNr || ""),

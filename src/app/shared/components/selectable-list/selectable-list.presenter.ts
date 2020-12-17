@@ -2,21 +2,22 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SelectableEntity } from '@shared/interfaces';
+import { ImmutableArray, UnknownState } from "@global/interfaces";
 
 @Injectable()
-export class SelectableListPresenter<T> {
+export class SelectableListPresenter<T extends UnknownState = UnknownState> {
 
     private selectedIdsSubject = new BehaviorSubject<unknown[]>([]);
     selectedIds$ = this.selectedIdsSubject.asObservable();
 
-    private entitiesSubject =  new BehaviorSubject<T[]>([]);
+    private entitiesSubject =  new BehaviorSubject<ImmutableArray<T>>([]);
     private entities$ = this.entitiesSubject.asObservable();
 
     selectableEntities$: Observable<SelectableEntity<T>[]> = combineLatest([this.entities$, this.selectedIds$]).pipe(
         map(([entities, selectedIds]) => this.getSelectableEntities(entities, selectedIds))
     )
 
-    private identifier:string; 
+    private identifier: string; 
 
     constructor(){}
     
@@ -26,7 +27,7 @@ export class SelectableListPresenter<T> {
 
     setIdentifier(identifier: string){ this.identifier = identifier; }
 
-    addEntities(entities: T[]){
+    addEntities(entities: ImmutableArray<T>){
         this.entitiesSubject.next(entities);
     }
 
@@ -44,10 +45,11 @@ export class SelectableListPresenter<T> {
 
     isEntitySelected = (id: unknown) => this.selectedIdsSubject.value.includes(id);
     
-    private getSelectableEntities(entities:T[], selectedIds: unknown[]): SelectableEntity<T>[]{
+    private getSelectableEntities(entities: ImmutableArray<T>, selectedIds: unknown[]): SelectableEntity<T>[]{
         let result = [];
         for(let i = 0; i < entities.length; i++){
-            let isSelected = selectedIds.includes(entities[i][this.identifier]);
+            const id = entities[i][this.identifier];
+            let isSelected = selectedIds.includes(id);
             result.push({entity: entities[i], selected:isSelected})
         }
         return result;

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Question, QuestionComponent } from '@dynamic-forms/interfaces';
 import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '@dynamic-forms/validation-error-map.interface';
 import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.component';
+import { Maybe } from '@global/interfaces';
 
 export interface InputQuestion extends Question {
   type: "tel" | "text" | "number" | "email" | "file" | "password";
@@ -29,12 +30,12 @@ export interface InputQuestion extends Question {
 
       <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>
 
-      <button mat-icon-button matSuffix *ngIf="question.resetable && !control.disabled && control.value" aria-label="Clear" 
-        (click)="control.setValue(''); control.markAsDirty()">
+      <button mat-icon-button matSuffix *ngIf="question.resetable && !control?.disabled && control?.value" aria-label="Clear" 
+        (click)="control?.setValue(''); control?.markAsDirty()">
         <mat-icon>close</mat-icon>
       </button>
 
-      <mat-error *ngIf="control.dirty && control.invalid">
+      <mat-error *ngIf="control?.dirty && control?.invalid">
         {{ getValidationErrorMessage() }}
       </mat-error>
     </mat-form-field>
@@ -44,7 +45,7 @@ export interface InputQuestion extends Question {
 export class InputQuestionComponent extends BaseQuestionComponent<InputQuestion> 
   implements QuestionComponent {
 
-  hideField: boolean;
+  hideField: Maybe<boolean>;
 
   constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
     super(validationErrorMessages) 

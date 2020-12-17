@@ -9,7 +9,7 @@
         [stylingClass]="config.imgSrc ? 'detail-navbar-overlay detail-navbar-overlay-top' : ''">
     </app-main-top-nav-bar>
   
-    <mat-toolbar *ngIf="config?.titleLines && config.titleLines.length > 0" 
+    <mat-toolbar *ngIf="config.titleLines?.length" 
       [ngClass]="config.imgSrc ? 'detail-navbar-overlay detail-navbar-overlay-bottom' : ''"
       class="detail-nav">
   

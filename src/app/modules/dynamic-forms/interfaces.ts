@@ -1,6 +1,6 @@
 import { EventEmitter, Type } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable, Maybe } from '@global/interfaces';
 import { Observable } from 'rxjs';
 
 export type DisabledObjectMap<T> = { [key in keyof Partial<T>]: boolean };
@@ -13,7 +13,7 @@ export interface ControlHook<TResponse>{
 export type OptionsGetter<T> = T[] | ((state: unknown) => T[]);
 
 export interface DynamicForm<TForm, TFormState>{
-    initialValue?: Immutable<Partial<TForm>>;
+    initialValue?: Maybe<Immutable<Partial<TForm>>>;
     submitText?: string;
     controls: (DynamicControlGroup<TForm, TFormState> | DynamicControl<TForm, TFormState>)[];
     onSubmitFormatter?: (f: TForm, s: Immutable<TFormState>) => Immutable<TForm>;
@@ -35,7 +35,7 @@ export interface DynamicControlGroup<TForm, TFormState = unknown> {
     disabledControls?: DisabledObjectMap<TForm>;
 }
 
-export interface DynamicControl<TForm, TFormState = unknown> { //Keep TFromState to enforce same state on controls
+export interface DynamicControl<TForm, TFormState = {}> { //Keep TFromState to enforce same state on controls? not working atm
     type: "control"
     name: Extract<keyof TForm, string>, 
     required?: boolean,       
@@ -70,20 +70,20 @@ export interface Question {
 export interface QuestionComponent {
     question: Question;
     form: FormGroup;
-    required: boolean;
-    control: AbstractControl;
+    required?: boolean;
+    control: Maybe<AbstractControl>;
     hideField$: Observable<boolean>;
 }
 
 export interface ControlGroupComponent {
     form: FormGroup;
-    controlGroup: DynamicControlGroup<unknown>;
-    formConfig: DynamicForm<unknown, Immutable<unknown>>;
+    controlGroup: DynamicControlGroup<{}>;
+    formConfig: DynamicForm<{}, Immutable<{}>>;
     nestedNames: string[];
 }
 
 export interface FormComponent<TConfig, TFormState, TResult> {
-    config: TConfig;
-    formState: Immutable<TFormState>;
-    formSubmitted: EventEmitter<TResult>;
+    config: Maybe<TConfig>;
+    formState: Maybe<Immutable<TFormState>>;
+    formSubmitted: EventEmitter<Maybe<TResult>>;
 }

@@ -4,7 +4,7 @@ import { Employer, Mission, MissionType } from "@core/models";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { ModelState } from "@core/state/model-state.interface";
 import { FormService } from '@form-sheet/form-sheet.service';
-import { Immutable } from "@immutable/interfaces";
+import { Immutable, Maybe } from "@global/interfaces";
 import { ModelFormService } from '@model-form/model-form.service';
 import { _getModelDisplayValue } from '@model/helpers/get-model-property.helper';
 import { Roles } from "@shared-app/enums";
@@ -15,6 +15,7 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
+import { Prop } from "@state/interfaces";
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { MissionListFacade } from '../mission-list.facade';
@@ -72,13 +73,13 @@ export class MissionListComponent {
         submitCallback: (val: MissionCriteria) => this.facade.addCriteria(val),
       });   
 
-  private getTopNavConfig(criteria: Immutable<MissionCriteria>): MainTopNavConfig {
+  private getTopNavConfig(criteria: Maybe<Immutable<MissionCriteria>>): MainTopNavConfig {
     return {
       title: "Oppdrag",
       buttons: [
         {icon: "filter_list",
           callback: this.openMissionFilter,
-          color: _getSetPropCount(criteria, {finished:false}) ? "accent" : null},
+          color: _getSetPropCount(criteria || {}, {finished:false}) ? "accent" : undefined},
       ],
       searchBar: {
         callback: this.searchMissions,
@@ -88,9 +89,9 @@ export class MissionListComponent {
     };
   }
 
-  private getCriteriaChips(criteria: Immutable<MissionCriteria>){
+  private getCriteriaChips(criteria: Maybe<Immutable<MissionCriteria>>){
     return this.chipsFactory.createCriteriaChips(criteria, 
-      (prop) => this.resetCriteriaProp(prop, criteria),      
+      (prop) => criteria ? this.resetCriteriaProp(prop, criteria) : null,      
       {
         finished: {valueFormatter: (val: boolean) => val ? "Ferdig" : null},
         employer: {valueFormatter: (val: Immutable<Employer>) => <string> _getModelDisplayValue("employers", val)},
@@ -99,9 +100,9 @@ export class MissionListComponent {
     )
   }
 
-  private resetCriteriaProp(prop: string, criteria: Immutable<MissionCriteria>){
+  private resetCriteriaProp(prop: Prop<Immutable<MissionCriteria>>, criteria: Immutable<MissionCriteria>){
     const clone = {...criteria};
-    clone[prop] = null;
+    clone[prop] = undefined;
     this.facade.addCriteria(clone);
   }
 

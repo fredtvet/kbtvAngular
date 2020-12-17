@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
 import { LoadingService } from '@core/services/loading.service';
-import { MainNavService } from 'src/app/layout/main-nav.service';
 import { ButtonTypes } from '@shared-app/enums';
 import { _trackByAppButton } from '@shared-app/track-by-app-button';
+import { Observable } from 'rxjs';
+import { MainNavService } from 'src/app/layout/main-nav.service';
 import { MainTopNavConfig } from './main-top-nav.config';
 
 @Component({
@@ -30,10 +30,9 @@ export class MainTopNavBarComponent {
 
   onMenuButtonClick = () => this.mainNavService.toggleDrawer();
 
-  toggleSearchBar = () => 
-    this.searchBarHidden = !this.searchBarHidden
+  toggleSearchBar = () => this.searchBarHidden = !this.searchBarHidden
 
-  handleSearchFn = (criteria: string) => this.config.searchBar.callback(criteria);
+  handleSearchFn = (criteria: string): void => this.config.searchBar?.callback(criteria);
 
   TrackByButton = _trackByAppButton
 

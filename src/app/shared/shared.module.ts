@@ -28,7 +28,7 @@ import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
 import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
-import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButtonsPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
+import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 
 @NgModule({
   declarations: [
@@ -56,7 +56,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     TranslatePipe,
     SortByDatePipe,
     IsTodayPipe,
-    CheckRolesInButtonsPipe,
     ArrayFromNumberPipe,
     AppFileUrlPipe,
     ObjectToArrayPipe,
@@ -97,7 +96,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, CheckRolesInButton
     TranslatePipe,
     SortByDatePipe,
     IsTodayPipe,
-    CheckRolesInButtonsPipe,
     ArrayFromNumberPipe,
     AppFileUrlPipe,
     ObjectToArrayPipe,

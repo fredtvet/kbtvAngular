@@ -22,7 +22,7 @@ export class IfRoleDirective {
       this.authService.currentUser$
       .pipe(skipWhile(user => !user?.role),take(1))
       .subscribe(user =>{
-        if(roles.includes(user.role)) 
+        if(user && roles.includes(user.role)) 
           this.viewContainer.createEmbeddedView(this.templateRef);
         else 
           this.viewContainer.clear();  

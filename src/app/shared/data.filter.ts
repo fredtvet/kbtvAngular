@@ -1,4 +1,4 @@
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 
 export type DataFilterConstructor<TCriteria>  = 
     new (criteria: Immutable<TCriteria>, ...args: unknown[]) => DataFilter<Immutable<unknown>, Immutable<TCriteria>>;
@@ -23,7 +23,7 @@ export abstract class DataFilter<TRecord, TCriteria>{
 
     protected addChecks(record: Immutable<TRecord>): boolean{
         console.error("Method not implemented");
-        return null;
+        return false;
     }
 
     protected addInitialChecks(record: Immutable<TRecord>): boolean{
@@ -44,6 +44,7 @@ export abstract class DataFilter<TRecord, TCriteria>{
     }
 
     private checkInitial = (record: Immutable<TRecord>): boolean => {
+        if(!record) return false;
         return this.addInitialChecks(record);
     }
 

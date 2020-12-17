@@ -6,7 +6,7 @@ import { _getYearRange } from '@datetime/get-year-range.helper';
 import { DateRange } from '@datetime/interfaces';
 import { WeekCriteria } from '../interfaces/week-criteria.interface';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
-import { Immutable } from '@immutable/interfaces';
+import { Immutable } from '@global/interfaces';
 
 export class WeekToTimesheetCriteriaAdapter implements TimesheetCriteria {
     

@@ -9,7 +9,7 @@ import { SyncStateAction } from './state/actions';
 @Injectable({providedIn: "root"})
 export class ContinousSyncService {
 
-    private get syncTimestamp(): number { return this.store.selectProperty("syncTimestamp") }
+    private get syncTimestamp() { return this.store.selectProperty<number>("syncTimestamp") }
 
     constructor(
         private appRef: ApplicationRef,
@@ -28,9 +28,9 @@ export class ContinousSyncService {
     }
 
     private syncIfTimePassed = (): void => {
-      const timeSinceLastSync = _getUnixTimeSeconds() - this.syncTimestamp;
+      const timeSinceLastSync = _getUnixTimeSeconds() - (this.syncTimestamp || 0);
       const syncConfig = this.store.selectProperty<SyncConfig>("syncConfig");
-      if(timeSinceLastSync > syncConfig?.refreshTime) this.syncAll();             
+      if(!syncConfig || (timeSinceLastSync > syncConfig.refreshTime)) this.syncAll();             
     }
 
     private syncAll = () : void => this.store.dispatch(<SyncStateAction>{ type: SyncStateAction })

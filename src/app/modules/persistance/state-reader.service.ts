@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { UnknownState } from '@global/interfaces';
+import { forkJoin, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { PERSISTANCE_CONFIG } from './injection-tokens.const';
 import { PersistanceConfig } from './interfaces';
@@ -9,12 +10,12 @@ import { StateDbService } from './state-db.service';
 export class StateReaderService {
 
     constructor(
-        @Inject(PERSISTANCE_CONFIG) private persistanceConfig: PersistanceConfig<unknown>,
+        @Inject(PERSISTANCE_CONFIG) private persistanceConfig: PersistanceConfig<UnknownState>,
         private stateDbService: StateDbService, 
     ) { }
 
-    getCriticalState(): unknown{
-        const state = {};
+    getCriticalState(): UnknownState {
+        const state: UnknownState = {};
         for(const prop in this.persistanceConfig){
             if(!this.persistanceConfig[prop].critical) continue;
             const value = window.localStorage.getItem(prop);
@@ -23,9 +24,9 @@ export class StateReaderService {
         return state;
     }
 
-    getState$(): Observable<unknown> {       
+    getState$(): Observable<UnknownState> {       
         const propDbObservables = [];
-        const propsInOrder = [];
+        const propsInOrder: string[] = [];
         for(const prop in this.persistanceConfig){
             if(this.persistanceConfig[prop].critical) continue;
             propsInOrder.push(prop);
@@ -38,8 +39,8 @@ export class StateReaderService {
         )
     }
 
-    private mapStateArrToStateObj(stateArr: unknown[], propsInOrder: ReadonlyArray<string>): Object{
-        const stateObj = {};
+    private mapStateArrToStateObj(stateArr: unknown[], propsInOrder: ReadonlyArray<string>): UnknownState{
+        const stateObj: UnknownState = {};
         for(const index in propsInOrder)
             stateObj[propsInOrder[index]] = stateArr[index];
         return stateObj;

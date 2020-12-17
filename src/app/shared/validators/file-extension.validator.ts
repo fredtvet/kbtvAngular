@@ -1,5 +1,5 @@
 import { ValidatorFn, AbstractControl } from '@angular/forms';
-import { UnknownState } from '@model/interfaces';
+import { UnknownState } from '@global/interfaces';
 import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
 
 export function fileExtensionValidator(allowedExtensions: string[]): ValidatorFn{ 
