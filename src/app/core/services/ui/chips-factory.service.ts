@@ -46,7 +46,7 @@ export class ChipsFactoryService {
       selectFn: (val: Immutable<unknown>) => void
     ): AppChip[] {
     const chips: AppChip[] = [];
-    const options = Object.keys(_enum).filter(key => isNaN(Number(_enum[+key])));
+    const options = Object.keys(_enum).filter(key => isNaN(Number(_enum[key as unknown as number])));
     for(const strVal of options){
       const value = parseInt(strVal);
       const selected = (value === currentSelection)

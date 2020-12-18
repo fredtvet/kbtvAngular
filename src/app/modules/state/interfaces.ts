@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, Maybe } from '@global/interfaces'
+import { Immutable, ImmutableArray, Maybe, UnknownState } from '@global/interfaces'
 import { Observable } from 'rxjs'
 import { StateAction } from './state.action'
 
@@ -6,10 +6,10 @@ export type Prop<T> = Extract<keyof T, string>
 
 export interface DispatchedAction<TAction extends StateAction, TState = {}> { 
     action: Immutable<TAction>, 
-    stateSnapshot: Maybe<Immutable<TState>>
+    stateSnapshot: Immutable<TState>
 };
 
-export interface Query { props: ImmutableArray<string> };
+export interface Query { props: ImmutableArray<string>, stateSnapshot: Immutable<UnknownState> };
 
 export interface Effect<TAction extends StateAction> {
     handle$(actions$: Observable<DispatchedAction<TAction>>): Observable<Immutable<StateAction> | void>

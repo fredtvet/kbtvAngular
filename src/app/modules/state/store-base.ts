@@ -57,8 +57,8 @@ export abstract class StoreBase<TState> {
     }
 
     select$<TResult = Partial<TState>>(
-        props: Maybe<ImmutableArray<Prop<TState>>>
-    ): Observable<Maybe<Immutable<TResult>>>{
+        props: Maybe<ImmutableArray<Prop<TState>>> = null
+    ): Observable<Immutable<TResult>>{
         this.dispatchQuery(props || ["all"])   
         return this.stateChanges$.pipe(selectSlice<Immutable<TResult>>(props))
     }
@@ -69,8 +69,8 @@ export abstract class StoreBase<TState> {
     }
 
     select<TResult = Partial<TState>>(
-        props: Maybe<ImmutableArray<Prop<TState>>>
-    ): Maybe<Immutable<TResult>> {
+        props: Maybe<ImmutableArray<Prop<TState>>> = null
+    ): Immutable<TResult> {
         this.dispatchQuery(props || ["all"])
         return this.base.getStoreState(props, false);
     }
@@ -97,7 +97,7 @@ export abstract class StoreBase<TState> {
     }
 
     private dispatchQuery = (props: ImmutableArray<string>): void => 
-        this.queryDispatcher.dispatch({ props });
+        this.queryDispatcher.dispatch({ props, stateSnapshot: this.base.getStoreState(props, false) });
 
     private setState(state: Maybe<Partial<TState>>, 
         deepCloneState: boolean = true) : void { 

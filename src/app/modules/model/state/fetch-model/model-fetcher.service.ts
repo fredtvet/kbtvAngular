@@ -24,12 +24,10 @@ export class ModelFetcherService {
         queryDispatcher.queries$.pipe(
             mergeMap(x => {
                 if(!x.props?.length) return of(null);
-                
                 const fetchers: Observable<UnknownState>[] = [];
-                const state = store.select(null);
 
                 for(const prop of x.props){
-                    if(state && (state[prop] || this.pendingProperties[prop])) continue;
+                    if(x.stateSnapshot[prop] || this.pendingProperties[prop]) continue;
                     const modelCfg = ModelStateConfig.get(prop);
                     if(this.isFetchable(modelCfg))          
                         fetchers.push(this.getFetcher$(modelCfg, prop))     
@@ -39,6 +37,7 @@ export class ModelFetcherService {
 
                 return combineLatest(fetchers)     
             }),
+           
             tap(stateSlices => stateSlices ? 
                 store.dispatch(<SetFetchedStateAction>{ type: SetFetchedStateAction, state: this.mergeSlices(stateSlices) }) : null)
         ).subscribe();

@@ -18,8 +18,8 @@ export class StateReaderService {
         const state: UnknownState = {};
         for(const prop in this.persistanceConfig){
             if(!this.persistanceConfig[prop].critical) continue;
-            const value = window.localStorage.getItem(prop);
-            state[prop] = value ? JSON.parse(value) : null;
+            const value = window.localStorage.getItem(prop)
+            state[prop] = (value !== 'undefined' && value != null) ? JSON.parse(value) : null;
         }
         return state;
     }

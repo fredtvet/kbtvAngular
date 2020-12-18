@@ -10,7 +10,7 @@ export class ActionDispatcher {
     private actionsSubject = new Subject<DispatchedAction<StateAction>>();
     actions$ = this.actionsSubject.asObservable();
 
-    dispatch(action: StateAction, stateSnapshot: Maybe<Immutable<{}>>){
+    dispatch(action: StateAction, stateSnapshot: Immutable<{}>){
         this.actionsSubject.next({action, stateSnapshot});
     }
     

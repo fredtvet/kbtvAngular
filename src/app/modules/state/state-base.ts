@@ -19,8 +19,8 @@ export class StateBase {
         this.stateChanges$ = this.stateChangesSubject.asObservable();
     }
 
-    getStoreState<T extends {}>(properties: Maybe<ImmutableArray<string>>, deepClone: boolean = true): Maybe<Immutable<T>> {
-        let state: Maybe<UnknownState> = null;
+    getStoreState<T extends {}>(properties: Maybe<ImmutableArray<string>>, deepClone: boolean = true): Immutable<T> {
+        let state: Maybe<UnknownState> = {};
 
         if (this.storeState && properties) {      
             state = {};
