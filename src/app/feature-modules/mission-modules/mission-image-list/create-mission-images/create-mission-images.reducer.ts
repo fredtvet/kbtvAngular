@@ -19,7 +19,7 @@ export const CreateMissionImagesReducer = _createReducer(
                 id: <string> wrapper.id, 
                 missionId: action.missionId, 
                 fileName: wrapper.modifiedFile.name,
-                temp_localFileUrl: URL.createObjectURL(file)
+                localFileUrl: URL.createObjectURL(file)
             })
         }
 

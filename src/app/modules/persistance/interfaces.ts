@@ -1,6 +1,10 @@
+import { Immutable } from "@global/interfaces";
+
 export type PersistanceConfig<TState> = { [key in keyof TState]: PersistancePropConfig }
+
+export type MapFn<T, U = Partial<T>> = (value: Immutable<T>) => U
 
 export interface PersistancePropConfig {
     critical?: boolean;
-    enableTempData?: boolean;
+    onPersistMapping?: MapFn<any, any>
 }

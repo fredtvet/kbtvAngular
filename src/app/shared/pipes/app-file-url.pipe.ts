@@ -12,8 +12,8 @@ export class AppFileUrlPipe implements PipeTransform {
 
   transform(modelFile: Maybe<ModelFile>, folder: typeof FileFolders[number], disableCache?: boolean): Maybe<string> {
     if(!modelFile) return null;
-    if(modelFile.temp_localFileUrl) 
-      return <string> this.domSanitizer.bypassSecurityTrustResourceUrl(modelFile.temp_localFileUrl); 
+    if(modelFile.localFileUrl) 
+      return <string> this.domSanitizer.bypassSecurityTrustResourceUrl(modelFile.localFileUrl); 
     if(modelFile.fileName)
       return _appFileUrl(modelFile.fileName, folder, disableCache);
     return null;

@@ -12,7 +12,7 @@ export const SaveModelFileReducer = _createReducer(
         const entity: Immutable<ModelFile> = {
             ...action.entity, 
             fileName: action.fileWrapper?.modifiedFile?.name,
-            temp_localFileUrl: URL.createObjectURL(action.fileWrapper?.modifiedFile)
+            localFileUrl: URL.createObjectURL(action.fileWrapper?.modifiedFile)
         }
         
         return SaveModelReducer.reducerFn(state, <SaveModelFileAction<ModelFile>>{...action, entity});       

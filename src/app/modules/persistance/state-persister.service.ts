@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
 import { Immutable, UnknownState } from '@global/interfaces';
-import { _deepClone } from '@state/helpers/deep-clone.helper';
 import { Store } from '@state/store';
 import { skip, tap } from 'rxjs/operators';
 import { PERSISTANCE_CONFIG } from './injection-tokens.const';
@@ -29,10 +28,9 @@ export class StatePersisterService {
             if(!propCfg) continue;
 
             let payload = stateChanges[prop];
-
-            if(propCfg.enableTempData)
-                payload = this.removePayloadTempProps(payload);
-
+      
+            if(propCfg.onPersistMapping) payload = propCfg.onPersistMapping(payload);
+         
             if(!propCfg.critical) 
                 this.stateDbService.set(prop, payload)
             else
@@ -40,23 +38,6 @@ export class StatePersisterService {
         }
     }
 
-    private removePayloadTempProps(payload: Immutable<unknown>): Immutable<unknown>{
-        if(Array.isArray(payload) && payload.length > 0 && typeof payload[0] === "object") {
-            const clone: {}[] = [...payload];
-            for(var key in clone) clone[key] = this.removeObjectTempProps(clone[key])
-            return clone;
-        }
-        else if(typeof payload === "object") 
-            return this.removeObjectTempProps(<{}> payload);
-        return
-    }
-
-    private removeObjectTempProps(obj: Immutable<{}>): Immutable<{}>{
-        var clone: UnknownState = {...obj};
-        for(var key in obj)
-            if(key.indexOf("temp_") !== -1) clone[key] = undefined 
-        return clone; 
-    }
 }
 
 
