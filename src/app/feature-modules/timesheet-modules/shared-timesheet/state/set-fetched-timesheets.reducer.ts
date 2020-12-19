@@ -16,7 +16,7 @@ type State = Immutable<StateTimesheets & StateMissions>;
 
 export const SetFetchedTimesheetsReducer = _createReducer(
     SetFetchedTimesheetsAction,
-    (state: State, action: Immutable<SetFetchedTimesheetsAction>): Partial<State> => {
+    (state: State, action: Immutable<SetFetchedTimesheetsAction>) => {
         
         const relationCfg = new GetWithRelationsConfig<State>("timesheets", null, ["missions"]);
 
@@ -25,6 +25,6 @@ export const SetFetchedTimesheetsReducer = _createReducer(
             missions: state.missions
         }, relationCfg);
 
-        return {timesheets: _addOrUpdateRange(state.timesheets, timesheets, "id")};
+        return {timesheets: _addOrUpdateRange<Timesheet>(state.timesheets, timesheets, "id")};
     }
 )  

@@ -10,15 +10,15 @@ export function _getRangeWithRelations<TModel extends {}, TState>(
     state: Immutable<Partial<TState>>,
     cfg: GetWithRelationsConfig<TState>,
     filter?: (value: Immutable<TModel>, index?: number, Array?: unknown[]) => boolean, 
-): ImmutableArray<TModel> {
+): Immutable<TModel>[] {
     const modelCfg = ModelStateConfig.get<UnknownState, UnknownState>(cfg.modelProp); 
 
-    let modelState = {...(<Immutable<UnknownModelState>> state)[cfg.modelProp] || []};
+    let modelState = [...(<Immutable<UnknownModelState>> state)[cfg.modelProp] || []];
     
     if(filter)
         modelState = _filter(modelState, filter);
 
-    if(!modelState.length) return <ImmutableArray<TModel>> modelState;
+    if(!modelState.length) return <Immutable<TModel>[]> modelState;
 
     const hasChildren = cfg.includedChildProps && cfg.includedChildProps.length > 0;      
     const hasForeigns = cfg.includedForeignProps && cfg.includedForeignProps.length > 0;
@@ -40,9 +40,9 @@ export function _getRangeWithRelations<TModel extends {}, TState>(
             _mapChildrenToEntity(cfg.includedChildProps, modelCfg, childLookups, entityClone);
             newState[i] = entityClone;
         }
-        return <ImmutableArray<TModel>> newState
+        return <Immutable<TModel>[]> newState
     }
-    return <ImmutableArray<TModel>> modelState;
+    return <Immutable<TModel>[]> modelState;
     
 }
 

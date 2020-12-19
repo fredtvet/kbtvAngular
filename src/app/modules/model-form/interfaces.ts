@@ -24,9 +24,3 @@ export interface ModelFormToSaveModelInput<TForm extends {}, TState extends {}> 
     stateProp: Prop<TState>,
     saveAction: SaveAction,
 }
-
-export interface ModelFormViewConfig<TModel extends {}, TState extends {}, TForm extends {}>{
-    entity?: Immutable<TModel>;
-    foreigns?: Immutable<Partial<TState>>;
-    lockedValues?: Immutable<Partial<TForm>>; 
-}

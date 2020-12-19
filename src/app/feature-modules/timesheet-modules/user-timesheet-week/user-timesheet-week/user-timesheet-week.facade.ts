@@ -15,7 +15,7 @@ import { filterRecords } from '@shared/operators/filter-records.operator';
 import { ComponentStore } from '@state/component.store';
 import { Store } from '@state/store';
 import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { TimesheetSummary } from '../../shared-timesheet/interfaces';
 import { ComponentStoreState, StoreState } from '../store-state.interface';
 import { NextWeekAction, PreviousWeekAction, SetTimesheetCriteriaAction } from './component.reducers';
@@ -43,6 +43,7 @@ export class UserTimesheetWeekFacade {
             const relationCfg = new GetWithRelationsConfig<StoreState>("userTimesheets", null, ["missions"]);
             const timesheets = _getRangeWithRelations<Timesheet, ModelState>({userTimesheets, missions: missions || []}, relationCfg);
             const summaries = this.summaryAggregator.groupByType(GroupByPeriod.Day, timesheets);
+            console.log(userTimesheets, timesheets);
             return _mapObjectsToWeekdays<TimesheetSummary>(summaries, "date")
         })
     );

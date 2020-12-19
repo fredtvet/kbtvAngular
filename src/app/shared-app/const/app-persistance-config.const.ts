@@ -3,7 +3,7 @@ import { Immutable } from "@global/interfaces";
 import { MapFn, PersistanceConfig } from "@persistance/interfaces";
 
 const modelFileArrayMapper: MapFn<ModelFile[]> = 
-    (x: Immutable<ModelFile[]>) => x.map(({localFileUrl, ...rest} ) => rest);
+    (x: Immutable<ModelFile[]>) => x?.map(({localFileUrl, ...rest} ) => rest);
 
 export const AppPersistanceConfig: PersistanceConfig<unknown> = {
     missions: { onPersistMapping: modelFileArrayMapper },

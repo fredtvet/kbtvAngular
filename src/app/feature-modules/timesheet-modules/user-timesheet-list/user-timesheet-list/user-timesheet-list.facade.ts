@@ -30,14 +30,14 @@ export class UserTimesheetListFacade {
           this.criteria$
       ]).pipe(filterRecords(TimesheetFilter), map(x => x.records));
 
-      timesheets$: Observable<Maybe<ImmutableArray<Timesheet>>> = combineLatest([
+      timesheets$: Observable<Maybe<Immutable<Timesheet>[]>> = combineLatest([
         this.filteredTimesheets$, 
         this.store.selectProperty$<Mission[]>("missions")
       ]).pipe(
           map(([userTimesheets, missions]) =>  {
               const relationCfg = new GetWithRelationsConfig<State>("userTimesheets", null, ["missions"]);
               if(!userTimesheets) return;
-              return _getRangeWithRelations({userTimesheets, missions: missions || []}, relationCfg);
+              return _getRangeWithRelations<Timesheet, State>({userTimesheets, missions: missions || []}, relationCfg);
           })
       );
 
