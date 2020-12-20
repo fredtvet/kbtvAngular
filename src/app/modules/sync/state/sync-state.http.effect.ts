@@ -12,9 +12,9 @@ import { SyncStateAction, SyncStateSuccessAction, WipeSyncStateAction } from './
 @Injectable()
 export class SyncStateHttpEffect implements Effect<StateAction> {
 
-    private get syncConfig() { return this.store.selectProperty<SyncConfig>("syncConfig") }
+    private get syncConfig() { return this.store.state.syncConfig }
 
-    private get syncTimestamp() { return this.store.selectProperty<number>("syncTimestamp") }
+    private get syncTimestamp() { return this.store.state.syncTimestamp }
 
     constructor(
       @Inject(SYNC_HTTP_FETCHER) private httpFetcher: SyncHttpFetcher<unknown>,

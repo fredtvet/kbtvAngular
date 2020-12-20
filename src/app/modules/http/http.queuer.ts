@@ -11,7 +11,7 @@ export class HttpQueuer {
   private nextInQueueSubject = new BehaviorSubject<boolean>(true);
 
   private nextInQueue$ = this.nextInQueueSubject.asObservable().pipe(
-    map(x => this.store.selectProperty<QueuedCommand[]>("requestQueue")),
+    map(x => this.store.state.requestQueue),
     filter(x => x != null && x.length > 0),
     switchMap(queue => 
       merge(

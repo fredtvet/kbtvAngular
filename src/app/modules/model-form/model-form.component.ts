@@ -45,9 +45,11 @@ export class ModelFormComponent
       @Inject(DEFAULT_SAVE_CONVERTER) @Optional() private defaultSaveConverter: FormToSaveModelConverter<{}, {}, StateAction>
     ) {}
   
-    ngOnInit(): void {   
-      if(!this.config.entityId) this.isCreateForm = true;
+    ngOnInit(): void {  
+      this.facade.loadModels(this.config.stateProp); 
 
+      if(!this.config.entityId) this.isCreateForm = true;
+    
       this.formState$ = combineLatest([
         this.formStateSubject.asObservable(),
         this.facade.getFormState$(this.config.stateProp)
@@ -59,7 +61,6 @@ export class ModelFormComponent
         filter(x => x != null),take(1), 
         map(state => this.getFormConfig(state.options))
       )
-
     }
 
     onSubmit(result: Immutable<{}>): void{   

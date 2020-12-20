@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Timesheet, User } from '@core/models';
 import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
 import { Immutable } from '@global/interfaces';
+import { FetchModelsAction } from '@model/state/fetch-model/fetch-models.http.effect';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
@@ -27,7 +28,7 @@ type Record = Timesheet | TimesheetSummary;
 export class TimesheetStatisticFacade extends WithUnsubscribe() {
      
     criteria$ = this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria");
-    get criteria() { return this.componentStore.selectProperty<TimesheetCriteria>("timesheetCriteria") }
+    get criteria() { return this.componentStore.state.timesheetCriteria }
 
     criteriaFormState$: Observable<TimesheetCriteriaFormState> = 
         this.store.select$<StateMissions & StateUsers>(["missions", "users"]).pipe(
@@ -61,6 +62,7 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
         private componentStore: ComponentStore<ComponentStoreState>
     ){
         super();
+        this.store.dispatch({type: FetchModelsAction, props: ["users"]})
         this.componentStore.selectProperty$("timesheetCriteria").pipe(takeUntil(this.unsubscribe)).subscribe(timesheetCriteria => 
             this.store.dispatch(<FetchTimesheetsAction>{ type: FetchTimesheetsAction, timesheetCriteria }))
     }

@@ -1,17 +1,9 @@
 import { NgModule } from '@angular/core';
-import { STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { ModelStateConfig } from './model-state.config';
-import { ModelFetcherService } from './state/fetch-model/model-fetcher.service';
-import { SetFetchedStateReducer } from './state/fetch-model/set-fetched-state.reducer';
 
-@NgModule({
-    providers: [   
-        {provide: STORE_REDUCERS, useValue: SetFetchedStateReducer, multi: true},
-    ]
-})
+@NgModule({})
 export class ModelModule { 
     constructor(
-        modelFetcherService: ModelFetcherService,
         rootConfigSetter: ModelStateConfig,
     ){}
 }

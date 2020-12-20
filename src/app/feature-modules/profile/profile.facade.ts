@@ -13,11 +13,11 @@ import { Immutable } from "@global/interfaces";
 export class ProfileFacade {
 
   get currentUser() {
-    return this.store.selectProperty<User>("currentUser")
+    return this.store.state.currentUser
   };
 
   get syncConfig() {
-    return this.store.selectProperty<SyncConfig>("syncConfig")
+    return this.store.state.syncConfig
   };
 
   constructor(

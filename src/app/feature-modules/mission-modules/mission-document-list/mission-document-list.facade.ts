@@ -26,8 +26,7 @@ export class MissionDocumentListFacade  {
 
   getMissionEmployerEmail(missionId: Maybe<string>): string{  
     const relationCfg = new GetWithRelationsConfig<StoreState>("missions", null, ["employers"])
-    let state = this.store.select(["missions", "employers"]);
-    const mission = _getWithRelations<Mission, ModelState>(state, relationCfg, missionId);
+    const mission = _getWithRelations<Mission, ModelState>(this.store.state, relationCfg, missionId);
     const email = mission?.employer?.email;
     return email || "";
   }

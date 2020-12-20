@@ -1,19 +1,16 @@
-import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
 import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
 import { Observable } from 'rxjs';
 import { ActionDispatcher } from './action-dispatcher';
 import { _applyMetaReducers } from './helpers/apply-meta-reducers.helper';
 import { _mergeReducers } from './helpers/merge-reducers.helper';
 import { _deepFreeze } from './helpers/object-freezer.helper';
+import { _selectSlice } from './helpers/select-slice.helper';
 import { tryWithLogging } from './helpers/try-log-error.helper';
-import { MetaReducer, Prop, Reducer, ReducerMap, StateChanges, StoreSettings } from './interfaces';
-import { selectProp, selectSlice } from './operators/selectors.operator';
-import { QueryDispatcher } from './query-dispatcher';
+import { MetaReducer, Prop, Reducer, ReducerMap, StoreSettings } from './interfaces';
+import { select, selectProp } from './operators/selectors.operator';
 import { StateBase } from './state-base';
 import { StateAction } from './state.action';
 import { Store } from './store';
-
-export type stateFunc<T> = (state: Partial<T>) => Partial<T>;
 
 export abstract class StoreBase<TState> {
 
@@ -23,12 +20,13 @@ export abstract class StoreBase<TState> {
 
     private metaReducers: Immutable<MetaReducer<unknown, StateAction>>[];
 
-    stateChanges$: Observable<StateChanges<unknown>> = this.base.stateChanges$;
+    get state(): Immutable<TState> { return this.base.getStoreState() }
+
+    state$: Observable<Immutable<TState>>  = this.base.getStoreState$();
     
     constructor(
         private base: StateBase,
         private hostStore: Store<unknown>,
-        private queryDispatcher: QueryDispatcher,
         private actionDispatcher: ActionDispatcher,
         reducers: ImmutableArray<Reducer<unknown, StateAction>>,
         metaReducers: ImmutableArray<MetaReducer<unknown, StateAction>>,
@@ -50,64 +48,37 @@ export abstract class StoreBase<TState> {
 
     dispatch<TAction extends StateAction>(action: Immutable<TAction>): void {
         if(this._settings.strictImmutability) _deepFreeze(action);
-        const stateSnapshot = this.base.getStoreState(null, false);
+        const stateSnapshot = this.base.getStoreState();
         this.reduceState(action);
         this.actionDispatcher.dispatch(action, stateSnapshot);
         if(this.hostStore && action.propagate) this.hostStore.dispatch(action);
     }
 
-    select$<TResult = Partial<TState>>(
-        props: Maybe<ImmutableArray<Prop<TState>>> = null
-    ): Observable<Immutable<TResult>>{
-        this.dispatchQuery(props || ["all"])   
-        return this.stateChanges$.pipe(selectSlice<Immutable<TResult>>(props))
-    }
+    select$ = <TResult = Partial<TState>>(props: ImmutableArray<Prop<TState>>): Observable<Immutable<TResult>> =>
+       this.state$.pipe(select(props))
 
-    selectProperty$<TResult>(prop: Prop<Immutable<TState>>): Observable<Maybe<Immutable<TResult>>>{
-        this.dispatchQuery([prop])
-        return this.stateChanges$.pipe(selectProp<Immutable<TResult>, TState>(prop))
-    }
-
-    select<TResult = Partial<TState>>(
-        props: Maybe<ImmutableArray<Prop<TState>>> = null
-    ): Immutable<TResult> {
-        this.dispatchQuery(props || ["all"])
-        return this.base.getStoreState(props, false);
-    }
-
-    selectProperty<TResult>(prop: Prop<Immutable<TState>>): Maybe<Immutable<TResult>> {
-        this.dispatchQuery([prop])
-        const state = this.base.getStoreState<TState>([prop], false);
-        return state ? <Immutable<TResult>> state[prop] : undefined;
-    }
-
+    selectProperty$ = <TResult>(prop: Prop<Immutable<TState>>): Observable<Immutable<TResult>> =>
+       this.state$.pipe(selectProp<TState, TResult>(prop))
+   
     private reduceState(action: Immutable<StateAction>): void{
         const actionReducers = this.reducerMap[action.type];
-
+    
         if(!actionReducers?.length) return;
         const mergedReducer = _mergeReducers(actionReducers, action.type);
 
         const modifiedReducer = _applyMetaReducers(mergedReducer, this.metaReducers);
 
-        const state = this.base.getStoreState(undefined, false);
+        const state = this.base.getStoreState();
 
         const newState = tryWithLogging(() => modifiedReducer.reducerFn(<{}> state, action));
         
-        this.setState(<TState> newState, false) 
+        this.setState(<TState> newState) 
     }
 
-    private dispatchQuery = (props: ImmutableArray<string>): void => 
-        this.queryDispatcher.dispatch({ props, stateSnapshot: this.base.getStoreState(props, false) });
-
-    private setState(state: Maybe<Partial<TState>>, 
-        deepCloneState: boolean = true) : void { 
-
-        this.base.setStoreState(state, deepCloneState);
-
-        if (this._settings.logStateChanges) {
-            const caller = (this.constructor) ? '\r\nCaller: ' + this.constructor.name : '';
-            console.log('%cSTATE CHANGED', 'font-weight: bold', caller, '\r\nState: ', state);
-        }
+    private setState(state: Maybe<Partial<TState>>) : void {        
+        this.base.setStoreState(state);
+        if (this._settings.logStateChanges) 
+            console.log('%cSTATE CHANGED', 'font-weight: bold', '\r\nState: ', state);   
     }
 
 }

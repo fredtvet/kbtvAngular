@@ -22,7 +22,7 @@ type State = StateMissions & StateUserTimesheets;
 @Injectable()
 export class UserTimesheetListFacade {
     
-      get criteria(){ return this.componentStore.selectProperty<TimesheetCriteria>("timesheetCriteria"); } 
+      get criteria(){ return this.componentStore.state.timesheetCriteria; } 
       criteria$ = this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria");
   
       private filteredTimesheets$ = combineLatest([

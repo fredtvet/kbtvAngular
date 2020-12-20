@@ -5,6 +5,7 @@ import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
 import { UnknownModelState } from '@model/interfaces';
 import { ModelStateConfig } from '@model/model-state.config';
+import { FetchModelsAction } from '@model/state/fetch-model/fetch-models.http.effect';
 import { StateAction } from '@state/state.action';
 import { Store } from '@state/store';
 import { Observable } from 'rxjs';
@@ -15,6 +16,14 @@ export class ModelFormFacade {
 
   constructor(private store: Store<UnknownModelState>) {}
 
+  loadModels(modelProp: string): void{
+    const modelCfg = ModelStateConfig.get(modelProp);
+    this.store.dispatch(<FetchModelsAction<UnknownState>>{
+      type: FetchModelsAction, 
+      props: [modelProp, ...(modelCfg.foreigns || [])]
+    })
+  }
+
   getFormState$(modelProp: string): Observable<Immutable<OptionsFormState<UnknownModelState>>>{
     const modelCfg = ModelStateConfig.get(modelProp);
     return this.store.select$<UnknownModelState>(modelCfg.foreigns || []).pipe(
@@ -24,7 +33,7 @@ export class ModelFormFacade {
 
   getModelWithForeigns(id: string, modelProp: string, fkState: Immutable<UnknownModelState>): Maybe<Immutable<{}>> {
     const state = {...fkState};
-    state[modelProp] = this.store.selectProperty<UnknownState[]>(modelProp) || []
+    state[modelProp] = this.store.state[modelProp] || []
     const relationCfg = new GetWithRelationsConfig(modelProp, null, 'all');
     return _getWithRelations<UnknownState, UnknownModelState>(state, relationCfg, id);
   }

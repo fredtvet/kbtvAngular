@@ -19,16 +19,17 @@ import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.
 import { SetSelectedWeekAction, SetTimesheetCriteriaAction } from './component-state-reducers';
 import { UpdateTimesheetStatusesAction } from './update-timesheet-statuses/update-timesheet-statuses.action';
 import { Immutable, Maybe } from '@global/interfaces';
+import { FetchModelsAction } from '@model/state/fetch-model/fetch-models.http.effect';
 
 @Injectable()
 export class TimesheetAdminFacade {
 
     users$ = this.store.selectProperty$<User[]>("users");
 
-    get selectedWeekNr(){ return this.componentStore.selectProperty<number>("selectedWeekNr"); } 
+    get selectedWeekNr(){ return this.componentStore.state.selectedWeekNr; } 
     selectedWeekNr$ = this.componentStore.selectProperty$<number>("selectedWeekNr");
 
-    get weekCriteria(){ return this.componentStore.selectProperty<WeekCriteria>("weekCriteria"); } 
+    get weekCriteria(){ return this.componentStore.state.weekCriteria; } 
     weekCriteria$ = this.componentStore.selectProperty$<WeekCriteria>("weekCriteria");
 
     weekCriteriaFormState$: Observable<WeekCriteriaFormState> = 
@@ -59,6 +60,8 @@ export class TimesheetAdminFacade {
         private store: Store<StoreState>,
         private componentStore: ComponentStore<ComponentStoreState>
     ){
+        this.store.dispatch({type: FetchModelsAction, props: ["users"]})
+          
         this.componentStore.selectProperty$("timesheetCriteria").subscribe(timesheetCriteria => 
             this.store.dispatch(<FetchTimesheetsAction>{ type: FetchTimesheetsAction, timesheetCriteria }))
     }

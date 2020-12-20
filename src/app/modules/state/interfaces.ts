@@ -4,12 +4,14 @@ import { StateAction } from './state.action'
 
 export type Prop<T> = Extract<keyof T, string>
 
+export type StateSelector<TState, TResult> = ((s: Immutable<TState>) => Immutable<TResult>) | (Prop<TState>[])
+
 export interface DispatchedAction<TAction extends StateAction, TState = {}> { 
     action: Immutable<TAction>, 
     stateSnapshot: Immutable<TState>
 };
 
-export interface Query { props: ImmutableArray<string>, stateSnapshot: Immutable<UnknownState> };
+export interface Query { props: Maybe<ImmutableArray<string>>, stateSnapshot: Immutable<UnknownState> };
 
 export interface Effect<TAction extends StateAction> {
     handle$(actions$: Observable<DispatchedAction<TAction>>): Observable<Immutable<StateAction> | void>

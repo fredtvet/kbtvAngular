@@ -38,7 +38,7 @@ export class MissionListFacade {
     this.componentStore.selectProperty$<MissionCriteria>("missionCriteria");
 
   get criteria() {
-    return this.componentStore.selectProperty<MissionCriteria>("missionCriteria");
+    return this.componentStore.state.missionCriteria;
   }
 
   criteriaFormState$: Observable<MissionCriteriaFormState> = 

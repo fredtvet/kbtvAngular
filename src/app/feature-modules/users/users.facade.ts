@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { _groupBy } from '@array/group-by.helper';
 import { User } from "@core/models";
 import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
+import { FetchModelsAction } from "@model/state/fetch-model/fetch-models.http.effect";
 import { Roles } from '@shared-app/enums';
 import { Store } from '@state/store';
 import { map } from "rxjs/operators";
@@ -14,9 +15,11 @@ export class UsersFacade {
   sortedUsers$ = 
     this.store.selectProperty$<User[]>("users").pipe(map(x => this.sortByRole(x)));
   
-  get users() { return this.store.selectProperty<User[]>("users"); }
+  get users() { return this.store.state.users; }
 
-  constructor(private store: Store<StoreState>) { }
+  constructor(private store: Store<StoreState>) {
+    this.store.dispatch({type: FetchModelsAction, props: ["users"]})
+  }
 
   updatePassword(userName: string, newPassword: string): void{
     this.store.dispatch(<UpdateUserPasswordAction>{ type: UpdateUserPasswordAction, newPassword, userName })

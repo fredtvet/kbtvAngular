@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, UnknownState } from '@global/interfaces';
+import { Immutable, UnknownState } from '@global/interfaces';
 import { Prop } from '@state/interfaces';
 import { ModelCommand } from './model-command.enum';
 

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { DynamicFormsModule } from '@dynamic-forms/dynamic-forms.module';
 import { FormSheetModule } from '@form-sheet/form-sheet.module';
+import { FetchModelsProviders } from '@model/state/providers.const';
 import { StateAction } from '@state/state.action';
 import { ConfirmDialogModule } from '../confirm-dialog/confirm-dialog.module';
 import { DEFAULT_SAVE_CONVERTER } from './injection-tokens.const';
@@ -21,6 +22,7 @@ import { ModelFormService } from './model-form.service';
     providers: [
         ModelFormService,
         ModelFormFacade,
+        ...FetchModelsProviders
     ],
 })
 export class ModelFormModule { 

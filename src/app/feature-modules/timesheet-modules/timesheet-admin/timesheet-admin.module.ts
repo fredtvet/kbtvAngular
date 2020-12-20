@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AppSaveModelProviders } from '@core/state/providers.const';
+import { FetchModelsProviders } from '@model/state/providers.const';
 import { STORE_EFFECTS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';
@@ -27,6 +28,7 @@ import { UpdateTimesheetStatusesReducer } from './update-timesheet-statuses/upda
     { provide: STORE_REDUCERS, useValue: UpdateTimesheetStatusesReducer, multi: true},
     ...AppSaveModelProviders,
     ...FetchTimesheetProviders,
+    ...FetchModelsProviders,
   ],
   imports: [
     SharedTimesheetModule,

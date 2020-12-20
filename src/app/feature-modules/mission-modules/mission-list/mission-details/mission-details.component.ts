@@ -11,7 +11,7 @@ import { EditMissionForm } from '@shared/constants/model-forms/save-mission-form
 import { TimesheetStatus } from '@shared/enums';
 import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { MissionListFacade } from '../mission-list.facade';
 
 interface ViewModel { mission: Maybe<Immutable<Mission>>, navConfig: DetailTopNavConfig }

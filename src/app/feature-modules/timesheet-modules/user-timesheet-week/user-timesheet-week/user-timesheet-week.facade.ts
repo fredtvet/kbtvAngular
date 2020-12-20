@@ -26,7 +26,7 @@ export class UserTimesheetWeekFacade {
     private currentWeekNr: number = _getWeekOfYear();
     private currentYear: number = new Date().getFullYear();
 
-    get weekCriteria(){ return this.componentStore.selectProperty<WeekCriteria>("weekCriteria"); } 
+    get weekCriteria(){ return this.componentStore.state.weekCriteria; } 
     weekCriteria$ = this.componentStore.selectProperty$<WeekCriteria>("weekCriteria");
 
     private filteredTimesheets$: Observable<Maybe<Immutable<Timesheet>[]>> = combineLatest([
@@ -43,7 +43,6 @@ export class UserTimesheetWeekFacade {
             const relationCfg = new GetWithRelationsConfig<StoreState>("userTimesheets", null, ["missions"]);
             const timesheets = _getRangeWithRelations<Timesheet, ModelState>({userTimesheets, missions: missions || []}, relationCfg);
             const summaries = this.summaryAggregator.groupByType(GroupByPeriod.Day, timesheets);
-            console.log(userTimesheets, timesheets);
             return _mapObjectsToWeekdays<TimesheetSummary>(summaries, "date")
         })
     );
