@@ -18,7 +18,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
+            "aot": false,
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -33,12 +33,7 @@
                 "input": "src/styles/lazy-styles/ag-grid.scss",
                 "bundleName": "ag-grid",
                 "inject": false
-              },
-              {
-                "input": "src/styles/lazy-styles/mat-styles.scss",
-                "bundleName": "mat-styles",
-                "inject": false
-              } 
+              }
             ],
             "scripts": []
           },

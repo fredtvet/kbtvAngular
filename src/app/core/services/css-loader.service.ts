@@ -10,7 +10,7 @@ export class CssLoaderService {
 
     constructor(@Inject(DOCUMENT) private document: Document) {}
   
-    loadStyle(styleSheet: LazyStyles): void {
+    load(styleSheet: LazyStyles): void {
       if (this.document.getElementById(styleSheet)) return;
       else {     
         const head = this.document.getElementsByTagName('head')[0];
@@ -18,6 +18,7 @@ export class CssLoaderService {
         style.id = styleSheet;
         style.rel = 'stylesheet';
         style.href = `${environment.baseUrl}/${styleSheet}.css`;
+ 
   
         head.appendChild(style);
       }
