@@ -14,6 +14,7 @@ import { UpdateSelectedPropertyAction } from './state/update-selected-property.r
 import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
 import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
 import { Immutable } from "@global/interfaces";
+import { FetchModelsAction } from "@model/state/fetch-model/fetch-models.http.effect";
 
 @Injectable()
 export class DataManagerFacade  {
@@ -36,8 +37,10 @@ export class DataManagerFacade  {
         private componentStore: ComponentStore<ComponentState>
     ) { }
 
-    updateSelectedProperty = (prop: Prop<ModelState>) => 
+    updateSelectedProperty = (prop: Prop<ModelState>) => {
         this.componentStore.dispatch(<UpdateSelectedPropertyAction>{ type: UpdateSelectedPropertyAction, selectedProperty: prop })
+        this.store.dispatch(<FetchModelsAction<ModelState>>{ type: FetchModelsAction, props: [prop] })
+    }
 
     update = (form: Model): void =>
         this.selectedProperty ? 
