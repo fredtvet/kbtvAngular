@@ -52,4 +52,5 @@ export const UserPasswordForm: DynamicForm<UserPasswordForm,  unknown> = {
         NewPasswordControl,
         ConfirmPasswordControl,
     ],
+    validators: [isSamePasswordsValidator<PasswordForm>("newPassword", "confirmPassword")],
 }
