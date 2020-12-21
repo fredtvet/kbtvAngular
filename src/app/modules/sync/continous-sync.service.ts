@@ -1,9 +1,8 @@
 import { ApplicationRef, Injectable } from "@angular/core";
-import { interval, concat } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
-import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper';
 import { Store } from '@state/store';
-import { StoreState, SyncConfig } from './interfaces';
+import { concat, interval } from 'rxjs';
+import { first, tap } from 'rxjs/operators';
+import { StoreState } from './interfaces';
 import { SyncStateAction } from './state/actions';
 
 @Injectable({providedIn: "root"})
@@ -28,7 +27,7 @@ export class ContinousSyncService {
     }
 
     private syncIfTimePassed = (): void => {
-      const timeSinceLastSync = _getUnixTimeSeconds() - (this.syncTimestamp || 0);
+      const timeSinceLastSync = new Date().getTime() - (this.syncTimestamp || 0);
       const syncConfig = this.store.state.syncConfig;
       if(!syncConfig || (timeSinceLastSync > syncConfig.refreshTime)) this.syncAll();             
     }

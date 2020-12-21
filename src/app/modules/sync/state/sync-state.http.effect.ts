@@ -6,7 +6,7 @@ import { Store } from '@state/store';
 import { Observable } from 'rxjs';
 import { exhaustMap, filter, map } from 'rxjs/operators';
 import { SYNC_HTTP_FETCHER, SYNC_STATE_CONFIG } from '../injection-tokens.const';
-import { StoreState, SyncConfig, SyncHttpFetcher, SyncStateConfig } from '../interfaces';
+import { StoreState, SyncHttpFetcher, SyncStateConfig } from '../interfaces';
 import { SyncStateAction, SyncStateSuccessAction, WipeSyncStateAction } from './actions';
 
 @Injectable()

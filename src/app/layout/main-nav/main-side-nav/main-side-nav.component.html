@@ -13,7 +13,7 @@
     </span>
 
     <span class="mat-small ellipsis" *ngIf="config.user">
-      Sist synkronisert {{ (config.syncTimestamp * 1000) | date : 'shortTime'}}
+      Sist synkronisert {{ config.syncTimestamp | date : 'shortTime'}}
     </span>
 
   </mat-toolbar>
