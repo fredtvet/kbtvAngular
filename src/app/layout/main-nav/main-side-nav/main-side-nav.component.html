@@ -1,15 +1,19 @@
 
-  <mat-toolbar fxLayout="column" fxLayoutAlign="center start" color="primary">
+  <mat-toolbar fxLayout="column" fxLayoutAlign="center stretch" color="primary">
 
     <ng-container *ngIf="config.isOnline else offlineHeader">
-      <span class="mat-small color-accent"> Tilkoblet internett </span>
+      <span class="mat-small color-accent ellipsis"> Tilkoblet internett</span>
     </ng-container>
     <ng-template #offlineHeader>
-      <span class="mat-small color-warn">Frakoblet internett</span>
+      <span class="mat-small color-warn ellipsis">Frakoblet internett</span>
     </ng-template>
 
-    <span class="mat-body" *ngIf="config.user">
+    <span class="mat-body ellipsis" *ngIf="config.user" style="line-height:1">
       {{ config.user.firstName }} {{ config.user.lastName }}
+    </span>
+
+    <span class="mat-small ellipsis" *ngIf="config.user">
+      Sist synkronisert {{ (config.syncTimestamp * 1000) | date : 'shortTime'}}
     </span>
 
   </mat-toolbar>
