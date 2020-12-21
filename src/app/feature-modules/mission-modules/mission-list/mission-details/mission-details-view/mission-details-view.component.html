@@ -1,50 +1,61 @@
-<div class="p-1 max-width" *ngIf="mission">
+<div class="pr-1 pl-1 max-width" *ngIf="mission">
 
-  <div fxLayout="row" fxLayoutGap="8px" class="mat-subheading-2 mb-2">
-    
-    <a *ngIf="mission?.phoneNumber else noPhone" class="mat-elevation-z2 foreground-card text-center p-6" fxFlex="50"
-      href="tel:{{ mission?.phoneNumber }}"  matRipple>
-      <mat-icon class="scale-150 mb-1">phone</mat-icon><br />
-      <span>{{ mission?.phoneNumber || 'N/A' }} </span>
-    </a>
+  <a *ngIf="mission.phoneNumber" href="tel:{{ mission?.phoneNumber }}">
+    <app-list-card>
+      <mat-icon left-side>phone</mat-icon>
+      92278483
+      <ng-container right-side>
+        <span class="color-accent">Ring</span>
+        <mat-icon>chevron_right</mat-icon>
+      </ng-container>
+    </app-list-card>
+  </a>
 
-    <ng-template #noPhone>
-      <span class="mat-elevation-z2 foreground-card text-center p-6" fxFlex="50">
-        <mat-icon class="scale-150 mb-1">phone</mat-icon><br />
-        <span>{{ mission?.phoneNumber || 'N/A' }} </span>
-      </span>
-    </ng-template>
+  <a href="https://www.google.com/maps/dir/?api=1&destination={{ mission?.address }}&travelmode=driving"
+    target="_blank">
+    <app-list-card>
+      <mat-icon left-side>directions_car</mat-icon>
+      Veibeskrivelse
+      <ng-container right-side>
+        <span class="color-accent">Åpne kart</span>
+        <mat-icon>chevron_right</mat-icon>
+      </ng-container>
+    </app-list-card>
+  </a>
 
-    <a href="https://www.google.com/maps/dir/?api=1&destination={{ mission?.address }}&travelmode=driving"
-      target="_blank" class="mat-elevation-z2 foreground-card text-center p-6" fxFlex="50" matRipple>
-      <mat-icon class="scale-150">directions_car</mat-icon><br />
-      <span>Veibeskrivelse</span>
-    </a>
+  <mat-card class="mt-1">
 
-  </div>
+    <span class="mat-body-2 mb-2"> Ressurser</span>
 
-  <app-list-card ellipsisDisabled="true" [routerLink]="['/oppdrag', mission?.id, 'detaljer','bilder']">
-    <mat-icon left-side>photo_library</mat-icon>
-    <span [matBadge]="mission.missionImages ? mission.missionImages.length : 0" 
-      matBadgeOverlap="false" matBadgeColor="accent">Bilder</span>
-    <mat-icon right-side>chevron_right</mat-icon>
-  </app-list-card>
+    <mat-divider inset="true"></mat-divider>
 
-  <app-list-card *ifRole="RolePresets.Internal" ellipsisDisabled="true"  
-    [routerLink]="['/oppdrag', mission?.id, 'detaljer','dokumenter']">
-    <mat-icon left-side>folder</mat-icon>
-    <span [matBadge]="mission.missionDocuments ? mission.missionDocuments.length : 0" 
-      matBadgeOverlap="false" matBadgeColor="accent">Dokumenter</span>
-    <mat-icon right-side>chevron_right</mat-icon>
-  </app-list-card>
+    <app-list-item [routerLink]="['/oppdrag', mission?.id, 'detaljer','bilder']">
+      <mat-icon left-side>photo_library</mat-icon>
+      Bilder
+      <ng-container right-side>
+        <span *ngIf="mission.missionImages?.length">{{ mission.missionImages.length }}</span>
+        <mat-icon>chevron_right</mat-icon>
+      </ng-container>
+    </app-list-item>
 
-  <app-list-card *ifRole="RolePresets.Internal" ellipsisDisabled="true"
-    [routerLink]="['/oppdrag', mission?.id, 'detaljer','notater']">
-    <mat-icon left-side>rate_review</mat-icon>
-    <span [matBadge]="mission.missionNotes ? mission.missionNotes.length : 0" 
-      matBadgeOverlap="false" matBadgeColor="accent">Notater</span>
-    <mat-icon right-side>chevron_right</mat-icon>
-  </app-list-card>
+    <app-list-item *ifRole="RolePresets.Internal" [routerLink]="['/oppdrag', mission?.id, 'detaljer','dokumenter']">
+      <mat-icon left-side>folder</mat-icon>
+      Dokumenter
+      <ng-container right-side>
+        <span *ngIf="mission.missionDocuments?.length">{{ mission.missionDocuments.length }}</span>
+        <mat-icon>chevron_right</mat-icon>
+      </ng-container>
+    </app-list-item>
 
+    <app-list-item *ifRole="RolePresets.Internal" [routerLink]="['/oppdrag', mission?.id, 'detaljer','notater']">
+      <mat-icon left-side>rate_review</mat-icon>
+      Notater
+      <ng-container right-side>
+        <span *ngIf="mission.missionNotes?.length">{{ mission.missionNotes.length }}</span>
+        <mat-icon>chevron_right</mat-icon>
+      </ng-container>
+    </app-list-item>
+
+  </mat-card>
 
 </div>
