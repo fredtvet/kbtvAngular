@@ -3,7 +3,6 @@ import { Mission, MissionType, Employer, AppDocumentType, MissionImage, MissionD
 import { ModelState } from '@core/state/model-state.interface';
 import { ModelConfig } from '@model/interfaces';
 
-
 export const ModelConfigs: unknown[] = [
     <ModelConfig<Mission, ModelState>>{
         stateProp: "missions",
@@ -12,7 +11,13 @@ export const ModelConfigs: unknown[] = [
         displayProp: "address",
         foreignProp: "mission",
         foreignKey: "missionId",
-        children: ["missionImages", "missionDocuments", "missionNotes", "timesheets", "userTimesheets"], 
+        children: [
+            {prop: "missionImages", cascadeDelete: true}, 
+            {prop: "missionDocuments", cascadeDelete: true},
+            {prop: "missionNotes", cascadeDelete: true}, 
+            {prop: "timesheets"},
+            {prop: "userTimesheets"},
+        ], 
         foreigns: ["missionTypes","employers"],       
     },
     <ModelConfig<MissionType, ModelState>>{

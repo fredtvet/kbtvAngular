@@ -28,11 +28,12 @@ export function _deleteModelWithChildren<TState extends UnknownState>(
   if(filtered?.length < slice?.length) newState[stateProp] = filtered;
 
   if(modelCfg.children?.length)
-    for(var childProp of modelCfg.children){
-      const childSlice = <unknown[]> state[childProp];
+    for(var childRel of modelCfg.children){
+      if(!childRel.cascadeDelete) continue;
+      const childSlice = <unknown[]> state[childRel.prop];
       if(!modelCfg.foreignKey) { console.error(`No foreign key for property ${stateProp}`); continue };
       const childFiltered = _filter(childSlice, filterFactory(modelCfg.foreignKey));
-      if(childFiltered?.length < childSlice?.length) newState[childProp] = childFiltered;
+      if(childFiltered?.length < childSlice?.length) newState[childRel.prop] = childFiltered;
     }
 
   return <Immutable<Partial<TState>>> newState;

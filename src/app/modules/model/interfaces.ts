@@ -10,9 +10,11 @@ export interface ModelConfig<TModel, TState> {
     foreignProp?: string,
     foreignKey?: string,
     displayProp?: Prop<TModel>,
-    children?: Prop<TState>[],
+    children?: ChildRelation<TState>[],
     foreigns?: Prop<TState>[]
 }
+
+export interface ChildRelation<TState> { prop: Prop<TState>, cascadeDelete?: boolean }
 
 export type SaveAction = ModelCommand.Create | ModelCommand.Update;
 

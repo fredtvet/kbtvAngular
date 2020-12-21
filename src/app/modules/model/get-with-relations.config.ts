@@ -26,7 +26,7 @@ export class GetWithRelationsConfig<TState> {
     this.includedForeignProps = 
       foreigns === "all" ? (fkProps || []) : this.getProps(foreigns || [], fkProps || [])
 
-    const childProps = this.propConfig?.children
+    const childProps = this.propConfig?.children?.map(x => x.prop)
     this.includedChildProps = 
       children === "all" ? (childProps || []) : this.getProps(children || [], childProps || []) 
 
