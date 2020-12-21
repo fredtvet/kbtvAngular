@@ -13,7 +13,7 @@
       [ngClass]="config.imgSrc ? 'detail-navbar-overlay detail-navbar-overlay-bottom' : ''"
       class="detail-nav">
   
-      <span class="ml-6 mb-2">
+      <span class="ml-6">
           <ng-container *ngFor="let line of config.titleLines; let last = last">
               <div [ngClass]="config.imgSrc ? 'img-title-overlay' : ''" class="title-line pl-2 pr-2">{{ line }}</div><br />
           </ng-container>
