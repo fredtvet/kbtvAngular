@@ -1,8 +1,6 @@
 import { Immutable, ImmutableArray } from '@global/interfaces';
 import { Reducer } from '../interfaces';
 import { StateAction } from '../state.action';
-import { _cloneInstance } from './clone-instance.helper';
-import { _deepClone } from './deep-clone.helper';
 
 export function _mergeReducers(reducers: ImmutableArray<Reducer<{}, StateAction>>, type: string): Reducer<{}, StateAction> {
     return <Reducer<{}, StateAction>>{type,
