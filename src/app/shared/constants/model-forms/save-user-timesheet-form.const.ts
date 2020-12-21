@@ -1,7 +1,7 @@
 import { Validators } from '@angular/forms';
 import { Mission } from '@core/models';
 import { DynamicControl, DynamicControlGroup, DynamicForm } from '@dynamic-forms/interfaces';
-import { _getISO } from '@datetime/get-iso-with-timezone.helper';
+import { _getISO } from '@datetime/get-iso.helper';
 import { IonDateQuestion, IonDateQuestionComponent } from '../../components/dynamic-form-questions/ion-date-time-question.component';
 import { TextAreaQuestion, TextAreaQuestionComponent } from '../../components/dynamic-form-questions/text-area-question.component';
 import { HiddenIdControl, MissionAutoCompleteControl } from '../common-controls.const';
@@ -25,7 +25,7 @@ export interface TimesheetForm {
 
 const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm, FormState>>{ type: "group", controls: [
     <DynamicControl<TimesheetForm, FormState>>{ name: "date", required: true, 
-        valueGetter: (s: TimesheetForm) => _getISO(s.date) || _getISO(s.startTime),
+        valueGetter: (s: TimesheetForm) => s.date ? _getISO(s.date) : (s.startTime ? _getISO(s.startTime) : null),
         getRawValue:true,
         type: "control", questions: [{
             component:  IonDateQuestionComponent,
@@ -38,7 +38,7 @@ const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm, FormState>>{ ty
         }], 
     } ,
     <DynamicControl<TimesheetForm, FormState>>{ name: "startTime", required: true,
-        valueGetter: (f: TimesheetForm) => _getISO(f?.startTime),
+        valueGetter: (f: TimesheetForm) => f.startTime ? _getISO(f.startTime) : null,
         type: "control", questions: [{
             component:  IonDateQuestionComponent,
             question: <IonDateQuestion>{
@@ -53,7 +53,7 @@ const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm, FormState>>{ ty
         }], 
     },
     <DynamicControl<TimesheetForm, FormState>>{ name: "endTime", required: true,
-        valueGetter: (f: TimesheetForm) => _getISO(f?.endTime),
+        valueGetter: (f: TimesheetForm) => f.endTime ? _getISO(f.endTime) : null,
         type: "control", questions: [{
             component:  IonDateQuestionComponent,
             question: <IonDateQuestion>{

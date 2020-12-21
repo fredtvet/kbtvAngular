@@ -11,7 +11,7 @@ import { SaveUserTimesheetAction } from './save-user-timesheet.action';
 export const _timesheetFormToSaveUserTimesheetConverter: FormToSaveModelConverter<TimesheetForm, ModelState, SaveUserTimesheetAction> =
     (input: ModelFormToSaveModelInput<TimesheetForm, ModelState>): SaveUserTimesheetAction => {
         const value = input.formValue;
-
+   
         var entity: Immutable<Timesheet> = {
             id: value.id,
             missionId: value.mission?.id,

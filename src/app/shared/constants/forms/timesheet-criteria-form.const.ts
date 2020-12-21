@@ -1,5 +1,5 @@
 import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
-import { _getISO } from '@datetime/get-iso-with-timezone.helper';
+import { _getISO } from '@datetime/get-iso.helper';
 import { _getMonthRange } from '@datetime/get-month-range.helper';
 import { DateRange } from '@datetime/interfaces';
 import { DynamicControl, DynamicControlGroup, DynamicForm } from '@dynamic-forms/interfaces';
@@ -32,7 +32,7 @@ const DateRangePresetControl = <DynamicControl<TimesheetCriteria, FormState>>{ n
 const DateRangeControlGroup = <DynamicControlGroup<TimesheetCriteria, FormState>>{ name: "dateRange", 
     type: "group", controls: [
         <DynamicControl<DateRange, FormState>>{ name: "start",
-            valueGetter: (s: TimesheetCriteria) => _getISO(s.dateRange?.start),
+            valueGetter: (s: TimesheetCriteria) => s.dateRange?.start ? _getISO(s.dateRange.start) : null,
             type: "control", questions: [
                 {component:  IonDateQuestionComponent,       
                     hideOnValueChange: {controlName: "dateRangePreset", callback: (val) => val !== DateRangePresets.Custom},
@@ -58,7 +58,7 @@ const DateRangeControlGroup = <DynamicControlGroup<TimesheetCriteria, FormState>
             ], 
         },
         <DynamicControl<DateRange, FormState>>{ name: "end",
-            valueGetter: (s: TimesheetCriteria) => _getISO(s.dateRange?.end),
+            valueGetter: (s: TimesheetCriteria) => s.dateRange?.end ? _getISO(s.dateRange.end) : null,
             type: "control", questions: [
                 {component:  IonDateQuestionComponent,              
                 hideOnValueChange: {controlName: "dateRangePreset", callback: (val) => val !== DateRangePresets.Custom},
