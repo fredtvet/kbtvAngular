@@ -4,16 +4,18 @@ import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar'
 @Component({
   selector: 'app-notification',
   template: `
-    <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" style="margin-bottom:4px">
+  <div style="overflow-wrap:break-word;word-wrap: break-word;">
+    <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" style="margin-bottom:4px;">
       <mat-icon>{{data.icon}}</mat-icon>
-      <span *ngIf="data.title">{{ data.title }}</span>
+      <span style="overflow:hidden" *ngIf="data.title">{{ data.title }}</span>
     </span>
 
-    <ul *ngFor="let detail of data.details">
-        <li>
+    <ul style="max-height:30vh;overflow-y:scroll">
+        <li *ngFor="let detail of data.details">
             {{ detail }}
         </li>
     </ul>
+  </div>
   `,
   host: { '(click)': 'onClick()'},
   changeDetection: ChangeDetectionStrategy.OnPush
