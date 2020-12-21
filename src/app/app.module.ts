@@ -25,7 +25,6 @@ registerLocaleData(norwayLocale, 'nb-NO');
     HomeTopNavComponent,
   ],
   imports: [
-    BrowserModule,
     BrowserAnimationsModule,   
     HttpClientModule, 
     CoreModule, 
@@ -38,9 +37,9 @@ registerLocaleData(norwayLocale, 'nb-NO');
     NotificationModule
   ],
   providers:[ 
+    { provide: LOCALE_ID, useValue: "nb-NO" }, 
     { provide: HAMMER_GESTURE_CONFIG, useClass: AppHammerConfig},
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: LOCALE_ID, useValue: "nb-NO" }, 
   ],
   bootstrap: [AppComponent],
 })

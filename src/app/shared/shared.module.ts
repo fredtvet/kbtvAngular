@@ -109,4 +109,4 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, FuncPipe, IsTodayP
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -5,16 +5,13 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { CssLoaderService } from '../core/services/css-loader.service';
-import { LazyStyles } from '../shared-app/enums';
-import {MatSliderModule} from '@angular/material/slider';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
    imports: [
@@ -23,11 +20,9 @@ import {MatSliderModule} from '@angular/material/slider';
       MatInputModule,
       MatSelectModule,
       MatRadioModule,
-      MatTooltipModule,
       MatCheckboxModule,
       MatAutocompleteModule,
       ScrollingModule, 
-      MatButtonToggleModule,
       MatDialogModule,
       MatBottomSheetModule,
       MatChipsModule,
@@ -39,7 +34,6 @@ import {MatSliderModule} from '@angular/material/slider';
       MatFormFieldModule,
       MatSelectModule,
       MatRadioModule,
-      MatTooltipModule,
       MatCheckboxModule,
       MatAutocompleteModule,
       ScrollingModule, 
@@ -47,12 +41,8 @@ import {MatSliderModule} from '@angular/material/slider';
       MatDialogModule,
       MatBottomSheetModule,
       MatChipsModule,
-      MatSliderModule
+      MatSliderModule,
    ],
 })
 
-export class AngularMaterialModule { 
-   constructor(private cssLoaderService: CssLoaderService){
-      this.cssLoaderService.loadStyle(LazyStyles.MatStyles);
-    }
-}
+export class AngularMaterialModule {}

@@ -48,7 +48,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes,  {
-      preloadingStrategy: RolePreloadService
+      // preloadingStrategy: RolePreloadService
   })],
   exports: [RouterModule]
 })

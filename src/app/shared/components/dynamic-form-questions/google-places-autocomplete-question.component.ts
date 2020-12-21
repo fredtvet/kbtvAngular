@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.component';
+import { Question, QuestionComponent } from '@dynamic-forms/interfaces';
+import { ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from '@dynamic-forms/validation-error-map.interface';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
-import { Question, QuestionComponent } from '@dynamic-forms/interfaces';
-import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '@dynamic-forms/validation-error-map.interface';
-import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.component';
 
 export interface GooglePlacesAutoCompleteQuestion extends Question {
     options?: Partial<Options>;
@@ -48,7 +48,7 @@ export class GooglePlacesAutoCompleteQuestionComponent extends BaseQuestionCompo
     addressFormatter = (address: Address) => address.formatted_address
 
     constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
-        super(validationErrorMessages) 
+        super(validationErrorMessages);   
     }
 
     onAddressChange(address: Address){
