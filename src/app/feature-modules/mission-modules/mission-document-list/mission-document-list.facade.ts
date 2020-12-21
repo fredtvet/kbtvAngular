@@ -2,9 +2,9 @@ import { Injectable } from "@angular/core";
 import { Mission, MissionDocument } from "@core/models";
 import { ModelState } from '@core/state/model-state.interface';
 import { ImmutableArray, Maybe } from '@global/interfaces';
-import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
+import { RelationInclude } from "@model/interfaces";
 import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
 import { MailModelsAction } from '@model/state/mail-models/mail-models.action';
 import { Store } from '@state/store';
@@ -19,14 +19,14 @@ export class MissionDocumentListFacade  {
 
   getMissionDocuments$(missionId: Maybe<string>): Observable<ImmutableArray<MissionDocument>> {
     return this.store.select$(["missionDocuments", "employers", "documentTypes"]).pipe(map(state => {
-      const relationCfg = new GetWithRelationsConfig<StoreState>("missionDocuments", null, ["documentTypes"])
-      return _getRangeWithRelations(state || {}, relationCfg, (x: MissionDocument) => x.missionId === missionId);
+      const cfg: RelationInclude<StoreState> = {prop: "missionDocuments", foreigns: ["documentTypes"]}
+      return _getRangeWithRelations(state || {}, cfg, (x: MissionDocument) => x.missionId === missionId);
     }))
   }
 
   getMissionEmployerEmail(missionId: Maybe<string>): string{  
-    const relationCfg = new GetWithRelationsConfig<StoreState>("missions", null, ["employers"])
-    const mission = _getWithRelations<Mission, ModelState>(this.store.state, relationCfg, missionId);
+    const cfg: RelationInclude<ModelState> = {prop: "missions", foreigns: ["employers"]}
+    const mission = _getWithRelations<Mission, ModelState>(this.store.state, cfg, missionId);
     const email = mission?.employer?.email;
     return email || "";
   }

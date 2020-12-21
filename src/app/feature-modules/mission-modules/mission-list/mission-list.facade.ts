@@ -4,7 +4,6 @@ import { ApiUrl } from '@core/api-url.enum';
 import { Mission } from "@core/models";
 import { SaveModelFileAction } from '@core/state/save-model-file/save-model-file.action';
 import { Immutable, Maybe } from '@global/interfaces';
-import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
 import { ModelCommand } from '@model/model-command.enum';
 import { NotificationService, NotificationType } from '@notification/index';
@@ -16,6 +15,7 @@ import { MissionCriteria } from '@shared/interfaces';
 import { MissionFilter } from '@shared/mission-filter.model';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { ComponentStore } from '@state/component.store';
+import { Prop } from "@state/interfaces";
 import { Store } from '@state/store';
 import { combineLatest, Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
@@ -56,11 +56,10 @@ export class MissionListFacade {
     if(!id) return of(null);
     this.updateLastVisited(id);
 
-    let relationCfg = new GetWithRelationsConfig<StoreState>("missions", 
-      ["missionNotes", "missionDocuments", "missionImages"]);
+    const children: Prop<StoreState>[] = ["missionNotes", "missionDocuments", "missionImages"];
 
-    return this.store.select$(relationCfg.includedProps).pipe(
-      map(state => _getWithRelations<Mission, StoreState>(state, relationCfg, id))
+    return this.store.select$(["missions", ...children]).pipe(
+      map(state => _getWithRelations<Mission, StoreState>(state, {prop: "missions", children}, id))
     )
   }
 

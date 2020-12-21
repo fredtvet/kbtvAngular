@@ -3,8 +3,8 @@ import { Mission, Timesheet } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
 import { Immutable, Maybe } from '@global/interfaces';
-import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
+import { RelationInclude } from '@model/interfaces';
 import { _mapObjectsToWeekdays } from '@shared-app/helpers/object/map-objects-to-weekdays.helper';
 import { WeekCriteria } from '@shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetSummaryAggregator } from '@shared-timesheet/services/timesheet-summary.aggregator';
@@ -15,7 +15,7 @@ import { filterRecords } from '@shared/operators/filter-records.operator';
 import { ComponentStore } from '@state/component.store';
 import { Store } from '@state/store';
 import { combineLatest, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { TimesheetSummary } from '../../shared-timesheet/interfaces';
 import { ComponentStoreState, StoreState } from '../store-state.interface';
 import { NextWeekAction, PreviousWeekAction, SetTimesheetCriteriaAction } from './component.reducers';
@@ -40,8 +40,8 @@ export class UserTimesheetWeekFacade {
     ]).pipe(
         map(([userTimesheets, missions]) =>  {
             if(!userTimesheets?.length) return;
-            const relationCfg = new GetWithRelationsConfig<StoreState>("userTimesheets", null, ["missions"]);
-            const timesheets = _getRangeWithRelations<Timesheet, ModelState>({userTimesheets, missions: missions || []}, relationCfg);
+            const cfg: RelationInclude<ModelState> = {prop: "userTimesheets", foreigns: ["missions"]}; 
+            const timesheets = _getRangeWithRelations<Timesheet, ModelState>({userTimesheets, missions: missions || []}, cfg);
             const summaries = this.summaryAggregator.groupByType(GroupByPeriod.Day, timesheets);
             return _mapObjectsToWeekdays<TimesheetSummary>(summaries, "date")
         })

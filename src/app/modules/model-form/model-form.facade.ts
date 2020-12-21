@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { OptionsFormState } from '@form-sheet/interfaces';
 import { Immutable, Maybe, UnknownState } from '@global/interfaces';
-import { GetWithRelationsConfig } from '@model/get-with-relations.config';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
-import { UnknownModelState } from '@model/interfaces';
+import { RelationInclude, UnknownModelState } from '@model/interfaces';
 import { ModelStateConfig } from '@model/model-state.config';
 import { FetchModelsAction } from '@model/state/fetch-model/fetch-models.http.effect';
 import { StateAction } from '@state/state.action';
@@ -34,8 +33,8 @@ export class ModelFormFacade {
   getModelWithForeigns(id: string, modelProp: string, fkState: Immutable<UnknownModelState>): Maybe<Immutable<{}>> {
     const state = {...fkState};
     state[modelProp] = this.store.state[modelProp] || []
-    const relationCfg = new GetWithRelationsConfig(modelProp, null, 'all');
-    return _getWithRelations<UnknownState, UnknownModelState>(state, relationCfg, id);
+    const cfg: RelationInclude<UnknownModelState> = {prop: modelProp, foreigns: "all"}; 
+    return _getWithRelations<UnknownState, UnknownModelState>(state, cfg, id);
   }
 
   save(action: StateAction): void {

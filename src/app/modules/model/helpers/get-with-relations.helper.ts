@@ -1,18 +1,18 @@
 import { _filter } from '@array/filter.helper';
 import { _find } from '@array/find.helper';
 import { Immutable, Maybe } from '@global/interfaces';
-import { UnknownModelState } from '@model/interfaces';
-import { GetWithRelationsConfig } from '../get-with-relations.config';
+import { RelationInclude, UnknownModelState } from '@model/interfaces';
 import { ModelStateConfig } from '../model-state.config';
+import { _getRelationProps } from './get-relation-props.helper';
 
 export function _getWithRelations<TModel extends {}, TState extends {}>( 
     state: Maybe<Immutable<Partial<TState>>>,
-    cfg: GetWithRelationsConfig<TState>,
+    cfg: RelationInclude<TState>,
     id: unknown, 
 ): Maybe<Immutable<TModel>> {
-    const modelCfg = ModelStateConfig.get<TModel, TState>(cfg.modelProp); 
+    const modelCfg = ModelStateConfig.get<TModel, TState>(cfg.prop); 
 
-    const modelState = (<Immutable<UnknownModelState>> state)[cfg.modelProp];
+    const modelState = (<Immutable<UnknownModelState>> state)[cfg.prop];
     if(!modelState || modelState.length == 0) return;
 
     const entity = _find(modelState, id, modelCfg.identifier);
@@ -20,7 +20,9 @@ export function _getWithRelations<TModel extends {}, TState extends {}>(
     if(!entity) return;
     let entityClone = {...entity};
 
-    for(const fkStateProp of cfg.includedForeignProps){
+    const {foreigns, children} = _getRelationProps<TState>(cfg);
+
+    for(const fkStateProp of foreigns){
         const fkPropConfig = ModelStateConfig.get(fkStateProp as string);
         entityClone[<string> fkPropConfig.foreignProp] = //Set object prop in detail prop equals to object with ID = fk id
             _find(
@@ -30,7 +32,7 @@ export function _getWithRelations<TModel extends {}, TState extends {}>(
             );
     }
 
-    for(const childStateProp of cfg.includedChildProps){
+    for(const childStateProp of children){
         entityClone[childStateProp as string] = //Set object prop in detail prop equals to object with ID = fk id
             _filter((<Immutable<UnknownModelState>> state)[childStateProp], (x) => x[<string> modelCfg.foreignKey] === id);
     }

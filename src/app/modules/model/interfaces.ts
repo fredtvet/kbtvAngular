@@ -1,4 +1,4 @@
-import { Immutable, UnknownState } from '@global/interfaces';
+import { Immutable, ImmutableArray, UnknownState } from '@global/interfaces';
 import { Prop } from '@state/interfaces';
 import { ModelCommand } from './model-command.enum';
 
@@ -15,6 +15,12 @@ export interface ModelConfig<TModel, TState> {
 }
 
 export interface ChildRelation<TState> { prop: Prop<TState>, cascadeDelete?: boolean }
+
+export interface RelationInclude<TState> {
+    prop: Immutable<Prop<TState>>,
+    foreigns?: ImmutableArray<Prop<TState>> | "all",
+    children?: ImmutableArray<Prop<TState>> | "all"
+};
 
 export type SaveAction = ModelCommand.Create | ModelCommand.Update;
 

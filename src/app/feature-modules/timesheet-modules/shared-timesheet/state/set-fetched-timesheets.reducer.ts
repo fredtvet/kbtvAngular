@@ -1,10 +1,9 @@
 import { _addOrUpdateRange } from '@array/add-or-update-range.helper';
 import { Timesheet } from '@core/models';
 import { StateMissions, StateTimesheets } from '@core/state/global-state.interfaces';
-import { GetWithRelationsConfig } from '@model/get-with-relations.config';
+import { Immutable } from '@global/interfaces';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable } from '@global/interfaces';
 import { StateAction } from '@state/state.action';
 
 export const SetFetchedTimesheetsAction = "SET_FETCHED_TIMESHEETS_ACTION";
@@ -18,12 +17,10 @@ export const SetFetchedTimesheetsReducer = _createReducer(
     SetFetchedTimesheetsAction,
     (state: State, action: Immutable<SetFetchedTimesheetsAction>) => {
         
-        const relationCfg = new GetWithRelationsConfig<State>("timesheets", null, ["missions"]);
-
         const timesheets = _getRangeWithRelations<Timesheet, State>({
             timesheets: action.timesheets, 
             missions: state.missions
-        }, relationCfg);
+        }, {prop: "timesheets", foreigns: ["missions"]});
 
         return {timesheets: _addOrUpdateRange<Timesheet>(state.timesheets, timesheets, "id")};
     }

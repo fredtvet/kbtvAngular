@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Mission, Timesheet } from '@core/models';
 import { StateMissions, StateUserTimesheets } from '@core/state/global-state.interfaces';
-import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
-import { GetWithRelationsConfig } from '@model/get-with-relations.config';
+import { Immutable, Maybe } from '@global/interfaces';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
+import { RelationInclude } from '@model/interfaces';
 import { DateRangePresets } from '@shared-app/enums';
 import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { filterRecords } from '@shared/operators/filter-records.operator';
@@ -35,9 +35,9 @@ export class UserTimesheetListFacade {
         this.store.selectProperty$<Mission[]>("missions")
       ]).pipe(
           map(([userTimesheets, missions]) =>  {
-              const relationCfg = new GetWithRelationsConfig<State>("userTimesheets", null, ["missions"]);
-              if(!userTimesheets) return;
-              return _getRangeWithRelations<Timesheet, State>({userTimesheets, missions: missions || []}, relationCfg);
+            if(!userTimesheets) return;
+            const cfg: RelationInclude<State> = {prop: "userTimesheets", foreigns: ["missions"]};     
+            return _getRangeWithRelations<Timesheet, State>({userTimesheets, missions: missions || []}, cfg);
           })
       );
 
