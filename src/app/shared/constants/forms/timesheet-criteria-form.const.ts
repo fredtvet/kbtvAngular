@@ -94,15 +94,15 @@ export const TimesheetCriteriaForm: DynamicForm<TimesheetCriteria, FormState> = 
         DateRangeControlGroup,
         StatusControl
     ],
-    onSubmitFormatter: (criteria: TimesheetCriteria): Immutable<TimesheetCriteria> => {
-        const preset = criteria.dateRangePreset;  
-        if(preset !== DateRangePresets.Custom && preset !== DateRangePresets.CustomMonth )
-        criteria.dateRange = <DateRange> _getRangeByDateRangePreset(preset);
+    // onSubmitFormatter: (criteria: TimesheetCriteria): Immutable<TimesheetCriteria> => {
+    //     const preset = criteria.dateRangePreset;  
+    //     if(preset !== DateRangePresets.Custom && preset !== DateRangePresets.CustomMonth )
+    //     criteria.dateRange = <DateRange> _getRangeByDateRangePreset(preset);
         
-        const {start, end} = criteria.dateRange || {};
-        if(start || end) criteria.dateRange = {start: new Date(start || 0), end: new Date(end || new Date())};
-        else criteria.dateRange = undefined;
+    //     // const {start, end} = criteria.dateRange || {};
+    //     // if(start || end) criteria.dateRange = {start: new Date(start || 0), end: new Date(end || new Date())};
+    //     // else criteria.dateRange = undefined;
 
-        return criteria;
-    }
+    //     return criteria;
+    // }
 }
