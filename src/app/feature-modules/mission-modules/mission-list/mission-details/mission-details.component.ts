@@ -5,7 +5,7 @@ import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.serv
 import { ModelState } from '@core/state/model-state.interface';
 import { Immutable, Maybe } from '@global/interfaces';
 import { ModelFormService } from '@model-form/model-form.service';
-import { RolePresets, Roles } from '@shared-app/enums';
+import { DateRangePresets, RolePresets, Roles } from '@shared-app/enums';
 import { DetailTopNavConfig } from '@shared/components/detail-top-nav-bar/detail-top-nav.config';
 import { EditMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { TimesheetStatus } from '@shared/enums';
@@ -60,7 +60,7 @@ export class MissionDetailsComponent{
   private goToTimesheets = (mission: Immutable<Mission>) => 
     this.router.navigate(['timer', {
       returnUrl: this.router.url, 
-      criteria: JSON.stringify({mission, status: TimesheetStatus.Open})
+      criteria: JSON.stringify({mission, dateRangePreset: DateRangePresets.ShowAll})
     }], {relativeTo: this.route});
 
   private openBottomSheetMenu = (mission: Immutable<Mission>) => {   
