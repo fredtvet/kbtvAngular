@@ -10,7 +10,7 @@
     width:100%;
     min-height:150px;
     max-width:600px;
-    max-height:37vh; 
+    max-height:35vh; 
     //max-width:650px!important;
     img{
         max-width:100%;
@@ -25,6 +25,8 @@
 .img-title-overlay{
     background-color:rgba(0,0,0,.75);
 }
+
+.bg-black{background-color:#000}
 
 mat-toolbar.detail-nav, 
 mat-toolbar-row.detail-nav, 
