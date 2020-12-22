@@ -70,15 +70,16 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
   }
 
   onChange(val: unknown){
+    let control = this.control;
     if(this.question.overrideValueSetterControl) 
-      this.control = this.form.get(this.question.overrideValueSetterControl)
+      control = this.form.get(this.question.overrideValueSetterControl)
 
-    if(!this.control) return;
+    if(!control) return;
 
     const value = this.question.valueSetter ? this.question.valueSetter(val) : val;
 
-    this.control.setValue(value);  
-    this.control.markAsDirty();
+    control.setValue(value);  
+    control.markAsDirty();
   }
 
   protected onQuestionChanges(question: IonDateQuestion): void { 
