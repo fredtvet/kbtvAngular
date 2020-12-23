@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
 import { Employer, Mission, MissionType } from "@core/models";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { ModelState } from "@core/state/model-state.interface";
@@ -39,8 +38,6 @@ export class MissionListComponent {
 
   missions$ = this.facade.filteredMissions$;
 
-  get initialMissionId() { return this.route.snapshot.paramMap.get('initialMissionId') }
-
   fabs: AppButton[];
 
   private searchBar: SearchBarConfig;
@@ -50,7 +47,6 @@ export class MissionListComponent {
     private chipsFactory: ChipsFactoryService,
     private modelFormService: ModelFormService,
     private facade: MissionListFacade,
-    private route: ActivatedRoute
   ) {
     this.fabs = [
       {icon: "add", aria: "Legg til", color: "accent",
