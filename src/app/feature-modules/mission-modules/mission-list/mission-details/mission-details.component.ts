@@ -8,7 +8,6 @@ import { ModelFormService } from '@model-form/model-form.service';
 import { DateRangePresets, RolePresets, Roles } from '@shared-app/enums';
 import { DetailTopNavConfig } from '@shared/components/detail-top-nav-bar/detail-top-nav.config';
 import { EditMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
-import { TimesheetStatus } from '@shared/enums';
 import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
