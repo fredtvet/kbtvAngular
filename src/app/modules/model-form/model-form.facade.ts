@@ -25,14 +25,12 @@ export class ModelFormFacade {
 
   getFormState$(modelProp: string): Observable<Immutable<OptionsFormState<UnknownModelState>>>{
     const modelCfg = ModelStateConfig.get(modelProp);
-    return this.store.select$<UnknownModelState>(modelCfg.foreigns || []).pipe(
+    return this.store.select$<UnknownModelState>([modelProp, ...(modelCfg.foreigns || [])]).pipe(
       map(state => { return {options: state || {}} })
     )
   }
 
-  getModelWithForeigns(id: string, modelProp: string, fkState: Immutable<UnknownModelState>): Maybe<Immutable<{}>> {
-    const state = {...fkState};
-    state[modelProp] = this.store.state[modelProp] || []
+  getModelWithForeigns(id: string, modelProp: string, state: Immutable<UnknownModelState>): Maybe<Immutable<{}>> {
     const cfg: RelationInclude<UnknownModelState> = {prop: modelProp, foreigns: "all"}; 
     return _getWithRelations<UnknownState, UnknownModelState>(state, cfg, id);
   }
