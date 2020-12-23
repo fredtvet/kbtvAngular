@@ -19,7 +19,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         if(this.criteria.user?.userName)
             exp = exp && record.userName === this.criteria.user.userName;
 
-        if(this.criteria.dateRange && this.criteria.dateRange.start && this.criteria.dateRange.end) {
+        if(this.criteria.dateRange.start && this.criteria.dateRange.end) {
             if(!record.startTime) return false;
             let startTime = this.getStartOfDayTime(record.startTime);
             exp = exp && startTime >= this.getStartOfDayTime(this.criteria.dateRange.start) 

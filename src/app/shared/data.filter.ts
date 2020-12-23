@@ -11,22 +11,19 @@ export abstract class DataFilter<TRecord, TCriteria>{
 
     criteria: Immutable<Partial<TCriteria>>;
 
-    constructor(criteria: Immutable<TCriteria>, private maxChecks?: number, ignoreInital?: boolean){
+    constructor(criteria: Immutable<TCriteria>, private maxChecks?: number, ignoreEmptyCheck?: boolean){
         this.criteria = criteria || {} as Immutable<Partial<TCriteria>>;
-        if(ignoreInital) 
+        if(ignoreEmptyCheck) 
             this.check = this.checkDefault
         else 
-            this.check = this.isCriteriaEmpty ? this.checkInitial : this.checkDefault;
+            this.check = this.isCriteriaEmpty ? this.checkEmpty : this.checkDefault;
     }
 
     check: (record: Immutable<TRecord>) => boolean; 
 
-    protected addChecks(record: Immutable<TRecord>): boolean{
-        console.error("Method not implemented");
-        return false;
-    }
+    protected abstract addChecks(record: Immutable<TRecord>): boolean;
 
-    protected addInitialChecks(record: Immutable<TRecord>): boolean{
+    protected addEmptyStateChecks(record: Immutable<TRecord>): boolean{
         return true; 
     }
 
@@ -43,9 +40,9 @@ export abstract class DataFilter<TRecord, TCriteria>{
         return exp;
     }
 
-    private checkInitial = (record: Immutable<TRecord>): boolean => {
+    private checkEmpty = (record: Immutable<TRecord>): boolean => {
         if(!record) return false;
-        return this.addInitialChecks(record);
+        return this.addEmptyStateChecks(record);
     }
 
 }

@@ -13,8 +13,8 @@ export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
     private searchStringLower: Maybe<string>;
     private sixtyDaysAgo: Maybe<number>;
 
-    constructor(criteria: Immutable<MissionCriteria>, maxChecks?: number, ignoreInitial?: boolean){
-        super(criteria, maxChecks, ignoreInitial);
+    constructor(criteria: Immutable<MissionCriteria>, maxChecks?: number, ignoreEmptyCheck?: boolean){
+        super(criteria, maxChecks, ignoreEmptyCheck);
         this.searchStringLower = criteria?.searchString?.toLowerCase();
         if(this.isCriteriaEmpty) this.sixtyDaysAgo = new Date().setDate(new Date().getDate() - 60);
     }
@@ -37,7 +37,7 @@ export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
         return exp;
     }
 
-    protected addInitialChecks(mission: Immutable<Mission>): boolean{
+    protected addEmptyStateChecks(mission: Immutable<Mission>): boolean{
         let exp = mission.updatedAt != null && mission.updatedAt >= <number> this.sixtyDaysAgo
         exp = exp || mission.lastVisited != null && mission.lastVisited >= <number> this.sixtyDaysAgo;
         return exp;
