@@ -20,7 +20,7 @@ const AvailableRoles = Object.keys(Roles).filter(x => x !== Roles.Leder).map(key
 const UniqueUserNameControl = {...UserNameControl, required: true,     
     asyncStateValidators: [
     (s$: Observable<FormState>) => 
-        isUniqueAsyncValidator<User>(s$.pipe(map(s => s?.options?.users)), "userName")
+        isUniqueAsyncValidator<User>(s$.pipe(map(s => s?.options?.users)), (x, y) => x.userName.toLowerCase() === y.toLowerCase())
     ],
 }
 const RoleControl = <DynamicControl<UserForm, StateUsers>>{ name: "role", required: true,
