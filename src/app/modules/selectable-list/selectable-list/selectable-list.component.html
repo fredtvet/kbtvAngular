@@ -1,5 +1,5 @@
 <div class="entity-row">
-    <div class="entity-column" *ngFor="let i of totalRows | arrayFromNumber">
+    <div class="entity-column" *ngFor="let i of totalRows | numberToArray">
         <app-selectable-card 
             *ngFor="let selectable of (selectableEntities$ | async) | arrayslice: i:totalRows;let i = index;trackBy: trackByFn"
             [selectedText]="selectedText" selectedIcon="check_circle"

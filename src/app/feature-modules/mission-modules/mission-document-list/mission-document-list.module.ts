@@ -4,6 +4,7 @@ import { ModelFormModule } from '@model-form/model-form.module';
 import { DeleteModelProviders, MailModelsProviders } from '@model/state/providers.const';
 import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { SharedModule } from '@shared/shared.module';
+import { SelectableListModule } from 'src/app/modules/selectable-list/selectable-list.module';
 import { MissionDocumentListRoutingModule } from './mission-document-list-routing.module';
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
 import { FileExtensionIconPipe } from './pipes/file-extension-icon.pipe';
@@ -17,7 +18,8 @@ import { FileExtensionPipe } from './pipes/file-extension.pipe';
     FileExtensionPipe,
   ],
   imports: [
-    SharedModule,  
+    SharedModule, 
+    SelectableListModule, 
     ModelFormModule.forFeature(_formToSaveModelFileConverter),
     MissionDocumentListRoutingModule
   ],

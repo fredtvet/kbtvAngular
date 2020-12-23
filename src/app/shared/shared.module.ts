@@ -6,12 +6,7 @@ import { FormSheetModule } from '@form-sheet/form-sheet.module';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
-import {
-  BottomSheetMenuComponent,
-
-  SelectableCardComponent,
-  SelectableListComponent
-} from './components';
+import { BottomSheetMenuComponent } from './components/bottom-sheet-menu.component';
 import { ChipsBarComponent } from './components/chips-bar.component';
 import { DetailTopNavBarComponent } from './components/detail-top-nav-bar/detail-top-nav-bar.component';
 import { AutoCompleteQuestionComponent } from './components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
@@ -28,12 +23,10 @@ import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
 import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
-import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
+import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 
 @NgModule({
   declarations: [
-    SelectableCardComponent,
-    SelectableListComponent,
     BottomSheetMenuComponent,
     MainSkeletonComponent,
     MainTopNavBarComponent,
@@ -52,7 +45,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, FuncPipe, IsTodayP
     SliderQuestionComponent,
     
     TransformButtonPipe,
-    ArraySlicePipe,
     TranslatePipe,
     SortByDatePipe,
     IsTodayPipe,
@@ -83,16 +75,13 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, ArraySlicePipe, FuncPipe, IsTodayP
     SharedAppModule,
     GooglePlaceModule,    
 
-    SelectableCardComponent,
     BottomSheetMenuComponent,
-    SelectableListComponent,
     MainSkeletonComponent,    
     MainTopNavBarComponent,
     DetailTopNavBarComponent,
     ChipsBarComponent,
     
     TransformButtonPipe,
-    ArraySlicePipe,
     TranslatePipe,
     SortByDatePipe,
     IsTodayPipe,

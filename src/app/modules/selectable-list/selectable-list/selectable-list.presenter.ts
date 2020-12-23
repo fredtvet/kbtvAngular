@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SelectableEntity } from '@shared/interfaces';
 import { ImmutableArray, UnknownState } from "@global/interfaces";
+import { SelectableEntity } from "../interfaces";
 
 @Injectable()
 export class SelectableListPresenter<T extends UnknownState = UnknownState> {

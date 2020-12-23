@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef } from "@angular/core";
 import { skip, takeUntil } from "rxjs/operators";
-import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
-import { SelectableEntity } from '@shared/interfaces';
 import { SelectableListPresenter } from './selectable-list.presenter';
 import { UnknownState } from "@global/interfaces";
+import { SelectableEntity } from "../interfaces";
+import { Subject } from "rxjs";
 
 @Component({
   selector: 'app-selectable-list',
@@ -12,7 +12,7 @@ import { UnknownState } from "@global/interfaces";
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers:[SelectableListPresenter]
 })
-export class SelectableListComponent extends WithUnsubscribe() {
+export class SelectableListComponent {
     @Input('entities')
     set entities(value: UnknownState[]) {this.selectableListPresenter.addEntities(value)}
 
@@ -33,10 +33,10 @@ export class SelectableListComponent extends WithUnsubscribe() {
     selectableEntities$ = this.selectableListPresenter.selectableEntities$;
 
     clickDisabled: boolean = false;
+    
+    unsubscribe : Subject<void> = new Subject();
 
-    constructor(private selectableListPresenter: SelectableListPresenter) {
-      super();
-    }
+    constructor(private selectableListPresenter: SelectableListPresenter) {}
     
     ngOnInit(): void {
         this.selectableListPresenter.selectedIds$.pipe(
@@ -62,6 +62,12 @@ export class SelectableListComponent extends WithUnsubscribe() {
       selectable.entity[this._identifier];
     
     clearSelections = () => this.selectableListPresenter.addSelections([]);
+    
+
+    ngOnDestroy(){
+      this.unsubscribe.next();
+      this.unsubscribe.complete();
+    }
   
   }
   

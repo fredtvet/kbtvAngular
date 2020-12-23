@@ -1,8 +1,6 @@
-@import '../../../../styles/variables';
-
 .container {
     position:relative;
-    margin:$gap-size  * .25px;
+    margin:1px;
     touch-action: auto!important;
   }
 
@@ -18,4 +16,9 @@
     transition: .5s ease;
     background-color: black;
     color:white;
+
+    flex-direction:column;
+    display:flex;
+    place-content:center;
+    align-items: center;
   }

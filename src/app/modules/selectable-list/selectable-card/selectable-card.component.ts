@@ -6,7 +6,6 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
   styleUrls: ['./selectable-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class SelectableCardComponent {
 
   @Input() selectedText: string;
