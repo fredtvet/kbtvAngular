@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@angular/core";
 import { MatBottomSheet, MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { Router } from '@angular/router';
-import { ModelState } from '@core/state/model-state.interface';
+import { ConfirmDialogService } from "@confirm-dialog/confirm-dialog.service";
 import { FormSheetWrapperComponent } from '@form-sheet/form-sheet-wrapper.component';
 import { FormSheetWrapperConfig, OptionsFormState } from '@form-sheet/interfaces';
 import { Immutable, Maybe, UnknownState } from "@global/interfaces";
@@ -12,7 +12,6 @@ import { ModelStateConfig } from '@model/model-state.config';
 import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
 import { Store } from '@state/store';
 import { Observable, of } from 'rxjs';
-import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
 import { ModelFormConfig } from './interfaces';
 import { ModelFormComponent } from './model-form.component';
 
@@ -91,13 +90,13 @@ export class ModelFormService {
   }
 
   private deleteEntity = <TState, TForm>(
-    formConfig: ModelFormConfig<TState, TForm, FormState<TState>>, 
+    formConfig: ModelFormConfig< TState, TForm, FormState<TState>>, 
     deleteUrl: Maybe<string>, 
     ref: MatBottomSheetRef<unknown, unknown>) => {
       this.close(ModelCommand.Delete, ref, deleteUrl);
-      this.store.dispatch(<DeleteModelAction<ModelState>>{ 
-        type: DeleteModelAction, 
-        stateProp: formConfig.stateProp, 
+      this.store.dispatch({ 
+        type: DeleteModelAction,  
+        stateProp: <string> formConfig.stateProp, 
         payload: { id: formConfig.entityId } 
       });
   };
