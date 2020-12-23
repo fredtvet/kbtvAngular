@@ -14,6 +14,7 @@ import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
+import { SearchBarConfig } from "@shared/interfaces";
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
 import { Prop } from "@state/interfaces";
 import { Observable } from 'rxjs';
@@ -42,6 +43,8 @@ export class MissionListComponent {
 
   fabs: AppButton[];
 
+  private searchBar: SearchBarConfig;
+
   constructor(
     private formService: FormService,
     private chipsFactory: ChipsFactoryService,
@@ -54,6 +57,11 @@ export class MissionListComponent {
         callback: this.openMissionForm,
         allowedRoles: [Roles.Leder, Roles.Mellomleder]}
     ];
+    this.searchBar = {
+      callback: this.searchMissions,
+      initialValue: this.facade.criteria?.searchString,
+      placeholder: "Søk med adresse eller id",
+    };
   }
 
   searchMissions = (searchString: string) => 
@@ -81,11 +89,7 @@ export class MissionListComponent {
           callback: this.openMissionFilter,
           color: _getSetPropCount(criteria || {}, {finished:false}) ? "accent" : undefined},
       ],
-      searchBar: {
-        callback: this.searchMissions,
-        initialValue: criteria?.searchString,
-        placeholder: "Søk med adresse eller id",
-      },
+      searchBar: this.searchBar
     };
   }
 
