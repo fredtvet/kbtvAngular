@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     
     if(allowedRoles){
       const currentUser = this.authService.getCurrentUser();
-      if(currentUser && !allowedRoles.includes(currentUser?.role)){
+      if(currentUser && allowedRoles.indexOf(currentUser?.role) === -1){
         this.notificaitonService.notify({title: 'Du mangler riktig autorisasjon for å gå inn på denne siden.', type: NotificationType.Error})
         this.router.navigate(['/hjem']);
         return false;    

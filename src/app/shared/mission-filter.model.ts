@@ -45,8 +45,8 @@ export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
     
     private filterSearchString(m: Immutable<Mission>): boolean {
         return m != null && this.searchStringLower != null && 
-        (   m.address?.toLowerCase().includes(this.searchStringLower) || 
-            (m.id != null && m.id.includes(this.searchStringLower)) );
+        ( m.address?.toLowerCase().indexOf(this.searchStringLower) !== -1 || 
+         ( m.id != null && m.id.indexOf(this.searchStringLower)  !== -1 ) );
     }   
        
 };

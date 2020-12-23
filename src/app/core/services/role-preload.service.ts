@@ -18,8 +18,8 @@ export class RolePreloadService implements PreloadingStrategy {
   
     private preloadCheck(route: Route, role: Maybe<string>): boolean {
       return (
-        route.data && role &&
-        (!route.data['allowedRoles'] || route.data['allowedRoles'].includes(role))
+        route.data != null && role != null &&
+        (!route.data['allowedRoles'] || (route.data['allowedRoles'].indexOf(role) !== -1))
       )
     }
   

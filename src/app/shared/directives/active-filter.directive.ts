@@ -54,7 +54,7 @@ export class ActiveStringFilterDirective<TRecord> {
         let exp = false;
         for(var i = this._config.stringProps.length; i--;){
             const value = <string> record[this._config.stringProps[i]];
-            exp = exp || value.toLowerCase().includes(this.searchLower)
+            exp = exp || value.toLowerCase().indexOf(this.searchLower) !== -1
         }
         if(exp && this._config.maxChecks) this.checkCount++;
         return exp;

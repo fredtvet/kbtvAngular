@@ -43,13 +43,13 @@ export class SelectableListPresenter<T extends UnknownState = UnknownState> {
         this.selectedIdsSubject.next(ids);
     }
 
-    isEntitySelected = (id: unknown) => this.selectedIdsSubject.value.includes(id);
+    isEntitySelected = (id: unknown) => this.selectedIdsSubject.value.indexOf(id) !== -1;
     
     private getSelectableEntities(entities: ImmutableArray<T>, selectedIds: unknown[]): SelectableEntity<T>[]{
         let result = [];
         for(let i = 0; i < entities.length; i++){
             const id = entities[i][this.identifier];
-            let isSelected = selectedIds.includes(id);
+            let isSelected = selectedIds.indexOf(id) !== -1;
             result.push({entity: entities[i], selected:isSelected})
         }
         return result;

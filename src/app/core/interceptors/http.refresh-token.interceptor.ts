@@ -42,9 +42,9 @@ export class HttpRefreshTokenInterceptor implements HttpInterceptor {
         return throwError("Noe gikk galt. Du har blitt logget ut.");
     }
 
-    private isLoginRequest = (req: HttpRequest<unknown>) => req.url.includes(`${ApiUrl.Auth}/login`);
+    private isLoginRequest = (req: HttpRequest<unknown>) => req.url.indexOf(`${ApiUrl.Auth}/login`) !== -1;
 
-    private isRefreshRequest = (req: HttpRequest<unknown>): boolean => req.url.includes(`${ApiUrl.Auth}/refresh`);
+    private isRefreshRequest = (req: HttpRequest<unknown>): boolean => req.url.indexOf(`${ApiUrl.Auth}/refresh`) !== -1;
 
-    private isLogoutRequest = (req: HttpRequest<unknown>): boolean => req.url.includes(`${ApiUrl.Auth}/logout`);
+    private isLogoutRequest = (req: HttpRequest<unknown>): boolean => req.url.indexOf(`${ApiUrl.Auth}/logout`) !== -1;
 }
