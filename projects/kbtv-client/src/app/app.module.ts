@@ -2,7 +2,7 @@ import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@ang
 import { HttpClientModule } from '@angular/common/http';
 import norwayLocale from '@angular/common/locales/nb';
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { BrowserModule, HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';

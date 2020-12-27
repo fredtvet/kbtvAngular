@@ -1,11 +1,11 @@
 {
-  "name": "kbtv-client",
+  "name": "fredtv-workspace",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "buildGit": "ng build --prod --base-href /kbtvAngularLive/ --stats-json",
-    "build": "ng build --prod --stats-json",
+    "buildGit": "ng build  --prod --base-href /kbtvAngularLive/ --stats-json",
+    "build": "ng build --project kbtv-client --prod --stats-json",
     "buildPublishGit": "ng build --prod --base-href /kbtvAngularLive/ --stats-json && angular-cli-ghpages --dir dist/kbtv-client --repo=https://github.com/fredtvet/kbtvAngularLive.git",
     "test": "ng test",
     "lint": "ng lint",
@@ -46,7 +46,7 @@
     "@angular/compiler-cli": "^10.1.3",
     "@angular/language-service": "^10.1.3",
     "@compodoc/compodoc": "^1.1.11",
-    "@types/jasmine": "^3.5.14",
+    "@types/jasmine": "^3.6.2",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^14.11.2",
     "codelyzer": "^5.2.2",
