@@ -1,5 +1,5 @@
 import { Mission, Employer, MissionType, MissionImage, MissionDocument, MissionNote, AppDocumentType, Timesheet, User } from '@core/models';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 
 export interface StateMissions { missions: Maybe<Mission[]> }  
 export interface StateEmployers { employers: Maybe<Employer[]> }

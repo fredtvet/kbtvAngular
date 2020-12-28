@@ -1,5 +1,4 @@
-import { Immutable, ImmutableArray, UnknownState } from '@global/interfaces';
-import { Prop } from '@state/interfaces';
+import { Immutable, ImmutableArray, UnknownState, Prop } from 'global-types';
 import { ModelCommand } from './model-command.enum';
 
 export interface ModelConfig<TModel, TState> { 

@@ -5,7 +5,7 @@ import { MissionNote } from "@core/models";
 import { _filter } from '@array/filter.helper';
 import { Store } from '@state/store';
 import { StateMissionNotes } from '@core/state/global-state.interfaces';
-import { Maybe } from "@global/interfaces";
+import { Maybe } from "global-types";
 
 @Injectable({
   providedIn: 'any',

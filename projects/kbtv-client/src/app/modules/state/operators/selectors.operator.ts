@@ -1,8 +1,7 @@
-import { Immutable, ImmutableArray, UnknownState } from '@global/interfaces';
+import { Immutable, ImmutableArray, UnknownState, Prop } from 'global-types';
 import { _selectSlice } from '@state/helpers/select-slice.helper';
 import { Observable } from 'rxjs';
-import { distinctUntilChanged, distinctUntilKeyChanged, map, tap } from "rxjs/operators";
-import { Prop } from '../interfaces';
+import { distinctUntilChanged, distinctUntilKeyChanged, map } from "rxjs/operators";
 
 export const selectProp = <TState, TResult>(prop: Prop<Immutable<TState>>) => 
     (source: Observable<Immutable<TState>>): Observable<Immutable<TResult>> => 

@@ -1,5 +1,5 @@
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 import { StateAction } from '@state/state.action';
 import { StateRequestQueue } from '../interfaces';
 

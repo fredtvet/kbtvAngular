@@ -1,6 +1,6 @@
 import { StateRequestQueue } from '@http/interfaces';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 import { DispatchHttpAction } from './dispatch-http.action';
 
 export const DispatchHttpReducer = _createReducer(

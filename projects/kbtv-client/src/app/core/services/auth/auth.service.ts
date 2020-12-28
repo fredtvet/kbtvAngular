@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { User } from '@core/models';
 import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper';
-import { Immutable, Maybe } from '@global/interfaces';
-import { _selectSlice } from '@state/helpers/select-slice.helper';
-import { select, selectProp } from '@state/operators/selectors.operator';
+import { select } from '@state/operators/selectors.operator';
 import { Store } from '@state/store';
+import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 import { map, skip } from 'rxjs/operators';
 import { Credentials } from './interfaces/credentials.interface';

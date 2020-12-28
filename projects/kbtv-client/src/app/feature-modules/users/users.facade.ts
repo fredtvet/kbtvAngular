@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { _groupBy } from '@array/group-by.helper';
 import { User } from "@core/models";
-import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
+import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { FetchModelsAction } from "@model/state/fetch-model/fetch-models.http.effect";
 import { Roles } from '@shared-app/enums';
 import { Store } from '@state/store';

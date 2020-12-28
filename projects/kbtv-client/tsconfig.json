@@ -5,6 +5,10 @@
     "outDir": "./out-tsc/app",
     "types": [],
     "paths": {
+      "global-types": [
+        "../../dist/global-types/global-types",
+        "../../dist/global-types"
+      ],
       "@core/*": ["src/app/core/*"],
       "@shared-app/*": ["src/app/shared-app/*"],
       "@shared/*": ["src/app/shared/*"],
@@ -22,7 +26,6 @@
       "@selectable-list/*": ["src/app/modules/selectable-list/*"],  
       "@array/*": ["src/app/modules/utility/array-helpers/*"],
       "@datetime/*": ["src/app/modules/utility/date-time-helpers/*"],   
-      "@global/*": ["src/app/modules/global/*"]
     },
   },
   "files": [

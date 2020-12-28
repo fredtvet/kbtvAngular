@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 import { AppButton } from '@shared-app/interfaces';
 
 @Component({

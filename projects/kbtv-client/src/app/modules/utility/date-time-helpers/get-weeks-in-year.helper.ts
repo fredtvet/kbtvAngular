@@ -1,4 +1,4 @@
-import { Maybe } from "@global/interfaces";
+import { Maybe } from "global-types";
 
 export function _getWeeksInYear(year: Maybe<number>): number{
   if(!year) year = new Date().getFullYear();

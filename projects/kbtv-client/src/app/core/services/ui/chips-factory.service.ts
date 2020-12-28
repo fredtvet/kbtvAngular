@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
-import { Prop } from '@state/interfaces';
 import { translations } from '@shared/translations';
-import { Immutable } from '@global/interfaces';
+import { Immutable, Prop } from 'global-types';
 
 export interface CriteriaChipOptions {
   valueFormatter?: ((val: Immutable<unknown>) => string | string),

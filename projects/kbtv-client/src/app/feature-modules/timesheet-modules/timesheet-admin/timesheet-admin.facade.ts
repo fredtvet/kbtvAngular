@@ -18,7 +18,7 @@ import { ComponentStoreState, StoreState } from './store-state';
 import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
 import { SetSelectedWeekAction, SetTimesheetCriteriaAction } from './component-state-reducers';
 import { UpdateTimesheetStatusesAction } from './update-timesheet-statuses/update-timesheet-statuses.action';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 import { FetchModelsAction } from '@model/state/fetch-model/fetch-models.http.effect';
 
 @Injectable()

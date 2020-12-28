@@ -1,5 +1,5 @@
 import { User } from '@core/models/user.interface';
-import { Maybe, Immutable } from '@global/interfaces';
+import { Maybe, Immutable } from 'global-types';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 
 export interface MainSideNavConfig{

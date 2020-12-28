@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef } from "@angular/core";
 import { skip, takeUntil } from "rxjs/operators";
 import { SelectableListPresenter } from './selectable-list.presenter';
-import { UnknownState } from "@global/interfaces";
+import { UnknownState } from "global-types";
 import { SelectableEntity } from "../interfaces";
 import { Subject } from "rxjs";
 

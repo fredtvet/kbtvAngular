@@ -1,5 +1,5 @@
 import { AbstractControl, AsyncValidatorFn } from '@angular/forms';
-import { Immutable, ImmutableArray, Maybe, UnknownState } from '@global/interfaces';
+import { Immutable, ImmutableArray, Maybe, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { Immutable, UnknownState } from '@global/interfaces';
+import { Immutable, UnknownState } from 'global-types';
 import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { StateAction } from '@state/state.action';

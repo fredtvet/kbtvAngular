@@ -1,6 +1,6 @@
 import { _add } from '@array/add.helper';
 import { _update } from '@array/update.helper';
-import { Immutable, ImmutableArray } from '@global/interfaces';
+import { Immutable, ImmutableArray } from 'global-types';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { _modifyModelWithForeigns } from '../../helpers/modify-model-with-foreigns.helper';
 import { ModelCommand } from '../../model-command.enum';

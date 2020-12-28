@@ -5,7 +5,7 @@ import { TimesheetStatus } from '@shared/enums/timesheet-status.enum';
 import { _getWeekAndYearFromDate } from '@datetime/get-week-and-year-from-date.helper';
 import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
 import { TimesheetSummary } from '../interfaces/timesheet-summary.interface';
-import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
+import { Immutable, ImmutableArray, Maybe } from 'global-types';
 
 @Injectable({providedIn: "root"})
 export class TimesheetSummaryAggregator {

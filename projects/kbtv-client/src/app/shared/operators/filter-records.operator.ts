@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { _filter } from '@array/filter.helper';
 import { DataFilterConstructor } from '@shared/data.filter';
 import { FilteredResponse } from '@shared/interfaces';
-import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
+import { Immutable, ImmutableArray, Maybe } from 'global-types';
 
 type Response<TRecord, TCriteria> = FilteredResponse<Immutable<TCriteria>, Immutable<TRecord>>;
 

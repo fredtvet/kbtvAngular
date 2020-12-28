@@ -1,6 +1,6 @@
 import { _getWeeksInYear } from '@datetime/get-weeks-in-year.helper';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 import { StateAction } from '@state/state.action';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { WeekToTimesheetCriteriaAdapter } from '../../shared-timesheet/timesheet-filter/week-to-timesheet-criteria.adapter';

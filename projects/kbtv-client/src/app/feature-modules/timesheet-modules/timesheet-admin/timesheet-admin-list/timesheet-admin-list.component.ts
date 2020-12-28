@@ -13,7 +13,7 @@ import { TimesheetStatus } from '@shared/enums';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { FormService } from '@form-sheet/form-sheet.service';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
-import { Maybe, Immutable } from '@global/interfaces';
+import { Maybe, Immutable } from 'global-types';
 
 @Component({
   selector: 'app-timesheet-admin-list',

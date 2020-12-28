@@ -20,7 +20,7 @@ import { FormService } from '@form-sheet/form-sheet.service';
 import { OptionsFormState } from '@form-sheet/interfaces';
 import { ModelFormService } from '@model-form/model-form.service';
 import { ModelState } from "@core/state/model-state.interface";
-import { Maybe } from "@global/interfaces";
+import { Maybe } from "global-types";
 
 @Component({
   selector: "app-user-timesheet-week",

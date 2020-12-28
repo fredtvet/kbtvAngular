@@ -7,7 +7,7 @@ import { _objectToDisabledObjectMap } from '@dynamic-forms/helpers/disabled-cont
 import { DynamicForm } from '@dynamic-forms/interfaces';
 import { FormService } from '@form-sheet/form-sheet.service';
 import { OptionsFormState } from '@form-sheet/interfaces';
-import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
+import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { ModelFormService } from '@model-form/model-form.service';
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from '@shared-app/interfaces';
@@ -15,7 +15,6 @@ import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetCriteriaForm, TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
-import { Prop } from "@state/interfaces";
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { TimesheetCriteriaChipOptions } from '../../shared-timesheet/timesheet-filter/timesheet-criteria-chip-options.const';

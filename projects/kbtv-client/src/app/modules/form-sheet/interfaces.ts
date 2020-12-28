@@ -1,6 +1,6 @@
 import { Type } from '@angular/core';
 import { DynamicForm, FormComponent } from '@dynamic-forms/interfaces';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 
 export interface FormSheetWrapperConfig<TFormConfig, TFormState, TResult>{

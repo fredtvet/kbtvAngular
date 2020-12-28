@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { OptionsGetter } from './interfaces';

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from "@angular/core";
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 import { BASE_API_URL } from './injection-tokens.const';
 import { FormDataEntry, HttpRequest } from './interfaces';

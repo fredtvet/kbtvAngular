@@ -1,4 +1,4 @@
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 
 export function _getFirstDayOfWeek(date: Immutable<Date> = new Date()): Date  {
     let day = date.getDay();

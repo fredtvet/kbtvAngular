@@ -1,4 +1,4 @@
-import { DateInput, Immutable } from '@global/interfaces';
+import { DateInput, Immutable } from 'global-types';
 
 export function _getWeekOfYear(date: Immutable<DateInput> = new Date()): number {
     var d = new Date(date as Date);

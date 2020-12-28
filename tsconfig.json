@@ -3,13 +3,11 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
-
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noFallthroughCasesInSwitch": true,
     "strictNullChecks": true,
-
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -18,12 +16,6 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es5",
-
-    // "forceConsistentCasingInFileNames": true,
-    // "strict": true,
-    // "noImplicitReturns": true,
-    // "noFallthroughCasesInSwitch": true,
-
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -31,11 +23,15 @@
       "es2018",
       "dom"
     ],
+    "paths": {
+      "global-types": [
+        "dist/global-types/global-types",
+        "dist/global-types"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    // "strictInputAccessModifiers": true,
-    // "strictTemplates": true
+    "strictInjectionParameters": true
   }
 }

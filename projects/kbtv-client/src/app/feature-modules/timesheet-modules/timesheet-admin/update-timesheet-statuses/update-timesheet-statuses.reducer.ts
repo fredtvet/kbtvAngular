@@ -2,7 +2,7 @@
 import { _addOrUpdateRange } from '@array/add-or-update-range.helper';
 import { StateTimesheets } from '@core/state/global-state.interfaces';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 import { UpdateTimesheetStatusesAction } from './update-timesheet-statuses.action';
 
 export const UpdateTimesheetStatusesReducer = _createReducer(

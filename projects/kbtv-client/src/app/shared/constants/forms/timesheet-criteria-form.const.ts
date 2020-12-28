@@ -4,7 +4,7 @@ import { _getMonthRange } from '@datetime/get-month-range.helper';
 import { DateRange } from '@datetime/interfaces';
 import { DynamicControl, DynamicControlGroup, DynamicForm } from '@dynamic-forms/interfaces';
 import { OptionsFormState } from '@form-sheet/interfaces';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 import { DateRangePresets } from '@shared-app/enums';
 import { _getRangeByDateRangePreset } from '@shared-app/helpers/get-range-by-date-range-preset.helper';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';

@@ -1,7 +1,7 @@
 import { DatePipe } from "@angular/common";
 import { Injectable } from "@angular/core";
 import { Timesheet } from "@core/models";
-import { UnknownState } from "@global/interfaces";
+import { UnknownState } from "global-types";
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
 import { TimesheetStatus } from "@shared/enums";
 import { translations } from "@shared/translations";

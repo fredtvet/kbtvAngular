@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ImmutableArray } from '@global/interfaces';
+import { ImmutableArray } from 'global-types';
 
 @Pipe({
   name: 'reverseArray'

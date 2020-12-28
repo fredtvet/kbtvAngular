@@ -1,4 +1,4 @@
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 
 export type DataFilterConstructor<TCriteria>  = 
     new (criteria: Immutable<TCriteria>, ...args: unknown[]) => DataFilter<Immutable<unknown>, Immutable<TCriteria>>;

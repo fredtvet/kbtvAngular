@@ -1,5 +1,4 @@
-import { Immutable } from '@global/interfaces';
-import { Prop } from '@state/interfaces';
+import { Immutable, Prop } from 'global-types';
 import { ModelStateConfig } from '../model-state.config';
 
 export function _getModelDisplayValue<TState, TModel = {}>(prop: Immutable<Prop<TState>>, value: Immutable<TModel>): unknown {

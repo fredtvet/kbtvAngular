@@ -7,7 +7,7 @@ import { StoreState } from './store-state';
 import { UpdateSyncConfigAction, SyncStateAction, ReloadSyncStateAction } from '@sync/state/actions';
 import { UpdateCurrentUserAction } from './state/update-current-user/update-current-user.action';
 import { UpdatePasswordAction } from './state/update-password/update-password.action';
-import { Immutable } from "@global/interfaces";
+import { Immutable } from "global-types";
 
 @Injectable({providedIn: 'any'})
 export class ProfileFacade {

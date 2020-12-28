@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, Maybe, UnknownState } from '@global/interfaces'
+import { Immutable, ImmutableArray, Maybe, UnknownState } from 'global-types'
 import { Observable } from 'rxjs'
 import { StateAction } from './state.action'
 

@@ -17,8 +17,7 @@ import { TimesheetStatisticFacade } from '../timesheet-statistic.facade';
 import { TimesheetStatisticProviders } from './timesheet-statistic-providers.const';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
 import { FormService } from '@form-sheet/form-sheet.service';
-import { Immutable, Maybe } from '@global/interfaces';
-import { Prop } from '@state/interfaces';
+import { Immutable, Maybe, Prop } from 'global-types';
 
 interface NavViewModel { groupByChips: AppChip[], criteriaChips: AppChip[],  navConfig: MainTopNavConfig }
 

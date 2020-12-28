@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApiUrl } from '@core/api-url.enum';
 import { Timesheet } from '@core/models';
 import { ApiService } from '@core/services/api.service';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { StateAction } from '@state/state.action';

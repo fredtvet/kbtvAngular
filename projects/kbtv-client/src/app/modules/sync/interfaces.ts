@@ -1,5 +1,5 @@
 import { Type } from '@angular/core';
-import { Maybe, UnknownState } from '@global/interfaces';
+import { Maybe, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 
 export interface StateSyncConfig { syncConfig: SyncConfig }

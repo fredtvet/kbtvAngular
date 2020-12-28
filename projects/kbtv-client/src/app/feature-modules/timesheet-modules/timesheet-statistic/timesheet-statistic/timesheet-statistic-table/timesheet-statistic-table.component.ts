@@ -6,7 +6,7 @@ import { AgGridTableComponent } from '@shared/components/abstracts/ag-grid-table
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
 import { ColDefsFactoryService } from './col-defs-factory.service';
 import { _getTotalHours } from '@datetime/get-total-hours.helper';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 
 @Component({
   selector: 'app-timesheet-statistic-table',

@@ -1,6 +1,6 @@
 import { Directive, HostBinding, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 import { _getValidationErrorMessage } from '../helpers/get-validation-error-message.helper';
 import { Question, QuestionComponent } from '../interfaces';

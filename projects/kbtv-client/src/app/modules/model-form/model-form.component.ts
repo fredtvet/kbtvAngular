@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Optional, Output } from '@angular/core';
 import { DynamicForm, FormComponent } from '@dynamic-forms/interfaces';
 import { OptionsFormState } from '@form-sheet/interfaces';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 import { SaveAction } from '@model/interfaces';
 import { ModelCommand } from '@model/model-command.enum';
 import { StateAction } from '@state/state.action';

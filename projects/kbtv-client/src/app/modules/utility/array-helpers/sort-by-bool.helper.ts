@@ -1,5 +1,4 @@
-import { Immutable, ImmutableArray, Maybe, UnknownState } from '@global/interfaces';
-import { Prop } from '@state/interfaces';
+import { Immutable, ImmutableArray, Maybe, UnknownState, Prop } from 'global-types'; 
 
 export function _sortByBool<T extends {}>(
     collection: Maybe<ImmutableArray<T>>, 

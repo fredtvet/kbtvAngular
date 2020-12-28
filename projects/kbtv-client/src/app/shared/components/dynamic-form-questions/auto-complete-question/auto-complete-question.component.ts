@@ -7,7 +7,7 @@ import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '@dynamic-forms/va
 import { ActiveStringFilterConfig } from '../../../interfaces';
 import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.component';
 import { AutoCompleteQuestion } from './auto-complete-question.interface';
-import { UnknownState } from '@global/interfaces';
+import { UnknownState } from 'global-types';
 
 export interface AutoCompleteViewModel { options: unknown[], activeFilter: ActiveStringFilterConfig<UnknownState> }
 

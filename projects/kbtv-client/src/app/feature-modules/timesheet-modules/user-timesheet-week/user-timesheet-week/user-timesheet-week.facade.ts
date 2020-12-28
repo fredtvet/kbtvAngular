@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Mission, Timesheet } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
 import { RelationInclude } from '@model/interfaces';
 import { _mapObjectsToWeekdays } from '@shared-app/helpers/object/map-objects-to-weekdays.helper';

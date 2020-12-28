@@ -7,7 +7,7 @@ import { TimesheetStatus } from '@shared/enums';
 import { translations } from '@shared/translations';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
 import { DateRange } from '@datetime/interfaces';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 
 export const TimesheetCriteriaChipOptions: {[key in keyof TimesheetCriteria]: CriteriaChipOptions} = {
     user: {valueFormatter: (val: Immutable<User>) => val.lastName + ', ' + val.lastName}, 

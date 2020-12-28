@@ -1,5 +1,5 @@
 import { DateRange } from '@datetime/interfaces';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 import { DateRangePresets } from "@shared-app/enums/date-range-presets.enum";
 import { _getLastDayOfYear } from '../../modules/utility/date-time-helpers/get-last-day-of-year.helper';
 import { _getMonthRange } from '../../modules/utility/date-time-helpers/get-month-range.helper';

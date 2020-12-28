@@ -1,4 +1,4 @@
-import { DateInput, Immutable } from '@global/interfaces';
+import { DateInput, Immutable } from 'global-types';
 
 export function _getLastDayOfMonth(date: Immutable<DateInput> = new Date()): Immutable<Date>  {
     const d = new Date(date as Date);

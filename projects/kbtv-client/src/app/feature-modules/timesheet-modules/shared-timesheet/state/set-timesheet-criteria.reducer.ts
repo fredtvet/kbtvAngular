@@ -1,5 +1,5 @@
 import { DateRange } from '@datetime/interfaces';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 import { DateRangePresets } from '@shared-app/enums';
 import { _getRangeByDateRangePreset } from '@shared-app/helpers/get-range-by-date-range-preset.helper';
 import { _createReducer } from '@state/helpers/create-reducer.helper';

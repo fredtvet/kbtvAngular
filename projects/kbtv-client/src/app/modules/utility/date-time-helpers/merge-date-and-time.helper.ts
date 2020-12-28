@@ -1,4 +1,4 @@
-import { DateInput, Immutable } from '@global/interfaces';
+import { DateInput, Immutable } from 'global-types';
 
 export function _mergeDateAndTime(date: Immutable<DateInput> = new Date(), time: Immutable<DateInput>): Immutable<Date>{
     const d = new Date(date as Date);

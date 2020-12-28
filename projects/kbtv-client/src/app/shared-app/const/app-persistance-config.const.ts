@@ -1,5 +1,5 @@
 import { ModelFile } from "@core/models";
-import { Immutable } from "@global/interfaces";
+import { Immutable } from "global-types";
 import { MapFn, PersistanceConfig } from "@persistance/interfaces";
 
 const modelFileArrayMapper: MapFn<ModelFile[]> = 

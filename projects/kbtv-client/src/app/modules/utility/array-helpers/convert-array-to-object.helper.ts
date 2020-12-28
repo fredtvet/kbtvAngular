@@ -1,5 +1,4 @@
-import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
-import { Prop } from '@state/interfaces';
+import { Immutable, ImmutableArray, Maybe, Prop} from 'global-types';
 
 type Response<T> = { [key: string]: Maybe<Immutable<T>> }
 export function _convertArrayToObject<T>(

@@ -11,7 +11,7 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { CreateMissionNoteForm, EditMissionNoteForm } from '@shared/constants/model-forms/save-mission-note-forms.const';
 import { MissionNoteListFacade } from '../mission-note-list.facade';
 import { ModelFormService } from '@model-form/model-form.service';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 
 @Component({
   selector: 'app-mission-note-list',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PreloadingStrategy, Route } from '@angular/router';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 import { EMPTY, Observable, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AuthService } from './auth/auth.service';

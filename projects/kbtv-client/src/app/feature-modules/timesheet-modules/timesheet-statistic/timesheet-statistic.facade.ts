@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Timesheet, User } from '@core/models';
 import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 import { FetchModelsAction } from '@model/state/fetch-model/fetch-models.http.effect';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';

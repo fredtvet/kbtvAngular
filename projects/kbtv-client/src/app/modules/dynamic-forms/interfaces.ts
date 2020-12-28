@@ -1,6 +1,6 @@
 import { EventEmitter, Type } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 
 export type DisabledObjectMap<T> = { [key in keyof Partial<T>]: boolean };

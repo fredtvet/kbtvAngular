@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { OptionsFormState } from '@form-sheet/interfaces';
-import { Immutable, Maybe, UnknownState } from '@global/interfaces';
+import { Immutable, Maybe, UnknownState } from 'global-types';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
 import { RelationInclude, UnknownModelState } from '@model/interfaces';
 import { ModelStateConfig } from '@model/model-state.config';

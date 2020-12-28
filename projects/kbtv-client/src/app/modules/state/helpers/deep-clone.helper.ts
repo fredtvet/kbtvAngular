@@ -1,4 +1,4 @@
-import { Immutable, UnknownState } from "@global/interfaces";
+import { Immutable, UnknownState } from "global-types";
 
 export function _deepClone(value: Immutable<unknown>): unknown {
     const type = typeof value;

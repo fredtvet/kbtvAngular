@@ -1,14 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Model } from "@core/models";
 import { ModelState } from '@core/state/model-state.interface';
-import { Immutable } from "@global/interfaces";
+import { Immutable, Prop } from "global-types";
 import { ModelCommand } from '@model/model-command.enum';
 import { ModelStateConfig } from "@model/model-state.config";
 import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
 import { FetchModelsAction } from "@model/state/fetch-model/fetch-models.http.effect";
 import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
 import { ComponentStore } from '@state/component.store';
-import { Prop } from '@state/interfaces';
 import { Store } from '@state/store';
 import { Observable, of } from "rxjs";
 import { distinctUntilChanged, map, switchMap } from "rxjs/operators";

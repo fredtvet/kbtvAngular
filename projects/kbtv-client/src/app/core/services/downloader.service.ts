@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 
 @Injectable({ providedIn: 'root' })
 export class DownloaderService {

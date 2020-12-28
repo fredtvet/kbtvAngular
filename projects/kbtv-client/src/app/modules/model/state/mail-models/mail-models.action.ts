@@ -1,4 +1,4 @@
-import { Prop } from '@state/interfaces';
+import { Prop } from 'global-types';
 import { ModelStateAction } from '../model-state.action';
 
 export const MailModelsAction = "MAIL_MODELS_ACTION";

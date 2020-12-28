@@ -7,7 +7,7 @@ import { TextAreaQuestion, TextAreaQuestionComponent } from '../../components/dy
 import { HiddenIdControl, MissionAutoCompleteControl } from '../common-controls.const';
 import { StateMissions } from '@core/state/global-state.interfaces';
 import { OptionsFormState } from '@form-sheet/interfaces';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 
 type FormState = OptionsFormState<StateMissions> & {defaultStartTime: string, defaultEndTime: string};
 

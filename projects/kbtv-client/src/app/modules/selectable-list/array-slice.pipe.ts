@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 
 @Pipe({name: 'arrayslice'})
 //Slices items up and grabs n'th index based on rowNr from each slice. 

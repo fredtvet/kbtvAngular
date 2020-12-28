@@ -1,7 +1,7 @@
 import { Mission } from '../core/models';
 import { MissionCriteria } from './interfaces';
 import { DataFilter } from './data.filter';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 
 export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
 

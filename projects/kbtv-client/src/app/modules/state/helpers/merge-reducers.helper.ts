@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray } from '@global/interfaces';
+import { Immutable, ImmutableArray } from 'global-types';
 import { Reducer } from '../interfaces';
 import { StateAction } from '../state.action';
 

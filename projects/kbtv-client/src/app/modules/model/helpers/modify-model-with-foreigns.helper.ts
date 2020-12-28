@@ -1,6 +1,5 @@
 import { _add } from '@array/add.helper';
-import { Immutable, ImmutableArray, UnknownState } from '@global/interfaces';
-import { Prop } from '@state/interfaces';
+import { Immutable, ImmutableArray, UnknownState, Prop } from 'global-types';
 import { ModelStateConfig } from '../model-state.config';
 
 export function _modifyModelWithForeigns<TState extends {}>(

@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ModelFile } from '@core/models';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { FileFolders } from '../constants/file-folders.const';
 

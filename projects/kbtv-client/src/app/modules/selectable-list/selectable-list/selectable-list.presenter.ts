@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ImmutableArray, UnknownState } from "@global/interfaces";
+import { ImmutableArray, UnknownState } from "global-types";
 import { SelectableEntity } from "../interfaces";
 
 @Injectable()

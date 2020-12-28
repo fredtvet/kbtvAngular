@@ -10,7 +10,7 @@ import { TimesheetStatus } from '@shared/enums';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { FormService } from '@form-sheet/form-sheet.service';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 
 @Component({
   selector: 'app-timesheet-admin-week-list',

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 import { FormSheetNavConfig } from '../interfaces';
 
 @Component({

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiUrl } from '@core/api-url.enum';
 import { HttpRequest } from '@http/interfaces';
 import { HttpAction } from '@http/state/http.effect';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { Observable } from 'rxjs';

@@ -1,5 +1,5 @@
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable, UnknownState } from '@global/interfaces';
+import { Immutable, UnknownState } from 'global-types';
 import { StateAction } from '@state/state.action';
 
 export const WipeStateAction = "WIPE_STATE_ACTION";

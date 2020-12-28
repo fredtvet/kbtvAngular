@@ -1,6 +1,6 @@
 import { StateAction } from '../state.action';
 import { Reducer, MetaReducer } from '../interfaces';
-import { ImmutableArray } from '@global/interfaces';
+import { ImmutableArray } from 'global-types';
 
 export function _applyMetaReducers(
     reducer: Reducer<{}, StateAction>, 

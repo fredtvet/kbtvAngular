@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, Type } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { UnknownState } from '@global/interfaces';
+import { UnknownState } from 'global-types';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DynamicHostDirective } from '../dynamic-host.directive';

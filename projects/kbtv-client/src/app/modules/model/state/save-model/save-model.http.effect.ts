@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpRequest } from '@http/interfaces';
 import { HttpAction } from '@http/state/http.effect';
-import { Immutable } from '@global/interfaces';
-import { DispatchedAction, Effect, Prop } from '@state/interfaces';
+import { Immutable, Prop } from 'global-types';
+import { DispatchedAction, Effect } from '@state/interfaces';
 import { listenTo } from '@state/operators/listen-to.operator';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

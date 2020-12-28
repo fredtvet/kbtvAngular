@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Immutable } from '@global/interfaces';
-import { Prop } from '@state/interfaces';
+import { Immutable, Prop } from 'global-types';
 import { MODEL_CONFIGS } from './injection-tokens.const';
 import { ModelConfig, ModelConfigMap } from './interfaces';
 

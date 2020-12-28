@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { _find } from '@array/find.helper';
 import { Timesheet } from '@core/models';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 import { Store } from '@state/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

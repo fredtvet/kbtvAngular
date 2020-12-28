@@ -1,4 +1,4 @@
-import { Immutable, UnknownState } from '@global/interfaces';
+import { Immutable, UnknownState } from 'global-types';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { WipeSyncStateAction } from './actions';
 

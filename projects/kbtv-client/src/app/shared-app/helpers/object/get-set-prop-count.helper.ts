@@ -1,4 +1,4 @@
-import { Immutable, UnknownState } from '@global/interfaces';
+import { Immutable, UnknownState } from 'global-types';
 import { _isNullOrEmpty } from '../is-null-or-empty.helper';
 
 export function _getSetPropCount(obj: Immutable<UnknownState>, ignoredProps: UnknownState): number{

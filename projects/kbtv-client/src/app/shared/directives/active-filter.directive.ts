@@ -3,7 +3,7 @@ import { merge, of } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
 import { _filter } from '@array/filter.helper';
 import { ActiveStringFilterConfig } from '../interfaces/active-string-filter-config.interface';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 
 @Directive({
   selector: '[appActiveStringFilter]'

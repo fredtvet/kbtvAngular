@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Mission, Timesheet } from '@core/models';
 import { StateMissions, StateUserTimesheets } from '@core/state/global-state.interfaces';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
 import { RelationInclude } from '@model/interfaces';
 import { DateRangePresets } from '@shared-app/enums';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 import { Subject } from 'rxjs';
 import { DispatchedAction } from './interfaces';
 import { StateAction } from './state.action';

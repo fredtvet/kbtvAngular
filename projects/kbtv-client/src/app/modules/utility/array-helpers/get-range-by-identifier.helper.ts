@@ -1,5 +1,4 @@
-import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
-import { Prop } from '@state/interfaces';
+import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { _convertArrayToObject } from './convert-array-to-object.helper';
 
 export function _getRangeByIdentifier<T>(

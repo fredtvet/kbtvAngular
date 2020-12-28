@@ -10,7 +10,7 @@ import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens
 import { DeleteModelAction } from './delete-model.action';
 import { HttpAction } from '@http/state/http.effect';
 import { ModelCommand } from '@model/model-command.enum';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 
 @Injectable()
 export class DeleteModelHttpEffect implements Effect<DeleteModelAction<unknown>>{

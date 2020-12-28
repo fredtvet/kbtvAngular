@@ -1,4 +1,4 @@
-import { Prop } from '@state/interfaces';
+import { Prop } from 'global-types';
 import { StateAction } from '@state/state.action';
 
 export const ModelStateAction = "MODEL_STATE_ACTION";

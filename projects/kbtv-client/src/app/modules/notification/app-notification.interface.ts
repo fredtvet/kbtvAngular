@@ -1,4 +1,4 @@
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 import { NotificationType } from './notification-type.enum';
 
 export interface AppNotification {

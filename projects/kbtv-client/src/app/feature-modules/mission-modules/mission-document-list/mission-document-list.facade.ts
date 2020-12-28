@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Mission, MissionDocument } from "@core/models";
 import { ModelState } from '@core/state/model-state.interface';
-import { ImmutableArray, Maybe } from '@global/interfaces';
+import { ImmutableArray, Maybe } from 'global-types';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
 import { RelationInclude } from "@model/interfaces";

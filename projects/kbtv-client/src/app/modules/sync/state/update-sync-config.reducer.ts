@@ -1,5 +1,5 @@
 
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { StateSyncConfig } from '@sync/interfaces';
 import { UpdateSyncConfigAction } from './actions';

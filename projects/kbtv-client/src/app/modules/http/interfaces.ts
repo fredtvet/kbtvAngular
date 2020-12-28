@@ -1,5 +1,4 @@
-import { Immutable, Maybe, UnknownState } from '@global/interfaces';
-import { Prop } from '@state/interfaces';
+import { Immutable, Maybe, UnknownState, Prop } from 'global-types';
 
 export interface FormDataEntry { name: string, value: string | Blob }
 

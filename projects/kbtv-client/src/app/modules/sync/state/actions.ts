@@ -1,4 +1,4 @@
-import { UnknownState } from '@global/interfaces';
+import { UnknownState } from 'global-types';
 import { StateAction } from '@state/state.action';
 import { SyncConfig, SyncResponse, SyncStateConfig } from '../interfaces';
 

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Mission } from '@core/models';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { ModelState } from '@core/state/model-state.interface';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from '@model-form/model-form.service';
 import { DateRangePresets, RolePresets, Roles } from '@shared-app/enums';
 import { DetailTopNavConfig } from '@shared/components/detail-top-nav-bar/detail-top-nav.config';

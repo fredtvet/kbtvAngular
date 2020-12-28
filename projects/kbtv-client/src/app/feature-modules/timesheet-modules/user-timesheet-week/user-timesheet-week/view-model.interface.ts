@@ -1,4 +1,4 @@
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 import { TimesheetSummary, WeekCriteria } from '../../shared-timesheet/interfaces';
 
 export interface ViewModel{ 

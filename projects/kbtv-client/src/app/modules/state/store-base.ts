@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
+import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 import { ActionDispatcher } from './action-dispatcher';
 import { _applyMetaReducers } from './helpers/apply-meta-reducers.helper';

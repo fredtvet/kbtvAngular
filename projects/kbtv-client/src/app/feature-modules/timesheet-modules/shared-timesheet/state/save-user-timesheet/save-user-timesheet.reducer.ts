@@ -3,7 +3,7 @@ import { _getTotalHours } from '@datetime/get-total-hours.helper';
 import { SaveModelReducer } from '@model/state/save-model/save-model.reducer';
 import { TimesheetStatus } from '@shared/enums';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 import { SaveUserTimesheetAction } from './save-user-timesheet.action';
 import { Timesheet } from '@core/models';
 

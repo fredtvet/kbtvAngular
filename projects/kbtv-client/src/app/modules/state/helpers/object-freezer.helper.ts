@@ -1,4 +1,4 @@
-import { Immutable } from "@global/interfaces";
+import { Immutable } from "global-types";
 
 export function _deepFreeze<T extends {}>(obj: Immutable<T>): Immutable<T> {
     if(typeof obj !== "object") return obj;

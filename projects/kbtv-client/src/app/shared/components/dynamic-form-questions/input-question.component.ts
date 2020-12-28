@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Question, QuestionComponent } from '@dynamic-forms/interfaces';
 import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '@dynamic-forms/validation-error-map.interface';
 import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.component';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 
 export interface InputQuestion extends Question {
   type: "tel" | "text" | "number" | "email" | "file" | "password";

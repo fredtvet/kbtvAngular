@@ -1,6 +1,6 @@
 import { StateMissions } from '@core/state/global-state.interfaces';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 import { StateAction } from '@state/state.action';
 
 export const UpdateLastVisitedAction = "UPDATE_LAST_VISITED_ACTION";

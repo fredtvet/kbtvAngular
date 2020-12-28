@@ -6,7 +6,7 @@ import { AgGridTableComponent } from '@shared/components/abstracts/ag-grid-table
 import { translations } from '@shared/translations';
 import { DataConfig } from '../../interfaces/data-config.interface';
 import { CellValueChangedEvent, ColDef } from 'ag-grid-community';
-import { Immutable, Maybe } from '@global/interfaces';
+import { Immutable, Maybe } from 'global-types';
 import { DataTablePropConfig } from './data-table.config';
 
 @Component({

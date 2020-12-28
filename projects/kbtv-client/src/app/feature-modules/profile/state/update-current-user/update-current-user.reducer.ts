@@ -1,6 +1,6 @@
 import { StateCurrentUser } from '@core/state/global-state.interfaces';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable } from '@global/interfaces';
+import { Immutable } from 'global-types';
 import { UpdateCurrentUserAction } from './update-current-user.action';
 
 export const UpdateCurrentUserReducer = _createReducer(

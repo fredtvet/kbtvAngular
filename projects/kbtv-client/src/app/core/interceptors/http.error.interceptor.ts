@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AppNotification, NotificationService, NotificationType } from '@notification/index';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 
 export interface AppErrorResponse {
   status: number;

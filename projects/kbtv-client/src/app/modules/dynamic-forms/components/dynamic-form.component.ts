@@ -11,7 +11,7 @@ import { DisabledObjectMap, DynamicControl, DynamicForm, FormComponent } from '.
 import { ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from '../validation-error-map.interface';
 import { ControlComponentLoaderComponent, ValidControl } from './control-component-loader.component';
 import { DynamicControlGroupComponent } from './dynamic-control-group.component';
-import { Maybe, UnknownState } from '@global/interfaces';
+import { Maybe, UnknownState } from 'global-types';
 
 @Component({
   selector: 'app-dynamic-form',

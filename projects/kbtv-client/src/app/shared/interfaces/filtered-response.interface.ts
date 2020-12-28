@@ -1,4 +1,4 @@
-import { Maybe } from "@global/interfaces";
+import { Maybe } from "global-types";
 
 export interface FilteredResponse<TCriteria, TRecord>{
     criteria: Maybe<TCriteria>,

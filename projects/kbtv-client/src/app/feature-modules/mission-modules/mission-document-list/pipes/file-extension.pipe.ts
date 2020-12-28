@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Maybe } from '@global/interfaces';
+import { Maybe } from 'global-types';
 
 @Pipe({
   name: 'fileExtension'

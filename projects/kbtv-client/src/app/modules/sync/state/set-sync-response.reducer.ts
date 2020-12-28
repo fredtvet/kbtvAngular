@@ -1,7 +1,7 @@
 import { _addOrUpdateRange } from '@array/add-or-update-range.helper';
 import { _removeRangeByIdentifier } from '@array/remove-range-by-identifier.helper';
 import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { Immutable, ImmutableArray, UnknownState } from '@global/interfaces';
+import { Immutable, ImmutableArray, UnknownState } from 'global-types';
 import { StoreState, SyncStatePropConfig } from '../interfaces';
 import { SyncStateSuccessAction } from './actions';
 

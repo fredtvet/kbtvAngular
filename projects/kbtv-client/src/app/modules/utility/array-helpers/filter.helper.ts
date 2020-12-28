@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, Maybe } from '@global/interfaces';
+import { Immutable, ImmutableArray, Maybe } from 'global-types';
 
 export function _filter<T>(
   originals: Maybe<ImmutableArray<T>>, 

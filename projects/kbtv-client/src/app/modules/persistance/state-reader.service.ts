@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { UnknownState } from '@global/interfaces';
+import { UnknownState } from 'global-types';
 import { forkJoin, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { PERSISTANCE_CONFIG } from './injection-tokens.const';

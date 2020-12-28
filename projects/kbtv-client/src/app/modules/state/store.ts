@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional, Self, SkipSelf } from '@angular/core';
-import { UnknownState } from '@global/interfaces';
+import { UnknownState } from 'global-types';
 import { ActionDispatcher } from './action-dispatcher';
 import { STORE_DEFAULT_STATE, STORE_META_REDUCERS, STORE_REDUCERS, STORE_SETTINGS } from './constants/injection-tokens.const';
 import { MetaReducer, Reducer, StoreSettings } from './interfaces';

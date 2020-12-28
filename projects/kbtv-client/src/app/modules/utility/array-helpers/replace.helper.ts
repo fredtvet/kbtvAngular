@@ -1,5 +1,4 @@
-import { ImmutableArray, Immutable, Maybe } from '@global/interfaces';
-import { Prop } from '@state/interfaces';
+import { ImmutableArray, Immutable, Maybe, Prop } from 'global-types';
 
 export function _replace<T>(
   array: Maybe<ImmutableArray<T>>, 
