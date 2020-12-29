@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { BASE_API_URL } from '@http/injection-tokens.const';
+import { BASE_API_URL } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';

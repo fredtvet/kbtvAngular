@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiUrl } from '@core/api-url.enum';
-import { HttpAction } from '@http/state/http.effect';
+import { OptimisticHttpAction } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
@@ -16,11 +16,11 @@ export class UpdateUserPasswordHttpEffect implements Effect<UpdateUserPasswordAc
 
     constructor(){}
 
-    handle$(actions$: Observable<DispatchedAction<UpdateUserPasswordAction>>): Observable<HttpAction> {
+    handle$(actions$: Observable<DispatchedAction<UpdateUserPasswordAction>>): Observable<OptimisticHttpAction> {
         return actions$.pipe(
             listenTo([UpdateUserPasswordAction]),
-            map(x => <HttpAction>{
-                type: HttpAction, propagate: true,
+            map(x => <OptimisticHttpAction>{
+                type: OptimisticHttpAction, propagate: true,
                 request: {
                     apiUrl: `${ApiUrl.Users}/${x.action.userName}/NewPassword`,
                     method: "PUT", 

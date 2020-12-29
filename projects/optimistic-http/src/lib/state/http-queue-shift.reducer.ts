@@ -1,9 +1,7 @@
 import { Immutable } from 'global-types';
-import { StateAction, _createReducer } from 'state-management';
+import { _createReducer } from 'state-management';
 import { StateRequestQueue } from '../interfaces';
-
-export const HttpQueueShiftAction = "HTTP_QUEUE_SHIFT_ACTION";
-export interface HttpQueueShiftAction extends StateAction {}
+import { HttpQueueShiftAction } from './http-queue-shift.action';
 
 export const HttpQueueShiftReducer = _createReducer(
     HttpQueueShiftAction,

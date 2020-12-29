@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Store } from 'state-management'
 import { BehaviorSubject, fromEvent, merge, of } from 'rxjs';
 import { filter, first, map, switchMap, tap } from 'rxjs/operators';
-import { QueuedCommand, StateRequestQueue } from './interfaces';
+import { Store } from 'state-management';
+import { StateRequestQueue } from './interfaces';
 import { DispatchHttpAction } from './state/dispatch-http/dispatch-http.action';
 
 @Injectable({ providedIn: 'root' })

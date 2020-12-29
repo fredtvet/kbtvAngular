@@ -1,8 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpRequest } from '@http/interfaces';
-import { HttpAction } from '@http/state/http.effect';
 import { ModelCommand } from '@model/model-command.enum';
 import { Immutable, Maybe } from 'global-types';
+import { OptimisticHttpRequest, OptimisticHttpAction } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
@@ -19,18 +18,18 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<unknown>>
         @Inject(MODEL_PROP_TRANSLATIONS) private translations: Readonly<KeyVal<string>>
     ){ }
 
-    handle$(actions$: Observable<DispatchedAction<DeleteModelAction<unknown>>>): Observable<HttpAction> {
+    handle$(actions$: Observable<DispatchedAction<DeleteModelAction<unknown>>>): Observable<OptimisticHttpAction> {
         return actions$.pipe(
             listenTo([DeleteModelAction]),
-            map(x => <HttpAction>{ 
-                type: HttpAction, propagate: true,
+            map(x => <OptimisticHttpAction>{ 
+                type: OptimisticHttpAction, propagate: true,
                 request: this.createHttpRequest(x.action), 
                 stateSnapshot: x.stateSnapshot 
             }),  
         )
     }
 
-    private createHttpRequest(action: Immutable<DeleteModelAction<unknown>>): HttpRequest {
+    private createHttpRequest(action: Immutable<DeleteModelAction<unknown>>): OptimisticHttpRequest {
         const modelConfig = ModelStateConfig.get(action.stateProp);
         if(!modelConfig) console.error(`No model config for property ${action.stateProp}`);
         const modelCommand = action.payload.id ? ModelCommand.Delete : ModelCommand.DeleteRange;

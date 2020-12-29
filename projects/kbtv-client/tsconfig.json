@@ -10,9 +10,7 @@
       "@shared/*": ["src/app/shared/*"],
       "@shared-timesheet/*": ["src/app/feature-modules/timesheet-modules/shared-timesheet/*"],
       "@dynamic-forms/*": ["src/app/modules/dynamic-forms/*"],
-      "@http/*": ["src/app/modules/http/*"],
       "@model/*": ["src/app/modules/model/*"],
-      "@persistance/*": ["src/app/modules/persistance/*"],
       "@sync/*": ["src/app/modules/sync/*"],
       "@form-sheet/*": ["src/app/modules/form-sheet/*"],
       "@model-form/*": ["src/app/modules/model-form/*"],
@@ -41,6 +39,10 @@
       "persistance": [
         "../../dist/persistance/persistance",
         "../../dist/persistance"
+      ],
+      "optimistic-http": [
+        "../../dist/optimistic-http/optimistic-http",
+        "../../dist/optimistic-http"
       ]
     },
   },

@@ -47,6 +47,10 @@
       "persistance": [
         "dist/persistance/persistance",
         "dist/persistance"
+      ],
+      "optimistic-http": [
+        "dist/optimistic-http/optimistic-http",
+        "dist/optimistic-http"
       ]
     }
   },

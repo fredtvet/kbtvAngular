@@ -2,19 +2,14 @@ import { Inject, Injectable, Optional } from '@angular/core';
 import { Immutable, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
+import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { OPTIMISTIC_STATE_SELECTOR } from '../injection-tokens.const';
-import { HttpRequest, OptimisticStateSelector } from '../interfaces';
+import { OptimisticStateSelector } from '../interfaces';
 import { HttpQueuePushAction } from './http-queue-push/http-queue-push.action';
-
-export const HttpAction = "HTTP_ACTION";
-export interface HttpAction extends StateAction {
-    request: HttpRequest, 
-    stateSnapshot: Immutable<{}>
-}
+import { OptimisticHttpAction } from './optimistic-http.action';
 
 @Injectable()
-export class HttpEffect implements Effect<HttpAction> {
+export class OptimisticHttpEffect implements Effect<OptimisticHttpAction> {
 
     constructor(
         @Inject(OPTIMISTIC_STATE_SELECTOR) @Optional() private stateSelector: OptimisticStateSelector<UnknownState>
@@ -22,9 +17,9 @@ export class HttpEffect implements Effect<HttpAction> {
         this.setOptimistictStateStrategy() 
     }
 
-    handle$(actions$: Observable<DispatchedAction<HttpAction>>): Observable<HttpQueuePushAction> {
+    handle$(actions$: Observable<DispatchedAction<OptimisticHttpAction>>): Observable<HttpQueuePushAction> {
         return actions$.pipe(
-            listenTo([HttpAction]),
+            listenTo([OptimisticHttpAction]),
             map(x => <HttpQueuePushAction>{
                 type: HttpQueuePushAction,
                 command: {

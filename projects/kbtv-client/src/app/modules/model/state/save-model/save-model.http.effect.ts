@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpRequest } from '@http/interfaces';
-import { HttpAction } from '@http/state/http.effect';
 import { Immutable, Prop } from 'global-types';
+import { OptimisticHttpAction, OptimisticHttpRequest } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
@@ -20,18 +19,18 @@ export class SaveModelHttpEffect<TModel extends {}, TState extends {}> implement
         @Inject(MODEL_PROP_TRANSLATIONS) private translations: Readonly<KeyVal<string>>,
     ){ }
 
-    handle$(actions$: Observable<DispatchedAction<SaveModelAction<TModel, TState>>>): Observable<HttpAction> {
+    handle$(actions$: Observable<DispatchedAction<SaveModelAction<TModel, TState>>>): Observable<OptimisticHttpAction> {
         return actions$.pipe(
             listenTo([this.type]),
-            map(x => <HttpAction>{ 
-                type: HttpAction, propagate: true,
+            map(x => <OptimisticHttpAction>{ 
+                type: OptimisticHttpAction, propagate: true,
                 request: this.createHttpRequest(x.action), 
                 stateSnapshot: x.stateSnapshot 
             }),
         )
     }
 
-    protected createHttpRequest(action: Immutable<SaveModelAction<TModel, TState>>): HttpRequest{
+    protected createHttpRequest(action: Immutable<SaveModelAction<TModel, TState>>): OptimisticHttpRequest {
         const modelConfig = ModelStateConfig.get<TModel, TState>(action.stateProp);
         if(!modelConfig) console.error(`No model config for property ${action.stateProp}`);
 

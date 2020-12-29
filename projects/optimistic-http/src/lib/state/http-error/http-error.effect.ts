@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { StateRequestQueue } from '@http/interfaces';
 import { NotificationService, NotificationType } from 'notification';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
+import { StateRequestQueue } from '../../interfaces';
 import { HttpErrorAction } from './http-error.action';
 
 @Injectable()

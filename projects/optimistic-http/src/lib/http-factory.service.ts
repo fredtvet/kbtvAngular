@@ -3,7 +3,7 @@ import { Inject, Injectable } from "@angular/core";
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 import { BASE_API_URL } from './injection-tokens.const';
-import { FormDataEntry, HttpRequest } from './interfaces';
+import { FormDataEntry, OptimisticHttpRequest } from './interfaces';
 
 @Injectable({providedIn: "root"})
 export class HttpFactoryService {
@@ -13,7 +13,7 @@ export class HttpFactoryService {
       @Inject(BASE_API_URL) private baseUrl: string
     ) {}
 
-    getObserver$(request: Immutable<HttpRequest>): Observable<unknown> {
+    getObserver$(request: Immutable<OptimisticHttpRequest>): Observable<unknown> {
         switch (request.method) {
           case "POST": return this.httpClient.post(this.baseUrl + request.apiUrl, this.constructBody(request.body));
           case "PUT": return this.httpClient.put(this.baseUrl +request.apiUrl, this.constructBody(request.body));

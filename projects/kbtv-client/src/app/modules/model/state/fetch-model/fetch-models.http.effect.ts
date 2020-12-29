@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Inject, Injectable } from '@angular/core'
-import { BASE_API_URL } from '@http/injection-tokens.const'
+import { BASE_API_URL } from 'optimistic-http'
 import { Immutable, Prop, UnknownState } from 'global-types'
 import { merge, Observable } from 'rxjs'
 import { finalize, map, mergeMap } from 'rxjs/operators'

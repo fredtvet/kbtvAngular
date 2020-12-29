@@ -2,7 +2,7 @@ import { Immutable, Maybe, UnknownState, Prop } from 'global-types';
 
 export interface FormDataEntry { name: string, value: string | Blob }
 
-export interface HttpRequest { 
+export interface OptimisticHttpRequest { 
     apiUrl: string; 
     method: "POST" | "PUT" | "DELETE"; 
     body: {} | FormDataEntry[] | null | undefined; 
@@ -10,7 +10,7 @@ export interface HttpRequest {
 };
 
 export interface QueuedCommand { 
-    request: Immutable<HttpRequest>, 
+    request: Immutable<OptimisticHttpRequest>, 
     stateSnapshot: Maybe<Immutable<UnknownState>>, 
     dispatched?: boolean 
 };

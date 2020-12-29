@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { StateRequestQueue } from '@http/interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { HttpQueuer } from '../../http.queuer';
+import { StateRequestQueue } from '../../interfaces';
 import { HttpQueuePushAction } from './http-queue-push.action';
 
 @Injectable()

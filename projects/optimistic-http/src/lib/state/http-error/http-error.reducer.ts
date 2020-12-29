@@ -1,6 +1,6 @@
-import { StateRequestQueue } from '@http/interfaces';
-import { _createReducer } from 'state-management'
 import { Immutable } from 'global-types';
+import { _createReducer } from 'state-management';
+import { StateRequestQueue } from '../../interfaces';
 import { HttpErrorAction } from './http-error.action';
 
 export const HttpErrorReducer = _createReducer(
