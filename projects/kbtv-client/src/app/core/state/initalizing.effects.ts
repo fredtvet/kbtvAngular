@@ -3,7 +3,7 @@ import { HttpQueuer } from '@http/http.queuer';
 import { StateRequestQueue } from '@http/interfaces';
 import { HttpErrorAction } from '@http/state/http-error/http-error.action';
 import { HttpQueueShiftAction } from '@http/state/http-queue-shift.reducer';
-import { SetPersistedStateAction } from '@persistance/state/actions.const';
+import { SetPersistedStateAction } from 'persistance';
 import { ContinousSyncService } from '@sync/continous-sync.service';
 import { SyncStateSuccessAction } from '@sync/state/actions';
 import { Observable } from 'rxjs';

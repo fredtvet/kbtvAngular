@@ -1,6 +1,6 @@
 import { ModelFile } from "@core/models";
 import { Immutable } from "global-types";
-import { MapFn, PersistanceConfig } from "@persistance/interfaces";
+import { MapFn, PersistanceConfig } from 'persistance';
 
 const modelFileArrayMapper: MapFn<ModelFile[]> = 
     (x: Immutable<ModelFile[]>) => x?.map(({localFileUrl, ...rest} ) => rest);

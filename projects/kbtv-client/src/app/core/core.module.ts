@@ -5,16 +5,15 @@ import { BASE_API_URL, OPTIMISTIC_STATE_SELECTOR } from '@http/injection-tokens.
 import { OptimisticHttpModule } from '@http/optimistic-http.module';
 import { COMMAND_API_MAP, MODEL_CONFIGS, MODEL_PROP_TRANSLATIONS } from '@model/injection-tokens.const';
 import { ModelModule } from '@model/model.module';
-import { PERSISTANCE_CONFIG } from '@persistance/injection-tokens.const';
-import { PersistanceModule } from '@persistance/persistance.module';
 import { AppCommandApiMap } from '@shared-app/const/app-command-api-map.const';
 import { AppPersistanceConfig } from '@shared-app/const/app-persistance-config.const';
 import { AppStoreSettings } from '@shared-app/const/app-store-settings.const';
 import { ModelConfigs } from '@shared-app/const/model-configs.const';
 import { translations } from '@shared/translations';
-import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS, STORE_SETTINGS } from 'state-management'
 import { SyncModule } from '@sync/sync.module';
+import { PersistanceModule, PERSISTANCE_CONFIG } from 'persistance';
 import { environment } from 'src/environments/environment';
+import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS, STORE_SETTINGS } from 'state-management';
 import { DefaultState } from '../shared-app/const/default-state.const';
 import { AppOptimisticState } from '../shared-app/const/optimistic-state-props.const';
 import { AppSyncStateConfig } from '../shared-app/const/sync-state.config';

@@ -37,6 +37,10 @@
       "notification": [
         "../../dist/notification/notification",
         "../../dist/notification"
+      ],
+      "persistance": [
+        "../../dist/persistance/persistance",
+        "../../dist/persistance"
       ]
     },
   },

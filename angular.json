@@ -337,6 +337,46 @@
           }
         }
       }
+    },
+    "persistance": {
+      "projectType": "library",
+      "root": "projects/persistance",
+      "sourceRoot": "projects/persistance/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/persistance/tsconfig.lib.json",
+            "project": "projects/persistance/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/persistance/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/persistance/src/test.ts",
+            "tsConfig": "projects/persistance/tsconfig.spec.json",
+            "karmaConfig": "projects/persistance/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/persistance/tsconfig.lib.json",
+              "projects/persistance/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "kbtv-client"
