@@ -3,14 +3,14 @@
     <app-main-top-nav-bar navbar [config]="vm.navConfig" >
     </app-main-top-nav-bar>
 
-    <app-selectable-list #selectableList 
+    <lib-selectable-list #selectableList 
         *ngIf="vm.images" identifier="id" selectedText="Bilde valgt"
         [totalRows]="vm.isXs ? 2 : 4"
         [entities]="vm.images" 
         [itemTemplate]="imgTemplate"
         (selectionChanged)="onSelectionChange($event)"
         (itemClicked)="openImageViewer($event, vm.images)">
-    </app-selectable-list>
+    </lib-selectable-list>
 </app-main-skeleton>
 
 <ng-template #imgTemplate let-entity>

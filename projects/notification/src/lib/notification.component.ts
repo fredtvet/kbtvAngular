@@ -2,7 +2,7 @@ import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-notification',
+  selector: 'lib-notification',
   template: `
   <div style="overflow-wrap:break-word;word-wrap: break-word;">
     <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" style="margin-bottom:4px;">

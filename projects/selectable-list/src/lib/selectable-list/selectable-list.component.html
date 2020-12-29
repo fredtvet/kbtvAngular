@@ -1,6 +1,6 @@
 <div class="entity-row">
     <div class="entity-column" *ngFor="let i of totalRows | numberToArray">
-        <app-selectable-card 
+        <lib-selectable-card 
             *ngFor="let selectable of (selectableEntities$ | async) | arrayslice: i:totalRows;let i = index;trackBy: trackByFn"
             [selectedText]="selectedText" selectedIcon="check_circle"
             [isSelected]="selectable.selected" 
@@ -9,6 +9,6 @@
 
             <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit: selectable.entity}"></ng-container>
 
-        </app-selectable-card>
+        </lib-selectable-card>
     </div>
 </div>

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'app-selectable-card',
+  selector: 'lib-selectable-card',
   templateUrl: './selectable-card.component.html',
   styleUrls: ['./selectable-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

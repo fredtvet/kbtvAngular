@@ -3,14 +3,14 @@
     <app-main-top-nav-bar navbar [config]="vm.navConfig" >
     </app-main-top-nav-bar>
 
-    <app-selectable-list #selectableList *ngIf="vm.documents" identifier="id" selectedText="Dokument valgt"
+    <lib-selectable-list #selectableList *ngIf="vm.documents" identifier="id" selectedText="Dokument valgt"
         [totalRows]="vm.isXs ? 2 : 4"
         [entities]="vm.documents" 
         [itemTemplate]="documentTemplate"
         selectionText=""
         (selectionChanged)="onSelectionChange($event)"
         (itemClicked)="downloadDocument($event)">
-    </app-selectable-list>
+    </lib-selectable-list>
 
 </app-main-skeleton>
 

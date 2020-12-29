@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfirmDialogConfig } from './confirm-dialog-config.interface';
 
 @Component({
-  selector: 'app-confirm-dialog',
+  selector: 'lib-confirm-dialog',
   template: `
   <mat-card>
 

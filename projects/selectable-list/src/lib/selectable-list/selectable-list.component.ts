@@ -6,7 +6,7 @@ import { SelectableEntity } from "../interfaces";
 import { Subject } from "rxjs";
 
 @Component({
-  selector: 'app-selectable-list',
+  selector: 'lib-selectable-list',
   templateUrl: './selectable-list.component.html',
   styleUrls: ['./selectable-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
