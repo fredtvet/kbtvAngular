@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { exhaustMap, map } from 'rxjs/operators';
 import { ApiUrl } from '@core/api-url.enum';
 import { ApiService } from '@core/services/api.service';
-import { Effect, DispatchedAction } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
-import { Credentials } from '../interfaces';
-import { StateAction } from '@state/state.action';
-import { LoginSuccessAction } from './login-success/login-success.action';
 import { StateCurrentUser } from '@core/state/global-state.interfaces';
+import { Observable } from 'rxjs';
+import { exhaustMap, map } from 'rxjs/operators';
+import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
+import { Credentials } from '../interfaces';
+import { LoginSuccessAction } from './login-success/login-success.action';
 
 export const LoginAction = "LOGIN_ACTION";
 export interface LoginAction extends StateAction {

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { DispatchedAction, Effect } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { HttpQueuer } from '../../http.queuer';
 import { HttpSuccessAction } from './http-success.action';
 

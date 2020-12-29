@@ -4,7 +4,7 @@ import { OptionsFormState } from '@form-sheet/interfaces';
 import { Immutable, Maybe } from 'global-types';
 import { SaveAction } from '@model/interfaces';
 import { ModelCommand } from '@model/model-command.enum';
-import { StateAction } from '@state/state.action';
+import { StateAction } from 'state-management'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, shareReplay, take } from 'rxjs/operators';
 import { DEFAULT_SAVE_CONVERTER } from './injection-tokens.const';

@@ -1,6 +1,6 @@
 import { ModelFile } from '@core/models';
 import { SaveModelReducer } from '@model/state/save-model/save-model.reducer';
-import { _createReducer } from '@state/helpers/create-reducer.helper';
+import { _createReducer } from 'state-management'
 import { Immutable } from 'global-types';
 import { ModelState } from '../model-state.interface';
 import { SaveModelFileAction } from './save-model-file.action';

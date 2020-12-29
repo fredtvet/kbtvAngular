@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
-import { User } from '@core/models';
 import { HttpQueuer } from '@http/http.queuer';
-import { QueuedCommand, StateRequestQueue } from '@http/interfaces';
+import { StateRequestQueue } from '@http/interfaces';
 import { HttpErrorAction } from '@http/state/http-error/http-error.action';
 import { HttpQueueShiftAction } from '@http/state/http-queue-shift.reducer';
 import { SetPersistedStateAction } from '@persistance/state/actions.const';
-import { DispatchedAction, Effect } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
-import { Store } from '@state/store';
 import { ContinousSyncService } from '@sync/continous-sync.service';
 import { SyncStateSuccessAction } from '@sync/state/actions';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
+import { DispatchedAction, Effect, listenTo, Store } from 'state-management';
 import { StateCurrentUser } from './global-state.interfaces';
 
 @Injectable()

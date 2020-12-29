@@ -1,5 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { STORE_EFFECTS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
+import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management'
 import { SYNC_HTTP_FETCHER, SYNC_STATE_CONFIG } from './injection-tokens.const';
 import { CustomSyncProviders } from './interfaces';
 import { ReloadSyncStateEffect } from './state/reload-sync-state.effect';

@@ -1,5 +1,5 @@
 import { StateCurrentUser } from '@core/state/global-state.interfaces';
-import { _createReducer } from '@state/helpers/create-reducer.helper';
+import { _createReducer } from 'state-management'
 import { Immutable } from 'global-types';
 import { UpdateCurrentUserAction } from './update-current-user.action';
 

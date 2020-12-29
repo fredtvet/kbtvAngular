@@ -1,5 +1,5 @@
 import { StateRequestQueue } from '@http/interfaces';
-import { _createReducer } from '@state/helpers/create-reducer.helper';
+import { _createReducer } from 'state-management'
 import { Immutable } from 'global-types';
 import { HttpErrorAction } from './http-error.action';
 

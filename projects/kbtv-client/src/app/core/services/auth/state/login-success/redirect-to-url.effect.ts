@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Effect, DispatchedAction } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
+import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { LoginSuccessAction } from './login-success.action';
 
 @Injectable()

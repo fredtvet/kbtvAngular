@@ -12,7 +12,7 @@ import { AppPersistanceConfig } from '@shared-app/const/app-persistance-config.c
 import { AppStoreSettings } from '@shared-app/const/app-store-settings.const';
 import { ModelConfigs } from '@shared-app/const/model-configs.const';
 import { translations } from '@shared/translations';
-import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS, STORE_SETTINGS } from '@state/constants/injection-tokens.const';
+import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS, STORE_SETTINGS } from 'state-management'
 import { SyncModule } from '@sync/sync.module';
 import { environment } from 'src/environments/environment';
 import { DefaultState } from '../shared-app/const/default-state.const';

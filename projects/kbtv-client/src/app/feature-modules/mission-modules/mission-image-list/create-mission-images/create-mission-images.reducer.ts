@@ -1,7 +1,7 @@
-import { _addOrUpdateRange } from '@array/add-or-update-range.helper';
+import { _addOrUpdateRange } from 'array-helpers';
 import { MissionImage } from '@core/models';
 import { StateMissionImages } from '@core/state/global-state.interfaces';
-import { _createReducer } from '@state/helpers/create-reducer.helper';
+import { _createReducer } from 'state-management'
 import { Immutable } from 'global-types';
 import { CreateMissionImagesAction } from './create-mission-images.action';
 

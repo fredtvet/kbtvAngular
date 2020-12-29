@@ -9,7 +9,7 @@ import { MailModelsAction } from '@model/state/mail-models/mail-models.action';
 import { NotificationService, NotificationType } from '@notification/index';
 import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
 import { ImageFileExtensions } from '@shared/constants/image-file-extensions.const';
-import { Store } from '@state/store';
+import { Store } from 'state-management'
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { CreateMissionImagesForm, _formToCreateMissionImagesConverter } from './form-to-create-mission-images.converter';

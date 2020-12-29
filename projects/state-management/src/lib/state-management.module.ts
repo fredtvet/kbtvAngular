@@ -10,7 +10,7 @@ import { Store } from './store';
         EffectsSubscriber
     ]
 })
-export class StateModule { 
+export class StateManagementModule { 
     constructor(effectsSubscriber: EffectsSubscriber){}
 }
   

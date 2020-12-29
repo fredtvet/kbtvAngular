@@ -1,6 +1,4 @@
-import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
-import { _filter } from '@array/filter.helper';
-import { _groupBy } from '@array/group-by.helper';
+import { _convertArrayToObject, _filter, _groupBy } from 'array-helpers';
 import { Immutable, ImmutableArray, Maybe, UnknownState } from 'global-types';
 import { ModelConfig, RelationInclude, UnknownModelState } from '../interfaces';
 import { ModelStateConfig } from '../model-state.config';

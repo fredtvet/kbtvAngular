@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { User } from "@core/models";
 import { AuthService } from '@core/services/auth';
 import { SyncConfig } from '@sync/interfaces';
-import { Store } from '@state/store';
+import { Store } from 'state-management'
 import { StoreState } from './store-state';
 import { UpdateSyncConfigAction, SyncStateAction, ReloadSyncStateAction } from '@sync/state/actions';
 import { UpdateCurrentUserAction } from './state/update-current-user/update-current-user.action';

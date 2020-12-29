@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { StateCurrentUser } from '@core/state/global-state.interfaces';
-import { Store } from '@state/store';
+import { Store } from 'state-management'
 import { StateSyncTimestamp } from '@sync/interfaces';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';

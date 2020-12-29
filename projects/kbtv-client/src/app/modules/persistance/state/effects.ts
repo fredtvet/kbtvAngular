@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first, map, switchMap } from 'rxjs/operators';
-import { DispatchedAction, Effect } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
+import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { StatePersisterService } from '../state-persister.service';
 import { StateReaderService } from '../state-reader.service';
-import { StateAction } from '@state/state.action';
 import { LoadPersistedStateAction, SetPersistedCriticalStateAction, SetPersistedStateAction } from './actions.const';
 
 @Injectable()

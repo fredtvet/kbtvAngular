@@ -1,7 +1,6 @@
-import { Immutable } from 'global-types';
 import { MissionCriteria } from '@shared/interfaces';
-import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { StateAction } from '@state/state.action';
+import { Immutable } from 'global-types';
+import { StateAction, _createReducer } from 'state-management';
 import { ComponentStoreState } from './interfaces/store-state';
 
 export const SetMissionCriteriaAction = "SET_MISSION_CRITERIA_ACTION";

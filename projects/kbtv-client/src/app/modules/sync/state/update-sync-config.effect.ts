@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
+import { StateSyncConfig } from '@sync/interfaces';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { Effect, DispatchedAction } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
+import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { ReloadSyncStateAction, UpdateSyncConfigAction } from './actions';
-import { StateSyncConfig } from '@sync/interfaces';
 
 @Injectable()
 export class UpdateSyncConfigEffect implements Effect<UpdateSyncConfigAction> {

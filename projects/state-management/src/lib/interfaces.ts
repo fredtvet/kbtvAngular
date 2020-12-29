@@ -1,8 +1,6 @@
-import { Immutable, ImmutableArray, Maybe, UnknownState } from 'global-types'
+import { Immutable, ImmutableArray, Maybe, Prop, UnknownState } from 'global-types'
 import { Observable } from 'rxjs'
 import { StateAction } from './state.action'
-
-export type Prop<T> = Extract<keyof T, string>
 
 export type StateSelector<TState, TResult> = ((s: Immutable<TState>) => Immutable<TResult>) | (Prop<TState>[])
 

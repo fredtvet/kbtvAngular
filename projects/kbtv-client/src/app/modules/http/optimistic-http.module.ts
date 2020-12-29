@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { STORE_EFFECTS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
+import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management'
 import { DispatchHttpEffect } from './state/dispatch-http/dispatch-http.effect';
 import { DispatchHttpReducer } from './state/dispatch-http/dispatch-http.reducer';
 import { HttpErrorEffect } from './state/http-error/http-error.effect';

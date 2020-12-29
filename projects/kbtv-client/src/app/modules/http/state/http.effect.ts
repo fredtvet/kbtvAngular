@@ -1,10 +1,8 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { Immutable, UnknownState } from 'global-types';
-import { DispatchedAction, Effect } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
-import { StateAction } from '@state/state.action';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { OPTIMISTIC_STATE_SELECTOR } from '../injection-tokens.const';
 import { HttpRequest, OptimisticStateSelector } from '../interfaces';
 import { HttpQueuePushAction } from './http-queue-push/http-queue-push.action';

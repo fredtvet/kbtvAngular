@@ -1,21 +1,20 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { Model } from '@core/models';
+import { ModelState } from '@core/state/model-state.interface';
+import { ModelFormService } from '@model-form/model-form.service';
+import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { translations } from '@shared/translations';
+import { CellValueChangedEvent } from 'ag-grid-community';
+import { Maybe, Prop } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { translations } from '@shared/translations';
-import { STORE_REDUCERS } from '@state/constants/injection-tokens.const';
-import { ComponentStoreProviders } from '@state/constants/providers.const';
+import { ComponentStoreProviders, STORE_REDUCERS } from 'state-management';
 import { DataConfig } from '../interfaces/data-config.interface';
 import { DataManagerFacade } from './data-manager.facade';
 import { DataTableComponent } from './data-table/data-table.component';
 import { PropertyFormMap } from './property-form.map';
 import { UpdateSelectedPropertyReducer } from './state/update-selected-property.reducer';
-import { ModelState } from '@core/state/model-state.interface';
-import { ModelFormService } from '@model-form/model-form.service';
-import { CellValueChangedEvent } from 'ag-grid-community';
-import { Model } from '@core/models';
-import { Maybe, Prop } from 'global-types';
 
 type ViewModel = {navConfig: MainTopNavConfig} & DataConfig
 

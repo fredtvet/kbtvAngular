@@ -1,10 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
-import { DispatchedAction, Effect } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
-import { StateAction } from '@state/state.action';
-import { Store } from '@state/store';
 import { Observable } from 'rxjs';
 import { exhaustMap, filter, map } from 'rxjs/operators';
+import { DispatchedAction, Effect, listenTo, StateAction, Store } from 'state-management';
 import { SYNC_HTTP_FETCHER, SYNC_STATE_CONFIG } from '../injection-tokens.const';
 import { StoreState, SyncHttpFetcher, SyncStateConfig } from '../interfaces';
 import { SyncStateAction, SyncStateSuccessAction, WipeSyncStateAction } from './actions';

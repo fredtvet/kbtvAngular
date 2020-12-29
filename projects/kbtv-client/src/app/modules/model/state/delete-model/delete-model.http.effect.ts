@@ -1,16 +1,15 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { HttpRequest } from '@http/interfaces';
-import { DispatchedAction, Effect } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
-import { ModelStateConfig } from '../../model-state.config';
-import { CommandApiMap, KeyVal, ModelConfig } from '../../interfaces';
-import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens.const';
-import { DeleteModelAction } from './delete-model.action';
 import { HttpAction } from '@http/state/http.effect';
 import { ModelCommand } from '@model/model-command.enum';
 import { Immutable, Maybe } from 'global-types';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { DispatchedAction, Effect, listenTo } from 'state-management';
+import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens.const';
+import { CommandApiMap, KeyVal, ModelConfig } from '../../interfaces';
+import { ModelStateConfig } from '../../model-state.config';
+import { DeleteModelAction } from './delete-model.action';
 
 @Injectable()
 export class DeleteModelHttpEffect implements Effect<DeleteModelAction<unknown>>{

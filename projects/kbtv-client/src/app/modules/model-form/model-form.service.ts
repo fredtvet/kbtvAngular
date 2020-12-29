@@ -10,7 +10,7 @@ import { KeyVal, SaveAction } from '@model/interfaces';
 import { ModelCommand } from '@model/model-command.enum';
 import { ModelStateConfig } from '@model/model-state.config';
 import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
-import { Store } from '@state/store';
+import { Store } from 'state-management'
 import { Observable, of } from 'rxjs';
 import { ModelFormConfig } from './interfaces';
 import { ModelFormComponent } from './model-form.component';

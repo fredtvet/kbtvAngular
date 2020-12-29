@@ -1,9 +1,8 @@
 import { DateRange } from '@datetime/interfaces';
-import { Immutable } from 'global-types';
 import { DateRangePresets } from '@shared-app/enums';
 import { _getRangeByDateRangePreset } from '@shared-app/helpers/get-range-by-date-range-preset.helper';
-import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { StateAction } from '@state/state.action';
+import { Immutable } from 'global-types';
+import { StateAction, _createReducer } from 'state-management';
 import { TimesheetCriteria } from '../timesheet-filter/timesheet-criteria.interface';
 
 export const SetTimesheetCriteriaAction = "SET_TIMESHEET_CRITERIA_ACTION";

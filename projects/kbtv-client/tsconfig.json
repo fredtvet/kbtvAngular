@@ -5,10 +5,6 @@
     "outDir": "./out-tsc/app",
     "types": [],
     "paths": {
-      "global-types": [
-        "../../dist/global-types/global-types",
-        "../../dist/global-types"
-      ],
       "@core/*": ["src/app/core/*"],
       "@shared-app/*": ["src/app/shared-app/*"],
       "@shared/*": ["src/app/shared/*"],
@@ -18,14 +14,24 @@
       "@model/*": ["src/app/modules/model/*"],
       "@notification/*": ["src/app/modules/notification/*"],
       "@persistance/*": ["src/app/modules/persistance/*"],
-      "@state/*": ["src/app/modules/state/*"],
       "@sync/*": ["src/app/modules/sync/*"],
       "@form-sheet/*": ["src/app/modules/form-sheet/*"],
       "@model-form/*": ["src/app/modules/model-form/*"],
       "@confirm-dialog/*": ["src/app/modules/confirm-dialog/*"],
       "@selectable-list/*": ["src/app/modules/selectable-list/*"],  
-      "@array/*": ["src/app/modules/utility/array-helpers/*"],
-      "@datetime/*": ["src/app/modules/utility/date-time-helpers/*"],   
+      "@datetime/*": ["src/app/modules/utility/date-time-helpers/*"],  
+      "global-types": [
+        "../../dist/global-types/global-types",
+        "../../dist/global-types"
+      ],
+      "state-management": [
+        "../../dist/state-management/state-management",
+        "../../dist/state-management"
+      ],
+      "array-helpers": [
+        "../../dist/array-helpers/array-helpers",
+        "../../dist/array-helpers"
+      ] 
     },
   },
   "files": [

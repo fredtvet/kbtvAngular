@@ -1,5 +1,5 @@
 import { TimesheetStatus } from '@shared/enums';
-import { StateAction } from '@state/state.action';
+import { StateAction } from 'state-management'
 
 export const UpdateTimesheetStatusesAction = "UPDATE_TIMESHEET_STATUSES_ACTION";
 export interface UpdateTimesheetStatusesAction extends StateAction{

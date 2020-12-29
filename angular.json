@@ -177,6 +177,86 @@
           }
         }
       }
+    },
+    "state-management": {
+      "projectType": "library",
+      "root": "projects/state-management",
+      "sourceRoot": "projects/state-management/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/state-management/tsconfig.lib.json",
+            "project": "projects/state-management/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/state-management/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/state-management/src/test.ts",
+            "tsConfig": "projects/state-management/tsconfig.spec.json",
+            "karmaConfig": "projects/state-management/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/state-management/tsconfig.lib.json",
+              "projects/state-management/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "array-helpers": {
+      "projectType": "library",
+      "root": "projects/array-helpers",
+      "sourceRoot": "projects/array-helpers/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/array-helpers/tsconfig.lib.json",
+            "project": "projects/array-helpers/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/array-helpers/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/array-helpers/src/test.ts",
+            "tsConfig": "projects/array-helpers/tsconfig.spec.json",
+            "karmaConfig": "projects/array-helpers/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/array-helpers/tsconfig.lib.json",
+              "projects/array-helpers/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "kbtv-client"

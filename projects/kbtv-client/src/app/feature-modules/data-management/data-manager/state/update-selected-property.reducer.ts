@@ -1,7 +1,6 @@
 import { ModelState } from '@core/state/model-state.interface';
 import { Immutable, Prop } from 'global-types';
-import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { StateAction } from '@state/state.action';
+import { StateAction, _createReducer } from 'state-management';
 import { ComponentState } from '../../interfaces/component-state.interface';
 
 export const UpdateSelectedPropertyAction = "UPDATE_SELECTED_PROPERTY_ACTION";

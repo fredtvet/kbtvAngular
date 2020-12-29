@@ -1,6 +1,6 @@
 import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper';
 import { Immutable } from 'global-types';
-import { _createReducer } from '@state/helpers/create-reducer.helper';
+import { _createReducer } from 'state-management'
 import { StoreState } from '../../interfaces/store-state';
 import { LoginSuccessAction } from './login-success.action';
 

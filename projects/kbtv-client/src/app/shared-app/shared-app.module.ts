@@ -10,7 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { StateModule } from '@state/state.module';
+import { StateManagementModule } from 'state-management'
 import { AppButtonComponent, ListCardComponent, NavItemComponent } from './components';
 import { ListItemComponent } from './components/list-item/list-item.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
@@ -35,7 +35,7 @@ import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
     CommonModule, 
     FlexLayoutModule,
 
-    StateModule,
+    StateManagementModule,
     
     MatToolbarModule,
     MatSidenavModule,

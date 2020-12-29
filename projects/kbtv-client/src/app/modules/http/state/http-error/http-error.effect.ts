@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
+import { StateRequestQueue } from '@http/interfaces';
+import { NotificationService, NotificationType } from '@notification/index';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Effect, DispatchedAction } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
-import { NotificationService, NotificationType } from '@notification/index';
+import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { HttpErrorAction } from './http-error.action';
-import { StateRequestQueue } from '@http/interfaces';
 
 @Injectable()
 export class HttpErrorEffect implements Effect<HttpErrorAction> {

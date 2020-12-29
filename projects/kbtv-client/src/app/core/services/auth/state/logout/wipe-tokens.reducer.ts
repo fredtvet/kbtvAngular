@@ -1,5 +1,4 @@
-import { _createReducer } from '@state/helpers/create-reducer.helper';
-import { StateAction } from '@state/state.action';
+import { StateAction, _createReducer } from 'state-management';
 import { StoreState } from '../../interfaces/store-state';
 
 export const WipeTokensAction = "WIPE_TOKENS_ACTION"

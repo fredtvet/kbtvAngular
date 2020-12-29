@@ -1,25 +1,24 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { _find } from 'array-helpers';
 import { Timesheet, User } from '@core/models';
+import { FetchModelsAction } from '@model/state/fetch-model/fetch-models.http.effect';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
-import { _find } from '@array/find.helper';
+import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
 import { WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { GroupByPeriod, TimesheetStatus } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
-import { ComponentStore } from '@state/component.store';
-import { Store } from '@state/store';
+import { Immutable, Maybe } from 'global-types';
+import { combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ComponentStore, Store } from 'state-management';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetSummaryAggregator } from '../shared-timesheet/services/timesheet-summary.aggregator';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
-import { ComponentStoreState, StoreState } from './store-state';
-import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
 import { SetSelectedWeekAction, SetTimesheetCriteriaAction } from './component-state-reducers';
+import { ComponentStoreState, StoreState } from './store-state';
 import { UpdateTimesheetStatusesAction } from './update-timesheet-statuses/update-timesheet-statuses.action';
-import { Immutable, Maybe } from 'global-types';
-import { FetchModelsAction } from '@model/state/fetch-model/fetch-models.http.effect';
 
 @Injectable()
 export class TimesheetAdminFacade {

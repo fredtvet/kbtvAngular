@@ -1,14 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { BASE_API_URL } from '@http/injection-tokens.const';
-import { COMMAND_API_MAP } from '../../injection-tokens.const';
-import { CommandApiMap } from '../../interfaces';
-import { Effect, DispatchedAction } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
 import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { ModelStateConfig } from '../../model-state.config';
+import { DispatchedAction, Effect, listenTo } from 'state-management';
+import { COMMAND_API_MAP } from '../../injection-tokens.const';
+import { CommandApiMap } from '../../interfaces';
 import { ModelCommand } from '../../model-command.enum';
+import { ModelStateConfig } from '../../model-state.config';
 import { MailModelsAction } from './mail-models.action';
 
 @Injectable()

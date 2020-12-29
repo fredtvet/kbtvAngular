@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
+import { StateRequestQueue } from '@http/interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Effect, DispatchedAction } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
+import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { HttpQueuer } from '../../http.queuer';
 import { HttpQueuePushAction } from './http-queue-push.action';
-import { StateRequestQueue } from '@http/interfaces';
 
 @Injectable()
 export class HttpQueuePushEffect implements Effect<HttpQueuePushAction> {

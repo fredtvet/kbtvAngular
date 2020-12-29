@@ -1,5 +1,5 @@
 import { ApplicationRef, Injectable } from "@angular/core";
-import { Store } from '@state/store';
+import { Store } from 'state-management'
 import { concat, interval } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { StoreState } from './interfaces';

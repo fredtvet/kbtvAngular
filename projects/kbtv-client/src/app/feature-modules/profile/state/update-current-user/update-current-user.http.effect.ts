@@ -3,9 +3,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiUrl } from '@core/api-url.enum';
 import { HttpRequest } from '@http/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
+import { listenTo } from 'state-management'
 import { HttpAction } from '@http/state/http.effect';
-import { Effect, DispatchedAction } from '@state/interfaces';
+import { Effect, DispatchedAction } from 'state-management'
 import { UpdateCurrentUserAction } from './update-current-user.action';
 
 @Injectable()

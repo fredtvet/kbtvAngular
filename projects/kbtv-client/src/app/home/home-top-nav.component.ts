@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { LoadingService } from '@core/services/loading.service';
 import { MainNavService } from '../layout/main-nav.service';
-import { Store } from '@state/store';
+import { Store } from 'state-management'
 import { SyncStateAction } from '@sync/state/actions';
 
 @Component({

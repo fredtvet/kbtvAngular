@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { UnknownState } from 'global-types';
-import { Store } from '@state/store';
+import { Store } from 'state-management'
 import { pairwise, tap } from 'rxjs/operators';
 import { PERSISTANCE_CONFIG } from './injection-tokens.const';
 import { PersistanceConfig } from './interfaces';

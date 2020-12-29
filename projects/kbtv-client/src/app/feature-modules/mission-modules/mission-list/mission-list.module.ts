@@ -5,7 +5,7 @@ import { DeleteModelProviders } from '@model/state/providers.const';
 import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
 import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
 import { SharedModule } from '@shared/shared.module';
-import { STORE_REDUCERS } from '@state/constants/injection-tokens.const';
+import { STORE_REDUCERS } from 'state-management'
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
 import { MissionListRoutingModule } from './mission-list-routing.module';

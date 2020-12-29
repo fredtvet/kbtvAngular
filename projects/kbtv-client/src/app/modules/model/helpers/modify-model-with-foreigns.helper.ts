@@ -1,4 +1,4 @@
-import { _add } from '@array/add.helper';
+import { _add } from 'array-helpers';
 import { Immutable, ImmutableArray, UnknownState, Prop } from 'global-types';
 import { ModelStateConfig } from '../model-state.config';
 

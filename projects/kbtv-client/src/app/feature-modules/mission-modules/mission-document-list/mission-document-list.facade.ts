@@ -7,7 +7,7 @@ import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
 import { RelationInclude } from "@model/interfaces";
 import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
 import { MailModelsAction } from '@model/state/mail-models/mail-models.action';
-import { Store } from '@state/store';
+import { Store } from 'state-management'
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { StoreState } from './store-state';

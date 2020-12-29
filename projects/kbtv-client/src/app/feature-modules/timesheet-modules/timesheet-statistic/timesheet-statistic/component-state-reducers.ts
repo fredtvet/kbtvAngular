@@ -1,7 +1,6 @@
 import { GroupByPeriod } from '@shared/enums';
-import { _createReducer } from '@state/helpers/create-reducer.helper';
 import { Immutable } from 'global-types';
-import { StateAction } from '@state/state.action';
+import { StateAction, _createReducer } from 'state-management';
 import { ComponentStoreState } from '../store-state';
 
 export const SetGroupByAction = "SET_GROUP_BY_ACTION";

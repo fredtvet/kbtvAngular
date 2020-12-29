@@ -1,9 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
-import { DispatchedAction, Effect } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
-import { StateAction } from '@state/state.action';
 import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { SYNC_STATE_CONFIG } from '../injection-tokens.const';
 import { SyncStateConfig } from '../interfaces';
 import { ReloadSyncStateAction, SyncStateAction, WipeSyncStateAction } from './actions';

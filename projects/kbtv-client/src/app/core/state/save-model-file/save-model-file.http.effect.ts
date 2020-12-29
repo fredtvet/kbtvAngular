@@ -4,7 +4,7 @@ import { FormDataEntry } from '@http/interfaces';
 import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '@model/injection-tokens.const';
 import { CommandApiMap, KeyVal } from '@model/interfaces';
 import { SaveModelHttpEffect } from '@model/state/save-model/save-model.http.effect';
-import { Effect } from '@state/interfaces';
+import { Effect } from 'state-management'
 import { ModelState } from '../model-state.interface';
 import { SaveModelFileAction } from './save-model-file.action';
 

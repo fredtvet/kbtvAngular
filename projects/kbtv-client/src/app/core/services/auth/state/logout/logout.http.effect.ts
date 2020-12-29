@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from '@core/services/api.service';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { ApiService } from '@core/services/api.service';
-import { Effect, DispatchedAction } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
-import { WipeTokensAction } from './wipe-tokens.reducer';
-import { StateAction } from '@state/state.action';
+import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { LogoutAction } from './logout.action';
+import { WipeTokensAction } from './wipe-tokens.reducer';
 
 @Injectable()
 export class LogoutHttpEffect implements Effect<LogoutAction> {

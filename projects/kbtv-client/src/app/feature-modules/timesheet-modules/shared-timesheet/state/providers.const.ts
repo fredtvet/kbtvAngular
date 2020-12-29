@@ -1,6 +1,6 @@
 import { Provider } from '@angular/core';
 import { saveModelMetaReducer } from '@core/state/save-model.meta.reducer';
-import { STORE_EFFECTS, STORE_META_REDUCERS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
+import { STORE_EFFECTS, STORE_META_REDUCERS, STORE_REDUCERS } from 'state-management'
 import { FetchTimesheetsHttpEffect } from './fetch-timesheets.http.effect';
 import { SaveUserTimesheetHttpEffect } from './save-user-timesheet/save-user-timesheet.http.effect';
 import { SaveUserTimesheetReducer } from './save-user-timesheet/save-user-timesheet.reducer';

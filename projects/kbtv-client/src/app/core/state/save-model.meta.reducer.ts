@@ -1,6 +1,6 @@
 import { Model } from '@core/models';
 import { SaveModelAction } from '@model/state/save-model/save-model.action';
-import { Reducer } from '@state/interfaces';
+import { Reducer } from 'state-management'
 import { ModelState } from './model-state.interface';
 
 type Action = SaveModelAction<Model, ModelState>

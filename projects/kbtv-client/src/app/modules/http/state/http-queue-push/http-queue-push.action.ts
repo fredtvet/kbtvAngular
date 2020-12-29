@@ -1,4 +1,4 @@
-import { StateAction } from '@state/state.action';
+import { StateAction } from 'state-management'
 import { QueuedCommand } from '../../interfaces';
 
 export const HttpQueuePushAction = "HTTP_QUEUE_PUSH_ACTION";

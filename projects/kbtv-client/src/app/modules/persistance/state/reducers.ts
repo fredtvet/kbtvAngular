@@ -1,5 +1,5 @@
 import { Immutable } from 'global-types';
-import { _createReducer } from '@state/helpers/create-reducer.helper';
+import { _createReducer } from 'state-management'
 import { SetPersistedCriticalStateAction, SetPersistedStateAction } from './actions.const';
 
 export const SetPersistedCriticalStateReducer = _createReducer(

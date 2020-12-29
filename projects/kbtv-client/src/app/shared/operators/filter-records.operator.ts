@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { _filter } from '@array/filter.helper';
+import { _filter } from 'array-helpers';
 import { DataFilterConstructor } from '@shared/data.filter';
 import { FilteredResponse } from '@shared/interfaces';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';

@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
+import { LoginSuccessAction } from '@core/services/auth/state/login-success/login-success.action';
+import { SyncStateAction } from '@sync/state/actions';
 import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { Effect, DispatchedAction } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
-import { Store } from '@state/store';
-import { LoginSuccessAction } from '@core/services/auth/state/login-success/login-success.action';
-import { StateAction } from '@state/state.action';
+import { DispatchedAction, Effect, listenTo, StateAction, Store } from 'state-management';
 import { WipeStateAction } from './wipe-state.reducer';
-import { SyncStateAction } from '@sync/state/actions';
 
 @Injectable()
 export class SyncUserOnLoginEffect implements Effect<LoginSuccessAction> {

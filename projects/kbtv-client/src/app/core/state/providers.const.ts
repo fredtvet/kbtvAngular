@@ -1,6 +1,6 @@
 import { Provider } from '@angular/core';
 import { SaveModelProviders } from '@model/state/providers.const';
-import { STORE_EFFECTS, STORE_META_REDUCERS, STORE_REDUCERS } from '@state/constants/injection-tokens.const';
+import { STORE_EFFECTS, STORE_META_REDUCERS, STORE_REDUCERS } from 'state-management'
 import { SaveModelFileHttpEffect } from './save-model-file/save-model-file.http.effect';
 import { SaveModelFileReducer } from './save-model-file/save-model-file.reducer';
 import { saveModelMetaReducer } from './save-model.meta.reducer';

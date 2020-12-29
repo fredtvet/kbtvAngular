@@ -1,7 +1,6 @@
+import { _convertArrayToObject, _filter } from 'array-helpers';
+import { Immutable, Prop, UnknownState } from 'global-types';
 import { ModelStateConfig } from '../model-state.config';
-import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
-import { _filter } from '@array/filter.helper';
-import { Immutable, UnknownState, Prop } from 'global-types';
 
 export function _deleteModelWithChildren<TState extends UnknownState>(
   state: Immutable<TState>, 

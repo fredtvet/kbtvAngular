@@ -1,4 +1,4 @@
-import { StateAction } from '@state/state.action';
+import { StateAction } from 'state-management'
 
 export const LoadPersistedStateAction = "LOAD_PERSISTED_STATE_ACTION";
 export interface LoadPersistedStateAction extends StateAction {}

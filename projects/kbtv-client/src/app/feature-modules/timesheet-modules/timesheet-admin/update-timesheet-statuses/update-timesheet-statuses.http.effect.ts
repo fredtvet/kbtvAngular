@@ -3,10 +3,9 @@ import { ApiUrl } from '@core/api-url.enum';
 import { HttpRequest } from '@http/interfaces';
 import { HttpAction } from '@http/state/http.effect';
 import { Immutable } from 'global-types';
-import { DispatchedAction, Effect } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { UpdateTimesheetStatusesAction } from './update-timesheet-statuses.action';
 
 @Injectable()

@@ -1,4 +1,4 @@
-import { _find } from '@array/find.helper';
+import { _find } from 'array-helpers';
 import { ModelState } from '@core/state/model-state.interface';
 import { Immutable, Maybe, UnknownState, Prop } from 'global-types';
 import { ModelStateConfig } from '@model/model-state.config';

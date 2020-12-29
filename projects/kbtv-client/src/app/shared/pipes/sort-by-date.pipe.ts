@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { _sortByDate } from '@array/sort-by-date.helper';
+import { _sortByDate } from 'array-helpers';
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 
 @Pipe({name: 'sortByDate'})

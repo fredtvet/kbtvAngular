@@ -1,4 +1,4 @@
-import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
+import { _convertArrayToObject } from 'array-helpers';
 import { User } from '@core/models';
 import { UserForeign } from '@core/models/relationships/user-foreign.interface';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';

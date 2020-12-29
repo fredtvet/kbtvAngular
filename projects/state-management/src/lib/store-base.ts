@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { Observable } from 'rxjs';
 import { ActionDispatcher } from './action-dispatcher';
 import { _applyMetaReducers } from './helpers/apply-meta-reducers.helper';
@@ -6,8 +6,9 @@ import { _mergeReducers } from './helpers/merge-reducers.helper';
 import { _deepFreeze } from './helpers/object-freezer.helper';
 import { _selectSlice } from './helpers/select-slice.helper';
 import { tryWithLogging } from './helpers/try-log-error.helper';
-import { MetaReducer, Prop, Reducer, ReducerMap, StoreSettings } from './interfaces';
-import { select, selectProp } from './operators/selectors.operator';
+import { MetaReducer, Reducer, ReducerMap, StoreSettings } from './interfaces';
+import { selectProp } from './operators/select-prop.operator';
+import { select } from './operators/select.operator';
 import { StateBase } from './state-base';
 import { StateAction } from './state.action';
 import { Store } from './store';

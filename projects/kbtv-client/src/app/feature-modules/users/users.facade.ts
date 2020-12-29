@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
-import { _groupBy } from '@array/group-by.helper';
+import { _groupBy } from 'array-helpers';
 import { User } from "@core/models";
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { FetchModelsAction } from "@model/state/fetch-model/fetch-models.http.effect";
 import { Roles } from '@shared-app/enums';
-import { Store } from '@state/store';
+import { Store } from 'state-management'
 import { map } from "rxjs/operators";
 import { StoreState } from './store-state';
 import { UpdateUserPasswordAction } from './update-user-password.http.effect';

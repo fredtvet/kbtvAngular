@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@state/store';
+import { Store } from 'state-management'
 import { BehaviorSubject, fromEvent, merge, of } from 'rxjs';
 import { filter, first, map, switchMap, tap } from 'rxjs/operators';
 import { QueuedCommand, StateRequestQueue } from './interfaces';

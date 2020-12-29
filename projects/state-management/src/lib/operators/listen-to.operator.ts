@@ -1,4 +1,4 @@
-import { _convertArrayToObject } from '@array/convert-array-to-object.helper';
+import { _convertArrayToObject } from 'array-helpers';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { DispatchedAction } from '../interfaces';

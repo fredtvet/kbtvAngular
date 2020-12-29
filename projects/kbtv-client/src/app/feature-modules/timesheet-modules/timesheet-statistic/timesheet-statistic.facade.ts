@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Timesheet, User } from '@core/models';
 import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
-import { Immutable } from 'global-types';
 import { FetchModelsAction } from '@model/state/fetch-model/fetch-models.http.effect';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
@@ -10,10 +9,10 @@ import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interf
 import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
-import { ComponentStore } from '@state/component.store';
-import { Store } from '@state/store';
+import { Immutable } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { ComponentStore, Store } from 'state-management';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { TimesheetSummaryAggregator } from '../shared-timesheet/services/timesheet-summary.aggregator';
 import { SetTimesheetCriteriaAction } from '../shared-timesheet/state/set-timesheet-criteria.reducer';

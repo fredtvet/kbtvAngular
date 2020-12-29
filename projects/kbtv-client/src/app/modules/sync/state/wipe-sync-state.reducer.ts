@@ -1,5 +1,5 @@
 import { Immutable, UnknownState } from 'global-types';
-import { _createReducer } from '@state/helpers/create-reducer.helper';
+import { _createReducer } from 'state-management'
 import { WipeSyncStateAction } from './actions';
 
 export const WipeSyncStateReducer = _createReducer(

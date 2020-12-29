@@ -1,5 +1,5 @@
 import { UnknownState } from 'global-types';
-import { StateAction } from '@state/state.action';
+import { StateAction } from 'state-management'
 import { SyncConfig, SyncResponse, SyncStateConfig } from '../interfaces';
 
 export const SyncStateAction = "SYNC_STATE_ACTION";

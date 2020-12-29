@@ -5,7 +5,7 @@ import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '@model/injection-token
 import { CommandApiMap, KeyVal } from '@model/interfaces';
 import { ModelCommand } from '@model/model-command.enum';
 import { SaveModelHttpEffect } from '@model/state/save-model/save-model.http.effect';
-import { Effect } from '@state/interfaces';
+import { Effect } from 'state-management'
 import { SaveUserAction } from './save-user.action';
 
 @Injectable({providedIn: 'root'})

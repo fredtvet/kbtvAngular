@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
 import { ApiUrl } from '@core/api-url.enum';
 import { ApiService } from '@core/services/api.service';
-import { Effect, DispatchedAction } from '@state/interfaces';
-import { listenTo } from '@state/operators/listen-to.operator';
+import { Observable } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { UpdatePasswordAction } from './update-password.action';
 
 @Injectable()
