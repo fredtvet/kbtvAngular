@@ -1,7 +1,7 @@
 {
   "name": "state-management",
   "version": "0.0.1",
-  "sideEffects": false,
+  "sideEffects": ["./src/lib/global-state.ts"],
   "peerDependencies": {
     "@angular/core": "^11.0.5",
     "rxjs": "~6.5.5"
