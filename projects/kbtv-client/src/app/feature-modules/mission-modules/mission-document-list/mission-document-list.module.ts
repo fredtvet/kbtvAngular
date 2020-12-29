@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SaveModelFileProviders } from '@core/state/providers.const';
-import { ModelFormModule } from '@model-form/model-form.module';
+import { ModelFormModule } from 'model-form';
 import { SelectableListModule } from 'selectable-list';
 import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { SharedModule } from '@shared/shared.module';

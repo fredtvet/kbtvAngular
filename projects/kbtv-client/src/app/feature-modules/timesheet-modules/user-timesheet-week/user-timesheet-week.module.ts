@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ModelFormModule } from '@model-form/model-form.module';
+import { ModelFormModule } from 'model-form';
 import { _timesheetFormToSaveUserTimesheetConverter } from '@shared-timesheet/state/save-user-timesheet/timesheet-form-to-save-user-timesheet.converter';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
 import { DeleteModelHttpEffect, DeleteModelReducer } from 'state-model';

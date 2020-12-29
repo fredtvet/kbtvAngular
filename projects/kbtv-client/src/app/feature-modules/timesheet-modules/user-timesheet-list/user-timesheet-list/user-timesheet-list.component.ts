@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet } from '@core/models';
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { ModelState } from '@core/state/model-state.interface';
-import { ModelFormService } from "@model-form/model-form.service";
+import { ModelFormService } from 'model-form';
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from '@shared-app/interfaces';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';

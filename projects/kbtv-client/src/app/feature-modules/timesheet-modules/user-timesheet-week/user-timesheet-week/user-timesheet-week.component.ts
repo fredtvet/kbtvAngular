@@ -3,7 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { ModelState } from "@core/state/model-state.interface";
-import { ModelFormService } from "@model-form/model-form.service";
+import { ModelFormService } from 'model-form';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { WeekCriteriaForm } from '@shared/constants/forms/week-criteria-controls.const';
 import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';

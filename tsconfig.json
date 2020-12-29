@@ -75,6 +75,10 @@
       "form-sheet": [
         "dist/form-sheet/form-sheet",
         "dist/form-sheet"
+      ],
+      "model-form": [
+        "dist/model-form/model-form",
+        "dist/model-form"
       ]
     }
   },

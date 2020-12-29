@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AppSaveModelProviders, SaveModelFileProviders } from '@core/state/providers.const';
-import { ModelFormModule } from '@model-form/model-form.module';
+import { ModelFormModule } from 'model-form';
 import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
 import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
 import { SharedModule } from '@shared/shared.module';

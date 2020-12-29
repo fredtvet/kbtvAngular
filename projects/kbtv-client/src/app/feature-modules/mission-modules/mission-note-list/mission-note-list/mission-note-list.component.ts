@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MissionNote } from '@core/models';
-import { ModelFormService } from '@model-form/model-form.service';
 import { RolePresets } from '@shared-app/enums';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from '@shared-app/interfaces';
@@ -9,6 +8,7 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { CreateMissionNoteForm, EditMissionNoteForm } from '@shared/constants/model-forms/save-mission-note-forms.const';
 import { _sortByDate } from 'array-helpers';
 import { Maybe } from 'global-types';
+import { ModelFormService } from 'model-form';
 import { map } from 'rxjs/operators';
 import { MissionNoteListFacade } from '../mission-note-list.facade';
 

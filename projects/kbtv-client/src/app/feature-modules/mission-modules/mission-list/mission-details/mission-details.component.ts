@@ -11,7 +11,7 @@ import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { MissionListFacade } from '../mission-list.facade';
-import { ModelFormService } from '@model-form/model-form.service';
+import { ModelFormService } from 'model-form';
 
 interface ViewModel { mission: Maybe<Immutable<Mission>>, navConfig: DetailTopNavConfig }
 

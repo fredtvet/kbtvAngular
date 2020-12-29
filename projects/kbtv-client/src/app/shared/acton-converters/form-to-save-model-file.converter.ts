@@ -1,7 +1,7 @@
 import { Model, ModelFile } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { SaveModelFileAction } from '@core/state/save-model-file/save-model-file.action';
-import { FormToSaveModelConverter, ModelFormToSaveModelInput } from '@model-form/interfaces';
+import { FormToSaveModelConverter, ModelFormToSaveModelInput } from 'model-form';
 import { _flattenExistingForeigns } from '@shared-app/helpers/flatten-existing-foreigns.helper';
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
 import { ModelFileWrapper, ModelStateConfig } from 'state-model';

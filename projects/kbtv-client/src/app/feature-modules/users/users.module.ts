@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { saveModelMetaReducer } from '@core/state/save-model.meta.reducer';
-import { ModelFormModule } from '@model-form/model-form.module';
+import { ModelFormModule } from 'model-form';
 import { SharedModule } from '@shared/shared.module';
 import { STORE_EFFECTS, STORE_META_REDUCERS, STORE_REDUCERS } from 'state-management';
 import { DeleteModelHttpEffect, DeleteModelReducer } from 'state-model';

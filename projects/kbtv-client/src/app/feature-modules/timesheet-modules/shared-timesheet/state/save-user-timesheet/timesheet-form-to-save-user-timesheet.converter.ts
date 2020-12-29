@@ -6,7 +6,7 @@ import { _flattenExistingForeigns } from '@shared-app/helpers/flatten-existing-f
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
 import { TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
 import { SaveUserTimesheetAction } from './save-user-timesheet.action';
-import { FormToSaveModelConverter, ModelFormToSaveModelInput } from '@model-form/interfaces';
+import { FormToSaveModelConverter, ModelFormToSaveModelInput } from 'model-form';
 
 export const _timesheetFormToSaveUserTimesheetConverter: FormToSaveModelConverter<TimesheetForm, ModelState, SaveUserTimesheetAction> =
     (input: ModelFormToSaveModelInput<TimesheetForm, ModelState>): SaveUserTimesheetAction => {

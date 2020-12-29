@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppSaveModelProviders } from '@core/state/providers.const';
-import { ModelFormModule } from '@model-form/model-form.module';
+import { ModelFormModule } from 'model-form';
 import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
 import { SharedModule } from '@shared/shared.module';
 import { AppAgGridModule } from 'src/app/app-ag-grid/app-ag-grid.module';

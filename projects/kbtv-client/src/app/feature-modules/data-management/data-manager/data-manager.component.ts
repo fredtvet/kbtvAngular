@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Model } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { ModelFormService } from '@model-form/model-form.service';
+import { ModelFormService } from 'model-form';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { translations } from '@shared/translations';
 import { CellValueChangedEvent } from 'ag-grid-community';
