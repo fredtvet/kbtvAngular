@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { StateSyncConfig } from '@sync/interfaces';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
+import { StateSyncConfig } from '../interfaces';
 import { ReloadSyncStateAction, UpdateSyncConfigAction } from './actions';
 
 @Injectable()

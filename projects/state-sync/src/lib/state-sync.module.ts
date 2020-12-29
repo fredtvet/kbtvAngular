@@ -10,10 +10,10 @@ import { UpdateSyncConfigReducer } from './state/update-sync-config.reducer';
 import { WipeSyncStateReducer } from './state/wipe-sync-state.reducer';
 
 @NgModule({})
-export class SyncModule { 
-    static forRoot(providers: CustomSyncProviders): ModuleWithProviders<SyncModule> {
+export class StateSyncModule { 
+    static forRoot(providers: CustomSyncProviders): ModuleWithProviders<StateSyncModule> {
         return {
-            ngModule: SyncModule,
+            ngModule: StateSyncModule,
             providers: [
                 {provide: STORE_REDUCERS, useValue: SetSyncResponseReducer, multi: true},
                 {provide: STORE_REDUCERS, useValue: UpdateSyncConfigReducer, multi: true},

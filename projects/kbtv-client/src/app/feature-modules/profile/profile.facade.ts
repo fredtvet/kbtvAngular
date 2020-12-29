@@ -1,13 +1,12 @@
 import { Injectable } from "@angular/core";
 import { User } from "@core/models";
 import { AuthService } from '@core/services/auth';
-import { SyncConfig } from '@sync/interfaces';
-import { Store } from 'state-management'
-import { StoreState } from './store-state';
-import { UpdateSyncConfigAction, SyncStateAction, ReloadSyncStateAction } from '@sync/state/actions';
+import { Immutable } from "global-types";
+import { Store } from 'state-management';
+import { ReloadSyncStateAction, SyncConfig, SyncStateAction, UpdateSyncConfigAction } from 'state-sync';
 import { UpdateCurrentUserAction } from './state/update-current-user/update-current-user.action';
 import { UpdatePasswordAction } from './state/update-password/update-password.action';
-import { Immutable } from "global-types";
+import { StoreState } from './store-state';
 
 @Injectable({providedIn: 'any'})
 export class ProfileFacade {

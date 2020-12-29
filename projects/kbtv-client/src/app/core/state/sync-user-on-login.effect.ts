@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoginSuccessAction } from '@core/services/auth/state/login-success/login-success.action';
-import { SyncStateAction } from '@sync/state/actions';
+import { SyncStateAction } from 'state-sync';
 import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction, Store } from 'state-management';

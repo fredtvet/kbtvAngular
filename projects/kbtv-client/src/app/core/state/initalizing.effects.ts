@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ContinousSyncService } from '@sync/continous-sync.service';
-import { SyncStateSuccessAction } from '@sync/state/actions';
 import { HttpErrorAction, HttpQueuer, HttpQueueShiftAction, StateRequestQueue } from 'optimistic-http';
 import { SetPersistedStateAction } from 'persistance';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, Store } from 'state-management';
+import { ContinousSyncService, SyncStateSuccessAction } from 'state-sync';
 import { StateCurrentUser } from './global-state.interfaces';
 
 @Injectable()

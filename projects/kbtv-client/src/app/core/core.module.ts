@@ -8,7 +8,7 @@ import { AppPersistanceConfig } from '@shared-app/const/app-persistance-config.c
 import { AppStoreSettings } from '@shared-app/const/app-store-settings.const';
 import { ModelConfigs } from '@shared-app/const/model-configs.const';
 import { translations } from '@shared/translations';
-import { SyncModule } from '@sync/sync.module';
+import { StateSyncModule } from 'state-sync';
 import { BASE_API_URL, OptimisticHttpModule, OPTIMISTIC_STATE_SELECTOR } from 'optimistic-http';
 import { PersistanceModule, PERSISTANCE_CONFIG } from 'persistance';
 import { environment } from 'src/environments/environment';
@@ -34,7 +34,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
 @NgModule({
   declarations: [],
   imports: [
-    SyncModule.forRoot({
+    StateSyncModule.forRoot({
       fetcher: SyncHttpFetcherService,
       config: AppSyncStateConfig
     }),

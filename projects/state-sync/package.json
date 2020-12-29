@@ -1,0 +1,12 @@
+{
+  "name": "state-sync",
+  "version": "0.0.1",
+  "sideEffects": false,
+  "peerDependencies": {
+    "@angular/core": "^11.0.5",
+    "rxjs": "~6.5.5"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

@@ -51,6 +51,10 @@
       "optimistic-http": [
         "dist/optimistic-http/optimistic-http",
         "dist/optimistic-http"
+      ],
+      "state-sync": [
+        "dist/state-sync/state-sync",
+        "dist/state-sync"
       ]
     }
   },

@@ -9,13 +9,14 @@
       "@shared-app/*": ["src/app/shared-app/*"],
       "@shared/*": ["src/app/shared/*"],
       "@shared-timesheet/*": ["src/app/feature-modules/timesheet-modules/shared-timesheet/*"],
+      
       "@dynamic-forms/*": ["src/app/modules/dynamic-forms/*"],
       "@model/*": ["src/app/modules/model/*"],
-      "@sync/*": ["src/app/modules/sync/*"],
       "@form-sheet/*": ["src/app/modules/form-sheet/*"],
       "@model-form/*": ["src/app/modules/model-form/*"],
       "@confirm-dialog/*": ["src/app/modules/confirm-dialog/*"],
-      "@selectable-list/*": ["src/app/modules/selectable-list/*"],  
+      "@selectable-list/*": ["src/app/modules/selectable-list/*"], 
+       
       "date-time-helpers": [
         "../../dist/date-time-helpers/date-time-helpers",
         "../../dist/date-time-helpers"
@@ -43,6 +44,10 @@
       "optimistic-http": [
         "../../dist/optimistic-http/optimistic-http",
         "../../dist/optimistic-http"
+      ],    
+      "state-sync": [
+        "../../dist/state-sync/state-sync",
+        "../../dist/state-sync"
       ]
     },
   },

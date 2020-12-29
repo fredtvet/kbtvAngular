@@ -1,7 +1,7 @@
 import { StateCurrentUser } from '@core/state/global-state.interfaces';
 import { ModelState } from '@core/state/model-state.interface';
 import { OptimisticStateSelector } from 'optimistic-http';
-import { StateSyncTimestamp } from '@sync/interfaces';
+import { StateSyncTimestamp } from 'state-sync';
 
 type State = ModelState & StateSyncTimestamp & StateCurrentUser
 export const AppOptimisticState: OptimisticStateSelector<State> = {

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { User } from '@core/models';
-import { SyncConfig } from '@sync/interfaces';
+import { SyncConfig } from 'state-sync';
 import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { ProfileForm } from '@shared/constants/forms/profile-form.const';
