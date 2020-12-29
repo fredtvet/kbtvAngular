@@ -12,7 +12,6 @@
       "@dynamic-forms/*": ["src/app/modules/dynamic-forms/*"],
       "@http/*": ["src/app/modules/http/*"],
       "@model/*": ["src/app/modules/model/*"],
-      "@notification/*": ["src/app/modules/notification/*"],
       "@persistance/*": ["src/app/modules/persistance/*"],
       "@sync/*": ["src/app/modules/sync/*"],
       "@form-sheet/*": ["src/app/modules/form-sheet/*"],
@@ -34,7 +33,11 @@
       "array-helpers": [
         "../../dist/array-helpers/array-helpers",
         "../../dist/array-helpers"
-      ] 
+      ],
+      "notification": [
+        "../../dist/notification/notification",
+        "../../dist/notification"
+      ]
     },
   },
   "files": [

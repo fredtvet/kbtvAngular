@@ -5,6 +5,7 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { NotificationModule } from 'notification';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,7 +13,6 @@ import { CoreModule } from './core/core.module';
 import { HomeTopNavComponent } from './home/home-top-nav.component';
 import { HomeComponent } from './home/home.component';
 import { AppLayoutModule } from './layout/app-layout.module';
-import { NotificationModule } from '@notification/notification.module';
 import { AppHammerConfig } from './shared-app/app-hammer-config';
 import { SharedAppModule } from './shared-app/shared-app.module';
 

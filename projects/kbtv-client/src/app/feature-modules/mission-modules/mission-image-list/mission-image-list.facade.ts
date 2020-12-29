@@ -6,7 +6,7 @@ import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
 import { RelationInclude } from "@model/interfaces";
 import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
 import { MailModelsAction } from '@model/state/mail-models/mail-models.action';
-import { NotificationService, NotificationType } from '@notification/index';
+import { NotificationService, NotificationType } from 'notification';
 import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
 import { ImageFileExtensions } from '@shared/constants/image-file-extensions.const';
 import { Store } from 'state-management'

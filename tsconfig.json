@@ -39,6 +39,10 @@
       "date-time-helpers": [
         "dist/date-time-helpers/date-time-helpers",
         "dist/date-time-helpers"
+      ],
+      "notification": [
+        "dist/notification/notification",
+        "dist/notification"
       ]
     }
   },

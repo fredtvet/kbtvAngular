@@ -4,7 +4,7 @@ import { Mission } from "@core/models";
 import { SaveModelFileAction } from '@core/state/save-model-file/save-model-file.action';
 import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
 import { ModelCommand } from '@model/model-command.enum';
-import { NotificationService, NotificationType } from '@notification/index';
+import { NotificationService, NotificationType } from 'notification';
 import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
 import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';

@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router } from '@angular/router';
-import { NotificationService, NotificationType } from '@notification/index';
+import { NotificationService, NotificationType } from 'notification';
 import { AuthService } from './auth.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(
     private router: Router,

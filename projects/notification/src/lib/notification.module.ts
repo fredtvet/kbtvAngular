@@ -10,10 +10,10 @@ import { NotificationComponent } from './notification.component';
     NotificationComponent,
   ],
   imports: [ 
-      CommonModule, 
-      FlexLayoutModule,
-      MatIconModule,
-      MatSnackBarModule
+    CommonModule, 
+    FlexLayoutModule,
+    MatIconModule,
+    MatSnackBarModule
   ],
   exports: [],
   providers: [],
