@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { SaveModelFileProviders } from '@core/state/providers.const';
 import { ModelFormModule } from '@model-form/model-form.module';
+import { SelectableListModule } from 'selectable-list';
 import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { SharedModule } from '@shared/shared.module';
-import { SelectableListModule } from 'src/app/modules/selectable-list/selectable-list.module';
 import { DeleteModelProviders, MailModelsProviders } from 'state-model';
 import { MissionDocumentListRoutingModule } from './mission-document-list-routing.module';
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';

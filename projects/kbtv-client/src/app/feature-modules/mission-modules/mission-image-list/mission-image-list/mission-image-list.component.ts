@@ -15,9 +15,9 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { EmailForm } from '@shared/constants/forms/email-form.const';
 import { combineLatest, Observable } from 'rxjs';
 import { map, tap } from "rxjs/operators";
-import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MissionImageListFacade } from '../mission-image-list.facade';
+import { ConfirmDialogService } from "confirm-dialog";
 
 interface ViewModel { images: Maybe<ImmutableArray<MissionImage>>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig }
 

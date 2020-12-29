@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@angular/core";
 import { MatBottomSheet, MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { Router } from '@angular/router';
-import { ConfirmDialogService } from "@confirm-dialog/confirm-dialog.service";
+import { ConfirmDialogService } from 'confirm-dialog';
 import { FormSheetWrapperComponent } from '@form-sheet/form-sheet-wrapper.component';
 import { FormSheetWrapperConfig, OptionsFormState } from '@form-sheet/interfaces';
 import { Immutable, Maybe, UnknownState } from "global-types";

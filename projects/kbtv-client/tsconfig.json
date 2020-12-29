@@ -13,8 +13,6 @@
       "@dynamic-forms/*": ["src/app/modules/dynamic-forms/*"],
       "@form-sheet/*": ["src/app/modules/form-sheet/*"],
       "@model-form/*": ["src/app/modules/model-form/*"],
-      "@confirm-dialog/*": ["src/app/modules/confirm-dialog/*"],
-      "@selectable-list/*": ["src/app/modules/selectable-list/*"], 
        
       "date-time-helpers": [
         "../../dist/date-time-helpers/date-time-helpers",
@@ -51,6 +49,14 @@
       "state-model": [
         "../../dist/state-model/state-model",
         "../../dist/state-model"
+      ],
+      "selectable-list": [
+        "../../dist/selectable-list/selectable-list",
+        "../../dist/selectable-list"
+      ],
+      "confirm-dialog": [
+        "../../dist/confirm-dialog/confirm-dialog",
+        "../../dist/confirm-dialog"
       ]
     },
   },

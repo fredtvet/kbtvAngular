@@ -59,6 +59,14 @@
       "state-model": [
         "dist/state-model/state-model",
         "dist/state-model"
+      ],
+      "selectable-list": [
+        "dist/selectable-list/selectable-list",
+        "dist/selectable-list"
+      ],
+      "confirm-dialog": [
+        "dist/confirm-dialog/confirm-dialog",
+        "dist/confirm-dialog"
       ]
     }
   },

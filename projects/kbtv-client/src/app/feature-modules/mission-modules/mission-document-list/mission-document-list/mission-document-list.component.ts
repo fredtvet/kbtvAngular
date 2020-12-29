@@ -5,7 +5,7 @@ import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { FormService } from '@form-sheet/form-sheet.service';
-import { ImmutableArray, Maybe } from 'global-types';
+import { ModelFormService } from '@model-form/model-form.service';
 import { Roles } from '@shared-app/enums';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { AppButton } from '@shared-app/interfaces';
@@ -13,11 +13,11 @@ import { SelectableListContainerComponent } from '@shared/components/abstracts/s
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EmailForm } from '@shared/constants/forms/email-form.const';
 import { CreateMissionDocumentForm, MissionDocumentForm } from '@shared/constants/model-forms/create-mission-document-form.const';
+import { ConfirmDialogService } from 'confirm-dialog';
+import { ImmutableArray, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
 import { MissionDocumentListFacade } from '../mission-document-list.facade';
-import { ModelFormService } from '@model-form/model-form.service';
 
 interface ViewModel { documents: Maybe<ImmutableArray<MissionDocument>>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig}
 

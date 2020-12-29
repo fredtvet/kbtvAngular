@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { User } from '@core/models';
 import { SyncConfig } from 'state-sync';
-import { ConfirmDialogService } from 'src/app/modules/confirm-dialog/confirm-dialog.service';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { ProfileForm } from '@shared/constants/forms/profile-form.const';
 import { SyncConfigForm } from '@shared/constants/forms/sync-config.form.const';
 import { ProfileFacade } from '../profile.facade';
 import { FormService } from '@form-sheet/form-sheet.service';
 import { CurrentUserPasswordForm } from '@shared/constants/forms/password-form.const';
+import { ConfirmDialogService } from 'confirm-dialog';
 
 @Component({
   selector: 'app-profile',

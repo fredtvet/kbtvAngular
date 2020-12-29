@@ -4,12 +4,12 @@ import { DynamicFormsModule } from '@dynamic-forms/dynamic-forms.module';
 import { FormSheetModule } from '@form-sheet/form-sheet.module';
 import { FetchModelsProviders } from 'state-model';
 import { StateAction } from 'state-management'
-import { ConfirmDialogModule } from '../confirm-dialog/confirm-dialog.module';
 import { DEFAULT_SAVE_CONVERTER } from './injection-tokens.const';
 import { FormToSaveModelConverter } from './interfaces';
 import { ModelFormComponent } from './model-form.component';
 import { ModelFormFacade } from './model-form.facade';
 import { ModelFormService } from './model-form.service';
+import { ConfirmDialogModule } from 'confirm-dialog';
 
 @NgModule({
     declarations: [ ModelFormComponent ],

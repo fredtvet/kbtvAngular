@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { DeleteModelProviders, MailModelsProviders } from 'state-model';
 import { SharedModule } from '@shared/shared.module';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management'
-import { SelectableListModule } from 'src/app/modules/selectable-list/selectable-list.module';
+import { SelectableListModule } from 'selectable-list';
 import { CreateMissionImagesHttpEffect } from './create-mission-images/create-mission-images.http.effect';
 import { CreateMissionImagesReducer } from './create-mission-images/create-mission-images.reducer';
 import { ImageViewerDialogWrapperComponent } from './image-viewer/image-viewer-dialog-wrapper.component';
