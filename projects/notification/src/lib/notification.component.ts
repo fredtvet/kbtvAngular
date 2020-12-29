@@ -1,5 +1,6 @@
-import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { NotificationSnackBarData } from './notification-snack-bar-data.interface';
 
 @Component({
   selector: 'lib-notification',
@@ -23,7 +24,7 @@ import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar'
 export class NotificationComponent {
 
   constructor(
-    @Inject(MAT_SNACK_BAR_DATA) public data: {title: string, details: string[], icon: string},
+    @Inject(MAT_SNACK_BAR_DATA) public data: NotificationSnackBarData,
     private _snackRef: MatSnackBarRef<NotificationComponent>) {}
 
   onClick = () => this._snackRef.dismiss();
