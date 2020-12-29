@@ -1,8 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { _getDateOfWeek } from '@datetime/get-date-of-week.helper';
-import { _getFirstDayOfWeek } from '@datetime/get-first-day-of-week.helper';
-import { Immutable, Maybe } from 'global-types';
 import { DateParams } from '@shared-app/interfaces';
+import { _getDateOfWeek, _getFirstDayOfWeek } from 'date-time-helpers';
+import { Immutable, Maybe } from 'global-types';
 
 @Pipe({name: 'getDateByDateParams'})
 export class GetDateByDateParamsPipe implements PipeTransform {

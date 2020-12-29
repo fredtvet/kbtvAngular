@@ -1,5 +1,5 @@
 import { Timesheet } from '@core/models';
-import { DateRange } from '@datetime/interfaces';
+import { DateRange } from 'date-time-helpers';
 import { ModelStateConfig } from '@model/model-state.config';
 import { DataFilter } from '@shared/data.filter';
 import { DateInput, Immutable, Maybe, Prop } from 'global-types';

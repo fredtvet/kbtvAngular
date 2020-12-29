@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Mission, Timesheet } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
+import { _getWeekOfYear } from 'date-time-helpers';
 import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
 import { RelationInclude } from '@model/interfaces';
 import { _mapObjectsToWeekdays } from '@shared-app/helpers/object/map-objects-to-weekdays.helper';

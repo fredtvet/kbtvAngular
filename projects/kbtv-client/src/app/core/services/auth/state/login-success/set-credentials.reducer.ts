@@ -1,4 +1,4 @@
-import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper';
+import { _getUnixTimeSeconds } from 'date-time-helpers';
 import { Immutable } from 'global-types';
 import { _createReducer } from 'state-management'
 import { StoreState } from '../../interfaces/store-state';

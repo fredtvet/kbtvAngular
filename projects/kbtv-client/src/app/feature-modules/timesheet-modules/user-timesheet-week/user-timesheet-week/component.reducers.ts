@@ -1,5 +1,4 @@
-import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
-import { _getWeeksInYear } from '@datetime/get-weeks-in-year.helper';
+import { _getWeekOfYear, _getWeeksInYear } from 'date-time-helpers';
 import { Immutable } from 'global-types';
 import { StateAction, _createReducer } from 'state-management';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';

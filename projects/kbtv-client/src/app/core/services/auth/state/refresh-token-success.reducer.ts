@@ -1,4 +1,4 @@
-import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper'
+import { _getUnixTimeSeconds } from 'date-time-helpers'
 import { Immutable } from 'global-types'
 import { StateAction, _createReducer } from 'state-management'
 import { RefreshTokenResponse } from '../interfaces'

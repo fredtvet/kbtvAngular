@@ -257,6 +257,46 @@
           }
         }
       }
+    },
+    "date-time-helpers": {
+      "projectType": "library",
+      "root": "projects/date-time-helpers",
+      "sourceRoot": "projects/date-time-helpers/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/date-time-helpers/tsconfig.lib.json",
+            "project": "projects/date-time-helpers/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/date-time-helpers/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/date-time-helpers/src/test.ts",
+            "tsConfig": "projects/date-time-helpers/tsconfig.spec.json",
+            "karmaConfig": "projects/date-time-helpers/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/date-time-helpers/tsconfig.lib.json",
+              "projects/date-time-helpers/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "kbtv-client"

@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { Timesheet } from '@core/models';
 import { GroupByPeriod } from '@shared/enums/group-by-period.enum';
 import { TimesheetStatus } from '@shared/enums/timesheet-status.enum';
-import { _getWeekAndYearFromDate } from '@datetime/get-week-and-year-from-date.helper';
-import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
-import { TimesheetSummary } from '../interfaces/timesheet-summary.interface';
+import { _getWeekAndYearFromDate, _getWeekOfYear } from 'date-time-helpers';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { TimesheetSummary } from '../interfaces/timesheet-summary.interface';
 
 @Injectable({providedIn: "root"})
 export class TimesheetSummaryAggregator {

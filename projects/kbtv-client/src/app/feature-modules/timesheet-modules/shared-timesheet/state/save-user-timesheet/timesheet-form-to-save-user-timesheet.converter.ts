@@ -1,6 +1,6 @@
 import { Timesheet } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { _mergeDateAndTime } from '@datetime/merge-date-and-time.helper';
+import { _mergeDateAndTime } from 'date-time-helpers';
 import { Immutable } from 'global-types';
 import { FormToSaveModelConverter, ModelFormToSaveModelInput } from '@model-form/interfaces';
 import { _flattenExistingForeigns } from '@shared-app/helpers/flatten-existing-foreigns.helper';

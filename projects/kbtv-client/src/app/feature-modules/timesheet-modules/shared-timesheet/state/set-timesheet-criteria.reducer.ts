@@ -1,4 +1,4 @@
-import { DateRange } from '@datetime/interfaces';
+import { DateRange } from 'date-time-helpers';
 import { DateRangePresets } from '@shared-app/enums';
 import { _getRangeByDateRangePreset } from '@shared-app/helpers/get-range-by-date-range-preset.helper';
 import { Immutable } from 'global-types';

@@ -1,12 +1,9 @@
 import { User } from '@core/models';
 import { DateRangePresets } from '@shared-app/enums';
-import { _getDateOfWeek } from '@datetime/get-date-of-week.helper';
-import { _getWeekRange } from '@datetime/get-week-range.helper';
-import { _getYearRange } from '@datetime/get-year-range.helper';
-import { DateRange } from '@datetime/interfaces';
+import { DateRange, _getDateOfWeek, _getWeekRange, _getYearRange } from 'date-time-helpers';
+import { Immutable } from 'global-types';
 import { WeekCriteria } from '../interfaces/week-criteria.interface';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
-import { Immutable } from 'global-types';
 
 export class WeekToTimesheetCriteriaAdapter implements TimesheetCriteria {
     

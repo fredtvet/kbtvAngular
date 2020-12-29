@@ -1,10 +1,6 @@
-import { DateRange } from '@datetime/interfaces';
-import { Immutable, Maybe } from 'global-types';
 import { DateRangePresets } from "@shared-app/enums/date-range-presets.enum";
-import { _getLastDayOfYear } from '../../modules/utility/date-time-helpers/get-last-day-of-year.helper';
-import { _getMonthRange } from '../../modules/utility/date-time-helpers/get-month-range.helper';
-import { _getWeekRange } from '../../modules/utility/date-time-helpers/get-week-range.helper';
-import { _getYearRange } from '../../modules/utility/date-time-helpers/get-year-range.helper';
+import { DateRange, _getLastDayOfYear, _getMonthRange, _getWeekRange, _getYearRange } from 'date-time-helpers';
+import { Immutable, Maybe } from 'global-types';
 
 export function _getRangeByDateRangePreset(preset: Maybe<DateRangePresets>, getISO?: boolean): Maybe<Immutable<DateRange>> {
     switch (preset) {

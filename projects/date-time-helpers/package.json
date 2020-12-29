@@ -1,0 +1,9 @@
+{
+  "name": "date-time-helpers",
+  "version": "0.0.1",
+  "sideEffects": false,
+  "peerDependencies": {},
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

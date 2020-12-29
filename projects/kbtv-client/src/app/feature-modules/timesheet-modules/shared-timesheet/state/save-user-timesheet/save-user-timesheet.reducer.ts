@@ -1,5 +1,5 @@
 import { StateCurrentUser, StateUserTimesheets } from '@core/state/global-state.interfaces';
-import { _getTotalHours } from '@datetime/get-total-hours.helper';
+import { _getTotalHours } from 'date-time-helpers';
 import { SaveModelReducer } from '@model/state/save-model/save-model.reducer';
 import { TimesheetStatus } from '@shared/enums';
 import { _createReducer } from 'state-management'

@@ -19,7 +19,10 @@
       "@model-form/*": ["src/app/modules/model-form/*"],
       "@confirm-dialog/*": ["src/app/modules/confirm-dialog/*"],
       "@selectable-list/*": ["src/app/modules/selectable-list/*"],  
-      "@datetime/*": ["src/app/modules/utility/date-time-helpers/*"],  
+      "date-time-helpers": [
+        "../../dist/date-time-helpers/date-time-helpers",
+        "../../dist/date-time-helpers"
+      ],
       "global-types": [
         "../../dist/global-types/global-types",
         "../../dist/global-types"

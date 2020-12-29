@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '@core/models';
-import { _getUnixTimeSeconds } from '@datetime/get-unix-time-seconds.helper';
+import { _getUnixTimeSeconds } from 'date-time-helpers';
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 import { map, skip } from 'rxjs/operators';

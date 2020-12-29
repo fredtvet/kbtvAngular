@@ -1,5 +1,5 @@
 import { Provider } from '@angular/core';
-import { _getWeekOfYear } from '@datetime/get-week-of-year.helper';
+import { _getWeekOfYear } from 'date-time-helpers';
 import { ComponentStoreProviders, STORE_DEFAULT_STATE, STORE_REDUCERS } from 'state-management';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { WeekToTimesheetCriteriaAdapter } from '../../shared-timesheet/timesheet-filter/week-to-timesheet-criteria.adapter';

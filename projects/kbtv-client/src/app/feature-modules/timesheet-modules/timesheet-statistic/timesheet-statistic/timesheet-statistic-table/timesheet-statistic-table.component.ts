@@ -5,7 +5,7 @@ import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interf
 import { AgGridTableComponent } from '@shared/components/abstracts/ag-grid-table.component';
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
 import { ColDefsFactoryService } from './col-defs-factory.service';
-import { _getTotalHours } from '@datetime/get-total-hours.helper';
+import { _getTotalHours } from 'date-time-helpers';
 import { Immutable } from 'global-types';
 
 @Component({
