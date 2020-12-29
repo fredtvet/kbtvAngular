@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Option
 import { DynamicForm, FormComponent } from '@dynamic-forms/interfaces';
 import { OptionsFormState } from '@form-sheet/interfaces';
 import { Immutable, Maybe } from 'global-types';
-import { SaveAction } from '@model/interfaces';
-import { ModelCommand } from '@model/model-command.enum';
+import { SaveAction } from 'state-model';
+import { ModelCommand } from 'state-model';
 import { StateAction } from 'state-management'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, shareReplay, take } from 'rxjs/operators';

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AppSaveModelProviders } from '@core/state/providers.const';
-import { FetchModelsProviders } from '@model/state/providers.const';
+import { FetchModelsProviders } from 'state-model';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management'
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';

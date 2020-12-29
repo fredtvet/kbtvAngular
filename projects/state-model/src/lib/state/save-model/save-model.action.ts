@@ -1,6 +1,4 @@
-
-import { Immutable } from 'global-types';
-import { SaveAction } from '@model/interfaces';
+import { SaveAction } from '../../interfaces';
 import { ModelStateAction } from '../model-state.action';
 
 export const SaveModelAction = "SAVE_MODEL_ACTION";

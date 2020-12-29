@@ -11,7 +11,6 @@
       "@shared-timesheet/*": ["src/app/feature-modules/timesheet-modules/shared-timesheet/*"],
       
       "@dynamic-forms/*": ["src/app/modules/dynamic-forms/*"],
-      "@model/*": ["src/app/modules/model/*"],
       "@form-sheet/*": ["src/app/modules/form-sheet/*"],
       "@model-form/*": ["src/app/modules/model-form/*"],
       "@confirm-dialog/*": ["src/app/modules/confirm-dialog/*"],
@@ -48,6 +47,10 @@
       "state-sync": [
         "../../dist/state-sync/state-sync",
         "../../dist/state-sync"
+      ],
+      "state-model": [
+        "../../dist/state-model/state-model",
+        "../../dist/state-model"
       ]
     },
   },

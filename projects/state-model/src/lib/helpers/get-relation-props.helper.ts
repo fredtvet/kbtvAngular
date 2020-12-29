@@ -1,6 +1,6 @@
 import { ImmutableArray, UnknownState, Prop } from "global-types";
-import { RelationInclude } from "@model/interfaces";
-import { ModelStateConfig } from "@model/model-state.config";
+import { RelationInclude } from "../interfaces";
+import { ModelStateConfig } from "../model-state.config";
 
 export function _getRelationProps<TState>(
     cfg: RelationInclude<TState>

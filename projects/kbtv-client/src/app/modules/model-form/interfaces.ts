@@ -1,7 +1,7 @@
 import { DynamicForm } from '@dynamic-forms/interfaces';
 import { OptionsFormState } from '@form-sheet/interfaces';
 import { Immutable, Maybe, Prop } from 'global-types';
-import { SaveAction } from '@model/interfaces';
+import { SaveAction } from 'state-model';
 import { StateAction } from 'state-management'
 
 export type ActionConverter<TInput, TAction extends StateAction> = (input: Immutable<TInput>) => TAction;

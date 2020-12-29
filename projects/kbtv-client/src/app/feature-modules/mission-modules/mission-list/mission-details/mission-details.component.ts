@@ -4,7 +4,6 @@ import { Mission } from '@core/models';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { Immutable, Maybe } from 'global-types';
-import { ModelFormService } from '@model-form/model-form.service';
 import { DateRangePresets, RolePresets, Roles } from '@shared-app/enums';
 import { DetailTopNavConfig } from '@shared/components/detail-top-nav-bar/detail-top-nav.config';
 import { EditMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
@@ -12,6 +11,7 @@ import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { MissionListFacade } from '../mission-list.facade';
+import { ModelFormService } from '@model-form/model-form.service';
 
 interface ViewModel { mission: Maybe<Immutable<Mission>>, navConfig: DetailTopNavConfig }
 

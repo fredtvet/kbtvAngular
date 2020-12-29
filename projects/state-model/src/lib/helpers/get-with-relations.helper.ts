@@ -1,6 +1,6 @@
-import { RelationInclude, UnknownModelState } from '@model/interfaces';
 import { _filter, _find } from 'array-helpers';
 import { Immutable, Maybe } from 'global-types';
+import { RelationInclude, UnknownModelState } from '../interfaces';
 import { ModelStateConfig } from '../model-state.config';
 import { _getRelationProps } from './get-relation-props.helper';
 

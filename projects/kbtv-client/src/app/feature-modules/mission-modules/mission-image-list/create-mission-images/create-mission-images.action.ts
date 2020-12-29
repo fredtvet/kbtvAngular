@@ -1,4 +1,4 @@
-import { ModelFileWrapper } from '@model/model-file.wrapper';
+import { ModelFileWrapper } from 'state-model';
 import { StateAction } from 'state-management'
 
 export const CreateMissionImagesAction = "CREATE_MISSION_IMAGES_ACTION";

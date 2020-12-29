@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { _find } from 'array-helpers';
 import { Timesheet, User } from '@core/models';
-import { FetchModelsAction } from '@model/state/fetch-model/fetch-models.http.effect';
+import { FetchModelsAction } from 'state-model';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
 import { WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';

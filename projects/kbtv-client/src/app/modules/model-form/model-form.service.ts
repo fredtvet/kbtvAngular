@@ -5,13 +5,9 @@ import { ConfirmDialogService } from "@confirm-dialog/confirm-dialog.service";
 import { FormSheetWrapperComponent } from '@form-sheet/form-sheet-wrapper.component';
 import { FormSheetWrapperConfig, OptionsFormState } from '@form-sheet/interfaces';
 import { Immutable, Maybe, UnknownState } from "global-types";
-import { MODEL_PROP_TRANSLATIONS } from '@model/injection-tokens.const';
-import { KeyVal, SaveAction } from '@model/interfaces';
-import { ModelCommand } from '@model/model-command.enum';
-import { ModelStateConfig } from '@model/model-state.config';
-import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
-import { Store } from 'state-management'
 import { Observable, of } from 'rxjs';
+import { Store } from 'state-management';
+import { DeleteModelAction, KeyVal, ModelCommand, ModelStateConfig, MODEL_PROP_TRANSLATIONS, SaveAction } from 'state-model';
 import { ModelFormConfig } from './interfaces';
 import { ModelFormComponent } from './model-form.component';
 

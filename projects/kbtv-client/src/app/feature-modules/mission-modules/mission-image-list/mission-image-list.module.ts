@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeleteModelProviders, MailModelsProviders } from '@model/state/providers.const';
+import { DeleteModelProviders, MailModelsProviders } from 'state-model';
 import { SharedModule } from '@shared/shared.module';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management'
 import { SelectableListModule } from 'src/app/modules/selectable-list/selectable-list.module';

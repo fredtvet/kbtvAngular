@@ -1,11 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { User } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '@model/injection-tokens.const';
-import { CommandApiMap, KeyVal } from '@model/interfaces';
-import { ModelCommand } from '@model/model-command.enum';
-import { SaveModelHttpEffect } from '@model/state/save-model/save-model.http.effect';
-import { Effect } from 'state-management'
+import { Effect } from 'state-management';
+import { CommandApiMap, COMMAND_API_MAP, KeyVal, ModelCommand, MODEL_PROP_TRANSLATIONS, SaveModelHttpEffect } from 'state-model';
 import { SaveUserAction } from './save-user.action';
 
 @Injectable({providedIn: 'root'})

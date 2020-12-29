@@ -2,14 +2,10 @@ import { Injectable } from "@angular/core";
 import { Mission, MissionDocument } from "@core/models";
 import { ModelState } from '@core/state/model-state.interface';
 import { ImmutableArray, Maybe } from 'global-types';
-import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
-import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
-import { RelationInclude } from "@model/interfaces";
-import { DeleteModelAction } from '@model/state/delete-model/delete-model.action';
-import { MailModelsAction } from '@model/state/mail-models/mail-models.action';
-import { Store } from 'state-management'
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
+import { Store } from 'state-management';
+import { DeleteModelAction, MailModelsAction, RelationInclude, _getRangeWithRelations, _getWithRelations } from 'state-model';
 import { StoreState } from './store-state';
 
 @Injectable({providedIn: 'any'})

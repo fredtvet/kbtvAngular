@@ -1,7 +1,7 @@
 import { Model } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { Immutable, UnknownState, Prop } from 'global-types';
-import { ModelStateConfig } from '@model/model-state.config';
+import { ModelStateConfig } from 'state-model';
 import { _idGenerator } from './id-generator.helper';
 
 export function _modelIdGenerator<TModel extends Model>(stateProp: Prop<ModelState>, entity: Immutable<TModel>): Immutable<TModel>{

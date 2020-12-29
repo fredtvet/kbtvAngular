@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { saveModelMetaReducer } from '@core/state/save-model.meta.reducer';
 import { ModelFormModule } from '@model-form/model-form.module';
-import { DeleteModelProviders } from '@model/state/providers.const';
 import { SharedModule } from '@shared/shared.module';
-import { STORE_EFFECTS, STORE_META_REDUCERS, STORE_REDUCERS } from 'state-management'
+import { STORE_EFFECTS, STORE_META_REDUCERS, STORE_REDUCERS } from 'state-management';
+import { DeleteModelProviders } from 'state-model';
 import { SaveUserHttpEffect } from './save-user/save-user.http.effect';
 import { SaveUserReducer } from './save-user/save-user.reducer';
 import { _userFormToSaveUserConverter } from './save-user/user-form-to-save-user.converter';

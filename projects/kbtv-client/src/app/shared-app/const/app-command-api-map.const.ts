@@ -1,5 +1,4 @@
-import { CommandApiMap } from '@model/interfaces';
-import { ModelCommand } from '@model/model-command.enum';
+import { CommandApiMap, ModelCommand } from 'state-model';
 
 export const AppCommandApiMap: CommandApiMap = {
     [ModelCommand.Create]: {method: "POST", suffix: ""},

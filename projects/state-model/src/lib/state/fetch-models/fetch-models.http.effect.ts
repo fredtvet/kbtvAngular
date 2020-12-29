@@ -1,16 +1,14 @@
 import { HttpClient } from '@angular/common/http'
 import { Inject, Injectable } from '@angular/core'
+import { Immutable, UnknownState } from 'global-types'
 import { BASE_API_URL } from 'optimistic-http'
-import { Immutable, Prop, UnknownState } from 'global-types'
 import { merge, Observable } from 'rxjs'
 import { finalize, map, mergeMap } from 'rxjs/operators'
-import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management'
+import { DispatchedAction, Effect, listenTo } from 'state-management'
 import { ModelConfig } from '../../interfaces'
 import { ModelStateConfig } from '../../model-state.config'
+import { FetchModelsAction } from './fetch-models.action'
 import { SetFetchedModelAction } from './set-fetched-model.reducer'
-
-export const FetchModelsAction = "FETCH_MODELS_ACTION";
-export interface FetchModelsAction<TState> extends StateAction { props: Prop<Immutable<TState>>[]; }
 
 @Injectable()
 export class FetchModelsHttpEffect implements Effect<FetchModelsAction<{}>> {

@@ -1,5 +1,5 @@
 
-import { SaveModelReducer } from '@model/state/save-model/save-model.reducer';
+import { SaveModelReducer } from 'state-model';
 import { _createReducer } from 'state-management'
 import { SaveUserAction } from './save-user.action';
 

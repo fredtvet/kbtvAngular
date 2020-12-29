@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { OptionsFormState } from '@form-sheet/interfaces';
-import { _getWithRelations } from '@model/helpers/get-with-relations.helper';
-import { RelationInclude, UnknownModelState } from '@model/interfaces';
-import { ModelStateConfig } from '@model/model-state.config';
-import { FetchModelsAction } from '@model/state/fetch-model/fetch-models.http.effect';
 import { Immutable, Maybe, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StateAction, Store } from 'state-management';
+import { FetchModelsAction, ModelStateConfig, RelationInclude, UnknownModelState, _getWithRelations } from 'state-model';
 
 @Injectable()
 export class ModelFormFacade {

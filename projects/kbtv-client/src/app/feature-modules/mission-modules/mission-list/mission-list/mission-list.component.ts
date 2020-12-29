@@ -3,9 +3,7 @@ import { Employer, Mission, MissionType } from "@core/models";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { ModelState } from "@core/state/model-state.interface";
 import { FormService } from '@form-sheet/form-sheet.service';
-import { Immutable, Maybe, Prop } from "global-types";
-import { ModelFormService } from '@model-form/model-form.service';
-import { _getModelDisplayValue } from '@model/helpers/get-model-property.helper';
+import { ModelFormService } from "@model-form/model-form.service";
 import { Roles } from "@shared-app/enums";
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from '@shared-app/interfaces';
@@ -15,8 +13,10 @@ import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { SearchBarConfig } from "@shared/interfaces";
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
+import { Immutable, Maybe, Prop } from "global-types";
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
+import { _getModelDisplayValue } from 'state-model';
 import { MissionListFacade } from '../mission-list.facade';
 import { MissionListProviders } from './mission-list-providers.const';
 

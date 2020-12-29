@@ -1,7 +1,7 @@
 import { _addOrUpdateRange } from 'array-helpers';
 import { Timesheet } from '@core/models';
 import { StateMissions, StateTimesheets } from '@core/state/global-state.interfaces';
-import { _getRangeWithRelations } from '@model/helpers/get-range-with-relations.helper';
+import { _getRangeWithRelations } from 'state-model';
 import { Immutable } from 'global-types';
 import { StateAction, _createReducer } from 'state-management';
 

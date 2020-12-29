@@ -1,17 +1,16 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { MissionNote } from '@core/models';
+import { ModelFormService } from '@model-form/model-form.service';
 import { RolePresets } from '@shared-app/enums';
-import { _sortByDate } from 'array-helpers';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from '@shared-app/interfaces';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { CreateMissionNoteForm, EditMissionNoteForm } from '@shared/constants/model-forms/save-mission-note-forms.const';
-import { MissionNoteListFacade } from '../mission-note-list.facade';
-import { ModelFormService } from '@model-form/model-form.service';
+import { _sortByDate } from 'array-helpers';
 import { Maybe } from 'global-types';
+import { map } from 'rxjs/operators';
+import { MissionNoteListFacade } from '../mission-note-list.facade';
 
 @Component({
   selector: 'app-mission-note-list',

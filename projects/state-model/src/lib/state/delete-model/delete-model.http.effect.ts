@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@angular/core';
-import { ModelCommand } from '@model/model-command.enum';
 import { Immutable, Maybe } from 'global-types';
 import { OptimisticHttpRequest, OptimisticHttpAction } from 'optimistic-http';
 import { Observable } from 'rxjs';
@@ -7,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens.const';
 import { CommandApiMap, KeyVal, ModelConfig } from '../../interfaces';
+import { ModelCommand } from '../../model-command.enum';
 import { ModelStateConfig } from '../../model-state.config';
 import { DeleteModelAction } from './delete-model.action';
 

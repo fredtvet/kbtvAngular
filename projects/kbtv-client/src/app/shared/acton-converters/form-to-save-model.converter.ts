@@ -1,9 +1,9 @@
 import { Model } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { FormToSaveModelConverter, ModelFormToSaveModelInput } from '@model-form/interfaces';
-import { SaveModelAction } from '@model/state/save-model/save-model.action';
 import { _flattenExistingForeigns } from '@shared-app/helpers/flatten-existing-foreigns.helper';
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
+import { SaveModelAction } from 'state-model';
 
 export const _formToSaveModelConverter: FormToSaveModelConverter<{}, ModelState, SaveModelAction<Model, ModelState>> =
     <TForm extends Model>(input: ModelFormToSaveModelInput<TForm, ModelState>): SaveModelAction<Model, ModelState> => {
