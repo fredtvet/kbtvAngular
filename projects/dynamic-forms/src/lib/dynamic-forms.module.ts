@@ -9,26 +9,23 @@ import { DynamicFormComponent } from './components/dynamic-form.component';
 import { FormActionsComponent } from './components/form-actions.component';
 import { DynamicHostDirective } from './dynamic-host.directive';
 
-
 @NgModule({
   declarations: [
-      DynamicFormComponent,
-      DynamicControlGroupComponent,
-      FormActionsComponent,
-
-      DynamicHostDirective
+    DynamicFormComponent,
+    DynamicControlGroupComponent,
+    FormActionsComponent,
+    DynamicHostDirective
   ],
   imports: [ 
-      CommonModule, 
-      ReactiveFormsModule,
-      FlexLayoutModule,
-      MatButtonModule,
-      MatFormFieldModule
+    CommonModule, 
+    ReactiveFormsModule,
+    FlexLayoutModule,
+    MatButtonModule,
+    MatFormFieldModule
   ],
   exports: [
     DynamicFormComponent
   ],
   providers: [],
 })
-export class DynamicFormsModule { 
-}
+export class DynamicFormsModule { }

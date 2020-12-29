@@ -4,7 +4,7 @@ import { ControlGroupComponent, DynamicControl, DynamicControlGroup, DynamicForm
 import { ControlComponentLoaderComponent } from './control-component-loader.component';
 
 @Component({
-  selector: 'app-dynamic-control-group',
+  selector: 'lib-dynamic-control-group',
   template: `
   <mat-label *ngIf="controlGroup.label">{{ controlGroup.label }}</mat-label>
   <div 

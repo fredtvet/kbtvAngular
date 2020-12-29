@@ -1,4 +1,4 @@
-import { Question, OptionsGetter } from '@dynamic-forms/interfaces';
+import { Question, OptionsGetter } from 'dynamic-forms';
 import { Prop } from 'global-types';
 import { ActiveStringFilterConfig } from '@shared/interfaces';
 

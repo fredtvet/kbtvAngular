@@ -1,5 +1,5 @@
 import { Type } from '@angular/core';
-import { DynamicForm, FormComponent } from '@dynamic-forms/interfaces';
+import { DynamicForm, FormComponent } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 

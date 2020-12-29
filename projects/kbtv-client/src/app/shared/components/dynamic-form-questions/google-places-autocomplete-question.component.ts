@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.component';
-import { Question, QuestionComponent } from '@dynamic-forms/interfaces';
-import { ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from '@dynamic-forms/validation-error-map.interface';
+import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
 

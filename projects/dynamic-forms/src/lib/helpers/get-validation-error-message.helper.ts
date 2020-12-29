@@ -1,6 +1,6 @@
 import { ValidationErrors } from '@angular/forms';
 import { Maybe } from 'global-types';
-import { ValidationErrorMap } from '../validation-error-map.interface';
+import { ValidationErrorMap } from '../interfaces';
 
 export function _getValidationErrorMessage(errors: Maybe<Maybe<ValidationErrors>>, messages: ValidationErrorMap): Maybe<string> {
     if(!errors) return;

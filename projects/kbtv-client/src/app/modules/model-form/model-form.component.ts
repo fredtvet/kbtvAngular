@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Optional, Output } from '@angular/core';
-import { DynamicForm, FormComponent } from '@dynamic-forms/interfaces';
 import { OptionsFormState } from '@form-sheet/interfaces';
+import { DynamicForm, FormComponent } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
-import { SaveAction } from 'state-model';
-import { ModelCommand } from 'state-model';
-import { StateAction } from 'state-management'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, shareReplay, take } from 'rxjs/operators';
+import { StateAction } from 'state-management';
+import { ModelCommand, SaveAction } from 'state-model';
 import { DEFAULT_SAVE_CONVERTER } from './injection-tokens.const';
 import { FormToSaveModelConverter, ModelFormConfig } from './interfaces';
 import { ModelFormFacade } from './model-form.facade';
@@ -14,11 +13,11 @@ import { ModelFormFacade } from './model-form.facade';
 @Component({
     selector: 'app-model-form',
     template: `
-      <app-dynamic-form 
+      <lib-dynamic-form 
         [config]="formConfig$ | async" 
         [formState]="formState$ | async" 
         (formSubmitted)="$event ? onSubmit($event) : onCancel()">
-      </app-dynamic-form>
+      </lib-dynamic-form>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })

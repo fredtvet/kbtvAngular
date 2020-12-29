@@ -9,8 +9,7 @@
       "@shared-app/*": ["src/app/shared-app/*"],
       "@shared/*": ["src/app/shared/*"],
       "@shared-timesheet/*": ["src/app/feature-modules/timesheet-modules/shared-timesheet/*"],
-      
-      "@dynamic-forms/*": ["src/app/modules/dynamic-forms/*"],
+
       "@form-sheet/*": ["src/app/modules/form-sheet/*"],
       "@model-form/*": ["src/app/modules/model-form/*"],
        
@@ -57,6 +56,10 @@
       "confirm-dialog": [
         "../../dist/confirm-dialog/confirm-dialog",
         "../../dist/confirm-dialog"
+      ],
+      "dynamic-forms": [
+        "../../dist/dynamic-forms/dynamic-forms",
+        "../../dist/dynamic-forms"
       ]
     },
   },

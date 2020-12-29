@@ -1,8 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ConfirmDialogModule } from 'confirm-dialog';
-import { DynamicFormsModule } from '@dynamic-forms/dynamic-forms.module';
 import { FormSheetModule } from '@form-sheet/form-sheet.module';
+import { ConfirmDialogModule } from 'confirm-dialog';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
@@ -65,7 +64,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     SharedAppModule,
     GooglePlaceModule,
 
-    DynamicFormsModule,
     ConfirmDialogModule,
     FormSheetModule
   ],

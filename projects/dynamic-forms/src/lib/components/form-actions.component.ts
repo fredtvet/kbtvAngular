@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-form-actions',
+  selector: 'lib-form-actions',
   template:`
   <div fxLayout="row" fxLayoutAlign="end start" style="margin-top: 12px"> 
     <button mat-button *ngIf="showReset else cancelButton" [disabled]="resetDisabled" color="warn" (click)="reset.emit()">

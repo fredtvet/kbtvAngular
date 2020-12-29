@@ -1,5 +1,5 @@
 import { StateUsers } from '@core/state/global-state.interfaces';
-import { DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
+import { DynamicControl, DynamicForm } from 'dynamic-forms';
 import { OptionsFormState } from '@form-sheet/interfaces';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { InputQuestion, InputQuestionComponent } from '../../components/dynamic-form-questions/input-question.component';

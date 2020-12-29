@@ -3,6 +3,8 @@ import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angu
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 
+export interface ValidationErrorMap { [key: string]: (err: unknown) => string }
+
 export type DisabledObjectMap<T> = { [key in keyof Partial<T>]: boolean };
 
 export interface ControlHook<TResponse>{

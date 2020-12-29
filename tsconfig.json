@@ -67,6 +67,10 @@
       "confirm-dialog": [
         "dist/confirm-dialog/confirm-dialog",
         "dist/confirm-dialog"
+      ],
+      "dynamic-forms": [
+        "dist/dynamic-forms/dynamic-forms",
+        "dist/dynamic-forms"
       ]
     }
   },

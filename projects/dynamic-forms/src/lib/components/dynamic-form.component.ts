@@ -1,20 +1,19 @@
-import { Inject } from '@angular/core';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Maybe, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 import { debounceTime, map, startWith, take } from 'rxjs/operators';
-import { _hasSameState } from '../helpers/has-same-state.helper';
 import { DynamicFormStore } from '../dynamic-form.store';
 import { DynamicHostDirective } from '../dynamic-host.directive';
 import { _getValidationErrorMessage } from '../helpers/get-validation-error-message.helper';
-import { DisabledObjectMap, DynamicControl, DynamicForm, FormComponent } from '../interfaces';
-import { ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from '../validation-error-map.interface';
+import { _hasSameState } from '../helpers/has-same-state.helper';
+import { DisabledObjectMap, DynamicControl, DynamicForm, FormComponent, ValidationErrorMap } from '../interfaces';
+import { VALIDATION_ERROR_MESSAGES } from '../injection-tokens.const';
 import { ControlComponentLoaderComponent, ValidControl } from './control-component-loader.component';
 import { DynamicControlGroupComponent } from './dynamic-control-group.component';
-import { Maybe, UnknownState } from 'global-types';
 
 @Component({
-  selector: 'app-dynamic-form',
+  selector: 'lib-dynamic-form',
   template: `
     <form [formGroup]="form" fxLayout="column">
         <ng-container *dynamicHost>
@@ -25,7 +24,7 @@ import { Maybe, UnknownState } from 'global-types';
             {{ getValidationErrorMessage() }}
         </mat-error>
 
-        <app-form-actions 
+        <lib-form-actions 
             [submitDisabled]="form.pristine || form.invalid" 
             [submitText]="config.submitText || 'Lagre'" 
             [showReset]="config.resettable"
@@ -33,7 +32,7 @@ import { Maybe, UnknownState } from 'global-types';
             (reset)="onReset()"
             (submitted)="onSubmit()" 
             (canceled)="onCancel()">
-        </app-form-actions>
+        </lib-form-actions>
     </form>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,0 +1,16 @@
+{
+  "name": "dynamic-forms",
+  "version": "0.0.1",
+  "sideEffects": false,
+  "peerDependencies": {
+    "@angular/common": "^11.0.5",
+    "@angular/core": "^11.0.5",
+    "@angular/forms": "^11.0.5",
+    "@angular/material": "^11.0.5",
+    "@angular/flex-layout": "^10.0.0-beta.32",
+    "rxjs": "~6.5.5"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

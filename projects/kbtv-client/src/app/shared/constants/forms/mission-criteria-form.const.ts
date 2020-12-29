@@ -1,6 +1,6 @@
 import { Mission, MissionType } from '@core/models';
 import { StateMissions, StateEmployers, StateMissionTypes } from '@core/state/global-state.interfaces';
-import { DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
+import { DynamicControl, DynamicForm } from 'dynamic-forms';
 import { OptionsFormState } from '@form-sheet/interfaces';
 import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
 import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';

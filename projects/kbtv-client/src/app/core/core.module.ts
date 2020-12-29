@@ -1,6 +1,6 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { VALIDATION_ERROR_MESSAGES } from '@dynamic-forms/validation-error-map.interface';
+import { VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { AppCommandApiMap } from '@shared-app/const/app-command-api-map.const';
 import { AppPersistanceConfig } from '@shared-app/const/app-persistance-config.const';
 import { AppStoreSettings } from '@shared-app/const/app-store-settings.const';

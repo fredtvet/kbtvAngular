@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { Observable } from 'rxjs';
 import { startWith } from 'rxjs/operators';
-import { Question, QuestionComponent } from '@dynamic-forms/interfaces';
-import { VALIDATION_ERROR_MESSAGES, ValidationErrorMap } from '@dynamic-forms/validation-error-map.interface';
-import { BaseQuestionComponent } from '@dynamic-forms/components/base-question.component';
 
 export interface SliderQuestion extends Question {
   tickInterval?: number;

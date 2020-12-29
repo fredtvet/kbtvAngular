@@ -1,4 +1,4 @@
-import { DynamicForm } from '@dynamic-forms/interfaces';
+import { DynamicForm } from 'dynamic-forms';
 import { OptionsFormState } from '@form-sheet/interfaces';
 import { Immutable, Maybe, Prop } from 'global-types';
 import { SaveAction } from 'state-model';

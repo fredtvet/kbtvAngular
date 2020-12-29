@@ -3,8 +3,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 import { Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 import { _getValidationErrorMessage } from '../helpers/get-validation-error-message.helper';
-import { Question, QuestionComponent } from '../interfaces';
-import { ValidationErrorMap } from '../validation-error-map.interface';
+import { Question, QuestionComponent, ValidationErrorMap } from '../interfaces';
 
 @Directive()
 export abstract class BaseQuestionComponent<TQuestion extends Question>

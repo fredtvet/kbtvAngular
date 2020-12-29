@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { DynamicFormsModule } from '@dynamic-forms/dynamic-forms.module';
+import { DynamicFormsModule } from 'dynamic-forms';
 import { FormSheetModule } from '@form-sheet/form-sheet.module';
 import { FetchModelsProviders } from 'state-model';
 import { StateAction } from 'state-management'

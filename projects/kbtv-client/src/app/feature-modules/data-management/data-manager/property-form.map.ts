@@ -1,6 +1,6 @@
 import { Model } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { DynamicForm } from '@dynamic-forms/interfaces';
+import { DynamicForm } from 'dynamic-forms';
 import { OptionsFormState } from '@form-sheet/interfaces';
 import { CreateDocumentTypeForm } from '@shared/constants/model-forms/create-document-type-form.const';
 import { CreateEmployerForm } from '@shared/constants/model-forms/create-employer-form.const';

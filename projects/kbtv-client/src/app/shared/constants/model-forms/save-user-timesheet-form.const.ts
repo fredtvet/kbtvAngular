@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms';
 import { Mission } from '@core/models';
-import { DynamicControl, DynamicControlGroup, DynamicForm } from '@dynamic-forms/interfaces';
+import { DynamicControl, DynamicControlGroup, DynamicForm } from 'dynamic-forms';
 import { _getISO } from 'date-time-helpers';
 import { IonDateQuestion, IonDateQuestionComponent } from '../../components/dynamic-form-questions/ion-date-time-question.component';
 import { TextAreaQuestion, TextAreaQuestionComponent } from '../../components/dynamic-form-questions/text-area-question.component';

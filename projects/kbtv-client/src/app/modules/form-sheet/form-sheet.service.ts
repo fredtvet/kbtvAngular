@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { DynamicFormComponent } from '@dynamic-forms/components/dynamic-form.component';
-import { DynamicForm } from '@dynamic-forms/interfaces';
+import { DynamicForm, DynamicFormComponent } from 'dynamic-forms';
 import { Observable, of } from 'rxjs';
 import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
 import { FormServiceConfig, FormSheetWrapperConfig } from './interfaces';

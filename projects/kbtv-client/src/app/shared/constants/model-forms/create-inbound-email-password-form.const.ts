@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms';
 import { InboundEmailPassword } from '@core/models';
-import { DynamicControl, DynamicForm } from '@dynamic-forms/interfaces';
+import { DynamicControl, DynamicForm } from 'dynamic-forms';
 import { UnknownState } from 'global-types';
 import { InputQuestionComponent, InputQuestion } from '../../components/dynamic-form-questions/input-question.component';
 

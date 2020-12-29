@@ -1,5 +1,5 @@
 import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
-import { DynamicControl, DynamicControlGroup, DynamicForm } from '@dynamic-forms/interfaces';
+import { DynamicControl, DynamicControlGroup, DynamicForm } from 'dynamic-forms';
 import { OptionsFormState } from '@form-sheet/interfaces';
 import { DateRangePresets } from '@shared-app/enums';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
