@@ -19,15 +19,16 @@ export * from './lib/helpers/modify-model-with-foreigns.helper'
 export * from './lib/state/model-state.action';
 
 export * from './lib/state/delete-model/delete-model.action';
-export * from './lib/state/delete-model/delete-model.providers';
+export * from './lib/state/delete-model/delete-model.reducer';
+export * from './lib/state/delete-model/delete-model.http.effect';
 
 export * from './lib/state/fetch-models/fetch-models.action';
-export * from './lib/state/fetch-models/fetch-models.providers';
+export * from './lib/state/fetch-models/fetch-models.http.effect';
+export * from './lib/state/fetch-models/set-fetched-model.reducer';
 
 export * from './lib/state/mail-models/mail-models.action';
-export * from './lib/state/mail-models/mail-models.providers';
+export * from './lib/state/mail-models/mail-models.http.effect';
 
 export * from './lib/state/save-model/save-model.reducer';
 export * from './lib/state/save-model/save-model.http.effect';
 export * from './lib/state/save-model/save-model.action';
-export * from './lib/state/save-model/save-model.providers';

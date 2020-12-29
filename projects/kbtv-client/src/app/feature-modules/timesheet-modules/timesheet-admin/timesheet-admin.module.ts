@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AppSaveModelProviders } from '@core/state/providers.const';
-import { FetchModelsProviders } from 'state-model';
-import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management'
+import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
+import { FetchModelsHttpEffect, SetFetchedModelReducer } from 'state-model';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';
 import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
@@ -26,9 +26,10 @@ import { UpdateTimesheetStatusesReducer } from './update-timesheet-statuses/upda
   providers:[
     { provide: STORE_EFFECTS, useClass: UpdateTimesheetStatusesHttpEffect, multi: true},
     { provide: STORE_REDUCERS, useValue: UpdateTimesheetStatusesReducer, multi: true},
+    {provide: STORE_EFFECTS, useClass: FetchModelsHttpEffect, multi: true},
+    {provide: STORE_REDUCERS, useValue: SetFetchedModelReducer, multi: true},
     ...AppSaveModelProviders,
     ...FetchTimesheetProviders,
-    ...FetchModelsProviders,
   ],
   imports: [
     SharedTimesheetModule,

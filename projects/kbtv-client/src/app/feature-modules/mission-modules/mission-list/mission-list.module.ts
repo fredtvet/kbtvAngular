@@ -4,8 +4,8 @@ import { ModelFormModule } from '@model-form/model-form.module';
 import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
 import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
 import { SharedModule } from '@shared/shared.module';
-import { STORE_REDUCERS } from 'state-management';
-import { DeleteModelProviders } from 'state-model';
+import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
+import { DeleteModelHttpEffect, DeleteModelReducer } from 'state-model';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
 import { MissionListRoutingModule } from './mission-list-routing.module';
@@ -24,7 +24,8 @@ import { UpdateLastVisitedReducer } from './update-last-visited.reducer';
     AppFileUrlPipe,
     ...SaveModelFileProviders,
     ...AppSaveModelProviders,
-    ...DeleteModelProviders,
+    {provide: STORE_EFFECTS, useClass: DeleteModelHttpEffect, multi: true},
+    {provide: STORE_REDUCERS, useValue: DeleteModelReducer, multi: true},
     {provide: STORE_REDUCERS, useValue: UpdateLastVisitedReducer, multi: true}
   ],
   imports: [

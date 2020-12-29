@@ -3,7 +3,7 @@ import { saveModelMetaReducer } from '@core/state/save-model.meta.reducer';
 import { ModelFormModule } from '@model-form/model-form.module';
 import { SharedModule } from '@shared/shared.module';
 import { STORE_EFFECTS, STORE_META_REDUCERS, STORE_REDUCERS } from 'state-management';
-import { DeleteModelProviders } from 'state-model';
+import { DeleteModelHttpEffect, DeleteModelReducer } from 'state-model';
 import { SaveUserHttpEffect } from './save-user/save-user.http.effect';
 import { SaveUserReducer } from './save-user/save-user.reducer';
 import { _userFormToSaveUserConverter } from './save-user/user-form-to-save-user.converter';
@@ -24,7 +24,8 @@ import { UsersRoutingModule } from './users-routing.module';
     UsersRoutingModule
   ],
   providers: [
-    ...DeleteModelProviders,
+    {provide: STORE_EFFECTS, useClass: DeleteModelHttpEffect, multi: true},
+    {provide: STORE_REDUCERS, useValue: DeleteModelReducer, multi: true},
     {provide: STORE_EFFECTS, useClass: UpdateUserPasswordHttpEffect, multi: true},
     {provide: STORE_EFFECTS, useClass: SaveUserHttpEffect, multi: true},
     {provide: STORE_REDUCERS, useValue: SaveUserReducer, multi: true},

@@ -4,11 +4,12 @@ import { ModelFormModule } from '@model-form/model-form.module';
 import { SelectableListModule } from 'selectable-list';
 import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { SharedModule } from '@shared/shared.module';
-import { DeleteModelProviders, MailModelsProviders } from 'state-model';
+import { DeleteModelHttpEffect, DeleteModelReducer, MailModelsHttpEffect } from 'state-model';
 import { MissionDocumentListRoutingModule } from './mission-document-list-routing.module';
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
 import { FileExtensionIconPipe } from './pipes/file-extension-icon.pipe';
 import { FileExtensionPipe } from './pipes/file-extension.pipe';
+import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
 
 
 @NgModule({
@@ -24,9 +25,10 @@ import { FileExtensionPipe } from './pipes/file-extension.pipe';
     MissionDocumentListRoutingModule
   ],
   providers: [
-    ...MailModelsProviders,
+    {provide: STORE_EFFECTS, useClass: MailModelsHttpEffect, multi: true},
     ...SaveModelFileProviders,
-    ...DeleteModelProviders,
+    {provide: STORE_EFFECTS, useClass: DeleteModelHttpEffect, multi: true},
+    {provide: STORE_REDUCERS, useValue: DeleteModelReducer, multi: true},
   ],
 })
 export class MissionDocumentListModule {}

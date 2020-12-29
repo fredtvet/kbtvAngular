@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ConfirmDialogModule } from 'confirm-dialog';
 import { DynamicFormsModule } from 'dynamic-forms';
 import { FormSheetModule } from 'form-sheet';
-import { FetchModelsProviders } from 'state-model';
-import { StateAction } from 'state-management'
+import { StateAction, STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
+import { FetchModelsHttpEffect, SetFetchedModelReducer } from 'state-model';
 import { DEFAULT_SAVE_CONVERTER } from './injection-tokens.const';
 import { FormToSaveModelConverter } from './interfaces';
 import { ModelFormComponent } from './model-form.component';
 import { ModelFormFacade } from './model-form.facade';
 import { ModelFormService } from './model-form.service';
-import { ConfirmDialogModule } from 'confirm-dialog';
 
 @NgModule({
     declarations: [ ModelFormComponent ],
@@ -22,7 +22,8 @@ import { ConfirmDialogModule } from 'confirm-dialog';
     providers: [
         ModelFormService,
         ModelFormFacade,
-        ...FetchModelsProviders
+        {provide: STORE_EFFECTS, useClass: FetchModelsHttpEffect, multi: true},
+        {provide: STORE_REDUCERS, useValue: SetFetchedModelReducer, multi: true},
     ],
 })
 export class ModelFormModule { 
