@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { User } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { FormService } from '@form-sheet/form-sheet.service';
+import { FormService } from 'form-sheet';
 import { ModelFormService } from '@model-form/model-form.service';
 import { ButtonTypes, Roles } from '@shared-app/enums';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';

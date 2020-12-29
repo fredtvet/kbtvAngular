@@ -71,6 +71,10 @@
       "dynamic-forms": [
         "dist/dynamic-forms/dynamic-forms",
         "dist/dynamic-forms"
+      ],
+      "form-sheet": [
+        "dist/form-sheet/form-sheet",
+        "dist/form-sheet"
       ]
     }
   },

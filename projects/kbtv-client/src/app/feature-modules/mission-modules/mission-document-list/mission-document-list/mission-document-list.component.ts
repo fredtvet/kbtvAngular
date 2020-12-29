@@ -4,7 +4,7 @@ import { MissionDocument } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { ModelState } from '@core/state/model-state.interface';
-import { FormService } from '@form-sheet/form-sheet.service';
+import { FormService } from 'form-sheet';
 import { ModelFormService } from '@model-form/model-form.service';
 import { Roles } from '@shared-app/enums';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';

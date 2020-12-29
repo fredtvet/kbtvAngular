@@ -5,7 +5,7 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { ProfileForm } from '@shared/constants/forms/profile-form.const';
 import { SyncConfigForm } from '@shared/constants/forms/sync-config.form.const';
 import { ProfileFacade } from '../profile.facade';
-import { FormService } from '@form-sheet/form-sheet.service';
+import { FormService } from 'form-sheet';
 import { CurrentUserPasswordForm } from '@shared/constants/forms/password-form.const';
 import { ConfirmDialogService } from 'confirm-dialog';
 

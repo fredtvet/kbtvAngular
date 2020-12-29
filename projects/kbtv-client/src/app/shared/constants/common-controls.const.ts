@@ -5,7 +5,7 @@ import { IId } from '@core/models/sub-interfaces/iid.interface';
 import { IName } from '@core/models/sub-interfaces/iname.interface';
 import { StateMissions, StateEmployers, StateUsers } from '@core/state/global-state.interfaces';
 import { DynamicControl } from 'dynamic-forms';
-import { OptionsFormState } from '@form-sheet/interfaces';
+import { OptionsFormState } from 'form-sheet';
 import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
 import { isObjectValidator } from '@shared/validators/is-object.validator';
 import { AutoCompleteQuestionComponent } from '../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';

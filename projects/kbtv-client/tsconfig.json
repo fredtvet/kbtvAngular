@@ -10,7 +10,6 @@
       "@shared/*": ["src/app/shared/*"],
       "@shared-timesheet/*": ["src/app/feature-modules/timesheet-modules/shared-timesheet/*"],
 
-      "@form-sheet/*": ["src/app/modules/form-sheet/*"],
       "@model-form/*": ["src/app/modules/model-form/*"],
        
       "date-time-helpers": [
@@ -60,6 +59,10 @@
       "dynamic-forms": [
         "../../dist/dynamic-forms/dynamic-forms",
         "../../dist/dynamic-forms"
+      ],
+      "form-sheet": [
+        "../../dist/form-sheet/form-sheet",
+        "../../dist/form-sheet"
       ]
     },
   },

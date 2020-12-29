@@ -9,7 +9,7 @@ import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms
 import { TimesheetStatus } from '@shared/enums';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
-import { FormService } from '@form-sheet/form-sheet.service';
+import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
 
 @Component({

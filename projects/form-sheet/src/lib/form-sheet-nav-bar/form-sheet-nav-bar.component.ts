@@ -3,7 +3,7 @@ import { Maybe } from 'global-types';
 import { FormSheetNavConfig } from '../interfaces';
 
 @Component({
-  selector: 'app-form-sheet-nav-bar',
+  selector: 'lib-form-sheet-nav-bar',
   templateUrl: './form-sheet-nav-bar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

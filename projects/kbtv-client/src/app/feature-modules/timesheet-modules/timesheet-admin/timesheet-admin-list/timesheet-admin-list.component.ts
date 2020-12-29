@@ -11,7 +11,7 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { TimesheetStatus } from '@shared/enums';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
-import { FormService } from '@form-sheet/form-sheet.service';
+import { FormService } from 'form-sheet';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { Maybe, Immutable } from 'global-types';
 

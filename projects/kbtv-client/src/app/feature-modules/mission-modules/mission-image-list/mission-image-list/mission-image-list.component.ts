@@ -5,7 +5,7 @@ import { MissionImage, ModelFile } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
-import { FormService } from '@form-sheet/form-sheet.service';
+import { FormService } from 'form-sheet';
 import { ImmutableArray, Maybe } from 'global-types';
 import { RolePresets, Roles } from '@shared-app/enums';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';

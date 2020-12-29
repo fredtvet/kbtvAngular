@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { OptionsFormState } from '@form-sheet/interfaces';
+import { OptionsFormState } from 'form-sheet';
 import { Immutable, Maybe, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

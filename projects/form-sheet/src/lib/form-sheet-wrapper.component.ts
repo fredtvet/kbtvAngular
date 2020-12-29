@@ -5,10 +5,8 @@ import { first, tap } from 'rxjs/operators';
 import { FormSheetNavBarComponent } from './form-sheet-nav-bar/form-sheet-nav-bar.component';
 import { FormSheetWrapperConfig } from './interfaces';
 
-type WrapperConfig = FormSheetWrapperConfig<{}, {}, unknown>;
-
 @Component({
-    selector: 'app-form-sheet-wrapper',
+    selector: 'lib-form-sheet-wrapper',
     template: ``,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -20,7 +18,7 @@ export class FormSheetWrapperComponent  {
         private componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,
         private _bottomSheetRef: MatBottomSheetRef<FormSheetWrapperComponent, unknown>, 
-        @Inject(MAT_BOTTOM_SHEET_DATA) private config: WrapperConfig) { }
+        @Inject(MAT_BOTTOM_SHEET_DATA) private config: FormSheetWrapperConfig<{}, {}, unknown>) { }
     
     ngOnInit() {
         this.loadNav();

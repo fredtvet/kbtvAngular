@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { Employer, Mission, MissionType } from "@core/models";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { ModelState } from "@core/state/model-state.interface";
-import { FormService } from '@form-sheet/form-sheet.service';
+import { FormService } from 'form-sheet';
 import { ModelFormService } from "@model-form/model-form.service";
 import { Roles } from "@shared-app/enums";
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';

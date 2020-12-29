@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, Optional, Output } from '@angular/core';
-import { OptionsFormState } from '@form-sheet/interfaces';
+import { OptionsFormState } from 'form-sheet';
 import { DynamicForm, FormComponent } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';

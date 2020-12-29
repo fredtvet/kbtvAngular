@@ -6,7 +6,7 @@ import { IonDateQuestion, IonDateQuestionComponent } from '../../components/dyna
 import { TextAreaQuestion, TextAreaQuestionComponent } from '../../components/dynamic-form-questions/text-area-question.component';
 import { HiddenIdControl, MissionAutoCompleteControl } from '../common-controls.const';
 import { StateMissions } from '@core/state/global-state.interfaces';
-import { OptionsFormState } from '@form-sheet/interfaces';
+import { OptionsFormState } from 'form-sheet';
 import { Maybe } from 'global-types';
 
 type FormState = OptionsFormState<StateMissions> & {defaultStartTime: string, defaultEndTime: string};

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { DynamicFormsModule } from 'dynamic-forms';
-import { FormSheetModule } from '@form-sheet/form-sheet.module';
+import { FormSheetModule } from 'form-sheet';
 import { FetchModelsProviders } from 'state-model';
 import { StateAction } from 'state-management'
 import { DEFAULT_SAVE_CONVERTER } from './injection-tokens.const';

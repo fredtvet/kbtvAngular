@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormSheetModule } from '@form-sheet/form-sheet.module';
+import { FormSheetModule } from 'form-sheet';
 import { ConfirmDialogModule } from 'confirm-dialog';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { SharedAppModule } from '../shared-app/shared-app.module';

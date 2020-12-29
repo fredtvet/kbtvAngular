@@ -2,7 +2,7 @@ import { Validators } from '@angular/forms';
 import { Employer, User } from '@core/models';
 import { StateEmployers, StateUsers } from '@core/state/global-state.interfaces';
 import { DynamicControl, DynamicForm } from 'dynamic-forms';
-import { OptionsFormState } from '@form-sheet/interfaces';
+import { OptionsFormState } from 'form-sheet';
 import { Roles } from '@shared-app/enums';
 import { isUniqueAsyncValidator } from '@shared/validators/is-unique.async.validator';
 import { Observable } from 'rxjs';
