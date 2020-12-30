@@ -1,6 +1,5 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { AppCommandApiMap } from '@shared-app/const/app-command-api-map.const';
 import { AppPersistanceConfig } from '@shared-app/const/app-persistance-config.const';
 import { AppStoreSettings } from '@shared-app/const/app-store-settings.const';
@@ -10,12 +9,11 @@ import { BASE_API_URL, OptimisticHttpModule, OPTIMISTIC_STATE_SELECTOR } from 'o
 import { PersistanceModule, PERSISTANCE_CONFIG } from 'persistance';
 import { environment } from 'src/environments/environment';
 import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS, STORE_SETTINGS } from 'state-management';
-import { COMMAND_API_MAP, StateModelModule, MODEL_CONFIGS, MODEL_PROP_TRANSLATIONS } from 'state-model';
+import { COMMAND_API_MAP, MODEL_CONFIGS, MODEL_PROP_TRANSLATIONS, StateModelModule } from 'state-model';
 import { StateSyncModule } from 'state-sync';
 import { DefaultState } from '../shared-app/const/default-state.const';
 import { AppOptimisticState } from '../shared-app/const/optimistic-state-props.const';
 import { AppSyncStateConfig } from '../shared-app/const/sync-state.config';
-import { ValidationErrorMessages } from '../shared-app/const/validation-error-messages.const';
 import { HttpErrorInterceptor, HttpIsOnlineInterceptor, HttpLoadingInterceptor, HttpRefreshTokenInterceptor } from './interceptors';
 import { RedirectToUrlEffect } from './services/auth/state/login-success/redirect-to-url.effect';
 import { SetCredentialsReducer } from './services/auth/state/login-success/set-credentials.reducer';
@@ -53,8 +51,6 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
     { provide: MODEL_CONFIGS, useValue: ModelConfigs },
     { provide: COMMAND_API_MAP, useValue: AppCommandApiMap },
     { provide: MODEL_PROP_TRANSLATIONS, useValue: translations },
-
-    { provide: VALIDATION_ERROR_MESSAGES, useValue: ValidationErrorMessages},
 
     { provide: OPTIMISTIC_STATE_SELECTOR, useValue: AppOptimisticState},
 

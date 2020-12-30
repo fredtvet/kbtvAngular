@@ -23,6 +23,8 @@ import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-n
 import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
+import { ValidationErrorMessages } from '@shared-app/const/validation-error-messages.const';
+import { VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 
 @NgModule({
   declarations: [
@@ -93,6 +95,9 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     LoadingOverlayDirective,    
     ImageErrorReloaderDirective,  
 
+  ],
+  providers:[
+    { provide: VALIDATION_ERROR_MESSAGES, useValue: ValidationErrorMessages},
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
