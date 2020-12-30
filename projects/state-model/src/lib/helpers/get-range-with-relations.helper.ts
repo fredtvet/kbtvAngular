@@ -84,7 +84,7 @@ function _mapForeignsToEntity(
 function _mapChildrenToEntity(
     props: ImmutableArray<string>, 
     propCfg: Immutable<ModelConfig<UnknownState, UnknownState>>, 
-    lookups: {[key: string]: Readonly<UnknownState>}, 
+    lookups: {[key: string]: Immutable<UnknownState>}, 
     entity: UnknownState
 ): void{
     for(let childProp of props){

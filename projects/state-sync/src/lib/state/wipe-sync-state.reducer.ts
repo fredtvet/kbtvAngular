@@ -1,8 +1,8 @@
 import { Immutable, UnknownState } from 'global-types';
-import { _createReducer } from 'state-management'
+import { Reducer, _createReducer } from 'state-management'
 import { WipeSyncStateAction } from './actions';
 
-export const WipeSyncStateReducer = _createReducer(
+export const WipeSyncStateReducer: Reducer<unknown, WipeSyncStateAction> = _createReducer(
     WipeSyncStateAction, 
     (state: unknown, action: Immutable<WipeSyncStateAction>) => {
 

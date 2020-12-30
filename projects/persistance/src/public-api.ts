@@ -9,6 +9,4 @@ export * from './lib/state-db.service'
 export * from './lib/state-persister.service'
 export * from './lib/state-reader.service'
 
-export * from './lib/state/effects'
 export * from './lib/state/actions.const'
-export * from './lib/state/reducers'

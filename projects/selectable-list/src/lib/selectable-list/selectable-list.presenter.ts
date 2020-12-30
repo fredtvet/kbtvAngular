@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ImmutableArray, UnknownState } from "global-types";
+import { Immutable, ImmutableArray, UnknownState } from "global-types";
 import { SelectableEntity } from "../interfaces";
 
 @Injectable()
@@ -21,7 +21,7 @@ export class SelectableListPresenter<T extends UnknownState = UnknownState> {
 
     constructor(){}
     
-    get entities(){
+    get entities(): Immutable<T>[] {
         return [...this.entitiesSubject.value]
     }
 

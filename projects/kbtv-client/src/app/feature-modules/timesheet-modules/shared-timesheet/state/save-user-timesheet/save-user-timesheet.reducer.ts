@@ -19,6 +19,6 @@ export const SaveUserTimesheetReducer = _createReducer(
                 totalHours: _getTotalHours(timesheet.startTime || 0, timesheet.endTime || 0)
             };
 
-        return SaveModelReducer.reducerFn(state, <SaveUserTimesheetAction>{...action, entity: modifiedTimesheet})
+        return SaveModelReducer.reducerFn(state, <Immutable<SaveUserTimesheetAction>>{...action, entity: modifiedTimesheet})
     }
 )

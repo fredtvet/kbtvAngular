@@ -1,10 +1,10 @@
 import { _addOrUpdateRange, _removeRangeByIdentifier } from 'array-helpers';
 import { Immutable, ImmutableArray, UnknownState } from 'global-types';
-import { _createReducer } from 'state-management';
+import { Reducer, _createReducer } from 'state-management';
 import { StoreState, SyncStatePropConfig } from '../interfaces';
 import { SyncStateSuccessAction } from './actions';
 
-export const SetSyncResponseReducer = _createReducer(
+export const SetSyncResponseReducer: Reducer<Immutable<StoreState>,SyncStateSuccessAction> = _createReducer(
     SyncStateSuccessAction,
     (state: Immutable<StoreState>, action: Immutable<SyncStateSuccessAction>) => {
         const newState: UnknownState = {syncTimestamp: action.response.timestamp};

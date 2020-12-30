@@ -16,7 +16,7 @@ export class SaveModelHttpEffect<TModel extends {}, TState extends {}> implement
     
     constructor(
         @Inject(COMMAND_API_MAP) private apiMap: CommandApiMap,
-        @Inject(MODEL_PROP_TRANSLATIONS) private translations: Readonly<KeyVal<string>>,
+        @Inject(MODEL_PROP_TRANSLATIONS) private translations: Immutable<KeyVal<string>>,
     ){ }
 
     handle$(actions$: Observable<DispatchedAction<SaveModelAction<TModel, TState>>>): Observable<OptimisticHttpAction> {

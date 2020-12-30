@@ -10,8 +10,6 @@
       "@shared/*": ["src/app/shared/*"],
       "@shared-timesheet/*": ["src/app/feature-modules/timesheet-modules/shared-timesheet/*"],
 
-      "@model-form/*": ["src/app/modules/model-form/*"],
-       
       "date-time-helpers": [
         "../../dist/date-time-helpers/date-time-helpers",
         "../../dist/date-time-helpers"

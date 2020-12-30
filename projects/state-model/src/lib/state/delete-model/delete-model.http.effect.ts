@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Immutable, Maybe } from 'global-types';
-import { OptimisticHttpRequest, OptimisticHttpAction } from 'optimistic-http';
+import { OptimisticHttpAction, OptimisticHttpRequest } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
@@ -15,7 +15,7 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<unknown>>
 
     constructor(
         @Inject(COMMAND_API_MAP) private apiMap: CommandApiMap,    
-        @Inject(MODEL_PROP_TRANSLATIONS) private translations: Readonly<KeyVal<string>>
+        @Inject(MODEL_PROP_TRANSLATIONS) private translations: Immutable<KeyVal<string>>
     ){ }
 
     handle$(actions$: Observable<DispatchedAction<DeleteModelAction<unknown>>>): Observable<OptimisticHttpAction> {

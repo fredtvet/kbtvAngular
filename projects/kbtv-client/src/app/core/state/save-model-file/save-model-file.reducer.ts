@@ -7,7 +7,7 @@ import { SaveModelFileAction } from './save-model-file.action';
 
 export const SaveModelFileReducer = _createReducer(
     SaveModelFileAction, 
-    (state: Immutable<ModelState>, action: Immutable<SaveModelFileAction<ModelFile>>) => {  
+    (state: Immutable<ModelState>, action: Immutable<SaveModelFileAction<Immutable<ModelFile>>>) => {  
         
         const entity: Immutable<ModelFile> = {
             ...action.entity, 
@@ -15,7 +15,7 @@ export const SaveModelFileReducer = _createReducer(
             localFileUrl: URL.createObjectURL(action.fileWrapper?.modifiedFile)
         }
         
-        return SaveModelReducer.reducerFn(state, <SaveModelFileAction<ModelFile>>{...action, entity});       
+        return SaveModelReducer.reducerFn(state, <SaveModelFileAction<Immutable<ModelFile>>>{...action, entity});       
     }
 );
 

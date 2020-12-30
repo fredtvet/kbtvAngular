@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Immutable, Maybe } from 'global-types';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { DispatchedAction } from './interfaces';
 import { StateAction } from './state.action';
 
@@ -8,7 +8,7 @@ import { StateAction } from './state.action';
 export class ActionDispatcher {
 
     private actionsSubject = new Subject<DispatchedAction<StateAction>>();
-    actions$ = this.actionsSubject.asObservable();
+    actions$: Observable<DispatchedAction<StateAction>> = this.actionsSubject.asObservable();
 
     dispatch(action: StateAction, stateSnapshot: Immutable<{}>){
         this.actionsSubject.next({action, stateSnapshot});

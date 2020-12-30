@@ -1,9 +1,9 @@
 import { Immutable } from 'global-types';
-import { _createReducer } from 'state-management';
+import { Reducer, _createReducer } from 'state-management';
 import { StateRequestQueue } from '../../interfaces';
 import { HttpErrorAction } from './http-error.action';
 
-export const HttpErrorReducer = _createReducer(
+export const HttpErrorReducer: Reducer<Immutable<StateRequestQueue>, HttpErrorAction> = _createReducer(
     HttpErrorAction,
     (state: Immutable<StateRequestQueue>) => {
         if(!state.requestQueue) return;

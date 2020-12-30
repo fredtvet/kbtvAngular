@@ -3,7 +3,7 @@ import { skip, takeUntil } from "rxjs/operators";
 import { SelectableListPresenter } from './selectable-list.presenter';
 import { UnknownState } from "global-types";
 import { SelectableEntity } from "../interfaces";
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 
 @Component({
   selector: 'lib-selectable-list',
@@ -30,7 +30,8 @@ export class SelectableListComponent {
     @Output() selectionChanged = new EventEmitter<unknown[]>();
     @Output() itemClicked = new EventEmitter<unknown>();
   
-    selectableEntities$ = this.selectableListPresenter.selectableEntities$;
+    selectableEntities$: Observable<SelectableEntity<UnknownState>[]> = 
+      this.selectableListPresenter.selectableEntities$;
 
     clickDisabled: boolean = false;
     

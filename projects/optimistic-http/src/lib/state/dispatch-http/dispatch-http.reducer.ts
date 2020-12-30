@@ -1,9 +1,9 @@
-import { _createReducer } from 'state-management'
+import { Reducer, _createReducer } from 'state-management'
 import { Immutable } from 'global-types';
 import { DispatchHttpAction } from './dispatch-http.action';
 import { StateRequestQueue } from '../../interfaces';
 
-export const DispatchHttpReducer = _createReducer(
+export const DispatchHttpReducer: Reducer<Immutable<StateRequestQueue>, DispatchHttpAction> = _createReducer(
     DispatchHttpAction,
     (state: Immutable<StateRequestQueue>) => {
         if(!state.requestQueue) return;
