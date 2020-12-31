@@ -2,6 +2,13 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/model-form",
   "lib": {
-    "entryFile": "src/public-api.ts"
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "dynamic-forms": "dynamic-forms",
+      "form-sheet": "form-sheet",
+      "confirm-dialog": "confirm-dialog",
+      "state-model": "state-model",
+      "state-management": "state-management"
+    }
   }
 }
