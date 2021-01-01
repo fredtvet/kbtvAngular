@@ -5,9 +5,15 @@ import { AppButton } from '@shared-app/interfaces';
 @Component({
   selector: 'app-bottom-sheet-menu',
   template:`
-  <span class="nav-list mat-subheading-2">
+  <style>
+    span > a {
+      padding: 8px 0;
+      display:block;
+    }
+  </style>
+  <span class="mat-subheading-2">
     <ng-container #navs *ngFor="let button of buttons">
-        <a *ifRole="button.allowedRoles" (click)="handleFn(button.callback, button.params)">
+        <a *ifRole="button.allowedRoles" (click)="handleFn(button.callback, button.params)" matRipple>
             <mat-icon>{{ button.icon }}</mat-icon>
             <span class="ml-2 mr-2">{{ button.text }}</span>
         </a>

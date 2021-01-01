@@ -35,7 +35,6 @@
 @include mat-chips-theme($kbtv-client-theme); // d
 @include mat-slider-theme($kbtv-client-theme); // d
 
-
 //Fix to keep items in CDK virtual scroll responsive 
 .cdk-virtual-scroll-content-wrapper{
   width:100%;
@@ -81,13 +80,7 @@
   }  
 }
 
-//Fix for bug on iOs
+// //Fix for bug on iOs
 .mat-drawer-container {position: unset!important;}
 
-mat-bottom-sheet-container{
-  padding:0!important;
-  max-height:none!important;
-}
-
 .mat-icon{vertical-align: middle!important;}
-.mat-dialog-container{padding:0!important;}
