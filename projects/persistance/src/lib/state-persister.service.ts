@@ -37,7 +37,6 @@ export class StatePersisterService {
         else
              window.localStorage.setItem(prop, JSON.stringify(payload))
     }
-    
 
 }
 
