@@ -42,9 +42,7 @@ export class FormSheetWrapperComponent  {
         const factory = this.componentFactoryResolver.resolveComponentFactory(this.config.formComponent);
         let formRef = this.viewContainerRef.createComponent(factory);
         formRef.instance.config = this.config.formConfig;         
-        formRef.location.nativeElement.style.display = "block";
-        formRef.location.nativeElement.style.margin = "0px 24px 24px 24px";
-
+        
         if(this.config.formState$)
             this.formStateSub = 
                 this.config.formState$.subscribe(x => formRef.instance.formState = x)
