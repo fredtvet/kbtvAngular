@@ -25,6 +25,7 @@ import { RefreshTokenHttpEffect } from './services/auth/state/refresh-token.http
 import { StartupService } from './services/startup.service';
 import { SyncHttpFetcherService } from './services/sync-http-fetcher.service';
 import { InitalizeHttpQueueEffect, InitalizeSyncEffect } from './state/initalizing.effects';
+import { NotifyOnOptimisticErrorEffect } from './state/notify-on-optimistic-error.effect';
 import { SyncUserOnLoginEffect } from './state/sync-user-on-login.effect';
 import { WipeStateReducer } from './state/wipe-state.reducer';
 
@@ -66,6 +67,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
     { provide: STORE_EFFECTS, useClass: LoginHttpEffect, multi: true},
     { provide: STORE_EFFECTS, useClass: SyncUserOnLoginEffect, multi: true},
     { provide: STORE_EFFECTS, useClass: RedirectToUrlEffect, multi: true},
+    { provide: STORE_EFFECTS, useClass: NotifyOnOptimisticErrorEffect, multi: true},
     
     { provide: STORE_REDUCERS, useValue: RefreshTokenSuccessReducer, multi: true },
     { provide: STORE_REDUCERS, useValue: WipeTokensReducer, multi: true },

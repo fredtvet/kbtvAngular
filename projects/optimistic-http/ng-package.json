@@ -4,7 +4,6 @@
   "lib": {
     "entryFile": "src/public-api.ts",    
     "umdModuleIds": {
-      "notification": "notification",
       "state-management": "state-management"
     }
   }

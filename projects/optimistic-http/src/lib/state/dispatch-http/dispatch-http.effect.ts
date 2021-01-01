@@ -1,6 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { HttpFactoryService } from '../../http-factory.service';
 import { HttpErrorAction } from '../http-error/http-error.action';
@@ -20,5 +21,6 @@ export class DispatchHttpEffect implements Effect<DispatchHttpAction> {
         )
     }
 
-    onErrorAction = (err: unknown) => <HttpErrorAction>{ type: HttpErrorAction, ignoreInitialError: true }
+    onErrorAction = (httpError: HttpErrorResponse) => 
+        <HttpErrorAction>{ type: HttpErrorAction, httpError }
 }

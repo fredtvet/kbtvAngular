@@ -1,34 +1,23 @@
 import { Injectable } from '@angular/core';
-import { NotificationService, NotificationType } from 'notification';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { StateRequestQueue } from '../../interfaces';
+import { OptimisticHttpErrorAction } from '../optimistic-http-error.action';
 import { HttpErrorAction } from './http-error.action';
 
 @Injectable()
 export class HttpErrorEffect implements Effect<HttpErrorAction> {
 
-    constructor(private notificationService: NotificationService) {}
+    constructor() {}
 
-    handle$(actions$: Observable<DispatchedAction<HttpErrorAction, StateRequestQueue>>): Observable<void> {
+    handle$(actions$: Observable<DispatchedAction<HttpErrorAction, StateRequestQueue>>): Observable<OptimisticHttpErrorAction> {
         return actions$.pipe(
             listenTo([HttpErrorAction]),
-            map(x => {
-                const errorMessages =
-                    x.stateSnapshot?.requestQueue?.map(x => x.request.cancelMessage);
-                    
-                if(!errorMessages) return;
-    
-                if (x.action.ignoreInitialError) errorMessages.shift();
-                
-                if (errorMessages.length > 0)
-                    this.notificationService.notify({
-                        title: x.action.customErrorTitle || "Følgefeil!",
-                        details: errorMessages,
-                        type: NotificationType.Error,
-                        duration: errorMessages.length * 2500
-                    });
+            map(x => <OptimisticHttpErrorAction>{
+                type: OptimisticHttpErrorAction,
+                httpError: x.action.httpError,
+                optimisticErrors: x.stateSnapshot?.requestQueue?.map(x => x.request.cancelMessage)
             })
         )
     }

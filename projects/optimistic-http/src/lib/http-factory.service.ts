@@ -15,7 +15,7 @@ export class HttpFactoryService {
 
     getObserver$(request: Immutable<OptimisticHttpRequest>): Observable<unknown> {
         switch (request.method) {
-          case "POST": return this.httpClient.post(this.baseUrl + request.apiUrl, this.constructBody(request.body));
+          case "POST": return this.httpClient.post(this.baseUrl + request.apiUrl,  {});
           case "PUT": return this.httpClient.put(this.baseUrl +request.apiUrl, this.constructBody(request.body));
           case "DELETE": return this.httpClient.delete(this.baseUrl + request.apiUrl);
         }

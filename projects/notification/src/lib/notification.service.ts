@@ -10,7 +10,7 @@ export class NotificationService {
 
   private queue: AppNotification[] = [];
 
-  private currentNotification: AppNotification;
+  private currentNotification: Maybe<AppNotification>;
 
   constructor(private snackBar: MatSnackBar) { }
 
@@ -22,8 +22,8 @@ export class NotificationService {
   }
 
   private setNotification = (input: Maybe<AppNotification>): void => {
-    if(!input) return;
     this.currentNotification = input;
+    if(!input) return;
 
     switch(input?.type){
       case NotificationType.Success:
