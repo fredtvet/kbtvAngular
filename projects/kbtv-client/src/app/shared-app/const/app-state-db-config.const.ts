@@ -1,11 +1,11 @@
 import { ModelFile } from "@core/models";
 import { Immutable } from "global-types";
-import { MapFn, PersistanceConfig } from 'persistance';
+import { MapFn, StateDbConfig } from 'state-db';
 
 const modelFileArrayMapper: MapFn<ModelFile[]> = 
     (x: Immutable<ModelFile[]>) => x?.map(({localFileUrl, ...rest} ) => rest);
 
-export const AppPersistanceConfig: PersistanceConfig<unknown> = {
+export const AppStateDbConfig: StateDbConfig<unknown> = {
     missions: { onPersistMapping: modelFileArrayMapper },
     missionDocuments: { onPersistMapping: modelFileArrayMapper },
     missionImages: { onPersistMapping: modelFileArrayMapper },

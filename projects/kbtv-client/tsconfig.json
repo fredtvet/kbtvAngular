@@ -30,9 +30,9 @@
         "../../dist/notification/notification",
         "../../dist/notification"
       ],
-      "persistance": [
-        "../../dist/persistance/persistance",
-        "../../dist/persistance"
+      "state-db": [
+        "../../dist/state-db/state-db",
+        "../../dist/state-db"
       ],
       "optimistic-http": [
         "../../dist/optimistic-http/optimistic-http",

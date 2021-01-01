@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoadPersistedStateAction } from 'persistance';
+import { LoadPersistedStateAction } from 'state-db';
 import { EffectsSubscriber, Store } from 'state-management';
 import { IconService } from './icon.service';
 

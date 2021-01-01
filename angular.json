@@ -338,38 +338,38 @@
         }
       }
     },
-    "persistance": {
+    "state-db": {
       "projectType": "library",
-      "root": "projects/persistance",
-      "sourceRoot": "projects/persistance/src",
+      "root": "projects/state-db",
+      "sourceRoot": "projects/state-db/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/persistance/tsconfig.lib.json",
-            "project": "projects/persistance/ng-package.json"
+            "tsConfig": "projects/state-db/tsconfig.lib.json",
+            "project": "projects/state-db/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/persistance/tsconfig.lib.prod.json"
+              "tsConfig": "projects/state-db/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/persistance/src/test.ts",
-            "tsConfig": "projects/persistance/tsconfig.spec.json",
-            "karmaConfig": "projects/persistance/karma.conf.js"
+            "main": "projects/state-db/src/test.ts",
+            "tsConfig": "projects/state-db/tsconfig.spec.json",
+            "karmaConfig": "projects/state-db/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/persistance/tsconfig.lib.json",
-              "projects/persistance/tsconfig.spec.json"
+              "projects/state-db/tsconfig.lib.json",
+              "projects/state-db/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

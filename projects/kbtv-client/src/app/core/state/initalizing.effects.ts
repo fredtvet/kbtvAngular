@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorAction, HttpQueuer, HttpQueueShiftAction, StateRequestQueue } from 'optimistic-http';
-import { SetPersistedStateAction } from 'persistance';
+import { SetPersistedStateAction } from 'state-db';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, Store } from 'state-management';

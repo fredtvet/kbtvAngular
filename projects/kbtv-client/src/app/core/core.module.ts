@@ -1,12 +1,12 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AppCommandApiMap } from '@shared-app/const/app-command-api-map.const';
-import { AppPersistanceConfig } from '@shared-app/const/app-persistance-config.const';
+import { AppStateDbConfig } from '@shared-app/const/app-state-db-config.const';
 import { AppStoreSettings } from '@shared-app/const/app-store-settings.const';
 import { ModelConfigs } from '@shared-app/const/model-configs.const';
 import { translations } from '@shared/translations';
 import { BASE_API_URL, OptimisticHttpModule, OPTIMISTIC_STATE_SELECTOR } from 'optimistic-http';
-import { PersistanceModule, PERSISTANCE_CONFIG } from 'persistance';
+import { StateDbModule, STATE_DB_CONFIG } from 'state-db';
 import { environment } from 'src/environments/environment';
 import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS, STORE_SETTINGS } from 'state-management';
 import { COMMAND_API_MAP, MODEL_CONFIGS, MODEL_PROP_TRANSLATIONS, StateModelModule } from 'state-model';
@@ -36,7 +36,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
       fetcher: SyncHttpFetcherService,
       config: AppSyncStateConfig
     }),
-    PersistanceModule,
+    StateDbModule,
     OptimisticHttpModule,
     StateModelModule
   ],
@@ -55,7 +55,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
 
     { provide: OPTIMISTIC_STATE_SELECTOR, useValue: AppOptimisticState},
 
-    { provide: PERSISTANCE_CONFIG, useValue: AppPersistanceConfig},   
+    { provide: STATE_DB_CONFIG, useValue: AppStateDbConfig},   
 
     { provide: STORE_DEFAULT_STATE, useValue: DefaultState },
 

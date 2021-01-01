@@ -14,4 +14,4 @@ import { SetPersistedCriticalStateReducer, SetPersistedStateReducer } from './st
       {provide: STORE_EFFECTS, useClass: InitalizeStatePersisterEffect, multi: true},
   ]
 })
-export class PersistanceModule { }
+export class StateDbModule { }
