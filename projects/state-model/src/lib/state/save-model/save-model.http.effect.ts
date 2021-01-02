@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
-import { Immutable, Prop } from 'global-types';
+import { Immutable, Prop, KeyVal } from 'global-types';
 import { OptimisticHttpAction, OptimisticHttpRequest } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens.const';
-import { CommandApiMap, KeyVal, ModelConfig } from '../../interfaces';
+import { CommandApiMap, ModelConfig } from '../../interfaces';
 import { ModelCommand } from '../../model-command.enum';
 import { ModelStateConfig } from '../../model-state.config';
 import { SaveModelAction } from './save-model.action';

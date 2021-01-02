@@ -35,6 +35,4 @@ export interface CommandApiMap {
     [ModelCommand.Mail]: Immutable<CommandApiConfig<string>>
 }
 
-export type KeyVal<T> = { [key: string]: Immutable<T> }
-
 export type UnknownModelState = { [key: string]: UnknownState[] }

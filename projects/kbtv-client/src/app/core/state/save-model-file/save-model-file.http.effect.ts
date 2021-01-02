@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { ModelFile } from '@core/models';
+import { KeyVal } from 'global-types';
 import { FormDataEntry } from 'optimistic-http';
 import { Effect } from 'state-management';
-import { CommandApiMap, COMMAND_API_MAP, KeyVal, MODEL_PROP_TRANSLATIONS, SaveModelHttpEffect } from 'state-model';
+import { CommandApiMap, COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS, SaveModelHttpEffect } from 'state-model';
 import { ModelState } from '../model-state.interface';
 import { SaveModelFileAction } from './save-model-file.action';
 

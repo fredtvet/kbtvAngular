@@ -3,10 +3,10 @@ import { MatBottomSheet, MatBottomSheetRef } from "@angular/material/bottom-shee
 import { Router } from '@angular/router';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { FormSheetWrapperComponent, FormSheetWrapperConfig, OptionsFormState } from 'form-sheet';
-import { Immutable, Maybe, UnknownState } from "global-types";
+import { Immutable, Maybe, UnknownState, KeyVal } from "global-types";
 import { Observable, of } from 'rxjs';
 import { Store } from 'state-management';
-import { DeleteModelAction, KeyVal, ModelCommand, ModelStateConfig, MODEL_PROP_TRANSLATIONS, SaveAction } from 'state-model';
+import { DeleteModelAction, ModelCommand, ModelStateConfig, MODEL_PROP_TRANSLATIONS, SaveAction } from 'state-model';
 import { ModelFormConfig } from './interfaces';
 import { ModelFormComponent } from './model-form.component';
 

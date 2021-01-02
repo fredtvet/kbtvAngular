@@ -1,5 +1,6 @@
 import { InjectionToken } from '@angular/core';
-import { CommandApiMap, KeyVal, ModelConfig } from './interfaces';
+import { CommandApiMap, ModelConfig } from './interfaces';
+import { KeyVal } from 'global-types';
 
 export const MODEL_CONFIGS = new InjectionToken<ModelConfig<unknown, unknown>[]>('ModelConfigs');
 

@@ -17,3 +17,5 @@ export type Maybe<T> = T | null | undefined;
 export type DateInput = Date | string | number;
 
 export type Prop<T> = Extract<keyof T, string>;
+
+export type KeyVal<T> = { [key: string]: Immutable<T> }
