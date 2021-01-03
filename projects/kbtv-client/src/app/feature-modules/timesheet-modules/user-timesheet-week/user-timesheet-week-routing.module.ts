@@ -10,7 +10,7 @@ const routes: Routes = [
     data: {child: true},
     children: [
       {
-        path: 'liste', data: {child: true},
+        path: 'liste', data: {child: true, viewSize: "overlay"},
         loadChildren: () => import('src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list.module').then(m => m.UserTimesheetListModule)
       }
     ]
