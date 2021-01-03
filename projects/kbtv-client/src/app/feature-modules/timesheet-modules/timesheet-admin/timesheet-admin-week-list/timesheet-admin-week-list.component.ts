@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, takeUntil, tap } from 'rxjs/operators';
 import { Timesheet, User } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { LoadingService } from '@core/services/loading.service';
@@ -11,13 +11,14 @@ import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
+import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 
 @Component({
   selector: 'app-timesheet-admin-week-list',
   templateUrl: './timesheet-admin-week-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimesheetAdminWeekListComponent {
+export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
    
   loading$ = this.loadingService.queryLoading$;
 
@@ -34,8 +35,11 @@ export class TimesheetAdminWeekListComponent {
     private router: Router,
     private route: ActivatedRoute,
     private deviceInfoService: DeviceInfoService) {
-      const criteria = this.route.snapshot.params.criteria;
-      this.facade.updateCriteria(criteria ? JSON.parse(criteria) : {});
+      super();
+      this.route.paramMap.pipe(
+        takeUntil(this.unsubscribe),
+        tap(params => this.facade.updateCriteria( JSON.parse(params.get('criteria') || "{}") ))
+      ).subscribe()
     }
 
   confirmTimesheets = (timesheets: Timesheet[]): void => {

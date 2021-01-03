@@ -3,15 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Mission } from '@core/models';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { ModelState } from '@core/state/model-state.interface';
-import { Immutable, Maybe } from 'global-types';
 import { DateRangePresets, RolePresets, Roles } from '@shared-app/enums';
+import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { DetailTopNavConfig } from '@shared/components/detail-top-nav-bar/detail-top-nav.config';
 import { EditMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { AppFileUrlPipe } from '@shared/pipes/app-file-url.pipe';
+import { Immutable, Maybe } from 'global-types';
+import { ModelFormService } from 'model-form';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { MissionListFacade } from '../mission-list.facade';
-import { ModelFormService } from 'model-form';
 
 interface ViewModel { mission: Maybe<Immutable<Mission>>, navConfig: DetailTopNavConfig }
 
@@ -20,7 +21,7 @@ interface ViewModel { mission: Maybe<Immutable<Mission>>, navConfig: DetailTopNa
   templateUrl: './mission-details.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MissionDetailsComponent{
+export class MissionDetailsComponent extends WithUnsubscribe() {
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
 
   get missionId() { return this.route.snapshot.paramMap.get('id') }
@@ -38,8 +39,10 @@ export class MissionDetailsComponent{
     private router: Router,
     private appFileUrl: AppFileUrlPipe,
     private menuService: BottomSheetMenuService,
-    private modelFormService: ModelFormService
-  ){ }
+    private modelFormService: ModelFormService, 
+  ) { 
+    super()   
+  }
 
   updateHeaderImage = (files: FileList): void => 
     (files && files[0] && this.missionId) ? this.facade.updateHeaderImage(this.missionId, files[0]) : undefined;

@@ -12,12 +12,12 @@ const routes: Routes = [
       {
         path: 'uker',
         component: TimesheetAdminWeekListComponent,
-        data: {child: true},
+        data: {child: true, viewSize: "60%"},
         children: [
           {
             path: 'timer',
             component: TimesheetAdminListComponent,
-            data: {child: true},
+            data: {child: true, viewSize: "overlay"},
           },
         ]
       },

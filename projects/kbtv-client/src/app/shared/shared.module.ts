@@ -1,7 +1,9 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormSheetModule } from 'form-sheet';
+import { ValidationErrorMessages } from '@shared-app/const/validation-error-messages.const';
 import { ConfirmDialogModule } from 'confirm-dialog';
+import { VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { FormSheetModule } from 'form-sheet';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
@@ -23,8 +25,6 @@ import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-n
 import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
-import { ValidationErrorMessages } from '@shared-app/const/validation-error-messages.const';
-import { VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,6 @@ import { VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
     MainTopNavBarComponent,
     DetailTopNavBarComponent,
     ChipsBarComponent,
-
     InputQuestionComponent,
     SelectQuestionComponent,
     AutoCompleteQuestionComponent,
@@ -80,7 +79,7 @@ import { VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
     MainTopNavBarComponent,
     DetailTopNavBarComponent,
     ChipsBarComponent,
-    
+
     TransformButtonPipe,
     TranslatePipe,
     SortByDatePipe,

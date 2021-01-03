@@ -13,27 +13,27 @@ const routes: Routes = [
       {
         path: ':id/detaljer',
         component: MissionDetailsComponent,
-        data: {child: true},
+        data: {child: true, viewSize: "60%"},
         children: [
           {
             path: 'timer',
-            data: {child: true},
+            data: {child: true, viewSize: "overlay"},
             loadChildren: () => import('src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list.module').then(m => m.UserTimesheetListModule),
           },
           {
             path: 'bilder',
-            data: {child: true},
+            data: {child: true, viewSize: "overlay"},
             loadChildren: () => import('src/app/feature-modules/mission-modules/mission-image-list/mission-image-list.module').then(m => m.MissionImageListModule),
           },
           {
             path: 'dokumenter',
-            data: {allowedRoles: RolePresets.Internal.valueOf(), child: true},
+            data: {allowedRoles: RolePresets.Internal.valueOf(), child: true, viewSize: "overlay"},
             loadChildren: () => import('src/app/feature-modules/mission-modules/mission-document-list/mission-document-list.module').then(m => m.MissionDocumentListModule),
         
           },
           {
             path: 'notater',
-            data: {allowedRoles: RolePresets.Internal.valueOf(), child: true},
+            data: {allowedRoles: RolePresets.Internal.valueOf(), child: true, viewSize: "overlay"},
             loadChildren: () => import('src/app/feature-modules/mission-modules/mission-note-list/mission-note-list.module').then(m => m.MissionNoteListModule),
           },
         ]

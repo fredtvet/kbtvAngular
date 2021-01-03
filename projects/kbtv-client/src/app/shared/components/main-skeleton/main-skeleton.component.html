@@ -1,8 +1,6 @@
-<div class="main-container primary-light" fxLayout="row" *ngIf="childDisplayMode$ | async; let displayMode">
+<div class="main-container primary-light" fxLayout="row">
 
-  <div fxLayout="column" class="main-container mat-elevation-z2" 
-
-    [fxFlex]="(displayMode === 'side' && outlet.isActivated) ? (100 - childSize) : 100">
+  <div fxLayout="column" class="main-container mat-elevation-z2" fxFlex>
     <span  class="primary" style="z-index:1"
       [ngClass]="disableElevation ? '' : 'mat-elevation-z2'" >
       
@@ -25,9 +23,8 @@
     </div>
   </div>
   
-  <div [fxHide]="!outlet.isActivated" [ngClass]="displayMode" [fxFlex]="(displayMode === 'overlay') ? 100 : childSize">
-    <router-outlet #outlet="outlet"></router-outlet>
-  </div>
+  <router-outlet #outlet="outlet">
+  </router-outlet>
 
 </div>
 

@@ -2,18 +2,19 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { Employer, Mission, MissionType } from "@core/models";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { ModelState } from "@core/state/model-state.interface";
-import { FormService } from 'form-sheet';
-import { ModelFormService } from 'model-form';
 import { Roles } from "@shared-app/enums";
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from '@shared-app/interfaces';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
+import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { SearchBarConfig } from "@shared/interfaces";
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
+import { FormService } from 'form-sheet';
 import { Immutable, Maybe, Prop } from "global-types";
+import { ModelFormService } from 'model-form';
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { _getModelDisplayValue } from 'state-model';
@@ -28,7 +29,7 @@ interface NavViewModel{ criteriaChips?: AppChip[], navConfig?: MainTopNavConfig 
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: MissionListProviders,
 })
-export class MissionListComponent {
+export class MissionListComponent extends WithUnsubscribe(){
 
   navVm$: Observable<NavViewModel> = this.facade.criteria$.pipe(map(x => { return {
     criteriaChips: this.getCriteriaChips(x),
@@ -47,6 +48,8 @@ export class MissionListComponent {
     private modelFormService: ModelFormService,
     private facade: MissionListFacade,
   ) {
+    super()
+
     this.fabs = [
       {icon: "add", aria: "Legg til", color: "accent",
         callback: this.openMissionForm,
