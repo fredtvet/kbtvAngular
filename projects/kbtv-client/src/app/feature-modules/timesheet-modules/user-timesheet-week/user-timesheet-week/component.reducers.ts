@@ -1,4 +1,4 @@
-import { _getWeekOfYear, _getWeeksInYear } from 'date-time-helpers';
+import { _getWeekYear, _getWeeksInYear } from 'date-time-helpers';
 import { Immutable } from 'global-types';
 import { StateAction, _createReducer } from 'state-management';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
@@ -58,8 +58,9 @@ export const PreviousWeekReducer = _createReducer(
     (state: Immutable<ComponentStoreState>) => {
         let {weekNr, year} = {...state.weekCriteria};
 
-        if(!year) year = new Date().getFullYear();
-        if(!weekNr) weekNr = _getWeekOfYear()
+        const wy = _getWeekYear();
+        if(!year) year = wy.year;
+        if(!weekNr) weekNr = wy.weekNr
         
         if(weekNr <= 1) {
             year--; //Go to previous year if new week is less than 1

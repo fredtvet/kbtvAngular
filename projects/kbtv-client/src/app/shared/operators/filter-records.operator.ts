@@ -11,6 +11,7 @@ export const filterRecords = <TRecord, TCriteria>(filterType: DataFilterConstruc
     (source: Observable<[Maybe<ImmutableArray<TRecord>>, Maybe<Immutable<TCriteria>>]> ): Observable<Response<TRecord, TCriteria>> => 
         source.pipe(
             map(([timesheets, criteria]) => {
+                console.log(timesheets, criteria)
                 if(!criteria) return {criteria: null, records: null};
                 const filter = new filterType(criteria, ...filterArgs);
                 return <Response<TRecord, TCriteria>>{

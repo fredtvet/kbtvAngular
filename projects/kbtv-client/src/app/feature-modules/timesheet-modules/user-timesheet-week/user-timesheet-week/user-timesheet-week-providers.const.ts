@@ -1,5 +1,5 @@
 import { Provider } from '@angular/core';
-import { _getWeekOfYear } from 'date-time-helpers';
+import { _getWeekYear } from 'date-time-helpers';
 import { ComponentStoreProviders, STORE_DEFAULT_STATE, STORE_REDUCERS } from 'state-management';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { WeekToTimesheetCriteriaAdapter } from '../../shared-timesheet/timesheet-filter/week-to-timesheet-criteria.adapter';
@@ -7,10 +7,7 @@ import { ComponentStoreState } from '../store-state.interface';
 import { NextWeekReducer, PreviousWeekReducer, SetTimesheetCriteriaReducer } from './component.reducers';
 import { UserTimesheetWeekFacade } from './user-timesheet-week.facade';
 
-const DefaultWeekCriteria: WeekCriteria= {
-    year: new Date().getFullYear(), 
-    weekNr: _getWeekOfYear(),
-}
+const DefaultWeekCriteria: WeekCriteria = {..._getWeekYear()}
 
 const DefaultComponentState: Partial<ComponentStoreState> = {
     weekCriteria: DefaultWeekCriteria,

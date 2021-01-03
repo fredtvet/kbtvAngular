@@ -4,7 +4,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { Timesheet, User } from '@core/models';
 import { LoadingService } from '@core/services/loading.service';
-import { _getWeekOfYear } from 'date-time-helpers';
+import { _getWeekYear } from 'date-time-helpers';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
@@ -39,7 +39,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
     private formService: FormService) {
       super();
       this.route.paramMap.pipe(
-        tap(x => this.facade.updateWeekNr(x.get('weekNr') || _getWeekOfYear())), 
+        tap(x => this.facade.updateWeekNr(x.get('weekNr') || _getWeekYear().weekNr)), 
         takeUntil(this.unsubscribe)
       ).subscribe();
     }

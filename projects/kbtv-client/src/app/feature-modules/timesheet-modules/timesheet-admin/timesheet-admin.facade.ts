@@ -31,6 +31,8 @@ export class TimesheetAdminFacade {
     get weekCriteria(){ return this.componentStore.state.weekCriteria; } 
     weekCriteria$ = this.componentStore.selectProperty$<WeekCriteria>("weekCriteria");
 
+    timesheetCriteria$ = this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria")
+
     weekCriteriaFormState$: Observable<WeekCriteriaFormState> = 
         this.store.selectProperty$<User[]>("users").pipe(map(x => { return { options: {users: x} } }))
 

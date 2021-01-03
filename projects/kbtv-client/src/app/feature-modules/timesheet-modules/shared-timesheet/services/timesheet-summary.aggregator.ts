@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Timesheet } from '@core/models';
 import { GroupByPeriod } from '@shared/enums/group-by-period.enum';
 import { TimesheetStatus } from '@shared/enums/timesheet-status.enum';
-import { _getWeekAndYearFromDate, _getWeekOfYear } from 'date-time-helpers';
+import { _getWeekYear } from 'date-time-helpers';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { TimesheetSummary } from '../interfaces/timesheet-summary.interface';
 
@@ -56,14 +56,14 @@ export class TimesheetSummaryAggregator {
     const groups: {[key:string]: TimesheetSummary} = {};
     for(let i = t.length; i--;){
       const timesheet = t[i];
-      const wy = _getWeekAndYearFromDate(timesheet.startTime);
-      const index = wy.year + "-" + wy.weekNr + "-" + timesheet.userName;
+      const {weekNr, year} = _getWeekYear(timesheet.startTime);
+      const index = year + "-" + weekNr + "-" + timesheet.userName;
       let summary = groups[index];
       if (summary === undefined) {
         groups[index] = {
           userName: timesheet.userName,
-          year: wy.year,
-          weekNr: wy.weekNr,
+          year: year,
+          weekNr: weekNr,
           openHours: 0,
           confirmedHours: 0,
           timesheets: [],
@@ -75,35 +75,6 @@ export class TimesheetSummaryAggregator {
 
       summary.timesheets.push(<Timesheet> timesheet);
     }
-
-    return <Immutable<TimesheetSummary>[]> Object.values(groups);
-  }
-
-  groupByWeekRange(
-    t: Maybe<ImmutableArray<Timesheet>>,
-    startWeek: number, endWeek: number, year: number, 
-    excludeStatus?: TimesheetStatus): Maybe<Immutable<TimesheetSummary>[]> {
-    if(!t) return null;
-    const groups: {[key:string]: TimesheetSummary} = {};
-    for(let i = t.length; i--;){
-      const timesheet = t[i];
-      if(timesheet.status === excludeStatus) continue;
-      const date = timesheet.startTime ? new Date(timesheet.startTime) : new Date();
-      if(date.getFullYear() !== year) continue;
-      const weekNr = _getWeekOfYear(date);
-      if (weekNr >= startWeek && weekNr <= endWeek) {
-        let summary = groups[weekNr];
-        if (summary === undefined){
-          groups[weekNr] = 
-            {weekNr, timesheets: [],openHours: 0,confirmedHours: 0,};    
-          summary = groups[weekNr];  
-        }
-
-        this.addHoursToSummary(summary, timesheet)
-
-        summary.timesheets.push(<Timesheet> timesheet);
-      }
-    };
 
     return <Immutable<TimesheetSummary>[]> Object.values(groups);
   }

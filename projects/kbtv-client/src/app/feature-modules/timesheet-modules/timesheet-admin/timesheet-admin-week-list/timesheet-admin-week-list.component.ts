@@ -21,9 +21,12 @@ import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
    
   loading$ = this.loadingService.queryLoading$;
-
-  summaries$ = this.facade.weeklySummaries$.pipe(map(x => x?.sort((a, b) => (b.weekNr || 0) - (a.weekNr || 0) )));
-
+  
+  // summaries$ = this.facade.weeklySummaries$.pipe(map(x => x?.sort((a, b) => (b.weekNr || 0) - (a.weekNr || 0) )));
+  summaries$ = this.facade.weeklySummaries$.pipe(
+    map(x => x?.sort((x, y) => ((x.weekNr || 0) - (y.weekNr || 0))|| ((x.year || 0) - (y.year || 0))) )
+  );
+  
   isXs$ = this.deviceInfoService.isXs$;
 
   navConfig$ =  this.facade.weekCriteria$.pipe(map(x => this.getNavConfig(x?.user, x?.year)));
