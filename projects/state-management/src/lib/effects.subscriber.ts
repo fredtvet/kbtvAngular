@@ -28,9 +28,9 @@ export class EffectsSubscriber {
 
     private handleEffect(effect: Effect<StateAction>): void {
         effect.handle$(this.dispatcher.actions$).pipe(   
-            tap(x => (x && x.type) ? this.store.dispatch(x) : null),
+            tap(x => (x && x.type) ? this.store.dispatch(x) : null),   
+            catchError(x => this.onEffectError$(x, effect)),
             takeUntil(this.unsubscribe),
-            catchError(x => this.onEffectError$(x, effect))
         ).subscribe();
     }
 

@@ -39,9 +39,9 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
     private route: ActivatedRoute,
     private deviceInfoService: DeviceInfoService) {
       super();
-      this.route.paramMap.pipe(
+      this.route.paramMap.pipe( 
+        tap(params => this.facade.updateCriteria( JSON.parse(params.get('criteria') || "{}") )),
         takeUntil(this.unsubscribe),
-        tap(params => this.facade.updateCriteria( JSON.parse(params.get('criteria') || "{}") ))
       ).subscribe()
     }
 
