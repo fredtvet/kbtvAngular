@@ -10,6 +10,7 @@ import { _sortByDate } from 'array-helpers';
 import { Maybe } from 'global-types';
 import { ModelFormService } from 'model-form';
 import { map } from 'rxjs/operators';
+import { SelectedMissionIdParam } from '../../mission-list/mission-list-route-params.const';
 import { MissionNoteListFacade } from '../mission-note-list.facade';
 
 @Component({
@@ -26,7 +27,9 @@ export class MissionNoteListComponent {
   navConfig: MainTopNavConfig; 
   fabs: AppButton[];
   
-  get missionId(): Maybe<string> { return this.route.parent?.parent?.snapshot.params.id }
+  get missionId(): Maybe<string> { 
+    return this.route.parent?.parent?.snapshot.paramMap.get(SelectedMissionIdParam) 
+  }
 
   constructor( 
     private facade: MissionNoteListFacade,

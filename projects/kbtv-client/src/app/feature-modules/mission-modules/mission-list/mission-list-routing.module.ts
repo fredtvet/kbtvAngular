@@ -5,6 +5,7 @@ import { RolePresets } from '@shared-app/enums';
 import { CustomRoute } from '@shared-app/interfaces/custom-route.interface';
 import { MainSkeletonRouteData } from '@shared/components/main-skeleton/main-skeleton-route-data.interface';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
+import { SelectedMissionIdParam } from './mission-list-route-params.const';
 import { MissionListComponent } from './mission-list/mission-list.component';
 
 interface MissionListRoute extends CustomRoute<AuthRouteData & MainSkeletonRouteData>{}
@@ -15,7 +16,7 @@ const routes: MissionListRoute[] = [
     component: MissionListComponent,
     children: [
       {
-        path: ':id/detaljer',
+        path: `:${SelectedMissionIdParam}/detaljer`,
         component: MissionDetailsComponent,
         data: {viewSize: "60%"},
         children: [

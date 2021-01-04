@@ -18,6 +18,7 @@ import { map, tap } from "rxjs/operators";
 import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
 import { MissionImageListFacade } from '../mission-image-list.facade';
 import { ConfirmDialogService } from "confirm-dialog";
+import { SelectedMissionIdParam } from "../../mission-list/mission-list-route-params.const";
 
 interface ViewModel { images: Maybe<ImmutableArray<MissionImage>>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig }
 
@@ -29,7 +30,9 @@ interface ViewModel { images: Maybe<ImmutableArray<MissionImage>>, isXs: boolean
 export class MissionImageListComponent extends SelectableListContainerComponent{
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
 
-  get missionId(): Maybe<string> { return this.route.parent?.parent?.snapshot.params.id }
+  get missionId(): Maybe<string> { 
+    return this.route.parent?.parent?.snapshot.paramMap.get(SelectedMissionIdParam)  
+  }
   
   vm$: Observable<ViewModel> = combineLatest([
     this.facade.getByMissionId$(this.missionId),

@@ -12,6 +12,7 @@ import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model-form';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { SelectedMissionIdParam } from '../mission-list-route-params.const';
 import { MissionListFacade } from '../mission-list.facade';
 
 interface ViewModel { mission: Maybe<Immutable<Mission>>, navConfig: DetailTopNavConfig }
@@ -24,10 +25,10 @@ interface ViewModel { mission: Maybe<Immutable<Mission>>, navConfig: DetailTopNa
 export class MissionDetailsComponent extends WithUnsubscribe() {
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
 
-  get missionId() { return this.route.snapshot.paramMap.get('id') }
+  get missionId() { return this.route.snapshot.paramMap.get(SelectedMissionIdParam) }
 
   vm$: Observable<ViewModel> =  this.route.paramMap.pipe(
-    switchMap(x =>  this.facade.getMissionDetails$(x.get('id'))),
+    switchMap(x =>  this.facade.getMissionDetails$(x.get(SelectedMissionIdParam))),
     map(mission => { return {
       navConfig: this.getNavConfig(mission), mission
     }})

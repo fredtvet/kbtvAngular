@@ -18,6 +18,7 @@ import { ImmutableArray, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MissionDocumentListFacade } from '../mission-document-list.facade';
+import { SelectedMissionIdParam } from '../../mission-list/mission-list-route-params.const';
 
 interface ViewModel { documents: Maybe<ImmutableArray<MissionDocument>>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig}
 
@@ -38,7 +39,9 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     }})
   )
 
-  private get missionId(): Maybe<string> { return this.route.parent?.parent?.snapshot.params.id }
+  private get missionId(): Maybe<string> { 
+    return this.route.parent?.parent?.snapshot.paramMap.get(SelectedMissionIdParam) 
+  }
 
   private navConfig: MainTopNavConfig;
   
