@@ -3,17 +3,17 @@
 
     <div fxLayout="row" fxLayoutGap="8px">
       <span class="mat-elevation-z2 foreground-card text-center p-6" fxFlex="50" matRipple
-        [routerLink]="['/oppdrag']">
+        routerLink="/oppdrag">
         <mat-icon class="scale-150 mb-1">view_list</mat-icon><br />
         <span>Oppdrag</span>
       </span>
       <span *ifRole="RolePresets.Internal" class="mat-elevation-z2 foreground-card text-center p-6"
-        fxFlex="50" matRipple [routerLink]="['/mine-timer']">
+        fxFlex="50" matRipple routerLink="/mine-timer">
         <mat-icon class="scale-150 mb-1">timer</mat-icon><br />
         <span>Timer</span>
       </span>
       <span *ifRole="RolePresets.External" class="mat-elevation-z2 foreground-card text-center p-6"
-        fxFlex="50" matRipple [routerLink]="['/profil']">
+        fxFlex="50" matRipple routerLink="/profil">
         <mat-icon class="scale-150">person</mat-icon><br />
         <span>Profil</span>
       </span>
@@ -26,19 +26,19 @@
 
         <mat-divider inset="true"></mat-divider>
 
-        <app-list-item [routerLink]="['/timeadministrering']">
+        <app-list-item routerLink="/timeadministrering">
           <mat-icon left-side>date_range</mat-icon>
           Administrer timer
           <mat-icon right-side>chevron_right</mat-icon>
         </app-list-item>
 
-        <app-list-item [routerLink]="['/data']">
+        <app-list-item routerLink="/data">
           <mat-icon left-side>dns</mat-icon>
           Administrer data
           <mat-icon right-side>chevron_right</mat-icon>
         </app-list-item>
 
-        <app-list-item [routerLink]="['/brukere']">
+        <app-list-item routerLink="/brukere">
           <mat-icon left-side>people</mat-icon>
           Administrer brukere
           <mat-icon right-side>chevron_right</mat-icon>
@@ -52,7 +52,7 @@
 
         <mat-divider inset="true"></mat-divider>
 
-        <app-list-item [routerLink]="['/timestatistikk']">
+        <app-list-item routerLink="/timestatistikk">
           <mat-icon left-side>assessment</mat-icon>
           Timestatistikk
           <mat-icon right-side>chevron_right</mat-icon>
