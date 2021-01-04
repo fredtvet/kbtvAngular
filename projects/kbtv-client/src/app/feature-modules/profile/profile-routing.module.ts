@@ -6,7 +6,6 @@ const routes: Routes = [
   {
     path: '',
     component: ProfileComponent,
-    data: {depth: 1},
   },
 ];
 

@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { CustomRoute } from '@shared-app/interfaces/custom-route.interface';
+import { MainSkeletonRouteData } from '@shared/components/main-skeleton/main-skeleton-route-data.interface';
 import { TimesheetAdminListComponent } from './timesheet-admin-list/timesheet-admin-list.component';
 import { TimesheetAdminUserListComponent } from './timesheet-admin-user-list/timesheet-admin-user-list.component';
 import { TimesheetAdminWeekListComponent } from './timesheet-admin-week-list/timesheet-admin-week-list.component';
 
-const routes: Routes = [
+interface TimesheetAdminRoute extends CustomRoute<MainSkeletonRouteData>{}
+
+const routes: TimesheetAdminRoute[] = [
   {
     path: '',
     component: TimesheetAdminUserListComponent,
@@ -12,12 +16,12 @@ const routes: Routes = [
       {
         path: 'uker',
         component: TimesheetAdminWeekListComponent,
-        data: {child: true, viewSize: "overlay"},
+        data: {viewSize: "overlay"},
         children: [
           {
             path: 'timer',
             component: TimesheetAdminListComponent,
-            data: {child: true, viewSize: "50%"},
+            data: {viewSize: "50%"},
           },
         ]
       },
