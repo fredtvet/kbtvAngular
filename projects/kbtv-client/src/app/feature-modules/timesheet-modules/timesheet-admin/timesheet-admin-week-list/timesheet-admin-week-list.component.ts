@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, takeUntil, tap } from 'rxjs/operators';
 import { Timesheet, User } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { LoadingService } from '@core/services/loading.service';
+import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { TimesheetStatus } from '@shared/enums';
-import { WeekCriteria } from '../../shared-timesheet/interfaces';
-import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
-import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
+import { map, takeUntil, tap } from 'rxjs/operators';
+import { WeekCriteria } from '../../shared-timesheet/interfaces';
+import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 
 @Component({
   selector: 'app-timesheet-admin-week-list',
@@ -22,9 +22,8 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
    
   loading$ = this.loadingService.queryLoading$;
   
-  // summaries$ = this.facade.weeklySummaries$.pipe(map(x => x?.sort((a, b) => (b.weekNr || 0) - (a.weekNr || 0) )));
   summaries$ = this.facade.weeklySummaries$.pipe(
-    map(x => x?.sort((x, y) => ((x.weekNr || 0) - (y.weekNr || 0))|| ((x.year || 0) - (y.year || 0))) )
+    map(x => x?.sort((x, y) => ((y.year || 0) - (x.year || 0)) || ((y.weekNr || 0) - (x.weekNr || 0))))
   );
   
   isXs$ = this.deviceInfoService.isXs$;
