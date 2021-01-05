@@ -25,8 +25,8 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
         </mat-error>
 
         <lib-form-actions 
-            [submitDisabled]="form.pristine || form.invalid" 
-            [submitText]="config.submitText || 'Lagre'" 
+            [submitDisabled]="form.pristine || form.invalid || disableOnOffline" 
+            [submitText]="disableOnOffline ? 'Ikke på nett' : (config.submitText || 'Lagre')" 
             [showReset]="config.resettable"
             [resetDisabled]="!(resetEnabled$ | async)"
             (reset)="onReset()"
@@ -60,6 +60,10 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
     @Output() formSubmitted = new EventEmitter<unknown>();
 
     resetEnabled$: Observable<boolean>;
+
+    get disableOnOffline(): boolean { 
+        return this.config.onlineRequired != null && !navigator.onLine 
+    }
 
     constructor(
         componentFactoryResolver: ComponentFactoryResolver,

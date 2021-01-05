@@ -28,7 +28,7 @@ const ConfirmPasswordControl = <DynamicControl<PasswordForm>>{
 
 export interface CurrentUserPasswordForm extends PasswordForm { oldPassword: string }
 export const CurrentUserPasswordForm: DynamicForm<CurrentUserPasswordForm, unknown> = {
-    submitText: "Oppdater", controls: [
+    submitText: "Oppdater",  onlineRequired: true, controls: [
         <DynamicControl<CurrentUserPasswordForm>>{ 
             name: "oldPassword", required: true,
             type: "control", questions: [{
@@ -46,7 +46,7 @@ export const CurrentUserPasswordForm: DynamicForm<CurrentUserPasswordForm, unkno
 
 export interface UserPasswordForm extends PasswordForm { userName: string }
 export const UserPasswordForm: DynamicForm<UserPasswordForm,  unknown> = {
-    submitText: "Oppdater", disabledControls: {userName: true}, getRawValue: true,
+    submitText: "Oppdater", onlineRequired: true, disabledControls: {userName: true}, getRawValue: true,
     controls: [
         UserNameControl,
         NewPasswordControl,

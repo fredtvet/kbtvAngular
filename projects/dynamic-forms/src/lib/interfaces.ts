@@ -25,6 +25,7 @@ export interface DynamicForm<TForm, TFormState>{
     validators?: ValidatorFn[];
     resettable?: boolean;
     resetState?: Partial<TForm>;
+    onlineRequired?: boolean;
 }
 
 export interface DynamicControlGroup<TForm, TFormState = unknown> {
