@@ -24,6 +24,7 @@ import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
 import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
+import { InputListenerDirective } from './directives/input-listener.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 
 @NgModule({
@@ -58,11 +59,12 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    
     ImageErrorReloaderDirective,  
+    InputListenerDirective,
   ],
   imports: [
     ReactiveFormsModule,
     AngularMaterialModule,
-    SharedAppModule,
+    SharedAppModule,    
     GooglePlaceModule,
 
     ConfirmDialogModule,
@@ -93,7 +95,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    
     ImageErrorReloaderDirective,  
-
+    InputListenerDirective
   ],
   providers:[
     { provide: VALIDATION_ERROR_MESSAGES, useValue: ValidationErrorMessages},

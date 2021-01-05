@@ -30,7 +30,6 @@ registerLocaleData(norwayLocale, 'nb-NO');
     CoreModule, 
     HammerModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    
     AppRoutingModule, 
     AppLayoutModule,
     SharedAppModule,

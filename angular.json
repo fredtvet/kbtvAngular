@@ -697,6 +697,46 @@
           }
         }
       }
+    },
+    "state-auth": {
+      "projectType": "library",
+      "root": "projects/state-auth",
+      "sourceRoot": "projects/state-auth/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/state-auth/tsconfig.lib.json",
+            "project": "projects/state-auth/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/state-auth/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/state-auth/src/test.ts",
+            "tsConfig": "projects/state-auth/tsconfig.spec.json",
+            "karmaConfig": "projects/state-auth/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/state-auth/tsconfig.lib.json",
+              "projects/state-auth/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "kbtv-client"

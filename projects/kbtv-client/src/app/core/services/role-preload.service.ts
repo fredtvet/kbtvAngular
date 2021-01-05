@@ -3,7 +3,7 @@ import { PreloadingStrategy, Route } from '@angular/router';
 import { Maybe } from 'global-types';
 import { EMPTY, Observable, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from 'state-auth';
 
 @Injectable({ providedIn: 'root' })
 export class RolePreloadService implements PreloadingStrategy {  

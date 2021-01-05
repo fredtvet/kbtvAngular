@@ -10,11 +10,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { StateManagementModule } from 'state-management'
+import { StateAuthModule } from 'state-auth';
+import { StateManagementModule } from 'state-management';
 import { AppButtonComponent, ListCardComponent, NavItemComponent } from './components';
 import { ListItemComponent } from './components/list-item/list-item.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
-import { IfRoleDirective, InputListenerDirective } from './directives';
 import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
 
 @NgModule({
@@ -26,16 +26,13 @@ import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
     ListItemComponent,
     ReverseArrayPipe,
     TransformButtonsPipe,
-
-    IfRoleDirective,
-    InputListenerDirective,
   ],
   imports: [
     RouterModule,
     CommonModule, 
     FlexLayoutModule,
-
     StateManagementModule,
+    StateAuthModule,
     
     MatToolbarModule,
     MatSidenavModule,
@@ -61,6 +58,8 @@ import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
     MatProgressSpinnerModule,  
     MatCardModule,
 
+    StateAuthModule,
+
     PageNotFoundComponent,
     AppButtonComponent,  
     NavItemComponent,   
@@ -69,9 +68,6 @@ import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
     
     ReverseArrayPipe,
     TransformButtonsPipe,
-
-    IfRoleDirective,
-    InputListenerDirective,
   ]
 })
 export class SharedAppModule {}

@@ -4,7 +4,7 @@ import { SyncModelState } from '@shared-app/const/sync-state.config';
 import { SyncConfig, SyncHttpFetcher, SyncResponse } from 'state-sync';
 import { Observable, throwError } from 'rxjs';
 import { ApiService } from './api.service';
-import { AuthService } from './auth';
+import { AuthService } from 'state-auth';
 
 @Injectable()
 export class SyncHttpFetcherService implements SyncHttpFetcher<SyncModelState> {

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { User } from "@core/models";
-import { AuthService } from '@core/services/auth';
 import { Immutable } from "global-types";
+import { AuthService } from "state-auth";
 import { Store } from 'state-management';
 import { ReloadSyncStateAction, SyncConfig, SyncStateAction, UpdateSyncConfigAction } from 'state-sync';
 import { UpdateCurrentUserAction } from './state/update-current-user/update-current-user.action';

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthRouteData } from '@core/services/auth/auth-route-data.interface';
 import { RolePresets } from '@shared-app/enums';
 import { CustomRoute } from '@shared-app/interfaces/custom-route.interface';
 import { MainSkeletonRouteData } from '@shared/components/main-skeleton/main-skeleton-route-data.interface';
+import { AuthRouteData } from 'state-auth';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
 import { SelectedMissionIdParam } from './mission-list-route-params.const';
 import { MissionListComponent } from './mission-list/mission-list.component';

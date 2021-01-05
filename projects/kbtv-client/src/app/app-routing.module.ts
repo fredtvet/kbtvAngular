@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthRouteData } from '@core/services/auth/auth-route-data.interface';
 import { CustomRoute } from '@shared-app/interfaces/custom-route.interface';
-import { AuthGuard, NoAuthGuard } from './core/services/auth';
+import { AuthGuard, AuthRouteData, NoAuthGuard } from 'state-auth';
 import { RolePreloadService } from './core/services/role-preload.service';
 import { HomeComponent } from './home/home.component';
 import { MainNavComponent } from './layout/main-nav/main-nav.component';

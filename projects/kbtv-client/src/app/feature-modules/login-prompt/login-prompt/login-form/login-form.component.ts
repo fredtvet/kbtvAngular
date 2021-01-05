@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Credentials } from '@core/services/auth';
+import { Credentials } from 'state-auth';
 
 @Component({
   selector: 'app-login-form',

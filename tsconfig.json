@@ -79,6 +79,10 @@
       "model-form": [
         "dist/model-form/model-form",
         "dist/model-form"
+      ],
+      "state-auth": [
+        "dist/state-auth/state-auth",
+        "dist/state-auth"
       ]
     }
   },

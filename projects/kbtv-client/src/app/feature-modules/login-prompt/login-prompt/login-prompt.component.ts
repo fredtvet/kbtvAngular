@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService, Credentials } from '@core/services/auth';
+import { AuthService, Credentials } from 'state-auth';
 
 @Component({
   selector: 'app-login-prompt',
