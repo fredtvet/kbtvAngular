@@ -3,7 +3,7 @@ import { ModelFile } from '@core/models';
 import { KeyVal } from 'global-types';
 import { FormDataEntry } from 'optimistic-http';
 import { Effect } from 'state-management';
-import { CommandApiMap, COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS, SaveModelHttpEffect } from 'state-model';
+import { ModelCommandApiMap, MODEL_COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS, SaveModelHttpEffect } from 'state-model';
 import { ModelState } from '../model-state.interface';
 import { SaveModelFileAction } from './save-model-file.action';
 
@@ -14,7 +14,7 @@ export class SaveModelFileHttpEffect extends SaveModelHttpEffect<ModelFile, Mode
     protected type: string = SaveModelFileAction;
     
     constructor(
-        @Inject(COMMAND_API_MAP) apiMap: CommandApiMap,
+        @Inject(MODEL_COMMAND_API_MAP) apiMap: ModelCommandApiMap,
         @Inject(MODEL_PROP_TRANSLATIONS) translations: Readonly<KeyVal<string>>
     ){ super(apiMap, translations) }
 

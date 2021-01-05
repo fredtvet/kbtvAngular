@@ -3,7 +3,7 @@ import { User } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { Effect } from 'state-management';
 import { KeyVal } from 'global-types';
-import { CommandApiMap, COMMAND_API_MAP, ModelCommand, MODEL_PROP_TRANSLATIONS, SaveModelHttpEffect } from 'state-model';
+import { ModelCommandApiMap, MODEL_COMMAND_API_MAP, ModelCommand, MODEL_PROP_TRANSLATIONS, SaveModelHttpEffect } from 'state-model';
 import { SaveUserAction } from './save-user.action';
 
 @Injectable({providedIn: 'root'})
@@ -12,7 +12,7 @@ export class SaveUserHttpEffect extends SaveModelHttpEffect<User, ModelState> im
     protected type: string = SaveUserAction
 
     constructor(
-        @Inject(COMMAND_API_MAP) apiMap: CommandApiMap,
+        @Inject(MODEL_COMMAND_API_MAP) apiMap: ModelCommandApiMap,
         @Inject(MODEL_PROP_TRANSLATIONS) translations: Readonly<KeyVal<string>>
     ){ super(apiMap, translations) }
 

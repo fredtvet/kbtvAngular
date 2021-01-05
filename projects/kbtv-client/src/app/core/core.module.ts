@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { HttpAuthTokensInterceptor, StateAuthModule } from 'state-auth';
 import { StateDbModule, STATE_DB_CONFIG } from 'state-db';
 import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS, STORE_SETTINGS } from 'state-management';
-import { COMMAND_API_MAP, MODEL_CONFIGS, MODEL_PROP_TRANSLATIONS, StateModelModule } from 'state-model';
+import { MODEL_COMMAND_API_MAP, MODEL_CONFIGS, MODEL_PROP_TRANSLATIONS, StateModelModule } from 'state-model';
 import { StateSyncModule } from 'state-sync';
 import { AppAuthCommandApiMap } from './configurations/app-auth-command-api-map.const';
 import { AppAuthRedirects } from './configurations/app-auth-redirects.const';
@@ -50,7 +50,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
 
     { provide: BASE_API_URL, useValue: environment.apiUrl},
     { provide: MODEL_CONFIGS, useValue: ModelConfigs },
-    { provide: COMMAND_API_MAP, useValue: AppCommandApiMap },
+    { provide: MODEL_COMMAND_API_MAP, useValue: AppCommandApiMap },
     { provide: MODEL_PROP_TRANSLATIONS, useValue: translations },
 
     { provide: OPTIMISTIC_STATE_SELECTOR, useValue: AppOptimisticState},

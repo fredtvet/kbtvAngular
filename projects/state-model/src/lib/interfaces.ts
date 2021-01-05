@@ -25,14 +25,14 @@ export type SaveAction = ModelCommand.Create | ModelCommand.Update;
 
 export type ModelConfigMap<TState> = {[key: string]: Immutable<ModelConfig<unknown, TState>>};
 
-export type CommandApiConfig<TSuffix> = {method: "POST" | "PUT" | "DELETE", suffix: TSuffix}
+export type ModelCommandApi<TSuffix> = {method: "POST" | "PUT" | "DELETE", suffix: TSuffix}
 
-export interface CommandApiMap {
-    [ModelCommand.Create]: Immutable<CommandApiConfig<string>>,
-    [ModelCommand.Update]: Immutable<CommandApiConfig<(id: unknown) => string>>,
-    [ModelCommand.Delete]: Immutable<CommandApiConfig<(id: unknown) => string>>,
-    [ModelCommand.DeleteRange]: Immutable<CommandApiConfig<string>>,
-    [ModelCommand.Mail]: Immutable<CommandApiConfig<string>>
+export interface ModelCommandApiMap {
+    [ModelCommand.Create]: Immutable<ModelCommandApi<string>>,
+    [ModelCommand.Update]: Immutable<ModelCommandApi<(id: unknown) => string>>,
+    [ModelCommand.Delete]: Immutable<ModelCommandApi<(id: unknown) => string>>,
+    [ModelCommand.DeleteRange]: Immutable<ModelCommandApi<string>>,
+    [ModelCommand.Mail]: Immutable<ModelCommandApi<string>>
 }
 
 export type UnknownModelState = { [key: string]: UnknownState[] }

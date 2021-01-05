@@ -4,8 +4,8 @@ import { OptimisticHttpAction, OptimisticHttpRequest } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
-import { COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens.const';
-import { CommandApiMap, ModelConfig } from '../../interfaces';
+import { MODEL_COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens.const';
+import { ModelCommandApiMap, ModelConfig } from '../../interfaces';
 import { ModelCommand } from '../../model-command.enum';
 import { ModelStateConfig } from '../../model-state.config';
 import { SaveModelAction } from './save-model.action';
@@ -15,7 +15,7 @@ export class SaveModelHttpEffect<TModel extends {}, TState extends {}> implement
     protected type: string = SaveModelAction
     
     constructor(
-        @Inject(COMMAND_API_MAP) private apiMap: CommandApiMap,
+        @Inject(MODEL_COMMAND_API_MAP) private apiMap: ModelCommandApiMap,
         @Inject(MODEL_PROP_TRANSLATIONS) private translations: Immutable<KeyVal<string>>,
     ){ }
 

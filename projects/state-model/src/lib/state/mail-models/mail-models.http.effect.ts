@@ -4,8 +4,8 @@ import { BASE_API_URL } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
-import { COMMAND_API_MAP } from '../../injection-tokens.const';
-import { CommandApiMap } from '../../interfaces';
+import { MODEL_COMMAND_API_MAP } from '../../injection-tokens.const';
+import { ModelCommandApiMap } from '../../interfaces';
 import { ModelCommand } from '../../model-command.enum';
 import { ModelStateConfig } from '../../model-state.config';
 import { MailModelsAction } from './mail-models.action';
@@ -16,7 +16,7 @@ export class MailModelsHttpEffect implements Effect<MailModelsAction<unknown>>{
     constructor(
         private httpClient: HttpClient,
         @Inject(BASE_API_URL) private baseUrl: string,
-        @Inject(COMMAND_API_MAP) private apiMap: CommandApiMap,
+        @Inject(MODEL_COMMAND_API_MAP) private apiMap: ModelCommandApiMap,
     ) {}
     
     handle$(actions$: Observable<DispatchedAction<MailModelsAction<unknown>>>): Observable<void> {

@@ -1,6 +1,6 @@
-import { CommandApiMap, ModelCommand } from 'state-model';
+import { ModelCommandApiMap, ModelCommand } from 'state-model';
 
-export const AppCommandApiMap: CommandApiMap = {
+export const AppCommandApiMap: ModelCommandApiMap = {
     [ModelCommand.Create]: {method: "POST", suffix: ""},
     [ModelCommand.Update]: {method: "PUT", suffix: (id: string) => `/${id}`},
     [ModelCommand.Delete]: {method: "DELETE", suffix: (id: string) => `/${id}`},
