@@ -1,4 +1,4 @@
-import { ModelFile } from "@core/models";
+import { ModelFile } from "../models/base-entity-file.interface";
 import { Immutable } from "global-types";
 import { MapFn, StateDbConfig } from 'state-db';
 

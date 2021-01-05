@@ -13,7 +13,7 @@ import { CoreModule } from './core/core.module';
 import { HomeTopNavComponent } from './home/home-top-nav.component';
 import { HomeComponent } from './home/home.component';
 import { AppLayoutModule } from './layout/app-layout.module';
-import { AppHammerConfig } from './shared-app/app-hammer-config';
+import { AppHammerConfig } from './core/configurations/app-hammer-config';
 import { SharedAppModule } from './shared-app/shared-app.module';
 
 registerLocaleData(norwayLocale, 'nb-NO');

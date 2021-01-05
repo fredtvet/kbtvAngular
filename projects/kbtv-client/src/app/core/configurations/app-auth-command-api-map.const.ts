@@ -1,4 +1,4 @@
-import { ApiUrl } from "@core/api-url.enum";
+import { ApiUrl } from "../api-url.enum";
 import { environment } from "src/environments/environment";
 import { AuthCommandApiMap, LoginAction, LogoutAction, RefreshTokenAction } from "state-auth";
 

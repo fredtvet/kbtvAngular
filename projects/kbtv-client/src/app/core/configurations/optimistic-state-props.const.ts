@@ -1,5 +1,5 @@
-import { StateCurrentUser } from '@core/state/global-state.interfaces';
-import { ModelState } from '@core/state/model-state.interface';
+import { StateCurrentUser } from '../state/global-state.interfaces';
+import { ModelState } from '../state/model-state.interface';
 import { OptimisticStateSelector } from 'optimistic-http';
 import { StateSyncTimestamp } from 'state-sync';
 

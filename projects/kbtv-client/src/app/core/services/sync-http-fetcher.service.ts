@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SyncModelState } from '@shared-app/const/sync-state.config';
+import { SyncModelState } from '@core/configurations/sync-state.config';
 import { SyncConfig, SyncHttpFetcher, SyncResponse } from 'state-sync';
 import { Observable, throwError } from 'rxjs';
 import { ApiService } from './api.service';

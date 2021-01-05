@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ValidationErrorMessages } from '@shared-app/const/validation-error-messages.const';
+import { ValidationErrorMessages } from '@core/configurations/validation-error-messages.const';
 import { ConfirmDialogModule } from 'confirm-dialog';
 import { VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { FormSheetModule } from 'form-sheet';
