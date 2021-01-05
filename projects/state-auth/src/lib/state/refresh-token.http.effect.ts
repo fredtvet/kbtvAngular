@@ -6,6 +6,7 @@ import { AuthHttpFactoryService } from '../services/auth-http-factory.service';
 import { httpRetryStrategy } from '../http-retry.strategy';
 import { RefreshTokenResponse, Tokens } from '../interfaces';
 import { LogoutAction, RefreshTokenAction, RefreshTokenSuccessAction } from './actions.const';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class RefreshTokenHttpEffect implements Effect<RefreshTokenAction>{
@@ -21,11 +22,12 @@ export class RefreshTokenHttpEffect implements Effect<RefreshTokenAction>{
             map(response => {
                 if(!response?.accessToken?.token) return <LogoutAction>{ type: LogoutAction };
                 else return <RefreshTokenSuccessAction> { type: RefreshTokenSuccessAction, response }
-            })                 
+            })                
         )
     }
 
-    onErrorAction = (err: unknown) => <LogoutAction>{ type: LogoutAction };
+    onErrorAction = (err: HttpErrorResponse) => 
+        err.status === 400 ? <LogoutAction>{ type: LogoutAction } : undefined;
 
     private refreshToken$(tokens: Tokens): Observable<RefreshTokenResponse> {
         if(this.isRefreshingToken || !navigator.onLine) return EMPTY;
