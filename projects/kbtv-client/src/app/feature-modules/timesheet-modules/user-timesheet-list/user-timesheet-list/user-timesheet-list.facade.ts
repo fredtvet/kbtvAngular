@@ -13,6 +13,7 @@ import { RelationInclude, _getRangeWithRelations } from 'state-model';
 import { SetTimesheetCriteriaAction } from '../../shared-timesheet/state/set-timesheet-criteria.reducer';
 import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../../shared-timesheet/timesheet-filter/timesheet-filter.model';
+import { UserTimesheetListCriteriaQueryParam } from './user-timesheet-list-route-params.const';
 import { UserTimesheetListState } from './user-timesheet-list.state';
 
 type State = StateMissions & StateUserTimesheets;
@@ -56,7 +57,7 @@ export class UserTimesheetListFacade {
           this.componentStore.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, timesheetCriteria });
 
       private setInitialCriteria(){
-        let rawCriteria = this.route.snapshot.params.criteria;
+        let rawCriteria = this.route.snapshot.params[UserTimesheetListCriteriaQueryParam];
 
         const criteria: TimesheetCriteria = rawCriteria ? JSON.parse(rawCriteria) : {};
           

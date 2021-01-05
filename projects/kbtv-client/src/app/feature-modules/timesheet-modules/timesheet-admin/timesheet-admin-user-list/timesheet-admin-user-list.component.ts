@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { User } from '@core/models';
 import { LoadingService } from '@core/services/loading.service';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { TimesheetAdminWeekListCriteriaQueryParam } from '../timesheet-admin-week-list/timesheet-admin-week-list-route-params.const';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { TimesheetAdminUserListProviders } from './timesheet-admin-user-list-providers.const';
 
@@ -28,7 +29,7 @@ export class TimesheetAdminUserListComponent {
 
   goToWeekList(user: User){
     this.router.navigate(['timeadministrering/uker', {
-      criteria: JSON.stringify({user, year: new Date().getFullYear()})
+      [TimesheetAdminWeekListCriteriaQueryParam]: JSON.stringify({user, year: new Date().getFullYear()})
     }])
   }
 }

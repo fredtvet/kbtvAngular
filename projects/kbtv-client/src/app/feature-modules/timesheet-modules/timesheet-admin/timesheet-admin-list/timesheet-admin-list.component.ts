@@ -14,6 +14,7 @@ import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { FormService } from 'form-sheet';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { Maybe, Immutable } from 'global-types';
+import { TimesheetAdminListWeekNrQueryParam } from './timesheet-admin-list-route-params.const';
 
 @Component({
   selector: 'app-timesheet-admin-list',
@@ -39,7 +40,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
     private formService: FormService) {
       super();
       this.route.paramMap.pipe(
-        tap(x => this.facade.updateWeekNr(x.get('weekNr') || _getWeekYear().weekNr)), 
+        tap(x => this.facade.updateWeekNr(x.get(TimesheetAdminListWeekNrQueryParam) || _getWeekYear().weekNr)), 
         takeUntil(this.unsubscribe)
       ).subscribe();
     }

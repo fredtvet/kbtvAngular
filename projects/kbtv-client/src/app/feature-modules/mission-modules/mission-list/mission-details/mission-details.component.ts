@@ -13,6 +13,7 @@ import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model-form';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { UserTimesheetListCriteriaQueryParam } from 'src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const';
 import { SelectedMissionIdParam } from '../mission-list-route-params.const';
 import { MissionListFacade } from '../mission-list.facade';
 
@@ -62,7 +63,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
   private goToTimesheets = (mission: Immutable<Mission>) => 
     this.router.navigate(['timer', {
       returnUrl: this.router.url, 
-      criteria: JSON.stringify({mission, dateRangePreset: DateRangePresets.ShowAll})
+      [UserTimesheetListCriteriaQueryParam]: JSON.stringify({mission, dateRangePreset: DateRangePresets.ShowAll})
     }], {relativeTo: this.route});
 
   private openBottomSheetMenu = (mission: Immutable<Mission>) => {   

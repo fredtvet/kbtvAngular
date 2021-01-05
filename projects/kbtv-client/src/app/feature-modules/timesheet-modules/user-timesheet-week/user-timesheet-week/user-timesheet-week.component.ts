@@ -18,6 +18,7 @@ import { UserTimesheetCardDialogWrapperComponent } from './user-timesheet-card-d
 import { UserTimesheetWeekProviders } from './user-timesheet-week-providers.const';
 import { UserTimesheetWeekFacade } from './user-timesheet-week.facade';
 import { ViewModel } from './view-model.interface';
+import { UserTimesheetListCriteriaQueryParam } from "../../user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const";
 
 @Component({
   selector: "app-user-timesheet-week",
@@ -71,7 +72,7 @@ export class UserTimesheetWeekComponent {
   private goToTimesheetList = () => {
       const {weekNr, year} = this.facade.weekCriteria || {};
       this.router.navigate(["liste", { 
-        criteria: (weekNr && year) ? JSON.stringify({
+        [UserTimesheetListCriteriaQueryParam]: (weekNr && year) ? JSON.stringify({
             dateRange:  _getWeekRange(_getDateOfWeek(weekNr, year))
         }) : null
       }], {relativeTo: this.route});

@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthReturnUrlQueryParam } from 'state-auth';
 
 @Component({
   template: `
@@ -13,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class LoginPromptEntryComponent {
 
   get returnUrl(): string{
-    let url = this.route.snapshot.queryParams['returnUrl']
+    let url = this.route.snapshot.queryParams[AuthReturnUrlQueryParam]
     if(url === this.router.url.split('?')[0]) url = undefined;
     return url;
   }

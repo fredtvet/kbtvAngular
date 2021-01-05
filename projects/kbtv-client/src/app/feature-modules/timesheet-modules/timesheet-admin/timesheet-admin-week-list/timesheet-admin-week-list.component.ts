@@ -11,7 +11,9 @@ import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
+import { TimesheetAdminListWeekNrQueryParam } from '../timesheet-admin-list/timesheet-admin-list-route-params.const';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
+import { TimesheetAdminWeekListCriteriaQueryParam } from './timesheet-admin-week-list-route-params.const';
 
 @Component({
   selector: 'app-timesheet-admin-week-list',
@@ -39,7 +41,7 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
     private deviceInfoService: DeviceInfoService) {
       super();
       this.route.paramMap.pipe( 
-        tap(params => this.facade.updateCriteria( JSON.parse(params.get('criteria') || "{}") )),
+        tap(params => this.facade.updateCriteria( JSON.parse(params.get(TimesheetAdminWeekListCriteriaQueryParam) || "{}") )),
         takeUntil(this.unsubscribe),
       ).subscribe()
     }
@@ -59,7 +61,7 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
   }
 
   selectWeek = (weekNr: number) => 
-    this.router.navigate(['timer', {weekNr}], {relativeTo: this.route})
+    this.router.navigate(['timer', {[TimesheetAdminListWeekNrQueryParam]: weekNr}], {relativeTo: this.route})
   
   private openWeekFilter = (): void => {
     this.formService.open<WeekCriteria, WeekCriteriaFormState>({
