@@ -35,8 +35,10 @@ export class EffectsSubscriber {
     }
 
     private onEffectError$(err: unknown, effect: Effect<StateAction>): Observable<unknown> {
-        if(effect.onErrorAction) 
-            this.store.dispatch(effect.onErrorAction(err))
+        if(effect.onErrorAction) {
+            const action = effect.onErrorAction(err)
+            if(action) this.store.dispatch(action)
+        }
       
         this.handleEffect(effect); //Resubscribe on error
  

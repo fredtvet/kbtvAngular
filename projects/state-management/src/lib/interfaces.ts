@@ -13,7 +13,7 @@ export interface Query { props: Maybe<ImmutableArray<string>>, stateSnapshot: Im
 
 export interface Effect<TAction extends StateAction> {
     handle$(actions$: Observable<DispatchedAction<TAction>>): Observable<Immutable<StateAction> | void>
-    onErrorAction?: (err: unknown) => Immutable<StateAction>
+    onErrorAction?: (err: unknown) => Immutable<StateAction> | void
 }
 
 export type ReducerFn<TState, TAction> = (state: Immutable<TState>, action: Immutable<TAction>) => Maybe<Immutable<Partial<TState>>>
