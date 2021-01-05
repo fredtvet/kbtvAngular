@@ -3,14 +3,15 @@
 
   <mat-form-field color="accent">
     <mat-icon matSuffix color="accent">person</mat-icon>
-    <input matInput formControlName="userName" placeholder="Brukernavn" type="text" />
+    <input matInput autocomplete="username" formControlName="userName" placeholder="Brukernavn" type="text" />
   </mat-form-field>
 
   <mat-form-field color="accent">
     <mat-icon matSuffix color="accent" (click)="hidePassword = !hidePassword">
       {{hidePassword ? 'visibility_off' : 'visibility'}}
     </mat-icon>
-    <input matInput formControlName="password" placeholder="Passord" [type]="hidePassword ? 'password' : 'text'" />
+    <input matInput formControlName="password" placeholder="Passord" 
+      autocomplete="current-password" [type]="hidePassword ? 'password' : 'text'" />
   </mat-form-field>
 
   <button appHttpCommandButton mat-raised-button color="accent" [disabled]="!authForm.valid" type="submit">
