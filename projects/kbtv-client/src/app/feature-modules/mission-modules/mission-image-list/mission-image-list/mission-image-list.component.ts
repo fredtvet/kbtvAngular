@@ -7,9 +7,7 @@ import { DownloaderService } from '@core/services/downloader.service';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { FormService } from 'form-sheet';
 import { ImmutableArray, Maybe } from 'global-types';
-import { RolePresets, Roles } from '@shared-app/enums';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
-import { AppButton } from '@shared-app/interfaces';
 import { SelectableListContainerComponent } from '@shared/components/abstracts/selectable-list-container.component';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EmailForm } from '@shared/constants/forms/email-form.const';
@@ -19,6 +17,8 @@ import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-
 import { MissionImageListFacade } from '../mission-image-list.facade';
 import { ConfirmDialogService } from "confirm-dialog";
 import { SelectedMissionIdParam } from "../../mission-list/mission-list-route-params.const";
+import { RolePresets, Roles } from "@shared-app/enums/roles.enum";
+import { AppButton } from "@shared-app/interfaces/app-button.interface";
 
 interface ViewModel { images: Maybe<ImmutableArray<MissionImage>>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig }
 

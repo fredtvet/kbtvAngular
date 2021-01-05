@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { RolePresets } from '@shared-app/enums/roles.enum';
 import { CustomRoute } from '@shared-app/interfaces/custom-route.interface';
 import { AuthGuard, AuthRouteData, NoAuthGuard } from 'state-auth';
 import { RolePreloadService } from './core/services/role-preload.service';
 import { HomeComponent } from './home/home.component';
 import { MainNavComponent } from './layout/main-nav/main-nav.component';
 import { PageNotFoundComponent } from './shared-app/components/page-not-found.component';
-import { RolePresets } from './shared-app/enums';
 
 interface AppRoute extends CustomRoute<AuthRouteData>{}
 

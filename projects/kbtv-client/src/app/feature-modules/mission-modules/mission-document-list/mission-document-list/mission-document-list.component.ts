@@ -6,9 +6,7 @@ import { DownloaderService } from '@core/services/downloader.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { FormService } from 'form-sheet';
 import { ModelFormService } from 'model-form';
-import { Roles } from '@shared-app/enums';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
-import { AppButton } from '@shared-app/interfaces';
 import { SelectableListContainerComponent } from '@shared/components/abstracts/selectable-list-container.component';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EmailForm } from '@shared/constants/forms/email-form.const';
@@ -19,6 +17,8 @@ import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MissionDocumentListFacade } from '../mission-document-list.facade';
 import { SelectedMissionIdParam } from '../../mission-list/mission-list-route-params.const';
+import { Roles } from '@shared-app/enums/roles.enum';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 
 interface ViewModel { documents: Maybe<ImmutableArray<MissionDocument>>, isXs: boolean,  fabs: AppButton[], navConfig: MainTopNavConfig}
 

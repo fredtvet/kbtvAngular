@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Timesheet } from '@core/models';
-import { ButtonTypes } from '@shared-app/enums';
-import { AppButton } from '@shared-app/interfaces';
+import { ButtonTypes } from '@shared-app/enums/button-types.enum';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { TimesheetStatus } from '@shared/enums';
 
 @Component({

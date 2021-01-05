@@ -3,13 +3,13 @@ import { Employer, User } from '@core/models';
 import { StateEmployers, StateUsers } from '@core/state/global-state.interfaces';
 import { DynamicControl, DynamicForm } from 'dynamic-forms';
 import { OptionsFormState } from 'form-sheet';
-import { Roles } from '@shared-app/enums';
 import { isUniqueAsyncValidator } from '@shared/validators/is-unique.async.validator';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { InputQuestion, InputQuestionComponent } from '../../components/dynamic-form-questions/input-question.component';
 import { SelectQuestion, SelectQuestionComponent } from '../../components/dynamic-form-questions/select-question.component';
 import { EmailControl, EmployerSelectControl, FirstNameControl, LastNameControl, PhoneNumberControl, UserNameControl } from '../common-controls.const';
+import { Roles } from '@shared-app/enums/roles.enum';
 
 export interface UserForm extends User { password?: string; }
 

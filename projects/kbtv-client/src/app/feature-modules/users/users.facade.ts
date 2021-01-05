@@ -2,12 +2,12 @@ import { Injectable } from "@angular/core";
 import { _groupBy } from 'array-helpers';
 import { User } from "@core/models";
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
-import { Roles } from '@shared-app/enums';
 import { Store } from 'state-management'
 import { map } from "rxjs/operators";
 import { StoreState } from './store-state';
 import { UpdateUserPasswordAction } from './update-user-password.http.effect';
 import { FetchModelsAction } from "state-model";
+import { Roles } from "@shared-app/enums/roles.enum";
 
 @Injectable({providedIn: 'any'})
 export class UsersFacade {

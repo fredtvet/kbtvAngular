@@ -1,8 +1,8 @@
 import { Directive, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AppButton } from '@shared-app/interfaces';
 import { Maybe } from 'global-types';
 import { SelectableListComponent } from 'selectable-list';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 
 @Directive()
 export abstract class SelectableListContainerComponent implements OnInit {

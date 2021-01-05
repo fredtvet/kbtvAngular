@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MissionNote } from '@core/models';
-import { RolePresets } from '@shared-app/enums';
+import { RolePresets } from '@shared-app/enums/roles.enum';
 
 @Component({
   selector: 'app-note-card',

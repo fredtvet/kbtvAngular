@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { AppButton } from '../../interfaces/app-button.interface';
-import { ButtonTypes } from '../../enums/button-types.enum';
+import { AppButton } from '../../../shared-app/interfaces/app-button.interface';
+import { ButtonTypes } from '../../../shared-app/enums/button-types.enum';
 
 @Component({
   selector: 'app-button',

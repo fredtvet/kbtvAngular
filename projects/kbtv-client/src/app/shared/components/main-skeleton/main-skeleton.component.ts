@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DeviceInfoService } from '@core/services/device-info.service';
-import { ButtonTypes } from '@shared-app/enums';
+import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { _trackById } from '@shared-app/helpers/trackby/track-by-id.helper';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';

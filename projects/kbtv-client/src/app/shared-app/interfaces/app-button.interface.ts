@@ -1,4 +1,5 @@
-import { ButtonTypes, Icons } from '../enums';
+import { Icons } from "../enums/icons.enum";
+import { ButtonTypes } from "../enums/button-types.enum";
 
 export interface AppButton{
     text?: string;

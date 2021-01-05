@@ -1,4 +1,4 @@
-import { AppButton } from '@shared-app/interfaces';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { SearchBarConfig } from './search-bar-config.interface';
 
 export interface TopNavConfig{

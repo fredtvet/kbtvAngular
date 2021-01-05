@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DateParams } from '@shared-app/interfaces';
+import { DateParams } from '@shared-app/interfaces/date-params.interface';
 import { _getDateOfWeek, _getFirstDayOfWeek } from 'date-time-helpers';
 import { Immutable, Maybe } from 'global-types';
 

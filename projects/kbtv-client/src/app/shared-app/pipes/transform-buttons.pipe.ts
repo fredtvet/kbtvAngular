@@ -2,9 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { AppButton } from '../interfaces/app-button.interface';
 import { ButtonTypes } from '../enums/button-types.enum';
 
-@Pipe({
-  name: 'transformButtons'
-})
+@Pipe({name: 'transformButtons'})
 export class TransformButtonsPipe implements PipeTransform {
 
   transform(buttons: AppButton[], newType: ButtonTypes): AppButton[] {

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModelFile } from '@core/models';
 import { DownloaderService } from '@core/services/downloader.service';
-import { Roles } from '@shared-app/enums';
+import { Roles } from '@shared-app/enums/roles.enum';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { MissionImageListFacade } from '../mission-image-list.facade';

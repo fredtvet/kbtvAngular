@@ -1,5 +1,5 @@
-import { RolePresets } from '@shared-app/enums';
-import { AppButton } from '@shared-app/interfaces';
+import { RolePresets } from "@shared-app/enums/roles.enum";
+import { AppButton } from "@shared-app/interfaces/app-button.interface";
 
 export const BottomNavNavigations: AppButton[] = [
   {

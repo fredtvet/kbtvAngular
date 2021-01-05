@@ -1,7 +1,7 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Roles } from '@shared-app/enums';
 import { User } from '@core/models';
-import { AppButton } from '@shared-app/interfaces';
+import { Roles } from '@shared-app/enums/roles.enum';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 
 @Component({
   selector: 'app-user-card',

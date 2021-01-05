@@ -1,11 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { LazyStyles } from '@shared-app/enums';
 import { environment } from 'src/environments/environment';
+import { LazyStyles } from '@shared-app/enums/lazy-styles.enum';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class CssLoaderService {
 
     constructor(@Inject(DOCUMENT) private document: Document) {}

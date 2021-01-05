@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Mission } from '@core/models';
-import { RolePresets } from '@shared-app/enums';
 import { _sortByDate } from 'array-helpers';
 import { Store } from 'state-management'
 import { StateMissions } from '@core/state/global-state.interfaces';
+import { RolePresets } from '@shared-app/enums/roles.enum';
 
 @Component({
   selector: 'app-home',

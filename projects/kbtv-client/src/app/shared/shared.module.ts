@@ -7,6 +7,7 @@ import { FormSheetModule } from 'form-sheet';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
+import { AppButtonComponent } from './components/app-button/app-button.component';
 import { BottomSheetMenuComponent } from './components/bottom-sheet-menu.component';
 import { ChipsBarComponent } from './components/chips-bar.component';
 import { DetailTopNavBarComponent } from './components/detail-top-nav-bar/detail-top-nav-bar.component';
@@ -44,6 +45,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     IonDateQuestionComponent,
     RadioGroupQuestionComponent,
     SliderQuestionComponent,
+    AppButtonComponent,
     
     TransformButtonPipe,
     TranslatePipe,
@@ -81,7 +83,8 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     MainTopNavBarComponent,
     DetailTopNavBarComponent,
     ChipsBarComponent,
-
+    AppButtonComponent,
+    
     TransformButtonPipe,
     TranslatePipe,
     SortByDatePipe,

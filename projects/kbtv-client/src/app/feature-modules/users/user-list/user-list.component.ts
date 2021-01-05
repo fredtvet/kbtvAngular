@@ -3,13 +3,14 @@ import { User } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { FormService } from 'form-sheet';
 import { ModelFormService } from 'model-form';
-import { ButtonTypes, Roles } from '@shared-app/enums';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { UserPasswordForm } from '@shared/constants/forms/password-form.const';
 import { CreateUserForm, EditUserForm, UserForm } from '@shared/constants/model-forms/save-user-forms.const';
 import { Observable } from 'rxjs';
 import { UsersFacade } from '../users.facade';
+import { ButtonTypes } from '@shared-app/enums/button-types.enum';
+import { Roles } from '@shared-app/enums/roles.enum';
 
 @Component({
   selector: 'app-user-list',

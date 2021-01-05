@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Mission, Timesheet } from '@core/models';
 import { StateMissions, StateUserTimesheets } from '@core/state/global-state.interfaces';
-import { DateRangePresets } from '@shared-app/enums';
+import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { Immutable, Maybe } from 'global-types';

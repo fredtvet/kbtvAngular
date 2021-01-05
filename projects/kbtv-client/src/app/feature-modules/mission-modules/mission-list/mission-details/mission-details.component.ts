@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Mission } from '@core/models';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { ModelState } from '@core/state/model-state.interface';
-import { DateRangePresets, RolePresets, Roles } from '@shared-app/enums';
+import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
+import { RolePresets, Roles } from '@shared-app/enums/roles.enum';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { DetailTopNavConfig } from '@shared/components/detail-top-nav-bar/detail-top-nav.config';
 import { EditMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
@@ -41,9 +42,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     private appFileUrl: AppFileUrlPipe,
     private menuService: BottomSheetMenuService,
     private modelFormService: ModelFormService, 
-  ) { 
-    super()   
-  }
+  ) { super() }
 
   updateHeaderImage = (files: FileList): void => 
     (files && files[0] && this.missionId) ? this.facade.updateHeaderImage(this.missionId, files[0]) : undefined;

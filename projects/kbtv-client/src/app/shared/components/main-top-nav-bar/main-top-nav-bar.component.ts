@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { LoadingService } from '@core/services/loading.service';
-import { ButtonTypes } from '@shared-app/enums';
+import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { _trackByAppButton } from '@shared-app/track-by-app-button';
 import { Observable } from 'rxjs';
 import { MainNavService } from 'src/app/layout/main-nav.service';

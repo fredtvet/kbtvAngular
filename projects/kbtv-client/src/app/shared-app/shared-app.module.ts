@@ -12,15 +12,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { StateAuthModule } from 'state-auth';
 import { StateManagementModule } from 'state-management';
-import { AppButtonComponent, ListCardComponent, NavItemComponent } from './components';
+import { ListCardComponent } from './components/list-card/list-card.component';
 import { ListItemComponent } from './components/list-item/list-item.component';
+import { NavItemComponent } from './components/nav-item/nav-item.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
-import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
+import { ReverseArrayPipe } from './pipes/reverse-array';
+import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
 
 @NgModule({
   declarations: [
     PageNotFoundComponent,  
-    AppButtonComponent,  
     NavItemComponent,
     ListCardComponent,
     ListItemComponent,
@@ -61,7 +62,6 @@ import { ReverseArrayPipe, TransformButtonsPipe } from './pipes';
     StateAuthModule,
 
     PageNotFoundComponent,
-    AppButtonComponent,  
     NavItemComponent,   
     ListCardComponent,
     ListItemComponent,

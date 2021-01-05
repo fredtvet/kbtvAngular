@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { RolePresets } from '@shared-app/enums';
+import { RolePresets } from '@shared-app/enums/roles.enum';
 import { CustomRoute } from '@shared-app/interfaces/custom-route.interface';
 import { MainSkeletonRouteData } from '@shared/components/main-skeleton/main-skeleton-route-data.interface';
 import { AuthRouteData } from 'state-auth';

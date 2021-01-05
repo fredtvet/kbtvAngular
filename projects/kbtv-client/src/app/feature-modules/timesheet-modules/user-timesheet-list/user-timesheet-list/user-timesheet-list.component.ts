@@ -5,7 +5,6 @@ import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { ModelFormService } from 'model-form';
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
-import { AppButton } from '@shared-app/interfaces';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetCriteriaForm, TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
@@ -19,6 +18,7 @@ import { TimesheetCriteriaChipOptions } from '../../shared-timesheet/timesheet-f
 import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { UserTimesheetListFacade } from './user-timesheet-list.facade';
 import { UserTimesheetListProviders } from './user-timesheet-list.state';
+import { AppButton } from "@shared-app/interfaces/app-button.interface";
 
 interface ViewModel { 
   timesheets: ImmutableArray<Timesheet>;

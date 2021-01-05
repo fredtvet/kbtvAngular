@@ -1,10 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Icons } from '@shared-app/enums';
+import { Icons } from '@shared-app/enums/icons.enum';
 
-
-@Pipe({
-  name: 'fileExtensionIcon'
-})
+@Pipe({name: 'fileExtensionIcon'})
 export class FileExtensionIconPipe implements PipeTransform {
 
   transform(value: string): string {

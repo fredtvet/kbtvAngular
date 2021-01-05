@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ModelFile } from '@core/models';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
-import { AppButton } from '@shared-app/interfaces';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 
 @Component({
   selector: 'app-image-viewer',
