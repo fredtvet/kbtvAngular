@@ -80,6 +80,8 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         let value = this._config.getRawValue ? this.form.getRawValue() : this.form.value;
         if(this._config.onSubmitFormatter)
             value = this._config.onSubmitFormatter(value, this.formStore.formState || {});
+            
+        this.form.markAsPristine();
         this.formSubmitted.emit(value);
     }
 
