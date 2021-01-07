@@ -8,11 +8,11 @@ import { Maybe } from 'global-types';
   animations: [
     trigger('openCloseConfirm', [
       state('open', style({
-        marginLeft:'0px'
-      })),
+        transform: 'translateX({{open_width}})'
+      }), {params: {open_width: '0'}}),
       state('close', style({
-        marginLeft:'-81px'
-      })),
+        transform: 'translateX({{closed_width}})'
+      }), {params: {closed_width: '0'}}),
       transition('open => close', [
         animate('.1s ease-out')
       ]),
@@ -30,38 +30,17 @@ import { Maybe } from 'global-types';
 export class SwipeCardComponent {
 
   @Input() swipeButton: AppButton;
-  @Input() navButton: AppButton;
   @Input() lockPosition: "open" | "close" | false | null;
+  @Input() openWidth: number;
+  @Input() closedWidth: number;
 
   isClosed: boolean = true;
 
-  private navDisabled: boolean = false;
-
   constructor() { }
 
-  hideSwipeAction(state: boolean): void{
+  toggleSwipeContent(isClosed: boolean): void{
     if(this.lockPosition) return;
-    this.isClosed = state;
-  }
-
-  handleSwipeBtnClick = (e: Event): void => { 
-    e.preventDefault(); 
-    if(this.lockPosition === "close") return;
-    this.navDisabled = true;
-    setTimeout(() => this.navDisabled = false, 200); //Prevent click event from nav button to fire accidentally. 
-    this.isClosed = true;
-    if(this.swipeButton.callback) 
-      this.handleFn(this.swipeButton.callback, this.swipeButton.params);
-  };
-
-  handleNavClick = (): void => {
-    if(!this.navButton?.callback || this.navDisabled) return;
-    this.handleFn(this.navButton.callback, this.navButton.params);
-  }
-
-  private handleFn(fn: Function, parameters: Maybe<unknown[]>){
-    if(parameters) fn(...parameters);
-    else fn();
+    this.isClosed = isClosed;
   }
 
 }

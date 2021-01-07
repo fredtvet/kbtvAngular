@@ -1,19 +1,22 @@
 <mat-card
     fxLayout="row" fxLayoutAlign="start stretch" class="swipe-card">
 
-  <div class="swipe-hidden-content" matRipple 
-    fxLayout="column" fxLayoutAlign="center center"
-    [ngClass]="swipeButton.color" 
-    (press)="handleSwipeBtnClick($event)">
-        <mat-icon class="scale-125">{{ swipeButton.icon }}</mat-icon>
+  <div class="hidden-content">
+      <ng-content select="[swipeContent]">
+
+      </ng-content>    
   </div>
 
-  <div fxFlex class="swipe-content"
-    matRipple [matRippleDisabled]="!navButton"
-    (click)="handleNavClick()"
-    [@openCloseConfirm]="lockPosition || (isClosed ? 'close' : 'open')"
-    (swiperight)="hideSwipeAction(false)" 
-    (swipeleft)="hideSwipeAction(true)">
+  <div fxFlex class="main-content" matRipple
+    [@openCloseConfirm]="{
+      value: lockPosition || (isClosed ? 'close' : 'open'), 
+      params: {
+        open_width: openWidth,
+        closed_width: closedWidth
+      }
+    }"
+    (swiperight)="toggleSwipeContent(false)" 
+    (swipeleft)="toggleSwipeContent(true)">
     <ng-content>
       
     </ng-content>
