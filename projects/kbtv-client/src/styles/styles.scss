@@ -109,7 +109,7 @@ a {
 
 .image_viewer_dialog{max-width:none!important;}
 
-.image_viewer_dialog .mat-dialog-container{background-color:black!important;}
+.image_viewer_dialog .mat-dialog-container{background-color:black!important;padding:0!important}
 
 .notification-error{
   margin-bottom:$bottom-nav-height + $gap-size * 2px!important;

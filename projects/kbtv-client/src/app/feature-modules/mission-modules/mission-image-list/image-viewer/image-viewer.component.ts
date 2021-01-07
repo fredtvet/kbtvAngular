@@ -9,7 +9,6 @@ import { AppButton } from '@shared-app/interfaces/app-button.interface';
   styleUrls: ['./image-viewer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class ImageViewerComponent {
   toolbarHidden = false;
 
@@ -27,7 +26,6 @@ export class ImageViewerComponent {
   ngOnInit() {
     if(this.currentImage)
       this.index = this.images.findIndex(x => x.id == this.currentImage.id);
-    // this.currentImage = this.images[this.index];
   }
 
   changeCurrentImage(image: ModelFile){
