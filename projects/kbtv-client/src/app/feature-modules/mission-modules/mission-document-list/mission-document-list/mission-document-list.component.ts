@@ -7,7 +7,7 @@ import { ModelState } from '@core/state/model-state.interface';
 import { FormService } from 'form-sheet';
 import { ModelFormService } from 'model-form';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
-import { SelectableListContainerComponent } from '@shared/components/abstracts/selectable-list-container.component';
+import { SelectableContainerWrapperComponent } from '@shared/components/abstracts/selectable-container-wrapper.component';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EmailForm } from '@shared/constants/forms/email-form.const';
 import { CreateMissionDocumentForm, MissionDocumentForm } from '@shared/constants/model-forms/create-mission-document-form.const';
@@ -27,7 +27,7 @@ interface ViewModel { documents: Maybe<ImmutableArray<MissionDocument>>, isXs: b
   templateUrl: './mission-document-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MissionDocumentListComponent extends SelectableListContainerComponent {
+export class MissionDocumentListComponent extends SelectableContainerWrapperComponent {
 
   vm$: Observable<ViewModel> = combineLatest([
     this.facade.getMissionDocuments$(this.missionId),
@@ -72,9 +72,11 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
     document.fileName ? 
     this.downloaderService.downloadUrl(_appFileUrl(document.fileName, "documents")) : null;
 
+  trackByFn = (index: number, entity: MissionDocument) => entity.id
+
   private deleteSelectedDocuments = () => {
     this.facade.delete({ids: this.currentSelections});    
-    this.selectableList.clearSelections();
+    this.selectableContainer.resetSelections();
   }
 
   private openConfirmDeleteDialog = () => {   
@@ -92,7 +94,7 @@ export class MissionDocumentListComponent extends SelectableListContainerCompone
       navConfig: {title: "Send Dokumenter"},
       submitCallback: (val: EmailForm) => { 
         this.facade.mailDocuments(val.email, this.currentSelections);
-        this.selectableList.clearSelections();
+        this.selectableContainer.resetSelections();
       },
     })
   }

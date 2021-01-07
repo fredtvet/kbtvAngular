@@ -27,6 +27,8 @@ import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloade
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { InputListenerDirective } from './directives/input-listener.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
+import { CdkSelectableModule} from 'cdk-selectable'
+import { SelectableCardComponent } from './components/selectable-card/selectable-card.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     RadioGroupQuestionComponent,
     SliderQuestionComponent,
     AppButtonComponent,
-    
+    SelectableCardComponent,
+
     TransformButtonPipe,
     TranslatePipe,
     SortByDatePipe,
@@ -68,6 +71,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     AngularMaterialModule,
     SharedAppModule,    
     GooglePlaceModule,
+    CdkSelectableModule, 
 
     ConfirmDialogModule,
     FormSheetModule
@@ -76,8 +80,10 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     ReactiveFormsModule,
     AngularMaterialModule,
     SharedAppModule,
-    GooglePlaceModule,    
+    GooglePlaceModule,   
 
+    CdkSelectableModule,
+    SelectableCardComponent,
     BottomSheetMenuComponent,
     MainSkeletonComponent,    
     MainTopNavBarComponent,

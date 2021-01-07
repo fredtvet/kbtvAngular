@@ -1,11 +1,9 @@
 {
-  "name": "selectable-list",
+  "name": "cdk-selectable",
   "version": "0.0.1",
   "sideEffects": false,
   "peerDependencies": {
-    "@angular/common": "^11.0.5",
     "@angular/core": "^11.0.5",
-    "@angular/material": "^11.0.5",
     "rxjs": "~6.5.5"
   },
   "dependencies": {

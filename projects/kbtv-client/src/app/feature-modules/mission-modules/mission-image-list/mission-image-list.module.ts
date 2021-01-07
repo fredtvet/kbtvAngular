@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
-import { SelectableListModule } from 'selectable-list';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
 import { DeleteModelHttpEffect, DeleteModelReducer, MailModelsHttpEffect } from 'state-model';
 import { CreateMissionImagesHttpEffect } from './create-mission-images/create-mission-images.http.effect';
@@ -9,6 +8,8 @@ import { ImageViewerDialogWrapperComponent } from './image-viewer/image-viewer-d
 import { ImageViewerComponent } from './image-viewer/image-viewer.component';
 import { MissionImageListRoutingModule } from './mission-image-list-routing.module';
 import { MissionImageListComponent } from './mission-image-list/mission-image-list.component';
+import { ArraySlicePipe } from './pipes/array-slice.pipe';
+import { NumberToArrayPipe } from './pipes/number-to-array.pipe';
 
 
 @NgModule({
@@ -16,10 +17,11 @@ import { MissionImageListComponent } from './mission-image-list/mission-image-li
     MissionImageListComponent,
     ImageViewerDialogWrapperComponent,
     ImageViewerComponent,
+    ArraySlicePipe,
+    NumberToArrayPipe
   ],
   imports: [
     SharedModule,
-    SelectableListModule,
     MissionImageListRoutingModule,
   ],
   providers:[

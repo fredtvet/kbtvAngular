@@ -1,25 +1,21 @@
+<style> .selectable-container{ display: flex; flex-wrap: wrap; overflow:hidden } </style>
 <app-main-skeleton *ngIf="vm$ | async; let vm" [fabs]="vm.fabs">
 
     <app-main-top-nav-bar navbar [config]="vm.navConfig" >
     </app-main-top-nav-bar>
 
-    <lib-selectable-list #selectableList *ngIf="vm.documents" identifier="id" selectedText="Dokument valgt"
-        [totalRows]="vm.isXs ? 2 : 4"
-        [entities]="vm.documents" 
-        [itemTemplate]="documentTemplate"
-        selectionText=""
-        (selectionChanged)="onSelectionChange($event)"
-        (itemClicked)="downloadDocument($event)">
-    </lib-selectable-list>
+    <div cdkSelectableContainer #selectableContainer (selectionChanged)="onSelectionChange($event)" class="selectable-container">
+        <app-selectable-card *ngFor="let doc of vm.documents; trackBy: trackByFn" [id]="doc.id" style="word-wrap: break-word;"
+        ngStyle.xs="width:50%" ngStyle.sm="width:33%" ngStyle.gt-sm="width:25%"
+        selectedText="Dokument valgt">
+            <div class="foreground-card text-center mat-elevation-z2 p-2 pt-6 pb-6 m-1" (tap)="downloadDocument(doc)">
+                <mat-icon [svgIcon]="doc.fileName | fileExtension | fileExtensionIcon" class="scale-150 mb-2"></mat-icon>
+                <div>{{ doc.documentType?.name }}</div>
+        
+                <div class="mat-caption">Filtype: {{ doc.fileName | fileExtension | uppercase }}</div>
+                <div class="mat-caption">Lastet opp {{ doc.updatedAt | date : 'dd.MMM yyyy' }}</div>
+            </div>
+        </app-selectable-card>
+    </div>
 
 </app-main-skeleton>
-
-<ng-template #documentTemplate let-entity>
-    <div class="foreground-card text-center mat-elevation-z2 p-2 pt-6 pb-6 m-1">
-        <mat-icon [svgIcon]="entity.fileName | fileExtension | fileExtensionIcon" class="scale-150 mb-2"></mat-icon>
-        <div>{{ entity.documentType?.name }}</div>
-
-        <div class="mat-caption">Filtype: {{ entity.fileName | fileExtension | uppercase }}</div>
-        <div class="mat-caption">Lastet opp {{ entity.updatedAt | date : 'dd.MMM yyyy' }}</div>
-    </div>
-</ng-template>

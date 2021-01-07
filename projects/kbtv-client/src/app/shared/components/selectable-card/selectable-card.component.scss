@@ -2,7 +2,7 @@
     position:relative;
     margin:1px;
     touch-action: auto!important;
-  }
+}
 
 .overlay {
     position: absolute;
@@ -16,9 +16,14 @@
     transition: .5s ease;
     background-color: black;
     color:white;
-
+    pointer-events:none;
     flex-direction:column;
     display:flex;
     place-content:center;
     align-items: center;
   }
+
+.selected{
+  opacity:.65;
+  pointer-events: all;
+}

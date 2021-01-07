@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, '../../coverage/selectable-list'),
+      dir: require('path').join(__dirname, '../../coverage/cdk-selectable'),
       subdir: '.',
       reporters: [
         { type: 'html' },

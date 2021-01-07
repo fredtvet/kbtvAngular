@@ -1,12 +1,13 @@
 import { Directive, OnInit, ViewChild } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Maybe } from 'global-types';
-import { SelectableListComponent } from 'selectable-list';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { CdkSelectableContainerDirective } from 'cdk-selectable';
+import { Maybe } from 'global-types';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Directive()
-export abstract class SelectableListContainerComponent implements OnInit {
-    @ViewChild('selectableList') selectableList: SelectableListComponent;
+export abstract class SelectableContainerWrapperComponent implements OnInit {
+    @ViewChild('selectableContainer', {read: CdkSelectableContainerDirective}) 
+    selectableContainer: CdkSelectableContainerDirective;
 
     private currentFabsSubject: BehaviorSubject<Maybe<AppButton[]>> = new BehaviorSubject(null);
     currentFabs$: Observable<Maybe<AppButton[]>> = this.currentFabsSubject.asObservable();

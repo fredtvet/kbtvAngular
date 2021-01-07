@@ -46,10 +46,6 @@
         "../../dist/state-model/state-model",
         "../../dist/state-model"
       ],
-      "selectable-list": [
-        "../../dist/selectable-list/selectable-list",
-        "../../dist/selectable-list"
-      ],
       "confirm-dialog": [
         "../../dist/confirm-dialog/confirm-dialog",
         "../../dist/confirm-dialog"
@@ -69,6 +65,10 @@
       "state-auth": [
         "../../dist/state-auth/state-auth",
         "../../dist/state-auth"
+      ],
+      "cdk-selectable": [
+        "../../dist/cdk-selectable/cdk-selectable",
+        "../../dist/cdk-selectable"
       ]
     },
   },

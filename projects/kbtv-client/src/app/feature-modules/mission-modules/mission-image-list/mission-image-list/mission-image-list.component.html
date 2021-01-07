@@ -3,19 +3,16 @@
     <app-main-top-nav-bar navbar [config]="vm.navConfig" >
     </app-main-top-nav-bar>
 
-    <lib-selectable-list #selectableList 
-        *ngIf="vm.images" identifier="id" selectedText="Bilde valgt"
-        [totalRows]="vm.isXs ? 2 : 4"
-        [entities]="vm.images" 
-        [itemTemplate]="imgTemplate"
-        (selectionChanged)="onSelectionChange($event)"
-        (itemClicked)="openImageViewer($event, vm.images)">
-    </lib-selectable-list>
-</app-main-skeleton>
+    <div cdkSelectableContainer #selectableContainer (selectionChanged)="onSelectionChange($event)" fxLayout="row">
+        <div *ngFor="let i of (vm.columns | numberToArray)" [fxFlex]="100 / vm.columns">
+            <app-selectable-card *ngFor="let img of vm.images | arrayslice: i:vm.columns;trackBy: trackByFn"
+                [id]="img.id" selectedText="Bilde valgt">
+                <img appImageErrorReloader (tap)="openImageViewer(img, vm.images)" class="entity-card"  alt="oppdragsbilde"
+                    [src]="img | appFileUrl: 'thumbnails'"/> 
+            </app-selectable-card>
+        </div>
+    </div>
 
-<ng-template #imgTemplate let-entity>
-        <img appImageErrorReloader class="entity-card"  alt="oppdragsbilde"
-        [src]="entity | appFileUrl: 'thumbnails'"/> 
-</ng-template>
+</app-main-skeleton>
 
 <input type="file" style="display:none" multiple #imageInput (change)="uploadImages($event.target.files)">

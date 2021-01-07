@@ -1,0 +1,14 @@
+<div class="container" matRipple 
+    *ngIf="isSelected$(id) | async; let isSelected"
+    (press)="toggleSelection()">
+     
+    <ng-content>
+
+    </ng-content>
+
+    <div class="overlay" [ngClass]="isSelected?.selected ? 'selected' : ''">
+        <mat-icon>{{ selectedIcon || 'check_circle' }}</mat-icon>
+        <span class="mat-body-strong">{{ selectedText }}</span>
+    </div>
+
+</div>
