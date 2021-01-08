@@ -16,4 +16,6 @@ export const ValidationRules = {
 
     UserPasswordMinLength: 7,
     UserPasswordMaxLength: 100,
+    
+    ContentMaxByteLength: 25000000,
 }
