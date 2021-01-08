@@ -5,7 +5,7 @@ import { SaveModelFileAction } from '@core/state/save-model-file/save-model-file
 import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
 import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
-import { ImageFileExtensions } from '@shared/constants/image-file-extensions.const';
+import { ValidationRules } from "@shared/constants/validation-rules.const";
 import { MissionCriteria } from '@shared/interfaces';
 import { MissionFilter } from '@shared/mission-filter.model';
 import { filterRecords } from '@shared/operators/filter-records.operator';
@@ -64,7 +64,7 @@ export class MissionListFacade {
     this.componentStore.dispatch(<SetMissionCriteriaAction>{ type: SetMissionCriteriaAction, missionCriteria });
     
   updateHeaderImage(id: string, file: File): void {
-    if(!_validateFileExtension(file, ImageFileExtensions)) 
+    if(!_validateFileExtension(file, ValidationRules.MissionImageFileExtensions)) 
       return this.notificationService.notify(
           {title: "Filtypen er ikke tillatt.", type: NotificationType.Error}
       );  

@@ -1,14 +1,14 @@
 import { Validators } from '@angular/forms';
 import { AppDocumentType, MissionDocument } from '@core/models';
 import { StateDocumentTypes } from '@core/state/global-state.interfaces';
-import { DynamicControlGroup, DynamicControl, DynamicForm } from 'dynamic-forms';
-import { OptionsFormState } from 'form-sheet';
 import { fileExtensionValidator } from '@shared/validators/file-extension.validator';
+import { DynamicControl, DynamicControlGroup, DynamicForm } from 'dynamic-forms';
+import { OptionsFormState } from 'form-sheet';
 import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { FileQuestionComponent } from '../../components/dynamic-form-questions/file-question.component';
 import { HiddenMissionIdControl } from '../common-controls.const';
-import { DocumentFileExtensions } from '../document-file-extensions.const';
+import { ValidationRules } from '../validation-rules.const';
 
 type FormState = OptionsFormState<StateDocumentTypes>;
 
@@ -39,7 +39,7 @@ const FileControl = <DynamicControl<MissionDocumentForm, FormState>>{ name: "fil
     type: "control", questions: [{
         component:  FileQuestionComponent, question: {}
     }],
-    validators: [fileExtensionValidator(DocumentFileExtensions)]
+    validators: [fileExtensionValidator(ValidationRules.MissionDocumentFileExtensions)]
 }
 
 export const CreateMissionDocumentForm: DynamicForm<MissionDocumentForm, FormState> = {

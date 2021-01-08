@@ -18,4 +18,14 @@ export const ValidationRules = {
     UserPasswordMaxLength: 100,
     
     ContentMaxByteLength: 25000000,
+
+    MissionDocumentFileExtensions: [
+        "doc","docm", "docx", "txt", 
+        "pdf", "dot", "csv", "dotm", 
+        "dotx", "xla", "odt", "xlam", 
+        "xls", "xlsb", "xlsm", "xlsx", 
+        "xlt", "xlw"
+    ],
+
+    MissionImageFileExtensions: ["jpg", "jpeg", "png"]
 }
