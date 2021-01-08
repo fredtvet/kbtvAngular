@@ -2,6 +2,7 @@ import { Validators } from '@angular/forms';
 import { AppDocumentType, MissionDocument } from '@core/models';
 import { StateDocumentTypes } from '@core/state/global-state.interfaces';
 import { fileExtensionValidator } from '@shared/validators/file-extension.validator';
+import { fileSizeValidator } from '@shared/validators/file-size.validator';
 import { DynamicControl, DynamicControlGroup, DynamicForm } from 'dynamic-forms';
 import { OptionsFormState } from 'form-sheet';
 import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
@@ -39,7 +40,10 @@ const FileControl = <DynamicControl<MissionDocumentForm, FormState>>{ name: "fil
     type: "control", questions: [{
         component:  FileQuestionComponent, question: {}
     }],
-    validators: [fileExtensionValidator(ValidationRules.MissionDocumentFileExtensions)]
+    validators: [
+        fileExtensionValidator(ValidationRules.MissionDocumentFileExtensions),
+        fileSizeValidator(ValidationRules.ContentMaxByteLength)
+    ]
 }
 
 export const CreateMissionDocumentForm: DynamicForm<MissionDocumentForm, FormState> = {

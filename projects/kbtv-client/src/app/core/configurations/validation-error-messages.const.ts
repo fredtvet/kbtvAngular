@@ -1,3 +1,4 @@
+import { _formatMb } from '@shared-app/helpers/format-mb.helper';
 import { ValidationErrorMap } from 'dynamic-forms';
 
 export const ValidationErrorMessages: ValidationErrorMap = {
@@ -9,5 +10,6 @@ export const ValidationErrorMessages: ValidationErrorMap = {
     isobject: () => "Ugyldig verdi.",
     daterange: () => "Det mangler en eller flere datoer.",
     email: () => "Eposten er ikke skrevet riktig.",
-    issamepasswords: () => "Passordene er ikke like."
+    issamepasswords: () => "Passordene er ikke like.",
+    filesize: (err: {maxSize: number}) => `Filstørrelse kan ikke overstige ${_formatMb(err.maxSize)}`
 }
