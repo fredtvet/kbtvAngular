@@ -25,6 +25,10 @@ export interface Reducer<TState, TAction extends StateAction> {
     reducerFn: ReducerFn<TState, TAction>;
 }
 
+export interface ActionInterceptor {
+    intercept(action: Immutable<StateAction>): Maybe<StateAction>
+}
+
 export type MetaReducer<TState, TAction extends StateAction> = 
     (reducer: Immutable<Reducer<TState, TAction>>) => Reducer<TState, TAction>
 

@@ -1,12 +1,13 @@
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { Observable } from 'rxjs';
 import { ActionDispatcher } from './action-dispatcher';
+import { _applyInterceptors } from './helpers/apply-interceptors.helper';
 import { _applyMetaReducers } from './helpers/apply-meta-reducers.helper';
 import { _mergeReducers } from './helpers/merge-reducers.helper';
 import { _deepFreeze } from './helpers/object-freezer.helper';
 import { _selectSlice } from './helpers/select-slice.helper';
 import { tryWithLogging } from './helpers/try-log-error.helper';
-import { MetaReducer, Reducer, ReducerMap, StoreSettings } from './interfaces';
+import { ActionInterceptor, MetaReducer, Reducer, ReducerMap, StoreSettings } from './interfaces';
 import { selectProp } from './operators/select-prop.operator';
 import { select } from './operators/select.operator';
 import { StateBase } from './state-base';
@@ -31,11 +32,12 @@ export abstract class StoreBase<TState> {
         private actionDispatcher: ActionDispatcher,
         reducers: ImmutableArray<Reducer<unknown, StateAction>>,
         metaReducers: ImmutableArray<MetaReducer<unknown, StateAction>>,
+        private interceptors: ImmutableArray<ActionInterceptor>,
         settings?: StoreSettings,
     ) { 
         //Get unique values
         this.metaReducers = metaReducers?.filter((v, i, a) => a.indexOf(v) === i)
-
+        
         if(reducers)
             for(const reducer of reducers){
                 const value = this.reducerMap[reducer.type];
@@ -49,6 +51,8 @@ export abstract class StoreBase<TState> {
 
     dispatch<TAction extends StateAction>(action: Immutable<TAction>): void {
         if(this._settings.strictImmutability) _deepFreeze(action);
+        const modifiedAction = _applyInterceptors(action, this.interceptors);
+        if(!modifiedAction) return;
         const stateSnapshot = this.base.getStoreState();
         this.reduceState(action);
         this.actionDispatcher.dispatch(action, stateSnapshot);
