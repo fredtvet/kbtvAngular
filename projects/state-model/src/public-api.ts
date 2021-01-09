@@ -4,7 +4,6 @@
 
 export * from './lib/state-model.module';
 export * from './lib/model-state.config';
-export * from './lib/model-file.wrapper';
 export * from './lib/model-command.enum';
 export * from './lib/interfaces';
 export * from './lib/injection-tokens.const';

@@ -1,6 +1,7 @@
 import { ModelFile } from '@core/models/base-entity-file.interface';
+import { ModelFileWrapper } from '@shared/model-file.wrapper';
 import { Prop } from 'global-types';
-import { ModelFileWrapper, SaveAction, SaveModelAction } from 'state-model';
+import { SaveAction, SaveModelAction } from 'state-model';
 import { ModelState } from '../model-state.interface';
 
 export const SaveModelFileAction = SaveModelAction+"_FILE";

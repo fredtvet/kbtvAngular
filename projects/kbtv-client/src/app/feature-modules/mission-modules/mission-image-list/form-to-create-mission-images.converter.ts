@@ -1,7 +1,7 @@
 import { ActionConverter } from 'model-form';
 import { _idGenerator } from '@shared-app/helpers/id/id-generator.helper';
-import { ModelFileWrapper } from 'state-model';
 import { CreateMissionImagesAction } from './create-mission-images/create-mission-images.action';
+import { ModelFileWrapper } from '@shared/model-file.wrapper';
 
 export interface CreateMissionImagesForm { missionId: string, files: FileList }
 

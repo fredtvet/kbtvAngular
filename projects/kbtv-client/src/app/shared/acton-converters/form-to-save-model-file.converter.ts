@@ -4,7 +4,8 @@ import { SaveModelFileAction } from '@core/state/save-model-file/save-model-file
 import { FormToSaveModelConverter, ModelFormToSaveModelInput } from 'model-form';
 import { _flattenExistingForeigns } from '@shared-app/helpers/flatten-existing-foreigns.helper';
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
-import { ModelFileWrapper, ModelStateConfig } from 'state-model';
+import { ModelStateConfig } from 'state-model';
+import { ModelFileWrapper } from '@shared/model-file.wrapper';
 
 export type ModelFileForm = ModelFile & {file: File};
 export const _formToSaveModelFileConverter: FormToSaveModelConverter<ModelFileForm, ModelState, SaveModelFileAction<ModelFile>> =
