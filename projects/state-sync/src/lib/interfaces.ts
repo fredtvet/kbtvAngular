@@ -3,39 +3,69 @@ import { Maybe, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 
 export interface StateSyncConfig { syncConfig: SyncConfig }
-export interface StateSyncTimestamp { syncTimestamp: number; }
 
-export interface StoreState extends StateSyncConfig, StateSyncTimestamp {}
+export interface StateSyncTimestamp { 
+    /** Last synchronization as UNIX milliseconds timestamp. */
+    syncTimestamp: number; 
+}
 
+/** Configuration for synchronized state management.
+ *  Injected by consumer application with token {@link SYNC_STATE_CONFIG}
+ */
 export type SyncStateConfig<TState> = {[key in keyof TState]: SyncStatePropConfig}
 
+/** Configuration for synchronized state property */
 export interface SyncStatePropConfig {
+    /** Type of state data */
     type?: "value" | "array",
+    /** Set to false if you wish to preserve values after wipes */
     wipeable?: boolean,
+    /** A property on state value that unqiuely identifies it. */
     identifier: string
 }
 
+/** User configuration for synchronization */
 export interface SyncConfig{
+    /** The interval in which the system synchronizes in seconds */
     refreshTime: number; 
+    /** The number of months of data that should be fetched on initial synchronization 
+     * @remarks This will cause the system to wipe old state and resynchronize
+    */
     initialNumberOfMonths: string;
 }
 
+/** Response from a synchronization request */
 export interface SyncResponse<TState>{
+    /** UNIX milliseconds timestamp when synchronization happen.*/
     timestamp: number;
     arrays: SyncArraysResponse<TState>;
     values: SyncValuesResponse<TState>;
 }
 
+/** Response data for state arrays
+ * @remarks Keys should correspond to prop configs with type 'array' in {@link SyncStatePropConfig} 
+*/
 export type SyncArraysResponse<TState> = {[key in keyof TState]: SyncArrayResponse}
 
+/** Response data for single state values
+ * @remarks Keys should correspond to prop configs with type 'value' in {@link SyncStatePropConfig} 
+*/
 export type SyncValuesResponse<TState> = {[key in keyof TState]: unknown}
 
+/** Response data for a state array */
 export interface SyncArrayResponse{
+    /** New or updated entities */
     entities: UnknownState[];
-    deletedEntities: number[];
+    /** The id's of deleted entities */
+    deletedEntities: (number | string)[];
 }
 
+/** Injected by consumer application with token {@link SYNC_HTTP_FETCHER}. */
 export interface SyncHttpFetcher<TState> {
+    /** 
+     * Fetches data from external api and returns a data observer with correct format. 
+     * @param timestamp UNIX milliseconds timestamp since last sync 
+     */
     fetch$(config: Maybe<SyncConfig>, timestamp: Maybe<number>): Observable<SyncResponse<TState>>
 }
 

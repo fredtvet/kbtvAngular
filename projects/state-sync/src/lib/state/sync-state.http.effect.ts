@@ -3,8 +3,9 @@ import { Observable } from 'rxjs';
 import { exhaustMap, filter, map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction, Store } from 'state-management';
 import { SYNC_HTTP_FETCHER, SYNC_STATE_CONFIG } from '../injection-tokens.const';
-import { StoreState, SyncHttpFetcher, SyncStateConfig } from '../interfaces';
+import { SyncHttpFetcher, SyncStateConfig } from '../interfaces';
 import { SyncStateAction, SyncStateSuccessAction, WipeSyncStateAction } from './actions';
+import { StoreState } from "../store-state.interface";
 
 @Injectable()
 export class SyncStateHttpEffect implements Effect<StateAction> {

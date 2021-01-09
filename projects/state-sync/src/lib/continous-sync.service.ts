@@ -2,9 +2,10 @@ import { ApplicationRef, Injectable } from "@angular/core";
 import { Store } from 'state-management'
 import { concat, interval } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
-import { StoreState } from './interfaces';
 import { SyncStateAction } from './state/actions';
+import { StoreState } from "./store-state.interface";
 
+/** Root service responsible for keeping system synchronized */
 @Injectable({providedIn: "root"})
 export class ContinousSyncService {
 
@@ -15,6 +16,7 @@ export class ContinousSyncService {
         private store: Store<StoreState>,
     ) { }
   
+    /** Initalizes the synchronization clock. */
     initalize(): void {
       this.syncAll()
       this.continousSync$.subscribe();

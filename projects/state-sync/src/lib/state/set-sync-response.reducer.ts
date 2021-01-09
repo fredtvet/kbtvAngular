@@ -1,7 +1,8 @@
 import { _addOrUpdateRange, _removeRangeByIdentifier } from 'array-helpers';
 import { Immutable, ImmutableArray, UnknownState } from 'global-types';
 import { Reducer, _createReducer } from 'state-management';
-import { StoreState, SyncStatePropConfig } from '../interfaces';
+import { SyncStatePropConfig } from '../interfaces';
+import { StoreState } from "../store-state.interface";
 import { SyncStateSuccessAction } from './actions';
 
 export const SetSyncResponseReducer: Reducer<Immutable<StoreState>,SyncStateSuccessAction> = _createReducer(
