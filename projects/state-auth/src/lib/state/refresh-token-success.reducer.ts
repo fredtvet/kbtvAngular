@@ -9,7 +9,8 @@ export const RefreshTokenSuccessReducer: Reducer<unknown, RefreshTokenSuccessAct
         (state: unknown, action: Immutable<RefreshTokenSuccessAction>): Partial<StoreState>=> {
             const {accessToken, refreshToken} = action.response;  
             return {
-                accessToken: {...accessToken, expiresIn: _getUnixTimeSeconds() + accessToken.expiresIn},
+                accessToken: accessToken.token,
+                accessTokenExpiration: _getUnixTimeSeconds() + accessToken.expiresIn,
                 refreshToken
             }
         }

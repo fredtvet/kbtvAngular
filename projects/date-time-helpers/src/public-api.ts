@@ -1,5 +1,6 @@
-/*
- * Public API Surface of date-time-helpers
+/**
+ * A library of helper functions for date logic
+ * @packageDocumentation
  */
 
 export * from './lib/format-date-range.helper'

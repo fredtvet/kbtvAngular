@@ -26,10 +26,12 @@ export abstract class BaseQuestionComponent<TQuestion extends Question>
 
   constructor(private validationErrorMessages: ValidationErrorMap) {}
 
+  /** Responsible for getting the validation error message based on errors on the control */
   getValidationErrorMessage(): Maybe<string> {
     return _getValidationErrorMessage(this.control?.errors, this.validationErrorMessages)
-  }
+  } 
 
+  /** Gets called when the @Input() question changes. */
   protected onQuestionChanges(question: TQuestion): void { 
     this.width = question.width || "100%"   
   }

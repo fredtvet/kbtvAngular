@@ -4,6 +4,14 @@ import { ModelConfig, RelationInclude, UnknownModelState } from '../interfaces';
 import { ModelStateConfig } from '../model-state.config';
 import { _getRelationProps } from './get-relation-props.helper';
 
+/**
+ * Get all or given range of models with specified relationships set on model
+ * according to model property config set in {@link ModelStateConfig}
+ * @param state State containing model and relationship data
+ * @param cfg Configuration of which relationships to include
+ * @param filter A filter to select a range of models. 
+ * @returns An array of models with relationships applied. 
+ */
 export function _getRangeWithRelations<TModel extends {}, TState>(
     state: Immutable<Partial<TState>>,
     cfg: RelationInclude<TState>,
@@ -43,7 +51,7 @@ export function _getRangeWithRelations<TModel extends {}, TState>(
     
 }
 
-//Lookup of children grouped by foreign key
+/** Lookup of children grouped by foreign key */
 function _createGroupedLookups(
     props: ImmutableArray<string>, 
     groupBy: Maybe<string>, 
@@ -56,7 +64,7 @@ function _createGroupedLookups(
     return lookups;
 }
 
-//Lookup of foreign entities by identifier
+/** Lookup of foreign entities by identifier */
 function _createStatePropertyLookups(
     props: ImmutableArray<string>, 
     state: Immutable<{}>

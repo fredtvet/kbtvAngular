@@ -1,5 +1,11 @@
 import { ImmutableArray, Immutable, Maybe, Prop } from 'global-types';
 
+/**
+ * Group an array of objects by a specified key
+ * @param array An array of objects
+ * @param key A key on the object to group by
+ * @returns An object with keys accociated with an array of objects matching the key value
+ */
 export function _groupBy<T>(
   array: Maybe<ImmutableArray<T>>, 
   key: Prop<Immutable<T>>

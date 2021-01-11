@@ -3,6 +3,7 @@ import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management'
 import { InitalizeStatePersisterEffect, LoadCriticalStateEffect, LoadStateEffect } from './state/effects';
 import { SetPersistedCriticalStateReducer, SetPersistedStateReducer } from './state/reducers';
 
+/** Responsible for injecting core providers. Should only be imported in root. */
 @NgModule({
   declarations: [],
   imports: [],

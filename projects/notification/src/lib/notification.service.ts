@@ -5,6 +5,7 @@ import { AppNotification } from './app-notification.interface';
 import { NotificationType } from './notification-type.enum';
 import { NotificationComponent } from './notification.component';
 
+/** Responsible for queueing and displaying notifications provided by user as a snack bar */
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
 
@@ -14,6 +15,8 @@ export class NotificationService {
 
   constructor(private snackBar: MatSnackBar) { }
 
+  /** Displays the provided notification when the snack bar is available
+   * @param notification */
   notify = (notification: AppNotification) => { 
     if(!this.currentNotification && this.currentNotification !== null)
        this.setNotification(notification);      

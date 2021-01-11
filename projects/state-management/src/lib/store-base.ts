@@ -7,12 +7,14 @@ import { _mergeReducers } from './helpers/merge-reducers.helper';
 import { _deepFreeze } from './helpers/object-freezer.helper';
 import { _selectSlice } from './helpers/select-slice.helper';
 import { tryWithLogging } from './helpers/try-log-error.helper';
-import { ActionInterceptor, MetaReducer, Reducer, ReducerMap, StoreSettings } from './interfaces';
+import { ActionInterceptor, MetaReducer, Reducer, StoreSettings } from './interfaces';
 import { selectProp } from './operators/select-prop.operator';
 import { select } from './operators/select.operator';
 import { StateBase } from './state-base';
 import { StateAction } from './state.action';
 import { Store } from './store';
+
+type ReducerMap = {[key: string]: ImmutableArray<Reducer<unknown, StateAction>>}
 
 export abstract class StoreBase<TState> {
 
@@ -22,8 +24,10 @@ export abstract class StoreBase<TState> {
 
     private metaReducers: Immutable<MetaReducer<unknown, StateAction>>[];
 
+    /** @readonly The store state */
     get state(): Immutable<TState> { return this.base.getStoreState() }
 
+    /**An observable of the store state */
     state$: Observable<Immutable<TState>>  = this.base.getStoreState$();
     
     constructor(
@@ -35,7 +39,6 @@ export abstract class StoreBase<TState> {
         private interceptors: ImmutableArray<ActionInterceptor>,
         settings?: StoreSettings,
     ) { 
-        //Get unique values
         this.metaReducers = metaReducers?.filter((v, i, a) => a.indexOf(v) === i)
         
         if(reducers)
@@ -49,6 +52,11 @@ export abstract class StoreBase<TState> {
         this.base.strictImmutability = this._settings.strictImmutability;
     }
 
+    /**
+     * Responsible for dispatching the action to the relevant parts of the state layer. 
+     * @remarks Applies interceptors and reducers before dispatching to {@link ActionDispatcher}.  
+     * @param action 
+     */
     dispatch<TAction extends StateAction>(action: Immutable<TAction>): void {
         if(this._settings.strictImmutability) _deepFreeze(action);
         const modifiedAction = _applyInterceptors(action, this.interceptors);
@@ -59,9 +67,19 @@ export abstract class StoreBase<TState> {
         if(this.hostStore && action.propagate) this.hostStore.dispatch(action);
     }
 
+    /**
+     * Responsible for providing the specified slice of state reactivly from state
+     * @param props The state properties that should be returned
+     * @returns An observable of the specified slice of state
+     */
     select$ = <TResult = Partial<TState>>(props: ImmutableArray<Prop<TState>>): Observable<Immutable<TResult>> =>
        this.state$.pipe(select(props))
 
+    /**
+     * Responsible for providing the specified value reactivly from state
+     * @param props The state property that should be returned
+     * @returns An observable of the provided property value
+     */
     selectProperty$ = <TResult>(prop: Prop<Immutable<TState>>): Observable<Immutable<TResult>> =>
        this.state$.pipe(selectProp<TState, TResult>(prop))
    

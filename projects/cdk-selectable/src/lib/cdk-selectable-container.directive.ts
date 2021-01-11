@@ -3,9 +3,13 @@ import { Subscription } from "rxjs";
 import { SelectedMap } from "./interfaces";
 import { CdkSelectablePresenter } from "./cdk-selectable.presenter";
 
+/** Add to a element to make it a container component
+ *  for selectable components that inherits from  the {@link CdkSelectableItemBaseComponent}. */
 @Directive({selector: '[cdkSelectableContainer]', providers: [CdkSelectablePresenter]})
 export class CdkSelectableContainerDirective {
     
+    /** Emits an array of currently selected ids when an 
+     *  item in the container changes its selected status. */
     @Output() selectionChanged = new EventEmitter<(string | number)[]>();
 
     private mapSub: Subscription;
@@ -16,8 +20,11 @@ export class CdkSelectableContainerDirective {
         )
     }
     
-    getSelectedIds = () => this._getSelectedIds(this.presenter.selectedMap);
+    /** Get an array of the currently selected ids */
+    getSelectedIds = (): (string | number)[] => 
+        this._getSelectedIds(this.presenter.selectedMap);
 
+    /** {@inheritdoc CdkSelectablePresenter.resetSelections} */
     resetSelections = (): void => this.presenter.resetSelections()
     
     ngOnDestroy(): void {

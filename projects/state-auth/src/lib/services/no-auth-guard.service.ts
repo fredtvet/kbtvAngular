@@ -5,6 +5,8 @@ import { AuthService } from './auth.service';
 import { AUTH_DEFAULT_REDIRECTS } from '../injection-tokens.const';
 import { DefaultRedirects } from '../interfaces';
 
+/** Used to guard for authorized users and redirect them to a return url provided
+ *  as a query parameter in the route. Optionally redirects to default home route.*/
 @Injectable({providedIn: 'root'})
 export class NoAuthGuard implements CanActivate {
 

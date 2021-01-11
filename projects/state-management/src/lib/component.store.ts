@@ -8,6 +8,7 @@ import { StateAction } from './state.action';
 import { Store } from './store';
 import { StoreBase } from './store-base';
 
+/** Responsible for providing read and write access to a local state within its provider scope.*/
 @Injectable()
 export class ComponentStore<TState> extends StoreBase<TState> {
 

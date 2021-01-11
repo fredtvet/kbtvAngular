@@ -9,7 +9,7 @@ import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetCriteriaForm, TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
-import { DynamicForm, _objectToDisabledObjectMap } from 'dynamic-forms';
+import { DynamicForm, _disableControlsWithNoValue } from 'dynamic-forms';
 import { FormService, OptionsFormState } from 'form-sheet';
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { Observable } from "rxjs";
@@ -63,7 +63,7 @@ export class UserTimesheetListComponent {
   
   openTimesheetForm = (entityId?: string, initialValue?: TimesheetForm): void => {
     let dynamicForm: DynamicForm<TimesheetForm, OptionsFormState<Partial<ModelState>>>;
-    if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _objectToDisabledObjectMap(initialValue)}
+    if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _disableControlsWithNoValue(initialValue)}
     else dynamicForm = EditUserTimesheetForm
 
     this.modelFormService.open<ModelState, TimesheetForm>({

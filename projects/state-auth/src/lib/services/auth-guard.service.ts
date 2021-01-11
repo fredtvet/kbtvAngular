@@ -6,6 +6,9 @@ import { DefaultRedirects, StoreState } from '../interfaces';
 import { Store } from 'state-management';
 import { UnauthorizedAction } from '../state/actions.const';
 
+/** Used to guard for unauthorized users. Provides both canActivate & canActivateChild
+ * @remarks Use route data (see {@link AuthRouteData}) to set allowed roles for the guarded routes. 
+ */
 @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(

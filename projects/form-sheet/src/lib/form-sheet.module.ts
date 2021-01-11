@@ -8,6 +8,7 @@ import { DynamicFormsModule } from 'dynamic-forms';
 import { FormSheetNavBarComponent } from './form-sheet-nav-bar/form-sheet-nav-bar.component';
 import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
 
+/** Responisble for declaring components. */
 @NgModule({
     declarations: [
         FormSheetWrapperComponent,

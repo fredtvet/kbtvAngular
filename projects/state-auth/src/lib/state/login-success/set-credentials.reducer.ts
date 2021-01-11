@@ -9,10 +9,8 @@ export const SetCredentialsReducer: Reducer<unknown, LoginSuccessAction> = _crea
     (state: unknown, action: Immutable<LoginSuccessAction>): Partial<StoreState>=> {
         let {accessToken, refreshToken, user} = action.response;
         return {
-            accessToken: {...accessToken,
-                expiresIn: _getUnixTimeSeconds() + accessToken.expiresIn,
-                token: accessToken?.token.replace("Bearer ", "")
-            }, 
+            accessToken: accessToken?.token.replace("Bearer ", ""), 
+            accessTokenExpiration: _getUnixTimeSeconds() + accessToken.expiresIn,
             refreshToken, 
             currentUser: user
         }

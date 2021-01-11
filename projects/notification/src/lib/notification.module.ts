@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationComponent } from './notification.component';
 
+/** Responsible for declaring components. */
 @NgModule({
   declarations: [
     NotificationComponent,

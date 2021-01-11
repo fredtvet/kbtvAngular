@@ -1,3 +1,8 @@
+/**
+ * A library of generic typescript types
+ * @packageDocumentation
+ */
+
 export type Immutable<T> =
     T extends (infer R)[] ? ImmutableArray<R> :
     T extends Function ? T :

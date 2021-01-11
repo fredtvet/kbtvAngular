@@ -2,6 +2,15 @@ import { _add } from 'array-helpers';
 import { Immutable, ImmutableArray, UnknownState, Prop } from 'global-types';
 import { ModelStateConfig } from '../model-state.config';
 
+/**
+ * Add or update a model and any foreign relationships set on the provided model value 
+ * according to {@link ModelStateConfig}
+ * @param state State containing model and foregin data
+ * @param stateProp Model state property of the model
+ * @param entity The model value with optional foreign props
+ * @param entityFn A modifier function to add or update the model. 
+ * @returns State with model and foreigns added or updated. 
+ */
 export function _modifyModelWithForeigns<TState extends {}>(
     state: Immutable<TState>, 
     stateProp: Immutable<Prop<TState>>, 

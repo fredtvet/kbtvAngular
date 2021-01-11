@@ -7,6 +7,7 @@ import { ActionInterceptor, MetaReducer, Reducer, StoreSettings } from './interf
 import { StateAction } from './state.action';
 import { StoreBase } from './store-base';
 
+/** Responsible for providing read and write access to global state. */
 @Injectable()
 export class Store<TState> extends StoreBase<TState> {
 
@@ -23,9 +24,10 @@ export class Store<TState> extends StoreBase<TState> {
         if(defaultState) Store.setDefaultState({...defaultState});
     }
 
+    /** Default global state */
     static defaultState: Maybe<Object> = null;
 
-    static setDefaultState(defaultState: UnknownState): void {
+    private static setDefaultState(defaultState: UnknownState): void {
         Store.defaultState = {...Store.defaultState, ...defaultState}; //accumulate default state from feature modules to keep track
         const currState = <UnknownState> State.getStoreState();
         const newState: UnknownState = {};

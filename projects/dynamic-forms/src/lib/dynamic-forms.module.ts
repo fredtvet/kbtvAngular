@@ -9,6 +9,7 @@ import { DynamicFormComponent } from './components/dynamic-form.component';
 import { FormActionsComponent } from './components/form-actions.component';
 import { DynamicHostDirective } from './dynamic-host.directive';
 
+/** Responsible for declaring components and exporting the {@link DynamicFormComponent} */
 @NgModule({
   declarations: [
     DynamicFormComponent,

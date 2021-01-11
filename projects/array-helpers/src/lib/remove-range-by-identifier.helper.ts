@@ -1,6 +1,12 @@
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { _convertArrayToObject } from './convert-array-to-object.helper';
 
+/**
+ * Remove a range  of objects from an array of objects
+ * @param originals An array of objects
+ * @param deletedIds An array of unique values used to find the objects to delete
+ * @param identifier A property on the object that contains the unique value
+ */
 export function _removeRangeByIdentifier<T>(
   originals: Maybe<ImmutableArray<T>>, 
   deletedIds: ImmutableArray<unknown>, 

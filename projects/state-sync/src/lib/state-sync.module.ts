@@ -9,6 +9,7 @@ import { UpdateSyncConfigEffect } from './state/update-sync-config.effect';
 import { UpdateSyncConfigReducer } from './state/update-sync-config.reducer';
 import { WipeSyncStateReducer } from './state/wipe-sync-state.reducer';
 
+/** Responsible for providing root injectables using the forRoot method. */
 @NgModule({})
 export class StateSyncModule { 
     static forRoot(providers: CustomSyncProviders): ModuleWithProviders<StateSyncModule> {

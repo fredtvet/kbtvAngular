@@ -7,11 +7,12 @@ import { DynamicFormStore } from '../dynamic-form.store';
 import { DynamicHostDirective } from '../dynamic-host.directive';
 import { _getValidationErrorMessage } from '../helpers/get-validation-error-message.helper';
 import { _hasSameState } from '../helpers/has-same-state.helper';
-import { DisabledObjectMap, DynamicControl, DynamicForm, FormComponent, ValidationErrorMap } from '../interfaces';
+import { DisabledControls, DynamicControl, DynamicForm, FormComponent, ValidationErrorMap } from '../interfaces';
 import { VALIDATION_ERROR_MESSAGES } from '../injection-tokens.const';
 import { ControlComponentLoaderComponent, ValidControl } from './control-component-loader.component';
 import { DynamicControlGroupComponent } from './dynamic-control-group.component';
 
+/** Responsible for rendering a dynamic form with a {@link DynamicForm} configuration. */
 @Component({
   selector: 'lib-dynamic-form',
   template: `
@@ -119,7 +120,7 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         this.loadComponents(this._config.controls, this._config);
     }
 
-    private getFormGroup(controls: ValidControl[], disabledControls: Maybe<DisabledObjectMap<UnknownState>>): FormGroup{
+    private getFormGroup(controls: ValidControl[], disabledControls: Maybe<DisabledControls<UnknownState>>): FormGroup{
         const formGroup = this.formBuilder.group({});
         for(const control of controls) {
             if(control.type === "group") {

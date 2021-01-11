@@ -11,6 +11,8 @@ import { WipeTokensReducer } from './state/logout/wipe-tokens.reducer';
 import { RefreshTokenSuccessReducer } from './state/refresh-token-success.reducer';
 import { RefreshTokenHttpEffect } from './state/refresh-token.http.effect';
 
+/** Responsible for exporting diretives. 
+ *  Use forRoot function to inject core providers*/
 @NgModule({
     declarations: [IfRoleDirective],
     imports: [ApplicationModule],

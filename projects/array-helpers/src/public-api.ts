@@ -1,5 +1,6 @@
-/*
- * Public API Surface of array-helpers
+/**
+ * A library of helper functions related to arrays & object arrays
+ * @packageDocumentation
  */
 
 export * from './lib/add-or-update-range.helper'
@@ -15,4 +16,3 @@ export * from './lib/replace.helper'
 export * from './lib/sort-by-bool.helper'
 export * from './lib/sort-by-date.helper'
 export * from './lib/update.helper'
-export * from './lib/youknowitsme.helper'

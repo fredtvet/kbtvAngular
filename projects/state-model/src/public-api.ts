@@ -1,5 +1,9 @@
-/*
- * Public API Surface of state-model
+/**
+ * A library for managing relational state in the application and in communications with an external api.
+ * @remarks 
+ * The library treats communications with the external api optimistically, therefore ids are generated as a random string on the client.
+ * The library does not support many-to-many relationships. 
+ * @packageDocumentation
  */
 
 export * from './lib/state-model.module';

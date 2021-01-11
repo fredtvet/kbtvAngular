@@ -1,5 +1,6 @@
-/*
- * Public API Surface of dynamic-forms
+/**
+ * A library for rendering forms dynamically by specifiying a set of controls and components
+ * @packageDocumentation
  */
 
 export * from './lib/dynamic-forms.module';

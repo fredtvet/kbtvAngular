@@ -48,5 +48,5 @@ export class FetchModelsHttpEffect implements Effect<FetchModelsAction<{}>> {
     }
 
     private isFetchable = (modelConfig: Immutable<ModelConfig<Object, {[key:string]:{}}>>): boolean => 
-      modelConfig != null && modelConfig.apiUrl != null && modelConfig.autoFetch != null
+      modelConfig != null && modelConfig.apiUrl != null && modelConfig.fetchable != null
 }

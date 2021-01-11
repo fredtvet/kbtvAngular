@@ -1,5 +1,6 @@
-/*
- * Public API Surface of state-sync
+/**
+ * A library for synchronizing state with an external api.
+ * @packageDocumentation
  */
 
 export * from './lib/state/actions';

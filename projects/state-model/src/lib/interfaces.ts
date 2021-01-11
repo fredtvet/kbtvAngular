@@ -2,22 +2,39 @@ import { Immutable, ImmutableArray, UnknownState, Prop } from 'global-types';
 import { ModelCommand } from './model-command.enum';
 
 export interface ModelConfig<TModel, TState> { 
+    /** State property containing model data */
     stateProp: Prop<TState>,
+    /** Base url for model api calls */
     apiUrl: string, 
+    /** A property on the model that unqiuely identifies it. */
     identifier: Prop<TModel>, 
-    autoFetch?: boolean, 
+    /** Set to true if model can be fetched from external API  */
+    fetchable?: boolean, 
+    /** Property used as foreign reference in other models */
     foreignProp?: string,
+    /** Property used as foreign key in other models */
     foreignKey?: string,
+    /** Property used when displaying model. */
     displayProp?: Prop<TModel>,
     children?: ChildRelation<TState>[],
     foreigns?: Prop<TState>[]
 }
 
-export interface ChildRelation<TState> { prop: Prop<TState>, cascadeDelete?: boolean }
+/** A one to many relationship child */
+export interface ChildRelation<TState> { 
+    /** Child state property */
+    prop: Prop<TState>, 
+    /** Set to true if children should be deleted when parents are. */
+    cascadeDelete?: boolean 
+}
 
+/** Information on which relationships should be included together with model */
 export interface RelationInclude<TState> {
+    /** The model property */
     prop: Immutable<Prop<TState>>,
+    /** Foreign properties that should be included. Set to 'all' to get all relationships */
     foreigns?: ImmutableArray<Prop<TState>> | "all",
+    /** Child properties that should be included. Set to 'all' to get all relationships */
     children?: ImmutableArray<Prop<TState>> | "all"
 };
 
@@ -25,7 +42,13 @@ export type SaveAction = ModelCommand.Create | ModelCommand.Update;
 
 export type ModelConfigMap<TState> = {[key: string]: Immutable<ModelConfig<unknown, TState>>};
 
-export type ModelCommandApi<TSuffix> = {method: "POST" | "PUT" | "DELETE", suffix: TSuffix}
+/** Information about model commands communication with external api  */
+export type ModelCommandApi<TSuffix> = {
+    /** The http method used to send the command */
+    method: "POST" | "PUT" | "DELETE", 
+    /** The suffix appended to the base model url provided in {@link ModelConfig} */
+    suffix: TSuffix
+}
 
 export interface ModelCommandApiMap {
     [ModelCommand.Create]: Immutable<ModelCommandApi<string>>,
@@ -35,4 +58,5 @@ export interface ModelCommandApiMap {
     [ModelCommand.Mail]: Immutable<ModelCommandApi<string>>
 }
 
+/** A state slice of unknown model state */
 export type UnknownModelState = { [key: string]: UnknownState[] }

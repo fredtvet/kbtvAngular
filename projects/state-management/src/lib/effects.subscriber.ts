@@ -7,13 +7,16 @@ import { Effect } from './interfaces';
 import { StateAction } from './state.action';
 import { Store } from './store';
 
+/** Responsible for injecting effects (see {@link Effect}) within its provider scope
+ *  Effects are handled be subscribing and dispatching the returning actions to the store. */
 @Injectable()
 export class EffectsSubscriber {
 
     private effectsInitSubject = new BehaviorSubject<boolean>(false);
+    /** A lifecycle hook that emits when all effects are subscribed to. */
     onEffectsInit$ = this.effectsInitSubject.asObservable().pipe(first(x => x === true))
 
-    unsubscribe : Subject<void> = new Subject();
+    private unsubscribe : Subject<void> = new Subject();
 
     constructor(
         private store: Store<unknown>,

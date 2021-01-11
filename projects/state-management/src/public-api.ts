@@ -1,6 +1,10 @@
-/*
- * Public API Surface of state-management
+/**
+ * A library for managing local and global state. 
+ * @remarks 
+ * The implementation is similar to the redux design pattern. 
+ * @packageDocumentation
  */
+
 export * from './lib/store'
 export * from './lib/state.action'
 export * from './lib/state-management.module'

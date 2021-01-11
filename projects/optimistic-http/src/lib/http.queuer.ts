@@ -5,6 +5,8 @@ import { Store } from 'state-management';
 import { StateRequestQueue } from './interfaces';
 import { DispatchHttpAction } from './state/dispatch-http/dispatch-http.action';
 
+/** Class responsible for queuing and dispatching http requests ({@link OptimisticHttpRequest}) 
+ * Requires initalization by consumer. */
 @Injectable({ providedIn: 'root' })
 export class HttpQueuer {
 
@@ -26,10 +28,12 @@ export class HttpQueuer {
 
   constructor(private store: Store<StateRequestQueue>) {}
 
+  /** Initalizes the queue */
   initalize(): void {
     this.nextInQueue$.subscribe();
   }
 
+  /** Allows the next in queue to execute. Should be called cautiously.  */
   next(): void {
     this.nextInQueueSubject.next(true)
   }

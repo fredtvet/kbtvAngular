@@ -8,7 +8,7 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { WeekCriteriaForm } from '@shared/constants/forms/week-criteria-controls.const';
 import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
 import { _getDateOfWeek, _getWeekRange } from 'date-time-helpers';
-import { DynamicForm, _objectToDisabledObjectMap } from 'dynamic-forms';
+import { DynamicForm, _disableControlsWithNoValue } from 'dynamic-forms';
 import { FormService, OptionsFormState } from 'form-sheet';
 import { Maybe } from "global-types";
 import { combineLatest, Observable } from 'rxjs';
@@ -54,7 +54,7 @@ export class UserTimesheetWeekComponent {
 
   openTimesheetForm = (entityId?: Maybe<string>, form?: TimesheetForm): void => {
     let dynamicForm: DynamicForm<TimesheetForm,  OptionsFormState<Partial<ModelState>>>;
-    if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _objectToDisabledObjectMap(form)}
+    if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _disableControlsWithNoValue(form)}
     else dynamicForm = EditUserTimesheetForm
 
     this.modelFormService.open<ModelState, TimesheetForm>({

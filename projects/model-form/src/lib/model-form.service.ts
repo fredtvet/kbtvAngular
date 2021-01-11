@@ -7,21 +7,12 @@ import { Immutable, Maybe, UnknownState, KeyVal } from "global-types";
 import { Observable, of } from 'rxjs';
 import { Store } from 'state-management';
 import { DeleteModelAction, ModelCommand, ModelStateConfig, MODEL_PROP_TRANSLATIONS, SaveAction } from 'state-model';
-import { ModelFormConfig } from './interfaces';
+import { ModelFormConfig, ModelFormServiceConfig } from './interfaces';
 import { ModelFormComponent } from './model-form.component';
 
 type FormState<TState> = OptionsFormState<TState>;
 
-export interface ModelFormServiceConfig<TState extends {}, TForm extends {}, TFormState extends FormState<TState>> {
-  formConfig: ModelFormConfig<TState, TForm, TFormState>,  
-  formState?: Immutable<TFormState> | Observable<Immutable<TFormState>>,
-  onSaveUri?: string, 
-  onDeleteUri?: string, 
-  deleteDisabled?: boolean, 
-  customTitle?: string, 
-  submitCallback?: (val: unknown) => void
-}
-
+/** Responsible for showing a form sheet with the specified model form */
 @Injectable()
 export class ModelFormService {
 
@@ -33,6 +24,10 @@ export class ModelFormService {
     @Inject(MODEL_PROP_TRANSLATIONS) private translations: KeyVal<string>
   ) {}
 
+  /** Opens the specified model form as a form sheet
+   * @param config
+   * @returns A reference to the bottom sheet with the model form.
+   */
   open<TState extends {}, TForm extends {}>(
     config: ModelFormServiceConfig<TState, TForm, FormState<TState>>
   ): MatBottomSheetRef<FormSheetWrapperComponent, ModelCommand> {
@@ -63,7 +58,7 @@ export class ModelFormService {
     return ref;
   }
 
-  close = (res: Maybe<ModelCommand>, ref: MatBottomSheetRef<unknown, unknown>, url?: Maybe<string>) => {
+  private close = (res: Maybe<ModelCommand>, ref: MatBottomSheetRef<unknown, unknown>, url?: Maybe<string>) => {
     if(url) this.router.navigate([url]);
     ref.dismiss(res);
   } 

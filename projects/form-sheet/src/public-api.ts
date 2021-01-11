@@ -1,6 +1,8 @@
-/*
- * Public API Surface of form-sheet
+/**
+ * A library for rendering dynamic forms in a mat bottom sheet. 
+ * @packageDocumentation
  */
+
 export * from './lib/form-sheet.service';
 export * from './lib/form-sheet.module';
 export * from './lib/interfaces';

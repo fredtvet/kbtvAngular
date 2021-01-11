@@ -3,6 +3,11 @@ import { Observable } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
 import { _selectSlice } from "../helpers/select-slice.helper";
 
+/** An rxjs operator used to select a specified slice from state 
+ *  and only emit when its value changes.
+ * @param props The properties on state that should be selected.
+ * @returns The slice of state that corresponds with the specified properties
+ */
 export const select = <TState, TSlice = Partial<TState>>(props: ImmutableArray<Prop<TState>>) => 
     (source: Observable<Immutable<TState>>): Observable<Immutable<TSlice>> => 
         source.pipe(

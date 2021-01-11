@@ -7,7 +7,8 @@ export interface WipeStateAction extends StateAction { defaultState: {} }
 export const WipeStateReducer = _createReducer(
     WipeStateAction, 
     (state: Immutable<{}>, action: Immutable<WipeStateAction>): {} => {
-        const ignoredState: UnknownState = {refreshToken: true, accessToken: true, currentUser: true};
+        const ignoredState: UnknownState = 
+          {refreshToken: true, accessToken: true, accessTokenExpiration: true, currentUser: true};
         
         const deleteState: UnknownState = {};
 

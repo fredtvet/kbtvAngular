@@ -5,27 +5,31 @@ import { Observable } from 'rxjs';
 import { map, skip } from 'rxjs/operators';
 import { select, Store } from 'state-management';
 import { AUTH_COMMAND_API_MAP } from '../injection-tokens.const';
-import { AccessToken, AuthCommandApiMap, Credentials, CurrentUser, StoreState } from '../interfaces';
+import { AuthCommandApiMap, Credentials, CurrentUser, StoreState } from '../interfaces';
 import { LoginAction, LogoutAction, RefreshTokenAction } from '../state/actions.const';
 
+/** The class responsible for exposing authorization state & commands */
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
+  /** An observable of the authorization status of current user */
   isAuthorized$: Observable<boolean> = this.store.state$.pipe(
     select(["accessToken", "refreshToken"]),
-    map(state => state != null && state.refreshToken != null && state.accessToken?.token != null)
+    map(state => state != null && state.refreshToken != null && state.accessToken != null)
   )
 
+  /** An observable of the current user */
   currentUser$: Observable<CurrentUser> = this.store.selectProperty$<CurrentUser>("currentUser");
 
-  newAccessToken$: Observable<AccessToken> = 
-    this.store.selectProperty$<AccessToken>("accessToken").pipe(skip(1));
+  /** An observable that emits access tokens when they are received. */
+  newAccessToken$: Observable<string> = 
+    this.store.selectProperty$<string>("accessToken").pipe(skip(1));
 
   get hasAccessTokenExpired(): boolean{
-    const expiresIn = this.store.state.accessToken?.expiresIn
+    const expires = this.store.state.accessTokenExpiration
 
-    if(!expiresIn) return true; //If no access token expiration set
-    if (_getUnixTimeSeconds() >= expiresIn) return true; //If access token expired
+    if(!expires) return true; //If no access token expiration set
+    if (_getUnixTimeSeconds() >= expires) return true; //If access token expired
     return false;
   }
 
@@ -38,18 +42,23 @@ export class AuthService {
     @Inject(AUTH_COMMAND_API_MAP) private commandApiMap: AuthCommandApiMap,
   ) {}
 
-  getAccessToken = (): Maybe<string> => 
-    this.store.state.accessToken?.token 
+  getAccessToken = (): Maybe<string> => this.store.state.accessToken 
 
   getCurrentUser = (): Maybe<Immutable<CurrentUser>> => 
     this.store.state.currentUser 
   
+  /** Attempts to authorize user with external api. 
+   * @param credentials The authorization data
+   * @param returnUrl A router url used to navigate the user if login succeeds. 
+   */
   login = (credentials: Credentials, returnUrl?: string): void => 
     this.store.dispatch(<LoginAction>{ type: LoginAction, credentials, returnUrl })
   
+  /** Removes the authorization state and redirects the user to login page. */
   logout = (returnUrl?: string): void =>
     this.store.dispatch(<LogoutAction>{ type: LogoutAction, refreshToken: this.getRefreshToken(), returnUrl })
   
+  /** Attempts to request a new access token from the external api */
   refreshToken = (): void => 
     this.store.dispatch(<RefreshTokenAction>{ type: RefreshTokenAction,
       tokens: {

@@ -11,6 +11,8 @@ import { HttpSuccessEffect } from './state/http-success/http-success.effect';
 import { HttpSuccessReducer } from './state/http-success/http-success.reducer';
 import { OptimisticHttpEffect } from './state/optimistic-http.effect';
 
+/** Responsible for providing core injectables. 
+ *  Should only be imported in root. */
 @NgModule({
   providers: [  
     { provide: STORE_EFFECTS, useClass: DispatchHttpEffect, multi: true },

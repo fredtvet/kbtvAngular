@@ -65,7 +65,15 @@ export abstract class ControlComponentLoaderComponent {
         componentRef.instance.controlGroup = controlGroup;
         componentRef.instance.formConfig = formConfig;
         componentRef.instance.form = this.form;
-        componentRef.instance.nestedNames = controlGroup.name ? [...nestedNames, controlGroup.name] : nestedNames;
+
+        const panelClass = controlGroup.styling?.panelClass
+        if(panelClass) 
+            componentRef.location.nativeElement.classList.add(panelClass)
+
+        componentRef.instance.nestedNames = 
+            controlGroup.name ? 
+            [...nestedNames, controlGroup.name] : 
+            nestedNames;
     }
 
     private loadComponent<TComponent>(component: Type<TComponent>): ComponentRef<TComponent>{

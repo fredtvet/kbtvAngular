@@ -1,5 +1,8 @@
-/*
- * Public API Surface of optimistic-http
+/**
+ * A library for sending optimistic http requests.  
+ * @remarks 
+ * The library ensures that http requests are executed sequentially and http errors handled correctly.
+ * @packageDocumentation
  */
 
 export * from './lib/http.queuer';

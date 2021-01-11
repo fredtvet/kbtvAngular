@@ -2,6 +2,14 @@ import { _convertArrayToObject, _filter } from 'array-helpers';
 import { Immutable, Prop, UnknownState } from 'global-types';
 import { ModelStateConfig } from '../model-state.config';
 
+/**  
+ * Responsible for deleting model with given id(s) 
+ * and children with cascadeDelete set to true. 
+ * @param state The state containing model & child state.
+ * @param stateProp The state property of the model thats being deleted.
+ * @param cfg The id or ids of the model(s) to be deleted.
+ * @returns Updated state with deletion applied. 
+*/
 export function _deleteModelWithChildren<TState extends UnknownState>(
   state: Immutable<TState>, 
   stateProp: Immutable<Prop<TState>>, 

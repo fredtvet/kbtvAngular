@@ -16,6 +16,7 @@ export const AppStateDbConfig: StateDbConfig<unknown> = {
     userTimesheets: {},
     requestQueue: {},
     accessToken: {critical: true},
+    accessTokenExpiration: {critical: true},
     refreshToken: {critical: true},
     currentUser: {critical: true},       
     syncTimestamp: {critical: true},

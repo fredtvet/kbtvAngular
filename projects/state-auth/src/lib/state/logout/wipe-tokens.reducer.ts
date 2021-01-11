@@ -4,6 +4,6 @@ import { WipeTokensAction } from '../actions.const';
 
 export const WipeTokensReducer: Reducer<unknown, WipeTokensAction> = _createReducer(
     WipeTokensAction, (): Partial<StoreState> => {
-        return {accessToken: undefined, refreshToken: undefined}
+        return {accessToken: undefined, accessTokenExpiration: undefined, refreshToken: undefined}
     }
 )

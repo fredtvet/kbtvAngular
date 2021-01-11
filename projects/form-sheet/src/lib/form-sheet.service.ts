@@ -5,11 +5,16 @@ import { Observable, of } from 'rxjs';
 import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
 import { FormServiceConfig, FormSheetWrapperConfig } from './interfaces';
 
+/** Responsible for opening the provided form in a bottom sheet */
 @Injectable({ providedIn: "any" })
 export class FormService {
 
   constructor(private matBottomSheet: MatBottomSheet) {}
 
+  /** Opens the specified form as a form sheet
+   * @param config
+   * @returns A reference to the bottom sheet with the form.
+   */
   open<TForm, TFormState = unknown>(config: FormServiceConfig<TForm, TFormState>)
   : MatBottomSheetRef<FormSheetWrapperComponent, TForm> {      
     return this.matBottomSheet.open(FormSheetWrapperComponent, { 

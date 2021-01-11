@@ -4,6 +4,14 @@ import { RelationInclude, UnknownModelState } from '../interfaces';
 import { ModelStateConfig } from '../model-state.config';
 import { _getRelationProps } from './get-relation-props.helper';
 
+/**
+ * Get model with specified relationships set on model
+ * according to model property config set in {@link ModelStateConfig}
+ * @param state State containing model and relationship data
+ * @param cfg Configuration of which relationships to include
+ * @param id A unique property value of the model that is requested.
+ * @returns The requested model with relationships applied if found. 
+ */
 export function _getWithRelations<TModel extends {}, TState extends {}>( 
     state: Maybe<Immutable<Partial<TState>>>,
     cfg: RelationInclude<TState>,

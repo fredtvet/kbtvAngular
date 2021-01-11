@@ -1,5 +1,11 @@
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 
+/**
+ * Sort an array of objects by a date property
+ * @param collection An array of objects
+ * @param prop A date property on the object
+ * @param direction A sorting direction
+ */
 export function _sortByDate<T extends {}>(
     collection: Maybe<ImmutableArray<T>>, 
     prop: Prop<Immutable<T>>, 

@@ -1,6 +1,12 @@
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { _convertArrayToObject } from './convert-array-to-object.helper';
 
+/**
+ * Merge two arrays of objects, updating any objects that overlap
+ * @param originals The original array of objects that may be overriden
+ * @param newEntities The new array of objects that should be added 
+ * @param identifier A property on the object that uniquely identifies it
+ */
 export function _addOrUpdateRange<T>(
     originals: Maybe<ImmutableArray<T>>, 
     newEntities: Maybe<ImmutableArray<T>>, 

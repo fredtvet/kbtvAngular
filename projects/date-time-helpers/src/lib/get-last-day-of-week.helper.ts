@@ -1,5 +1,9 @@
 import { Immutable } from 'global-types';
 
+/**
+ * Get the last day of a specified week
+ * @param date A date with the desired week
+ */
 export function _getLastDayOfWeek(date: Immutable<Date> = new Date()): Immutable<Date>  {
     let day = date.getDay();
     return new Date(

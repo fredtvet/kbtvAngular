@@ -1,6 +1,12 @@
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { _convertArrayToObject } from './convert-array-to-object.helper';
 
+/**
+ * Get a range of objects
+ * @param originals An array of objects 
+ * @param ids An array of unique values that identify the objects
+ * @param identifier A property on the object that contains the unique value
+ */
 export function _getRangeByIdentifier<T>(
   originals: Maybe<ImmutableArray<T>>, 
   ids: ImmutableArray<unknown>, 

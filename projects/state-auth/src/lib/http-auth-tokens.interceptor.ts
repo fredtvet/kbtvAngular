@@ -1,11 +1,14 @@
 import { HttpHandler, HttpHeaderResponse, HttpInterceptor, HttpProgressEvent, HttpRequest, HttpResponse, HttpSentEvent, HttpUserEvent } from "@angular/common/http";
 import { Inject, Injectable } from '@angular/core';
 import { merge, Observable, of, throwError } from 'rxjs';
-import { filter, pluck, switchMap, take, tap } from 'rxjs/operators';
-import { AuthService } from "./services/auth.service";
+import { filter, switchMap, take, tap } from 'rxjs/operators';
 import { AUTH_COMMAND_API_MAP } from "./injection-tokens.const";
 import { AuthCommandApiMap } from "./interfaces";
+import { AuthService } from "./services/auth.service";
 
+/** Http interceptor responsible for handling tokens and authorization.
+ *  The interceptor will append access tokens to all requests 
+ *  and optionally refresh access tokens when expired if configured. */
 @Injectable()
 export class HttpAuthTokensInterceptor implements HttpInterceptor {
 
@@ -26,7 +29,7 @@ export class HttpAuthTokensInterceptor implements HttpInterceptor {
         if(!this.isRefreshRequest(req) && this.authService.hasAccessTokenExpired){    
             return merge(
                 of(null).pipe(tap(x => this.authService.refreshToken())),
-                this.authService.newAccessToken$.pipe(take(1), pluck('token')),
+                this.authService.newAccessToken$.pipe(take(1)),
             ).pipe(
                 filter(x => x != null),
                 switchMap(x =>{ return next.handle(this.addToken(req, <string> x)) })

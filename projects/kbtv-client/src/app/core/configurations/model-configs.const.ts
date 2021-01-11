@@ -74,7 +74,7 @@ export const ModelConfigs: unknown[] = [
         apiUrl: ApiUrl.Users, 
         identifier: "userName", 
         displayProp: "userName",  
-        autoFetch: true,
+        fetchable: true,
         foreignProp: "user",
         foreignKey: "userName",     
         foreigns: ["employers"]
@@ -86,7 +86,7 @@ export const ModelConfigs: unknown[] = [
         displayProp: "password",      
         foreignProp: "inboundEmailPassword",   
         foreignKey: "inboundEmailPasswordId",      
-        autoFetch: true,    
+        fetchable: true,    
     }, 
     <ModelConfig<Timesheet, ModelState>>{
         stateProp: "userTimesheets",

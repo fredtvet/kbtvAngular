@@ -5,6 +5,8 @@ import { first, tap } from 'rxjs/operators';
 import { FormSheetNavBarComponent } from './form-sheet-nav-bar/form-sheet-nav-bar.component';
 import { FormSheetWrapperConfig } from './interfaces';
 
+/** Component responsible for rendering a form component in a material bottom sheet.
+ *  Also renders the top navigation bar */
 @Component({
     selector: 'lib-form-sheet-wrapper',
     template: ``,

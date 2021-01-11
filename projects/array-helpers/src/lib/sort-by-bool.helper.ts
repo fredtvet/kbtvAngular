@@ -1,5 +1,11 @@
 import { Immutable, ImmutableArray, Maybe, UnknownState, Prop } from 'global-types'; 
 
+/**
+ * Sort an array of objects by a boolean property.
+ * @param collection An array of objects
+ * @param prop The boolean property to sort by
+ * @param trueFirst Set to true if false values should come last
+ */
 export function _sortByBool<T extends {}>(
     collection: Maybe<ImmutableArray<T>>, 
     prop: Prop<Immutable<T>>, 

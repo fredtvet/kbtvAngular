@@ -1,6 +1,12 @@
 import { Immutable, ImmutableArray, Maybe, Prop} from 'global-types';
 
 type Response<T> = { [key: string]: Maybe<Immutable<T>> }
+/**
+ * Convert an array to a key/value object
+ * @param array 
+ * @param key If property on the array value that will be used as the key for its value. If null, the value is used as key.
+ * @returns An object containing keys with accociated values
+ */
 export function _convertArrayToObject<T>(
   array: Maybe<ImmutableArray<T>>, 
   key?: Prop<Immutable<T>>   

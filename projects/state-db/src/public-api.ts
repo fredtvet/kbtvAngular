@@ -1,5 +1,8 @@
-/*
- * Public API Surface of state-db
+/**
+ * A library for persisting state in a local db. 
+ * @remarks 
+ * The implementation uses both indexedDB and localStorage. 
+ * @packageDocumentation
  */
 
 export * from './lib/injection-tokens.const'

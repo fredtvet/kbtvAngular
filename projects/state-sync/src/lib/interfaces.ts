@@ -10,7 +10,7 @@ export interface StateSyncTimestamp {
 }
 
 /** Configuration for synchronized state management.
- *  Injected by consumer application with token {@link SYNC_STATE_CONFIG}
+ *  Provided by consumer application with token {@link SYNC_STATE_CONFIG}
  */
 export type SyncStateConfig<TState> = {[key in keyof TState]: SyncStatePropConfig}
 
@@ -60,7 +60,8 @@ export interface SyncArrayResponse{
     deletedEntities: (number | string)[];
 }
 
-/** Injected by consumer application with token {@link SYNC_HTTP_FETCHER}. */
+/** Responsible for fetching data from external API. 
+ *  Provided by consumer application with token {@link SYNC_HTTP_FETCHER}. */
 export interface SyncHttpFetcher<TState> {
     /** 
      * Fetches data from external api and returns a data observer with correct format. 

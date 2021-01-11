@@ -11,6 +11,8 @@ import { ModelFormComponent } from './model-form.component';
 import { ModelFormFacade } from './model-form.facade';
 import { ModelFormService } from './model-form.service';
 
+/** Responsible for declaring components and providing core injectables. 
+ *  Use forFeature function to configure a default save converter for each feature module. */
 @NgModule({
     declarations: [ ModelFormComponent ],
     imports: [

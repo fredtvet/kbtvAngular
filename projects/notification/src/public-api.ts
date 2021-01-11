@@ -1,6 +1,8 @@
-/*
- * Public API Surface of notification
+/**
+ * A library for notifying the user of a system with a snack bar popup.  
+ * @packageDocumentation
  */
+
 
 export * from './lib/notification.service';
 export * from './lib/notification.module';
