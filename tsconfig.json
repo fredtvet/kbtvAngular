@@ -89,5 +89,9 @@
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
+  },
+  "typedocOptions": {
+    "entryPoints": ["projects/**/src/public-api.ts"],
+    "out": "docs"
   }
 }

@@ -1,0 +1,2741 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.12.1",
+    "schemaVersion": 1003,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "canonicalReference": "state-auth!",
+  "docComment": "/**\n * A library with services that assists in authorizing users.\n *\n * @remarks\n *\n * The implementation uses access tokens for authorization. If specified, refresh tokens are used to fetch new access tokens. The library only stores the tokens in global state. The consumer is responsible for persisting the tokens accross sessions\n *\n * @packageDocumentation\n */\n",
+  "name": "state-auth",
+  "members": [
+    {
+      "kind": "EntryPoint",
+      "canonicalReference": "state-auth!",
+      "name": "",
+      "members": [
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!AccessToken:interface",
+          "docComment": "/**\n * Represents a token received by an external api that authorizes the user for a certain time period\n *\n * @remarks\n *\n * The token will be appended to the authorization header of every request\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface AccessToken "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "AccessToken",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!AccessToken#expiresIn:member",
+              "docComment": "/**\n * The number of seconds before the token expires\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "expiresIn: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "expiresIn",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!AccessToken#token:member",
+              "docComment": "/**\n * The token value\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "token: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "token",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-auth!AUTH_COMMAND_API_MAP:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "AUTH_COMMAND_API_MAP: "
+            },
+            {
+              "kind": "Reference",
+              "text": "InjectionToken",
+              "canonicalReference": "@angular/core!InjectionToken:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "AuthCommandApiMap",
+              "canonicalReference": "state-auth!AuthCommandApiMap:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "AUTH_COMMAND_API_MAP",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-auth!AUTH_DEFAULT_REDIRECTS:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "AUTH_DEFAULT_REDIRECTS: "
+            },
+            {
+              "kind": "Reference",
+              "text": "InjectionToken",
+              "canonicalReference": "@angular/core!InjectionToken:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DefaultRedirects",
+              "canonicalReference": "state-auth!DefaultRedirects:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "AUTH_DEFAULT_REDIRECTS",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!AuthCommandApi:interface",
+          "docComment": "/**\n * Describes an object that can be used to handle external api commmands\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface AuthCommandApi<TBody, TResponse> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TBody",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "TResponse",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "AuthCommandApi",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!AuthCommandApi#apiUrl:member",
+              "docComment": "/**\n * The api url pointing to external api endpoint\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "apiUrl: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "apiUrl",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!AuthCommandApi#bodyFormatter:member",
+              "docComment": "/**\n * Used to format the body according to requirements of the external api\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "bodyFormatter?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(t: TBody) => unknown"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "bodyFormatter",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!AuthCommandApi#method:member",
+              "docComment": "/**\n * The http method used\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "method: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "method",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!AuthCommandApi#responseFormatter:member",
+              "docComment": "/**\n * Used to format the external api response according to the specified response type\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "responseFormatter?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(t: unknown) => TResponse"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "responseFormatter",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!AuthCommandApiMap:interface",
+          "docComment": "/**\n * Represents a map of all external auth commands accociated with a {@link AuthCommandApi}. Provided with token {@link AUTH_COMMAND_API_MAP}\n *\n * @remarks\n *\n * By leaving the {@link RefreshTokenAction} entry empty, the feature will be disabled.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface AuthCommandApiMap "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "AuthCommandApiMap",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!AuthCommandApiMap#LOGIN_ACTION:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "["
+                },
+                {
+                  "kind": "Reference",
+                  "text": "LoginAction",
+                  "canonicalReference": "state-auth!LoginAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "]: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AuthCommandApi",
+                  "canonicalReference": "state-auth!AuthCommandApi:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Credentials",
+                  "canonicalReference": "state-auth!Credentials:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "LoginResponse",
+                  "canonicalReference": "state-auth!LoginResponse:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "LOGIN_ACTION",
+              "propertyTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 9
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!AuthCommandApiMap#LOGOUT_ACTION:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "["
+                },
+                {
+                  "kind": "Reference",
+                  "text": "LogoutAction",
+                  "canonicalReference": "state-auth!LogoutAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "]: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AuthCommandApi",
+                  "canonicalReference": "state-auth!AuthCommandApi:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<{\n        refreshToken: string;\n    }, void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "LOGOUT_ACTION",
+              "propertyTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!AuthCommandApiMap#REFRESH_TOKEN_ACTION:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "["
+                },
+                {
+                  "kind": "Reference",
+                  "text": "RefreshTokenAction",
+                  "canonicalReference": "state-auth!RefreshTokenAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "]?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AuthCommandApi",
+                  "canonicalReference": "state-auth!AuthCommandApi:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Tokens",
+                  "canonicalReference": "state-auth!Tokens:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "RefreshTokenResponse",
+                  "canonicalReference": "state-auth!RefreshTokenResponse:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "REFRESH_TOKEN_ACTION",
+              "propertyTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 9
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "state-auth!AuthGuard:class",
+          "docComment": "/**\n * Used to guard for unauthorized users. Provides both canActivate & canActivateChild\n *\n * @remarks\n *\n * Use route data (see {@link AuthRouteData}) to set allowed roles for the guarded routes.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class AuthGuard implements "
+            },
+            {
+              "kind": "Reference",
+              "text": "CanActivate",
+              "canonicalReference": "@angular/router!CanActivate:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "CanActivateChild",
+              "canonicalReference": "@angular/router!CanActivateChild:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "AuthGuard",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "state-auth!AuthGuard:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `AuthGuard` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(router: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Router",
+                  "canonicalReference": "@angular/router!Router:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", store: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Store",
+                  "canonicalReference": "state-auth!Store:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StoreState",
+                  "canonicalReference": "state-auth!StoreState:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", authService: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AuthService",
+                  "canonicalReference": "state-auth!AuthService:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", defaultRedirects: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DefaultRedirects",
+                  "canonicalReference": "state-auth!DefaultRedirects:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "router",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "store",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 7
+                  }
+                },
+                {
+                  "parameterName": "authService",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 8,
+                    "endIndex": 9
+                  }
+                },
+                {
+                  "parameterName": "defaultRedirects",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 10,
+                    "endIndex": 11
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-auth!AuthGuard#canActivate:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "canActivate(route: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ActivatedRouteSnapshot",
+                  "canonicalReference": "@angular/router!ActivatedRouteSnapshot:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "route",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "canActivate"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-auth!AuthGuard#canActivateChild:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "canActivateChild(route: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ActivatedRouteSnapshot",
+                  "canonicalReference": "@angular/router!ActivatedRouteSnapshot:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "route",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "canActivateChild"
+            }
+          ],
+          "implementsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 2
+            },
+            {
+              "startIndex": 3,
+              "endIndex": 5
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-auth!AuthReturnUrlQueryParam:var",
+          "docComment": "/**\n * Query param used in {@link NoAuthGuard} to redirect to custom url\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "AuthReturnUrlQueryParam = \"returnUrl\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "AuthReturnUrlQueryParam",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!AuthRouteData:interface",
+          "docComment": "/**\n * Route data associated with authorized routes\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface AuthRouteData "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "AuthRouteData",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!AuthRouteData#allowedRoles:member",
+              "docComment": "/**\n * The roles that are allowed access.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "allowedRoles?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "allowedRoles",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "state-auth!AuthService:class",
+          "docComment": "/**\n * The class responsible for exposing authorization state & commands\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class AuthService "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "AuthService",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "state-auth!AuthService:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `AuthService` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(store: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Store",
+                  "canonicalReference": "state-auth!Store:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StoreState",
+                  "canonicalReference": "state-auth!StoreState:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", commandApiMap: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AuthCommandApiMap",
+                  "canonicalReference": "state-auth!AuthCommandApiMap:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "store",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 5
+                  }
+                },
+                {
+                  "parameterName": "commandApiMap",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 6,
+                    "endIndex": 7
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "state-auth!AuthService#currentUser$:member",
+              "docComment": "/**\n * An observable of the current user\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "currentUser$: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Observable",
+                  "canonicalReference": "rxjs!Observable:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CurrentUser",
+                  "canonicalReference": "state-auth!CurrentUser:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "currentUser$",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "state-auth!AuthService#getAccessToken:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getAccessToken: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "() => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Maybe",
+                  "canonicalReference": "state-auth!Maybe:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "getAccessToken",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 4
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "state-auth!AuthService#getCurrentUser:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getCurrentUser: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "() => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Maybe",
+                  "canonicalReference": "state-auth!Maybe:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-auth!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CurrentUser",
+                  "canonicalReference": "state-auth!CurrentUser:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "getCurrentUser",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 8
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "state-auth!AuthService#hasAccessTokenExpired:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get hasAccessTokenExpired(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "hasAccessTokenExpired",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "state-auth!AuthService#isAuthorized:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "get isAuthorized(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "isAuthorized",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "state-auth!AuthService#isAuthorized$:member",
+              "docComment": "/**\n * An observable of the authorization status of current user\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "isAuthorized$: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Observable",
+                  "canonicalReference": "rxjs!Observable:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<boolean>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "isAuthorized$",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "state-auth!AuthService#login:member",
+              "docComment": "/**\n * Attempts to authorize user with external api.\n *\n * @param credentials - The authorization data\n *\n * @param returnUrl - A router url used to navigate the user if login succeeds.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "login: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(credentials: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Credentials",
+                  "canonicalReference": "state-auth!Credentials:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", returnUrl?: string | undefined) => void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "login",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 4
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "state-auth!AuthService#logout:member",
+              "docComment": "/**\n * Removes the authorization state and redirects the user to login page.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "logout: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(returnUrl?: string | undefined) => void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "logout",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "state-auth!AuthService#newAccessToken$:member",
+              "docComment": "/**\n * An observable that emits access tokens when they are received.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "newAccessToken$: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Observable",
+                  "canonicalReference": "rxjs!Observable:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "newAccessToken$",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "state-auth!AuthService#refreshToken:member",
+              "docComment": "/**\n * Attempts to request a new access token from the external api\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "refreshToken: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "() => void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "refreshToken",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            }
+          ],
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!Credentials:interface",
+          "docComment": "/**\n * Describes an object containing data used to authorize a user\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface Credentials "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "Credentials",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!Credentials#password:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "password: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "password",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!Credentials#userName:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "userName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "userName",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!CurrentUser:interface",
+          "docComment": "/**\n * Describes the user that is currently active.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface CurrentUser "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "CurrentUser",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!CurrentUser#role:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "role: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "role",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!CurrentUser#userName:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "userName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "userName",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!DefaultRedirects:interface",
+          "docComment": "/**\n * Represents an object of default router redirects. Provided with token {@link AUTH_DEFAULT_REDIRECTS}\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface DefaultRedirects "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "DefaultRedirects",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!DefaultRedirects#home:member",
+              "docComment": "/**\n * The router url to the home screen.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "home: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "home",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!DefaultRedirects#login:member",
+              "docComment": "/**\n * The router url to the login screen.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "login: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "login",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "state-auth!HttpAuthTokensInterceptor:class",
+          "docComment": "/**\n * Http interceptor responsible for handling tokens and authorization. The interceptor will append access tokens to all requests and optionally refresh access tokens when expired if configured.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class HttpAuthTokensInterceptor implements "
+            },
+            {
+              "kind": "Reference",
+              "text": "HttpInterceptor",
+              "canonicalReference": "@angular/common/http!HttpInterceptor:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "HttpAuthTokensInterceptor",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "state-auth!HttpAuthTokensInterceptor:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `HttpAuthTokensInterceptor` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(authService: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AuthService",
+                  "canonicalReference": "state-auth!AuthService:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", commandApiMap: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AuthCommandApiMap",
+                  "canonicalReference": "state-auth!AuthCommandApiMap:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "authService",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "commandApiMap",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-auth!HttpAuthTokensInterceptor#intercept:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "intercept(req: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpRequest",
+                  "canonicalReference": "@angular/common/http!HttpRequest:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<unknown>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", next: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpHandler",
+                  "canonicalReference": "@angular/common/http!HttpHandler:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Observable",
+                  "canonicalReference": "rxjs!Observable:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpSentEvent",
+                  "canonicalReference": "@angular/common/http!HttpSentEvent:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpHeaderResponse",
+                  "canonicalReference": "@angular/common/http!HttpHeaderResponse:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpProgressEvent",
+                  "canonicalReference": "@angular/common/http!HttpProgressEvent:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpResponse",
+                  "canonicalReference": "@angular/common/http!HttpResponse:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<unknown> | "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpUserEvent",
+                  "canonicalReference": "@angular/common/http!HttpUserEvent:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<unknown>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 18
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "req",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  }
+                },
+                {
+                  "parameterName": "next",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 4,
+                    "endIndex": 5
+                  }
+                }
+              ],
+              "name": "intercept"
+            }
+          ],
+          "implementsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!LoginAction:interface",
+          "docComment": "/**\n * Represents the action used to login a user\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface LoginAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "state-auth!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "LoginAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!LoginAction#credentials:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "credentials: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Credentials",
+                  "canonicalReference": "state-auth!Credentials:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "credentials",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!LoginAction#returnUrl:member",
+              "docComment": "/**\n * A router url used to redirect the user after login\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "returnUrl?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "returnUrl",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-auth!LoginAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "LoginAction = \"LOGIN_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "LoginAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!LoginResponse:interface",
+          "docComment": "/**\n * Describes the expected result from a login command\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface LoginResponse "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "LoginResponse",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!LoginResponse#accessToken:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "accessToken: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AccessToken",
+                  "canonicalReference": "state-auth!AccessToken:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "accessToken",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!LoginResponse#refreshToken:member",
+              "docComment": "/**\n * A token used to request a new access token\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "refreshToken?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "refreshToken",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!LoginResponse#user:member",
+              "docComment": "/**\n * User details about the authorized user\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "user: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CurrentUser",
+                  "canonicalReference": "state-auth!CurrentUser:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "user",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!LoginSuccessAction:interface",
+          "docComment": "/**\n * Represents the action dispatched when a successful login attempt has been made\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface LoginSuccessAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "state-auth!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "LoginSuccessAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!LoginSuccessAction#previousUser:member",
+              "docComment": "/**\n * The previous user that was active in the system\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "previousUser?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CurrentUser",
+                  "canonicalReference": "state-auth!CurrentUser:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "previousUser",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!LoginSuccessAction#response:member",
+              "docComment": "/**\n * The response from the external api\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "response: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "LoginResponse",
+                  "canonicalReference": "state-auth!LoginResponse:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "response",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!LoginSuccessAction#returnUrl:member",
+              "docComment": "/**\n * A router url used to redirect the user after login\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "returnUrl?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "returnUrl",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-auth!LoginSuccessAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "LoginSuccessAction = \"LOGIN_SUCCESS_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "LoginSuccessAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!LogoutAction:interface",
+          "docComment": "/**\n * Represents an action used to logout the current user\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface LogoutAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "state-auth!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "LogoutAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!LogoutAction#refreshToken:member",
+              "docComment": "/**\n * The refresh token so external api can clean up old tokens\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "refreshToken?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "refreshToken",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!LogoutAction#returnUrl:member",
+              "docComment": "/**\n * A return url used if the user logs in again\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "returnUrl?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "returnUrl",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-auth!LogoutAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "LogoutAction = \"LOGOUT_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "LogoutAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "state-auth!NoAuthGuard:class",
+          "docComment": "/**\n * Used to guard for authorized users and redirect them to a return url provided as a query parameter in the route. Optionally redirects to default home route.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class NoAuthGuard implements "
+            },
+            {
+              "kind": "Reference",
+              "text": "CanActivate",
+              "canonicalReference": "@angular/router!CanActivate:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "NoAuthGuard",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "state-auth!NoAuthGuard:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `NoAuthGuard` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(router: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Router",
+                  "canonicalReference": "@angular/router!Router:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", authService: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AuthService",
+                  "canonicalReference": "state-auth!AuthService:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", defaultRedirects: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DefaultRedirects",
+                  "canonicalReference": "state-auth!DefaultRedirects:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "router",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "authService",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "defaultRedirects",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-auth!NoAuthGuard#canActivate:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "canActivate(route: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ActivatedRouteSnapshot",
+                  "canonicalReference": "@angular/router!ActivatedRouteSnapshot:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", state: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "RouterStateSnapshot",
+                  "canonicalReference": "@angular/router!RouterStateSnapshot:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "route",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "state",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "canActivate"
+            }
+          ],
+          "implementsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!RefreshTokenAction:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface RefreshTokenAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "state-auth!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "RefreshTokenAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!RefreshTokenAction#tokens:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "tokens: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Tokens",
+                  "canonicalReference": "state-auth!Tokens:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "tokens",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-auth!RefreshTokenAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "RefreshTokenAction = \"REFRESH_TOKEN_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "RefreshTokenAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!RefreshTokenResponse:interface",
+          "docComment": "/**\n * Describes the expected result from a refresh token command\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface RefreshTokenResponse "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "RefreshTokenResponse",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!RefreshTokenResponse#accessToken:member",
+              "docComment": "/**\n * A new access token\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "accessToken: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AccessToken",
+                  "canonicalReference": "state-auth!AccessToken:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "accessToken",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!RefreshTokenResponse#refreshToken:member",
+              "docComment": "/**\n * The refresh token used to make the request\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "refreshToken: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "refreshToken",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!RefreshTokenSuccessAction:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface RefreshTokenSuccessAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "state-auth!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "RefreshTokenSuccessAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!RefreshTokenSuccessAction#response:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "response: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "RefreshTokenResponse",
+                  "canonicalReference": "state-auth!RefreshTokenResponse:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "response",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-auth!RefreshTokenSuccessAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "RefreshTokenSuccessAction = \"REFRESH_TOKEN_SUCCESS_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "RefreshTokenSuccessAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "state-auth!StateAuthModule:class",
+          "docComment": "/**\n * Responsible for exporting diretives. Use forRoot function to inject core providers\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class StateAuthModule "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "StateAuthModule",
+          "members": [
+            {
+              "kind": "Method",
+              "canonicalReference": "state-auth!StateAuthModule.forRoot:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static forRoot(commandApiMap: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AuthCommandApiMap",
+                  "canonicalReference": "state-auth!AuthCommandApiMap:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", defaultRedirects: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DefaultRedirects",
+                  "canonicalReference": "state-auth!DefaultRedirects:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModuleWithProviders",
+                  "canonicalReference": "@angular/core!ModuleWithProviders:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StateAuthModule",
+                  "canonicalReference": "state-auth!StateAuthModule:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 9
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "commandApiMap",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "defaultRedirects",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "forRoot"
+            }
+          ],
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!StateCurrentUser:interface",
+          "docComment": "/**\n * Represents a state slice containing the current user logged in\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface StateCurrentUser "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "StateCurrentUser",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!StateCurrentUser#currentUser:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "currentUser: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CurrentUser",
+                  "canonicalReference": "state-auth!CurrentUser:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "currentUser",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!StoreState:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface StoreState extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateCurrentUser",
+              "canonicalReference": "state-auth!StateCurrentUser:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "StoreState",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!StoreState#accessToken:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "accessToken: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "accessToken",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!StoreState#accessTokenExpiration:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "accessTokenExpiration: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "accessTokenExpiration",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!StoreState#refreshToken:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "refreshToken: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "refreshToken",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!Tokens:interface",
+          "docComment": "/**\n * Describes an object\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface Tokens "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "Tokens",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!Tokens#accessToken:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "accessToken: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "accessToken",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-auth!Tokens#refreshToken:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "refreshToken: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "refreshToken",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-auth!UnauthorizedAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "UnauthorizedAction = \"UNAUTHORIZED_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "UnauthorizedAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-auth!WipeTokensAction:interface",
+          "docComment": "/**\n * Represents the action responsible for removing tokens from state\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface WipeTokensAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "state-auth!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "WipeTokensAction",
+          "members": [],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-auth!WipeTokensAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "WipeTokensAction = \"WIPE_TOKENS_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "WipeTokensAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }
+      ]
+    }
+  ]
+}

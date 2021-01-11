@@ -1,0 +1,4561 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.12.1",
+    "schemaVersion": 1003,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "canonicalReference": "state-model!",
+  "docComment": "/**\n * A library for managing relational state in the application and in communications with an external api.\n *\n * @remarks\n *\n * The library treats communications with the external api optimistically, therefore ids are generated as a random string on the client. The library does not support many-to-many relationships.\n *\n * @packageDocumentation\n */\n",
+  "name": "state-model",
+  "members": [
+    {
+      "kind": "EntryPoint",
+      "canonicalReference": "state-model!",
+      "name": "",
+      "members": [
+        {
+          "kind": "Function",
+          "canonicalReference": "state-model!_deleteModelWithChildren:function(1)",
+          "docComment": "/**\n * Responsible for deleting model with given id(s) and children with cascadeDelete set to true.\n *\n * @param state - The state containing model & child state.\n *\n * @param stateProp - The state property of the model thats being deleted.\n *\n * @param cfg - The id or ids of the model(s) to be deleted.\n *\n * @returns Updated state with deletion applied.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _deleteModelWithChildren<TState extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "UnknownState",
+              "canonicalReference": "state-model!UnknownState:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">(state: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>"
+            },
+            {
+              "kind": "Content",
+              "text": ", stateProp: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "state-model!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", cfg: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<{\n    id?: unknown;\n    ids?: unknown[];\n}>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 14,
+            "endIndex": 18
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "state",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "stateProp",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 10
+              }
+            },
+            {
+              "parameterName": "cfg",
+              "parameterTypeTokenRange": {
+                "startIndex": 11,
+                "endIndex": 13
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_deleteModelWithChildren"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "state-model!_getModelDisplayValue:function(1)",
+          "docComment": "/**\n * Get display value for model\n *\n * @param prop - Model state property\n *\n * @param value - Model value\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getModelDisplayValue<TState, TModel = "
+            },
+            {
+              "kind": "Content",
+              "text": "{}"
+            },
+            {
+              "kind": "Content",
+              "text": ">(prop: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "state-model!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", value: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TModel>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 11,
+            "endIndex": 12
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "prop",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              }
+            },
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 10
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "TModel",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "name": "_getModelDisplayValue"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "state-model!_getRangeWithRelations:function(1)",
+          "docComment": "/**\n * Get all or given range of models with specified relationships set on model according to model property config set in {@link ModelStateConfig}\n *\n * @param state - State containing model and relationship data\n *\n * @param cfg - Configuration of which relationships to include\n *\n * @param filter - A filter to select a range of models.\n *\n * @returns An array of models with relationships applied.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getRangeWithRelations<TModel extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{}"
+            },
+            {
+              "kind": "Content",
+              "text": ", TState>(state: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", cfg: "
+            },
+            {
+              "kind": "Reference",
+              "text": "RelationInclude",
+              "canonicalReference": "state-model!RelationInclude:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>"
+            },
+            {
+              "kind": "Content",
+              "text": ", filter?: "
+            },
+            {
+              "kind": "Content",
+              "text": "(value: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TModel>, index?: number, Array?: unknown[]) => boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TModel>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 15,
+            "endIndex": 17
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "state",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              }
+            },
+            {
+              "parameterName": "cfg",
+              "parameterTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 10
+              }
+            },
+            {
+              "parameterName": "filter",
+              "parameterTypeTokenRange": {
+                "startIndex": 11,
+                "endIndex": 14
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "TModel",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_getRangeWithRelations"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "state-model!_getRelationProps:function(1)",
+          "docComment": "/**\n * Get state properties of relationships specified in input config.\n *\n * @param cfg - \n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getRelationProps<TState>(cfg: "
+            },
+            {
+              "kind": "Reference",
+              "text": "RelationInclude",
+              "canonicalReference": "state-model!RelationInclude:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    children: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "state-model!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "state-model!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>>;\n    foreigns: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "state-model!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "state-model!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>>;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 13
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "cfg",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_getRelationProps"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "state-model!_getWithRelations:function(1)",
+          "docComment": "/**\n * Get model with specified relationships set on model according to model property config set in {@link ModelStateConfig}\n *\n * @param state - State containing model and relationship data\n *\n * @param cfg - Configuration of which relationships to include\n *\n * @param id - A unique property value of the model that is requested.\n *\n * @returns The requested model with relationships applied if found.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getWithRelations<TModel extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{}"
+            },
+            {
+              "kind": "Content",
+              "text": ", TState extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{}"
+            },
+            {
+              "kind": "Content",
+              "text": ">(state: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "state-model!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", cfg: "
+            },
+            {
+              "kind": "Reference",
+              "text": "RelationInclude",
+              "canonicalReference": "state-model!RelationInclude:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>"
+            },
+            {
+              "kind": "Content",
+              "text": ", id: "
+            },
+            {
+              "kind": "Content",
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "state-model!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TModel>>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 17,
+            "endIndex": 21
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "state",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 11
+              }
+            },
+            {
+              "parameterName": "cfg",
+              "parameterTypeTokenRange": {
+                "startIndex": 12,
+                "endIndex": 14
+              }
+            },
+            {
+              "parameterName": "id",
+              "parameterTypeTokenRange": {
+                "startIndex": 15,
+                "endIndex": 16
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "TModel",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_getWithRelations"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "state-model!_modifyModelWithForeigns:function(1)",
+          "docComment": "/**\n * Add or update a model and any foreign relationships set on the provided model value according to {@link ModelStateConfig}\n *\n * @param state - State containing model and foregin data\n *\n * @param stateProp - Model state property of the model\n *\n * @param entity - The model value with optional foreign props\n *\n * @param entityFn - A modifier function to add or update the model.\n *\n * @returns State with model and foreigns added or updated.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _modifyModelWithForeigns<TState extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{}"
+            },
+            {
+              "kind": "Content",
+              "text": ">(state: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>"
+            },
+            {
+              "kind": "Content",
+              "text": ", stateProp: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "state-model!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", entity: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "UnknownState",
+              "canonicalReference": "state-model!UnknownState:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ", entityFn: "
+            },
+            {
+              "kind": "Content",
+              "text": "(entity: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<{}>, stateSlice: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "state-model!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<{}>) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "state-model!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<{}>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState>>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 24,
+            "endIndex": 28
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "state",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "stateProp",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 10
+              }
+            },
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": {
+                "startIndex": 11,
+                "endIndex": 15
+              }
+            },
+            {
+              "parameterName": "entityFn",
+              "parameterTypeTokenRange": {
+                "startIndex": 16,
+                "endIndex": 23
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_modifyModelWithForeigns"
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-model!ChildRelation:interface",
+          "docComment": "/**\n * A one to many relationship child\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface ChildRelation<TState> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "ChildRelation",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ChildRelation#cascadeDelete:member",
+              "docComment": "/**\n * Set to true if children should be deleted when parents are.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "cascadeDelete?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "cascadeDelete",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ChildRelation#prop:member",
+              "docComment": "/**\n * Child state property\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "prop: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TState>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "prop",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-model!DeleteModelAction:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface DeleteModelAction<TState> extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "ModelStateAction",
+              "canonicalReference": "state-model!ModelStateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "DeleteModelAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!DeleteModelAction#payload:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "payload: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{\n        id?: unknown;\n        ids?: unknown[];\n    }"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "payload",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-model!DeleteModelAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "DeleteModelAction = \"DELETE_MODEL_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "DeleteModelAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "state-model!DeleteModelHttpEffect:class",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class DeleteModelHttpEffect implements "
+            },
+            {
+              "kind": "Reference",
+              "text": "Effect",
+              "canonicalReference": "state-model!Effect:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DeleteModelAction",
+              "canonicalReference": "state-model!DeleteModelAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<unknown>> "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "DeleteModelHttpEffect",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "state-model!DeleteModelHttpEffect:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `DeleteModelHttpEffect` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(apiMap: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommandApiMap",
+                  "canonicalReference": "state-model!ModelCommandApiMap:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", translations: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "KeyVal",
+                  "canonicalReference": "state-model!KeyVal:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "apiMap",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "translations",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 7
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-model!DeleteModelHttpEffect#createApiUrl:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "protected createApiUrl(action: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DeleteModelAction",
+                  "canonicalReference": "state-model!DeleteModelAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Object",
+                  "canonicalReference": "!Object:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", modelConfig: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelConfig",
+                  "canonicalReference": "state-model!ModelConfig:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Object",
+                  "canonicalReference": "!Object:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Object",
+                  "canonicalReference": "!Object:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", actionType: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommand",
+                  "canonicalReference": "state-model!ModelCommand:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 19,
+                "endIndex": 20
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "action",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 7
+                  }
+                },
+                {
+                  "parameterName": "modelConfig",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 8,
+                    "endIndex": 16
+                  }
+                },
+                {
+                  "parameterName": "actionType",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 17,
+                    "endIndex": 18
+                  }
+                }
+              ],
+              "name": "createApiUrl"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-model!DeleteModelHttpEffect#createCancelMessage:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "protected createCancelMessage(action: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DeleteModelAction",
+                  "canonicalReference": "state-model!DeleteModelAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<unknown>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", modelConfig: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelConfig",
+                  "canonicalReference": "state-model!ModelConfig:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<unknown, unknown>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 11,
+                "endIndex": 12
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "action",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 5
+                  }
+                },
+                {
+                  "parameterName": "modelConfig",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 6,
+                    "endIndex": 10
+                  }
+                }
+              ],
+              "name": "createCancelMessage"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-model!DeleteModelHttpEffect#createHttpBody:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "protected createHttpBody(action: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DeleteModelAction",
+                  "canonicalReference": "state-model!DeleteModelAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<unknown>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Maybe",
+                  "canonicalReference": "state-model!Maybe:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<{\n        ids: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Maybe",
+                  "canonicalReference": "state-model!Maybe:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<unknown[]>;\n    }>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 12
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "action",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 5
+                  }
+                }
+              ],
+              "name": "createHttpBody"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-model!DeleteModelHttpEffect#handle$:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "handle$(actions$: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Observable",
+                  "canonicalReference": "rxjs!Observable:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DispatchedAction",
+                  "canonicalReference": "state-model!DispatchedAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DeleteModelAction",
+                  "canonicalReference": "state-model!DeleteModelAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<unknown>>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Observable",
+                  "canonicalReference": "rxjs!Observable:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "OptimisticHttpAction",
+                  "canonicalReference": "state-model!OptimisticHttpAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 12
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "actions$",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 7
+                  }
+                }
+              ],
+              "name": "handle$"
+            }
+          ],
+          "implementsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 5
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-model!DeleteModelReducer:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "DeleteModelReducer: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Reducer",
+              "canonicalReference": "state-model!Reducer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "UnknownState",
+              "canonicalReference": "state-model!UnknownState:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">, "
+            },
+            {
+              "kind": "Reference",
+              "text": "DeleteModelAction",
+              "canonicalReference": "state-model!DeleteModelAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "UnknownState",
+              "canonicalReference": "state-model!UnknownState:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">>>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "DeleteModelReducer",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 13
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-model!FetchModelsAction:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface FetchModelsAction<TState> extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "state-model!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "FetchModelsAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!FetchModelsAction#props:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "props: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TState>>[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "props",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-model!FetchModelsAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "FetchModelsAction = \"FETCH_MODELS_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "FetchModelsAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "state-model!FetchModelsHttpEffect:class",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class FetchModelsHttpEffect implements "
+            },
+            {
+              "kind": "Reference",
+              "text": "Effect",
+              "canonicalReference": "state-model!Effect:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "FetchModelsAction",
+              "canonicalReference": "state-model!FetchModelsAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<{}>> "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "FetchModelsHttpEffect",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "state-model!FetchModelsHttpEffect:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `FetchModelsHttpEffect` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(httpClient: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpClient",
+                  "canonicalReference": "@angular/common/http!HttpClient:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", baseUrl: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "httpClient",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "baseUrl",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-model!FetchModelsHttpEffect#handle$:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "handle$(actions$: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Observable",
+                  "canonicalReference": "rxjs!Observable:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DispatchedAction",
+                  "canonicalReference": "state-model!DispatchedAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "FetchModelsAction",
+                  "canonicalReference": "state-model!FetchModelsAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<{}>, "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "UnknownState",
+                  "canonicalReference": "state-model!UnknownState:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Observable",
+                  "canonicalReference": "rxjs!Observable:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SetFetchedModelAction",
+                  "canonicalReference": "state-model!SetFetchedModelAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 10,
+                "endIndex": 14
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "actions$",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 9
+                  }
+                }
+              ],
+              "name": "handle$"
+            }
+          ],
+          "implementsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 5
+            }
+          ]
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-model!MailModelsAction:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface MailModelsAction<TState> extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "ModelStateAction",
+              "canonicalReference": "state-model!ModelStateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "MailModelsAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!MailModelsAction#ids:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "ids: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "unknown[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "ids",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!MailModelsAction#stateProp:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "stateProp: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TState>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "stateProp",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!MailModelsAction#toEmail:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "toEmail: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "toEmail",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-model!MailModelsAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "MailModelsAction = \"MAIL_MODELS_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "MailModelsAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "state-model!MailModelsHttpEffect:class",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class MailModelsHttpEffect implements "
+            },
+            {
+              "kind": "Reference",
+              "text": "Effect",
+              "canonicalReference": "state-model!Effect:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "MailModelsAction",
+              "canonicalReference": "state-model!MailModelsAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<unknown>> "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "MailModelsHttpEffect",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "state-model!MailModelsHttpEffect:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `MailModelsHttpEffect` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(httpClient: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpClient",
+                  "canonicalReference": "@angular/common/http!HttpClient:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", baseUrl: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", apiMap: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommandApiMap",
+                  "canonicalReference": "state-model!ModelCommandApiMap:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "httpClient",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "baseUrl",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "apiMap",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-model!MailModelsHttpEffect#handle$:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "handle$(actions$: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Observable",
+                  "canonicalReference": "rxjs!Observable:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DispatchedAction",
+                  "canonicalReference": "state-model!DispatchedAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MailModelsAction",
+                  "canonicalReference": "state-model!MailModelsAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<unknown>>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Observable",
+                  "canonicalReference": "rxjs!Observable:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 10
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "actions$",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 7
+                  }
+                }
+              ],
+              "name": "handle$"
+            }
+          ],
+          "implementsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 5
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-model!MODEL_COMMAND_API_MAP:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "MODEL_COMMAND_API_MAP: "
+            },
+            {
+              "kind": "Reference",
+              "text": "InjectionToken",
+              "canonicalReference": "@angular/core!InjectionToken:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ModelCommandApiMap",
+              "canonicalReference": "state-model!ModelCommandApiMap:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "MODEL_COMMAND_API_MAP",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-model!MODEL_CONFIGS:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "MODEL_CONFIGS: "
+            },
+            {
+              "kind": "Reference",
+              "text": "InjectionToken",
+              "canonicalReference": "@angular/core!InjectionToken:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ModelConfig",
+              "canonicalReference": "state-model!ModelConfig:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<unknown, unknown>[]>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "MODEL_CONFIGS",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-model!MODEL_PROP_TRANSLATIONS:var",
+          "docComment": "/**\n * Translations of all model properties\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "MODEL_PROP_TRANSLATIONS: "
+            },
+            {
+              "kind": "Reference",
+              "text": "InjectionToken",
+              "canonicalReference": "@angular/core!InjectionToken:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "KeyVal",
+              "canonicalReference": "state-model!KeyVal:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<string>>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "MODEL_PROP_TRANSLATIONS",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
+        },
+        {
+          "kind": "Enum",
+          "canonicalReference": "state-model!ModelCommand:enum",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare const enum ModelCommand "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ModelCommand",
+          "members": [
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "state-model!ModelCommand.Create:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Create = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "0"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Create",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "state-model!ModelCommand.Delete:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Delete = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "2"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Delete",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "state-model!ModelCommand.DeleteRange:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "DeleteRange = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "3"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "DeleteRange",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "state-model!ModelCommand.Mail:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Mail = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "4"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Mail",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "state-model!ModelCommand.Update:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Update = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "1"
+                }
+              ],
+              "releaseTag": "Public",
+              "name": "Update",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ]
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "state-model!ModelCommandApi:type",
+          "docComment": "/**\n * Information about model commands communication with external api\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type ModelCommandApi<TSuffix> = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    method: \"POST\" | \"PUT\" | \"DELETE\";\n    suffix: TSuffix;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ModelCommandApi",
+          "typeParameters": [
+            {
+              "typeParameterName": "TSuffix",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-model!ModelCommandApiMap:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface ModelCommandApiMap "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ModelCommandApiMap",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelCommandApiMap#\"0\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "["
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommand.Create",
+                  "canonicalReference": "state-model!ModelCommand.Create:member"
+                },
+                {
+                  "kind": "Content",
+                  "text": "]: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommandApi",
+                  "canonicalReference": "state-model!ModelCommandApi:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "\"0\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelCommandApiMap#\"1\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "["
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommand.Update",
+                  "canonicalReference": "state-model!ModelCommand.Update:member"
+                },
+                {
+                  "kind": "Content",
+                  "text": "]: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommandApi",
+                  "canonicalReference": "state-model!ModelCommandApi:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<(id: unknown) => string>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "\"1\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelCommandApiMap#\"2\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "["
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommand.Delete",
+                  "canonicalReference": "state-model!ModelCommand.Delete:member"
+                },
+                {
+                  "kind": "Content",
+                  "text": "]: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommandApi",
+                  "canonicalReference": "state-model!ModelCommandApi:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<(id: unknown) => string>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "\"2\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelCommandApiMap#\"3\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "["
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommand.DeleteRange",
+                  "canonicalReference": "state-model!ModelCommand.DeleteRange:member"
+                },
+                {
+                  "kind": "Content",
+                  "text": "]: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommandApi",
+                  "canonicalReference": "state-model!ModelCommandApi:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "\"3\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelCommandApiMap#\"4\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "["
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommand.Mail",
+                  "canonicalReference": "state-model!ModelCommand.Mail:member"
+                },
+                {
+                  "kind": "Content",
+                  "text": "]: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommandApi",
+                  "canonicalReference": "state-model!ModelCommandApi:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "\"4\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-model!ModelConfig:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface ModelConfig<TModel, TState> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TModel",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "ModelConfig",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelConfig#apiUrl:member",
+              "docComment": "/**\n * Base url for model api calls\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "apiUrl: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "apiUrl",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelConfig#children:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "children?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ChildRelation",
+                  "canonicalReference": "state-model!ChildRelation:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TState>[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "children",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelConfig#displayProp:member",
+              "docComment": "/**\n * Property used when displaying model.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "displayProp?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TModel>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "displayProp",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelConfig#fetchable:member",
+              "docComment": "/**\n * Set to true if model can be fetched from external API\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "fetchable?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "fetchable",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelConfig#foreignKey:member",
+              "docComment": "/**\n * Property used as foreign key in other models\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "foreignKey?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "foreignKey",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelConfig#foreignProp:member",
+              "docComment": "/**\n * Property used as foreign reference in other models\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "foreignProp?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "foreignProp",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelConfig#foreigns:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "foreigns?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TState>[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "foreigns",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelConfig#identifier:member",
+              "docComment": "/**\n * A property on the model that unqiuely identifies it.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "identifier: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TModel>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "identifier",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelConfig#stateProp:member",
+              "docComment": "/**\n * State property containing model data\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "stateProp: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TState>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "stateProp",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "state-model!ModelConfigMap:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type ModelConfigMap<TState> = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    [key: string]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ModelConfig",
+              "canonicalReference": "state-model!ModelConfig:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<unknown, TState>>;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ModelConfigMap",
+          "typeParameters": [
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 6
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-model!ModelStateAction:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface ModelStateAction<TState> extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "state-model!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "ModelStateAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!ModelStateAction#stateProp:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "stateProp: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TState>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "stateProp",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-model!ModelStateAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "ModelStateAction = \"MODEL_STATE_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ModelStateAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "state-model!ModelStateConfig:class",
+          "docComment": "/**\n * Responsible for setting & reading model state config data.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class ModelStateConfig "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ModelStateConfig",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "state-model!ModelStateConfig:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `ModelStateConfig` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(modelConfigs: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelConfig",
+                  "canonicalReference": "state-model!ModelConfig:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<unknown, unknown>[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "modelConfigs",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-model!ModelStateConfig.get:member(1)",
+              "docComment": "/**\n * Get model config for given state property\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static get<TModel, TState>(prop: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TState>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelConfig",
+                  "canonicalReference": "state-model!ModelConfig:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TModel, TState>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 10
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "prop",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 5
+                  }
+                }
+              ],
+              "typeParameters": [
+                {
+                  "typeParameterName": "TModel",
+                  "constraintTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                },
+                {
+                  "typeParameterName": "TState",
+                  "constraintTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                }
+              ],
+              "name": "get"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-model!ModelStateConfig.getBy:member(1)",
+              "docComment": "/**\n * Get model config for given state property grouped by key\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static getBy<TModel, TState>(prop: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TState>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", key: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelConfig",
+                  "canonicalReference": "state-model!ModelConfig:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TModel, TState>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelConfig",
+                  "canonicalReference": "state-model!ModelConfig:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TModel, TState>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 11,
+                "endIndex": 15
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "prop",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 5
+                  }
+                },
+                {
+                  "parameterName": "key",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 6,
+                    "endIndex": 10
+                  }
+                }
+              ],
+              "typeParameters": [
+                {
+                  "typeParameterName": "TModel",
+                  "constraintTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                },
+                {
+                  "typeParameterName": "TState",
+                  "constraintTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                }
+              ],
+              "name": "getBy"
+            }
+          ],
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-model!RelationInclude:interface",
+          "docComment": "/**\n * Information on which relationships should be included together with model\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface RelationInclude<TState> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "RelationInclude",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!RelationInclude#children:member",
+              "docComment": "/**\n * Child properties that should be included. Set to 'all' to get all relationships\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "children?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ImmutableArray",
+                  "canonicalReference": "state-model!ImmutableArray:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TState>> | \"all\""
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "children",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!RelationInclude#foreigns:member",
+              "docComment": "/**\n * Foreign properties that should be included. Set to 'all' to get all relationships\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "foreigns?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ImmutableArray",
+                  "canonicalReference": "state-model!ImmutableArray:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TState>> | \"all\""
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "foreigns",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!RelationInclude#prop:member",
+              "docComment": "/**\n * The model property\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "prop: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "state-model!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TState>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "prop",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "state-model!SaveAction:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type SaveAction = "
+            },
+            {
+              "kind": "Reference",
+              "text": "ModelCommand.Create",
+              "canonicalReference": "state-model!ModelCommand.Create:member"
+            },
+            {
+              "kind": "Content",
+              "text": " | "
+            },
+            {
+              "kind": "Reference",
+              "text": "ModelCommand.Update",
+              "canonicalReference": "state-model!ModelCommand.Update:member"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "SaveAction",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-model!SaveModelAction:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface SaveModelAction<TModel, TState> extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "ModelStateAction",
+              "canonicalReference": "state-model!ModelStateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TState> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TModel",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "SaveModelAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!SaveModelAction#apiUrlOverride:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "apiUrlOverride?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "apiUrlOverride",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!SaveModelAction#entity:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "entity: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "TModel"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "entity",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!SaveModelAction#saveAction:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "saveAction: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SaveAction",
+                  "canonicalReference": "state-model!SaveAction:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "saveAction",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-model!SaveModelAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "SaveModelAction = \"SAVE_MODEL_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "SaveModelAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "state-model!SaveModelHttpEffect:class",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class SaveModelHttpEffect<TModel extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{}"
+            },
+            {
+              "kind": "Content",
+              "text": ", TState extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{}"
+            },
+            {
+              "kind": "Content",
+              "text": "> implements "
+            },
+            {
+              "kind": "Reference",
+              "text": "Effect",
+              "canonicalReference": "state-model!Effect:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "SaveModelAction",
+              "canonicalReference": "state-model!SaveModelAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<TModel, TState>> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TModel",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "SaveModelHttpEffect",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "state-model!SaveModelHttpEffect:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `SaveModelHttpEffect` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(apiMap: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelCommandApiMap",
+                  "canonicalReference": "state-model!ModelCommandApiMap:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", translations: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "KeyVal",
+                  "canonicalReference": "state-model!KeyVal:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "apiMap",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "translations",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 7
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-model!SaveModelHttpEffect#createApiUrl:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "protected createApiUrl(action: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SaveModelAction",
+                  "canonicalReference": "state-model!SaveModelAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TModel, TState>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", modelConfig: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelConfig",
+                  "canonicalReference": "state-model!ModelConfig:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TModel, TState>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 11,
+                "endIndex": 12
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "action",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 5
+                  }
+                },
+                {
+                  "parameterName": "modelConfig",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 6,
+                    "endIndex": 10
+                  }
+                }
+              ],
+              "name": "createApiUrl"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-model!SaveModelHttpEffect#createCancelMessage:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "protected createCancelMessage(action: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SaveModelAction",
+                  "canonicalReference": "state-model!SaveModelAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TModel, TState>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", modelConfig: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelConfig",
+                  "canonicalReference": "state-model!ModelConfig:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TModel, TState>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 11,
+                "endIndex": 12
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "action",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 5
+                  }
+                },
+                {
+                  "parameterName": "modelConfig",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 6,
+                    "endIndex": 10
+                  }
+                }
+              ],
+              "name": "createCancelMessage"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-model!SaveModelHttpEffect#createHttpBody:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "protected createHttpBody(action: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SaveModelAction",
+                  "canonicalReference": "state-model!SaveModelAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TModel, TState>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{}"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "action",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 5
+                  }
+                }
+              ],
+              "name": "createHttpBody"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-model!SaveModelHttpEffect#createHttpRequest:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "protected createHttpRequest(action: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "state-model!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SaveModelAction",
+                  "canonicalReference": "state-model!SaveModelAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TModel, TState>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "OptimisticHttpRequest",
+                  "canonicalReference": "state-model!OptimisticHttpRequest:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "action",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 5
+                  }
+                }
+              ],
+              "name": "createHttpRequest"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "state-model!SaveModelHttpEffect#handle$:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "handle$(actions$: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Observable",
+                  "canonicalReference": "rxjs!Observable:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "DispatchedAction",
+                  "canonicalReference": "state-model!DispatchedAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SaveModelAction",
+                  "canonicalReference": "state-model!SaveModelAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TModel, TState>>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Observable",
+                  "canonicalReference": "rxjs!Observable:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "OptimisticHttpAction",
+                  "canonicalReference": "state-model!OptimisticHttpAction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 12
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "actions$",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 7
+                  }
+                }
+              ],
+              "name": "handle$"
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "state-model!SaveModelHttpEffect#type:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "protected type: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "type",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            }
+          ],
+          "implementsTokenRanges": [
+            {
+              "startIndex": 5,
+              "endIndex": 9
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-model!SaveModelReducer:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "SaveModelReducer: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Reducer",
+              "canonicalReference": "state-model!Reducer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-model!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "UnknownState",
+              "canonicalReference": "state-model!UnknownState:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">, "
+            },
+            {
+              "kind": "Reference",
+              "text": "SaveModelAction",
+              "canonicalReference": "state-model!SaveModelAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "UnknownState",
+              "canonicalReference": "state-model!UnknownState:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", "
+            },
+            {
+              "kind": "Reference",
+              "text": "UnknownState",
+              "canonicalReference": "state-model!UnknownState:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "SaveModelReducer",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 13
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-model!SetFetchedModelAction:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface SetFetchedModelAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "state-model!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "SetFetchedModelAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!SetFetchedModelAction#payload:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "payload: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "unknown[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "payload",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-model!SetFetchedModelAction#stateProp:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "stateProp: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "stateProp",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-model!SetFetchedModelAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "SetFetchedModelAction = \"SET_FETCHED_STATE_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "SetFetchedModelAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-model!SetFetchedModelReducer:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "SetFetchedModelReducer: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Reducer",
+              "canonicalReference": "state-model!Reducer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<unknown, "
+            },
+            {
+              "kind": "Reference",
+              "text": "SetFetchedModelAction",
+              "canonicalReference": "state-model!SetFetchedModelAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "SetFetchedModelReducer",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "state-model!StateModelModule:class",
+          "docComment": "/**\n * Responsible for setting provided root model state config. Should be provided in root only.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class StateModelModule "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "StateModelModule",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "state-model!StateModelModule:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `StateModelModule` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(rootConfigSetter: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ModelStateConfig",
+                  "canonicalReference": "state-model!ModelStateConfig:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "rootConfigSetter",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ]
+            }
+          ],
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "state-model!UnknownModelState:type",
+          "docComment": "/**\n * A state slice of unknown model state\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type UnknownModelState = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    [key: string]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "UnknownState",
+              "canonicalReference": "state-model!UnknownState:type"
+            },
+            {
+              "kind": "Content",
+              "text": "[];\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "UnknownModelState",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        }
+      ]
+    }
+  ]
+}

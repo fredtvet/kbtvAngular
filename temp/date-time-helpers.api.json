@@ -1,0 +1,1408 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.12.1",
+    "schemaVersion": 1003,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "canonicalReference": "date-time-helpers!",
+  "docComment": "/**\n * A library of helper functions for date logic\n *\n * @packageDocumentation\n */\n",
+  "name": "date-time-helpers",
+  "members": [
+    {
+      "kind": "EntryPoint",
+      "canonicalReference": "date-time-helpers!",
+      "name": "",
+      "members": [
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_formatDateRange:function(1)",
+          "docComment": "/**\n * Formats a range of dates to a readable format\n *\n * @param range - The range of dates to format\n *\n * @param formatFn - Formats the individual dates\n *\n * @returns A string representation of the date range.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _formatDateRange(range: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateRange",
+              "canonicalReference": "date-time-helpers!DateRange:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ", formatFn: "
+            },
+            {
+              "kind": "Content",
+              "text": "(d: unknown) => string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 9
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "range",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "formatFn",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              }
+            }
+          ],
+          "name": "_formatDateRange"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_formatShortDate:function(1)",
+          "docComment": "/**\n * Formats a date to a short string. Format dd.m.yy.\n *\n * @param d - The date to format\n *\n * @returns a date string with format dd.m.yy\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _formatShortDate(d: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateInput",
+              "canonicalReference": "date-time-helpers!DateInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "d",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "name": "_formatShortDate"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getDateOfWeek:function(1)",
+          "docComment": "/**\n * Get a date that belongs to a specified week and year.\n *\n * @param w - The week you need a date from\n *\n * @param y - The year you need a date from\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getDateOfWeek(w: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ", y: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "w",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "parameterName": "y",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              }
+            }
+          ],
+          "name": "_getDateOfWeek"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getFirstDayOfMonth:function(1)",
+          "docComment": "/**\n * Get the first day of a specified month\n *\n * @param date - A date with the desired month\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getFirstDayOfMonth(date?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateInput",
+              "canonicalReference": "date-time-helpers!DateInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "name": "_getFirstDayOfMonth"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getFirstDayOfWeek:function(1)",
+          "docComment": "/**\n * Get the first day of a specified week\n *\n * @param date - A date with the desired week\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getFirstDayOfWeek(date?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "name": "_getFirstDayOfWeek"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getFirstDayOfYear:function(1)",
+          "docComment": "/**\n * Get the first day of a specified year\n *\n * @param date - A date with the desired year\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getFirstDayOfYear(date?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateInput",
+              "canonicalReference": "date-time-helpers!DateInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "name": "_getFirstDayOfYear"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getISO:function(1)",
+          "docComment": "/**\n * Get an ISO date string from a {@link DateInput}\n *\n * @param date - \n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getISO(date: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateInput",
+              "canonicalReference": "date-time-helpers!DateInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "name": "_getISO"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getLastDayOfMonth:function(1)",
+          "docComment": "/**\n * Get the last day of a specified month\n *\n * @param date - A date with the desired month\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getLastDayOfMonth(date?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateInput",
+              "canonicalReference": "date-time-helpers!DateInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "name": "_getLastDayOfMonth"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getLastDayOfWeek:function(1)",
+          "docComment": "/**\n * Get the last day of a specified week\n *\n * @param date - A date with the desired week\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getLastDayOfWeek(date?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "name": "_getLastDayOfWeek"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getLastDayOfYear:function(1)",
+          "docComment": "/**\n * Get the last day of a specified year\n *\n * @param date - A date with the desired year\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getLastDayOfYear(date?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateInput",
+              "canonicalReference": "date-time-helpers!DateInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 10
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "name": "_getLastDayOfYear"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getMonthRange:function(1)",
+          "docComment": "/**\n * Get a date range containing the start and end date of a specified month.\n *\n * @param date - A date with the desired month\n *\n * @param getISO - Set to true if you want the output as ISO strings\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getMonthRange(date?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateInput",
+              "canonicalReference": "date-time-helpers!DateInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ", getISO?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateRange",
+              "canonicalReference": "date-time-helpers!DateRange:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 12
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "getISO",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              }
+            }
+          ],
+          "name": "_getMonthRange"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getTotalHours:function(1)",
+          "docComment": "/**\n * Get the total hours between two UNIX millisecond timestamps\n *\n * @param first - The first UNIX millisecond timestamp\n *\n * @param last - The last UNIX milliseconds timestamp\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getTotalHours(first: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ", last: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "first",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "parameterName": "last",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              }
+            }
+          ],
+          "name": "_getTotalHours"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getUnixTimeSeconds:function(1)",
+          "docComment": "/**\n * Get a UNIX timestamp for a specified date in seconds.\n *\n * @param date - \n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getUnixTimeSeconds(date?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateInput",
+              "canonicalReference": "date-time-helpers!DateInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "name": "_getUnixTimeSeconds"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getWeekRange:function(1)",
+          "docComment": "/**\n * Get a date range containing the start and end date of a specified week.\n *\n * @param date - A date with the desired week\n *\n * @param getISO - Set to true if you want the output as ISO strings\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getWeekRange(date?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ", getISO?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateRange",
+              "canonicalReference": "date-time-helpers!DateRange:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 12
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "getISO",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              }
+            }
+          ],
+          "name": "_getWeekRange"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getWeeksInYear:function(1)",
+          "docComment": "/**\n * Get the number of weeks for a specified year\n *\n * @param year - \n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getWeeksInYear(year: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "date-time-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<number>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "year",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "name": "_getWeeksInYear"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getWeekYear:function(1)",
+          "docComment": "/**\n * Get the week and year of a specified date\n *\n * @param date - \n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getWeekYear(date?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateInput",
+              "canonicalReference": "date-time-helpers!DateInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "WeekYear",
+              "canonicalReference": "date-time-helpers!WeekYear:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "name": "_getWeekYear"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_getYearRange:function(1)",
+          "docComment": "/**\n * Get a date range containing the start and end date of a specified year.\n *\n * @param date - A date with the desired year\n *\n * @param getISO - Set to true if you want the output as ISO strings\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getYearRange(date?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ", getISO?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateRange",
+              "canonicalReference": "date-time-helpers!DateRange:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 12
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "getISO",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              }
+            }
+          ],
+          "name": "_getYearRange"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "date-time-helpers!_mergeDateAndTime:function(1)",
+          "docComment": "/**\n * Merge a date value and a time value to a datetime value.\n *\n * @param date - A date input specifying the date of the result.\n *\n * @param time - A date input specifying the time of the result.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _mergeDateAndTime(date: "
+            },
+            {
+              "kind": "Content",
+              "text": "string | number | "
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableObject",
+              "canonicalReference": "date-time-helpers!ImmutableObject:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "> | undefined"
+            },
+            {
+              "kind": "Content",
+              "text": ", time: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "DateInput",
+              "canonicalReference": "date-time-helpers!DateInput:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "date-time-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 12,
+            "endIndex": 16
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "date",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 6
+              }
+            },
+            {
+              "parameterName": "time",
+              "parameterTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 11
+              }
+            }
+          ],
+          "name": "_mergeDateAndTime"
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "date-time-helpers!DateRange:interface",
+          "docComment": "/**\n * Represents the range between two specified dates\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface DateRange "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "DateRange",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "date-time-helpers!DateRange#end:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "end: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Date",
+                  "canonicalReference": "!Date:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | string | number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "end",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "date-time-helpers!DateRange#start:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "start: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Date",
+                  "canonicalReference": "!Date:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | string | number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "start",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "date-time-helpers!WeekYear:interface",
+          "docComment": "/**\n * Represents a week and year\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface WeekYear "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "WeekYear",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "date-time-helpers!WeekYear#weekNr:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "weekNr: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "weekNr",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "date-time-helpers!WeekYear#year:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "year: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "year",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        }
+      ]
+    }
+  ]
+}

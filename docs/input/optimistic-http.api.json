@@ -1,0 +1,1006 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.12.1",
+    "schemaVersion": 1003,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "canonicalReference": "optimistic-http!",
+  "docComment": "/**\n * A library for sending optimistic http requests.\n *\n * @remarks\n *\n * The library ensures that http requests are executed sequentially and http errors handled correctly.\n *\n * @packageDocumentation\n */\n",
+  "name": "optimistic-http",
+  "members": [
+    {
+      "kind": "EntryPoint",
+      "canonicalReference": "optimistic-http!",
+      "name": "",
+      "members": [
+        {
+          "kind": "Variable",
+          "canonicalReference": "optimistic-http!BASE_API_URL:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "BASE_API_URL: "
+            },
+            {
+              "kind": "Reference",
+              "text": "InjectionToken",
+              "canonicalReference": "@angular/core!InjectionToken:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<string>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "BASE_API_URL",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "optimistic-http!FormDataEntry:interface",
+          "docComment": "/**\n * Describes an object thats used to represent an entry in a form data class.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface FormDataEntry "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "FormDataEntry",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!FormDataEntry#name:member",
+              "docComment": "/**\n * The key of the entry\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "name: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "name",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!FormDataEntry#value:member",
+              "docComment": "/**\n * The value of the entry\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "value: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string | "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Blob",
+                  "canonicalReference": "!Blob:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "value",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "optimistic-http!HttpErrorAction:interface",
+          "docComment": "/**\n * Represents the action dispatched when there are http errors returned from optimistic requests. Triggers the {@link OptimisticHttpError} action.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface HttpErrorAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "optimistic-http!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "HttpErrorAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!HttpErrorAction#httpError:member",
+              "docComment": "/**\n * The error response from the external api\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "httpError: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpErrorResponse",
+                  "canonicalReference": "@angular/common/http!HttpErrorResponse:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "httpError",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "optimistic-http!HttpErrorAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "HttpErrorAction = \"HTTP_ERROR_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "HttpErrorAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "optimistic-http!HttpQueuer:class",
+          "docComment": "/**\n * Class responsible for queuing and dispatching http requests ({@link OptimisticHttpRequest}) Requires initalization by consumer.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class HttpQueuer "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "HttpQueuer",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "optimistic-http!HttpQueuer:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `HttpQueuer` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(store: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Store",
+                  "canonicalReference": "optimistic-http!Store:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "StateRequestQueue",
+                  "canonicalReference": "optimistic-http!StateRequestQueue:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "store",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 5
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "optimistic-http!HttpQueuer#initalize:member(1)",
+              "docComment": "/**\n * Initalizes the queue\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "initalize(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "initalize"
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "optimistic-http!HttpQueuer#next:member(1)",
+              "docComment": "/**\n * Allows the next in queue to execute. Should be called cautiously.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "next(): "
+                },
+                {
+                  "kind": "Content",
+                  "text": "void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "next"
+            }
+          ],
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "optimistic-http!HttpQueueShiftAction:interface",
+          "docComment": "/**\n * Represents an action used to remove the first request in queue\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface HttpQueueShiftAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "optimistic-http!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "HttpQueueShiftAction",
+          "members": [],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "optimistic-http!HttpQueueShiftAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "HttpQueueShiftAction = \"HTTP_QUEUE_SHIFT_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "HttpQueueShiftAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "optimistic-http!OPTIMISTIC_STATE_SELECTOR:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "OPTIMISTIC_STATE_SELECTOR: "
+            },
+            {
+              "kind": "Reference",
+              "text": "InjectionToken",
+              "canonicalReference": "@angular/core!InjectionToken:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "OptimisticStateSelector",
+              "canonicalReference": "optimistic-http!OptimisticStateSelector:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<unknown>>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "OPTIMISTIC_STATE_SELECTOR",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "optimistic-http!OptimisticHttpAction:interface",
+          "docComment": "/**\n * Represents an action used to make an optimistic http request.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface OptimisticHttpAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "optimistic-http!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "OptimisticHttpAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!OptimisticHttpAction#request:member",
+              "docComment": "/**\n * The request that should be sent\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "request: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "OptimisticHttpRequest",
+                  "canonicalReference": "optimistic-http!OptimisticHttpRequest:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "request",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!OptimisticHttpAction#stateSnapshot:member",
+              "docComment": "/**\n * A snapshot that is used to revert state in case of errors.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "stateSnapshot: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "optimistic-http!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<{}>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "stateSnapshot",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "optimistic-http!OptimisticHttpAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "OptimisticHttpAction = \"HTTP_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "OptimisticHttpAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "optimistic-http!OptimisticHttpErrorAction:interface",
+          "docComment": "/**\n * Represents an action that occurs when there are http errors occuring on optimistic requests.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface OptimisticHttpErrorAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "optimistic-http!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "OptimisticHttpErrorAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!OptimisticHttpErrorAction#httpError:member",
+              "docComment": "/**\n * The error response from external api\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "httpError: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpErrorResponse",
+                  "canonicalReference": "@angular/common/http!HttpErrorResponse:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "httpError",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!OptimisticHttpErrorAction#optimisticErrors:member",
+              "docComment": "/**\n * A list of cancel messages from the requests in the queue thats now canceled.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "optimisticErrors: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "optimisticErrors",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "optimistic-http!OptimisticHttpErrorAction:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "OptimisticHttpErrorAction = \"OPTIMISTIC_HTTP_ERROR_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "OptimisticHttpErrorAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "optimistic-http!OptimisticHttpModule:class",
+          "docComment": "/**\n * Responsible for providing core injectables. Should only be imported in root.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class OptimisticHttpModule "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "OptimisticHttpModule",
+          "members": [],
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "optimistic-http!OptimisticHttpRequest:interface",
+          "docComment": "/**\n * Describes an object used to make optimistic http requests.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface OptimisticHttpRequest "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "OptimisticHttpRequest",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!OptimisticHttpRequest#apiUrl:member",
+              "docComment": "/**\n * The url suffix of the api endpoint. Gets appended to base url provided with {@link BASE_API_URL}\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "apiUrl: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "apiUrl",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!OptimisticHttpRequest#body:member",
+              "docComment": "/**\n * The body of the http request\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "body: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{} | "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "FormDataEntry",
+                  "canonicalReference": "optimistic-http!FormDataEntry:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[] | null | undefined"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "body",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 4
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!OptimisticHttpRequest#cancelMessage:member",
+              "docComment": "/**\n * A custom cancel message in case the request gets canceled.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "cancelMessage?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "cancelMessage",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!OptimisticHttpRequest#method:member",
+              "docComment": "/**\n * The http method of the request\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "method: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "\"POST\" | \"PUT\" | \"DELETE\""
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "method",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "optimistic-http!OptimisticStateSelector:interface",
+          "docComment": "/**\n * Represents an object used to select what state is optimistic. Provided with the token {@link OPTIMISTIC_STATE_SELECTOR}\n *\n * @remarks\n *\n * Optimistic state is reverted when errors occur in the requests.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface OptimisticStateSelector<TState> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "OptimisticStateSelector",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!OptimisticStateSelector#props:member",
+              "docComment": "/**\n * The props that should be included / excluded\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "props: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Prop",
+                  "canonicalReference": "optimistic-http!Prop:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<TState>[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "props",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!OptimisticStateSelector#strategy:member",
+              "docComment": "/**\n * If set to 'exclude', all state except the props specified are treated optimistically. If set to 'include', only the props specified are treated optimistically.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "strategy: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "\"include\" | \"exclude\""
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "strategy",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "optimistic-http!QueuedCommand:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface QueuedCommand "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "QueuedCommand",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!QueuedCommand#dispatched:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "dispatched?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "dispatched",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!QueuedCommand#request:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "request: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "optimistic-http!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "OptimisticHttpRequest",
+                  "canonicalReference": "optimistic-http!OptimisticHttpRequest:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "request",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!QueuedCommand#stateSnapshot:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "stateSnapshot: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Maybe",
+                  "canonicalReference": "optimistic-http!Maybe:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Immutable",
+                  "canonicalReference": "optimistic-http!Immutable:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "UnknownState",
+                  "canonicalReference": "optimistic-http!UnknownState:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "stateSnapshot",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 7
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "optimistic-http!StateRequestQueue:interface",
+          "docComment": "/**\n * Represents a slice of state containing the request queue\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface StateRequestQueue "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "StateRequestQueue",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "optimistic-http!StateRequestQueue#requestQueue:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "requestQueue: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "QueuedCommand",
+                  "canonicalReference": "optimistic-http!QueuedCommand:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "requestQueue",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1603 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.12.1",
+    "schemaVersion": 1003,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "canonicalReference": "array-helpers!",
+  "docComment": "/**\n * A library of helper functions related to arrays & object arrays\n *\n * @packageDocumentation\n */\n",
+  "name": "array-helpers",
+  "members": [
+    {
+      "kind": "EntryPoint",
+      "canonicalReference": "array-helpers!",
+      "name": "",
+      "members": [
+        {
+          "kind": "Function",
+          "canonicalReference": "array-helpers!_add:function(1)",
+          "docComment": "/**\n * Add a value to the start of an array without mutating it.\n *\n * @param array - \n *\n * @param value - \n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _add<T>(array: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", value: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 9,
+            "endIndex": 11
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "array",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 8
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_add"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "array-helpers!_addOrUpdateRange:function(1)",
+          "docComment": "/**\n * Merge two arrays of objects, updating any objects that overlap\n *\n * @param originals - The original array of objects that may be overriden\n *\n * @param newEntities - The new array of objects that should be added\n *\n * @param identifier - A property on the object that uniquely identifies it\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _addOrUpdateRange<T>(originals: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", newEntities: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", identifier: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "array-helpers!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 16,
+            "endIndex": 18
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "originals",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "newEntities",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 10
+              }
+            },
+            {
+              "parameterName": "identifier",
+              "parameterTypeTokenRange": {
+                "startIndex": 11,
+                "endIndex": 15
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_addOrUpdateRange"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "array-helpers!_convertArrayToObject:function(1)",
+          "docComment": "/**\n * Convert an array to a key/value object\n *\n * @param array - \n *\n * @param key - If property on the array value that will be used as the key for its value. If null, the value is used as key.\n *\n * @returns An object containing keys with accociated values\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _convertArrayToObject<T>(array: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", key?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "array-helpers!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Response",
+              "canonicalReference": "array-helpers!~Response:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 11,
+            "endIndex": 13
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "array",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "key",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 10
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_convertArrayToObject"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "array-helpers!_filter:function(1)",
+          "docComment": "/**\n * Filter an array of items, only returning the ones who pass the specified expression\n *\n * @param originals - An array of items to be filtered\n *\n * @param expression - An expression for filtering the items\n *\n * @returns An array of items that passed the expression\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _filter<T>(originals: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", expression: "
+            },
+            {
+              "kind": "Content",
+              "text": "(value: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>, index?: number, Array?: unknown[]) => boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 10,
+            "endIndex": 12
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "originals",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "expression",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 9
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_filter"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "array-helpers!_find:function(1)",
+          "docComment": "/**\n * Find an object in an array of objects\n *\n * @param array - An array of objects\n *\n * @param value - A unique value used to find the object\n *\n * @param identifier - A property on the object that contains the unique value\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _find<T>(array: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", value: "
+            },
+            {
+              "kind": "Content",
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ", identifier: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "array-helpers!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 13,
+            "endIndex": 17
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "array",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "value",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 7
+              }
+            },
+            {
+              "parameterName": "identifier",
+              "parameterTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 12
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_find"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "array-helpers!_getRangeByIdentifier:function(1)",
+          "docComment": "/**\n * Get a range of objects\n *\n * @param originals - An array of objects\n *\n * @param ids - An array of unique values that identify the objects\n *\n * @param identifier - A property on the object that contains the unique value\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _getRangeByIdentifier<T>(originals: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", ids: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<unknown>"
+            },
+            {
+              "kind": "Content",
+              "text": ", identifier: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "array-helpers!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 14,
+            "endIndex": 16
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "originals",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "ids",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 8
+              }
+            },
+            {
+              "parameterName": "identifier",
+              "parameterTypeTokenRange": {
+                "startIndex": 9,
+                "endIndex": 13
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_getRangeByIdentifier"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "array-helpers!_groupBy:function(1)",
+          "docComment": "/**\n * Group an array of objects by a specified key\n *\n * @param array - An array of objects\n *\n * @param key - A key on the object to group by\n *\n * @returns An object with keys accociated with an array of objects matching the key value\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _groupBy<T>(array: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", key: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "array-helpers!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    [key: string]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[];\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 11,
+            "endIndex": 14
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "array",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "key",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 10
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_groupBy"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "array-helpers!_removeByIdentifier:function(1)",
+          "docComment": "/**\n * Remove an object from an array of objects\n *\n * @param originals - An array of objects\n *\n * @param deletedId - A unique value used to find the object to delete\n *\n * @param identifier - A property on the object that contains the unique value\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _removeByIdentifier<T>(originals: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", deletedId: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<unknown>"
+            },
+            {
+              "kind": "Content",
+              "text": ", identifier: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "array-helpers!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 14,
+            "endIndex": 16
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "originals",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "deletedId",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 8
+              }
+            },
+            {
+              "parameterName": "identifier",
+              "parameterTypeTokenRange": {
+                "startIndex": 9,
+                "endIndex": 13
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_removeByIdentifier"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "array-helpers!_removeRangeByIdentifier:function(1)",
+          "docComment": "/**\n * Remove a range of objects from an array of objects\n *\n * @param originals - An array of objects\n *\n * @param deletedIds - An array of unique values used to find the objects to delete\n *\n * @param identifier - A property on the object that contains the unique value\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _removeRangeByIdentifier<T>(originals: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", deletedIds: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<unknown>"
+            },
+            {
+              "kind": "Content",
+              "text": ", identifier: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "array-helpers!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 14,
+            "endIndex": 16
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "originals",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "deletedIds",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 8
+              }
+            },
+            {
+              "parameterName": "identifier",
+              "parameterTypeTokenRange": {
+                "startIndex": 9,
+                "endIndex": 13
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_removeRangeByIdentifier"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "array-helpers!_replace:function(1)",
+          "docComment": "/**\n * Replace an object in an array objects with a new value\n *\n * @param array - An array of objects\n *\n * @param obj - The new object\n *\n * @param id - A unique value identifying the object being replaced\n *\n * @param identifier - A property on the object that contains the unique value\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _replace<T>(array: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", obj: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ", id: "
+            },
+            {
+              "kind": "Content",
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": ", identifier: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "array-helpers!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 16,
+            "endIndex": 18
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "array",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            },
+            {
+              "parameterName": "obj",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 8
+              }
+            },
+            {
+              "parameterName": "id",
+              "parameterTypeTokenRange": {
+                "startIndex": 9,
+                "endIndex": 10
+              }
+            },
+            {
+              "parameterName": "identifier",
+              "parameterTypeTokenRange": {
+                "startIndex": 11,
+                "endIndex": 15
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_replace"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "array-helpers!_sortByBool:function(1)",
+          "docComment": "/**\n * Sort an array of objects by a boolean property.\n *\n * @param collection - An array of objects\n *\n * @param prop - The boolean property to sort by\n *\n * @param trueFirst - Set to true if false values should come last\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _sortByBool<T extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{}"
+            },
+            {
+              "kind": "Content",
+              "text": ">(collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", prop: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "array-helpers!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", trueFirst?: "
+            },
+            {
+              "kind": "Content",
+              "text": "boolean"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 15,
+            "endIndex": 17
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              }
+            },
+            {
+              "parameterName": "prop",
+              "parameterTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 12
+              }
+            },
+            {
+              "parameterName": "trueFirst",
+              "parameterTypeTokenRange": {
+                "startIndex": 13,
+                "endIndex": 14
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_sortByBool"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "array-helpers!_sortByDate:function(1)",
+          "docComment": "/**\n * Sort an array of objects by a date property\n *\n * @param collection - An array of objects\n *\n * @param prop - A date property on the object\n *\n * @param direction - A sorting direction\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _sortByDate<T extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{}"
+            },
+            {
+              "kind": "Content",
+              "text": ">(collection: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", prop: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "array-helpers!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", direction?: "
+            },
+            {
+              "kind": "Content",
+              "text": "\"asc\" | \"desc\""
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 15,
+            "endIndex": 19
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "collection",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              }
+            },
+            {
+              "parameterName": "prop",
+              "parameterTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 12
+              }
+            },
+            {
+              "parameterName": "direction",
+              "parameterTypeTokenRange": {
+                "startIndex": 13,
+                "endIndex": 14
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_sortByDate"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "array-helpers!_update:function(1)",
+          "docComment": "/**\n * Update a object in an object array\n *\n * @param array - An array of objects\n *\n * @param updatedObj - An object containing updated properties\n *\n * @param identifier - A property on the object containing a unique value used to match the objects\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function _update<T extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{}"
+            },
+            {
+              "kind": "Content",
+              "text": ">(array: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Maybe",
+              "canonicalReference": "array-helpers!Maybe:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "ImmutableArray",
+              "canonicalReference": "array-helpers!ImmutableArray:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", updatedObj: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": ", identifier: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Prop",
+              "canonicalReference": "array-helpers!Prop:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>>"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "array-helpers!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 18,
+            "endIndex": 20
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "array",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              }
+            },
+            {
+              "parameterName": "updatedObj",
+              "parameterTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 12
+              }
+            },
+            {
+              "parameterName": "identifier",
+              "parameterTypeTokenRange": {
+                "startIndex": 13,
+                "endIndex": 17
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "_update"
+        }
+      ]
+    }
+  ]
+}

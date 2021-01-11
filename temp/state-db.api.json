@@ -1,0 +1,454 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.12.1",
+    "schemaVersion": 1003,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "canonicalReference": "state-db!",
+  "docComment": "/**\n * A library for persisting state in a local db.\n *\n * @remarks\n *\n * The implementation uses both indexedDB and localStorage.\n *\n * @packageDocumentation\n */\n",
+  "name": "state-db",
+  "members": [
+    {
+      "kind": "EntryPoint",
+      "canonicalReference": "state-db!",
+      "name": "",
+      "members": [
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-db!LoadPersistedStateAction:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface LoadPersistedStateAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "state-db!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "LoadPersistedStateAction",
+          "members": [],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-db!LoadPersistedStateAction:var",
+          "docComment": "/**\n * Action responsible for loading state. This also initalizes the db and should be called when the app initalizes.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "LoadPersistedStateAction = \"LOAD_PERSISTED_STATE_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "LoadPersistedStateAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "state-db!MapFn:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type MapFn<T, U = "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": "> = "
+            },
+            {
+              "kind": "Content",
+              "text": "(value: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Immutable",
+              "canonicalReference": "state-db!Immutable:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>) => U"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "MapFn",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "U",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 7
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-db!SetPersistedCriticalStateAction:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface SetPersistedCriticalStateAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "state-db!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "SetPersistedCriticalStateAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-db!SetPersistedCriticalStateAction#state:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "state: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{}"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "state",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-db!SetPersistedCriticalStateAction:var",
+          "docComment": "/**\n * Action responsible for setting critical state.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "SetPersistedCriticalStateAction = \"SET_PERSISTED_CRITICAL_STATE_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "SetPersistedCriticalStateAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-db!SetPersistedStateAction:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface SetPersistedStateAction extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "StateAction",
+              "canonicalReference": "state-db!StateAction:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "SetPersistedStateAction",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-db!SetPersistedStateAction#state:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "state: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{}"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "state",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-db!SetPersistedStateAction:var",
+          "docComment": "/**\n * Action responsible for setting non-critical state.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "SetPersistedStateAction = \"SET_PERSISTED_STATE_ACTION\""
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "SetPersistedStateAction",
+          "variableTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "state-db!STATE_DB_CONFIG:var",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "STATE_DB_CONFIG: "
+            },
+            {
+              "kind": "Reference",
+              "text": "InjectionToken",
+              "canonicalReference": "@angular/core!InjectionToken:class"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "StateDbConfig",
+              "canonicalReference": "state-db!StateDbConfig:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<unknown>>"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "STATE_DB_CONFIG",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "state-db!StateDbConfig:type",
+          "docComment": "/**\n * Represents a key/value object with configurations of the db properties.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type StateDbConfig<TState> = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    [key in keyof TState]: "
+            },
+            {
+              "kind": "Reference",
+              "text": "StatePropConfig",
+              "canonicalReference": "state-db!StatePropConfig:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "StateDbConfig",
+          "typeParameters": [
+            {
+              "typeParameterName": "TState",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "state-db!StateDbModule:class",
+          "docComment": "/**\n * Responsible for injecting core providers. Should only be imported in root.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class StateDbModule "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "StateDbModule",
+          "members": [],
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "state-db!StatePropConfig:interface",
+          "docComment": "/**\n * Represents a object with configurations for a state property that should be persisted by the db.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface StatePropConfig "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "StatePropConfig",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-db!StatePropConfig#critical:member",
+              "docComment": "/**\n * If set to true, the state will be stored in localStorage to ensure fast loading time. This causes read/writes to be synchronous and should therefore be used with consideration.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "critical?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "critical",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "state-db!StatePropConfig#onPersistMapping:member",
+              "docComment": "/**\n * A mapping function that runs before value changes are persisted to the db.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "onPersistMapping?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MapFn",
+                  "canonicalReference": "state-db!MapFn:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<any, any>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "onPersistMapping",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        }
+      ]
+    }
+  ]
+}
