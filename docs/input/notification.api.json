@@ -7,7 +7,7 @@
   },
   "kind": "Package",
   "canonicalReference": "notification!",
-  "docComment": "/**\n * A library for sending optimistic http requests.\n *\n * @remarks\n *\n * The library ensures that http requests are executed sequentially and http errors handled correctly.\n *\n * @packageDocumentation\n */\n",
+  "docComment": "/**\n * A library for notifying the user of a system with a snack bar popup.\n *\n * @packageDocumentation\n */\n",
   "name": "notification",
   "members": [
     {
@@ -16,52 +16,83 @@
       "name": "",
       "members": [
         {
-          "kind": "Variable",
-          "canonicalReference": "notification!BASE_API_URL:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "BASE_API_URL: "
-            },
-            {
-              "kind": "Reference",
-              "text": "InjectionToken",
-              "canonicalReference": "@angular/core!InjectionToken:class"
-            },
-            {
-              "kind": "Content",
-              "text": "<string>"
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "BASE_API_URL",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 3
-          }
-        },
-        {
           "kind": "Interface",
-          "canonicalReference": "notification!FormDataEntry:interface",
-          "docComment": "/**\n * Describes an object thats used to represent an entry in a form data class.\n */\n",
+          "canonicalReference": "notification!AppNotification:interface",
+          "docComment": "/**\n * Represents an object with data required to display a notification\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface FormDataEntry "
+              "text": "export interface AppNotification "
             }
           ],
           "releaseTag": "Public",
-          "name": "FormDataEntry",
+          "name": "AppNotification",
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "notification!FormDataEntry#name:member",
-              "docComment": "/**\n * The key of the entry\n */\n",
+              "canonicalReference": "notification!AppNotification#details:member",
+              "docComment": "/**\n * Additional information displayed as a list of strings\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "name: "
+                  "text": "details?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Maybe",
+                  "canonicalReference": "notification!Maybe:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string>[]"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "details",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "notification!AppNotification#duration:member",
+              "docComment": "/**\n * A custom duration that the notification will be displayed for\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "duration?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "duration",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "notification!AppNotification#title:member",
+              "docComment": "/**\n * A title on the notification snack bar\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "title?: "
                 },
                 {
                   "kind": "Content",
@@ -72,9 +103,9 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
+              "isOptional": true,
               "releaseTag": "Public",
-              "name": "name",
+              "name": "title",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -82,21 +113,17 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "notification!FormDataEntry#value:member",
-              "docComment": "/**\n * The value of the entry\n */\n",
+              "canonicalReference": "notification!AppNotification#type:member",
+              "docComment": "/**\n * The type of notification which determines styling and duration\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "value: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string | "
+                  "text": "type: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "Blob",
-                  "canonicalReference": "!Blob:interface"
+                  "text": "NotificationType",
+                  "canonicalReference": "notification!NotificationType:enum"
                 },
                 {
                   "kind": "Content",
@@ -105,128 +132,56 @@
               ],
               "isOptional": false,
               "releaseTag": "Public",
-              "name": "value",
+              "name": "type",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 3
+                "endIndex": 2
               }
             }
           ],
           "extendsTokenRanges": []
         },
         {
-          "kind": "Interface",
-          "canonicalReference": "notification!HttpErrorAction:interface",
-          "docComment": "/**\n * Represents the action dispatched when there are http errors returned from optimistic requests. Triggers the {@link OptimisticHttpError} action.\n */\n",
+          "kind": "Class",
+          "canonicalReference": "notification!NotificationModule:class",
+          "docComment": "/**\n * Responsible for declaring components.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface HttpErrorAction extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "StateAction",
-              "canonicalReference": "notification!StateAction:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " "
+              "text": "export declare class NotificationModule "
             }
           ],
           "releaseTag": "Public",
-          "name": "HttpErrorAction",
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!HttpErrorAction#httpError:member",
-              "docComment": "/**\n * The error response from the external api\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "httpError: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "HttpErrorResponse",
-                  "canonicalReference": "@angular/common/http!HttpErrorResponse:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "httpError",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "extendsTokenRanges": [
-            {
-              "startIndex": 1,
-              "endIndex": 3
-            }
-          ]
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "notification!HttpErrorAction:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "HttpErrorAction = \"HTTP_ERROR_ACTION\""
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "HttpErrorAction",
-          "variableTypeTokenRange": {
-            "startIndex": 0,
-            "endIndex": 0
-          }
+          "name": "NotificationModule",
+          "members": [],
+          "implementsTokenRanges": []
         },
         {
           "kind": "Class",
-          "canonicalReference": "notification!HttpQueuer:class",
-          "docComment": "/**\n * Class responsible for queuing and dispatching http requests ({@link OptimisticHttpRequest}) Requires initalization by consumer.\n */\n",
+          "canonicalReference": "notification!NotificationService:class",
+          "docComment": "/**\n * Responsible for queueing and displaying notifications provided by user as a snack bar\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare class HttpQueuer "
+              "text": "export declare class NotificationService "
             }
           ],
           "releaseTag": "Public",
-          "name": "HttpQueuer",
+          "name": "NotificationService",
           "members": [
             {
               "kind": "Constructor",
-              "canonicalReference": "notification!HttpQueuer:constructor(1)",
-              "docComment": "/**\n * Constructs a new instance of the `HttpQueuer` class\n */\n",
+              "canonicalReference": "notification!NotificationService:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `NotificationService` class\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "constructor(store: "
+                  "text": "constructor(snackBar: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "Store",
-                  "canonicalReference": "notification!Store:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "StateRequestQueue",
-                  "canonicalReference": "notification!StateRequestQueue:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ">"
+                  "text": "MatSnackBar",
+                  "canonicalReference": "@angular/material/snack-bar!MatSnackBar:class"
                 },
                 {
                   "kind": "Content",
@@ -237,191 +192,35 @@
               "overloadIndex": 1,
               "parameters": [
                 {
-                  "parameterName": "store",
+                  "parameterName": "snackBar",
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
-                    "endIndex": 5
+                    "endIndex": 2
                   }
                 }
               ]
             },
             {
-              "kind": "Method",
-              "canonicalReference": "notification!HttpQueuer#initalize:member(1)",
-              "docComment": "/**\n * Initalizes the queue\n */\n",
+              "kind": "Property",
+              "canonicalReference": "notification!NotificationService#notify:member",
+              "docComment": "/**\n * Displays the provided notification when the snack bar is available\n *\n * @param notification - \n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "initalize(): "
+                  "text": "notify: "
                 },
                 {
                   "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "releaseTag": "Public",
-              "overloadIndex": 1,
-              "parameters": [],
-              "name": "initalize"
-            },
-            {
-              "kind": "Method",
-              "canonicalReference": "notification!HttpQueuer#next:member(1)",
-              "docComment": "/**\n * Allows the next in queue to execute. Should be called cautiously.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "next(): "
-                },
-                {
-                  "kind": "Content",
-                  "text": "void"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "releaseTag": "Public",
-              "overloadIndex": 1,
-              "parameters": [],
-              "name": "next"
-            }
-          ],
-          "implementsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "notification!HttpQueueShiftAction:interface",
-          "docComment": "/**\n * Represents an action used to remove the first request in queue\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface HttpQueueShiftAction extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "StateAction",
-              "canonicalReference": "notification!StateAction:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " "
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "HttpQueueShiftAction",
-          "members": [],
-          "extendsTokenRanges": [
-            {
-              "startIndex": 1,
-              "endIndex": 3
-            }
-          ]
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "notification!HttpQueueShiftAction:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "HttpQueueShiftAction = \"HTTP_QUEUE_SHIFT_ACTION\""
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "HttpQueueShiftAction",
-          "variableTypeTokenRange": {
-            "startIndex": 0,
-            "endIndex": 0
-          }
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "notification!OPTIMISTIC_STATE_SELECTOR:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "OPTIMISTIC_STATE_SELECTOR: "
-            },
-            {
-              "kind": "Reference",
-              "text": "InjectionToken",
-              "canonicalReference": "@angular/core!InjectionToken:class"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "OptimisticStateSelector",
-              "canonicalReference": "notification!OptimisticStateSelector:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<unknown>>"
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "OPTIMISTIC_STATE_SELECTOR",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 5
-          }
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "notification!OptimisticHttpAction:interface",
-          "docComment": "/**\n * Represents an action used to make an optimistic http request.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface OptimisticHttpAction extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "StateAction",
-              "canonicalReference": "notification!StateAction:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " "
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "OptimisticHttpAction",
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!OptimisticHttpAction#request:member",
-              "docComment": "/**\n * The request that should be sent\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "request: "
+                  "text": "(notification: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "OptimisticHttpRequest",
-                  "canonicalReference": "notification!OptimisticHttpRequest:interface"
+                  "text": "AppNotification",
+                  "canonicalReference": "notification!AppNotification:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ") => void"
                 },
                 {
                   "kind": "Content",
@@ -430,575 +229,93 @@
               ],
               "isOptional": false,
               "releaseTag": "Public",
-              "name": "request",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!OptimisticHttpAction#stateSnapshot:member",
-              "docComment": "/**\n * A snapshot that is used to revert state in case of errors.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "stateSnapshot: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Immutable",
-                  "canonicalReference": "notification!Immutable:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<{}>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "stateSnapshot",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
-            }
-          ],
-          "extendsTokenRanges": [
-            {
-              "startIndex": 1,
-              "endIndex": 3
-            }
-          ]
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "notification!OptimisticHttpAction:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "OptimisticHttpAction = \"HTTP_ACTION\""
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "OptimisticHttpAction",
-          "variableTypeTokenRange": {
-            "startIndex": 0,
-            "endIndex": 0
-          }
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "notification!OptimisticHttpErrorAction:interface",
-          "docComment": "/**\n * Represents an action that occurs when there are http errors occuring on optimistic requests.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface OptimisticHttpErrorAction extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "StateAction",
-              "canonicalReference": "notification!StateAction:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " "
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "OptimisticHttpErrorAction",
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!OptimisticHttpErrorAction#httpError:member",
-              "docComment": "/**\n * The error response from external api\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "httpError: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "HttpErrorResponse",
-                  "canonicalReference": "@angular/common/http!HttpErrorResponse:class"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "httpError",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!OptimisticHttpErrorAction#optimisticErrors:member",
-              "docComment": "/**\n * A list of cancel messages from the requests in the queue thats now canceled.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "optimisticErrors: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "optimisticErrors",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "extendsTokenRanges": [
-            {
-              "startIndex": 1,
-              "endIndex": 3
-            }
-          ]
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "notification!OptimisticHttpErrorAction:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "OptimisticHttpErrorAction = \"OPTIMISTIC_HTTP_ERROR_ACTION\""
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "OptimisticHttpErrorAction",
-          "variableTypeTokenRange": {
-            "startIndex": 0,
-            "endIndex": 0
-          }
-        },
-        {
-          "kind": "Class",
-          "canonicalReference": "notification!OptimisticHttpModule:class",
-          "docComment": "/**\n * Responsible for providing core injectables. Should only be imported in root.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare class OptimisticHttpModule "
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "OptimisticHttpModule",
-          "members": [],
-          "implementsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "notification!OptimisticHttpRequest:interface",
-          "docComment": "/**\n * Describes an object used to make optimistic http requests.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface OptimisticHttpRequest "
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "OptimisticHttpRequest",
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!OptimisticHttpRequest#apiUrl:member",
-              "docComment": "/**\n * The url suffix of the api endpoint. Gets appended to base url provided with {@link BASE_API_URL}\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "apiUrl: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "apiUrl",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!OptimisticHttpRequest#body:member",
-              "docComment": "/**\n * The body of the http request\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "body: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "{} | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "FormDataEntry",
-                  "canonicalReference": "notification!FormDataEntry:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[] | null | undefined"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "body",
+              "name": "notify",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 4
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!OptimisticHttpRequest#cancelMessage:member",
-              "docComment": "/**\n * A custom cancel message in case the request gets canceled.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "cancelMessage?: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "string"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": true,
-              "releaseTag": "Public",
-              "name": "cancelMessage",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!OptimisticHttpRequest#method:member",
-              "docComment": "/**\n * The http method of the request\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "method: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "\"POST\" | \"PUT\" | \"DELETE\""
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "method",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "notification!OptimisticStateSelector:interface",
-          "docComment": "/**\n * Represents an object used to select what state is optimistic. Provided with the token {@link OPTIMISTIC_STATE_SELECTOR}\n *\n * @remarks\n *\n * Optimistic state is reverted when errors occur in the requests.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface OptimisticStateSelector<TState> "
-            }
-          ],
-          "releaseTag": "Public",
-          "typeParameters": [
-            {
-              "typeParameterName": "TState",
-              "constraintTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
               },
-              "defaultTypeTokenRange": {
-                "startIndex": 0,
-                "endIndex": 0
-              }
+              "isStatic": false
             }
           ],
-          "name": "OptimisticStateSelector",
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!OptimisticStateSelector#props:member",
-              "docComment": "/**\n * The props that should be included / excluded\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "props: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Prop",
-                  "canonicalReference": "notification!Prop:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<TState>[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "props",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
-            },
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!OptimisticStateSelector#strategy:member",
-              "docComment": "/**\n * If set to 'exclude', all state except the props specified are treated optimistically. If set to 'include', only the props specified are treated optimistically.\n */\n",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "strategy: "
-                },
-                {
-                  "kind": "Content",
-                  "text": "\"include\" | \"exclude\""
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "strategy",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            }
-          ],
-          "extendsTokenRanges": []
+          "implementsTokenRanges": []
         },
         {
-          "kind": "Interface",
-          "canonicalReference": "notification!QueuedCommand:interface",
-          "docComment": "",
+          "kind": "Enum",
+          "canonicalReference": "notification!NotificationType:enum",
+          "docComment": "/**\n * The different type of notifications supported.\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export interface QueuedCommand "
+              "text": "export declare const enum NotificationType "
             }
           ],
           "releaseTag": "Public",
-          "name": "QueuedCommand",
+          "name": "NotificationType",
           "members": [
             {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!QueuedCommand#dispatched:member",
+              "kind": "EnumMember",
+              "canonicalReference": "notification!NotificationType.Error:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "dispatched?: "
+                  "text": "Error = "
                 },
                 {
                   "kind": "Content",
-                  "text": "boolean"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
+                  "text": "2"
                 }
               ],
-              "isOptional": true,
               "releaseTag": "Public",
-              "name": "dispatched",
-              "propertyTypeTokenRange": {
+              "name": "Error",
+              "initializerTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
               }
             },
             {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!QueuedCommand#request:member",
+              "kind": "EnumMember",
+              "canonicalReference": "notification!NotificationType.Success:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "request: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Immutable",
-                  "canonicalReference": "notification!Immutable:type"
+                  "text": "Success = "
                 },
                 {
                   "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "OptimisticHttpRequest",
-                  "canonicalReference": "notification!OptimisticHttpRequest:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ">"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
+                  "text": "0"
                 }
               ],
-              "isOptional": false,
               "releaseTag": "Public",
-              "name": "request",
-              "propertyTypeTokenRange": {
+              "name": "Success",
+              "initializerTokenRange": {
                 "startIndex": 1,
-                "endIndex": 5
+                "endIndex": 2
               }
             },
             {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!QueuedCommand#stateSnapshot:member",
+              "kind": "EnumMember",
+              "canonicalReference": "notification!NotificationType.Warning:member",
               "docComment": "",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "stateSnapshot: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Maybe",
-                  "canonicalReference": "notification!Maybe:type"
+                  "text": "Warning = "
                 },
                 {
                   "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Immutable",
-                  "canonicalReference": "notification!Immutable:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "UnknownState",
-                  "canonicalReference": "notification!UnknownState:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": ">>"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
+                  "text": "1"
                 }
               ],
-              "isOptional": false,
               "releaseTag": "Public",
-              "name": "stateSnapshot",
-              "propertyTypeTokenRange": {
+              "name": "Warning",
+              "initializerTokenRange": {
                 "startIndex": 1,
-                "endIndex": 7
+                "endIndex": 2
               }
             }
-          ],
-          "extendsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "notification!StateRequestQueue:interface",
-          "docComment": "/**\n * Represents a slice of state containing the request queue\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface StateRequestQueue "
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "StateRequestQueue",
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "notification!StateRequestQueue#requestQueue:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "requestQueue: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "QueuedCommand",
-                  "canonicalReference": "notification!QueuedCommand:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "[]"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Public",
-              "name": "requestQueue",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
-            }
-          ],
-          "extendsTokenRanges": []
+          ]
         }
       ]
     }

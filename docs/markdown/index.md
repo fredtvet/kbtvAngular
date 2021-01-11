@@ -16,7 +16,7 @@
 |  [form-sheet](./form-sheet.md) | A library for rendering dynamic forms in a mat bottom sheet. |
 |  [global-types](./global-types.md) | A library of generic typescript types |
 |  [model-form](./model-form.md) | A library for rendering dynamic forms for models specified in the app . |
-|  [notification](./notification.md) | A library for sending optimistic http requests. |
+|  [notification](./notification.md) | A library for notifying the user of a system with a snack bar popup. |
 |  [optimistic-http](./optimistic-http.md) | A library for sending optimistic http requests. |
 |  [state-auth](./state-auth.md) | A library with services that assists in authorizing users. |
 |  [state-db](./state-db.md) | A library for persisting state in a local db. |

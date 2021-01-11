@@ -3,6 +3,7 @@
  * @packageDocumentation
  */
 
+/** A value that can't be mutated */
 export type Immutable<T> =
     T extends (infer R)[] ? ImmutableArray<R> :
     T extends Function ? T :
