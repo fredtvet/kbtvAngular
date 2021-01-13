@@ -6,7 +6,7 @@ export interface ModelConfig<TModel, TState> {
     stateProp: Prop<TState>,
     /** Base url for model api calls */
     apiUrl: string, 
-    /** A property on the model that unqiuely identifies it. */
+    /** A property used to get a value that unqiuely identifies the model. */
     identifier: Prop<TModel>, 
     /** Set to true if model can be fetched from external API  */
     fetchable?: boolean, 
@@ -14,7 +14,7 @@ export interface ModelConfig<TModel, TState> {
     foreignProp?: string,
     /** Property used as foreign key in other models */
     foreignKey?: string,
-    /** Property used when displaying model. */
+    /** Property used to get a unique value used in model views. */
     displayProp?: Prop<TModel>,
     children?: ChildRelation<TState>[],
     foreigns?: Prop<TState>[]

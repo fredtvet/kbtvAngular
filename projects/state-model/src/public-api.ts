@@ -1,7 +1,7 @@
 /**
  * A library for managing relational state in the application and in communications with an external api.
  * @remarks 
- * The library treats communications with the external api optimistically, therefore ids are generated as a random string on the client.
+ * The library treats commands sent to the external api optimistically, and therefore expects no state returned.
  * The library does not support many-to-many relationships. 
  * @packageDocumentation
  */
