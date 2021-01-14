@@ -83,6 +83,10 @@
       "cdk-selectable": [
         "dist/cdk-selectable/cdk-selectable",
         "dist/cdk-selectable"
+      ],
+      "model-data-table": [
+        "dist/model-data-table/model-data-table",
+        "dist/model-data-table"
       ]
     }
   },
@@ -91,7 +95,9 @@
     "strictInjectionParameters": true
   },
   "typedocOptions": {
-    "entryPoints": ["projects/**/src/public-api.ts"],
+    "entryPoints": [
+      "projects/**/src/public-api.ts"
+    ],
     "out": "docs"
   }
 }

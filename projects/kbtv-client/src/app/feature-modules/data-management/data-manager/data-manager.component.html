@@ -7,16 +7,17 @@
 
     <app-data-property-picker
       [properties]="properties" 
-      [selectedProperty]="vm.selectedProp" 
+      [selectedProperty]="vm.selectedProperty" 
       (propertySelected)="updateSelectedProperty($event)">
     </app-data-property-picker>
 
   </ng-container>
 
-  <app-data-table class="h-100" #dataTable
-    [config]="vm"
-    (itemEdited)="updateItem($event)">
-  </app-data-table>
+  <lib-model-data-table #dataTable class="h-100" 
+    [modelProperty]="vm.selectedProperty" 
+    agGridTheme="ag-theme-balham" 
+    overlayNoRowsTemplate="Tomt">
+  </lib-model-data-table>
 
 </app-main-skeleton>
 

@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Model } from "@core/models";
 import { ModelState } from '@core/state/model-state.interface';
-import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
-import { Immutable, Prop } from "global-types";
-import { Observable, of } from "rxjs";
-import { distinctUntilChanged, map, switchMap } from "rxjs/operators";
+import { translations } from "@shared/translations";
+import { ConfirmDialogService } from "confirm-dialog";
+import { Prop } from "global-types";
+import { ModelFormService } from "model-form";
 import { ComponentStore, Store } from 'state-management';
-import { DeleteModelAction, FetchModelsAction, ModelCommand, ModelStateConfig } from 'state-model';
+import { DeleteModelAction, FetchModelsAction } from 'state-model';
 import { ComponentState } from '../interfaces/component-state.interface';
-import { DataConfig } from '../interfaces/data-config.interface';
+import { PropertyFormMap } from "./property-form.map";
 import { UpdateSelectedPropertyAction } from './state/update-selected-property.reducer';
 
 @Injectable()
@@ -19,17 +19,15 @@ export class DataManagerFacade  {
 
     selectedProperty$ = this.componentStore.selectProperty$<Prop<ModelState>>("selectedProperty");
 
-    dataConfig$ = this.selectedProperty$.pipe(
-        distinctUntilChanged(), 
-        switchMap(x => x ? this.getDataConfig$(x) : of(undefined)));
-
     get selectedProperty() {
         return this.componentStore.state.selectedProperty;
     }
 
     constructor(
         private store: Store<ModelState>,
-        private componentStore: ComponentStore<ComponentState>
+        private componentStore: ComponentStore<ComponentState>,     
+        private confirmService: ConfirmDialogService,
+        private formService: ModelFormService
     ) { }
 
     updateSelectedProperty = (prop: Prop<ModelState>) => {
@@ -37,31 +35,30 @@ export class DataManagerFacade  {
         this.store.dispatch(<FetchModelsAction<ModelState>>{ type: FetchModelsAction, props: [prop] })
     }
 
-    update = (form: Model): void =>
+    createItem = (): void => {
         this.selectedProperty ? 
-        this.store.dispatch(_formToSaveModelConverter({
-                stateProp: this.selectedProperty, 
-                saveAction: ModelCommand.Update,
-                formValue: form
-            })) : undefined
-    
-  
-    delete = (payload: {id?: string, ids?: string[]}): void => 
+        this.formService.open<ModelState, Model>({formConfig: {
+          stateProp: this.selectedProperty,    
+          dynamicForm: PropertyFormMap[this.selectedProperty]
+        }}) : undefined
+    }
+
+    deleteItems = (ids?: string[]): void =>{ 
+        if(!ids?.length) return;
+        const translatedProp = translations[<string> this.selectedProperty?.toLowerCase()]?.toLowerCase();
+        this.confirmService.open({
+          title: `Slett ${ids.length > 1 ? 'ressurser' : 'ressurs'}?`,
+          message: `Bekreft at du ønsker å slette ${ids.length} ${translatedProp}`,  
+          confirmText: 'Slett',
+          confirmCallback: () => this._deleteItems(ids)
+        })
+    }
+
+    private _deleteItems(ids: string[]): void{
         this.store.dispatch(<DeleteModelAction<ModelState>>{ 
             type: DeleteModelAction, 
             stateProp: this.selectedProperty, 
-            payload 
+            payload: {ids} 
         });
- 
-    private getDataConfig$(prop: Prop<Immutable<ModelState>>): Observable<DataConfig>{        
-        const foreigns = ModelStateConfig.get(prop).foreigns
-        return this.store.select$([prop, ...(foreigns || [])]).pipe(
-            map(state => { 
-            return {
-                data: state ? state[prop] : undefined,
-                foreigns: state || {},
-                selectedProp: prop
-            }
-        }));
     }
 }

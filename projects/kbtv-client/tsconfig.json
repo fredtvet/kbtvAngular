@@ -69,6 +69,10 @@
       "cdk-selectable": [
         "../../dist/cdk-selectable/cdk-selectable",
         "../../dist/cdk-selectable"
+      ],
+      "model-data-table": [
+        "../../dist/model-data-table/model-data-table",
+        "../../dist/model-data-table"
       ]
     },
   },

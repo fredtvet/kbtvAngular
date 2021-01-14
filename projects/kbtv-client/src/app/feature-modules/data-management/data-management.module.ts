@@ -1,20 +1,23 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CssLoaderService } from '@core/services/css-loader.service';
 import { AppSaveModelProviders } from '@core/state/providers.const';
-import { ModelFormModule } from 'model-form';
+import { LazyStyles } from '@shared-app/enums/lazy-styles.enum';
 import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
 import { SharedModule } from '@shared/shared.module';
-import { AppAgGridModule } from 'src/app/app-ag-grid/app-ag-grid.module';
+import { translations } from '@shared/translations';
+import { ModelDataTableModule, MODEL_DATA_TABLES_CONFIG, MODEL_NAME_TRANSLATIONS } from 'model-data-table';
+import { ModelFormModule } from 'model-form';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
+import { DeleteModelHttpEffect, DeleteModelReducer } from 'state-model';
 import { DataManagementRoutingModule } from './data-management-routing.module';
 import { DataManagerComponent } from './data-manager/data-manager.component';
 import { DataPropertyPickerComponent } from './data-manager/data-property-picker/data-property-picker.component';
-import { DataTableComponent } from './data-manager/data-table/data-table.component';
-import { DeleteModelHttpEffect, DeleteModelReducer } from 'state-model'
+import { ModelDataTables } from './model-data-tables.const';
+
 @NgModule({
   declarations: [
     DataManagerComponent,
-    DataTableComponent,
     DataPropertyPickerComponent,
   ],
   imports: [
@@ -22,12 +25,18 @@ import { DeleteModelHttpEffect, DeleteModelReducer } from 'state-model'
     FormsModule,
     ModelFormModule.forFeature(_formToSaveModelConverter),
     DataManagementRoutingModule,
-    AppAgGridModule,
+    ModelDataTableModule
   ],
   providers: [
     ...AppSaveModelProviders,
+    {provide: MODEL_NAME_TRANSLATIONS, useValue: translations},
+    {provide: MODEL_DATA_TABLES_CONFIG, useValue: ModelDataTables},
     {provide: STORE_EFFECTS, useClass: DeleteModelHttpEffect, multi: true},
     {provide: STORE_REDUCERS, useValue: DeleteModelReducer, multi: true},
   ]
 })
-export class DataManagementModule { }
+export class DataManagementModule { 
+  constructor(private cssLoaderService: CssLoaderService){
+    this.cssLoaderService.load(LazyStyles.AgGrid);
+  }
+}
