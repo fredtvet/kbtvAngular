@@ -11,7 +11,7 @@ export interface DeviceInfo {
 @Injectable({providedIn: 'root'})
 export class DeviceInfoService {
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
   get isOnline(){ return navigator.onLine };
 
@@ -24,6 +24,8 @@ export class DeviceInfoService {
     //   sub.complete();
     // })
   );
+
+  isIphone = /(iPad|iPhone)/g.test(navigator.userAgent);
 
   isXs$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.XSmall)
     .pipe(

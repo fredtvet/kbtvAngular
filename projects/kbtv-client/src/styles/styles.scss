@@ -17,6 +17,8 @@
 html, body { height: 100%; overflow:hidden;padding:0;margin:0; overflow-x:hidden}
 body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 
+.iphone-body{ height: calc(100vh - 16px); }
+
 .primary{
   background-color:$primary;
   color: mat-color($app-primary, default-contrast);
@@ -112,10 +114,6 @@ a {
 .image_viewer_dialog{max-width:none!important;}
 
 .image_viewer_dialog .mat-dialog-container{background-color:black!important;padding:0!important}
-
-.notification-margin{
-  
-}
 
 .notification-error{
   margin-bottom:$bottom-nav-height + $gap-size * 2px!important;
