@@ -3,7 +3,7 @@
     <app-main-top-nav-bar navbar [config]="navConfig" >
     </app-main-top-nav-bar>
 
-    <div class="max-width">
+    <div class="max-width bottom-fab-padding">
         <app-note-card *ngFor="let note of notes$ | async; trackBy: trackByNote" [note]="note" 
             (editClicked)="openEditNoteForm($event)">
         </app-note-card>
