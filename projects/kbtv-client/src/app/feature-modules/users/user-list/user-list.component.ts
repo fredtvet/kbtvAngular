@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { User } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { FormService } from 'form-sheet';
-import { ModelFormService } from 'model-form';
-import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { UserPasswordForm } from '@shared/constants/forms/password-form.const';
-import { CreateUserForm, EditUserForm, UserForm } from '@shared/constants/model-forms/save-user-forms.const';
-import { Observable } from 'rxjs';
-import { UsersFacade } from '../users.facade';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { Roles } from '@shared-app/enums/roles.enum';
+import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { UserPasswordForm } from '@shared/constants/forms/password-form.const';
+import { CreateUserForm, EditUserForm, UserForm } from '@shared/constants/model-forms/save-user-forms.const';
+import { FormService } from 'form-sheet';
+import { ModelFormService } from 'model-form';
+import { Observable } from 'rxjs';
+import { UsersFacade } from '../users.facade';
 
 @Component({
   selector: 'app-user-list',
@@ -22,21 +22,19 @@ export class UserListComponent {
   ButtonTypes = ButtonTypes;
 
   users$: Observable<User[]> = this.facade.sortedUsers$;
-  navConfig: MainTopNavConfig;
+  fabs: AppButton[];
 
   constructor(
     private facade: UsersFacade,
     private modelFormService: ModelFormService,
     private formService: FormService) {
-      this.navConfig = {
-        title:  "Brukere",
-        buttons: [{
-          icon: "person_add", 
-          aria: 'Ny bruker',
-          callback: this.openUserForm, 
-          allowedRoles: [Roles.Leder]
-        }]
-      };
+      this.fabs = [{
+        icon: "add", 
+        aria: 'Ny bruker',
+        color: 'accent',
+        callback: this.openUserForm, 
+        allowedRoles: [Roles.Leder]
+      }];
     }
 
   openUserForm = (userName?: string): void => {

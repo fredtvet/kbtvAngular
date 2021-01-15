@@ -1,9 +1,9 @@
-<app-main-skeleton>
+<app-main-skeleton [fabs]="fabs">
 
-  <app-main-top-nav-bar navbar [config]="navConfig" >
+  <app-main-top-nav-bar navbar [config]="{title: 'Brukere'}">
   </app-main-top-nav-bar>
 
-  <div class="pl-1 pr-1 pb-1 max-width" *ngIf="users$ | async else loading; let users;">
+  <div class="pl-1 pr-1 max-width bottom-fab-padding" *ngIf="users$ | async else loading; let users;">
 
     <app-user-card *ngFor="let user of users; trackBy: trackByUser" 
       [user]="user"
