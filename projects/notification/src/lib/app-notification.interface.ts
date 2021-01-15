@@ -11,4 +11,6 @@ export interface AppNotification {
     details?: Maybe<string>[];
     /** A custom duration that the notification will be displayed for */
     duration?: number;
+    /** CSS class applied to panel */
+    panelClass?: string;
 }

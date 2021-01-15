@@ -30,22 +30,22 @@ export class NotificationService {
 
     switch(input?.type){
       case NotificationType.Success:
-        this.openSnackBar(input.title, input.details, 'check_circle', input.duration || 2000, 'notification-success');
+        this.openSnackBar({...input, icon: 'check_circle', duration: input.duration || 2000});
         break;
       case NotificationType.Error:
-        this.openSnackBar(input.title, input.details, 'error', input.duration || 5000, 'notification-error');
+        this.openSnackBar({...input, icon: 'error', duration: input.duration || 5000});
         break;
       case NotificationType.Warning:
-        this.openSnackBar(input.title, input.details, 'warning', input.duration || 3500, 'notification-warn');
+        this.openSnackBar({...input, icon: 'warning', duration: input.duration || 3500 });
         break;
     }
   }
 
-  private openSnackBar(title: Maybe<string>, details: Maybe<Maybe<string>[]>, icon:string, duration: number, panelClass:string){
+  private openSnackBar(cfg: Omit<AppNotification, "type"> & {icon: string}){
     let ref = this.snackBar.openFromComponent(NotificationComponent, {
-      data : { title, details, icon },
-      duration: duration || undefined,
-      panelClass: panelClass
+      data : { title: cfg.title, details: cfg.details, icon: cfg.icon },
+      duration: cfg.duration || undefined,
+      panelClass: cfg.panelClass
     });
 
     ref.afterDismissed().subscribe(x => this.setNotification(this.queue.shift()))

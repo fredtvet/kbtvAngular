@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { ApiUrl } from '@core/api-url.enum';
 import { Mission } from "@core/models";
 import { SaveModelFileAction } from '@core/state/save-model-file/save-model-file.action';
+import { AppNotifications } from "@shared-app/app-notifications.const";
 import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
 import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
@@ -65,9 +66,9 @@ export class MissionListFacade {
     
   updateHeaderImage(id: string, file: File): void {
     if(!_validateFileExtension(file, ValidationRules.MissionImageFileExtensions)) 
-      return this.notificationService.notify(
-          {title: "Filtypen er ikke tillatt.", type: NotificationType.Error}
-      );  
+      return this.notificationService.notify(AppNotifications.error({
+        title: "Filtypen er ikke tillatt."
+      }));  
 
     let action: SaveModelFileAction<Mission> = _formToSaveModelFileConverter({
       formValue: {id, file},

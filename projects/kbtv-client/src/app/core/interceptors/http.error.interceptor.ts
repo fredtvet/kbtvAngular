@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AppNotification, NotificationService, NotificationType } from 'notification';
 import { Maybe } from 'global-types';
+import { AppNotifications } from '@shared-app/app-notifications.const';
 
 export interface AppErrorResponse {
   status: number;
@@ -30,20 +31,19 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         var notification: Maybe<AppNotification> = null;
 
         if(err.status === 504) 
-          notification = { title: 'Får ikke konkakt med serveren. Vennligst prøv igjen.', type: NotificationType.Error }
+          notification = AppNotifications.error({title: 'Får ikke konkakt med serveren. Vennligst prøv igjen.'})
 
         var error = err.error as AppErrorResponse;
 
         if(error)
-          notification = { 
-            title: error.detail || error.title || "En ukjent feil oppsto! Vennligst prøv igjen.",  
+          notification = AppNotifications.error({
+            title: error.detail || error.title || "En ukjent feil oppsto! Vennligst prøv igjen.",
             details: error.errors ? this.convertErrorsToStringArray(error.errors) : undefined,
-            type: NotificationType.Error,
             duration: this.calculateDuration(error.errors)
-          }
-
+          })
+        
         if(!notification) 
-          notification = { title: "En ukjent feil oppsto! Vennligst prøv igjen.", type: NotificationType.Error }
+          notification = AppNotifications.error({title: "En ukjent feil oppsto! Vennligst prøv igjen."})
 
         this.notificationService.notify(notification);
       }

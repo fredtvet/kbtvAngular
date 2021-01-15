@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AppNotifications } from '@shared-app/app-notifications.const';
 import { NotificationService, NotificationType } from 'notification';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -14,10 +15,9 @@ export class NotifyOnUnauthorizedEffect implements Effect<StateAction> {
         return actions$.pipe(
             listenTo([UnauthorizedAction]),
             map(x => {
-                this.notificationService.notify({
-                    title: 'Du mangler riktig autorisasjon for å gå inn på denne siden.', 
-                    type: NotificationType.Error
-                })
+                this.notificationService.notify(AppNotifications.error({
+                    title: 'Du mangler riktig autorisasjon for å gå inn på denne siden.'
+                }))
             }),
         ) 
     }

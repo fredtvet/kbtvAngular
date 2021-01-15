@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AppNotifications } from '@shared-app/app-notifications.const';
 import { NotificationService, NotificationType } from 'notification';
 import { OptimisticHttpErrorAction } from 'optimistic-http';
 import { Observable } from 'rxjs';
@@ -18,12 +19,11 @@ export class NotifyOnOptimisticErrorEffect implements Effect<OptimisticHttpError
                 if(action.httpError) errors.shift();
                 
                 if(errors.length > 0)
-                    this.notificationService.notify({
+                    this.notificationService.notify(AppNotifications.error({
                         title: action.httpError ? "Følgefeil!" : "Noe gikk feil ved forrige økt!",
                         details: errors,
-                        type: NotificationType.Error,
                         duration: errors.length * 2500
-                    });
+                    }));
             }),
         ) 
     }

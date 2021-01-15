@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Mission, MissionImage } from "@core/models";
 import { ModelState } from '@core/state/model-state.interface';
+import { AppNotifications } from "@shared-app/app-notifications.const";
 import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
 import { ValidationRules } from "@shared/constants/validation-rules.const";
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
@@ -33,9 +34,9 @@ export class MissionImageListFacade {
   add = (state: CreateMissionImagesForm): void =>{
     for(var  i = 0; i < state.files.length; i++){
       if(_validateFileExtension(state.files[i], ValidationRules.MissionImageFileExtensions)) continue;
-      return this.notificationService.notify(
-        {title: "Filtype ikke tillatt for en eller flere filer", type: NotificationType.Error}
-      );  
+      return this.notificationService.notify(AppNotifications.error({
+        title: "Filtype ikke tillatt for en eller flere filer"
+      }));  
     }
     this.store.dispatch(_formToCreateMissionImagesConverter(state));
   }
