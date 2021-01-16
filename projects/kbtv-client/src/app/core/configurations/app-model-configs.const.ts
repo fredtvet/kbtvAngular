@@ -2,12 +2,13 @@ import { ApiUrl } from '../api-url.enum';
 import { Mission, MissionType, Employer, AppDocumentType, MissionImage, MissionDocument, MissionNote, User, InboundEmailPassword, Timesheet } from '../models';
 import { ModelState } from '../state/model-state.interface';
 import { ModelConfig } from 'state-model';
+import { ModelIdProps } from './model-id-props.const';
 
 export const AppModelConfigs: unknown[] = [
     <ModelConfig<Mission, ModelState>>{
         stateProp: "missions",
         apiUrl: ApiUrl.Mission, 
-        idProp: "id", 
+        idProp: ModelIdProps.missions, 
         displayProp: "address",
         foreignProp: "mission",
         foreignKey: "missionId",
@@ -23,7 +24,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<MissionType, ModelState>>{
         stateProp: "missionTypes",
         apiUrl: ApiUrl.MissionType, 
-        idProp: "id", 
+        idProp: ModelIdProps.missionTypes, 
         displayProp: "name",   
         foreignProp: "missionType",
         foreignKey: "missionTypeId",
@@ -31,7 +32,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<Employer, ModelState>>{
         stateProp: "employers",
         apiUrl: ApiUrl.Employer, 
-        idProp: "id",  
+        idProp: ModelIdProps.employers,  
         displayProp: "name",    
         foreignProp: "employer",
         foreignKey: "employerId",
@@ -39,7 +40,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<AppDocumentType, ModelState>>{
         stateProp: "documentTypes",
         apiUrl: ApiUrl.DocumentType, 
-        idProp: "id",   
+        idProp: ModelIdProps.documentTypes,   
         displayProp: "name",   
         foreignProp: "documentType",
         foreignKey: "documentTypeId",
@@ -47,7 +48,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<MissionImage, ModelState>>{
         stateProp: "missionImages",
         apiUrl: ApiUrl.MissionImage, 
-        idProp: "id",  
+        idProp: ModelIdProps.missionImages,  
         displayProp: "fileName",    
         foreignProp: "missionImage",
         foreignKey: "missionImageId",
@@ -55,7 +56,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<MissionDocument, ModelState>>{
         stateProp: "missionDocuments",
         apiUrl: ApiUrl.MissionDocument, 
-        idProp: "id", 
+        idProp: ModelIdProps.missionDocuments, 
         displayProp: "fileName",   
         foreignProp: "missionDocument",
         foreignKey: "missionDocumentId",
@@ -64,7 +65,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<MissionNote, ModelState>>{
         stateProp: "missionNotes",
         apiUrl: ApiUrl.MissionNote, 
-        idProp: "id",    
+        idProp: ModelIdProps.missionNotes,    
         displayProp: "id",  
         foreignProp: "missionNote",
         foreignKey: "missionNoteId",
@@ -72,7 +73,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<User, ModelState>>{
         stateProp: "users",
         apiUrl: ApiUrl.Users, 
-        idProp: "userName", 
+        idProp: ModelIdProps.users, 
         displayProp: "userName",  
         fetchable: true,
         foreignProp: "user",
@@ -82,7 +83,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<InboundEmailPassword, ModelState>>{
         stateProp: "inboundEmailPasswords",
         apiUrl: ApiUrl.InboundEmailPassword, 
-        idProp: "id", 
+        idProp: ModelIdProps.inboundEmailPasswords, 
         displayProp: "password",      
         foreignProp: "inboundEmailPassword",   
         foreignKey: "inboundEmailPasswordId",      
@@ -91,7 +92,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<Timesheet, ModelState>>{
         stateProp: "userTimesheets",
         apiUrl: ApiUrl.UserTimesheet, 
-        idProp: "id",
+        idProp: ModelIdProps.timesheets,
         displayProp: "id",  
         foreignProp: "userTimesheet",
         foreignKey: "userTimesheetId",
@@ -100,7 +101,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<Timesheet, ModelState>>{
         stateProp: "timesheets",
         apiUrl: ApiUrl.Timesheet, 
-        idProp: "id", 
+        idProp: ModelIdProps.userTimesheets, 
         displayProp: "id",  
         foreignProp: "timesheet",
         foreignKey: "timesheetId",
