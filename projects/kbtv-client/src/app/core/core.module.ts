@@ -14,9 +14,9 @@ import { AppCommandApiMap } from './configurations/app-command-api-map.const';
 import { AppStateDbConfig } from './configurations/app-state-db-config.const';
 import { AppStoreSettings } from './configurations/app-store-settings.const';
 import { DefaultState } from './configurations/default-state.const';
-import { ModelConfigs } from './configurations/model-configs.const';
-import { AppOptimisticState } from './configurations/optimistic-state-props.const';
-import { AppSyncStateConfig } from './configurations/sync-state.config';
+import { AppModelConfigs } from './configurations/app-model-configs.const';
+import { AppOptimisticState } from './configurations/app-optimistic-state.const';
+import { AppSyncStateConfig } from './configurations/app-sync-state.config';
 import { HttpErrorInterceptor } from './interceptors/http.error.interceptor';
 import { HttpIsOnlineInterceptor } from './interceptors/http.is-online.interceptor';
 import { HttpLoadingInterceptor } from './interceptors/http.loading.interceptor';
@@ -49,7 +49,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
     { provide: STORE_SETTINGS, useValue: AppStoreSettings},
 
     { provide: BASE_API_URL, useValue: environment.apiUrl},
-    { provide: MODEL_CONFIGS, useValue: ModelConfigs },
+    { provide: MODEL_CONFIGS, useValue: AppModelConfigs },
     { provide: MODEL_COMMAND_API_MAP, useValue: AppCommandApiMap },
     { provide: MODEL_PROP_TRANSLATIONS, useValue: translations },
 

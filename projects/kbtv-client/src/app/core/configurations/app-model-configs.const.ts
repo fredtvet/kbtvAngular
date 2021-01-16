@@ -3,7 +3,7 @@ import { Mission, MissionType, Employer, AppDocumentType, MissionImage, MissionD
 import { ModelState } from '../state/model-state.interface';
 import { ModelConfig } from 'state-model';
 
-export const ModelConfigs: unknown[] = [
+export const AppModelConfigs: unknown[] = [
     <ModelConfig<Mission, ModelState>>{
         stateProp: "missions",
         apiUrl: ApiUrl.Mission, 
