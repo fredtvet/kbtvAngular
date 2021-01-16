@@ -19,7 +19,7 @@ export class SaveModelFileHttpEffect extends SaveModelHttpEffect<ModelFile, Mode
     ){ super(apiMap, translations) }
 
     protected createHttpBody(command: SaveModelFileAction<ModelFile>): FormDataEntry[] { 
-        const file = command.fileWrapper.modifiedFile;
+        const file = command.fileWrapper?.modifiedFile;
         const entries: FormDataEntry[] = [{name: "command", value: JSON.stringify(command.entity)}]
         if(file) entries.push({name: "files", value: file})
         return entries

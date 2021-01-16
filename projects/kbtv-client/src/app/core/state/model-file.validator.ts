@@ -14,8 +14,8 @@ export class ModelFileValidatorInterceptor implements ActionInterceptor {
 
     intercept(action: Immutable<SaveModelFileAction<ModelFile>>): Maybe<StateAction> {
         if(action.type !== SaveModelFileAction) return action;
-        const size = action.fileWrapper.modifiedFile.size
-        if(size < ValidationRules.ContentMaxByteLength) return action;
+        const size = action.fileWrapper?.modifiedFile.size
+        if(!size || size < ValidationRules.ContentMaxByteLength) return action;
         this.notificationService.notify(AppNotifications.maxContentLength(size))
         return null;
     }
