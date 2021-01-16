@@ -1,14 +1,14 @@
-<ng-container *ngIf="vm$ | async; let vm">
+<ng-container>
 
-    <ng-container *ngIf="!vm.activeFilter else activeFilterView" 
+    <ng-container *ngIf="!activeFilter else activeFilterView" 
         [ngTemplateOutlet]="autocomplete"
-        [ngTemplateOutletContext]="{options: vm.options}">
+        [ngTemplateOutletContext]="{options: options$ | async}">
     </ng-container>
 
     <ng-template #activeFilterView>
-        <ng-template *appActiveStringFilter="let options$; config: vm.activeFilter"
+        <ng-template *appActiveStringFilter="let filtered$; config: activeFilter; options: options$ | async"
             [ngTemplateOutlet]="autocomplete" 
-            [ngTemplateOutletContext]="{options:options$ | async}">
+            [ngTemplateOutletContext]="{options:filtered$ | async}">
         </ng-template>
     </ng-template>
     

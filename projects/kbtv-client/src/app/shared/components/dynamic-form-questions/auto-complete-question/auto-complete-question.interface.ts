@@ -8,5 +8,5 @@ export interface AutoCompleteQuestion<T> extends Question {
     resetable?: boolean;
     valueFormatter?: (val: T) => unknown;  
     displayWith?: (value: unknown) => string;
-    activeFilter?: Omit<ActiveStringFilterConfig<T>, "stringChanges$" | "data">;
+    activeFilter?: Omit<ActiveStringFilterConfig<T>, "stringChanges$">;
 }

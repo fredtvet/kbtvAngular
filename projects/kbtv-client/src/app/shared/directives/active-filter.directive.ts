@@ -1,17 +1,26 @@
 import { Directive, EmbeddedViewRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { merge, of } from 'rxjs';
-import { debounceTime, filter, map } from 'rxjs/operators';
+import { BehaviorSubject, merge, of } from 'rxjs';
+import { debounceTime, filter, map, tap } from 'rxjs/operators';
 import { _filter } from 'array-helpers';
 import { ActiveStringFilterConfig } from '../interfaces/active-string-filter-config.interface';
-import { Immutable } from 'global-types';
+import { Immutable, ImmutableArray } from 'global-types';
+import { combineLatest } from 'rxjs';
 
 @Directive({
   selector: '[appActiveStringFilter]'
 })
 export class ActiveStringFilterDirective<TRecord> {
 
+    private optionsSubject = new BehaviorSubject<ImmutableArray<unknown>>([]);
+
+    @Input('appActiveStringFilterOptions') set options(value: ImmutableArray<unknown>){
+        if(value === this.optionsSubject.value) return;
+        this.optionsSubject.next(value)
+    }
+
     private _config: ActiveStringFilterConfig<TRecord>;
     @Input('appActiveStringFilterConfig') set config(value: ActiveStringFilterConfig<TRecord>){
+        if(value === this._config) return;
         this._config = value;
         this.initalizeObserver();
     }
@@ -30,20 +39,26 @@ export class ActiveStringFilterDirective<TRecord> {
 
     private initalizeObserver(): void {
         if(!this._config) return;
-        this.viewRef.context.$implicit = merge(
+        console.log('eyo')
+        const stringObserver$ = merge(
             of(this._config.initialString),
             this._config.stringChanges$
-        ).pipe(
-            filter(x => !x || typeof x === "string"), 
+        )
+        this.viewRef.context.$implicit = combineLatest([
+            stringObserver$,
+            this.optionsSubject.asObservable()
+        ]).pipe(
+            tap(console.log),
+            filter(([criteria]) => !criteria || typeof criteria === "string"), 
             debounceTime(this._config.customDebounceTime || 400), 
-            map(criteria => {
+            map(([criteria, options]) => {
                 this.checkCount = 0; //reset check counter
                 if(!criteria) //If no search, just take first n items
                     return this._config.maxChecks ? 
-                    this._config.data?.slice(0, this._config.maxChecks) : this._config.data; 
+                    options?.slice(0, this._config.maxChecks) : options; 
                 else {
                     this.searchLower = criteria.toLowerCase();
-                    return _filter(this._config.data, this.filterRecord);
+                    return _filter(options, this.filterRecord);
                 }
         }))
     }
