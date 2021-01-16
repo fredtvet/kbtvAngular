@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { ModelFile } from '@core/models';
 import { DownloaderService } from '@core/services/downloader.service';
-import { Roles } from '@shared-app/enums/roles.enum';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { MissionImageListFacade } from '../mission-image-list.facade';
@@ -26,7 +26,11 @@ export class ImageViewerDialogWrapperComponent {
   get actions(){
     return [
       {text: "Last ned bilde", icon: "cloud_download", callback: this.downloadImage},
-      {text: "Slett bilde", icon: "delete", callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
+      {
+        text: "Slett bilde", icon: "delete", 
+        callback: this.openConfirmDeleteDialog, 
+        allowedRoles: RolePermissions.MissionImageList.delete
+      }
     ];
   }
 

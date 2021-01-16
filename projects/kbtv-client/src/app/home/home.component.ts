@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
-import { _sortByDate } from 'array-helpers';
-import { Store } from 'state-management'
 import { StateMissions } from '@core/state/global-state.interfaces';
-import { RolePresets } from '@shared-app/enums/roles.enum';
+import { Roles } from '@core/roles.enum';
+import { _sortByDate } from 'array-helpers';
+import { map } from 'rxjs/operators';
+import { Store } from 'state-management';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,8 @@ import { RolePresets } from '@shared-app/enums/roles.enum';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
-  RolePresets = RolePresets;
+  permissions = RolePermissions;
+  roles = Roles;
 
   missionHistory$ = 
     this.store.selectProperty$<Mission[]>("missions").pipe(

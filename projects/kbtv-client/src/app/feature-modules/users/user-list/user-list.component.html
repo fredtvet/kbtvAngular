@@ -9,14 +9,12 @@
       [user]="user"
       [editButton]="{
         icon: 'edit', 
-        allowedRoles: [Roles.Leder], 
         callback: openUserForm, params: [user.userName],
         type: ButtonTypes.Icon
       }"
       [newPasswordButton]="{
         icon: 'vpn_key', 
         color: 'accent',
-        allowedRoles: [Roles.Leder], 
         callback: openNewPasswordForm, params: [user.userName],
         type: ButtonTypes.Icon
       }">

@@ -7,19 +7,19 @@
         <mat-icon class="scale-150 mb-1">view_list</mat-icon><br />
         <span>Oppdrag</span>
       </span>
-      <span *ifRole="RolePresets.Internal" class="mat-elevation-z2 foreground-card text-center p-6"
+      <span *ifRole="permissions.UserTimesheetWeek.access" class="mat-elevation-z2 foreground-card text-center p-6"
         fxFlex="50" matRipple routerLink="/mine-timer">
         <mat-icon class="scale-150 mb-1">timer</mat-icon><br />
         <span>Timer</span>
       </span>
-      <span *ifRole="RolePresets.External" class="mat-elevation-z2 foreground-card text-center p-6"
+      <span *ifRole="[roles.Oppdragsgiver]" class="mat-elevation-z2 foreground-card text-center p-6"
         fxFlex="50" matRipple routerLink="/profil">
         <mat-icon class="scale-150">person</mat-icon><br />
         <span>Profil</span>
       </span>
     </div>
   
-    <ng-container *ifRole="RolePresets.Authority">
+    <ng-container *ifRole="[roles.Leder]">
       <mat-card>
 
         <span class="mat-body-2 mb-2"> Administrering</span>

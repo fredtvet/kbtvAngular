@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
-import { RolePresets, Roles } from '@shared-app/enums/roles.enum';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { DetailTopNavConfig } from '@shared/components/detail-top-nav-bar/detail-top-nav.config';
 import { EditMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
@@ -26,6 +26,8 @@ interface ViewModel { mission: Maybe<Immutable<Mission>>, navConfig: DetailTopNa
 })
 export class MissionDetailsComponent extends WithUnsubscribe() {
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
+
+  private can = RolePermissions.MissionList;
 
   get missionId() { return this.route.snapshot.paramMap.get(SelectedMissionIdParam) }
 
@@ -68,8 +70,12 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
 
   private openBottomSheetMenu = (mission: Immutable<Mission>) => {   
     this.menuService.open([
-      {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission?.id], allowedRoles: [Roles.Leder]},
-      {text: `${mission?.fileName ? 'Oppdater' : 'Legg til'} forsidebilde`, icon: "add_photo_alternate", callback: this.openHeaderImageInput, allowedRoles: [Roles.Leder]},
+      {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission?.id], allowedRoles: this.can.update},
+      {
+        text: `${mission?.fileName ? 'Oppdater' : 'Legg til'} forsidebilde`, 
+        icon: "add_photo_alternate", 
+        callback: this.openHeaderImageInput, 
+        allowedRoles: this.can.update},
     ]);
   }
 
@@ -81,8 +87,8 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
         imgSrc: this.appFileUrl.transform(mission, "missionheader") || undefined,
         backFn: this.onBack,
         buttons: [
-          {icon: "timer", callback: this.goToTimesheets, params: [mission], allowedRoles: RolePresets.Internal},
-          {icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission], allowedRoles: RolePresets.Authority},
+          {icon: "timer", callback: this.goToTimesheets, params: [mission], allowedRoles: RolePermissions.UserTimesheetList.access},
+          {icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission], allowedRoles: this.can.update},
         ]
     }
   }

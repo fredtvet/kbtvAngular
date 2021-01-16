@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { RolePresets } from '@shared-app/enums/roles.enum';
+import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { CustomRoute } from '@shared-app/interfaces/custom-route.interface';
 import { MainSkeletonRouteData } from '@shared/components/main-skeleton/main-skeleton-route-data.interface';
 import { AuthRouteData } from 'state-auth';
@@ -22,7 +22,7 @@ const routes: MissionListRoute[] = [
         children: [
           {
             path: 'timer',
-            data: {viewSize: "overlay"},
+            data: {allowedRoles: RolePermissions.UserTimesheetList.access, viewSize: "overlay"},
             loadChildren: () => import('src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list.module').then(m => m.UserTimesheetListModule),
           },
           {
@@ -32,13 +32,13 @@ const routes: MissionListRoute[] = [
           },
           {
             path: 'dokumenter',
-            data: {allowedRoles: <string[]> RolePresets.Internal.valueOf(), viewSize: "overlay"},
+            data: {allowedRoles: RolePermissions.MissionDocumentList.access, viewSize: "overlay"},
             loadChildren: () => import('src/app/feature-modules/mission-modules/mission-document-list/mission-document-list.module').then(m => m.MissionDocumentListModule),
         
           },
           {
             path: 'notater',
-            data: {allowedRoles: <string[]> RolePresets.Internal.valueOf(), viewSize: "overlay"},
+            data: {allowedRoles: RolePermissions.MissionNoteList.access, viewSize: "overlay"},
             loadChildren: () => import('src/app/feature-modules/mission-modules/mission-note-list/mission-note-list.module').then(m => m.MissionNoteListModule),
           },
         ]

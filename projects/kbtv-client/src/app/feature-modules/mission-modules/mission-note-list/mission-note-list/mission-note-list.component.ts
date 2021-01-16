@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { MissionNote } from '@core/models';
-import { RolePresets } from '@shared-app/enums/roles.enum';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
@@ -40,7 +40,7 @@ export class MissionNoteListComponent {
     this.navConfig = {title:  "Notater", backFn: this.onBack};
     this.fabs = [
       {icon: "add", aria: 'Legg til', color: "accent", 
-      callback: this.openCreateNoteForm, allowedRoles: RolePresets.Internal}
+      callback: this.openCreateNoteForm, allowedRoles: RolePermissions.MissionNoteList.create}
     ]
   }
  

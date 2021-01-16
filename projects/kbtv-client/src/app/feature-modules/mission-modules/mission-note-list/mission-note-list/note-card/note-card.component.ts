@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { MissionNote } from '@core/models';
-import { RolePresets } from '@shared-app/enums/roles.enum';
 
 @Component({
   selector: 'app-note-card',
@@ -8,7 +8,7 @@ import { RolePresets } from '@shared-app/enums/roles.enum';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NoteCardComponent {
-  RolePresets = RolePresets;
+  can = RolePermissions.MissionNoteList
   
   @Input() note: MissionNote;
 

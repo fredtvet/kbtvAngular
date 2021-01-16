@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
-import { RolePresets } from '@shared-app/enums/roles.enum';
 
 @Component({
   selector: 'app-mission-details-view',
@@ -9,7 +9,7 @@ import { RolePresets } from '@shared-app/enums/roles.enum';
 })
 export class MissionDetailsViewComponent {
 
-  RolePresets = RolePresets;
+  permissions = RolePermissions;
 
   @Input() mission: Mission;
 

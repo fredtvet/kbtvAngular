@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { RolePresets } from '@shared-app/enums/roles.enum';
+import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { CustomRoute } from '@shared-app/interfaces/custom-route.interface';
 import { AuthGuard, AuthRouteData, NoAuthGuard } from 'state-auth';
 import { RolePreloadService } from './core/services/role-preload.service';
@@ -21,22 +21,22 @@ const routes: AppRoute[] = [
       {path: 'profil',
         loadChildren: () => import('src/app/feature-modules/profile/profile.module').then(m => m.ProfileModule)},
 
-      {path: 'mine-timer', data: {allowedRoles: RolePresets.Internal}, 
+      {path: 'mine-timer', data: {allowedRoles: RolePermissions.UserTimesheetWeek.access}, 
         loadChildren: () => import('src/app/feature-modules/timesheet-modules/user-timesheet-week/user-timesheet-week.module').then(m => m.UserTimesheetWeekModule)},
 
       {path: 'oppdrag', 
         loadChildren: () => import('src/app/feature-modules/mission-modules/mission-list/mission-list.module').then(m => m.MissionListModule)},
 
-      {path: 'brukere', data: {allowedRoles: RolePresets.Authority}, 
+      {path: 'brukere', data: {allowedRoles: RolePermissions.Users.access}, 
         loadChildren: () => import('src/app/feature-modules/users/users.module').then(m => m.UsersModule)},
 
-      {path: 'data', data: {allowedRoles: RolePresets.Authority}, 
+      {path: 'data', data: {allowedRoles: RolePermissions.DataManagement.access}, 
         loadChildren: () => import('src/app/feature-modules/data-management/data-management.module').then(m => m.DataManagementModule)},
 
-      {path: 'timeadministrering', data: {allowedRoles: RolePresets.Authority},
+      {path: 'timeadministrering', data: {allowedRoles: RolePermissions.TimesheetAdmin.access},
         loadChildren: () => import('src/app/feature-modules/timesheet-modules/timesheet-admin/timesheet-admin.module').then(m => m.TimesheetAdminModule)},
 
-      {path: 'timestatistikk', data: {allowedRoles: RolePresets.Authority}, 
+      {path: 'timestatistikk', data: {allowedRoles: RolePermissions.TimesheetStatistic.access}, 
         loadChildren: () => import('src/app/feature-modules/timesheet-modules/timesheet-statistic/timesheet-statistic.module').then(m => m.TimesheetStatisticModule)},
     ],
   },

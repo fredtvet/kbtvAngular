@@ -1,4 +1,5 @@
-import { RolePresets } from "@shared-app/enums/roles.enum";
+import { RolePermissions } from "@core/configurations/role-permissions.const";
+import { Roles } from "@core/roles.enum";
 import { AppButton } from "@shared-app/interfaces/app-button.interface";
 
 export const BottomNavNavigations: AppButton[] = [
@@ -19,13 +20,13 @@ export const BottomNavNavigations: AppButton[] = [
     text: "Profil",
     routerLink: "/profil",
     aria: "Gå til profil",
-    allowedRoles: RolePresets.External,
+    allowedRoles: [Roles.Oppdragsgiver],
   },  
   {
     icon: "timer",
     text: "Timer",
     routerLink: "/mine-timer",
     aria: "Gå til timeliste",
-    allowedRoles: RolePresets.Internal,
+    allowedRoles: RolePermissions.UserTimesheetWeek.access,
   },
 ]

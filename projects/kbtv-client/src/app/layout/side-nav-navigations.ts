@@ -1,4 +1,5 @@
-import { RolePresets } from "@shared-app/enums/roles.enum";
+import { RolePermissions } from "@core/configurations/role-permissions.const";
+import { Roles } from "@core/roles.enum";
 import { AppButton } from "@shared-app/interfaces/app-button.interface";
 
 export const SideNavNavigations: AppButton[] = [
@@ -16,12 +17,12 @@ export const SideNavNavigations: AppButton[] = [
     icon: "timer",
     text: "Timer",
     routerLink: "/mine-timer",
-    allowedRoles: RolePresets.Internal
+    allowedRoles:  RolePermissions.UserTimesheetWeek.access,
   },
   {
     icon: "dns",
     text: "Administrering",
-    allowedRoles: RolePresets.Authority,
+    allowedRoles: [Roles.Leder],
     children: [
       {
         icon: "dns",
@@ -43,7 +44,7 @@ export const SideNavNavigations: AppButton[] = [
   {
     icon: "assessment",
     text: "Statistikk",
-    allowedRoles: RolePresets.Authority,
+    allowedRoles: RolePermissions.TimesheetStatistic.access,
     children: [
       {
         icon: "assessment",

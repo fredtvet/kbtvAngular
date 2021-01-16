@@ -1,6 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { User } from '@core/models';
-import { Roles } from '@shared-app/enums/roles.enum';
+import { Roles } from '@core/roles.enum';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 
 @Component({

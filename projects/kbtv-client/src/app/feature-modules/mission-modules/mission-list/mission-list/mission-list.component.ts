@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Employer, Mission, MissionType } from "@core/models";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { ModelState } from "@core/state/model-state.interface";
-import { Roles } from "@shared-app/enums/roles.enum";
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
 import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
@@ -53,7 +53,7 @@ export class MissionListComponent extends WithUnsubscribe(){
     this.fabs = [
       {icon: "add", aria: "Legg til", color: "accent",
         callback: this.openMissionForm,
-        allowedRoles: [Roles.Leder, Roles.Mellomleder]}
+        allowedRoles: RolePermissions.MissionList.create}
     ];
     this.searchBar = {
       callback: this.searchMissions,

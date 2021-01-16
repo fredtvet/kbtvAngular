@@ -16,9 +16,9 @@ import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-
 import { MissionImageListFacade } from '../mission-image-list.facade';
 import { ConfirmDialogService } from "confirm-dialog";
 import { SelectedMissionIdParam } from "../../mission-list/mission-list-route-params.const";
-import { RolePresets, Roles } from "@shared-app/enums/roles.enum";
 import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { SelectableContainerWrapperComponent } from "@shared/components/abstracts/selectable-container-wrapper.component";
+import { RolePermissions } from "@core/configurations/role-permissions.const";
 
 interface ViewModel { images: Maybe<ImmutableArray<MissionImage>>, columns: 2 | 4,  fabs: AppButton[], navConfig: MainTopNavConfig }
 
@@ -29,6 +29,8 @@ interface ViewModel { images: Maybe<ImmutableArray<MissionImage>>, columns: 2 | 
 })
 export class MissionImageListComponent extends SelectableContainerWrapperComponent{
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
+
+  private can = RolePermissions.MissionImageList;
 
   get missionId(): Maybe<string> { 
     return this.route.parent?.parent?.snapshot.paramMap.get(SelectedMissionIdParam)  
@@ -67,12 +69,12 @@ export class MissionImageListComponent extends SelectableContainerWrapperCompone
       }
 
       this.staticFabs = [
-        {icon: "camera_enhance", aria: 'Ta bilde', color: 'accent', callback: this.openImageInput, allowedRoles: RolePresets.Internal}
+        {icon: "camera_enhance", aria: 'Ta bilde', color: 'accent', callback: this.openImageInput, allowedRoles: this.can.create}
       ];
 
       this.selectedItemsFabs = [
-        {icon: "send", aria: 'Send', color: 'accent', callback: this.openMailImageSheet, allowedRoles: [Roles.Leder]}, 
-        {icon: "delete_forever", aria: 'Slett', color: 'warn', callback: this.openConfirmDeleteDialog, allowedRoles: [Roles.Leder]}
+        {icon: "send", aria: 'Send', color: 'accent', callback: this.openMailImageSheet, allowedRoles: this.can.sendEmail}, 
+        {icon: "delete_forever", aria: 'Slett', color: 'warn', callback: this.openConfirmDeleteDialog, allowedRoles: this.can.delete}
       ]
     }
 
@@ -118,7 +120,7 @@ export class MissionImageListComponent extends SelectableContainerWrapperCompone
 
   private openBottomSheetMenu = () => {   
     this.menuService.open([
-      {icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, allowedRoles: RolePresets.Authority},
+      {icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, allowedRoles: this.can.sendEmail},
       {icon: "cloud_download", text: "Last ned alle", callback: this.downloadImages, params: [this.images]},
     ]);
   }

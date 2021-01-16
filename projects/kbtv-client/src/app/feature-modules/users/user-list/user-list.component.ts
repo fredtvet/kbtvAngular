@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { User } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
-import { Roles } from '@shared-app/enums/roles.enum';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { UserPasswordForm } from '@shared/constants/forms/password-form.const';
@@ -18,7 +18,6 @@ import { UsersFacade } from '../users.facade';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent {
-  Roles = Roles;
   ButtonTypes = ButtonTypes;
 
   users$: Observable<User[]> = this.facade.sortedUsers$;
@@ -32,8 +31,7 @@ export class UserListComponent {
         icon: "add", 
         aria: 'Ny bruker',
         color: 'accent',
-        callback: this.openUserForm, 
-        allowedRoles: [Roles.Leder]
+        callback: this.openUserForm
       }];
     }
 

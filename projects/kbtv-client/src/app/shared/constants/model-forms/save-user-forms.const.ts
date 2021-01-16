@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 import { InputQuestion, InputQuestionComponent } from '../../components/dynamic-form-questions/input-question.component';
 import { SelectQuestion, SelectQuestionComponent } from '../../components/dynamic-form-questions/select-question.component';
 import { EmailControl, EmployerSelectControl, FirstNameControl, LastNameControl, PhoneNumberControl, UserNameControl } from '../common-controls.const';
-import { Roles } from '@shared-app/enums/roles.enum';
+import { Roles } from '@core/roles.enum';
 
 export interface UserForm extends User { password?: string; }
 
