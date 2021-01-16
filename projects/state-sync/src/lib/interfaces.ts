@@ -21,7 +21,7 @@ export interface SyncStatePropConfig {
     /** Set to false if you wish to preserve values after wipes */
     wipeable?: boolean,
     /** A property on state value that unqiuely identifies it. */
-    identifier: string
+    idProp: string
 }
 
 /** User configuration for synchronization */

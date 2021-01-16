@@ -6,15 +6,15 @@ export type SyncModelState = Partial<ModelState> & StateCurrentUser;
 
 export const AppSyncStateConfig: {[key in keyof SyncModelState]: SyncStatePropConfig} = 
 {
-    missions: {identifier: "id", type: "array"},
-    missionTypes: {identifier: "id", type: "array"},
-    missionImages: {identifier: "id", type: "array"},
-    missionNotes: {identifier: "id", type: "array"},
-    missionDocuments: {identifier: "id", type: "array"},
-    employers: {identifier: "id", type: "array"},
-    documentTypes: {identifier: "id", type: "array"},     
-    userTimesheets: {identifier: "id", type: "array"}, 
-    currentUser: {identifier: "userName", type: "value", wipeable: false}, 
+    missions: {idProp: "id", type: "array"},
+    missionTypes: {idProp: "id", type: "array"},
+    missionImages: {idProp: "id", type: "array"},
+    missionNotes: {idProp: "id", type: "array"},
+    missionDocuments: {idProp: "id", type: "array"},
+    employers: {idProp: "id", type: "array"},
+    documentTypes: {idProp: "id", type: "array"},     
+    userTimesheets: {idProp: "id", type: "array"}, 
+    currentUser: {idProp: "userName", type: "value", wipeable: false}, 
 };
 
 

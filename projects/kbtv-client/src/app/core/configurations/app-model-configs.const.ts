@@ -7,7 +7,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<Mission, ModelState>>{
         stateProp: "missions",
         apiUrl: ApiUrl.Mission, 
-        identifier: "id", 
+        idProp: "id", 
         displayProp: "address",
         foreignProp: "mission",
         foreignKey: "missionId",
@@ -23,7 +23,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<MissionType, ModelState>>{
         stateProp: "missionTypes",
         apiUrl: ApiUrl.MissionType, 
-        identifier: "id", 
+        idProp: "id", 
         displayProp: "name",   
         foreignProp: "missionType",
         foreignKey: "missionTypeId",
@@ -31,7 +31,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<Employer, ModelState>>{
         stateProp: "employers",
         apiUrl: ApiUrl.Employer, 
-        identifier: "id",  
+        idProp: "id",  
         displayProp: "name",    
         foreignProp: "employer",
         foreignKey: "employerId",
@@ -39,7 +39,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<AppDocumentType, ModelState>>{
         stateProp: "documentTypes",
         apiUrl: ApiUrl.DocumentType, 
-        identifier: "id",   
+        idProp: "id",   
         displayProp: "name",   
         foreignProp: "documentType",
         foreignKey: "documentTypeId",
@@ -47,7 +47,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<MissionImage, ModelState>>{
         stateProp: "missionImages",
         apiUrl: ApiUrl.MissionImage, 
-        identifier: "id",  
+        idProp: "id",  
         displayProp: "fileName",    
         foreignProp: "missionImage",
         foreignKey: "missionImageId",
@@ -55,7 +55,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<MissionDocument, ModelState>>{
         stateProp: "missionDocuments",
         apiUrl: ApiUrl.MissionDocument, 
-        identifier: "id", 
+        idProp: "id", 
         displayProp: "fileName",   
         foreignProp: "missionDocument",
         foreignKey: "missionDocumentId",
@@ -64,7 +64,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<MissionNote, ModelState>>{
         stateProp: "missionNotes",
         apiUrl: ApiUrl.MissionNote, 
-        identifier: "id",    
+        idProp: "id",    
         displayProp: "id",  
         foreignProp: "missionNote",
         foreignKey: "missionNoteId",
@@ -72,7 +72,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<User, ModelState>>{
         stateProp: "users",
         apiUrl: ApiUrl.Users, 
-        identifier: "userName", 
+        idProp: "userName", 
         displayProp: "userName",  
         fetchable: true,
         foreignProp: "user",
@@ -82,7 +82,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<InboundEmailPassword, ModelState>>{
         stateProp: "inboundEmailPasswords",
         apiUrl: ApiUrl.InboundEmailPassword, 
-        identifier: "id", 
+        idProp: "id", 
         displayProp: "password",      
         foreignProp: "inboundEmailPassword",   
         foreignKey: "inboundEmailPasswordId",      
@@ -91,7 +91,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<Timesheet, ModelState>>{
         stateProp: "userTimesheets",
         apiUrl: ApiUrl.UserTimesheet, 
-        identifier: "id",
+        idProp: "id",
         displayProp: "id",  
         foreignProp: "userTimesheet",
         foreignKey: "userTimesheetId",
@@ -100,7 +100,7 @@ export const AppModelConfigs: unknown[] = [
     <ModelConfig<Timesheet, ModelState>>{
         stateProp: "timesheets",
         apiUrl: ApiUrl.Timesheet, 
-        identifier: "id", 
+        idProp: "id", 
         displayProp: "id",  
         foreignProp: "timesheet",
         foreignKey: "timesheetId",

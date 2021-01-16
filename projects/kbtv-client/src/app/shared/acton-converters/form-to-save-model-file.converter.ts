@@ -17,7 +17,7 @@ export const _formToSaveModelFileConverter: FormToSaveModelConverter<ModelFileFo
 
     const modelCfg = ModelStateConfig.get(input.stateProp);
     const fileWrapper = 
-        new ModelFileWrapper(input.formValue.file, entity[modelCfg.identifier]);
+        new ModelFileWrapper(input.formValue.file, entity[modelCfg.idProp]);
 
     return <SaveModelFileAction<Model>>{
         type: SaveModelFileAction,

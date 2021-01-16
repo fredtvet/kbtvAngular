@@ -29,7 +29,7 @@ export function _deleteModelWithChildren<TState extends UnknownState>(
   const modelCfg = ModelStateConfig.get(stateProp);
   const newState: UnknownState = {};
   const slice = <unknown[]> state[<string> stateProp];
-  const filtered = _filter(slice, filterFactory(modelCfg.identifier));
+  const filtered = _filter(slice, filterFactory(modelCfg.idProp));
 
   if(filtered?.length < slice?.length) newState[stateProp] = filtered;
 

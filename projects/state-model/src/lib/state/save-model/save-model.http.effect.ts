@@ -64,7 +64,7 @@ export class SaveModelHttpEffect<TModel extends {}, TState extends {}> implement
         const suffix = this.apiMap[action.saveAction].suffix;
         if(typeof suffix === "string") return modelConfig.apiUrl + suffix;
         else{ 
-            const id = action.entity[<Prop<Immutable<TModel>>> modelConfig.identifier]
+            const id = action.entity[<Prop<Immutable<TModel>>> modelConfig.idProp]
             return modelConfig.apiUrl + suffix(id);
         }
     }

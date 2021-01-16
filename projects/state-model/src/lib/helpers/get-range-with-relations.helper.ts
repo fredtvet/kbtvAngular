@@ -64,7 +64,7 @@ function _createGroupedLookups(
     return lookups;
 }
 
-/** Lookup of foreign entities by identifier */
+/** Lookup of foreign entities by idProp */
 function _createStatePropertyLookups(
     props: ImmutableArray<string>, 
     state: Immutable<{}>
@@ -72,7 +72,7 @@ function _createStatePropertyLookups(
     const lookups: {[key: string]: Immutable<unknown>} = {};
     for(const prop of props){ //Convert foreign state props to lookup tables
         const cfg = ModelStateConfig.get(prop); 
-        lookups[prop] = _convertArrayToObject(<[]> (<UnknownState> state)[prop], cfg.identifier);
+        lookups[prop] = _convertArrayToObject(<[]> (<UnknownState> state)[prop], cfg.idProp);
     }
     return lookups;
 }
@@ -96,7 +96,7 @@ function _mapChildrenToEntity(
     entity: UnknownState
 ): void{
     for(let childProp of props){
-        const entityId = entity[propCfg.identifier];
+        const entityId = entity[propCfg.idProp];
         entity[childProp] = lookups[childProp][<string> entityId]
     }
 }

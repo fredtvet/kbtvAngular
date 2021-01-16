@@ -15,7 +15,7 @@ export function _flattenExistingForeigns<TEntity>(
     if(!state) state = {};
 
     for(const foreignStateProp of foreigns){
-        const {foreignKey, displayProp, foreignProp, identifier} = ModelStateConfig.get<UnknownState, ModelState>(foreignStateProp);
+        const {foreignKey, displayProp, foreignProp, idProp} = ModelStateConfig.get<UnknownState, ModelState>(foreignStateProp);
         const fkEntity = <UnknownState> entityClone[<string> foreignProp];
         if(!fkEntity) continue; //If no fk entity set on entity, ignore
 
@@ -28,7 +28,7 @@ export function _flattenExistingForeigns<TEntity>(
             _find<UnknownState>(<UnknownState[]> state[foreignStateProp], fkDisplayValue, <string> displayProp)
 
         if(existingFkEntity) //If existing fkEntity, set foreign key on entity 
-            entityClone[<string> foreignKey] = existingFkEntity[identifier]; 
+            entityClone[<string> foreignKey] = existingFkEntity[idProp]; 
         
         if(existingFkEntity || !fkDisplayValue) //If no fkEntity or fk value provided, set nested fk entity to null
             entityClone[<string> foreignProp] = null;

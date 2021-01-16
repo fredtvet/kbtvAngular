@@ -54,7 +54,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         const modelCfg = ModelStateConfig.getBy(prop, "foreignProp");
         const value = <{}> this.criteria[prop];
 
-        if(modelCfg && value[modelCfg.identifier] !== baseValue[modelCfg.identifier]) 
+        if(modelCfg && value[modelCfg.idProp] !== baseValue[modelCfg.idProp]) 
             return false
 
         if(!modelCfg && value !== baseValue) return false;

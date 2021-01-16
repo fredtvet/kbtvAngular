@@ -1,4 +1,4 @@
-import { _addOrUpdateRange, _removeRangeByIdentifier } from 'array-helpers';
+import { _addOrUpdateRange, _removeRangeById } from 'array-helpers';
 import { Immutable, ImmutableArray, UnknownState } from 'global-types';
 import { Reducer, _createReducer } from 'state-management';
 import { SyncStatePropConfig } from '../interfaces';
@@ -19,11 +19,11 @@ export const SetSyncResponseReducer: Reducer<Immutable<StoreState>,SyncStateSucc
 
             if(deletedEntities?.length)
                 newState[prop] = 
-                    _removeRangeByIdentifier(stateSlice, deletedEntities, propCfg.identifier);
+                    _removeRangeById(stateSlice, deletedEntities, propCfg.idProp);
 
             if(entities?.length)
                 newState[prop] = 
-                    _addOrUpdateRange(<ImmutableArray<UnknownState>> newState[prop] || stateSlice, entities, propCfg.identifier); 
+                    _addOrUpdateRange(<ImmutableArray<UnknownState>> newState[prop] || stateSlice, entities, propCfg.idProp); 
         }
 
         for(const prop in action.response.values){

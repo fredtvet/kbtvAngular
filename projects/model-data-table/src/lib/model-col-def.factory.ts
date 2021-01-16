@@ -83,7 +83,7 @@ export class ModelColDefFactory {
                 const fkId = params.data[fkIdProp];
                 if(fkId){
                     const fkEntity = this.fkModelIdMap[fkIdProp][fkId];
-                    return fkEntity ? fkEntity[fkModelCfg.displayProp || fkModelCfg.identifier] : null;
+                    return fkEntity ? fkEntity[fkModelCfg.displayProp || fkModelCfg.idProp] : null;
                 }
                 else return ''
             };
@@ -91,7 +91,7 @@ export class ModelColDefFactory {
             def['valueSetter'] = (params) => {
                 const hit = this.fkModelDisplayPropMap[fkIdProp][params.newValue];
                 if(!hit) return false;
-                const updatedModel = {...params.data, [fkIdProp]: hit[fkModelCfg.identifier]};
+                const updatedModel = {...params.data, [fkIdProp]: hit[fkModelCfg.idProp]};
                 this.dispatchUpdateAction(updatedModel, stateProp, table)
                 return true;
             }
@@ -108,7 +108,7 @@ export class ModelColDefFactory {
             const entities = this.store.state[fkStateKey];
             if(entities){
               this.fkModelIdMap[<string> fkCfg.foreignKey] = 
-                _convertArrayToObject(entities, fkCfg.identifier);
+                _convertArrayToObject(entities, fkCfg.idProp);
               this.fkModelDisplayPropMap[<string> fkCfg.foreignKey] = 
                 _convertArrayToObject(entities, fkCfg.displayProp);
             }

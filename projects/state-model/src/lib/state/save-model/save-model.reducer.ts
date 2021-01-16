@@ -15,7 +15,7 @@ export const SaveModelReducer: Reducer<Immutable<UnknownState>, SaveModelAction<
     
         if(command.saveAction === ModelCommand.Update) 
             modifyFn = (entity: Immutable<T>, entities: ImmutableArray<T>): ImmutableArray<T> => 
-                _update(entities, entity, modelConfig.identifier)
+                _update(entities, entity, modelConfig.idProp)
         else 
             modifyFn = (entity: Immutable<T>, entities: ImmutableArray<T>): ImmutableArray<T> =>   
                 _add(entities, entity)

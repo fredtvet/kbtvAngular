@@ -26,7 +26,7 @@ export function _modifyModelWithForeigns<TState extends {}>(
         const fkPropConfig = ModelStateConfig.get(fkProp); //Key information about foreign prop
         const foreignEntity = <{}> entity[<string> fkPropConfig.foreignProp];
         if(!foreignEntity) continue; //If no new entity, continue
-        const foreignEntityId = foreignEntity[fkPropConfig.identifier];
+        const foreignEntityId = foreignEntity[fkPropConfig.idProp];
         if(!foreignEntityId){ //No id on new entity? ignore and set null
             console.error(`Entity from ${stateProp} has foreign property from ${fkProp} set with no ID`)
             entityClone[<string> fkPropConfig.foreignProp] = null;

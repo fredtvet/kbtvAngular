@@ -30,7 +30,7 @@ export class ModelDataTableFacade  {
 
     get modelIdentifier(): Maybe<string> { 
         return this.modelPropertySubject.value ? 
-        ModelStateConfig.get(this.modelPropertySubject.value)?.identifier : null
+        ModelStateConfig.get(this.modelPropertySubject.value)?.idProp : null
     }
 
     constructor(

@@ -5,6 +5,6 @@ import { ModelStateConfig } from 'state-model';
 import { Prop } from 'global-types';
 
 export function _trackByModel(prop: Prop<ModelState>){
-    const identifier = ModelStateConfig.get(prop).identifier;
-    return (index:number, model:Model): unknown => model[identifier];
+    const idProp = ModelStateConfig.get(prop).idProp;
+    return (index:number, model:Model): unknown => model[idProp];
 }

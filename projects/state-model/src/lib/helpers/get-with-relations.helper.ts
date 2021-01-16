@@ -22,7 +22,7 @@ export function _getWithRelations<TModel extends {}, TState extends {}>(
     const modelState = (<Immutable<UnknownModelState>> state)[cfg.prop];
     if(!modelState || modelState.length == 0) return;
 
-    const entity = _find(modelState, id, modelCfg.identifier);
+    const entity = _find(modelState, id, modelCfg.idProp);
     
     if(!entity) return;
     let entityClone = {...entity};
@@ -35,7 +35,7 @@ export function _getWithRelations<TModel extends {}, TState extends {}>(
             _find(
                 (<Immutable<UnknownModelState>> state)[fkStateProp],
                 entity[<string> fkPropConfig.foreignKey], 
-                fkPropConfig.identifier
+                fkPropConfig.idProp
             );
     }
 

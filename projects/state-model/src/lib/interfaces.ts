@@ -7,7 +7,7 @@ export interface ModelConfig<TModel, TState> {
     /** Base url for model api calls */
     apiUrl: string, 
     /** A property used to get a value that unqiuely identifies the model. */
-    identifier: Prop<TModel>, 
+    idProp: Prop<TModel>, 
     /** Set to true if model can be fetched from external API  */
     fetchable?: boolean, 
     /** Property used as foreign reference in other models */

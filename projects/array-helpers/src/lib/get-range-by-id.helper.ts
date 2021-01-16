@@ -5,16 +5,16 @@ import { _convertArrayToObject } from './convert-array-to-object.helper';
  * Get a range of objects
  * @param originals An array of objects 
  * @param ids An array of unique values that identify the objects
- * @param identifier A property on the object that contains the unique value
+ * @param idProp A property on the object that contains a unique value
  */
-export function _getRangeByIdentifier<T>(
+export function _getRangeById<T>(
   originals: Maybe<ImmutableArray<T>>, 
   ids: ImmutableArray<unknown>, 
-  identifier: Prop<Immutable<T>>): Immutable<T>[]{       
+  idProp: Prop<Immutable<T>>): Immutable<T>[]{       
     if(!originals?.length) return []; //If initial array empty, just return empty array  
     if(!ids?.length) return originals.slice(); //If no deleted ids, just return originals
     
-    let originalsObj = _convertArrayToObject<T>(originals, identifier);
+    let originalsObj = _convertArrayToObject<T>(originals, idProp);
     let result: Immutable<T>[] = [];
 
     for(let i = 0; i < ids.length; i++){  

@@ -11,13 +11,13 @@ export abstract class CdkSelectableItemBaseComponent {
   @Input() defaultState: boolean = false;
 
   private _id: string | number;
-  /**  Adds the unique identifier to the selection map in {@link CdkSelectablePresenter} */
+  /**  Adds the unique idProp to the selection map in {@link CdkSelectablePresenter} */
   @Input('id') 
   set id(value: string | number) {
     this._id = value;
     this.presenter.addEntry(this.id, this.defaultState)
   }
-  /** Get a unique identifier value for the component to track the selected status. */
+  /** Get a unique idProp value for the component to track the selected status. */
   get id(): string | number { return this._id }
 
   constructor(private presenter: CdkSelectablePresenter) { }
