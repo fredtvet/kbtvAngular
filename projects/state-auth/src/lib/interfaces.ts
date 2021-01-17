@@ -63,8 +63,6 @@ export interface LoginResponse {
 export interface RefreshTokenResponse {
     /** A new access token */
     accessToken: AccessToken;
-    /** The refresh token used to make the request */
-    refreshToken: string;
 }
 
 /** Describes an object containing data used to authorize a user */

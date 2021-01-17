@@ -7,11 +7,10 @@ import { RefreshTokenSuccessAction } from './actions.const'
 export const RefreshTokenSuccessReducer: Reducer<unknown, RefreshTokenSuccessAction> = _createReducer(
         RefreshTokenSuccessAction,
         (state: unknown, action: Immutable<RefreshTokenSuccessAction>): Partial<StoreState>=> {
-            const {accessToken, refreshToken} = action.response;  
+            const accessToken = action.response.accessToken;  
             return {
                 accessToken: accessToken.token,
-                accessTokenExpiration: _getUnixTimeSeconds() + accessToken.expiresIn,
-                refreshToken
+                accessTokenExpiration: _getUnixTimeSeconds() + accessToken.expiresIn
             }
         }
     )
