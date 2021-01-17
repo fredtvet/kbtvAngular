@@ -1,10 +1,9 @@
 import { Directive, EmbeddedViewRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { BehaviorSubject, merge, of } from 'rxjs';
-import { debounceTime, filter, map, tap } from 'rxjs/operators';
 import { _filter } from 'array-helpers';
-import { ActiveStringFilterConfig } from '../interfaces/active-string-filter-config.interface';
 import { Immutable, ImmutableArray } from 'global-types';
-import { combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, merge, of } from 'rxjs';
+import { debounceTime, filter, map } from 'rxjs/operators';
+import { ActiveStringFilterConfig } from '../interfaces/active-string-filter-config.interface';
 
 @Directive({
   selector: '[appActiveStringFilter]'
@@ -39,7 +38,7 @@ export class ActiveStringFilterDirective<TRecord> {
 
     private initalizeObserver(): void {
         if(!this._config) return;
-        console.log('eyo')
+
         const stringObserver$ = merge(
             of(this._config.initialString),
             this._config.stringChanges$
@@ -48,7 +47,6 @@ export class ActiveStringFilterDirective<TRecord> {
             stringObserver$,
             this.optionsSubject.asObservable()
         ]).pipe(
-            tap(console.log),
             filter(([criteria]) => !criteria || typeof criteria === "string"), 
             debounceTime(this._config.customDebounceTime || 400), 
             map(([criteria, options]) => {

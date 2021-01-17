@@ -1,4 +1,4 @@
-const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const charLength = chars.length;
 
 export function _idGenerator(length: number = 7): string{

@@ -25,7 +25,7 @@ export class DataManagerComponent {
   @ViewChild('dataTable') dataTable: ModelDataTableComponent;
 
   vm$: Observable<ViewModel> = this.facade.selectedProperty$.pipe(
-    map(x => { console.log(x);  return <ViewModel>{
+    map(x => { return <ViewModel>{
       navConfig: this.getNavConfig(x),
       selectedProperty: x
     }})
