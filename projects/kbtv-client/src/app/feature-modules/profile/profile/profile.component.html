@@ -1,54 +1,58 @@
 <app-main-skeleton>
 
-  <app-main-top-nav-bar navbar [config]="navConfig" >
+  <app-main-top-nav-bar navbar [config]="navConfig">
   </app-main-top-nav-bar>
 
-  <div class="pl-1 pr-1 pb-1 max-width h-100" fxLayout="column" fxLayoutAlign="space-between stretch">
 
-    <span>
-      <app-list-card (click)="updateProfile()">
-        <mat-icon left-side>account_circle</mat-icon>
-        Oppdater profil
-        <mat-icon right-side>chevron_right</mat-icon>
-      </app-list-card>
-      <app-list-card (click)="updatePassword()">
-        <mat-icon left-side>vpn_key</mat-icon>
-        Oppdater passord
-        <mat-icon right-side>chevron_right</mat-icon>
-      </app-list-card>
-      <app-list-card (click)="updateSyncConfig()">
-        <mat-icon left-side>settings</mat-icon>
-        Konfigurasjoner
-        <mat-icon right-side>chevron_right</mat-icon>
-      </app-list-card>
-      <app-list-card appAddToHomeScreen>
-        <mat-icon left-side>get_app</mat-icon>
-        Legg til app
-        <mat-icon right-side>chevron_right</mat-icon>
-      </app-list-card>
+  <div>
+    <app-list-item (click)="updateProfile()">
+      <mat-icon left-side>account_circle</mat-icon>
+      Oppdater profil
+    </app-list-item>
+    <mat-divider></mat-divider>
 
-      <app-list-card (click)="syncAll()">
-        <mat-icon left-side>update</mat-icon>
-        Synkroniser data
-        <mat-icon right-side>chevron_right</mat-icon>
-      </app-list-card>
-    </span>
-  
-    <span>
-      <app-list-card (click)="confirmPurge()">
-        <mat-icon left-side>delete_sweep</mat-icon>
-        Slett lokal data
-        <mat-icon right-side>chevron_right</mat-icon>
-      </app-list-card>
-      <app-list-card (click)="logout()">
-        <mat-icon left-side>power_settings_new</mat-icon>
-        Logg ut
-        <mat-icon right-side>chevron_right</mat-icon>
-      </app-list-card>
-    </span>
-
-    
+    <app-list-item (click)="updatePassword()">
+      <mat-icon left-side>vpn_key</mat-icon>
+      Oppdater passord
+    </app-list-item>
+    <mat-divider></mat-divider>
   </div>
 
-</app-main-skeleton>
+  <div class="mt-4">
+    <app-list-item appAddToHomeScreen>
+      <mat-icon left-side>get_app</mat-icon>
+      Legg til app
+    </app-list-item>
+    <mat-divider></mat-divider>
 
+    <app-list-item (click)="updateSyncConfig()">
+      <mat-icon left-side>settings</mat-icon>
+      Konfigurasjoner
+    </app-list-item>
+    <mat-divider></mat-divider>
+    
+    <app-list-item (click)="syncAll()">
+      <mat-icon left-side>update</mat-icon>
+      Synkroniser data
+    </app-list-item>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div class="mt-4">
+    <mat-divider></mat-divider>
+    <app-list-item (click)="confirmPurge()">
+      <mat-icon left-side>delete_sweep</mat-icon>
+      Slett lokal data
+    </app-list-item>
+    <mat-divider></mat-divider>
+
+    <app-list-item (click)="logout()">
+      <mat-icon left-side>power_settings_new</mat-icon>
+      Logg ut
+    </app-list-item>
+    <mat-divider></mat-divider>
+  </div>
+
+
+
+</app-main-skeleton>

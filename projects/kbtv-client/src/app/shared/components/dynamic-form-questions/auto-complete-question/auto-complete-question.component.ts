@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { BaseQuestionComponent, DynamicFormStore, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
-import { ImmutableArray, UnknownState } from 'global-types';
+import { Immutable, ImmutableArray, UnknownState } from 'global-types';
 import { Observable, of } from 'rxjs';
 import { ActiveStringFilterConfig } from '../../../interfaces';
 import { AutoCompleteQuestion } from './auto-complete-question.interface';
@@ -15,7 +15,7 @@ export class AutoCompleteQuestionComponent extends BaseQuestionComponent<AutoCom
 
     options$: Observable<ImmutableArray<unknown>>;
 
-    activeFilter: ActiveStringFilterConfig<UnknownState>;
+    activeFilter: Immutable<ActiveStringFilterConfig<UnknownState>>;
 
     constructor(
         @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,

@@ -10,10 +10,10 @@ import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper
 export class UserTimesheetListViewComponent {
 
   @Input() timesheets: Timesheet[];
-  @Output() editClicked = new EventEmitter<string>();
+  @Output() timesheetClicked = new EventEmitter<Timesheet>();
   @Output() filterClicked = new EventEmitter();
 
-  editTimesheet = (id: string) => this.editClicked.emit(id);
+  onTimesheetClick = (t: Timesheet) => this.timesheetClicked.emit(t);
   
   trackByTimesheet = _trackByModel("timesheets")
 }

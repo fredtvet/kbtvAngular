@@ -6,10 +6,10 @@ import { Immutable, Maybe } from 'global-types';
 import { Store } from 'state-management'
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StoreState } from '../store-state.interface';
+import { StoreState } from '../../user-timesheet-week/store-state.interface';
 
 @Component({
-  selector: 'app-timesheet-card-dialog-wrapper',
+  selector: 'app-user-timesheet-card-dialog-wrapper',
   template: `
   <app-timesheet-card 
     [timesheet]="timesheet$ | async">

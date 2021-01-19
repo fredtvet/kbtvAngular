@@ -7,6 +7,7 @@ import { SyncStateAction } from 'state-sync';
 @Component({
   selector: 'app-home-top-nav',
   templateUrl: 'home-top-nav.component.html',
+  styleUrls: ['home-top-nav.component.scss'],  
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeTopNavComponent{

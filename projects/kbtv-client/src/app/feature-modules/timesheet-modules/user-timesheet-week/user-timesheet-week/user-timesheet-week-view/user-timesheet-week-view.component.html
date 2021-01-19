@@ -1,10 +1,13 @@
-<div style="min-height:100%" fxLayout="row">
-
+<style>
+  .week-view-container { min-height: 100%; }
+  .day-label { z-index:1; position:sticky; top:0; }
+</style>
+<div class="week-view-container" fxLayout="row">
   <ng-container *ngFor="let weekDay of (vm.isXs ? 5 : 7) | arrayFromNumber">
 
     <div class="w-100" fxLayout="column" fxLayoutAlign="start stretch">
 
-      <app-timesheet-day-label class="w-100 mb-1" style="z-index:1;position:sticky;top:0"
+      <app-timesheet-day-label class="mb-1 day-label"
         [date]="vm.weekCriteria | getDateByDateParams : weekDay"
         (labelClicked)="labelClicked.emit($event)">
       </app-timesheet-day-label>

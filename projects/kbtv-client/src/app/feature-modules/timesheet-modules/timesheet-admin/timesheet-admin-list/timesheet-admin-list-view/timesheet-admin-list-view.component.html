@@ -1,12 +1,30 @@
-<div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch">
-    <cdk-virtual-scroll-viewport itemSize="120" maxBufferPx="800" minBufferPx="800" fxFlex>
-        <div class="m-1" *cdkVirtualFor="let timesheet of timesheets; trackBy: trackById">
-            <app-timesheet-card [timesheet]="timesheet" [actionButton]="{ 
-                        icon: timesheet.status === 2 ? 'check_circle' : 'check_circle_outline', 
-                        color: timesheet.status === 2 ? 'accent' : 'warn',
-                        callback: toggleTimesheetStatus, params: [timesheet]
-                    }">
-            </app-timesheet-card>
-        </div>
+<div class="h-100" fxLayout="column" fxLayoutAlign="start stretch">
+    <cdk-virtual-scroll-viewport itemSize="96" maxBufferPx="800" minBufferPx="800" fxFlex>
+
+        <ng-container *cdkVirtualFor="let timesheet of timesheets; trackBy: trackById">
+
+            <app-list-item rippleDisabled="true">
+                
+                <ng-container left-side>
+                    <button mat-icon-button color="warn" *ngIf="timesheet.status === 1 else closedIcon" 
+                        (click)="onPress(timesheet)">
+                        <mat-icon>lock_open</mat-icon>
+                    </button>
+                    <ng-template #closedIcon>
+                        <button mat-icon-button color="accent" (click)="onPress(timesheet)">
+                            <mat-icon>lock</mat-icon>
+                        </button>
+                    </ng-template>
+                </ng-container>
+
+                <app-timesheet-list-item-content matRipple [timesheet]="timesheet" (click)="onTap(timesheet)">
+                </app-timesheet-list-item-content>
+           
+            </app-list-item>
+
+            <mat-divider></mat-divider>
+
+        </ng-container>
+
     </cdk-virtual-scroll-viewport>
 </div>

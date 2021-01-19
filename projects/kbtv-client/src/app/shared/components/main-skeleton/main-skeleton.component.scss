@@ -1,8 +1,26 @@
+@import '../../../../styles/variables';
+
 .main-container{
     position:relative;
     z-index:1;
     height:100%;
-    width:100%
+    width:100%;
+}
+.content-container{
+    position:relative;
+    z-index:1;
+    height:100%;
+    width:100%;
+    background: mat-color($background, background);
+}
+
+.nav-content{
+    z-index:1;
+    background:mat-color($background, card);
+}
+
+.main-content{
+    overflow-y: auto;
 }
 
 ::ng-deep.main-skeleton-overlay{

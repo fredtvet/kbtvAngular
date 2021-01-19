@@ -3,23 +3,24 @@
   <app-main-top-nav-bar navbar [config]="{title: 'Brukere'}">
   </app-main-top-nav-bar>
 
-  <div class="pl-1 pr-1 max-width bottom-fab-padding" *ngIf="users$ | async else loading; let users;">
-
-    <app-user-card *ngFor="let user of users; trackBy: trackByUser" 
-      [user]="user"
-      [editButton]="{
-        icon: 'edit', 
-        callback: openUserForm, params: [user.userName],
-        type: ButtonTypes.Icon
-      }"
-      [newPasswordButton]="{
-        icon: 'vpn_key', 
-        color: 'accent',
-        callback: openNewPasswordForm, params: [user.userName],
-        type: ButtonTypes.Icon
-      }">
-    </app-user-card>
-
+  <div class="pl-1 pr-1 bottom-fab-padding" *ngIf="users$ | async else loading; let users;">
+    <ng-container *ngFor="let user of users; trackBy: trackByUser">
+      <app-user-card
+        [user]="user"
+        [editButton]="{
+          icon: 'edit', 
+          callback: openUserForm, params: [user.userName],
+          type: ButtonTypes.Icon
+        }"
+        [newPasswordButton]="{
+          icon: 'vpn_key', 
+          color: 'accent',
+          callback: openNewPasswordForm, params: [user.userName],
+          type: ButtonTypes.Icon
+        }">
+      </app-user-card>
+      <mat-divider></mat-divider>
+    </ng-container>
   </div>
   
 </app-main-skeleton>

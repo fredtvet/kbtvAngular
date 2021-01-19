@@ -1,15 +1,22 @@
-<div fxLayout="column" fxLayoutAlign="start stretch" class="h-100 max-width">
+<div fxLayout="column" fxLayoutAlign="start stretch" class="h-100">
     <cdk-virtual-scroll-viewport *ngIf="timesheets?.length else noContent"
-        itemSize="120" maxBufferPx="800" minBufferPx="800" fxFlex>
-        <div class="m-1" *cdkVirtualFor="let timesheet of timesheets | sortByDate : 'startTime'; trackBy: trackByTimesheet">
-            <app-timesheet-card [timesheet]="timesheet" 
-                [actionButton]="timesheet.status === 2 ? null : { 
-                    icon: 'edit', 
-                    color: 'accent',
-                    callback: editTimesheet, params: [timesheet.id]
-                }">
-            </app-timesheet-card>
-        </div>
+        itemSize="96" maxBufferPx="800" minBufferPx="800" fxFlex>
+        <ng-container *cdkVirtualFor="let timesheet of timesheets | sortByDate : 'startTime'; trackBy: trackByTimesheet">
+                
+            <app-list-item (click)="onTimesheetClick(timesheet)">
+
+                <ng-container left-side>
+                    <mat-icon *ngIf="timesheet.status === 1 else closedIcon" color="warn">lock_open</mat-icon>
+                    <ng-template #closedIcon><mat-icon color="accent">lock</mat-icon></ng-template>
+                </ng-container>
+
+                <app-timesheet-list-item-content [timesheet]="timesheet">
+                </app-timesheet-list-item-content>
+           
+            </app-list-item>
+
+            <mat-divider></mat-divider>
+        </ng-container>
     </cdk-virtual-scroll-viewport>
 </div> 
 

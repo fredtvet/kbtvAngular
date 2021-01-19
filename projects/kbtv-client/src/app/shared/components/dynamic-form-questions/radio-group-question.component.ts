@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { BaseQuestionComponent, DynamicFormStore, OptionsGetter, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { ImmutableArray } from 'global-types';
 import { Observable } from 'rxjs';
 
 export interface RadioGroupQuestion<T> extends Question {
@@ -39,7 +40,7 @@ export class RadioGroupQuestionComponent extends BaseQuestionComponent<RadioGrou
 
   hideField: boolean;
 
-  options$: Observable<unknown[]>;
+  options$: Observable<ImmutableArray<unknown>>;;
   
   constructor(
     @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,

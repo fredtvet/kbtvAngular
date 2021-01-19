@@ -1,14 +1,15 @@
-<div class="main-container primary-light" fxLayout="row">
+<div class="main-container" fxLayout="row">
 
-  <div fxLayout="column" class="main-container mat-elevation-z2" fxFlex>
-    <span  class="primary" style="z-index:1"
-      [ngClass]="disableElevation ? '' : 'mat-elevation-z2'" >
+  <div fxLayout="column" class="content-container mat-elevation-z1 max-width" fxFlex 
+    [ngClass]="{ 'max-width': !data.disableMaxWidth }">
+    <span
+      [ngClass]="disableElevation ? 'nav-content' : 'nav-content mat-elevation-z1'" >
       
       <ng-content select="[navbar]"></ng-content>
   
     </span>
   
-    <div fxFlex style="overflow-y:auto;">
+    <div fxFlex class="main-content">
       <ng-content>
     
       </ng-content>

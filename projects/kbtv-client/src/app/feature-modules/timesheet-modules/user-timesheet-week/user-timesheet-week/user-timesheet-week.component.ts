@@ -14,11 +14,11 @@ import { Maybe } from "global-types";
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { WeekCriteria } from '../../shared-timesheet/interfaces';
-import { UserTimesheetCardDialogWrapperComponent } from './user-timesheet-card-dialog-wrapper.component';
 import { UserTimesheetWeekProviders } from './user-timesheet-week-providers.const';
 import { UserTimesheetWeekFacade } from './user-timesheet-week.facade';
 import { ViewModel } from './view-model.interface';
 import { UserTimesheetListCriteriaQueryParam } from "../../user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const";
+import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
 
 @Component({
   selector: "app-user-timesheet-week",

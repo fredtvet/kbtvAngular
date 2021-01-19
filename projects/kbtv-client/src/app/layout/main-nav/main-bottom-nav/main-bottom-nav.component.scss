@@ -1,0 +1,7 @@
+@import '../../../../styles/variables';
+
+.bottom-nav-container{
+    padding:0;
+    overflow:hidden;
+    color: mat-color($background, card);
+}

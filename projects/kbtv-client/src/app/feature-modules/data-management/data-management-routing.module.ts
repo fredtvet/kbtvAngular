@@ -5,7 +5,7 @@ import { DataManagerComponent } from './data-manager/data-manager.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: '', data: {disableMaxWidth: true},
     component: DataManagerComponent
   },
 ];

@@ -1,19 +1,21 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, Observable } from 'rxjs';
-import { map, takeUntil, tap } from 'rxjs/operators';
 import { Timesheet, User } from '@core/models';
 import { LoadingService } from '@core/services/loading.service';
-import { _getWeekYear } from 'date-time-helpers';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
+import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { TimesheetStatus } from '@shared/enums';
-import { TimesheetAdminFacade } from '../timesheet-admin.facade';
+import { _getWeekYear } from 'date-time-helpers';
 import { FormService } from 'form-sheet';
-import { WeekCriteria } from '@shared-timesheet/interfaces';
-import { Maybe, Immutable } from 'global-types';
+import { Immutable, Maybe } from 'global-types';
+import { combineLatest, Observable } from 'rxjs';
+import { map, takeUntil, tap } from 'rxjs/operators';
+import { AdminTimesheetCardDialogWrapperComponent } from '../components/admin-timesheet-card-dialog-wrapper.component';
+import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { TimesheetAdminListWeekNrQueryParam } from './timesheet-admin-list-route-params.const';
 
 @Component({
@@ -36,6 +38,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
     private loadingService: LoadingService,
     private facade: TimesheetAdminFacade,
     private router: Router,
+    private dialog: MatDialog,
     private route: ActivatedRoute,
     private formService: FormService) {
       super();
@@ -45,10 +48,14 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
       ).subscribe();
     }
 
-  toggleTimesheetStatus = (timesheet: Timesheet): void => 
+  toggleTimesheetStatus = (timesheet: Immutable<Timesheet>): void => 
     this.facade.updateStatuses([<string> timesheet.id],  
       timesheet.status === TimesheetStatus.Confirmed ? TimesheetStatus.Open : TimesheetStatus.Confirmed
     );
+
+  openTimesheetCard = (timesheet: Immutable<Timesheet>) =>
+    this.dialog.open(AdminTimesheetCardDialogWrapperComponent, {
+      data: timesheet, panelClass: 'extended-dialog'});
 
   trackById = _trackByModel("timesheets");
   

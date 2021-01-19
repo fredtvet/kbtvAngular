@@ -1,8 +1,9 @@
-<span fxLayout="row" fxLayoutAlign="start center" class="p-2 pt-3 pb-3" matRipple> 
+<span fxLayout="row" fxLayoutAlign="start center" class="p-4 bg-card" 
+    matRipple [matRippleDisabled]="rippleDisabled"> 
 
     <ng-content select="[left-side]"></ng-content>
 
-    <span class="ml-1 mr-auto ellipsis">
+    <span class="ml-5 ellipsis" fxFlex>
         <ng-content></ng-content>
     </span>    
     

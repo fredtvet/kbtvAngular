@@ -1,0 +1,14 @@
+<div class="ellipsis">
+
+  <div class="mat-body-2 p-0">
+    {{ timesheet.startTime | date : 'longDate'}}
+    {{ timesheet.startTime | date : 'shortTime' }} - {{ timesheet.endTime | date : 'shortTime' }}
+  </div>
+  <div class="mat-body ellipsis">
+    {{ timesheet.mission?.address }}
+  </div>
+  <div class="mat-small ellipsis">
+    {{ timesheet.comment }}
+  </div>
+
+</div>

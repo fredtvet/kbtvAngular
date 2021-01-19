@@ -8,6 +8,7 @@ import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { _trackByAppButton } from '@shared-app/track-by-app-button';
 import { combineLatest } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
+import { MainSkeletonRouteData } from './main-skeleton-route-data.interface';
 
 @Component({
   selector: 'app-main-skeleton',
@@ -22,25 +23,19 @@ export class MainSkeletonComponent extends WithUnsubscribe() {
   @Input() fabs: AppButton[];
   @Input() disableElevation: boolean;
 
+  data: MainSkeletonRouteData = this.route.snapshot.data;
+
   constructor(
     private deviceInfoService: DeviceInfoService,
     private route: ActivatedRoute,
-    private elRef: ElementRef
-  ){ super() }
+    private elRef: ElementRef,
+  ){ super(); }
 
-  ngOnInit(): void {
-    const parent: HTMLElement = this.elRef.nativeElement.parentElement;
+  ngOnInit(): void { 
     combineLatest([
-      this.route.data,
       this.deviceInfoService.isS$
     ]).pipe(
-      tap(([data, isS]) => {
-        const size = data['viewSize'];
-        const shouldOverlay = isS || size === 'overlay';
-        if(shouldOverlay) parent.classList.add("main-skeleton-overlay");
-        else parent.classList.remove("main-skeleton-overlay");
-        if(size && !shouldOverlay) parent.style.width = size;
-      }),
+      tap(([isS]) => this.changeSize(isS)),
       takeUntil(this.unsubscribe),
     ).subscribe()
   }
@@ -48,5 +43,13 @@ export class MainSkeletonComponent extends WithUnsubscribe() {
   trackByFab = _trackByAppButton;
 
   trackByChipRow = _trackById; 
+
+  private changeSize(isS: boolean): void{
+    const parent: HTMLElement = this.elRef.nativeElement.parentElement;
+    const shouldOverlay = isS || this.data.viewSize === 'overlay';
+    if(shouldOverlay) parent.classList.add("main-skeleton-overlay");
+    else parent.classList.remove("main-skeleton-overlay");
+    if(this.data.viewSize && !shouldOverlay) parent.style.width = this.data.viewSize;
+  }
 
 }

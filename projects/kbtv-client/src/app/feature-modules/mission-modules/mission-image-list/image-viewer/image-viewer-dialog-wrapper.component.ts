@@ -8,7 +8,7 @@ import { ConfirmDialogService } from 'confirm-dialog';
 import { MissionImageListFacade } from '../mission-image-list.facade';
 
 @Component({
-  selector: 'app-timesheet-card-dialog-wrapper',
+  selector: 'app-image-viewer-dialog-wrapper',
   template: `
   <app-image-viewer
     [images]="data.images" 

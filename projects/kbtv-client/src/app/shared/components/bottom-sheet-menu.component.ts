@@ -14,7 +14,7 @@ import { AppButton } from '@shared-app/interfaces/app-button.interface';
   <span class="mat-subheading-2">
     <ng-container #navs *ngFor="let button of buttons">
         <a *ifRole="button.allowedRoles" (click)="handleFn(button.callback, button.params)" matRipple>
-            <mat-icon>{{ button.icon }}</mat-icon>
+            <mat-icon>{{ button.icon }}</mat-icon>>
             <span class="ml-2 mr-2">{{ button.text }}</span>
         </a>
     </ng-container>

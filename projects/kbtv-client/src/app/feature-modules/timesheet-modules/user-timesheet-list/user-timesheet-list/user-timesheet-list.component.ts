@@ -19,6 +19,8 @@ import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/times
 import { UserTimesheetListFacade } from './user-timesheet-list.facade';
 import { UserTimesheetListProviders } from './user-timesheet-list.state';
 import { AppButton } from "@shared-app/interfaces/app-button.interface";
+import { MatDialog } from "@angular/material/dialog";
+import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
 
 interface ViewModel { 
   timesheets: ImmutableArray<Timesheet>;
@@ -57,6 +59,7 @@ export class UserTimesheetListComponent {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
+    private dialog: MatDialog,
     private chipsFactory: ChipsFactoryService,
     private modelFormService: ModelFormService
   ) {}
@@ -84,6 +87,10 @@ export class UserTimesheetListComponent {
       submitCallback: (val: TimesheetCriteria) => this.facade.updateCriteria(val)
     });
   }
+
+  openTimesheetCard = (timesheetId: string) =>
+    this.dialog.open(UserTimesheetCardDialogWrapperComponent, {
+      data: timesheetId, panelClass: 'extended-dialog'});
 
   private onBack = (): void => {
     this.router.navigate(['../'], { relativeTo: this.route.parent })

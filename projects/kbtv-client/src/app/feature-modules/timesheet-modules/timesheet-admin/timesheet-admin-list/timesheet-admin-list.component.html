@@ -6,7 +6,8 @@
     <ng-container *ngIf="(timesheets$ | async) else loading; let timesheets">
         <app-timesheet-admin-list-view *ngIf="timesheets?.length else loading"
             [timesheets]="timesheets"
-            (timesheetStatusToggled)="toggleTimesheetStatus($event)">
+            (timesheetPressed)="toggleTimesheetStatus($event)"
+            (timesheetTapped)="openTimesheetCard($event)">
         </app-timesheet-admin-list-view>
     </ng-container>
 

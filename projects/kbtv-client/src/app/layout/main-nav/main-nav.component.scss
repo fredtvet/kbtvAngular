@@ -1,0 +1,26 @@
+@import '../../../styles/variables';
+
+mat-sidenav-container{
+    background: mat-color($background, background);
+    position: unset!important
+}
+
+mat-sidenav {
+    width:202px;
+    background: mat-color($background, app-bar);
+}
+
+mat-sidenav-content{
+    margin:0;
+    height:100%;
+    overflow-x:hidden;
+    div{
+        overflow-x:hidden;
+        position:relative;
+        height:100%;
+    }
+    app-main-bottom-nav{
+        z-index:5;
+        display:block
+    }
+}

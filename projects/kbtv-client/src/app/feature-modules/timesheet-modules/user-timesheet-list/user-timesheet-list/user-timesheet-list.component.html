@@ -8,7 +8,7 @@
 
     <app-user-timesheet-list-view 
         [timesheets]="timesheets$ | async" 
-        (editClicked)="openTimesheetForm($event)"
+        (timesheetClicked)="$event?.status === 2 ? openTimesheetCard($event?.id) : openTimesheetForm($event?.id)"
         (filterClicked)="openTimesheetFilter()">
     </app-user-timesheet-list-view>
 

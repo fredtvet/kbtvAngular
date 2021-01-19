@@ -4,17 +4,16 @@
     <app-main-top-nav-bar navbar [config]="vm.navConfig" >
     </app-main-top-nav-bar>
 
-    <div cdkSelectableContainer #selectableContainer (selectionChanged)="onSelectionChange($event)" class="selectable-container">
-        <app-selectable-card *ngFor="let doc of vm.documents; trackBy: trackByFn" [id]="doc.id" style="word-wrap: break-word;"
-        ngStyle.xs="width:50%" ngStyle.sm="width:33%" ngStyle.gt-sm="width:25%"
-        selectedText="Dokument valgt">
-            <div class="foreground-card text-center mat-elevation-z2 p-2 pt-6 pb-6 m-1" (tap)="downloadDocument(doc)">
-                <mat-icon [svgIcon]="doc.fileName | fileExtension | fileExtensionIcon" class="scale-150 mb-2"></mat-icon>
-                <div>{{ doc.documentType?.name }}</div>
-        
+    <div cdkSelectableContainer #selectableContainer (selectionChanged)="onSelectionChange($event)">
+        <app-selectable-card *ngFor="let doc of vm.documents; trackBy: trackByFn" [id]="doc.id" selectedText="Dokument valgt">
+            <app-list-item (tap)="downloadDocument(doc)" [rippleDisabled]="true">
+                <mat-icon left-side [svgIcon]="doc.fileName | fileExtension | fileExtensionIcon"></mat-icon>
+                <div class="ellipsis">{{ doc.documentType?.name }}dsadsadsadsadasdsadsad</div>  
                 <div class="mat-caption">Filtype: {{ doc.fileName | fileExtension | uppercase }}</div>
                 <div class="mat-caption">Lastet opp {{ doc.updatedAt | date : 'dd.MMM yyyy' }}</div>
-            </div>
+                <span right-side class="color-accent">Last ned</span>
+            </app-list-item>
+            <mat-divider></mat-divider>
         </app-selectable-card>
     </div>
 

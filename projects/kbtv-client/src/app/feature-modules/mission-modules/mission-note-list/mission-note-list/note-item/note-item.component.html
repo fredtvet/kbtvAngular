@@ -1,0 +1,15 @@
+<div class="p-4 bg-card" *ngIf="note">
+    <div *ngIf="note.title" class="mat-title">{{ note.title }}</div>
+    <div class="mat-body">{{ note.content }}</div>
+    <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="mat-caption">
+            {{ note.updatedAt | date: 'dd.MMM yyyy' }} {{ note.createdBy ? ("av " + note.createdBy) : "" }}
+        </span>
+
+        
+        <button *ifRole="can.update" (click)="editNote()" mat-button color="accent"
+            aria-label="Rediger notat">
+            Oppdater
+        </button>       
+    </div>        
+</div>

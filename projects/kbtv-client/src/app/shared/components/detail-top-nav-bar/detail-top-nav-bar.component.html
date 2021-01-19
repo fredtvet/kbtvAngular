@@ -1,5 +1,5 @@
 
-<div class="container" *ngIf="config" [ngClass]="config.imgSrc ? 'bg-black' : 'primary'">
+<div class="container" *ngIf="config" [ngClass]="config.imgSrc ? 'bg-black' : ''">
     
     <div *ngIf="config.imgSrc" class="img-container text-center mr-auto ml-auto">
       <img appImageErrorReloader #img [src]="config.imgSrc" (error)="img.src = '/assets/notfound.png?'" alt="Forsidebilde" />

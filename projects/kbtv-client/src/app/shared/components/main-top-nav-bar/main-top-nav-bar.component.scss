@@ -1,0 +1,14 @@
+@import '../../../../styles/variables';
+
+mat-toolbar{
+    background:transparent;
+}
+
+.search-bar{
+    margin: ($gap-size * 1px);
+    margin-left: 0;
+    padding: ($gap-size * 2px);
+    padding-left: ($gap-size * 3px);
+    border:1px solid $accent;
+    border-radius:5px;
+}

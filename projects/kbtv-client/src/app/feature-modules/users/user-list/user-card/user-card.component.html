@@ -1,4 +1,4 @@
-<app-list-card rippleDisabled="true" >
+<app-list-item rippleDisabled="true" >
     <mat-icon left-side>{{ (user.role === Roles.Oppdragsgiver) ? 'work' : 'person' }}</mat-icon>
     
     {{ user.lastName }}, {{ user.firstName }}
@@ -10,5 +10,4 @@
         <app-button *ngIf="newPasswordButton && user.role != Roles.Leder" [config]="newPasswordButton"></app-button>
         <app-button *ngIf="editButton && user.role != Roles.Leder" [config]="editButton"></app-button>
     </span>
-
-</app-list-card>
+</app-list-item>

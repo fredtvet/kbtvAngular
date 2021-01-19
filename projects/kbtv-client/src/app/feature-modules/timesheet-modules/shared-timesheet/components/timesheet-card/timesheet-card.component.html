@@ -1,25 +1,24 @@
-<mat-card fxLayout="column" fxLayoutAlign="space-between start"
-   *ngIf="timesheet">
+<div fxLayout="row" fxLayoutAlign="space-between stretch" class="p-4" *ngIf="timesheet">
 
-  <span fxLayout="row" fxLayoutAlign="space-between stretch" class="w-100">
-
-    <span fxLayout="column" fxLayoutAlign="start start" class="ellipsis">
-
-      <span class="mat-body-2 p-0">
-        {{ this.timesheet.startTime | date : 'longDate'}}
-        {{ this.timesheet.startTime | date : 'shortTime' }} - {{ this.timesheet.endTime | date : 'shortTime' }}
-      </span>
-      <span class="mat-small">
-        {{ (this.timesheet.totalHours || 0) | readableDuration }} 
-      </span>
-      <span class="mat-small">
-        ({{this.timesheet.missionId}}) {{ this.timesheet.mission?.address }} 
-      </span>
-      <span class="mat-body-2">
+    <div>
+      <div *ngIf="timesheet.fullName"> 
+        {{ timesheet.fullName }} 
+      </div>
+      <div class="mat-body-2 p-0">
+        {{ timesheet.startTime | date : 'longDate'}}
+        {{ timesheet.startTime | date : 'shortTime' }} - {{ timesheet.endTime | date : 'shortTime' }}
+      </div>
+      <div class="mat-body">
+        {{ (timesheet.totalHours || 0) | readableDuration }} 
+      </div>
+      <div class="mat-body-2">
+        ({{timesheet.missionId}}) {{ timesheet.mission?.address }}
+      </div>
+      <div class="mat-body">
         {{ timesheet.comment }}
-      </span>
+      </div>
 
-    </span>
+    </div>
 
     <span fxLayout="column" fxLayoutAlign="space-between center" style="min-width:40px">
 
@@ -28,8 +27,6 @@
         <mat-icon>lock_open</mat-icon>
         <span class="mat-caption">åpen</span>
       </span>
-
-      <app-button *ngIf="actionButton" [config]="actionButton | transformButton : ButtonTypes.Icon"></app-button>
 
     </span>
 
@@ -40,6 +37,4 @@
       </span>
     </ng-template>
 
-  </span>
-
-</mat-card>
+</div>

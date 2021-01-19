@@ -8,16 +8,19 @@ import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimesheetAdminListViewComponent {
-
+  
   @Input() timesheets: Timesheet[];
 
-  @Output() timesheetStatusToggled = new EventEmitter<Timesheet>();
+  @Output() timesheetPressed = new EventEmitter<Timesheet>();
+  @Output() timesheetTapped = new EventEmitter<Timesheet>();
 
-  constructor() { }
+  onPress = (timesheet: Timesheet): void => {
+    this.timesheetPressed.emit(timesheet)
+  }
 
-  toggleTimesheetStatus = (timesheet: Timesheet): void => 
-    this.timesheetStatusToggled.emit(timesheet)
-
+  onTap = (timesheet: Timesheet): void => 
+    this.timesheetTapped.emit(timesheet);
+  
   trackById = _trackByModel("timesheets");
   
 }

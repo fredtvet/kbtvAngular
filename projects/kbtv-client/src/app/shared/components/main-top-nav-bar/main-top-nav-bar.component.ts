@@ -9,6 +9,7 @@ import { MainTopNavConfig } from './main-top-nav.config';
 @Component({
   selector: 'app-main-top-nav-bar',
   templateUrl: './main-top-nav-bar.component.html',
+  styleUrls: ['./main-top-nav-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainTopNavBarComponent {
@@ -16,7 +17,6 @@ export class MainTopNavBarComponent {
   
   @Input() config: MainTopNavConfig;
   @Input() stylingClass: string;
-  @Input() color: "primary" | "accent" | "warn" | "transparent" = "primary";
   ButtonTypes = ButtonTypes;
   
   loading$: Observable<boolean> = this.loadingService.loading$;

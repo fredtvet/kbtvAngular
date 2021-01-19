@@ -1,3 +1,4 @@
 export interface MainSkeletonRouteData {
-    viewSize: string | 'overlay'
+    viewSize?: string | 'overlay'
+    disableMaxWidth?: boolean;
 }

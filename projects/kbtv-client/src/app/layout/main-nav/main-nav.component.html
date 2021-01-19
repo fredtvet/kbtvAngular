@@ -1,6 +1,6 @@
-<mat-sidenav-container class="h-100" *ngIf="config$ | async; let config" style="position: unset!important">
+<mat-sidenav-container class="h-100" *ngIf="config$ | async; let config">
 
-  <mat-sidenav fixedInViewport #drawer *ngIf="config" class="mat-elevation-z4 primary" style="width:202px"
+  <mat-sidenav fixedInViewport #drawer *ngIf="config" class="mat-elevation-z1"
   [attr.role]="config.isXs ? 'dialog' : 'navigation'"
   [mode]="config.isXs ? 'over' : 'side'"
   [opened]="!config.isXs">
@@ -12,16 +12,14 @@
 
   </mat-sidenav>
 
-  <mat-sidenav-content fxLayout="column" style="overflow-x:hidden;" class="h-100 primary-light">
+  <mat-sidenav-content fxLayout="column">
 
     <!-- h-100 for iOS Safari fix -->
-    <div fxFlex style="position:relative">
-      <div class="overflow-hidden h-100">
-        <router-outlet #outlet="outlet"></router-outlet>
-      </div> 
+    <div fxFlex>   
+        <router-outlet #outlet="outlet"></router-outlet>    
     </div>
 
-    <app-main-bottom-nav style="z-index:5" class="mat-elevation-z2" fxHide.gt-xs 
+    <app-main-bottom-nav class="mat-elevation-z2" fxHide.gt-xs 
       [navigations]="config.bottomNavigations">
     </app-main-bottom-nav>
 

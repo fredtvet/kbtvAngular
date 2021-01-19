@@ -1,5 +1,4 @@
-<mat-toolbar #navBar *ngIf="config" [ngClass]="stylingClass" [color]="color" 
-    [ngStyle]="{background: color === 'transparent' ? 'transparent' : ''}">
+<mat-toolbar #navBar *ngIf="config" [ngClass]="stylingClass">
 
     <ng-container *ngIf="searchBarHidden || !config.searchBar else searchBarContent">
         
@@ -54,7 +53,9 @@
       icon: 'close'}">
     </app-button>
 
-    <input #searchInput appInputListener (inputChanged)="handleSearchFn($event);" fxFlex
-        [value]="config.searchBar?.initialValue || ''" [placeholder]="config.searchBar?.placeholder"
-        class="mt-1 mb-1 p-2 pl-3 mr-1" style="background:white;border:none;border-radius:10px;">
+    <input #searchInput appInputListener  class="search-bar" fxFlex
+        (inputChanged)="handleSearchFn($event);"
+        [value]="config.searchBar?.initialValue || ''" 
+        [placeholder]="config.searchBar?.placeholder">
+
 </ng-template>

@@ -1,23 +1,29 @@
-<div class="h-100 max-width" fxLayout="column" fxLayoutAlign="start stretch">
+<div class="h-100" fxLayout="column" fxLayoutAlign="start stretch">
     
     <cdk-virtual-scroll-viewport itemSize="82" maxBufferPx="800" minBufferPx="800" fxFlex>
-        <app-swipe-card class="m-1 display-block" openWidth="82px" closedWidth="5px"
-            *cdkVirtualFor="let summary of summaries; trackBy: trackByWeek; templateCacheSize:0" 
-            [lockPosition]="!isXs ? 'open' : summary.openHours === 0 ? 'close' : null">
+        <ng-container *cdkVirtualFor="let summary of summaries; trackBy: trackByWeek; templateCacheSize:0" >
             
-            <div swipeContent matRipple style="width:82px" class="h-100"
-                fxLayout="column" fxLayoutAlign="center center"
-                [ngClass]="summary.openHours > 0 ? 'warn' : 'accent'" 
-                (press)="changeTimesheetStatuses(summary.timesheets)">
-                <mat-icon class="scale-125">{{ summary.openHours > 0 ? 'lock_open' : 'lock' }}</mat-icon>
-            </div>
+            <app-swipe-card class="display-block" openWidth="82px" closedWidth="5px"
+                [lockPosition]="!isXs ? 'open' : summary.openHours === 0 ? 'close' : null">
+                
+                <div swipeContent matRipple style="width:82px" class="h-100"
+                    fxLayout="column" fxLayoutAlign="center center"
+                    [ngClass]="summary.openHours > 0 ? 'warn' : 'accent'" 
+                    (press)="changeTimesheetStatuses(summary.timesheets)">
+                    <mat-icon class="scale-125">{{ summary.openHours > 0 ? 'lock_open' : 'lock' }}</mat-icon>
+                </div>
 
-            <app-timesheet-summary-card-content class="p-3 display-block"
-                [summary]="summary"
-                (tap)="selectWeek(summary.weekNr)">
-            </app-timesheet-summary-card-content>
+                <app-timesheet-summary-card-content
+                    [summary]="summary"
+                    (click)="selectWeek(summary.weekNr)">
+                </app-timesheet-summary-card-content>
 
-        </app-swipe-card>
+            </app-swipe-card>
+
+            <mat-divider></mat-divider>
+        </ng-container>
+        
+
     </cdk-virtual-scroll-viewport>
   
 </div>

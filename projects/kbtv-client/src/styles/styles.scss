@@ -33,6 +33,10 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
   color: $primary;
 }
 
+.bg-card{
+  background: mat-color($background, card);
+}
+
 .accent{
   background-color:$accent;
   color: mat-color($app-accent, default-contrast);
@@ -47,6 +51,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
   color: $accent;
 }
 
+.color-white{ color: white }
 
 .warn{
   background-color:$warn;
@@ -75,7 +80,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 
 .flex-spacer{flex: 1 1 auto;} //unnused
 
-.max-width{max-width:600px!important;margin:auto}
+.max-width{max-width:600px!important;}
 
 .extended-dialog{
   max-width:90vw!important;

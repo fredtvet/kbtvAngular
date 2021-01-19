@@ -1,4 +1,4 @@
-  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" *ngIf="summary">
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" *ngIf="summary" class="p-3 bg-card">
     <div fxLayout="column" fxLayoutAlign="center center" *ngIf="summary.weekNr; else yearView">
         <span class="mat-body m-0 line-height-100">Uke</span>
         <span class="mat-headline m-0 line-height-100">{{ summary.weekNr }}</span>

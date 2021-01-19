@@ -4,15 +4,18 @@ import { AppButton } from "@shared-app/interfaces/app-button.interface";
 @Component({
   selector: "app-main-bottom-nav-button",
   template: `
-    <button mat-button style="width:100%;height:100%"
-      *ngIf="config"
+    <style>
+      .active-nav-button{ opacity:1!important }
+      .nav-button{ width:100%;height:100%;opacity:.6 }
+    </style>
+    <button mat-button class="nav-button" *ngIf="config"
       [routerLink]="config.routerLink"
-      [routerLinkActive]="['color-accent']"
+      [routerLinkActive]="['active-nav-button']"
       [attr.aria-label]="config.aria">
 
-      <span fxLayout="column" fxLayoutAlign="start center">
+      <span fxLayout="column" fxLayoutAlign="start center" >
         <mat-icon>{{ config.icon }}</mat-icon>
-        <span class="mat-caption">{{ config.text }}</span>
+        <span class="mat-caption" style="font-weight:500;">{{ config.text }}</span>
       </span>
 
     </button>

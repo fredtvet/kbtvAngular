@@ -1,6 +1,6 @@
-<div fxLayout="column" class="h-100" style="position:relative">
+<div fxLayout="column" class="h-100 max-width" style="position:relative">
 
-    <mat-toolbar class="mat-elevation-z2" style="z-index:3" color="primary">
+    <mat-toolbar class="mat-elevation-z1">
 
       <button mat-icon-button aria-label="Toggle sidenav" (click)="toggleDrawer()" fxHide.gt-xs>
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
@@ -16,7 +16,7 @@
 
     </mat-toolbar>
 
-    <div fxFlex style="overflow-y:auto;">
+    <div fxFlex style="overflow-y:auto;" class="content-container">
       <ng-content>
 
       </ng-content>

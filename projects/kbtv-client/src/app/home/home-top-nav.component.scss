@@ -1,0 +1,10 @@
+@import '../../styles/variables';
+
+mat-toolbar{
+    background: mat-color($background, card);
+    z-index: 3;
+}
+
+.content-container{
+    background: mat-color($background, background);
+}

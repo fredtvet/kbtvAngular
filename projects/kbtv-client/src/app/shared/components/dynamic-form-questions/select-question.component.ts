@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { BaseQuestionComponent, DynamicFormStore, OptionsGetter, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
-import { Maybe, Prop, UnknownState } from 'global-types';
+import { ImmutableArray, Maybe, Prop, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 
 export interface SelectQuestion<T> extends Question {
@@ -37,7 +37,7 @@ export class SelectQuestionComponent extends BaseQuestionComponent<SelectQuestio
 
   state: Maybe<UnknownState> = this.formStore.formState;
 
-  options$: Observable<unknown[]>;
+  options$: Observable<ImmutableArray<unknown>>;
 
   constructor(
     @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,

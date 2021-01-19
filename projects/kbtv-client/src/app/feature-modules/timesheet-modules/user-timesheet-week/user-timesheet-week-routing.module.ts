@@ -8,11 +8,11 @@ interface TimesheetWeekRoute extends CustomRoute<MainSkeletonRouteData>{}
 
 const routes: TimesheetWeekRoute[] = [
   {
-    path: '',
+    path: '', data: {disableMaxWidth: true},
     component: UserTimesheetWeekComponent,
     children: [
       {
-        path: 'liste', data: {viewSize: "overlay"},
+        path: 'liste', data: {viewSize: "overlay", disableMaxWidth: true},
         loadChildren: () => import('src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list.module').then(m => m.UserTimesheetListModule)
       }
     ]

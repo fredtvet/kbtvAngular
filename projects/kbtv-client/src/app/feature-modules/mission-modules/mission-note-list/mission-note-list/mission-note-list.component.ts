@@ -19,7 +19,7 @@ import { MissionNoteListFacade } from '../mission-note-list.facade';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionNoteListComponent {
-  
+  can = RolePermissions.MissionNoteList
   notes$ = this.facade.getByMissionId$(this.missionId).pipe(
     map(x => _sortByDate<MissionNote>(x, "updatedAt"))
   );

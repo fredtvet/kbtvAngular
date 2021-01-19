@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { Immutable } from 'global-types';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
 
@@ -38,7 +39,7 @@ export interface GooglePlacesAutoCompleteQuestion extends Question {
 export class GooglePlacesAutoCompleteQuestionComponent extends BaseQuestionComponent<GooglePlacesAutoCompleteQuestion> 
     implements QuestionComponent {
     
-    googleOptions: Partial<Options> = {
+    googleOptions: Immutable<Partial<Options>> = {
         types: ['geocode'],
         componentRestrictions: { country: "no" }
     };
