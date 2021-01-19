@@ -1,5 +1,6 @@
 
 import { FormGroup } from '@angular/forms';
+import { Immutable } from 'global-types';
 import { Observable, throwError } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ControlHook } from '../interfaces';
@@ -11,10 +12,10 @@ import { ControlHook } from '../interfaces';
  * @param ignoreInitial Set to true if initial control value should be ignored.
  * @returns An observable of the hooks callback response */
 export function _getControlObserver$<TResponse>(
-    hook: ControlHook<TResponse>, 
+    hook: Immutable<ControlHook<TResponse>>, 
     form: FormGroup, 
     ignoreInitial?: boolean): Observable<TResponse>{
-    const control = form.get(hook.controlName);
+    const control = form.get(<string> hook.controlName);
     
     if(!control) return throwError(`No control for name ${hook.controlName}`)
 

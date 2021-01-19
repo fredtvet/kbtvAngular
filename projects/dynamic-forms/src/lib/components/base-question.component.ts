@@ -1,6 +1,6 @@
 import { Directive, HostBinding, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { Maybe } from 'global-types';
+import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 import { _getValidationErrorMessage } from '../helpers/get-validation-error-message.helper';
 import { Question, QuestionComponent, ValidationErrorMap } from '../interfaces';
@@ -16,10 +16,10 @@ export abstract class BaseQuestionComponent<TQuestion extends Question>
   required: boolean;
   hideField$: Observable<boolean>;
 
-  private _question: TQuestion;
-  get question(): TQuestion { return this._question; }
+  private _question: Immutable<TQuestion>;
+  get question(): Immutable<TQuestion> { return this._question; }
 
-  @Input() set question(value: TQuestion) {
+  @Input() set question(value: Immutable<TQuestion>) {
       this._question = value;
       this.onQuestionChanges(value);  
   }
@@ -32,7 +32,7 @@ export abstract class BaseQuestionComponent<TQuestion extends Question>
   } 
 
   /** Gets called when the @Input() question changes. */
-  protected onQuestionChanges(question: TQuestion): void { 
+  protected onQuestionChanges(question: Immutable<TQuestion>): void { 
     this.width = question.width || "100%"   
   }
 

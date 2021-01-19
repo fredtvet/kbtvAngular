@@ -1,6 +1,6 @@
 import { EventEmitter, Type } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 
 /** Represents a function that converts an error to a readable error message */
@@ -23,7 +23,7 @@ export interface ControlHook<TResponse>{
 
 /** Represents a getter function that returns an array of options from provided state
  *  Can also can the options directly. */
-export type OptionsGetter<T> = T[] | ((state: unknown) => T[]);
+export type OptionsGetter<T> = T[] | ((state: Immutable<unknown>) => ImmutableArray<T>);
 
 /** Describes a form that can render dynamically with the {@link DynamicFormComponent}
  *  Creates a reactive form with visible fields to change the values of the form. 
@@ -135,7 +135,7 @@ export interface Question {
 /** Represents a question component used to display a field to set a form control value. */
 export interface QuestionComponent {
     /** The question component view configuration */
-    question: Question;
+    question: Immutable<Question>;
     /** A form group with all the controls of the form */
     form: FormGroup;
     /** Set to true to indicate the question is required. */
@@ -151,9 +151,9 @@ export interface ControlGroupComponent {
     /** A form group with all the controls of the form */
     form: FormGroup;
     /** The dynamic control group associated with the component */ 
-    controlGroup: DynamicControlGroup<{}>;
+    controlGroup: Immutable<DynamicControlGroup<{}>>;
     /** The dynamic form configuration  */
-    formConfig: DynamicForm<{}, Immutable<{}>>;
+    formConfig: Immutable<DynamicForm<{}, {}>>;
     /** The names of parent groups.
      *  Used to keep track of where in the form model tree the group is located. */
     nestedNames: string[];
@@ -162,7 +162,7 @@ export interface ControlGroupComponent {
 /** Represents a form component. Implemented by {@link DynamicForm} */
 export interface FormComponent<TConfig, TFormState, TResult> {
     /** The form configuration object */
-    config: Maybe<TConfig>;
+    config: Immutable<Maybe<TConfig>>;
     /** The form state shared by the controls of the form */
     formState: Maybe<Immutable<TFormState>>;
     /** An event emitter that emits the form value when the user submits the form*/
