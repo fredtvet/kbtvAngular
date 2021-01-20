@@ -19,7 +19,7 @@ export class ScrollNavElevationTogglerDirective extends WithUnsubscribe() {
         if(this.togglerDisabled) return;
         this.ngZone.runOutsideAngular(() => {
             this.elRef.nativeElement.addEventListener("scroll", () => {
-                const shouldElevate = this.elRef.nativeElement.scrollTop > 5;
+                const shouldElevate = this.elRef.nativeElement.scrollTop > 8;
                 if(shouldElevate !== this.prevElevate)
                 this.ngZone.run(() => this.navPresenter.toggleElevation(shouldElevate))
                 this.prevElevate = shouldElevate;  
