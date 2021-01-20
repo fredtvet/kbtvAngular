@@ -1,81 +1,75 @@
-<app-home-top-nav>
-  <div class="p-1" fxLayout="column" fxLayoutGap="8px">
+<div class="max-width mat-elevation-z1 h-100" style="overflow:hidden">
 
-    <div fxLayout="row" fxLayoutGap="8px">
-      <span class="mat-elevation-z2 foreground-card text-center p-6" fxFlex="50" matRipple
-        routerLink="/oppdrag">
-        <mat-icon class="scale-150 mb-1">view_list</mat-icon><br />
-        <span>Oppdrag</span>
-      </span>
-      <span *ifRole="permissions.UserTimesheetWeek.access" class="mat-elevation-z2 foreground-card text-center p-6"
-        fxFlex="50" matRipple routerLink="/mine-timer">
-        <mat-icon class="scale-150 mb-1">timer</mat-icon><br />
-        <span>Timer</span>
-      </span>
-      <span *ifRole="[roles.Oppdragsgiver]" class="mat-elevation-z2 foreground-card text-center p-6"
-        fxFlex="50" matRipple routerLink="/profil">
-        <mat-icon class="scale-150">person</mat-icon><br />
-        <span>Profil</span>
-      </span>
+  <app-home-top-nav></app-home-top-nav>
+
+  <div style="position: relative">
+
+    <div class="color-accent" style="position:absolute; top:-30px;width:100%;">
+
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
+  
+        <app-home-nav-tile text="Oppdrag" icon="view_list" routerLink="/oppdrag" fxFlex=45>
+        </app-home-nav-tile>
+  
+        <app-home-nav-tile *ifRole="permissions.UserTimesheetWeek.access" fxFlex=45
+          text="Timer" icon="timer" routerLink="/mine-timer">
+        </app-home-nav-tile>
+
+        <app-home-nav-tile *ifRole="[roles.Oppdragsgiver]" fxFlex=45 
+          text="Profil" icon="person" routerLink="/profil">
+        </app-home-nav-tile>
+
+      </div>
+
+      <ng-container *ifRole="[roles.Leder]">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px" class="mt-3">
+  
+          <app-home-nav-tile text="Data" icon="dns" routerLink="/data" fxFlex=45>
+          </app-home-nav-tile>
+    
+          <app-home-nav-tile text="Brukere" icon="people" routerLink="/brukere" fxFlex=45>
+          </app-home-nav-tile>
+
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px" class="mt-3">
+  
+          <app-home-nav-tile text="Timeadministering" icon="date_range" routerLink="/timeadministrering" fxFlex=45>
+          </app-home-nav-tile>
+    
+          <app-home-nav-tile text="Timestatistikk" icon="assessment" routerLink="/timestatistikk" fxFlex=45>
+          </app-home-nav-tile>
+
+        </div>
+      </ng-container>
+
+      <div *ifRole="[roles.Oppdragsgiver, roles.Ansatt, roles.Mellomleder]" 
+        fxLayout="row" fxLayoutAlign="center center" class="mt-3">
+  
+        <div class="mat-elevation-z1 foreground-card p-3" fxFlex=93 style="height:40vh;overflow:hidden">
+
+          <span class="mat-body-2 mb-2"> Sist besøkte oppdrag</span>
+  
+          <mat-divider></mat-divider>
+
+          <div style="overflow-x:scroll;height:100%">
+
+            <app-list-item *ngFor="let mission of missionHistory$ | async" 
+            [routerLink]="['/oppdrag', mission.id, 'detaljer']">
+              <mat-icon left-side>history</mat-icon>
+              {{mission.address}}
+              <mat-icon right-side>chevron_right</mat-icon>
+            </app-list-item>
+
+            <div class="mt-4"></div>
+
+          </div>
+
+        </div>
+
+      </div>
+ 
     </div>
-  
-    <ng-container *ifRole="[roles.Leder]">
-      <mat-card>
 
-        <span class="mat-body-2 mb-2"> Administrering</span>
-
-        <mat-divider inset="true"></mat-divider>
-
-        <app-list-item routerLink="/timeadministrering">
-          <mat-icon left-side>date_range</mat-icon>
-          Administrer timer
-          <mat-icon right-side>chevron_right</mat-icon>
-        </app-list-item>
-
-        <app-list-item routerLink="/data">
-          <mat-icon left-side>dns</mat-icon>
-          Administrer data
-          <mat-icon right-side>chevron_right</mat-icon>
-        </app-list-item>
-
-        <app-list-item routerLink="/brukere">
-          <mat-icon left-side>people</mat-icon>
-          Administrer brukere
-          <mat-icon right-side>chevron_right</mat-icon>
-        </app-list-item>
-
-      </mat-card>
-
-      <mat-card>
-
-        <span class="mat-body-2 mb-2"> Statistikk</span>
-
-        <mat-divider inset="true"></mat-divider>
-
-        <app-list-item routerLink="/timestatistikk">
-          <mat-icon left-side>assessment</mat-icon>
-          Timestatistikk
-          <mat-icon right-side>chevron_right</mat-icon>
-        </app-list-item>
-
-      </mat-card>
-    </ng-container>
-
-    <mat-card>
-
-        <span class="mat-body-2 mb-2"> Sist besøkte oppdrag</span>
-
-        <mat-divider inset="true"></mat-divider>
-
-        <app-list-item *ngFor="let mission of missionHistory$ | async" 
-          [routerLink]="['/oppdrag', mission.id, 'detaljer']">
-          <mat-icon left-side>history</mat-icon>
-          {{mission.address}}
-          <mat-icon right-side>chevron_right</mat-icon>
-        </app-list-item>
-
-    </mat-card>
-  
   </div>
-</app-home-top-nav>
 
+</div>

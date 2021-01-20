@@ -4,22 +4,16 @@
   </app-main-top-nav-bar>
 
   <div class="pl-1 pr-1 bottom-fab-padding" *ngIf="users$ | async else loading; let users;">
-    <ng-container *ngFor="let user of users; trackBy: trackByUser">
+    <ng-container *ngFor="let user of users; trackBy: trackByUser;"> 
+
       <app-user-card
         [user]="user"
-        [editButton]="{
-          icon: 'edit', 
-          callback: openUserForm, params: [user.userName],
-          type: ButtonTypes.Icon
-        }"
-        [newPasswordButton]="{
-          icon: 'vpn_key', 
-          color: 'accent',
-          callback: openNewPasswordForm, params: [user.userName],
-          type: ButtonTypes.Icon
-        }">
+        [editButton]="getEditButton(user.userName)"
+        [newPasswordButton]="getNewPasswordButton(user.userName)">
       </app-user-card>
+      
       <mat-divider></mat-divider>
+
     </ng-container>
   </div>
   

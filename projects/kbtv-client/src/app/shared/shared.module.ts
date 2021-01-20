@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ValidationErrorMessages } from '@core/configurations/validation-error-messages.const';
+import { CdkSelectableModule } from 'cdk-selectable';
 import { ConfirmDialogModule } from 'confirm-dialog';
 import { VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { FormSheetModule } from 'form-sheet';
@@ -22,13 +23,13 @@ import { SelectQuestionComponent } from './components/dynamic-form-questions/sel
 import { SliderQuestionComponent } from './components/dynamic-form-questions/slider-question.component';
 import { TextAreaQuestionComponent } from './components/dynamic-form-questions/text-area-question.component';
 import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.component';
+import { ScrollNavElevationTogglerDirective } from './components/main-skeleton/scroll-nav-elevation-toggler.directive';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
+import { SelectableCardComponent } from './components/selectable-card/selectable-card.component';
 import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { InputListenerDirective } from './directives/input-listener.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
-import { CdkSelectableModule} from 'cdk-selectable'
-import { SelectableCardComponent } from './components/selectable-card/selectable-card.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { SelectableCardComponent } from './components/selectable-card/selectable
     AppFileUrlPipe,
     ObjectToArrayPipe,
     FuncPipe,
-    
+
+    ScrollNavElevationTogglerDirective,
     AddToHomeScreenDirective,      
     HttpCommandButtonDirective,
     ActiveStringFilterDirective,
@@ -99,6 +101,7 @@ import { SelectableCardComponent } from './components/selectable-card/selectable
     AppFileUrlPipe,
     ObjectToArrayPipe,
 
+    ScrollNavElevationTogglerDirective,
     AddToHomeScreenDirective,      
     HttpCommandButtonDirective,
     ActiveStringFilterDirective,

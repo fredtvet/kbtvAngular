@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { AppLayoutModule } from './layout/app-layout.module';
 import { AppHammerConfig } from './core/configurations/app-hammer-config';
 import { SharedAppModule } from './shared-app/shared-app.module';
+import { HomeNavTileComponent } from './home/home-nav-tile.component';
 
 registerLocaleData(norwayLocale, 'nb-NO');
 
@@ -23,6 +24,7 @@ registerLocaleData(norwayLocale, 'nb-NO');
     AppComponent,
     HomeComponent,
     HomeTopNavComponent,
+    HomeNavTileComponent
   ],
   imports: [
     BrowserAnimationsModule,   

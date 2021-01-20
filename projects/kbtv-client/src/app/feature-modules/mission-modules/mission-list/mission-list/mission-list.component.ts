@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import { ChangeDetectionStrategy, Component, ViewChild } from "@angular/core";
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Employer, Mission, MissionType } from "@core/models";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
@@ -15,7 +16,7 @@ import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe, Prop } from "global-types";
 import { ModelFormService } from 'model-form';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { _getModelDisplayValue } from 'state-model';
 import { MissionListFacade } from '../mission-list.facade';
@@ -39,7 +40,7 @@ export class MissionListComponent extends WithUnsubscribe(){
   missions$ = this.facade.filteredMissions$;
 
   fabs: AppButton[];
-
+  
   private searchBar: SearchBarConfig;
 
   constructor(

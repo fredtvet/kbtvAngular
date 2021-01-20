@@ -1,4 +1,4 @@
-<app-main-skeleton *ngIf="navVm$ | async; let navVm" [fabs]="navVm.fabs">
+<app-main-skeleton *ngIf="navVm$ | async; let navVm" [fabs]="navVm.fabs" navTogglerDisabled=true>
 
     <ng-container navbar>
         <app-main-top-nav-bar [config]="navVm.navConfig" >

@@ -1,9 +1,9 @@
 
 
-  <app-main-skeleton [fabs]="fabs">
+  <app-main-skeleton [fabs]="fabs" navTogglerDisabled=true>
 
     <ng-container navbar *ngIf="navVm$ | async; let navVm">
-      <app-main-top-nav-bar [config]="navVm.navConfig" >
+      <app-main-top-nav-bar [config]="navVm.navConfig">
       </app-main-top-nav-bar>
       <app-chips-bar [chips]="navVm.criteriaChips"></app-chips-bar>
     </ng-container>

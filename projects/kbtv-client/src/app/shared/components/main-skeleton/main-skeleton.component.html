@@ -1,20 +1,21 @@
 <div class="main-container" fxLayout="row">
 
-  <div fxLayout="column" class="content-container mat-elevation-z1 max-width" fxFlex 
+  <div fxLayout="column" class="content-container mat-elevation-z1 max-width nav-content" fxFlex 
     [ngClass]="{ 'max-width': !data.disableMaxWidth }">
-    <span
-      [ngClass]="disableElevation ? 'nav-content' : 'nav-content mat-elevation-z1'" >
+    <span 
+      [ngClass]="(enableElevation$ | async) ? 'nav-content mat-elevation-z1' : 'nav-content'" >
       
       <ng-content select="[navbar]"></ng-content>
   
     </span>
   
-    <div fxFlex class="main-content">
+    <div 
+      fxFlex class="main-content" appScrollNavElevationToggler [togglerDisabled]="navTogglerDisabled">
       <ng-content>
     
       </ng-content>
     </div>
-  
+    
     <div class="fab-container m-2" *ngIf="fabs"
         fxLayout="column" fxLayoutGap="4px">  
         <app-button class="fadeInRight" 

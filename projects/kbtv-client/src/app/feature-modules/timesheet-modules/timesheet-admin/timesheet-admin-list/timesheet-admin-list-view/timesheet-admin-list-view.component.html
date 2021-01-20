@@ -1,5 +1,6 @@
 <div class="h-100" fxLayout="column" fxLayoutAlign="start stretch">
-    <cdk-virtual-scroll-viewport itemSize="96" maxBufferPx="800" minBufferPx="800" fxFlex>
+    <cdk-virtual-scroll-viewport itemSize="96" maxBufferPx="800" minBufferPx="800" fxFlex
+        appScrollNavElevationToggler>
 
         <ng-container *cdkVirtualFor="let timesheet of timesheets; trackBy: trackById">
 
@@ -22,7 +23,7 @@
            
             </app-list-item>
 
-            <mat-divider></mat-divider>
+            <mat-divider inset=true></mat-divider>
 
         </ng-container>
 

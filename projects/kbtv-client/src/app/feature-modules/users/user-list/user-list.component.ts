@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { User } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
@@ -21,6 +20,7 @@ export class UserListComponent {
   ButtonTypes = ButtonTypes;
 
   users$: Observable<User[]> = this.facade.sortedUsers$;
+
   fabs: AppButton[];
 
   constructor(
@@ -35,7 +35,26 @@ export class UserListComponent {
       }];
     }
 
-  openUserForm = (userName?: string): void => {
+  trackByUser = _trackByModel("users")
+
+  getEditButton(userName: string): AppButton {
+    return {
+      icon: 'edit', 
+      callback: () => this.openUserForm(userName),
+      type: ButtonTypes.Icon
+    } 
+  }
+
+  getNewPasswordButton(userName: string): AppButton {
+    return {
+      icon: 'vpn_key', 
+      color: 'accent',
+      callback: () => this.openNewPasswordForm(userName),
+      type: ButtonTypes.Icon
+    }
+  }
+
+  private openUserForm = (userName?: string): void => {
     this.modelFormService.open<ModelState, UserForm>({formConfig: {
       entityId: userName, 
       stateProp: "users", 
@@ -43,14 +62,12 @@ export class UserListComponent {
     }});
   }
   
-  openNewPasswordForm = (userName?: string): void => {
+  private openNewPasswordForm = (userName?: string): void => {
     this.formService.open<UserPasswordForm>({
       formConfig: {...UserPasswordForm, initialValue: {userName}}, 
       navConfig: {title: "Oppdater passord"},  
       submitCallback: (val: UserPasswordForm) => this.facade.updatePassword(val.userName, val.newPassword)
     });
   }
-
-  trackByUser = _trackByModel("users")
 
 }

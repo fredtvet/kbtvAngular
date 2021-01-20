@@ -1,6 +1,7 @@
 <div class="h-100" fxLayout="column" fxLayoutAlign="start stretch">
     
-    <cdk-virtual-scroll-viewport itemSize="82" maxBufferPx="800" minBufferPx="800" fxFlex>
+    <cdk-virtual-scroll-viewport itemSize="82" maxBufferPx="800" minBufferPx="800" fxFlex
+        appScrollNavElevationToggler>
         <ng-container *cdkVirtualFor="let summary of summaries; trackBy: trackByWeek; templateCacheSize:0" >
             
             <app-swipe-card class="display-block" openWidth="82px" closedWidth="5px"

@@ -1,25 +1,23 @@
-<div fxLayout="column" class="h-100 max-width" style="position:relative">
+<mat-toolbar color="accent" *ngIf="vm$ | async; let vm">
+  <mat-toolbar-row>
 
-    <mat-toolbar class="mat-elevation-z1">
+    <button mat-icon-button aria-label="Toggle sidenav" (click)="toggleDrawer()" fxHide.gt-xs>
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
 
-      <button mat-icon-button aria-label="Toggle sidenav" (click)="toggleDrawer()" fxHide.gt-xs>
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
+    <span class="mr-auto"></span>
 
-      <span class="mr-auto">
-          <span ngClass.xs="ml-1" ngClass.gt-xs="ml-2">Hjem</span>
-      </span>
-      
-      <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>
+    <mat-spinner *ngIf="vm.loading" diameter="24" class="mr-2"></mat-spinner>
+    <button mat-icon-button (click)="refresh()"><mat-icon>update</mat-icon></button>
 
-      <button mat-icon-button (click)="refresh()"><mat-icon>update</mat-icon></button>
+  </mat-toolbar-row>
 
-    </mat-toolbar>
+  <mat-toolbar-row 
+    fxLayout="column" fxLayoutAlign="start center" style="height:20vh;padding-top:12px">
 
-    <div fxFlex style="overflow-y:auto;" class="content-container">
-      <ng-content>
+    <h2>{{ vm.currentUser.firstName + ' ' + vm.currentUser.lastName }}</h2>
+    <span class="mat-caption">Sist synkronisert {{ vm.syncTimestamp | date : 	'd.MMM  kl. H:mm'}}</span>
 
-      </ng-content>
-    </div>
+  </mat-toolbar-row>
 
-  </div>
+</mat-toolbar>

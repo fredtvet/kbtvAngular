@@ -8,7 +8,7 @@
         <app-selectable-card *ngFor="let doc of vm.documents; trackBy: trackByFn" [id]="doc.id" selectedText="Dokument valgt">
             <app-list-item (tap)="downloadDocument(doc)" [rippleDisabled]="true">
                 <mat-icon left-side [svgIcon]="doc.fileName | fileExtension | fileExtensionIcon"></mat-icon>
-                <div class="ellipsis">{{ doc.documentType?.name }}dsadsadsadsadasdsadsad</div>  
+                <div class="ellipsis">{{ doc.documentType?.name }}</div>  
                 <div class="mat-caption">Filtype: {{ doc.fileName | fileExtension | uppercase }}</div>
                 <div class="mat-caption">Lastet opp {{ doc.updatedAt | date : 'dd.MMM yyyy' }}</div>
                 <span right-side class="color-accent">Last ned</span>
