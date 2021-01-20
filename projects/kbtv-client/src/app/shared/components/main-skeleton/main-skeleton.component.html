@@ -9,7 +9,7 @@
   
     </span>
   
-    <div 
+    <div [style.paddingTop.px]="paddingDisabled ? 0 : 8"
       fxFlex class="main-content" appScrollNavElevationToggler [togglerDisabled]="navTogglerDisabled">
       <ng-content>
     

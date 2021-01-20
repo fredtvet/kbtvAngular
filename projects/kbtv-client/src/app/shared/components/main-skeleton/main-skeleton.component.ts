@@ -24,7 +24,8 @@ export class MainSkeletonComponent {
   }
 
   @Input() navTogglerDisabled: boolean;
-
+  @Input() paddingDisabled: boolean;
+  
   data: MainSkeletonRouteData = this.presenter.data;
 
   enableElevation$ = this.presenter.enableElevation$;
