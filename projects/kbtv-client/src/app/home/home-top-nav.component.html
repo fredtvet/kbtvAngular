@@ -8,15 +8,16 @@
     <span class="mr-auto"></span>
 
     <mat-spinner *ngIf="vm.loading" diameter="24" class="mr-2"></mat-spinner>
+    <button mat-button appAddToHomeScreen>Legg til app</button>
     <button mat-icon-button (click)="refresh()"><mat-icon>update</mat-icon></button>
 
   </mat-toolbar-row>
 
   <mat-toolbar-row 
-    fxLayout="column" fxLayoutAlign="start center" style="height:20vh;padding-top:12px">
+    fxLayout="column" fxLayoutAlign="start center" style="height:20vh;padding-top:12px;">
 
     <h2>{{ vm.currentUser.firstName + ' ' + vm.currentUser.lastName }}</h2>
-    <span class="mat-caption">Sist synkronisert {{ vm.syncTimestamp | date : 	'd.MMM  kl. H:mm'}}</span>
+    <span class="mat-caption">Sist synkronisert {{ vm.syncTimestamp | date : 	'd.MMM  kl. H:mm'}}</span> 
 
   </mat-toolbar-row>
 

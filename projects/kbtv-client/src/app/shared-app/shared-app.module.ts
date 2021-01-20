@@ -12,6 +12,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { StateAuthModule } from 'state-auth';
 import { StateManagementModule } from 'state-management';
+import { AddToHomeScreenDirective } from './add-to-home-screen.directive';
 import { ListCardComponent } from './components/list-card/list-card.component';
 import { ListItemComponent } from './components/list-item/list-item.component';
 import { NavItemComponent } from './components/nav-item/nav-item.component';
@@ -27,6 +28,7 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     ListItemComponent,
     ReverseArrayPipe,
     TransformButtonsPipe,
+    AddToHomeScreenDirective, 
   ],
   imports: [
     RouterModule,
@@ -67,7 +69,8 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     ListItemComponent,
     
     ReverseArrayPipe,
-    TransformButtonsPipe,
+    TransformButtonsPipe,   
+    AddToHomeScreenDirective, 
   ]
 })
 export class SharedAppModule {}

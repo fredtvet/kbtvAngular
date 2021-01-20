@@ -1,9 +1,7 @@
 import { Directive, HostListener, ElementRef } from '@angular/core';
 import { BeforeInstallPromptEvent } from '@shared/interfaces/before-install-prompt-event.interface';
 
-@Directive({
-  selector: '[appAddToHomeScreen]'
-})
+@Directive({selector: '[appAddToHomeScreen]'})
 export class AddToHomeScreenDirective {
   
   deferredPrompt: BeforeInstallPromptEvent | undefined;

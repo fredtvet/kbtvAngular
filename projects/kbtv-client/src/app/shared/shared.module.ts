@@ -26,7 +26,7 @@ import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.
 import { ScrollNavElevationTogglerDirective } from './components/main-skeleton/scroll-nav-elevation-toggler.directive';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
 import { SelectableCardComponent } from './components/selectable-card/selectable-card.component';
-import { AddToHomeScreenDirective, HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
+import { HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { InputListenerDirective } from './directives/input-listener.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
@@ -60,8 +60,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     ObjectToArrayPipe,
     FuncPipe,
 
-    ScrollNavElevationTogglerDirective,
-    AddToHomeScreenDirective,      
+    ScrollNavElevationTogglerDirective,   
     HttpCommandButtonDirective,
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    
@@ -101,8 +100,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     AppFileUrlPipe,
     ObjectToArrayPipe,
 
-    ScrollNavElevationTogglerDirective,
-    AddToHomeScreenDirective,      
+    ScrollNavElevationTogglerDirective,     
     HttpCommandButtonDirective,
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    
