@@ -1,51 +1,56 @@
+<style>.home-tile{ text-align:center; width:100% }</style>
 <div *ngIf="mission">
 
   <a *ngIf="mission.phoneNumber" href="tel:{{ mission?.phoneNumber }}">
     <app-list-item>
-      <mat-icon left-side>phone</mat-icon>
+      <mat-icon left-side class="pl-2 pr-2">phone</mat-icon>
       {{ mission.phoneNumber }}
       <ng-container right-side>
         <span class="color-accent">Ring</span>
       </ng-container>
     </app-list-item>
-    <mat-divider></mat-divider>
+    <mat-divider inset=true></mat-divider>
   </a>
  
   <a href="https://www.google.com/maps/dir/?api=1&destination={{ mission?.address }}&travelmode=driving"
     target="_blank">
     <app-list-item>
-      <mat-icon left-side>directions_car</mat-icon>
+      <mat-icon left-side class="pl-2 pr-2">directions_car</mat-icon>
       Veibeskrivelse
       <ng-container right-side>
         <span class="color-accent">Åpne kart</span>
       </ng-container>
     </app-list-item>
-    <mat-divider></mat-divider>
+    <mat-divider inset=true></mat-divider>
   </a>
- 
+
+  <div class="mat-body-2 ml-5 mt-3">Ressurser</div>
+
   <app-list-item [routerLink]="['/oppdrag', mission?.id, 'detaljer','bilder']">
-      <mat-icon left-side>photo_library</mat-icon>
+      <mat-icon left-side class="pl-2 pr-2">photo_library</mat-icon>
       Bilder
       <ng-container right-side>
         <span *ngIf="mission.missionImages?.length">{{ mission.missionImages?.length }}</span>
       </ng-container>
   </app-list-item>
-  <mat-divider></mat-divider>
+  <mat-divider inset=true></mat-divider>
+
   <app-list-item *ifRole="permissions.MissionDocumentList.access" [routerLink]="['/oppdrag', mission?.id, 'detaljer','dokumenter']">
-      <mat-icon left-side>folder</mat-icon>
+      <mat-icon left-side class="pl-2 pr-2">folder</mat-icon>
       Dokumenter
       <ng-container right-side>
         <span *ngIf="mission.missionDocuments?.length">{{ mission.missionDocuments?.length }}</span>
       </ng-container>
   </app-list-item>
-  <mat-divider></mat-divider>
+  <mat-divider inset=true></mat-divider>
+
   <app-list-item *ifRole="permissions.MissionNoteList.access" [routerLink]="['/oppdrag', mission?.id, 'detaljer','notater']">
-      <mat-icon left-side>rate_review</mat-icon>
+      <mat-icon left-side class="pl-2 pr-2">rate_review</mat-icon>
       Notater
       <ng-container right-side>
         <span *ngIf="mission.missionNotes?.length">{{ mission.missionNotes?.length }}</span>
       </ng-container>
   </app-list-item>
-  <mat-divider></mat-divider>
+  <mat-divider inset=true></mat-divider>
 
 </div>
