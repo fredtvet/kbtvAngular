@@ -3,7 +3,7 @@
     <app-main-top-nav-bar navbar [config]="vm.navConfig" >
     </app-main-top-nav-bar>
 
-    <div cdkSelectableContainer #selectableContainer (selectionChanged)="onSelectionChange($event)" fxLayout="row">
+    <div cdkSelectableContainer #selectableContainer (selectionChanged)="onSelectionChange($event)" fxLayout="row" style="margin:1px">
         <div *ngFor="let i of (vm.columns | numberToArray)" [fxFlex]="100 / vm.columns">
             
             <app-selectable-card *ngFor="let img of vm.images | arrayslice: i:vm.columns;trackBy: trackByFn"

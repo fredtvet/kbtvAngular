@@ -3,55 +3,48 @@
   <app-main-top-nav-bar navbar [config]="navConfig">
   </app-main-top-nav-bar>
 
-
-  <div>
     <app-list-item (click)="updateProfile()">
-      <mat-icon left-side>account_circle</mat-icon>
+      <mat-icon left-side class="pl-2 pr-2">account_circle</mat-icon>
       Oppdater profil
     </app-list-item>
-    <mat-divider></mat-divider>
+    <mat-divider inset=true></mat-divider>
 
     <app-list-item (click)="updatePassword()">
-      <mat-icon left-side>vpn_key</mat-icon>
+      <mat-icon left-side class="pl-2 pr-2">vpn_key</mat-icon>
       Oppdater passord
     </app-list-item>
-    <mat-divider></mat-divider>
-  </div>
-
-  <div class="mt-4">
-    <app-list-item appAddToHomeScreen>
-      <mat-icon left-side>get_app</mat-icon>
-      Legg til app
-    </app-list-item>
-    <mat-divider></mat-divider>
+    <mat-divider inset=true></mat-divider>
 
     <app-list-item (click)="updateSyncConfig()">
-      <mat-icon left-side>settings</mat-icon>
+      <mat-icon left-side class="pl-2 pr-2">settings</mat-icon>
       Konfigurasjoner
     </app-list-item>
-    <mat-divider></mat-divider>
+    <mat-divider inset=true></mat-divider>
     
     <app-list-item (click)="syncAll()">
-      <mat-icon left-side>update</mat-icon>
-      Synkroniser data
+      <mat-icon left-side class="pl-2 pr-2">update</mat-icon>
+      <div>Synkroniser data</div>
+      <div class="mat-caption">
+        Hent nye og oppdaterte data fra skyen.
+      </div>
     </app-list-item>
-    <mat-divider></mat-divider>
-  </div>
+    <mat-divider inset=true></mat-divider>
 
-  <div class="mt-4">
-    <mat-divider></mat-divider>
     <app-list-item (click)="confirmPurge()">
-      <mat-icon left-side>delete_sweep</mat-icon>
-      Slett lokal data
+      <mat-icon left-side class="pl-2 pr-2">delete_sweep</mat-icon>
+      <div>Slett lokal data</div>
+      <div class="mat-caption">
+        Slett data lagret på enheten og last inn på nytt.
+      </div>
     </app-list-item>
-    <mat-divider></mat-divider>
+    <mat-divider inset=true></mat-divider>
 
     <app-list-item (click)="logout()">
-      <mat-icon left-side>power_settings_new</mat-icon>
+      <mat-icon left-side class="pl-2 pr-2">power_settings_new</mat-icon>
       Logg ut
     </app-list-item>
-    <mat-divider></mat-divider>
-  </div>
+    <mat-divider inset=true></mat-divider>
+
 
 
 
