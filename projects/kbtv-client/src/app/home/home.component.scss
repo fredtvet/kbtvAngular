@@ -1,1 +1,28 @@
 @import '../../styles/variables';
+
+.main-container{
+    background: mat-color($background, card);
+    height:100%;
+    overflow:hidden;
+}
+
+.content-container{
+    position:absolute; 
+    top:-30px;
+    width:100%;
+    color:$accent;
+}
+
+.mission-card{
+    height:40vh;
+    margin: 0 3.3%;
+    padding: $gap-size * 3px;
+    background-color:mat-color($background, card);
+} 
+
+.mission-list{
+   overflow-y:scroll;
+   overflow-x:hidden;
+   height:100%;
+   width:100% 
+}

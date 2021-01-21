@@ -1,20 +1,18 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { LoadingService } from '@core/services/loading.service';
-import { MainNavService } from '../layout/main-nav.service';
-import { Store } from 'state-management'
-import { StateSyncTimestamp, SyncStateAction } from 'state-sync';
-import { StateCurrentUser } from 'state-auth';
-import { User } from '@core/models';
+import { Immutable } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Immutable } from '../../../../../dist/global-types/public-api';
+import { StateCurrentUser } from 'state-auth';
+import { Store } from 'state-management';
+import { StateSyncTimestamp, SyncStateAction } from 'state-sync';
+import { MainNavService } from '../layout/main-nav.service';
 
 interface ViewModel extends Immutable<StateCurrentUser> {loading: boolean, syncTimestamp: number}
 
 @Component({
   selector: 'app-home-top-nav',
-  templateUrl: 'home-top-nav.component.html',
-  styleUrls: ['home-top-nav.component.scss'],  
+  templateUrl: 'home-top-nav.component.html', 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeTopNavComponent{

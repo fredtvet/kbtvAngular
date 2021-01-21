@@ -1,23 +1,24 @@
-<div class="max-width mat-elevation-z1 h-100" style="overflow:hidden">
+<div class="max-width mat-elevation-z1 main-container">
 
   <app-home-top-nav></app-home-top-nav>
 
   <div style="position: relative">
 
-    <div class="color-accent" style="position:absolute; top:-30px;width:100%;">
+    <div class="content-container">
 
       <app-home-nav-tile-grid [navigations]="navigations"></app-home-nav-tile-grid>
 
       <div *ifRole="[roles.Oppdragsgiver, roles.Ansatt, roles.Mellomleder]" 
-        fxLayout="row" fxLayoutAlign="center center">
+        fxLayout="column" fxLayoutAlign="start start" 
+        class="mat-elevation-z1  mission-card">
+   
+          <span class="mat-body-2 mb-2 w-100"> 
+            Sist besøkte oppdrag
+            <mat-divider></mat-divider>
+          </span>
   
-        <div class="mat-elevation-z1 foreground-card p-3" fxFlex=93 style="height:40vh;overflow:hidden">
-
-          <span class="mat-body-2 mb-2"> Sist besøkte oppdrag</span>
-  
-          <mat-divider></mat-divider>
-
-          <div style="overflow-x:scroll;height:100%" *ngIf="missionHistory$ | async; let missions; else noContent">
+          <div *ngIf="missionHistory$ | async; let missions; else noContent"
+            class="mission-list">
 
             <app-list-item *ngFor="let mission of missions" 
             [routerLink]="['/oppdrag', mission.id, 'detaljer']">
@@ -30,9 +31,7 @@
 
           <ng-template #noContent>
             <div class="mt-2">Finner ingen oppdrag</div>
-          </ng-template>
-
-        </div>
+          </ng-template>   
 
       </div>
  
