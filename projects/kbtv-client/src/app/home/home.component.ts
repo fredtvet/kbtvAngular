@@ -6,6 +6,7 @@ import { StateMissions } from '@core/state/global-state.interfaces';
 import { _sortByDate } from 'array-helpers';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
+import { HomeNavigations } from './home-navigations.const';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ import { Store } from 'state-management';
 export class HomeComponent {
   permissions = RolePermissions;
   roles = Roles;
+  navigations = HomeNavigations;
 
   missionHistory$ = 
     this.store.selectProperty$<Mission[]>("missions").pipe(

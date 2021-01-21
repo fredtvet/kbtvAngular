@@ -6,44 +6,10 @@
 
     <div class="color-accent" style="position:absolute; top:-30px;width:100%;">
 
-      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
-  
-        <app-home-nav-tile text="Oppdrag" icon="view_list" routerLink="/oppdrag" fxFlex=45>
-        </app-home-nav-tile>
-  
-        <app-home-nav-tile *ifRole="permissions.UserTimesheetWeek.access" fxFlex=45
-          text="Timer" icon="timer" routerLink="/mine-timer">
-        </app-home-nav-tile>
-
-        <app-home-nav-tile *ifRole="[roles.Oppdragsgiver]" fxFlex=45 
-          text="Profil" icon="person" routerLink="/profil">
-        </app-home-nav-tile>
-
-      </div>
-
-      <ng-container *ifRole="[roles.Leder]">
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px" class="mt-3">
-  
-          <app-home-nav-tile text="Data" icon="dns" routerLink="/data" fxFlex=45>
-          </app-home-nav-tile>
-    
-          <app-home-nav-tile text="Brukere" icon="people" routerLink="/brukere" fxFlex=45>
-          </app-home-nav-tile>
-
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px" class="mt-3">
-  
-          <app-home-nav-tile text="Timeadministering" icon="date_range" routerLink="/timeadministrering" fxFlex=45>
-          </app-home-nav-tile>
-    
-          <app-home-nav-tile text="Timestatistikk" icon="assessment" routerLink="/timestatistikk" fxFlex=45>
-          </app-home-nav-tile>
-
-        </div>
-      </ng-container>
+      <app-home-nav-tile-grid [navigations]="navigations"></app-home-nav-tile-grid>
 
       <div *ifRole="[roles.Oppdragsgiver, roles.Ansatt, roles.Mellomleder]" 
-        fxLayout="row" fxLayoutAlign="center center" class="mt-3">
+        fxLayout="row" fxLayoutAlign="center center">
   
         <div class="mat-elevation-z1 foreground-card p-3" fxFlex=93 style="height:40vh;overflow:hidden">
 
@@ -51,18 +17,20 @@
   
           <mat-divider></mat-divider>
 
-          <div style="overflow-x:scroll;height:100%">
+          <div style="overflow-x:scroll;height:100%" *ngIf="missionHistory$ | async; let missions; else noContent">
 
-            <app-list-item *ngFor="let mission of missionHistory$ | async" 
+            <app-list-item *ngFor="let mission of missions" 
             [routerLink]="['/oppdrag', mission.id, 'detaljer']">
               <mat-icon left-side>history</mat-icon>
               {{mission.address}}
               <mat-icon right-side>chevron_right</mat-icon>
             </app-list-item>
-
-            <div class="mt-4"></div>
-
+               
           </div>
+
+          <ng-template #noContent>
+            <div class="mt-2">Finner ingen oppdrag</div>
+          </ng-template>
 
         </div>
 
