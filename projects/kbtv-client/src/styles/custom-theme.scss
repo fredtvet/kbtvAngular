@@ -55,11 +55,11 @@
 }
 
 .horizontal-chips-container:before {
-  box-shadow: 15px 0 7px -12px inset $primary;
+  box-shadow: 15px 0 7px -12px inset mat-color($background, card);
 }
 
 .horizontal-chips-container:after {
-  box-shadow: -15px 0 7px -12px inset $primary;
+  box-shadow: -15px 0 7px -12px inset mat-color($background, card);
   right:0;
 }
 
