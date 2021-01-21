@@ -40,6 +40,8 @@ export class MissionListComponent extends WithUnsubscribe(){
   missions$ = this.facade.filteredMissions$;
 
   fabs: AppButton[];
+
+  noContentBtn: AppButton;
   
   private searchBar: SearchBarConfig;
 

@@ -12,6 +12,10 @@ export class MissionListViewComponent {
 
   @Input() missions: Mission[];
 
+  noContentButton = {
+    
+  }
+
   constructor() { }
 
   trackByFn = _trackByModel("missions");

@@ -8,9 +8,7 @@
       <app-chips-bar [chips]="navVm.criteriaChips"></app-chips-bar>
     </ng-container>
   
-    <app-mission-list-view
-      [missions]="missions$ | async" 
-      (search)="searchMissions($event)">
+    <app-mission-list-view [missions]="missions$ | async">
     </app-mission-list-view>
   
   </app-main-skeleton>

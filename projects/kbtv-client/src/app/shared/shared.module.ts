@@ -25,6 +25,7 @@ import { TextAreaQuestionComponent } from './components/dynamic-form-questions/t
 import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.component';
 import { ScrollNavElevationTogglerDirective } from './components/main-skeleton/scroll-nav-elevation-toggler.directive';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
+import { NoContentComponent } from './components/no-content.component';
 import { SelectableCardComponent } from './components/selectable-card/selectable-card.component';
 import { HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
@@ -50,6 +51,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     SliderQuestionComponent,
     AppButtonComponent,
     SelectableCardComponent,
+    NoContentComponent,
 
     TransformButtonPipe,
     TranslatePipe,
@@ -91,6 +93,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     DetailTopNavBarComponent,
     ChipsBarComponent,
     AppButtonComponent,
+    NoContentComponent,
     
     TransformButtonPipe,
     TranslatePipe,

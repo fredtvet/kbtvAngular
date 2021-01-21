@@ -1,8 +1,7 @@
 <div class="h-100 bg-card" style="overflow:hidden;" fxLayout="column" fxLayoutAlign="start stretch">
 
-    <p *ngIf="!missions || missions.length == 0" class="m-2">Fant ingen oppdrag</p>
-
-    <cdk-virtual-scroll-viewport itemSize="56" maxBufferPx="800" minBufferPx="800" class="h-100"
+    <cdk-virtual-scroll-viewport *ngIf="missions?.length; else noContent"
+        itemSize="56" maxBufferPx="800" minBufferPx="800" class="h-100"
         appScrollNavElevationToggler>
         <ng-container *cdkVirtualFor="let mission of missions; trackBy: trackByFn;" >
             <app-list-item [routerLink]="[mission.id, 'detaljer']">
@@ -14,3 +13,7 @@
     </cdk-virtual-scroll-viewport>
 
 </div>
+
+<ng-template #noContent>
+    <app-no-content text="Fant ingen oppdrag"></app-no-content>
+</ng-template>
