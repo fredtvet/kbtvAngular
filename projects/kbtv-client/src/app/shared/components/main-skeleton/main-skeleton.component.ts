@@ -32,7 +32,9 @@ export class MainSkeletonComponent {
 
   constructor(private presenter: MainSkeletonPresenter){ }
 
-  ngOnInit(): void { this.presenter.init() }
+  ngOnInit(): void {
+    this.presenter.init()
+  }
 
   trackByFab = _trackByAppButton;
 

@@ -5,7 +5,7 @@ import { TimesheetStatisticComponent } from './timesheet-statistic/timesheet-sta
 
 const routes: Routes = [
   {
-    path: '', data: {disableMaxWidth: true},
+    path: '', data: {disableMaxWidth: true, viewType: "card"},
     component: TimesheetStatisticComponent,
   },
 ];

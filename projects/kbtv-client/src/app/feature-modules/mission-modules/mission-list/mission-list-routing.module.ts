@@ -18,27 +18,27 @@ const routes: MissionListRoute[] = [
       {
         path: `:${SelectedMissionIdParam}/detaljer`,
         component: MissionDetailsComponent,
-        data: {viewSize: "60%"},
+        data: {viewSize: "60%", viewType: "card"},
         children: [
           {
             path: 'timer',
-            data: {allowedRoles: RolePermissions.UserTimesheetList.access, viewSize: "overlay"},
+            data: {allowedRoles: RolePermissions.UserTimesheetList.access, viewType: "overlay"},
             loadChildren: () => import('src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list.module').then(m => m.UserTimesheetListModule),
           },
           {
             path: 'bilder',
-            data: {viewSize: "overlay"},
+            data: {viewType: "overlay"},
             loadChildren: () => import('src/app/feature-modules/mission-modules/mission-image-list/mission-image-list.module').then(m => m.MissionImageListModule),
           },
           {
             path: 'dokumenter',
-            data: {allowedRoles: RolePermissions.MissionDocumentList.access, viewSize: "overlay"},
+            data: {allowedRoles: RolePermissions.MissionDocumentList.access, viewType: "overlay"},
             loadChildren: () => import('src/app/feature-modules/mission-modules/mission-document-list/mission-document-list.module').then(m => m.MissionDocumentListModule),
         
           },
           {
             path: 'notater',
-            data: {allowedRoles: RolePermissions.MissionNoteList.access, viewSize: "overlay"},
+            data: {allowedRoles: RolePermissions.MissionNoteList.access, viewType: "overlay"},
             loadChildren: () => import('src/app/feature-modules/mission-modules/mission-note-list/mission-note-list.module').then(m => m.MissionNoteListModule),
           },
         ]

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
 import { Roles } from '@core/roles.enum';
@@ -15,6 +15,8 @@ import { HomeNavigations } from './home-navigations.const';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
+  @HostBinding("style.width") width: string = "100%"
+  
   permissions = RolePermissions;
   roles = Roles;
   navigations = HomeNavigations;

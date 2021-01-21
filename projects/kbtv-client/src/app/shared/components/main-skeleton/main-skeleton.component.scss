@@ -5,6 +5,7 @@
     z-index:1;
     height:100%;
     width:100%;
+    background: mat-color($background, background);
 }
 .content-container{
     position:relative;
@@ -23,6 +24,10 @@
     top:0;
     width:100%!important;
     height:100%;
+}
+
+::ng-deep.main-skeleton-card{
+    margin: $gap-size * 5px;
 }
 
 .fab-container{

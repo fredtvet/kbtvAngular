@@ -2,14 +2,12 @@ import { ElementRef, Injectable } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { DeviceInfoService } from "@core/services/device-info.service";
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
-import { Observable } from "rxjs";
 import { BehaviorSubject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 import { MainSkeletonRouteData } from "./main-skeleton-route-data.interface";
 
 @Injectable()
 export class MainSkeletonPresenter extends WithUnsubscribe() {
-
     private enableElevationSubject = new BehaviorSubject<boolean>(false);
     enableElevation$ = this.enableElevationSubject.asObservable();
 
@@ -23,7 +21,7 @@ export class MainSkeletonPresenter extends WithUnsubscribe() {
 
     init(): void {
         this.deviceInfoService.isS$.pipe(
-            tap(isS => this.changeSize(isS)),
+            tap(isS => this.setViewStyles(isS)),
             takeUntil(this.unsubscribe),
         ).subscribe()
     }
@@ -33,11 +31,18 @@ export class MainSkeletonPresenter extends WithUnsubscribe() {
         this.enableElevationSubject.next(val); 
     }
 
-    private changeSize(isS: boolean): void{
+    private setViewStyles(isS: boolean): void{
+
         const parent: HTMLElement = this.elRef.nativeElement.parentElement;
-        const shouldOverlay = isS || this.data.viewSize === 'overlay';
-        if(shouldOverlay) parent.classList.add("main-skeleton-overlay");
-        else parent.classList.remove("main-skeleton-overlay");
-        if(this.data.viewSize && !shouldOverlay) parent.style.width = this.data.viewSize;
+
+        parent.classList.remove("main-skeleton-card", "main-skeleton-overlay");
+
+        if(isS || this.data.viewType === 'overlay') 
+            return parent.classList.add("main-skeleton-overlay"); 
+        
+        if(this.data.viewType === 'card') 
+            parent.classList.add("main-skeleton-card"); 
+
+        parent.style.width = this.data.viewSize || "100%";
     }
 }

@@ -12,7 +12,7 @@ const routes: TimesheetWeekRoute[] = [
     component: UserTimesheetWeekComponent,
     children: [
       {
-        path: 'liste', data: {viewSize: "overlay", disableMaxWidth: true},
+        path: 'liste', data: {viewType: "overlay", disableMaxWidth: true},
         loadChildren: () => import('src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list.module').then(m => m.UserTimesheetListModule)
       }
     ]

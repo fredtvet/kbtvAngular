@@ -45,7 +45,7 @@ export class DataManagerComponent {
 
   private getNavConfig(selectedProp: Maybe<string>){
       return { 
-        title: "Data", 
+        title: "Databehandling", 
         buttons: selectedProp ? [
           {icon: "add", callback: () => this.facade.createItem()},
           {icon: "delete_forever", callback: this.deleteItems} 

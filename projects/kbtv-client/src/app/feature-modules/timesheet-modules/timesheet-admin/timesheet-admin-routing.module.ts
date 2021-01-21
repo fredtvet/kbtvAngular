@@ -16,12 +16,12 @@ const routes: TimesheetAdminRoute[] = [
       {
         path: 'uker',
         component: TimesheetAdminWeekListComponent,
-        data: {viewSize: "overlay"},
+        data: {viewType: "overlay"},
         children: [
           {
             path: 'timer',
             component: TimesheetAdminListComponent,
-            data: {viewSize: "50%"},
+            data: {viewSize: "60%", viewType: "card"},
           },
         ]
       },
