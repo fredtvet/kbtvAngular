@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Timesheet } from '@core/models';
+import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 
 @Component({
   selector: 'app-user-timesheet-list-view',
@@ -12,6 +14,12 @@ export class UserTimesheetListViewComponent {
   @Input() timesheets: Timesheet[];
   @Output() timesheetClicked = new EventEmitter<Timesheet>();
   @Output() filterClicked = new EventEmitter();
+
+  filterButton: AppButton = {
+    text: 'Åpne filter',
+    icon: 'filter_list',
+    callback: () => this.filterClicked.emit()
+  }
 
   onTimesheetClick = (t: Timesheet) => this.timesheetClicked.emit(t);
   

@@ -22,11 +22,8 @@
 </div> 
 
 <ng-template #noContent>
-    <span class="text-center w-100">
-        <p>Finner ingen timer med gitte filtre. </p>
-        <button mat-raised-button color="accent" class="bounceIn" (click)="filterClicked.emit()">
-            <mat-icon>filter_list</mat-icon>
-            Åpne filter
-        </button>
-    </span>
+    <app-no-content
+        text="Finner ingen timer med gitte filtre." 
+        [buttonInfo]="filterButton"> 
+    </app-no-content>
 </ng-template>
