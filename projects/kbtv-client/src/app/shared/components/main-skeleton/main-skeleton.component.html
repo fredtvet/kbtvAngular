@@ -1,7 +1,8 @@
 <div class="main-container" fxLayout="row">
 
-  <div fxLayout="column" class="content-container mat-elevation-z1 max-width nav-content" fxFlex 
+  <div fxLayout="column" class="content-container mat-elevation-z1 max-width" fxFlex 
     [ngClass]="{ 'max-width': !data.disableMaxWidth }">
+
     <span 
       [ngClass]="(enableElevation$ | async) ? 'nav-content mat-elevation-z1' : 'nav-content'" >
       
@@ -23,6 +24,7 @@
           [config]="fab">
         </app-button>
     </div>
+    
   </div>
   
   <router-outlet #outlet="outlet">
