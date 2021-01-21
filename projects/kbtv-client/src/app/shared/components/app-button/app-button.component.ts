@@ -16,9 +16,11 @@ export class AppButtonComponent {
 
   get buttonClass(): string{
     switch(this.config.type){
+      case ButtonTypes.Flat: return "mat-flat-button";
       case ButtonTypes.Icon: return "mat-icon-button";
       case ButtonTypes.Stroked: return "mat-stroked-button";
       case ButtonTypes.Fab: return "mat-fab";
+      case ButtonTypes.MiniFab: return "mat-mini-fab";
       default: return "";
     }
   }

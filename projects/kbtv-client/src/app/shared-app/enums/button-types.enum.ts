@@ -1,5 +1,8 @@
 export enum ButtonTypes{
     Icon,
-    Stroked,
-    Fab
+    Stroked,  
+    Basic,
+    Flat,
+    Fab,
+    MiniFab
 }
