@@ -1,8 +1,8 @@
 {
   "name": "test-client",
   "short_name": "test-client",
-  "theme_color": "#212121",
-  "background_color": "#212121",
+  "theme_color": "#006064",
+  "background_color": "#006064",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
