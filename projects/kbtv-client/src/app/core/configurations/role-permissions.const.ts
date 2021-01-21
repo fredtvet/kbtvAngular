@@ -1,7 +1,7 @@
 import { Roles } from "@core/roles.enum";
 
 export const RolePermissions = {
-    DataManagement: {access: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]},
+    DataManagement: {access: [Roles.Leder]},
     MissionDocumentList: {
         access: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt],
         create: [Roles.Leder], delete: [Roles.Leder],
