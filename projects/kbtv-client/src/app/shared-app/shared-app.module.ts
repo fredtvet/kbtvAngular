@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +12,6 @@ import { RouterModule } from '@angular/router';
 import { StateAuthModule } from 'state-auth';
 import { StateManagementModule } from 'state-management';
 import { AddToHomeScreenDirective } from './add-to-home-screen.directive';
-import { ListCardComponent } from './components/list-card/list-card.component';
 import { ListItemComponent } from './components/list-item/list-item.component';
 import { NavItemComponent } from './components/nav-item/nav-item.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
@@ -24,7 +22,6 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
   declarations: [
     PageNotFoundComponent,  
     NavItemComponent,
-    ListCardComponent,
     ListItemComponent,
     ReverseArrayPipe,
     TransformButtonsPipe,
@@ -42,7 +39,6 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     MatButtonModule,
     MatDividerModule,
     MatRippleModule,
-    MatCardModule,
 
     MatIconModule,
     MatProgressSpinnerModule,
@@ -59,13 +55,11 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     MatDividerModule,
     MatIconModule,
     MatProgressSpinnerModule,  
-    MatCardModule,
 
     StateAuthModule,
 
     PageNotFoundComponent,
     NavItemComponent,   
-    ListCardComponent,
     ListItemComponent,
     
     ReverseArrayPipe,
