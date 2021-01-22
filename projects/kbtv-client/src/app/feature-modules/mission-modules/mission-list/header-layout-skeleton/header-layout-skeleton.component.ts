@@ -23,7 +23,7 @@ import { MainTopNavConfig } from "@shared/components/main-top-nav-bar/main-top-n
     constructor(private cdRef: ChangeDetectorRef) {  }
   
     ngAfterViewInit(): void {
-        const rootMargin = this.isLargeScreen ?  "-65px 0px 0px 0px" :  "-57px 0px 0px 0px"
+        const rootMargin = this.isLargeScreen ?  "-66px 0px 0px 0px" :  "-58px 0px 0px 0px"
         const el: HTMLElement = this.contentHeader.nativeElement;
         const observer = new IntersectionObserver((items) => {
             this.contentScrolledToTop = !items[0].isIntersecting;
