@@ -5,9 +5,9 @@ $levels: 6;
 @mixin gap-units($gap-size-unit) {
   @each $styleAbbr, $style in $gap-styles{
     @for $i from 0 through $levels {     
-      .#{$styleAbbr}-#{$i} { #{$style}: $gap-size-unit * $i * 1px }
+      .#{$styleAbbr}-#{$i} { #{$style}: $gap-size-unit * $i * 1px!important }
       @each $dirAbbr, $dir in $directions{
-        .#{$styleAbbr}#{$dirAbbr}-#{$i} { #{$style}-#{$dir}: $gap-size-unit * $i * 1px }
+        .#{$styleAbbr}#{$dirAbbr}-#{$i} { #{$style}-#{$dir}: $gap-size-unit * $i * 1px!important }
       }
     } 
     //Autos
