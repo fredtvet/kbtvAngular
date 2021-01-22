@@ -25,10 +25,11 @@ import { MainTopNavConfig } from "@shared/components/main-top-nav-bar/main-top-n
         const rootMargin = this.isLargeScreen ?  "-65px 0px 0px 0px" :  "-57px 0px 0px 0px"
         const el: HTMLElement = this.contentHeader.nativeElement;
         const observer = new IntersectionObserver((items) => {
+            console.log(items)
             this.contentScrolledToTop = !items[0].isIntersecting;
             this.cdRef.detectChanges();
         }, {
-            root: el.parentElement, threshold: 1, rootMargin
+            root: el.parentElement, threshold: 0.99, rootMargin
         });
     
         observer.observe(el);
