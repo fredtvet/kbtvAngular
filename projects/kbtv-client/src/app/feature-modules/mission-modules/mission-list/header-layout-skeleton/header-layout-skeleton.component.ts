@@ -11,7 +11,8 @@ import { MainTopNavConfig } from "@shared/components/main-top-nav-bar/main-top-n
     @ViewChild('contentHeader', {read: ElementRef}) contentHeader: ElementRef<HTMLElement>;
 
     @Input() navConfig: MainTopNavConfig;
-  
+    @Input() navOverlayDisabled: MainTopNavConfig;
+
     contentScrolledToTop?: boolean = false;
     noHeaderNode: boolean;
 

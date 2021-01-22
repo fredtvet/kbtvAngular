@@ -2,6 +2,7 @@
     [ngClass]="contentScrolledToTop ? 'solid' : ''" 
     [config]="navConfig"
     [overlayMode]="(
+        navOverlayDisabled || 
         !header.childNodes.length || 
         header.childNodes[0].nodeName === '#comment' || 
         contentScrolledToTop) 
@@ -10,7 +11,7 @@
 
 <div class="content-container">
 
-    <div class="header-container" #header>
+    <div class="header-container" fxLayout="row" fxLayoutAlign="center center" #header>
         <ng-content select="[header]"></ng-content>
     </div>
 
