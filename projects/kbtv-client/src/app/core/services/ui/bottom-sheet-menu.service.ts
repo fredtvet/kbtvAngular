@@ -9,6 +9,6 @@ export class BottomSheetMenuService {
   constructor(private matBottomSheet: MatBottomSheet) {}
 
   open(buttons: AppButton[]): MatBottomSheetRef<BottomSheetMenuComponent> {
-    return this.matBottomSheet.open(BottomSheetMenuComponent, { data: buttons });
+    return this.matBottomSheet.open(BottomSheetMenuComponent, { data: buttons, panelClass: "p-0" });
   }
 }

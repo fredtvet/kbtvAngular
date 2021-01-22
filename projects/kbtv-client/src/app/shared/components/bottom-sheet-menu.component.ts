@@ -5,20 +5,16 @@ import { AppButton } from '@shared-app/interfaces/app-button.interface';
 @Component({
   selector: 'app-bottom-sheet-menu',
   template:`
-  <style>
-    span > a {
-      padding: 8px 0;
-      display:block;
-    }
-  </style>
-  <span class="mat-subheading-2">
-    <ng-container #navs *ngFor="let button of buttons">
-        <a *ifRole="button.allowedRoles" (click)="handleFn(button.callback, button.params)" matRipple>
-            <mat-icon>{{ button.icon }}</mat-icon>
-            <span class="ml-2 mr-2">{{ button.text }}</span>
-        </a>
+
+    <ng-container *ngFor="let button of buttons">
+      <a *ifRole="button.allowedRoles" (click)="handleFn(button.callback, button.params)">
+        <app-list-item>
+          <mat-icon left-side>{{ button.icon }}</mat-icon>
+          <span>{{ button.text }}</span>
+        </app-list-item>
+      </a>
     </ng-container>
-  </span>
+
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
