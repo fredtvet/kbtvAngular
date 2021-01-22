@@ -5,7 +5,9 @@ import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { ModelState } from '@core/state/model-state.interface';
+import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { ImageViewerDialogWrapperConfig } from '@shared/components/image-viewer/image-viewer-dialog-wrapper-config.const';
 import { ImageViewerDialogWrapperComponent } from '@shared/components/image-viewer/image-viewer-dialog-wrapper.component';
@@ -28,7 +30,8 @@ interface ViewModel { mission: Maybe<Immutable<Mission>>, navConfig: MainTopNavC
 })
 export class MissionDetailsComponent extends WithUnsubscribe() {
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
-
+  ButtonTypes = ButtonTypes;
+  
   private can = RolePermissions.MissionList;
 
   get missionId() { return this.route.snapshot.paramMap.get(SelectedMissionIdParam) }
@@ -38,6 +41,8 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     map(mission => { return { navConfig: this.getNavConfig(mission), mission }})
   );
 
+  addHeaderImgBtn: AppButton;
+
   constructor(
     private facade: MissionListFacade,
     private route: ActivatedRoute,
@@ -45,7 +50,15 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     private dialog: MatDialog,
     private menuService: BottomSheetMenuService,
     private modelFormService: ModelFormService
-  ) { super() }
+  ) { 
+    super() 
+    this.addHeaderImgBtn = {
+      text: "Legg til forsidebilde", 
+      icon: "add_photo_alternate", 
+      callback: this.openHeaderImageInput, 
+      allowedRoles: this.can.update
+    }
+  }
 
   updateHeaderImage = (files: FileList): void => 
     (files && files[0] && this.missionId) ? this.facade.updateHeaderImage(this.missionId, files[0]) : undefined;
@@ -60,7 +73,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
         },
       });
   }
-  
+ 
   private openHeaderImageInput = (): void => this.imageInput?.nativeElement?.click();
   
   private openMissionForm = (entityId: number) => 
@@ -82,11 +95,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
   private openBottomSheetMenu = (mission: Immutable<Mission>) => {   
     this.menuService.open([
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission?.id], allowedRoles: this.can.update},
-      {
-        text: `${mission?.fileName ? 'Oppdater' : 'Legg til'} forsidebilde`, 
-        icon: "add_photo_alternate", 
-        callback: this.openHeaderImageInput, 
-        allowedRoles: this.can.update},
+      {...this.addHeaderImgBtn, text: `${mission?.fileName ? 'Oppdater' : 'Legg til'} forsidebilde`}
     ]);
   }
 
