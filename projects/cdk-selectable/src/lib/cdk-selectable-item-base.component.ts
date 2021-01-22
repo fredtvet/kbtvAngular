@@ -28,7 +28,7 @@ export abstract class CdkSelectableItemBaseComponent {
 
   /** Toggle the selected status of the component */
   toggleSelection = () => 
-    this.presenter.updateEntry(this.id, !this.presenter.selectedMap[this.id].selected);
+    this.presenter.updateEntry(this.id, !this.presenter.selectedMap[this.id]?.selected);
   
   /** Clean up when the component is destroyed. */
   ngOnDestroy(): void {

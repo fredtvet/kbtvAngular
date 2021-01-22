@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilKeyChanged, map } from 'rxjs/operators';
+import { distinctUntilKeyChanged, filter, map } from 'rxjs/operators';
 import { IdSelectPair, SelectedMap } from "./interfaces";
 
 /**
@@ -24,7 +24,11 @@ export class CdkSelectablePresenter {
      *  when the selected status changes for a specified id.
      *  @param id The id of the item you desire to observe */
     isSelected$ = (id: string | number): Observable<IdSelectPair> =>
-        this.selectedMap$.pipe(map(x => x[id]), distinctUntilKeyChanged<IdSelectPair>("selected"))
+        this.selectedMap$.pipe(
+            map(x => x[id]), 
+            filter(x => x !== undefined),
+            distinctUntilKeyChanged<IdSelectPair>("selected")
+        )
 
     /**
      * Update the selected status of a specified id
@@ -52,14 +56,17 @@ export class CdkSelectablePresenter {
     removeEntry = (id: string | number) => {
         if(!id) return;
         const copy = this.selectedMap;
-        delete copy[id];
+        copy[id] = undefined;
         this.selectedMapSubject.next(copy)
     }
 
     /** Set the selected status of all items to false. */
     resetSelections(): void{
         const items = this.selectedMap;
-        for(const key in items) items[key] = {...items[key], selected: false};
+        for(const key in items){ 
+            const item = items[key];
+            if(item) items[key] = {...item, selected: false}
+        }
         this.selectedMapSubject.next(items);
     }
 }

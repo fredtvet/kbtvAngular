@@ -27,9 +27,7 @@ export class CdkSelectableContainerDirective {
     /** {@inheritdoc CdkSelectablePresenter.resetSelections} */
     resetSelections = (): void => this.presenter.resetSelections()
     
-    ngOnDestroy(): void {
-        this.mapSub?.unsubscribe()
-    }
+    ngOnDestroy(): void { this.mapSub?.unsubscribe() }
 
     private _getSelectedIds(map: SelectedMap): (string | number)[]{
         const ids = [];
