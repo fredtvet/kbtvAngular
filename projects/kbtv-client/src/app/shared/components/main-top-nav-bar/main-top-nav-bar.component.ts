@@ -17,6 +17,8 @@ export class MainTopNavBarComponent {
   
   @Input() config: MainTopNavConfig;
   @Input() stylingClass: string;
+  @Input() overlayMode: boolean;
+
   ButtonTypes = ButtonTypes;
   
   loading$: Observable<boolean> = this.loadingService.loading$;

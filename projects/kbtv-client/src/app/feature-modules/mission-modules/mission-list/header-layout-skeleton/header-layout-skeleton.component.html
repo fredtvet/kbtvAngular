@@ -1,0 +1,30 @@
+<app-main-top-nav-bar class="nav-bar"
+    [ngClass]="contentScrolledToTop ? 'solid' : ''" 
+    [config]="navConfig"
+    [overlayMode]="(
+        !header.childNodes.length || 
+        header.childNodes[0].nodeName === '#comment' || 
+        contentScrolledToTop) 
+        ? false : true">
+</app-main-top-nav-bar>
+
+<div class="content-container">
+
+    <div class="header-container" #header>
+        <ng-content select="[header]"></ng-content>
+    </div>
+
+    <div class="content-header" #contentHeader 
+        [ngClass]="contentScrolledToTop ? 'mat-elevation-z3' : ''">
+
+        <div class="drag-handle"><mat-icon [fxHide]="contentScrolledToTop">drag_handle</mat-icon></div>
+    
+        <ng-content select="[contentHeader]"></ng-content>
+
+    </div>
+    
+    <div class="content">
+        <ng-content select="[content]"></ng-content>
+    </div>  
+
+</div>

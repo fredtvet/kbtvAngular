@@ -1,5 +1,4 @@
-import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import { ChangeDetectionStrategy, Component, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Employer, Mission, MissionType } from "@core/models";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
@@ -16,7 +15,7 @@ import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe, Prop } from "global-types";
 import { ModelFormService } from 'model-form';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { _getModelDisplayValue } from 'state-model';
 import { MissionListFacade } from '../mission-list.facade';

@@ -1,8 +1,8 @@
-<mat-toolbar #navBar *ngIf="config" [ngClass]="stylingClass">
+<mat-toolbar #navBar *ngIf="config" [ngClass]="overlayMode ? 'overlay-nav' : ''">
 
     <ng-container *ngIf="searchBarHidden || !config.searchBar else searchBarContent">
         
-        <app-button *ngIf="config.backFn else menuBtn" [config]="{
+        <app-button class="primary-button" *ngIf="config.backFn else menuBtn" [config]="{
             callback: config.backFn, 
             params: config.backFnParams,
             type: ButtonTypes.Icon,
@@ -19,27 +19,29 @@
         <span class="mr-auto ellipsis">
             <ng-container *ngIf="config.title">
                 <span *ngIf="!config.backFn else noLinkTitle" ngClass.xs="ml-1" ngClass.gt-xs="ml-2"
-                    routerLink="/hjem">{{ config.title || "Hjem" }}</span>
+                    routerLink="/hjem">{{ config.title }}</span>
                 <ng-template #noLinkTitle><span ngClass.xs="ml-1" ngClass.gt-xs="ml-2">{{ config.title }}</span>
                 </ng-template>
             </ng-container>
             <mat-icon *ngIf="config.subIcon" class="scale-75">{{ config.subIcon }}</mat-icon>
-            <span class="mat-caption ml-1">{{ config.subTitle }}</span>
+            <span *ngIf="config.subTitle" class="mat-caption ml-1">{{ config.subTitle }}</span>
         </span>
 
         <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>
 
-        <app-button *ngIf="config.searchBar" [config]="{
-            callback: toggleSearchBar, 
-            type: ButtonTypes.Icon,
-            aria: 'Søk',
-            icon: 'search'}">
-        </app-button>
-        
-        <ng-container *ngIf="config.buttons">
-            <app-button *ngFor="let button of config.buttons | transformButtons: ButtonTypes.Icon; trackBy: TrackByButton" [config]="button">
+        <span class="custom-buttons">
+            <app-button *ngIf="config.searchBar" [config]="{
+                callback: toggleSearchBar, 
+                type: ButtonTypes.Icon,
+                aria: 'Søk',
+                icon: 'search'}">
             </app-button>
-        </ng-container>
+            
+            <ng-container *ngIf="config.buttons">
+                <app-button *ngFor="let button of config.buttons | transformButtons: ButtonTypes.Icon; trackBy: TrackByButton" [config]="button">
+                </app-button>
+            </ng-container>
+        </span>
     </ng-container>
 
 </mat-toolbar>
@@ -57,5 +59,4 @@
         (inputChanged)="handleSearchFn($event);"
         [value]="config.searchBar?.initialValue || ''" 
         [placeholder]="config.searchBar?.placeholder">
-
 </ng-template>

@@ -1,12 +1,19 @@
+<app-main-skeleton *ngIf="vm$ | async; let vm" paddingDisabled=true>
+    
+    <app-header-layout-skeleton [navConfig]="vm.navConfig">
 
-<app-main-skeleton *ngIf="vm$ | async; let vm">
+        <img header appImageErrorReloader #img *ngIf="vm.mission?.fileName"
+            style="max-width:100%" [src]="vm.mission | appFileUrl: 'missionheader'" 
+            (error)="img.src = '/assets/notfound.png?'" alt="Forsidebilde" />
 
-    <app-detail-top-nav-bar navbar [config]="vm.navConfig" >
-    </app-detail-top-nav-bar>
+        <app-mission-header contentHeader [mission]="vm.mission">
+        </app-mission-header>
 
-    <app-mission-details-view [mission]="vm.mission">
-    </app-mission-details-view>
-        
+        <app-mission-details-view content [mission]="vm.mission">
+        </app-mission-details-view>
+
+    </app-header-layout-skeleton>
+     
 </app-main-skeleton>
   
 <input type="file" style="display:none" #imageInput (change)="updateHeaderImage($event.target.files)">
