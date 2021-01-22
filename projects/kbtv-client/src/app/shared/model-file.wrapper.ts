@@ -10,7 +10,7 @@ export class ModelFileWrapper{
         this.id = id;
         var type = inputFile.type;
         var extension = this.getExtension(inputFile.name);
-        this.modifiedFile = new File([inputFile], `${id}.${extension}`, {type});
+        this.modifiedFile = new File([inputFile], `${id}.${extension.toLowerCase()}`, {type});
     }
 
     private getExtension(fileName: string): string{
