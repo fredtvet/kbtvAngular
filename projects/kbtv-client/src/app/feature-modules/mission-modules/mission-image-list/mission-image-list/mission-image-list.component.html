@@ -3,16 +3,14 @@
     <app-main-top-nav-bar navbar [config]="vm.navConfig" >
     </app-main-top-nav-bar>
 
-    <div cdkSelectableContainer #selectableContainer (selectionChanged)="onSelectionChange($event)" fxLayout="row" style="margin:1px">
-        <div *ngFor="let i of (vm.columns | numberToArray)" [fxFlex]="100 / vm.columns">
-            
-            <app-selectable-card *ngFor="let img of vm.images | arrayslice: i:vm.columns;trackBy: trackByFn"
-                [id]="img.id" selectedText="Bilde valgt">
-                <img appImageErrorReloader (tap)="openImageViewer(img, vm.images)" class="entity-card"  alt="oppdragsbilde"
-                    [src]="img | appFileUrl: 'thumbnails'"/> 
-            </app-selectable-card>         
+    <div cdkSelectableContainer #selectableContainer (selectionChanged)="onSelectionChange($event)" class="image-container">
 
-        </div>
+        <app-selectable-card *ngFor="let img of vm.images;trackBy: trackByImg"
+            class="image" [id]="img.id" selectedText="Bilde valgt">
+            <img appImageErrorReloader (tap)="openImageViewer(img, vm.images)" class="entity-card"  alt="oppdragsbilde"
+                [src]="img | appFileUrl: 'thumbnails'"/> 
+        </app-selectable-card>  
+
     </div>
 
 </app-main-skeleton>

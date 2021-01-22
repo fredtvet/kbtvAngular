@@ -5,8 +5,6 @@ import { DeleteModelHttpEffect, DeleteModelReducer, MailModelsHttpEffect } from 
 import { CreateMissionImagesHttpEffect } from './create-mission-images/create-mission-images.http.effect';
 import { CreateMissionImagesReducer } from './create-mission-images/create-mission-images.reducer';
 import { CreateMissionImagesValidatorInterceptor } from './create-mission-images/create-mission-images.validator';
-import { ImageViewerDialogWrapperComponent } from './image-viewer/image-viewer-dialog-wrapper.component';
-import { ImageViewerComponent } from './image-viewer/image-viewer.component';
 import { MissionImageListRoutingModule } from './mission-image-list-routing.module';
 import { MissionImageListComponent } from './mission-image-list/mission-image-list.component';
 import { ArraySlicePipe } from './pipes/array-slice.pipe';
@@ -16,8 +14,6 @@ import { NumberToArrayPipe } from './pipes/number-to-array.pipe';
 @NgModule({
   declarations: [
     MissionImageListComponent,
-    ImageViewerDialogWrapperComponent,
-    ImageViewerComponent,
     ArraySlicePipe,
     NumberToArrayPipe
   ],

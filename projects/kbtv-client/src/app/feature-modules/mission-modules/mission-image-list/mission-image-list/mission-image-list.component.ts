@@ -1,30 +1,33 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from "@angular/core";
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { MissionImage, ModelFile } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
-import { FormService } from 'form-sheet';
-import { ImmutableArray, Maybe } from 'global-types';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { EmailForm } from '@shared/constants/forms/email-form.const';
-import { combineLatest, Observable } from 'rxjs';
-import { map, tap } from "rxjs/operators";
-import { ImageViewerDialogWrapperComponent } from '../image-viewer/image-viewer-dialog-wrapper.component';
-import { MissionImageListFacade } from '../mission-image-list.facade';
-import { ConfirmDialogService } from "confirm-dialog";
-import { SelectedMissionIdParam } from "../../mission-list/mission-list-route-params.const";
+import { _trackByModel } from "@shared-app/helpers/trackby/track-by-model.helper";
 import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { SelectableContainerWrapperComponent } from "@shared/components/abstracts/selectable-container-wrapper.component";
-import { RolePermissions } from "@core/configurations/role-permissions.const";
+import { ImageViewerDialogWrapperConfig } from "@shared/components/image-viewer/image-viewer-dialog-wrapper-config.const";
+import { ImageViewerDialogWrapperComponent } from "@shared/components/image-viewer/image-viewer-dialog-wrapper.component";
+import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { EmailForm } from '@shared/constants/forms/email-form.const';
+import { ConfirmDialogService } from "confirm-dialog";
+import { FormService } from 'form-sheet';
+import { ImmutableArray, Maybe } from 'global-types';
+import { combineLatest, Observable } from 'rxjs';
+import { map, tap } from "rxjs/operators";
+import { SelectedMissionIdParam } from "../../mission-list/mission-list-route-params.const";
+import { MissionImageListFacade } from '../mission-image-list.facade';
 
 interface ViewModel { images: Maybe<ImmutableArray<MissionImage>>, columns: 2 | 4,  fabs: AppButton[], navConfig: MainTopNavConfig }
 
 @Component({
   selector: "app-mission-image-list",
   templateUrl: "./mission-image-list.component.html",
+  styleUrls: ["./mission-image-list.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionImageListComponent extends SelectableContainerWrapperComponent{
@@ -78,26 +81,37 @@ export class MissionImageListComponent extends SelectableContainerWrapperCompone
       ]
     }
 
-  openImageViewer(image: ModelFile, images: ModelFile[]) {
+  openImageViewer(currentImage: ModelFile, images: ModelFile[]) {
     this.dialog.open(ImageViewerDialogWrapperComponent, {
       width: "100%",
       height: "100%",
       panelClass: "image_viewer_dialog",
-      data: {currentImage: image, images},
+      data: <ImageViewerDialogWrapperConfig>{
+        currentImage, images,
+        deleteAction: { 
+          callback: (id: string) => this.deleteImages({id}),
+          allowedRoles: RolePermissions.MissionImageList.delete
+        }
+      },
     });
   }
 
   uploadImages = (files: FileList): void => 
     this.missionId ? this.facade.add({missionId: this.missionId, files}) : undefined;
 
-  trackByFn = (index: number, entity: MissionImage) => entity.id
+  trackByImg = _trackByModel("missionImages")
+
+  trackByCol = (index: number, col: number) => col
 
   private openImageInput = (): void => this.imageInput.nativeElement.click();
 
   private deleteSelectedImages = () => {
-    this.facade.delete({ids: this.currentSelections});     
+    this.deleteImages({ids: this.currentSelections});     
     this.selectableContainer.resetSelections();
   }
+
+  private deleteImages = (payload: {ids?: string[], id?: string}) => 
+    this.facade.delete(payload);
 
   private  openConfirmDeleteDialog = () => {   
     this.confirmService.open({

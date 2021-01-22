@@ -22,6 +22,8 @@ import { RadioGroupQuestionComponent } from './components/dynamic-form-questions
 import { SelectQuestionComponent } from './components/dynamic-form-questions/select-question.component';
 import { SliderQuestionComponent } from './components/dynamic-form-questions/slider-question.component';
 import { TextAreaQuestionComponent } from './components/dynamic-form-questions/text-area-question.component';
+import { ImageViewerDialogWrapperComponent } from './components/image-viewer/image-viewer-dialog-wrapper.component';
+import { ImageViewerComponent } from './components/image-viewer/image-viewer.component';
 import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.component';
 import { ScrollNavElevationTogglerDirective } from './components/main-skeleton/scroll-nav-elevation-toggler.directive';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
@@ -52,7 +54,9 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     AppButtonComponent,
     SelectableCardComponent,
     NoContentComponent,
-
+    ImageViewerDialogWrapperComponent,
+    ImageViewerComponent,
+    
     TransformButtonPipe,
     TranslatePipe,
     SortByDatePipe,
@@ -94,6 +98,8 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     ChipsBarComponent,
     AppButtonComponent,
     NoContentComponent,
+    ImageViewerDialogWrapperComponent,
+    ImageViewerComponent,
     
     TransformButtonPipe,
     TranslatePipe,

@@ -1,0 +1,17 @@
+.image-container {
+    padding: 1px;
+    line-height: 0;  
+    column-count: 3;
+    column-gap: 0px;  
+}
+  
+.image-container > .image {
+    width: 100% !important;
+    height: auto !important;
+}
+
+@media (max-width: 599px) {
+    .image-container {
+        column-count: 2;
+    }
+}
