@@ -11,7 +11,6 @@ import { AngularMaterialModule } from './angular-material.module';
 import { AppButtonComponent } from './components/app-button/app-button.component';
 import { BottomSheetMenuComponent } from './components/bottom-sheet-menu.component';
 import { ChipsBarComponent } from './components/chips-bar.component';
-import { DetailTopNavBarComponent } from './components/detail-top-nav-bar/detail-top-nav-bar.component';
 import { AutoCompleteQuestionComponent } from './components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { CheckboxQuestionComponent } from './components/dynamic-form-questions/checkbox-question.component';
 import { FileQuestionComponent } from './components/dynamic-form-questions/file-question.component';
@@ -39,7 +38,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     BottomSheetMenuComponent,
     MainSkeletonComponent,
     MainTopNavBarComponent,
-    DetailTopNavBarComponent,
     ChipsBarComponent,
     InputQuestionComponent,
     SelectQuestionComponent,
@@ -94,13 +92,12 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     BottomSheetMenuComponent,
     MainSkeletonComponent,    
     MainTopNavBarComponent,
-    DetailTopNavBarComponent,
     ChipsBarComponent,
     AppButtonComponent,
     NoContentComponent,
     ImageViewerDialogWrapperComponent,
     ImageViewerComponent,
-    
+
     TransformButtonPipe,
     TranslatePipe,
     SortByDatePipe,

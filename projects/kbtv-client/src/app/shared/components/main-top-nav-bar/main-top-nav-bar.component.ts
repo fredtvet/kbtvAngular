@@ -16,7 +16,6 @@ export class MainTopNavBarComponent {
   @ViewChild('searchInput') searchInput: ElementRef;
   
   @Input() config: MainTopNavConfig;
-  @Input() stylingClass: string;
   @Input() overlayMode: boolean;
 
   ButtonTypes = ButtonTypes;
