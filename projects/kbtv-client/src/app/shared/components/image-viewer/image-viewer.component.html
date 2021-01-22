@@ -10,10 +10,10 @@
   (tap)="toolbarHidden = !toolbarHidden" 
   (swiperight)="previousImage()" 
   (swipeleft)="nextImage()" 
-  [src]="currentImage | appFileUrl: 'images'" layout-fill/>
+  [src]="currentImage | appFileUrl: this.folder" layout-fill/>
 
-<mat-toolbar class="overlay_container page_counter" [fxHide]="toolbarHidden">
-  <h5>{{ index + 1 }} / {{ images.length }}</h5>
+<mat-toolbar *ngIf="images?.length" class="overlay_container page_counter" [fxHide]="toolbarHidden">
+  <h5>{{ index + 1 }} / {{ images?.length }}</h5>
 </mat-toolbar>
 
 

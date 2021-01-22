@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
@@ -6,6 +7,8 @@ import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.serv
 import { ModelState } from '@core/state/model-state.interface';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
+import { ImageViewerDialogWrapperConfig } from '@shared/components/image-viewer/image-viewer-dialog-wrapper-config.const';
+import { ImageViewerDialogWrapperComponent } from '@shared/components/image-viewer/image-viewer-dialog-wrapper.component';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EditMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { Immutable, Maybe } from 'global-types';
@@ -39,12 +42,24 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     private facade: MissionListFacade,
     private route: ActivatedRoute,
     private router: Router,
+    private dialog: MatDialog,
     private menuService: BottomSheetMenuService,
     private modelFormService: ModelFormService
   ) { super() }
 
   updateHeaderImage = (files: FileList): void => 
     (files && files[0] && this.missionId) ? this.facade.updateHeaderImage(this.missionId, files[0]) : undefined;
+
+  openImageViewer(mission: Mission) {console.log('click')
+      this.dialog.open(ImageViewerDialogWrapperComponent, {
+        width: "100%",
+        height: "100%",
+        panelClass: "image_viewer_dialog",
+        data: <ImageViewerDialogWrapperConfig>{
+          currentImage: mission, fileFolder: "missionheader"
+        },
+      });
+  }
   
   private openHeaderImageInput = (): void => this.imageInput?.nativeElement?.click();
   

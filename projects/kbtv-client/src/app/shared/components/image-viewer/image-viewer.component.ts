@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { ModelFile } from '@core/models';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { FileFolders } from '@shared/constants/file-folders.const';
+import { Maybe } from '../../../../../../../dist/global-types/public-api';
 
 @Component({
   selector: 'app-image-viewer',
@@ -12,10 +14,11 @@ import { AppButton } from '@shared-app/interfaces/app-button.interface';
 export class ImageViewerComponent {
   toolbarHidden = false;
 
-  @Input() images: ModelFile[];
+  @Input() images: Maybe<ModelFile[]>;
   @Input() currentImage: ModelFile;
   @Input() actions: AppButton[];
-  
+  @Input() folder: typeof FileFolders[number];
+
   @Output() currentImageChanged = new EventEmitter();
   @Output() closed = new EventEmitter();
 
@@ -24,7 +27,7 @@ export class ImageViewerComponent {
   constructor(private menuService: BottomSheetMenuService){};
 
   ngOnInit() {
-    if(this.currentImage)
+    if(this.currentImage && this.images?.length)
       this.index = this.images.findIndex(x => x.id == this.currentImage.id);
   }
 
@@ -34,13 +37,13 @@ export class ImageViewerComponent {
   }
 
   nextImage(): void{
-    if(this.index >= this.images.length - 1) return;
+    if(!this.images?.length || this.index >= this.images.length - 1) return;
     this.index++
     this.changeCurrentImage(this.images[this.index]);
   }
 
   previousImage(): void{
-    if(this.index <= 0) return
+    if(!this.images?.length || this.index <= 0) return
     this.index--;
     this.changeCurrentImage(this.images[this.index]);
   }

@@ -13,6 +13,7 @@ import { ImageViewerDialogWrapperConfig } from './image-viewer-dialog-wrapper-co
     [images]="cfg.images" 
     [currentImage]="cfg.currentImage"
     [actions]="actions"
+    [folder]="cfg.fileFolder"
     (currentImageChanged)="cfg.currentImage = $event"
     (closed)="close()">
   </app-image-viewer>
@@ -47,7 +48,7 @@ export class ImageViewerDialogWrapperComponent {
     
     private downloadImage = () => 
       this.cfg.currentImage?.fileName ? 
-      this.downloaderService.downloadUrl(_appFileUrl(this.cfg.currentImage.fileName, "images")) : null
+      this.downloaderService.downloadUrl(_appFileUrl(this.cfg.currentImage.fileName, this.cfg.fileFolder)) : null
     
     private openConfirmDeleteDialog = () => {  
       this.confirmService.open({
