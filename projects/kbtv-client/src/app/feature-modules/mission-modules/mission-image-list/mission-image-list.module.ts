@@ -7,16 +7,9 @@ import { CreateMissionImagesReducer } from './create-mission-images/create-missi
 import { CreateMissionImagesValidatorInterceptor } from './create-mission-images/create-mission-images.validator';
 import { MissionImageListRoutingModule } from './mission-image-list-routing.module';
 import { MissionImageListComponent } from './mission-image-list/mission-image-list.component';
-import { ArraySlicePipe } from './pipes/array-slice.pipe';
-import { NumberToArrayPipe } from './pipes/number-to-array.pipe';
-
 
 @NgModule({
-  declarations: [
-    MissionImageListComponent,
-    ArraySlicePipe,
-    NumberToArrayPipe
-  ],
+  declarations: [MissionImageListComponent],
   imports: [
     SharedModule,
     MissionImageListRoutingModule,
