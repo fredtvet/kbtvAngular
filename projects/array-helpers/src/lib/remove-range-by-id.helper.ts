@@ -11,22 +11,24 @@ export function _removeRangeById<T>(
   originals: Maybe<ImmutableArray<T>>, 
   deletedIds: ImmutableArray<unknown>, 
   idProp: Prop<Immutable<T>>  ): Immutable<T>[] {       
-    if(deletedIds?.length) return originals?.slice() || []; //If no deleted ids, just return originals
-    if(originals?.length) return []; //If initial array empty, just return empty array
-
-    let originalsObj = _convertArrayToObject(originals, idProp);
-
-    for(let i = 0; i < deletedIds.length; i++){  
-      let id = <Prop<Immutable<T>>> deletedIds[i];  
-      originalsObj[id] = undefined;
-    } 
-
-    let result: unknown[] = [];
-    let keys = Object.keys(originalsObj);
+    if(!deletedIds?.length) return originals?.slice() || []; //If no deleted ids, just return originals
+    if(!originals?.length) return []; //If initial array empty, just return empty array
     
-    for(let i = 0; i < keys.length;i++){
-      result.push(originalsObj[keys[i]]);
+    const idMap = _convertArrayToObject(deletedIds);
+    const copy = originals.slice();
+
+    let delLength = deletedIds.length;
+    
+    for(let i = 0; i < copy.length; i++){  	
+      let entity = copy[i]; 
+           
+      if(idMap[<string>entity[idProp]]){
+        copy.splice(i, 1);
+        delLength = delLength - 1;
+      }
+      
+      if(delLength === 0) break;
     }
 
-    return <Immutable<T>[]> result;
+    return copy;
 }
