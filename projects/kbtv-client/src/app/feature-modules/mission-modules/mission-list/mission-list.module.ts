@@ -6,9 +6,9 @@ import { ModelFormModule } from 'model-form';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
 import { DeleteModelHttpEffect, DeleteModelReducer } from 'state-model';
 import { HeaderLayoutSkeletonComponent } from './header-layout-skeleton/header-layout-skeleton.component';
+import { EmployerListItemComponent } from './mission-details/mission-details-view/employer-list-item.component';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';
 import { MissionDetailsComponent } from './mission-details/mission-details.component';
-import { MissionHeaderComponent } from './mission-details/mission-header.component';
 import { MissionListRoutingModule } from './mission-list-routing.module';
 import { MissionListViewComponent } from './mission-list/mission-list-view/mission-list-view.component';
 import { MissionListComponent } from './mission-list/mission-list.component';
@@ -21,7 +21,7 @@ import { UpdateLastVisitedReducer } from './update-last-visited.reducer';
     MissionListComponent,
     MissionListViewComponent,
     HeaderLayoutSkeletonComponent,
-    MissionHeaderComponent
+    EmployerListItemComponent
   ],
   providers: [
     ...SaveModelFileProviders,

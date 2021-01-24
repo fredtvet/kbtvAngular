@@ -7,8 +7,7 @@
             style="max-width:100%" [src]="vm.mission | appFileUrl: 'missionheader'" 
             (error)="img.src = '/assets/notfound.png?'" alt="Forsidebilde" />
 
-        <app-mission-header contentHeader [mission]="vm.mission">
-        </app-mission-header>
+        <div contentHeader class="pl-6 pr-6 pb-5"> {{vm.mission?.address}}</div>
 
         <app-mission-details-view content [mission]="vm.mission">
         </app-mission-details-view>
@@ -18,7 +17,6 @@
 </app-main-skeleton>
   
 <input type="file" style="display:none" #imageInput (change)="updateHeaderImage($event.target.files)">
-
 
 <ng-template #addHeaderImage>
     <app-button [config]="addHeaderImgBtn | transformButton : ButtonTypes.Stroked">

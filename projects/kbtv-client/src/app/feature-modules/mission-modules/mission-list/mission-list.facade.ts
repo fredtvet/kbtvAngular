@@ -56,8 +56,8 @@ export class MissionListFacade {
 
     const children: Prop<StoreState>[] = ["missionNotes", "missionDocuments", "missionImages"];
 
-    return this.store.select$(["missions", ...children]).pipe(
-      map(state => _getWithRelations<Mission, StoreState>(state, {prop: "missions", children}, id))
+    return this.store.select$(["missions", "employers", ...children]).pipe(
+      map(state => _getWithRelations<Mission, StoreState>(state, {prop: "missions", children, foreigns: ['employers']}, id))
     )
   }
 
