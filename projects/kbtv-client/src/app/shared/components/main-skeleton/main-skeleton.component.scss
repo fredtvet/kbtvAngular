@@ -15,7 +15,10 @@
     background: mat-color($background, card);
 }
 
-.nav-content{ z-index:1; }
+.nav-content{ 
+    transition: box-shadow 150ms linear;  
+    z-index:1; 
+}
 
 .main-content{ overflow-y: auto; }
 

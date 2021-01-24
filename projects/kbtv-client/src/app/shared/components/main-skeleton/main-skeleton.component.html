@@ -3,8 +3,8 @@
   <div fxLayout="column" class="content-container mat-elevation-z2" fxFlex
     [ngClass]="{ 'max-width': !data.disableMaxWidth }">
 
-    <span 
-      [ngClass]="(enableElevation$ | async) ? 'nav-content mat-elevation-z1' : 'nav-content'" >
+    <span class="nav-content"
+      [ngClass]="(enableElevation$ | async) ? 'mat-elevation-z1' : ''" >
       
       <ng-content select="[navbar]"></ng-content>
   
