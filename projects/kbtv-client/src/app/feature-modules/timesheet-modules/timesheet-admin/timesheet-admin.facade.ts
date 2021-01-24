@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import { _find } from 'array-helpers';
 import { Timesheet, User } from '@core/models';
-import { FetchModelsAction } from 'state-model';
+import { Roles } from '@core/roles.enum';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
+import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper';
 import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
 import { WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { GroupByPeriod, TimesheetStatus } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
+import { _filter, _find } from 'array-helpers';
 import { Immutable, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';
+import { FetchModelsAction } from 'state-model';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetSummaryAggregator } from '../shared-timesheet/services/timesheet-summary.aggregator';
@@ -23,7 +25,7 @@ import { UpdateTimesheetStatusesAction } from './update-timesheet-statuses/updat
 @Injectable()
 export class TimesheetAdminFacade {
 
-    users$ = this.store.selectProperty$<User[]>("users");
+    users$ = this.store.selectProperty$<User[]>("users").pipe(map(_noEmployersFilter));
 
     get selectedWeekNr(){ return this.componentStore.state.selectedWeekNr; } 
     selectedWeekNr$ = this.componentStore.selectProperty$<number>("selectedWeekNr");
@@ -34,7 +36,7 @@ export class TimesheetAdminFacade {
     timesheetCriteria$ = this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria")
 
     weekCriteriaFormState$: Observable<WeekCriteriaFormState> = 
-        this.store.selectProperty$<User[]>("users").pipe(map(x => { return { options: {users: x} } }))
+        this.users$.pipe(map(x => { return { options: {users: x} } }))
 
     private _weeklySummaries$ = combineLatest([
         this.store.selectProperty$<Timesheet[]>("timesheets"),
