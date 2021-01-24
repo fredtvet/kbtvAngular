@@ -16,7 +16,7 @@
     </div>
 
     <div class="content-header" #contentHeader 
-        [ngClass]="contentScrolledToTop ? 'mat-elevation-z3' : ''">
+        [ngClass]="contentScrolledToTop ? 'mat-elevation-z1 content-header-top' : ''">
 
         <div class="drag-handle"><mat-icon [fxHide]="contentScrolledToTop">drag_handle</mat-icon></div>
     
@@ -24,7 +24,7 @@
 
     </div>
     
-    <div class="content">
+    <div class="content bottom-fab-padding">
         <ng-content select="[content]"></ng-content>
     </div>  
 

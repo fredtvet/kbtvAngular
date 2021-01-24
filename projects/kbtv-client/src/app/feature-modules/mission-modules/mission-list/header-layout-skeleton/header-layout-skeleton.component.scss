@@ -14,8 +14,8 @@
         top:0;
         z-index:1;
         overflow:hidden;
-        min-height:150px;
-        max-height:35vh; 
+        min-height:160px;
+        max-height:40vh; 
     }
     
     .content-header{
@@ -26,14 +26,19 @@
         z-index:3;
         font-size:19px;
         font-weight:400; 
-        transition: box-shadow 100ms linear;  
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        transform: translateY(-20px);
+        transition: box-shadow 150ms linear, border-radius 150ms linear;  
         .drag-handle{
             width:100%;
             text-align: center;
             height:24px;
         } 
     }
-      
+    .content-header-top{
+        border-radius: 0px; 
+    }
     @media (max-width: 599px) {
         .content-header {
             top:56px;
@@ -43,9 +48,10 @@
         background:white;
         display:block;
         width:100%;
-        height:200%;
+       
         position: relative;
         z-index: 2;
+        transform: translateY(-20px);
     }
 }
 
@@ -53,7 +59,7 @@
     width:100%;
     position:absolute;
     z-index:4;
-    transition: background-color 100ms linear;
+    transition: background-color 150ms linear;
 }
 
 .solid{
