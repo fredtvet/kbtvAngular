@@ -1,6 +1,7 @@
 import { Validators } from '@angular/forms';
 import { Employer, Mission, MissionType } from '@core/models';
 import { StateEmployers, StateMissionTypes } from '@core/state/global-state.interfaces';
+import { _googleAddressFormatter } from '@shared-app/helpers/google-address-formatter.helper';
 import { DynamicControl, DynamicControlGroup, DynamicForm } from 'dynamic-forms';
 import { OptionsFormState } from 'form-sheet';
 import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
@@ -71,7 +72,8 @@ export const CreateMissionForm: DynamicForm<Mission, FormState> = {
         DescriptionControl,
         EmployerControl,
         MissionTypeControl,    
-    ]
+    ],
+    onSubmitFormatter: _googleAddressFormatter
 }
 
 export const EditMissionForm: DynamicForm<Mission, FormState> = {
@@ -81,4 +83,5 @@ export const EditMissionForm: DynamicForm<Mission, FormState> = {
         FinishedControl,
         HiddenIdControl,
     ],
+    onSubmitFormatter: _googleAddressFormatter
 }

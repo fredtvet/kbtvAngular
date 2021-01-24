@@ -1,4 +1,5 @@
 import { Employer } from '@core/models';
+import { _googleAddressFormatter } from '@shared-app/helpers/google-address-formatter.helper';
 import { DynamicForm } from 'dynamic-forms';
 import { EmailControl, GoogleAddressControl, NameControl, PhoneNumberControl } from '../common-controls.const';
 
@@ -10,4 +11,5 @@ export const CreateEmployerForm: DynamicForm<Employer, unknown> = {
         GoogleAddressControl, 
         EmailControl
     ],
+    onSubmitFormatter: _googleAddressFormatter
 }
