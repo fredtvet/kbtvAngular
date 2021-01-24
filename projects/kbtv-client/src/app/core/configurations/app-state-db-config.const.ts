@@ -11,7 +11,6 @@ export const AppStateDbConfig: StateDbConfig<unknown> = {
     missionImages: { onPersistMapping: modelFileArrayMapper },
     missionNotes: {},
     missionTypes: {},
-    documentTypes: {},
     employers: {},
     userTimesheets: {},
     requestQueue: {},

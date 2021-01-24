@@ -4,7 +4,6 @@ export const enum ApiUrl {
     MissionImage = "/MissionImages",
     MissionNote = "/MissionNotes",
     MissionDocument = "/MissionDocuments",
-    DocumentType = "/DocumentTypes",
     UserTimesheet = "/UserTimesheets",
     Timesheet = "/Timesheets",
     Employer = "/Employers",

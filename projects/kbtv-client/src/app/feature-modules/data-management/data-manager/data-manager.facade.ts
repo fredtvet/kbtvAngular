@@ -15,7 +15,7 @@ import { UpdateSelectedPropertyAction } from './state/update-selected-property.r
 export class DataManagerFacade  {
 
     properties: Prop<ModelState>[] = 
-        ["missions", "employers", "missionTypes", "documentTypes", "inboundEmailPasswords"];
+        ["missions", "employers", "missionTypes", "inboundEmailPasswords"];
 
     selectedProperty$ = this.componentStore.selectProperty$<Prop<ModelState>>("selectedProperty");
 

@@ -1,4 +1,4 @@
-import { Mission, Employer, MissionType, MissionImage, MissionDocument, MissionNote, AppDocumentType, Timesheet, User } from '@core/models';
+import { Mission, Employer, MissionType, MissionImage, MissionDocument, MissionNote, Timesheet, User } from '@core/models';
 import { Maybe } from 'global-types';
 import { CurrentUser } from 'state-auth';
 
@@ -8,7 +8,6 @@ export interface StateMissionTypes { missionTypes: Maybe<MissionType[]> }
 export interface StateMissionImages { missionImages: Maybe<MissionImage[]> }
 export interface StateMissionDocuments { missionDocuments: Maybe<MissionDocument[]> }
 export interface StateMissionNotes { missionNotes: Maybe<MissionNote[]> }
-export interface StateDocumentTypes { documentTypes: Maybe<AppDocumentType[]> }
 export interface StateUserTimesheets { userTimesheets: Maybe<Timesheet[]> }
 export interface StateCurrentUser { currentUser: Maybe<User & CurrentUser> }
 export interface StateUsers { users: Maybe<User[]> }

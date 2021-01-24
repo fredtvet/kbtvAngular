@@ -48,11 +48,7 @@ export const translations: { [key: string]: string } = {
   employer: "Oppdragsgiver",
   employerid: "Oppdragsgiver",
   employers: "Oppdragsgivere",
-
-  documenttype: "Dokumenttype",
-  documenttypeid: "Dokumenttype",
-  documenttypes: "Dokumenttyper",
-
+  
   missiondocument: "Dokument",
   missiondocumentid: "Dokument",
   missiondocuments: "Dokumenter",

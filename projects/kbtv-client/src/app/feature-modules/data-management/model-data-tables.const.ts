@@ -18,9 +18,6 @@ export const ModelDataTables: ModelDataTablesConfig<Partial<ModelState>> = {
         missionTypes: {selectable: true, propertyColDefs: {
             id: {}, name: {}
         }},
-        documentTypes: {selectable: true, propertyColDefs: {
-            id: {}, name: {} 
-        }},
         inboundEmailPasswords: {selectable: true, propertyColDefs: {
             id: {}, password: {editable: false}
         }},

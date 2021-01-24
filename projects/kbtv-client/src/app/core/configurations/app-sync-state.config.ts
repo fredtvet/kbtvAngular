@@ -12,8 +12,7 @@ export const AppSyncStateConfig: {[key in keyof SyncModelState]: SyncStatePropCo
     missionImages: {idProp: ModelIdProps.missionImages, type: "array"},
     missionNotes: {idProp: ModelIdProps.missionNotes, type: "array"},
     missionDocuments: {idProp: ModelIdProps.missionDocuments, type: "array"},
-    employers: {idProp: ModelIdProps.employers, type: "array"},
-    documentTypes: {idProp: ModelIdProps.documentTypes, type: "array"},     
+    employers: {idProp: ModelIdProps.employers, type: "array"},  
     userTimesheets: {idProp: ModelIdProps.userTimesheets, type: "array"}, 
     currentUser: {idProp: ModelIdProps.users, type: "value", wipeable: false}, 
 };

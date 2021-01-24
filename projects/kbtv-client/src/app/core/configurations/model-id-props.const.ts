@@ -10,6 +10,5 @@ export const ModelIdProps: {[key in keyof ModelState]: string} = {
     timesheets: 'id',
     userTimesheets: 'id',
     inboundEmailPasswords: 'id',
-    documentTypes: 'id',
     users: 'userName',    
 }

@@ -1,5 +1,5 @@
 import { ApiUrl } from '../api-url.enum';
-import { Mission, MissionType, Employer, AppDocumentType, MissionImage, MissionDocument, MissionNote, User, InboundEmailPassword, Timesheet } from '../models';
+import { Mission, MissionType, Employer, MissionImage, MissionDocument, MissionNote, User, InboundEmailPassword, Timesheet } from '../models';
 import { ModelState } from '../state/model-state.interface';
 import { ModelConfig } from 'state-model';
 import { ModelIdProps } from './model-id-props.const';
@@ -36,14 +36,6 @@ export const AppModelConfigs: unknown[] = [
         displayProp: "name",    
         foreignProp: "employer",
         foreignKey: "employerId",
-    },
-    <ModelConfig<AppDocumentType, ModelState>>{
-        stateProp: "documentTypes",
-        apiUrl: ApiUrl.DocumentType, 
-        idProp: ModelIdProps.documentTypes,   
-        displayProp: "name",   
-        foreignProp: "documentType",
-        foreignKey: "documentTypeId",
     }, 
     <ModelConfig<MissionImage, ModelState>>{
         stateProp: "missionImages",
@@ -57,10 +49,9 @@ export const AppModelConfigs: unknown[] = [
         stateProp: "missionDocuments",
         apiUrl: ApiUrl.MissionDocument, 
         idProp: ModelIdProps.missionDocuments, 
-        displayProp: "fileName",   
+        displayProp: "name",   
         foreignProp: "missionDocument",
         foreignKey: "missionDocumentId",
-        foreigns: ["documentTypes"]
     },    
     <ModelConfig<MissionNote, ModelState>>{
         stateProp: "missionNotes",
