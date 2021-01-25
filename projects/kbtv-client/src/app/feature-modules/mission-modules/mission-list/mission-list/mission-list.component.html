@@ -1,11 +1,13 @@
 
-
-  <app-main-skeleton [fabs]="fabs" navTogglerDisabled=true paddingDisabled=true>
+<app-main-skeleton [fabs]="fabs" navTogglerDisabled=true paddingDisabled=true>
 
     <ng-container navbar *ngIf="navVm$ | async; let navVm">
+  
       <app-main-top-nav-bar [config]="navVm.navConfig">
       </app-main-top-nav-bar>
+
       <app-chips-bar [chips]="navVm.criteriaChips"></app-chips-bar>
+      
     </ng-container>
   
     <app-mission-list-view [missions]="missions$ | async">

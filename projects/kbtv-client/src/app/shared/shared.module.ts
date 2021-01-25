@@ -27,6 +27,7 @@ import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.
 import { ScrollNavElevationTogglerDirective } from './components/main-skeleton/scroll-nav-elevation-toggler.directive';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
 import { NoContentComponent } from './components/no-content.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SelectableCardComponent } from './components/selectable-card/selectable-card.component';
 import { HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
@@ -54,6 +55,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     NoContentComponent,
     ImageViewerDialogWrapperComponent,
     ImageViewerComponent,
+    SearchBarComponent,
     
     TransformButtonPipe,
     TranslatePipe,
@@ -97,7 +99,8 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     NoContentComponent,
     ImageViewerDialogWrapperComponent,
     ImageViewerComponent,
-
+    SearchBarComponent,
+    
     TransformButtonPipe,
     TranslatePipe,
     SortByDatePipe,

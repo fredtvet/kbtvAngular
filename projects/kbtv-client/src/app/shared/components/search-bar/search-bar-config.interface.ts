@@ -1,5 +1,5 @@
 export interface SearchBarConfig{
-    callback: (val: string) => void, 
+    searchCallback: (val: string) => void, 
     initialValue?: string,
     placeholder: string
 }

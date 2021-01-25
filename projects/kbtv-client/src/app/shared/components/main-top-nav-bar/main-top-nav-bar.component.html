@@ -46,17 +46,7 @@
 
 </mat-toolbar>
 
-
 <ng-template #searchBarContent>
-    <app-button [config]="{
-      callback: toggleSearchBar, 
-      type: ButtonTypes.Icon,
-      aria: 'Tilbake',
-      icon: 'close'}">
-    </app-button>
-
-    <input #searchInput appInputListener  class="search-bar" fxFlex
-        (inputChanged)="handleSearchFn($event);"
-        [value]="config.searchBar?.initialValue || ''" 
-        [placeholder]="config.searchBar?.placeholder">
+    <app-search-bar [cfg]="config.searchBar" [extraButtons]="searchBarButtons" class="w-100">
+    </app-search-bar>
 </ng-template>

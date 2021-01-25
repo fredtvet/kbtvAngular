@@ -8,9 +8,9 @@ import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { SearchBarConfig } from "@shared/components/search-bar/search-bar-config.interface";
 import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
-import { SearchBarConfig } from "@shared/interfaces";
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe, Prop } from "global-types";
@@ -58,7 +58,7 @@ export class MissionListComponent extends WithUnsubscribe(){
         allowedRoles: RolePermissions.MissionList.create}
     ];
     this.searchBar = {
-      callback: this.searchMissions,
+      searchCallback: this.searchMissions,
       initialValue: this.facade.criteria?.searchString,
       placeholder: "Søk med adresse eller id",
     };

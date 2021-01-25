@@ -1,0 +1,17 @@
+.search-bar {
+    border:none;
+    border-bottom: 1px solid;
+    input {
+        margin: 0 8px;
+        border:none;
+    }
+    input:focus {
+        outline: none;
+    }
+    mat-icon {
+        padding:8px;
+    }
+    mat-divider {
+        transform: scaleY(0.65)
+    }
+}
