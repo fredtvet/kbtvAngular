@@ -1,13 +1,13 @@
 @import '../../../styles/variables';
 
 mat-sidenav-container{
-    background: mat-color($background, background);
+    background: mat-color($background, app-bar);
     position: unset!important
 }
 
 mat-sidenav {
     width:202px;
-    background: mat-color($background, background);
+    background: mat-color($background, app-bar);
 }
 
 mat-sidenav-content{
