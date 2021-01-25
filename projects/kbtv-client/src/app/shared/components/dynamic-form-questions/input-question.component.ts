@@ -22,14 +22,14 @@ export interface InputQuestion extends Question {
         [required]="required" />
 
       <mat-icon *ngIf="question.hideable" [color]="question.color || 'accent'" matSuffix 
-        (click)="hideField = !hideField">
+        (tap)="hideField = !hideField">
         {{hideField ? 'visibility_off' : 'visibility'}}
       </mat-icon>
 
       <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>
 
       <button mat-icon-button matSuffix *ngIf="question.resetable && !control?.disabled && control?.value" aria-label="Clear" 
-        (click)="control?.setValue(''); control?.markAsDirty()">
+        (tap)="control?.setValue(''); control?.markAsDirty()">
         <mat-icon>close</mat-icon>
       </button>
 

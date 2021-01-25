@@ -25,7 +25,7 @@ export interface GooglePlacesAutoCompleteQuestion extends Question {
         <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>
 
         <button mat-icon-button matSuffix *ngIf="question.resetable && control && !control.disabled  && control.value" aria-label="Clear" 
-            (click)="control.setValue(''); control.markAsDirty()">
+            (tap)="control.setValue(''); control.markAsDirty()">
             <mat-icon>close</mat-icon>
         </button>
 

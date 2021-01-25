@@ -8,17 +8,17 @@
                 
                 <ng-container left-side>
                     <button mat-icon-button color="warn" *ngIf="timesheet.status === 1 else closedIcon" 
-                        (click)="onPress(timesheet)">
+                        (click)="onLockClick(timesheet)">
                         <mat-icon>lock_open</mat-icon>
                     </button>
                     <ng-template #closedIcon>
-                        <button mat-icon-button color="accent" (click)="onPress(timesheet)">
+                        <button mat-icon-button color="accent" (click)="onLockClick(timesheet)">
                             <mat-icon>lock</mat-icon>
                         </button>
                     </ng-template>
                 </ng-container>
 
-                <app-timesheet-list-item-content matRipple [timesheet]="timesheet" (click)="onTap(timesheet)">
+                <app-timesheet-list-item-content matRipple [timesheet]="timesheet" (click)="onClick(timesheet)">
                 </app-timesheet-list-item-content>
            
             </app-list-item>

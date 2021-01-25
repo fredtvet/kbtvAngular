@@ -7,7 +7,7 @@
   </mat-form-field>
 
   <mat-form-field color="accent">
-    <mat-icon matSuffix color="accent" (click)="hidePassword = !hidePassword">
+    <mat-icon matSuffix color="accent" (tap)="hidePassword = !hidePassword">
       {{hidePassword ? 'visibility_off' : 'visibility'}}
     </mat-icon>
     <input matInput formControlName="password" placeholder="Passord" 

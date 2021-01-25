@@ -4,18 +4,18 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
   selector: 'lib-form-actions',
   template:`
   <div fxLayout="row" fxLayoutAlign="end start" style="margin-top: 12px"> 
-    <button mat-button *ngIf="showReset else cancelButton" [disabled]="resetDisabled" color="warn" (click)="reset.emit()">
+    <button mat-button *ngIf="showReset else cancelButton" [disabled]="resetDisabled" color="warn" (tap)="reset.emit()">
       Nullstill
     </button>
     <ng-template #cancelButton>
       <button mat-button fxFlex=35 color="warn" 
-        (click)="canceled.emit()">
+        (tap)="canceled.emit()">
         Avbryt    
       </button>   
     </ng-template>
     <button mat-raised-button fxFlex=40 color="accent" 
       [disabled]="submitDisabled"
-      (click)="submitted.emit()">
+      (tap)="submitted.emit()">
       {{ submitText }}    
     </button>
   </div>

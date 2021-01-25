@@ -10,7 +10,7 @@
 <mat-toolbar #navBar *ngIf="config">
 
     <button mat-icon-button aria-label="Lukk skjema"
-        (click)="closed.emit(true)">
+        (tap)="closed.emit(true)">
         <mat-icon>close</mat-icon>
     </button>
 
@@ -21,7 +21,7 @@
     <button mat-icon-button *ngFor="let button of config.buttons || []"
         [color]="button.color"
         [attr.aria-label]="button.aria"
-        (click)="handleCallback(button.callback)">
+        (tap)="handleCallback(button.callback)">
         <mat-icon>{{ button.icon }}</mat-icon>
     </button>
 

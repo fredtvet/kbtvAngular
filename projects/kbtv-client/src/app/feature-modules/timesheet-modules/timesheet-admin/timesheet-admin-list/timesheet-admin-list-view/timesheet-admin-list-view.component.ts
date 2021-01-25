@@ -11,15 +11,15 @@ export class TimesheetAdminListViewComponent {
   
   @Input() timesheets: Timesheet[];
 
-  @Output() timesheetPressed = new EventEmitter<Timesheet>();
-  @Output() timesheetTapped = new EventEmitter<Timesheet>();
+  @Output() statusToggled = new EventEmitter<Timesheet>();
+  @Output() timesheetClicked = new EventEmitter<Timesheet>();
 
-  onPress = (timesheet: Timesheet): void => {
-    this.timesheetPressed.emit(timesheet)
+  onLockClick = (timesheet: Timesheet): void => {
+    this.statusToggled.emit(timesheet)
   }
 
-  onTap = (timesheet: Timesheet): void => 
-    this.timesheetTapped.emit(timesheet);
+  onClick = (timesheet: Timesheet): void => 
+    this.timesheetClicked.emit(timesheet);
   
   trackById = _trackByModel("timesheets");
   

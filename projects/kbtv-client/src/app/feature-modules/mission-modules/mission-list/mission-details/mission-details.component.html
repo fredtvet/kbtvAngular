@@ -3,7 +3,7 @@
     <app-header-layout-skeleton [navConfig]="vm.navConfig" [navOverlayDisabled]="!vm.mission?.fileName">
 
         <img header appImageErrorReloader #img *ngIf="vm.mission?.fileName; else addHeaderImage"
-            (click)="openImageViewer(vm.mission)"
+            (tap)="openImageViewer(vm.mission)"
             style="max-width:100%" [src]="vm.mission | appFileUrl: 'missionheader'" 
             (error)="img.src = '/assets/notfound.png?'" alt="Forsidebilde" />
 

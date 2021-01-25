@@ -1,7 +1,7 @@
 <mat-toolbar color="accent" *ngIf="vm$ | async; let vm">
   <mat-toolbar-row>
 
-    <button mat-icon-button aria-label="Toggle sidenav" (click)="toggleDrawer()" fxHide.gt-xs>
+    <button mat-icon-button aria-label="Toggle sidenav" (tap)="toggleDrawer()" fxHide.gt-xs>
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
 
@@ -9,7 +9,7 @@
 
     <mat-spinner *ngIf="vm.loading" diameter="24" class="mr-2"></mat-spinner>
     <button mat-button appAddToHomeScreen>Legg til app</button>
-    <button mat-icon-button (click)="refresh()"><mat-icon>update</mat-icon></button>
+    <button mat-icon-button (tap)="refresh()"><mat-icon>update</mat-icon></button>
 
   </mat-toolbar-row>
 

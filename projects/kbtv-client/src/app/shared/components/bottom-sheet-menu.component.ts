@@ -7,7 +7,7 @@ import { AppButton } from '@shared-app/interfaces/app-button.interface';
   template:`
 
     <ng-container *ngFor="let button of buttons">
-      <a *ifRole="button.allowedRoles" (click)="handleFn(button.callback, button.params)">
+      <a *ifRole="button.allowedRoles" (tap)="handleFn(button.callback, button.params)">
         <app-list-item>
           <mat-icon left-side>{{ button.icon }}</mat-icon>
           <span>{{ button.text }}</span>
