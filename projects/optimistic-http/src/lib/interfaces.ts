@@ -1,4 +1,4 @@
-import { Immutable, Maybe, UnknownState, Prop } from 'global-types';
+import { Immutable, Maybe, Prop, UnknownState } from 'global-types';
 
 /** Describes an object thats used to represent an entry in a form data class. */
 export interface FormDataEntry { 
@@ -24,7 +24,8 @@ export interface OptimisticHttpRequest {
 export interface QueuedCommand { 
     request: Immutable<OptimisticHttpRequest>, 
     stateSnapshot: Maybe<Immutable<UnknownState>>, 
-    dispatched?: boolean 
+    dispatched?: boolean,
+    requestId?: number
 };
 
 /** Represents a slice of state containing the request queue */

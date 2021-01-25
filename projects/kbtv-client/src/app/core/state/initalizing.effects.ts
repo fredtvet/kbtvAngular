@@ -33,29 +33,7 @@ export class InitalizeHttpQueueEffect implements Effect<SyncStateSuccessAction> 
         return actions$.pipe(
             listenTo([SyncStateSuccessAction]),
             first(),
-            map(x => {
-                this.checkForUnhandledRequests();
-                this.httpQueuer.initalize()
-            }),
+            map(x => this.httpQueuer.initalize(this.store.state.currentUser?.lastCommandStatus)),
         ) 
-    }
-
-    //Checks if there are unhandled requests persisted when initalizing. 
-    //i.e. if app is closed before receiving request response
-    //Waits for sync call to provide last command status for user, to check if it was successful or not. 
-    private checkForUnhandledRequests(): void {
-        const requestQueue = this.store.state.requestQueue;
-
-        if(!requestQueue) return;
-        const firstRequest = requestQueue[0];
-
-        if(!firstRequest?.dispatched) return; //Only check dispatched requests
-
-        const lastCommandStatus = this.store.state.currentUser?.lastCommandStatus;
-
-        if (!lastCommandStatus) 
-            this.store.dispatch(<HttpErrorAction>{ type: HttpErrorAction })
-        else
-            this.store.dispatch(<HttpQueueShiftAction>{ type: HttpQueueShiftAction }) 
     }
 }

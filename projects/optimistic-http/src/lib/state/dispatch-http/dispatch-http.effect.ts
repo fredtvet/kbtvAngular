@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { HttpFactoryService } from '../../http-factory.service';
 import { HttpErrorAction } from '../http-error/http-error.action';

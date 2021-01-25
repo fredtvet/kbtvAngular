@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppNotifications } from '@shared-app/app-notifications.const';
-import { NotificationService, NotificationType } from 'notification';
+import { NotificationService } from 'notification';
 import { OptimisticHttpErrorAction } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
