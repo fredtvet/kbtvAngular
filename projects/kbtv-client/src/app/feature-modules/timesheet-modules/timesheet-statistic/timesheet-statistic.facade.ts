@@ -3,6 +3,7 @@ import { Timesheet, User } from '@core/models';
 import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
+import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper';
 import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
@@ -15,7 +16,6 @@ import { map, takeUntil } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';
 import { FetchModelsAction } from 'state-model';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
-import { TimesheetSummaryAggregator } from '../shared-timesheet/services/timesheet-summary.aggregator';
 import { SetTimesheetCriteriaAction } from '../shared-timesheet/state/set-timesheet-criteria.reducer';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
@@ -48,7 +48,7 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
         this.filteredTimesheets$,
         this.groupBy$
     ]).pipe(map(([timesheets, groupBy]) => {
-        return this.summaryAggregator.groupByType(groupBy, timesheets) || timesheets;    
+        return _getSummariesByType(groupBy, timesheets) || timesheets;    
     }));
 
     tableConfig$: Observable<AgGridConfig<Record>> = combineLatest([
@@ -59,7 +59,6 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
     ));
 
     constructor(
-        private summaryAggregator: TimesheetSummaryAggregator,
         private store: Store<StoreState>,
         private componentStore: ComponentStore<ComponentStoreState>
     ){

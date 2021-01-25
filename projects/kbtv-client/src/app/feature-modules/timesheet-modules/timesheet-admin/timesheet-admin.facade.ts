@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Timesheet, User } from '@core/models';
-import { Roles } from '@core/roles.enum';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
+import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper';
 import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
 import { WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { GroupByPeriod, TimesheetStatus } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
-import { _filter, _find } from 'array-helpers';
+import { _find } from 'array-helpers';
 import { Immutable, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,7 +15,6 @@ import { ComponentStore, Store } from 'state-management';
 import { FetchModelsAction } from 'state-model';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
-import { TimesheetSummaryAggregator } from '../shared-timesheet/services/timesheet-summary.aggregator';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { SetSelectedWeekAction, SetTimesheetCriteriaAction } from './component-state-reducers';
@@ -43,7 +42,7 @@ export class TimesheetAdminFacade {
         this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria")
     ]).pipe(
         filterRecords(TimesheetFilter), 
-        map(x => this.summaryAggregator.groupByType(GroupByPeriod.Week, x.records))
+        map(x => _getSummariesByType(GroupByPeriod.Week, x.records))
     );
 
     weeklySummaries$ = combineLatest([this._weeklySummaries$, this.users$]).pipe(
@@ -59,7 +58,6 @@ export class TimesheetAdminFacade {
     }))
     
     constructor(
-        private summaryAggregator: TimesheetSummaryAggregator,
         private store: Store<StoreState>,
         private componentStore: ComponentStore<ComponentStoreState>
     ){

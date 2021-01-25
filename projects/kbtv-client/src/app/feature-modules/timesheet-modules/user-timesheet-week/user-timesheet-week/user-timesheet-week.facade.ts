@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Mission, Timesheet } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { _mapObjectsToWeekdays } from '@shared-app/helpers/object/map-objects-to-weekdays.helper';
+import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { WeekCriteria } from '@shared-timesheet/interfaces/week-criteria.interface';
-import { TimesheetSummaryAggregator } from '@shared-timesheet/services/timesheet-summary.aggregator';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '@shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { GroupByPeriod } from '@shared/enums';
@@ -39,13 +39,12 @@ export class UserTimesheetWeekFacade {
             if(!userTimesheets?.length) return;
             const cfg: RelationInclude<ModelState> = {prop: "userTimesheets", foreigns: ["missions"]}; 
             const timesheets = _getRangeWithRelations<Timesheet, ModelState>({userTimesheets, missions: missions || []}, cfg);
-            const summaries = this.summaryAggregator.groupByType(GroupByPeriod.Day, timesheets);
+            const summaries = _getSummariesByType(GroupByPeriod.Day, timesheets);
             return _mapObjectsToWeekdays<TimesheetSummary>(summaries, "date")
         })
     );
     
     constructor(
-        private summaryAggregator: TimesheetSummaryAggregator,
         private store: Store<StoreState>,
         private componentStore: ComponentStore<ComponentStoreState>,  
     ){}
