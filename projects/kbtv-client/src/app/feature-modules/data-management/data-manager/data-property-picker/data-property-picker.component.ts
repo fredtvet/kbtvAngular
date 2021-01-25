@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { PropertyHints } from '../property-hints.const';
 
 @Component({
   selector: 'app-data-property-picker',
@@ -7,6 +8,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataPropertyPickerComponent {
+
+  propertyHints = PropertyHints;
   
   @Input() properties: string[];
   @Input() selectedProperty: string;
