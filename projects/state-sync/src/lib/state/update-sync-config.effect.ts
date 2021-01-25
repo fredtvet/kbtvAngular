@@ -12,8 +12,8 @@ export class UpdateSyncConfigEffect implements Effect<UpdateSyncConfigAction> {
         return actions$.pipe(
             listenTo([UpdateSyncConfigAction]),
             filter(x => 
-                x.action.syncConfig.initialNumberOfMonths !== 
-                x.stateSnapshot?.syncConfig.initialNumberOfMonths
+                x.action.syncConfig.initialTimestamp !== 
+                x.stateSnapshot?.syncConfig.initialTimestamp
             ),
             map(x => <ReloadSyncStateAction>{ type: ReloadSyncStateAction })
         )

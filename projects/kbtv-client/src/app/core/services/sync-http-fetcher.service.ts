@@ -19,7 +19,7 @@ export class SyncHttpFetcherService implements SyncHttpFetcher<SyncModelState> {
 
     let params = new HttpParams();
 
-    params = params.set("initialNumberOfMonths", config?.initialNumberOfMonths);
+    params = params.set("initialTimestamp", config?.initialTimestamp?.toString());
     params = params.set("timestamp", timestamp?.toString());
 
     return this.apiService.get('/SyncAll', params);

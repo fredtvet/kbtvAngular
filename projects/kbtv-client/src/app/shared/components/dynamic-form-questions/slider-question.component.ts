@@ -16,7 +16,7 @@ export interface SliderQuestion extends Question {
   template: `  
     <div class="mat-body" *ngIf="question.label">{{ question.label }}</div>
 
-    <span *ngIf="question.hint" class="mat-caption">{{ question.hint }}</span>
+    <mat-hint *ngIf="question.hint" class="mat-caption">{{ question.hint }}</mat-hint>
     
     <div fxLayout="row" fxLayoutAlign="start center">
         <span class="mat-body">{{ (control?.value || '') + " " + (question?.valueSuffix || '') }}</span>

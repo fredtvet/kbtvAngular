@@ -28,10 +28,12 @@ export interface SyncStatePropConfig {
 export interface SyncConfig{
     /** The interval in which the system synchronizes in seconds */
     refreshTime: number; 
-    /** The number of months of data that should be fetched on initial synchronization 
-     * @remarks This will cause the system to wipe old state and resynchronize
+
+    /** A timestamp limiting the amount of data fetched from external api. 
+     *  Only data created or updated after the timestamp should be included. 
+     * @remarks Setting this value will cause the system to wipe old state and resynchronize
     */
-    initialNumberOfMonths: string;
+    initialTimestamp: number;
 }
 
 /** Response from a synchronization request */
