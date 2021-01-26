@@ -3,6 +3,9 @@ import { ModelFile } from '@core/models';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { FileFolders } from '@shared/constants/file-folders.const';
+import { Observable } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { debounceTime, distinctUntilKeyChanged } from 'rxjs/operators';
 import { Maybe } from '../../../../../../../dist/global-types/public-api';
 
 @Component({
@@ -24,14 +27,27 @@ export class ImageViewerComponent {
 
   index: number;
 
-  constructor(private menuService: BottomSheetMenuService){};
+  private loadingImageSubject = new BehaviorSubject<{loading: boolean}>({loading: true});
 
+  loadingImage$: Observable<{loading: boolean}> = 
+    this.loadingImageSubject.asObservable().pipe(
+      distinctUntilKeyChanged("loading"), 
+      debounceTime(10)
+    );
+
+  constructor(private menuService: BottomSheetMenuService){};
+  
   ngOnInit() {
     if(this.currentImage && this.images?.length)
       this.index = this.images.findIndex(x => x.id == this.currentImage.id);
   }
 
+  onCurrentImageLoaded = () => 
+    this.loadingImageSubject.next({loading: false})
+  
+
   changeCurrentImage(image: ModelFile){
+    this.loadingImageSubject.next({loading: true})
     this.currentImage = image;
     this.currentImageChanged.emit(image);
   }

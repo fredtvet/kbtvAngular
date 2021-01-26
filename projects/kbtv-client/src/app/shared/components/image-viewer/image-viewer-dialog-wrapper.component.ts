@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ModelFile } from '@core/models';
 import { DownloaderService } from '@core/services/downloader.service';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
@@ -14,7 +15,7 @@ import { ImageViewerDialogWrapperConfig } from './image-viewer-dialog-wrapper-co
     [currentImage]="cfg.currentImage"
     [actions]="actions"
     [folder]="cfg.fileFolder"
-    (currentImageChanged)="cfg.currentImage = $event"
+    (currentImageChanged)="currentImage = $event"
     (closed)="close()">
   </app-image-viewer>
   `,
@@ -24,6 +25,8 @@ import { ImageViewerDialogWrapperConfig } from './image-viewer-dialog-wrapper-co
 export class ImageViewerDialogWrapperComponent {
 
   actions: AppButton[];
+  
+  currentImage: ModelFile;
 
   constructor( 
     private confirmService: ConfirmDialogService,

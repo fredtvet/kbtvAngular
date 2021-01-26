@@ -3,18 +3,26 @@
     <button mat-icon-button aria-label="Lukk" (tap)="close()">
         <mat-icon>close</mat-icon>
     </button>
-    <button mat-icon-button (tap)="openBottomSheet()"><mat-icon>more_vert</mat-icon></button>
+    <button mat-icon-button (click)="openBottomSheet()"><mat-icon>more_vert</mat-icon></button>
 </mat-toolbar>
 
-<img *ngIf="currentImage" alt="oppdragsbilde"
-  (tap)="toolbarHidden = !toolbarHidden" 
-  (swiperight)="previousImage()" 
-  (swipeleft)="nextImage()" 
-  [src]="currentImage | appFileUrl: this.folder" layout-fill/>
+<ng-container *ngIf="loadingImage$ | async; let loadingImage">
+  <img [fxHide]="loadingImage.loading" alt="oppdragsbilde"
+    (tap)="toolbarHidden = !toolbarHidden" 
+    (swiperight)="previousImage()" 
+    (swipeleft)="nextImage()" 
+    (load)="onCurrentImageLoaded()"
+    [src]="currentImage | appFileUrl: this.folder" layout-fill/>
+
+  <mat-spinner [fxShow]="loadingImage.loading" color="accent"></mat-spinner>
+</ng-container>
+
 
 <mat-toolbar *ngIf="images?.length" class="overlay_container page_counter" [fxHide]="toolbarHidden">
   <h5>{{ index + 1 }} / {{ images?.length }}</h5>
 </mat-toolbar>
+
+
 
 
 

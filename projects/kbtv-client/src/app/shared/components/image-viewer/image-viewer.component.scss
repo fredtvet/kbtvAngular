@@ -33,3 +33,9 @@ img{
   justify-content:center;
   bottom:0px;
 }
+
+mat-spinner{
+    position: absolute;
+    top: calc(50vh - 50px);
+    left: calc(50vw - 50px)
+}
