@@ -1,5 +1,4 @@
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Mission } from '@core/models';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 
@@ -11,10 +10,6 @@ import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper
 export class MissionListViewComponent {
 
   @Input() missions: Mission[];
-
-  noContentButton = {
-    
-  }
 
   constructor() { }
 

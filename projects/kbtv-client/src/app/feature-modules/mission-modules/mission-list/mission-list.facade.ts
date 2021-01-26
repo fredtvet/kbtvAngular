@@ -12,7 +12,7 @@ import { MissionFilter } from '@shared/mission-filter.model';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { _sortByDate } from 'array-helpers';
 import { Immutable, Maybe, Prop } from 'global-types';
-import { NotificationService, NotificationType } from 'notification';
+import { NotificationService } from 'notification';
 import { combineLatest, Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { ComponentStore, Store } from 'state-management';
@@ -29,7 +29,7 @@ export class MissionListFacade {
     this.componentStore.selectProperty$<MissionCriteria>("missionCriteria")
   ]).pipe(
     filterRecords<Mission, MissionCriteria>(MissionFilter, null, true),   
-    map(x => _sortByDate(x.records, "updatedAt") )
+    map(x => _sortByDate(x.records, "updatedAt"))
   );
 
   criteria$ = 
