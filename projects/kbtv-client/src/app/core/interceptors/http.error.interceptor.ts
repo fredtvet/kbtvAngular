@@ -3,11 +3,11 @@ import {
   HttpInterceptor, HttpRequest
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AppNotifications } from '@shared-app/app-notifications.const';
+import { Maybe } from 'global-types';
+import { AppNotification, NotificationService } from 'notification';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AppNotification, NotificationService, NotificationType } from 'notification';
-import { Maybe } from 'global-types';
-import { AppNotifications } from '@shared-app/app-notifications.const';
 
 export interface AppErrorResponse {
   status: number;
