@@ -1,1 +1,1 @@
-export const FileFolders = ["missionheader", "documents", "oppdragsbilder", "miniatyrbilder"] as const
+export const FileFolders = ["missionheader", "documents", "oppdrag-bilder", "oppdrag-original", "oppdrag-thumbnail"] as const

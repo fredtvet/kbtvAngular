@@ -87,7 +87,7 @@ export class MissionImageListComponent extends SelectableContainerWrapperCompone
       height: "100%",
       panelClass: "image_viewer_dialog",
       data: <ImageViewerDialogWrapperConfig>{
-        currentImage, images, fileFolder: "oppdragsbilder",
+        currentImage, images, fileFolder: "oppdrag-bilder",
         deleteAction: { 
           callback: (id: string) => this.deleteImages({id}),
           allowedRoles: RolePermissions.MissionImageList.delete
@@ -140,7 +140,7 @@ export class MissionImageListComponent extends SelectableContainerWrapperCompone
   }
 
   private downloadImages = (imgs: MissionImage[]) => 
-    this.downloaderService.downloadUrls(imgs.map(x => x.fileName ? _appFileUrl(x.fileName, "oppdragsbilder") : null));
+    this.downloaderService.downloadUrls(imgs.map(x => x.fileName ? _appFileUrl(x.fileName, "oppdrag-original") : null));
 
   private onBack = () => this.router.navigate(['../'], {relativeTo: this.route.parent});
   
