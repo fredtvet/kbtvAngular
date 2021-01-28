@@ -11,6 +11,7 @@ import { SelectableContainerWrapperComponent } from '@shared/components/abstract
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EmailForm } from '@shared/constants/forms/email-form.const';
 import { CreateMissionDocumentForm, MissionDocumentForm } from '@shared/constants/model-forms/create-mission-document-form.const';
+import { FileFolder } from '@shared/enums/file-folder.enum';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { FormService } from 'form-sheet';
 import { ImmutableArray, Maybe } from 'global-types';
@@ -72,7 +73,7 @@ export class MissionDocumentListComponent extends SelectableContainerWrapperComp
 
   downloadDocument = (document: MissionDocument) => 
     document.fileName ? 
-    this.downloaderService.downloadUrl(_appFileUrl(document.fileName, "documents")) : null;
+    this.downloaderService.downloadUrl(_appFileUrl(document.fileName, FileFolder.Documents)) : null;
 
   trackByFn = (index: number, entity: MissionDocument) => entity.id
 

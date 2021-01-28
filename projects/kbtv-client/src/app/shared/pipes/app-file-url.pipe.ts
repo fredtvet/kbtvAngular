@@ -3,14 +3,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ModelFile } from '@core/models';
 import { Maybe } from 'global-types';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
-import { FileFolders } from '../constants/file-folders.const';
+import { FileFolder } from "@shared/enums/file-folder.enum";
 
 @Pipe({name: 'appFileUrl'})
 export class AppFileUrlPipe implements PipeTransform {
 
   constructor(private readonly domSanitizer: DomSanitizer){}
 
-  transform(modelFile: Maybe<ModelFile>, folder: typeof FileFolders[number], disableCache?: boolean): Maybe<string> {
+  transform(modelFile: Maybe<ModelFile>, folder: FileFolder, disableCache?: boolean): Maybe<string> {
     if(!modelFile) return null;
     if(modelFile.localFileUrl) 
       return <string> this.domSanitizer.bypassSecurityTrustResourceUrl(modelFile.localFileUrl); 

@@ -2,11 +2,10 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { ModelFile } from '@core/models';
 import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
-import { FileFolders } from '@shared/constants/file-folders.const';
-import { Observable } from 'rxjs';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { FileFolder } from "@shared/enums/file-folder.enum";
+import { Maybe } from 'global-types';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilKeyChanged } from 'rxjs/operators';
-import { Maybe } from '../../../../../../../dist/global-types/public-api';
 
 @Component({
   selector: 'app-image-viewer',
@@ -20,7 +19,7 @@ export class ImageViewerComponent {
   @Input() images: Maybe<ModelFile[]>;
   @Input() currentImage: ModelFile;
   @Input() actions: AppButton[];
-  @Input() folder: typeof FileFolders[number];
+  @Input() folder: FileFolder;
 
   @Output() currentImageChanged = new EventEmitter();
   @Output() closed = new EventEmitter();

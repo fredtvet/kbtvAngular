@@ -1,9 +1,9 @@
 import { ModelFile } from "@core/models";
-import { FileFolders } from "@shared/constants/file-folders.const";
+import { FileFolder } from "@shared/enums/file-folder.enum";
 
 export interface ImageViewerDialogWrapperConfig {
     images?: ModelFile[], 
     currentImage: ModelFile,
-    fileFolder: typeof FileFolders[number],
+    fileFolder: FileFolder,
     deleteAction?: {callback :(id: string) => void, allowedRoles?: string[]};
 }

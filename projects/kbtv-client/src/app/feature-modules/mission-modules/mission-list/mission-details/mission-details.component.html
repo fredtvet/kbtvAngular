@@ -4,7 +4,7 @@
 
         <img header appImageErrorReloader #img *ngIf="vm.mission?.fileName; else addHeaderImage"
             (tap)="openImageViewer(vm.mission)"
-            style="max-width:100%" [src]="vm.mission | appFileUrl: 'missionheader'" 
+            style="max-width:100%" [src]="vm.mission | appFileUrl: FileFolder.MissionHeader" 
             (error)="img.src = '/assets/notfound.png?'" alt="Forsidebilde" />
 
         <div contentHeader class="pl-6 pr-6 pb-5"> {{vm.mission?.address}}</div>

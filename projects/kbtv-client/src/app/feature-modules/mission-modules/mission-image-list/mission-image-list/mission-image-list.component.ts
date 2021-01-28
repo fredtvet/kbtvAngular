@@ -14,6 +14,7 @@ import { ImageViewerDialogWrapperConfig } from "@shared/components/image-viewer/
 import { ImageViewerDialogWrapperComponent } from "@shared/components/image-viewer/image-viewer-dialog-wrapper.component";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EmailForm } from '@shared/constants/forms/email-form.const';
+import { FileFolder } from "@shared/enums/file-folder.enum";
 import { ConfirmDialogService } from "confirm-dialog";
 import { FormService } from 'form-sheet';
 import { ImmutableArray, Maybe } from 'global-types';
@@ -32,7 +33,7 @@ interface ViewModel { images: Maybe<ImmutableArray<MissionImage>>, columns: 2 | 
 })
 export class MissionImageListComponent extends SelectableContainerWrapperComponent{
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
-
+  FileFolder = FileFolder;
   private can = RolePermissions.MissionImageList;
 
   get missionId(): Maybe<string> { 
@@ -87,7 +88,7 @@ export class MissionImageListComponent extends SelectableContainerWrapperCompone
       height: "100%",
       panelClass: "image_viewer_dialog",
       data: <ImageViewerDialogWrapperConfig>{
-        currentImage, images, fileFolder: "oppdrag-bilder",
+        currentImage, images, fileFolder: FileFolder.MissionImage,
         deleteAction: { 
           callback: (id: string) => this.deleteImages({id}),
           allowedRoles: RolePermissions.MissionImageList.delete
@@ -140,7 +141,7 @@ export class MissionImageListComponent extends SelectableContainerWrapperCompone
   }
 
   private downloadImages = (imgs: MissionImage[]) => 
-    this.downloaderService.downloadUrls(imgs.map(x => x.fileName ? _appFileUrl(x.fileName, "oppdrag-original") : null));
+    this.downloaderService.downloadUrls(imgs.map(x => x.fileName ? _appFileUrl(x.fileName, FileFolder.MissionImageOriginal) : null));
 
   private onBack = () => this.router.navigate(['../'], {relativeTo: this.route.parent});
   

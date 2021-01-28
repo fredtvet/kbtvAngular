@@ -13,6 +13,7 @@ import { ImageViewerDialogWrapperConfig } from '@shared/components/image-viewer/
 import { ImageViewerDialogWrapperComponent } from '@shared/components/image-viewer/image-viewer-dialog-wrapper.component';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EditMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
+import { FileFolder } from '@shared/enums/file-folder.enum';
 import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model-form';
 import { Observable } from 'rxjs';
@@ -30,6 +31,7 @@ interface ViewModel { mission: Maybe<Immutable<Mission>>, navConfig: MainTopNavC
 })
 export class MissionDetailsComponent extends WithUnsubscribe() {
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
+  FileFolder = FileFolder;
   ButtonTypes = ButtonTypes;
   
   private can = RolePermissions.MissionList;
@@ -69,7 +71,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
         height: "100%",
         panelClass: "image_viewer_dialog",
         data: <ImageViewerDialogWrapperConfig>{
-          currentImage: mission, fileFolder: "missionheader"
+          currentImage: mission, fileFolder: FileFolder.MissionHeader
         },
       });
   }
