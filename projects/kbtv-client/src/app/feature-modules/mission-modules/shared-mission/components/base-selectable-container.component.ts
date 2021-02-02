@@ -1,5 +1,5 @@
 import { Directive, ViewChild } from '@angular/core';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { CdkSelectableContainerDirective } from 'cdk-selectable';
 import { Maybe } from 'global-types';
 import { BehaviorSubject, Observable } from 'rxjs';

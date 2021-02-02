@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet, User } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { LoadingService } from '@core/services/loading.service';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';

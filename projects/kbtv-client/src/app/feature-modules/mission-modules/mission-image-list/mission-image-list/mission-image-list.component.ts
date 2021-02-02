@@ -7,7 +7,7 @@ import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { _trackByModel } from "@shared-app/helpers/trackby/track-by-model.helper";
-import { AppButton } from "@shared-app/interfaces/app-button.interface";
+import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { BaseSelectableContainerComponent } from "@shared-mission/components/base-selectable-container.component";
 import { ImageViewerDialogWrapperConfig } from "@shared-mission/components/image-viewer/image-viewer-dialog-wrapper-config.const";
 import { ImageViewerDialogWrapperComponent } from "@shared-mission/components/image-viewer/image-viewer-dialog-wrapper.component";

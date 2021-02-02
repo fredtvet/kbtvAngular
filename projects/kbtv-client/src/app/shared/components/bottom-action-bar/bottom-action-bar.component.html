@@ -14,7 +14,7 @@
     </div>
 
     <div class="bottom-bar-side right" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-        <app-button *ngFor="let action of vm.actions" [config]="action | transformButton : baseActionBtn">
+        <app-button *ngFor="let action of vm.actions; trackBy: trackByButton" [config]="action | transformButton : baseActionBtn">
         </app-button>
     </div>
 

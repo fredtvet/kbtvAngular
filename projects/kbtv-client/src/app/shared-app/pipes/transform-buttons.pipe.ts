@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { AppButton } from '../interfaces/app-button.interface';
+import { AppButton } from '../../shared/components/app-button/app-button.interface';
 
 @Pipe({name: 'transformButtons'})
 export class TransformButtonsPipe implements PipeTransform {

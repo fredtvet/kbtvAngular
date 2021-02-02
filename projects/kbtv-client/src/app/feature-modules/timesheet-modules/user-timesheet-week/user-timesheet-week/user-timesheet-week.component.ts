@@ -3,7 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { ModelState } from "@core/state/model-state.interface";
-import { AppButton } from "@shared-app/interfaces/app-button.interface";
+import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { WeekCriteriaForm } from '@shared/constants/forms/week-criteria-controls.const';

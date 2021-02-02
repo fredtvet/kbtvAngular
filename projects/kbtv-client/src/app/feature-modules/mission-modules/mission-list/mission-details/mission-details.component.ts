@@ -6,7 +6,7 @@ import { Mission } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { ImageViewerDialogWrapperConfig } from '@shared-mission/components/image-viewer/image-viewer-dialog-wrapper-config.const';
 import { ImageViewerDialogWrapperComponent } from '@shared-mission/components/image-viewer/image-viewer-dialog-wrapper.component';

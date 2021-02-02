@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { MissionNote } from '@core/models';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { CreateMissionNoteForm, EditMissionNoteForm } from '@shared/constants/model-forms/save-mission-note-forms.const';
 import { _sortByDate } from 'array-helpers';

@@ -1,4 +1,4 @@
-import { AppButton } from "@shared-app/interfaces/app-button.interface";
+import { AppButton } from "@shared/components/app-button/app-button.interface";
 
 export interface MainTopNavConfig  {
     title?: string;

@@ -3,7 +3,7 @@ import { User } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { UserPasswordForm } from '@shared/constants/forms/password-form.const';
 import { CreateUserForm, EditUserForm, UserForm } from '@shared/constants/model-forms/save-user-forms.const';
 import { FormService } from 'form-sheet';

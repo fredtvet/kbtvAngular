@@ -1,5 +1,5 @@
-import { Icons } from "../enums/icons.enum";
-import { ButtonTypes } from "../enums/button-types.enum";
+import { Icons } from "@shared-app/enums/icons.enum";
+import { ButtonTypes } from "@shared-app/enums/button-types.enum";
 
 export interface AppButton{
     text?: string;
@@ -7,12 +7,9 @@ export interface AppButton{
     type?: ButtonTypes;
     allowedRoles?: string[];
 
-    routerLink?: string;
-
     callback?: Function;
     params?: unknown[];
 
-    children?: AppButton[];
     svgIcon?: Icons;
     color?: "primary" | "accent" | "warn"; 
     iconSizeClass?: string;

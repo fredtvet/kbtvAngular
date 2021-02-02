@@ -1,6 +1,6 @@
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Roles } from "@core/roles.enum";
-import { AppButton } from "@shared-app/interfaces/app-button.interface";
+import { AppButton } from "@shared/components/app-button/app-button.interface";
 
 export const HomeNavigations: AppButton[] = [
     {

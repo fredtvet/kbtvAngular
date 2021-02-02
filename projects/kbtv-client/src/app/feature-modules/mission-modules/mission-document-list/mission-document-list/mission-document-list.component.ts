@@ -6,7 +6,7 @@ import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { BaseSelectableContainerComponent } from '@shared-mission/components/base-selectable-container.component';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EmailForm } from '@shared/constants/forms/email-form.const';

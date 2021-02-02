@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { _trackById } from '@shared-app/helpers/trackby/track-by-id.helper';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { _trackByAppButton } from '@shared-app/track-by-app-button';
 import { MainSkeletonRouteData } from './main-skeleton-route-data.interface';
 import { MainSkeletonPresenter } from './main-skeleton.presenter';
@@ -14,7 +14,6 @@ import { MainSkeletonPresenter } from './main-skeleton.presenter';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainSkeletonComponent {
-  @Input() fabs: AppButton[];
   
   @Input() set enableElevation(value: boolean) {
     this.presenter.toggleElevation(value);
@@ -33,8 +32,6 @@ export class MainSkeletonComponent {
   constructor(private presenter: MainSkeletonPresenter){ }
 
   ngOnInit(): void { this.presenter.init() }
-  
-  trackByFab = _trackByAppButton;
 
   trackByChipRow = _trackById; 
 

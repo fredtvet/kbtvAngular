@@ -8,7 +8,7 @@ import { ProfileFacade } from '../profile.facade';
 import { FormService } from 'form-sheet';
 import { CurrentUserPasswordForm } from '@shared/constants/forms/password-form.const';
 import { ConfirmDialogService } from 'confirm-dialog';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 
 @Component({
   selector: 'app-profile',

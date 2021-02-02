@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { DeviceInfoService } from '@core/services/device-info.service';
-import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
+import { BottomSheetMenuService } from '@shared/bottom-sheet-menu/bottom-sheet-menu.service';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MainNavService } from 'src/app/layout/main-nav.service';
+import { _trackByAppButton } from '@shared-app/track-by-app-button';
 
 export interface ViewModel { isXs: boolean, actions: AppButton[] }
 
@@ -35,7 +36,7 @@ export class BottomActionBarComponent {
             if(!actions || !isXs || actions.length < 3) return {isXs, actions};
             const actionsClone = [...actions];
             return { isXs, actions: [
-                <AppButton> actionsClone.shift(),
+                actionsClone.shift(),
                 {
                     icon: "more_vert",
                     callback: () => this.menuService.open(actionsClone)
@@ -51,5 +52,7 @@ export class BottomActionBarComponent {
     ){};
 
     toggleDrawer = () => this.mainNavService.toggleDrawer();
+
+    trackByButton = _trackByAppButton
 }
 

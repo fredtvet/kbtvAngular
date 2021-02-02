@@ -1,4 +1,4 @@
-import { AppButton } from './interfaces/app-button.interface';
+import { AppButton } from '../shared/components/app-button/app-button.interface';
 
 export const _trackByAppButton = (index: number, btn: AppButton) => 
-    btn && (btn.callback?.prototype.constructor || btn.routerLink);
+    btn && (btn.callback?.prototype.constructor);

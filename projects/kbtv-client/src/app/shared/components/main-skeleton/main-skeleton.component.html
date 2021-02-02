@@ -20,14 +20,6 @@
     <div class="bottom-bar" [ngClass]="bottomBarHidden ? 'bottom-bar-hidden' : ''" #bottomBar>
       <ng-content select="[bottombar]"></ng-content>
     </div>
-
-    <div class="fab-container m-2" *ngIf="fabs"
-        fxLayout="column" fxLayoutGap="4px">  
-        <app-button class="fadeInRight" 
-          *ngFor="let fab of fabs | transformButtons : baseFabBtn | reverseArray; trackBy: trackByFab" 
-          [config]="fab">
-        </app-button>
-    </div>
     
   </div>
   

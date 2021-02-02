@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet, User } from '@core/models';
 import { LoadingService } from '@core/services/loading.service';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';

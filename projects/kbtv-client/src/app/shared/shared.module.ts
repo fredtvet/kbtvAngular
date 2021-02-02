@@ -10,7 +10,7 @@ import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import { AppButtonComponent } from './components/app-button/app-button.component';
 import { BottomActionBarComponent } from './components/bottom-action-bar/bottom-action-bar.component';
-import { BottomSheetMenuComponent } from './components/bottom-sheet-menu.component';
+import { BottomSheetMenuComponent } from './bottom-sheet-menu/bottom-sheet-menu.component';
 import { ChipsBarComponent } from './components/chips-bar.component';
 import { AutoCompleteQuestionComponent } from './components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { CheckboxQuestionComponent } from './components/dynamic-form-questions/checkbox-question.component';

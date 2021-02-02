@@ -1,8 +1,8 @@
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Roles } from "@core/roles.enum";
-import { AppButton } from "@shared-app/interfaces/app-button.interface";
+import { NavItem } from "./nav-item/nav-item.interface";
 
-export const SideNavNavigations: AppButton[] = [
+export const SideNavNavigations: NavItem[] = [
   {
     icon: "home",
     text: "Hjem",

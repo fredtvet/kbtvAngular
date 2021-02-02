@@ -1,6 +1,6 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { halfwayRotate } from '@shared/animations';
-import { AppButton } from '../../interfaces/app-button.interface';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { halfwayRotate } from '../halfway-rotate.animation';
+import { NavItem } from './nav-item.interface';
 
 @Component({
   selector: 'app-nav-item',
@@ -9,7 +9,7 @@ import { AppButton } from '../../interfaces/app-button.interface';
 })
 export class NavItemComponent {
 
-  @Input() navButton: AppButton;
+  @Input() navButton: NavItem;
 
   @Output() hasNavigated = new EventEmitter();
 

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Timesheet } from '@core/models';
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
