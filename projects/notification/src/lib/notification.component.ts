@@ -5,13 +5,18 @@ import { NotificationSnackBarData } from './notification-snack-bar-data.interfac
 @Component({
   selector: 'lib-notification',
   template: `
-  <div style="overflow-wrap:break-word;word-wrap: break-word;">
-    <span fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" style="margin-bottom:4px;">
+  <style>
+    .notification-container{ overflow-wrap:break-word; word-wrap: break-word; }
+    .title{ margin-left: 16px }
+    .details{ max-height:30vh; overflow-y:scroll; }
+  </style>
+  <div class="notification-container">
+    <span fxLayout="row" fxLayoutAlign="start center" style="margin-bottom:4px;" class="mat-subheading-2">
       <mat-icon>{{data.icon}}</mat-icon>
-      <span style="overflow:hidden" *ngIf="data.title">{{ data.title }}</span>
+      <span class="title mat-subheading-2" *ngIf="data.title">{{ data.title }}</span>
     </span>
 
-    <ul style="max-height:30vh;overflow-y:scroll">
+    <ul class="details mat-body">
         <li *ngFor="let detail of data.details">
             {{ detail }}
         </li>

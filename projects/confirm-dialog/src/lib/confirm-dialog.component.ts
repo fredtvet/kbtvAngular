@@ -6,7 +6,7 @@ import { ConfirmDialogConfig } from './confirm-dialog-config.interface';
   selector: 'lib-confirm-dialog',
   template: `
   <h2 *ngIf="config.title" mat-dialog-title>{{ config.title }}</h2>
-  <div mat-dialog-content *ngIf="config.message">
+  <div mat-dialog-content class="mat-body" *ngIf="config.message">
     {{ config.message || 'Vennligst bekreft operasjonen.' }}
   </div>
   <div mat-dialog-actions align="end">

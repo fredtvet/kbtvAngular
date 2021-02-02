@@ -15,7 +15,7 @@ export interface RadioGroupQuestion<T> extends Question {
   selector: 'app-radio-group-question',
   template: `
     <div class="pb-2">
-        <div class="mat-body" *ngIf="question.label">{{ question.label }}</div>
+        <div class="mat-body-2" *ngIf="question.label">{{ question.label }}</div>
         <mat-radio-group [formControl]="control" [color]="question.color || 'accent'" fxLayoutGap="8px">
             <mat-radio-button *ngIf="question.defaultOption"
               [checked]="control?.value == null">

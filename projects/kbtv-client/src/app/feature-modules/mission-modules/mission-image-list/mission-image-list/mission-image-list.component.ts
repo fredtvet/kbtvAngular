@@ -95,7 +95,7 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
       height: "100%",
       panelClass: "image_viewer_dialog",
       data: <ImageViewerDialogWrapperConfig>{
-        currentImage, images, fileFolder: FileFolder.MissionImage,
+        currentImage, images, fileFolder: FileFolder.MissionImage, downloadFolder: FileFolder.MissionImageOriginal,
         deleteAction: { 
           callback: (id: string) => this.deleteImages({id}),
           allowedRoles: RolePermissions.MissionImageList.delete

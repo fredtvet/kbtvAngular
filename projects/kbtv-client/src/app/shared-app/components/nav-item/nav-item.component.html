@@ -2,23 +2,23 @@
     <a matRipple *ngIf="navButton.routerLink else categoryButton" 
         (tap)="alertNavigation()" [routerLink]="navButton.routerLink" [routerLinkActive]="['color-accent']">
         <mat-icon>{{navButton.icon}}</mat-icon>
-        <span class="ml-2 mr-2">{{navButton.text}}</span>
+        <span class="ml-6 mr-2 mat-body-2">{{navButton.text}}</span>
     </a>
 
     <ng-template #categoryButton>
         <a matRipple (tap)="toggleChildren()">
             <mat-icon>{{navButton.icon}}</mat-icon>
-            <span class="ml-2 mr-2">{{navButton.text}}</span>
+            <span class="ml-6 mr-2 mat-body-2">{{navButton.text}}</span>
             <mat-icon *ngIf="navButton.children && navButton.children.length > 0" [@halfwayRotate]="childrenShown">
                 expand_more
             </mat-icon>
         </a>
     </ng-template>
 
-    <span class="children" *ngIf="navButton.children && navButton.children.length > 0" [fxHide]="!childrenShown">
+    <div class="pl-2" *ngIf="navButton.children && navButton.children.length > 0" [fxHide]="!childrenShown">
 
         <app-nav-item *ngFor="let child of navButton.children" [navButton]="child" (hasNavigated)="alertNavigation()">
         </app-nav-item>
 
-    </span>
+    </div>
 </ng-container>

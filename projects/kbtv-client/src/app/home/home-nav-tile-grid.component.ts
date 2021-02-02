@@ -4,7 +4,7 @@ import { AppButton } from '@shared-app/interfaces/app-button.interface';
 @Component({
   selector: 'app-home-nav-tile-grid',
   template: `
-    <style>.home-tile{ text-align:center; width:100%; margin-bottom: 3.3% }</style>
+    <style>.home-tile{ text-align:center; width:100%; margin-bottom: 3.3%; font-size:15px; font-weight: 500 }</style>
 
     <div fxLayout="row wrap" fxLayoutAlign="space-evenly center">
       <ng-container *ngFor="let nav of navigations">

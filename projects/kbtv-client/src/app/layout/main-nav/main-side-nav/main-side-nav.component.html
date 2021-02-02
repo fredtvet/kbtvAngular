@@ -1,5 +1,5 @@
 
-  <mat-toolbar fxLayout="column" fxLayoutAlign="center stretch">
+  <mat-toolbar fxLayout="column" fxLayoutAlign="center stretch" class="mb-2 mt-2">
 
     <ng-container *ngIf="config.isOnline else offlineHeader">
       <span class="mat-small color-accent ellipsis"> Tilkoblet internett</span>
@@ -8,7 +8,7 @@
       <span class="mat-small color-warn ellipsis">Frakoblet internett</span>
     </ng-template>
 
-    <span class="mat-body ellipsis" *ngIf="config.user" style="line-height:1">
+    <span class="mat-subheading-1 ellipsis" *ngIf="config.user" style="line-height:1;margin:0;">
       {{ config.user.firstName }} {{ config.user.lastName }}
     </span>
 
@@ -26,7 +26,7 @@
         [navButton]="navButton"
         (hasNavigated)="onNavClick()">
       </app-nav-item>  
-      <mat-divider *ifRole="navButton.allowedRoles" class="mid-divider"></mat-divider>
+ 
     </ng-container>
   </div>
 
