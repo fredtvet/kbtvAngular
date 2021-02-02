@@ -9,6 +9,7 @@ import { FormService } from 'form-sheet';
 import { CurrentUserPasswordForm } from '@shared/constants/forms/password-form.const';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
+import { ProfileAction } from './profile-action.interface';
 
 @Component({
   selector: 'app-profile',
@@ -16,12 +17,12 @@ import { AppButton } from '@shared/components/app-button/app-button.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent {
-
-  passwordStatus: string;
-
+  
   navConfig: MainTopNavConfig = {title: "Profil"};
 
   bottomActions: AppButton[];
+
+  actions: ProfileAction[];
   
   constructor(
     private formService: FormService,
@@ -29,9 +30,21 @@ export class ProfileComponent {
     private confirmService: ConfirmDialogService,
   ){
     this.bottomActions = [{icon: 'update', callback: this.syncAll}]
+    this.actions = [
+      {text: 'Oppdater profil', icon: 'account_circle', callback: this.updateProfile},
+      {text: 'Oppdater passord', icon: 'vpn_key', callback: this.updatePassword},
+      {text: 'Konfigurasjoner', icon: 'settings', callback: this.updateSyncConfig},
+      {text: 'Synkroniser data', icon: 'update', callback: this.syncAll, 
+        hint: 'Hent nye og oppdaterte data fra skyen.'},
+      {text: 'Slett lokal data', icon: 'delete_sweep',callback: this.confirmPurge,
+        hint: 'Slett data lagret på enheten og last inn på nytt.'},
+      {text: 'Logg ut', icon: 'power_settings_new', callback: this.logout},
+    ]
   }
 
-  updateProfile(): void{
+  handleFn = (fn: Function, parameters: unknown[] = []) => fn(...parameters);
+
+  private updateProfile= (): void => {
     this.formService.open<User>({
       formConfig: {...ProfileForm, initialValue: this.facade.currentUser}, 
       navConfig: {title: "Oppdater profil"},
@@ -39,7 +52,7 @@ export class ProfileComponent {
     });
   }
 
-  updatePassword(): void {
+  private updatePassword = (): void => {
     this.formService.open<CurrentUserPasswordForm>({
       formConfig: CurrentUserPasswordForm, 
       navConfig: {title: "Oppdater passord"},
@@ -47,7 +60,7 @@ export class ProfileComponent {
     })
   }
 
-  updateSyncConfig(): void {
+  private updateSyncConfig = (): void => {
     const config = this.facade.syncConfig;
     this.formService.open<SyncConfig, unknown>({
       formConfig: {...SyncConfigForm, initialValue: config ? {...config, refreshTime: config.refreshTime / 60 } : null}, 
@@ -57,7 +70,7 @@ export class ProfileComponent {
     })
   }
 
-  confirmPurge = () => {
+  private confirmPurge = () => {
     this.confirmService.open({
       title: 'Slett lokalt data?',
       message: 'All data vil bli lastet ned på nytt. Vær varsom ved bruk av mobildata.', 
@@ -66,7 +79,8 @@ export class ProfileComponent {
     });
   }
 
-  syncAll = () => this.facade.syncAll();
+  private syncAll = () => this.facade.syncAll();
 
-  logout = () => this.facade.logout();
+  private logout = () => this.facade.logout(); 
+
 }

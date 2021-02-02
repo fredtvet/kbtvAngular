@@ -3,48 +3,20 @@
   <app-main-top-nav-bar navbar [config]="navConfig">
   </app-main-top-nav-bar>
 
-    <app-list-item (click)="updateProfile()">
-      <mat-icon left-side class="pl-2 pr-2">account_circle</mat-icon>
-      Oppdater profil
-    </app-list-item>
-    <mat-divider inset=true></mat-divider>
-
-    <app-list-item (click)="updatePassword()">
-      <mat-icon left-side class="pl-2 pr-2">vpn_key</mat-icon>
-      Oppdater passord
-    </app-list-item>
-    <mat-divider inset=true></mat-divider>
-
-    <app-list-item (click)="updateSyncConfig()">
-      <mat-icon left-side class="pl-2 pr-2">settings</mat-icon>
-      Konfigurasjoner
-    </app-list-item>
-    <mat-divider inset=true></mat-divider>
+  <ng-container *ngFor="let action of actions">
     
-    <app-list-item (tap)="syncAll()">
-      <mat-icon left-side class="pl-2 pr-2">update</mat-icon>
-      <div>Synkroniser data</div>
+    <app-list-item (click)="handleFn(action.callback, action.params)">
+      <mat-icon left-side class="pl-2 pr-2">{{ action.icon }}</mat-icon>
+      <div>{{ action.text }}</div>
       <div class="mat-caption">
-        Hent nye og oppdaterte data fra skyen.
+        {{ action.hint }}
       </div>
     </app-list-item>
-    <mat-divider inset=true></mat-divider>
 
-    <app-list-item (click)="confirmPurge()">
-      <mat-icon left-side class="pl-2 pr-2">delete_sweep</mat-icon>
-      <div>Slett lokal data</div>
-      <div class="mat-caption">
-        Slett data lagret på enheten og last inn på nytt.
-      </div>
-    </app-list-item>
     <mat-divider inset=true></mat-divider>
+  </ng-container>
 
-    <app-list-item (tap)="logout()">
-      <mat-icon left-side class="pl-2 pr-2">power_settings_new</mat-icon>
-      Logg ut
-    </app-list-item>
-    <mat-divider inset=true></mat-divider>
+  <app-bottom-action-bar bottombar [actions]="bottomActions">
+  </app-bottom-action-bar>
 
-    <app-bottom-action-bar bottombar [actions]="bottomActions">
-    </app-bottom-action-bar>
 </app-main-skeleton>
