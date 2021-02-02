@@ -22,17 +22,12 @@ import { RadioGroupQuestionComponent } from './components/dynamic-form-questions
 import { SelectQuestionComponent } from './components/dynamic-form-questions/select-question.component';
 import { SliderQuestionComponent } from './components/dynamic-form-questions/slider-question.component';
 import { TextAreaQuestionComponent } from './components/dynamic-form-questions/text-area-question.component';
-import { ImageViewerDialogWrapperComponent } from './components/image-viewer/image-viewer-dialog-wrapper.component';
-import { ImageViewerComponent } from './components/image-viewer/image-viewer.component';
 import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.component';
 import { ScrollNavElevationTogglerDirective } from './components/main-skeleton/scroll-nav-elevation-toggler.directive';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
 import { NoContentComponent } from './components/no-content.component';
-import { SearchBarComponent } from './components/search-bar/search-bar.component';
-import { SelectableCardComponent } from './components/selectable-card/selectable-card.component';
-import { HttpCommandButtonDirective, ImageErrorReloaderDirective, LoadingOverlayDirective } from './directives';
+import { HttpCommandButtonDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
-import { InputListenerDirective } from './directives/input-listener.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 
 @NgModule({
@@ -52,11 +47,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     RadioGroupQuestionComponent,
     SliderQuestionComponent,
     AppButtonComponent,
-    SelectableCardComponent,
     NoContentComponent,
-    ImageViewerDialogWrapperComponent,
-    ImageViewerComponent,
-    SearchBarComponent,
     BottomActionBarComponent,
 
     TransformButtonPipe,
@@ -72,8 +63,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     HttpCommandButtonDirective,
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    
-    ImageErrorReloaderDirective,  
-    InputListenerDirective,
   ],
   imports: [
     ReactiveFormsModule,
@@ -92,16 +81,12 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     GooglePlaceModule,   
 
     CdkSelectableModule,
-    SelectableCardComponent,
     BottomSheetMenuComponent,
     MainSkeletonComponent,    
     MainTopNavBarComponent,
     ChipsBarComponent,
     AppButtonComponent,
     NoContentComponent,
-    ImageViewerDialogWrapperComponent,
-    ImageViewerComponent,
-    SearchBarComponent,
     BottomActionBarComponent,
     
     TransformButtonPipe,
@@ -116,8 +101,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     HttpCommandButtonDirective,
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    
-    ImageErrorReloaderDirective,  
-    InputListenerDirective
   ],
   providers:[
     { provide: VALIDATION_ERROR_MESSAGES, useValue: ValidationErrorMessages},

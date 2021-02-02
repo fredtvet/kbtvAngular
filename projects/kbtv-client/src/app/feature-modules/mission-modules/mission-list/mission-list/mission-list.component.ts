@@ -9,7 +9,7 @@ import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { SearchBarConfig } from "@shared/components/search-bar/search-bar-config.interface";
+import { SearchBarConfig } from "@shared-mission/components/search-bar/search-bar-config.interface";
 import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";

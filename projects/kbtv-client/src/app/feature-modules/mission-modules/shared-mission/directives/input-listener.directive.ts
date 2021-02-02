@@ -1,11 +1,9 @@
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil, tap } from 'rxjs/operators';
-import { WithUnsubscribe } from '../../shared-app/mixins/with-unsubscribe.mixin';
+import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 
-@Directive({
-  selector: '[appInputListener]'
-})
+@Directive({selector: '[appInputListener]'})
 export class InputListenerDirective extends WithUnsubscribe(){
 
   @Input() debounceTime: number = 400;

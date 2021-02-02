@@ -4,7 +4,7 @@ import { ModelFile } from '@core/models';
 import { DownloaderService } from '@core/services/downloader.service';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { ConfirmDialogService } from 'confirm-dialog';
-import { MainTopNavConfig } from '../main-top-nav-bar/main-top-nav.config';
+import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { ImageViewerDialogWrapperConfig } from './image-viewer-dialog-wrapper-config.const';
 
 @Component({

@@ -4,7 +4,7 @@ import { FileFolder } from "@shared/enums/file-folder.enum";
 import { Maybe } from 'global-types';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilKeyChanged } from 'rxjs/operators';
-import { MainTopNavConfig } from '../main-top-nav-bar/main-top-nav.config';
+import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 
 @Component({
   selector: 'app-image-viewer',

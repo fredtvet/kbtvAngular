@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SaveModelFileProviders } from '@core/state/providers.const';
+import { SharedMissionModule } from '@shared-mission/shared-mission.module';
 import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
-import { SharedModule } from '@shared/shared.module';
 import { ModelFormModule } from 'model-form';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
 import { DeleteModelHttpEffect, DeleteModelReducer, MailModelsHttpEffect } from 'state-model';
@@ -18,7 +18,7 @@ import { FileExtensionPipe } from './pipes/file-extension.pipe';
     FileExtensionPipe,
   ],
   imports: [
-    SharedModule, 
+    SharedMissionModule, 
     ModelFormModule.forFeature(_formToSaveModelFileConverter),
     MissionDocumentListRoutingModule
   ],

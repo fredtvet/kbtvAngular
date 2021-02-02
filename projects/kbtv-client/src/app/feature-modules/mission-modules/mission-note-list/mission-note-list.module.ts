@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared/shared.module';
+import { SharedMissionModule } from '@shared-mission/shared-mission.module';
 import { MissionNoteListRoutingModule } from './mission-note-list-routing.module';
 import { MissionNoteListComponent } from './mission-note-list/mission-note-list.component';
 import { NoteItemComponent } from './mission-note-list/note-item/note-item.component';
@@ -10,7 +10,7 @@ import { NoteItemComponent } from './mission-note-list/note-item/note-item.compo
     NoteItemComponent,
   ],
   imports: [
-    SharedModule,
+    SharedMissionModule,
     MissionNoteListRoutingModule
   ],
 })
