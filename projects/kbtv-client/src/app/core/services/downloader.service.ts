@@ -23,7 +23,7 @@ export class DownloaderService {
     let delay = 0;
     urls.forEach(url => {
       setTimeout(() => url ? this.downloadUrl(url) : null, delay);
-      delay = delay + 500;
+      delay = delay + 1000;
     })
   }
 }
