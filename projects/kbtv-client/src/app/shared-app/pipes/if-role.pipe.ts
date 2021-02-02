@@ -3,7 +3,7 @@ import { ImmutableArray, Maybe } from 'global-types';
 import { CurrentUser, StateCurrentUser } from 'state-auth';
 import { Store } from 'state-management';
 
-@Pipe({name: 'ifRole'})
+@Pipe({name: 'ifRole', pure: false})
 export class IfRolePipe implements PipeTransform {
 
     private get currentUser(): CurrentUser { return this.store.state.currentUser; }
