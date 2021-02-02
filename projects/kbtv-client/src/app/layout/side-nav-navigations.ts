@@ -43,15 +43,9 @@ export const SideNavNavigations: AppButton[] = [
   },
   {
     icon: "assessment",
-    text: "Statistikk",
+    text: "Timestatistikk",
     allowedRoles: RolePermissions.TimesheetStatistic.access,
-    children: [
-      {
-        icon: "assessment",
-        text: "Timestatistikk",
-        routerLink: "/timestatistikk",
-      },
-    ],
+    routerLink: "/timestatistikk",
   },
   {
     icon: "person",
