@@ -1,8 +1,8 @@
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Roles } from "@core/roles.enum";
-import { AppButton } from "@shared/components/app-button/app-button.interface";
+import { HomeNavTile } from "./home-nav-tile.interface";
 
-export const HomeNavigations: AppButton[] = [
+export const HomeNavigations: HomeNavTile[] = [
     {
         icon: "view_list",
         text: "Oppdrag",

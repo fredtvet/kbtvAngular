@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { StateCurrentUser } from 'state-auth';
 import { Store } from 'state-management';
 import { StateSyncTimestamp, SyncStateAction } from 'state-sync';
-import { MainNavService } from '../layout/main-nav.service';
+import { MainNavService } from '../../layout/main-nav.service';
 
 interface ViewModel extends Immutable<StateCurrentUser> {loading: boolean, syncTimestamp: number}
 
