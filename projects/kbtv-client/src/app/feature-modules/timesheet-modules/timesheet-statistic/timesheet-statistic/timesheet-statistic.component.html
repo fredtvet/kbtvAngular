@@ -1,16 +1,19 @@
-<app-main-skeleton paddingDisabled=true>
+<app-main-skeleton paddingDisabled=true *ngIf="vm$ | async; let vm">
 
-    <ng-container navbar *ngIf="navVm$ | async; let navVm">
-        <app-main-top-nav-bar [config]="navVm.navConfig" >
+    <ng-container navbar *ngIf="vm$ | async; let navVm">
+        <app-main-top-nav-bar [config]="navConfig" >
         </app-main-top-nav-bar>
-        <app-chips-bar [chips]="navVm.groupByChips">
+        <app-chips-bar [chips]="vm.groupByChips">
         </app-chips-bar>
-        <app-chips-bar [chips]="navVm.criteriaChips">
+        <app-chips-bar [chips]="vm.criteriaChips">
         </app-chips-bar>
     </ng-container>
 
     <app-timesheet-statistic-table #statTable fxFlex 
-        [config]="tableConfig$ | async">
+        [config]="vm.tableConfig">
     </app-timesheet-statistic-table>
-  
+    
+    <app-bottom-action-bar bottombar [actions]="bottomActions">
+    </app-bottom-action-bar>
+
 </app-main-skeleton>
