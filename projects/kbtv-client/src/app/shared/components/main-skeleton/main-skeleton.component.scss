@@ -5,8 +5,10 @@
     z-index:1;
     height:100%;
     width:100%;
+    overflow:hidden;
     background: mat-color($background, app-bar);
 }
+
 .content-container{
     position:relative;
     z-index:1;
@@ -20,7 +22,10 @@
     z-index:1; 
 }
 
-.main-content{ overflow-y: auto; }
+.main-content{ 
+    overflow-y: auto; 
+    margin-bottom: -56px;
+}
 
 ::ng-deep.main-skeleton-overlay{
     position:absolute;
@@ -38,4 +43,15 @@
     right:0;
     bottom:0;
 }
+
+.bottom-bar{
+    width: 100%; 
+    z-index:10;
+    transition: transform 100ms ease-out;
+}
+
+.bottom-bar-hidden{
+    transform: translateY(100px)
+}
+
   

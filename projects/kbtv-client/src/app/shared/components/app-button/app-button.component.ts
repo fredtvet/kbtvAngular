@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { AppButton } from '../../../shared-app/interfaces/app-button.interface';
-import { ButtonTypes } from '../../../shared-app/enums/button-types.enum';
+import { ButtonTypes } from '@shared-app/enums/button-types.enum';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 
 @Component({
   selector: 'app-button',
@@ -8,8 +8,9 @@ import { ButtonTypes } from '../../../shared-app/enums/button-types.enum';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppButtonComponent {
-  @Input() config: AppButton;
+  ButtonTypes = ButtonTypes;
 
+  @Input() config: AppButton;
   @Output() fnHandled = new EventEmitter();
   
   constructor() { }

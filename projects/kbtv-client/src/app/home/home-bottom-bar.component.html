@@ -1,0 +1,16 @@
+<mat-toolbar color="accent" *ngIf="vm$ | async; let vm">
+
+  <button mat-icon-button aria-label="Toggle sidenav" (tap)="toggleDrawer()" fxHide.gt-xs>
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+
+  <span class="mr-auto"></span>
+
+  <mat-spinner *ngIf="vm.loading" diameter="24" class="mr-2"></mat-spinner>
+  <button mat-button appAddToHomeScreen>Legg til app</button>
+  <button mat-icon-button (tap)="refresh()">
+    <mat-icon>update</mat-icon>
+  </button>
+
+
+</mat-toolbar>

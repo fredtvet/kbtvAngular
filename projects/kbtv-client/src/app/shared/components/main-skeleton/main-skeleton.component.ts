@@ -1,5 +1,4 @@
-import { ViewChild } from '@angular/core';
-import { ChangeDetectionStrategy, Component, ElementRef, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { _trackById } from '@shared-app/helpers/trackby/track-by-id.helper';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
@@ -15,8 +14,6 @@ import { MainSkeletonPresenter } from './main-skeleton.presenter';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainSkeletonComponent {
-  ButtonTypes = ButtonTypes;
-
   @Input() fabs: AppButton[];
   
   @Input() set enableElevation(value: boolean) {
@@ -25,17 +22,18 @@ export class MainSkeletonComponent {
 
   @Input() navTogglerDisabled: boolean;
   @Input() paddingDisabled: boolean;
+  @Input() bottomBarHidden: boolean;
   
   data: MainSkeletonRouteData = this.presenter.data;
 
   enableElevation$ = this.presenter.enableElevation$;
 
+  baseFabBtn: Partial<AppButton> = {type: ButtonTypes.Fab}
+  
   constructor(private presenter: MainSkeletonPresenter){ }
 
-  ngOnInit(): void {
-    this.presenter.init()
-  }
-
+  ngOnInit(): void { this.presenter.init() }
+  
   trackByFab = _trackByAppButton;
 
   trackByChipRow = _trackById; 

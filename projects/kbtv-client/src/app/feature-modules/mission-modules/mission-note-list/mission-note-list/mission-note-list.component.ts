@@ -20,12 +20,13 @@ import { MissionNoteListFacade } from '../mission-note-list.facade';
 })
 export class MissionNoteListComponent {
   can = RolePermissions.MissionNoteList
+  
   notes$ = this.facade.getByMissionId$(this.missionId).pipe(
     map(x => _sortByDate<MissionNote>(x, "updatedAt"))
   );
 
   navConfig: MainTopNavConfig; 
-  fabs: AppButton[];
+  actionFab: AppButton;
   
   get missionId(): Maybe<string> { 
     return this.route.parent?.parent?.snapshot.paramMap.get(SelectedMissionIdParam) 
@@ -38,10 +39,11 @@ export class MissionNoteListComponent {
     private modelFormService: ModelFormService
     ) {  
     this.navConfig = {title:  "Notater", backFn: this.onBack};
-    this.fabs = [
-      {icon: "add", aria: 'Legg til', color: "accent", 
-      callback: this.openCreateNoteForm, allowedRoles: RolePermissions.MissionNoteList.create}
-    ]
+
+    this.actionFab = {
+      icon: "add", aria: 'Legg til', color: "accent", 
+      callback: this.openCreateNoteForm, allowedRoles: RolePermissions.MissionNoteList.create
+    }  
   }
  
   openEditNoteForm = (entityId: number) => 

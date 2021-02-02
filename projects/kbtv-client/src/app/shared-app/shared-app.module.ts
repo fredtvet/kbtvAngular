@@ -15,6 +15,7 @@ import { AddToHomeScreenDirective } from './add-to-home-screen.directive';
 import { ListItemComponent } from './components/list-item/list-item.component';
 import { NavItemComponent } from './components/nav-item/nav-item.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
+import { IfRolePipe } from './pipes/if-role.pipe';
 import { ReverseArrayPipe } from './pipes/reverse-array';
 import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
 
@@ -25,6 +26,7 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     ListItemComponent,
     ReverseArrayPipe,
     TransformButtonsPipe,
+    IfRolePipe,
     AddToHomeScreenDirective, 
   ],
   imports: [
@@ -62,6 +64,7 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     NavItemComponent,   
     ListItemComponent,
     
+    IfRolePipe,
     ReverseArrayPipe,
     TransformButtonsPipe,   
     AddToHomeScreenDirective, 

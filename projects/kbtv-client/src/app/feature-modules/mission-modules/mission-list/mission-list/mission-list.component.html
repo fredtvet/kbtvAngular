@@ -1,18 +1,31 @@
 
-<app-main-skeleton [fabs]="fabs" navTogglerDisabled=true paddingDisabled=true>
+<app-main-skeleton *ngIf="vm$ | async; let vm" navTogglerDisabled=true paddingDisabled=true>
 
-    <ng-container navbar *ngIf="navVm$ | async; let navVm">
+    <ng-container navbar>
   
-      <app-main-top-nav-bar [config]="navVm.navConfig">
+      <app-main-top-nav-bar 
+        [fxShow]="searchBarHidden" 
+        [config]="topNavConfig">
       </app-main-top-nav-bar>
 
-      <app-chips-bar [chips]="navVm.criteriaChips"></app-chips-bar>
-      
+      <app-search-bar class="w-100" 
+        [fxHide]="searchBarHidden"  
+        [config]="searchBar" 
+        [extraButtons]="searchBarBtns">
+      </app-search-bar>
+
+      <app-chips-bar [chips]="vm.criteriaChips"></app-chips-bar>
+
     </ng-container>
-  
-    <app-mission-list-view [missions]="missions$ | async">
+
+    <app-mission-list-view [missions]="vm.missions">
     </app-mission-list-view>
-  
+
+    <app-bottom-action-bar bottombar
+      [fab]="actionFab" 
+      [actions]="vm.bottomActions">
+    </app-bottom-action-bar>
+
   </app-main-skeleton>
 
 

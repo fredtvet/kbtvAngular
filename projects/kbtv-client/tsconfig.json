@@ -9,7 +9,7 @@
       "@shared-app/*": ["src/app/shared-app/*"],
       "@shared/*": ["src/app/shared/*"],
       "@shared-timesheet/*": ["src/app/feature-modules/timesheet-modules/shared-timesheet/*"],
-
+      "@shared-mission/*": ["src/app/feature-modules/mission-modules/shared-mission/*"],
       "date-time-helpers": [
         "../../dist/date-time-helpers/date-time-helpers",
         "../../dist/date-time-helpers"

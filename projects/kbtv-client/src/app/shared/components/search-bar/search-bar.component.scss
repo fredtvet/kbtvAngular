@@ -1,8 +1,16 @@
+@import '../../../../styles/variables';
+
 .search-bar {
     border:none;
-    border-bottom: 1px solid;
+    background:mat-color($background, card);
+    div{
+        border-bottom: 1px solid black;
+        width:100%;
+    }
     input {
         border:none;
+        font-size:16px;
+        
     }
     input:focus {
         outline: none;

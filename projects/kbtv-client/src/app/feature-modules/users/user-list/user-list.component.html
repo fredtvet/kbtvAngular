@@ -1,9 +1,9 @@
-<app-main-skeleton [fabs]="fabs">
+<app-main-skeleton>
 
   <app-main-top-nav-bar navbar [config]="{title: 'Brukere'}">
   </app-main-top-nav-bar>
 
-  <div class="pl-1 pr-1 bottom-fab-padding" *ngIf="users$ | async else loading; let users;">
+  <div class="pl-1 pr-1" *ngIf="users$ | async else loading; let users;">
     <ng-container *ngFor="let user of users; trackBy: trackByUser;"> 
 
       <app-user-card
@@ -16,7 +16,11 @@
 
     </ng-container>
   </div>
-  
+
+  <app-bottom-action-bar bottombar
+    [fab]="actionFab">
+  </app-bottom-action-bar>
+
 </app-main-skeleton>
 
 <ng-template #loading>

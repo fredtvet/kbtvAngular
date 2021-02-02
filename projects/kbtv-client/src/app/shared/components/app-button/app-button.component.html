@@ -10,7 +10,7 @@
 
         <mat-icon *ngIf="config.icon">{{ config.icon }}</mat-icon>
         <mat-icon *ngIf="config.svgIcon" [svgIcon]="config.svgIcon"></mat-icon> 
-        {{ config.text }}     
+        <ng-container *ngIf="config.type !== ButtonTypes.Icon">{{ config.text }}</ng-container> 
     </button>
 </ng-container>
 

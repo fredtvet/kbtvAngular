@@ -1,52 +1,24 @@
 <mat-toolbar #navBar *ngIf="config" [ngClass]="overlayMode ? 'overlay-nav' : ''">
 
-    <ng-container *ngIf="searchBarHidden || !config.searchBar else searchBarContent">
-        
-        <app-button class="primary-button" *ngIf="config.backFn else menuBtn" [config]="{
-            callback: config.backFn, 
-            params: config.backFnParams,
-            type: ButtonTypes.Icon,
-            aria: 'Tilbake',
-            icon: config.backIcon || 'close'}">
-        </app-button>
+    <app-button class="primary-button" [config]="getPrimaryBtn(config)">
+    </app-button>
 
-        <ng-template #menuBtn>
-            <button mat-icon-button aria-label="Toggle sidenav" (tap)="onMenuButtonClick()" fxHide.gt-xs>
-                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-            </button>
-        </ng-template>
+    <span class="mr-auto ellipsis">
 
-        <span class="mr-auto ellipsis">
-            <ng-container *ngIf="config.title">
-                <span *ngIf="!config.backFn else noLinkTitle" ngClass.xs="ml-1" ngClass.gt-xs="ml-2"
-                    routerLink="/hjem">{{ config.title }}</span>
-                <ng-template #noLinkTitle><span ngClass.xs="ml-1" ngClass.gt-xs="ml-2">{{ config.title }}</span>
-                </ng-template>
-            </ng-container>
-            <mat-icon *ngIf="config.subIcon" class="scale-75">{{ config.subIcon }}</mat-icon>
-            <span *ngIf="config.subTitle" class="mat-caption ml-1">{{ config.subTitle }}</span>
-        </span>
+        <span *ngIf="config.title" ngClass.xs="ml-1" ngClass.gt-xs="ml-2">{{ config.title }}</span>
 
-        <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>
+        <span *ngIf="config.subTitle" class="mat-caption ml-1">{{ config.subTitle }}</span>
 
-        <span class="custom-buttons">
-            <app-button *ngIf="config.searchBar" [config]="{
-                callback: toggleSearchBar, 
-                type: ButtonTypes.Icon,
-                aria: 'Søk',
-                icon: 'search'}">
+    </span>
+
+    <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>
+
+    <span class="custom-buttons">
+        <ng-container *ngIf="config.buttons">
+            <app-button *ngFor="let button of config.buttons | transformButtons: baseActionBtn; trackBy: TrackByButton"
+                [config]="button">
             </app-button>
-            
-            <ng-container *ngIf="config.buttons">
-                <app-button *ngFor="let button of config.buttons | transformButtons: ButtonTypes.Icon; trackBy: TrackByButton" [config]="button">
-                </app-button>
-            </ng-container>
-        </span>
-    </ng-container>
+        </ng-container>
+    </span>
 
 </mat-toolbar>
-
-<ng-template #searchBarContent>
-    <app-search-bar [cfg]="config.searchBar" [extraButtons]="searchBarButtons" class="w-100">
-    </app-search-bar>
-</ng-template>

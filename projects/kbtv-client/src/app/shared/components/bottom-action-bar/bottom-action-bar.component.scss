@@ -15,28 +15,52 @@
     );
 }
 
+::ng-deep .fab > button {background:black!important; color:white!important}
+
 .fab{
     position: absolute;
     top: -28px;
+    z-index:-1;
     left: calc(50% - 28px);
 }
 
-.bottom-nav-container{
+.bottom-bar{
     background:transparent!important;
     padding:0!important;
+    color: mat-color($background, card);
+    height:56px!important;
 }
 
-.bottom-nav-button{
+.bottom-bar-side{
     background:$accent;
     height:100%;
-    padding:4px;
-    width: calc(50% - 30px);
+    padding:8px;
     box-sizing:border-box;
+    width: calc(50% - 30px);
 }
 
 .left{
     border-radius: 0px 9px 0px 0px;
 }
 .right{
-    border-radius: 9px 0px 0px 0px; 
+    border-radius: 9px 0px 0px 0px;   
+}
+
+.bottom-bar-no-fab{
+    .fab-container{
+        display: none;
+    }
+    .bottom-bar-side{
+        border-radius: 0px; 
+        width: 50%!important;
+    }
+}
+
+.bottom-bar-start-fab{
+    .left{
+        width:16px;
+    }
+    .right{
+        width: calc(100% - 76px);
+    }
 }

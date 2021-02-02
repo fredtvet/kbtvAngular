@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
-import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
@@ -22,7 +21,7 @@ import { UserTimesheetListCriteriaQueryParam } from 'src/app/feature-modules/tim
 import { SelectedMissionIdParam } from '../mission-list-route-params.const';
 import { MissionListFacade } from '../mission-list.facade';
 
-interface ViewModel { mission: Maybe<Immutable<Mission>>, navConfig: MainTopNavConfig }
+interface ViewModel { mission: Maybe<Immutable<Mission>>, bottomActions: AppButton[] }
 
 @Component({
   selector: 'app-mission-details',
@@ -30,40 +29,52 @@ interface ViewModel { mission: Maybe<Immutable<Mission>>, navConfig: MainTopNavC
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MissionDetailsComponent extends WithUnsubscribe() {
-  @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
+  @ViewChild('headerImageInput') headerImageInput: ElementRef<HTMLElement>;
+  @ViewChild('missionImageInput') missionImageInput: ElementRef<HTMLElement>;
+
   FileFolder = FileFolder;
-  ButtonTypes = ButtonTypes;
-  
+
+  baseHeaderImgButton: Partial<AppButton> = {type: ButtonTypes.Stroked}
+
   private can = RolePermissions.MissionList;
 
   get missionId() { return this.route.snapshot.paramMap.get(SelectedMissionIdParam) }
 
   vm$: Observable<ViewModel> =  this.route.paramMap.pipe(
     switchMap(x =>  this.facade.getMissionDetails$(x.get(SelectedMissionIdParam))),
-    map(mission => { return { navConfig: this.getNavConfig(mission), mission }})
+    map(mission => { return { bottomActions: this.getBottomActions(mission), mission }})
   );
 
-  addHeaderImgBtn: AppButton;
+  addHeaderImgBtn: AppButton = {
+    text: "Legg til forsidebilde", 
+    icon: "add_photo_alternate", 
+    callback: () => this.openImageInput(this.headerImageInput), 
+    allowedRoles: this.can.update
+  };
+
+  actionFab: AppButton = {
+    icon: "camera_enhance", 
+    callback: () => this.openImageInput(this.missionImageInput)
+  }
+
+  navConfig: MainTopNavConfig;
 
   constructor(
     private facade: MissionListFacade,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private menuService: BottomSheetMenuService,
     private modelFormService: ModelFormService
   ) { 
     super() 
-    this.addHeaderImgBtn = {
-      text: "Legg til forsidebilde", 
-      icon: "add_photo_alternate", 
-      callback: this.openHeaderImageInput, 
-      allowedRoles: this.can.update
-    }
+    this.navConfig = { backFn: this.onBack }
   }
 
   updateHeaderImage = (files: FileList): void => 
-    (files && files[0] && this.missionId) ? this.facade.updateHeaderImage(this.missionId, files[0]) : undefined;
+    (files?.length && this.missionId) ? this.facade.updateHeaderImage(this.missionId, files[0]) : undefined;
+
+  addMissionImages = (files: FileList): void => 
+    (files?.length && this.missionId) ? this.facade.addMissionImages({missionId: this.missionId, files}) : undefined;
 
   openImageViewer(mission: Mission) {
       this.dialog.open(ImageViewerDialogWrapperComponent, {
@@ -76,8 +87,8 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
       });
   }
  
-  private openHeaderImageInput = (): void => this.imageInput?.nativeElement?.click();
-  
+  private openImageInput = (ref: ElementRef<HTMLElement>): void => ref?.nativeElement?.click();
+
   private openMissionForm = (entityId: number) => 
     this.modelFormService.open<ModelState, Mission>({ 
       onDeleteUri: "/oppdrag",
@@ -94,21 +105,13 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
       [UserTimesheetListCriteriaQueryParam]: JSON.stringify({mission, dateRangePreset: DateRangePresets.ShowAll})
     }], {relativeTo: this.route});
 
-  private openBottomSheetMenu = (mission: Immutable<Mission>) => {   
-    this.menuService.open([
+  private getBottomActions(mission: Maybe<Immutable<Mission>>): AppButton[] {
+    return  [
+      {icon: "timer", callback: this.goToTimesheets, params: [mission], allowedRoles: RolePermissions.UserTimesheetList.access},
+      // {icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission], allowedRoles: this.can.update},
       {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission?.id], allowedRoles: this.can.update},
       {...this.addHeaderImgBtn, text: `${mission?.fileName ? 'Oppdater' : 'Legg til'} forsidebilde`}
-    ]);
-  }
-
-  private getNavConfig(mission: Maybe<Immutable<Mission>>): MainTopNavConfig {
-    return {
-        backFn: this.onBack,
-        buttons: [
-          {icon: "timer", callback: this.goToTimesheets, params: [mission], allowedRoles: RolePermissions.UserTimesheetList.access},
-          {icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission], allowedRoles: this.can.update},
-        ]
-    }
+    ]
   }
 
   private onBack = () => this.router.navigate(['../../'], {relativeTo: this.route})

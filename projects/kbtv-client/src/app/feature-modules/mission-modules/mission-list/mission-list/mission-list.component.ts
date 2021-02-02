@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Employer, Mission, MissionType } from "@core/models";
+import { Roles } from "@core/roles.enum";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { ModelState } from "@core/state/model-state.interface";
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
@@ -13,15 +14,19 @@ import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
 import { FormService } from 'form-sheet';
-import { Immutable, Maybe, Prop } from "global-types";
+import { Immutable, ImmutableArray, Maybe, Prop } from "global-types";
 import { ModelFormService } from 'model-form';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { _getModelDisplayValue } from 'state-model';
 import { MissionListFacade } from '../mission-list.facade';
 import { MissionListProviders } from './mission-list-providers.const';
 
-interface NavViewModel{ criteriaChips?: AppChip[], navConfig?: MainTopNavConfig }
+interface ViewModel{ 
+  criteriaChips?: AppChip[], 
+  bottomActions?: AppButton[], 
+  missions: ImmutableArray<Mission>
+}
 
 @Component({
   selector: "app-mission-list",
@@ -31,18 +36,27 @@ interface NavViewModel{ criteriaChips?: AppChip[], navConfig?: MainTopNavConfig 
 })
 export class MissionListComponent extends WithUnsubscribe(){
 
-  navVm$: Observable<NavViewModel> = this.facade.criteria$.pipe(map(x => { return {
+  private partialVm$ = this.facade.criteria$.pipe(map(x => { return {
     criteriaChips: this.getCriteriaChips(x),
-    navConfig: this.getTopNavConfig(x)
-  }}))
+    bottomActions: this.getBottomActions(x)
+  }}));
 
-  missions$ = this.facade.filteredMissions$;
+  topNavConfig: MainTopNavConfig = {title: "Oppdrag" };
 
-  fabs: AppButton[];
+  vm$: Observable<ViewModel> = combineLatest([
+    this.partialVm$,
+    this.facade.filteredMissions$
+  ]).pipe(
+    map(([partialVm, missions]) => { return <ViewModel>{...partialVm, missions} })
+  );
 
-  noContentBtn: AppButton;
+  actionFab: AppButton;
   
-  private searchBar: SearchBarConfig;
+  searchBar: SearchBarConfig; 
+
+  searchBarBtns: AppButton[];
+
+  searchBarHidden: boolean = true;
 
   constructor(
     private formService: FormService,
@@ -50,22 +64,27 @@ export class MissionListComponent extends WithUnsubscribe(){
     private modelFormService: ModelFormService,
     private facade: MissionListFacade,
   ) {
-    super()
+    super();
 
-    this.fabs = [
-      {icon: "add", aria: "Legg til", color: "accent",
-        callback: this.openMissionForm,
-        allowedRoles: RolePermissions.MissionList.create}
-    ];
+    this.actionFab = {
+      icon: "add", aria: "Legg til", color: "accent",
+      callback: this.openMissionForm,
+      allowedRoles: RolePermissions.MissionList.create
+    };
+
     this.searchBar = {
       searchCallback: this.searchMissions,
       initialValue: this.facade.criteria?.searchString,
       placeholder: "Søk med adresse eller id",
     };
+
+    this.searchBarBtns = [{aria: "Lukk", icon: "close", callback: this.toggleSearchBar}]
   }
 
   searchMissions = (searchString: string) => 
     this.facade.addCriteria({ ...this.facade.criteria, searchString });
+
+  toggleSearchBar = () => this.searchBarHidden = !this.searchBarHidden;
 
   private openMissionForm = () => 
     this.modelFormService.open<ModelState, Mission>({formConfig: {
@@ -81,16 +100,13 @@ export class MissionListComponent extends WithUnsubscribe(){
         submitCallback: (val: MissionCriteria) => this.facade.addCriteria(val),
       });   
 
-  private getTopNavConfig(criteria: Maybe<Immutable<MissionCriteria>>): MainTopNavConfig {
-    return {
-      title: "Oppdrag",
-      buttons: [
+  private getBottomActions(criteria: Maybe<Immutable<MissionCriteria>>): AppButton[] {
+    return  [
         {icon: "filter_list",
           callback: this.openMissionFilter,
           color: _getSetPropCount(criteria || {}, {finished:false}) ? "accent" : undefined},
-      ],
-      searchBar: this.searchBar
-    };
+        {icon: "search", callback: this.toggleSearchBar}
+    ]
   }
 
   private getCriteriaChips(criteria: Maybe<Immutable<MissionCriteria>>){

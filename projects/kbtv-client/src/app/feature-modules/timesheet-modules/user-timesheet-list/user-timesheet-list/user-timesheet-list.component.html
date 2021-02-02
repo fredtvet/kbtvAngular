@@ -1,9 +1,9 @@
-<app-main-skeleton *ngIf="navVm$ | async; let navVm" [fabs]="navVm.fabs" navTogglerDisabled=true paddingDisabled=true>
+<app-main-skeleton navTogglerDisabled=true paddingDisabled=true>
 
     <ng-container navbar>
-        <app-main-top-nav-bar [config]="navVm.navConfig" >
+        <app-main-top-nav-bar [config]="navConfig" >
         </app-main-top-nav-bar>
-        <app-chips-bar [chips]="navVm.criteriaChips"></app-chips-bar>
+        <app-chips-bar [chips]="criteriaChips$ | async"></app-chips-bar>
     </ng-container>
 
     <app-user-timesheet-list-view 
@@ -11,5 +11,9 @@
         (timesheetClicked)="$event?.status === 2 ? openTimesheetCard($event?.id) : openTimesheetForm($event?.id)"
         (filterClicked)="openTimesheetFilter()">
     </app-user-timesheet-list-view>
+
+    <app-bottom-action-bar bottombar 
+        [actions]="bottomActions" [fab]="actionFab">
+    </app-bottom-action-bar>
 
 </app-main-skeleton>

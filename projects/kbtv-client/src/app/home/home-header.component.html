@@ -1,0 +1,13 @@
+<mat-toolbar color="accent" 
+    *ngIf="vm$ | async; let vm"  
+    fxLayout="column" fxLayoutAlign="center center" style="height:30vh;padding-bottom:26px">
+  
+    <h2>{{ vm.currentUser.firstName + ' ' + vm.currentUser.lastName }}</h2>
+    <span class="mat-caption">Sist synkronisert {{ vm.syncTimestamp | date : 	'd.MMM  kl. H:mm'}}</span> 
+    <span class="mt-2">
+        <button routerLink="/profil" mat-stroked-button>Min profil</button>
+        <button appAddToHomeScreen class="ml-2" mat-stroked-button>Last ned app</button>
+    </span>
+    
+  
+</mat-toolbar>

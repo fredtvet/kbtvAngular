@@ -16,6 +16,9 @@
         <ng-container *ngIf="users.length == 0" [ngTemplateOutlet]="noUsers"></ng-container>
     </div>  
 
+    <app-bottom-action-bar bottombar>
+    </app-bottom-action-bar>
+    
 </app-main-skeleton>
 
 <ng-template #noUsers>

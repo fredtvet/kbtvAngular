@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet, User } from '@core/models';
 import { LoadingService } from '@core/services/loading.service';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
@@ -34,6 +35,8 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
     this.facade.weekCriteria$
   ]).pipe(map(([weekNr, weekCriteria]) => this.getNavConfig(weekCriteria?.user, weekCriteria?.year, weekNr)))
 
+  bottomActions: AppButton[];
+  
   constructor(
     private loadingService: LoadingService,
     private facade: TimesheetAdminFacade,
@@ -42,6 +45,8 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
     private route: ActivatedRoute,
     private formService: FormService) {
       super();
+      this.bottomActions = [{icon: 'filter_list', callback: this.openWeekFilter}];
+      
       this.route.paramMap.pipe(
         tap(x => this.facade.updateWeekNr(x.get(TimesheetAdminListWeekNrQueryParam) || _getWeekYear().weekNr)), 
         takeUntil(this.unsubscribe)
@@ -75,9 +80,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
     return {
       title:  "Uke " + (weekNr || ""),
       subTitle: (year || "") + ' - ' + (fullName || ""),
-      backFn: this.onBack,
-      backFnParams: [null],
-      buttons: [{icon: 'filter_list', color: 'accent', callback: this.openWeekFilter}]
+      backFn: this.onBack
     }
   }
 

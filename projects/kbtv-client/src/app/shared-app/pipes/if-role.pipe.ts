@@ -1,0 +1,17 @@
+import { Pipe, PipeTransform } from '@angular/core';
+import { ImmutableArray, Maybe } from 'global-types';
+import { CurrentUser, StateCurrentUser } from 'state-auth';
+import { Store } from 'state-management';
+
+@Pipe({name: 'ifRole'})
+export class IfRolePipe implements PipeTransform {
+
+    private get currentUser(): CurrentUser { return this.store.state.currentUser; }
+
+    constructor(private store: Store<StateCurrentUser>){}
+
+    transform(roles: Maybe<ImmutableArray<string>>) {
+        return !roles?.length || (this.currentUser && roles.indexOf(this.currentUser.role)  !== -1)
+    }
+
+}

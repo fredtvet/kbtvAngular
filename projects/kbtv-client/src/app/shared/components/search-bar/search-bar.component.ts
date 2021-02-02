@@ -6,32 +6,35 @@ import { SearchBarConfig } from './search-bar-config.interface';
 @Component({
   selector: 'app-search-bar',
   template: `
-    <div class="search-bar" *ngIf="cfg">
-  
-      <mat-icon>search</mat-icon>
+    <mat-toolbar class="search-bar" *ngIf="config">
+      <div>
+      
+        <mat-icon>search</mat-icon>
 
-      <input #searchInput appInputListener fxFlex   
-          [placeholder]="cfg.placeholder" 
-          [value]="cfg.initialValue || ''"
-          (inputChanged)="handleSearchFn($event);">
+        <input #searchInput appInputListener fxFlex  
+            [placeholder]="config.placeholder" 
+            [value]="config.initialValue || ''"
+            (inputChanged)="handleSearchFn($event);">
 
-      <ng-container *ngFor="let button of extraButtons || []">
-        <mat-divider vertical=true></mat-divider>
-        <app-button [config]="button | transformButton : ButtonTypes.Icon">
-        </app-button>
-      </ng-container>
-
-    </div>
+        <ng-container *ngFor="let button of extraButtons || []">
+          <mat-divider vertical=true></mat-divider>
+          <app-button [config]="button | transformButton : baseSearchBtn">
+          </app-button>
+        </ng-container>
+        
+      </div>
+    </mat-toolbar>
   `,
   styleUrls: ["./search-bar.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBarComponent{
-  ButtonTypes = ButtonTypes;
 
-  @Input() cfg: SearchBarConfig;
+  @Input() config: SearchBarConfig;
   @Input() extraButtons: AppButton[];
 
+  baseSearchBtn: Partial<AppButton> = {type: ButtonTypes.Icon}
+
   handleSearchFn = (criteria: string): void => 
-    this.cfg?.searchCallback(criteria);
+    this.config?.searchCallback(criteria);
 }

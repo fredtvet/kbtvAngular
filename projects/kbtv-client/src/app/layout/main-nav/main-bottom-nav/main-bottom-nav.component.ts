@@ -4,17 +4,8 @@ import { AppButton } from '@shared-app/interfaces/app-button.interface';
 
 @Component({
   selector: 'app-main-bottom-nav',
-  template: `
-  <mat-toolbar class="bottom-nav-container" color="accent">
-    <ng-container *ngFor="let button of navigations;">
-      <app-main-bottom-nav-button fxFlex
-        *ifRole="button.allowedRoles" 
-        [config]="button">
-      </app-main-bottom-nav-button>
-    </ng-container>
-  </mat-toolbar>
-  `,
-  styleUrls: ['./main-bottom-nav.component.scss'],
+  templateUrl: 'main-bottom-nav.component.html',
+  styleUrls: ['main-bottom-nav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainBottomNavComponent {

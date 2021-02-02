@@ -11,11 +11,11 @@ import { MainNavService } from '../layout/main-nav.service';
 interface ViewModel extends Immutable<StateCurrentUser> {loading: boolean, syncTimestamp: number}
 
 @Component({
-  selector: 'app-home-top-nav',
-  templateUrl: 'home-top-nav.component.html', 
+  selector: 'app-home-header',
+  templateUrl: 'home-header.component.html', 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeTopNavComponent{
+export class HomeHeaderComponent{
 
     vm$: Observable<ViewModel> = combineLatest([
       this.loadingService.queryLoading$,

@@ -9,6 +9,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import { AppButtonComponent } from './components/app-button/app-button.component';
+import { BottomActionBarComponent } from './components/bottom-action-bar/bottom-action-bar.component';
 import { BottomSheetMenuComponent } from './components/bottom-sheet-menu.component';
 import { ChipsBarComponent } from './components/chips-bar.component';
 import { AutoCompleteQuestionComponent } from './components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
@@ -56,7 +57,8 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     ImageViewerDialogWrapperComponent,
     ImageViewerComponent,
     SearchBarComponent,
-    
+    BottomActionBarComponent,
+
     TransformButtonPipe,
     TranslatePipe,
     SortByDatePipe,
@@ -100,6 +102,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     ImageViewerDialogWrapperComponent,
     ImageViewerComponent,
     SearchBarComponent,
+    BottomActionBarComponent,
     
     TransformButtonPipe,
     TranslatePipe,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
@@ -14,6 +14,10 @@ export class LoadingService {
   loading$ = combineLatest([this.queryLoading$, this.commandLoading$]).pipe(map(x => (x[0] || x[1])))
 
   constructor() { }
+
+  isUriLoading$(uri: string): Observable<boolean> {
+    return EMPTY;
+  }
 
   setCommandLoading(loading: boolean){
     this.commandLoadingSubject.next(loading);

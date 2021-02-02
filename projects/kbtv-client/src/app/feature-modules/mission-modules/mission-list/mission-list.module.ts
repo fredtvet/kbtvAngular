@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { AppSaveModelProviders, SaveModelFileProviders } from '@core/state/providers.const';
+import { SharedMissionModule } from '@shared-mission/shared-mission.module';
+import { CreateMissionImagesProviders } from '@shared-mission/state/create-mission-images/create-mission-images.providers.const';
 import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
-import { SharedModule } from '@shared/shared.module';
 import { ModelFormModule } from 'model-form';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
 import { DeleteModelHttpEffect, DeleteModelReducer } from 'state-model';
@@ -26,12 +27,13 @@ import { UpdateLastVisitedReducer } from './update-last-visited.reducer';
   providers: [
     ...SaveModelFileProviders,
     ...AppSaveModelProviders,
+    ...CreateMissionImagesProviders,
     {provide: STORE_EFFECTS, useClass: DeleteModelHttpEffect, multi: true},
     {provide: STORE_REDUCERS, useValue: DeleteModelReducer, multi: true},
     {provide: STORE_REDUCERS, useValue: UpdateLastVisitedReducer, multi: true}
   ],
   imports: [
-    SharedModule,
+    SharedMissionModule,
     MissionListRoutingModule,
     ModelFormModule.forFeature(_formToSaveModelConverter),
   ]

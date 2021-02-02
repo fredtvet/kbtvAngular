@@ -1,6 +1,6 @@
 <app-main-skeleton *ngIf="vm$ | async; let vm" paddingDisabled=true>
     
-    <app-header-layout-skeleton [navConfig]="vm.navConfig" [navOverlayDisabled]="!vm.mission?.fileName">
+    <app-header-layout-skeleton [navConfig]="navConfig" [navOverlayDisabled]="!vm.mission?.fileName">
 
         <img header appImageErrorReloader #img *ngIf="vm.mission?.fileName; else addHeaderImage"
             (tap)="openImageViewer(vm.mission)"
@@ -13,12 +13,18 @@
         </app-mission-details-view>
 
     </app-header-layout-skeleton>
-     
+
+    <app-bottom-action-bar bottombar
+        [fab]="actionFab" 
+        [actions]="vm.bottomActions">
+    </app-bottom-action-bar>
+
 </app-main-skeleton>
   
-<input type="file" style="display:none" #imageInput (change)="updateHeaderImage($event.target.files)">
+<input type="file" style="display:none" #headerImageInput (change)="updateHeaderImage($event.target.files)">
+<input type="file" style="display:none" multiple #missionImageInput (change)="addMissionImages($event.target.files)">
 
 <ng-template #addHeaderImage>
-    <app-button [config]="addHeaderImgBtn | transformButton : ButtonTypes.Stroked">
+    <app-button [config]="addHeaderImgBtn | transformButton : baseHeaderImgButton">
     </app-button>
 </ng-template>

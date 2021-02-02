@@ -21,18 +21,18 @@ export class UserListComponent {
 
   users$: Observable<User[]> = this.facade.sortedUsers$;
 
-  fabs: AppButton[];
+  actionFab: AppButton;
 
   constructor(
     private facade: UsersFacade,
     private modelFormService: ModelFormService,
     private formService: FormService) {
-      this.fabs = [{
+      this.actionFab = {
         icon: "add", 
         aria: 'Ny bruker',
         color: 'accent',
         callback: this.openUserForm
-      }];
+      };
     }
 
   trackByUser = _trackByModel("users")

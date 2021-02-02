@@ -1,0 +1,32 @@
+<mat-toolbar class="bottom-nav-container">
+    <!-- <ng-container *ngFor="let button of navigations;">
+      <app-main-bottom-nav-button fxFlex
+        *ifRole="button.allowedRoles" 
+        [config]="button">
+      </app-main-bottom-nav-button>
+    </ng-container> -->
+ 
+    <div class="bottom-nav-button left">
+        <app-main-bottom-nav-button
+            *ifRole="navigations[0].allowedRoles" 
+            [config]="navigations[0]">
+        </app-main-bottom-nav-button>
+        
+    </div>
+
+    <div class="fab-container">
+        <button class="fab" mat-fab color="accent"><mat-icon>people</mat-icon></button>
+    </div>
+
+    <div class="bottom-nav-button right" fxLayout="row" fxLayoutAlign="space-between center">
+        <app-main-bottom-nav-button
+            *ifRole="navigations[1].allowedRoles" 
+            [config]="navigations[1]">
+        </app-main-bottom-nav-button>
+        <app-main-bottom-nav-button
+            *ifRole="navigations[3].allowedRoles" 
+            [config]="navigations[3]">
+        </app-main-bottom-nav-button>
+    </div>
+
+  </mat-toolbar>

@@ -1,16 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Mission, MissionImage } from "@core/models";
 import { ModelState } from '@core/state/model-state.interface';
-import { AppNotifications } from "@shared-app/app-notifications.const";
-import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
-import { ValidationRules } from "@shared/constants/validation-rules.const";
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
-import { NotificationService, NotificationType } from 'notification';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
 import { DeleteModelAction, MailModelsAction, RelationInclude, _getWithRelations } from 'state-model';
-import { CreateMissionImagesForm, _formToCreateMissionImagesConverter } from './form-to-create-mission-images.converter';
+import { CreateMissionImagesForm, _formToCreateMissionImagesConverter } from '../shared-mission/form-to-create-mission-images.converter';
 import { StoreState } from './store-state';
 
 @Injectable({providedIn: 'any'})
@@ -18,10 +14,7 @@ export class MissionImageListFacade {
 
   mission: Maybe<Immutable<Mission>>;
 
-  constructor(
-    private notificationService: NotificationService,     
-    private store: Store<StoreState>
-  ) { }
+  constructor(private store: Store<StoreState>) { }
 
   getByMissionId$ = (id: Maybe<string>): Observable<Maybe<ImmutableArray<MissionImage>>> => 
     this.store.select$(["missions", "employers", "missionImages"]).pipe(map(state => {
@@ -31,15 +24,9 @@ export class MissionImageListFacade {
       return mission?.missionImages;
     }))
  
-  add = (state: CreateMissionImagesForm): void =>{
-    for(var  i = 0; i < state.files.length; i++){
-      if(_validateFileExtension(state.files[i], ValidationRules.MissionImageFileExtensions)) continue;
-      return this.notificationService.notify(AppNotifications.error({
-        title: "Filtype ikke tillatt for en eller flere filer"
-      }));  
-    }
+  add = (state: CreateMissionImagesForm): void =>
     this.store.dispatch(_formToCreateMissionImagesConverter(state));
-  }
+  
   
   delete = (payload: {ids?: string[], id?: string}): void => 
     this.store.dispatch(<DeleteModelAction<ModelState>>{type: DeleteModelAction, stateProp: "missionImages", payload});

@@ -1,10 +1,10 @@
-<div class="max-width mat-elevation-z2 main-container">
+<div class="max-width mat-elevation-z2 main-container" fxLayout="column">
 
-  <app-home-top-nav></app-home-top-nav>
+  <app-home-header></app-home-header>
 
-  <div style="position: relative">
+  <div style="position: relative" fxFlex >
 
-    <div class="content-container">
+    <div class="content-container" >
 
       <app-home-nav-tile-grid [navigations]="navigations"></app-home-nav-tile-grid>
 
@@ -38,5 +38,7 @@
     </div>
 
   </div>
+
+  <app-home-bottom-bar></app-home-bottom-bar>
 
 </div>

@@ -4,6 +4,7 @@ import { Mission } from "@core/models";
 import { SaveModelFileAction } from '@core/state/save-model-file/save-model-file.action';
 import { AppNotifications } from "@shared-app/app-notifications.const";
 import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
+import { CreateMissionImagesForm, _formToCreateMissionImagesConverter } from "@shared-mission/form-to-create-mission-images.converter";
 import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { ValidationRules } from "@shared/constants/validation-rules.const";
@@ -43,6 +44,8 @@ export class MissionListFacade {
     this.store.select$(["missionTypes", "employers", "missions"]).pipe(
       map(options => { return <MissionCriteriaFormState> {options}})
     )
+  
+  get currentUser() { return this.store.state.currentUser }
 
   constructor(
     private notificationService: NotificationService,
@@ -80,6 +83,9 @@ export class MissionListFacade {
 
     this.store.dispatch(action);
   }
+
+  addMissionImages = (state: CreateMissionImagesForm): void =>
+    this.store.dispatch(_formToCreateMissionImagesConverter(state));
 
   private updateLastVisited = (id: string): void => 
     this.store.dispatch(<UpdateLastVisitedAction>{ type: UpdateLastVisitedAction, id })

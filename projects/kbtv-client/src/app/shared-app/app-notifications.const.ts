@@ -12,7 +12,7 @@ export const AppNotifications = {
     warning: (input: {title?: string, details?: string[], duration?: number}): AppNotification => { 
         return {...input, type: NotificationType.Warning, panelClass: 'notification-warning'}
     },
-    onlineRequired: () => { return AppNotifications.warning({title: "Denne funksjonen krever internett"}) },
+    onlineRequired: () =>  AppNotifications.warning({title: "Denne funksjonen krever internett"}),
     maxContentLength: (contentLength: number): AppNotification => { 
         return AppNotifications.error({
             title: `Forespørselen er for stor til å sendes.`,
@@ -22,4 +22,5 @@ export const AppNotifications = {
             ]
         })
     },
+    invalidFileFormat: () => AppNotifications.error({title: "Filtypen er ikke tillatt"})
 }

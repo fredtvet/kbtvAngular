@@ -38,7 +38,7 @@
 
 .backInUp {
   animation: backInUp;
-  animation-duration: 0.5s;
+  animation-duration: 0.3s;
 }
 .fadeIn {
   animation: fadeIn;
@@ -59,7 +59,10 @@
   animation: fadeInLeft;
   animation-duration: 0.5s;
 }
-
+.zoomIn {
+  animation: zoomIn;
+  animation-duration: 0.3s;
+}
 /*
  * animate.css - https://animate.style/
  * Version - 4.1.0
@@ -344,6 +347,17 @@
     opacity: 1;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
   }
 }
 

@@ -9,18 +9,22 @@
       <ng-content select="[navbar]"></ng-content>
   
     </span>
-  
-    <div [style.paddingTop.px]="paddingDisabled ? 0 : 8"
-      fxFlex class="main-content" appScrollNavElevationToggler [togglerDisabled]="navTogglerDisabled">
+
+    <div fxFlex [ngStyle]="{padding: paddingDisabled ? 0 : '8px 0px 88px 0px'}" 
+      class="main-content" appScrollNavElevationToggler [togglerDisabled]="navTogglerDisabled">
       <ng-content>
     
       </ng-content>
     </div>
-    
+
+    <div class="bottom-bar" [ngClass]="bottomBarHidden ? 'bottom-bar-hidden' : ''" #bottomBar>
+      <ng-content select="[bottombar]"></ng-content>
+    </div>
+
     <div class="fab-container m-2" *ngIf="fabs"
         fxLayout="column" fxLayoutGap="4px">  
         <app-button class="fadeInRight" 
-          *ngFor="let fab of fabs | transformButtons : ButtonTypes.Fab | reverseArray; trackBy: trackByFab" 
+          *ngFor="let fab of fabs | transformButtons : baseFabBtn | reverseArray; trackBy: trackByFab" 
           [config]="fab">
         </app-button>
     </div>

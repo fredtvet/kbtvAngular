@@ -5,11 +5,10 @@ import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { MissionImage, ModelFile } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
-import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { _trackByModel } from "@shared-app/helpers/trackby/track-by-model.helper";
 import { AppButton } from "@shared-app/interfaces/app-button.interface";
-import { SelectableContainerWrapperComponent } from "@shared/components/abstracts/selectable-container-wrapper.component";
+import { BaseSelectableContainerComponent } from "@shared-mission/components/base-selectable-container.component";
 import { ImageViewerDialogWrapperConfig } from "@shared/components/image-viewer/image-viewer-dialog-wrapper-config.const";
 import { ImageViewerDialogWrapperComponent } from "@shared/components/image-viewer/image-viewer-dialog-wrapper.component";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
@@ -23,7 +22,11 @@ import { map, tap } from "rxjs/operators";
 import { SelectedMissionIdParam } from "../../mission-list/mission-list-route-params.const";
 import { MissionImageListFacade } from '../mission-image-list.facade';
 
-interface ViewModel { images: Maybe<ImmutableArray<MissionImage>>, columns: 2 | 4,  fabs: AppButton[], navConfig: MainTopNavConfig }
+interface ViewModel { 
+  images: Maybe<ImmutableArray<MissionImage>>, 
+  columns: 2 | 4,  
+  selectionBarConfig: MainTopNavConfig
+}
 
 @Component({
   selector: "app-mission-image-list",
@@ -31,7 +34,7 @@ interface ViewModel { images: Maybe<ImmutableArray<MissionImage>>, columns: 2 | 
   styleUrls: ["./mission-image-list.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MissionImageListComponent extends SelectableContainerWrapperComponent{
+export class MissionImageListComponent extends BaseSelectableContainerComponent{
   @ViewChild('imageInput') imageInput: ElementRef<HTMLElement>;
   FileFolder = FileFolder;
   private can = RolePermissions.MissionImageList;
@@ -43,22 +46,25 @@ export class MissionImageListComponent extends SelectableContainerWrapperCompone
   vm$: Observable<ViewModel> = combineLatest([
     this.facade.getByMissionId$(this.missionId),
     this.deviceInfoService.isXs$,
-    this.currentFabs$
+    this.selectionBarConfig$
   ]).pipe(
-    tap(x => this.images = x[0]),
-    map(([images, isXs, fabs]) => { return <ViewModel> { 
-      images, columns: isXs ? 2 : 4, fabs, navConfig: this.navConfig
+    tap(x => this.images = x[0] || []),
+    map(([images, isXs, selectionBarConfig]) => { return <ViewModel> { 
+      images, selectionBarConfig, columns: isXs ? 2 : 4
     }})
   )
 
-  private navConfig: MainTopNavConfig;
+  actionFab: AppButton;
 
-  private images: Maybe<ImmutableArray<MissionImage>>;
+  bottomActions: AppButton[];
+
+  navConfig: MainTopNavConfig;
+
+  private images: ImmutableArray<MissionImage>;
 
   constructor( 
     private downloaderService: DownloaderService,
     private deviceInfoService: DeviceInfoService,
-    private menuService: BottomSheetMenuService,
     private formService: FormService,
     private confirmService: ConfirmDialogService,
     private dialog: MatDialog,
@@ -66,19 +72,20 @@ export class MissionImageListComponent extends SelectableContainerWrapperCompone
     private route: ActivatedRoute,
     private router: Router) {
       super();
-      this.navConfig = {
-        title:  "Bilder",
-        backFn: this.onBack,
-        buttons: [{icon: "more_vert", callback: this.openBottomSheetMenu}],
-      }
 
-      this.staticFabs = [
-        {icon: "camera_enhance", aria: 'Ta bilde', color: 'accent', callback: this.openImageInput, allowedRoles: this.can.create}
-      ];
+      this.navConfig = {title:  "Bilder", backFn: this.onBack}
 
-      this.selectedItemsFabs = [
-        {icon: "send", aria: 'Send', color: 'accent', callback: this.openMailImageSheet, allowedRoles: this.can.sendEmail}, 
+      this.actionFab = 
+        {icon: "camera_enhance", aria: 'Ta bilde', callback: this.openImageInput, allowedRoles: this.can.create};
+
+      this.selectedItemsActions = [
+        {icon: "send", aria: 'Send', callback: this.openMailImageSheet, allowedRoles: this.can.sendEmail}, 
         {icon: "delete_forever", aria: 'Slett', color: 'warn', callback: this.openConfirmDeleteDialog, allowedRoles: this.can.delete}
+      ]
+
+      this.bottomActions = [
+        {icon: 'send', text:'Send alle bilder', callback: this.openMailImageSheet, allowedRoles: this.can.sendEmail},
+        {icon: "cloud_download", text: "Last ned alle", callback: () => this.downloadImages(this.images)},
       ]
     }
 
@@ -101,8 +108,6 @@ export class MissionImageListComponent extends SelectableContainerWrapperCompone
     this.missionId ? this.facade.add({missionId: this.missionId, files}) : undefined;
 
   trackByImg = _trackByModel("missionImages")
-
-  trackByCol = (index: number, col: number) => col
 
   private openImageInput = (): void => this.imageInput.nativeElement.click();
 
@@ -133,17 +138,9 @@ export class MissionImageListComponent extends SelectableContainerWrapperCompone
     })
   }
 
-  private openBottomSheetMenu = () => {   
-    this.menuService.open([
-      {icon:'send', text:'Send alle bilder', callback: this.openMailImageSheet, allowedRoles: this.can.sendEmail},
-      {icon: "cloud_download", text: "Last ned alle", callback: this.downloadImages, params: [this.images]},
-    ]);
-  }
-
-  private downloadImages = (imgs: MissionImage[]) => 
+  private downloadImages = (imgs: ImmutableArray<MissionImage>) => 
     this.downloaderService.downloadUrls(imgs.map(x => x.fileName ? _appFileUrl(x.fileName, FileFolder.MissionImageOriginal) : null));
 
   private onBack = () => this.router.navigate(['../'], {relativeTo: this.route.parent});
   
- 
 }

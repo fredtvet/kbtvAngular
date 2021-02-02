@@ -34,13 +34,11 @@
 @include mat-chips-theme($kbtv-client-theme); // d
 @include mat-slider-theme($kbtv-client-theme); // d
 
-.bottom-fab-padding{ padding-bottom: 70px }
 
-//Fix to keep items in CDK virtual scroll responsive 
 .cdk-virtual-scroll-content-wrapper{
   width:100%;
   padding-top:8px;
-  @extend .bottom-fab-padding
+  padding-bottom: 88px;
 }
 
 .horizontal-chips-container:before, .horizontal-chips-container:after {

@@ -1,14 +1,17 @@
-<app-main-skeleton [fabs]="fabs">
+<app-main-skeleton>
 
     <app-main-top-nav-bar navbar [config]="navConfig" >
     </app-main-top-nav-bar>
 
-    <div class="bottom-fab-padding">
-        <ng-container *ngFor="let note of notes$ | async; trackBy: trackByNote">
-            <app-note-item [note]="note" (editClicked)="openEditNoteForm($event)">         
-            </app-note-item>
-            <mat-divider></mat-divider>
-        </ng-container>
-    </div>   
+
+    <ng-container *ngFor="let note of notes$ | async; trackBy: trackByNote">
+        <app-note-item [note]="note" (editClicked)="openEditNoteForm($event)">         
+        </app-note-item>
+        <mat-divider></mat-divider>
+    </ng-container>
+ 
+    <app-bottom-action-bar bottombar
+        [fab]="actionFab">
+    </app-bottom-action-bar>
 
 </app-main-skeleton>

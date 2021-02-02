@@ -1,5 +1,11 @@
-import { TopNavConfig } from '../../interfaces/top-nav.config';
+import { AppButton } from "@shared-app/interfaces/app-button.interface";
 
-export interface MainTopNavConfig extends TopNavConfig{
+export interface MainTopNavConfig  {
     title?: string;
+    subTitle?:string;
+
+    backFn?: Function;
+    backFnParams?: unknown[];
+
+    buttons?: AppButton[];
 }
