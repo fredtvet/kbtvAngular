@@ -13,6 +13,9 @@ mat-toolbar{
 
 .overlay-nav{
     color:white;
+    position:absolute;
+    top:0;
+    z-index:1;
     .primary-button, mat-spinner {
         background: rgba(0,0,0,0.5);
         border-radius: 100%;

@@ -1,10 +1,12 @@
-<mat-toolbar class="overlay_container image_toolbar" fxLayout="row" fxLayoutAlign="space-between center" 
+<!-- <mat-toolbar class="overlay_container image_toolbar" fxLayout="row" fxLayoutAlign="space-between center" 
     [fxHide]="toolbarHidden">
     <button mat-icon-button aria-label="Lukk" (tap)="close()">
         <mat-icon>close</mat-icon>
     </button>
     <button mat-icon-button (click)="openBottomSheet()"><mat-icon>more_vert</mat-icon></button>
-</mat-toolbar>
+</mat-toolbar> -->
+<app-main-top-nav-bar [config]="navConfig" overlayMode=true [fxHide]="toolbarHidden">
+</app-main-top-nav-bar>
 
 <ng-container *ngIf="loadingImage$ | async; let loadingImage">
   <img [fxHide]="loadingImage.loading" alt="oppdragsbilde"
@@ -17,10 +19,9 @@
   <mat-spinner [fxShow]="loadingImage.loading" color="accent"></mat-spinner>
 </ng-container>
 
-
-<mat-toolbar *ngIf="images?.length" class="overlay_container page_counter" [fxHide]="toolbarHidden">
-  <h5>{{ index + 1 }} / {{ images?.length }}</h5>
-</mat-toolbar>
+<div *ngIf="images?.length" class="page-counter-container" [fxHide]="toolbarHidden">
+  <span class="page-counter">{{ index + 1 }} / {{ images?.length }}</span>
+</div>
 
 
 

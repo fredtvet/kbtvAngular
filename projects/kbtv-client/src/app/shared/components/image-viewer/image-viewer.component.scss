@@ -7,31 +7,20 @@ img{
     transform: translatex(calc(50vw - 50%)) translatey(calc(50vh - 50%));
 }
 
-.top_left_fab{
-    position:absolute;
-    left:$gap-size * 2px;
+.page-counter{
+  background:rgba(0,0,0,0.5);
+  border-radius: 10px;
+  padding: 12px;
 }
 
-.top_right_fab{
-    position:absolute;
-    right:$gap-size * 2px;
-}
-
-.overlay_container{
-    background:rgba(0,0,0,0.5);
-    color: white;
+.page-counter-container{
     position: absolute;
+    bottom:0px;
+    color: white;
     z-index:2;
-}
-
-.image_toolbar{
-    left:0px;
-}
-
-.page_counter{
-  width:100%;
-  justify-content:center;
-  bottom:0px;
+    text-align: center;
+    width: 100%;  
+    margin-bottom: 20px;
 }
 
 mat-spinner{

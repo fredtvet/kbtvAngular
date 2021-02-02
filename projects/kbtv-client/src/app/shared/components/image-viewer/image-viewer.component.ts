@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ModelFile } from '@core/models';
-import { BottomSheetMenuService } from '@core/services/ui/bottom-sheet-menu.service';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { FileFolder } from "@shared/enums/file-folder.enum";
 import { Maybe } from 'global-types';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilKeyChanged } from 'rxjs/operators';
+import { MainTopNavConfig } from '../main-top-nav-bar/main-top-nav.config';
 
 @Component({
   selector: 'app-image-viewer',
@@ -18,11 +17,10 @@ export class ImageViewerComponent {
 
   @Input() images: Maybe<ModelFile[]>;
   @Input() currentImage: ModelFile;
-  @Input() actions: AppButton[];
+  @Input() navConfig: MainTopNavConfig;
   @Input() folder: FileFolder;
 
   @Output() currentImageChanged = new EventEmitter();
-  @Output() closed = new EventEmitter();
 
   index: number;
 
@@ -34,7 +32,7 @@ export class ImageViewerComponent {
       debounceTime(10)
     );
 
-  constructor(private menuService: BottomSheetMenuService){};
+  constructor(){};
   
   ngOnInit() {
     if(this.currentImage && this.images?.length)
@@ -62,9 +60,5 @@ export class ImageViewerComponent {
     this.index--;
     this.changeCurrentImage(this.images[this.index]);
   }
-
-  close = () => this.closed.emit();
-
-  openBottomSheet = () => this.menuService.open(this.actions);
   
 }

@@ -3,8 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModelFile } from '@core/models';
 import { DownloaderService } from '@core/services/downloader.service';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { ConfirmDialogService } from 'confirm-dialog';
+import { MainTopNavConfig } from '../main-top-nav-bar/main-top-nav.config';
 import { ImageViewerDialogWrapperConfig } from './image-viewer-dialog-wrapper-config.const';
 
 @Component({
@@ -13,7 +13,7 @@ import { ImageViewerDialogWrapperConfig } from './image-viewer-dialog-wrapper-co
   <app-image-viewer
     [images]="cfg.images" 
     [currentImage]="cfg.currentImage"
-    [actions]="actions"
+    [navConfig]="navConfig"
     [folder]="cfg.fileFolder"
     (currentImageChanged)="currentImage = $event"
     (closed)="close()">
@@ -24,7 +24,7 @@ import { ImageViewerDialogWrapperConfig } from './image-viewer-dialog-wrapper-co
 
 export class ImageViewerDialogWrapperComponent {
 
-  actions: AppButton[];
+  navConfig: MainTopNavConfig;
   
   currentImage: ModelFile;
 
@@ -34,12 +34,17 @@ export class ImageViewerDialogWrapperComponent {
     private dialogRef: MatDialogRef<ImageViewerDialogWrapperComponent>,
     @Inject(MAT_DIALOG_DATA) public cfg: ImageViewerDialogWrapperConfig
     ) {
-      this.actions = [{text: "Last ned bilde", icon: "cloud_download", callback: this.downloadImage}]
-      if(cfg.deleteAction) this.actions.push({
-        text: "Slett bilde", icon: "delete", 
-        callback: this.openConfirmDeleteDialog, 
-        allowedRoles: this.cfg.deleteAction?.allowedRoles
-      })
+      this.navConfig = {
+        buttons: [{text: "Last ned bilde", icon: "cloud_download", callback: this.downloadImage}],
+        backFn: this.close
+      }
+
+      if(cfg.deleteAction) 
+        this.navConfig.buttons?.push({
+          text: "Slett bilde", icon: "delete", 
+          callback: this.openConfirmDeleteDialog, 
+          allowedRoles: this.cfg.deleteAction?.allowedRoles
+        })
     }
 
     close = () => this.dialogRef.close();
