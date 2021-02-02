@@ -1,4 +1,4 @@
-<app-main-skeleton *ngIf="vm$ | async; let vm" paddingDisabled=true>
+<app-main-skeleton *ngIf="vm$ | async; let vm" contentWrapperClass="p-0">
     
     <app-header-layout-skeleton [navConfig]="navConfig" [navOverlayDisabled]="!vm.mission?.fileName">
 

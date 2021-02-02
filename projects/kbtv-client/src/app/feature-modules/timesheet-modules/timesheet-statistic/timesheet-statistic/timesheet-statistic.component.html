@@ -1,4 +1,4 @@
-<app-main-skeleton paddingDisabled=true *ngIf="vm$ | async; let vm">
+<app-main-skeleton contentWrapperClass="bottom-bar-padding" *ngIf="vm$ | async; let vm">
 
     <ng-container navbar *ngIf="vm$ | async; let navVm">
         <app-main-top-nav-bar [config]="navConfig" >

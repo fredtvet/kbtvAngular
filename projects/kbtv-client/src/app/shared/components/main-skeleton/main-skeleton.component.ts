@@ -21,7 +21,7 @@ export class MainSkeletonComponent {
   }
 
   @Input() navTogglerDisabled: boolean;
-  @Input() paddingDisabled: boolean;
+  @Input() contentWrapperClass: string;
   @Input() bottomBarHidden: boolean;
   
   data: MainSkeletonRouteData = this.presenter.data;

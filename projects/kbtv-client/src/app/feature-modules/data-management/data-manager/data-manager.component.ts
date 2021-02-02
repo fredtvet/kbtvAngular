@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { ModelState } from '@core/state/model-state.interface';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { Maybe, Prop } from 'global-types';
+import { Prop } from 'global-types';
 import { ModelDataTableComponent } from 'model-data-table';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -9,7 +10,7 @@ import { ComponentStoreProviders, STORE_REDUCERS } from 'state-management';
 import { DataManagerFacade } from './data-manager.facade';
 import { UpdateSelectedPropertyReducer } from './state/update-selected-property.reducer';
 
-type ViewModel = {navConfig: MainTopNavConfig, selectedProperty: string}
+type ViewModel = {bottomActions: AppButton[], selectedProperty: string}
 
 @Component({
   selector: 'app-data-manager',
@@ -26,14 +27,22 @@ export class DataManagerComponent {
 
   vm$: Observable<ViewModel> = this.facade.selectedProperty$.pipe(
     map(x => { return <ViewModel>{
-      navConfig: this.getNavConfig(x),
+      bottomActions: x ? this.selectedItemsActions : null,
       selectedProperty: x
     }})
   )
 
   properties = this.facade.properties;
+  navConfig: MainTopNavConfig = {title: "Databehandling"}
 
-  constructor(private facade: DataManagerFacade) {}
+  private selectedItemsActions: AppButton[];
+
+  constructor(private facade: DataManagerFacade) {
+    this.selectedItemsActions = [
+      {icon: "add", callback: () => this.facade.createItem()},
+      {icon: "delete_forever", callback: this.deleteItems} 
+    ]
+  }
 
   updateSelectedProperty = (prop: Prop<ModelState>) => 
       this.facade.updateSelectedProperty(prop);
@@ -43,14 +52,5 @@ export class DataManagerComponent {
       this.facade.deleteItems(nodes.map(node => node.data['id']))
   }
 
-  private getNavConfig(selectedProp: Maybe<string>){
-      return { 
-        title: "Databehandling", 
-        buttons: selectedProp ? [
-          {icon: "add", callback: () => this.facade.createItem()},
-          {icon: "delete_forever", callback: this.deleteItems} 
-        ] : null
-      };
-  }
 }
 

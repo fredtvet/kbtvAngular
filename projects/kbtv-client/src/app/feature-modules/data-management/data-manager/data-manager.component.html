@@ -1,8 +1,8 @@
-<app-main-skeleton *ngIf="vm$ | async; let vm" paddingDisabled=true>
+<app-main-skeleton *ngIf="vm$ | async; let vm" contentWrapperClass="bottom-bar-padding">
 
   <ng-container navbar>
 
-    <app-main-top-nav-bar [config]="vm.navConfig" >
+    <app-main-top-nav-bar [config]="navConfig" >
     </app-main-top-nav-bar>
 
     <app-data-property-picker
@@ -18,6 +18,9 @@
     agGridTheme="ag-theme-balham" 
     overlayNoRowsTemplate="Tomt">
   </lib-model-data-table>
+
+  <app-bottom-action-bar bottombar [actions]="vm.bottomActions">
+  </app-bottom-action-bar>
 
 </app-main-skeleton>
 

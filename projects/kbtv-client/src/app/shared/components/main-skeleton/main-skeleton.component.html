@@ -10,7 +10,7 @@
   
     </span>
 
-    <div fxFlex [ngStyle]="{padding: paddingDisabled ? 0 : '8px 0px 88px 0px'}" 
+    <div fxFlex [ngClass]="contentWrapperClass || 'default-main-content'"
       class="main-content" appScrollNavElevationToggler [togglerDisabled]="navTogglerDisabled">
       <ng-content>
     

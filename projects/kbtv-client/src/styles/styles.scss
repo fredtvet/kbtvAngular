@@ -72,6 +72,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
   background-color:mat-color($background, card);
 }
 
+.bottom-bar-padding{ padding-bottom: 56px; }
+
 .scale-150{transform:scale(1.5);}
 .scale-125{transform:scale(1.25);}
 .scale-75{transform:scale(.75);}
