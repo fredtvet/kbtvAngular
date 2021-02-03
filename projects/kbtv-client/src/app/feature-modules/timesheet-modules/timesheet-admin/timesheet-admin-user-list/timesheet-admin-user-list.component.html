@@ -5,8 +5,7 @@
 
     <div *ngIf="users$ | async else loading; let users;">
         <ng-container *ngFor="let user of users; trackBy: trackByUser">
-            <app-list-item 
-            (tap)="goToWeekList(user)"> 
+            <app-list-item (click)="goToWeekList(user)"> 
                 <mat-icon left-side>person</mat-icon>
                 {{user.firstName + ' ' +user.lastName}}
             </app-list-item>
