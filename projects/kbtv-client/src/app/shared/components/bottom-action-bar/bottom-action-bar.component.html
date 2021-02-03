@@ -3,7 +3,7 @@
     'bottom-bar-start-fab': !vm.isXs
 }">
 
-    <div class="bottom-bar-side left" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+    <div class="bottom-bar-side left mat-elevation-z3" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
         <button *ngIf="vm.isXs" mat-icon-button aria-label="Toggle sidenav" (tap)="toggleDrawer()">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
@@ -13,7 +13,7 @@
         <app-button class="fab zoomIn" [config]="fab | transformButton : baseFabBtn"></app-button>
     </div>
 
-    <div class="bottom-bar-side right" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+    <div class="bottom-bar-side right mat-elevation-z3" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
         <app-button *ngFor="let action of vm.actions; trackBy: trackByButton" [config]="action | transformButton : baseActionBtn">
         </app-button>
     </div>
