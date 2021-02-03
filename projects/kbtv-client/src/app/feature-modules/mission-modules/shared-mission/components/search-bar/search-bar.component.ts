@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { SearchBarConfig } from './search-bar-config.interface';
@@ -6,7 +6,7 @@ import { SearchBarConfig } from './search-bar-config.interface';
 @Component({
   selector: 'app-search-bar',
   template: `
-    <mat-toolbar class="search-bar" *ngIf="config">
+    <mat-toolbar class="search-bar" *ngIf="config" [fxHide]="hidden">
       <div>
       
         <mat-icon>search</mat-icon>
@@ -29,9 +29,23 @@ import { SearchBarConfig } from './search-bar-config.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBarComponent{
+  @ViewChild('searchInput') searchInput: ElementRef<HTMLElement>;
 
   @Input() config: SearchBarConfig;
   @Input() extraButtons: AppButton[];
+
+  private _hidden: boolean
+  get hidden(): boolean { return this._hidden };
+
+  @Input('hidden') set hidden(val: boolean) {
+    if(!val && this._hidden) {
+      setTimeout(() => {
+        this.searchInput.nativeElement.focus();
+        this.searchInput.nativeElement.click();
+      }, 50)
+    }
+    this._hidden = val;
+  };
 
   baseSearchBtn: Partial<AppButton> = {type: ButtonTypes.Icon}
 
