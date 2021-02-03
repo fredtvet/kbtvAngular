@@ -1,3 +1,7 @@
+<style>
+    .nav-icon{ transition: transform 200ms ease-out }
+    .nav-icon-open { transform: rotate(180deg) }
+</style>
 <ng-container *ifRole="navButton.allowedRoles">
     <a matRipple *ngIf="navButton.routerLink else categoryButton" 
         (tap)="alertNavigation()" [routerLink]="navButton.routerLink" [routerLinkActive]="['color-accent']">
@@ -9,7 +13,8 @@
         <a matRipple (tap)="toggleChildren()">
             <mat-icon>{{navButton.icon}}</mat-icon>
             <span class="ml-6 mr-2 mat-body-2">{{navButton.text}}</span>
-            <mat-icon *ngIf="navButton.children && navButton.children.length > 0" [@halfwayRotate]="childrenShown">
+            <mat-icon *ngIf="navButton.children && navButton.children.length > 0" 
+                class="nav-icon" [ngClass]="childrenShown ? 'nav-icon-open' : ''">
                 expand_more
             </mat-icon>
         </a>

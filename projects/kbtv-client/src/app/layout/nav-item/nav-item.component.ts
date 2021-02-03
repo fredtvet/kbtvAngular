@@ -1,11 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { halfwayRotate } from '../halfway-rotate.animation';
 import { NavItem } from './nav-item.interface';
 
 @Component({
   selector: 'app-nav-item',
   templateUrl: './nav-item.component.html',
-  animations: [halfwayRotate]
 })
 export class NavItemComponent {
 
