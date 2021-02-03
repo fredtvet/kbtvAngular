@@ -11,12 +11,12 @@ import { NotificationSnackBarData } from './notification-snack-bar-data.interfac
     .details{ max-height:30vh; overflow-y:scroll; }
   </style>
   <div class="notification-container">
-    <span fxLayout="row" fxLayoutAlign="start center" style="margin-bottom:4px;" class="mat-subheading-2">
+    <span fxLayout="row" fxLayoutAlign="start center">
       <mat-icon>{{data.icon}}</mat-icon>
-      <span class="title mat-subheading-2" *ngIf="data.title">{{ data.title }}</span>
+      <span class="title" *ngIf="data.title">{{ data.title }}</span>
     </span>
 
-    <ul class="details mat-body">
+    <ul *ngIf="data.details" class="details mat-body">
         <li *ngFor="let detail of data.details">
             {{ detail }}
         </li>

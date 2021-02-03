@@ -128,17 +128,17 @@ a {
 }
 
 .notification-error{
-  margin-bottom:$bottom-nav-height + $gap-size * 2px!important;
+  margin-bottom:110px!important;
   @extend .warn;
 }
 
 .notification-success{
-  margin-bottom:$bottom-nav-height + $gap-size * 2px!important;
+  margin-bottom:110px!important;
   @extend .accent;
 }
 
 .notification-warn{
-  margin-bottom:$bottom-nav-height + $gap-size * 2px!important;
+  margin-bottom:110px!important;
   @extend .accent;
 }
 
