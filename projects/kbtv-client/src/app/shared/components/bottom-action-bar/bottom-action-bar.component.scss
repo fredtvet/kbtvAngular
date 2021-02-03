@@ -1,17 +1,17 @@
 @import '../../../../styles/variables';
 
 .fab-container {
-    width: 60px;
+    width: 70px;
     display: inline-block;    
     position: relative;    
     height: 56px;
     color:white;
     background-image: -webkit-radial-gradient(
-        30px 1%,
+        35px 1%,
         circle closest-corner, 
         rgba(0, 0, 0, 0) 0, 
-        rgba(0, 0, 0, 0) 30px, 
-        $accent 31px, $accent 32px
+        rgba(0, 0, 0, 0) 35px, 
+        $accent 36px, $accent 37px
     );
 }
 
@@ -36,7 +36,7 @@
     height:100%;
     padding:8px;
     box-sizing:border-box;
-    width: calc(50% - 30px);
+    width: calc(50% - 35px);
 }
 
 .left{
@@ -61,6 +61,6 @@
         width:16px;
     }
     .right{
-        width: calc(100% - 76px);
+        width: calc(100% - 86px);
     }
 }
