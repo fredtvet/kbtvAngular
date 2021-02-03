@@ -8,7 +8,7 @@ interface TimesheetWeekRoute extends CustomRoute<MainSkeletonRouteData>{}
 
 const routes: TimesheetWeekRoute[] = [
   {
-    path: '', data: {disableMaxWidth: true},
+    path: '', data: {disableMaxWidth: true, viewType: "card"},
     component: UserTimesheetWeekComponent,
     children: [
       {
