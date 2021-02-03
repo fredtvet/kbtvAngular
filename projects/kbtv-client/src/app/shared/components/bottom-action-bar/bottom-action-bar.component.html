@@ -1,5 +1,5 @@
 <mat-toolbar *ngIf="vm$ | async; let vm" class="bottom-bar" [ngClass]="{
-    'bottom-bar-no-fab': !fab || !(fab.allowedRoles | ifRole),
+    'bottom-bar-no-fab mat-elevation-z3': !fab || !(fab.allowedRoles | ifRole),
     'bottom-bar-start-fab': !vm.isXs
 }">
 
