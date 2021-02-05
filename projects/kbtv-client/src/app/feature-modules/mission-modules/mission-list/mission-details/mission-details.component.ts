@@ -21,7 +21,7 @@ import { UserTimesheetListCriteriaQueryParam } from 'src/app/feature-modules/tim
 import { SelectedMissionIdParam } from '../mission-list-route-params.const';
 import { MissionListFacade } from '../mission-list.facade';
 
-interface ViewModel { mission: Maybe<Immutable<Mission>>, bottomActions: AppButton[] }
+interface ViewModel { mission: Maybe<Immutable<Mission>>, bottomActions: AppButton[], navConfig: MainTopNavConfig }
 
 @Component({
   selector: 'app-mission-details',
@@ -42,7 +42,11 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
 
   vm$: Observable<ViewModel> =  this.route.paramMap.pipe(
     switchMap(x =>  this.facade.getMissionDetails$(x.get(SelectedMissionIdParam))),
-    map(mission => { return { bottomActions: this.getBottomActions(mission), mission }})
+    map(mission => { return { 
+      bottomActions: this.getBottomActions(mission), 
+      navConfig: { title: mission?.address, backFn: this.onBack },
+      mission
+    }})
   );
 
   addHeaderImgBtn: AppButton = {
@@ -57,18 +61,13 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     callback: () => this.openImageInput(this.missionImageInput)
   }
 
-  navConfig: MainTopNavConfig;
-
   constructor(
     private facade: MissionListFacade,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
     private modelFormService: ModelFormService
-  ) { 
-    super() 
-    this.navConfig = { backFn: this.onBack }
-  }
+  ) { super() }
 
   updateHeaderImage = (files: FileList): void => 
     (files?.length && this.missionId) ? this.facade.updateHeaderImage(this.missionId, files[0]) : undefined;

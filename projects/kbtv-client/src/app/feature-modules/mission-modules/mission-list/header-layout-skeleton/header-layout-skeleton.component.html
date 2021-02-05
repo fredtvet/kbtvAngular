@@ -1,6 +1,6 @@
 <app-main-top-nav-bar class="nav-bar"
-    [ngClass]="contentScrolledToTop ? 'solid' : ''" 
-    [config]="navConfig"
+    [ngClass]="contentScrolledToTop ? 'solid mat-elevation-z1' : ''" 
+    [config]="contentScrolledToTop ? navConfig : (navConfig | mergeObj : noTitleNav)"
     [overlayMode]="(
         navOverlayDisabled || 
         !header.childNodes.length || 
@@ -16,11 +16,11 @@
     </div>
 
     <div class="content-header" #contentHeader 
-        [ngClass]="contentScrolledToTop ? 'mat-elevation-z1 content-header-top' : ''">
+        [ngClass]="contentScrolledToTop ? 'content-header-top' : ''">
 
-        <div class="drag-handle"><mat-icon [fxHide]="contentScrolledToTop">drag_handle</mat-icon></div>
-    
-        <ng-content select="[contentHeader]"></ng-content>
+        <mat-icon class="drag-handle">drag_handle</mat-icon>
+
+        <div class="content-header-title">{{ navConfig.title }}</div>
 
     </div>
     

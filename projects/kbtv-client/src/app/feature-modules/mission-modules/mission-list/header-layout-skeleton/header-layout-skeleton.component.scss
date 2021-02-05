@@ -18,11 +18,10 @@
     }
     
     .content-header{
-        position:sticky;
-        top:64px;
         background:white;
         color:black;
-        z-index:3;
+        z-index:2;
+        position: relative;
         font-size:19px;
         font-weight:400; 
         border-top-left-radius: 20px;
@@ -34,15 +33,17 @@
             text-align: center;
             height:24px;
         } 
+        .content-header-title{
+            transition: opacity 150ms linear;       
+            padding: 0 24px 24px 20px;
+        }
     }
     .content-header-top{
         border-radius: 0px; 
-    }
-    @media (max-width: 599px) {
-        .content-header {
-            top:56px;
+        .content-header-title{
+            opacity: 0;
         }
-    }  
+    } 
     .content {
         background:white;
         display:block;

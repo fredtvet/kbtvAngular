@@ -28,7 +28,7 @@ import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-n
 import { NoContentComponent } from './components/no-content.component';
 import { HttpCommandButtonDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
-import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
+import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 
 @NgModule({
   declarations: [
@@ -58,7 +58,8 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     AppFileUrlPipe,
     ObjectToArrayPipe,
     FuncPipe,
-
+    MergeObjPipe,
+    
     ScrollNavElevationTogglerDirective,   
     HttpCommandButtonDirective,
     ActiveStringFilterDirective,
@@ -96,6 +97,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, ObjectToArr
     ArrayFromNumberPipe,
     AppFileUrlPipe,
     ObjectToArrayPipe,
+    MergeObjPipe,
 
     ScrollNavElevationTogglerDirective,     
     HttpCommandButtonDirective,

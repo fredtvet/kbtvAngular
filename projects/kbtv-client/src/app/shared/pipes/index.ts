@@ -6,3 +6,4 @@ export * from './is-today.pipe';
 export * from './app-file-url.pipe';
 export * from './object-to-array.pipe';
 export * from './func.pipe';
+export * from './merge-obj.pipe';
