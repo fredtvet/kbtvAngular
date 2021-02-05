@@ -1,6 +1,11 @@
 <style>
     .nav-icon{ transition: transform 200ms ease-out }
     .nav-icon-open { transform: rotate(180deg) }
+    a {
+        margin:8px;
+        padding: 8px;
+        display: block;
+    }
 </style>
 <ng-container *ifRole="navButton.allowedRoles">
     <a matRipple *ngIf="navButton.routerLink else categoryButton" 

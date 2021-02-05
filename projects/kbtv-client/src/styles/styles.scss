@@ -95,25 +95,9 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 
 .text-center{text-align:center}
 
-.nav-list{
-  a{
-    margin: $gap-size * 2px;
-    padding: $gap-size * 2px;
-    display:block;
-  }
-}
-
 a {
   color: inherit; /* blue colors for links too */
   text-decoration: inherit; /* no underline */
-}
-
-.entity-card{  
-  width:100%;
-  vertical-align: middle;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-   box-sizing: border-box;
 }
 
 .display-block{ display: block }

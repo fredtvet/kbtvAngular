@@ -3,13 +3,17 @@
     line-height: 0;  
     column-count: 3;
     column-gap: 0px;  
+    .image {
+        width: 100% !important;
+        height: auto !important;
+        img {   
+            width:100%;
+            vertical-align: middle;
+            box-sizing: border-box;    
+        }
+    }    
 }
   
-.image-container > .image {
-    width: 100% !important;
-    height: auto !important;
-}
-
 @media (max-width: 599px) {
     .image-container {
         column-count: 2;
