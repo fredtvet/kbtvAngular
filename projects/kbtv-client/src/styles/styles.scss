@@ -118,12 +118,14 @@ a {
 
 .notification-success{
   margin-bottom:110px!important;
-  @extend .accent;
+  background:$success;
+  color:black;
 }
 
-.notification-warn{
+.notification-warning{
   margin-bottom:110px!important;
-  @extend .accent;
+  background:$warning;
+  color:black;
 }
 
 .ellipsis{

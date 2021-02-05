@@ -24,30 +24,31 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(private notificationService: NotificationService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if(request.responseType != "json") return next.handle(request);
+    if(request.responseType != "json" || request.url.indexOf('/refresh') !== -1) return next.handle(request);
     return next.handle(request).pipe(tap(() => {},
       (err: unknown) => { 
-      if (err instanceof HttpErrorResponse) { 
-        var notification: Maybe<AppNotification> = null;
+        if (err instanceof HttpErrorResponse) 
+          this.notificationService.notify(this.getNotification(request, err));    
+      }));
+  }
 
-        if(err.status === 504) 
-          notification = AppNotifications.error({title: 'Får ikke konkakt med serveren. Vennligst prøv igjen.'})
+  private getNotification(request: HttpRequest<unknown>, err: HttpErrorResponse): AppNotification{
+    if(request.url.indexOf('/SyncAll') !== -1) 
+      return AppNotifications.warning({title: 'Synkronisering mislyktes.'})
 
-        var error = err.error as AppErrorResponse;
+    if(err.status === 504) 
+      return AppNotifications.error({title: 'Får ikke konkakt med serveren. Vennligst prøv igjen.'})
 
-        if(error)
-          notification = AppNotifications.error({
-            title: error.detail || error.title || "En ukjent feil oppsto! Vennligst prøv igjen.",
-            details: error.errors ? this.convertErrorsToStringArray(error.errors) : undefined,
-            duration: this.calculateDuration(error.errors)
-          })
-        
-        if(!notification) 
-          notification = AppNotifications.error({title: "En ukjent feil oppsto! Vennligst prøv igjen."})
+    var error = err.error as AppErrorResponse;
 
-        this.notificationService.notify(notification);
-      }
-    }));
+    if(error)
+      return AppNotifications.error({
+        title: error.detail || error.title || "En ukjent feil oppsto! Vennligst prøv igjen.",
+        details: error.errors ? this.convertErrorsToStringArray(error.errors) : undefined,
+        duration: this.calculateDuration(error.errors)
+      })
+    
+    return AppNotifications.error({title: "En ukjent feil oppsto! Vennligst prøv igjen."})  
   }
 
   private convertErrorsToStringArray(errors: { [key: string]: string[] }): string[]{
