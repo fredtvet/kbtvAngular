@@ -7,7 +7,7 @@ import { AppButton } from '@shared/components/app-button/app-button.interface';
   template: `
     <span class="text-center w-100">
         <p>{{ text }}</p>
-        <app-button *ngIf="button" [config]="button" class="bounceIn" style="display:block"></app-button>
+        <app-button *ngIf="button" [config]="button" class="fadeIn" style="display:block"></app-button>
     </span>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

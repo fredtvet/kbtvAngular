@@ -10,7 +10,9 @@ import { NotificationSnackBarData } from './notification-snack-bar-data.interfac
     .title{ margin-left: 16px }
     .details{ max-height:30vh; overflow-y:scroll; }
   </style>
+
   <div class="notification-container">
+    <mat-icon style="float:right">close</mat-icon>
     <span fxLayout="row" fxLayoutAlign="start center">
       <mat-icon>{{data.icon}}</mat-icon>
       <span class="title" *ngIf="data.title">{{ data.title }}</span>
@@ -21,6 +23,7 @@ import { NotificationSnackBarData } from './notification-snack-bar-data.interfac
             {{ detail }}
         </li>
     </ul>
+
   </div>
   `,
   host: { '(click)': 'onClick()'},
