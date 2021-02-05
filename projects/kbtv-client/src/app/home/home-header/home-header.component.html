@@ -1,4 +1,11 @@
-<mat-toolbar color="accent" 
+<style>
+    mat-toolbar{
+        background: #006064;  /* fallback for old browsers */
+      background: linear-gradient(to top, #006064, #314755)!important;
+      color:white;
+    }
+</style>
+<mat-toolbar
     *ngIf="vm$ | async; let vm"  
     fxLayout="column" fxLayoutAlign="center center" style="height:30vh;padding-bottom:26px">
   
@@ -8,6 +15,5 @@
         <button routerLink="/profil" mat-stroked-button>Min profil</button>
         <button appAddToHomeScreen class="ml-2" mat-stroked-button>Last ned app</button>
     </span>
-    
-  
+     
 </mat-toolbar>
