@@ -5,6 +5,7 @@ import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { InputQuestion, InputQuestionComponent } from '../../components/dynamic-form-questions/input-question.component';
 import { IonDateQuestion, IonDateQuestionComponent } from '../../components/dynamic-form-questions/ion-date-time-question.component';
 import { UserSelectControl } from '../common-controls.const';
+import { isWeekInRange } from '@shared/validators/is-week-in-range.validator';
 
 export interface WeekCriteriaFormState extends OptionsFormState<StateUsers>{ }
 
@@ -27,8 +28,9 @@ export const WeekCriteriaForm: DynamicForm<WeekCriteria, FormState> = {
             type: "control", valueGetter: (s: WeekCriteria) => s.weekNr, questions: [{
                 component:  InputQuestionComponent,      
                 hideOnValueChange: {controlName: "weekNr", callback: (val: number) => val == null},
-                question: <InputQuestion>{ placeholder: "Velg uke", type: "number" }, 
+                question: <InputQuestion>{ placeholder: "Velg uke", type: "tel" }, 
             }], 
         },
     ],
+    validators: [isWeekInRange("weekNr", "year")]
 }

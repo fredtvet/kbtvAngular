@@ -11,5 +11,6 @@ export const ValidationErrorMessages: ValidationErrorMap = {
     daterange: () => "Det mangler en eller flere datoer.",
     email: () => "Eposten er ikke skrevet riktig.",
     issamepasswords: () => "Passordene er ikke like.",
-    filesize: (err: {maxSize: number}) => `Filstørrelse kan ikke overstige ${_formatMb(err.maxSize)}`
+    filesize: (err: {maxSize: number}) => `Filstørrelse kan ikke overstige ${_formatMb(err.maxSize)}.`,
+    isweeknrinrange: (err: {upperWeekLimit: number}) => `Vennligst velg ett ukenummer fra 1 til ${err.upperWeekLimit}.`
 }
