@@ -25,7 +25,6 @@ import { MissionListProviders } from './mission-list-providers.const';
 
 interface ViewModel{ 
   criteriaChips?: AppChip[], 
-  bottomActions?: AppButton[], 
   missions: ImmutableArray<Mission>
 }
 
@@ -39,8 +38,7 @@ export class MissionListComponent extends WithUnsubscribe(){
 
   private partialVm$ = this.facade.criteria$.pipe(map(criteria => { return {
     criteria,
-    criteriaChips: this.getCriteriaChips(criteria),
-    bottomActions: this.getBottomActions(criteria)
+    criteriaChips: this.getCriteriaChips(criteria)
   }}));
 
   topNavConfig: MainTopNavConfig = {title: "Oppdrag" };
@@ -61,6 +59,8 @@ export class MissionListComponent extends WithUnsubscribe(){
 
   searchBarBtns: AppButton[];
 
+  bottomActions: AppButton[];
+
   searchBarHidden: boolean = true;
 
   constructor(
@@ -70,6 +70,11 @@ export class MissionListComponent extends WithUnsubscribe(){
     private facade: MissionListFacade,
   ) {
     super();
+
+    this.bottomActions = [
+      {icon: "filter_list", callback: this.openMissionFilter},
+      {icon: "search", callback: this.toggleSearchBar}
+    ]
 
     this.actionFab = {
       icon: "add", aria: "Legg til", color: "accent",
@@ -104,15 +109,6 @@ export class MissionListComponent extends WithUnsubscribe(){
         navConfig: {title: "Velg filtre"},
         submitCallback: (val: MissionCriteria) => this.facade.addCriteria(val),
       });   
-
-  private getBottomActions(criteria: Maybe<Immutable<MissionCriteria>>): AppButton[] {
-    return  [
-        {icon: "filter_list",
-          callback: this.openMissionFilter,
-          color: _getSetPropCount(criteria || {}, {finished:false}) ? "accent" : undefined},
-        {icon: "search", callback: this.toggleSearchBar}
-    ]
-  }
 
   private getCriteriaChips(criteria: Maybe<Immutable<MissionCriteria>>){
     return this.chipsFactory.createCriteriaChips(criteria, 
