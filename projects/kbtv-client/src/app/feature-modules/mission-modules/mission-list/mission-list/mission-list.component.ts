@@ -1,18 +1,19 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Employer, Mission, MissionType } from "@core/models";
-import { Roles } from "@core/roles.enum";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { ModelState } from "@core/state/model-state.interface";
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
-import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { SearchBarConfig } from "@shared-mission/components/search-bar/search-bar-config.interface";
+import { AppButton } from "@shared/components/app-button/app-button.interface";
+import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
+import { MissionFilter } from "@shared/mission-filter.model";
+import { _filter } from "array-helpers";
 import { FormService } from 'form-sheet';
 import { Immutable, ImmutableArray, Maybe, Prop } from "global-types";
 import { ModelFormService } from 'model-form';
@@ -36,18 +37,22 @@ interface ViewModel{
 })
 export class MissionListComponent extends WithUnsubscribe(){
 
-  private partialVm$ = this.facade.criteria$.pipe(map(x => { return {
-    criteriaChips: this.getCriteriaChips(x),
-    bottomActions: this.getBottomActions(x)
+  private partialVm$ = this.facade.criteria$.pipe(map(criteria => { return {
+    criteria,
+    criteriaChips: this.getCriteriaChips(criteria),
+    bottomActions: this.getBottomActions(criteria)
   }}));
 
   topNavConfig: MainTopNavConfig = {title: "Oppdrag" };
 
   vm$: Observable<ViewModel> = combineLatest([
     this.partialVm$,
-    this.facade.filteredMissions$
+    this.facade.missions$
   ]).pipe(
-    map(([partialVm, missions]) => { return <ViewModel>{...partialVm, missions} })
+    map(([vm, missions]) => { 
+      const filter = new MissionFilter(vm.criteria, undefined, true)
+      return { ...vm, missions: _filter(missions, (entity) => filter.check(entity)) } 
+    })
   );
 
   actionFab: AppButton;

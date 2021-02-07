@@ -9,12 +9,9 @@ import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-
 import { MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { ValidationRules } from "@shared/constants/validation-rules.const";
 import { MissionCriteria } from '@shared/interfaces';
-import { MissionFilter } from '@shared/mission-filter.model';
-import { filterRecords } from '@shared/operators/filter-records.operator';
-import { _sortByDate } from 'array-helpers';
 import { Immutable, Maybe, Prop } from 'global-types';
 import { NotificationService } from 'notification';
-import { combineLatest, Observable, of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { ComponentStore, Store } from 'state-management';
 import { ModelCommand, _getWithRelations } from 'state-model';
@@ -25,13 +22,8 @@ import { UpdateLastVisitedAction } from './update-last-visited.reducer';
 @Injectable()
 export class MissionListFacade {
 
-  filteredMissions$ = combineLatest([
-    this.store.selectProperty$<Mission[]>("missions"),
-    this.componentStore.selectProperty$<MissionCriteria>("missionCriteria")
-  ]).pipe(
-    filterRecords<Mission, MissionCriteria>(MissionFilter, null, true),   
-    map(x => _sortByDate(x.records, "updatedAt"))
-  );
+  missions$ = 
+    this.store.selectProperty$<Mission[]>("missions");
 
   criteria$ = 
     this.componentStore.selectProperty$<MissionCriteria>("missionCriteria");
