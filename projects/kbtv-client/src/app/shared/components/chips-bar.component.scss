@@ -1,0 +1,20 @@
+::ng-deep.horizontal-chips-container{
+    position: relative;
+    width:100%;
+    .horizontal-chips{
+      .mat-chip-list-wrapper {
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        overflow-x:auto!important;
+        overflow-y:hidden;
+        margin: 2px 0 2px 0px;
+        padding-left:8px;
+        .mat-chip{
+          max-width:50%;
+        }
+        .mat-standard-chip{
+          margin:2px;
+        }    
+      }  
+    }  
+  }

@@ -4,7 +4,7 @@ import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 @Component({
   selector: 'app-chips-bar',
   template: `
-     <div class="horizontal-chips-container" *ngIf="chips && chips.length > 0">
+    <div class="horizontal-chips-container" *ngIf="chips && chips.length > 0">
 
         <mat-chip-list aria-orientation="horizontal" class="horizontal-chips">
 
@@ -21,6 +21,7 @@ import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 
     </div>
   `,
+  styleUrls: ['./chips-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChipsBarComponent{

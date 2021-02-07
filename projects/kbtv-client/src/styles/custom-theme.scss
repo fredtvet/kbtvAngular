@@ -41,46 +41,6 @@
   padding-bottom: 88px;
 }
 
-.horizontal-chips-container:before, .horizontal-chips-container:after {
-  content: " ";
-  position: absolute;
-  top: 0;
-  width: 20px;
-  height: 100%;
-  z-index:1;
-  pointer-events:none!important;
-}
-
-.horizontal-chips-container:before {
-  box-shadow: 15px 0 7px -12px inset mat-color($background, card);
-}
-
-.horizontal-chips-container:after {
-  box-shadow: -15px 0 7px -12px inset mat-color($background, card);
-  right:0;
-}
-
-.horizontal-chips-container{
-  position: relative;
-  width:100%;
-  .horizontal-chips{
-    .mat-chip-list-wrapper {
-      flex-wrap: nowrap;
-      white-space: nowrap;
-      overflow-x:auto!important;
-      overflow-y:hidden;
-      margin: 2px 0 2px 0px;
-      padding-left:8px;
-      .mat-chip{
-        max-width:50%;
-      }
-      .mat-standard-chip{
-        margin:2px;
-      }    
-    }  
-  }  
-}
-
 // //Fix for bug on iOs
 .mat-drawer-container {position: unset!important;}
 
