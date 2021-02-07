@@ -15,7 +15,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
     </ng-template>
     <button mat-raised-button fxFlex=40 color="accent" 
       [disabled]="submitDisabled"
-      (tap)="submitted.emit()">
+      (tap)="onSubmit()">
       {{ submitText }}    
     </button>
   </div>
@@ -35,5 +35,7 @@ export class FormActionsComponent {
    @Output() submitted = new EventEmitter();
 
   constructor() {}
+
+  onSubmit = () => !this.submitDisabled ? this.submitted.emit() : null;
 
 }
