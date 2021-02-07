@@ -1,7 +1,6 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgModule } from '@angular/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -15,7 +14,6 @@ import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
    imports: [
-      MatBadgeModule,
       MatFormFieldModule,
       MatInputModule,
       MatSelectModule,
@@ -29,7 +27,6 @@ import { MatSliderModule } from '@angular/material/slider';
       MatSliderModule
    ],
    exports: [
-      MatBadgeModule,
       MatInputModule,
       MatFormFieldModule,
       MatSelectModule,
