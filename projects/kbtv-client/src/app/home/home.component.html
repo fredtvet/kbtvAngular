@@ -1,40 +1,33 @@
-<div class="max-width mat-elevation-z2 main-container" fxLayout="column">
+<div class="max-width mat-elevation-z2 main-container">
 
   <app-home-header></app-home-header>
 
-  <div style="position: relative" fxFlex >
+  <div class="content-container">
 
-    <div class="content-container" >
+    <app-home-nav-tile-grid [navigations]="navigations"></app-home-nav-tile-grid>
 
-      <app-home-nav-tile-grid [navigations]="navigations"></app-home-nav-tile-grid>
+    <div *ifRole="[roles.Oppdragsgiver, roles.Ansatt, roles.Mellomleder]"
+      class="mat-elevation-z1  mission-card">
 
-      <div *ifRole="[roles.Oppdragsgiver, roles.Ansatt, roles.Mellomleder]" 
-        fxLayout="column" fxLayoutAlign="start start" 
-        class="mat-elevation-z1  mission-card">
-   
-          <span class="mat-body-2 mb-2 w-100"> 
-            Sist besøkte oppdrag
-            <mat-divider></mat-divider>
-          </span>
-  
-          <div *ngIf="missionHistory$ | async; let missions; else noContent"
-            class="mission-list">
+      <span class="mat-body-2 mb-2 w-100">
+        Sist besøkte oppdrag
+        <mat-divider></mat-divider>
+      </span>
 
-            <app-list-item *ngFor="let mission of missions" 
-            [routerLink]="['/oppdrag', mission.id, 'detaljer']">
-              <mat-icon left-side>history</mat-icon>
-              {{mission.address}}
-              <mat-icon right-side>chevron_right</mat-icon>
-            </app-list-item>
-               
-          </div>
+      <div *ngIf="missionHistory$ | async; let missions; else noContent" class="mission-list">
 
-          <ng-template #noContent>
-            <div class="mt-2">Finner ingen oppdrag</div>
-          </ng-template>   
+        <app-list-item *ngFor="let mission of missions" [routerLink]="['/oppdrag', mission.id, 'detaljer']">
+          <mat-icon left-side>history</mat-icon>
+          {{mission.address}}
+          <mat-icon right-side>chevron_right</mat-icon>
+        </app-list-item>
 
       </div>
- 
+
+      <ng-template #noContent>
+        <div class="mt-2">Finner ingen oppdrag</div>
+      </ng-template>
+
     </div>
 
   </div>

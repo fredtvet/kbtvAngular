@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
@@ -30,7 +29,6 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
   imports: [
     RouterModule,
     CommonModule, 
-    FlexLayoutModule,
     StateManagementModule,
     StateAuthModule,
     
@@ -46,7 +44,6 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
   exports: [
     RouterModule,
     CommonModule, 
-    FlexLayoutModule,
     
     MatToolbarModule,
     MatSidenavModule,

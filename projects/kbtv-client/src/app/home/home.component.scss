@@ -1,5 +1,11 @@
 @import '../../styles/variables';
 
+.main-container, .mission-card{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
 .main-container{
     background: mat-color($background, background);
     height:100%;
@@ -8,10 +14,11 @@
 }
 
 .content-container{
-    position:absolute; 
-    top:-30px;
+    transform:translateY(-30px);
     width:100%;
     color:$accent;
+    flex: 1 1 1e-09px;
+    box-sizing: border-box;
 }
 
 .mission-card{
@@ -19,6 +26,8 @@
     margin: 0 3.3%;
     padding: $gap-size * 3px;
     background-color:mat-color($background, card);
+    place-content: flex-start;
+    align-items: flex-start;
 } 
 
 .mission-list{

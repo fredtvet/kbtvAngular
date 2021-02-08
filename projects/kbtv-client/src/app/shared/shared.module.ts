@@ -29,6 +29,7 @@ import { NoContentComponent } from './components/no-content.component';
 import { HttpCommandButtonDirective, LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     SharedAppModule,    
     GooglePlaceModule,
     CdkSelectableModule, 
-
+    FlexLayoutModule,
     ConfirmDialogModule,
     FormSheetModule
   ],
@@ -80,6 +81,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     AngularMaterialModule,
     SharedAppModule,
     GooglePlaceModule,   
+    FlexLayoutModule,
 
     CdkSelectableModule,
     BottomSheetMenuComponent,

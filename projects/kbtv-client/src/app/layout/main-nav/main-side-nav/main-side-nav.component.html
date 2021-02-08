@@ -1,4 +1,14 @@
-<mat-toolbar fxLayout="column" fxLayoutAlign="center stretch" class="mb-4 mt-4">
+<style>
+  mat-toolbar{
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: stretch center;
+    align-items: stretch;
+    max-width: 100%;
+  }
+</style>
+<mat-toolbar class="mb-4 mt-4">
 
   <ng-container *ngIf="config.isOnline else offlineHeader">
     <span class="mat-small color-accent ellipsis"> Tilkoblet internett</span>
@@ -19,11 +29,7 @@
 
 <mat-divider></mat-divider>
 
-<div class="nav-list">
-  <ng-container *ngFor="let navButton of config.navigations">
+<app-nav-item *ngFor="let navButton of config.navigations" 
+  [navButton]="navButton" (hasNavigated)="onNavClick()">
+</app-nav-item>
 
-    <app-nav-item [navButton]="navButton" (hasNavigated)="onNavClick()">
-    </app-nav-item>
-
-  </ng-container>
-</div>

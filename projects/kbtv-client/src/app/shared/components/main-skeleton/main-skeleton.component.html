@@ -1,6 +1,6 @@
-<div class="main-container" fxLayout="row">
+<div class="main-container">
 
-  <div fxLayout="column" class="content-container mat-elevation-z2" fxFlex
+  <div class="content-container mat-elevation-z2"
     [ngClass]="{ 'max-width': !data.disableMaxWidth }">
 
     <span class="nav-content"
@@ -10,7 +10,7 @@
   
     </span>
 
-    <div fxFlex [ngClass]="contentWrapperClass || 'default-main-content'"
+    <div [ngClass]="contentWrapperClass || 'default-main-content'"
       class="main-content" appScrollNavElevationToggler [togglerDisabled]="navTogglerDisabled">
       <ng-content>
     

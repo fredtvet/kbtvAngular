@@ -1,11 +1,17 @@
 @import '../../../../styles/variables';
 
+.main-container, .content-container{
+    box-sizing: border-box;
+    display: flex;
+}
+
 .main-container{
     position:relative;
     z-index:1;
     height:100%;
     width:100%;
     background: mat-color($background, app-bar);
+    flex-direction: row;
 }
 
 .content-container{
@@ -15,6 +21,8 @@
     width:100%;
     overflow:hidden;
     background: mat-color($background, card);
+    flex-direction: column;
+    flex: 1 1 0%;
 }
 
 .nav-content{ 
@@ -25,6 +33,8 @@
 .main-content{ 
     overflow-y: auto; 
     margin-bottom: -56px;
+    flex: 1 1 1e-09px;
+    box-sizing: border-box;
 }
 
 .default-main-content{

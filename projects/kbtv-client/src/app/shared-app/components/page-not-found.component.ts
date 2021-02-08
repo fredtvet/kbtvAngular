@@ -3,7 +3,18 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 @Component({
   selector: 'app-page-not-found',
   template: `
-  <span class="h-100" fxLayout="column" fxLayoutAlign="center center">  
+  <style>
+    .container{
+        flex-direction: column;
+        box-sizing: border-box;
+        display: flex;
+        place-content: center;
+        align-items: center;
+        height:100%;
+        color:white;
+    }
+  </style>
+  <span class="container">  
       <span class="mat-display-1 m-0">
           404 
       </span>

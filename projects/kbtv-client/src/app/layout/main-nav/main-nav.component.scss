@@ -14,13 +14,17 @@ mat-sidenav-content{
     margin:0;
     height:100%;
     overflow-x:hidden;
+    flex-direction: column;
     div{
         overflow-x:hidden;
         position:relative;
         height:100%;
+        flex-direction: row;
+        flex: 1 1 1e-09px;
     }
-    app-main-bottom-nav{
-        z-index:5;
-        display:block
-    }
+}
+
+mat-sidenav-content, div{
+    box-sizing: border-box;
+    display: flex;
 }

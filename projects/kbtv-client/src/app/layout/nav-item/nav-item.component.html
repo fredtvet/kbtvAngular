@@ -25,7 +25,8 @@
         </a>
     </ng-template>
 
-    <div class="pl-2" *ngIf="navButton.children && navButton.children.length > 0" [fxHide]="!childrenShown">
+    <div class="pl-2" *ngIf="navButton.children && navButton.children.length > 0" 
+        [style.display]="childrenShown ? 'block' : 'none'">
 
         <app-nav-item *ngFor="let child of navButton.children" [navButton]="child" (hasNavigated)="alertNavigation()">
         </app-nav-item>
