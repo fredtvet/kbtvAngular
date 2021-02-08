@@ -1,15 +1,16 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { Immutable, ImmutableArray, Maybe, UnknownState } from 'global-types';
+import { FormGroup } from '@angular/forms';
+import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
-import { debounceTime, map, startWith, take } from 'rxjs/operators';
+import { debounceTime, map, startWith } from 'rxjs/operators';
+import { DynamicFormFactory } from '../dynamic-form.factory';
 import { DynamicFormStore } from '../dynamic-form.store';
 import { DynamicHostDirective } from '../dynamic-host.directive';
 import { _getValidationErrorMessage } from '../helpers/get-validation-error-message.helper';
 import { _hasSameState } from '../helpers/has-same-state.helper';
-import { DisabledControls, DynamicControl, DynamicForm, FormComponent, ValidationErrorMap } from '../interfaces';
 import { VALIDATION_ERROR_MESSAGES } from '../injection-tokens.const';
-import { ControlComponentLoaderComponent, ValidControl } from './control-component-loader.component';
+import { DynamicForm, FormComponent, ValidationErrorMap } from '../interfaces';
+import { ControlComponentLoaderComponent } from './control-component-loader.component';
 import { DynamicControlGroupComponent } from './dynamic-control-group.component';
 
 /** Responsible for rendering a dynamic form with a {@link DynamicForm} configuration. */
@@ -37,7 +38,7 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
     </form>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [DynamicFormStore],
+  providers: [DynamicFormStore, DynamicFormFactory],
 })
 export class DynamicFormComponent extends ControlComponentLoaderComponent 
     implements FormComponent<DynamicForm<{}, {}>, {}, unknown> {
@@ -71,8 +72,10 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         cdRef: ChangeDetectorRef,
         @Inject(VALIDATION_ERROR_MESSAGES) private validationErrorMessages: ValidationErrorMap,
         private formStore: DynamicFormStore<Object>,
-        private formBuilder: FormBuilder,
-    ) { super(componentFactoryResolver, cdRef, DynamicControlGroupComponent); }
+        private formFactory: DynamicFormFactory,
+    ) { 
+        super(componentFactoryResolver, cdRef, DynamicControlGroupComponent);
+    }
 
     checkPasswords(group: FormGroup) { // here we have the 'passwords' group
         let pass = group.get('newPassword')?.value;
@@ -106,8 +109,7 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
     private initalizeForm() {
         this.dynamicHost.viewContainerRef.clear();
 
-        this.form = this.getFormGroup(this._config.controls, this._config.disabledControls); //Add controls first
-        if(this.config.validators) this.form.setValidators(<ValidatorFn[]> this.config.validators)
+        this.form = this.formFactory.create(this.config)
 
         if(this._config.resettable)
             this.resetEnabled$ = this.form.valueChanges.pipe(
@@ -117,41 +119,6 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
             )
 
         this.loadComponents(this._config.controls, this._config);
-    }
-
-    private getFormGroup(controls: ImmutableArray<ValidControl>, disabledControls: Maybe<DisabledControls<UnknownState>>): FormGroup{
-        const formGroup = this.formBuilder.group({});
-        for(const control of controls) {
-            if(control.type === "group") {
-                if(control.name)
-                    formGroup.addControl(control.name, this.getFormGroup(control.controls, control.disabledControls));
-                else {
-                   const controls = this.getFormGroup(control.controls, disabledControls).controls;
-                   for(const key in controls)
-                       formGroup.addControl(key, controls[key]);           
-                }
-            }
-            else
-                formGroup.addControl(
-                    control.name, 
-                    this.getControl(control, disabledControls ? disabledControls[control.name] : false)
-                );
-        }
-        return formGroup;
-    }
-
-    private getControl(control: Immutable<DynamicControl<{}>>, disabled: boolean): AbstractControl {
-        const value = 
-            control.valueGetter instanceof Function ? control.valueGetter(this._config.initialValue || {}) : control.valueGetter;
-        
-        const validators: ValidatorFn[] = control.validators?.slice() || [];
-        if(control.required) validators.push(Validators.required)       
-        const asyncValidators: AsyncValidatorFn[] = [];
-        if(control.asyncStateValidators) //Validators using state as input
-            for(const customValidator of control.asyncStateValidators) 
-                asyncValidators.push(customValidator(this.formStore.formState$.pipe(take(1)))) 
-
-        return this.formBuilder.control({value, disabled}, validators, asyncValidators);
     }
 
 }
