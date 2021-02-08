@@ -1,9 +1,16 @@
+<style>
+    .card-buttons{
+        flex-direction: row;
+        box-sizing: border-box;
+        display: flex;
+    }
+</style>
 <app-list-item rippleDisabled="true" >
     <mat-icon left-side>{{ (user.role === Roles.Oppdragsgiver) ? 'work' : 'person' }}</mat-icon>
     
     {{ user.lastName }}, {{ user.firstName }}
 
-    <span right-side fxLayout="row">
+    <span right-side class="card-buttons">
         <a *ngIf="user.phoneNumber" style="color:green" mat-icon-button href="tel:{{ user.phoneNumber }}">
             <mat-icon>phone</mat-icon>
         </a>   

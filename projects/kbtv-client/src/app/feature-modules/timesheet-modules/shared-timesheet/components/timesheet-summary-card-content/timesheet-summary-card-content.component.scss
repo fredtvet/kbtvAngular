@@ -1,0 +1,22 @@
+.content-container{
+    flex-direction: row;
+    place-content: center flex-start;
+    align-items: center;
+    *{
+        margin-right: 16px;
+    }
+    .date-content{
+        flex-direction: column;
+        place-content: center;
+        align-items: center;
+    }
+    .content{
+        flex-direction: column;
+        place-content: flex-start center;
+        align-items: flex-start;
+    }
+}
+.content-container, .date-content, .content{
+    box-sizing: border-box;
+    display: flex;
+}

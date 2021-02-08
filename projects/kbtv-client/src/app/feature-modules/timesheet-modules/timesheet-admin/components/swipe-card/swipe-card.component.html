@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="start stretch" class="swipe-card">
+<div class="swipe-card">
 
   <div class="hidden-content">
       <ng-content select="[swipeContent]">
@@ -6,7 +6,7 @@
       </ng-content>    
   </div>
 
-  <div fxFlex class="main-content" matRipple
+  <div class="main-content" matRipple
     [@openCloseConfirm]="{
       value: lockPosition || (isClosed ? 'close' : 'open'), 
       params: {

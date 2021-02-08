@@ -1,9 +1,11 @@
-
-@import "../../../../../../styles/variables";
-
 .mission-bar{
     border-radius:4px!important;
-    padding:$gap-size * 0.5px!important; 
+    padding:2px!important; 
     text-align:center;
     transition: height 200ms linear;
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
 }

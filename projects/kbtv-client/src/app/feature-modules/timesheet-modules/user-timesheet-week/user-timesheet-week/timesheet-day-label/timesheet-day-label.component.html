@@ -1,20 +1,27 @@
-<span class="mat-elevation-z1 pt-2" fxLayout="column" fxLayoutAlign="start center" matRipple 
+<style>
+  .label-container{
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-start;
+    align-items: center;
+  }
+</style>
+<span class="mat-elevation-z1 pt-2 label-container" matRipple *ngIf="date"
   [ngClass]="(date | isToday) ? 'accent' : 'foreground-card color-accent'"
   (click)="labelClicked.emit(date.getTime())">
 
-    <div fxLayout="column" fxLayoutAlign="center center" *ngIf="date" >
-      <span class="mat-h3 m-0 line-height-100">
-        {{ date | date : 'E' }}
-      </span>
+    <span class="mat-h3 m-0 line-height-100">
+      {{ date | date : 'E' }}
+    </span>
 
-      <span class="mat-title m-0 line-height-100">
-        {{ date | date : 'dd' }}
-      </span>
+    <span class="mat-title m-0 line-height-100">
+      {{ date | date : 'dd' }}
+    </span>
 
-      <span class="mat-small line-height-100">
-        {{ date | date : 'MMM' }}
-      </span>
-    </div>
+    <span class="mat-small line-height-100">
+      {{ date | date : 'MMM' }}
+    </span>
  
     <mat-icon class="icon m-1">add</mat-icon>
     

@@ -1,6 +1,6 @@
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Roles } from "@core/roles.enum";
-import { HomeNavTile } from "./home-nav-tile.interface";
+import { HomeNavTile } from "./home-nav-tile-grid/home-nav-tile.interface";
 
 export const HomeNavigations: HomeNavTile[] = [
     {

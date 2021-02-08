@@ -1,35 +1,40 @@
-  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" *ngIf="summary" class="p-3 bg-card">
-    <div fxLayout="column" fxLayoutAlign="center center" *ngIf="summary.weekNr; else yearView">
+  <div *ngIf="summary" class="p-3 bg-card content-container">
+
+    <div class="date-content" *ngIf="summary.weekNr; else yearView">
         <span class="mat-body m-0 line-height-100">Uke</span>
         <span class="mat-headline m-0 line-height-100">{{ summary.weekNr }}</span>
+    </div>
+    
+    <ng-template #yearView>
+      <div class="date-content">
+        <span class="mat-body m-0 line-height-100">År</span>
+        <span class="mat-headline m-0 line-height-100">{{ summary.year }}</span>
       </div>
+    </ng-template>
     
-      <ng-template #yearView>
-        <div fxLayout="column" fxLayoutAlign="center center">
-          <span class="mat-body m-0 line-height-100">År</span>
-          <span class="mat-headline m-0 line-height-100">{{ summary.year }}</span>
-        </div>
-      </ng-template>
-    
-      <span fxLayout="column" fxLayoutAlign="center start" class="ellipsis">
-        <span *ngIf="summary.openHours > 0; else confirmed" class="mat-subheading-2 m-0 color-warn line-height-100">
+    <span class="ellipsis content">
+
+      <span *ngIf="summary.openHours > 0; else confirmed" class="mat-subheading-2 m-0 color-warn line-height-100">
           Åpen
-        </span>
-        <ng-template #confirmed>
-          <span class="mat-subheading-2 m-0 color-accent line-height-100"
-            >Alle timer låst
-          </span>
-        </ng-template>
-        <span class="mat-body m-0 line-height-100">
-            {{ summary.openHours }} timer åpne
-        </span>
-        <span class="mat-body m-0 line-height-100"
-          >{{ summary.confirmedHours }} timer låst
-        </span>
-        <span *ngIf="summary.fullName" class="mat-body-2 m-0 line-height-100">
-          {{summary.fullName}}
-        </span>
       </span>
+
+      <ng-template #confirmed>
+        <span class="mat-subheading-2 m-0 color-accent line-height-100">
+          Alle timer låst
+        </span>
+      </ng-template>
+
+      <span class="mat-body m-0 line-height-100">
+        {{ summary.openHours }} timer åpne
+      </span>
+      <span class="mat-body m-0 line-height-100">
+        {{ summary.confirmedHours }} timer låst
+      </span>
+      <span *ngIf="summary.fullName" class="mat-body-2 m-0 line-height-100">
+        {{summary.fullName}}
+      </span>
+
+    </span>
     
-      <mat-icon class="ml-auto">chevron_right</mat-icon>    
+    <mat-icon class="ml-auto">chevron_right</mat-icon>    
   </div>

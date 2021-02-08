@@ -15,7 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { AppLayoutModule } from './layout/app-layout.module';
 import { AppHammerConfig } from './core/configurations/app-hammer-config';
 import { SharedAppModule } from './shared-app/shared-app.module';
-import { HomeNavTileGridComponent } from './home/home-nav-tile-grid.component';
+import { HomeNavTileGridComponent } from './home/home-nav-tile-grid/home-nav-tile-grid.component';
 import { HomeHeaderComponent } from './home/home-header/home-header.component';
 
 registerLocaleData(norwayLocale, 'nb-NO');

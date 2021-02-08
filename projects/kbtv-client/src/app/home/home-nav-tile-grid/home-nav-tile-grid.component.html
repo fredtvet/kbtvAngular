@@ -1,0 +1,39 @@
+<style>
+    .tile-grid, .tile{
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+    }
+    .tile-grid{
+        flex-flow: row wrap;       
+        place-content: center space-evenly;
+    }
+    .tile {
+        text-align: center;
+        width: 100%;
+        margin-bottom: 3.3%;
+        font-size: 15px;
+        font-weight: 500;
+        flex-direction: column;
+        place-content: center;
+        flex: 1 1 45%;
+        max-width: 45%;
+    }
+</style>
+
+<div class="tile-grid">
+    
+    <ng-container *ngFor="let nav of navigations">
+
+        <span *ifRole="nav.allowedRoles" class="tile mat-elevation-z1 foreground-card p-5" matRipple 
+            [routerLink]="nav.routerLink" [attr.aria-label]="nav.aria">
+
+            <mat-icon class="scale-150 mb-2">{{ nav.icon }}</mat-icon>
+
+            <span>{{ nav.text }}</span>
+
+        </span>
+
+    </ng-container>
+
+</div>

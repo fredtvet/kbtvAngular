@@ -2,6 +2,12 @@
     padding:0!important;  
     overflow:hidden;
     position:relative;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: stretch flex-start;
+    align-items: stretch;
+    max-height: 100%;
     .hidden-content{
         position:absolute;
         top:0;
@@ -10,6 +16,8 @@
         z-index:0!important;
     }
     .main-content{
-        position:relative;     
+        position:relative;    
+        flex: 1 1 0%; 
+        box-sizing: border-box;
     }
 }
