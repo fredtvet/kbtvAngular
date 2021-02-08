@@ -13,7 +13,7 @@ export const UpdateLastVisitedReducer = _createReducer(
         if(!state.missions) return;
 
         const index = state.missions.findIndex(x => x.id === action.id);
-        if(!index) return;
+        if(index === -1) return;
 
         const missions = [...state.missions];
         const mission = missions[index];
