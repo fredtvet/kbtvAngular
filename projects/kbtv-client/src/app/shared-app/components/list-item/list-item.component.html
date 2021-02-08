@@ -1,10 +1,23 @@
-<style>.list-item{ font-size: 15px; font-weight: 500; padding: 16px }</style>
-<span fxLayout="row" fxLayoutAlign="start center" class="bg-card list-item" 
+<style>
+.list-item{ 
+    font-size: 15px; font-weight: 500; padding: 16px ;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-start;
+    align-items: center;
+}
+.list-item-content{
+    flex: 1 1 0%;
+    box-sizing: border-box;
+}
+</style>
+<span class="bg-card list-item" 
     matRipple [matRippleDisabled]="rippleDisabled"> 
 
     <ng-content select="[left-side]"></ng-content>
 
-    <span class="ml-5 ellipsis" fxFlex>
+    <span class="list-item-content ml-5 ellipsis">
         <ng-content></ng-content>
     </span>    
     
