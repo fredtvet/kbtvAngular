@@ -36,12 +36,12 @@ export class DynamicFormFactory {
                 else {
                    const controls = this.getFormGroup(control.controls, initialValue, disabledControls).controls;
                    for(const key in controls)
-                        this.addControl(formGroup, key, controls[key])
+                        formGroup.addControl(key, controls[key])
                 }
             }
             else 
-                this.addControl(
-                    formGroup, control.name,  
+                formGroup.addControl(
+                    control.name,  
                     this.getControl(control, initialValue, disabledControls ? disabledControls[control.name] : false)
                 )
 
@@ -66,7 +66,4 @@ export class DynamicFormFactory {
         return this.formBuilder.control({value, disabled}, validators, asyncValidators);
     }
 
-    private addControl(formGroup: FormGroup, key: string, control: AbstractControl): void{
-        formGroup.addControl(key, control);    
-    }
 }
