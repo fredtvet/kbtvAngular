@@ -1,3 +1,4 @@
+import { _groupBy } from 'array-helpers';
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { Observable } from 'rxjs';
 import { ActionDispatcher } from './action-dispatcher';
@@ -14,15 +15,13 @@ import { StateBase } from './state-base';
 import { StateAction } from './state.action';
 import { Store } from './store';
 
-type ReducerMap = {[key: string]: ImmutableArray<Reducer<unknown, StateAction>>}
+type ReducerMap = {[key: string]: Immutable<Reducer<unknown, StateAction>>}
 
 export abstract class StoreBase<TState> {
 
     private reducerMap: ReducerMap = {};
 
     private _settings: StoreSettings;
-
-    private metaReducers: Immutable<MetaReducer<unknown, StateAction>>[];
 
     /** @readonly The store state */
     get state(): Immutable<TState> { return this.base.getStoreState() }
@@ -39,14 +38,16 @@ export abstract class StoreBase<TState> {
         private interceptors: ImmutableArray<ActionInterceptor>,
         settings?: StoreSettings,
     ) { 
-        this.metaReducers = metaReducers?.filter((v, i, a) => a.indexOf(v) === i)
+        const uniqueMetaReducers = metaReducers?.filter((v, i, a) => a.indexOf(v) === i)
         
-        if(reducers)
-            for(const reducer of reducers){
-                const value = this.reducerMap[reducer.type];
-                this.reducerMap[reducer.type] = value ? [...value, reducer] : [reducer];
-            }  
-             
+        if(reducers){
+            const groupedReducers = _groupBy(reducers, "type")
+            for(const type in groupedReducers){
+               const mergedReducer = _mergeReducers(groupedReducers[type], type);
+               this.reducerMap[type] = _applyMetaReducers(mergedReducer, uniqueMetaReducers);
+            }
+        }
+
         this._settings = { logStateChanges: false, strictImmutability: true, ...(settings || {}) };
 
         this.base.strictImmutability = this._settings.strictImmutability;
@@ -84,16 +85,13 @@ export abstract class StoreBase<TState> {
        this.state$.pipe(selectProp<TState, TResult>(prop))
    
     private reduceState(action: Immutable<StateAction>): void{
-        const actionReducers = this.reducerMap[action.type];
-    
-        if(!actionReducers?.length) return;
-        const mergedReducer = _mergeReducers(actionReducers, action.type);
+        const reducer = this.reducerMap[action.type];
 
-        const modifiedReducer = _applyMetaReducers(mergedReducer, this.metaReducers);
+        if(!reducer) return;
 
         const state = this.base.getStoreState();
 
-        const newState = tryWithLogging(() => modifiedReducer.reducerFn(<{}> state, action));
+        const newState = tryWithLogging(() => reducer.reducerFn(<{}> state, action));
         
         this.setState(<TState> newState) 
     }
