@@ -15,10 +15,6 @@ export class LoadingService {
 
   constructor() { }
 
-  isUriLoading$(uri: string): Observable<boolean> {
-    return EMPTY;
-  }
-
   setCommandLoading(loading: boolean){
     this.commandLoadingSubject.next(loading);
   }
