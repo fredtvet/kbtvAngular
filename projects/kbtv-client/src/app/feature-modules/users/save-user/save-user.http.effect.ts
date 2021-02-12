@@ -18,6 +18,7 @@ export class SaveUserHttpEffect extends SaveModelHttpEffect<User, ModelState> im
 
     protected createHttpBody(action: SaveUserAction): User & {password?: string} {
         if(action.saveAction === ModelCommand.Update) return action.entity;
-        return {...action.entity, password: action.password};
+        let {employer, ...rest} = action.entity
+        return {...rest, password: action.password};
     }
 }
