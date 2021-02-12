@@ -12,7 +12,9 @@
     "e2e": "ng e2e",
     "analyze:wba": "webpack-bundle-analyzer dist/kbtv-client/stats.json",
     "analyze:sme": "source-map-explorer dist/kbtv-client/**/*.js",
-    "compodoc": "npx compodoc -p tsconfig.json"
+    "compodoc": "npx compodoc -p tsconfig.json",
+    "buildAll": "node build-all.js",
+    "buildDebug": "env NG_BUILD_MANGLE=false NG_BUILD_MINIFY=false NG_BUILD_BEAUTIFY=true ng build --project kbtv-client --prod --stats-json"
   },
   "private": true,
   "dependencies": {
