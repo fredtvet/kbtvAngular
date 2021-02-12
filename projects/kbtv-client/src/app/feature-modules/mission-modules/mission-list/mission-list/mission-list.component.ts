@@ -3,7 +3,6 @@ import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Employer, Mission, MissionType } from "@core/models";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { ModelState } from "@core/state/model-state.interface";
-import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { SearchBarConfig } from "@shared-mission/components/search-bar/search-bar-config.interface";
@@ -13,9 +12,9 @@ import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
 import { MissionFilter } from "@shared/mission-filter.model";
-import { _filter } from "array-helpers";
+import { _filter, _sortByDate } from "array-helpers";
 import { FormService } from 'form-sheet';
-import { Immutable, ImmutableArray, Maybe, Prop } from "global-types";
+import { Immutable, Maybe, Prop } from "global-types";
 import { ModelFormService } from 'model-form';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
@@ -25,7 +24,7 @@ import { MissionListProviders } from './mission-list-providers.const';
 
 interface ViewModel{ 
   criteriaChips?: AppChip[], 
-  missions: ImmutableArray<Mission>
+  missions: Immutable<Mission>[]
 }
 
 @Component({
@@ -49,7 +48,9 @@ export class MissionListComponent extends WithUnsubscribe(){
   ]).pipe(
     map(([vm, missions]) => { 
       const filter = new MissionFilter(vm.criteria, undefined, true)
-      return { ...vm, missions: _filter(missions, (entity) => filter.check(entity)) } 
+      return { ...vm, missions: 
+        _sortByDate<Mission>(_filter(missions, (entity) => filter.check(entity)), "updatedAt") || []
+      } 
     })
   );
 
