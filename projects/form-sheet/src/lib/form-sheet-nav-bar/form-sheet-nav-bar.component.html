@@ -21,7 +21,7 @@
     <button mat-icon-button *ngFor="let button of config.buttons || []"
         [color]="button.color"
         [attr.aria-label]="button.aria"
-        (tap)="handleCallback(button.callback)">
+        (click)="handleCallback(button.callback)">
         <mat-icon>{{ button.icon }}</mat-icon>
     </button>
 
