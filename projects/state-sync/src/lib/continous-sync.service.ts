@@ -1,9 +1,9 @@
 import { ApplicationRef, Injectable } from "@angular/core";
 import { Store } from 'state-management'
-import { concat, interval } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { filter, first, map, tap } from 'rxjs/operators';
 import { SyncStateAction } from './state/actions';
 import { StoreState } from "./store-state.interface";
+import { concat, fromEvent, interval, merge, of } from "rxjs";
 
 /** Root service responsible for keeping system synchronized */
 @Injectable({providedIn: "root"})
@@ -18,7 +18,12 @@ export class ContinousSyncService {
   
     /** Initalizes the synchronization clock. */
     initalize(): void {
-      this.syncAll()
+      merge(
+        fromEvent(window, 'online'),
+        of(navigator.onLine).pipe(filter(x => x === true))
+      ).pipe(
+        first()
+      ).subscribe(x => this.syncAll())
       this.continousSync$.subscribe();
     }
       
