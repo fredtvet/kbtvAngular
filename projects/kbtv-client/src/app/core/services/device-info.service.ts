@@ -18,17 +18,13 @@ export class DeviceInfoService {
     this.isIphone = /(iPad|iPhone)/g.test(iphoneId); 
   }
 
-  get isOnline(){ return navigator.onLine };
+  get isOnline(): boolean { return navigator.onLine };
 
-  isOnline$ = merge<boolean>(
-    fromEvent(window, 'offline').pipe(map(() => false)),
-    fromEvent(window, 'online').pipe(map(() => true)),
-    of(navigator.onLine),
-    // new Observable((sub: Observer<boolean>) => {
-    //   sub.next(navigator.onLine);
-    //   sub.complete();
-    // })
-  );
+  isOnline$: Observable<boolean> = merge(
+    fromEvent(window, 'offline'),
+    fromEvent(window, 'online'),
+    of(null)
+  ).pipe(map(x => navigator.onLine));
 
   isIphone: boolean;
 
