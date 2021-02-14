@@ -25,7 +25,7 @@ export interface QueuedCommand {
     request: Immutable<OptimisticHttpRequest>, 
     stateSnapshot: Maybe<Immutable<UnknownState>>, 
     dispatched?: boolean,
-    requestId?: number
+    commandId?: string
 };
 
 /** Represents a slice of state containing the request queue */
@@ -42,4 +42,10 @@ export interface OptimisticStateSelector<TState>{
     /** If set to 'exclude', all state except the props specified are treated optimistically.
      *  If set to 'include', only the props specified are treated optimistically. */
     strategy: "include" | "exclude";
+}
+
+/** Represents information neccesary to track the last command from the previous session. */
+export interface LastCommand{
+    lastCommandId: string;
+    lastCommandStatus: boolean;
 }

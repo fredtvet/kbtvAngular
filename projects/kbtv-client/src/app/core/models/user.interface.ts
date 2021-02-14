@@ -9,4 +9,5 @@ export interface User extends Model, EmployerForeign, IContactable {
   email: string;
   role: string;
   lastCommandStatus: boolean;
+  lastCommandId: string;
 };

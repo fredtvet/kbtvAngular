@@ -16,7 +16,7 @@ export class DispatchHttpEffect implements Effect<DispatchHttpAction> {
     handle$(actions$: Observable<DispatchedAction<DispatchHttpAction>>): Observable<StateAction> {
         return actions$.pipe(
             listenTo([DispatchHttpAction]),
-            mergeMap(x => this.httpFactory.getObserver$(x.action.request)),
+            mergeMap(x => this.httpFactory.getObserver$(x.action.request, x.action.commandId)),
             map(x => <HttpSuccessAction>{ type: HttpSuccessAction })
         )
     }
