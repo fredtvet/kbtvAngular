@@ -18,9 +18,8 @@ export class RolePreloadService implements PreloadingStrategy {
     }
   
     private preloadCheck(route: CustomRoute<AuthRouteData>, role: Maybe<string>): boolean {
-      return (
-        route.data != null && role != null &&
-        (!route.data['allowedRoles'] || (route.data['allowedRoles'].indexOf(role) !== -1))
+      return route.data == null || 
+      (role != null && (!route.data['allowedRoles'] || (route.data['allowedRoles'].indexOf(role) !== -1))
       )
     }
   
