@@ -1,0 +1,11 @@
+::ng-deep .request-log-container {
+  .list-item-content {
+    white-space: normal;
+    overflow: auto;
+    text-overflow: none;
+  }
+  .completed-requests-button {
+      width: 100%;
+      margin-top:16px;
+  }
+}

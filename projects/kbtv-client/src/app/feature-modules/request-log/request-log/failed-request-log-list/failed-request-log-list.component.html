@@ -1,0 +1,19 @@
+<div class="mat-body-2 ml-5 mt-3">Mislykkede aktiviteter</div>
+
+<div class="mat-body ml-5 mb-3" *ngIf="!requests?.length">Ingen aktiviteter mislykket</div>
+
+<ng-container *ngFor="let req of requests || []; trackBy: trackByReq">
+
+    <app-list-item rippleDisabled=true>
+
+        <mat-icon left-side class="pl-2 pr-2" color="warn">error</mat-icon>
+
+        <div class="mat-caption">Behandling mislykket</div>
+
+        {{ req.request.options.description }}
+
+    </app-list-item>
+
+    <mat-divider inset=true></mat-divider>
+
+</ng-container>

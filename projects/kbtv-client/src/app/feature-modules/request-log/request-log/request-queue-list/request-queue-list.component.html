@@ -1,0 +1,25 @@
+<div class="mat-body-2 ml-5 mt-3">Ubehandlede aktiviteter</div>
+
+<div class="mat-body ml-5 mb-3" *ngIf="!requests?.length">Ingen aktiviteter ubehandlet</div>
+
+<ng-container *ngFor="let queued of requests || []; trackBy: trackByReq">
+
+    <app-list-item rippleDisabled=true>
+        
+        <mat-icon *ngIf="!queued.dispatched || !isOnline; else dispatchedSpinner" left-side class="pl-2 pr-2">
+            pending_actions
+        </mat-icon>
+
+        <div class="mat-caption">{{ !isOnline ? 'Venter på internett' : (queued.dispatched ? 'Under behandling' : 'Venter') }}...</div>
+
+        {{ queued.request.options.description }}
+
+        <ng-template #dispatchedSpinner>
+            <span class="pl-2 pr-2"><mat-spinner left-side color="accent" diameter="24"></mat-spinner></span>  
+        </ng-template>
+
+    </app-list-item>
+
+    <mat-divider inset=true></mat-divider>
+
+</ng-container>

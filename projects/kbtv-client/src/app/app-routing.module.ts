@@ -38,6 +38,9 @@ const routes: AppRoute[] = [
 
       {path: 'timestatistikk', data: {allowedRoles: RolePermissions.TimesheetStatistic.access}, 
         loadChildren: () => import('src/app/feature-modules/timesheet-modules/timesheet-statistic/timesheet-statistic.module').then(m => m.TimesheetStatisticModule)},
+        
+      {path: 'aktivitetslogg', 
+        loadChildren: () => import('src/app/feature-modules/request-log/request-log.module').then(m => m.RequestLogModule)},
     ],
   },
   
