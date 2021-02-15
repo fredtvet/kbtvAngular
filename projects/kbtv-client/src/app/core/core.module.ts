@@ -11,19 +11,18 @@ import { StateSyncModule } from 'state-sync';
 import { AppAuthCommandApiMap } from './configurations/app-auth-command-api-map.const';
 import { AppAuthRedirects } from './configurations/app-auth-redirects.const';
 import { AppCommandApiMap } from './configurations/app-command-api-map.const';
-import { AppStateDbConfig } from './configurations/app-state-db-config.const';
-import { AppStoreSettings } from './configurations/app-store-settings.const';
-import { DefaultState } from './configurations/default-state.const';
 import { AppModelConfigs } from './configurations/app-model-configs.const';
 import { AppOptimisticState } from './configurations/app-optimistic-state.const';
+import { AppStateDbConfig } from './configurations/app-state-db-config.const';
+import { AppStoreSettings } from './configurations/app-store-settings.const';
 import { AppSyncStateConfig } from './configurations/app-sync-state.config';
+import { DefaultState } from './configurations/default-state.const';
 import { HttpErrorInterceptor } from './interceptors/http.error.interceptor';
 import { HttpIsOnlineInterceptor } from './interceptors/http.is-online.interceptor';
 import { HttpLoadingInterceptor } from './interceptors/http.loading.interceptor';
 import { StartupService } from './services/startup.service';
 import { SyncHttpFetcherService } from './services/sync-http-fetcher.service';
 import { InitalizeHttpQueueEffect, InitalizeSyncEffect } from './state/initalizing.effects';
-import { NotifyOnOptimisticErrorEffect } from './state/notify-on-optimistic-error.effect';
 import { NotifyOnUnauthorizedEffect } from './state/notify-on-unauthorized.effect';
 import { SyncUserOnLoginEffect } from './state/sync-user-on-login.effect';
 import { WipeStateReducer } from './state/wipe-state.reducer';
@@ -63,7 +62,6 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
     { provide: STORE_EFFECTS, useClass: InitalizeHttpQueueEffect, multi: true },
 
     { provide: STORE_EFFECTS, useClass: SyncUserOnLoginEffect, multi: true},
-    { provide: STORE_EFFECTS, useClass: NotifyOnOptimisticErrorEffect, multi: true},
     { provide: STORE_EFFECTS, useClass: NotifyOnUnauthorizedEffect, multi: true},
     { provide: STORE_REDUCERS, useValue: WipeStateReducer, multi: true},   
   ]

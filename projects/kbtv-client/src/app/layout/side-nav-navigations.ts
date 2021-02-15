@@ -51,5 +51,10 @@ export const SideNavNavigations: NavItem[] = [
     icon: "person",
     text: "Min Profil",
     routerLink: "/profil"
+  },  
+  {
+    icon: "rule",
+    text: "Aktivitetslogg",
+    routerLink: "/aktivitetslogg"
   },
 ];

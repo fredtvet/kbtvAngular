@@ -50,6 +50,12 @@ export type ModelCommandApi<TSuffix> = {
     suffix: TSuffix
 }
 
+/** Represents options set on optimistic requests made by model commands */
+export interface OptimisticRequestOptions {
+    /** A description of the action the request represents */
+    description: string
+}
+
 export interface ModelCommandApiMap {
     [ModelCommand.Create]: Immutable<ModelCommandApi<string>>,
     [ModelCommand.Update]: Immutable<ModelCommandApi<(id: unknown) => string>>,

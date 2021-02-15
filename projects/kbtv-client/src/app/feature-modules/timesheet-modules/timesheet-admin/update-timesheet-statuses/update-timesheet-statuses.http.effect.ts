@@ -5,6 +5,7 @@ import { OptimisticHttpRequest, OptimisticHttpAction } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
+import { OptimisticRequestOptions } from 'state-model';
 import { UpdateTimesheetStatusesAction } from './update-timesheet-statuses.action';
 
 @Injectable()
@@ -23,12 +24,12 @@ export class UpdateTimesheetStatusesHttpEffect implements Effect<UpdateTimesheet
         )
     }
 
-    protected createHttpRequest(command: Immutable<UpdateTimesheetStatusesAction>): OptimisticHttpRequest {
+    protected createHttpRequest(command: Immutable<UpdateTimesheetStatusesAction>): OptimisticHttpRequest<OptimisticRequestOptions> {
         return {
             method: "PUT", 
             body: {ids: command.ids, status: command.status}, 
             apiUrl: `${ApiUrl.Timesheet}/Status`,
-            cancelMessage: "Oppdatering av timestatuser er reversert"
+            options: {description: `Oppdatering status for ${command.ids.length} timeregistreringer`}
         }
     }
 

@@ -5,6 +5,7 @@ import { FormDataEntry, OptimisticHttpRequest, OptimisticHttpAction } from 'opti
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
+import { OptimisticRequestOptions } from 'state-model';
 import { CreateMissionImagesAction } from './create-mission-images.action';
 
 @Injectable()
@@ -21,12 +22,12 @@ export class CreateMissionImagesHttpEffect implements Effect<CreateMissionImages
         )
     }
 
-    private createHttpRequest(command: Immutable<CreateMissionImagesAction>): OptimisticHttpRequest{
+    private createHttpRequest(command: Immutable<CreateMissionImagesAction>): OptimisticHttpRequest<OptimisticRequestOptions>{
         return {
             apiUrl: `${ApiUrl.MissionImage}?missionId=${command.missionId}`,
             body: this.createHttpBody(command),
             method: "POST",
-            cancelMessage: `Oppretting av ${command.fileWrappers.length} bilder på oppdrag ${command.missionId} er reversert.`
+            options: {description: `Oppretting av ${command.fileWrappers.length} bilde${command.fileWrappers.length > 1 ? "r" : ""} på oppdrag ${command.missionId}.`}
         }
     }
 

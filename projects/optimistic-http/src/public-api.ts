@@ -12,6 +12,5 @@ export * from './lib/optimistic-http.module';
 export * from './lib/command-id-header.const';
 
 export * from './lib/state/optimistic-http.action'
-export * from './lib/state/optimistic-http-error.action'
 export * from './lib/state/http-queue-shift.action'
 export * from './lib/state/http-error/http-error.action'

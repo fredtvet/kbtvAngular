@@ -4,6 +4,7 @@ import { OptimisticHttpRequest, OptimisticHttpAction } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
+import { OptimisticRequestOptions } from 'state-model';
 import { UpdateCurrentUserAction } from './update-current-user.action';
 
 @Injectable()
@@ -22,12 +23,12 @@ export class UpdateCurrentUserHttpEffect implements Effect<UpdateCurrentUserActi
         )
     }
 
-    protected createHttpRequest(action: UpdateCurrentUserAction): OptimisticHttpRequest {
+    protected createHttpRequest(action: UpdateCurrentUserAction): OptimisticHttpRequest<OptimisticRequestOptions> {
         return {
             method: "PUT", 
             body: action.user, 
             apiUrl: ApiUrl.Auth, 
-            cancelMessage: "Oppdatering av profil er reversert"
+            options: {description: "Oppdatering av profil"}
         }
     }
 

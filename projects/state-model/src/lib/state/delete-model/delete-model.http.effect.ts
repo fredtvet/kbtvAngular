@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { MODEL_COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS } from '../../injection-tokens.const';
-import { ModelCommandApiMap, ModelConfig } from '../../interfaces';
+import { ModelCommandApiMap, ModelConfig, OptimisticRequestOptions } from '../../interfaces';
 import { ModelCommand } from '../../model-command.enum';
 import { ModelStateConfig } from '../../model-state.config';
 import { DeleteModelAction } from './delete-model.action';
@@ -29,7 +29,7 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<unknown>>
         )
     }
 
-    private createHttpRequest(action: Immutable<DeleteModelAction<unknown>>): OptimisticHttpRequest {
+    private createHttpRequest(action: Immutable<DeleteModelAction<unknown>>): OptimisticHttpRequest<OptimisticRequestOptions> {
         const modelConfig = ModelStateConfig.get(action.stateProp);
         if(!modelConfig) console.error(`No model config for property ${action.stateProp}`);
         const modelCommand = action.payload.id ? ModelCommand.Delete : ModelCommand.DeleteRange;
@@ -37,18 +37,22 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<unknown>>
             apiUrl: this.createApiUrl(action, modelConfig, modelCommand),
             body: this.createHttpBody(action),
             method: this.apiMap[modelCommand].method,
-            cancelMessage: this.createCancelMessage(action, modelConfig)
+            options: this.createRequestOptions(action, modelConfig)
         }
     }
 
-    protected createCancelMessage(action: Immutable<DeleteModelAction<unknown>>, modelConfig: Immutable<ModelConfig<unknown, unknown>>): string{
+    protected createRequestOptions(
+        action: Immutable<DeleteModelAction<unknown>>, 
+        modelConfig: Immutable<ModelConfig<unknown, unknown>>): OptimisticRequestOptions{
         const payload = action.payload;
         const multi = payload.ids && payload.ids.length > 1;
 
         const entityWord = 
             this.translations[<string> (multi ? action.stateProp : modelConfig.foreignProp)?.toLowerCase()];
-        
-        return `Sletting av ${payload.ids?.length || ''} ${entityWord} med id ${payload.ids || payload.id} er reversert!`;
+            
+        return { 
+            description: `Sletting av ${payload.ids?.length || ''} ${entityWord} med id ${payload.ids || payload.id}.`
+        }
     }
   
     protected createHttpBody(action: Immutable<DeleteModelAction<unknown>>): Maybe<Immutable<{ids: Maybe<unknown[]>}>> {

@@ -9,16 +9,16 @@ export interface FormDataEntry {
 }
 
 /** Describes an object used to make optimistic http requests. */
-export interface OptimisticHttpRequest { 
+export interface OptimisticHttpRequest<TOptions extends Object = {}> { 
     /** The url suffix of the api endpoint. 
      * Gets appended to base url provided with {@link BASE_API_URL} */
     apiUrl: string; 
     /** The http method of the request */
     method: "POST" | "PUT" | "DELETE"; 
     /** The body of the http request */
-    body: {} | FormDataEntry[] | null | undefined; 
-    /** A custom cancel message in case the request gets canceled. */
-    cancelMessage?: string; 
+    body: {} | FormDataEntry[] | null | undefined;   
+    /** Additional options to associate with the request */
+    options?: TOptions;
 };
 
 export interface QueuedCommand { 
@@ -28,9 +28,21 @@ export interface QueuedCommand {
     commandId?: string
 };
 
+/** Represents a completed command with a status indicating if the command succeeded. */
+export interface CompletedCommand { 
+    request: Immutable<OptimisticHttpRequest>, 
+    succeeded: boolean;
+    commandId?: string;
+};
+
 /** Represents a slice of state containing the request queue */
 export interface StateRequestQueue { 
     requestQueue: QueuedCommand[]; 
+};
+
+/** Represents a slice of state containing the request log of previus requests and their statuses*/
+export interface StateRequestLog { 
+    requestLog: CompletedCommand[]; 
 };
 
 /** Represents an object used to select what state is optimistic.
