@@ -17,17 +17,17 @@ export function _removeRangeById<T>(
     const idMap = _convertArrayToObject(deletedIds);
     const copy = originals.slice();
 
-    let delLength = deletedIds.length;
+    let delCount = deletedIds.length;
     
-    for(let i = 0; i < copy.length; i++){  	
-      let entity = copy[i]; 
+    for(let i = 0; i < originals.length; i++){  	
+      let entity = originals[i]; 
            
       if(idMap[<string>entity[idProp]]){
-        copy.splice(i, 1);
-        delLength = delLength - 1;
+        copy.splice(i + delCount - deletedIds.length, 1);
+        delCount = delCount - 1;
       }
       
-      if(delLength === 0) break;
+      if(delCount === 0) break;
     }
 
     return copy;
