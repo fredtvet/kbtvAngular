@@ -1,12 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
-import { exhaustMap, finalize, map, retryWhen } from 'rxjs/operators';
+import { exhaustMap, finalize, map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
-import { AuthHttpFactoryService } from '../services/auth-http-factory.service';
-import { httpRetryStrategy } from '../http-retry.strategy';
 import { RefreshTokenResponse, Tokens } from '../interfaces';
+import { AuthHttpFactoryService } from '../services/auth-http-factory.service';
 import { LogoutAction, RefreshTokenAction, RefreshTokenSuccessAction } from './actions.const';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class RefreshTokenHttpEffect implements Effect<RefreshTokenAction>{
@@ -31,12 +30,12 @@ export class RefreshTokenHttpEffect implements Effect<RefreshTokenAction>{
 
     private refreshToken$(tokens: Tokens): Observable<RefreshTokenResponse> {
         if(this.isRefreshingToken || !navigator.onLine) return EMPTY;
-
+        
         this.isRefreshingToken = true;
+
         return this.httpFactory.getObserver$<RefreshTokenResponse>(RefreshTokenAction, tokens).pipe(
-            retryWhen(httpRetryStrategy({excludedStatusCodes: [400]})), 
             finalize(() => this.isRefreshingToken = false)
-          );
+        );
     }
     
 }

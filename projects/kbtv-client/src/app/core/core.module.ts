@@ -17,6 +17,7 @@ import { AppStateDbConfig } from './configurations/app-state-db-config.const';
 import { AppStoreSettings } from './configurations/app-store-settings.const';
 import { AppSyncStateConfig } from './configurations/app-sync-state.config';
 import { DefaultState } from './configurations/default-state.const';
+import { HttpRetryInterceptor } from './interceptors/http-retry.interceptor';
 import { HttpErrorInterceptor } from './interceptors/http.error.interceptor';
 import { HttpIsOnlineInterceptor } from './interceptors/http.is-online.interceptor';
 import { HttpLoadingInterceptor } from './interceptors/http.loading.interceptor';
@@ -42,6 +43,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
   providers: [   
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },   
     { provide: HTTP_INTERCEPTORS, useClass: HttpAuthTokensInterceptor, multi: true },  
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRetryInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpIsOnlineInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpLoadingInterceptor, multi: true },
 
@@ -54,7 +56,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
 
     { provide: OPTIMISTIC_STATE_SELECTOR, useValue: AppOptimisticState},
 
-    { provide: STATE_DB_CONFIG, useValue: AppStateDbConfig},   
+    { provide: STATE_DB_CONFIG, useValue: AppStateDbConfig},  
 
     { provide: STORE_DEFAULT_STATE, useValue: DefaultState },
 
