@@ -49,9 +49,9 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<unknown>>
 
         const entityWord = 
             this.translations[<string> (multi ? action.stateProp : modelConfig.foreignProp)?.toLowerCase()];
-            
+
         return { 
-            description: `Sletting av ${payload.ids?.length || ''} ${entityWord} med id ${payload.ids || payload.id}.`
+            description: `Sletting av ${payload.ids?.length || ''} ${entityWord?.toLowerCase() || 'ukjent'} med id ${payload.ids || payload.id}.`
         }
     }
   
