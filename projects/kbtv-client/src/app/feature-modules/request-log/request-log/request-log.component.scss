@@ -1,8 +1,7 @@
 ::ng-deep .request-log-container {
   .list-item-content {
     white-space: normal;
-    overflow: auto;
-    text-overflow: none;
+    word-break: break-word;
   }
   .completed-requests-button {
       width: 100%;
