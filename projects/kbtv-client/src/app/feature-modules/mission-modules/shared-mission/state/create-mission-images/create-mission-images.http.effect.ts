@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { ApiUrl } from '@core/api-url.enum';
 import { Immutable } from 'global-types';
 import { FormDataEntry, OptimisticHttpRequest, OptimisticHttpAction } from 'optimistic-http';
+import { of } from 'rxjs';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { OptimisticRequestOptions } from 'state-model';
 import { CreateMissionImagesAction } from './create-mission-images.action';
@@ -14,30 +15,36 @@ export class CreateMissionImagesHttpEffect implements Effect<CreateMissionImages
     handle$(actions$: Observable<DispatchedAction<CreateMissionImagesAction>>): Observable<OptimisticHttpAction> {
         return actions$.pipe(
             listenTo([CreateMissionImagesAction]),
-            map(x => <OptimisticHttpAction>{ 
-                type: OptimisticHttpAction, propagate: true,
-                request: this.createHttpRequest(x.action), 
-                stateSnapshot: x.stateSnapshot 
+            mergeMap(x => {
+                const baseRequest = this.createBaseHttpRequest(x.action);
+                const baseAction = { 
+                    type: OptimisticHttpAction, propagate: true,
+                    stateSnapshot: x.stateSnapshot 
+                };
+
+                const actions: OptimisticHttpAction[] = [];
+
+                for(let i = 0; i < x.action.fileWrappers.length; i++){
+                    const file = x.action.fileWrappers[i].modifiedFile;
+                    actions.push({...baseAction,
+                        request: <OptimisticHttpRequest>{
+                            ...baseRequest, 
+                            body: [{name: "file", value: file}]
+                        }
+                    })
+                }
+
+                return of(...actions)
             }),        
         )
     }
 
-    private createHttpRequest(command: Immutable<CreateMissionImagesAction>): OptimisticHttpRequest<OptimisticRequestOptions>{
+    private createBaseHttpRequest(command: Immutable<CreateMissionImagesAction>): Partial<OptimisticHttpRequest<OptimisticRequestOptions>>{
         return {
             apiUrl: `${ApiUrl.MissionImage}?missionId=${command.missionId}`,
-            body: this.createHttpBody(command),
             method: "POST",
-            options: {description: `Oppretting av ${command.fileWrappers.length} bilde${command.fileWrappers.length > 1 ? "r" : ""} på oppdrag ${command.missionId}.`}
+            options: {description: `Oppretting av bilde på oppdrag ${command.missionId}.`}
         }
-    }
-
-    private createHttpBody(command: Immutable<CreateMissionImagesAction>): FormDataEntry[] {
-        const entries: FormDataEntry[] = [];
-        for(let i = 0; i < command.fileWrappers.length; i++){
-            const file = command.fileWrappers[i].modifiedFile;
-            entries.push({name: "file", value: file})
-        }
-        return entries;
     }
 
 }
