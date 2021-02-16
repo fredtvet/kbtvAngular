@@ -53,6 +53,10 @@ export const translations: { [key: string]: string } = {
   missiondocumentid: "Dokument",
   missiondocuments: "Dokumenter",
 
+  missionimage: "Bilde",
+  missionimageid: "Bilde",
+  missionimages: "Bilder",
+
   missionnote: "Notat",
   missionnoteId: "Notat",
   missionnotes: "Notater",
