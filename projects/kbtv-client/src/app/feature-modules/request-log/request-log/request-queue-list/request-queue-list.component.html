@@ -2,7 +2,7 @@
 
 <div class="mat-body ml-5 mb-3" *ngIf="!requests?.length">Ingen aktiviteter ubehandlet</div>
 
-<ng-container *ngFor="let queued of requests || []; trackBy: trackByReq">
+<ng-container *ngFor="let queued of requests || []; trackBy: trackByReq; let i = index">
 
     <app-list-item rippleDisabled=true>
         
@@ -20,6 +20,6 @@
 
     </app-list-item>
 
-    <mat-divider inset=true></mat-divider>
+    <mat-divider inset=true *ngIf="i !== (requests.length - 1)"></mat-divider>
 
 </ng-container>

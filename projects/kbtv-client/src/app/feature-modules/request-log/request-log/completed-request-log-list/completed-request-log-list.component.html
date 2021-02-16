@@ -2,7 +2,7 @@
 
 <div class="mat-body ml-5 mb-3" *ngIf="!requests?.length">Ingen aktiviteter fullført</div>
 
-<ng-container *ngFor="let req of requests || []; trackBy: trackByReq">
+<ng-container *ngFor="let req of requests || []; trackBy: trackByReq; let i = index">
 
     <app-list-item rippleDisabled=true>
 
