@@ -12,6 +12,7 @@ export class HttpIsOnlineInterceptor implements HttpInterceptor {
   constructor(private deviceInfoService: DeviceInfoService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler) {
+    if(request.responseType != "json") return next.handle(request);
     return this.deviceInfoService.isOnline$.pipe(
       first(x => x === true),
       switchMap(x => next.handle(request))

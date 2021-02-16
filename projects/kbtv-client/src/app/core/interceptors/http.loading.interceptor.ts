@@ -1,19 +1,15 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
   HttpHandler,
-  HttpInterceptor
+  HttpInterceptor, HttpRequest
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { LoadingService } from '../services/loading.service';
-import { ApiUrl } from '@core/api-url.enum';
 
 @Injectable()
 export class HttpLoadingInterceptor implements HttpInterceptor {
     private totalCommandRequests = 0;
     private totalQueryRequests = 0;
-
-    private ignoredCommands: string[] = ["/refresh", "/SyncAll"]
 
     constructor(private loadingService: LoadingService) { }
 
