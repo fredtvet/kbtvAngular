@@ -10,19 +10,28 @@ import { _convertArrayToObject } from './convert-array-to-object.helper';
 export function _removeRangeByProp<T>(
   originals: Maybe<ImmutableArray<T>>, 
   value: unknown | unknown[], 
-  prop: Prop<Immutable<T>>): Immutable<T>[] {       
+  prop: Prop<Immutable<T>>): Immutable<T>[] {    
     if(!originals?.length) return []; //If initial array empty, just return empty array
 
     const copy = originals.slice();   
-
-    if(typeof value !== "object")
-        for(let i = 0; i < copy.length; i++) 	
-            if(copy[i][prop] === value) copy.splice(i, 1);  
+    let delCount = 0;
+    if(!Array.isArray(value))
+        for(let i = 0; i < originals.length; i++) {
+            const item = copy[i];	
+            if(item && item[prop] === value){ 
+                copy.splice(i - delCount, 1);
+                delCount = delCount + 1;
+            } 
+        } 
     else {
         const valueMap  = _convertArrayToObject(<unknown[]> value)
-        for(let i = 0; i < copy.length; i++) 	
-            if(valueMap[<string> copy[i][prop]]) copy.splice(i, 1);  
-    }
-
+        for(let i = 0; i < originals.length; i++) 	{
+            const item = copy[i];	
+            if(item && valueMap[<string> item[prop]]){              
+                copy.splice(i - delCount, 1);
+                delCount = delCount + 1;
+            }
+        }
+    } 
     return copy;
 }
