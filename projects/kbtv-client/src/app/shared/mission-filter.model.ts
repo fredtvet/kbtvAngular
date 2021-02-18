@@ -38,7 +38,7 @@ export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
     }
 
     protected addEmptyStateChecks(mission: Immutable<Mission>): boolean{
-        let exp = mission.updatedAt != null && mission.updatedAt >= <number> this.sixtyDaysAgo
+        let exp = mission.createdAt != null && mission.createdAt >= <number> this.sixtyDaysAgo
         exp = exp || mission.lastVisited != null && mission.lastVisited >= <number> this.sixtyDaysAgo;
         return exp;
     }

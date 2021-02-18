@@ -12,7 +12,7 @@ import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
 import { MissionFilter } from "@shared/mission-filter.model";
-import { _filter, _sortByDate } from "array-helpers";
+import { _filter } from "array-helpers";
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe, Prop } from "global-types";
 import { ModelFormService } from 'model-form';
@@ -48,9 +48,7 @@ export class MissionListComponent extends WithUnsubscribe(){
   ]).pipe(
     map(([vm, missions]) => { 
       const filter = new MissionFilter(vm.criteria, undefined, true)
-      return { ...vm, missions: 
-        _sortByDate<Mission>(_filter(missions, (entity) => filter.check(entity)), "updatedAt") || []
-      } 
+      return { ...vm, missions: _filter(missions, (entity) => filter.check(entity)) } 
     })
   );
 

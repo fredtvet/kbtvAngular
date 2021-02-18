@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-import { saveModelMetaReducer } from '@core/state/save-model.meta.reducer';
-import { ModelFormModule } from 'model-form';
 import { SharedModule } from '@shared/shared.module';
-import { STORE_EFFECTS, STORE_META_REDUCERS, STORE_REDUCERS } from 'state-management';
+import { ModelFormModule } from 'model-form';
+import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
 import { DeleteModelHttpEffect, DeleteModelReducer } from 'state-model';
 import { SaveUserHttpEffect } from './save-user/save-user.http.effect';
 import { SaveUserReducer } from './save-user/save-user.reducer';
@@ -29,7 +28,6 @@ import { UsersRoutingModule } from './users-routing.module';
     {provide: STORE_EFFECTS, useClass: UpdateUserPasswordHttpEffect, multi: true},
     {provide: STORE_EFFECTS, useClass: SaveUserHttpEffect, multi: true},
     {provide: STORE_REDUCERS, useValue: SaveUserReducer, multi: true},
-    {provide: STORE_META_REDUCERS, useValue: saveModelMetaReducer, multi: true}
   ],
 })
 export class UsersModule {}

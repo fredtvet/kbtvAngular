@@ -1,14 +1,10 @@
-import { Inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { ColDef } from "ag-grid-community";
-import { UnknownState } from "global-types";
 import { ImmutableArray, Maybe } from "global-types";
-import { Observable } from "rxjs";
-import { BehaviorSubject, combineLatest } from "rxjs";
+import { BehaviorSubject, combineLatest, Observable } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
-import { StateAction, Store } from 'state-management';
-import { ModelCommand, ModelStateConfig, UnknownModelState } from "state-model";
-import { MODEL_DATA_TABLES_CONFIG } from "../injection-tokens.const";
-import { ModelDataTablesConfig } from "../interfaces";
+import { Store } from 'state-management';
+import { ModelStateConfig, UnknownModelState } from "state-model";
 import { ModelColDefFactory } from "../model-col-def.factory";
 
 @Injectable()

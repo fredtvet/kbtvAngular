@@ -1,3 +1,3 @@
 export interface Model{
-    updatedAt?: number;
+    createdAt?: number;
 }
