@@ -12,15 +12,22 @@ export function _convertArrayToObject<T>(
   key?: Prop<Immutable<T>> | ((t: Immutable<T>) => string)  
 ): Response<T> {
     if(!array?.length) return {};
+    
     const result: Response<T> = {}; 
     
-    let setter: (entity: Immutable<T>, result: Response<T>) => void = 
-      (entity: Immutable<T>, result: Response<T>) => result[entity as unknown as string] = entity;
+    let setter: (entity: Immutable<T>, result: Response<T>) => void;
 
-    if(typeof key === "string")
-      setter = (entity: Immutable<T>, result: Response<T>) => result[<string> entity[key]] = entity
-    else if(typeof key === "function")
-      setter = (entity: Immutable<T>, result: Response<T>) => result[key(entity)] = entity
+    switch(typeof key){
+      case "string": 
+        setter = (entity: Immutable<T>, result: Response<T>) => result[<string> entity[key]] = entity; 
+        break;
+      case "function":
+        setter = (entity: Immutable<T>, result: Response<T>) => result[key(entity)] = entity
+        break;
+      default:
+        setter = (entity: Immutable<T>, result: Response<T>) => result[entity as unknown as string] = entity;
+        break;
+    }
 
     for(var i = 0; i < array.length; i++) setter(array[i], result);
 
