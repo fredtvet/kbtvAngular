@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { _filter, _groupBy } from 'array-helpers';
@@ -9,6 +9,7 @@ import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
+import { SetRequestLogViewedAction } from '../set-request-log-viewed.action';
 
 interface ViewModel { 
   requestQueue?: ImmutableArray<QueuedCommand>;
@@ -20,7 +21,8 @@ interface ViewModel {
 @Component({
   selector: 'app-request-log',
   templateUrl: './request-log.component.html',
-  styleUrls: ['./request-log.component.scss']
+  styleUrls: ['./request-log.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RequestLogComponent {
 
@@ -44,5 +46,15 @@ export class RequestLogComponent {
     private location: Location,
     private deviceInfoService: DeviceInfoService
   ) {}
+
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    setTimeout(() => {
+      this.store.dispatch({type: SetRequestLogViewedAction})
+    })
+    
+  } 
 
 }

@@ -1,9 +1,11 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, Input } from '@angular/core';
 import { QueuedCommand } from 'optimistic-http';
 
 @Component({
   selector: 'app-request-queue-list',
-  templateUrl: './request-queue-list.component.html'
+  templateUrl: './request-queue-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RequestQueueListComponent {
 

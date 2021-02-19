@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CompletedCommand } from 'optimistic-http';
 
 @Component({
   selector: 'app-completed-request-log-list.',
-  templateUrl: './completed-request-log-list.component.html'
+  templateUrl: './completed-request-log-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompletedRequestLogListComponent {
 

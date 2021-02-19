@@ -1,9 +1,11 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NavItem } from './nav-item.interface';
 
 @Component({
   selector: 'app-nav-item',
   templateUrl: './nav-item.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavItemComponent {
 
