@@ -25,6 +25,7 @@ import { StartupService } from './services/startup.service';
 import { SyncHttpFetcherService } from './services/sync-http-fetcher.service';
 import { InitalizeHttpQueueEffect, InitalizeSyncEffect } from './state/initalizing.effects';
 import { NotifyOnUnauthorizedEffect } from './state/notify-on-unauthorized.effect';
+import { OpenDialogOnOptimisticError } from './state/open-dialog-on-optimistic-error.effect';
 import { SyncUserOnLoginEffect } from './state/sync-user-on-login.effect';
 import { WipeStateReducer } from './state/wipe-state.reducer';
 
@@ -59,9 +60,10 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
     { provide: STATE_DB_CONFIG, useValue: AppStateDbConfig},  
 
     { provide: STORE_DEFAULT_STATE, useValue: DefaultState },
-
+    
     { provide: STORE_EFFECTS, useClass: InitalizeSyncEffect, multi: true },
     { provide: STORE_EFFECTS, useClass: InitalizeHttpQueueEffect, multi: true },
+    { provide: STORE_EFFECTS, useClass: OpenDialogOnOptimisticError, multi: true },
 
     { provide: STORE_EFFECTS, useClass: SyncUserOnLoginEffect, multi: true},
     { provide: STORE_EFFECTS, useClass: NotifyOnUnauthorizedEffect, multi: true},

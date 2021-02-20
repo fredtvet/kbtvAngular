@@ -1,0 +1,37 @@
+@import '../../../../styles/variables';
+
+.error-container{
+    background: $warn-light;
+    border-radius: 6px;
+    margin: 0px 12px;
+    padding: 12px;
+}
+
+::ng-deep .dialog-container {
+    margin: 12px 0px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    .mat-title{
+        margin: 0 16px;
+    }
+    .list-item-content {
+      white-space: normal;
+      word-break: break-word;
+    }
+}
+
+.close-button-container{
+    margin: 12px 12px 0 0;
+    .close-button{
+        float:right;
+    }
+}
+
+app-failed-command-list{
+    display:block;
+    overflow-y:scroll;
+}
+  

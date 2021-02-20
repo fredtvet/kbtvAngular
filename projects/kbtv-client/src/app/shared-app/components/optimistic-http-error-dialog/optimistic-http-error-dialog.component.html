@@ -1,0 +1,36 @@
+<div class="dialog-container">
+
+    <span class="mat-title">Endringer har blitt reversert!</span>
+
+    <app-list-item rippleDisabled=true>
+    
+        <mat-icon left-side class="pl-2 pr-2" color="warn">error</mat-icon>
+    
+        <div class="mat-caption">Behandling mislykket</div>
+    
+        {{ data.errorCommand.request.options?.description }}
+    
+    </app-list-item>
+
+    <div class="error-container mat-body-2">
+        {{ httpError.title }}
+        <ul *ngIf="httpError.details?.length" class="mat-body">
+            <li *ngFor="let err of httpError.details">{{ err }}</li>
+        </ul>
+    </div>
+
+    <ng-container  *ngIf="data.canceledCommands?.length">
+
+        <div class="mat-body-2 ml-5 mt-3">Kansellerte aktiviteter ({{data.canceledCommands.length}})</div>
+
+        <app-failed-command-list [commands]="data.canceledCommands">
+    
+        </app-failed-command-list>
+
+    </ng-container>
+    
+    <span class="close-button-container">
+        <button class="close-button" mat-button [mat-dialog-close]="true" cdkFocusInitial>Lukk</button>
+    </span>
+    
+</div>

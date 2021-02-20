@@ -5,7 +5,6 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -21,7 +20,6 @@ import { MatSliderModule } from '@angular/material/slider';
       MatCheckboxModule,
       MatAutocompleteModule,
       ScrollingModule, 
-      MatDialogModule,
       MatBottomSheetModule,
       MatChipsModule,
       MatSliderModule
@@ -35,7 +33,6 @@ import { MatSliderModule } from '@angular/material/slider';
       MatAutocompleteModule,
       ScrollingModule, 
       MatButtonToggleModule,
-      MatDialogModule,
       MatBottomSheetModule,
       MatChipsModule,
       MatSliderModule,

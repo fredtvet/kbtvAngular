@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorAction, HttpQueuer, HttpQueueShiftAction, StateRequestQueue } from 'optimistic-http';
-import { SetPersistedStateAction } from 'state-db';
+import { HttpQueuer, StateRequestQueue } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
+import { SetPersistedStateAction } from 'state-db';
 import { DispatchedAction, Effect, listenTo, Store } from 'state-management';
 import { ContinousSyncService, SyncStateSuccessAction } from 'state-sync';
 import { StateCurrentUser } from './global-state.interfaces';
