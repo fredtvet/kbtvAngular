@@ -21,28 +21,28 @@ export interface OptimisticHttpRequest<TOptions extends Object = {}> {
     options?: TOptions;
 };
 
-export interface QueuedCommand { 
-    request: Immutable<OptimisticHttpRequest>, 
+export interface QueuedCommand<TOptions = {}> { 
+    request: Immutable<OptimisticHttpRequest<TOptions>>, 
     stateSnapshot: Maybe<Immutable<UnknownState>>, 
     dispatched?: boolean,
     commandId?: string
 };
 
 /** Represents a completed command with a status indicating if the command succeeded. */
-export interface CompletedCommand { 
-    request: Immutable<OptimisticHttpRequest>, 
+export interface CompletedCommand<TOptions = {}> { 
+    request: Immutable<OptimisticHttpRequest<TOptions>>, 
     succeeded: boolean;
     commandId?: string;
 };
 
 /** Represents a slice of state containing the request queue */
-export interface StateRequestQueue { 
-    requestQueue: QueuedCommand[]; 
+export interface StateRequestQueue<TOptions = {}> { 
+    requestQueue: QueuedCommand<TOptions>[]; 
 };
 
 /** Represents a slice of state containing the request log of previus requests and their statuses*/
-export interface StateRequestLog { 
-    requestLog: CompletedCommand[]; 
+export interface StateRequestLog<TOptions = {}> { 
+    requestLog: CompletedCommand<TOptions>[]; 
 };
 
 /** Represents an object used to select what state is optimistic.
