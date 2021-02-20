@@ -9,6 +9,7 @@ import { Maybe } from 'global-types';
 import { AppNotification, NotificationService } from 'notification';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { CommandIdHeader } from 'optimistic-http';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -18,7 +19,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if(request.responseType != "json" || request.url.indexOf('/refresh') !== -1) return next.handle(request);
+    if(request.responseType != "json" || request.url.indexOf('/refresh') !== -1 || request.headers.get(CommandIdHeader)) 
+      return next.handle(request);
+      
     return next.handle(request).pipe(tap(() => {},
       (err: unknown) => { 
         if (err instanceof HttpErrorResponse) 
