@@ -10,6 +10,7 @@ import { CurrentUserPasswordForm } from '@shared/constants/forms/password-form.c
 import { ConfirmDialogService } from 'confirm-dialog';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { ProfileAction } from './profile-action.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -28,17 +29,19 @@ export class ProfileComponent {
     private formService: FormService,
     private facade: ProfileFacade,
     private confirmService: ConfirmDialogService,
+    private router: Router
   ){
     this.bottomActions = [{icon: 'update', callback: this.syncAll}]
     this.actions = [
       {text: 'Oppdater profil', icon: 'account_circle', callback: this.updateProfile},
       {text: 'Oppdater passord', icon: 'vpn_key', callback: this.updatePassword},
-      {text: 'Konfigurasjoner', icon: 'settings', callback: this.updateSyncConfig},
+      {text: 'Konfigurasjoner', icon: 'settings', callback: this.updateSyncConfig},     
+      {text: "Aktivitetslogg", icon: "rule", callback: this.goToRequestLog},
       {text: 'Synkroniser data', icon: 'update', callback: this.syncAll, 
         hint: 'Hent nye og oppdaterte data fra skyen.'},
       {text: 'Slett lokal data', icon: 'delete_sweep',callback: this.confirmPurge,
         hint: 'Slett data lagret på enheten og last inn på nytt.'},
-      {text: 'Logg ut', icon: 'power_settings_new', callback: this.logout},
+      {text: 'Logg ut', icon: 'power_settings_new', callback: this.logout},  
     ]
   }
 
@@ -78,6 +81,8 @@ export class ProfileComponent {
       confirmCallback: this.facade.reloadData
     });
   }
+
+  private goToRequestLog = () => this.router.navigate(['aktivitetslogg']);
 
   private syncAll = () => this.facade.syncAll();
 
