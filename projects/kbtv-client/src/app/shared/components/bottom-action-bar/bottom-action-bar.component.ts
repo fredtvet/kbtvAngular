@@ -7,6 +7,7 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MainNavService } from 'src/app/layout/main-nav.service';
 import { _trackByAppButton } from '@shared-app/track-by-app-button';
+import { _getAuthenticatedResources } from '@shared-app/helpers/get-authenticated-resources.helper';
 
 export interface ViewModel { isXs: boolean, actions: AppButton[] }
 
@@ -25,12 +26,17 @@ export class BottomActionBarComponent {
 
     @Input() fab: AppButton;
 
-    baseActionBtn: Partial<AppButton> = {type: ButtonTypes.Icon}
+    baseActionBtn: Partial<AppButton> = {type: ButtonTypes.Icon, allowedRoles: undefined }
     baseFabBtn: Partial<AppButton> = {type: ButtonTypes.Fab }
+
+    private userActions$ = combineLatest([
+        this.mainNavService.currentUser$,
+        this.actionsSubject.asObservable()
+    ]).pipe(map(([currentUser, actions]) => _getAuthenticatedResources(actions, currentUser)))
     
     vm$: Observable<{isXs: boolean}> = combineLatest([
         this.deviceInfoService.isXs$,
-        this.actionsSubject.asObservable()
+        this.userActions$
     ]).pipe(
         map(([isXs, actions]) => { 
             if(!actions || !isXs || actions.length < 3) return {isXs, actions};

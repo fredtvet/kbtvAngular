@@ -15,9 +15,11 @@ export class MainNavService {
   private toggleDrawerSubject = new Subject();
   toggleDrawer$: Observable<unknown> = this.toggleDrawerSubject.asObservable()
 
+  currentUser$: Observable<User> = this.store.selectProperty$<User>("currentUser");
+
   config$: Observable<MainNavConfig> = combineLatest([
     this.deviceInfoService.isXs$, 
-    this.store.selectProperty$<User>("currentUser"),
+    this.currentUser$,
     this.store.selectProperty$<number>("syncTimestamp"),
     this.deviceInfoService.isOnline$, 
     ]).pipe(
