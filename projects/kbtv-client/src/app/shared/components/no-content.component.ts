@@ -5,16 +5,16 @@ import { AppButton } from '@shared/components/app-button/app-button.interface';
 @Component({
   selector: 'app-no-content',
   template: `
-    <span class="text-center w-100">
-        <p>{{ text }}</p>
-        <app-button *ngIf="button" [config]="button" class="fadeIn" style="display:block"></app-button>
-    </span>
+    <div class="text-center w-100">
+        <mat-icon *ngIf="icon" style="width:100%;margin-bottom:16px;font-size:50px;">{{ icon }}</mat-icon>
+        <div class="mt-4"><ng-content></ng-content></div>
+        <app-button *ngIf="button" [config]="button" class="fadeIn mt-4" style="display:block"></app-button>
+    </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoContentComponent{
-  @Input() text: string;
-
+  @Input() icon: string;
   button: AppButton;
 
   @Input('buttonInfo') 
