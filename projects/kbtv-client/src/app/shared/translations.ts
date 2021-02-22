@@ -3,7 +3,6 @@ export const translations: { [key: string]: string } = {
   name: "Navn",
   phonenumber: "Telefonnummer",
   address: "Adresse",
-  user: "Bruker",
   title: "Tittel",
   content: "Innhold",
   createdat: "Opprettet",
@@ -32,6 +31,9 @@ export const translations: { [key: string]: string } = {
   endtime: "Sluttid",
   totalhours: "Timer",
   comment: "Kommentar",
+
+  user: "Bruker",
+  users: "Brukere",
 
   timesheet: "Time",
   timesheetid: "Time",
