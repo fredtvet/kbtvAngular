@@ -66,3 +66,6 @@ export interface ModelCommandApiMap {
 
 /** A state slice of unknown model state */
 export type UnknownModelState = { [key: string]: UnknownState[] }
+
+/** Represents a slice of state containing an array of fetched models */
+export interface StateFetchedModels<TState> { fetchedModels: Record<Prop<TState>, boolean> }
