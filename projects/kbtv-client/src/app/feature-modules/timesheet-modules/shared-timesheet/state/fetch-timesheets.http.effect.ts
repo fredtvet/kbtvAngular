@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { ApiUrl } from '@core/api-url.enum';
 import { Timesheet } from '@core/models';
 import { ApiService } from '@core/services/api.service';
-import { Immutable } from 'global-types';
-import { Observable, of } from 'rxjs';
-import { filter, map, mergeMap, take } from 'rxjs/operators';
+import { Immutable, Maybe } from 'global-types';
+import { merge, Observable, of } from 'rxjs';
+import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { TimesheetCriteria } from '../timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../timesheet-filter/timesheet-filter.model';
+import { TimesheetsClearAction } from './clear-timesheets.reducer';
 import { SetFetchedTimesheetsAction } from './set-fetched-timesheets.reducer';
 
 export const FetchTimesheetsAction = "FETCH_TIMESHEETS_ACTION";
@@ -23,24 +24,29 @@ export class FetchTimesheetsHttpEffect implements Effect<FetchTimesheetsAction> 
 
   constructor(private apiService: ApiService){ }
 
-  handle$(actions$: Observable<DispatchedAction<FetchTimesheetsAction>>): Observable<StateAction |  void> {
+  handle$(actions$: Observable<DispatchedAction<FetchTimesheetsAction>>): Observable<SetFetchedTimesheetsAction | TimesheetsClearAction> {
     return actions$.pipe(
       listenTo([FetchTimesheetsAction]),
-      filter(x => x.action.timesheetCriteria != null),
-      mergeMap(x => this._handle$(x.action))
+      filter(x => !this.isContained(x.action.timesheetCriteria)),
+      tap(x => FetchTimesheetsHttpEffect.baseCriteria = x.action.timesheetCriteria),
+      mergeMap(x => this.fetchTimesheets$(x.action)), 
     )
   }
 
-  private _handle$(action: Immutable<FetchTimesheetsAction>): Observable<SetFetchedTimesheetsAction | void>{
-        const filter = new TimesheetFilter(action.timesheetCriteria);
-        //If resulting data is already in cache, dont fetch.
-        if(filter.containedIn(FetchTimesheetsHttpEffect.baseCriteria)) return of();
-        
-        FetchTimesheetsHttpEffect.baseCriteria = action.timesheetCriteria;
-        return this.fetch$(action.timesheetCriteria).pipe(
-            take(1),
-            map(timesheets => <SetFetchedTimesheetsAction>{ type: SetFetchedTimesheetsAction, timesheets })
-        )        
+  private fetchTimesheets$(action: Immutable<FetchTimesheetsAction>): Observable<SetFetchedTimesheetsAction | TimesheetsClearAction>{
+      return merge(
+        of(<TimesheetsClearAction>{type: TimesheetsClearAction}),
+        this.fetch$(action.timesheetCriteria).pipe(
+          take(1),
+          map(timesheets => <SetFetchedTimesheetsAction>{ type: SetFetchedTimesheetsAction, timesheets })
+        ),
+      )      
+  }
+
+  private isContained(criteria: Maybe<Immutable<TimesheetCriteria>>): boolean {
+    if(criteria == null) return true;
+    const filter = new TimesheetFilter(criteria);
+    return filter.containedIn(FetchTimesheetsHttpEffect.baseCriteria);
   }
     
   private fetch$ = (criteria: Immutable<TimesheetCriteria>): Observable<Timesheet[]> => {
