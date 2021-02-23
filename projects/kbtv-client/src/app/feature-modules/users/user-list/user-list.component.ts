@@ -9,7 +9,9 @@ import { CreateUserForm, EditUserForm, UserForm } from '@shared/constants/model-
 import { FormService } from 'form-sheet';
 import { ModelFormService } from 'model-form';
 import { Observable } from 'rxjs';
+import { Maybe } from 'global-types';
 import { UsersFacade } from '../users.facade';
+import { DeviceInfoService } from '@core/services/device-info.service';
 
 @Component({
   selector: 'app-user-list',
@@ -19,13 +21,16 @@ import { UsersFacade } from '../users.facade';
 export class UserListComponent {
   ButtonTypes = ButtonTypes;
 
-  users$: Observable<User[]> = this.facade.sortedUsers$;
+  users$: Observable<Maybe<User[]>> = this.facade.sortedUsers$;
 
   actionFab: AppButton;
+
+  isOnline$ = this.deviceInfoService.isOnline$;
 
   constructor(
     private facade: UsersFacade,
     private modelFormService: ModelFormService,
+    private deviceInfoService: DeviceInfoService,
     private formService: FormService) {
       this.actionFab = {
         icon: "add", 

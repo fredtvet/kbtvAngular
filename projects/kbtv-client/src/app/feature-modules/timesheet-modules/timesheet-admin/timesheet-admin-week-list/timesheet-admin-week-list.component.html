@@ -4,7 +4,7 @@
     </app-main-top-nav-bar>
 
     <ng-container *ngIf="(summaries$ | async) else loading; let summaries">
-        <app-timesheet-admin-week-list-view *ngIf="summaries?.length else loading"
+        <app-timesheet-admin-week-list-view *ngIf="summaries.length else loading"
             [summaries]="summaries"
             [isXs]="isXs$ | async"
             (timesheetsConfirmed)="confirmTimesheets($event)"
@@ -18,10 +18,6 @@
 
 </app-main-skeleton>
 
-<ng-template #noContent>
-    <div class="w-100 text-center mt-2 mat-h3">Fant ingen timer!</div>
-</ng-template>
-
 <ng-template #loading>
-    <mat-spinner *ngIf="loading$ | async else noContent" class="center-spinner" color="accent"></mat-spinner>
+    <app-fetching-model-content modelProp="timesheets"></app-fetching-model-content>
 </ng-template>

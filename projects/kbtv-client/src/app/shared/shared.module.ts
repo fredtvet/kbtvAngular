@@ -30,6 +30,7 @@ import { HttpCommandButtonDirective, LoadingOverlayDirective } from './directive
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FetchingModelContentComponent } from './components/fetching-model-content/fetching-model-content.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AppButtonComponent,
     NoContentComponent,
     BottomActionBarComponent,
-
+    FetchingModelContentComponent,
+    
     TransformButtonPipe,
     TranslatePipe,
     SortByDatePipe,
@@ -91,7 +93,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AppButtonComponent,
     NoContentComponent,
     BottomActionBarComponent,
-    
+    FetchingModelContentComponent,
     TransformButtonPipe,
     TranslatePipe,
     SortByDatePipe,

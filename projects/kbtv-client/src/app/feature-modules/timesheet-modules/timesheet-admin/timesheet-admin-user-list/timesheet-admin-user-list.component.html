@@ -3,27 +3,23 @@
     <app-main-top-nav-bar navbar [config]="navConfig">
     </app-main-top-nav-bar>
 
-    <div *ngIf="users$ | async else loading; let users;">
-        <ng-container *ngFor="let user of users; trackBy: trackByUser">
-            <app-list-item (click)="goToWeekList(user)"> 
-                <mat-icon left-side>person</mat-icon>
-                {{user.firstName + ' ' +user.lastName}}
-            </app-list-item>
-            <mat-divider></mat-divider>
-        </ng-container>
-        
-        <ng-container *ngIf="users.length == 0" [ngTemplateOutlet]="noUsers"></ng-container>
-    </div>  
+    <ng-container *ngIf="(users$ | async) else loading; let users;">
+        <div *ngIf="users.length else loading;">
+            <ng-container *ngFor="let user of users; trackBy: trackByUser">
+                <app-list-item (click)="goToWeekList(user)"> 
+                    <mat-icon left-side>person</mat-icon>
+                    {{user.firstName + ' ' +user.lastName}}
+                </app-list-item>
+                <mat-divider></mat-divider>
+            </ng-container>
+        </div>  
+    </ng-container>
 
     <app-bottom-action-bar bottombar>
     </app-bottom-action-bar>
     
 </app-main-skeleton>
 
-<ng-template #noUsers>
-    <div class="w-100 text-center mt-2 mat-h3">Fant ingen ansatte!</div>
-</ng-template>
-
 <ng-template #loading>
-    <mat-spinner *ngIf="loading$ | async else noUsers" class="center-spinner" color="accent"></mat-spinner>
+    <app-fetching-model-content modelProp="users"></app-fetching-model-content>
 </ng-template>

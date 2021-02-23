@@ -13,7 +13,7 @@ import { Roles } from "@core/roles.enum";
 export class UsersFacade {
 
   sortedUsers$ = 
-    this.store.selectProperty$<User[]>("users").pipe(map(x => this.sortByRole(x)));
+    this.store.selectProperty$<User[]>("users").pipe(map(x => x ? this.sortByRole(x) : null));
   
   get users() { return this.store.state.users; }
 
@@ -26,8 +26,6 @@ export class UsersFacade {
   }
   
   private sortByRole = (users: Maybe<ImmutableArray<User>>): Immutable<User>[] => {
-    if(!users) return [];
-
     let grouped = _groupBy(users, "role"); 
     let result: Immutable<User>[] = [];
 

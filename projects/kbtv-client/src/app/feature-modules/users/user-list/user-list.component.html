@@ -3,20 +3,21 @@
   <app-main-top-nav-bar navbar [config]="{title: 'Brukere'}">
   </app-main-top-nav-bar>
 
-  <div class="pl-1 pr-1" *ngIf="users$ | async else loading; let users;">
-    <ng-container *ngFor="let user of users; trackBy: trackByUser;"> 
+  <ng-container *ngIf="(users$ | async) else loading; let users;">
+    <div class="pl-1 pr-1" *ngIf="users.length else loading;">
+      <ng-container *ngFor="let user of users; trackBy: trackByUser;"> 
 
-      <app-user-card
-        [user]="user"
-        [editButton]="getEditButton(user.userName)"
-        [newPasswordButton]="getNewPasswordButton(user.userName)">
-      </app-user-card>
-      
-      <mat-divider></mat-divider>
+        <app-user-card
+          [user]="user"
+          [editButton]="getEditButton(user.userName)"
+          [newPasswordButton]="getNewPasswordButton(user.userName)">
+        </app-user-card>
+        
+        <mat-divider></mat-divider>
 
-    </ng-container>
-  </div>
-
+      </ng-container>
+    </div>
+  </ng-container>
   <app-bottom-action-bar bottombar
     [fab]="actionFab">
   </app-bottom-action-bar>
@@ -24,6 +25,6 @@
 </app-main-skeleton>
 
 <ng-template #loading>
-  <mat-spinner class="center-spinner" color="accent"></mat-spinner>
+  <app-fetching-model-content modelProp="users">
+  </app-fetching-model-content>
 </ng-template>
-
