@@ -26,8 +26,7 @@ export * from './lib/state/delete-model/delete-model.reducer';
 export * from './lib/state/delete-model/delete-model.http.effect';
 
 export * from './lib/state/fetch-models/fetch-models.action';
-export * from './lib/state/fetch-models/fetch-models.http.effect';
-export * from './lib/state/fetch-models/set-fetched-model.reducer';
+export * from './lib/state/fetch-models/fetch-models.providers.const';
 
 export * from './lib/state/mail-models/mail-models.action';
 export * from './lib/state/mail-models/mail-models.http.effect';
