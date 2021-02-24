@@ -54,6 +54,6 @@ export class ModelDataTableFacade  {
             const translatedProp = this.translations[prop.toLowerCase()]?.toLowerCase() || 'data';
             if(isFetching) return `Laster inn ${translatedProp}...`;
             return `Finner ingen ${translatedProp}`;
-        }))
+        }), distinctUntilChanged())
     }
 }
