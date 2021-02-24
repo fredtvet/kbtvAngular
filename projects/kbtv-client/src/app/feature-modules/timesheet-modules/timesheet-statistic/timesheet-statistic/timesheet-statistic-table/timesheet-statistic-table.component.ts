@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ColDef } from 'ag-grid-community';
 import { Timesheet } from '@core/models';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
@@ -16,6 +16,7 @@ import { Immutable } from 'global-types';
 })
 export class TimesheetStatisticTableComponent extends AgGridTableComponent<TimesheetSummary | Timesheet, AgGridConfig<TimesheetSummary | Timesheet>> {
 
+  @Input() overlayNoRowsTemplate: HTMLElement;
   private isSummaryData: boolean;
 
   constructor(private colDefsFactory: ColDefsFactoryService) { super(); }
@@ -27,7 +28,7 @@ export class TimesheetStatisticTableComponent extends AgGridTableComponent<Times
     this.isSummaryData = (sample.confirmedHours || sample.openHours) ? true : false
 
     super.initNgGrid(cfg);
-    
+
     this.dataGrid?.api.setPinnedBottomRowData(
       this.isSummaryData ? 
       this.addSummaryBottomRow(<AgGridConfig<TimesheetSummary>> cfg) : 

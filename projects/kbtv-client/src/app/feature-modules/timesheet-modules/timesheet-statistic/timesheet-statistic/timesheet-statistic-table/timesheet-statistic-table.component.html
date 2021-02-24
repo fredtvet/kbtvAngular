@@ -3,9 +3,8 @@
     rowSelection="multiple"
     suppressRowClickSelection="true"
     suppressColumnVirtualisation="true"
-    overlayNoRowsTemplate="Tomt"
+    [overlayNoRowsTemplate]="overlayNoRowsTemplate"
     (modelUpdated)="autoSizeGrid()"
     [rowData]="rowData"
-    [columnDefs]="columnDefs"
-    [allowContextMenuWithControlKey]>
+    [columnDefs]="columnDefs">
 </ag-grid-angular>

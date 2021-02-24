@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Timesheet, User } from '@core/models';
 import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
+import { ModelState } from '@core/state/model-state.interface';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
@@ -10,9 +11,9 @@ import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interf
 import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
-import { Immutable } from 'global-types';
+import { Immutable, Prop } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';
 import { FetchModelsAction } from 'state-model';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
@@ -22,7 +23,7 @@ import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-
 import { ComponentStoreState, StoreState } from './store-state';
 import { SetGroupByAction } from './timesheet-statistic/component-state-reducers';
 
-type Record = Timesheet | TimesheetSummary;
+type ValidRecord = Timesheet | TimesheetSummary;
 
 @Injectable()
 export class TimesheetStatisticFacade extends WithUnsubscribe() {
@@ -39,6 +40,10 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
 
     groupBy$ = this.componentStore.selectProperty$<GroupByPeriod>("timesheetGroupBy");
 
+    isFetching$: Observable<boolean> = 
+        this.store.selectProperty$<Record<Prop<ModelState>, boolean>>('isFetching').pipe(
+            map(x => x && x.timesheets), distinctUntilChanged())
+
     private filteredTimesheets$ = combineLatest([
         this.store.selectProperty$<Timesheet[]>("timesheets"),
         this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria")
@@ -51,11 +56,11 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
         return _getSummariesByType(groupBy, timesheets) || timesheets;    
     }));
 
-    tableConfig$: Observable<AgGridConfig<Record>> = combineLatest([
+    tableConfig$: Observable<AgGridConfig<ValidRecord>> = combineLatest([
         this.groupedTimesheets$, 
         this.store.selectProperty$<User[]>("users")
     ]).pipe(
-        map(x =>  { return { data: _setFullNameOnUserForeigns<Record>(x[0], x[1]) }}
+        map(x =>  { return { data: _setFullNameOnUserForeigns<ValidRecord>(x[0], x[1]) }}
     ));
 
     constructor(

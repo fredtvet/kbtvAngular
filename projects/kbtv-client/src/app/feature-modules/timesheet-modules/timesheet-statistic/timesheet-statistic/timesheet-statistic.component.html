@@ -10,7 +10,8 @@
     </ng-container>
 
     <app-timesheet-statistic-table #statTable fxFlex 
-        [config]="vm.tableConfig">
+        [config]="vm.tableConfig"
+        [overlayNoRowsTemplate]="vm.isFetching ? 'Laster inn timer...' : 'Finner ingen timer med gitte filtre'">
     </app-timesheet-statistic-table>
     
     <app-bottom-action-bar bottombar [actions]="bottomActions">

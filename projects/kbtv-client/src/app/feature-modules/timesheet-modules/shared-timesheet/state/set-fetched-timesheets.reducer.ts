@@ -21,9 +21,9 @@ export const SetFetchedTimesheetsReducer = _createReducer(
             missions: state.missions
         }, {prop: "timesheets", foreigns: ["missions"]});
 
-        return {
+        return <StateIsFetching<StateTimesheets>>{
             timesheets,
-            fetchedModels: {...state.isFetching, timesheets: false}
+            isFetching: {...state.isFetching || {}, timesheets: false}
         };
     }
 )  

@@ -9,6 +9,6 @@ export interface  TimesheetsClearAction extends StateAction {}
 export const TimesheetsClearReducer = _createReducer(
     TimesheetsClearAction, 
     (state: Immutable<StateTimesheets & StateIsFetching<StateTimesheets>>) => {
-        return {timesheets: [], fetchedModels: {...state.isFetching, timesheets: true}}
+        return {timesheets: [], isFetching: {...state.isFetching, timesheets: true}}
     }
 )

@@ -20,7 +20,12 @@ import { TimesheetStatisticFacade } from '../timesheet-statistic.facade';
 import { TimesheetStatisticProviders } from './timesheet-statistic-providers.const';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
 
-interface ViewModel { groupByChips: AppChip[], criteriaChips: AppChip[], tableConfig: AgGridConfig<TimesheetSummary | Timesheet> }
+interface ViewModel { 
+  groupByChips: AppChip[], 
+  criteriaChips: AppChip[], 
+  tableConfig: AgGridConfig<TimesheetSummary | Timesheet>, 
+  isFetching: boolean 
+}
 
 @Component({
   selector: 'app-timesheet-statistic',
@@ -41,9 +46,10 @@ export class TimesheetStatisticComponent {
   vm$: Observable<ViewModel> = combineLatest([
     this.facade.groupBy$.pipe(map(x => this.getGroupByChips(x))),
     this.criteriChips$,
-    this.facade.tableConfig$
-  ]).pipe(map(([groupByChips, criteriaChips, tableConfig]) => { 
-    return {groupByChips, criteriaChips, tableConfig} 
+    this.facade.tableConfig$,
+    this.facade.isFetching$,
+  ]).pipe(map(([groupByChips, criteriaChips, tableConfig, isFetching]) => { 
+    return {groupByChips, criteriaChips, tableConfig, isFetching} 
   }))
   
   navConfig: MainTopNavConfig = {title:  'Timestatistikk'};
