@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { AppSaveModelProviders } from '@core/state/providers.const';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
-import { FetchModelsHttpEffect, SetFetchedModelReducer } from 'state-model';
+import { FetchModelProviders } from 'state-model';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';
-import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
 import { AdminTimesheetCardDialogWrapperComponent } from './components/admin-timesheet-card-dialog-wrapper.component';
+import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
 import { TimesheetAdminListViewComponent } from './timesheet-admin-list/timesheet-admin-list-view/timesheet-admin-list-view.component';
 import { TimesheetAdminListComponent } from './timesheet-admin-list/timesheet-admin-list.component';
 import { TimesheetAdminRoutingModule } from './timesheet-admin-routing.module';
@@ -28,8 +28,7 @@ import { UpdateTimesheetStatusesReducer } from './update-timesheet-statuses/upda
   providers:[
     { provide: STORE_EFFECTS, useClass: UpdateTimesheetStatusesHttpEffect, multi: true},
     { provide: STORE_REDUCERS, useValue: UpdateTimesheetStatusesReducer, multi: true},
-    {provide: STORE_EFFECTS, useClass: FetchModelsHttpEffect, multi: true},
-    {provide: STORE_REDUCERS, useValue: SetFetchedModelReducer, multi: true},
+    FetchModelProviders,
     ...AppSaveModelProviders,
     ...FetchTimesheetProviders,
   ],
