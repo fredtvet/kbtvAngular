@@ -44,8 +44,8 @@ export class FetchModelsHttpEffect implements Effect<FetchModelsAction<{}>> {
                         return <SetFetchedModelAction>{type: SetFetchedModelAction, payload, stateProp: prop}
                     })))
                 }
- 
-                return merge(of(setFetchingStatusAction), ...fetchers);
+                if(fetchers.length) return merge(of(setFetchingStatusAction), ...fetchers)
+                return merge(...fetchers);
             })
         )
     }

@@ -6,7 +6,7 @@ import { ConfirmDialogService } from "confirm-dialog";
 import { Prop } from "global-types";
 import { ModelFormService } from "model-form";
 import { ComponentStore, Store } from 'state-management';
-import { DeleteModelAction, FetchModelsAction } from 'state-model';
+import { DeleteModelAction } from 'state-model';
 import { ComponentState } from '../interfaces/component-state.interface';
 import { PropertyFormMap } from "./property-form.map";
 import { UpdateSelectedPropertyAction } from './state/update-selected-property.reducer';
@@ -30,11 +30,9 @@ export class DataManagerFacade  {
         private formService: ModelFormService
     ) { }
 
-    updateSelectedProperty = (prop: Prop<ModelState>) => {
+    updateSelectedProperty = (prop: Prop<ModelState>) => 
         this.componentStore.dispatch(<UpdateSelectedPropertyAction>{ type: UpdateSelectedPropertyAction, selectedProperty: prop })
-        this.store.dispatch(<FetchModelsAction<ModelState>>{ type: FetchModelsAction, props: [prop] })
-    }
-
+    
     createItem = (): void => {
         this.selectedProperty ? 
         this.formService.open<ModelState, Model>({formConfig: {

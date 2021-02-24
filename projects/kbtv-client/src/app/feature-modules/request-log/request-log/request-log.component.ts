@@ -1,13 +1,11 @@
 import { Location } from '@angular/common';
-import { ChangeDetectionStrategy } from '@angular/core';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { _filter, _groupBy } from 'array-helpers';
+import { _groupBy } from 'array-helpers';
 import { ImmutableArray } from 'global-types';
 import { CompletedCommand, QueuedCommand, StateRequestLog, StateRequestQueue } from 'optimistic-http';
-import { combineLatest } from 'rxjs';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
 

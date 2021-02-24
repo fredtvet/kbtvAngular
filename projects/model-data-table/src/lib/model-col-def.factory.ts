@@ -74,27 +74,31 @@ export class ModelColDefFactory {
         if(fkModelCfg){
             const fkIdProp = modelProp;
 
-            def['cellEditor'] = 'agSelectCellEditor';
-            def['cellEditorParams'] = { 
-                values: Object.keys(this.fkModelDisplayPropMap[fkIdProp] || {}), 
-            }
-
-            def['valueGetter'] = (params) => { //Get name of foreign obj and display
-                const fkId = params.data[fkIdProp];
-                if(fkId){
-                    const fkEntity = this.fkModelIdMap[fkIdProp][fkId];
-                    return fkEntity ? fkEntity[fkModelCfg.displayProp || fkModelCfg.idProp] : null;
+            if(this.fkModelIdMap[fkIdProp]){
+                def['cellEditor'] = 'agSelectCellEditor';
+                def['cellEditorParams'] = { 
+                    values: Object.keys(this.fkModelDisplayPropMap[fkIdProp] || {}), 
                 }
-                else return ''
-            };
-
-            def['valueSetter'] = (params) => {
-                const hit = this.fkModelDisplayPropMap[fkIdProp][params.newValue];
-                if(!hit) return false;
-                const updatedModel = {...params.data, [fkIdProp]: hit[fkModelCfg.idProp]};
-                this.dispatchUpdateAction(updatedModel, stateProp, table)
-                return true;
+    
+                
+                def['valueGetter'] = (params) => { //Get name of foreign obj and display
+                    const fkId = params.data[fkIdProp];
+                    if(fkId){
+                        const fkEntity = this.fkModelIdMap[fkIdProp][fkId];
+                        return fkEntity ? fkEntity[fkModelCfg.displayProp || fkModelCfg.idProp] : null;
+                    }
+                    else return ''
+                };
+    
+                def['valueSetter'] = (params) => {
+                    const hit = this.fkModelDisplayPropMap[fkIdProp][params.newValue];
+                    if(!hit) return false;
+                    const updatedModel = {...params.data, [fkIdProp]: hit[fkModelCfg.idProp]};
+                    this.dispatchUpdateAction(updatedModel, stateProp, table)
+                    return true;
+                }
             }
+            else def['editable'] = false;      
         }
 
         return def;

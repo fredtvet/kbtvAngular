@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, SimpleChanges } from '@angular/core';
 import { ColDef } from 'ag-grid-community';
 import { Timesheet } from '@core/models';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';

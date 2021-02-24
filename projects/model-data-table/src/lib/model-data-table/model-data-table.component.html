@@ -1,12 +1,12 @@
-<ag-grid-angular style="height:100%"
+<ag-grid-angular style="height:100%" *ngIf="vm$ | async; let vm"
     [ngClass]="agGridTheme"
     rowSelection="multiple"
     suppressRowClickSelection="true"
     suppressColumnVirtualisation="false"
     immutableData="true"
-    [overlayNoRowsTemplate]="overlayNoRowsTemplate"
+    [overlayNoRowsTemplate]="vm.noRowsText"
     (modelUpdated)="autoSizeGrid()"
-    [rowData]="rowData$ | async"
-    [columnDefs]="colDefs$ | async"  
+    [rowData]="vm.rowData"
+    [columnDefs]="vm.colDefs"  
     [getRowNodeId]="getRowNodeId">
 </ag-grid-angular>

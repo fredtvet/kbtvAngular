@@ -4,7 +4,6 @@ import { User } from '@core/models';
 import { LoadingService } from '@core/services/loading.service';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { tap } from 'rxjs/operators';
 import { TimesheetAdminWeekListCriteriaQueryParam } from '../timesheet-admin-week-list/timesheet-admin-week-list-route-params.const';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { TimesheetAdminUserListProviders } from './timesheet-admin-user-list-providers.const';
@@ -17,7 +16,7 @@ import { TimesheetAdminUserListProviders } from './timesheet-admin-user-list-pro
 })
 export class TimesheetAdminUserListComponent {
 
-  users$ = this.facade.users$.pipe(tap(console.log));
+  users$ = this.facade.users$;
 
   loading$ = this.loadingService.queryLoading$;
 

@@ -34,7 +34,6 @@ export class InitalizeHttpQueueEffect implements Effect<SyncStateSuccessAction> 
             listenTo([SyncStateSuccessAction]),
             first(),
             map(x => {
-                console.log(this.store.state.currentUser)
                 if(!this.store.state.currentUser) return;
                 const {lastCommandId, lastCommandStatus} = this.store.state.currentUser;
                 this.httpQueuer.initalize({lastCommandId, lastCommandStatus})

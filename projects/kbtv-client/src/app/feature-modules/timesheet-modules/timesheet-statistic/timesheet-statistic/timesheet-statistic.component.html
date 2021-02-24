@@ -11,7 +11,7 @@
 
     <app-timesheet-statistic-table #statTable fxFlex 
         [config]="vm.tableConfig"
-        [overlayNoRowsTemplate]="vm.isFetching ? 'Laster inn timer...' : 'Finner ingen timer med gitte filtre'">
+        [overlayNoRowsTemplate]="vm.noRowsText">
     </app-timesheet-statistic-table>
     
     <app-bottom-action-bar bottombar [actions]="bottomActions">

@@ -2,9 +2,12 @@ import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Timesheet } from '@core/models';
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
+import { TimesheetSummary } from '@shared-timesheet/interfaces';
+import { TimesheetCriteriaChipOptions } from '@shared-timesheet/timesheet-filter/timesheet-criteria-chip-options.const';
+import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetCriteriaForm, TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from '@shared/enums';
@@ -13,9 +16,6 @@ import { FormService } from 'form-sheet';
 import { Immutable, Maybe, Prop } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { TimesheetSummary } from '@shared-timesheet/interfaces';
-import { TimesheetCriteriaChipOptions } from '@shared-timesheet/timesheet-filter/timesheet-criteria-chip-options.const';
-import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetStatisticFacade } from '../timesheet-statistic.facade';
 import { TimesheetStatisticProviders } from './timesheet-statistic-providers.const';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
@@ -24,7 +24,7 @@ interface ViewModel {
   groupByChips: AppChip[], 
   criteriaChips: AppChip[], 
   tableConfig: AgGridConfig<TimesheetSummary | Timesheet>, 
-  isFetching: boolean 
+  noRowsText: string
 }
 
 @Component({
@@ -36,7 +36,7 @@ interface ViewModel {
 export class TimesheetStatisticComponent {
   @ViewChild('statTable') statTable: TimesheetStatisticTableComponent;
 
-  private criteriChips$: Observable<AppChip[]> = this.facade.criteria$.pipe(
+  private criteriaChips$: Observable<AppChip[]> = this.facade.criteria$.pipe(
     map(criteria => { 
       const activeCriteriaCount = criteria ? _getSetPropCount(criteria, {dateRangePreset: null}) : 0
       return  this.getCriteriaChips(criteria || {}, activeCriteriaCount)   
@@ -45,20 +45,20 @@ export class TimesheetStatisticComponent {
 
   vm$: Observable<ViewModel> = combineLatest([
     this.facade.groupBy$.pipe(map(x => this.getGroupByChips(x))),
-    this.criteriChips$,
+    this.criteriaChips$,
     this.facade.tableConfig$,
     this.facade.isFetching$,
   ]).pipe(map(([groupByChips, criteriaChips, tableConfig, isFetching]) => { 
-    return {groupByChips, criteriaChips, tableConfig, isFetching} 
+    return {groupByChips, criteriaChips, tableConfig, noRowsText: this.getNoRowsText(isFetching)} 
   }))
-  
+
   navConfig: MainTopNavConfig = {title:  'Timestatistikk'};
   bottomActions: AppButton[];
   
   constructor( 
     private facade: TimesheetStatisticFacade,
     private formService: FormService,
-    private chipsFactory: ChipsFactoryService
+    private chipsFactory: ChipsFactoryService,
   ) { 
     this.bottomActions =  [
       {icon: "filter_list", callback: this.openTimesheetFilter},
@@ -114,6 +114,11 @@ export class TimesheetStatisticComponent {
         (prop) => this.resetCriteriaProp(prop, criteria), 
         TimesheetCriteriaChipOptions
       )
+  }
+
+  private getNoRowsText(isFetching: boolean): string {
+    if(!navigator.onLine) return "Mangler internett-tilkobling";
+    return isFetching ? 'Laster inn timer...' : 'Finner ingen timer med gitte filtre';
   }
 
 }
