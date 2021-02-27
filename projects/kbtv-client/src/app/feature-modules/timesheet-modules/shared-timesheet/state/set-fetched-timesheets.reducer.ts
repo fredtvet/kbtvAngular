@@ -22,7 +22,7 @@ export const SetFetchedTimesheetsReducer = _createReducer(
         }, {prop: "timesheets", foreigns: ["missions"]});
 
         return <StateIsFetching<StateTimesheets>>{
-            timesheets,
+            timesheets: _addOrUpdateRange(state.timesheets, timesheets, "id"),
             isFetching: {...state.isFetching || {}, timesheets: false}
         };
     }
