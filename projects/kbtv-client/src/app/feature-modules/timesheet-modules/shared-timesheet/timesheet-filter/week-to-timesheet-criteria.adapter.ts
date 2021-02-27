@@ -1,6 +1,6 @@
 import { User } from '@core/models';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
-import { DateRange, _getDateOfWeek, _getWeekRange, _getYearRange } from 'date-time-helpers';
+import { DateRange, _getDateOfWeek, _getFirstDayOfWeek, _getLastDayOfWeek, _getWeekRange, _getWeeksInYear, _getYearRange } from 'date-time-helpers';
 import { Immutable } from 'global-types';
 import { WeekCriteria } from '../interfaces/week-criteria.interface';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
@@ -20,9 +20,11 @@ export class WeekToTimesheetCriteriaAdapter implements TimesheetCriteria {
             this.dateRange = <DateRange> _getWeekRange(_getDateOfWeek(input.weekNr, input.year));
 
         else if(input.year){
-            let date = new Date();
-            date.setFullYear(input.year);
-            this.dateRange = <DateRange> _getYearRange(date);
+            const maxWeek = _getWeeksInYear(input.year);
+            this.dateRange = { 
+                start: _getFirstDayOfWeek(_getDateOfWeek(1, input.year)),
+                end: _getLastDayOfWeek(_getDateOfWeek(maxWeek, input.year)) 
+            }
         }
     }
 
