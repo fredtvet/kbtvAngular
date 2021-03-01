@@ -66,7 +66,7 @@ export class TimesheetStatisticComponent {
 
   private openTimesheetFilter = (): void => {
     this.formService.open<TimesheetCriteria, TimesheetCriteriaFormState>({
-      formConfig: { ...TimesheetCriteriaForm, initialValue: this.facade.criteria}, 
+      formConfig: { ...TimesheetCriteriaForm, initialValue: this.facade.criteria, onlineRequired: true}, 
       formState: this.facade.criteriaFormState$,
       navConfig: {title: "Velg filtre"},
       submitCallback: (val: TimesheetCriteria) => this.facade.updateCriteria(val)

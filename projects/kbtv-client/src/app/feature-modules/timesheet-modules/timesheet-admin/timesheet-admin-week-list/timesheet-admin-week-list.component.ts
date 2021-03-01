@@ -70,7 +70,7 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
   
   private openWeekFilter = (): void => {
     this.formService.open<WeekCriteria, WeekCriteriaFormState>({
-      formConfig: {...WeekCriteriaForm, 
+      formConfig: {...WeekCriteriaForm, onlineRequired: true,
         disabledControls: {weekNr: true}, 
         noRenderDisabledControls: true,
         initialValue: this.facade.weekCriteria}, 
