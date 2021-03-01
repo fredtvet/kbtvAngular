@@ -1,7 +1,7 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { translations } from '@shared/translations';
-import { BASE_API_URL, OptimisticHttpModule, OPTIMISTIC_STATE_SELECTOR } from 'optimistic-http';
+import { BASE_API_URL, OptimisticHttpModule, ROOT_OPTIMISTIC_STATE_PROPS } from 'optimistic-http';
 import { environment } from 'src/environments/environment';
 import { HttpAuthTokensInterceptor, StateAuthModule } from 'state-auth';
 import { StateDbModule, STATE_DB_CONFIG } from 'state-db';
@@ -12,7 +12,7 @@ import { AppAuthCommandApiMap } from './configurations/app-auth-command-api-map.
 import { AppAuthRedirects } from './configurations/app-auth-redirects.const';
 import { AppCommandApiMap } from './configurations/app-command-api-map.const';
 import { AppModelConfigs } from './configurations/app-model-configs.const';
-import { AppOptimisticState } from './configurations/app-optimistic-state.const';
+import { AppOptimisticStateProps } from './configurations/app-optimistic-state.const';
 import { AppStateDbConfig } from './configurations/app-state-db-config.const';
 import { AppStoreSettings } from './configurations/app-store-settings.const';
 import { AppSyncStateConfig } from './configurations/app-sync-state.config';
@@ -55,7 +55,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
     { provide: MODEL_COMMAND_API_MAP, useValue: AppCommandApiMap },
     { provide: MODEL_PROP_TRANSLATIONS, useValue: translations },
 
-    { provide: OPTIMISTIC_STATE_SELECTOR, useValue: AppOptimisticState},
+    { provide: ROOT_OPTIMISTIC_STATE_PROPS, useValue: AppOptimisticStateProps},
 
     { provide: STATE_DB_CONFIG, useValue: AppStateDbConfig},  
 
