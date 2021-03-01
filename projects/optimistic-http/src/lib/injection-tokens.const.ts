@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { OptimisticStateSelector } from './interfaces';
+import { Prop } from 'global-types';
 
-export const OPTIMISTIC_STATE_SELECTOR = new InjectionToken<OptimisticStateSelector<unknown>>('OptimisticStateSelector');
+export const ROOT_OPTIMISTIC_STATE_PROPS = new InjectionToken<Prop<unknown>[]>('RootOptimisticStateProps');
 export const BASE_API_URL = new InjectionToken<string>('BaseApiUrl');

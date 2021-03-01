@@ -45,17 +45,6 @@ export interface StateRequestLog<TOptions = {}> {
     requestLog: CompletedCommand<TOptions>[]; 
 };
 
-/** Represents an object used to select what state is optimistic.
- *  Provided with the token {@link OPTIMISTIC_STATE_SELECTOR}
- * @remarks Optimistic state is reverted when errors occur in the requests. */
-export interface OptimisticStateSelector<TState>{
-    /** The props that should be included / excluded */
-    props: Prop<TState>[];
-    /** If set to 'exclude', all state except the props specified are treated optimistically.
-     *  If set to 'include', only the props specified are treated optimistically. */
-    strategy: "include" | "exclude";
-}
-
 /** Represents information neccesary to track the last command from the previous session. */
 export interface LastCommand{
     lastCommandId: string;
