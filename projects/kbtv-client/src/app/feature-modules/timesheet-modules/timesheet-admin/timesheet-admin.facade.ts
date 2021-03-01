@@ -8,39 +8,38 @@ import { WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-con
 import { GroupByPeriod, TimesheetStatus } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { _find } from 'array-helpers';
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ComponentStore, Store } from 'state-management';
+import { Store } from 'state-management';
 import { FetchModelsAction } from 'state-model';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
-import { SetSelectedWeekAction, SetTimesheetCriteriaAction } from './component-state-reducers';
-import { ComponentStoreState, StoreState } from './store-state';
-import { UpdateTimesheetStatusesAction } from './update-timesheet-statuses/update-timesheet-statuses.action';
+import { StoreState } from './store-state';
+import { UpdateTimesheetStatusesAction } from './state/update-timesheet-statuses/update-timesheet-statuses.action';
+import { SetSelectedWeekAction } from './state/set-selected-week.reducer';
+import { SetTimesheetCriteriaAction } from './state/set-timesheet-criteria.reducer';
 
-@Injectable()
+@Injectable({providedIn: 'any'})
 export class TimesheetAdminFacade {
 
     users$ = this.store.selectProperty$<User[]>("users").pipe(map(_noEmployersFilter));
 
-    get selectedWeekNr(){ return this.componentStore.state.selectedWeekNr; } 
-    selectedWeekNr$ = this.componentStore.selectProperty$<number>("selectedWeekNr");
+    get selectedWeekNr(){ return this.store.state.timesheetAdminSelectedWeekNr; } 
+    selectedWeekNr$ = this.store.selectProperty$<number>("timesheetAdminSelectedWeekNr");
 
-    get weekCriteria(){ return this.componentStore.state.weekCriteria; } 
-    weekCriteria$ = this.componentStore.selectProperty$<WeekCriteria>("weekCriteria");
+    get weekCriteria(){ return this.store.state.timesheetAdminWeekCriteria; } 
+    weekCriteria$ = this.store.selectProperty$<WeekCriteria>("timesheetAdminWeekCriteria");
 
-    timesheetCriteria$ = this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria")
+    timesheetCriteria$ = this.store.selectProperty$<TimesheetCriteria>("timesheetAdminTimesheetCriteria")
 
     weekCriteriaFormState$: Observable<WeekCriteriaFormState> = 
         this.users$.pipe(map(x => { return { options: {users: x} } }))
 
-    private _weeklySummaries$ = combineLatest([
-        this.store.selectProperty$<Timesheet[]>("timesheets"),
-        this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria")
-    ]).pipe(
+    private _weeklySummaries$ = this.store.select$(['timesheets', 'timesheetAdminTimesheetCriteria']).pipe(
+        map(x => <[ImmutableArray<Timesheet>, Immutable<TimesheetCriteria>]> [x.timesheets, x.timesheetAdminTimesheetCriteria]),
         filterRecords(TimesheetFilter), 
         map(x => _getSummariesByType(GroupByPeriod.Week, x.records))
     );
@@ -57,22 +56,16 @@ export class TimesheetAdminFacade {
         return summary?.timesheets.map(x => { return <Timesheet> {...x, fullName: summary.fullName}});
     }))
     
-    constructor(
-        private store: Store<StoreState>,
-        private componentStore: ComponentStore<ComponentStoreState>
-    ){
+    constructor(private store: Store<StoreState>){
         this.store.dispatch({type: FetchModelsAction, props: ["users"]})
-          
-        this.componentStore.selectProperty$("timesheetCriteria").subscribe(timesheetCriteria => 
-            this.store.dispatch(<FetchTimesheetsAction>{ type: FetchTimesheetsAction, timesheetCriteria }))
     }
     
     updateCriteria = (weekCriteria: WeekCriteria): void =>       
-        this.componentStore.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, weekCriteria })
+        this.store.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, weekCriteria })
 
     updateWeekNr = (weekNr: number | string): void => {  
         weekNr = (typeof weekNr === "number") ? weekNr : parseInt(weekNr);
-        this.componentStore.dispatch(<SetSelectedWeekAction>{ type: SetSelectedWeekAction, weekNr })
+        this.store.dispatch(<SetSelectedWeekAction>{ type: SetSelectedWeekAction, weekNr })
     }
     
     updateStatuses(ids: string[], status: TimesheetStatus): void{

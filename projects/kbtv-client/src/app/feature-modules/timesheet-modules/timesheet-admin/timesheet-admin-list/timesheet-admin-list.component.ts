@@ -9,7 +9,6 @@ import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
-import { TimesheetStatus } from '@shared/enums';
 import { _getWeekYear } from 'date-time-helpers';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
@@ -18,6 +17,7 @@ import { map, takeUntil, tap } from 'rxjs/operators';
 import { AdminTimesheetCardDialogWrapperComponent } from '../components/admin-timesheet-card-dialog-wrapper.component';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { TimesheetAdminListWeekNrQueryParam } from './timesheet-admin-list-route-params.const';
+import { TimesheetStatus } from '@shared/enums';
 
 @Component({
   selector: 'app-timesheet-admin-list',

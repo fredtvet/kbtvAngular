@@ -6,13 +6,11 @@ import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetAdminWeekListCriteriaQueryParam } from '../timesheet-admin-week-list/timesheet-admin-week-list-route-params.const';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
-import { TimesheetAdminUserListProviders } from './timesheet-admin-user-list-providers.const';
 
 @Component({
   selector: 'app-timesheet-admin-user-list',
   templateUrl: './timesheet-admin-user-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: TimesheetAdminUserListProviders
 })
 export class TimesheetAdminUserListComponent {
 

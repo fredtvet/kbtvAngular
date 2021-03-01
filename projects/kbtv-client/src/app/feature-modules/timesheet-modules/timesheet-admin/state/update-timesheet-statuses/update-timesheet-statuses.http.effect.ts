@@ -19,7 +19,7 @@ export class UpdateTimesheetStatusesHttpEffect implements Effect<UpdateTimesheet
             map(x => <OptimisticHttpAction>{ 
                 type: OptimisticHttpAction, propagate: true,
                 request: this.createHttpRequest(x.action), 
-                stateSnapshot: x.stateSnapshot 
+                stateSnapshot: x.stateSnapshot
             }),
         )
     }
