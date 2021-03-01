@@ -17,7 +17,6 @@ import { Immutable, Maybe, Prop } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TimesheetStatisticFacade } from '../timesheet-statistic.facade';
-import { TimesheetStatisticProviders } from './timesheet-statistic-providers.const';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
 
 interface ViewModel { 
@@ -30,8 +29,7 @@ interface ViewModel {
 @Component({
   selector: 'app-timesheet-statistic',
   templateUrl: './timesheet-statistic.component.html',  
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: TimesheetStatisticProviders
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimesheetStatisticComponent {
   @ViewChild('statTable') statTable: TimesheetStatisticTableComponent;

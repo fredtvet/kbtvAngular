@@ -6,30 +6,29 @@ import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper';
-import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
 import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
-import { Immutable, Prop } from 'global-types';
+import { Immutable, ImmutableArray, Prop } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
-import { distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
-import { ComponentStore, Store } from 'state-management';
+import { distinctUntilChanged, map } from 'rxjs/operators';
+import { Store } from 'state-management';
 import { FetchModelsAction } from 'state-model';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { SetTimesheetCriteriaAction } from '../shared-timesheet/state/set-timesheet-criteria.reducer';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
-import { ComponentStoreState, StoreState } from './store-state';
-import { SetGroupByAction } from './timesheet-statistic/component-state-reducers';
+import { SetGroupByAction } from './state/set-group-by.reducer';
+import { StoreState } from './state/store-state';
 
 type ValidRecord = Timesheet | TimesheetSummary;
 
-@Injectable()
+@Injectable({providedIn: "any"})
 export class TimesheetStatisticFacade extends WithUnsubscribe() {
 
-    criteria$ = this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria");
-    get criteria() { return this.componentStore.state.timesheetCriteria }
+    criteria$ = this.store.selectProperty$<TimesheetCriteria>("timesheetStatisticTimesheetCriteria");
+    get criteria() { return this.store.state.timesheetStatisticTimesheetCriteria }
 
     criteriaFormState$: Observable<TimesheetCriteriaFormState> = 
         this.store.select$<StateMissions & StateUsers>(["missions", "users"]).pipe(
@@ -38,16 +37,16 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
             }})
         )
 
-    groupBy$ = this.componentStore.selectProperty$<GroupByPeriod>("timesheetGroupBy");
+    groupBy$ = this.store.selectProperty$<GroupByPeriod>("timesheetStatisticGroupBy");
 
     isFetching$: Observable<boolean> = 
         this.store.selectProperty$<Record<Prop<ModelState>, boolean>>('isFetching').pipe(
             map(x => x && x.timesheets), distinctUntilChanged())
 
-    private filteredTimesheets$ = combineLatest([
-        this.store.selectProperty$<Timesheet[]>("timesheets"),
-        this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria")
-    ]).pipe(filterRecords(TimesheetFilter), map(x => x.records));
+    private filteredTimesheets$ = this.store.select$(['timesheets', 'timesheetStatisticTimesheetCriteria']).pipe(
+        map(x => <[ImmutableArray<Timesheet>, Immutable<TimesheetCriteria>]> [x.timesheets, x.timesheetStatisticTimesheetCriteria]),
+        filterRecords(TimesheetFilter), 
+        map(x => x.records));
 
     private groupedTimesheets$ = combineLatest([
         this.filteredTimesheets$,
@@ -63,20 +62,15 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
         map(x =>  { return { data: _setFullNameOnUserForeigns<ValidRecord>(x[0], x[1]) }}
     ));
 
-    constructor(
-        private store: Store<StoreState>,
-        private componentStore: ComponentStore<ComponentStoreState>
-    ){
+    constructor(private store: Store<StoreState>){
         super();
         this.store.dispatch({type: FetchModelsAction, props: ["users"]})
-        this.componentStore.selectProperty$("timesheetCriteria").pipe(takeUntil(this.unsubscribe)).subscribe(timesheetCriteria => 
-            this.store.dispatch(<FetchTimesheetsAction>{ type: FetchTimesheetsAction, timesheetCriteria }))
     }
 
     updateCriteria = (timesheetCriteria: Immutable<TimesheetCriteria>): void =>       
-        this.componentStore.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, timesheetCriteria })
+        this.store.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, timesheetCriteria })
 
     updateGroupBy = (groupBy: GroupByPeriod): void =>       
-        this.componentStore.dispatch(<SetGroupByAction>{ type: SetGroupByAction, groupBy })
+        this.store.dispatch(<SetGroupByAction>{ type: SetGroupByAction, groupBy })
 
 }
