@@ -17,13 +17,13 @@ export class UsersFacade {
   
   get users() { return this.store.state.users; }
 
-  constructor(private store: Store<StoreState>) {
-    this.store.dispatch({type: FetchModelsAction, props: ["users"]})
-  }
+  constructor(private store: Store<StoreState>) {}
 
   updatePassword(userName: string, newPassword: string): void{
     this.store.dispatch(<UpdateUserPasswordAction>{ type: UpdateUserPasswordAction, newPassword, userName })
   }
+
+  fetchUsers():void{ this.store.dispatch({type: FetchModelsAction, props: ["users"]}) }
   
   private sortByRole = (users: Maybe<ImmutableArray<User>>): Immutable<User>[] => {
     let grouped = _groupBy(users, "role"); 

@@ -31,7 +31,8 @@ export class UserListComponent {
     private facade: UsersFacade,
     private modelFormService: ModelFormService,
     private deviceInfoService: DeviceInfoService,
-    private formService: FormService) {
+    private formService: FormService) {    
+      this.facade.fetchUsers();
       this.actionFab = {
         icon: "add", 
         aria: 'Ny bruker',
