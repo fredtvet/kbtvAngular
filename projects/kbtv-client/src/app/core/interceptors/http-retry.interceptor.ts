@@ -10,7 +10,7 @@ export class HttpRetryInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler) {
     return next.handle(request).pipe(
-        retryWhen(httpRetryStrategy({excludedStatusCodes: [400, 401, 403]}))
+        retryWhen(httpRetryStrategy({excludedStatusCodes: [400, 401, 403, 404]}))
     )
   }
 
