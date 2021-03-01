@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Mission, Timesheet } from '@core/models';
 import { StateMissions, StateUserTimesheets } from '@core/state/global-state.interfaces';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
+import { SetTimesheetCriteriaAction } from '@shared-timesheet/state/set-timesheet-criteria.reducer';
+import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
+import { TimesheetFilter } from '@shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { Immutable, Maybe } from 'global-types';
@@ -10,9 +13,6 @@ import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';
 import { RelationInclude, _getRangeWithRelations } from 'state-model';
-import { SetTimesheetCriteriaAction } from '../../shared-timesheet/state/set-timesheet-criteria.reducer';
-import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
-import { TimesheetFilter } from '../../shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { UserTimesheetListCriteriaQueryParam } from './user-timesheet-list-route-params.const';
 import { UserTimesheetListState } from './user-timesheet-list.state';
 
@@ -54,7 +54,9 @@ export class UserTimesheetListFacade {
       }
       
       updateCriteria = (timesheetCriteria: Immutable<TimesheetCriteria>) => 
-          this.componentStore.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, timesheetCriteria });
+          this.componentStore.dispatch(<SetTimesheetCriteriaAction<UserTimesheetListState>>{ 
+            type: SetTimesheetCriteriaAction, timesheetCriteria, criteriaProp: "timesheetCriteria" 
+          });
 
       private setInitialCriteria(){
         let rawCriteria = this.route.snapshot.params[UserTimesheetListCriteriaQueryParam];

@@ -68,7 +68,8 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
     }
 
     updateCriteria = (timesheetCriteria: Immutable<TimesheetCriteria>): void =>       
-        this.store.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, timesheetCriteria })
+        this.store.dispatch(<SetTimesheetCriteriaAction<StoreState>>{ type: SetTimesheetCriteriaAction, 
+            timesheetCriteria, criteriaProp: "timesheetStatisticTimesheetCriteria" })
 
     updateGroupBy = (groupBy: GroupByPeriod): void =>       
         this.store.dispatch(<SetGroupByAction>{ type: SetGroupByAction, groupBy })
