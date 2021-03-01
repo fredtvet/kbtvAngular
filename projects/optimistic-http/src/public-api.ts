@@ -10,6 +10,7 @@ export * from './lib/injection-tokens.const';
 export * from './lib/interfaces';
 export * from './lib/optimistic-http.module';
 export * from './lib/command-id-header.const';
+export * from './lib/optimistic-state.service'
 
 export * from './lib/state/optimistic-http-error.action';
 export * from './lib/state/optimistic-http.action'
