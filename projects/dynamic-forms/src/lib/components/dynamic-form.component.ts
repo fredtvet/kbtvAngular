@@ -21,21 +21,22 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
         <ng-container *dynamicHost>
 
         </ng-container>
+        <ng-container *ngIf="config">
+            <mat-error *ngIf="form.dirty && form.invalid && form.errors">
+                {{ getValidationErrorMessage() }}
+            </mat-error>
 
-        <mat-error *ngIf="form.dirty && form.invalid && form.errors">
-            {{ getValidationErrorMessage() }}
-        </mat-error>
-
-        <lib-form-actions 
-            [submitDisabled]="form.pristine || form.invalid" 
-            [submitText]="config.submitText || 'Lagre'" 
-            [showReset]="config.resettable"
-            [resetDisabled]="!(resetEnabled$ | async)"
-            [onlineRequired]="config.onlineRequired"
-            (reset)="onReset()"
-            (submitted)="onSubmit()" 
-            (canceled)="onCancel()">
-        </lib-form-actions>
+            <lib-form-actions 
+                [submitDisabled]="(!config.allowPristine && form.pristine) || form.invalid" 
+                [submitText]="config.submitText || 'Lagre'" 
+                [showReset]="config.resettable"
+                [resetDisabled]="!(resetEnabled$ | async)"
+                [onlineRequired]="config.onlineRequired"
+                (reset)="onReset()"
+                (submitted)="onSubmit()" 
+                (canceled)="onCancel()">
+            </lib-form-actions>
+        </ng-container>
     </form>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

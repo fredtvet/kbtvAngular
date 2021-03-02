@@ -17,7 +17,7 @@ export abstract class ControlComponentLoaderComponent {
 
     unsubscribe : Subject<void> = new Subject();
 
-    form: FormGroup;
+    form: FormGroup = new FormGroup({});
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,  

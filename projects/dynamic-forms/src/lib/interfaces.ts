@@ -52,6 +52,8 @@ export interface DynamicForm<TForm, TFormState>{
     resetState?: Partial<TForm>;
     /** Should the form require the user to be online before submitting? */
     onlineRequired?: boolean;
+    /** Can the form submit in pristine state? */
+    allowPristine?: boolean;
 }
 
 /** Describes a group of controls that make up an object in the form model */
