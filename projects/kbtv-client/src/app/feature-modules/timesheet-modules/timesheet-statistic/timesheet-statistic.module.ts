@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SetTimesheetCriteriaReducer } from '@shared-timesheet/state/set-timesheet-criteria.reducer';
+import { DynamicFormsModule } from 'dynamic-forms';
 import { OptimisticStateService } from 'optimistic-http';
 import { AppAgGridModule } from 'src/app/app-ag-grid/app-ag-grid.module';
 import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
@@ -33,6 +34,7 @@ import { TimesheetStatisticComponent } from './timesheet-statistic/timesheet-sta
     SharedTimesheetModule,
     TimesheetStatisticRoutingModule,
     AppAgGridModule,
+    DynamicFormsModule
   ],
 })
 export class TimesheetStatisticModule { 

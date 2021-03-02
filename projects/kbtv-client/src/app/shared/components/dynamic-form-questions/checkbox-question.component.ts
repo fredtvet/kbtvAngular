@@ -9,7 +9,7 @@ export interface CheckboxQuestion extends Question {
   selector: 'app-checkbox-question',
   template: `  
     <div class="mat-body-2" *ngIf="question.label">{{ question.label }}</div>
-    
+
     <mat-checkbox
         [color]="question.color || 'accent'" 
         [formControl]="control" 

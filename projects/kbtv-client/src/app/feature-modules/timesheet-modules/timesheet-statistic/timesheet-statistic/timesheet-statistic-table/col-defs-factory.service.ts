@@ -36,7 +36,7 @@ export class ColDefsFactoryService extends WithUnsubscribe() {
     ];
 
     this.timesheetColDefs = [
-      { field: "startTime", headerName: translations["date"], valueFormatter: this.convertDate},
+      { colId: "date", field: "startTime", headerName: translations["date"], valueFormatter: this.convertDate},
       { field: "fullName" },
       { field: "totalHours", maxWidth: 75 },
       { field: "startTime", valueFormatter: this.convertTime },
@@ -69,6 +69,7 @@ export class ColDefsFactoryService extends WithUnsubscribe() {
     const genericColDef = {
       headerName: colDef.field ? translations[colDef.field.toLowerCase()] : "",
       sortable: true,
+      colId: colDef.field
     };
     return { ...genericColDef, ...colDef };
   }

@@ -11,11 +11,11 @@ import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetCriteriaForm, TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from '@shared/enums';
-import { ValueFormatterParams } from 'ag-grid-community';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe, Prop } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ExportCsvFormService } from '../export-csv-form.service';
 import { TimesheetStatisticFacade } from '../timesheet-statistic.facade';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic-table/timesheet-statistic-table.component';
 
@@ -57,6 +57,7 @@ export class TimesheetStatisticComponent {
     private facade: TimesheetStatisticFacade,
     private formService: FormService,
     private chipsFactory: ChipsFactoryService,
+    private exportCsvFormService: ExportCsvFormService
   ) { 
     this.bottomActions =  [
       {icon: "filter_list", callback: this.openTimesheetFilter},
@@ -79,24 +80,8 @@ export class TimesheetStatisticComponent {
     this.facade.updateCriteria(clone);
   }
 
-  private exportAsCsv = () => {
-    this.statTable.dataGrid.api.exportDataAsCsv({
-      processCellCallback: (params) => {
-        const colDef = params.column.getColDef()
-        // Use coldef value formatter in export
-        if (colDef.valueFormatter instanceof Function) {
-          const valueFormatterParams: ValueFormatterParams = {
-            ...params,
-            data: params.node?.data,
-            node: params.node!,
-            colDef: params.column.getColDef()
-          };
-          return colDef.valueFormatter(valueFormatterParams);
-        }
-        return params.value;
-      }
-    });
-  }
+  private exportAsCsv = () => 
+    this.exportCsvFormService.open(this.statTable.dataGrid);
 
   private addGroupBy = (groupBy: GroupByPeriod) => this.facade.updateGroupBy(groupBy);
 
