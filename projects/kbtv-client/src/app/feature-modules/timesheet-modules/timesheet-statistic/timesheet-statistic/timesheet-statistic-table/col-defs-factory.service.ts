@@ -47,9 +47,7 @@ export class ColDefsFactoryService extends WithUnsubscribe() {
     ];
 
     this.store.selectProperty$<Mission[]>("missions").pipe(takeUntil(this.unsubscribe)).subscribe(x => 
-      {console.time('heyo')
       this.missionMap = _convertArrayToObject(x, "id")
-      console.timeEnd('heyo')}
     )
   }
 
