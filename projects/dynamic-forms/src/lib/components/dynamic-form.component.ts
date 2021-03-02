@@ -22,9 +22,13 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
 
         </ng-container>
         <ng-container *ngIf="config">
-            <mat-error *ngIf="form.dirty && form.invalid && form.errors">
-                {{ getValidationErrorMessage() }}
-            </mat-error>
+
+            <div style="height:20px">
+                <mat-error *ngIf="form.dirty && form.invalid && form.errors">
+                    {{ getValidationErrorMessage() }}
+                </mat-error>
+            </div>
+            
 
             <lib-form-actions 
                 [submitDisabled]="(!config.allowPristine && form.pristine) || form.invalid" 
@@ -36,6 +40,7 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
                 (submitted)="onSubmit()" 
                 (canceled)="onCancel()">
             </lib-form-actions>
+
         </ng-container>
     </form>
   `,
