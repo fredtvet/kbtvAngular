@@ -4,7 +4,7 @@ import { ImageViewerDialogWrapperComponent } from './components/image-viewer/ima
 import { ImageViewerComponent } from './components/image-viewer/image-viewer.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SelectableCardComponent } from './components/selectable-card/selectable-card.component';
-import { ImageErrorReloaderDirective } from './directives/image-error-reloader.directive';
+import { ImageErrorPlaceholderDirective } from './directives/image-error-placeholder.directive';
 import { InputListenerDirective } from './directives/input-listener.directive';
 
 @NgModule({
@@ -13,8 +13,8 @@ import { InputListenerDirective } from './directives/input-listener.directive';
     ImageViewerComponent,
     SearchBarComponent,
     SelectableCardComponent,
-
-    ImageErrorReloaderDirective,  
+    
+    ImageErrorPlaceholderDirective,
     InputListenerDirective,
   ],
   imports: [
@@ -28,7 +28,7 @@ import { InputListenerDirective } from './directives/input-listener.directive';
     SearchBarComponent,
     SelectableCardComponent,
 
-    ImageErrorReloaderDirective,  
+    ImageErrorPlaceholderDirective,
     InputListenerDirective,
   ],
 })

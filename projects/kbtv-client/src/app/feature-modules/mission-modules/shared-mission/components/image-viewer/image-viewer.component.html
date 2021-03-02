@@ -9,13 +9,12 @@
 </app-main-top-nav-bar>
 
 <ng-container *ngIf="loadingImage$ | async; let loadingImage">
-  <img #img [fxHide]="loadingImage.loading" alt="oppdragsbilde"
+  <img appImageErrorPlaceholder [fxHide]="loadingImage.loading" alt="oppdragsbilde"
+    [src]="currentImage | appFileUrl: this.folder" layout-fill
     (tap)="toolbarHidden = !toolbarHidden" 
     (swiperight)="previousImage()" 
     (swipeleft)="nextImage()" 
-    (load)="onCurrentImageLoaded()"
-    (error)="img.src = '/assets/notfound.png?'"
-    [src]="currentImage | appFileUrl: this.folder" layout-fill/>
+    (load)="onCurrentImageLoaded()"/>
 
   <mat-spinner [fxShow]="loadingImage.loading" color="accent"></mat-spinner>
 </ng-container>
