@@ -12,7 +12,7 @@ import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
-import { FetchModelsAction } from 'state-model';
+import { FetchModelsAction, _getRangeWithRelations, _getWithRelations } from 'state-model';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
@@ -50,10 +50,15 @@ export class TimesheetAdminFacade {
 
     selectedWeekTimesheets$: Observable<Maybe<Immutable<Timesheet>[]>> = combineLatest([
         this.weeklySummaries$,
-        this.selectedWeekNr$
-    ]).pipe(map(([summaries, weekNr]) => {
-        const summary = _find<TimesheetSummary>(summaries, weekNr, "weekNr");
-        return summary?.timesheets.map(x => { return <Timesheet> {...x, fullName: summary.fullName}});
+        this.store.select$(['timesheetAdminSelectedWeekNr', 'missions'])
+    ]).pipe(map(([summaries, state]) => {
+        const summary = _find<TimesheetSummary>(summaries, state.timesheetAdminSelectedWeekNr, "weekNr");
+        if(!summary?.timesheets?.length) return;
+        let timesheets = _getRangeWithRelations<Timesheet, StoreState>(
+            {...state, timesheets: summary.timesheets}, 
+            {prop: "timesheets", foreigns: ["missions"]}
+        )
+        return timesheets?.slice().map(x => { return <Timesheet> {...x, fullName: summary.fullName}});
     }))
     
     constructor(private store: Store<StoreState>){

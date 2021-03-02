@@ -1,19 +1,30 @@
 import { DatePipe } from "@angular/common";
 import { Injectable } from "@angular/core";
-import { Timesheet } from "@core/models";
-import { UnknownState } from "global-types";
+import { Mission, Timesheet } from "@core/models";
+import { Immutable, Maybe, UnknownState } from "global-types";
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
 import { TimesheetStatus } from "@shared/enums";
 import { translations } from "@shared/translations";
 import { ColDef, ValueFormatterParams } from "ag-grid-community";
+import { Store } from "state-management";
+import { StateMissions } from "@core/state/global-state.interfaces";
+import { _convertArrayToObject } from "array-helpers";
+import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
+import { takeUntil } from "rxjs/operators";
 
 @Injectable()
-export class ColDefsFactoryService {
+export class ColDefsFactoryService extends WithUnsubscribe() {
 
   private summaryColDefs: ColDef[];
   private timesheetColDefs: ColDef[];
 
-  constructor(private datePipe: DatePipe) {
+  private missionMap: Record<string, Maybe<Immutable<Mission>>> = {};
+
+  constructor(
+    private datePipe: DatePipe,
+    private store: Store<StateMissions>
+  ) {
+    super();
     this.summaryColDefs = [
       { field: "date", valueFormatter: this.convertDate },
       { field: "year" },
@@ -31,14 +42,19 @@ export class ColDefsFactoryService {
       { field: "startTime", valueFormatter: this.convertTime },
       { field: "endTime", valueFormatter: this.convertTime },
       { field: "status", valueFormatter: this.convertStatus },
-      { field: "missionId" },
       { field: "comment", maxWidth: 200 },
+      { field: "missionId", valueFormatter: this.convertMissionId },
     ];
+
+    this.store.selectProperty$<Mission[]>("missions").pipe(takeUntil(this.unsubscribe)).subscribe(x => 
+      {console.time('heyo')
+      this.missionMap = _convertArrayToObject(x, "id")
+      console.timeEnd('heyo')}
+    )
   }
 
   createColDefs(entity: TimesheetSummary | Timesheet): ColDef[]  {
     const isSummary = ((<TimesheetSummary> entity).confirmedHours || (<TimesheetSummary> entity).openHours) ? true : false;
-
     return this._createColDefs(entity, isSummary ? this.summaryColDefs : this.timesheetColDefs);
   }
 
@@ -76,4 +92,7 @@ export class ColDefsFactoryService {
 
   private convertStatus = (params: ValueFormatterParams): string => 
     translations[TimesheetStatus[params.value]?.toLowerCase()]
+
+  private convertMissionId = (params: ValueFormatterParams): string => 
+    `(${params.value}) ${this.missionMap[params.value]?.address || ''}`;
 }

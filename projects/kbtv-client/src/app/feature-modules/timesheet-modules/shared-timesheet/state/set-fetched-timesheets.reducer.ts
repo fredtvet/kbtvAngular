@@ -15,14 +15,8 @@ type State = Immutable<StateTimesheets & StateMissions & StateIsFetching<StateTi
 export const SetFetchedTimesheetsReducer = _createReducer(
     SetFetchedTimesheetsAction,
     (state: State, action: Immutable<SetFetchedTimesheetsAction>) => {
-        
-        const timesheets = _getRangeWithRelations<Timesheet, State>({
-            timesheets: action.timesheets, 
-            missions: state.missions
-        }, {prop: "timesheets", foreigns: ["missions"]});
-
         return <StateIsFetching<StateTimesheets>>{
-            timesheets: _addOrUpdateRange(state.timesheets, timesheets, "id"),
+            timesheets: _addOrUpdateRange(state.timesheets, action.timesheets, "id"),
             isFetching: {...state.isFetching || {}, timesheets: false}
         };
     }
