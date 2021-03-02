@@ -2,15 +2,11 @@ import { Injectable } from "@angular/core";
 import { ApiUrl } from '@core/api-url.enum';
 import { Mission } from "@core/models";
 import { SaveModelFileAction } from '@core/state/save-model-file/save-model-file.action';
-import { AppNotifications } from "@shared-app/app-notifications.const";
-import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
-import { CreateMissionImagesForm, _formToCreateMissionImagesConverter } from "@shared-mission/form-to-create-mission-images.converter";
+import { CreateMissionImagesAction } from "@shared-mission/create-mission-images/create-mission-images.action";
 import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
-import { ValidationRules } from "@shared/constants/validation-rules.const";
 import { MissionCriteria } from '@shared/interfaces';
 import { Immutable, Maybe, Prop } from 'global-types';
-import { NotificationService } from 'notification';
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { ComponentStore, Store } from 'state-management';
@@ -40,7 +36,6 @@ export class MissionListFacade {
   get currentUser() { return this.store.state.currentUser }
 
   constructor(
-    private notificationService: NotificationService,
     private store: Store<StoreState>,
     private componentStore: ComponentStore<ComponentStoreState>
   ) {}
@@ -60,11 +55,6 @@ export class MissionListFacade {
     this.componentStore.dispatch(<SetMissionCriteriaAction>{ type: SetMissionCriteriaAction, missionCriteria });
     
   updateHeaderImage(id: string, file: File): void {
-    if(!_validateFileExtension(file, ValidationRules.MissionImageFileExtensions)) 
-      return this.notificationService.notify(AppNotifications.error({
-        title: "Filtypen er ikke tillatt."
-      }));  
-
     let action: SaveModelFileAction<Mission> = _formToSaveModelFileConverter({
       formValue: {id, file},
       stateProp: "missions",
@@ -76,8 +66,8 @@ export class MissionListFacade {
     this.store.dispatch(action);
   }
 
-  addMissionImages = (state: CreateMissionImagesForm): void =>
-    this.store.dispatch(_formToCreateMissionImagesConverter(state));
+  addMissionImages = (missionId: string, files: FileList): void =>
+   this.store.dispatch(<CreateMissionImagesAction>{type: CreateMissionImagesAction, missionId, files: {...files}});
 
   private updateLastVisited = (id: string): void => 
     this.store.dispatch(<UpdateLastVisitedAction>{ type: UpdateLastVisitedAction, id })

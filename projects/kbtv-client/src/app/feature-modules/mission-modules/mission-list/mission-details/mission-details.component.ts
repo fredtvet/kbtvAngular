@@ -73,7 +73,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     (files?.length && this.missionId) ? this.facade.updateHeaderImage(this.missionId, files[0]) : undefined;
 
   addMissionImages = (files: FileList): void => 
-    (files?.length && this.missionId) ? this.facade.addMissionImages({missionId: this.missionId, files}) : undefined;
+    (files?.length && this.missionId) ? this.facade.addMissionImages(this.missionId, files) : undefined;
 
   openImageViewer(mission: Mission) {
       this.dialog.open(ImageViewerDialogWrapperComponent, {

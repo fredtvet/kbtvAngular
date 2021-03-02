@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Mission, MissionImage } from "@core/models";
 import { ModelState } from '@core/state/model-state.interface';
+import { CreateMissionImagesAction } from "@shared-mission/create-mission-images/create-mission-images.action";
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
 import { DeleteModelAction, MailModelsAction, RelationInclude, _getWithRelations } from 'state-model';
-import { CreateMissionImagesForm, _formToCreateMissionImagesConverter } from '../shared-mission/form-to-create-mission-images.converter';
 import { StoreState } from './store-state';
 
 @Injectable({providedIn: 'any'})
@@ -24,8 +24,8 @@ export class MissionImageListFacade {
       return mission?.missionImages;
     }))
  
-  add = (state: CreateMissionImagesForm): void =>
-    this.store.dispatch(_formToCreateMissionImagesConverter(state));
+  add = (missionId: string, files: FileList): void =>
+    this.store.dispatch(<CreateMissionImagesAction>{type: CreateMissionImagesAction, missionId, files: {...files}});
   
   
   delete = (payload: {ids?: string[], id?: string}): void => 

@@ -5,7 +5,7 @@ import { SaveAction, SaveModelAction } from 'state-model';
 import { ModelState } from '../model-state.interface';
 
 export const SaveModelFileAction = SaveModelAction+"_FILE";
-export interface SaveModelFileAction<TModel extends ModelFile> extends SaveModelAction<TModel, ModelState>{
+export interface SaveModelFileAction<TModel extends ModelFile = ModelFile> extends SaveModelAction<TModel, ModelState>{
         stateProp: Prop<ModelState>,
         entity: TModel,
         fileWrapper: ModelFileWrapper,

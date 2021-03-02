@@ -105,7 +105,7 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
   }
 
   uploadImages = (files: FileList): void => 
-    this.missionId ? this.facade.add({missionId: this.missionId, files}) : undefined;
+    this.missionId ? this.facade.add(this.missionId, files) : undefined;
 
   trackByImg = _trackByModel("missionImages")
 
