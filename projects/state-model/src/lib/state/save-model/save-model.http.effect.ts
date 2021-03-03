@@ -50,9 +50,12 @@ export class SaveModelHttpEffect<TModel extends {}, TState extends {}> implement
         const entityWord = this.translations[<string> modelConfig.foreignProp?.toLowerCase()]?.toLowerCase();
         const displayPropWord = this.translations[<string> modelConfig.displayProp?.toLowerCase()]?.toLowerCase();
         const displayPropValue = action.entity[<Prop<Immutable<TModel>>> modelConfig.displayProp];
-        return {
-            description: `${saveWord} av ${entityWord} med ${displayPropWord} '${displayPropValue}'`
-        }
+        
+        if(displayPropWord && displayPropValue)
+            return {description: `${saveWord} av ${entityWord} med ${displayPropWord} '${displayPropValue}'`}
+
+        const idPropValue = action.entity[<Prop<Immutable<TModel>>> modelConfig.idProp];
+        return {description: `${saveWord} av ${entityWord} med id '${idPropValue}'`}
     }
   
     protected createHttpBody(action: Immutable<SaveModelAction<TModel, TState>>): {} {
