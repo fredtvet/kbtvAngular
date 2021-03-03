@@ -3,10 +3,14 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 @Directive({selector: '[appImageErrorPlaceholder]'})
 export class ImageErrorPlaceholderDirective {
 
-  constructor(private el: ElementRef) {}
+    private hasSetPlaceholder: boolean;
 
-  @HostListener('error') onError(): void {
-    this.el.nativeElement.src = "/assets/notfound.png?"
-  }
+    constructor(private el: ElementRef) {}
+
+    @HostListener('error') onError(): void {
+        if(this.hasSetPlaceholder) return;
+        this.hasSetPlaceholder = true; 
+        this.el.nativeElement.src =  "/assets/notfound.png?";     
+    }
 
 }
