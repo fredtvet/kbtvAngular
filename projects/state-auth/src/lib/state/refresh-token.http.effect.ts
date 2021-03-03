@@ -25,8 +25,7 @@ export class RefreshTokenHttpEffect implements Effect<RefreshTokenAction>{
         )
     }
 
-    onErrorAction = (err: HttpErrorResponse) => 
-        err.status === 400 ? <LogoutAction>{ type: LogoutAction } : undefined;
+    onErrorAction = (err: HttpErrorResponse) => <LogoutAction>{ type: LogoutAction };
 
     private refreshToken$(tokens: Tokens): Observable<RefreshTokenResponse> {
         if(this.isRefreshingToken || !navigator.onLine) return EMPTY;
