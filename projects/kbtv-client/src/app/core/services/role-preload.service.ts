@@ -1,3 +1,4 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Injectable } from '@angular/core';
 import { PreloadingStrategy } from '@angular/router';
 import { CustomRoute } from '@shared-app/interfaces/custom-route.interface';
@@ -6,20 +7,30 @@ import { EMPTY, Observable, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AuthRouteData, AuthService } from 'state-auth';
 
+export interface PreloadRouteData extends AuthRouteData { preload?: boolean, preloadBreakpoints?: string[] }
+
 @Injectable({ providedIn: 'root' })
 export class RolePreloadService implements PreloadingStrategy {  
 
-    constructor(private authService: AuthService){ }
+    constructor(
+      private authService: AuthService,
+      private breakpointObserver: BreakpointObserver
+    ){ }
 
-    preload(route: CustomRoute<AuthRouteData>, load: () => Observable<unknown>): Observable<unknown> {
+    preload(route: CustomRoute<PreloadRouteData>, load: () => Observable<unknown>): Observable<unknown> {
       const user = this.authService.getCurrentUser();
-      if(!this.preloadCheck(route, user?.role)) return EMPTY;
+      if(!this.preloadCheck(route.data, user?.role)) return EMPTY;
       return timer(2000).pipe(switchMap(x => load()))
     }
   
-    private preloadCheck(route: CustomRoute<AuthRouteData>, role: Maybe<string>): boolean {
-      return route.data == null || 
-      (role != null && (!route.data['allowedRoles'] || (route.data['allowedRoles'].indexOf(role) !== -1))
+    private preloadCheck(data: PreloadRouteData | undefined, role: Maybe<string>): boolean {
+      return data === undefined ||
+        ( 
+          role != null && 
+          (data.preloadBreakpoints === undefined || this.breakpointObserver.isMatched(data.preloadBreakpoints)) &&
+          (data.preload === undefined || data.preload === true) && 
+          (!data['allowedRoles'] || (data['allowedRoles'].indexOf(role) !== -1)
+        )
       )
     }
   
