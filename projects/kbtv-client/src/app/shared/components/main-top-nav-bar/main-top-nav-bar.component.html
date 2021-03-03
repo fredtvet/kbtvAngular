@@ -11,8 +11,8 @@
 
     </span>
 
-    <mat-spinner *ngIf="loading$ |  async" diameter="24" color="accent" class="mr-2"></mat-spinner>
-
+    <app-optimistic-loading-spinner spinnerColor="accent"></app-optimistic-loading-spinner>
+    
     <span class="custom-buttons">
         <ng-container *ngIf="config.buttons">
             <app-button *ngFor="let button of config.buttons | transformButtons: baseActionBtn; trackBy: TrackByButton"

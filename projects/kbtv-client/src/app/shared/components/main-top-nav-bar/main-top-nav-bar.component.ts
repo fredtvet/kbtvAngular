@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingService } from '@core/services/loading.service';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { _trackByAppButton } from '@shared-app/track-by-app-button';
-import { Observable } from 'rxjs';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from './main-top-nav.config';
 
 @Component({
@@ -18,14 +16,9 @@ export class MainTopNavBarComponent {
   @Input() config: MainTopNavConfig;
   @Input() overlayMode: boolean;
   
-  loading$: Observable<boolean> = this.loadingService.loading$;
-
   baseActionBtn: Partial<AppButton> = {type: ButtonTypes.Icon}
 
-  constructor(
-    private loadingService: LoadingService,
-    private router: Router
-  ) {}
+  constructor(private router: Router) {}
 
   TrackByButton = _trackByAppButton
 

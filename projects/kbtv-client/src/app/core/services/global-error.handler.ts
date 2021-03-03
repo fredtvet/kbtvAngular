@@ -17,7 +17,6 @@ export class GlobalErrorHandler implements ErrorHandler {
     })
 
     handleError(error: Error): void {
-        console.log(error, this.chunkFailedExp.test(error.message))
         if (this.chunkFailedExp.test(error.message)) 
             this.notificationService.notify(this.chunkFailedNotification)     
     }

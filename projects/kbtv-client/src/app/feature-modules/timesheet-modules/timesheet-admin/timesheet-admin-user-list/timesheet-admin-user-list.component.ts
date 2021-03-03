@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '@core/models';
-import { LoadingService } from '@core/services/loading.service';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { TimesheetAdminWeekListCriteriaQueryParam } from '../timesheet-admin-week-list/timesheet-admin-week-list-route-params.const';
@@ -16,12 +15,9 @@ export class TimesheetAdminUserListComponent {
 
   users$ = this.facade.users$;
 
-  loading$ = this.loadingService.queryLoading$;
-
   navConfig: MainTopNavConfig = {title: 'Administrer timer'};
 
   constructor(
-    private loadingService: LoadingService,
     private facade: TimesheetAdminFacade,
     private router: Router,
   ) {}

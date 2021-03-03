@@ -8,8 +8,9 @@
         display: block;
       }
   }
+
 </style>
-<mat-toolbar color="accent" *ngIf="vm$ | async; let vm" class="mat-elevation-z3">
+<mat-toolbar color="accent" class="mat-elevation-z3">
 
   <button mat-icon-button aria-label="Toggle sidenav" (tap)="toggleDrawer()" class="menu-btn">
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
@@ -17,7 +18,7 @@
 
   <span class="mr-auto"></span>
 
-  <mat-spinner *ngIf="vm.loading" diameter="24" class="mr-2"></mat-spinner>
+  <app-optimistic-loading-spinner></app-optimistic-loading-spinner>
 
   <button mat-button appAddToHomeScreen>Legg til app</button>
 

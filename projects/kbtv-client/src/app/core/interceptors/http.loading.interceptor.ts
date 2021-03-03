@@ -8,35 +8,21 @@ import { LoadingService } from '../services/loading.service';
 
 @Injectable()
 export class HttpLoadingInterceptor implements HttpInterceptor {
-    private totalCommandRequests = 0;
-    private totalQueryRequests = 0;
+    private totalRequests = 0;
 
     constructor(private loadingService: LoadingService) { }
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler) {   
       if(request.responseType != "json") return next.handle(request);
-      if(request.method === "GET"){
-        this.totalQueryRequests++;
-        this.loadingService.setQueryLoading(true);
-        return next.handle(request).pipe(finalize(() => this.decreaseQueryRequests()));
-      } else {
-        this.totalCommandRequests++;
-        this.loadingService.setCommandLoading(true);
-        return next.handle(request).pipe(finalize(() => this.decreaseCommandRequests()));
-      }
+      this.totalRequests++;
+      this.loadingService.setHttpLoading(true);
+      return next.handle(request).pipe(finalize(() => this.decreaseRequests()));
     }  
 
-    private decreaseCommandRequests() {
-      this.totalCommandRequests--;
-      if (this.totalCommandRequests === 0) {
-        this.loadingService.setCommandLoading(false);
-      }
-    }
-
-    private decreaseQueryRequests() {
-      this.totalQueryRequests--;
-      if (this.totalQueryRequests === 0) {
-        this.loadingService.setQueryLoading(false);
+    private decreaseRequests() {
+      this.totalRequests--;
+      if (this.totalRequests === 0) {
+        this.loadingService.setHttpLoading(false);
       }
     }
 }

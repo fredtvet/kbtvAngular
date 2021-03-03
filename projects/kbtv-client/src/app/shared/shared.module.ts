@@ -1,4 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ValidationErrorMessages } from '@core/configurations/validation-error-messages.const';
 import { CdkSelectableModule } from 'cdk-selectable';
@@ -8,9 +9,9 @@ import { FormSheetModule } from 'form-sheet';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
+import { BottomSheetMenuComponent } from './bottom-sheet-menu/bottom-sheet-menu.component';
 import { AppButtonComponent } from './components/app-button/app-button.component';
 import { BottomActionBarComponent } from './components/bottom-action-bar/bottom-action-bar.component';
-import { BottomSheetMenuComponent } from './bottom-sheet-menu/bottom-sheet-menu.component';
 import { ChipsBarComponent } from './components/chips-bar.component';
 import { AutoCompleteQuestionComponent } from './components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { CheckboxQuestionComponent } from './components/dynamic-form-questions/checkbox-question.component';
@@ -22,15 +23,14 @@ import { RadioGroupQuestionComponent } from './components/dynamic-form-questions
 import { SelectQuestionComponent } from './components/dynamic-form-questions/select-question.component';
 import { SliderQuestionComponent } from './components/dynamic-form-questions/slider-question.component';
 import { TextAreaQuestionComponent } from './components/dynamic-form-questions/text-area-question.component';
+import { FetchingModelContentComponent } from './components/fetching-model-content/fetching-model-content.component';
 import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.component';
 import { ScrollNavElevationTogglerDirective } from './components/main-skeleton/scroll-nav-elevation-toggler.directive';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
 import { NoContentComponent } from './components/no-content.component';
-import { HttpCommandButtonDirective, LoadingOverlayDirective } from './directives';
+import { LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FetchingModelContentComponent } from './components/fetching-model-content/fetching-model-content.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +64,6 @@ import { FetchingModelContentComponent } from './components/fetching-model-conte
     MergeObjPipe,
     
     ScrollNavElevationTogglerDirective,   
-    HttpCommandButtonDirective,
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    
   ],
@@ -103,8 +102,7 @@ import { FetchingModelContentComponent } from './components/fetching-model-conte
     ObjectToArrayPipe,
     MergeObjPipe,
 
-    ScrollNavElevationTogglerDirective,     
-    HttpCommandButtonDirective,
+    ScrollNavElevationTogglerDirective,
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    
   ],

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Credentials } from 'state-auth';
 
@@ -12,7 +12,8 @@ export class LoginFormComponent {
   @Output() submitted = new EventEmitter<Credentials>();
   authForm: FormGroup;
   hidePassword = true;
-  
+
+
   constructor(
     private fb: FormBuilder
   ) {

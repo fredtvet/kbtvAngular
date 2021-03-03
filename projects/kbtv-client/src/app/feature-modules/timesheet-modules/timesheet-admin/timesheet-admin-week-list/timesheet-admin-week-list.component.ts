@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet, User } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
-import { LoadingService } from '@core/services/loading.service';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
+import { TimesheetStatus } from '@shared/enums';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
 import { map, takeUntil, tap } from 'rxjs/operators';
@@ -14,7 +14,6 @@ import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { TimesheetAdminListWeekNrQueryParam } from '../timesheet-admin-list/timesheet-admin-list-route-params.const';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { TimesheetAdminWeekListCriteriaQueryParam } from './timesheet-admin-week-list-route-params.const';
-import { TimesheetStatus } from '@shared/enums';
 
 @Component({
   selector: 'app-timesheet-admin-week-list',
@@ -22,8 +21,6 @@ import { TimesheetStatus } from '@shared/enums';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
-   
-  loading$ = this.loadingService.queryLoading$;
   
   summaries$ = this.facade.weeklySummaries$.pipe(
     map(x => x?.sort((x, y) => ((y.year || 0) - (x.year || 0)) || ((y.weekNr || 0) - (x.weekNr || 0))))
@@ -36,7 +33,6 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
   bottomActions: AppButton[];
   
   constructor(
-    private loadingService: LoadingService,
     private facade: TimesheetAdminFacade,
     private formService: FormService,
     private router: Router,

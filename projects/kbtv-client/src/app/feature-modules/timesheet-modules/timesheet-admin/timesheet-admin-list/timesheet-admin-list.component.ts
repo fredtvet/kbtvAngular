@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet, User } from '@core/models';
-import { LoadingService } from '@core/services/loading.service';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
+import { TimesheetStatus } from '@shared/enums';
 import { _getWeekYear } from 'date-time-helpers';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
@@ -17,7 +17,6 @@ import { map, takeUntil, tap } from 'rxjs/operators';
 import { AdminTimesheetCardDialogWrapperComponent } from '../components/admin-timesheet-card-dialog-wrapper.component';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { TimesheetAdminListWeekNrQueryParam } from './timesheet-admin-list-route-params.const';
-import { TimesheetStatus } from '@shared/enums';
 
 @Component({
   selector: 'app-timesheet-admin-list',
@@ -25,8 +24,6 @@ import { TimesheetStatus } from '@shared/enums';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimesheetAdminListComponent extends WithUnsubscribe() {
-    
-  loading$ = this.loadingService.queryLoading$;
 
   timesheets$ = this.facade.selectedWeekTimesheets$;
 
@@ -38,7 +35,6 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
   bottomActions: AppButton[];
   
   constructor(
-    private loadingService: LoadingService,
     private facade: TimesheetAdminFacade,
     private router: Router,
     private dialog: MatDialog,

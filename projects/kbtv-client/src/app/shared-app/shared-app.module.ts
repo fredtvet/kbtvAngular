@@ -15,6 +15,7 @@ import { AddToHomeScreenDirective } from './add-to-home-screen.directive';
 import { ListItemComponent } from './components/list-item/list-item.component';
 import { FailedCommandListComponent } from './components/optimistic-http-error-dialog/failed-command-list/failed-command-list.component';
 import { OptimisticHttpErrorDialogComponent } from './components/optimistic-http-error-dialog/optimistic-http-error-dialog.component';
+import { OptimisticLoadingSpinnerComponent } from './components/optimistic-loading-spinner/optimistic-loading-spinner.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
 import { IfRolePipe } from './pipes/if-role.pipe';
 import { ReverseArrayPipe } from './pipes/reverse-array';
@@ -29,7 +30,8 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     TransformButtonsPipe,
     IfRolePipe,
     AddToHomeScreenDirective,
-    OptimisticHttpErrorDialogComponent 
+    OptimisticHttpErrorDialogComponent,
+    OptimisticLoadingSpinnerComponent,
   ],
   imports: [
     RouterModule,
@@ -65,7 +67,8 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     PageNotFoundComponent,
     ListItemComponent,
     FailedCommandListComponent,
-
+    OptimisticLoadingSpinnerComponent,
+    
     IfRolePipe,
     ReverseArrayPipe,
     TransformButtonsPipe,   

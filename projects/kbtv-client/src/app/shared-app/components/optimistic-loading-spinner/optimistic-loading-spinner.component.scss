@@ -1,0 +1,19 @@
+:host { 
+    width: 40px;
+    height: 40px;
+}
+
+.loading-count{
+    position:absolute;
+    text-align:center;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 40px;
+    height: 40px;
+    top:0;
+    left:0;
+    z-index: 1;
+}
+
+mat-spinner{ margin:8px }
