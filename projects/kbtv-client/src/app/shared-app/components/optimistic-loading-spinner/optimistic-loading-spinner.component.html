@@ -3,7 +3,7 @@
     <ng-container *ngIf="vm.loading">
 
         <ng-container *ngIf="vm.isOnline else offlineContent">
-            <span class="loading-count mat-body" *ngIf="vm.optimisticCount">
+            <span class="loading-count mat-body" *ngIf="vm.optimisticCount && vm.optimisticCount > 1">
                 {{ vm.optimisticCount }}
             </span>
 

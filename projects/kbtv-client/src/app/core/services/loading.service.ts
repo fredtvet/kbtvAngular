@@ -21,7 +21,7 @@ export class LoadingService {
   loading$: Observable<LoadingResponse> = combineLatest([
     this.httpLoadingSubject.asObservable().pipe(distinctUntilChanged()), 
     this.optimisticCount$
-  ]).pipe(map(([loading, optimisticCount]) => { return {loading: true, optimisticCount: 4} }));
+  ]).pipe(map(([loading, optimisticCount]) => { return {loading, optimisticCount} }));
 
   constructor(private store: Store<StateRequestQueue>) { }
 
