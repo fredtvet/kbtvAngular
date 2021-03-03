@@ -1,5 +1,5 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { translations } from '@shared/translations';
 import { BASE_API_URL, OptimisticHttpModule, ROOT_OPTIMISTIC_STATE_PROPS } from 'optimistic-http';
 import { environment } from 'src/environments/environment';
@@ -21,6 +21,7 @@ import { HttpRetryInterceptor } from './interceptors/http-retry.interceptor';
 import { HttpErrorInterceptor } from './interceptors/http.error.interceptor';
 import { HttpIsOnlineInterceptor } from './interceptors/http.is-online.interceptor';
 import { HttpLoadingInterceptor } from './interceptors/http.loading.interceptor';
+import { GlobalErrorHandler } from './services/global-error.handler';
 import { StartupService } from './services/startup.service';
 import { SyncHttpFetcherService } from './services/sync-http-fetcher.service';
 import { InitalizeHttpQueueEffect, InitalizeSyncEffect } from './state/initalizing.effects';
@@ -42,6 +43,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
     StateModelModule
   ],
   providers: [   
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },   
     { provide: HTTP_INTERCEPTORS, useClass: HttpAuthTokensInterceptor, multi: true },  
     { provide: HTTP_INTERCEPTORS, useClass: HttpRetryInterceptor, multi: true },
