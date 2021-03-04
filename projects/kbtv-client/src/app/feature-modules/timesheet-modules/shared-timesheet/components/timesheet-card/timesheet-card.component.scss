@@ -1,0 +1,19 @@
+::ng-deep .timesheet-card-container{
+    .list-item{
+        padding:8px!important;
+        .list-item-content{
+            white-space:normal;
+            overflow:auto;
+            text-overflow:unset;
+        }
+    }   
+}
+.timesheet-card-container{
+    width: 400px;
+    padding: 8px 0px;
+    .card-title{
+        padding: 0 16px;
+        margin-bottom: 12px;
+        span { float: right }
+    }  
+}

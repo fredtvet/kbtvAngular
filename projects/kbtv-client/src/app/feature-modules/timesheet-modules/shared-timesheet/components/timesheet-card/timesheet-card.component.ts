@@ -6,6 +6,7 @@ import { TimesheetStatus } from '@shared/enums';
 @Component({
   selector: 'app-timesheet-card',
   templateUrl: './timesheet-card.component.html',
+  styleUrls: ['./timesheet-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
