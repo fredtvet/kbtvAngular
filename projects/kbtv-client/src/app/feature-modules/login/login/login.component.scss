@@ -1,0 +1,44 @@
+.image-container{
+    background-image: url("/assets/login.jpg?");
+    height:100%;  
+    background-size: cover;
+    background-repeat: no-repeat; 
+}
+.logo-text {
+    line-height: 100%;
+    text-align: center;
+}
+
+.login-container {
+  height: 100%;
+  background: white;
+  app-login-form{ margin-top: 52px; }
+  .header-container {
+    max-height: 60vh;
+    position: relative;
+    .image-container {
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15vw), 0 100%);
+    }
+    .logo-container {
+      position: absolute;
+      bottom: 0;
+      height: 15vw;
+      width:100%;
+      transform:translateY(22px);
+      .logo-text {
+        line-height: 100%;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.login-container-desktop{
+    background:white;
+    height:100%;
+    .form-container{
+        .logo-container{ margin-bottom: 32px; }
+        app-login-form{ width: 420px }
+    }
+   
+}

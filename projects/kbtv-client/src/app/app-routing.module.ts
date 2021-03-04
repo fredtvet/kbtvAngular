@@ -56,7 +56,7 @@ const routes: AppRoute[] = [
   },
   
   {path: 'login', canActivate: [NoAuthGuard], 
-    loadChildren: () => import('src/app/feature-modules/login-prompt/login-prompt.module').then(m => m.LoginPromptModule)},   
+    loadChildren: () => import('src/app/feature-modules/login/login.module').then(m => m.LoginModule)},   
 
   {path: '**', component: PageNotFoundComponent},
 ];
