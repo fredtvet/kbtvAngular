@@ -1,33 +1,39 @@
-<div *ngIf="isSmall$ | async; else desktop" class="login-container" fxLayout="column"
-  fxLayoutAlign="space-between stretch">
+<ng-container *ngIf="vm$ | async; let vm">
 
-  <div fxFlex class="header-container">
-    <div class="image-container"></div>
+  <div *ngIf="vm.isSmall; else desktop" class="login-container" fxLayout="column"
+    fxLayoutAlign="space-between stretch">
 
-    <div class="logo-container" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px">
-      <img src="assets/icons/icon-72x72.png" alt="Logo bilde" />
-
-      <span class="mat-body-strong logo-text">Bjørkelangen<br />Bygg og Eiendom</span>
-    </div>
-
-  </div>
-
-  <app-login-form (submitted)="authenticate($event)"></app-login-form>
-
-</div>
-
-<ng-template #desktop>
-  <div class="login-container-desktop" fxLayout="row" fxLayoutAlign="start center">
-    <div class="image-container" fxFlex=40></div>
-    <div class="form-container" fxFlex fxLayout="column" fxLayoutAlign="center center">
+    <div fxFlex class="header-container">
+      <div class="image-container"></div>
 
       <div class="logo-container" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px">
-        <img src="assets/icons/icon-128x128.png" alt="Logo bilde" />
+        <img src="assets/icons/icon-72x72.png" alt="Logo bilde" />
 
-        <span class="mat-title logo-text">Bjørkelangen<br />Bygg og Eiendom</span>
+        <span class="mat-body-strong logo-text">Bjørkelangen<br />Bygg og Eiendom</span>
       </div>
 
-      <app-login-form (submitted)="authenticate($event)"></app-login-form>
     </div>
+
+    <app-login-form [disabled]="vm.formDisabled" (submitted)="authenticate($event)"></app-login-form>
+
   </div>
-</ng-template>
+
+  <ng-template #desktop>
+    <div class="login-container-desktop" fxLayout="row" fxLayoutAlign="start center">
+      <div class="image-container" fxFlex=40></div>
+      <div class="form-container" fxFlex fxLayout="column" fxLayoutAlign="center center">
+
+        <div class="logo-container" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px">
+          <img src="assets/icons/icon-128x128.png" alt="Logo bilde" />
+
+          <span class="mat-title logo-text">Bjørkelangen<br />Bygg og Eiendom</span>
+        </div>
+
+        <app-login-form [disabled]="vm.formDisabled" (submitted)="authenticate($event)"></app-login-form>
+      </div>
+    </div>
+  </ng-template>
+
+</ng-container>
+
+

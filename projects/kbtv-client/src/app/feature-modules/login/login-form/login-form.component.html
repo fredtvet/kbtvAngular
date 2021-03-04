@@ -13,7 +13,7 @@
       autocomplete="current-password" [type]="hidePassword ? 'password' : 'text'" />
   </mat-form-field>
 
-  <button mat-raised-button color="accent" [disabled]="!authForm.valid" type="submit" style="height:50px">
+  <button mat-raised-button color="accent" [disabled]="disabled || !authForm.valid" type="submit" style="height:50px">
     <mat-icon>lock_open</mat-icon>
     Logg inn
   </button>

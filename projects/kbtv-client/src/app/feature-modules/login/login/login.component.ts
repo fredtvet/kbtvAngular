@@ -1,6 +1,9 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceInfoService } from '@core/services/device-info.service';
+import { LoadingService } from '@core/services/loading.service';
+import { combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AuthReturnUrlQueryParam, AuthService, Credentials } from 'state-auth';
 
 @Component({
@@ -17,13 +20,17 @@ export class LoginComponent {
     return url || this.route.snapshot.root.url.toString();
   }
 
-  isSmall$ = this.deviceInfoService.isXs$;
+  vm$: Observable<{isSmall: boolean, formDisabled: boolean}> = combineLatest([
+    this.deviceInfoService.isXs$,
+    this.loadingService.httpLoading$
+  ]).pipe(map(([isSmall, formDisabled]) => { return {isSmall, formDisabled}}))
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private deviceInfoService: DeviceInfoService
+    private deviceInfoService: DeviceInfoService,
+    private loadingService: LoadingService,
   ) {}
 
   authenticate = (credentials: Credentials) =>
