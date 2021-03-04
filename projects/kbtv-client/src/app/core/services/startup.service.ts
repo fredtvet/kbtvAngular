@@ -15,7 +15,8 @@ export class StartupService {
     deviceInfoService: DeviceInfoService,
     @Inject(DOCUMENT) document: Document
   ) { 
-    if(deviceInfoService.isIphone) document.body.classList.add("iphone-body");
+    if(deviceInfoService.isIphone) document.documentElement.style.setProperty('--bottom-nav-padding', '16px');
+    
     effectsSubscriber.onEffectsInit$.subscribe(x => store.dispatch(<LoadPersistedStateAction> { type: LoadPersistedStateAction }))
     iconService.registerIcons();
   }

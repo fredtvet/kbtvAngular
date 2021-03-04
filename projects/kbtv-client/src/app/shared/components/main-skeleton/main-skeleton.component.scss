@@ -32,13 +32,13 @@
 
 .main-content{ 
     overflow-y: auto; 
-    margin-bottom: -56px;
+    margin-bottom: calc(var(--bottom-nav-height) * -1)!important;
     flex: 1 1 1e-09px;
     box-sizing: border-box;
 }
 
 .default-main-content{
-   padding: 8px 0px 88px 0px
+   padding: 8px 0px calc(var(--bottom-nav-height) + 32px) 0px
 }
 
 ::ng-deep.main-skeleton-overlay{

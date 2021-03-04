@@ -4,7 +4,7 @@
     width: 70px;
     display: inline-block;    
     position: relative;    
-    height: 56px;
+    height: var(--bottom-nav-height);
     color:white;
     background-image: -webkit-radial-gradient(
         35px 1%,
@@ -27,13 +27,14 @@
     background:transparent!important;
     padding:0!important;
     color: mat-color($background, card);
-    height:56px!important;
+    height:var(--bottom-nav-height)!important;
 }
 
 .bottom-bar-side{
     background:$accent;
     height:100%;
     padding:8px;
+    padding-bottom:var(--bottom-nav-padding)!important;
     box-sizing:border-box;
     width: calc(50% - 35px);
 }

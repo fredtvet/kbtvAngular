@@ -10,14 +10,15 @@
 
 @include gap-units($gap-size);
 
-:root{
+html:root{
   --ion-color-primary: black;
+  --bottom-nav-inner-height: 48px;
+  --bottom-nav-padding: 8px;
+  --bottom-nav-height: calc(var(--bottom-nav-inner-height) +  var(--bottom-nav-padding))
 }
 
 html, body { height: 100%; overflow:hidden;padding:0;margin:0; overflow-x:hidden}
 body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
-
-.iphone-body{ height: calc(100vh - 16px); }
 
 .primary{
   background-color:$primary;
@@ -72,7 +73,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
   background-color:mat-color($background, card);
 }
 
-.bottom-bar-padding{ padding-bottom: 56px; }
+.bottom-bar-padding{ padding-bottom: var(--bottom-nav-height)!important; }
 
 .scale-150{transform:scale(1.5);}
 .scale-125{transform:scale(1.25);}
