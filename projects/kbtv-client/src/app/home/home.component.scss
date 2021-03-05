@@ -4,7 +4,6 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    overflow:hidden;
 }
 
 app-home-mission-card{
@@ -16,6 +15,7 @@ app-home-mission-card{
     background: mat-color($background, background);
     height:100%;
     width:100%;  
+    overflow:hidden;
 }
 
 .content-container{
@@ -24,4 +24,5 @@ app-home-mission-card{
     margin-bottom: -50px;
     padding: 8px 8px 0 8px;
     flex: 1 1 1e-09px;
+    overflow:hidden;
 }
