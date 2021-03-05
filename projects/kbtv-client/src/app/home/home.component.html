@@ -2,31 +2,10 @@
 
   <app-home-header></app-home-header>
 
-  <div class="content-container p-2">
+  <div class="content-container">
 
-    <div class="mat-elevation-z1  mission-card" 
-      [style.minHeight]="([roles.Leder] | ifRole) ? '200px' : '310px'">
-
-      <span class="mat-body-2 mb-2 w-100">
-        Sist besøkte oppdrag
-        <mat-divider></mat-divider>
-      </span>
-
-      <div *ngIf="missionHistory$ | async; let missions; else noContent" class="mission-list">
-
-        <app-list-item *ngFor="let mission of missions" [routerLink]="['/oppdrag', mission.id, 'detaljer']">
-          <mat-icon left-side>history</mat-icon>
-          {{mission.address}}
-          <mat-icon right-side>chevron_right</mat-icon>
-        </app-list-item>
-
-      </div>
-
-      <ng-template #noContent>
-        <div class="mt-2">Finner ingen oppdrag</div>
-      </ng-template>
-
-    </div>
+    <app-home-mission-card [missions]="missionHistory$ | async">
+    </app-home-mission-card>
 
     <app-home-nav-tile-grid  
       [columnCount]="([roles.Leder] | ifRole) ? 3 : 2"

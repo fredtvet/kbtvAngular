@@ -5,7 +5,9 @@
         background:transparent;
         color:white;
         height: 180px;
+       
     }
+    mat-toolbar-row{ height: 56px!important; }
     .second-row{
         flex-direction: column;
         box-sizing: border-box;
@@ -15,7 +17,7 @@
     }
 </style>
 <mat-toolbar *ngIf="vm$ | async; let vm">
-    
+
     <mat-toolbar-row>
             <button mat-icon-button aria-label="Toggle sidenav" (tap)="toggleDrawer()" class="menu-btn">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>

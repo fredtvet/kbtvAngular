@@ -1,0 +1,23 @@
+<div class="mat-elevation-z1  mission-card">
+
+    <span class="mat-body-2 m-3">
+      Sist besøkte oppdrag    
+    </span>
+
+    <mat-divider class="ml-3 mr-3"></mat-divider>
+
+    <div *ngIf="missions; else noContent" class="mission-list">
+
+      <app-list-item *ngFor="let mission of missions" [routerLink]="['/oppdrag', mission.id, 'detaljer']">
+        <mat-icon left-side>history</mat-icon>
+        {{mission.address}}
+        <mat-icon right-side>chevron_right</mat-icon>
+      </app-list-item>
+
+    </div>
+
+    <ng-template #noContent>
+      <div class="mt-2">Finner ingen oppdrag</div>
+    </ng-template>
+
+</div>

@@ -1,40 +1,21 @@
 @import '../../styles/variables';
 
-.main-container, .mission-card{
+.main-container, .content-container, app-home-mission-card{
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    overflow:hidden;
 }
 
 .main-container{
     background: mat-color($background, background);
     height:100%;
-    width:100%;
-    overflow:hidden;
+    width:100%;  
 }
 
 .content-container{
-    width:100%;
     color:$accent;
-    flex: 1 1 1e-09px;
-    box-sizing: border-box;
     transform:translateY(-50px);
-}
-
-.mission-card{
-    height:40vh;
-    min-height:200px;
-    margin-bottom: $gap-size * 3px;
-    padding: $gap-size * 3px;
-    background-color:mat-color($background, card);
-    place-content: flex-start;
-    align-items: flex-start;
-    border-radius: 4px;
-} 
-
-.mission-list{
-   overflow-y:scroll;
-   overflow-x:hidden;
-   height:100%;
-   width:100% 
+    margin-bottom: -50px;
+    padding: 8px 8px 0 8px;
 }

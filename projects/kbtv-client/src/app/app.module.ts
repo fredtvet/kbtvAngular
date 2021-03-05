@@ -2,6 +2,7 @@ import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@ang
 import { HttpClientModule } from '@angular/common/http';
 import norwayLocale from '@angular/common/locales/nb';
 import { LOCALE_ID, NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -12,6 +13,7 @@ import { AppComponent } from './app.component';
 import { AppHammerConfig } from './core/configurations/app-hammer-config';
 import { CoreModule } from './core/core.module';
 import { HomeHeaderComponent } from './home/home-header/home-header.component';
+import { HomeMissionCardComponent } from './home/home-mission-card/home-mission-card.component';
 import { HomeNavTileGridComponent } from './home/home-nav-tile-grid/home-nav-tile-grid.component';
 import { HomeComponent } from './home/home.component';
 import { AppLayoutModule } from './layout/app-layout.module';
@@ -24,7 +26,8 @@ registerLocaleData(norwayLocale, 'nb-NO');
     AppComponent,
     HomeComponent,
     HomeNavTileGridComponent,
-    HomeHeaderComponent
+    HomeHeaderComponent,
+    HomeMissionCardComponent
   ],
   imports: [
     BrowserAnimationsModule,   
@@ -35,6 +38,7 @@ registerLocaleData(norwayLocale, 'nb-NO');
     AppRoutingModule, 
     AppLayoutModule,
     SharedAppModule,
+    FlexLayoutModule,
     NotificationModule
   ],
   providers:[ 
