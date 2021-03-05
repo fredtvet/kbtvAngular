@@ -1,10 +1,12 @@
 <style>
     mat-toolbar{
-        background: #006064;  /* fallback for old browsers */
+        background: #006064; 
         background: linear-gradient(to top, #006064, #314755)!important;
+        background:transparent;
         color:white;
-        height: 30vh;
-        padding-bottom: 26px;
+        height: 180px;
+    }
+    .second-row{
         flex-direction: column;
         box-sizing: border-box;
         display: flex;
@@ -13,12 +15,30 @@
     }
 </style>
 <mat-toolbar *ngIf="vm$ | async; let vm">
-  
-    <h2>{{ vm.currentUser.firstName + ' ' + vm.currentUser.lastName }}</h2>
-    <span class="mat-caption">Sist synkronisert {{ vm.syncTimestamp | date : 	'd.MMM  kl. H:mm'}}</span> 
-    <span class="mt-2">
-        <button routerLink="/profil" mat-stroked-button>Min profil</button>
-        <button appAddToHomeScreen class="ml-2" mat-stroked-button>Last ned app</button>
-    </span>
+    
+    <mat-toolbar-row>
+            <button mat-icon-button aria-label="Toggle sidenav" (tap)="toggleDrawer()" class="menu-btn">
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+        
+          <span class="mr-auto"></span>
+        
+          <app-optimistic-loading-spinner></app-optimistic-loading-spinner>
+        
+          <button mat-button appAddToHomeScreen>Legg til app</button>
+
+          <button mat-icon-button routerLink="/profil">
+            <mat-icon>person</mat-icon>
+          </button>
+
+          <button mat-icon-button (tap)="refresh()">
+            <mat-icon>update</mat-icon>
+          </button>
+    </mat-toolbar-row>
+    
+    <mat-toolbar-row class="second-row">
+        <h2>{{ vm.currentUser.firstName + ' ' + vm.currentUser.lastName }}</h2>
+        <span class="mat-caption">Sist synkronisert {{ vm.syncTimestamp | date : 	'd.MMM  kl. H:mm'}}</span> 
+    </mat-toolbar-row>
      
 </mat-toolbar>

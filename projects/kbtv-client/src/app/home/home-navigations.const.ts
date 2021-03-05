@@ -10,6 +10,13 @@ export const HomeNavigations: HomeNavTile[] = [
         aria: "Åpne oppdrag"
     },
     {
+        icon: "dns",
+        text: "Data",
+        routerLink: "/data",
+        aria: "Åpne dataverktøy ",
+        allowedRoles: RolePermissions.DataManagement.access,
+    },  
+    {
         icon: "timer",
         text: "Timer",
         routerLink: "/mine-timer",
@@ -22,27 +29,20 @@ export const HomeNavigations: HomeNavTile[] = [
         routerLink: "/profil",
         aria: "Åpne profil",
         allowedRoles: [Roles.Oppdragsgiver],
-    }, 
+    },  
     {
-        icon: "dns",
-        text: "Data",
-        routerLink: "/data",
-        aria: "Åpne dataverktøy ",
-        allowedRoles: RolePermissions.DataManagement.access,
-    },   
+        icon: "date_range",
+        text: "Administrer timer",
+        routerLink: "/timeadministrering",
+        aria: "Åpne timeadministrering",
+        allowedRoles: RolePermissions.TimesheetAdmin.access,
+    },    
     {
         icon: "people",
         text: "Brukere",
         routerLink: "/brukere",
         aria: "Åpne brukerliste",
         allowedRoles: RolePermissions.Users.access,
-    },
-    {
-        icon: "date_range",
-        text: "Timeadministering",
-        routerLink: "/timeadministrering",
-        aria: "Åpne timeadministrering",
-        allowedRoles: RolePermissions.TimesheetAdmin.access,
     },
     {
         icon: "assessment",

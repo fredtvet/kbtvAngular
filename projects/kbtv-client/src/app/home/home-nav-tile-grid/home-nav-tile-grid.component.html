@@ -5,32 +5,34 @@
         align-items: center;
     }
     .tile-grid{
-        flex-flow: row wrap;       
-        place-content: center space-evenly;
+        display: block;
+        column-gap:8px;
+        column-count: 3;
     }
     .tile {
         text-align: center;
-        width: 100%;
-        margin-bottom: 3.3%;
-        font-size: 15px;
-        font-weight: 500;
+        margin-bottom: 8px;
         flex-direction: column;
         place-content: center;
-        flex: 1 1 45%;
-        max-width: 45%;
+        border-radius:4px;
+        height: 88px;
+        padding: 8px;
+        word-break: break-word;
+        hyphens: auto;
     }
+    .tile-text{line-height:1;}
 </style>
 
-<div class="tile-grid">
+<div class="tile-grid" [style.columnCount]="columnCount">
     
     <ng-container *ngFor="let nav of navigations">
 
-        <span *ifRole="nav.allowedRoles" class="tile mat-elevation-z1 foreground-card p-5" matRipple 
+        <span *ifRole="nav.allowedRoles" class="tile mat-elevation-z1 foreground-card" matRipple 
             [routerLink]="nav.routerLink" [attr.aria-label]="nav.aria">
 
             <mat-icon class="scale-150 mb-2">{{ nav.icon }}</mat-icon>
 
-            <span>{{ nav.text }}</span>
+            <span class="mat-body-2 tile-text">{{ nav.text }}</span>
 
         </span>
 

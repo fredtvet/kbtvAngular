@@ -2,12 +2,10 @@
 
   <app-home-header></app-home-header>
 
-  <div class="content-container">
+  <div class="content-container p-2">
 
-    <app-home-nav-tile-grid [navigations]="navigations"></app-home-nav-tile-grid>
-
-    <div *ifRole="[roles.Oppdragsgiver, roles.Ansatt, roles.Mellomleder]"
-      class="mat-elevation-z1  mission-card">
+    <div class="mat-elevation-z1  mission-card" 
+      [style.minHeight]="([roles.Leder] | ifRole) ? '200px' : '310px'">
 
       <span class="mat-body-2 mb-2 w-100">
         Sist besøkte oppdrag
@@ -30,8 +28,11 @@
 
     </div>
 
-  </div>
+    <app-home-nav-tile-grid  
+      [columnCount]="([roles.Leder] | ifRole) ? 3 : 2"
+      [navigations]="navigations">
+    </app-home-nav-tile-grid>
 
-  <app-home-bottom-bar></app-home-bottom-bar>
+  </div>
 
 </div>

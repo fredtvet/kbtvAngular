@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
 import { AgGridAngular } from "ag-grid-angular";
 import { ColDef, ValueFormatterParams } from "ag-grid-community";
 import { FormService } from "form-sheet";
@@ -34,6 +35,7 @@ export class ExportCsvFormService {
     private exportAsCsv = (columnKeys: string[], grid: AgGridAngular) => {
         grid.api.exportDataAsCsv({
           columnKeys,
+          fileName: _idGenerator(),
           processCellCallback: (params) => {
             const colDef = params.column.getColDef()
             // Use coldef value formatter in export

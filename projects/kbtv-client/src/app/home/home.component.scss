@@ -14,20 +14,22 @@
 }
 
 .content-container{
-    transform:translateY(-30px);
     width:100%;
     color:$accent;
     flex: 1 1 1e-09px;
     box-sizing: border-box;
+    transform:translateY(-50px);
 }
 
 .mission-card{
     height:40vh;
-    margin: 0 3.3%;
+    min-height:200px;
+    margin-bottom: $gap-size * 3px;
     padding: $gap-size * 3px;
     background-color:mat-color($background, card);
     place-content: flex-start;
     align-items: flex-start;
+    border-radius: 4px;
 } 
 
 .mission-list{

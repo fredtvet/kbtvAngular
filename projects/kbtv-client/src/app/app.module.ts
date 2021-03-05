@@ -9,14 +9,13 @@ import { NotificationModule } from 'notification';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AppHammerConfig } from './core/configurations/app-hammer-config';
 import { CoreModule } from './core/core.module';
-import { HomeBottomBarComponent } from './home/home-bottom-bar/home-bottom-bar.component';
+import { HomeHeaderComponent } from './home/home-header/home-header.component';
+import { HomeNavTileGridComponent } from './home/home-nav-tile-grid/home-nav-tile-grid.component';
 import { HomeComponent } from './home/home.component';
 import { AppLayoutModule } from './layout/app-layout.module';
-import { AppHammerConfig } from './core/configurations/app-hammer-config';
 import { SharedAppModule } from './shared-app/shared-app.module';
-import { HomeNavTileGridComponent } from './home/home-nav-tile-grid/home-nav-tile-grid.component';
-import { HomeHeaderComponent } from './home/home-header/home-header.component';
 
 registerLocaleData(norwayLocale, 'nb-NO');
 
@@ -24,7 +23,6 @@ registerLocaleData(norwayLocale, 'nb-NO');
   declarations: [
     AppComponent,
     HomeComponent,
-    HomeBottomBarComponent,
     HomeNavTileGridComponent,
     HomeHeaderComponent
   ],
