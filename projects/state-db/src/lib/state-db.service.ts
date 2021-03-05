@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { get, set, Store as DbStore } from 'idb-keyval';
+import { clear, get, set, Store as DbStore } from 'idb-keyval';
 import { from, Observable } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
@@ -16,6 +16,10 @@ export class StateDbService {
 
     get$<T>(property: string): Observable<T>{
         return from(get<T>(property, this.dbStore))
+    }
+
+    clear$(): Observable<void> {
+        return from(clear(this.dbStore));
     }
 
 }
