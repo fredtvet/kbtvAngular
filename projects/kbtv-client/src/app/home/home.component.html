@@ -4,7 +4,7 @@
 
   <div class="content-container">
 
-    <app-home-mission-card >
+    <app-home-mission-card [missions]="missionHistory$ | async">
     </app-home-mission-card>
 
     <app-home-nav-tile-grid  
