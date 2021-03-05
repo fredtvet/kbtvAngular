@@ -4,6 +4,7 @@ import { Immutable } from "global-types";
 import { AuthService } from "state-auth";
 import { Store } from 'state-management';
 import { ReloadSyncStateAction, SyncConfig, SyncStateAction, UpdateSyncConfigAction } from 'state-sync';
+import { ClearAndLogoutAction } from "./state/clear-and-logout.action";
 import { UpdateCurrentUserAction } from './state/update-current-user/update-current-user.action';
 import { UpdatePasswordAction } from './state/update-password/update-password.action';
 import { StoreState } from './store-state';
@@ -38,5 +39,9 @@ export class ProfileFacade {
   reloadData = () => this.store.dispatch(<ReloadSyncStateAction>{ type: ReloadSyncStateAction, propagate: true });
 
   logout = () => this.authService.logout(); 
+
+  clearAndLogout = () => {
+    this.store.dispatch({type: ClearAndLogoutAction})
+  }
 
 }

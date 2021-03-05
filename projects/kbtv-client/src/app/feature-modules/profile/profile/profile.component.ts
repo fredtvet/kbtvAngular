@@ -1,16 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '@core/models';
-import { SyncConfig } from 'state-sync';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { ProfileForm } from '@shared/constants/forms/profile-form.const';
-import { SyncConfigForm } from '@shared/constants/forms/sync-config.form.const';
-import { ProfileFacade } from '../profile.facade';
-import { FormService } from 'form-sheet';
-import { CurrentUserPasswordForm } from '@shared/constants/forms/password-form.const';
-import { ConfirmDialogService } from 'confirm-dialog';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
+import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { CurrentUserPasswordForm } from '@shared/constants/forms/password-form.const';
+import { ProfileForm } from '@shared/constants/forms/profile-form.const';
+import { ConfirmDialogService } from 'confirm-dialog';
+import { FormService } from 'form-sheet';
+import { ProfileFacade } from '../profile.facade';
 import { ProfileAction } from './profile-action.interface';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -29,19 +27,20 @@ export class ProfileComponent {
     private formService: FormService,
     private facade: ProfileFacade,
     private confirmService: ConfirmDialogService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ){
     this.bottomActions = [{icon: 'update', callback: this.syncAll}]
     this.actions = [
       {text: 'Oppdater profil', icon: 'account_circle', callback: this.updateProfile},
-      {text: 'Oppdater passord', icon: 'vpn_key', callback: this.updatePassword},
-      {text: 'Konfigurasjoner', icon: 'settings', callback: this.updateSyncConfig},     
-      {text: "Aktivitetslogg", icon: "rule", callback: this.goToRequestLog},
-      {text: 'Synkroniser data', icon: 'update', callback: this.syncAll, 
-        hint: 'Hent nye og oppdaterte data fra skyen.'},
-      {text: 'Slett lokal data', icon: 'delete_sweep',callback: this.confirmPurge,
-        hint: 'Slett data lagret på enheten og last inn på nytt.'},
-      {text: 'Logg ut', icon: 'power_settings_new', callback: this.logout},  
+      {text: 'Oppdater passord', icon: 'vpn_key', callback: this.updatePassword},    
+      {text: "Aktivitetslogg", icon: "rule", callback: this.goToRequestLog,
+        hint: "Logg over aktiviteter utført denne økten."},
+      {text: "Synkronisering", icon: 'update', callback: this.goToSyncProfile,
+        hint: "Valg relatert til synkronisering av data"},      
+      {text: 'Slett lokal data', icon: 'power_settings_new', callback: this.confirmClear,
+        hint: "Du vil bli logget ut og må laste ned data på nytt ved neste økt."},  
+      {text: 'Logg ut', icon: 'power_settings_new', callback: this.logout},   
     ]
   }
 
@@ -63,22 +62,12 @@ export class ProfileComponent {
     })
   }
 
-  private updateSyncConfig = (): void => {
-    const config = this.facade.syncConfig;
-    this.formService.open<SyncConfig, unknown>({
-      formConfig: {...SyncConfigForm, initialValue: config ? {...config, refreshTime: config.refreshTime / 60 } : null}, 
-      navConfig: {title: "Konfigurasjoner"},
-      submitCallback: (val: SyncConfig) => 
-        this.facade.updateSyncConfig({...val, refreshTime: val.refreshTime * 60})
-    })
-  }
-
-  private confirmPurge = () => {
+  private confirmClear = (): void => {
     this.confirmService.open({
-      title: 'Slett lokalt data?',
-      message: 'All data vil bli lastet ned på nytt. Vær varsom ved bruk av mobildata.', 
+      title: 'Slett lokal data?',
+      message: 'Lokale innstillinger vil bli borte og all data må lastes ned på nytt. Vær varsom ved bruk av mobildata.', 
       confirmText: 'Slett',
-      confirmCallback: this.facade.reloadData
+      confirmCallback: () => this.facade.clearAndLogout()
     });
   }
 
@@ -87,5 +76,8 @@ export class ProfileComponent {
   private syncAll = () => this.facade.syncAll();
 
   private logout = () => this.facade.logout(); 
+
+  private goToSyncProfile = () => this.router.navigate(['synkronisering'],{relativeTo: this.route})
+  
 
 }

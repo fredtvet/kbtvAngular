@@ -5,15 +5,10 @@
 
   <ng-container *ngFor="let action of actions">
     
-    <app-list-item (click)="handleFn(action.callback, action.params)">
-      <mat-icon left-side class="pl-2 pr-2">{{ action.icon }}</mat-icon>
-      <div>{{ action.text }}</div>
-      <div class="mat-caption">
-        {{ action.hint }}
-      </div>
-    </app-list-item>
+    <app-profile-action-item [action]="action"></app-profile-action-item>
 
     <mat-divider inset=true></mat-divider>
+    
   </ng-container>
 
   <app-bottom-action-bar bottombar [actions]="bottomActions">

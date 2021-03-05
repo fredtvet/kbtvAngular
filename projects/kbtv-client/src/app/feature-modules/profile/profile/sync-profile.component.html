@@ -1,0 +1,17 @@
+<app-main-skeleton>
+
+    <app-main-top-nav-bar navbar [config]="navConfig">
+    </app-main-top-nav-bar>
+  
+    <ng-container *ngFor="let action of actions">
+      
+      <app-profile-action-item [action]="action"></app-profile-action-item>
+  
+      <mat-divider inset=true></mat-divider>
+      
+    </ng-container>
+  
+    <app-bottom-action-bar bottombar [actions]="bottomActions">
+    </app-bottom-action-bar>
+  
+</app-main-skeleton>
