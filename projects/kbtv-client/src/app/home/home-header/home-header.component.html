@@ -14,11 +14,14 @@
         place-content: center;
         align-items: center;
     }
+    @media (min-width: 600px) {
+      .menu-btn { display: none }
+    }
 </style>
 <mat-toolbar *ngIf="vm$ | async; let vm">
 
     <mat-toolbar-row>
-            <button mat-icon-button aria-label="Toggle sidenav" (tap)="toggleDrawer()" class="menu-btn">
+          <button class="menu-btn" mat-icon-button aria-label="Toggle sidenav" (tap)="toggleDrawer()" class="menu-btn">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
           </button>
         
