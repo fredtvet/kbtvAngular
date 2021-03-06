@@ -1,10 +1,11 @@
 import { CheckboxQuestion, CheckboxQuestionComponent } from '@shared/components/dynamic-form-questions/checkbox-question.component';
-import { translations } from '@shared/translations';
 import { DynamicForm } from 'dynamic-forms';
 import { Prop, UnknownState } from 'global-types';
 
+export interface KeyOptions<TState = UnknownState> { key: Prop<TState>, text: string }
+
 export function _createMultiCheckboxForm<TState = UnknownState>(
-    keys: Prop<TState>[], 
+    keys: KeyOptions<TState>[], 
     baseForm?: Partial<DynamicForm<Record<Prop<TState>, boolean>, {}>>,
     selectAll?: boolean): DynamicForm<Record<Prop<TState>, boolean>, {}>{
 
@@ -12,14 +13,14 @@ export function _createMultiCheckboxForm<TState = UnknownState>(
         submitText: "Lagre", controls: [], ...(baseForm || {})
     };
 
-    for(const key of keys){
+    for(const keyOptions of keys){
         form.controls.push({
-            name: key, type: "control", 
-            valueGetter: form.initialValue ? (<Record<Prop<TState>, boolean>> form.initialValue)[key] : selectAll, 
+            name: keyOptions.key, type: "control", 
+            valueGetter: form.initialValue ? (<Record<Prop<TState>, boolean>> form.initialValue)[keyOptions.key] : selectAll, 
             questions: [{
                 component:  CheckboxQuestionComponent,
                 question: <CheckboxQuestion>{   
-                    text: translations[key.toLowerCase()] || key, 
+                    text: keyOptions.text || keyOptions.key, 
                 }, 
             }], 
         })

@@ -4,7 +4,7 @@ import { AgGridAngular } from "ag-grid-angular";
 import { ColDef, ValueFormatterParams } from "ag-grid-community";
 import { FormService } from "form-sheet";
 import { Immutable } from "global-types";
-import { _createMultiCheckboxForm } from "./create-multi-checkbox-form.helper";
+import { KeyOptions, _createMultiCheckboxForm } from "./create-multi-checkbox-form.helper";
 
 @Injectable({providedIn: "any"})
 export class ExportCsvFormService {
@@ -13,11 +13,13 @@ export class ExportCsvFormService {
 
     open(grid: AgGridAngular): void{
         if(!grid.columnDefs?.length) return;
-
-        const columnKeys = (<ColDef[]> grid.columnDefs).map((val, i) => val.colId || `Ukjent${i+1}`);
+        
+        const keyOptions: KeyOptions[] = (<ColDef[]> grid.columnDefs).map(x => { 
+          return { key: x.colId || x.field || "Ukjent", text: x.headerName || "Ukjent"} 
+        })
 
         this.formService.open({
-          formConfig: _createMultiCheckboxForm(columnKeys, {submitText: "Eksporter", allowPristine: true}, true),
+          formConfig: _createMultiCheckboxForm(keyOptions, {submitText: "Eksporter", allowPristine: true}, true),
           navConfig: {title: "Velg kolonner"},
           submitCallback: (val) => this.onSubmit(val, grid)
         })
