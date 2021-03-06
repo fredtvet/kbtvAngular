@@ -11,6 +11,7 @@ import { StateMissions } from "@core/state/global-state.interfaces";
 import { _convertArrayToObject } from "array-helpers";
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { takeUntil } from "rxjs/operators";
+import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
 
 @Injectable()
 export class ColDefsFactoryService extends WithUnsubscribe() {
@@ -68,10 +69,9 @@ export class ColDefsFactoryService extends WithUnsubscribe() {
   private mergeDefaultColDef(colDef: ColDef): ColDef {
     const genericColDef = {
       headerName: colDef.field ? translations[colDef.field.toLowerCase()] : "",
-      sortable: true,
-      colId: colDef.field
+      sortable: true
     };
-    return { ...genericColDef, ...colDef };
+    return { ...genericColDef, ...colDef, colId: (colDef.colId || colDef.field) + _idGenerator(5) };
   }
 
   private convertMonthIndex = (params: ValueFormatterParams): string =>
