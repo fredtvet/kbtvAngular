@@ -1,7 +1,7 @@
 @import '../../../styles/variables';
 
 mat-sidenav-container{
-    background: mat-color($background, app-bar);
+    background: mat-color($background, status-bar);
     position: unset!important
 }
 
