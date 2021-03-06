@@ -98,12 +98,12 @@ export type AsyncStateValidator<T> = ((state$: Observable<T>) => AsyncValidatorF
 /** Describes the different stylings options available for {@link DynamicControlGroup} */
 export interface DynamicControlGroupStyling {
     /** A custom class added to the anchor tag of the component */
-    panelClass: string; 
+    panelClass?: string; 
     /** The margin applied to questions in the group. Use regular css margin syntax. */
     itemMargin?: string;
     /** The flex layout type for the group. 
      * @see {@link https://github.com/angular/flex-layout} */
-    fxLayout?: "row" | "column";
+    fxLayout?: string;
     /** The flex alignments for the group. Check fxLayout
      * @see {@link https://github.com/angular/flex-layout} */
     fxLayoutAlign?: string;
