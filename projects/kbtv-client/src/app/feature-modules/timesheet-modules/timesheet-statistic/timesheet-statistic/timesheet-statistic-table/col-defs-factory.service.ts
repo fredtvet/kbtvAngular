@@ -92,6 +92,6 @@ export class ColDefsFactoryService extends WithUnsubscribe() {
   private convertStatus = (params: ValueFormatterParams): string => 
     translations[TimesheetStatus[params.value]?.toLowerCase()]
 
-  private convertMissionId = (params: ValueFormatterParams): string => 
-    `(${params.value}) ${this.missionMap[params.value]?.address || ''}`;
+  private convertMissionId = (params: ValueFormatterParams): string  => 
+    params.value ? `(${params.value}) ${this.missionMap[params.value]?.address || ''}` : "";
 }
