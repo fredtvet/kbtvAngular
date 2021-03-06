@@ -38,7 +38,7 @@ export class ProfileComponent {
         hint: "Logg over aktiviteter utført denne økten."},
       {text: "Synkronisering", icon: 'update', callback: this.goToSyncProfile,
         hint: "Valg relatert til synkronisering av data"},      
-      {text: 'Slett lokal data', icon: 'power_settings_new', callback: this.confirmClear,
+      {text: 'Slett lokal data', icon: 'delete_sweep', callback: this.confirmClear,
         hint: "Du vil bli logget ut og må laste ned data på nytt ved neste økt."},  
       {text: 'Logg ut', icon: 'power_settings_new', callback: this.logout},   
     ]
