@@ -23,6 +23,7 @@ export interface CheckboxQuestion extends Question {
       {{ getValidationErrorMessage() }}
     </mat-error>
   `,
+  styles: [` :host { overflow: hidden } `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CheckboxQuestionComponent extends BaseQuestionComponent<CheckboxQuestion> 

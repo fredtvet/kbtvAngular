@@ -20,12 +20,13 @@ export class ExportCsvFormService {
 
         this.formService.open({
           formConfig: _createMultiCheckboxForm(keyOptions, {submitText: "Eksporter", allowPristine: true}, true),
-          navConfig: {title: "Velg kolonner"},
+          navConfig: {title: "Eksporter til CSV format"},
           submitCallback: (val) => this.onSubmit(val, grid)
         })
     }
 
     private onSubmit = (formVal: Immutable<Record<string, boolean>>, grid: AgGridAngular): void => {
+      console.log(formVal)
         const colKeys = [];
 
         for(const key in formVal)
