@@ -1,10 +1,26 @@
-<div class="max-width mat-elevation-z2 main-container">
+<div class="max-width mat-elevation-z2 main-container" *ngIf="vm$ | async; let vm">
 
-  <app-home-header></app-home-header>
+  <mat-toolbar class="top-bar">
+
+    <h2>{{ vm.currentUser.firstName + ' ' + vm.currentUser.lastName }}</h2>
+    <span class="mat-caption">Sist synkronisert {{ vm.syncTimestamp | date : 	'd.MMM  kl. H:mm'}}</span> 
+    <div class="top-action-bar">
+      <button mat-stroked-button appAddToHomeScreen>Legg til app</button>
+    
+      <button mat-stroked-button routerLink="/profil">
+        <mat-icon>person</mat-icon> Profil
+      </button>
+  
+      <button mat-stroked-button (tap)="refresh()">
+        <mat-icon>update</mat-icon> Synkroniser
+      </button>
+    </div>
+  
+  </mat-toolbar>
 
   <div class="content-container">
 
-    <app-home-mission-card [missions]="missionHistory$ | async">
+    <app-home-mission-card [missions]="vm.missions">
     </app-home-mission-card>
 
     <app-home-nav-tile-grid  
@@ -13,5 +29,27 @@
     </app-home-nav-tile-grid>
 
   </div>
+
+  <mat-toolbar class="bottom-bar">
+
+    <button class="menu-btn" mat-icon-button aria-label="Toggle sidenav" (tap)="toggleDrawer()" class="menu-btn">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+  
+    <span class="mr-auto"></span>
+  
+    <app-optimistic-loading-spinner></app-optimistic-loading-spinner>
+  
+    <button mat-stroked-button appAddToHomeScreen>Legg til app</button>
+
+    <button mat-icon-button routerLink="/profil">
+      <mat-icon>person</mat-icon>
+    </button>
+
+    <button mat-icon-button (tap)="refresh()">
+      <mat-icon>update</mat-icon>
+    </button>
+
+  </mat-toolbar>
 
 </div>

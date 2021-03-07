@@ -12,7 +12,8 @@ app-home-mission-card{
 }
 
 .main-container{
-    background: mat-color($background, disabled-button-toggle);
+    background: mat-color($background, disabled-button-toggle); 
+    background: linear-gradient(to top, #006064, mat-color($background, disabled-button-toggle))!important;
     height:100%;
     width:100%;  
     overflow:hidden;
@@ -20,8 +21,38 @@ app-home-mission-card{
 
 .content-container{
     color:$accent;
-    transform:translateY(-61px);
-    margin-bottom: -61px;
     flex: 1 1 1e-09px;
     overflow:hidden;
+    
+}
+
+mat-toolbar{
+    background:transparent;
+}
+
+.bottom-bar{
+    color:white;
+    padding:8px;
+    height:var(--bottom-nav-height)!important;
+    padding-bottom:var(--bottom-nav-padding)!important;
+}
+
+.top-bar{
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
+    height: 16%!important; 
+}
+
+.top-action-bar{
+    display: none;
+    margin-top:8px;
+    button{ margin-left: 8px; }
+}
+
+@media (min-width: 600px) {
+  .bottom-bar { display: none }
+  .top-action-bar { display:block }
 }
