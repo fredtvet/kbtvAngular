@@ -27,7 +27,7 @@
     
     <ng-container *ngFor="let nav of navigations">
 
-        <span *ifRole="nav.allowedRoles" class="tile mat-elevation-z1 foreground-card" matRipple 
+        <span *ifRole="nav.allowedRoles" class="tile mat-elevation-z2 foreground-card" matRipple 
             [routerLink]="nav.routerLink" [attr.aria-label]="nav.aria">
 
             <mat-icon class="scale-150 mb-2">{{ nav.icon }}</mat-icon>
