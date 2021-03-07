@@ -5,25 +5,27 @@
         align-items: center;
     }
     .tile-grid{
-        display: block;
-        column-gap:8px;
-        column-count: 3;
+        display:flex;
+        flex-wrap: wrap;
+        margin:8px;
     }
+    .tile-grid-2 > .tile { flex: 1 0 calc(50% - 8px); }
+    .tile-grid-3 > .tile { flex: 1 0 calc(33.33% - 8px); }
     .tile {
         text-align: center;
-        margin-bottom: 8px;
         flex-direction: column;
         place-content: center;
         border-radius:4px;
         height: 88px;
         padding: 8px;
+        margin: 4px;
         word-break: break-word;
         hyphens: auto;
     }
     .tile-text{line-height:1;}
 </style>
 
-<div class="tile-grid" [style.columnCount]="columnCount">
+<div class="tile-grid" [ngClass]="columnCount === 2 ? 'tile-grid-2' : 'tile-grid-3'">
     
     <ng-container *ngFor="let nav of navigations">
 

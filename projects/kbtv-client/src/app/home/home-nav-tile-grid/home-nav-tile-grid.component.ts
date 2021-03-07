@@ -8,5 +8,5 @@ import { AppButton } from '@shared/components/app-button/app-button.interface';
 })
 export class HomeNavTileGridComponent{
   @Input() navigations: AppButton[];
-  @Input() columnCount: number = 2;
+  @Input() columnCount: 2 | 3 = 2;
 }
