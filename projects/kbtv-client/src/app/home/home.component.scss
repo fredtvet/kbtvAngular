@@ -13,7 +13,6 @@ app-home-mission-card{
 
 .main-container{
     background: mat-color($background, disabled-button-toggle); 
-    background: linear-gradient(to top, #006064, mat-color($background, disabled-button-toggle))!important;
     height:100%;
     width:100%;  
     overflow:hidden;
@@ -23,6 +22,7 @@ app-home-mission-card{
     color:$accent;
     flex: 1 1 1e-09px;
     overflow:hidden;
+    background: linear-gradient(to top, $accent, transparent)!important;
     
 }
 
@@ -35,6 +35,7 @@ mat-toolbar{
     padding:8px;
     height:var(--bottom-nav-height)!important;
     padding-bottom:var(--bottom-nav-padding)!important;
+    background: $accent;
 }
 
 .top-bar{
