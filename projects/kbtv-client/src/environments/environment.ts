@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'https://localhost:44379/api',
   baseUrl: '',
-  fileServerUrl: 'https://kbtv.blob.core.windows.net',
+  fileServerUrl: 'https://bjbygg-assets.azureedge.net',
 };
 
 /*
