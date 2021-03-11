@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Immutable, Maybe, KeyVal } from 'global-types';
+import { Immutable, Maybe, KeyVal, UnknownState } from 'global-types';
 import { OptimisticHttpAction, OptimisticHttpRequest } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -43,15 +43,15 @@ export class DeleteModelHttpEffect implements Effect<DeleteModelAction<unknown>>
 
     protected createRequestOptions(
         action: Immutable<DeleteModelAction<unknown>>, 
-        modelConfig: Immutable<ModelConfig<unknown, unknown>>): OptimisticRequestOptions{
+        modelConfig: Immutable<ModelConfig<UnknownState, unknown>>): OptimisticRequestOptions{
         const payload = action.payload;
         const multi = payload.ids && payload.ids.length > 1;
 
         const entityWord = 
             this.translations[<string> (multi ? action.stateProp : modelConfig.foreignProp)?.toLowerCase()];
-
+        const idWord = this.translations[modelConfig.idProp] || modelConfig.idProp
         return { 
-            description: `Sletting av ${payload.ids?.length || ''} ${entityWord?.toLowerCase() || 'ukjent'} med id ${payload.ids || payload.id}.`
+            description: `Sletting av ${payload.ids?.length || ''} ${entityWord?.toLowerCase() || 'ukjent'} med ${idWord} ${payload.ids || payload.id}.`
         }
     }
   
