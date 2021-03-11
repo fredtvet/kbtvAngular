@@ -73,10 +73,10 @@ export class ModelFormService {
     ref: MatBottomSheetRef<unknown, unknown>) => { 
     const translatedProp = this.translateStateProp(formConfig.stateProp);
     const modelCfg = ModelStateConfig.get<unknown, TState>(formConfig.stateProp);
-    const idWord = this.translations[modelCfg.idProp] || modelCfg.idProp
+    const idWord = this.translations[(<string> modelCfg.idProp).toLowerCase()] || modelCfg.idProp
     this.confirmService.open({
         title: `Slett ${translatedProp}?`, 
-        message: `Bekreft at du ønsker å slette ${translatedProp} med ${idWord} "${formConfig.entityId}"`, 
+        message: `Bekreft at du ønsker å slette ${translatedProp} med ${idWord.toLowerCase()} "${formConfig.entityId}"`, 
         confirmText: 'Slett',
         confirmCallback: () => this.deleteEntity(formConfig, deleteUrl, ref)
     });
