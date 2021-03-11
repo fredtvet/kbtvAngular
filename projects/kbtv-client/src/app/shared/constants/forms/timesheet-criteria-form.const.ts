@@ -9,12 +9,13 @@ import { TimesheetStatus } from '../../enums';
 import { translations } from '../../translations';
 import { MissionAutoCompleteControl, UserSelectControl } from '../common-controls.const';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
+import { Immutable, ImmutableArray } from 'global-types';
 
 export interface TimesheetCriteriaFormState extends OptionsFormState<StateUsers & StateMissions>{}
 
 type FormState = TimesheetCriteriaFormState;  
 
-const DateRangePresetControl = <DynamicControl<TimesheetCriteria, FormState>>{ name: "dateRangePreset", required: true,
+const DateRangePresetControl: Immutable<DynamicControl<TimesheetCriteria, FormState>> = { name: "dateRangePreset", required: true,
     valueGetter: (s: TimesheetCriteria) => s.dateRangePreset, 
     type: "control", questions: [{
         component:  RadioGroupQuestionComponent,
@@ -25,9 +26,9 @@ const DateRangePresetControl = <DynamicControl<TimesheetCriteria, FormState>>{ n
         }, 
     }], 
 }
-const DateRangeControlGroup = <DynamicControlGroup<TimesheetCriteria, FormState>>{ name: "dateRange", 
+const DateRangeControlGroup: Immutable<DynamicControlGroup<TimesheetCriteria, FormState, DateRange>> = { name: "dateRange", 
     type: "group", controls: [
-        <DynamicControl<DateRange, FormState>>{ name: "start",
+        { name: "start",
             valueGetter: (s: TimesheetCriteria) => s.dateRange?.start ? _getISO(s.dateRange.start) : null,
             type: "control", questions: [
                 {component:  IonDateQuestionComponent,       
@@ -53,7 +54,7 @@ const DateRangeControlGroup = <DynamicControlGroup<TimesheetCriteria, FormState>
                 }
             ], 
         },
-        <DynamicControl<DateRange, FormState>>{ name: "end",
+        { name: "end",
             valueGetter: (s: TimesheetCriteria) => s.dateRange?.end ? _getISO(s.dateRange.end) : null,
             type: "control", questions: [
                 {component:  IonDateQuestionComponent,              
@@ -69,7 +70,7 @@ const DateRangeControlGroup = <DynamicControlGroup<TimesheetCriteria, FormState>
         },
     ]
 }
-const StatusControl = <DynamicControl<TimesheetCriteria, FormState>>{ name: "status",
+const StatusControl: Immutable<DynamicControl<TimesheetCriteria, FormState>> = { name: "status",
     valueGetter: (s: TimesheetCriteria) => s.status, 
     type: "control", questions: [{
         component:  RadioGroupQuestionComponent,
@@ -81,7 +82,7 @@ const StatusControl = <DynamicControl<TimesheetCriteria, FormState>>{ name: "sta
     }], 
 }
 
-export const TimesheetCriteriaForm: DynamicForm<TimesheetCriteria, FormState> = {
+export const TimesheetCriteriaForm: Immutable<DynamicForm<TimesheetCriteria, FormState>> = {
     submitText: "Bruk", noRenderDisabledControls: true, resettable: true,
     controls: [
         UserSelectControl,

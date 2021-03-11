@@ -3,10 +3,11 @@ import { DynamicControl, DynamicForm } from 'dynamic-forms';
 import { isSamePasswordsValidator } from '@shared/validators/is-same-passwords.validator';
 import { InputQuestion, InputQuestionComponent } from '../../components/dynamic-form-questions/input-question.component';
 import { UserNameControl } from '../common-controls.const';
+import { Immutable } from 'global-types';
 
 interface PasswordForm { newPassword: string, confirmPassword: string }
 
-const NewPasswordControl = <DynamicControl<PasswordForm>>{ 
+const NewPasswordControl: Immutable<DynamicControl<PasswordForm>> = { 
     name: "newPassword", required: true,
     type: "control", questions: [{
         component:  InputQuestionComponent,
@@ -16,7 +17,7 @@ const NewPasswordControl = <DynamicControl<PasswordForm>>{
     }],
     validators: [Validators.minLength(7)] 
 }
-const ConfirmPasswordControl = <DynamicControl<PasswordForm>>{ 
+const ConfirmPasswordControl: Immutable<DynamicControl<PasswordForm>> = { 
     name: "confirmPassword", required: true,
     type: "control", questions: [{
         component:  InputQuestionComponent,
@@ -27,7 +28,7 @@ const ConfirmPasswordControl = <DynamicControl<PasswordForm>>{
 }
 
 export interface CurrentUserPasswordForm extends PasswordForm { oldPassword: string }
-export const CurrentUserPasswordForm: DynamicForm<CurrentUserPasswordForm, unknown> = {
+export const CurrentUserPasswordForm: Immutable<DynamicForm<CurrentUserPasswordForm, unknown>> = {
     submitText: "Oppdater",  onlineRequired: true, controls: [
         <DynamicControl<CurrentUserPasswordForm>>{ 
             name: "oldPassword", required: true,
@@ -45,7 +46,7 @@ export const CurrentUserPasswordForm: DynamicForm<CurrentUserPasswordForm, unkno
 }
 
 export interface UserPasswordForm extends PasswordForm { userName: string }
-export const UserPasswordForm: DynamicForm<UserPasswordForm,  unknown> = {
+export const UserPasswordForm: Immutable<DynamicForm<UserPasswordForm,  unknown>> = {
     submitText: "Oppdater", onlineRequired: true, disabledControls: {userName: true}, getRawValue: true,
     controls: [
         UserNameControl,

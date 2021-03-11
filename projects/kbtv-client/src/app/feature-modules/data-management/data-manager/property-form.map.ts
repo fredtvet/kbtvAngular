@@ -6,8 +6,9 @@ import { CreateEmployerForm } from '@shared/constants/model-forms/create-employe
 import { CreateInboundEmailPasswordForm } from '@shared/constants/model-forms/create-inbound-email-password-form.const';
 import { CreateMissionTypeForm } from '@shared/constants/model-forms/create-mission-type-form.const';
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
+import { Immutable } from 'global-types';
 
-export const PropertyFormMap: {[key: string]: DynamicForm<Model, OptionsFormState<ModelState>> } = {
+export const PropertyFormMap: {[key: string]: Immutable<DynamicForm<Model, OptionsFormState<ModelState>>> } = {
     "employers": CreateEmployerForm,
     "missionTypes": CreateMissionTypeForm,
     "inboundEmailPasswords": CreateInboundEmailPasswordForm,

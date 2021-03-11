@@ -11,7 +11,7 @@ import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from '@
 import { _getDateOfWeek, _getWeekRange } from 'date-time-helpers';
 import { DynamicForm, _disableControlsWithNoValue } from 'dynamic-forms';
 import { FormService, OptionsFormState } from 'form-sheet';
-import { Maybe } from "global-types";
+import { Immutable, Maybe } from "global-types";
 import { ModelFormService } from 'model-form';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
@@ -61,7 +61,7 @@ export class UserTimesheetWeekComponent {
   previousWeek = (): void => this.facade.previousWeek()
 
   openTimesheetForm = (entityId?: Maybe<string>, form?: TimesheetForm): void => {
-    let dynamicForm: DynamicForm<TimesheetForm,  OptionsFormState<Partial<ModelState>>>;
+    let dynamicForm: Immutable<DynamicForm<TimesheetForm,  OptionsFormState<Partial<ModelState>>>>;
     if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _disableControlsWithNoValue(form)}
     else dynamicForm = EditUserTimesheetForm
 

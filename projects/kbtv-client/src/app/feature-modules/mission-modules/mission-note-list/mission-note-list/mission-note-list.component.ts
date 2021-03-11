@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
+import { MissionNote, MissionType } from '@core/models';
+import { ModelState } from '@core/state/model-state.interface';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
@@ -42,7 +44,7 @@ export class MissionNoteListComponent {
   }
  
   openEditNoteForm = (entityId: number) => 
-    this.modelFormService.open({formConfig: {
+    this.modelFormService.open<ModelState, MissionNote>({formConfig: {
       dynamicForm: EditMissionNoteForm,
       stateProp: "missionNotes", entityId
     }});
@@ -50,7 +52,7 @@ export class MissionNoteListComponent {
   trackByNote = _trackByModel("missionNotes")
   
   private openCreateNoteForm = () => 
-    this.modelFormService.open({
+    this.modelFormService.open<ModelState, MissionNote>({
       formConfig: {
         dynamicForm: {...CreateMissionNoteForm, initialValue: {missionId: <string> this.missionId}},
         stateProp: "missionNotes",

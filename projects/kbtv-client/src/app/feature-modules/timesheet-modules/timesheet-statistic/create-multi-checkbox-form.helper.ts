@@ -1,13 +1,13 @@
 import { CheckboxQuestion, CheckboxQuestionComponent } from '@shared/components/dynamic-form-questions/checkbox-question.component';
 import { DynamicControlGroup, DynamicForm } from 'dynamic-forms';
-import { Prop, UnknownState } from 'global-types';
+import { Immutable, Prop, UnknownState } from 'global-types';
 
 export interface KeyOptions<TState = UnknownState> { key: Prop<TState>, text: string }
 
 export function _createMultiCheckboxForm<TState = UnknownState>(
     keys: KeyOptions<TState>[], 
     baseForm?: Partial<DynamicForm<Record<Prop<TState>, boolean>, {}>>,
-    selectAll?: boolean): DynamicForm<Record<Prop<TState>, boolean>, {}>{
+    selectAll?: boolean): Immutable<DynamicForm<Record<Prop<TState>, boolean>, {}>> {
 
     const form: DynamicForm<Record<Prop<TState>, boolean>, {}> = {
         submitText: "Lagre", controls: [], ...(baseForm || {})
@@ -36,5 +36,6 @@ export function _createMultiCheckboxForm<TState = UnknownState>(
         })
     }
     form.controls = [formGroup];
-    return form;
+
+    return <Immutable<DynamicForm<Record<Prop<TState>, boolean>, {}>>> form;
 }

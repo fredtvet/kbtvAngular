@@ -1,6 +1,6 @@
 import { EventEmitter, Type } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 
 /** Represents a function that converts an error to a readable error message */
@@ -34,7 +34,7 @@ export interface DynamicForm<TForm, TFormState>{
     /** A custom text on the submit button */
     submitText?: string;
     /** The form controls that make up the form */
-    controls: (DynamicControlGroup<TForm, TFormState> | DynamicControl<TForm, TFormState>)[];
+    controls: (DynamicControlGroup<TForm, TFormState, any> | DynamicControl<TForm, TFormState>)[];
     /** A function that modifies the form value when submitted */
     onSubmitFormatter?: (f: TForm, s: Immutable<TFormState>) => Immutable<TForm>;
     /** Set to true to get the raw form value on submit. 
@@ -57,13 +57,13 @@ export interface DynamicForm<TForm, TFormState>{
 }
 
 /** Describes a group of controls that make up an object in the form model */
-export interface DynamicControlGroup<TForm, TFormState = unknown> {
+export interface DynamicControlGroup<TForm, TFormState = unknown, TGroup = TForm> {
     /** The type of control */
     type: "group",
-    /** The name of the control group */
+    /** The name of the control group. If name is set, the controls are nested within a form group with given name. */
     name?: Extract<keyof TForm, string>, 
     /** The controls belonging to the group */
-    controls: (DynamicControl<TForm, TFormState> | DynamicControlGroup<TForm, TFormState>)[],  
+    controls: (DynamicControl<TGroup, TFormState> | DynamicControlGroup<TGroup, TFormState>)[],  
     /** A custom control group component for displaying the group */
     controlGroupComponent?: Type<ControlGroupComponent>,
     /** A visual label displayed above the group on the rendered form */
@@ -71,7 +71,7 @@ export interface DynamicControlGroup<TForm, TFormState = unknown> {
     /** Custom stylings for the group */
     styling?: DynamicControlGroupStyling,
     /** {@inheritDoc DynamicForm.disabledControls} */
-    disabledControls?: DisabledControls<TForm>;
+    disabledControls?: DisabledControls<TGroup>;
 }
 
 /** Describes the rendering, value and validation of an form control */

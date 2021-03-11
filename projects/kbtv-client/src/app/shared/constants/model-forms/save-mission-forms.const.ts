@@ -4,6 +4,7 @@ import { StateEmployers, StateMissionTypes } from '@core/state/global-state.inte
 import { _googleAddressFormatter } from '@shared-app/helpers/google-address-formatter.helper';
 import { DynamicControl, DynamicControlGroup, DynamicForm } from 'dynamic-forms';
 import { OptionsFormState } from 'form-sheet';
+import { Immutable } from 'global-types';
 import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { CheckboxQuestion, CheckboxQuestionComponent } from '../../components/dynamic-form-questions/checkbox-question.component';
@@ -13,16 +14,17 @@ import { ValidationRules } from '../validation-rules.const';
 
 type FormState = OptionsFormState<StateEmployers & StateMissionTypes>;
 
-const DescriptionControl = <DynamicControl<Mission, FormState>>{ name: "description",
+const DescriptionControl: Immutable<DynamicControl<Mission, FormState>> = { name: "description",
     type: "control", questions: [{
         component:  TextAreaQuestionComponent,
         question: <TextAreaQuestion>{placeholder: "Beskrivelse"}, 
     }], 
     validators: [Validators.maxLength(ValidationRules.MissionDescriptionMaxLength)] 
 }
-const EmployerControl = <DynamicControlGroup<Mission, FormState>>{ name: "employer",
+
+const EmployerControl: Immutable<DynamicControlGroup<Mission, FormState, Employer>> = { name: "employer",
     type: "group", controls: [
-    <DynamicControl<Employer, FormState>>{ name: "name",
+    { name: "name",
         valueGetter: (s: Mission) => s.employer?.name, 
         type: "control", questions: [{
             component:  AutoCompleteQuestionComponent,
@@ -37,9 +39,10 @@ const EmployerControl = <DynamicControlGroup<Mission, FormState>>{ name: "employ
         }], 
     }],
 }
-const MissionTypeControl = <DynamicControlGroup<Mission, FormState>>{ name: "missionType",
+
+const MissionTypeControl: Immutable<DynamicControlGroup<Mission, FormState, MissionType>> = { name: "missionType",
     type: "group", controls: [
-    <DynamicControl<MissionType, FormState>>{ name: "name",
+    { name: "name",
         valueGetter: (s: Mission) => s.missionType?.name, 
         type: "control", questions: [{
             component:  AutoCompleteQuestionComponent,
@@ -54,7 +57,8 @@ const MissionTypeControl = <DynamicControlGroup<Mission, FormState>>{ name: "mis
         }], 
     }],
 }
-const FinishedControl = <DynamicControl<Mission, FormState>>{ name: "finished",
+
+const FinishedControl: Immutable<DynamicControl<Mission, FormState>> = { name: "finished",
     valueGetter: (s: Mission) => s.finished, 
     type: "control", questions: [{
         component:  CheckboxQuestionComponent,
@@ -64,7 +68,7 @@ const FinishedControl = <DynamicControl<Mission, FormState>>{ name: "finished",
     }], 
 }
 
-export const CreateMissionForm: DynamicForm<Mission, FormState> = {
+export const CreateMissionForm: Immutable<DynamicForm<Mission, FormState>> = {
     submitText: "Legg til",
     controls: [
         {...GoogleAddressControl, required: true},
@@ -76,7 +80,7 @@ export const CreateMissionForm: DynamicForm<Mission, FormState> = {
     onSubmitFormatter: _googleAddressFormatter
 }
 
-export const EditMissionForm: DynamicForm<Mission, FormState> = {
+export const EditMissionForm: Immutable<DynamicForm<Mission, FormState>> = {
     submitText: "Oppdater",
     controls: [
         ...CreateMissionForm.controls,   

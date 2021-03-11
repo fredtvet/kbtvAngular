@@ -69,7 +69,7 @@ export class UserTimesheetListComponent {
   }
   
   openTimesheetForm = (entityId?: string, initialValue?: TimesheetForm): void => {
-    let dynamicForm: DynamicForm<TimesheetForm, OptionsFormState<Partial<ModelState>>>;
+    let dynamicForm: Immutable<DynamicForm<TimesheetForm, OptionsFormState<Partial<ModelState>>>>;
     if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _disableControlsWithNoValue(initialValue)}
     else dynamicForm = EditUserTimesheetForm
 

@@ -9,13 +9,14 @@ import { RadioGroupQuestionComponent, RadioGroupQuestion } from '../../component
 import { SelectQuestionComponent, SelectQuestion } from '../../components/dynamic-form-questions/select-question.component';
 import { MissionCriteria } from '../../interfaces';
 import { EmployerSelectControl } from '../common-controls.const';
+import { Immutable } from 'global-types';
 
 export interface MissionCriteriaFormState 
     extends OptionsFormState<StateMissions & StateEmployers & StateMissionTypes> {}
 
 type FormState = MissionCriteriaFormState;
 
-const SearchStringControl = <DynamicControl<MissionCriteria, FormState>>{ name: "searchString", 
+const SearchStringControl: Immutable<DynamicControl<MissionCriteria, FormState>> = { name: "searchString", 
     valueGetter: (s: MissionCriteria) => s.searchString,
     type: "control", questions: [{
         component:  AutoCompleteQuestionComponent,
@@ -29,7 +30,7 @@ const SearchStringControl = <DynamicControl<MissionCriteria, FormState>>{ name: 
         }, 
     }], 
 }
-const MissionTypeControl = <DynamicControl<MissionCriteria, FormState>>{ name: "missionType",
+const MissionTypeControl: Immutable<DynamicControl<MissionCriteria, FormState>> = { name: "missionType",
     valueGetter: (s: MissionCriteria) => s.missionType,
     type: "control", questions: [{
         component:  SelectQuestionComponent,
@@ -41,7 +42,7 @@ const MissionTypeControl = <DynamicControl<MissionCriteria, FormState>>{ name: "
         }, 
     }], 
 }
-const FinishedControl = <DynamicControl<MissionCriteria, FormState>>{ name: "finished",
+const FinishedControl: Immutable<DynamicControl<MissionCriteria, FormState>> = { name: "finished",
     valueGetter: (s: MissionCriteria) => s.finished, 
     type: "control", questions: [{
         component:  RadioGroupQuestionComponent,
@@ -52,7 +53,7 @@ const FinishedControl = <DynamicControl<MissionCriteria, FormState>>{ name: "fin
     }], 
 }
 
-export const MissionCriteriaForm: DynamicForm<MissionCriteria, FormState> = {
+export const MissionCriteriaForm: Immutable<DynamicForm<MissionCriteria, FormState>> = {
     submitText: "Bruk", resettable: true, resetState: {finished: false},
     controls: [
         SearchStringControl,

@@ -7,7 +7,7 @@ import { TextAreaQuestion, TextAreaQuestionComponent } from '../../components/dy
 import { HiddenIdControl, MissionAutoCompleteControl } from '../common-controls.const';
 import { StateMissions } from '@core/state/global-state.interfaces';
 import { OptionsFormState } from 'form-sheet';
-import { Maybe } from 'global-types';
+import { Immutable, Maybe } from 'global-types';
 
 type FormState = OptionsFormState<StateMissions> & {defaultStartTime: string, defaultEndTime: string};
 
@@ -23,10 +23,9 @@ export interface TimesheetForm {
     comment?: string;
 }
 
-const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm, FormState>>{ type: "group", controls: [
-    <DynamicControl<TimesheetForm, FormState>>{ name: "date", required: true, 
+const DateTimeControlGroup: Immutable<DynamicControlGroup<TimesheetForm, FormState>> = { type: "group", controls: [
+    { name: "date", required: true, 
         valueGetter: (s: TimesheetForm) => s.date ? _getISO(s.date) : (s.startTime ? _getISO(s.startTime) : null),
-        getRawValue:true,
         type: "control", questions: [{
             component:  IonDateQuestionComponent,
             question: <IonDateQuestion>{
@@ -37,7 +36,7 @@ const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm, FormState>>{ ty
             }, 
         }], 
     } ,
-    <DynamicControl<TimesheetForm, FormState>>{ name: "startTime", required: true,
+    { name: "startTime", required: true,
         valueGetter: (f: TimesheetForm) => f.startTime ? _getISO(f.startTime) : null,
         type: "control", questions: [{
             component:  IonDateQuestionComponent,
@@ -52,7 +51,7 @@ const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm, FormState>>{ ty
             }, 
         }], 
     },
-    <DynamicControl<TimesheetForm, FormState>>{ name: "endTime", required: true,
+    { name: "endTime", required: true,
         valueGetter: (f: TimesheetForm) => f.endTime ? _getISO(f.endTime) : null,
         type: "control", questions: [{
             component:  IonDateQuestionComponent,
@@ -68,7 +67,8 @@ const DateTimeControlGroup = <DynamicControlGroup<TimesheetForm, FormState>>{ ty
         }], 
     },
 ]}
-const CommentControl = <DynamicControl<TimesheetForm, FormState>>{ name: "comment", required: true,
+
+const CommentControl: Immutable<DynamicControl<TimesheetForm, FormState>> = { name: "comment", required: true,
     type: "control", valueGetter: (s: TimesheetForm) => s?.comment, questions: [{
         component:  TextAreaQuestionComponent,
         question: <TextAreaQuestion>{placeholder: "Kommentar"}, 
@@ -76,7 +76,7 @@ const CommentControl = <DynamicControl<TimesheetForm, FormState>>{ name: "commen
     validators: [Validators.maxLength(400)], 
 }
 
-export const CreateUserTimesheetForm: DynamicForm<TimesheetForm, FormState> = {
+export const CreateUserTimesheetForm: Immutable<DynamicForm<TimesheetForm, FormState>> = {
     submitText: "Legg til", getRawValue: true,
     controls: [
         {...MissionAutoCompleteControl, required: true},
@@ -84,7 +84,7 @@ export const CreateUserTimesheetForm: DynamicForm<TimesheetForm, FormState> = {
         CommentControl,
     ]
 }
-export const EditUserTimesheetForm: DynamicForm<TimesheetForm, FormState> = {
+export const EditUserTimesheetForm: Immutable<DynamicForm<TimesheetForm, FormState>> = {
     submitText: "Oppdater", getRawValue: true,
     controls: [
         ...CreateUserTimesheetForm.controls,
