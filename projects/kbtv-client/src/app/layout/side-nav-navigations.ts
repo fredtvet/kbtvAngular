@@ -35,7 +35,7 @@ export const SideNavNavigations: NavItem[] = [
         routerLink: "/brukere",
       },
       {
-        icon: "assessment",
+        icon: "date_range",
         text: "Timer",
         routerLink: "/timeadministrering",
       },
