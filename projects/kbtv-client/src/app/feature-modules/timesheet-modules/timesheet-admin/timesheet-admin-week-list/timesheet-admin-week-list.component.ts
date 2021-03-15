@@ -5,6 +5,7 @@ import { DeviceInfoService } from '@core/services/device-info.service';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { TimesheetStatus } from '@shared/enums';
 import { FormService } from 'form-sheet';
@@ -39,7 +40,7 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
     private route: ActivatedRoute,
     private deviceInfoService: DeviceInfoService) {
       super();
-      this.bottomActions = [{icon: 'filter_list', callback: this.openWeekFilter}];
+      this.bottomActions = [{...BottomIconButtons.Filter, callback: this.openWeekFilter}];
 
       this.route.paramMap.pipe( 
         tap(params => this.facade.updateCriteria( JSON.parse(params.get(TimesheetAdminWeekListCriteriaQueryParam) || "{}") )),

@@ -42,14 +42,16 @@
   
     <button mat-stroked-button appAddToHomeScreen>Legg til app</button>
 
-    <button mat-icon-button routerLink="/profil">
+    <button mat-button routerLink="/profil" class="action-btn">
       <mat-icon>person</mat-icon>
+      <span class="mat-caption">Profil</span>
     </button>
 
-    <button mat-icon-button (tap)="refresh()">
-      <mat-icon>update</mat-icon>
+    <button mat-button (tap)="refresh()" class="action-btn">
+      <mat-icon>update</mat-icon> 
+      <span class="mat-caption">Synkroniser</span>
     </button>
 
-  </mat-toolbar>
+</mat-toolbar>
 
 </div>

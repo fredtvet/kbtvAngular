@@ -8,11 +8,13 @@ import { TimesheetCriteriaChipOptions } from '@shared-timesheet/timesheet-filter
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
+import { BottomBarIconButton } from '@shared/components/bottom-action-bar/bottom-bar-icon-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { TimesheetCriteriaForm, TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from '@shared/enums';
 import { FormService } from 'form-sheet';
-import { Immutable, Maybe, Prop } from 'global-types';
+import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ExportCsvFormService } from '../export-csv-form.service';
@@ -23,7 +25,8 @@ interface ViewModel {
   groupByChips: AppChip[], 
   criteriaChips: AppChip[], 
   tableConfig: AgGridConfig<TimesheetSummary | Timesheet>, 
-  noRowsText: string
+  noRowsText: string,
+  bottomActions: ImmutableArray<BottomBarIconButton>
 }
 
 @Component({
@@ -41,17 +44,26 @@ export class TimesheetStatisticComponent {
     })
   )
 
+  private staticBottomActions: ImmutableArray<BottomBarIconButton>;
+
+  private partialVm$: Observable<Pick<ViewModel, "tableConfig" | "bottomActions">> = 
+    this.facade.tableConfig$.pipe(map(tableConfig  => { 
+      return {tableConfig, bottomActions: 
+        tableConfig.data?.length ? [{text: "Eksporter", icon: "cloud_download", aria: "Eksporter", callback: this.exportAsCsv}, 
+        ...this.staticBottomActions] : this.staticBottomActions
+      }
+    }));
+
   vm$: Observable<ViewModel> = combineLatest([
     this.facade.groupBy$.pipe(map(x => this.getGroupByChips(x))),
     this.criteriaChips$,
-    this.facade.tableConfig$,
+    this.partialVm$,
     this.facade.isFetching$,
-  ]).pipe(map(([groupByChips, criteriaChips, tableConfig, isFetching]) => { 
-    return {groupByChips, criteriaChips, tableConfig, noRowsText: this.getNoRowsText(isFetching)} 
+  ]).pipe(map(([groupByChips, criteriaChips, {tableConfig, bottomActions}, isFetching]) => { 
+    return {groupByChips, criteriaChips, tableConfig, bottomActions, noRowsText: this.getNoRowsText(isFetching)} 
   }))
 
   navConfig: MainTopNavConfig = {title:  'Timestatistikk'};
-  bottomActions: AppButton[];
   
   constructor( 
     private facade: TimesheetStatisticFacade,
@@ -59,10 +71,7 @@ export class TimesheetStatisticComponent {
     private chipsFactory: ChipsFactoryService,
     private exportCsvFormService: ExportCsvFormService
   ) { 
-    this.bottomActions =  [
-      {icon: "filter_list", callback: this.openTimesheetFilter},
-      {icon: "cloud_download", callback: this.exportAsCsv}     
-    ]
+    this.staticBottomActions =  [{...BottomIconButtons.Filter, callback: this.openTimesheetFilter}]
   }
 
   private openTimesheetFilter = (): void => {

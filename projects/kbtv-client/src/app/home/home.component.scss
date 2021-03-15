@@ -36,6 +36,16 @@ mat-toolbar{
     height:var(--bottom-nav-height)!important;
     padding-bottom:var(--bottom-nav-padding)!important;
     background: $accent;
+    .action-btn{
+        line-height:1;
+        min-width:40px;
+        width:auto;
+        padding: 0 8px;
+        span{
+            display:flex;
+            justify-content: center;
+        }
+    }
 }
 
 .top-bar{

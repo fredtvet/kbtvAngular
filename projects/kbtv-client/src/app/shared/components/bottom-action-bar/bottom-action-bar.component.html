@@ -1,21 +1,31 @@
-<mat-toolbar *ngIf="vm$ | async; let vm" class="bottom-bar" [ngClass]="{
-    'bottom-bar-no-fab mat-elevation-z3': !fab || !(fab.allowedRoles | ifRole),
-    'bottom-bar-start-fab': !vm.isXs
-}">
+<ng-container *ngIf="vm$ | async; let vm">
+    <mat-toolbar *ngIf="vm.actions?.length || fab; else noActionsTemplate" class="bottom-bar" [ngClass]="{
+        'bottom-bar-no-fab mat-elevation-z3': !fab || !(fab.allowedRoles | ifRole),
+        'bottom-bar-start-fab': !vm.isXs
+    }">
+    
+        <div class="bottom-bar-side left mat-elevation-z3" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+            <button *ngIf="vm.isXs" mat-icon-button aria-label="Toggle sidenav" (tap)="toggleDrawer()">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+        </div>
+    
+        <div class="fab-container">
+            <app-button class="fab zoomIn" [config]="fab | transformButton : baseFabBtn"></app-button>
+        </div>
+    
+        <div class="bottom-bar-side right mat-elevation-z3">
+            <app-bottom-bar-icon-button *ngFor="let action of vm.actions; trackBy: trackByButton" 
+                [config]="action | transformButton : baseActionBtn">
+            </app-bottom-bar-icon-button>
+        </div>
+    
+    </mat-toolbar>
 
-    <div class="bottom-bar-side left mat-elevation-z3" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-        <button *ngIf="vm.isXs" mat-icon-button aria-label="Toggle sidenav" (tap)="toggleDrawer()">
+    <ng-template #noActionsTemplate>
+        <button *ngIf="vm.isXs" mat-mini-fab aria-label="Toggle sidenav" (tap)="toggleDrawer()" class="no-actions-drawer">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
-    </div>
+    </ng-template>
 
-    <div class="fab-container">
-        <app-button class="fab zoomIn" [config]="fab | transformButton : baseFabBtn"></app-button>
-    </div>
-
-    <div class="bottom-bar-side right mat-elevation-z3" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-        <app-button *ngFor="let action of vm.actions; trackBy: trackByButton" [config]="action | transformButton : baseActionBtn">
-        </app-button>
-    </div>
-
-</mat-toolbar>
+</ng-container>

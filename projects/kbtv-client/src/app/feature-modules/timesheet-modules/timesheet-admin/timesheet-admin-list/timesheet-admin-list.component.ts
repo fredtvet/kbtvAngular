@@ -7,6 +7,7 @@ import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { TimesheetStatus } from '@shared/enums';
 import { _getWeekYear } from 'date-time-helpers';
@@ -41,7 +42,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
     private route: ActivatedRoute,
     private formService: FormService) {
       super();
-      this.bottomActions = [{icon: 'filter_list', callback: this.openWeekFilter}];
+      this.bottomActions = [{...BottomIconButtons.Filter, callback: this.openWeekFilter}];
       
       this.route.paramMap.pipe(
         tap(x => this.facade.updateWeekNr(x.get(TimesheetAdminListWeekNrQueryParam) || _getWeekYear().weekNr)), 

@@ -27,7 +27,6 @@ export class SyncProfileComponent {
     private router: Router,
   ){
     this.navConfig = {title: "Synkronisering", backFn: this.goToProfile };
-    this.bottomActions = [{icon: 'update', callback: this.syncAll}]
     this.actions = [
       {text: 'Konfigurasjoner', icon: 'settings', callback: this.updateSyncConfig,
         hint: "Konfigurer synkronisering av data med skyen"},  

@@ -12,6 +12,7 @@ import { AngularMaterialModule } from './angular-material.module';
 import { BottomSheetMenuComponent } from './bottom-sheet-menu/bottom-sheet-menu.component';
 import { AppButtonComponent } from './components/app-button/app-button.component';
 import { BottomActionBarComponent } from './components/bottom-action-bar/bottom-action-bar.component';
+import { BottomBarIconButtonComponent } from './components/bottom-action-bar/bottom-bar-icon-button.component';
 import { ChipsBarComponent } from './components/chips-bar.component';
 import { AutoCompleteQuestionComponent } from './components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { CheckboxQuestionComponent } from './components/dynamic-form-questions/checkbox-question.component';
@@ -52,6 +53,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     NoContentComponent,
     BottomActionBarComponent,
     FetchingModelContentComponent,
+    BottomBarIconButtonComponent,
     
     TransformButtonPipe,
     TranslatePipe,

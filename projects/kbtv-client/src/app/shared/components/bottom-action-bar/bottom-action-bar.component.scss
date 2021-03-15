@@ -44,6 +44,12 @@
 }
 .right{
     border-radius: 9px 0px 0px 0px;   
+       
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-end;
+    align-items: center;
 }
 
 .bottom-bar-no-fab{
@@ -55,6 +61,11 @@
         width: 50%!important;
         box-shadow: none;
     }
+    .right{
+        *{
+            margin-right:8px;
+        }
+    }
 }
 
 .bottom-bar-start-fab{
@@ -62,6 +73,14 @@
         width:16px;
     }
     .right{
-        width: calc(100% - 86px);
+        width: calc(100% - 86px);   
+        *{
+            margin-right:24px!important;
+        }
     }
+}
+
+.no-actions-drawer{
+    margin: 8px;
+    margin-bottom: var(--bottom-nav-padding);
 }

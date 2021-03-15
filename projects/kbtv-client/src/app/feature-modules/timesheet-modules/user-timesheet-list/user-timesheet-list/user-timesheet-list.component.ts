@@ -20,6 +20,7 @@ import { TimesheetCriteriaChipOptions } from '../../shared-timesheet/timesheet-f
 import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { UserTimesheetListFacade } from './user-timesheet-list.facade';
 import { UserTimesheetListProviders } from './user-timesheet-list.state';
+import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 
 interface ViewModel { 
   timesheets: ImmutableArray<Timesheet>;
@@ -62,7 +63,7 @@ export class UserTimesheetListComponent {
     private modelFormService: ModelFormService
   ) {
     this.bottomActions = [
-      { icon: 'filter_list', 
+      { ...BottomIconButtons.Filter,
         callback: this.openTimesheetFilter }
     ]
     this.navConfig = { title:  "Timeliste", backFn: this.onBack }

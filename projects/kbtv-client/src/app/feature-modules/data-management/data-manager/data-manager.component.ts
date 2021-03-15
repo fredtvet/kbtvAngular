@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { ModelState } from '@core/state/model-state.interface';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { Prop } from 'global-types';
 import { ModelDataTableComponent } from 'model-data-table';
 import { Observable } from 'rxjs';
@@ -39,8 +40,8 @@ export class DataManagerComponent {
 
   constructor(private facade: DataManagerFacade) {
     this.selectedItemsActions = [
-      {icon: "add", callback: () => this.facade.createItem()},
-      {icon: "delete_forever", callback: this.deleteItems} 
+      {...BottomIconButtons.Add, callback: () => this.facade.createItem()},
+      {...BottomIconButtons.Delete, callback: this.deleteItems} 
     ]
   }
 

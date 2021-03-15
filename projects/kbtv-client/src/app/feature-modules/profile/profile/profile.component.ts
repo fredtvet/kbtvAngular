@@ -30,7 +30,6 @@ export class ProfileComponent {
     private router: Router,
     private route: ActivatedRoute,
   ){
-    this.bottomActions = [{icon: 'update', callback: this.syncAll}]
     this.actions = [
       {text: 'Oppdater profil', icon: 'account_circle', callback: this.updateProfile},
       {text: 'Oppdater passord', icon: 'vpn_key', callback: this.updatePassword},    
@@ -73,11 +72,8 @@ export class ProfileComponent {
 
   private goToRequestLog = () => this.router.navigate(['aktivitetslogg']);
 
-  private syncAll = () => this.facade.syncAll();
-
   private logout = () => this.facade.logout(); 
 
   private goToSyncProfile = () => this.router.navigate(['synkronisering'],{relativeTo: this.route})
   
-
 }

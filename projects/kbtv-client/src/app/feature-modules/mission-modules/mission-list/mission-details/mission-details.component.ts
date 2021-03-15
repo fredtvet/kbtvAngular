@@ -20,6 +20,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { UserTimesheetListCriteriaQueryParam } from 'src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const';
 import { SelectedMissionIdParam } from '../mission-list-route-params.const';
 import { MissionListFacade } from '../mission-list.facade';
+import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 
 interface ViewModel { mission: Maybe<Immutable<Mission>>, bottomActions: AppButton[], navConfig: MainTopNavConfig }
 
@@ -106,10 +107,10 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
 
   private getBottomActions(mission: Maybe<Immutable<Mission>>): AppButton[] {
     return  [
-      {icon: "timer", callback: this.goToTimesheets, params: [mission], allowedRoles: RolePermissions.UserTimesheetList.access},
+      {icon: "timer", text: "Timer", callback: this.goToTimesheets, params: [mission], allowedRoles: RolePermissions.UserTimesheetList.access},
       // {icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission], allowedRoles: this.can.update},
-      {text: "Rediger", icon: "edit", callback: this.openMissionForm, params: [mission?.id], allowedRoles: this.can.update},
-      {...this.addHeaderImgBtn, text: `${mission?.fileName ? 'Oppdater' : 'Legg til'} forsidebilde`}
+      {...BottomIconButtons.Edit, callback: this.openMissionForm, params: [mission?.id], allowedRoles: this.can.update},
+      {...this.addHeaderImgBtn, text: 'Nytt forsidebilde'}
     ]
   }
 

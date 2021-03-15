@@ -20,6 +20,7 @@ import { UserTimesheetListCriteriaQueryParam } from "../../user-timesheet-list/u
 import { UserTimesheetWeekProviders } from './user-timesheet-week-providers.const';
 import { UserTimesheetWeekFacade } from './user-timesheet-week.facade';
 import { ViewModel } from './view-model.interface';
+import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 
 @Component({
   selector: "app-user-timesheet-week",
@@ -51,8 +52,8 @@ export class UserTimesheetWeekComponent {
     private formService: FormService,
   ) {
     this.bottomActions = [  
-      {icon: "filter_list", callback: this.openWeekFilter},
-      {icon: "list", callback: this.goToTimesheetList},
+      {...BottomIconButtons.Filter, callback: this.openWeekFilter},
+      {icon: "list", text: "Timeliste", aria: "Timeliste", callback: this.goToTimesheetList},
     ]
   }
 

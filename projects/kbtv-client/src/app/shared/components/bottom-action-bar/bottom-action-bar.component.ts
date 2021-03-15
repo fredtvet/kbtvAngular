@@ -44,7 +44,7 @@ export class BottomActionBarComponent {
             return { isXs, actions: [
                 actionsClone.shift(),
                 {
-                    icon: "more_vert",
+                    icon: "more_vert", text: "Mer",
                     callback: () => this.menuService.open(actionsClone)
                 }
             ]}

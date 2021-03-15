@@ -7,7 +7,9 @@ import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { SearchBarConfig } from "@shared-mission/components/search-bar/search-bar-config.interface";
 import { AppButton } from "@shared/components/app-button/app-button.interface";
+import { BottomBarIconButton } from "@shared/components/bottom-action-bar/bottom-bar-icon-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
@@ -58,7 +60,7 @@ export class MissionListComponent extends WithUnsubscribe(){
 
   searchBarBtns: AppButton[];
 
-  bottomActions: AppButton[];
+  bottomActions: BottomBarIconButton[];
 
   searchBarHidden: boolean = true;
 
@@ -71,8 +73,8 @@ export class MissionListComponent extends WithUnsubscribe(){
     super();
 
     this.bottomActions = [
-      {icon: "filter_list", callback: this.openMissionFilter},
-      {icon: "search", callback: this.toggleSearchBar}
+      {...BottomIconButtons.Filter, callback: this.openMissionFilter},
+      {...BottomIconButtons.Search, callback: this.toggleSearchBar}
     ]
 
     this.actionFab = {

@@ -84,8 +84,8 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
       ]
 
       this.bottomActions = [
-        {icon: 'send', text:'Send alle bilder', callback: this.openMailImageSheet, allowedRoles: this.can.sendEmail},
-        {icon: "cloud_download", text: "Last ned alle", callback: () => this.downloadImages(this.images)},
+        {icon: 'send', text:'Send', callback: this.openMailImageSheet, allowedRoles: this.can.sendEmail},
+        {icon: "cloud_download", text: "Last ned", callback: () => this.downloadImages(this.images)},
       ]
     }
 
