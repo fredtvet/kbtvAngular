@@ -25,7 +25,8 @@ export class BottomActionBarComponent {
     set actions(value: AppButton[]) { this.actionsSubject.next(value); } 
 
     @Input() fab: AppButton;
-
+    @Input() alwaysDisplayBar: boolean;
+    
     baseActionBtn: Partial<AppButton> = {type: ButtonTypes.Icon, allowedRoles: undefined }
     baseFabBtn: Partial<AppButton> = {type: ButtonTypes.Fab }
 

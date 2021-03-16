@@ -1,5 +1,5 @@
 <ng-container *ngIf="vm$ | async; let vm">
-    <mat-toolbar *ngIf="vm.actions?.length || fab; else noActionsTemplate" class="bottom-bar" [ngClass]="{
+    <mat-toolbar *ngIf="alwaysDisplayBar || vm.actions?.length || fab; else noActionsTemplate" class="bottom-bar" [ngClass]="{
         'bottom-bar-no-fab mat-elevation-z3': !fab || !(fab.allowedRoles | ifRole),
         'bottom-bar-start-fab': !vm.isXs
     }">
