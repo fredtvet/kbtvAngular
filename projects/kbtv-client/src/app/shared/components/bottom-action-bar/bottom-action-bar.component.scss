@@ -48,7 +48,7 @@
     flex-direction: row;
     box-sizing: border-box;
     display: flex;
-    place-content: center flex-end;
+    place-content: center space-around;
     align-items: center;
 }
 
@@ -61,11 +61,6 @@
         width: 50%!important;
         box-shadow: none;
     }
-    .right{
-        *{
-            margin-right:8px;
-        }
-    }
 }
 
 .bottom-bar-start-fab{
@@ -74,9 +69,6 @@
     }
     .right{
         width: calc(100% - 86px);   
-        *{
-            margin-right:24px!important;
-        }
     }
 }
 
