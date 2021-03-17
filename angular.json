@@ -26,8 +26,7 @@
             "assets": [
               "projects/kbtv-client/src/favicon.ico",
               "projects/kbtv-client/src/assets",
-              "projects/kbtv-client/src/manifest.webmanifest",
-              "projects/kbtv-client/src/manifest.webmanifest"
+              "projects/kbtv-client/src/manifest.json"
             ],
             "extractCss": true,
             "styles": [
@@ -102,8 +101,7 @@
             "assets": [
               "projects/kbtv-client/src/favicon.ico",
               "projects/kbtv-client/src/assets",
-              "projects/kbtv-client/src/manifest.webmanifest",
-              "projects/kbtv-client/src/manifest.webmanifest"
+              "projects/kbtv-client/src/manifest.json",
             ],
             "styles": [
               "projects/kbtv-client/src/styles/styles.scss"
