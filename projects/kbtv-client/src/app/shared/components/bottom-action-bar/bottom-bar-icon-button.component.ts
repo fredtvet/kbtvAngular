@@ -7,7 +7,7 @@ import { BottomBarIconButton } from './bottom-bar-icon-button.interface';
     <button *ngIf="config" mat-button [disabled]="config.disabled" 
         style="line-height:1;min-width:58px;padding: 4px;width:auto;border-radius:0;display:block"
         [attr.aria-label]="config.aria"
-        (tap)="handleFn(config.callback)">
+        (click)="handleFn(config.callback)">
 
         <mat-icon>{{ config.icon }}</mat-icon> 
 
