@@ -25,5 +25,5 @@ const FileControl = <Immutable<DynamicControl<MissionDocumentForm, {}>>>{ name: 
 
 export const CreateMissionDocumentForm: Immutable<DynamicForm<MissionDocumentForm, {}>> = {
     submitText: "Legg til",
-    controls: [NameControl, FileControl, HiddenMissionIdControl],
+    controls: [{...NameControl, required: true}, FileControl, HiddenMissionIdControl],
 }
