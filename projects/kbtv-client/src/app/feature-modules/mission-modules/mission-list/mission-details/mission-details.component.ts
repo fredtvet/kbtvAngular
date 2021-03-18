@@ -89,7 +89,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
  
   private openImageInput = (ref: ElementRef<HTMLElement>): void => ref?.nativeElement?.click();
 
-  private openMissionForm = (entityId: number) => 
+  private openMissionForm = (entityId: Maybe<string>) => 
     this.modelFormService.open<ModelState, Mission>({ 
       onDeleteUri: "/oppdrag",
       formConfig: {
@@ -99,17 +99,18 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
       }, 
     })
 
-  private goToTimesheets = (mission: Immutable<Mission>) => 
+  private goToTimesheets = (mission: Maybe<Immutable<Mission>>) => 
     this.router.navigate(['timer', {
       returnUrl: this.router.url, 
       [UserTimesheetListCriteriaQueryParam]: JSON.stringify({mission, dateRangePreset: DateRangePresets.ShowAll})
     }], {relativeTo: this.route});
 
   private getBottomActions(mission: Maybe<Immutable<Mission>>): AppButton[] {
+    console.log(mission);
     return  [
-      {icon: "timer", text: "Timer", callback: this.goToTimesheets, params: [mission], allowedRoles: RolePermissions.UserTimesheetList.access},
+      {icon: "timer", text: "Timer", callback: () => this.goToTimesheets(mission), allowedRoles: RolePermissions.UserTimesheetList.access},
       // {icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission], allowedRoles: this.can.update},
-      {...BottomIconButtons.Edit, callback: this.openMissionForm, params: [mission?.id], allowedRoles: this.can.update},
+      {...BottomIconButtons.Edit, callback: () => this.openMissionForm(mission?.id), allowedRoles: this.can.update},
       {...this.addHeaderImgBtn, text: 'Nytt forsidebilde'}
     ]
   }
