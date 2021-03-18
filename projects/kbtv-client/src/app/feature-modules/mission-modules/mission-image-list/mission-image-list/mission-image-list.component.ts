@@ -44,7 +44,7 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
   }
   
   vm$: Observable<ViewModel> = combineLatest([
-    this.facade.getByMissionId$(this.missionId),
+    this.facade.getMissionImages$(this.missionId),
     this.deviceInfoService.isXs$,
     this.selectionBarConfig$
   ]).pipe(
@@ -79,12 +79,12 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
         {icon: "camera_enhance", aria: 'Ta bilde', callback: this.openImageInput, allowedRoles: this.can.create};
 
       this.selectedItemsActions = [
-        {icon: "send", aria: 'Send', callback: this.openMailImageSheet, allowedRoles: this.can.sendEmail}, 
+        {icon: "send", aria: 'Send', callback: () => this.openMailImageSheet(this.currentSelections), allowedRoles: this.can.sendEmail}, 
         {icon: "delete_forever", aria: 'Slett', color: 'warn', callback: this.openConfirmDeleteDialog, allowedRoles: this.can.delete}
       ]
 
       this.bottomActions = [
-        {icon: 'send', text:'Send', callback: this.openMailImageSheet, allowedRoles: this.can.sendEmail},
+        {icon: 'send', text: 'Send', callback: () => this.openMailImageSheet(<string[]> this.images?.map(x => x.id)), allowedRoles: this.can.sendEmail},
         {icon: "cloud_download", text: "Last ned", callback: () => this.downloadImages(this.images)},
       ]
     }
@@ -127,12 +127,13 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
     })
   }
   
-  private openMailImageSheet = () => {
+  private openMailImageSheet = (ids: string[]) => {
+    const email = this.facade.getMissionEmployerEmail(this.missionId)
     this.formService.open({
-      formConfig: {...EmailForm, initialValue: {email: this.facade.mission?.employer?.email }}, 
+      formConfig: {...EmailForm, initialValue: { email }, allowPristine: email != null }, 
       navConfig: {title: "Send bilder"},
       submitCallback: (val: EmailForm) => { 
-        this.facade.mailImages(val.email, this.currentSelections);
+        this.facade.mailImages(val.email, ids);
         this.selectableContainer.resetSelections();
       },
     })
