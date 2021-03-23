@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { ModelFile } from '@core/models';
-import { KeyVal } from 'global-types';
+import { KeyVal, Prop, UnknownState } from 'global-types';
 import { FormDataEntry } from 'optimistic-http';
 import { Effect } from 'state-management';
 import { ModelCommandApiMap, MODEL_COMMAND_API_MAP, MODEL_PROP_TRANSLATIONS, SaveModelHttpEffect } from 'state-model';
@@ -20,8 +20,17 @@ export class SaveModelFileHttpEffect extends SaveModelHttpEffect<ModelFile, Mode
 
     protected createHttpBody(command: SaveModelFileAction<ModelFile>): FormDataEntry[] { 
         const file = command.fileWrapper?.modifiedFile;
-        const entries: FormDataEntry[] = [{name: "command", value: JSON.stringify(command.entity)}]
-        if(file) entries.push({name: "files", value: file})
-        return entries
+        return <FormDataEntry[]>[
+            ...this.convertToFormData(command.entity),
+            {name: "file", value: file}
+        ]
+    }
+
+    private convertToFormData(t: ModelFile): FormDataEntry[]{
+        var entries: FormDataEntry[] = [];
+        for(const name in t){
+            entries.push({name, value: <string> t[<Prop<ModelFile>> name]})
+        }
+        return entries;
     }
 }
