@@ -11,9 +11,9 @@ export const SetSyncResponseReducer: Reducer<Immutable<StoreState>,SyncStateSucc
         const newState: UnknownState = {syncTimestamp: action.response.timestamp};
         
         for(const prop in action.response.arrays){
+            if(!action.response.arrays[prop]) continue;
             const propCfg: SyncStatePropConfig = action.syncStateConfig[prop]; 
-            if(!propCfg) console.error(`No sync state config for property ${prop}`);
-
+            if(!propCfg) console.error(`No sync state config for property ${prop}`);      
             const {deletedEntities, entities} = action.response.arrays[prop];
             const stateSlice = <ImmutableArray<UnknownState>> (<Immutable<UnknownState>>state)[prop];
 
