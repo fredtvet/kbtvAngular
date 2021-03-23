@@ -16,8 +16,8 @@ export class UserTimesheetListViewComponent {
   @Output() filterClicked = new EventEmitter();
 
   filterButton: AppButton = {
-    text: 'Åpne filter',
-    icon: 'filter_list',
+    type: ButtonTypes.Flat,
+    text: 'Åpne filter', color: 'accent', icon: 'filter_list',
     callback: () => this.filterClicked.emit()
   }
 

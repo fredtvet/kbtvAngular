@@ -5,7 +5,7 @@ import { AppSaveModelProviders } from '@core/state/providers.const';
 import { LazyStyles } from '@shared-app/enums/lazy-styles.enum';
 import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
 import { SharedModule } from '@shared/shared.module';
-import { translations } from '@shared/translations';
+import { translations } from '@shared-app/translations';
 import { ModelDataTableModule, MODEL_DATA_TABLES_CONFIG, MODEL_NAME_TRANSLATIONS } from 'model-data-table';
 import { ModelFormModule } from 'model-form';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';

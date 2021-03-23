@@ -25,7 +25,6 @@ export class FetchingModelContentComponent{
             isOnline 
         }})
     )
-
     constructor(
         private store: Store<StateIsFetching<ModelState>>,
         private deviceInfoService: DeviceInfoService,

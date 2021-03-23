@@ -1,6 +1,7 @@
 <ng-container *ngIf="vm$ | async; let vm">
     <app-no-content *ngIf="!vm.isFetching else fetching">
         Finner ingen {{ modelProp | translate : true }}
+        <ng-content></ng-content>
     </app-no-content>
 
     <ng-template #fetching>

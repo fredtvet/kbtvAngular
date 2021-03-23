@@ -6,7 +6,7 @@ import { DateRange, _getISO, _getMonthRange } from 'date-time-helpers';
 import { IonDateQuestion, IonDateQuestionComponent } from '../../components/dynamic-form-questions/ion-date-time-question.component';
 import { RadioGroupQuestion, RadioGroupQuestionComponent } from '../../components/dynamic-form-questions/radio-group-question.component';
 import { TimesheetStatus } from '../../enums';
-import { translations } from '../../translations';
+import { translations } from '../../../shared-app/translations';
 import { MissionAutoCompleteControl, UserSelectControl } from '../common-controls.const';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { Immutable, ImmutableArray } from 'global-types';

@@ -2,7 +2,7 @@ import { Mission, User } from '@core/models';
 import { CriteriaChipOptions } from '@core/services/ui/chips-factory.service';
 import { _getModelDisplayValue } from 'state-model';
 import { TimesheetStatus } from '@shared/enums';
-import { translations } from '@shared/translations';
+import { translations } from '@shared-app/translations';
 import { DateRange, _formatDateRange, _formatShortDate } from 'date-time-helpers';
 import { Immutable } from 'global-types';
 import { TimesheetCriteria } from './timesheet-criteria.interface';

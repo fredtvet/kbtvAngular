@@ -6,20 +6,22 @@
 
     <mat-divider class="ml-3 mr-3"></mat-divider>
 
-    <div *ngIf="missions; else noContent" class="mission-list">
+    <div  class="mission-list">
 
-      <app-list-item *ngFor="let mission of missions" [routerLink]="['/oppdrag', mission.id, 'detaljer']">
-        <mat-icon left-side>history</mat-icon>
-        {{mission.address}}
-        <mat-icon right-side>chevron_right</mat-icon>
-      </app-list-item>
+      <ng-container *ngIf="missions?.length; else loading">
+        <app-list-item *ngFor="let mission of missions" [routerLink]="['/oppdrag', mission.id, 'detaljer']">
+          <mat-icon left-side>history</mat-icon>
+          {{mission.address}}
+          <mat-icon right-side>chevron_right</mat-icon>
+        </app-list-item>
+      </ng-container>
 
     </div>
     
     <mat-divider class="ml-3 mr-3" style="height:8px"></mat-divider>
-    
-    <ng-template #noContent>
-      <div class="m-4">Finner ingen oppdrag</div>
-    </ng-template>
 
-</div>
+</div>  
+
+<ng-template #loading>
+  <app-fetching-model-content modelProp="missions"></app-fetching-model-content>
+</ng-template>

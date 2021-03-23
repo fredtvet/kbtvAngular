@@ -12,7 +12,9 @@ import { RouterModule } from '@angular/router';
 import { StateAuthModule } from 'state-auth';
 import { StateManagementModule } from 'state-management';
 import { AddToHomeScreenDirective } from './add-to-home-screen.directive';
+import { FetchingModelContentComponent } from './components/fetching-model-content/fetching-model-content.component';
 import { ListItemComponent } from './components/list-item/list-item.component';
+import { NoContentComponent } from './components/no-content.component';
 import { FailedCommandListComponent } from './components/optimistic-http-error-dialog/failed-command-list/failed-command-list.component';
 import { OptimisticHttpErrorDialogComponent } from './components/optimistic-http-error-dialog/optimistic-http-error-dialog.component';
 import { OptimisticLoadingSpinnerComponent } from './components/optimistic-loading-spinner/optimistic-loading-spinner.component';
@@ -20,6 +22,7 @@ import { PageNotFoundComponent } from './components/page-not-found.component';
 import { IfRolePipe } from './pipes/if-role.pipe';
 import { ReverseArrayPipe } from './pipes/reverse-array';
 import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
+import { TranslatePipe } from './pipes/translate.pipe';
 
 @NgModule({
   declarations: [
@@ -29,9 +32,12 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     ReverseArrayPipe,
     TransformButtonsPipe,
     IfRolePipe,
+    TranslatePipe,
     AddToHomeScreenDirective,
     OptimisticHttpErrorDialogComponent,
     OptimisticLoadingSpinnerComponent,
+    NoContentComponent,
+    FetchingModelContentComponent,
   ],
   imports: [
     RouterModule,
@@ -67,11 +73,14 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     PageNotFoundComponent,
     ListItemComponent,
     FailedCommandListComponent,
-    OptimisticLoadingSpinnerComponent,
-    
+    OptimisticLoadingSpinnerComponent, 
+    NoContentComponent,
+    FetchingModelContentComponent,
+
     IfRolePipe,
     ReverseArrayPipe,
     TransformButtonsPipe,   
+    TranslatePipe,
     AddToHomeScreenDirective, 
   ]
 })

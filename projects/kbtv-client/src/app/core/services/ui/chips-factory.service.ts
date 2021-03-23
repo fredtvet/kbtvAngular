@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
-import { translations } from '@shared/translations';
+import { translations } from '@shared-app/translations';
 import { Immutable, Prop } from 'global-types';
 
 export interface CriteriaChipOptions {

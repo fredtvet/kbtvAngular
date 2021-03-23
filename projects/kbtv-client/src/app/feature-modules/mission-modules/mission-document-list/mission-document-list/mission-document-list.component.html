@@ -3,7 +3,8 @@
     <app-main-top-nav-bar navbar [config]="vm.selectionBarConfig || navConfig" >
     </app-main-top-nav-bar>
 
-    <div cdkSelectableContainer #selectableContainer (selectionChanged)="onSelectionChange($event)">
+    <div cdkSelectableContainer #selectableContainer *ngIf="vm.documents?.length; else loading"
+        (selectionChanged)="onSelectionChange($event)">
         <app-selectable-card *ngFor="let doc of vm.documents; trackBy: trackByFn" [id]="doc.id" selectedText="Dokument valgt">
             <app-list-item (tap)="downloadDocument(doc)" [rippleDisabled]="true">
                 <mat-icon left-side [svgIcon]="doc.fileName | fileExtension | fileExtensionIcon"></mat-icon>
@@ -21,3 +22,7 @@
     </app-bottom-action-bar>
 
 </app-main-skeleton>
+
+<ng-template #loading>
+    <app-fetching-model-content modelProp="missionDocuments"></app-fetching-model-content>
+</ng-template>

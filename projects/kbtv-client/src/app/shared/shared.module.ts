@@ -24,14 +24,12 @@ import { RadioGroupQuestionComponent } from './components/dynamic-form-questions
 import { SelectQuestionComponent } from './components/dynamic-form-questions/select-question.component';
 import { SliderQuestionComponent } from './components/dynamic-form-questions/slider-question.component';
 import { TextAreaQuestionComponent } from './components/dynamic-form-questions/text-area-question.component';
-import { FetchingModelContentComponent } from './components/fetching-model-content/fetching-model-content.component';
 import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.component';
 import { ScrollNavElevationTogglerDirective } from './components/main-skeleton/scroll-nav-elevation-toggler.directive';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
-import { NoContentComponent } from './components/no-content.component';
 import { LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
-import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe, TranslatePipe } from './pipes';
+import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe } from './pipes';
 
 @NgModule({
   declarations: [
@@ -50,13 +48,10 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     RadioGroupQuestionComponent,
     SliderQuestionComponent,
     AppButtonComponent,
-    NoContentComponent,
     BottomActionBarComponent,
-    FetchingModelContentComponent,
     BottomBarIconButtonComponent,
     
     TransformButtonPipe,
-    TranslatePipe,
     SortByDatePipe,
     IsTodayPipe,
     ArrayFromNumberPipe,
@@ -92,11 +87,8 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     MainTopNavBarComponent,
     ChipsBarComponent,
     AppButtonComponent,
-    NoContentComponent,
     BottomActionBarComponent,
-    FetchingModelContentComponent,
     TransformButtonPipe,
-    TranslatePipe,
     SortByDatePipe,
     IsTodayPipe,
     ArrayFromNumberPipe,

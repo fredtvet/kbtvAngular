@@ -4,7 +4,7 @@ import { Mission, Timesheet } from "@core/models";
 import { Immutable, Maybe, UnknownState } from "global-types";
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
 import { TimesheetStatus } from "@shared/enums";
-import { translations } from "@shared/translations";
+import { translations } from "@shared-app/translations";
 import { ColDef, ValueFormatterParams } from "ag-grid-community";
 import { Store } from "state-management";
 import { StateMissions } from "@core/state/global-state.interfaces";

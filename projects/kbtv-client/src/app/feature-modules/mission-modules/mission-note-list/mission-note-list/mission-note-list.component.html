@@ -3,15 +3,22 @@
     <app-main-top-nav-bar navbar [config]="navConfig" >
     </app-main-top-nav-bar>
 
-
-    <ng-container *ngFor="let note of notes$ | async; trackBy: trackByNote">
-        <app-note-item [note]="note" (editClicked)="openEditNoteForm($event)">         
-        </app-note-item>
-        <mat-divider></mat-divider>
+    <ng-container *ngIf="notes$ | async; else loading; let notes">
+        <ng-container *ngIf="notes.length; else loading">
+            <ng-container *ngFor="let note of notes; trackBy: trackByNote">
+                <app-note-item [note]="note" (editClicked)="openEditNoteForm($event)">         
+                </app-note-item>
+                <mat-divider></mat-divider>
+            </ng-container>
+        </ng-container>
     </ng-container>
- 
+
     <app-bottom-action-bar bottombar
         [fab]="actionFab">
     </app-bottom-action-bar>
 
 </app-main-skeleton>
+
+<ng-template #loading>
+    <app-fetching-model-content modelProp="missionNotes"></app-fetching-model-content>
+</ng-template>

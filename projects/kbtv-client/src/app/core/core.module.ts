@@ -1,6 +1,6 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { translations } from '@shared/translations';
+import { translations } from '@shared-app/translations';
 import { BASE_API_URL, OptimisticHttpModule, ROOT_OPTIMISTIC_STATE_PROPS } from 'optimistic-http';
 import { environment } from 'src/environments/environment';
 import { HttpAuthTokensInterceptor, StateAuthModule } from 'state-auth';
@@ -27,6 +27,7 @@ import { SyncHttpFetcherService } from './services/sync-http-fetcher.service';
 import { InitalizeHttpQueueEffect, InitalizeSyncEffect } from './state/initalizing.effects';
 import { NotifyOnUnauthorizedEffect } from './state/notify-on-unauthorized.effect';
 import { OpenDialogOnOptimisticError } from './state/open-dialog-on-optimistic-error.effect';
+import { SetSyncModelsFetchedReducer, SetSyncModelsFetchingReducer } from './state/sync-fetching.reducer';
 import { SyncUserOnLoginEffect } from './state/sync-user-on-login.effect';
 import { WipeStateReducer } from './state/wipe-state.reducer';
 
@@ -69,7 +70,9 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
 
     { provide: STORE_EFFECTS, useClass: SyncUserOnLoginEffect, multi: true},
     { provide: STORE_EFFECTS, useClass: NotifyOnUnauthorizedEffect, multi: true},
-    { provide: STORE_REDUCERS, useValue: WipeStateReducer, multi: true},   
+    { provide: STORE_REDUCERS, useValue: WipeStateReducer, multi: true},  
+    { provide: STORE_REDUCERS, useValue: SetSyncModelsFetchedReducer, multi: true}, 
+    { provide: STORE_REDUCERS, useValue: SetSyncModelsFetchingReducer, multi: true},  
   ]
 })
 export class CoreModule { 

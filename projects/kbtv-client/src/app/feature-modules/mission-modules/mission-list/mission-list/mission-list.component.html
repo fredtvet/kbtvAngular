@@ -18,7 +18,7 @@
 
     </ng-container>
 
-    <app-mission-list-view [missions]="vm.missions">
+    <app-mission-list-view *ngIf="vm.missions?.length; else loading" [missions]="vm.missions">
     </app-mission-list-view>
 
     <app-bottom-action-bar bottombar
@@ -28,7 +28,9 @@
 
   </app-main-skeleton>
 
-
+  <ng-template #loading>
+    <app-fetching-model-content modelProp="missions"></app-fetching-model-content>
+  </ng-template>
 
 
 

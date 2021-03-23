@@ -3,7 +3,8 @@
     <app-main-top-nav-bar navbar [config]="vm.selectionBarConfig || navConfig" >
     </app-main-top-nav-bar>
 
-    <div cdkSelectableContainer #selectableContainer (selectionChanged)="onSelectionChange($event)" class="image-container">
+    <div cdkSelectableContainer #selectableContainer *ngIf="vm.images?.length; else loading"
+        (selectionChanged)="onSelectionChange($event)" class="image-container">
 
         <app-selectable-card *ngFor="let img of vm.images;trackBy: trackByImg"
             class="image" [id]="img.id" selectedText="Bilde valgt">
@@ -21,3 +22,7 @@
 </app-main-skeleton>
 
 <input type="file" style="display:none" multiple #imageInput (change)="uploadImages($event.target.files)">
+
+<ng-template #loading>
+    <app-fetching-model-content modelProp="missionImages"></app-fetching-model-content>
+</ng-template>
