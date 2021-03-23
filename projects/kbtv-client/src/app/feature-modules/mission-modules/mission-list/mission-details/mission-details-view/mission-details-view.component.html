@@ -28,19 +28,23 @@
   </app-list-item>
   <mat-divider inset=true></mat-divider>
 
-  <app-list-item *ifRole="permissions.MissionDocumentList.access" [routerLink]="['/oppdrag', mission.id, 'detaljer','dokumenter']">
+  <ng-container *ifRole="permissions.MissionDocumentList.access">
+    <app-list-item [routerLink]="['/oppdrag', mission.id, 'detaljer','dokumenter']">
       <mat-icon left-side class="pl-2 pr-2">folder</mat-icon>
       Dokumenter
       <span right-side *ngIf="mission.missionDocuments?.length">{{ mission.missionDocuments?.length }}</span>
-  </app-list-item>
-  <mat-divider inset=true></mat-divider>
+    </app-list-item>
+    <mat-divider inset=true></mat-divider>
+  </ng-container>
 
-  <app-list-item *ifRole="permissions.MissionNoteList.access" [routerLink]="['/oppdrag', mission.id, 'detaljer','notater']">
+  <ng-container *ifRole="permissions.MissionNoteList.access">
+    <app-list-item  [routerLink]="['/oppdrag', mission.id, 'detaljer','notater']">
       <mat-icon left-side class="pl-2 pr-2">rate_review</mat-icon>
       Notater
       <span right-side *ngIf="mission.missionNotes?.length">{{ mission.missionNotes?.length }}</span>
-  </app-list-item>
-  <mat-divider inset=true></mat-divider>
+    </app-list-item>
+    <mat-divider inset=true></mat-divider>
+  </ng-container>
 
   <ng-container *ngIf="mission.employer">
     <ng-container *ifRole="[roles.Ansatt, roles.Leder, roles.Mellomleder]">
