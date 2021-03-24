@@ -1,8 +1,3 @@
-// ng build global-types --prod && ng build array-helpers --prod && 
-// ng build date-time-helpers --prod && 
-// ng build state-management --prod && 
-// ng build",
-
 var shell = require("shelljs");
 shell.exec("ng build global-types --prod");
 shell.exec("ng build array-helpers --prod");

@@ -96,7 +96,7 @@
   },
   "typedocOptions": {
     "entryPoints": [
-      "projects/**/src/public-api.ts"
+      "libs/**/src/public-api.ts"
     ],
     "out": "docs"
   }
