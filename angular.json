@@ -775,6 +775,46 @@
           }
         }
       }
+    },
+    "google-places-autocomplete": {
+      "projectType": "library",
+      "root": "libs/google-places-autocomplete",
+      "sourceRoot": "libs/google-places-autocomplete/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "libs/google-places-autocomplete/tsconfig.lib.json",
+            "project": "libs/google-places-autocomplete/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/google-places-autocomplete/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/google-places-autocomplete/src/test.ts",
+            "tsConfig": "libs/google-places-autocomplete/tsconfig.spec.json",
+            "karmaConfig": "libs/google-places-autocomplete/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/google-places-autocomplete/tsconfig.lib.json",
+              "libs/google-places-autocomplete/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "kbtv-client"

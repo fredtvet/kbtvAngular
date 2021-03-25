@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
 
 @Component({
   selector: 'app-no-content',
@@ -14,5 +13,4 @@ import { AppButton } from '@shared/components/app-button/app-button.interface';
 })
 export class NoContentComponent{
   @Input() icon: string;
-  button: AppButton;
 }

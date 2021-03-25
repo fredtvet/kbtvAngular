@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { Immutable } from 'global-types';
-import { Address } from 'ngx-google-places-autocomplete/objects/address';
-import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
+import { Address, Options } from 'google-places-autocomplete';
 
 export interface GooglePlacesAutoCompleteQuestion extends Question {
     options?: Partial<Options>;
@@ -15,7 +14,7 @@ export interface GooglePlacesAutoCompleteQuestion extends Question {
   template: `
     <mat-form-field [color]="question.color || 'accent'" class="w-100">
         <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
-        <input ngx-google-places-autocomplete
+        <input lib-google-places-autocomplete
             [options]="googleOptions"
             [placeholder]="question.placeholder" 
             [formControl]="control" 

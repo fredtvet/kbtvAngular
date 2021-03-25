@@ -52,6 +52,10 @@
         "dist/optimistic-http/optimistic-http",
         "dist/optimistic-http"
       ],
+      "google-places-autocomplete": [
+        "dist/google-places-autocomplete/google-places-autocomplete",
+        "dist/google-places-autocomplete"
+      ],
       "state-sync": [
         "dist/state-sync/state-sync",
         "dist/state-sync"
@@ -87,7 +91,7 @@
       "model-data-table": [
         "dist/model-data-table/model-data-table",
         "dist/model-data-table"
-      ]
+      ],
     }
   },
   "angularCompilerOptions": {

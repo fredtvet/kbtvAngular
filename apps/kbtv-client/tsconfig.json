@@ -73,6 +73,10 @@
       "model-data-table": [
         "../../dist/model-data-table/model-data-table",
         "../../dist/model-data-table"
+      ],
+      "google-places-autocomplete": [
+        "../../dist/google-places-autocomplete/google-places-autocomplete",
+        "../../dist/google-places-autocomplete"
       ]
     },
   },

@@ -6,7 +6,7 @@ import { CdkSelectableModule } from 'cdk-selectable';
 import { ConfirmDialogModule } from 'confirm-dialog';
 import { VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { FormSheetModule } from 'form-sheet';
-import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { GooglePlacesAutocompleteModule } from 'google-places-autocomplete';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import { BottomSheetMenuComponent } from './bottom-sheet-menu/bottom-sheet-menu.component';
@@ -59,28 +59,25 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     ObjectToArrayPipe,
     FuncPipe,
     MergeObjPipe,
-    
     ScrollNavElevationTogglerDirective,   
     ActiveStringFilterDirective,
-    LoadingOverlayDirective,    
+    LoadingOverlayDirective,  
   ],
   imports: [
     ReactiveFormsModule,
     AngularMaterialModule,
     SharedAppModule,    
-    GooglePlaceModule,
     CdkSelectableModule, 
     FlexLayoutModule,
     ConfirmDialogModule,
-    FormSheetModule
+    FormSheetModule,
+    GooglePlacesAutocompleteModule
   ],
   exports: [
     ReactiveFormsModule,
     AngularMaterialModule,
-    SharedAppModule,
-    GooglePlaceModule,   
+    SharedAppModule, 
     FlexLayoutModule,
-
     CdkSelectableModule,
     BottomSheetMenuComponent,
     MainSkeletonComponent,    
@@ -95,7 +92,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     AppFileUrlPipe,
     ObjectToArrayPipe,
     MergeObjPipe,
-
     ScrollNavElevationTogglerDirective,
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    

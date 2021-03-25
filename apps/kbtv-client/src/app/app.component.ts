@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class AppComponent {
   title = 'test-client';
+  constructor(){ }
 }
