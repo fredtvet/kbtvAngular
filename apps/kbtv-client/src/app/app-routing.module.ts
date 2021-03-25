@@ -19,7 +19,7 @@ const routes: AppRoute[] = [
 
       {path: 'hjem', component: HomeComponent},  
 
-      {path: 'profil',
+      {path: 'profil', data: {preload: false},
         loadChildren: () => import('src/app/feature-modules/profile/profile.module').then(m => m.ProfileModule)},
 
       {path: 'mine-timer', data: {allowedRoles: RolePermissions.UserTimesheetWeek.access}, 
@@ -55,10 +55,10 @@ const routes: AppRoute[] = [
     ],
   },
   
-  {path: 'login', canActivate: [NoAuthGuard], 
+  {path: 'login', canActivate: [NoAuthGuard], data: {preload: false},
     loadChildren: () => import('src/app/feature-modules/login/login.module').then(m => m.LoginModule)},   
 
-  {path: '**', component: PageNotFoundComponent},
+  {path: '**', component: PageNotFoundComponent, data: {preload: false}},
 ];
 
 @NgModule({
