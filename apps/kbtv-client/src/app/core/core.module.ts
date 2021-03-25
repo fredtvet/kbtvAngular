@@ -46,10 +46,10 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
   providers: [   
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },   
-    { provide: HTTP_INTERCEPTORS, useClass: HttpAuthTokensInterceptor, multi: true },  
-    { provide: HTTP_INTERCEPTORS, useClass: HttpRetryInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpIsOnlineInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpLoadingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpAuthTokensInterceptor, multi: true }, 
+    { provide: HTTP_INTERCEPTORS, useClass: HttpLoadingInterceptor, multi: true },  
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRetryInterceptor, multi: true }, 
+    { provide: HTTP_INTERCEPTORS, useClass: HttpIsOnlineInterceptor, multi: true }, 
 
     { provide: STORE_SETTINGS, useValue: AppStoreSettings},
 
