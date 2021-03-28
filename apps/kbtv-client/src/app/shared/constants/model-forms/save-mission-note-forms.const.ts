@@ -17,7 +17,7 @@ const TitleControl = <Immutable<DynamicControl<MissionNote>>>{ name: "title",
 const ContentControl = <Immutable<DynamicControl<MissionNote>>>{ name: "content", required: true,
     type: "control", valueGetter: (s: MissionNote) => s?.content, questions: [{
         component:  TextAreaQuestionComponent,
-        question: <TextAreaQuestion>{placeholder: "Beskrivelse", minRows: 4}, 
+        question: <TextAreaQuestion>{placeholder: "Beskrivelse", rows: 4}, 
     }], 
     validators: [Validators.maxLength(ValidationRules.MissionNoteContentMaxLength)] 
 }
