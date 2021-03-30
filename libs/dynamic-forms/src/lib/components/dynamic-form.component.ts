@@ -21,27 +21,22 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
         <ng-container *dynamicHost>
 
         </ng-container>
-        <ng-container *ngIf="config">
 
-            <div style="height:20px">
-                <mat-error *ngIf="form.dirty && form.invalid && form.errors">
-                    {{ getValidationErrorMessage() }}
-                </mat-error>
-            </div>
-            
-
-            <lib-form-actions 
-                [submitDisabled]="(!config.allowPristine && form.pristine) || form.invalid" 
-                [submitText]="config.submitText || 'Lagre'" 
-                [showReset]="config.resettable"
-                [resetDisabled]="!(resetEnabled$ | async)"
-                [onlineRequired]="config.onlineRequired"
-                (reset)="onReset()"
-                (submitted)="onSubmit()" 
-                (canceled)="onCancel()">
-            </lib-form-actions>
-
-        </ng-container>
+        <div style="height:20px">
+            <mat-error *ngIf="form.dirty && form.invalid && form.errors">
+                {{ getValidationErrorMessage() }}
+            </mat-error>
+        </div>
+        
+        <lib-form-actions *ngIf="config"
+            [submitDisabled]="(!config.allowPristine && form.pristine) || form.invalid" 
+            [submitText]="config.submitText || 'Lagre'" 
+            [showReset]="config.resettable"    
+            [onlineRequired]="config.onlineRequired"
+            (reset)="onReset()"
+            (submitted)="onSubmit()" 
+            (canceled)="onCancel()">
+        </lib-form-actions>
     </form>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -78,13 +73,7 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         private formFactory: DynamicFormFactory,
     ) { 
         super(componentFactoryResolver, cdRef, DynamicControlGroupComponent);
-    }
-
-    checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-        let pass = group.get('newPassword')?.value;
-        let confirmPass = group.get('confirmPassword')?.value;
-    
-        return pass === confirmPass ? null : { notSame: true }     
+        cdRef.detach();
     }
 
     onSubmit(){
@@ -122,6 +111,8 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
             )
 
         this.loadComponents(this._config.controls, this._config);
+        
+        this.cdRef.reattach();
     }
 
 }
