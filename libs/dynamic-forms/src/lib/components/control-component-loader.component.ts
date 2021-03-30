@@ -17,11 +17,11 @@ export abstract class ControlComponentLoaderComponent {
 
     unsubscribe : Subject<void> = new Subject();
 
-    form: FormGroup = new FormGroup({});
+    form: FormGroup;
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,  
-        private cdRef: ChangeDetectorRef,      
+        protected cdRef: ChangeDetectorRef,      
         private defaultControlGroupComponent: Type<ControlGroupComponent>,
     ) { }
 
@@ -102,7 +102,7 @@ export abstract class ControlComponentLoaderComponent {
 
         _getControlObserver$(hook, this.form, true).pipe(takeUntil(this.unsubscribe)).subscribe(x => {
             htmlElement.style.display = (x ? "none" : currentDisplayVal);
-            this.cdRef.markForCheck();
+            this.cdRef.detectChanges();
         })
     }
 

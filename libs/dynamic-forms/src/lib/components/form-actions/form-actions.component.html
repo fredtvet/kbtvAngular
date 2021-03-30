@@ -1,0 +1,29 @@
+<div fxLayout="row" fxLayoutAlign="end start" style="margin: 12px 0 16px 0">
+
+    <button
+      mat-button
+      *ngIf="showReset; else cancelButton"
+      [disabled]="resetDisabled"
+      color="warn"
+      (tap)="reset.emit()"
+    >
+      Nullstill
+    </button>
+
+    <ng-template #cancelButton>
+      <button mat-button fxFlex="35" color="warn" (tap)="canceled.emit()">
+        Avbryt
+      </button>
+    </ng-template>
+
+    <button *ngIf="vm$ | async; let vm"
+      mat-raised-button
+      fxFlex="40"
+      color="accent"
+      [disabled]="(!vm.isOnline && onlineRequired) || submitDisabled"
+      (tap)="onSubmit()"
+    >
+      {{ (!vm.isOnline && onlineRequired) ? 'Ikke på nett' : submitText }}
+    </button>
+    
+</div>
