@@ -19,6 +19,7 @@ export class FormService {
   open<TForm, TFormState = unknown>(config: Immutable<FormServiceConfig<TForm, TFormState>>)
   : MatBottomSheetRef<FormSheetWrapperComponent, TForm> {      
     return this.matBottomSheet.open(FormSheetWrapperComponent, { 
+      panelClass: "full-screen-sheet",
       data: <Immutable<FormSheetWrapperConfig<DynamicForm<TForm, TFormState>, unknown, TForm>>>{
         formConfig: config.formConfig, 
         navConfig: config.navConfig, 

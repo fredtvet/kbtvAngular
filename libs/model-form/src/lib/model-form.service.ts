@@ -33,6 +33,7 @@ export class ModelFormService {
     config: Immutable<ModelFormServiceConfig<TState, TForm, FormState<TState>>>
   ): MatBottomSheetRef<FormSheetWrapperComponent, ModelCommand> {
     const ref =  this.matBottomSheet.open(FormSheetWrapperComponent, { 
+      panelClass: "full-screen-sheet",
       data: <Immutable<WrapperConfig<TForm>>>{
         
         formConfig: config.formConfig, 
