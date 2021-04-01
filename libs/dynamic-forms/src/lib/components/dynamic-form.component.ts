@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 import { debounceTime, map, startWith } from 'rxjs/operators';
@@ -17,6 +16,7 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
 @Component({
   selector: 'lib-dynamic-form',
   template: `
+    <div style="width:100%;text-align:center;margin-top:24px" *ngIf="form === undefined">Laster inn skjema...</div>
     <form [formGroup]="form" fxLayout="column">
         <ng-container *dynamicHost>
 
@@ -50,8 +50,8 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
     private _config: Immutable<DynamicForm<{}, {}>>;
     @Input('config') 
     set config(value: Immutable<DynamicForm<{}, {}>>) {
-      this._config = value;
-      this.initalizeForm();
+        this._config = value;
+        setTimeout(() => this.initalizeForm()); 
     }  
 
     get config(): Immutable<DynamicForm<{}, {}>> { return this._config }
@@ -72,8 +72,8 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         private formStore: DynamicFormStore<Object>,
         private formFactory: DynamicFormFactory,
     ) { 
-        super(componentFactoryResolver, cdRef, DynamicControlGroupComponent);
-        cdRef.detach();
+        super(componentFactoryResolver, cdRef, DynamicControlGroupComponent);     
+
     }
 
     onSubmit(){
@@ -111,8 +111,19 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
             )
 
         this.loadComponents(this._config.controls, this._config);
-        
-        this.cdRef.reattach();
+
+        // console.log('reattached')
+        // this.cdRef.detectChanges();
+        // this.cdRef.reattach();  
+
+        // this.ngZone.onStable.pipe(take(1))
+        //     .subscribe(() => {       
+        //         console.log('reattached')
+        //         this.cdRef.detectChanges();
+        //         this.cdRef.reattach();      
+        //     });
+
+      
     }
 
 }

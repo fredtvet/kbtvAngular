@@ -159,6 +159,8 @@ export interface ControlGroupComponent {
     /** The names of parent groups.
      *  Used to keep track of where in the form model tree the group is located. */
     nestedNames: string[];
+
+    loadGroupComponents: Function;
 }
 
 /** Represents a form component. Implemented by {@link DynamicForm} */

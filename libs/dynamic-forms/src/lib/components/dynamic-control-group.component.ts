@@ -29,8 +29,8 @@ export class DynamicControlGroupComponent extends ControlComponentLoaderComponen
         super(componentFactoryResolver, cdRef, DynamicControlGroupComponent)
     }
 
-    ngOnInit(): void  {
-        this.loadComponents(this.controlGroup.controls, this.formConfig, this.nestedNames);
+    loadGroupComponents(){
+      this.loadComponents(this.controlGroup.controls, this.formConfig, this.nestedNames);
     }
 
     protected onQuestionComponentInit(componentRef: ComponentRef<QuestionComponent>, control: DynamicControl<unknown>): void {

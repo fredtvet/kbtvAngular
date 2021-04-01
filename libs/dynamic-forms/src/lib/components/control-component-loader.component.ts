@@ -83,7 +83,9 @@ export abstract class ControlComponentLoaderComponent {
         componentRef.instance.nestedNames = 
             controlGroup.name ? 
             [...nestedNames, controlGroup.name] : 
-            nestedNames;
+            nestedNames;   
+
+        componentRef.instance.loadGroupComponents();        
     }
 
     private loadComponent<TComponent>(component: Type<TComponent>): ComponentRef<TComponent>{
