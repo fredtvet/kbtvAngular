@@ -43,5 +43,11 @@
 .mat-drawer-container {position: unset!important;}
 
 .mat-icon{vertical-align: middle!important;}
-
-.mat-bottom-sheet-container { max-height: 100vh!important }
+.full-screen-sheet{
+  max-height: 100vh!important
+}
+@media (max-width: 959px) {
+  .full-screen-sheet{
+    height: 100vh!important; 
+  }
+}
