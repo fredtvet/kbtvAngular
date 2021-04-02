@@ -19,10 +19,13 @@ export class SyncHttpFetcherService implements SyncHttpFetcher<SyncModelState> {
 
     let params = new HttpParams();
 
-    params = params.set("initialTimestamp", config?.initialTimestamp?.toString());
-    params = params.set("timestamp", timestamp?.toString());
+    const isInitial = timestamp == null;
 
-    return this.apiService.get('/SyncAll', params);
+    params = params.set("timestamp", isInitial ? config.initialTimestamp?.toString() : timestamp?.toString());
+
+    const syncUrl = isInitial ? '/SyncAll/GetInitial' : '/SyncAll';
+
+    return this.apiService.get(syncUrl, params);
   }
   
 }
