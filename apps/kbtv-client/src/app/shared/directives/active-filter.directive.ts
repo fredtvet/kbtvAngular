@@ -1,8 +1,9 @@
 import { Directive, EmbeddedViewRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { debounceAfterFirst } from '@shared/operators/debounce-after-first.operator';
 import { _filter } from 'array-helpers';
 import { Immutable, ImmutableArray } from 'global-types';
 import { BehaviorSubject, combineLatest, merge, of } from 'rxjs';
-import { debounceTime, filter, map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { ActiveStringFilterConfig } from '../interfaces/active-string-filter-config.interface';
 
 @Directive({
@@ -48,7 +49,7 @@ export class ActiveStringFilterDirective<TRecord> {
             this.optionsSubject.asObservable()
         ]).pipe(
             filter(([criteria]) => !criteria || typeof criteria === "string"), 
-            debounceTime(this._config.customDebounceTime || 400), 
+            debounceAfterFirst(this._config.customDebounceTime || 400),
             map(([criteria, options]) => {
                 this.checkCount = 0; //reset check counter
                 if(!criteria) //If no search, just take first n items
