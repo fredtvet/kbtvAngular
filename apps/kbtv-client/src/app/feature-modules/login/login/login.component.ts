@@ -22,8 +22,9 @@ export class LoginComponent {
 
   vm$: Observable<{isSmall: boolean, formDisabled: boolean}> = combineLatest([
     this.deviceInfoService.isXs$,
+    this.deviceInfoService.isOnline$,
     this.loadingService.httpLoading$
-  ]).pipe(map(([isSmall, formDisabled]) => { return {isSmall, formDisabled}}))
+  ]).pipe(map(([isSmall, isOnline, loading]) => { return {isSmall, formDisabled: !isOnline || loading}}))
 
   constructor(
     private route: ActivatedRoute,

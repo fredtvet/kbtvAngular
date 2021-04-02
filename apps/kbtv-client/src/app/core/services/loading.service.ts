@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { Store } from 'state-management';
-import { DeviceInfoService } from './device-info.service';
 
 export interface LoadingResponse { loading: boolean, optimisticCount: number | undefined }
 
@@ -12,10 +11,8 @@ export interface LoadingResponse { loading: boolean, optimisticCount: number | u
 export class LoadingService {
 
   private httpLoadingSubject = new BehaviorSubject<boolean>(false);
-  httpLoading$ = combineLatest([
-    this.httpLoadingSubject.asObservable().pipe(distinctUntilChanged()),
-    this.deviceInfoService.isOnline$
-  ]).pipe(map(([loading, isOnline]) => isOnline ? loading : false));
+
+  httpLoading$ = this.httpLoadingSubject.asObservable().pipe(distinctUntilChanged());
 
   private optimisticCount$ = this.store.selectProperty$<QueuedCommand[]>("requestQueue").pipe(
     map(x => x?.length),
@@ -25,12 +22,11 @@ export class LoadingService {
   loading$: Observable<LoadingResponse> = combineLatest([
     this.httpLoading$, 
     this.optimisticCount$
-  ]).pipe(map(([loading, optimisticCount]) => { return {loading, optimisticCount} }));
+  ]).pipe(
+    map(([loading, optimisticCount]) => { return {loading, optimisticCount} })
+  );
 
-  constructor(
-    private store: Store<StateRequestQueue>, 
-    private deviceInfoService: DeviceInfoService
-  ) { }
+  constructor(private store: Store<StateRequestQueue>) { }
 
   setHttpLoading(loading: boolean){
     this.httpLoadingSubject.next(loading);
