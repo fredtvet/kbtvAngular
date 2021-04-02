@@ -111,19 +111,6 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
             )
 
         this.loadComponents(this._config.controls, this._config);
-
-        // console.log('reattached')
-        // this.cdRef.detectChanges();
-        // this.cdRef.reattach();  
-
-        // this.ngZone.onStable.pipe(take(1))
-        //     .subscribe(() => {       
-        //         console.log('reattached')
-        //         this.cdRef.detectChanges();
-        //         this.cdRef.reattach();      
-        //     });
-
-      
     }
 
 }

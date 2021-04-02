@@ -106,7 +106,6 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     }], {relativeTo: this.route});
 
   private getBottomActions(mission: Maybe<Immutable<Mission>>): AppButton[] {
-    console.log(mission);
     return  [
       {icon: "timer", text: "Timer", callback: () => this.goToTimesheets(mission), allowedRoles: RolePermissions.UserTimesheetList.access},
       // {icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission], allowedRoles: this.can.update},

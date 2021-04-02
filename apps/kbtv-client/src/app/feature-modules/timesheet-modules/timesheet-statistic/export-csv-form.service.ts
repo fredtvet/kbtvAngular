@@ -26,7 +26,6 @@ export class ExportCsvFormService {
     }
 
     private onSubmit = (formVal: Immutable<Record<string, boolean>>, grid: AgGridAngular): void => {
-      console.log(formVal)
         const colKeys = [];
 
         for(const key in formVal)
