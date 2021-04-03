@@ -24,7 +24,7 @@ export interface TimesheetForm {
 }
 
 const DateTimeControlGroup: Immutable<DynamicControlGroup<TimesheetForm, FormState>> = { type: "group", 
-styling: { itemMargin: "0px 16px 0px 0px" },
+styling: { itemMargin: "24px 16px 0px 0px" },
 controls: [
     { name: "date", required: true, 
         valueGetter: (s: TimesheetForm) => s.date ? _getISO(s.date) : (s.startTime ? _getISO(s.startTime) : null),
@@ -73,7 +73,7 @@ controls: [
 const CommentControl: Immutable<DynamicControl<TimesheetForm, FormState>> = { name: "comment", required: true,
     type: "control", valueGetter: (s: TimesheetForm) => s?.comment, questions: [{
         component:  TextAreaQuestionComponent,
-        question: <TextAreaQuestion>{placeholder: "Kommentar"}, 
+        question: <TextAreaQuestion>{placeholder: "Kommentar", rows: 3}, 
     }], 
     validators: [Validators.maxLength(400)], 
 }

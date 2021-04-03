@@ -1,15 +1,15 @@
 import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
-import { DynamicControl, DynamicControlGroup, DynamicForm } from 'dynamic-forms';
-import { OptionsFormState } from 'form-sheet';
+import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { DateRange, _getISO, _getMonthRange } from 'date-time-helpers';
+import { DynamicControl, DynamicControlGroup, DynamicForm } from 'dynamic-forms';
+import { OptionsFormState } from 'form-sheet';
+import { Immutable } from 'global-types';
+import { translations } from '../../../shared-app/translations';
 import { IonDateQuestion, IonDateQuestionComponent } from '../../components/dynamic-form-questions/ion-date-time-question.component';
 import { RadioGroupQuestion, RadioGroupQuestionComponent } from '../../components/dynamic-form-questions/radio-group-question.component';
 import { TimesheetStatus } from '../../enums';
-import { translations } from '../../../shared-app/translations';
 import { MissionAutoCompleteControl, UserSelectControl } from '../common-controls.const';
-import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
-import { Immutable, ImmutableArray } from 'global-types';
 
 export interface TimesheetCriteriaFormState extends OptionsFormState<StateUsers & StateMissions>{}
 
@@ -27,7 +27,7 @@ const DateRangePresetControl: Immutable<DynamicControl<TimesheetCriteria, FormSt
     }], 
 }
 const DateRangeControlGroup: Immutable<DynamicControlGroup<TimesheetCriteria, FormState, DateRange>> = { name: "dateRange", 
-    styling: { itemMargin: "0px 16px 0px 0px" },
+    styling: { itemMargin: "0px 16px 24px 0px" },
     type: "group", controls: [
         { name: "start",
             valueGetter: (s: TimesheetCriteria) => s.dateRange?.start ? _getISO(s.dateRange.start) : null,

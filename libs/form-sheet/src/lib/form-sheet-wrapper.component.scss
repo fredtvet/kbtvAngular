@@ -1,0 +1,18 @@
+::ng-deep .full-screen-sheet{
+    max-height: 100vh!important;
+    padding:0 16px;
+}
+  
+@media (max-width: 959px) {
+    ::ng-deep .full-screen-sheet{
+      height: 100vh!important; 
+    }
+}
+
+@media (min-width: 960px) {
+    ::ng-deep .full-screen-sheet{
+      width: 652px!important;
+      min-height: 400px;
+    }
+}
+  

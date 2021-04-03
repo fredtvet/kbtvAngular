@@ -10,6 +10,7 @@ import { FormSheetWrapperConfig } from './interfaces';
 @Component({
     selector: 'lib-form-sheet-wrapper',
     template: ``,
+    styleUrls: ['./form-sheet-wrapper.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormSheetWrapperComponent  {
@@ -37,14 +38,14 @@ export class FormSheetWrapperComponent  {
         const factory = this.componentFactoryResolver.resolveComponentFactory(FormSheetNavBarComponent);
         let navRef = this.viewContainerRef.createComponent(factory);
         navRef.instance.config = this.config.navConfig;
-        navRef.instance.closed.pipe(first()).subscribe(x => this.close(null))
+        navRef.instance.closed.pipe(first()).subscribe(x => this.close(null));
     }
     
     private loadForm(){
         const factory = this.componentFactoryResolver.resolveComponentFactory(this.config.formComponent);
         let formRef = this.viewContainerRef.createComponent(factory);
-        formRef.instance.config = this.config.formConfig;         
-        
+        formRef.instance.config = this.config.formConfig;    
+
         if(this.config.formState$)
             this.formStateSub = 
                 this.config.formState$.subscribe(x => formRef.instance.formState = x)

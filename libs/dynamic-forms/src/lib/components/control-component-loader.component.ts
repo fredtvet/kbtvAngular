@@ -59,7 +59,7 @@ export abstract class ControlComponentLoaderComponent {
         componentRef.instance.form = this.form;
         componentRef.instance.question = questionWrapper.question;  
         componentRef.instance.required = control.required;  
-        componentRef.location.nativeElement.style.marginBottom = "8px";
+        componentRef.location.nativeElement.style.marginTop = "3vh";
 
         this.onQuestionComponentInit(componentRef, control);
 

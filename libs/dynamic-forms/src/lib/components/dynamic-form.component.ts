@@ -22,7 +22,7 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
 
         </ng-container>
 
-        <div style="height:20px">
+        <div style="height:40px">
             <mat-error *ngIf="form.dirty && form.invalid && form.errors">
                 {{ getValidationErrorMessage() }}
             </mat-error>
