@@ -27,6 +27,7 @@ const DateRangePresetControl: Immutable<DynamicControl<TimesheetCriteria, FormSt
     }], 
 }
 const DateRangeControlGroup: Immutable<DynamicControlGroup<TimesheetCriteria, FormState, DateRange>> = { name: "dateRange", 
+    styling: { itemMargin: "0px 16px 0px 0px" },
     type: "group", controls: [
         { name: "start",
             valueGetter: (s: TimesheetCriteria) => s.dateRange?.start ? _getISO(s.dateRange.start) : null,

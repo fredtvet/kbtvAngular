@@ -34,6 +34,7 @@ export class DynamicControlGroupComponent extends ControlComponentLoaderComponen
     }
 
     protected onQuestionComponentInit(componentRef: ComponentRef<QuestionComponent>, control: DynamicControl<unknown>): void {
-      componentRef.location.nativeElement.style.margin = this.controlGroup.styling?.itemMargin || "0 8px 0 0"
+      if(this.controlGroup.styling?.itemMargin)
+        componentRef.location.nativeElement.style.margin = this.controlGroup.styling.itemMargin;
     }
 }

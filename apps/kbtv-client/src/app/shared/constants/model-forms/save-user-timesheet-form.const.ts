@@ -23,7 +23,9 @@ export interface TimesheetForm {
     comment?: string;
 }
 
-const DateTimeControlGroup: Immutable<DynamicControlGroup<TimesheetForm, FormState>> = { type: "group", controls: [
+const DateTimeControlGroup: Immutable<DynamicControlGroup<TimesheetForm, FormState>> = { type: "group", 
+styling: { itemMargin: "0px 16px 0px 0px" },
+controls: [
     { name: "date", required: true, 
         valueGetter: (s: TimesheetForm) => s.date ? _getISO(s.date) : (s.startTime ? _getISO(s.startTime) : null),
         type: "control", questions: [{
