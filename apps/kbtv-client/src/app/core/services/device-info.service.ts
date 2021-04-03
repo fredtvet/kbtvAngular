@@ -40,7 +40,8 @@ export class DeviceInfoService {
       shareReplay()
     )
 
-
+  get isXs(): boolean { return this.breakpointObserver.isMatched(Breakpoints.XSmall) }
+  
   deviceInfo$ = combineLatest([this.isOnline$, this.isXs$]).pipe(
     map(([isOnline, isXs])=> { return {isOnline, isXs} })
   )

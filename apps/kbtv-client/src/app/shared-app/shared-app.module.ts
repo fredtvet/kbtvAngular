@@ -19,6 +19,7 @@ import { FailedCommandListComponent } from './components/optimistic-http-error-d
 import { OptimisticHttpErrorDialogComponent } from './components/optimistic-http-error-dialog/optimistic-http-error-dialog.component';
 import { OptimisticLoadingSpinnerComponent } from './components/optimistic-loading-spinner/optimistic-loading-spinner.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
+import { AsyncDetectPipe } from './pipes/async-detect.pipe';
 import { IfRolePipe } from './pipes/if-role.pipe';
 import { ReverseArrayPipe } from './pipes/reverse-array';
 import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
@@ -33,6 +34,7 @@ import { TranslatePipe } from './pipes/translate.pipe';
     TransformButtonsPipe,
     IfRolePipe,
     TranslatePipe,
+    AsyncDetectPipe,
     AddToHomeScreenDirective,
     OptimisticHttpErrorDialogComponent,
     OptimisticLoadingSpinnerComponent,
@@ -81,6 +83,7 @@ import { TranslatePipe } from './pipes/translate.pipe';
     ReverseArrayPipe,
     TransformButtonsPipe,   
     TranslatePipe,
+    AsyncDetectPipe,
     AddToHomeScreenDirective, 
   ]
 })

@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { MainNavConfig } from '../interfaces/main-nav-config.interface';
+import { map, takeUntil, tap } from 'rxjs/operators';
 import { MainNavService } from '../main-nav.service';
 
 @Component({
@@ -15,7 +14,8 @@ import { MainNavService } from '../main-nav.service';
 export class MainNavComponent extends WithUnsubscribe() {
   @ViewChild('drawer') drawer: MatDrawer;
 
-  config$: Observable<MainNavConfig> = this.mainNavService.config$;
+  config$: Observable<{isXs: boolean}> = this.mainNavService.isXs$.pipe(
+    map(x=> { return {isXs: x}}));
 
   constructor(private mainNavService: MainNavService) {
     super();
@@ -24,5 +24,7 @@ export class MainNavComponent extends WithUnsubscribe() {
     ).subscribe(x => this.toggleDrawer());
   }
 
-  toggleDrawer = () => this.drawer.toggle();
+  toggleDrawer = () => {
+    this.drawer.toggle();
+  };
 }
