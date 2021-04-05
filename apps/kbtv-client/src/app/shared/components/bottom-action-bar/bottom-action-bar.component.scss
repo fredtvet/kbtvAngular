@@ -6,9 +6,8 @@
     position: relative;    
     height: var(--bottom-nav-height);
     color:white;
-    background-image: -webkit-radial-gradient(
-        35px 1%,
-        circle closest-corner, 
+    background-image: radial-gradient(
+        circle closest-corner at 35px 1%, 
         rgba(0, 0, 0, 0) 0, 
         rgba(0, 0, 0, 0) 35px, 
         $accent 36px, $accent 37px
