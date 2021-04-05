@@ -37,7 +37,10 @@ export class UserTimesheetWeekComponent {
     this.facade.weekDaySummaries$,
     this.deviceInfoService.isXs$
   ]).pipe(
-    map(([weekDaySummaries, isXs]) => { return { isXs, weekDaySummaries, weekCriteria: this.facade.weekCriteria }}),
+    map(([weekDaySummaries, isXs]) => { return { 
+      numberOfWeekDays: isXs ? 5 : 7, 
+      weekDaySummaries, weekCriteria: this.facade.weekCriteria
+    }}),
   );
 
   bottomActions: AppButton[];

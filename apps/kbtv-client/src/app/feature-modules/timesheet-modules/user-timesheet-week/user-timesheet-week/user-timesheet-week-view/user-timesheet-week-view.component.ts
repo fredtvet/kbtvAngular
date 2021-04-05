@@ -6,6 +6,7 @@ import { ViewModel } from '../view-model.interface';
 @Component({
   selector: "app-user-timesheet-week-view",
   templateUrl: "./user-timesheet-week-view.component.html",
+  styleUrls: ["./user-timesheet-week-view.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserTimesheetWeekViewComponent {

@@ -1,11 +1,7 @@
-<style>
-  .week-view-container { min-height: 100%; }
-  .day-label { z-index:1; position:sticky; top:0; }
-</style>
 <div class="week-view-container" fxLayout="row">
-  <ng-container *ngFor="let weekDay of (vm.isXs ? 5 : 7) | arrayFromNumber">
+  <ng-container *ngFor="let weekDay of vm.numberOfWeekDays | arrayFromNumber">
 
-    <div class="w-100" fxLayout="column" fxLayoutAlign="start stretch">
+    <div class="w-100" fxLayout="column" fxLayoutAlign="start stretch" fxFlex>
 
       <app-timesheet-day-label class="mb-1 day-label"
         [date]="vm.weekCriteria | getDateByDateParams : weekDay"
@@ -21,8 +17,9 @@
       </ng-container>
 
     </div>
-
-    <mat-divider vertical="true" *ngIf="weekDay !== 7"></mat-divider>
+    
+    <div class="fade-line" *ngIf="weekDay !== vm.numberOfWeekDays"></div>
+    <!-- <mat-divider vertical="true" *ngIf="weekDay !== 7"></mat-divider> -->
 
   </ng-container>
 

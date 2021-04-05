@@ -4,5 +4,5 @@ import { TimesheetSummary, WeekCriteria } from '../../shared-timesheet/interface
 export interface ViewModel{ 
     weekDaySummaries: Maybe<{[key: number]: Immutable<TimesheetSummary>}>, 
     weekCriteria: Maybe<Immutable<WeekCriteria>>, 
-    isXs: boolean
+    numberOfWeekDays: number
 }
