@@ -49,7 +49,10 @@ controls: [
                 datePipeFormat: "HH:mm",
                 minuteValues: [0,15,30,45],
                 defaultValueGetter:  (f: TimesheetForm) => _timeValueDefault(f?.date, 7),
-                max: {controlName: "endTime", callback: (val: unknown) => val}
+                max: {
+                    controlName: "endTime", 
+                    callback: (val: number) => val ? new Date(new Date(val).getTime() - 60e4).toLocaleTimeString() : null               
+                }
             }, 
         }], 
     },
@@ -62,9 +65,11 @@ controls: [
                 width: "20%",
                 ionFormat:"HH:mm",
                 datePipeFormat: "HH:mm",
-                minuteValues: [0,15,30,45],  
-                defaultValueGetter:  (f: TimesheetForm) => _timeValueDefault(f.date, 12),          
-                min: {controlName: "startTime", callback: (val: unknown) => val}
+                minuteValues: [0,15,30,45],         
+                min: {
+                    controlName: "startTime", 
+                    callback: (val: number) => val ? new Date(new Date(val).getTime() + 60e4).toLocaleTimeString() : null
+                }
             }, 
         }], 
     },
