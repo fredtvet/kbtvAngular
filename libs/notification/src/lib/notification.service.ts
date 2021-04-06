@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Maybe } from 'global-types';
 import { AppNotification } from './app-notification.interface';
@@ -13,15 +13,15 @@ export class NotificationService {
 
   private currentNotification: Maybe<AppNotification>;
 
-  constructor(private snackBar: MatSnackBar) { }
+  constructor(private snackBar: MatSnackBar, private zone: NgZone) { }
 
   /** Displays the provided notification when the snack bar is available
    * @param notification */
   notify = (notification: AppNotification) => { 
     if(!this.currentNotification && this.currentNotification !== null)
-       this.setNotification(notification);      
+      this.zone.run(x => this.setNotification(notification));      
     else if(JSON.stringify(notification) !== JSON.stringify(this.currentNotification))     
-        this.queue.push(notification);    
+      this.queue.push(notification);    
   }
 
   private setNotification = (input: Maybe<AppNotification>): void => {
