@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { Immutable } from 'global-types';
@@ -45,12 +46,21 @@ export class GooglePlacesAutoCompleteQuestionComponent extends BaseQuestionCompo
 
     addressFormatter = (address: Address) => address.formatted_address
 
-    constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
+    constructor(
+        @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
+        @Inject(DOCUMENT) private document: Document
+    ) { 
         super(validationErrorMessages);   
     }
 
     onAddressChange(address: Address){
         this.control?.setValue(this.addressFormatter(address))
+    }
+
+    ngOnDestroy(): void {
+        const body = this.document.getElementsByTagName('body')[0];
+        const elements = body.getElementsByClassName("pac-container");
+        for(let i = 0; i < elements.length; i++) elements[i].remove();    
     }
 
     protected onQuestionChanges(value: GooglePlacesAutoCompleteQuestion): void{
