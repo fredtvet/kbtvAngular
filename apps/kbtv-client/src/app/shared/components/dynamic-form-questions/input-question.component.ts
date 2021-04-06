@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { Maybe } from 'global-types';
 
@@ -45,7 +48,8 @@ export class InputQuestionComponent extends BaseQuestionComponent<InputQuestion>
 
   hideField: Maybe<boolean>;
 
-  constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
+  constructor(
+    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
     super(validationErrorMessages) 
   }
 
@@ -55,3 +59,13 @@ export class InputQuestionComponent extends BaseQuestionComponent<InputQuestion>
   }
 
 }
+
+@NgModule({
+  declarations: [InputQuestionComponent],
+  imports:[
+    SharedModule, 
+    MatFormFieldModule,
+    MatInputModule,  
+  ]
+})
+class InputQuestionModule {}

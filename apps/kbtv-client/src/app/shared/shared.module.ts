@@ -6,7 +6,6 @@ import { CdkSelectableModule } from 'cdk-selectable';
 import { ConfirmDialogModule } from 'confirm-dialog';
 import { VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { FormSheetModule } from 'form-sheet';
-import { GooglePlacesAutocompleteModule } from 'google-places-autocomplete';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import { BottomSheetMenuComponent } from './bottom-sheet-menu/bottom-sheet-menu.component';
@@ -14,16 +13,6 @@ import { AppButtonComponent } from './components/app-button/app-button.component
 import { BottomActionBarComponent } from './components/bottom-action-bar/bottom-action-bar.component';
 import { BottomBarIconButtonComponent } from './components/bottom-action-bar/bottom-bar-icon-button.component';
 import { ChipsBarComponent } from './components/chips-bar.component';
-import { AutoCompleteQuestionComponent } from './components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
-import { CheckboxQuestionComponent } from './components/dynamic-form-questions/checkbox-question.component';
-import { FileQuestionComponent } from './components/dynamic-form-questions/file-question.component';
-import { GooglePlacesAutoCompleteQuestionComponent } from './components/dynamic-form-questions/google-places-autocomplete-question.component';
-import { InputQuestionComponent } from './components/dynamic-form-questions/input-question.component';
-import { IonDateQuestionComponent } from './components/dynamic-form-questions/ion-date-time-question.component';
-import { RadioGroupQuestionComponent } from './components/dynamic-form-questions/radio-group-question.component';
-import { SelectQuestionComponent } from './components/dynamic-form-questions/select-question.component';
-import { SliderQuestionComponent } from './components/dynamic-form-questions/slider-question.component';
-import { TextAreaQuestionComponent } from './components/dynamic-form-questions/text-area-question.component';
 import { MainSkeletonComponent } from './components/main-skeleton/main-skeleton.component';
 import { ScrollNavElevationTogglerDirective } from './components/main-skeleton/scroll-nav-elevation-toggler.directive';
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
@@ -37,16 +26,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     MainSkeletonComponent,
     MainTopNavBarComponent,
     ChipsBarComponent,
-    InputQuestionComponent,
-    SelectQuestionComponent,
-    AutoCompleteQuestionComponent,
-    CheckboxQuestionComponent,
-    TextAreaQuestionComponent,
-    GooglePlacesAutoCompleteQuestionComponent,
-    FileQuestionComponent,
-    IonDateQuestionComponent,
-    RadioGroupQuestionComponent,
-    SliderQuestionComponent,
+
     AppButtonComponent,
     BottomActionBarComponent,
     BottomBarIconButtonComponent,
@@ -70,8 +50,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     CdkSelectableModule, 
     FlexLayoutModule,
     ConfirmDialogModule,
-    FormSheetModule,
-    GooglePlacesAutocompleteModule
+    FormSheetModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -92,6 +71,7 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     AppFileUrlPipe,
     ObjectToArrayPipe,
     MergeObjPipe,
+    FuncPipe,
     ScrollNavElevationTogglerDirective,
     ActiveStringFilterDirective,
     LoadingOverlayDirective,    

@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 
 export interface FileQuestion extends Question { multiple?: boolean; }
@@ -36,3 +38,12 @@ export class FileQuestionComponent extends BaseQuestionComponent<FileQuestion>
   }
 
 }
+
+@NgModule({
+  declarations: [FileQuestionComponent],
+  imports:[
+    SharedModule, 
+    MatFormFieldModule 
+  ]
+})
+class FileQuestionModule {}

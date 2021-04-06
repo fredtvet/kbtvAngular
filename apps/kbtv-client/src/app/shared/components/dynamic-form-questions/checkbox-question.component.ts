@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 
 export interface CheckboxQuestion extends Question {
@@ -34,3 +37,13 @@ export class CheckboxQuestionComponent extends BaseQuestionComponent<CheckboxQue
   }
 
 }
+
+@NgModule({
+  declarations: [CheckboxQuestionComponent],
+  imports:[
+    SharedModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+  ]
+})
+class CheckboxQuestionModule {}

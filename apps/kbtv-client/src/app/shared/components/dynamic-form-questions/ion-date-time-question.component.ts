@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, Inject, NgModule } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, ControlHook, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES, _getControlObserver$ } from 'dynamic-forms';
 import { Observable, of, throwError } from 'rxjs';
 import { filter, startWith } from 'rxjs/operators';
@@ -98,3 +101,15 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
   }
 
 }
+
+@NgModule({
+  declarations: [IonDateQuestionComponent],
+  imports:[
+    SharedModule,
+    MatFormFieldModule,
+    MatInputModule,   
+     
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+})
+class IonDateQuestionModule {}

@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSliderModule } from '@angular/material/slider';
+import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { Observable } from 'rxjs';
 import { startWith } from 'rxjs/operators';
@@ -57,3 +60,13 @@ export class SliderQuestionComponent extends BaseQuestionComponent<SliderQuestio
     }
 
 }
+
+@NgModule({
+  declarations: [SliderQuestionComponent],
+  imports:[
+    SharedModule,   
+    MatFormFieldModule,
+    MatSliderModule
+  ]
+})
+class SliderQuestionModule {}

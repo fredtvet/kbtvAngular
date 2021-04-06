@@ -1,8 +1,11 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { Immutable } from 'global-types';
-import { Address, Options } from 'google-places-autocomplete';
+import { Address, GooglePlacesAutocompleteModule, Options } from 'google-places-autocomplete';
 
 export interface GooglePlacesAutoCompleteQuestion extends Question {
     options?: Partial<Options>;
@@ -73,3 +76,15 @@ export class GooglePlacesAutoCompleteQuestionComponent extends BaseQuestionCompo
     }   
 
 }
+
+@NgModule({
+    declarations: [GooglePlacesAutoCompleteQuestionComponent],
+    imports:[
+      SharedModule,  
+      GooglePlacesAutocompleteModule, 
+      MatFormFieldModule,
+      MatInputModule,
+    ]
+  })
+class GooglePlacesAutoCompleteQuestionModule {}
+  

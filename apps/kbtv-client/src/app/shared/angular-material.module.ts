@@ -25,16 +25,16 @@ import { MatSliderModule } from '@angular/material/slider';
       MatSliderModule
    ],
    exports: [
+      ScrollingModule,  
+      MatBottomSheetModule,  
+      MatChipsModule,
+      
+      MatCheckboxModule,
+      MatAutocompleteModule,
       MatInputModule,
       MatFormFieldModule,
       MatSelectModule,
       MatRadioModule,
-      MatCheckboxModule,
-      MatAutocompleteModule,
-      ScrollingModule, 
-      MatButtonToggleModule,
-      MatBottomSheetModule,
-      MatChipsModule,
       MatSliderModule,
    ],
 })

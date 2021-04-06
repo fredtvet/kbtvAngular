@@ -1,7 +1,10 @@
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { ChangeDetectionStrategy, Component, Inject, NgZone, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { AngularMaterialModule } from '@shared/angular-material.module';
+import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
-import { take } from 'rxjs/operators';
 
 export interface TextAreaQuestion extends Question {
   rows: number;
@@ -32,19 +35,19 @@ export interface TextAreaQuestion extends Question {
 export class TextAreaQuestionComponent extends BaseQuestionComponent<TextAreaQuestion> 
   implements QuestionComponent {
 
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
-
-  constructor(
-    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
-    private _ngZone: NgZone,
-  ) { 
+  constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
     super(validationErrorMessages) 
   }
 
-  triggerResize() {
-    // Wait for changes to be applied, then trigger textarea resize.
-    this._ngZone.onStable.pipe(take(1))
-        .subscribe(() => this.autosize.resizeToFitContent(true));
-  }
-
 }
+
+@NgModule({
+  declarations: [TextAreaQuestionComponent],
+  imports:[
+    SharedModule,  
+    
+    MatFormFieldModule,
+    MatInputModule,    
+  ]
+})
+class TextAreaQuestionModule {}

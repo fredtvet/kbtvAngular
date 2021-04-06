@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, DynamicFormStore, OptionsGetter, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { ImmutableArray, Maybe, Prop, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
@@ -50,3 +53,13 @@ export class SelectQuestionComponent extends BaseQuestionComponent<SelectQuestio
   }
 
 }
+
+@NgModule({
+  declarations: [SelectQuestionComponent],
+  imports:[
+    SharedModule,  
+    MatFormFieldModule, 
+    MatSelectModule
+  ]
+})
+class SelectQuestionModule {}

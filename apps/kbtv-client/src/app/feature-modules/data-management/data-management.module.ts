@@ -14,6 +14,8 @@ import { DataManagementRoutingModule } from './data-management-routing.module';
 import { DataManagerComponent } from './data-manager/data-manager.component';
 import { DataPropertyPickerComponent } from './data-manager/data-property-picker/data-property-picker.component';
 import { ModelDataTables } from './model-data-tables.const';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,10 @@ import { ModelDataTables } from './model-data-tables.const';
     FormsModule,
     ModelFormModule.forFeature(_formToSaveModelConverter),
     DataManagementRoutingModule,
-    ModelDataTableModule
+    ModelDataTableModule,
+    
+    MatFormFieldModule, 
+    MatSelectModule
   ],
   providers: [
     ...AppSaveModelProviders,

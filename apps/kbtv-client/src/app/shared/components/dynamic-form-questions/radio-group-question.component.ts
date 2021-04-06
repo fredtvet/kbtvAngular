@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatRadioModule } from '@angular/material/radio';
+import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, DynamicFormStore, OptionsGetter, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { ImmutableArray } from 'global-types';
 import { Observable } from 'rxjs';
@@ -53,3 +56,13 @@ export class RadioGroupQuestionComponent extends BaseQuestionComponent<RadioGrou
   }
 
 }
+
+@NgModule({
+  declarations: [RadioGroupQuestionComponent],
+  imports:[
+    SharedModule,
+    MatFormFieldModule,
+    MatRadioModule,
+  ]
+})
+class RadioGroupQuestionModule {}
