@@ -1,3 +1,4 @@
+<style> mat-spinner { margin: 16px auto; } </style>
 <ng-container *ngIf="vm$ | async; let vm">
     <app-no-content *ngIf="!vm.isFetching else fetching">
         Finner ingen {{ modelProp | translate : true }}
@@ -6,7 +7,7 @@
 
     <ng-template #fetching>
         <app-no-content *ngIf="vm.isOnline else notOnline">
-            <mat-spinner class="center-spinner" color="accent"></mat-spinner>
+            <mat-spinner color="accent"></mat-spinner>
             <p>Laster inn {{ modelProp | translate : true }}...</p>
         </app-no-content>
     </ng-template>

@@ -4,14 +4,14 @@
         appScrollNavElevationToggler>
         <ng-container *cdkVirtualFor="let summary of summaries; trackBy: trackByWeek; templateCacheSize:0" >
             
-            <app-swipe-card class="display-block" openWidth="82px" closedWidth="5px"
+            <app-swipe-card openWidth="82px" closedWidth="5px"
                 [lockPosition]="!isXs ? 'open' : summary.openHours === 0 ? 'close' : null">
                 
                 <div swipeContent matRipple style="width:82px" class="h-100"
                     fxLayout="column" fxLayoutAlign="center center"
                     [ngClass]="summary.openHours > 0 ? 'warn' : 'accent'" 
                     (press)="changeTimesheetStatuses(summary.timesheets)">
-                    <mat-icon class="scale-125">{{ summary.openHours > 0 ? 'lock_open' : 'lock' }}</mat-icon>
+                    <mat-icon style="transform:scale(1.25)">{{ summary.openHours > 0 ? 'lock_open' : 'lock' }}</mat-icon>
                 </div>
 
                 <app-timesheet-summary-card-content

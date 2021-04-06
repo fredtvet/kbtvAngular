@@ -28,10 +28,6 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
   color: mat-color($app-primary, lighter-contrast);
 }
 
-.color-primary{
-  color: $primary;
-}
-
 .bg-card{
   background: mat-color($background, card);
 }
@@ -41,31 +37,18 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
   color: mat-color($app-accent, default-contrast);
 }
 
-.accent-light{
-  background-color:$accent-light;
-  color: mat-color($app-accent, lighter-contrast);
-}
-
 .color-accent{
   color: $accent;
 }
-
-.color-white{ color: white }
 
 .warn{
   background-color:$warn;
   color: mat-color($app-warn, default-contrast);
 }
 
-.warn-light{
-  background-color:$warn-light;
-  color: mat-color($app-warn, lighter-contrast);
-}
-
 .color-warn{
   color: $warn;
 }
-
 
 .foreground-card{
   background-color:mat-color($background, card);
@@ -73,13 +56,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 
 .bottom-bar-padding{ padding-bottom: var(--bottom-nav-height)!important; }
 
-.scale-150{transform:scale(1.5);}
-.scale-125{transform:scale(1.25);}
-.scale-75{transform:scale(.75);}
-
 .line-height-100{line-height:100%}
-
-.flex-spacer{flex: 1 1 auto;} //unnused
 
 .max-width{max-width:600px!important;}
 
@@ -92,14 +69,10 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 
 .w-100{width:100%;}
 
-.text-center{text-align:center}
-
 a {
-  color: inherit; /* blue colors for links too */
-  text-decoration: inherit; /* no underline */
+  color: inherit; 
+  text-decoration: inherit; 
 }
-
-.display-block{ display: block }
 
 .image_viewer_dialog{
   max-width:none!important;
@@ -133,11 +106,6 @@ a {
   text-overflow: ellipsis;
 }
 
-.mid-divider{
-   margin-left:$gap-size * 4px!important;
-   width:calc(100% - (#{$gap-size} * 8px))!important;
-}
-
 .loading-overlay{pointer-events: none; position:relative;}
 .loading-overlay::after {
   content: ""; // ::before and ::after both require content
@@ -149,6 +117,4 @@ a {
   background: #000;
   opacity: .5;
 }
-
-.center-spinner{margin:$gap-size * 4px auto;}
 

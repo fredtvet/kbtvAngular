@@ -8,7 +8,7 @@
 
 app-home-mission-card{
     max-height: 320px;
-    flex: 1 1 1e-09px;
+    flex: 1 1 0;
 }
 
 .main-container{
@@ -20,10 +20,9 @@ app-home-mission-card{
 
 .content-container{
     color:$accent;
-    flex: 1 1 1e-09px;
+    flex: 1 1 0;
     overflow:hidden;
-    background: linear-gradient(to top, $accent, transparent)!important;
-    
+    background: linear-gradient(to top, $accent, transparent)!important;  
 }
 
 mat-toolbar{
