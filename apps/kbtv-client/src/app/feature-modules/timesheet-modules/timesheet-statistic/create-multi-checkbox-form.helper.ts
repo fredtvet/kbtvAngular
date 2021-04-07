@@ -17,9 +17,7 @@ export function _createMultiCheckboxForm<TState = UnknownState>(
         type: "group",
         controls: [],
         label: "Velg kolonner",
-        styling: {
-            fxLayout: "row wrap"
-        }
+        panelClass: "multi-checkbox-group"
     }
 
     for(const keyOptions of keys){

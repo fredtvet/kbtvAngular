@@ -68,8 +68,8 @@ export interface DynamicControlGroup<TForm, TFormState = unknown, TGroup = TForm
     controlGroupComponent?: Type<ControlGroupComponent>,
     /** A visual label displayed above the group on the rendered form */
     label?: string,
-    /** Custom stylings for the group */
-    styling?: DynamicControlGroupStyling,
+    /** A custom class added to the anchor tag of the component */
+    panelClass?: string; 
     /** {@inheritDoc DynamicForm.disabledControls} */
     disabledControls?: DisabledControls<TGroup>;
 }
@@ -94,20 +94,6 @@ export interface DynamicControl<TForm, TFormState = {}> {
 
 /** Represents an async validator that reacts to an observer of state T */
 export type AsyncStateValidator<T> = ((state$: Observable<T>) => AsyncValidatorFn);
-
-/** Describes the different stylings options available for {@link DynamicControlGroup} */
-export interface DynamicControlGroupStyling {
-    /** A custom class added to the anchor tag of the component */
-    panelClass?: string; 
-    /** The margin applied to questions in the group. Use regular css margin syntax. */
-    itemMargin?: string;
-    /** The flex layout type for the group. 
-     * @see {@link https://github.com/angular/flex-layout} */
-    fxLayout?: string;
-    /** The flex alignments for the group. Check fxLayout
-     * @see {@link https://github.com/angular/flex-layout} */
-    fxLayoutAlign?: string;
-}
 
 /** Describes a wrapper for a question component with additional information */
 export interface QuestionWrapper {

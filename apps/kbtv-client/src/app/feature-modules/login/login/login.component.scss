@@ -7,6 +7,15 @@
     background-size: cover;
     background-repeat: no-repeat; 
 }
+
+.logo-container{ 
+  flex-direction: column;
+  box-sizing: border-box;
+  display: flex;
+  place-content: center;
+  align-items: center;
+}
+
 .logo-text {
     line-height: 100%;
     text-align: center;
@@ -14,21 +23,39 @@
 
 .login-container {
   height: 100%;
-  background: white;
+  background: white;  
+
+  flex-direction: column;
+  box-sizing: border-box;
+  display: flex;
+  place-content: stretch space-between;
+  align-items: stretch;
+  
+  max-width: 100%;
+
   app-login-form{ margin-top: 52px; }
+
   .header-container {
+
     max-height: 60vh;
-    position: relative;
+    position: relative;    
+    flex: 1 1 0%;
+    box-sizing: border-box;
+
     .image-container {
       clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15vw), 0 100%);
     }
+
     .logo-container {
+
       position: absolute;
       bottom: 0;
       height: 15vw;
       width:100%;
       transform:translateY(22px);
+
       .logo-text {
+        margin-top:8px;
         line-height: 100%;
         text-align: center;
       }
@@ -39,9 +66,30 @@
 .login-container-desktop{
     background:white;
     height:100%;
+
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-start;
+    align-items: center;
+
+    .image-container{
+      flex: 1 1 100%;
+      box-sizing: border-box;
+      max-width: 40%;
+    }
+
     .form-container{
-        .logo-container{ margin-bottom: 32px; }
-        app-login-form{ width: 420px }
+      flex-direction: column;
+      box-sizing: border-box;
+      display: flex;
+      place-content: center;
+      align-items: center;
+      flex: 1 1 0%;
+
+      .logo-container{ margin-bottom: 32px;  }
+      app-login-form{ width: 420px }
+      
     }
    
 }

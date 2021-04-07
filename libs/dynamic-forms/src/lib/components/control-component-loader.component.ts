@@ -75,10 +75,9 @@ export abstract class ControlComponentLoaderComponent {
         componentRef.instance.controlGroup = controlGroup;
         componentRef.instance.formConfig = formConfig;
         componentRef.instance.form = this.form;
-
-        const panelClass = controlGroup.styling?.panelClass
-        if(panelClass) 
-            componentRef.location.nativeElement.classList.add(panelClass)
+        
+        if(controlGroup.panelClass) 
+            componentRef.location.nativeElement.classList.add(controlGroup.panelClass)
 
         componentRef.instance.nestedNames = 
             controlGroup.name ? 

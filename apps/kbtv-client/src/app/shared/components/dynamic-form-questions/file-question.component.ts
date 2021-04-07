@@ -8,7 +8,14 @@ export interface FileQuestion extends Question { multiple?: boolean; }
 @Component({
   selector: 'app-file-question',
   template: `
-  <div class="mt-3 mb-3" fxLayout="column">
+  <style>
+    .container{
+      flex-direction: column;
+      box-sizing: border-box;
+      display: flex;
+    }
+  </style>
+  <div class="mt-3 mb-3 container">
     <div class="mat-body-2" *ngIf="question.label">{{ question.label }}</div>
     
     <input (change)="onFileChange($event)" type="file" [attr.multiple]="question.multiple" [attr.required]="required">

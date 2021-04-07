@@ -1,7 +1,14 @@
 @import '../../../../../styles/variables';
 
+:host{
+  display: flex;
+}
+
 ::ng-deep.data-picker{
     margin:0px $gap-size * 6px;
+    padding-bottom: $gap-size * 2px;
+    flex: 1 1 0%;
+    box-sizing: border-box;
     .mat-form-field-wrapper{
       .mat-select-value{ 
         color: mat-color($app-primary, default-contrast) !important;

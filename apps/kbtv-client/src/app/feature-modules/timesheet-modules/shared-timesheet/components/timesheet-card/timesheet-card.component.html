@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="timesheet" class="timesheet-card-container">
+<div *ngIf="timesheet" class="timesheet-card-container">
 
     <span class="mat-title card-title">
       Timeregistrering 
@@ -34,23 +34,5 @@
       <mat-icon left-side class="pl-2 pr-2">comment</mat-icon>
       {{ timesheet.comment }} 
     </app-list-item>
-
-
-    <!-- <span fxLayout="column" fxLayoutAlign="space-between center" style="min-width:40px">
-
-      <span *ngIf="timesheet.status === 1 else closedIcon" 
-        fxLayout="column" fxLayoutAlign="start center" class="color-warn">
-        <mat-icon>lock_open</mat-icon>
-        <span class="mat-caption">åpen</span>
-      </span>
-
-    </span>
-
-    <ng-template #closedIcon>   
-      <span fxLayout="column" fxLayoutAlign="start center" class="color-accent">
-        <mat-icon>lock</mat-icon>
-        <span class="mat-caption">låst</span>
-      </span>
-    </ng-template> -->
 
 </div>

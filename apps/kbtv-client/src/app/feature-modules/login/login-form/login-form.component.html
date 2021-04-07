@@ -1,5 +1,13 @@
-<style>.form-button{ height:45px; margin-bottom: 12px; }</style>
-<form [formGroup]="authForm" (ngSubmit)="submitForm()" fxLayout="column" class="pr-4 pl-4 pt-4">
+<style>
+  .form-button{ height:45px; margin-bottom: 12px; }
+  form{
+      padding: 16px 16px 0px 16px;
+      flex-direction: column;
+      box-sizing: border-box;
+      display: flex;
+  }
+</style>
+<form [formGroup]="authForm" (ngSubmit)="submitForm()">
 
   <mat-form-field color="accent">
     <mat-icon matSuffix color="accent">person</mat-icon>

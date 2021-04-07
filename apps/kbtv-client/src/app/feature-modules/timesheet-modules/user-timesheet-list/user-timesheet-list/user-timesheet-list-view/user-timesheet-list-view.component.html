@@ -1,6 +1,21 @@
-<div fxLayout="column" fxLayoutAlign="start stretch" class="h-100">
+<style>
+    cdk-virtual-scroll-viewport{     
+        flex: 1 1 0%;
+        box-sizing: border-box;
+    }
+    .container{
+        flex-direction: column;
+        box-sizing: border-box;
+        display: flex;
+        place-content: stretch flex-start;
+        align-items: stretch;
+        max-width: 100%;
+        height: 100%;
+    }
+</style>
+<div class="container">
     <cdk-virtual-scroll-viewport *ngIf="timesheets?.length else loading"
-        itemSize="96" maxBufferPx="800" minBufferPx="800" fxFlex appScrollNavElevationToggler>
+        itemSize="96" maxBufferPx="800" minBufferPx="800" appScrollNavElevationToggler>
         <ng-container *cdkVirtualFor="let timesheet of timesheets | sortByDate : 'startTime'; trackBy: trackByTimesheet">
                 
             <app-list-item (click)="onTimesheetClick(timesheet)">

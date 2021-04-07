@@ -1,5 +1,4 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ValidationErrorMessages } from '@core/configurations/validation-error-messages.const';
 import { CdkSelectableModule } from 'cdk-selectable';
@@ -18,6 +17,7 @@ import { ScrollNavElevationTogglerDirective } from './components/main-skeleton/s
 import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-nav-bar.component';
 import { LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
+import { HideDirective } from './directives/hide.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe } from './pipes';
 
 @NgModule({
@@ -42,13 +42,13 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     ScrollNavElevationTogglerDirective,   
     ActiveStringFilterDirective,
     LoadingOverlayDirective,  
+    HideDirective
   ],
   imports: [
     ReactiveFormsModule,
     AngularMaterialModule,
     SharedAppModule,    
     CdkSelectableModule, 
-    FlexLayoutModule,
     ConfirmDialogModule,
     FormSheetModule
   ],
@@ -56,7 +56,6 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     ReactiveFormsModule,
     AngularMaterialModule,
     SharedAppModule, 
-    FlexLayoutModule,
     CdkSelectableModule,
     BottomSheetMenuComponent,
     MainSkeletonComponent,    
@@ -74,7 +73,8 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     FuncPipe,
     ScrollNavElevationTogglerDirective,
     ActiveStringFilterDirective,
-    LoadingOverlayDirective,    
+    LoadingOverlayDirective,  
+    HideDirective  
   ],
   providers:[
     { provide: VALIDATION_ERROR_MESSAGES, useValue: ValidationErrorMessages},

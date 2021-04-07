@@ -1,16 +1,22 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { DynamicHostDirective } from '../dynamic-host.directive';
-import { ControlGroupComponent, DynamicControl, DynamicControlGroup, DynamicForm, QuestionComponent } from '../interfaces';
+import { ControlGroupComponent, DynamicControlGroup, DynamicForm } from '../interfaces';
 import { ControlComponentLoaderComponent } from './control-component-loader.component';
 
 @Component({
   selector: 'lib-dynamic-control-group',
   template: `
+  <style>
+    .question-container{
+      flex-direction: row;
+      box-sizing: border-box;
+      display: flex;
+      place-content: center flex-start;
+      align-items: center;
+    }
+  </style>
   <mat-label *ngIf="controlGroup.label">{{ controlGroup.label }}</mat-label>
-  <div 
-    [fxLayout]="controlGroup.styling?.fxLayout || 'row'" 
-    [fxLayoutAlign]="controlGroup.styling?.fxLayoutAlign || 'start center'" 
-    >   
+  <div class="question-container">   
     <ng-container *dynamicHost>
 
     </ng-container>
@@ -31,10 +37,5 @@ export class DynamicControlGroupComponent extends ControlComponentLoaderComponen
 
     loadGroupComponents(){
       this.loadComponents(this.controlGroup.controls, this.formConfig, this.nestedNames);
-    }
-
-    protected onQuestionComponentInit(componentRef: ComponentRef<QuestionComponent>, control: DynamicControl<unknown>): void {
-      if(this.controlGroup.styling?.itemMargin)
-        componentRef.location.nativeElement.style.margin = this.controlGroup.styling.itemMargin;
     }
 }

@@ -36,7 +36,7 @@
                 "input": "apps/kbtv-client/src/styles/lazy-styles/ag-grid.scss",
                 "bundleName": "ag-grid",
                 "inject": false
-              }
+              }        
             ],
             "scripts": []
           },
@@ -95,7 +95,7 @@
             "assets": [
               "apps/kbtv-client/src/favicon.ico",
               "apps/kbtv-client/src/assets",
-              "apps/kbtv-client/src/manifest.json",
+              "apps/kbtv-client/src/manifest.json"
             ],
             "styles": [
               "apps/kbtv-client/src/styles/styles.scss"

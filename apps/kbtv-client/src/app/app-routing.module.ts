@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { CustomRoute } from '@shared-app/interfaces/custom-route.interface';
 import { AuthGuard, NoAuthGuard } from 'state-auth';
-import { PreloadRouteData, RolePreloadService } from './core/services/role-preload.service';
+import { PreloadRouteData } from './core/services/role-preload.service';
 import { HomeComponent } from './home/home.component';
 import { MainNavComponent } from './layout/main-nav/main-nav.component';
 import { PageNotFoundComponent } from './shared-app/components/page-not-found.component';
@@ -63,7 +63,7 @@ const routes: AppRoute[] = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes,  {
-    preloadingStrategy: RolePreloadService,
+    // preloadingStrategy: RolePreloadService,
     relativeLinkResolution: 'legacy'
 })],
   exports: [RouterModule]

@@ -11,6 +11,12 @@
 .timesheet-card-container{
     width: 400px;
     padding: 8px 0px;
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: stretch flex-start;
+    align-items: stretch;
+    max-width: 100%;
     .card-title{
         padding: 0 16px;
         margin-bottom: 12px;

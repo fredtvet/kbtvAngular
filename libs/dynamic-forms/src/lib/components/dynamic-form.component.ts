@@ -16,8 +16,20 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
 @Component({
   selector: 'lib-dynamic-form',
   template: `
-    <div style="width:100%;text-align:center;margin-top:24px" *ngIf="form === undefined">Laster inn skjema...</div>
-    <form [formGroup]="form" fxLayout="column">
+    <style>
+        .loading{
+            width:100%;
+            text-align:center;
+            margin-top:24px
+        }
+        form{ 
+            flex-direction: column;
+            box-sizing: border-box;
+            display: flex;
+        }
+    </style>
+    <div class="loading" *ngIf="form === undefined">Laster inn skjema...</div>
+    <form [formGroup]="form">
         <ng-container *dynamicHost>
 
         </ng-container>

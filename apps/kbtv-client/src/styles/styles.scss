@@ -118,3 +118,20 @@ a {
   opacity: .5;
 }
 
+.multi-checkbox-group{
+  .question-container{
+    flex-flow: row wrap!important;
+    box-sizing: border-box!important;
+    display: flex!important;
+    place-content: center flex-start!important;
+    align-items: center!important;
+  }
+}
+
+.date-range-question-group{
+  .question-container > * { margin: 0px 16px 24px 0px!important; }
+}
+
+.date-time-questino-group{
+  .question-container > * { margin: 24px 16px 0px 0px!important; }
+}

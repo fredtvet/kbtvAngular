@@ -6,12 +6,12 @@ import { SearchBarConfig } from './search-bar-config.interface';
 @Component({
   selector: 'app-search-bar',
   template: `
-    <mat-toolbar class="search-bar" *ngIf="config" [fxHide]="hidden">
+    <mat-toolbar class="search-bar" *ngIf="config" [appHide]="hidden">
       <div>
       
         <mat-icon>search</mat-icon>
 
-        <input #searchInput appInputListener fxFlex  
+        <input #searchInput appInputListener 
             [placeholder]="config.placeholder" 
             [value]="config.initialValue || ''"
             (inputChanged)="handleSearchFn($event);">

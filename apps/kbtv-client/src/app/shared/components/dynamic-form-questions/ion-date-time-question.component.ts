@@ -36,7 +36,7 @@ export interface IonDateQuestion extends Question {
             </mat-error>  
       </mat-form-field>
 
-      <ion-datetime #dateTime fxHide 
+      <ion-datetime #dateTime appHide 
         cancel-text="Avbryt" done-text="Ferdig"
         [attr.max]="max$ | async"
         [attr.min]="min$ | async"

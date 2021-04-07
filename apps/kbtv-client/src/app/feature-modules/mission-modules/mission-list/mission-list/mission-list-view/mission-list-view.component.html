@@ -1,8 +1,18 @@
-<div class="h-100 bg-card" style="overflow:hidden;" fxLayout="column" fxLayoutAlign="start stretch">
+<style>
+    .list-container{
+        overflow: hidden;
+        flex-direction: column;
+        box-sizing: border-box;
+        display: flex;
+        place-content: stretch flex-start;
+        align-items: stretch;
+        max-width: 100%;
+    }
+</style>
+<div class="list-container h-100 bg-card">
 
     <cdk-virtual-scroll-viewport
-        itemSize="56" maxBufferPx="800" minBufferPx="800" class="h-100"
-        appScrollNavElevationToggler>
+        itemSize="56" maxBufferPx="800" minBufferPx="800" class="h-100" appScrollNavElevationToggler>
 
         <ng-container *cdkVirtualFor="let mission of missions; trackBy: trackByFn;" >
 

@@ -24,7 +24,7 @@ export interface TimesheetForm {
 }
 
 const DateTimeControlGroup: Immutable<DynamicControlGroup<TimesheetForm, FormState>> = { type: "group", 
-styling: { itemMargin: "24px 16px 0px 0px" },
+panelClass: "date-time-questino-group",
 controls: [
     { name: "date", required: true, 
         valueGetter: (s: TimesheetForm) => s.date ? _getISO(s.date) : (s.startTime ? _getISO(s.startTime) : null),

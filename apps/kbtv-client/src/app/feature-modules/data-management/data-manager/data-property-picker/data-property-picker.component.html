@@ -1,4 +1,4 @@
-<mat-form-field color="accent" class="data-picker pb-2" fxFlex>
+<mat-form-field color="accent" class="data-picker">
   <mat-label>Velg data</mat-label>
   <mat-select [ngModel]="selectedProperty" (ngModelChange)="changeProperty($event)" #select>
     <mat-option *ngFor="let prop of properties" value="{{ prop }}">{{ prop | translate }}</mat-option>

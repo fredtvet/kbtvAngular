@@ -3,14 +3,17 @@
 .search-bar {
     border:none;
     background:mat-color($background, card);
+    
     div{
         border-bottom: 1px solid black;
-        width:100%;
+        width:100%;    
+        display: flex;
     }
     input {
         border:none;
         font-size:16px;
-        
+        flex: 1 1 0%; 
+        box-sizing: border-box;
     }
     input:focus {
         outline: none;

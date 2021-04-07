@@ -1,28 +1,44 @@
-<div fxLayout="row" fxLayoutAlign="end start" style="margin: 12px 0 16px 0">
+<style>
+  .actions-container{
+    margin: 12px 0px 16px;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: flex-start flex-end;
+    align-items: flex-start;
+  }
+  .left-button{
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    max-width: 35%;
+  }
+  .right-button{
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    max-width: 40%;
+  }
+</style>
+<div class="actions-container">
 
-    <button
-      mat-button
+    <button mat-button class="left-button"
       *ngIf="showReset; else cancelButton"
       [disabled]="resetDisabled"
       color="warn"
-      (tap)="reset.emit()"
-    >
+      (tap)="reset.emit()">
       Nullstill
     </button>
 
     <ng-template #cancelButton>
-      <button mat-button fxFlex="35" color="warn" (tap)="canceled.emit()">
+      <button mat-button color="warn" class="left-button" (tap)="canceled.emit()">
         Avbryt
       </button>
     </ng-template>
 
-    <button *ngIf="vm$ | async; let vm"
+    <button *ngIf="vm$ | async; let vm" class="right-button"
       mat-raised-button
-      fxFlex="40"
       color="accent"
       [disabled]="(!vm.isOnline && onlineRequired) || submitDisabled"
-      (tap)="onSubmit()"
-    >
+      (tap)="onSubmit()">
       {{ (!vm.isOnline && onlineRequired) ? 'Ikke på nett' : submitText }}
     </button>
     
