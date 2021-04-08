@@ -66,16 +66,18 @@ export class ModelFormComponent
       const saveAction = this.isCreateForm ? ModelCommand.Create : ModelCommand.Update;
       this.formSubmitted.emit(saveAction);
 
-      const converter = this.config.actionConverter || this.defaultSaveConverter
+      setTimeout(() => {
+        const converter = this.config.actionConverter || this.defaultSaveConverter
 
-      this.formState$.pipe(take(1)).subscribe(state => 
-        this.facade.save(converter({
-          formValue: result, 
-          options: state.options,
-          stateProp: this.config.stateProp, 
-          saveAction, 
-        }))
-      )    
+        this.formState$.pipe(take(1)).subscribe(state => 
+          this.facade.save(converter({
+            formValue: result, 
+            options: state.options,
+            stateProp: this.config.stateProp, 
+            saveAction, 
+          }))
+        ) 
+      }) 
     }
 
     onCancel = (): void => this.formSubmitted.emit(null); 
