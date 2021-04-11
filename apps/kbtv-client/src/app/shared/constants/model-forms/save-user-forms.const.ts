@@ -29,6 +29,7 @@ const RoleControl = <Immutable<DynamicControl<UserForm, StateUsers>>>{ name: "ro
         component:  SelectQuestionComponent,
         question: <SelectQuestion<string>>{
             placeholder: "Rolle",
+            lazyOptions: "all",
             optionsGetter: () => AvailableRoles
         }, 
     }], 

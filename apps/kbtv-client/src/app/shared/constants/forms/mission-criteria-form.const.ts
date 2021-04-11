@@ -24,6 +24,7 @@ const SearchStringControl: Immutable<DynamicControl<MissionCriteria, FormState>>
             optionsGetter: (s: FormState) => s.options?.missions,
             valueFormatter: (val: Mission) => val.address,
             valueProp: "address",
+            lazyOptions: "all",
             placeholder: "Søk med adresse",
             resetable: true,
             activeFilter: { stringProps: ["address"], maxChecks: 50 }
@@ -38,6 +39,7 @@ const MissionTypeControl: Immutable<DynamicControl<MissionCriteria, FormState>> 
             optionsGetter: (s: FormState) => s.options?.missionTypes, 
             valueFormatter: (val: MissionType) => val.name,
             compareWith: _compareProp<MissionType>("id"),
+            lazyOptions: "all",
             placeholder: "Velg oppdragstype",
         }, 
     }], 

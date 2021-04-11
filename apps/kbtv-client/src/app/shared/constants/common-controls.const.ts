@@ -80,6 +80,7 @@ export const MissionAutoCompleteControl: Immutable<DynamicControl<{mission: Miss
         question: <AutoCompleteQuestion<Mission>>{
             optionsGetter: (state: OptionsFormState<StateMissions>) => state.options?.missions,
             placeholder: "Oppdrag",
+            lazyOptions: "all",
             valueFormatter: (val: Mission) => val.address,
             displayWith: (mission: Mission) => mission ? mission.address : null,
             resetable: true,
@@ -97,6 +98,7 @@ export const EmployerSelectControl: Immutable<DynamicControl<{employer: Employer
             optionsGetter: (s: OptionsFormState<StateEmployers>) => s.options?.employers,
             valueFormatter: (val: Employer) => val.name,
             compareWith: _compareProp<Employer>("id"),
+            lazyOptions: "all",
             placeholder: "Velg oppdragsgiver",
         }, 
     }], 
@@ -108,6 +110,7 @@ export const UserSelectControl: Immutable<DynamicControl<{user: User}>> = { name
             optionsGetter: (state: OptionsFormState<StateUsers>) => state.options?.users,
             valueFormatter: (val: User) => val.firstName + ' ' + val.lastName,
             compareWith: _compareProp<User>("userName"),
+            lazyOptions: "all",
             placeholder: "Velg ansatt",
         }, 
     }], 

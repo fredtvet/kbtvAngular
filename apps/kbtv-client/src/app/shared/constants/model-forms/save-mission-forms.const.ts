@@ -32,6 +32,7 @@ const EmployerControl: Immutable<DynamicControlGroup<Mission, FormState, Employe
                 optionsGetter: (state: FormState) => state.options?.employers,
                 placeholder: "Oppdragsgiver",
                 valueProp: "name",
+                lazyOptions: "all",
                 valueFormatter: (val: Employer) => val.name, 
                 resetable: true,
                 activeFilter: { stringProps: ["name"] }
@@ -50,6 +51,7 @@ const MissionTypeControl: Immutable<DynamicControlGroup<Mission, FormState, Miss
                 optionsGetter: (state: FormState) => state.options?.missionTypes,
                 placeholder: "Oppdragstype",
                 valueProp: "name",
+                lazyOptions: "all",
                 valueFormatter: (val: MissionType) => val.name, 
                 resetable: true,
                 activeFilter: { stringProps: ["name"] }
