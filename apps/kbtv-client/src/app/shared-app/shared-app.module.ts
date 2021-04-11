@@ -24,6 +24,7 @@ import { IfRolePipe } from './pipes/if-role.pipe';
 import { ReverseArrayPipe } from './pipes/reverse-array';
 import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
 import { TranslatePipe } from './pipes/translate.pipe';
+import { RenderTimeoutDirective } from './render-timeout.directive';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { TranslatePipe } from './pipes/translate.pipe';
     TranslatePipe,
     AsyncDetectPipe,
     AddToHomeScreenDirective,
+    RenderTimeoutDirective,
     OptimisticHttpErrorDialogComponent,
     OptimisticLoadingSpinnerComponent,
     NoContentComponent,
@@ -85,6 +87,7 @@ import { TranslatePipe } from './pipes/translate.pipe';
     TranslatePipe,
     AsyncDetectPipe,
     AddToHomeScreenDirective, 
+    RenderTimeoutDirective,
   ]
 })
 export class SharedAppModule {}

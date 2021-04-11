@@ -1,15 +1,15 @@
 <mat-sidenav-container class="h-100">
 
-  <mat-sidenav fixedInViewport #drawer *ngIf="config$ | async; let config" class="mat-elevation-z1"
+  <mat-sidenav fixedInViewport #drawer *ngIf="config$ | async; let config" class="mat-elevation-z1" 
   [attr.role]="config.isXs ? 'dialog' : 'navigation'"
   [mode]="config.isXs ? 'over' : 'side'"
   [opened]="!config.isXs">
 
-    <app-main-side-nav-header></app-main-side-nav-header>
+    <app-main-side-nav-header appRenderTimeout></app-main-side-nav-header>
 
     <mat-divider></mat-divider>
     
-    <app-main-side-nav-list></app-main-side-nav-list>
+    <app-main-side-nav-list appRenderTimeout></app-main-side-nav-list>
    
   </mat-sidenav>
 
