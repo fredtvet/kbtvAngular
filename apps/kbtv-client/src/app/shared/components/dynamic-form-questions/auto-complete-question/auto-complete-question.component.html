@@ -1,5 +1,4 @@
 <ng-container>
-    
     <ng-container *ngIf="!activeFilter else activeFilterView" 
         [ngTemplateOutlet]="autocomplete"
         [ngTemplateOutletContext]="{options: options$ | async}">
@@ -22,10 +21,19 @@
         <input matInput [placeholder]="question.placeholder" [formControl]="control" [required]="required"
             [matAutocomplete]="auto1">
 
-        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="question.displayWith">
-            <mat-option *ngFor="let option of options" [value]="question.valueProp ? option[question.valueProp] : option">
-                {{ (question.valueFormatter | func : option) || option }}
-            </mat-option>
+        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="question.displayWith" (opened)="triggerOptions()">
+            
+            <ng-container *ngIf="options; else loading">
+                <mat-option *ngFor="let option of options || []" [value]="question.valueProp ? option[question.valueProp] : option">
+                    {{ (question.valueFormatter | func : option) || option }}
+                </mat-option>
+            </ng-container>
+            <ng-template #loading>
+                <mat-option>
+                    Laster inn...
+                </mat-option>
+            </ng-template>
+            
         </mat-autocomplete>
 
         <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>
