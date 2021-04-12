@@ -1,4 +1,5 @@
-import {AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, Output} from "@angular/core";
+import { DOCUMENT } from "@angular/common";
+import {AfterViewInit, Directive, ElementRef, EventEmitter, Inject, Input, NgZone, Output} from "@angular/core";
 import { Address } from "./objects/address";
 import { Options } from "./objects/options/options";
 
@@ -12,7 +13,10 @@ export class GooglePlaceDirective implements AfterViewInit {
     private eventListener: any;
     public place: Address;
 
-    constructor(private el: ElementRef, private ngZone: NgZone) {
+    constructor(
+        private el: ElementRef, 
+        private ngZone: NgZone,
+        @Inject(DOCUMENT) private document: Document) {
     }
 
     ngAfterViewInit(): void {
@@ -20,6 +24,12 @@ export class GooglePlaceDirective implements AfterViewInit {
             this.options = new Options();
 
         this.initialize();
+    }
+
+    ngOnDestroy(): void {
+        const body = this.document.getElementsByTagName('body')[0];
+        const elements = body.getElementsByClassName("pac-container");
+        for(let i = 0; i < elements.length; i++) elements[i].remove();    
     }
 
     private isGoogleLibExists(): boolean {

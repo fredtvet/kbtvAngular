@@ -1,4 +1,3 @@
-import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -49,21 +48,12 @@ export class GooglePlacesAutoCompleteQuestionComponent extends BaseQuestionCompo
 
     addressFormatter = (address: Address) => address.formatted_address
 
-    constructor(
-        @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
-        @Inject(DOCUMENT) private document: Document
-    ) { 
+    constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
         super(validationErrorMessages);   
     }
 
     onAddressChange(address: Address){
         this.control?.setValue(this.addressFormatter(address))
-    }
-
-    ngOnDestroy(): void {
-        const body = this.document.getElementsByTagName('body')[0];
-        const elements = body.getElementsByClassName("pac-container");
-        for(let i = 0; i < elements.length; i++) elements[i].remove();    
     }
 
     protected onQuestionChanges(value: GooglePlacesAutoCompleteQuestion): void{
