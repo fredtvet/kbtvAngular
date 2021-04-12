@@ -16,7 +16,12 @@ export class FormSheetNavBarComponent {
 
   constructor(private _bottomSheetRef: MatBottomSheetRef<FormSheetWrapperComponent, unknown>) {}
 
-  handleCallback = (callback: (ref: MatBottomSheetRef<FormSheetWrapperComponent, unknown>) => void) => 
-    callback(this._bottomSheetRef)
+  handleCallback = (callback: (ref: MatBottomSheetRef<FormSheetWrapperComponent, unknown>) => void) => {
+    try{
+        callback(this._bottomSheetRef)
+    }catch(err){
+        console.error(err)
+    };
+  }
 
 }

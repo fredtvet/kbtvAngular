@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { _tryWithLogging } from '@shared-app/helpers/try-with-logging.helper';
 import { BottomBarIconButton } from './bottom-bar-icon-button.interface';
 
 @Component({
@@ -25,7 +26,7 @@ export class BottomBarIconButtonComponent {
 
     constructor(){};
 
-    handleFn = (fn: Function) => fn();
+    handleFn = (fn: Function) => _tryWithLogging(() => fn());
 
 }
 

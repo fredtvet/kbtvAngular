@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { _tryWithLogging } from '@shared-app/helpers/try-with-logging.helper';
 import { BottomSheetAction } from './bottom-sheet-action.interface';
 
 @Component({
@@ -24,7 +25,7 @@ export class BottomSheetMenuComponent {
     @Inject(MAT_BOTTOM_SHEET_DATA) public actions: BottomSheetAction[]) { }
 
   handleFn = (fn: Function, parameters: unknown[] = []) => {
-    fn(...parameters);
+    _tryWithLogging(() => fn(...parameters));
     this.close();
   };
 

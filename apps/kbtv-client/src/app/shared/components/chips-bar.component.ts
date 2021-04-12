@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { _tryWithLogging } from '@shared-app/helpers/try-with-logging.helper';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 
 @Component({
@@ -30,6 +31,6 @@ export class ChipsBarComponent{
 
   trackByChip = (index: number, chip:AppChip) => chip.text;
 
-  handleFn = (fn: Function): void => fn ? fn() : null;
+  handleFn = (fn: Function): void => fn ? _tryWithLogging(() => fn()) : null;
 
 }

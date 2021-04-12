@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
-import { _trackById } from '@shared-app/helpers/trackby/track-by-id.helper';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
-import { _trackByAppButton } from '@shared-app/track-by-app-button';
 import { MainSkeletonRouteData } from './main-skeleton-route-data.interface';
 import { MainSkeletonPresenter } from './main-skeleton.presenter';
 
@@ -32,7 +30,5 @@ export class MainSkeletonComponent {
   constructor(private presenter: MainSkeletonPresenter){ }
 
   ngOnInit(): void { this.presenter.init() }
-
-  trackByChipRow = _trackById; 
 
 }

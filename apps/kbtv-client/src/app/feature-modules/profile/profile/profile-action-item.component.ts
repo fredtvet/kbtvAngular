@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { _tryWithLogging } from '@shared-app/helpers/try-with-logging.helper';
 import { ProfileAction } from './profile-action.interface';
 
 @Component({
@@ -18,6 +19,7 @@ export class ProfileActionItemComponent {
 
     @Input() action: ProfileAction;
 
-    handleFn = (fn: Function, parameters: unknown[] = []) => fn(...parameters);
+    handleFn = (fn: Function, parameters: unknown[] = []) => _tryWithLogging(() => fn(...parameters));
     
 }
+

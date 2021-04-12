@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
+import { _tryWithLogging } from '@shared-app/helpers/try-with-logging.helper';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 
 @Component({
@@ -29,8 +30,8 @@ export class AppButtonComponent {
   handleFn = (fn: Function, parameters: unknown[] = []) => {
     if(!parameters?.length) parameters = this.config.params || [];
     
-    if(parameters) this.fnHandled.emit(fn(...parameters));
-    else this.fnHandled.emit(fn());
+    if(parameters) this.fnHandled.emit(_tryWithLogging(() => fn(...parameters)));
+    else this.fnHandled.emit(_tryWithLogging(fn()));
   };
 
 }

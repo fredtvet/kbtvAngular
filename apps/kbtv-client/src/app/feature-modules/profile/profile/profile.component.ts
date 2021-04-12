@@ -43,8 +43,6 @@ export class ProfileComponent {
     ]
   }
 
-  handleFn = (fn: Function, parameters: unknown[] = []) => fn(...parameters);
-
   private updateProfile= (): void => {
     this.formService.open<User>({
       formConfig: {...ProfileForm, initialValue: this.facade.currentUser}, 

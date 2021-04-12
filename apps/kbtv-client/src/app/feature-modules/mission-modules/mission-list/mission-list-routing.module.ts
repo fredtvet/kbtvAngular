@@ -1,4 +1,3 @@
-import { Breakpoints } from '@angular/cdk/layout';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
