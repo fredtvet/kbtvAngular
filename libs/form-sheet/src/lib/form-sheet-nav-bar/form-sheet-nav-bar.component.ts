@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Maybe } from 'global-types';
+import { FormSheetWrapperComponent } from '../form-sheet-wrapper.component';
 import { FormSheetNavConfig } from '../interfaces';
 
 @Component({
@@ -12,8 +14,9 @@ export class FormSheetNavBarComponent {
   @Input() config: Maybe<FormSheetNavConfig>;
   @Output() closed = new EventEmitter<unknown>()
 
-  constructor() {}
+  constructor(private _bottomSheetRef: MatBottomSheetRef<FormSheetWrapperComponent, unknown>) {}
 
-  handleCallback = (callback: Function) => callback()
+  handleCallback = (callback: (ref: MatBottomSheetRef<FormSheetWrapperComponent, unknown>) => void) => 
+    callback(this._bottomSheetRef)
 
 }

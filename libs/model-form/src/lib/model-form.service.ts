@@ -3,7 +3,7 @@ import { MatBottomSheet, MatBottomSheetRef } from "@angular/material/bottom-shee
 import { Router } from '@angular/router';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { FormSheetWrapperComponent, FormSheetWrapperConfig, OptionsFormState } from 'form-sheet';
-import { Immutable, Maybe, UnknownState, KeyVal, Prop } from "global-types";
+import { Immutable, Maybe, UnknownState, KeyVal } from "global-types";
 import { Observable, of } from 'rxjs';
 import { Store } from 'state-management';
 import { DeleteModelAction, ModelCommand, ModelStateConfig, MODEL_PROP_TRANSLATIONS, SaveAction } from 'state-model';
@@ -13,6 +13,7 @@ import { ModelFormComponent } from './model-form.component';
 type FormState<TState> = OptionsFormState<TState>;
 type ModelConfig<TForm> = ModelFormConfig<UnknownState, TForm, FormState<UnknownState>>;
 type WrapperConfig<TForm> = FormSheetWrapperConfig<ModelConfig<TForm>, FormState<UnknownState>, SaveAction>;
+type BottomSheetRef = MatBottomSheetRef<FormSheetWrapperComponent, ModelCommand>;
 /** Responsible for showing a form sheet with the specified model form */
 @Injectable()
 export class ModelFormService {
@@ -31,28 +32,28 @@ export class ModelFormService {
    */
   open<TState extends {}, TForm extends {}>(
     config: Immutable<ModelFormServiceConfig<TState, TForm, FormState<TState>>>
-  ): MatBottomSheetRef<FormSheetWrapperComponent, ModelCommand> {
-    const ref =  this.matBottomSheet.open(FormSheetWrapperComponent, { 
-      panelClass: "full-screen-sheet",
-      data: <Immutable<WrapperConfig<TForm>>>{
-        
-        formConfig: config.formConfig, 
-        submitCallback: config.submitCallback,
-        formComponent: ModelFormComponent,   
-        formState$: config.formState instanceof Observable ? config.formState : of(config.formState),
+  ): BottomSheetRef {
+    var ref: MatBottomSheetRef<FormSheetWrapperComponent, ModelCommand> = 
+      this.matBottomSheet.open(FormSheetWrapperComponent, { 
+        panelClass: "form-sheet-wrapper",
+        data: <Immutable<WrapperConfig<TForm>>>{
+          
+          formConfig: config.formConfig, 
+          submitCallback: config.submitCallback,
+          formComponent: ModelFormComponent,   
+          formState$: config.formState instanceof Observable ? config.formState : of(config.formState),
+          navConfig: {
+            title: config.customTitle || 
+              `${config.formConfig.entityId ? "Oppdater" : "Registrer"} 
+              ${this.translateStateProp(config.formConfig.stateProp)}`,   
 
-        navConfig: {
-          title: config.customTitle || 
-            `${config.formConfig.entityId ? "Oppdater" : "Registrer"} 
-             ${this.translateStateProp(config.formConfig.stateProp)}`,      
-          backFn: () => this.close(null, ref),
-          backIcon: "close",
-          buttons: (config.deleteDisabled || !(config.formConfig.entityId)) ? 
-              null : 
-              [{icon: 'delete_forever', color: "warn", callback: () => this.confirmDelete(config.formConfig, config.onDeleteUri, ref)}]    
-        },
-      } 
-    });
+            buttons: (config.deleteDisabled || !(config.formConfig.entityId)) ? 
+                null : 
+                [{ icon: 'delete_forever', color: "warn", 
+                   callback: (ref: BottomSheetRef) => this.confirmDelete(config.formConfig, config.onDeleteUri, ref) }]    
+          },
+        } 
+      });
 
     if(config.onSaveUri)
       ref.afterDismissed().subscribe(x => this.router.navigate([config.onSaveUri]))
@@ -72,6 +73,7 @@ export class ModelFormService {
     formConfig: Immutable<ModelFormConfig<TState, TForm, FormState<TState>>>, 
     deleteUrl: Maybe<string>, 
     ref: MatBottomSheetRef<unknown, unknown>) => { 
+      console.log(ref)
     const translatedProp = this.translateStateProp(formConfig.stateProp);
     const modelCfg = ModelStateConfig.get<unknown, TState>(formConfig.stateProp);
     const idWord = this.translations[(<string> modelCfg.idProp).toLowerCase()] || modelCfg.idProp

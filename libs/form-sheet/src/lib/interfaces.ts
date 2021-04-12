@@ -1,7 +1,9 @@
 import { Type } from '@angular/core';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { DynamicForm, FormComponent } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
+import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
 
 /** Represents the configuration for {@link FormSheetWrapperComponent} */
 export interface FormSheetWrapperConfig<TFormConfig, TFormState, TResult>{
@@ -46,7 +48,7 @@ export interface FormSheetNavButton{
     /** The material icon representing the button */
     icon: string;
     /** The function thats being called on button click */
-    callback: Function;
+    callback: (ref: MatBottomSheetRef<FormSheetWrapperComponent, unknown>) => void;
     /** The color of the button */
     color?: "primary" | "accent" | "warn"; 
     /** A description of the button's function */

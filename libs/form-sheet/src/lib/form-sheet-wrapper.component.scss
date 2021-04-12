@@ -1,16 +1,17 @@
-::ng-deep .full-screen-sheet{
+::ng-deep .form-sheet-wrapper{
     max-height: 100vh!important;
     padding:0 16px;
 }
   
 @media (max-width: 959px) {
-    ::ng-deep .full-screen-sheet{
+    ::ng-deep .form-sheet-wrapper{
       height: 100vh!important; 
+      form{ padding-left: 16px; }
     }
 }
 
 @media (min-width: 960px) {
-    ::ng-deep .full-screen-sheet{
+    ::ng-deep .form-sheet-wrapper{
       width: 652px!important;
       min-height: 400px;
     }
