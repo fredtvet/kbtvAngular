@@ -1,6 +1,11 @@
 ::ng-deep .form-sheet-wrapper{
     max-height: 100vh!important;
     padding:0 16px;
+    .loading{
+      width:100%;
+      text-align:center;
+      margin-top:24px
+  }
 }
   
 @media (max-width: 959px) {

@@ -25,7 +25,12 @@ export class FormSheetWrapperComponent  {
     
     ngOnInit() {
         this.loadNav();
-        this.loadForm();
+        this.loadLoader();
+
+        setTimeout(() => {
+            this.removeLoader();
+            this.loadForm()
+        })
     }
         
     ngOnDestroy(){
@@ -54,5 +59,20 @@ export class FormSheetWrapperComponent  {
             tap(x => (x && this.config.submitCallback) ? this.config.submitCallback(x) : null),
         ).subscribe(x => this.close(x))
     }
+
+    private loadLoader(): void{
+        var d = document.createElement('div');
+        d.innerHTML = "Laster inn skjema...";
+        d.classList.add('loading');
+        this.getParentElement()?.appendChild(d)
+    }
+
+    private removeLoader(): void {
+        const el = this.getParentElement()?.getElementsByClassName('loading')[0];
+        if(el) this.getParentElement()?.removeChild(el);
+    }
+
+    private getParentElement = (): HTMLElement | null => 
+        (<HTMLElement> this.viewContainerRef.element.nativeElement).parentElement
         
 }
