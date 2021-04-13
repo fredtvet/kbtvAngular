@@ -35,7 +35,7 @@
     padding:8px;
     padding-bottom:var(--bottom-nav-padding)!important;
     box-sizing:border-box;
-    width: calc(50% - 35px);
+    flex: 1 1 0%;
     flex-direction: row;
     display: flex;
     align-items: center;
@@ -57,17 +57,13 @@
     }
     .bottom-bar-side{
         border-radius: 0px; 
-        width: 50%!important;
         box-shadow: none;
     }
 }
 
 .bottom-bar-start-fab{
     .left{
-        width:16px;
-    }
-    .right{
-        width: calc(100% - 86px);   
+        max-width:16px;
     }
 }
 
