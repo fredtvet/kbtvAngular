@@ -4,7 +4,7 @@ import { Address } from "./objects/address";
 import { Options } from "./objects/options/options";
 
 declare let google: any;
-
+/** @dynamic */
 @Directive({selector: '[lib-google-places-autocomplete]'})
 export class GooglePlaceDirective implements AfterViewInit {
     @Input('options') options: Options;
@@ -16,8 +16,8 @@ export class GooglePlaceDirective implements AfterViewInit {
     constructor(
         private el: ElementRef, 
         private ngZone: NgZone,
-        @Inject(DOCUMENT) private document: Document) {
-    }
+        @Inject(DOCUMENT) private document: Document
+    ) {}
 
     ngAfterViewInit(): void {
         if (!this.options)
