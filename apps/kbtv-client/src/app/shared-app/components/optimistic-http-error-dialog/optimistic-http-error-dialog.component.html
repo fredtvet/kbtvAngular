@@ -8,7 +8,7 @@
     
         <div class="mat-caption">Behandling mislykket</div>
     
-        {{ data.errorCommand.request.options?.description }}
+        {{ data.errorCommand.request.callerAction | actionDescription}}
     
     </app-list-item>
 
@@ -21,7 +21,7 @@
 
     <ng-container  *ngIf="data.canceledCommands?.length">
 
-        <div class="mat-body-2 ml-5 mt-3">Kansellerte aktiviteter ({{data.canceledCommands.length}})</div>
+        <div class="mat-body-2 ml-5 mt-3">Påfølgende aktiviteter er kansellert ({{data.canceledCommands.length}})</div>
 
         <app-failed-command-list [commands]="data.canceledCommands">
     

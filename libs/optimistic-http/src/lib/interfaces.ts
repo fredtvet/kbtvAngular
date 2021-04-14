@@ -1,4 +1,5 @@
-import { Immutable, Maybe, Prop, UnknownState } from 'global-types';
+import { Immutable, Maybe, UnknownState } from 'global-types';
+import { StateAction } from 'state-management';
 
 /** Describes an object thats used to represent an entry in a form data class. */
 export interface FormDataEntry { 
@@ -9,7 +10,7 @@ export interface FormDataEntry {
 }
 
 /** Describes an object used to make optimistic http requests. */
-export interface OptimisticHttpRequest<TOptions extends Object = {}> { 
+export interface OptimisticHttpRequest { 
     /** The url suffix of the api endpoint. 
      * Gets appended to base url provided with {@link BASE_API_URL} */
     apiUrl: string; 
@@ -17,32 +18,32 @@ export interface OptimisticHttpRequest<TOptions extends Object = {}> {
     method: "POST" | "PUT" | "DELETE"; 
     /** The body of the http request */
     body: {} | FormDataEntry[] | null | undefined;   
-    /** Additional options to associate with the request */
-    options?: TOptions;
+    /** The action that initiated the request.  */
+    callerAction?: StateAction;
 };
 
-export interface QueuedCommand<TOptions = {}> { 
-    request: Immutable<OptimisticHttpRequest<TOptions>>, 
+export interface QueuedCommand { 
+    request: Immutable<OptimisticHttpRequest>, 
     stateSnapshot: Maybe<Immutable<UnknownState>>, 
     dispatched?: boolean,
     commandId?: string
 };
 
 /** Represents a completed command with a status indicating if the command succeeded. */
-export interface CompletedCommand<TOptions = {}> { 
-    request: Immutable<OptimisticHttpRequest<TOptions>>, 
+export interface CompletedCommand { 
+    request: Immutable<OptimisticHttpRequest>, 
     succeeded: boolean;
     commandId?: string;
 };
 
 /** Represents a slice of state containing the request queue */
-export interface StateRequestQueue<TOptions = {}> { 
-    requestQueue: QueuedCommand<TOptions>[]; 
+export interface StateRequestQueue { 
+    requestQueue: QueuedCommand[]; 
 };
 
 /** Represents a slice of state containing the request log of previus requests and their statuses*/
-export interface StateRequestLog<TOptions = {}> { 
-    requestLog: CompletedCommand<TOptions>[]; 
+export interface StateRequestLog { 
+    requestLog: CompletedCommand[]; 
 };
 
 /** Represents information neccesary to track the last command from the previous session. */

@@ -11,7 +11,7 @@ import { RequestQueueListComponent } from './request-log/request-queue-list/requ
     RequestLogComponent,
     RequestQueueListComponent,
     CompletedRequestLogListComponent,
-    FailedRequestLogListComponent
+    FailedRequestLogListComponent,
   ],
   imports: [ 
     SharedModule,

@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormattedHttpError, _httpErrorResponseFormatter } from '@shared-app/helpers/http-error-response-formatter.helper';
 import { OptimisticHttpErrorAction } from 'optimistic-http';
-import { OptimisticRequestOptions } from 'state-model';
 
 @Component({
   selector: 'app-optimistic-http-error-dialog',
@@ -14,7 +13,7 @@ export class OptimisticHttpErrorDialogComponent {
 
   httpError: FormattedHttpError;
   
-  constructor(@Inject(MAT_DIALOG_DATA) public data: OptimisticHttpErrorAction<OptimisticRequestOptions>) { 
+  constructor(@Inject(MAT_DIALOG_DATA) public data: OptimisticHttpErrorAction) { 
         this.httpError = _httpErrorResponseFormatter(data.httpError);
     }
   

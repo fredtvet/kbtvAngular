@@ -19,6 +19,7 @@ import { FailedCommandListComponent } from './components/optimistic-http-error-d
 import { OptimisticHttpErrorDialogComponent } from './components/optimistic-http-error-dialog/optimistic-http-error-dialog.component';
 import { OptimisticLoadingSpinnerComponent } from './components/optimistic-loading-spinner/optimistic-loading-spinner.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
+import { ActionDescriptionPipe } from './pipes/action-description.pipe';
 import { AsyncDetectPipe } from './pipes/async-detect.pipe';
 import { IfRolePipe } from './pipes/if-role.pipe';
 import { ReverseArrayPipe } from './pipes/reverse-array';
@@ -42,6 +43,7 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
     OptimisticLoadingSpinnerComponent,
     NoContentComponent,
     FetchingModelContentComponent,
+    ActionDescriptionPipe
   ],
   imports: [
     RouterModule,
@@ -83,7 +85,8 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
 
     IfRolePipe,
     ReverseArrayPipe,
-    TransformButtonsPipe,   
+    TransformButtonsPipe,  
+    ActionDescriptionPipe ,
     TranslatePipe,
     AsyncDetectPipe,
     AddToHomeScreenDirective, 
