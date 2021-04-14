@@ -15,4 +15,5 @@ shell.exec("ng build confirm-dialog --prod");
 shell.exec("ng build model-form --prod");
 shell.exec("ng build cdk-selectable --prod");
 shell.exec("ng build notification --prod");
+shell.exec("ng build google-places-autocomplete --prod");
 shell.exec("npm run build");

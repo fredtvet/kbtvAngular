@@ -8,7 +8,7 @@ import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { CreateMissionNoteForm, EditMissionNoteForm } from '@shared/constants/model-forms/save-mission-note-forms.const';
 import { Maybe } from 'global-types';
-import { ModelFormService } from 'model-form';
+import { ModelFormService } from 'model/form';
 import { SelectedMissionIdParam } from '../../mission-list/mission-list-route-params.const';
 import { MissionNoteListFacade } from '../mission-note-list.facade';
 

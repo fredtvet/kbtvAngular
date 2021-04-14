@@ -17,10 +17,10 @@ import { MissionFilter } from "@shared/mission-filter.model";
 import { _filter } from "array-helpers";
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe, Prop } from "global-types";
-import { ModelFormService } from 'model-form';
+import { ModelFormService } from 'model/form';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
-import { _getModelDisplayValue } from 'model-state';
+import { _getModelDisplayValue } from 'model/state';
 import { MissionListFacade } from '../mission-list.facade';
 import { MissionListProviders } from './mission-list-providers.const';
 

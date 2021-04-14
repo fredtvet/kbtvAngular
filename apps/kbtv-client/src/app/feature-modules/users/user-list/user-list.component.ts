@@ -7,7 +7,7 @@ import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { UserPasswordForm } from '@shared/constants/forms/password-form.const';
 import { CreateUserForm, EditUserForm, UserForm } from '@shared/constants/model-forms/save-user-forms.const';
 import { FormService } from 'form-sheet';
-import { ModelFormService } from 'model-form';
+import { ModelFormService } from 'model/form';
 import { Observable } from 'rxjs';
 import { Maybe } from 'global-types';
 import { UsersFacade } from '../users.facade';

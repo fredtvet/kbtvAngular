@@ -1,5 +1,5 @@
 import { ModelState } from "@core/state/model-state.interface";
-import { ModelDataTablesConfig } from "model-data-table";
+import { ModelDataTablesConfig } from 'model/data-table';
 
 export const ModelDataTables: ModelDataTablesConfig<Partial<ModelState>> = {
     baseColDef: {sortable: true, resizable: true, editable: true, lockPosition: true},

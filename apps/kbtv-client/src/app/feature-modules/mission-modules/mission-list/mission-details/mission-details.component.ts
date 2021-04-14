@@ -14,7 +14,7 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { EditMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { FileFolder } from '@shared/enums/file-folder.enum';
 import { Immutable, Maybe } from 'global-types';
-import { ModelFormService } from 'model-form';
+import { ModelFormService } from 'model/form';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { UserTimesheetListCriteriaQueryParam } from 'src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const';

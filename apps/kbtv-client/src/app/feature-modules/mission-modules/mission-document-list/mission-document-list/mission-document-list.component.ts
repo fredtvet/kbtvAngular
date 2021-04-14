@@ -15,7 +15,7 @@ import { FileFolder } from '@shared/enums/file-folder.enum';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { FormService } from 'form-sheet';
 import { ImmutableArray, Maybe } from 'global-types';
-import { ModelFormService } from 'model-form';
+import { ModelFormService } from 'model/form';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SelectedMissionIdParam } from '../../mission-list/mission-list-route-params.const';

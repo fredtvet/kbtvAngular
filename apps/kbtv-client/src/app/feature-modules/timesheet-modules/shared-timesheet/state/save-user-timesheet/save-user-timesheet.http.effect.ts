@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Timesheet } from '@core/models';
 import { StateUserTimesheets } from '@core/state/global-state.interfaces';
 import { Effect } from 'state-management';
-import { ModelCommandApiMap, MODEL_COMMAND_API_MAP, SaveModelHttpEffect } from 'model-state';
+import { ModelCommandApiMap, MODEL_COMMAND_API_MAP, SaveModelHttpEffect } from 'model/state';
 
 @Injectable()
 export class SaveUserTimesheetHttpEffect extends SaveModelHttpEffect<Timesheet, StateUserTimesheets> 

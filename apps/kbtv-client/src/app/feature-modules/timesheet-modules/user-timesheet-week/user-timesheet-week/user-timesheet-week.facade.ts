@@ -13,7 +13,7 @@ import { Immutable, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';
-import { RelationInclude, _getRangeWithRelations } from 'model-state';
+import { RelationInclude, _getRangeWithRelations } from 'model/state';
 import { TimesheetSummary } from '../../shared-timesheet/interfaces';
 import { ComponentStoreState, StoreState } from '../store-state.interface';
 import { NextWeekAction, PreviousWeekAction, SetTimesheetCriteriaAction } from './component.reducers';

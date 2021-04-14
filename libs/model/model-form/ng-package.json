@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/model/model-form",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "dynamic-forms": "dynamic-forms",
+      "form-sheet": "form-sheet",
+      "confirm-dialog": "confirm-dialog",
+      "model-state": "model-state",
+      "state-management": "state-management"
+    }
+  }
+}

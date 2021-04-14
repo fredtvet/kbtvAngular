@@ -12,7 +12,7 @@ import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
-import { FetchModelsAction, _getRangeWithRelations } from 'model-state';
+import { FetchModelsAction, _getRangeWithRelations } from 'model/state';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';

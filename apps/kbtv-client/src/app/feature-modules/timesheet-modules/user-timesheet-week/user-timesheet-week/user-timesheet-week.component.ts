@@ -12,7 +12,7 @@ import { _getDateOfWeek, _getWeekRange } from 'date-time-helpers';
 import { DynamicForm, _disableControlsWithNoValue } from 'dynamic-forms';
 import { FormService, OptionsFormState } from 'form-sheet';
 import { Immutable, Maybe } from "global-types";
-import { ModelFormService } from 'model-form';
+import { ModelFormService } from 'model/form';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { WeekCriteria } from '@shared-timesheet/interfaces';

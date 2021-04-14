@@ -1,6 +1,6 @@
 import { User } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { FormToSaveModelConverter, ModelFormToSaveModelInput } from 'model-form';
+import { FormToSaveModelConverter, ModelFormToSaveModelInput } from 'model/form';
 import { _flattenExistingForeigns } from '@shared-app/helpers/flatten-existing-foreigns.helper';
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
 import { UserForm } from '@shared/constants/model-forms/save-user-forms.const';

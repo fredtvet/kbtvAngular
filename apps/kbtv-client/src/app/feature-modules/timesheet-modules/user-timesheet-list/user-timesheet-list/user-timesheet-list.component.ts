@@ -13,7 +13,7 @@ import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from '@
 import { DynamicForm, _disableControlsWithNoValue } from 'dynamic-forms';
 import { FormService, OptionsFormState } from 'form-sheet';
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
-import { ModelFormService } from 'model-form';
+import { ModelFormService } from 'model/form';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { TimesheetCriteriaChipOptions } from '../../shared-timesheet/timesheet-filter/timesheet-criteria-chip-options.const';

@@ -3,9 +3,9 @@ import { AppSaveModelProviders, SaveModelFileProviders } from '@core/state/provi
 import { CreateMissionImagesProviders } from '@shared-mission/create-mission-images/create-mission-images.providers';
 import { SharedMissionModule } from '@shared-mission/shared-mission.module';
 import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
-import { ModelFormModule } from 'model-form';
+import { ModelFormModule } from 'model/form';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
-import { DeleteModelHttpEffect, DeleteModelReducer } from 'model-state';
+import { DeleteModelHttpEffect, DeleteModelReducer } from 'model/state';
 import { HeaderLayoutSkeletonComponent } from './header-layout-skeleton/header-layout-skeleton.component';
 import { EmployerListItemComponent } from './mission-details/mission-details-view/employer-list-item.component';
 import { MissionDetailsViewComponent } from './mission-details/mission-details-view/mission-details-view.component';

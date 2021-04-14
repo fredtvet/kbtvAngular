@@ -43,10 +43,6 @@
         "../../dist/state-sync/state-sync",
         "../../dist/state-sync"
       ],
-      "model-state": [
-        "../../dist/model-state/model-state",
-        "../../dist/model-state"
-      ],
       "confirm-dialog": [
         "../../dist/confirm-dialog/confirm-dialog",
         "../../dist/confirm-dialog"
@@ -59,10 +55,6 @@
         "../../dist/form-sheet/form-sheet",
         "../../dist/form-sheet"
       ],
-      "model-form": [
-        "../../dist/model-form/model-form",
-        "../../dist/model-form"
-      ],
       "state-auth": [
         "../../dist/state-auth/state-auth",
         "../../dist/state-auth"
@@ -71,14 +63,22 @@
         "../../dist/cdk-selectable/cdk-selectable",
         "../../dist/cdk-selectable"
       ],
-      "model-data-table": [
-        "../../dist/model-data-table/model-data-table",
-        "../../dist/model-data-table"
-      ],
       "google-places-autocomplete": [
         "../../dist/google-places-autocomplete/google-places-autocomplete",
         "../../dist/google-places-autocomplete"
-      ]
+      ],
+      "model/state": [
+        "../../dist/model/model-state/model-state",
+        "../../dist/model/model-state"
+      ],
+      "model/form": [
+        "../../dist/model/model-form/model-form",
+        "../../dist/model/model-form"
+      ],
+      "model/data-table": [
+        "../../dist/model/model-data-table/model-data-table",
+        "../../dist/model/model-data-table"
+      ],
     },
   },
   "files": [

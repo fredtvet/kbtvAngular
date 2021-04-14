@@ -1,6 +1,6 @@
 import { StateCurrentUser, StateUserTimesheets } from '@core/state/global-state.interfaces';
 import { _getTotalHours } from 'date-time-helpers';
-import { SaveModelReducer } from 'model-state';
+import { SaveModelReducer } from 'model/state';
 import { TimesheetStatus } from '@shared/enums';
 import { _createReducer } from 'state-management'
 import { Immutable } from 'global-types';

@@ -1,6 +1,6 @@
 import { Timesheet } from '@core/models';
 import { DateRange } from 'date-time-helpers';
-import { ModelStateConfig } from 'model-state';
+import { ModelStateConfig } from 'model/state';
 import { DataFilter } from '@shared/data.filter';
 import { DateInput, Immutable, Maybe, Prop } from 'global-types';
 import { TimesheetCriteria } from './timesheet-criteria.interface';

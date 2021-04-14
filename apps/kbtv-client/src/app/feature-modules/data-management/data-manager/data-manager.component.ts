@@ -4,7 +4,7 @@ import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { Prop } from 'global-types';
-import { ModelDataTableComponent } from 'model-data-table';
+import { ModelDataTableComponent } from 'model/data-table';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentStoreProviders, STORE_REDUCERS } from 'state-management';

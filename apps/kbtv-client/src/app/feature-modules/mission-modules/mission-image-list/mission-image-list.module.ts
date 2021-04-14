@@ -3,7 +3,7 @@ import { SaveModelFileProviders } from '@core/state/providers.const';
 import { CreateMissionImagesProviders } from '@shared-mission/create-mission-images/create-mission-images.providers';
 import { SharedMissionModule } from '@shared-mission/shared-mission.module';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
-import { DeleteModelHttpEffect, DeleteModelReducer, MailModelsHttpEffect } from 'model-state';
+import { DeleteModelHttpEffect, DeleteModelReducer, MailModelsHttpEffect } from 'model/state';
 import { MissionImageListRoutingModule } from './mission-image-list-routing.module';
 import { MissionImageListComponent } from './mission-image-list/mission-image-list.component';
 
