@@ -3,10 +3,10 @@ import { StateMissions, StateEmployers, StateMissionTypes } from '@core/state/gl
 import { DynamicControl, DynamicForm } from 'dynamic-forms';
 import { OptionsFormState } from 'form-sheet';
 import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
-import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
-import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
-import { RadioGroupQuestionComponent, RadioGroupQuestion } from '../../components/dynamic-form-questions/radio-group-question.component';
-import { SelectQuestionComponent, SelectQuestion } from '../../components/dynamic-form-questions/select-question.component';
+import { AutoCompleteQuestionComponent } from '../../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
+import { AutoCompleteQuestion } from '../../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
+import { RadioGroupQuestionComponent, RadioGroupQuestion } from '../../scam/dynamic-form-questions/radio-group-question.component';
+import { SelectQuestionComponent, SelectQuestion } from '../../scam/dynamic-form-questions/select-question.component';
 import { MissionCriteria } from '../../interfaces';
 import { EmployerSelectControl } from '../common-controls.const';
 import { Immutable } from 'global-types';

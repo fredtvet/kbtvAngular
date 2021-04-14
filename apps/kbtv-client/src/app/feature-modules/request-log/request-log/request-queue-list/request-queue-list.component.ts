@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, Input } from '@angular/core';
+import { ActionDescriptions } from '@shared-app/action-descriptions.const';
 import { QueuedCommand } from 'optimistic-http';
 
 @Component({
@@ -8,7 +9,8 @@ import { QueuedCommand } from 'optimistic-http';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RequestQueueListComponent {
-
+  ActionDescriptions = ActionDescriptions;
+  
   @Input() requests: QueuedCommand[];
   @Input() isOnline: boolean;
 

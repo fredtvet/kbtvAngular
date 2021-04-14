@@ -8,11 +8,11 @@ import { DynamicControl } from 'dynamic-forms';
 import { OptionsFormState } from 'form-sheet';
 import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
 import { isObjectValidator } from '@shared/validators/is-object.validator';
-import { AutoCompleteQuestionComponent } from '../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
-import { AutoCompleteQuestion } from '../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
-import { GooglePlacesAutoCompleteQuestionComponent, GooglePlacesAutoCompleteQuestion } from '../components/dynamic-form-questions/google-places-autocomplete-question.component';
-import { InputQuestionComponent, InputQuestion } from '../components/dynamic-form-questions/input-question.component';
-import { SelectQuestionComponent, SelectQuestion } from '../components/dynamic-form-questions/select-question.component';
+import { AutoCompleteQuestionComponent } from '../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
+import { AutoCompleteQuestion } from '../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
+import { GooglePlacesAutoCompleteQuestionComponent, GooglePlacesAutoCompleteQuestion } from '../scam/dynamic-form-questions/google-places-autocomplete-question.component';
+import { InputQuestionComponent, InputQuestion } from '../scam/dynamic-form-questions/input-question.component';
+import { SelectQuestionComponent, SelectQuestion } from '../scam/dynamic-form-questions/select-question.component';
 import { ValidationRules } from './validation-rules.const';
 import { Immutable } from 'global-types';
 

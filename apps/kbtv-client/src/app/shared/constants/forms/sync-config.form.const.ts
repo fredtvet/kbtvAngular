@@ -1,11 +1,11 @@
 import { Validators } from '@angular/forms';
 import { DefaultState } from '@core/configurations/default-state.const';
-import { IonDateQuestion, IonDateQuestionComponent } from '@shared/components/dynamic-form-questions/ion-date-time-question.component';
+import { IonDateQuestion, IonDateQuestionComponent } from '@shared/scam/dynamic-form-questions/ion-date-time-question.component';
 import { _getDateYearsAgo, _getFirstDayOfMonth, _getISO } from 'date-time-helpers';
 import { DynamicForm } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { SyncConfig } from 'state-sync';
-import { SliderQuestion, SliderQuestionComponent } from '../../components/dynamic-form-questions/slider-question.component';
+import { SliderQuestion, SliderQuestionComponent } from '../../scam/dynamic-form-questions/slider-question.component';
 
 export const SyncConfigForm: Immutable<DynamicForm<SyncConfig, unknown>> = {
     submitText: "Lagre", resettable: true, 

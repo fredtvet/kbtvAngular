@@ -1,7 +1,12 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActionDescriptions } from '@shared-app/action-descriptions.const';
 import { FormattedHttpError, _httpErrorResponseFormatter } from '@shared-app/helpers/http-error-response-formatter.helper';
+import { SharedAppModule } from '@shared-app/shared-app.module';
 import { OptimisticHttpErrorAction } from 'optimistic-http';
+import { FailedCommandListComponent } from './failed-command-list/failed-command-list.component';
+
+console.log('ive been run')
 
 @Component({
   selector: 'app-optimistic-http-error-dialog',
@@ -10,6 +15,7 @@ import { OptimisticHttpErrorAction } from 'optimistic-http';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OptimisticHttpErrorDialogComponent {
+  ActionDescriptions = ActionDescriptions;
 
   httpError: FormattedHttpError;
   
@@ -18,3 +24,14 @@ export class OptimisticHttpErrorDialogComponent {
     }
   
 }
+
+@NgModule({
+  declarations: [
+    OptimisticHttpErrorDialogComponent,
+    FailedCommandListComponent
+  ],
+  imports:[
+    SharedAppModule,  
+  ]
+})
+class OptimisticHttpErrorDialogModule {}

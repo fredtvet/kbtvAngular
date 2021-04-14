@@ -5,10 +5,10 @@ import { _googleAddressFormatter } from '@shared-app/helpers/google-address-form
 import { DynamicControl, DynamicControlGroup, DynamicForm } from 'dynamic-forms';
 import { OptionsFormState } from 'form-sheet';
 import { Immutable } from 'global-types';
-import { AutoCompleteQuestionComponent } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
-import { AutoCompleteQuestion } from '../../components/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
-import { CheckboxQuestion, CheckboxQuestionComponent } from '../../components/dynamic-form-questions/checkbox-question.component';
-import { TextAreaQuestion, TextAreaQuestionComponent } from '../../components/dynamic-form-questions/text-area-question.component';
+import { AutoCompleteQuestionComponent } from '../../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
+import { AutoCompleteQuestion } from '../../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
+import { CheckboxQuestion, CheckboxQuestionComponent } from '../../scam/dynamic-form-questions/checkbox-question.component';
+import { TextAreaQuestion, TextAreaQuestionComponent } from '../../scam/dynamic-form-questions/text-area-question.component';
 import { GoogleAddressControl, HiddenIdControl, PhoneNumberControl } from '../common-controls.const';
 import { ValidationRules } from '../validation-rules.const';
 

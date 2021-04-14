@@ -6,8 +6,8 @@ import { Model } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
 import { translations } from "@shared-app/translations";
 import { Immutable, Prop } from "global-types";
-import { StateAction } from "state-management";
 import { DeleteModelAction, ModelCommand, ModelStateConfig, SaveModelAction } from "state-model";
+import { ActionDescriptionMap } from "./interfaces/action-description-map.interface";
 
 const SaveModelActionDescription = (action: SaveModelAction<Model, ModelState>) => {
     const modelConfig = ModelStateConfig.get<Model, ModelState>(action.stateProp);
@@ -25,7 +25,6 @@ const SaveModelActionDescription = (action: SaveModelAction<Model, ModelState>) 
     return `${saveWord} av ${entityWord} med ${idWord.toLowerCase()} '${idPropValue}'`
 }
 
-export type ActionDescriptionMap = { [key: string]: (x: StateAction) => string };
 export const ActionDescriptions: ActionDescriptionMap = {
 
     [UpdateCurrentUserAction]: (action: UpdateCurrentUserAction) => "Oppdatering av profil",

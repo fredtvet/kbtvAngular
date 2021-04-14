@@ -15,8 +15,6 @@ import { AddToHomeScreenDirective } from './add-to-home-screen.directive';
 import { FetchingModelContentComponent } from './components/fetching-model-content/fetching-model-content.component';
 import { ListItemComponent } from './components/list-item/list-item.component';
 import { NoContentComponent } from './components/no-content.component';
-import { FailedCommandListComponent } from './components/optimistic-http-error-dialog/failed-command-list/failed-command-list.component';
-import { OptimisticHttpErrorDialogComponent } from './components/optimistic-http-error-dialog/optimistic-http-error-dialog.component';
 import { OptimisticLoadingSpinnerComponent } from './components/optimistic-loading-spinner/optimistic-loading-spinner.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
 import { ActionDescriptionPipe } from './pipes/action-description.pipe';
@@ -31,7 +29,6 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
   declarations: [
     PageNotFoundComponent,  
     ListItemComponent,
-    FailedCommandListComponent,
     ReverseArrayPipe,
     TransformButtonsPipe,
     IfRolePipe,
@@ -39,7 +36,6 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
     AsyncDetectPipe,
     AddToHomeScreenDirective,
     RenderTimeoutDirective,
-    OptimisticHttpErrorDialogComponent,
     OptimisticLoadingSpinnerComponent,
     NoContentComponent,
     FetchingModelContentComponent,
@@ -78,11 +74,10 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
 
     PageNotFoundComponent,
     ListItemComponent,
-    FailedCommandListComponent,
-    OptimisticLoadingSpinnerComponent, 
     NoContentComponent,
     FetchingModelContentComponent,
-
+    OptimisticLoadingSpinnerComponent,
+    
     IfRolePipe,
     ReverseArrayPipe,
     TransformButtonsPipe,  

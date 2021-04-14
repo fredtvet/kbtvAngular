@@ -2,7 +2,7 @@ import { Validators } from '@angular/forms';
 import { InboundEmailPassword } from '@core/models';
 import { DynamicControl, DynamicForm } from 'dynamic-forms';
 import { Immutable, UnknownState } from 'global-types';
-import { InputQuestionComponent, InputQuestion } from '../../components/dynamic-form-questions/input-question.component';
+import { InputQuestionComponent, InputQuestion } from '../../scam/dynamic-form-questions/input-question.component';
 
 const PasswordControl = <Immutable<DynamicControl<InboundEmailPassword>>>{ name: "password", required: true,
     type: "control", questions: [{

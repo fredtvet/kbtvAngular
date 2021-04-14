@@ -6,8 +6,8 @@ import { DynamicControl, DynamicControlGroup, DynamicForm } from 'dynamic-forms'
 import { OptionsFormState } from 'form-sheet';
 import { Immutable } from 'global-types';
 import { translations } from '../../../shared-app/translations';
-import { IonDateQuestion, IonDateQuestionComponent } from '../../components/dynamic-form-questions/ion-date-time-question.component';
-import { RadioGroupQuestion, RadioGroupQuestionComponent } from '../../components/dynamic-form-questions/radio-group-question.component';
+import { IonDateQuestion, IonDateQuestionComponent } from '../../scam/dynamic-form-questions/ion-date-time-question.component';
+import { RadioGroupQuestion, RadioGroupQuestionComponent } from '../../scam/dynamic-form-questions/radio-group-question.component';
 import { TimesheetStatus } from '../../enums';
 import { MissionAutoCompleteControl, UserSelectControl } from '../common-controls.const';
 

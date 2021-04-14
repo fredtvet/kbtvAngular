@@ -1,4 +1,4 @@
-import { CheckboxQuestion, CheckboxQuestionComponent } from '@shared/components/dynamic-form-questions/checkbox-question.component';
+import { CheckboxQuestion, CheckboxQuestionComponent } from '@shared/scam/dynamic-form-questions/checkbox-question.component';
 import { DynamicControlGroup, DynamicForm } from 'dynamic-forms';
 import { Immutable, Prop, UnknownState } from 'global-types';
 

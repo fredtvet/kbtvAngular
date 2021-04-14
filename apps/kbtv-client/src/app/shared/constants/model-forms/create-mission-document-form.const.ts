@@ -3,7 +3,7 @@ import { fileExtensionValidator } from '@shared/validators/file-extension.valida
 import { fileSizeValidator } from '@shared/validators/file-size.validator';
 import { DynamicControl, DynamicForm } from 'dynamic-forms';
 import { Immutable } from 'global-types';
-import { FileQuestionComponent } from '../../components/dynamic-form-questions/file-question.component';
+import { FileQuestionComponent } from '../../scam/dynamic-form-questions/file-question.component';
 import { HiddenMissionIdControl, NameControl } from '../common-controls.const';
 import { ValidationRules } from '../validation-rules.const';
 
