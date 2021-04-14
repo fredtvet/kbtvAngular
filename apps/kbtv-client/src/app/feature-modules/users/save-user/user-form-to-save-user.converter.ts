@@ -4,8 +4,8 @@ import { FormToSaveModelConverter, ModelFormToSaveModelInput } from 'model-form'
 import { _flattenExistingForeigns } from '@shared-app/helpers/flatten-existing-foreigns.helper';
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
 import { UserForm } from '@shared/constants/model-forms/save-user-forms.const';
-import { SaveUserAction } from './save-user.action';
 import { Roles } from '@core/roles.enum';
+import { SaveUserAction } from '@actions/user-actions';
 
 export const _userFormToSaveUserConverter: FormToSaveModelConverter<UserForm, ModelState, SaveUserAction> =
     (input: ModelFormToSaveModelInput<UserForm, ModelState>): SaveUserAction => {

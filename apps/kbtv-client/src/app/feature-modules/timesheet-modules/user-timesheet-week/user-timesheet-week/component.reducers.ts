@@ -1,8 +1,8 @@
+import { WeekCriteria } from '@shared-timesheet/interfaces';
+import { WeekToTimesheetCriteriaAdapter } from '@shared-timesheet/timesheet-filter/week-to-timesheet-criteria.adapter';
 import { _getWeekYear, _getWeeksInYear } from 'date-time-helpers';
 import { Immutable } from 'global-types';
 import { StateAction, _createReducer } from 'state-management';
-import { WeekCriteria } from '../../shared-timesheet/interfaces';
-import { WeekToTimesheetCriteriaAdapter } from '../../shared-timesheet/timesheet-filter/week-to-timesheet-criteria.adapter';
 import { ComponentStoreState } from '../store-state.interface';
 
 export const SetTimesheetCriteriaAction = "SET_TIMESHEET_CRITERIA_ACTION";

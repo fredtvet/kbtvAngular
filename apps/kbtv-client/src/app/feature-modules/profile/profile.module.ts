@@ -5,10 +5,10 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileActionItemComponent } from './profile/profile-action-item.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SyncProfileComponent } from './profile/sync-profile.component';
-import { ClearAndLogoutEffect } from './state/clear-and-logout.action';
-import { UpdateCurrentUserHttpEffect } from './state/update-current-user/update-current-user.http.effect';
-import { UpdateCurrentUserReducer } from './state/update-current-user/update-current-user.reducer';
-import { UpdatePasswordHttpEffect } from './state/update-password/update-password.http.effect';
+import { ClearAndLogoutEffect } from './state/clear-and-logout.effect';
+import { UpdateCurrentUserHttpEffect } from './state/update-current-user.http.effect';
+import { UpdateCurrentUserReducer } from './state/update-current-user.reducer';
+import { UpdatePasswordHttpEffect } from './state/update-password.http.effect';
 
 @NgModule({
   declarations: [

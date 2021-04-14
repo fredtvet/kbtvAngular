@@ -6,6 +6,7 @@
     "types": [],
     "paths": {
       "@core/*": ["src/app/core/*"],
+      "@actions/*": ["src/app/actions/*"],
       "@shared-app/*": ["src/app/shared-app/*"],
       "@shared/*": ["src/app/shared/*"],
       "@shared-timesheet/*": ["src/app/feature-modules/timesheet-modules/shared-timesheet/*"],

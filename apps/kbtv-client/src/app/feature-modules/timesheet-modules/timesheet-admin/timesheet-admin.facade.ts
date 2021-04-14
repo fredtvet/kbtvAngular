@@ -1,9 +1,9 @@
+import { SetTimesheetCriteriaAction, SetSelectedWeekAction, UpdateTimesheetStatusesAction, SetTimesheetCriteriaWithWeekCriteriaAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
 import { Timesheet, User } from '@core/models';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper';
-import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
 import { WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { GroupByPeriod, TimesheetStatus } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
@@ -12,15 +12,12 @@ import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
-import { FetchModelsAction, _getRangeWithRelations, _getWithRelations } from 'state-model';
+import { FetchModelsAction, _getRangeWithRelations } from 'state-model';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { StoreState } from './store-state';
-import { UpdateTimesheetStatusesAction } from './state/update-timesheet-statuses/update-timesheet-statuses.action';
-import { SetSelectedWeekAction } from './state/set-selected-week.reducer';
-import { SetTimesheetCriteriaAction } from './state/set-timesheet-criteria.reducer';
 
 @Injectable({providedIn: 'any'})
 export class TimesheetAdminFacade {
@@ -66,7 +63,9 @@ export class TimesheetAdminFacade {
     }
     
     updateCriteria = (weekCriteria: WeekCriteria): void =>       
-        this.store.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, weekCriteria })
+        this.store.dispatch(<SetTimesheetCriteriaWithWeekCriteriaAction>{ 
+            type: SetTimesheetCriteriaWithWeekCriteriaAction, weekCriteria 
+        })
 
     updateWeekNr = (weekNr: number | string): void => {  
         weekNr = (typeof weekNr === "number") ? weekNr : parseInt(weekNr);

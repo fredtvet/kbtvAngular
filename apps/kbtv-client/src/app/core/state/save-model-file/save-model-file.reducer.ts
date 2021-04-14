@@ -3,7 +3,7 @@ import { SaveModelReducer } from 'state-model';
 import { _createReducer } from 'state-management'
 import { Immutable } from 'global-types';
 import { ModelState } from '../model-state.interface';
-import { SaveModelFileAction } from './save-model-file.action';
+import { SaveModelFileAction } from '@actions/global-actions';
 
 export const SaveModelFileReducer = _createReducer(
     SaveModelFileAction, 

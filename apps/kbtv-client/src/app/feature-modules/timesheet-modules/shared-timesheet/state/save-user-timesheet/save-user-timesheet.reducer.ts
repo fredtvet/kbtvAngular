@@ -4,8 +4,8 @@ import { SaveModelReducer } from 'state-model';
 import { TimesheetStatus } from '@shared/enums';
 import { _createReducer } from 'state-management'
 import { Immutable } from 'global-types';
-import { SaveUserTimesheetAction } from './save-user-timesheet.action';
 import { Timesheet } from '@core/models';
+import { SaveUserTimesheetAction } from '@actions/timesheet-actions';
 
 export const SaveUserTimesheetReducer = _createReducer(
     SaveUserTimesheetAction,

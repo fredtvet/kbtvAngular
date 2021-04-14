@@ -1,7 +1,7 @@
 
 import { SaveModelReducer } from 'state-model';
 import { _createReducer } from 'state-management'
-import { SaveUserAction } from './save-user.action';
+import { SaveUserAction } from '@actions/user-actions';
 
 export const SaveUserReducer = _createReducer(  
     SaveUserAction,

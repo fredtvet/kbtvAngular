@@ -1,10 +1,7 @@
-import { TimesheetCriteria } from "@shared-timesheet/timesheet-filter/timesheet-criteria.interface";
+import { SetCriteriaCacheAction } from "@actions/timesheet-actions";
 import { Immutable } from "global-types";
-import { StateAction, _createReducer } from "state-management";
+import { _createReducer } from "state-management";
 import { StateSharedTimesheet } from "./state-shared-timesheet.interface";
-
-export const  SetCriteriaCacheAction = "SET_CRITERIA_CACHE_ACTION";
-export interface  SetCriteriaCacheAction extends StateAction { criteria: TimesheetCriteria }
 
 export const SetCriteriaCacheRedcuer = _createReducer(
     SetCriteriaCacheAction, 

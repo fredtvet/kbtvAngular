@@ -1,9 +1,9 @@
+import { SetTimesheetCriteriaAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Mission, Timesheet } from '@core/models';
 import { StateMissions, StateUserTimesheets } from '@core/state/global-state.interfaces';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
-import { SetTimesheetCriteriaAction } from '@shared-timesheet/state/set-timesheet-criteria.reducer';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '@shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';

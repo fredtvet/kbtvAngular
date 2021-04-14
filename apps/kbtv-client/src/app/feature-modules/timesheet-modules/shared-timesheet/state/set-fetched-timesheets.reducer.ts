@@ -1,14 +1,9 @@
-import { _addOrUpdateRange } from 'array-helpers';
-import { Timesheet } from '@core/models';
+import { SetFetchedTimesheetsAction } from '@actions/timesheet-actions';
 import { StateMissions, StateTimesheets } from '@core/state/global-state.interfaces';
-import { StateIsFetching, _getRangeWithRelations } from 'state-model';
+import { _addOrUpdateRange } from 'array-helpers';
 import { Immutable } from 'global-types';
-import { StateAction, _createReducer } from 'state-management';
-
-export const SetFetchedTimesheetsAction = "SET_FETCHED_TIMESHEETS_ACTION";
-export interface SetFetchedTimesheetsAction extends StateAction {
-    timesheets: Timesheet[]
-}
+import { _createReducer } from 'state-management';
+import { StateIsFetching } from 'state-model';
 
 type State = Immutable<StateTimesheets & StateMissions & StateIsFetching<StateTimesheets>>;
 

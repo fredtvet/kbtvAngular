@@ -1,6 +1,5 @@
+import { SetTimesheetCriteriaAction, FetchTimesheetsAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
-import { FetchTimesheetsAction } from '@shared-timesheet/state/fetch-timesheets.http.effect';
-import { SetTimesheetCriteriaAction } from '@shared-timesheet/state/set-timesheet-criteria.reducer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, Store } from 'state-management';

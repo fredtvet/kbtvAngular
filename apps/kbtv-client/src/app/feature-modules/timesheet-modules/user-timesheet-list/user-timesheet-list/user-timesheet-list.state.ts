@@ -1,7 +1,7 @@
 import { Provider } from '@angular/core';
+import { SetTimesheetCriteriaReducer } from '@shared-timesheet/state/set-timesheet-criteria.reducer';
+import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { ComponentStoreProviders, STORE_REDUCERS } from 'state-management';
-import { SetTimesheetCriteriaReducer } from '../../shared-timesheet/state/set-timesheet-criteria.reducer';
-import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { UserTimesheetListFacade } from './user-timesheet-list.facade';
 
 export interface UserTimesheetListState { 

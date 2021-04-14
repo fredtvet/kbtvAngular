@@ -1,11 +1,7 @@
+import { UpdateLastVisitedAction } from '@actions/mission-actions';
 import { StateMissions } from '@core/state/global-state.interfaces';
 import { Immutable } from 'global-types';
-import { StateAction, _createReducer } from 'state-management';
-
-export const UpdateLastVisitedAction = "UPDATE_LAST_VISITED_ACTION";
-export interface UpdateLastVisitedAction extends StateAction {
-    id: string
-}
+import { _createReducer } from 'state-management';
 
 export const UpdateLastVisitedReducer = _createReducer(
     UpdateLastVisitedAction,

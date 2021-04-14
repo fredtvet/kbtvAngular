@@ -1,3 +1,4 @@
+import { SetGroupByAction, SetTimesheetCriteriaAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
 import { Timesheet, User } from '@core/models';
 import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
@@ -16,10 +17,8 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 import { Store } from 'state-management';
 import { FetchModelsAction } from 'state-model';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
-import { SetTimesheetCriteriaAction } from '../shared-timesheet/state/set-timesheet-criteria.reducer';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
-import { SetGroupByAction } from './state/set-group-by.reducer';
 import { StoreState } from './state/store-state';
 
 type ValidRecord = Timesheet | TimesheetSummary;

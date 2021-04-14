@@ -1,11 +1,10 @@
+import { UpdateCurrentUserAction } from '@actions/profile-actions';
 import { Injectable } from '@angular/core';
 import { ApiUrl } from '@core/api-url.enum';
 import { OptimisticHttpRequest, OptimisticHttpAction } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
-import { OptimisticRequestOptions } from 'state-model';
-import { UpdateCurrentUserAction } from './update-current-user.action';
 
 @Injectable()
 export class UpdateCurrentUserHttpEffect implements Effect<UpdateCurrentUserAction> {
@@ -23,12 +22,12 @@ export class UpdateCurrentUserHttpEffect implements Effect<UpdateCurrentUserActi
         )
     }
 
-    protected createHttpRequest(action: UpdateCurrentUserAction): OptimisticHttpRequest<OptimisticRequestOptions> {
+    protected createHttpRequest(action: UpdateCurrentUserAction): OptimisticHttpRequest {
         return {
             method: "PUT", 
             body: action.user, 
             apiUrl: ApiUrl.Auth, 
-            options: {description: "Oppdatering av profil"}
+            callerAction: action
         }
     }
 

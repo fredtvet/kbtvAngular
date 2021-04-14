@@ -1,11 +1,9 @@
+import { ClearAndLogoutAction } from '@actions/profile-actions';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StateDbService } from 'state-db';
-import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
-
-export const ClearAndLogoutAction = "CLEAR_AND_LOGOUT_ACTION";
-export interface ClearAndLogoutAction extends StateAction {}
+import { DispatchedAction, Effect, listenTo } from 'state-management';
 
 @Injectable()
 export class ClearAndLogoutEffect implements Effect<ClearAndLogoutAction> {

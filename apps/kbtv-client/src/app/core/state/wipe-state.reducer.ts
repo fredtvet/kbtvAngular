@@ -1,8 +1,6 @@
+import { WipeStateAction } from '@actions/global-actions';
 import { Immutable, UnknownState } from 'global-types';
-import { StateAction, _createReducer } from 'state-management';
-
-export const WipeStateAction = "WIPE_STATE_ACTION";
-export interface WipeStateAction extends StateAction { defaultState: {} }
+import { _createReducer } from 'state-management';
 
 export const WipeStateReducer = _createReducer(
     WipeStateAction, 

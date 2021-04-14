@@ -1,3 +1,4 @@
+import { FetchTimesheetsAction, SetCriteriaCacheAction, SetFetchedTimesheetsAction } from '@actions/timesheet-actions';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiUrl } from '@core/api-url.enum';
@@ -9,14 +10,7 @@ import { filter, map, switchMap, take } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { TimesheetCriteria } from '../timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../timesheet-filter/timesheet-filter.model';
-import { SetCriteriaCacheAction } from './set-criteria-cache.reducer';
-import { SetFetchedTimesheetsAction } from './set-fetched-timesheets.reducer';
 import { StateSharedTimesheet } from './state-shared-timesheet.interface';
-
-export const FetchTimesheetsAction = "FETCH_TIMESHEETS_ACTION";
-export interface FetchTimesheetsAction extends StateAction {
-    timesheetCriteria: TimesheetCriteria
-}
 
 @Injectable()
 export class FetchTimesheetsHttpEffect implements Effect<FetchTimesheetsAction> {

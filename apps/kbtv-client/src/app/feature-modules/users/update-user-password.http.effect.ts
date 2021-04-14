@@ -1,15 +1,10 @@
+import { UpdateUserPasswordAction } from '@actions/user-actions';
 import { Injectable } from '@angular/core';
 import { ApiUrl } from '@core/api-url.enum';
 import { OptimisticHttpAction } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
-
-export const UpdateUserPasswordAction = "UPDATE_USER_PASSWORD_ACTION";
-export interface UpdateUserPasswordAction extends StateAction {
-    newPassword: string, 
-    userName: string
-}
+import { DispatchedAction, Effect, listenTo } from 'state-management';
 
 @Injectable()
 export class UpdateUserPasswordHttpEffect implements Effect<UpdateUserPasswordAction> {
