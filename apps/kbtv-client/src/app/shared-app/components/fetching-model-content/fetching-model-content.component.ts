@@ -6,7 +6,7 @@ import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
-import { StateIsFetching } from 'state-model';
+import { StateIsFetching } from 'model-state';
 
 @Component({
   selector: 'app-fetching-model-content',

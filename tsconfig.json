@@ -60,9 +60,9 @@
         "dist/state-sync/state-sync",
         "dist/state-sync"
       ],
-      "state-model": [
-        "dist/state-model/state-model",
-        "dist/state-model"
+      "model-state": [
+        "dist/model-state/model-state",
+        "dist/model-state"
       ],
       "confirm-dialog": [
         "dist/confirm-dialog/confirm-dialog",

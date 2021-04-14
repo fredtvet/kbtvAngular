@@ -1,6 +1,6 @@
 import { Provider } from '@angular/core';
 import { STORE_ACTION_INTERCEPTORS, STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
-import { SaveModelHttpEffect, SaveModelReducer } from 'state-model';
+import { SaveModelHttpEffect, SaveModelReducer } from 'model-state';
 import { SaveModelFileHttpEffect } from './save-model-file/save-model-file.http.effect';
 import { SaveModelFileReducer } from './save-model-file/save-model-file.reducer';
 import { SaveModelFileValidatorInterceptor } from './save-model-file/save-model-file.validator';

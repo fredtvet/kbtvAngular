@@ -1,7 +1,7 @@
 import { _find } from 'array-helpers';
 import { ModelState } from '@core/state/model-state.interface';
 import { Immutable, Maybe, UnknownState, Prop } from 'global-types';
-import { ModelStateConfig } from 'state-model';
+import { ModelStateConfig } from 'model-state';
 
 export function _flattenExistingForeigns<TEntity>(
     prop: Prop<ModelState>, 

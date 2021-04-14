@@ -4,5 +4,5 @@
 {
   "extends": "../../api-extractor.base.json",
   "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
-  "mainEntryPointFilePath": "../../dist/state-model/public-api.d.ts"
+  "mainEntryPointFilePath": "../../dist/model-state/public-api.d.ts"
 }

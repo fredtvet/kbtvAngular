@@ -1,7 +1,7 @@
 import { ApiUrl } from '../api-url.enum';
 import { Mission, MissionType, Employer, MissionImage, MissionDocument, MissionNote, User, InboundEmailPassword, Timesheet } from '../models';
 import { ModelState } from '../state/model-state.interface';
-import { ModelConfig } from 'state-model';
+import { ModelConfig } from 'model-state';
 import { ModelIdProps } from './model-id-props.const';
 
 export const AppModelConfigs: unknown[] = [

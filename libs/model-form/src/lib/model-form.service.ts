@@ -6,7 +6,7 @@ import { FormSheetWrapperComponent, FormSheetWrapperConfig, OptionsFormState } f
 import { Immutable, Maybe, UnknownState, KeyVal } from "global-types";
 import { Observable, of } from 'rxjs';
 import { Store } from 'state-management';
-import { DeleteModelAction, ModelCommand, ModelStateConfig, MODEL_PROP_TRANSLATIONS, SaveAction } from 'state-model';
+import { DeleteModelAction, ModelCommand, ModelStateConfig, MODEL_PROP_TRANSLATIONS, SaveAction } from 'model-state';
 import { ModelFormConfig, ModelFormServiceConfig } from './interfaces';
 import { ModelFormComponent } from './model-form.component';
 

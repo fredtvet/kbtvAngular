@@ -7,7 +7,7 @@ shell.exec("ng build optimistic-http --prod");
 shell.exec("ng build state-db --prod");
 shell.exec("ng build state-sync --prod");
 shell.exec("ng build state-auth --prod");
-shell.exec("ng build state-model --prod");
+shell.exec("ng build model-state --prod");
 shell.exec("ng build model-data-table --prod");
 shell.exec("ng build dynamic-forms --prod");
 shell.exec("ng build form-sheet --prod");

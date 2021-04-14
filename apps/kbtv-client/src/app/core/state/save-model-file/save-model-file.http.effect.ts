@@ -4,7 +4,7 @@ import { ModelFile } from '@core/models';
 import { Prop } from 'global-types';
 import { FormDataEntry } from 'optimistic-http';
 import { Effect } from 'state-management';
-import { ModelCommandApiMap, MODEL_COMMAND_API_MAP, SaveModelHttpEffect } from 'state-model';
+import { ModelCommandApiMap, MODEL_COMMAND_API_MAP, SaveModelHttpEffect } from 'model-state';
 import { ModelState } from '../model-state.interface';
 
 @Injectable()

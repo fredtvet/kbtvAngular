@@ -4,7 +4,7 @@ import { ConfirmDialogModule } from 'confirm-dialog';
 import { DynamicFormsModule } from 'dynamic-forms';
 import { FormSheetModule } from 'form-sheet';
 import { StateAction } from 'state-management';
-import { FetchModelProviders } from 'state-model';
+import { FetchModelProviders } from 'model-state';
 import { DEFAULT_SAVE_CONVERTER } from './injection-tokens.const';
 import { FormToSaveModelConverter } from './interfaces';
 import { ModelFormComponent } from './model-form.component';

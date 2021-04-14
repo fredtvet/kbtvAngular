@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { HttpAuthTokensInterceptor, StateAuthModule } from 'state-auth';
 import { StateDbModule, STATE_DB_CONFIG } from 'state-db';
 import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS, STORE_SETTINGS } from 'state-management';
-import { MODEL_COMMAND_API_MAP, MODEL_CONFIGS, MODEL_PROP_TRANSLATIONS, StateModelModule } from 'state-model';
+import { MODEL_COMMAND_API_MAP, MODEL_CONFIGS, MODEL_PROP_TRANSLATIONS, ModelStateModule } from 'model-state';
 import { StateSyncModule } from 'state-sync';
 import { AppAuthCommandApiMap } from './configurations/app-auth-command-api-map.const';
 import { AppAuthRedirects } from './configurations/app-auth-redirects.const';
@@ -41,7 +41,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
     StateAuthModule.forRoot(AppAuthCommandApiMap, AppAuthRedirects),
     StateDbModule,  
     OptimisticHttpModule,
-    StateModelModule
+    ModelStateModule
   ],
   providers: [   
     { provide: ErrorHandler, useClass: GlobalErrorHandler },

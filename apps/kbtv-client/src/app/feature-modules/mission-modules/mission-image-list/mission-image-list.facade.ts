@@ -7,7 +7,7 @@ import { ImmutableArray, Maybe } from 'global-types';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
-import { DeleteModelAction, MailModelsAction, RelationInclude, _getWithRelations } from 'state-model';
+import { DeleteModelAction, MailModelsAction, RelationInclude, _getWithRelations } from 'model-state';
 import { StoreState } from './store-state';
 
 @Injectable({providedIn: 'any'})

@@ -9,7 +9,7 @@ import { translations } from '@shared-app/translations';
 import { ModelDataTableModule, MODEL_DATA_TABLES_CONFIG, MODEL_NAME_TRANSLATIONS } from 'model-data-table';
 import { ModelFormModule } from 'model-form';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
-import { DeleteModelHttpEffect, DeleteModelReducer } from 'state-model';
+import { DeleteModelHttpEffect, DeleteModelReducer } from 'model-state';
 import { DataManagementRoutingModule } from './data-management-routing.module';
 import { DataManagerComponent } from './data-manager/data-manager.component';
 import { DataPropertyPickerComponent } from './data-manager/data-property-picker/data-property-picker.component';

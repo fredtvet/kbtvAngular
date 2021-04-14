@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AppSaveModelProviders } from '@core/state/providers.const';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
-import { FetchModelProviders } from 'state-model';
+import { FetchModelProviders } from 'model-state';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';
 import { AdminTimesheetCardDialogWrapperComponent } from './components/admin-timesheet-card-dialog-wrapper.component';

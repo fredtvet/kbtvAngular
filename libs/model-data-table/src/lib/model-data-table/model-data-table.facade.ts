@@ -4,7 +4,7 @@ import { ImmutableArray, KeyVal, Maybe, UnknownState } from "global-types";
 import { BehaviorSubject, combineLatest, Observable, of } from "rxjs";
 import { distinctUntilChanged, map, switchMap } from "rxjs/operators";
 import { Store } from 'state-management';
-import { FetchModelsAction, ModelStateConfig, MODEL_PROP_TRANSLATIONS, StateIsFetching, UnknownModelState } from "state-model";
+import { FetchModelsAction, ModelStateConfig, MODEL_PROP_TRANSLATIONS, StateIsFetching, UnknownModelState } from "model-state";
 import { ModelColDefFactory } from "../model-col-def.factory";
 
 export interface ViewModel { colDefs: Maybe<ColDef[]>, rowData: ImmutableArray<unknown>, noRowsText: string }

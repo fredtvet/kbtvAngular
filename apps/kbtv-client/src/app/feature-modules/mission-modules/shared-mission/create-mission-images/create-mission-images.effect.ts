@@ -11,7 +11,7 @@ import { of } from "rxjs";
 import { Observable } from "rxjs";
 import { mergeMap } from "rxjs/operators";
 import { DispatchedAction, Effect, listenTo } from "state-management";
-import { ModelCommand } from "state-model";
+import { ModelCommand } from "model-state";
 
 @Injectable()
 export class CreateMissionImagesEffect implements Effect<CreateMissionImagesAction> {

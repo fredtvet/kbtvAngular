@@ -5,7 +5,7 @@ import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { Store } from 'state-management'
 import { map } from "rxjs/operators";
 import { StoreState } from './store-state';
-import { FetchModelsAction } from "state-model";
+import { FetchModelsAction } from "model-state";
 import { Roles } from "@core/roles.enum";
 import { UpdateUserPasswordAction } from "@actions/user-actions";
 

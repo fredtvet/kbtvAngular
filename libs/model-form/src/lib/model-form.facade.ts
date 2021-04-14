@@ -4,7 +4,7 @@ import { Immutable, Maybe, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StateAction, Store } from 'state-management';
-import { FetchModelsAction, ModelStateConfig, RelationInclude, UnknownModelState, _getWithRelations } from 'state-model';
+import { FetchModelsAction, ModelStateConfig, RelationInclude, UnknownModelState, _getWithRelations } from 'model-state';
 
 @Injectable()
 export class ModelFormFacade {

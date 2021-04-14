@@ -3,7 +3,7 @@ import { ColDef } from "ag-grid-community";
 import { _convertArrayToObject } from "array-helpers";
 import { Immutable, Maybe, UnknownState } from "global-types";
 import { Store } from "state-management";
-import { ModelCommand, ModelStateConfig, SaveModelAction, UnknownModelState } from "state-model";
+import { ModelCommand, ModelStateConfig, SaveModelAction, UnknownModelState } from "model-state";
 import { MODEL_DATA_TABLES_CONFIG, MODEL_NAME_TRANSLATIONS } from "./injection-tokens.const";
 import { ModelDataTable, ModelDataTablesConfig, ModelNameTranslations } from "./interfaces";
 

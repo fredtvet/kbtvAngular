@@ -10,7 +10,7 @@ import { Immutable, Maybe, Prop } from 'global-types';
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { ComponentStore, Store } from 'state-management';
-import { ModelCommand, _getWithRelations } from 'state-model';
+import { ModelCommand, _getWithRelations } from 'model-state';
 import { ComponentStoreState, StoreState } from './interfaces/store-state';
 import { SetMissionCriteriaAction } from './set-mission-criteria.reducer';
 

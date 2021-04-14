@@ -5,7 +5,7 @@
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
       "state-management": "state-management",
-      "state-model": "state-model",
+      "model-state": "model-state",
       "global-types": "global-types"
     }
   }

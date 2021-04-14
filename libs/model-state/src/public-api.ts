@@ -6,7 +6,7 @@
  * @packageDocumentation
  */
 
-export * from './lib/state-model.module';
+export * from './lib/model-state.module';
 export * from './lib/model-state.config';
 export * from './lib/model-command.enum';
 export * from './lib/interfaces';

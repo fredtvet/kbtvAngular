@@ -6,18 +6,18 @@
     "oldestForwardsCompatibleVersion": 1001
   },
   "kind": "Package",
-  "canonicalReference": "state-model!",
+  "canonicalReference": "model-state!",
   "docComment": "/**\n * A library for managing relational state in the application and in communications with an external api.\n *\n * @remarks\n *\n * The library treats communications with the external api optimistically, therefore ids are generated as a random string on the client. The library does not support many-to-many relationships.\n *\n * @packageDocumentation\n */\n",
-  "name": "state-model",
+  "name": "model-state",
   "members": [
     {
       "kind": "EntryPoint",
-      "canonicalReference": "state-model!",
+      "canonicalReference": "model-state!",
       "name": "",
       "members": [
         {
           "kind": "Function",
-          "canonicalReference": "state-model!_deleteModelWithChildren:function(1)",
+          "canonicalReference": "model-state!_deleteModelWithChildren:function(1)",
           "docComment": "/**\n * Responsible for deleting model with given id(s) and children with cascadeDelete set to true.\n *\n * @param state - The state containing model & child state.\n *\n * @param stateProp - The state property of the model thats being deleted.\n *\n * @param cfg - The id or ids of the model(s) to be deleted.\n *\n * @returns Updated state with deletion applied.\n */\n",
           "excerptTokens": [
             {
@@ -27,7 +27,7 @@
             {
               "kind": "Reference",
               "text": "UnknownState",
-              "canonicalReference": "state-model!UnknownState:type"
+              "canonicalReference": "model-state!UnknownState:type"
             },
             {
               "kind": "Content",
@@ -36,7 +36,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -49,7 +49,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -58,7 +58,7 @@
             {
               "kind": "Reference",
               "text": "Prop",
-              "canonicalReference": "state-model!Prop:type"
+              "canonicalReference": "model-state!Prop:type"
             },
             {
               "kind": "Content",
@@ -71,7 +71,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -84,7 +84,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -150,7 +150,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "state-model!_getModelDisplayValue:function(1)",
+          "canonicalReference": "model-state!_getModelDisplayValue:function(1)",
           "docComment": "/**\n * Get display value for model\n *\n * @param prop - Model state property\n *\n * @param value - Model value\n */\n",
           "excerptTokens": [
             {
@@ -168,7 +168,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -177,7 +177,7 @@
             {
               "kind": "Reference",
               "text": "Prop",
-              "canonicalReference": "state-model!Prop:type"
+              "canonicalReference": "model-state!Prop:type"
             },
             {
               "kind": "Content",
@@ -190,7 +190,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -259,7 +259,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "state-model!_getRangeWithRelations:function(1)",
+          "canonicalReference": "model-state!_getRangeWithRelations:function(1)",
           "docComment": "/**\n * Get all or given range of models with specified relationships set on model according to model property config set in {@link ModelStateConfig}\n *\n * @param state - State containing model and relationship data\n *\n * @param cfg - Configuration of which relationships to include\n *\n * @param filter - A filter to select a range of models.\n *\n * @returns An array of models with relationships applied.\n */\n",
           "excerptTokens": [
             {
@@ -277,7 +277,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -299,7 +299,7 @@
             {
               "kind": "Reference",
               "text": "RelationInclude",
-              "canonicalReference": "state-model!RelationInclude:interface"
+              "canonicalReference": "model-state!RelationInclude:interface"
             },
             {
               "kind": "Content",
@@ -316,7 +316,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -329,7 +329,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -397,7 +397,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "state-model!_getRelationProps:function(1)",
+          "canonicalReference": "model-state!_getRelationProps:function(1)",
           "docComment": "/**\n * Get state properties of relationships specified in input config.\n *\n * @param cfg - \n */\n",
           "excerptTokens": [
             {
@@ -407,7 +407,7 @@
             {
               "kind": "Reference",
               "text": "RelationInclude",
-              "canonicalReference": "state-model!RelationInclude:interface"
+              "canonicalReference": "model-state!RelationInclude:interface"
             },
             {
               "kind": "Content",
@@ -424,7 +424,7 @@
             {
               "kind": "Reference",
               "text": "ImmutableArray",
-              "canonicalReference": "state-model!ImmutableArray:interface"
+              "canonicalReference": "model-state!ImmutableArray:interface"
             },
             {
               "kind": "Content",
@@ -433,7 +433,7 @@
             {
               "kind": "Reference",
               "text": "Prop",
-              "canonicalReference": "state-model!Prop:type"
+              "canonicalReference": "model-state!Prop:type"
             },
             {
               "kind": "Content",
@@ -442,7 +442,7 @@
             {
               "kind": "Reference",
               "text": "ImmutableArray",
-              "canonicalReference": "state-model!ImmutableArray:interface"
+              "canonicalReference": "model-state!ImmutableArray:interface"
             },
             {
               "kind": "Content",
@@ -451,7 +451,7 @@
             {
               "kind": "Reference",
               "text": "Prop",
-              "canonicalReference": "state-model!Prop:type"
+              "canonicalReference": "model-state!Prop:type"
             },
             {
               "kind": "Content",
@@ -494,7 +494,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "state-model!_getWithRelations:function(1)",
+          "canonicalReference": "model-state!_getWithRelations:function(1)",
           "docComment": "/**\n * Get model with specified relationships set on model according to model property config set in {@link ModelStateConfig}\n *\n * @param state - State containing model and relationship data\n *\n * @param cfg - Configuration of which relationships to include\n *\n * @param id - A unique property value of the model that is requested.\n *\n * @returns The requested model with relationships applied if found.\n */\n",
           "excerptTokens": [
             {
@@ -520,7 +520,7 @@
             {
               "kind": "Reference",
               "text": "Maybe",
-              "canonicalReference": "state-model!Maybe:type"
+              "canonicalReference": "model-state!Maybe:type"
             },
             {
               "kind": "Content",
@@ -529,7 +529,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -551,7 +551,7 @@
             {
               "kind": "Reference",
               "text": "RelationInclude",
-              "canonicalReference": "state-model!RelationInclude:interface"
+              "canonicalReference": "model-state!RelationInclude:interface"
             },
             {
               "kind": "Content",
@@ -572,7 +572,7 @@
             {
               "kind": "Reference",
               "text": "Maybe",
-              "canonicalReference": "state-model!Maybe:type"
+              "canonicalReference": "model-state!Maybe:type"
             },
             {
               "kind": "Content",
@@ -581,7 +581,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -649,7 +649,7 @@
         },
         {
           "kind": "Function",
-          "canonicalReference": "state-model!_modifyModelWithForeigns:function(1)",
+          "canonicalReference": "model-state!_modifyModelWithForeigns:function(1)",
           "docComment": "/**\n * Add or update a model and any foreign relationships set on the provided model value according to {@link ModelStateConfig}\n *\n * @param state - State containing model and foregin data\n *\n * @param stateProp - Model state property of the model\n *\n * @param entity - The model value with optional foreign props\n *\n * @param entityFn - A modifier function to add or update the model.\n *\n * @returns State with model and foreigns added or updated.\n */\n",
           "excerptTokens": [
             {
@@ -667,7 +667,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -680,7 +680,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -689,7 +689,7 @@
             {
               "kind": "Reference",
               "text": "Prop",
-              "canonicalReference": "state-model!Prop:type"
+              "canonicalReference": "model-state!Prop:type"
             },
             {
               "kind": "Content",
@@ -702,7 +702,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -711,7 +711,7 @@
             {
               "kind": "Reference",
               "text": "UnknownState",
-              "canonicalReference": "state-model!UnknownState:type"
+              "canonicalReference": "model-state!UnknownState:type"
             },
             {
               "kind": "Content",
@@ -728,7 +728,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -737,7 +737,7 @@
             {
               "kind": "Reference",
               "text": "ImmutableArray",
-              "canonicalReference": "state-model!ImmutableArray:interface"
+              "canonicalReference": "model-state!ImmutableArray:interface"
             },
             {
               "kind": "Content",
@@ -746,7 +746,7 @@
             {
               "kind": "Reference",
               "text": "ImmutableArray",
-              "canonicalReference": "state-model!ImmutableArray:interface"
+              "canonicalReference": "model-state!ImmutableArray:interface"
             },
             {
               "kind": "Content",
@@ -759,7 +759,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -832,7 +832,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "state-model!ChildRelation:interface",
+          "canonicalReference": "model-state!ChildRelation:interface",
           "docComment": "/**\n * A one to many relationship child\n */\n",
           "excerptTokens": [
             {
@@ -858,7 +858,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ChildRelation#cascadeDelete:member",
+              "canonicalReference": "model-state!ChildRelation#cascadeDelete:member",
               "docComment": "/**\n * Set to true if children should be deleted when parents are.\n */\n",
               "excerptTokens": [
                 {
@@ -884,7 +884,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ChildRelation#prop:member",
+              "canonicalReference": "model-state!ChildRelation#prop:member",
               "docComment": "/**\n * Child state property\n */\n",
               "excerptTokens": [
                 {
@@ -894,7 +894,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -918,7 +918,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "state-model!DeleteModelAction:interface",
+          "canonicalReference": "model-state!DeleteModelAction:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -928,7 +928,7 @@
             {
               "kind": "Reference",
               "text": "ModelStateAction",
-              "canonicalReference": "state-model!ModelStateAction:interface"
+              "canonicalReference": "model-state!ModelStateAction:interface"
             },
             {
               "kind": "Content",
@@ -953,7 +953,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!DeleteModelAction#payload:member",
+              "canonicalReference": "model-state!DeleteModelAction#payload:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -987,7 +987,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "state-model!DeleteModelAction:var",
+          "canonicalReference": "model-state!DeleteModelAction:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1004,7 +1004,7 @@
         },
         {
           "kind": "Class",
-          "canonicalReference": "state-model!DeleteModelHttpEffect:class",
+          "canonicalReference": "model-state!DeleteModelHttpEffect:class",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1014,7 +1014,7 @@
             {
               "kind": "Reference",
               "text": "Effect",
-              "canonicalReference": "state-model!Effect:interface"
+              "canonicalReference": "model-state!Effect:interface"
             },
             {
               "kind": "Content",
@@ -1023,7 +1023,7 @@
             {
               "kind": "Reference",
               "text": "DeleteModelAction",
-              "canonicalReference": "state-model!DeleteModelAction:interface"
+              "canonicalReference": "model-state!DeleteModelAction:interface"
             },
             {
               "kind": "Content",
@@ -1035,7 +1035,7 @@
           "members": [
             {
               "kind": "Constructor",
-              "canonicalReference": "state-model!DeleteModelHttpEffect:constructor(1)",
+              "canonicalReference": "model-state!DeleteModelHttpEffect:constructor(1)",
               "docComment": "/**\n * Constructs a new instance of the `DeleteModelHttpEffect` class\n */\n",
               "excerptTokens": [
                 {
@@ -1045,7 +1045,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommandApiMap",
-                  "canonicalReference": "state-model!ModelCommandApiMap:interface"
+                  "canonicalReference": "model-state!ModelCommandApiMap:interface"
                 },
                 {
                   "kind": "Content",
@@ -1054,7 +1054,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -1063,7 +1063,7 @@
                 {
                   "kind": "Reference",
                   "text": "KeyVal",
-                  "canonicalReference": "state-model!KeyVal:type"
+                  "canonicalReference": "model-state!KeyVal:type"
                 },
                 {
                   "kind": "Content",
@@ -1095,7 +1095,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "state-model!DeleteModelHttpEffect#createApiUrl:member(1)",
+              "canonicalReference": "model-state!DeleteModelHttpEffect#createApiUrl:member(1)",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1105,7 +1105,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -1114,7 +1114,7 @@
                 {
                   "kind": "Reference",
                   "text": "DeleteModelAction",
-                  "canonicalReference": "state-model!DeleteModelAction:interface"
+                  "canonicalReference": "model-state!DeleteModelAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -1136,7 +1136,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -1145,7 +1145,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelConfig",
-                  "canonicalReference": "state-model!ModelConfig:interface"
+                  "canonicalReference": "model-state!ModelConfig:interface"
                 },
                 {
                   "kind": "Content",
@@ -1176,7 +1176,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommand",
-                  "canonicalReference": "state-model!ModelCommand:enum"
+                  "canonicalReference": "model-state!ModelCommand:enum"
                 },
                 {
                   "kind": "Content",
@@ -1226,7 +1226,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "state-model!DeleteModelHttpEffect#createCancelMessage:member(1)",
+              "canonicalReference": "model-state!DeleteModelHttpEffect#createCancelMessage:member(1)",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1236,7 +1236,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -1245,7 +1245,7 @@
                 {
                   "kind": "Reference",
                   "text": "DeleteModelAction",
-                  "canonicalReference": "state-model!DeleteModelAction:interface"
+                  "canonicalReference": "model-state!DeleteModelAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -1258,7 +1258,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -1267,7 +1267,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelConfig",
-                  "canonicalReference": "state-model!ModelConfig:interface"
+                  "canonicalReference": "model-state!ModelConfig:interface"
                 },
                 {
                   "kind": "Content",
@@ -1314,7 +1314,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "state-model!DeleteModelHttpEffect#createHttpBody:member(1)",
+              "canonicalReference": "model-state!DeleteModelHttpEffect#createHttpBody:member(1)",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1324,7 +1324,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -1333,7 +1333,7 @@
                 {
                   "kind": "Reference",
                   "text": "DeleteModelAction",
-                  "canonicalReference": "state-model!DeleteModelAction:interface"
+                  "canonicalReference": "model-state!DeleteModelAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -1346,7 +1346,7 @@
                 {
                   "kind": "Reference",
                   "text": "Maybe",
-                  "canonicalReference": "state-model!Maybe:type"
+                  "canonicalReference": "model-state!Maybe:type"
                 },
                 {
                   "kind": "Content",
@@ -1355,7 +1355,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -1364,7 +1364,7 @@
                 {
                   "kind": "Reference",
                   "text": "Maybe",
-                  "canonicalReference": "state-model!Maybe:type"
+                  "canonicalReference": "model-state!Maybe:type"
                 },
                 {
                   "kind": "Content",
@@ -1396,7 +1396,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "state-model!DeleteModelHttpEffect#handle$:member(1)",
+              "canonicalReference": "model-state!DeleteModelHttpEffect#handle$:member(1)",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1415,7 +1415,7 @@
                 {
                   "kind": "Reference",
                   "text": "DispatchedAction",
-                  "canonicalReference": "state-model!DispatchedAction:interface"
+                  "canonicalReference": "model-state!DispatchedAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -1424,7 +1424,7 @@
                 {
                   "kind": "Reference",
                   "text": "DeleteModelAction",
-                  "canonicalReference": "state-model!DeleteModelAction:interface"
+                  "canonicalReference": "model-state!DeleteModelAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -1446,7 +1446,7 @@
                 {
                   "kind": "Reference",
                   "text": "OptimisticHttpAction",
-                  "canonicalReference": "state-model!OptimisticHttpAction:interface"
+                  "canonicalReference": "model-state!OptimisticHttpAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -1486,7 +1486,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "state-model!DeleteModelReducer:var",
+          "canonicalReference": "model-state!DeleteModelReducer:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1496,7 +1496,7 @@
             {
               "kind": "Reference",
               "text": "Reducer",
-              "canonicalReference": "state-model!Reducer:interface"
+              "canonicalReference": "model-state!Reducer:interface"
             },
             {
               "kind": "Content",
@@ -1505,7 +1505,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -1514,7 +1514,7 @@
             {
               "kind": "Reference",
               "text": "UnknownState",
-              "canonicalReference": "state-model!UnknownState:type"
+              "canonicalReference": "model-state!UnknownState:type"
             },
             {
               "kind": "Content",
@@ -1523,7 +1523,7 @@
             {
               "kind": "Reference",
               "text": "DeleteModelAction",
-              "canonicalReference": "state-model!DeleteModelAction:interface"
+              "canonicalReference": "model-state!DeleteModelAction:interface"
             },
             {
               "kind": "Content",
@@ -1532,7 +1532,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -1541,7 +1541,7 @@
             {
               "kind": "Reference",
               "text": "UnknownState",
-              "canonicalReference": "state-model!UnknownState:type"
+              "canonicalReference": "model-state!UnknownState:type"
             },
             {
               "kind": "Content",
@@ -1557,7 +1557,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "state-model!FetchModelsAction:interface",
+          "canonicalReference": "model-state!FetchModelsAction:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1567,7 +1567,7 @@
             {
               "kind": "Reference",
               "text": "StateAction",
-              "canonicalReference": "state-model!StateAction:interface"
+              "canonicalReference": "model-state!StateAction:interface"
             },
             {
               "kind": "Content",
@@ -1592,7 +1592,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!FetchModelsAction#props:member",
+              "canonicalReference": "model-state!FetchModelsAction#props:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1602,7 +1602,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -1611,7 +1611,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -1640,7 +1640,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "state-model!FetchModelsAction:var",
+          "canonicalReference": "model-state!FetchModelsAction:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1657,7 +1657,7 @@
         },
         {
           "kind": "Class",
-          "canonicalReference": "state-model!FetchModelsHttpEffect:class",
+          "canonicalReference": "model-state!FetchModelsHttpEffect:class",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1667,7 +1667,7 @@
             {
               "kind": "Reference",
               "text": "Effect",
-              "canonicalReference": "state-model!Effect:interface"
+              "canonicalReference": "model-state!Effect:interface"
             },
             {
               "kind": "Content",
@@ -1676,7 +1676,7 @@
             {
               "kind": "Reference",
               "text": "FetchModelsAction",
-              "canonicalReference": "state-model!FetchModelsAction:interface"
+              "canonicalReference": "model-state!FetchModelsAction:interface"
             },
             {
               "kind": "Content",
@@ -1688,7 +1688,7 @@
           "members": [
             {
               "kind": "Constructor",
-              "canonicalReference": "state-model!FetchModelsHttpEffect:constructor(1)",
+              "canonicalReference": "model-state!FetchModelsHttpEffect:constructor(1)",
               "docComment": "/**\n * Constructs a new instance of the `FetchModelsHttpEffect` class\n */\n",
               "excerptTokens": [
                 {
@@ -1734,7 +1734,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "state-model!FetchModelsHttpEffect#handle$:member(1)",
+              "canonicalReference": "model-state!FetchModelsHttpEffect#handle$:member(1)",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1753,7 +1753,7 @@
                 {
                   "kind": "Reference",
                   "text": "DispatchedAction",
-                  "canonicalReference": "state-model!DispatchedAction:interface"
+                  "canonicalReference": "model-state!DispatchedAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -1762,7 +1762,7 @@
                 {
                   "kind": "Reference",
                   "text": "FetchModelsAction",
-                  "canonicalReference": "state-model!FetchModelsAction:interface"
+                  "canonicalReference": "model-state!FetchModelsAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -1771,7 +1771,7 @@
                 {
                   "kind": "Reference",
                   "text": "UnknownState",
-                  "canonicalReference": "state-model!UnknownState:type"
+                  "canonicalReference": "model-state!UnknownState:type"
                 },
                 {
                   "kind": "Content",
@@ -1793,7 +1793,7 @@
                 {
                   "kind": "Reference",
                   "text": "SetFetchedModelAction",
-                  "canonicalReference": "state-model!SetFetchedModelAction:interface"
+                  "canonicalReference": "model-state!SetFetchedModelAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -1833,7 +1833,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "state-model!MailModelsAction:interface",
+          "canonicalReference": "model-state!MailModelsAction:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1843,7 +1843,7 @@
             {
               "kind": "Reference",
               "text": "ModelStateAction",
-              "canonicalReference": "state-model!ModelStateAction:interface"
+              "canonicalReference": "model-state!ModelStateAction:interface"
             },
             {
               "kind": "Content",
@@ -1868,7 +1868,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!MailModelsAction#ids:member",
+              "canonicalReference": "model-state!MailModelsAction#ids:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1894,7 +1894,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!MailModelsAction#stateProp:member",
+              "canonicalReference": "model-state!MailModelsAction#stateProp:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1904,7 +1904,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -1925,7 +1925,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!MailModelsAction#toEmail:member",
+              "canonicalReference": "model-state!MailModelsAction#toEmail:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -1959,7 +1959,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "state-model!MailModelsAction:var",
+          "canonicalReference": "model-state!MailModelsAction:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1976,7 +1976,7 @@
         },
         {
           "kind": "Class",
-          "canonicalReference": "state-model!MailModelsHttpEffect:class",
+          "canonicalReference": "model-state!MailModelsHttpEffect:class",
           "docComment": "",
           "excerptTokens": [
             {
@@ -1986,7 +1986,7 @@
             {
               "kind": "Reference",
               "text": "Effect",
-              "canonicalReference": "state-model!Effect:interface"
+              "canonicalReference": "model-state!Effect:interface"
             },
             {
               "kind": "Content",
@@ -1995,7 +1995,7 @@
             {
               "kind": "Reference",
               "text": "MailModelsAction",
-              "canonicalReference": "state-model!MailModelsAction:interface"
+              "canonicalReference": "model-state!MailModelsAction:interface"
             },
             {
               "kind": "Content",
@@ -2007,7 +2007,7 @@
           "members": [
             {
               "kind": "Constructor",
-              "canonicalReference": "state-model!MailModelsHttpEffect:constructor(1)",
+              "canonicalReference": "model-state!MailModelsHttpEffect:constructor(1)",
               "docComment": "/**\n * Constructs a new instance of the `MailModelsHttpEffect` class\n */\n",
               "excerptTokens": [
                 {
@@ -2034,7 +2034,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommandApiMap",
-                  "canonicalReference": "state-model!ModelCommandApiMap:interface"
+                  "canonicalReference": "model-state!ModelCommandApiMap:interface"
                 },
                 {
                   "kind": "Content",
@@ -2069,7 +2069,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "state-model!MailModelsHttpEffect#handle$:member(1)",
+              "canonicalReference": "model-state!MailModelsHttpEffect#handle$:member(1)",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2088,7 +2088,7 @@
                 {
                   "kind": "Reference",
                   "text": "DispatchedAction",
-                  "canonicalReference": "state-model!DispatchedAction:interface"
+                  "canonicalReference": "model-state!DispatchedAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -2097,7 +2097,7 @@
                 {
                   "kind": "Reference",
                   "text": "MailModelsAction",
-                  "canonicalReference": "state-model!MailModelsAction:interface"
+                  "canonicalReference": "model-state!MailModelsAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -2150,7 +2150,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "state-model!MODEL_COMMAND_API_MAP:var",
+          "canonicalReference": "model-state!MODEL_COMMAND_API_MAP:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2169,7 +2169,7 @@
             {
               "kind": "Reference",
               "text": "ModelCommandApiMap",
-              "canonicalReference": "state-model!ModelCommandApiMap:interface"
+              "canonicalReference": "model-state!ModelCommandApiMap:interface"
             },
             {
               "kind": "Content",
@@ -2185,7 +2185,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "state-model!MODEL_CONFIGS:var",
+          "canonicalReference": "model-state!MODEL_CONFIGS:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2204,7 +2204,7 @@
             {
               "kind": "Reference",
               "text": "ModelConfig",
-              "canonicalReference": "state-model!ModelConfig:interface"
+              "canonicalReference": "model-state!ModelConfig:interface"
             },
             {
               "kind": "Content",
@@ -2220,7 +2220,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "state-model!MODEL_PROP_TRANSLATIONS:var",
+          "canonicalReference": "model-state!MODEL_PROP_TRANSLATIONS:var",
           "docComment": "/**\n * Translations of all model properties\n */\n",
           "excerptTokens": [
             {
@@ -2239,7 +2239,7 @@
             {
               "kind": "Reference",
               "text": "KeyVal",
-              "canonicalReference": "state-model!KeyVal:type"
+              "canonicalReference": "model-state!KeyVal:type"
             },
             {
               "kind": "Content",
@@ -2255,7 +2255,7 @@
         },
         {
           "kind": "Enum",
-          "canonicalReference": "state-model!ModelCommand:enum",
+          "canonicalReference": "model-state!ModelCommand:enum",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2268,7 +2268,7 @@
           "members": [
             {
               "kind": "EnumMember",
-              "canonicalReference": "state-model!ModelCommand.Create:member",
+              "canonicalReference": "model-state!ModelCommand.Create:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2289,7 +2289,7 @@
             },
             {
               "kind": "EnumMember",
-              "canonicalReference": "state-model!ModelCommand.Delete:member",
+              "canonicalReference": "model-state!ModelCommand.Delete:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2310,7 +2310,7 @@
             },
             {
               "kind": "EnumMember",
-              "canonicalReference": "state-model!ModelCommand.DeleteRange:member",
+              "canonicalReference": "model-state!ModelCommand.DeleteRange:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2331,7 +2331,7 @@
             },
             {
               "kind": "EnumMember",
-              "canonicalReference": "state-model!ModelCommand.Mail:member",
+              "canonicalReference": "model-state!ModelCommand.Mail:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2352,7 +2352,7 @@
             },
             {
               "kind": "EnumMember",
-              "canonicalReference": "state-model!ModelCommand.Update:member",
+              "canonicalReference": "model-state!ModelCommand.Update:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2375,7 +2375,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "state-model!ModelCommandApi:type",
+          "canonicalReference": "model-state!ModelCommandApi:type",
           "docComment": "/**\n * Information about model commands communication with external api\n */\n",
           "excerptTokens": [
             {
@@ -2413,7 +2413,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "state-model!ModelCommandApiMap:interface",
+          "canonicalReference": "model-state!ModelCommandApiMap:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2426,7 +2426,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelCommandApiMap#\"0\":member",
+              "canonicalReference": "model-state!ModelCommandApiMap#\"0\":member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2436,7 +2436,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommand.Create",
-                  "canonicalReference": "state-model!ModelCommand.Create:member"
+                  "canonicalReference": "model-state!ModelCommand.Create:member"
                 },
                 {
                   "kind": "Content",
@@ -2445,7 +2445,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -2454,7 +2454,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommandApi",
-                  "canonicalReference": "state-model!ModelCommandApi:type"
+                  "canonicalReference": "model-state!ModelCommandApi:type"
                 },
                 {
                   "kind": "Content",
@@ -2475,7 +2475,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelCommandApiMap#\"1\":member",
+              "canonicalReference": "model-state!ModelCommandApiMap#\"1\":member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2485,7 +2485,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommand.Update",
-                  "canonicalReference": "state-model!ModelCommand.Update:member"
+                  "canonicalReference": "model-state!ModelCommand.Update:member"
                 },
                 {
                   "kind": "Content",
@@ -2494,7 +2494,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -2503,7 +2503,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommandApi",
-                  "canonicalReference": "state-model!ModelCommandApi:type"
+                  "canonicalReference": "model-state!ModelCommandApi:type"
                 },
                 {
                   "kind": "Content",
@@ -2524,7 +2524,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelCommandApiMap#\"2\":member",
+              "canonicalReference": "model-state!ModelCommandApiMap#\"2\":member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2534,7 +2534,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommand.Delete",
-                  "canonicalReference": "state-model!ModelCommand.Delete:member"
+                  "canonicalReference": "model-state!ModelCommand.Delete:member"
                 },
                 {
                   "kind": "Content",
@@ -2543,7 +2543,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -2552,7 +2552,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommandApi",
-                  "canonicalReference": "state-model!ModelCommandApi:type"
+                  "canonicalReference": "model-state!ModelCommandApi:type"
                 },
                 {
                   "kind": "Content",
@@ -2573,7 +2573,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelCommandApiMap#\"3\":member",
+              "canonicalReference": "model-state!ModelCommandApiMap#\"3\":member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2583,7 +2583,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommand.DeleteRange",
-                  "canonicalReference": "state-model!ModelCommand.DeleteRange:member"
+                  "canonicalReference": "model-state!ModelCommand.DeleteRange:member"
                 },
                 {
                   "kind": "Content",
@@ -2592,7 +2592,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -2601,7 +2601,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommandApi",
-                  "canonicalReference": "state-model!ModelCommandApi:type"
+                  "canonicalReference": "model-state!ModelCommandApi:type"
                 },
                 {
                   "kind": "Content",
@@ -2622,7 +2622,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelCommandApiMap#\"4\":member",
+              "canonicalReference": "model-state!ModelCommandApiMap#\"4\":member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2632,7 +2632,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommand.Mail",
-                  "canonicalReference": "state-model!ModelCommand.Mail:member"
+                  "canonicalReference": "model-state!ModelCommand.Mail:member"
                 },
                 {
                   "kind": "Content",
@@ -2641,7 +2641,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -2650,7 +2650,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommandApi",
-                  "canonicalReference": "state-model!ModelCommandApi:type"
+                  "canonicalReference": "model-state!ModelCommandApi:type"
                 },
                 {
                   "kind": "Content",
@@ -2674,7 +2674,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "state-model!ModelConfig:interface",
+          "canonicalReference": "model-state!ModelConfig:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2711,7 +2711,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelConfig#apiUrl:member",
+              "canonicalReference": "model-state!ModelConfig#apiUrl:member",
               "docComment": "/**\n * Base url for model api calls\n */\n",
               "excerptTokens": [
                 {
@@ -2737,7 +2737,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelConfig#children:member",
+              "canonicalReference": "model-state!ModelConfig#children:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2747,7 +2747,7 @@
                 {
                   "kind": "Reference",
                   "text": "ChildRelation",
-                  "canonicalReference": "state-model!ChildRelation:interface"
+                  "canonicalReference": "model-state!ChildRelation:interface"
                 },
                 {
                   "kind": "Content",
@@ -2768,7 +2768,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelConfig#displayProp:member",
+              "canonicalReference": "model-state!ModelConfig#displayProp:member",
               "docComment": "/**\n * Property used when displaying model.\n */\n",
               "excerptTokens": [
                 {
@@ -2778,7 +2778,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -2799,7 +2799,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelConfig#fetchable:member",
+              "canonicalReference": "model-state!ModelConfig#fetchable:member",
               "docComment": "/**\n * Set to true if model can be fetched from external API\n */\n",
               "excerptTokens": [
                 {
@@ -2825,7 +2825,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelConfig#foreignKey:member",
+              "canonicalReference": "model-state!ModelConfig#foreignKey:member",
               "docComment": "/**\n * Property used as foreign key in other models\n */\n",
               "excerptTokens": [
                 {
@@ -2851,7 +2851,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelConfig#foreignProp:member",
+              "canonicalReference": "model-state!ModelConfig#foreignProp:member",
               "docComment": "/**\n * Property used as foreign reference in other models\n */\n",
               "excerptTokens": [
                 {
@@ -2877,7 +2877,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelConfig#foreigns:member",
+              "canonicalReference": "model-state!ModelConfig#foreigns:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -2887,7 +2887,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -2908,7 +2908,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelConfig#identifier:member",
+              "canonicalReference": "model-state!ModelConfig#identifier:member",
               "docComment": "/**\n * A property on the model that unqiuely identifies it.\n */\n",
               "excerptTokens": [
                 {
@@ -2918,7 +2918,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -2939,7 +2939,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelConfig#stateProp:member",
+              "canonicalReference": "model-state!ModelConfig#stateProp:member",
               "docComment": "/**\n * State property containing model data\n */\n",
               "excerptTokens": [
                 {
@@ -2949,7 +2949,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -2973,7 +2973,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "state-model!ModelConfigMap:type",
+          "canonicalReference": "model-state!ModelConfigMap:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -2987,7 +2987,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -2996,7 +2996,7 @@
             {
               "kind": "Reference",
               "text": "ModelConfig",
-              "canonicalReference": "state-model!ModelConfig:interface"
+              "canonicalReference": "model-state!ModelConfig:interface"
             },
             {
               "kind": "Content",
@@ -3029,7 +3029,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "state-model!ModelStateAction:interface",
+          "canonicalReference": "model-state!ModelStateAction:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3039,7 +3039,7 @@
             {
               "kind": "Reference",
               "text": "StateAction",
-              "canonicalReference": "state-model!StateAction:interface"
+              "canonicalReference": "model-state!StateAction:interface"
             },
             {
               "kind": "Content",
@@ -3064,7 +3064,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!ModelStateAction#stateProp:member",
+              "canonicalReference": "model-state!ModelStateAction#stateProp:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -3074,7 +3074,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -3103,7 +3103,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "state-model!ModelStateAction:var",
+          "canonicalReference": "model-state!ModelStateAction:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3120,7 +3120,7 @@
         },
         {
           "kind": "Class",
-          "canonicalReference": "state-model!ModelStateConfig:class",
+          "canonicalReference": "model-state!ModelStateConfig:class",
           "docComment": "/**\n * Responsible for setting & reading model state config data.\n */\n",
           "excerptTokens": [
             {
@@ -3133,7 +3133,7 @@
           "members": [
             {
               "kind": "Constructor",
-              "canonicalReference": "state-model!ModelStateConfig:constructor(1)",
+              "canonicalReference": "model-state!ModelStateConfig:constructor(1)",
               "docComment": "/**\n * Constructs a new instance of the `ModelStateConfig` class\n */\n",
               "excerptTokens": [
                 {
@@ -3143,7 +3143,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelConfig",
-                  "canonicalReference": "state-model!ModelConfig:interface"
+                  "canonicalReference": "model-state!ModelConfig:interface"
                 },
                 {
                   "kind": "Content",
@@ -3168,7 +3168,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "state-model!ModelStateConfig.get:member(1)",
+              "canonicalReference": "model-state!ModelStateConfig.get:member(1)",
               "docComment": "/**\n * Get model config for given state property\n */\n",
               "excerptTokens": [
                 {
@@ -3178,7 +3178,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -3187,7 +3187,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -3200,7 +3200,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -3209,7 +3209,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelConfig",
-                  "canonicalReference": "state-model!ModelConfig:interface"
+                  "canonicalReference": "model-state!ModelConfig:interface"
                 },
                 {
                   "kind": "Content",
@@ -3265,7 +3265,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "state-model!ModelStateConfig.getBy:member(1)",
+              "canonicalReference": "model-state!ModelStateConfig.getBy:member(1)",
               "docComment": "/**\n * Get model config for given state property grouped by key\n */\n",
               "excerptTokens": [
                 {
@@ -3275,7 +3275,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -3284,7 +3284,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -3297,7 +3297,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -3306,7 +3306,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelConfig",
-                  "canonicalReference": "state-model!ModelConfig:interface"
+                  "canonicalReference": "model-state!ModelConfig:interface"
                 },
                 {
                   "kind": "Content",
@@ -3319,7 +3319,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -3328,7 +3328,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelConfig",
-                  "canonicalReference": "state-model!ModelConfig:interface"
+                  "canonicalReference": "model-state!ModelConfig:interface"
                 },
                 {
                   "kind": "Content",
@@ -3394,7 +3394,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "state-model!RelationInclude:interface",
+          "canonicalReference": "model-state!RelationInclude:interface",
           "docComment": "/**\n * Information on which relationships should be included together with model\n */\n",
           "excerptTokens": [
             {
@@ -3420,7 +3420,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!RelationInclude#children:member",
+              "canonicalReference": "model-state!RelationInclude#children:member",
               "docComment": "/**\n * Child properties that should be included. Set to 'all' to get all relationships\n */\n",
               "excerptTokens": [
                 {
@@ -3430,7 +3430,7 @@
                 {
                   "kind": "Reference",
                   "text": "ImmutableArray",
-                  "canonicalReference": "state-model!ImmutableArray:interface"
+                  "canonicalReference": "model-state!ImmutableArray:interface"
                 },
                 {
                   "kind": "Content",
@@ -3439,7 +3439,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -3460,7 +3460,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!RelationInclude#foreigns:member",
+              "canonicalReference": "model-state!RelationInclude#foreigns:member",
               "docComment": "/**\n * Foreign properties that should be included. Set to 'all' to get all relationships\n */\n",
               "excerptTokens": [
                 {
@@ -3470,7 +3470,7 @@
                 {
                   "kind": "Reference",
                   "text": "ImmutableArray",
-                  "canonicalReference": "state-model!ImmutableArray:interface"
+                  "canonicalReference": "model-state!ImmutableArray:interface"
                 },
                 {
                   "kind": "Content",
@@ -3479,7 +3479,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -3500,7 +3500,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!RelationInclude#prop:member",
+              "canonicalReference": "model-state!RelationInclude#prop:member",
               "docComment": "/**\n * The model property\n */\n",
               "excerptTokens": [
                 {
@@ -3510,7 +3510,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -3519,7 +3519,7 @@
                 {
                   "kind": "Reference",
                   "text": "Prop",
-                  "canonicalReference": "state-model!Prop:type"
+                  "canonicalReference": "model-state!Prop:type"
                 },
                 {
                   "kind": "Content",
@@ -3543,7 +3543,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "state-model!SaveAction:type",
+          "canonicalReference": "model-state!SaveAction:type",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3553,7 +3553,7 @@
             {
               "kind": "Reference",
               "text": "ModelCommand.Create",
-              "canonicalReference": "state-model!ModelCommand.Create:member"
+              "canonicalReference": "model-state!ModelCommand.Create:member"
             },
             {
               "kind": "Content",
@@ -3562,7 +3562,7 @@
             {
               "kind": "Reference",
               "text": "ModelCommand.Update",
-              "canonicalReference": "state-model!ModelCommand.Update:member"
+              "canonicalReference": "model-state!ModelCommand.Update:member"
             },
             {
               "kind": "Content",
@@ -3578,7 +3578,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "state-model!SaveModelAction:interface",
+          "canonicalReference": "model-state!SaveModelAction:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3588,7 +3588,7 @@
             {
               "kind": "Reference",
               "text": "ModelStateAction",
-              "canonicalReference": "state-model!ModelStateAction:interface"
+              "canonicalReference": "model-state!ModelStateAction:interface"
             },
             {
               "kind": "Content",
@@ -3624,7 +3624,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!SaveModelAction#apiUrlOverride:member",
+              "canonicalReference": "model-state!SaveModelAction#apiUrlOverride:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -3650,7 +3650,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!SaveModelAction#entity:member",
+              "canonicalReference": "model-state!SaveModelAction#entity:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -3676,7 +3676,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!SaveModelAction#saveAction:member",
+              "canonicalReference": "model-state!SaveModelAction#saveAction:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -3686,7 +3686,7 @@
                 {
                   "kind": "Reference",
                   "text": "SaveAction",
-                  "canonicalReference": "state-model!SaveAction:type"
+                  "canonicalReference": "model-state!SaveAction:type"
                 },
                 {
                   "kind": "Content",
@@ -3711,7 +3711,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "state-model!SaveModelAction:var",
+          "canonicalReference": "model-state!SaveModelAction:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3728,7 +3728,7 @@
         },
         {
           "kind": "Class",
-          "canonicalReference": "state-model!SaveModelHttpEffect:class",
+          "canonicalReference": "model-state!SaveModelHttpEffect:class",
           "docComment": "",
           "excerptTokens": [
             {
@@ -3754,7 +3754,7 @@
             {
               "kind": "Reference",
               "text": "Effect",
-              "canonicalReference": "state-model!Effect:interface"
+              "canonicalReference": "model-state!Effect:interface"
             },
             {
               "kind": "Content",
@@ -3763,7 +3763,7 @@
             {
               "kind": "Reference",
               "text": "SaveModelAction",
-              "canonicalReference": "state-model!SaveModelAction:interface"
+              "canonicalReference": "model-state!SaveModelAction:interface"
             },
             {
               "kind": "Content",
@@ -3799,7 +3799,7 @@
           "members": [
             {
               "kind": "Constructor",
-              "canonicalReference": "state-model!SaveModelHttpEffect:constructor(1)",
+              "canonicalReference": "model-state!SaveModelHttpEffect:constructor(1)",
               "docComment": "/**\n * Constructs a new instance of the `SaveModelHttpEffect` class\n */\n",
               "excerptTokens": [
                 {
@@ -3809,7 +3809,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelCommandApiMap",
-                  "canonicalReference": "state-model!ModelCommandApiMap:interface"
+                  "canonicalReference": "model-state!ModelCommandApiMap:interface"
                 },
                 {
                   "kind": "Content",
@@ -3818,7 +3818,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -3827,7 +3827,7 @@
                 {
                   "kind": "Reference",
                   "text": "KeyVal",
-                  "canonicalReference": "state-model!KeyVal:type"
+                  "canonicalReference": "model-state!KeyVal:type"
                 },
                 {
                   "kind": "Content",
@@ -3859,7 +3859,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "state-model!SaveModelHttpEffect#createApiUrl:member(1)",
+              "canonicalReference": "model-state!SaveModelHttpEffect#createApiUrl:member(1)",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -3869,7 +3869,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -3878,7 +3878,7 @@
                 {
                   "kind": "Reference",
                   "text": "SaveModelAction",
-                  "canonicalReference": "state-model!SaveModelAction:interface"
+                  "canonicalReference": "model-state!SaveModelAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -3891,7 +3891,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -3900,7 +3900,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelConfig",
-                  "canonicalReference": "state-model!ModelConfig:interface"
+                  "canonicalReference": "model-state!ModelConfig:interface"
                 },
                 {
                   "kind": "Content",
@@ -3947,7 +3947,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "state-model!SaveModelHttpEffect#createCancelMessage:member(1)",
+              "canonicalReference": "model-state!SaveModelHttpEffect#createCancelMessage:member(1)",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -3957,7 +3957,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -3966,7 +3966,7 @@
                 {
                   "kind": "Reference",
                   "text": "SaveModelAction",
-                  "canonicalReference": "state-model!SaveModelAction:interface"
+                  "canonicalReference": "model-state!SaveModelAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -3979,7 +3979,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -3988,7 +3988,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelConfig",
-                  "canonicalReference": "state-model!ModelConfig:interface"
+                  "canonicalReference": "model-state!ModelConfig:interface"
                 },
                 {
                   "kind": "Content",
@@ -4035,7 +4035,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "state-model!SaveModelHttpEffect#createHttpBody:member(1)",
+              "canonicalReference": "model-state!SaveModelHttpEffect#createHttpBody:member(1)",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -4045,7 +4045,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -4054,7 +4054,7 @@
                 {
                   "kind": "Reference",
                   "text": "SaveModelAction",
-                  "canonicalReference": "state-model!SaveModelAction:interface"
+                  "canonicalReference": "model-state!SaveModelAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -4094,7 +4094,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "state-model!SaveModelHttpEffect#createHttpRequest:member(1)",
+              "canonicalReference": "model-state!SaveModelHttpEffect#createHttpRequest:member(1)",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -4104,7 +4104,7 @@
                 {
                   "kind": "Reference",
                   "text": "Immutable",
-                  "canonicalReference": "state-model!Immutable:type"
+                  "canonicalReference": "model-state!Immutable:type"
                 },
                 {
                   "kind": "Content",
@@ -4113,7 +4113,7 @@
                 {
                   "kind": "Reference",
                   "text": "SaveModelAction",
-                  "canonicalReference": "state-model!SaveModelAction:interface"
+                  "canonicalReference": "model-state!SaveModelAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -4126,7 +4126,7 @@
                 {
                   "kind": "Reference",
                   "text": "OptimisticHttpRequest",
-                  "canonicalReference": "state-model!OptimisticHttpRequest:interface"
+                  "canonicalReference": "model-state!OptimisticHttpRequest:interface"
                 },
                 {
                   "kind": "Content",
@@ -4154,7 +4154,7 @@
             },
             {
               "kind": "Method",
-              "canonicalReference": "state-model!SaveModelHttpEffect#handle$:member(1)",
+              "canonicalReference": "model-state!SaveModelHttpEffect#handle$:member(1)",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -4173,7 +4173,7 @@
                 {
                   "kind": "Reference",
                   "text": "DispatchedAction",
-                  "canonicalReference": "state-model!DispatchedAction:interface"
+                  "canonicalReference": "model-state!DispatchedAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -4182,7 +4182,7 @@
                 {
                   "kind": "Reference",
                   "text": "SaveModelAction",
-                  "canonicalReference": "state-model!SaveModelAction:interface"
+                  "canonicalReference": "model-state!SaveModelAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -4204,7 +4204,7 @@
                 {
                   "kind": "Reference",
                   "text": "OptimisticHttpAction",
-                  "canonicalReference": "state-model!OptimisticHttpAction:interface"
+                  "canonicalReference": "model-state!OptimisticHttpAction:interface"
                 },
                 {
                   "kind": "Content",
@@ -4236,7 +4236,7 @@
             },
             {
               "kind": "Property",
-              "canonicalReference": "state-model!SaveModelHttpEffect#type:member",
+              "canonicalReference": "model-state!SaveModelHttpEffect#type:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -4271,7 +4271,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "state-model!SaveModelReducer:var",
+          "canonicalReference": "model-state!SaveModelReducer:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -4281,7 +4281,7 @@
             {
               "kind": "Reference",
               "text": "Reducer",
-              "canonicalReference": "state-model!Reducer:interface"
+              "canonicalReference": "model-state!Reducer:interface"
             },
             {
               "kind": "Content",
@@ -4290,7 +4290,7 @@
             {
               "kind": "Reference",
               "text": "Immutable",
-              "canonicalReference": "state-model!Immutable:type"
+              "canonicalReference": "model-state!Immutable:type"
             },
             {
               "kind": "Content",
@@ -4299,7 +4299,7 @@
             {
               "kind": "Reference",
               "text": "UnknownState",
-              "canonicalReference": "state-model!UnknownState:type"
+              "canonicalReference": "model-state!UnknownState:type"
             },
             {
               "kind": "Content",
@@ -4308,7 +4308,7 @@
             {
               "kind": "Reference",
               "text": "SaveModelAction",
-              "canonicalReference": "state-model!SaveModelAction:interface"
+              "canonicalReference": "model-state!SaveModelAction:interface"
             },
             {
               "kind": "Content",
@@ -4317,7 +4317,7 @@
             {
               "kind": "Reference",
               "text": "UnknownState",
-              "canonicalReference": "state-model!UnknownState:type"
+              "canonicalReference": "model-state!UnknownState:type"
             },
             {
               "kind": "Content",
@@ -4326,7 +4326,7 @@
             {
               "kind": "Reference",
               "text": "UnknownState",
-              "canonicalReference": "state-model!UnknownState:type"
+              "canonicalReference": "model-state!UnknownState:type"
             },
             {
               "kind": "Content",
@@ -4342,7 +4342,7 @@
         },
         {
           "kind": "Interface",
-          "canonicalReference": "state-model!SetFetchedModelAction:interface",
+          "canonicalReference": "model-state!SetFetchedModelAction:interface",
           "docComment": "",
           "excerptTokens": [
             {
@@ -4352,7 +4352,7 @@
             {
               "kind": "Reference",
               "text": "StateAction",
-              "canonicalReference": "state-model!StateAction:interface"
+              "canonicalReference": "model-state!StateAction:interface"
             },
             {
               "kind": "Content",
@@ -4364,7 +4364,7 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!SetFetchedModelAction#payload:member",
+              "canonicalReference": "model-state!SetFetchedModelAction#payload:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -4390,7 +4390,7 @@
             },
             {
               "kind": "PropertySignature",
-              "canonicalReference": "state-model!SetFetchedModelAction#stateProp:member",
+              "canonicalReference": "model-state!SetFetchedModelAction#stateProp:member",
               "docComment": "",
               "excerptTokens": [
                 {
@@ -4424,7 +4424,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "state-model!SetFetchedModelAction:var",
+          "canonicalReference": "model-state!SetFetchedModelAction:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -4441,7 +4441,7 @@
         },
         {
           "kind": "Variable",
-          "canonicalReference": "state-model!SetFetchedModelReducer:var",
+          "canonicalReference": "model-state!SetFetchedModelReducer:var",
           "docComment": "",
           "excerptTokens": [
             {
@@ -4451,7 +4451,7 @@
             {
               "kind": "Reference",
               "text": "Reducer",
-              "canonicalReference": "state-model!Reducer:interface"
+              "canonicalReference": "model-state!Reducer:interface"
             },
             {
               "kind": "Content",
@@ -4460,7 +4460,7 @@
             {
               "kind": "Reference",
               "text": "SetFetchedModelAction",
-              "canonicalReference": "state-model!SetFetchedModelAction:interface"
+              "canonicalReference": "model-state!SetFetchedModelAction:interface"
             },
             {
               "kind": "Content",
@@ -4476,7 +4476,7 @@
         },
         {
           "kind": "Class",
-          "canonicalReference": "state-model!StateModelModule:class",
+          "canonicalReference": "model-state!StateModelModule:class",
           "docComment": "/**\n * Responsible for setting provided root model state config. Should be provided in root only.\n */\n",
           "excerptTokens": [
             {
@@ -4489,7 +4489,7 @@
           "members": [
             {
               "kind": "Constructor",
-              "canonicalReference": "state-model!StateModelModule:constructor(1)",
+              "canonicalReference": "model-state!StateModelModule:constructor(1)",
               "docComment": "/**\n * Constructs a new instance of the `StateModelModule` class\n */\n",
               "excerptTokens": [
                 {
@@ -4499,7 +4499,7 @@
                 {
                   "kind": "Reference",
                   "text": "ModelStateConfig",
-                  "canonicalReference": "state-model!ModelStateConfig:class"
+                  "canonicalReference": "model-state!ModelStateConfig:class"
                 },
                 {
                   "kind": "Content",
@@ -4523,7 +4523,7 @@
         },
         {
           "kind": "TypeAlias",
-          "canonicalReference": "state-model!UnknownModelState:type",
+          "canonicalReference": "model-state!UnknownModelState:type",
           "docComment": "/**\n * A state slice of unknown model state\n */\n",
           "excerptTokens": [
             {
@@ -4537,7 +4537,7 @@
             {
               "kind": "Reference",
               "text": "UnknownState",
-              "canonicalReference": "state-model!UnknownState:type"
+              "canonicalReference": "model-state!UnknownState:type"
             },
             {
               "kind": "Content",

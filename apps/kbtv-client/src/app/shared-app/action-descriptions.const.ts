@@ -6,7 +6,7 @@ import { Model } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
 import { translations } from "@shared-app/translations";
 import { Immutable, Prop } from "global-types";
-import { DeleteModelAction, ModelCommand, ModelStateConfig, SaveModelAction } from "state-model";
+import { DeleteModelAction, ModelCommand, ModelStateConfig, SaveModelAction } from "model-state";
 import { ActionDescriptionMap } from "./interfaces/action-description-map.interface";
 
 const SaveModelActionDescription = (action: SaveModelAction<Model, ModelState>) => {

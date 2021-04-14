@@ -4,7 +4,7 @@ import { SharedMissionModule } from '@shared-mission/shared-mission.module';
 import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { ModelFormModule } from 'model-form';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
-import { DeleteModelHttpEffect, DeleteModelReducer, MailModelsHttpEffect } from 'state-model';
+import { DeleteModelHttpEffect, DeleteModelReducer, MailModelsHttpEffect } from 'model-state';
 import { MissionDocumentListRoutingModule } from './mission-document-list-routing.module';
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
 import { FileExtensionIconPipe } from './pipes/file-extension-icon.pipe';

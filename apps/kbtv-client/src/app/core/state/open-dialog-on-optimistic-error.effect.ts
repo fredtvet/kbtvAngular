@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { OptimisticHttpErrorAction } from 'optimistic-http';
 import { Observable } from 'rxjs';
@@ -8,7 +8,7 @@ import { DispatchedAction, Effect, listenTo, StateAction } from 'state-managemen
 @Injectable()
 export class OpenDialogOnOptimisticError implements Effect<StateAction> {
 
-    constructor(private dialog: MatDialog, private cfr: ComponentFactoryResolver){}
+    constructor(private dialog: MatDialog){}
 
     handle$(actions$: Observable<DispatchedAction<StateAction>>): Observable<void> {
         return actions$.pipe(

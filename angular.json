@@ -450,38 +450,38 @@
         }
       }
     },
-    "state-model": {
+    "model-state": {
       "projectType": "library",
-      "root": "libs/state-model",
-      "sourceRoot": "libs/state-model/src",
+      "root": "libs/model-state",
+      "sourceRoot": "libs/model-state/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "libs/state-model/tsconfig.lib.json",
-            "project": "libs/state-model/ng-package.json"
+            "tsConfig": "libs/model-state/tsconfig.lib.json",
+            "project": "libs/model-state/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "libs/state-model/tsconfig.lib.prod.json"
+              "tsConfig": "libs/model-state/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "libs/state-model/src/test.ts",
-            "tsConfig": "libs/state-model/tsconfig.spec.json",
-            "karmaConfig": "libs/state-model/karma.conf.js"
+            "main": "libs/model-state/src/test.ts",
+            "tsConfig": "libs/model-state/tsconfig.spec.json",
+            "karmaConfig": "libs/model-state/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/state-model/tsconfig.lib.json",
-              "libs/state-model/tsconfig.spec.json"
+              "libs/model-state/tsconfig.lib.json",
+              "libs/model-state/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
