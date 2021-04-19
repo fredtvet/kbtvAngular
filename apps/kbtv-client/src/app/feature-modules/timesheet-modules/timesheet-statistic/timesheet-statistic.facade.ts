@@ -15,7 +15,7 @@ import { Immutable, ImmutableArray, Prop } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { Store } from 'state-management';
-import { FetchModelsAction } from 'model/state';
+import { FetchModelsAction } from 'model/state-fetcher';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';

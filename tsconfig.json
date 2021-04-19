@@ -80,10 +80,18 @@
       "cdk-selectable": [
         "dist/cdk-selectable/cdk-selectable",
         "dist/cdk-selectable"
+      ],   
+      "model/core": [
+        "dist/model/model-core/model-core",
+        "dist/model/model-core"
       ],
-      "model/state": [
-        "dist/model/model-state/model-state",
-        "dist/model/model-state"
+      "model/state-commands": [
+        "dist/model/model-state-commands/model-state-commands",
+        "dist/model/model-state-commands"
+      ],  
+      "model/state-fetcher": [
+        "dist/model/model-state-fetcher/model-state-fetcher",
+        "dist/model/model-state-fetcher"
       ],
       "model/form": [
         "dist/model/model-form/model-form",

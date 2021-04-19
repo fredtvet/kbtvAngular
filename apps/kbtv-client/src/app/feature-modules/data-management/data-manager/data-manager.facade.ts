@@ -6,7 +6,7 @@ import { ConfirmDialogService } from "confirm-dialog";
 import { Prop } from "global-types";
 import { ModelFormService } from 'model/form';
 import { ComponentStore, Store } from 'state-management';
-import { DeleteModelAction } from 'model/state';
+import { DeleteModelAction } from 'model/state-commands';
 import { ComponentState } from '../interfaces/component-state.interface';
 import { PropertyFormMap } from "./property-form.map";
 import { UpdateSelectedPropertyAction } from './state/update-selected-property.reducer';

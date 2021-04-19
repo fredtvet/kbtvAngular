@@ -5,7 +5,7 @@ import { DynamicFormsModule } from 'dynamic-forms';
 import { OptimisticStateService } from 'optimistic-http';
 import { AppAgGridModule } from 'src/app/app-ag-grid/app-ag-grid.module';
 import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
-import { FetchModelProviders } from 'model/state';
+import { FetchModelProviders } from 'model/state-fetcher';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';
 import { DefaultState } from './state/default-state.const';

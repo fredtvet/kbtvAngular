@@ -1,8 +1,9 @@
-import { Timesheet } from '@core/models';
-import { DateRange } from 'date-time-helpers';
-import { ModelStateConfig } from 'model/state';
+import { Model, Timesheet } from '@core/models';
+import { ModelState } from '@core/state/model-state.interface';
 import { DataFilter } from '@shared/data.filter';
+import { DateRange } from 'date-time-helpers';
 import { DateInput, Immutable, Maybe, Prop } from 'global-types';
+import { ModelConfig, _getModelConfigBy } from 'model/core';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
 
 export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
@@ -51,7 +52,7 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
     }
     
     private isObjectContainedIn(baseValue: Immutable<{}>, prop: Prop<TimesheetCriteria>): boolean{
-        const modelCfg = ModelStateConfig.getBy(prop, "foreignProp");
+        const modelCfg = _getModelConfigBy<ModelConfig<{}, ModelState>>(prop, "foreignProp");
         const value = <{}> this.criteria[prop];
 
         if(modelCfg && value[modelCfg.idProp] !== baseValue[modelCfg.idProp]) 

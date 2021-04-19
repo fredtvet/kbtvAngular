@@ -1,7 +1,7 @@
 import { DynamicForm } from 'dynamic-forms';
 import { OptionsFormState } from 'form-sheet';
 import { Immutable, Maybe, Prop } from 'global-types';
-import { SaveAction } from 'model/state';
+import { SaveAction } from 'model/state-commands';
 import { StateAction } from 'state-management'
 import { Observable } from 'rxjs';
 

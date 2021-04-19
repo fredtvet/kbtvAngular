@@ -1,4 +1,4 @@
-import { SetTimesheetCriteriaAction, SetSelectedWeekAction, UpdateTimesheetStatusesAction, SetTimesheetCriteriaWithWeekCriteriaAction } from '@actions/timesheet-actions';
+import { SetSelectedWeekAction, SetTimesheetCriteriaWithWeekCriteriaAction, UpdateTimesheetStatusesAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
 import { Timesheet, User } from '@core/models';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
@@ -9,10 +9,11 @@ import { GroupByPeriod, TimesheetStatus } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { _find } from 'array-helpers';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { _getRangeWithRelations } from 'model/core';
+import { FetchModelsAction } from 'model/state-fetcher';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
-import { FetchModelsAction, _getRangeWithRelations } from 'model/state';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';

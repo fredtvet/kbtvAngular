@@ -2,7 +2,7 @@ import { AppSyncStateConfig } from '../configurations/app-sync-state.config';
 import { Immutable, Prop } from 'global-types';
 import { _createReducer } from 'state-management';
 import { StateSyncTimestamp, SyncStateAction, SyncStateSuccessAction } from 'state-sync';
-import { StateIsFetching } from 'model/state';
+import { StateIsFetching } from 'model/state-fetcher';
 import { ModelState } from './model-state.interface';
 
 export const SetSyncModelsFetchingReducer = _createReducer(

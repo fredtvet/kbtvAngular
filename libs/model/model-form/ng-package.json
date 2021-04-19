@@ -7,7 +7,9 @@
       "dynamic-forms": "dynamic-forms",
       "form-sheet": "form-sheet",
       "confirm-dialog": "confirm-dialog",
-      "model-state": "model-state",
+      "model/core": "model/core",
+      "model/state-commands": "model/state-commands",
+      "model/state-fetcher": "model/state-fetcher",
       "state-management": "state-management"
     }
   }

@@ -1,7 +1,7 @@
 import { StateCurrentUser } from '../state/global-state.interfaces';
 import { ModelState } from '../state/model-state.interface';
 import { SyncStatePropConfig } from 'state-sync';
-import { ModelIdProps } from './model-id-props.const';
+import { ModelIdProps } from './model/model-id-props.const';
 
 export type SyncModelState = Partial<ModelState> & StateCurrentUser;
 

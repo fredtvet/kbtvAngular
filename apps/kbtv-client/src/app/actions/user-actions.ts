@@ -1,7 +1,7 @@
 import { User } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
 import { StateAction } from "state-management";
-import { SaveModelAction } from 'model/state';
+import { SaveModelAction } from 'model/state-commands';
 
 export const UpdateUserPasswordAction = "UPDATE_USER_PASSWORD_ACTION";
 export interface UpdateUserPasswordAction extends StateAction {

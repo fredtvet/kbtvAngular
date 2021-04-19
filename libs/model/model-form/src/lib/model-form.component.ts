@@ -5,10 +5,10 @@ import { Immutable, Maybe } from 'global-types';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, shareReplay, take } from 'rxjs/operators';
 import { StateAction } from 'state-management';
-import { ModelCommand, SaveAction } from 'model/state';
 import { DEFAULT_SAVE_CONVERTER } from './injection-tokens.const';
 import { FormToSaveModelConverter, ModelFormConfig } from './interfaces';
 import { ModelFormFacade } from './model-form.facade';
+import { ModelCommand, SaveAction } from 'model/state-commands';
 
 @Component({
     selector: 'app-model-form',

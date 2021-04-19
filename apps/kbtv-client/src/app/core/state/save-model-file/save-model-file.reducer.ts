@@ -1,5 +1,5 @@
 import { ModelFile } from '@core/models';
-import { SaveModelReducer } from 'model/state';
+import { SaveModelAction, SaveModelReducer } from 'model/state-commands';
 import { _createReducer } from 'state-management'
 import { Immutable } from 'global-types';
 import { ModelState } from '../model-state.interface';
@@ -15,7 +15,7 @@ export const SaveModelFileReducer = _createReducer(
             localFileUrl: action.fileWrapper ? URL.createObjectURL(action.fileWrapper.modifiedFile) : undefined
         }
         
-        return SaveModelReducer.reducerFn(state, <SaveModelFileAction<Immutable<ModelFile>>>{...action, entity});       
+        return SaveModelReducer.reducerFn(state, <SaveModelAction<Immutable<ModelFile>, ModelState>>{...action, entity});       
     }
 );
 

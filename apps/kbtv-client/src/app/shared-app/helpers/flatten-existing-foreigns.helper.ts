@@ -1,21 +1,22 @@
 import { _find } from 'array-helpers';
 import { ModelState } from '@core/state/model-state.interface';
 import { Immutable, Maybe, UnknownState, Prop } from 'global-types';
-import { ModelStateConfig } from 'model/state';
+import { ModelConfig, _getModelConfig } from 'model/core';
+import { Model } from '@core/models';
 
 export function _flattenExistingForeigns<TEntity>(
     prop: Prop<ModelState>, 
     entity: Immutable<TEntity>, 
     state: Maybe<Immutable<Partial<ModelState>>>): Immutable<TEntity>{
     
-    const {foreigns} = ModelStateConfig.get(prop);    
+    const {foreigns} = _getModelConfig<ModelConfig<Model,ModelState>>(prop);    
     var entityClone = <UnknownState> {...entity};
 
     if(!foreigns) return <Immutable<TEntity>> entityClone;
     if(!state) state = {};
 
     for(const foreignStateProp of foreigns){
-        const {foreignKey, displayProp, foreignProp, idProp} = ModelStateConfig.get<UnknownState, ModelState>(foreignStateProp);
+        const {foreignKey, displayProp, foreignProp, idProp} = _getModelConfig<ModelConfig<Model,ModelState>>(foreignStateProp);
         const fkEntity = <UnknownState> entityClone[<string> foreignProp];
         if(!fkEntity) continue; //If no fk entity set on entity, ignore
 
@@ -25,7 +26,7 @@ export function _flattenExistingForeigns<TEntity>(
             entityClone[<string> foreignKey] = null;
 
         const existingFkEntity = //Check if fkEntity with same display value exists
-            _find<UnknownState>(<UnknownState[]> state[foreignStateProp], fkDisplayValue, <string> displayProp)
+            displayProp ? _find<Model>(state[foreignStateProp], fkDisplayValue, displayProp) : null;
 
         if(existingFkEntity) //If existing fkEntity, set foreign key on entity 
             entityClone[<string> foreignKey] = existingFkEntity[idProp]; 

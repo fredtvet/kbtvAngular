@@ -5,7 +5,9 @@
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
       "state-management": "state-management",
-      "model-state": "model-state",
+      "model/core": "model/core",
+      "model/state-commands": "model/state-commands",
+      "model/state-fetcher": "model/state-fetcher",
       "global-types": "global-types"
     }
   }

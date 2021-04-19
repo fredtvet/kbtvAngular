@@ -1,22 +1,24 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { translations } from '@shared-app/translations';
+import { _registerModelStateConfig } from 'model/core';
+import { MODEL_FORM_PROP_TRANSLATIONS } from 'model/form';
+import { MODEL_FETCHER_BASE_URL } from 'model/state-fetcher';
 import { BASE_API_URL, OptimisticHttpModule, ROOT_OPTIMISTIC_STATE_PROPS } from 'optimistic-http';
 import { environment } from 'src/environments/environment';
 import { HttpAuthTokensInterceptor, StateAuthModule } from 'state-auth';
 import { StateDbModule, STATE_DB_CONFIG } from 'state-db';
 import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS, STORE_SETTINGS } from 'state-management';
-import { MODEL_COMMAND_API_MAP, MODEL_CONFIGS, MODEL_PROP_TRANSLATIONS, ModelStateModule } from 'model/state';
 import { StateSyncModule } from 'state-sync';
 import { AppAuthCommandApiMap } from './configurations/app-auth-command-api-map.const';
 import { AppAuthRedirects } from './configurations/app-auth-redirects.const';
-import { AppCommandApiMap } from './configurations/app-command-api-map.const';
-import { AppModelConfigs } from './configurations/app-model-configs.const';
-import { AppOptimisticStateProps } from './configurations/app-optimistic-state.const';
 import { AppStateDbConfig } from './configurations/app-state-db-config.const';
 import { AppStoreSettings } from './configurations/app-store-settings.const';
 import { AppSyncStateConfig } from './configurations/app-sync-state.config';
 import { DefaultState } from './configurations/default-state.const';
+import { AppModelConfigs } from './configurations/model/app-model-configs.const';
+import { AppOptimisticStateProps } from './configurations/optimistic/app-optimistic-state.const';
+import { GenericActionRequestMap } from './configurations/optimistic/generic-action-request-map.const';
 import { HttpRetryInterceptor } from './interceptors/http-retry.interceptor';
 import { HttpErrorInterceptor } from './interceptors/http.error.interceptor';
 import { HttpIsOnlineInterceptor } from './interceptors/http.is-online.interceptor';
@@ -31,6 +33,8 @@ import { SetSyncModelsFetchedReducer, SetSyncModelsFetchingReducer } from './sta
 import { SyncUserOnLoginEffect } from './state/sync-user-on-login.effect';
 import { WipeStateReducer } from './state/wipe-state.reducer';
 
+_registerModelStateConfig(AppModelConfigs);
+
 @NgModule({
   declarations: [],
   imports: [
@@ -40,8 +44,7 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
     }),
     StateAuthModule.forRoot(AppAuthCommandApiMap, AppAuthRedirects),
     StateDbModule,  
-    OptimisticHttpModule,
-    ModelStateModule
+    OptimisticHttpModule.forRoot()
   ],
   providers: [   
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
@@ -52,11 +55,11 @@ import { WipeStateReducer } from './state/wipe-state.reducer';
     { provide: HTTP_INTERCEPTORS, useClass: HttpIsOnlineInterceptor, multi: true }, 
 
     { provide: STORE_SETTINGS, useValue: AppStoreSettings},
-
+    
     { provide: BASE_API_URL, useValue: environment.apiUrl},
-    { provide: MODEL_CONFIGS, useValue: AppModelConfigs },
-    { provide: MODEL_COMMAND_API_MAP, useValue: AppCommandApiMap },
-    { provide: MODEL_PROP_TRANSLATIONS, useValue: translations },
+    { provide: MODEL_FETCHER_BASE_URL, useValue: environment.apiUrl},
+
+    { provide: MODEL_FORM_PROP_TRANSLATIONS, useValue: translations },
 
     { provide: ROOT_OPTIMISTIC_STATE_PROPS, useValue: AppOptimisticStateProps},
 

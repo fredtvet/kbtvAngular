@@ -29,7 +29,3 @@ export interface ModelPropertyColDef {
     /** Set to true if the property should be editable */
     editable?: boolean;
 }
-
-/** Represents translations for model properties.
- *  Provided with token {@link MODEL_NAME_TRANSLATIONS} */
-export type ModelNameTranslations = {[key: string]: string}

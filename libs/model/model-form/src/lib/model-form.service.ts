@@ -4,9 +4,11 @@ import { Router } from '@angular/router';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { FormSheetWrapperComponent, FormSheetWrapperConfig, OptionsFormState } from 'form-sheet';
 import { Immutable, Maybe, UnknownState, KeyVal } from "global-types";
+import { _getModelConfig } from "model/core";
+import { DeleteModelAction, ModelCommand, SaveAction } from "model/state-commands";
 import { Observable, of } from 'rxjs';
 import { Store } from 'state-management';
-import { DeleteModelAction, ModelCommand, ModelStateConfig, MODEL_PROP_TRANSLATIONS, SaveAction } from 'model/state';
+import { MODEL_FORM_PROP_TRANSLATIONS } from "./injection-tokens.const";
 import { ModelFormConfig, ModelFormServiceConfig } from './interfaces';
 import { ModelFormComponent } from './model-form.component';
 
@@ -23,7 +25,7 @@ export class ModelFormService {
     private router: Router,
     private confirmService: ConfirmDialogService,  
     private store: Store<unknown>,
-    @Inject(MODEL_PROP_TRANSLATIONS) private translations: KeyVal<string>
+    @Inject(MODEL_FORM_PROP_TRANSLATIONS) private translations: KeyVal<string>
   ) {}
 
   /** Opens the specified model form as a form sheet
@@ -67,7 +69,7 @@ export class ModelFormService {
   } 
 
   private translateStateProp = (prop: string): string => 
-    this.translations[<string> ModelStateConfig.get(prop).foreignProp?.toLowerCase()]?.toLowerCase();
+    this.translations[<string> _getModelConfig(prop).foreignProp?.toLowerCase()]?.toLowerCase();
 
   private confirmDelete = <TState, TForm>(
     formConfig: Immutable<ModelFormConfig<TState, TForm, FormState<TState>>>, 
@@ -75,7 +77,7 @@ export class ModelFormService {
     ref: MatBottomSheetRef<unknown, unknown>) => { 
       console.log(ref)
     const translatedProp = this.translateStateProp(formConfig.stateProp);
-    const modelCfg = ModelStateConfig.get<unknown, TState>(formConfig.stateProp);
+    const modelCfg = _getModelConfig(formConfig.stateProp);
     const idWord = this.translations[(<string> modelCfg.idProp).toLowerCase()] || modelCfg.idProp
     this.confirmService.open({
         title: `Slett ${translatedProp}?`, 

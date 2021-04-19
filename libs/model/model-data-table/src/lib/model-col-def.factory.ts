@@ -1,11 +1,12 @@
 import { Inject, Injectable } from "@angular/core";
 import { ColDef } from "ag-grid-community";
 import { _convertArrayToObject } from "array-helpers";
-import { Immutable, Maybe, UnknownState } from "global-types";
+import { Immutable, KeyVal, Maybe, UnknownState } from "global-types";
+import { UnknownModelState, _getModelConfig, _getModelConfigBy } from "model/core";
+import { ModelCommand, SaveModelAction } from "model/state-commands";
 import { Store } from "state-management";
-import { ModelCommand, ModelStateConfig, SaveModelAction, UnknownModelState } from 'model/state';
-import { MODEL_DATA_TABLES_CONFIG, MODEL_NAME_TRANSLATIONS } from "./injection-tokens.const";
-import { ModelDataTable, ModelDataTablesConfig, ModelNameTranslations } from "./interfaces";
+import { MODEL_DATA_TABLES_CONFIG, MODEL_DATA_TABLE_PROP_TRANSLATIONS } from "./injection-tokens.const";
+import { ModelDataTable, ModelDataTablesConfig } from "./interfaces";
 
 @Injectable({providedIn: 'any'})
 export class ModelColDefFactory {
@@ -18,7 +19,7 @@ export class ModelColDefFactory {
 
     constructor(
         @Inject(MODEL_DATA_TABLES_CONFIG) private tableConfigs: ModelDataTablesConfig<UnknownModelState>,
-        @Inject(MODEL_NAME_TRANSLATIONS) private translations: ModelNameTranslations,
+        @Inject(MODEL_DATA_TABLE_PROP_TRANSLATIONS) private translations: KeyVal<string>,
         private store: Store<UnknownModelState>
     ){}
 
@@ -69,7 +70,7 @@ export class ModelColDefFactory {
 
         if(propDef.editable) def['editable'] = propDef.editable;
 
-        const fkModelCfg = ModelStateConfig.getBy(modelProp, "foreignKey");
+        const fkModelCfg = _getModelConfigBy(modelProp, "foreignKey");
 
         if(fkModelCfg){
             const fkIdProp = modelProp;
@@ -105,10 +106,10 @@ export class ModelColDefFactory {
     }
 
     private createLookupMaps(property: string){
-        const modelCfg = ModelStateConfig.get(property);
+        const modelCfg = _getModelConfig(property);
         if(modelCfg?.foreigns){
           for(const fkStateKey of modelCfg.foreigns){
-            const fkCfg = ModelStateConfig.get(fkStateKey);
+            const fkCfg = _getModelConfig(fkStateKey);
             const entities = this.store.state[fkStateKey];
             if(entities){
               this.fkModelIdMap[<string> fkCfg.foreignKey] = 

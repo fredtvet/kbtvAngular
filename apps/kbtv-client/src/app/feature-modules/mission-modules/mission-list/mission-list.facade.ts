@@ -10,7 +10,8 @@ import { Immutable, Maybe, Prop } from 'global-types';
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { ComponentStore, Store } from 'state-management';
-import { ModelCommand, _getWithRelations } from 'model/state';
+import { ModelCommand } from 'model/state-commands';
+import { _getWithRelations } from 'model/core';
 import { ComponentStoreState, StoreState } from './interfaces/store-state';
 import { SetMissionCriteriaAction } from './set-mission-criteria.reducer';
 
@@ -59,8 +60,6 @@ export class MissionListFacade {
       stateProp: "missions",
       saveAction: ModelCommand.Update
     });
-
-    action.apiUrlOverride = `${ApiUrl.Mission}/${id}/UpdateHeaderImage`;
 
     this.store.dispatch(action);
   }

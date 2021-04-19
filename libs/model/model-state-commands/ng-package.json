@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/model/model-state-commands",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "state-management": "state-management",
+      "global-types": "global-types",
+      "model/core": "model/core"
+    }
+  }
+}

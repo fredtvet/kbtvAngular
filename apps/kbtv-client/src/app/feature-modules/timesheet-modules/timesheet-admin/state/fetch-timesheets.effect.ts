@@ -1,4 +1,4 @@
-import { FetchTimesheetsAction, SetTimesheetCriteriaAction } from '@actions/timesheet-actions';
+import { FetchTimesheetsAction, SetTimesheetCriteriaAction, SetTimesheetCriteriaWithWeekCriteriaAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,8 +12,8 @@ export class FetchTimesheetsEffect implements Effect<SetTimesheetCriteriaAction>
 
     handle$(actions$: Observable<DispatchedAction<SetTimesheetCriteriaAction>>): Observable<FetchTimesheetsAction> {
         return actions$.pipe(
-            listenTo([SetTimesheetCriteriaAction]),
-            map(x => { return <FetchTimesheetsAction>{ type: FetchTimesheetsAction, 
+            listenTo([SetTimesheetCriteriaWithWeekCriteriaAction]),
+            map(x => { console.log(x); return <FetchTimesheetsAction>{ type: FetchTimesheetsAction, 
                 timesheetCriteria: this.store.state.timesheetAdminTimesheetCriteria 
             }}),
         )

@@ -6,7 +6,8 @@ export interface ClearAndLogoutAction extends StateAction {}
 
 export const UpdateCurrentUserAction = "UPDATE_CURRENT_USER_ACTION";
 export interface UpdateCurrentUserAction extends StateAction{
-    user: User
+    user: User,
+    type: typeof UpdateCurrentUserAction
 }
 
 export const UpdatePasswordAction = "UPDATE_PASSWORD_ACTION";

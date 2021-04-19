@@ -3,9 +3,9 @@ import { ModelState } from '@core/state/model-state.interface';
 import { FormToSaveModelConverter, ModelFormToSaveModelInput } from 'model/form';
 import { _flattenExistingForeigns } from '@shared-app/helpers/flatten-existing-foreigns.helper';
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
-import { ModelStateConfig } from 'model/state';
 import { ModelFileWrapper } from '@shared/model-file.wrapper';
 import { SaveModelFileAction } from '@actions/global-actions';
+import { ModelConfig, _getModelConfig } from 'model/core';
 
 export type ModelFileForm = ModelFile & {file: File};
 export const _formToSaveModelFileConverter: FormToSaveModelConverter<ModelFileForm, ModelState, SaveModelFileAction<ModelFile>> =
@@ -15,7 +15,7 @@ export const _formToSaveModelFileConverter: FormToSaveModelConverter<ModelFileFo
     var entity = _flattenExistingForeigns<ModelFile>(input.stateProp, clone, input.options);
     entity = _modelIdGenerator(input.stateProp, entity); 
 
-    const modelCfg = ModelStateConfig.get(input.stateProp);
+    const modelCfg = _getModelConfig<ModelConfig<ModelFile,ModelState>>(input.stateProp);
     const fileWrapper = 
         new ModelFileWrapper(input.formValue.file, entity[modelCfg.idProp]);
 

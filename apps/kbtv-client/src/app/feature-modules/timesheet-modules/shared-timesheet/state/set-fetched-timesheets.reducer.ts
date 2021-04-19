@@ -3,7 +3,7 @@ import { StateMissions, StateTimesheets } from '@core/state/global-state.interfa
 import { _addOrUpdateRange } from 'array-helpers';
 import { Immutable } from 'global-types';
 import { _createReducer } from 'state-management';
-import { StateIsFetching } from 'model/state';
+import { StateIsFetching } from 'model/state-fetcher';
 
 type State = Immutable<StateTimesheets & StateMissions & StateIsFetching<StateTimesheets>>;
 

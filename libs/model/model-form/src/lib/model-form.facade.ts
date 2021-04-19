@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { OptionsFormState } from 'form-sheet';
 import { Immutable, Maybe, UnknownState } from 'global-types';
+import { RelationInclude, UnknownModelState, _getModelConfig, _getWithRelations } from 'model/core';
+import { FetchModelsAction } from 'model/state-fetcher';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StateAction, Store } from 'state-management';
-import { FetchModelsAction, ModelStateConfig, RelationInclude, UnknownModelState, _getWithRelations } from 'model/state';
 
 @Injectable()
 export class ModelFormFacade {
@@ -12,7 +13,7 @@ export class ModelFormFacade {
   constructor(private store: Store<UnknownModelState>) {}
 
   loadModels(modelProp: string): void{
-    const modelCfg = ModelStateConfig.get(modelProp);
+    const modelCfg = _getModelConfig(modelProp);
     this.store.dispatch(<FetchModelsAction<UnknownState>>{
       type: FetchModelsAction, 
       props: [modelProp, ...(modelCfg.foreigns || [])]
@@ -20,7 +21,7 @@ export class ModelFormFacade {
   }
 
   getFormState$(modelProp: string): Observable<Immutable<OptionsFormState<UnknownModelState>>>{
-    const modelCfg = ModelStateConfig.get(modelProp);
+    const modelCfg = _getModelConfig(modelProp);
     return this.store.select$<UnknownModelState>([modelProp, ...(modelCfg.foreigns || [])]).pipe(
       map(state => { return {options: state || {}} })
     )

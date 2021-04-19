@@ -5,7 +5,7 @@ import { TimesheetCriteria } from "@shared-timesheet/timesheet-filter/timesheet-
 import { GroupByPeriod, TimesheetStatus } from "@shared/enums";
 import { Immutable, Prop, UnknownState } from "global-types";
 import { StateAction } from "state-management";
-import { SaveModelAction } from 'model/state';
+import { SaveModelAction } from 'model/state-commands';
 
 export const FetchTimesheetsAction = "FETCH_TIMESHEETS_ACTION";
 export interface FetchTimesheetsAction extends StateAction {
@@ -33,7 +33,8 @@ export interface SetTimesheetCriteriaWithWeekCriteriaAction extends StateAction 
 export const UpdateTimesheetStatusesAction = "UPDATE_TIMESHEET_STATUSES_ACTION";
 export interface UpdateTimesheetStatusesAction extends StateAction{
     ids: string[],
-    status: TimesheetStatus
+    status: TimesheetStatus,
+    type: typeof UpdateTimesheetStatusesAction
 }
 
 export const SetGroupByAction = "SET_GROUP_BY_ACTION";

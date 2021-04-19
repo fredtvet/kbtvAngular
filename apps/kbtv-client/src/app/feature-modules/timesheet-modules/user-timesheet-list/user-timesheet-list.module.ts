@@ -1,10 +1,13 @@
+import { SaveUserTimesheetAction } from '@actions/timesheet-actions';
 import { NgModule } from '@angular/core';
-import { ModelFormModule } from 'model/form';
+import { GenericActionRequestMap } from '@core/configurations/optimistic/generic-action-request-map.const';
+import { SaveUserTimesheetReducer } from '@shared-timesheet/state/save-user-timesheet/save-user-timesheet.reducer';
 import { _timesheetFormToSaveUserTimesheetConverter } from '@shared-timesheet/state/save-user-timesheet/timesheet-form-to-save-user-timesheet.converter';
-import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
-import { DeleteModelHttpEffect, DeleteModelReducer } from 'model/state';
+import { ModelFormModule } from 'model/form';
+import { DeleteModelAction, DeleteModelReducer, SaveModelAction } from 'model/state-commands';
+import { OptimisticHttpModule } from 'optimistic-http';
+import { STORE_REDUCERS } from 'state-management';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
-import { SaveUserTimesheetProviders } from '../shared-timesheet/state/providers.const';
 import { UserTimesheetListRoutingModule } from './user-timesheet-list-routing.module';
 import { UserTimesheetListViewComponent } from './user-timesheet-list/user-timesheet-list-view/user-timesheet-list-view.component';
 import { UserTimesheetListComponent } from './user-timesheet-list/user-timesheet-list.component';
@@ -15,13 +18,16 @@ import { UserTimesheetListComponent } from './user-timesheet-list/user-timesheet
     UserTimesheetListViewComponent,
   ],
   providers:[
-    ...SaveUserTimesheetProviders,
-    {provide: STORE_EFFECTS, useClass: DeleteModelHttpEffect, multi: true},
+    {provide: STORE_REDUCERS, useValue: SaveUserTimesheetReducer, multi: true},
     {provide: STORE_REDUCERS, useValue: DeleteModelReducer, multi: true},
   ],
   imports: [
     SharedTimesheetModule,
     ModelFormModule.forFeature(_timesheetFormToSaveUserTimesheetConverter),
+    OptimisticHttpModule.forFeature({
+      [SaveUserTimesheetAction]: GenericActionRequestMap[SaveModelAction],
+      [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction]
+    }),
     UserTimesheetListRoutingModule,
   ]
 })

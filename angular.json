@@ -450,46 +450,6 @@
         }
       }
     },
-    "model-state": {
-      "projectType": "library",
-      "root": "libs/model/model-state",
-      "sourceRoot": "libs/model/model-state/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "libs/model/model-state/tsconfig.lib.json",
-            "project": "libs/model/model-state/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/model/model-state/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/model/model-state/src/test.ts",
-            "tsConfig": "libs/model/model-state/tsconfig.spec.json",
-            "karmaConfig": "libs/model/model-state/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/model/model-state/tsconfig.lib.json",
-              "libs/model/model-state/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
     "confirm-dialog": {
       "projectType": "library",
       "root": "libs/confirm-dialog",
@@ -802,6 +762,126 @@
             "tsConfig": [
               "libs/google-places-autocomplete/tsconfig.lib.json",
               "libs/google-places-autocomplete/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "model-core": {
+      "projectType": "library",
+      "root": "libs/model/model-core",
+      "sourceRoot": "libs/model/model-core/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "libs/model/model-core/tsconfig.lib.json",
+            "project": "libs/model/model-core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/model/model-core/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/model/model-core/src/test.ts",
+        //     "tsConfig": "libs/model/model-core/tsconfig.spec.json",
+        //     "karmaConfig": "libs/model/model-core/karma.conf.js"
+        //   }
+        // },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/model/model-core/tsconfig.lib.json",
+              "libs/model/model-core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "model-state-fetcher": {
+      "projectType": "library",
+      "root": "libs/model/model-state-fetcher",
+      "sourceRoot": "libs/model/model-state-fetcher/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "libs/model/model-state-fetcher/tsconfig.lib.json",
+            "project": "libs/model/model-state-fetcher/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/model/model-state-fetcher/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/model/model-state-fetcher/src/test.ts",
+            "tsConfig": "libs/model/model-state-fetcher/tsconfig.spec.json",
+            "karmaConfig": "libs/model/model-state-fetcher/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/model/model-state-fetcher/tsconfig.lib.json",
+              "libs/model/model-state-fetcher/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "model-state-commands": {
+      "projectType": "library",
+      "root": "libs/model/model-state-commands",
+      "sourceRoot": "libs/model/model-state-commands/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "libs/model/model-state-commands/tsconfig.lib.json",
+            "project": "libs/model/model-state-commands/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/model/model-state-commands/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/model/model-state-commands/src/test.ts",
+        //     "tsConfig": "libs/model/model-state-commands/tsconfig.spec.json",
+        //     "karmaConfig": "libs/model/model-state-commands/karma.conf.js"
+        //   }
+        // },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/model/model-state-commands/tsconfig.lib.json",
+              "libs/model/model-state-commands/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
