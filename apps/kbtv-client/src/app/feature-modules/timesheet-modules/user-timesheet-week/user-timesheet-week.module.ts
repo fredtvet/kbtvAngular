@@ -6,7 +6,7 @@ import { _timesheetFormToSaveUserTimesheetConverter } from '@shared-timesheet/st
 import { ModelFormModule } from 'model/form';
 import { DeleteModelAction, DeleteModelReducer, SaveModelAction } from 'model/state-commands';
 import { OptimisticHttpModule } from 'optimistic-http';
-import { STORE_REDUCERS } from 'state-management';
+import { StateManagementModule, STORE_REDUCERS } from 'state-management';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { UserTimesheetWeekRoutingModule } from './user-timesheet-week-routing.module';
 import { TimesheetDayLabelComponent } from './user-timesheet-week/timesheet-day-label/timesheet-day-label.component';
@@ -21,19 +21,17 @@ import { UserTimesheetWeekComponent } from './user-timesheet-week/user-timesheet
     TimesheetDayLabelComponent,
     TimesheetMissionBarComponent,
   ],
-  providers:[
-    {provide: STORE_REDUCERS, useValue: SaveUserTimesheetReducer, multi: true},
-    {provide: STORE_REDUCERS, useValue: DeleteModelReducer, multi: true},
-  ],
   imports: [
     SharedTimesheetModule,
+    StateManagementModule.forFeature({reducers: [SaveUserTimesheetReducer, DeleteModelReducer]}), 
     ModelFormModule.forFeature(_timesheetFormToSaveUserTimesheetConverter),
     OptimisticHttpModule.forFeature({
       [SaveUserTimesheetAction]: GenericActionRequestMap[SaveModelAction],
       [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction]
     }),
     UserTimesheetWeekRoutingModule
-  ]
+  ] , 
+  providers:[],
 })
 export class UserTimesheetWeekModule {
   constructor(){}

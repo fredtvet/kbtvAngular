@@ -9,6 +9,8 @@ import { WipeStateAction } from '@actions/global-actions';
 @Injectable()
 export class SyncUserOnLoginEffect implements Effect<LoginSuccessAction> {
 
+    constructor(private store: Store<unknown>){}
+
     handle$(actions$: Observable<DispatchedAction<LoginSuccessAction>>): Observable<void | StateAction> {
         return actions$.pipe(
             listenTo([LoginSuccessAction]),
@@ -16,7 +18,7 @@ export class SyncUserOnLoginEffect implements Effect<LoginSuccessAction> {
                 const actions: StateAction[] = [<SyncStateAction>{ type: SyncStateAction, propagate: true }];
 
                 if(action.previousUser?.userName !== action.response.user.userName) //Wipe before sync if new login
-                    actions.unshift(<WipeStateAction>{ type: WipeStateAction, defaultState: Store.defaultState })
+                    actions.unshift(<WipeStateAction>{ type: WipeStateAction, defaultState: this.store.defaultState })
 
                 return of(...actions)
             }),

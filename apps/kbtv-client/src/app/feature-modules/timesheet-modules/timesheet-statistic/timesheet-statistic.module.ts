@@ -4,7 +4,7 @@ import { SetTimesheetCriteriaReducer } from '@shared-timesheet/state/set-timeshe
 import { DynamicFormsModule } from 'dynamic-forms';
 import { OptimisticStateService } from 'optimistic-http';
 import { AppAgGridModule } from 'src/app/app-ag-grid/app-ag-grid.module';
-import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
+import { StateManagementModule, STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
 import { FetchModelProviders } from 'model/state-fetcher';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';
@@ -23,10 +23,6 @@ import { TimesheetStatisticComponent } from './timesheet-statistic/timesheet-sta
   ],
   providers:[
     DatePipe,
-    { provide: STORE_DEFAULT_STATE, useValue: DefaultState },  
-    { provide: STORE_REDUCERS, useValue: SetTimesheetCriteriaReducer, multi: true},
-    { provide: STORE_REDUCERS, useValue: SetGroupByReducer, multi: true},
-    { provide: STORE_EFFECTS, useClass: FetchTimesheetsEffect, multi: true},
     ...FetchTimesheetProviders,
     ...FetchModelProviders,
   ],
@@ -34,7 +30,12 @@ import { TimesheetStatisticComponent } from './timesheet-statistic/timesheet-sta
     SharedTimesheetModule,
     TimesheetStatisticRoutingModule,
     AppAgGridModule,
-    DynamicFormsModule
+    DynamicFormsModule,
+    StateManagementModule.forFeature({
+      reducers: [SetGroupByReducer, SetTimesheetCriteriaReducer], 
+      effects: [FetchTimesheetsEffect],
+      defaultState: DefaultState
+    }), 
   ],
 })
 export class TimesheetStatisticModule { 

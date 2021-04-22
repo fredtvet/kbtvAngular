@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { OptimisticHttpModule } from 'optimistic-http';
-import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
+import { StateManagementModule, STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
 import { ProfileActionRequestMap } from './profile-action-request-map.const';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileActionItemComponent } from './profile/profile-action-item.component';
@@ -20,13 +20,13 @@ import { UpdatePasswordHttpEffect } from './state/update-password.http.effect';
   imports: [ 
     SharedModule,
     ProfileRoutingModule,
-    OptimisticHttpModule.forFeature(ProfileActionRequestMap)
+    StateManagementModule.forFeature({
+      reducers: [UpdateCurrentUserReducer], 
+      effects: [UpdatePasswordHttpEffect, ClearAndLogoutEffect],
+    }), 
+    OptimisticHttpModule.forFeature(ProfileActionRequestMap),
   ],
-  providers: [
-    { provide: STORE_EFFECTS, useClass: UpdatePasswordHttpEffect, multi: true },
-    { provide: STORE_EFFECTS, useClass: ClearAndLogoutEffect, multi: true },
-    { provide: STORE_REDUCERS, useValue: UpdateCurrentUserReducer, multi: true }
-  ]
+  providers: []
 })
 export class ProfileModule {}  
 

@@ -13,7 +13,7 @@ export class FetchTimesheetsEffect implements Effect<SetTimesheetCriteriaAction>
     handle$(actions$: Observable<DispatchedAction<SetTimesheetCriteriaAction>>): Observable<FetchTimesheetsAction> {
         return actions$.pipe(
             listenTo([SetTimesheetCriteriaWithWeekCriteriaAction]),
-            map(x => { console.log(x); return <FetchTimesheetsAction>{ type: FetchTimesheetsAction, 
+            map(x => { return <FetchTimesheetsAction>{ type: FetchTimesheetsAction, 
                 timesheetCriteria: this.store.state.timesheetAdminTimesheetCriteria 
             }}),
         )

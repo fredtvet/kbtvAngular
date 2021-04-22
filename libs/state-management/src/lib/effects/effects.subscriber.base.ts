@@ -1,16 +1,16 @@
-import { Inject, Injectable, Optional, Self } from '@angular/core';
+import { Directive } from '@angular/core';
+import { Immutable, ImmutableArray } from 'global-types';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError, first, takeUntil, tap } from 'rxjs/operators';
-import { ActionDispatcher } from './action-dispatcher';
-import { STORE_EFFECTS } from './constants/injection-tokens.const';
-import { Effect } from './interfaces';
-import { StateAction } from './state.action';
-import { Store } from './store';
+import { ActionDispatcher } from '../action-dispatcher';
+import { Effect } from '../interfaces';
+import { StateAction } from '../state.action';
+import { StoreBase } from '../store-base';
 
-/** Responsible for injecting effects (see {@link Effect}) within its provider scope
+/** Responsible for injecting effects (see {@link Effect}) for a given component
  *  Effects are handled be subscribing and dispatching the returning actions to the store. */
-@Injectable()
-export class EffectsSubscriber {
+@Directive()
+export abstract class EffectsSubscriberBase {
 
     private effectsInitSubject = new BehaviorSubject<boolean>(false);
     /** A lifecycle hook that emits when all effects are subscribed to. */
@@ -19,17 +19,18 @@ export class EffectsSubscriber {
     private unsubscribe : Subject<void> = new Subject();
 
     constructor(
-        private store: Store<unknown>,
+        private store: StoreBase<unknown>,
         private dispatcher: ActionDispatcher,
-        @Self() @Optional() @Inject(STORE_EFFECTS) effects: Effect<StateAction>[]
+        effects: ImmutableArray<Effect<StateAction>>
     ){   
-        if(effects)
-            for(const effect of effects) this.handleEffect(effect);
+        if(effects)  {
+            for(const effect of effects) this.handleEffect(effect)
+        }
         
         this.effectsInitSubject.next(true);
     }
 
-    private handleEffect(effect: Effect<StateAction>): void {
+    protected handleEffect(effect: Immutable<Effect<StateAction>>): void {
         effect.handle$(this.dispatcher.actions$).pipe(   
             tap(x => (x && x.type) ? this.store.dispatch(x) : null),   
             catchError(x => this.onEffectError$(x, effect)),
@@ -37,7 +38,7 @@ export class EffectsSubscriber {
         ).subscribe();
     }
 
-    private onEffectError$(err: unknown, effect: Effect<StateAction>): Observable<unknown> {
+    private onEffectError$(err: unknown, effect: Immutable<Effect<StateAction>>): Observable<unknown> {
         if(effect.onErrorAction) {
             const action = effect.onErrorAction(err)
             if(action) this.store.dispatch(action)

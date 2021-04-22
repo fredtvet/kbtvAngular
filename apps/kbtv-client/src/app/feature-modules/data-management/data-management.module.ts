@@ -12,7 +12,7 @@ import { ModelDataTableModule, MODEL_DATA_TABLES_CONFIG, MODEL_DATA_TABLE_PROP_T
 import { ModelFormModule } from 'model/form';
 import { DeleteModelAction, DeleteModelReducer, SaveModelAction, SaveModelReducer } from 'model/state-commands';
 import { OptimisticHttpModule } from 'optimistic-http';
-import { STORE_REDUCERS } from 'state-management';
+import { StateManagementModule, STORE_REDUCERS } from 'state-management';
 import { DataManagementRoutingModule } from './data-management-routing.module';
 import { DataManagerComponent } from './data-manager/data-manager.component';
 import { DataPropertyPickerComponent } from './data-manager/data-property-picker/data-property-picker.component';
@@ -25,7 +25,8 @@ import { ModelDataTables } from './model-data-tables.const';
   ],
   imports: [
     SharedModule,
-    FormsModule,
+    FormsModule,    
+    StateManagementModule.forFeature({reducers: [SaveModelReducer, DeleteModelReducer]}),
     ModelFormModule.forFeature(_formToSaveModelConverter),
     OptimisticHttpModule.forFeature({
       [SaveModelAction]: GenericActionRequestMap[SaveModelAction],  
@@ -39,8 +40,6 @@ import { ModelDataTables } from './model-data-tables.const';
     MatSelectModule
   ],
   providers: [
-    {provide: STORE_REDUCERS, useValue: SaveModelReducer, multi: true},
-    {provide: STORE_REDUCERS, useValue: DeleteModelReducer, multi: true},
     {provide: MODEL_DATA_TABLE_PROP_TRANSLATIONS, useValue: translations},
     {provide: MODEL_DATA_TABLES_CONFIG, useValue: ModelDataTables},
   ]

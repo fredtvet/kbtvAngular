@@ -6,8 +6,6 @@ import { SharedAppModule } from '@shared-app/shared-app.module';
 import { OptimisticHttpErrorAction } from 'optimistic-http';
 import { FailedCommandListComponent } from './failed-command-list/failed-command-list.component';
 
-console.log('ive been run')
-
 @Component({
   selector: 'app-optimistic-http-error-dialog',
   templateUrl: './optimistic-http-error-dialog.component.html',

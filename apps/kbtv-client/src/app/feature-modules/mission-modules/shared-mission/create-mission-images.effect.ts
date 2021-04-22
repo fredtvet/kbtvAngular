@@ -21,7 +21,7 @@ export class CreateMissionImagesEffect implements Effect<CreateMissionImagesActi
     handle$(actions$: Observable<DispatchedAction<CreateMissionImagesAction, {}>>): Observable<SaveModelFileAction> {
         return actions$.pipe(
             listenTo([CreateMissionImagesAction]),
-            mergeMap(x => {
+            mergeMap(x => { 
                 const actions: SaveModelFileAction[] = [];
    
                 for(const key in x.action.files){

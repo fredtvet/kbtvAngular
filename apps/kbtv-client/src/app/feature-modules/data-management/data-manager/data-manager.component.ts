@@ -7,7 +7,7 @@ import { Prop } from 'global-types';
 import { ModelDataTableComponent } from 'model/data-table';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ComponentStoreProviders, STORE_REDUCERS } from 'state-management';
+import { StateManagementModule } from 'state-management';
 import { DataManagerFacade } from './data-manager.facade';
 import { UpdateSelectedPropertyReducer } from './state/update-selected-property.reducer';
 
@@ -19,8 +19,7 @@ type ViewModel = {bottomActions: AppButton[], selectedProperty: string}
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     DataManagerFacade,
-    ...ComponentStoreProviders,
-    {provide: STORE_REDUCERS, useValue: UpdateSelectedPropertyReducer, multi: true}
+    ...StateManagementModule.forComponent({ reducers: [UpdateSelectedPropertyReducer]}),
   ]
 })
 export class DataManagerComponent {

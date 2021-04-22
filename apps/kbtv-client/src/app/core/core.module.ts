@@ -8,7 +8,7 @@ import { BASE_API_URL, OptimisticHttpModule, ROOT_OPTIMISTIC_STATE_PROPS } from 
 import { environment } from 'src/environments/environment';
 import { HttpAuthTokensInterceptor, StateAuthModule } from 'state-auth';
 import { StateDbModule, STATE_DB_CONFIG } from 'state-db';
-import { STORE_DEFAULT_STATE, STORE_EFFECTS, STORE_REDUCERS, STORE_SETTINGS } from 'state-management';
+import { StateManagementModule, STORE_SETTINGS } from 'state-management';
 import { StateSyncModule } from 'state-sync';
 import { AppAuthCommandApiMap } from './configurations/app-auth-command-api-map.const';
 import { AppAuthRedirects } from './configurations/app-auth-redirects.const';
@@ -18,7 +18,6 @@ import { AppSyncStateConfig } from './configurations/app-sync-state.config';
 import { DefaultState } from './configurations/default-state.const';
 import { AppModelConfigs } from './configurations/model/app-model-configs.const';
 import { AppOptimisticStateProps } from './configurations/optimistic/app-optimistic-state.const';
-import { GenericActionRequestMap } from './configurations/optimistic/generic-action-request-map.const';
 import { HttpRetryInterceptor } from './interceptors/http-retry.interceptor';
 import { HttpErrorInterceptor } from './interceptors/http.error.interceptor';
 import { HttpIsOnlineInterceptor } from './interceptors/http.is-online.interceptor';
@@ -38,6 +37,12 @@ _registerModelStateConfig(AppModelConfigs);
 @NgModule({
   declarations: [],
   imports: [
+    StateManagementModule.forRoot({
+      defaultState: DefaultState,
+      reducers: [WipeStateReducer, SetSyncModelsFetchedReducer, SetSyncModelsFetchingReducer],
+      effects: [InitalizeSyncEffect, InitalizeHttpQueueEffect, OpenDialogOnOptimisticError, 
+        SyncUserOnLoginEffect, NotifyOnUnauthorizedEffect],
+    }),
     StateSyncModule.forRoot({
       fetcher: SyncHttpFetcherService,
       config: AppSyncStateConfig
@@ -64,18 +69,6 @@ _registerModelStateConfig(AppModelConfigs);
     { provide: ROOT_OPTIMISTIC_STATE_PROPS, useValue: AppOptimisticStateProps},
 
     { provide: STATE_DB_CONFIG, useValue: AppStateDbConfig},  
-
-    { provide: STORE_DEFAULT_STATE, useValue: DefaultState },
-    
-    { provide: STORE_EFFECTS, useClass: InitalizeSyncEffect, multi: true },
-    { provide: STORE_EFFECTS, useClass: InitalizeHttpQueueEffect, multi: true },
-    { provide: STORE_EFFECTS, useClass: OpenDialogOnOptimisticError, multi: true },
-
-    { provide: STORE_EFFECTS, useClass: SyncUserOnLoginEffect, multi: true},
-    { provide: STORE_EFFECTS, useClass: NotifyOnUnauthorizedEffect, multi: true},
-    { provide: STORE_REDUCERS, useValue: WipeStateReducer, multi: true},  
-    { provide: STORE_REDUCERS, useValue: SetSyncModelsFetchedReducer, multi: true}, 
-    { provide: STORE_REDUCERS, useValue: SetSyncModelsFetchingReducer, multi: true},  
   ]
 })
 export class CoreModule { 

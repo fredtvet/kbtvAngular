@@ -9,8 +9,8 @@ import { IconService } from './icon.service';
 export class StartupService {
 
   constructor(
-    effectsSubscriber: EffectsSubscriber,
     store: Store<unknown>,
+    effectsSubscriber: EffectsSubscriber,
     iconService: IconService,
     deviceInfoService: DeviceInfoService,
     @Inject(DOCUMENT) document: Document

@@ -10,7 +10,7 @@ export class StateBase {
     private storeState$: Observable<Immutable<{}>>;
 
     constructor(defaultState?: Object){ 
-        this.storeStateSubject = new BehaviorSubject<{}>({...defaultState});
+        this.storeStateSubject = new BehaviorSubject<{}>({...(defaultState || {})});
         this.storeState$ = this.storeStateSubject.asObservable();
     }
 

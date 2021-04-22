@@ -10,7 +10,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { StateAuthModule } from 'state-auth';
-import { StateManagementModule } from 'state-management';
 import { AddToHomeScreenDirective } from './add-to-home-screen.directive';
 import { FetchingModelContentComponent } from './components/fetching-model-content/fetching-model-content.component';
 import { ListItemComponent } from './components/list-item/list-item.component';
@@ -44,7 +43,6 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
   imports: [
     RouterModule,
     CommonModule, 
-    StateManagementModule,
     StateAuthModule,
     
     MatToolbarModule,

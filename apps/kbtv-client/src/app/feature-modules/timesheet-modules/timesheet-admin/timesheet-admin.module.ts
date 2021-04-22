@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { SaveModelReducer } from 'model/state-commands';
 import { FetchModelProviders } from 'model/state-fetcher';
 import { OptimisticHttpModule, OptimisticStateService } from 'optimistic-http';
-import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
+import { StateManagementModule, STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';
 import { AdminTimesheetCardDialogWrapperComponent } from './components/admin-timesheet-card-dialog-wrapper.component';
@@ -31,17 +31,16 @@ import { TimesheetAdminWeekListComponent } from './timesheet-admin-week-list/tim
     AdminTimesheetCardDialogWrapperComponent
   ],
   providers:[
-    { provide: STORE_EFFECTS, useClass: FetchTimesheetsEffect, multi: true},
-    { provide: STORE_REDUCERS, useValue: UpdateTimesheetStatusesReducer, multi: true},
-    { provide: STORE_REDUCERS, useValue: SetTimesheetCriteriaReducer, multi: true},
-    { provide: STORE_REDUCERS, useValue: SetSelectedWeekReducer, multi: true},
     ...FetchModelProviders,
-    {provide: STORE_REDUCERS, useValue: SaveModelReducer, multi: true},
     ...FetchTimesheetProviders,
   ],
   imports: [
     SharedTimesheetModule,
-    TimesheetAdminRoutingModule,
+    TimesheetAdminRoutingModule,    
+    StateManagementModule.forFeature({
+      reducers: [SaveModelReducer, UpdateTimesheetStatusesReducer, SetTimesheetCriteriaReducer, SetSelectedWeekReducer], 
+      effects: [FetchTimesheetsEffect],
+    }), 
     OptimisticHttpModule.forFeature(TimesheetAdminActionRequestMap)
   ]
 })

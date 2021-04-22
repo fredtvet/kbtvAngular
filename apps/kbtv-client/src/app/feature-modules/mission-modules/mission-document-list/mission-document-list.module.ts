@@ -9,7 +9,7 @@ import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-
 import { ModelFormModule } from 'model/form';
 import { DeleteModelAction, DeleteModelReducer } from 'model/state-commands';
 import { OptimisticHttpModule } from 'optimistic-http';
-import { STORE_ACTION_INTERCEPTORS, STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
+import { StateManagementModule } from 'state-management';
 import { MissionDocumentListRoutingModule } from './mission-document-list-routing.module';
 import { MissionDocumentListComponent } from './mission-document-list/mission-document-list.component';
 import { FileExtensionIconPipe } from './pipes/file-extension-icon.pipe';
@@ -23,6 +23,11 @@ import { FileExtensionPipe } from './pipes/file-extension.pipe';
   ],
   imports: [
     SharedMissionModule, 
+    StateManagementModule.forFeature({
+      reducers: [SaveModelFileReducer, DeleteModelReducer], 
+      effects: [MailModelsHttpEffect], 
+      actionInterceptors: [SaveModelFileValidatorInterceptor]
+    }),
     ModelFormModule.forFeature(_formToSaveModelFileConverter),
     OptimisticHttpModule.forFeature({
       [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction],   
@@ -30,11 +35,6 @@ import { FileExtensionPipe } from './pipes/file-extension.pipe';
     }),  
     MissionDocumentListRoutingModule
   ],
-  providers: [
-    {provide: STORE_EFFECTS, useClass: MailModelsHttpEffect, multi: true},
-    {provide: STORE_REDUCERS, useValue: SaveModelFileReducer, multi: true},
-    {provide: STORE_ACTION_INTERCEPTORS, useClass: SaveModelFileValidatorInterceptor, multi: true},
-    {provide: STORE_REDUCERS, useValue: DeleteModelReducer, multi: true},
-  ],
+  providers: [],
 })
 export class MissionDocumentListModule {}

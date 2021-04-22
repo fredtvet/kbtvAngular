@@ -1,3 +1,4 @@
+import { Type } from '@angular/core'
 import { Immutable, Maybe } from 'global-types'
 import { Observable } from 'rxjs'
 import { StateAction } from './state.action'
@@ -69,4 +70,12 @@ export interface StoreSettings {
      *  Helps with debugging the immutability of the system. 
      *  WARNING! Should be set to false in production builds! */
     strictImmutability?: boolean; 
+}
+
+export interface StateManagementProviders {
+    defaultState?: Object;
+    effects?: Type<Effect<StateAction>>[];
+    reducers?: Reducer<Object, StateAction>[];
+    metaReducers?: MetaReducer<Object, StateAction>[];
+    actionInterceptors?: Type<ActionInterceptor>[]
 }
