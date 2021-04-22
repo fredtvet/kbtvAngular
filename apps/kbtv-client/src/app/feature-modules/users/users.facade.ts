@@ -13,7 +13,7 @@ import { UpdateUserPasswordAction } from "@actions/user-actions";
 export class UsersFacade {
 
   sortedUsers$ = 
-    this.store.selectProperty$<User[]>("users").pipe(map(x => x ? this.sortByRole(x) : null));
+    this.store.selectProperty$("users").pipe(map(x => x ? this.sortByRole(x) : null));
   
   get users() { return this.store.state.users; }
 

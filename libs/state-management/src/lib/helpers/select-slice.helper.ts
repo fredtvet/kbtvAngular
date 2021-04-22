@@ -1,10 +1,11 @@
-import { Immutable, ImmutableArray, UnknownState, Prop } from "global-types";
+import { Immutable, Prop, UnknownState } from "global-types";
+import { StateSlice } from "../interfaces";
 
-export function _selectSlice<TState>(
+export function _selectSlice<TState, TProps extends Prop<TState>[] = Prop<TState>[]>(
     state: Immutable<TState>,
-    props: ImmutableArray<Prop<TState>>
-): Immutable<Partial<TState>> {
-    const returnState: Partial<TState> = {}
-    for(const prop of props) (<UnknownState>returnState)[prop] = (<UnknownState>state)[prop];
-    return <Immutable<TState>> returnState;
+    props: Prop<TState>[]
+): Immutable<StateSlice<TState, TProps>> {
+    const returnState: Partial<UnknownState> = {}
+    for(const prop of props) returnState[prop] = state[<Prop<Immutable<TState>>> prop];
+    return <Immutable<StateSlice<TState, TProps>>> returnState;
 }

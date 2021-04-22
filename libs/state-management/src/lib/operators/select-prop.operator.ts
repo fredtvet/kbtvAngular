@@ -7,10 +7,10 @@ import { distinctUntilKeyChanged, map } from "rxjs/operators";
  * @param prop The property on state that should be selected.
  * @returns The value that corresponds with the specified property on state
  */
-export const selectProp = <TState, TResult>(prop: Prop<Immutable<TState>>) => 
-    (source: Observable<Immutable<TState>>): Observable<Immutable<TResult>> => 
+export const selectProp = <TState, TProp extends Prop<Immutable<TState>>>(prop: TProp) => 
+    (source: Observable<Immutable<TState>>): Observable<Immutable<TState>[TProp]> => 
         source.pipe(
             distinctUntilKeyChanged(prop),
-            map(x => <Immutable<TResult>> x[prop])
+            map(x => x[prop])
         )
 

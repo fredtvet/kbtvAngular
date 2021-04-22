@@ -1,6 +1,7 @@
 import { Type } from '@angular/core'
-import { Immutable, Maybe } from 'global-types'
+import { Immutable, Maybe, Prop, UnionTupleType } from 'global-types'
 import { Observable } from 'rxjs'
+import { _createReducer } from './helpers/create-reducer.helper'
 
 export interface StateAction<TActionType extends string = string> {
     /** A string value uniquely identifying the action */
@@ -47,7 +48,7 @@ export type ReducerFn<TState, TAction extends StateAction> =
 */
 export interface Reducer<TState, TAction extends StateAction> {
     /** The action that triggers the reducer. */
-    type: string;
+    type: TAction['type'];
     /** The reducerFn that should be triggered on specified action.  */
     reducerFn: ReducerFn<TState, TAction>;
 }
@@ -84,3 +85,5 @@ export interface StateManagementProviders {
     metaReducers?: MetaReducer<Object, StateAction>[];
     actionInterceptors?: Type<ActionInterceptor>[]
 }
+
+export type StateSlice<TState, TProps extends Prop<TState>[]> = {[P in UnionTupleType<TProps>]: TState[P]}

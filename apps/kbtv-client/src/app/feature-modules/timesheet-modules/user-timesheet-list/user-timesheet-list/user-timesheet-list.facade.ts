@@ -22,16 +22,16 @@ type State = StateMissions & StateUserTimesheets;
 export class UserTimesheetListFacade {
     
       get criteria(){ return this.componentStore.state.timesheetCriteria; } 
-      criteria$ = this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria");
+      criteria$ = this.componentStore.selectProperty$("timesheetCriteria");
   
       private filteredTimesheets$ = combineLatest([
-          this.store.selectProperty$<Timesheet[]>("userTimesheets"),
+          this.store.selectProperty$("userTimesheets"),
           this.criteria$
       ]).pipe(filterRecords(TimesheetFilter), map(x => x.records));
 
       timesheets$: Observable<Maybe<Immutable<Timesheet>[]>> = combineLatest([
         this.filteredTimesheets$, 
-        this.store.selectProperty$<Mission[]>("missions")
+        this.store.selectProperty$("missions")
       ]).pipe(
           map(([userTimesheets, missions]) =>  {
             if(!userTimesheets) return;
@@ -41,7 +41,7 @@ export class UserTimesheetListFacade {
       );
 
       timesheetCriteriaFormState$: Observable<TimesheetCriteriaFormState> = 
-        this.store.selectProperty$<Mission[]>("missions").pipe(
+        this.store.selectProperty$("missions").pipe(
           map(x => { return {options: {missions: x || [], users: null} }})
         )
 

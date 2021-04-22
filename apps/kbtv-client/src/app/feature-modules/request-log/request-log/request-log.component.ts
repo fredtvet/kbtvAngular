@@ -26,7 +26,7 @@ export class RequestLogComponent {
 
   navConfig: MainTopNavConfig = { title: "Aktivitetslogg", backFn: () => this.location.back() };
 
-  private sortedRequestLog$: Observable<Partial<ViewModel>> = this.store.selectProperty$<CompletedCommand[]>("requestLog").pipe(
+  private sortedRequestLog$: Observable<Partial<ViewModel>> = this.store.selectProperty$("requestLog").pipe(
     map(x => {
       const grouped = _groupBy(x, "succeeded");
       return { completedRequests: grouped['true'], failedRequests: grouped['false'] }
@@ -34,7 +34,7 @@ export class RequestLogComponent {
   );
 
   vm$: Observable<ViewModel> = combineLatest([
-    this.store.selectProperty$<QueuedCommand[]>("requestQueue"),
+    this.store.selectProperty$("requestQueue"),
     this.sortedRequestLog$,
     this.deviceInfoService.isOnline$
   ]).pipe(map(([requestQueue, sortedLog, isOnline]) => { return {requestQueue, isOnline, ...sortedLog}}))

@@ -48,7 +48,7 @@ export class ModelDataTableFacade  {
     }
 
     private getNoRowsText$(prop: Maybe<string>): Observable<string>{
-        return this.store.selectProperty$<Record<string, boolean>>("isFetching").pipe(map(isFetchingMap => {
+        return this.store.selectProperty$("isFetching").pipe(map(isFetchingMap => {
             const isFetching = prop != null && isFetchingMap != null && isFetchingMap[prop];
             if(!prop) return 'Ingen data model valgt';
             if(!navigator.onLine) return "Mangler internett-tilkobling";

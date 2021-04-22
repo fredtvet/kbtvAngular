@@ -17,7 +17,7 @@ export class FetchingModelContentComponent{
     @Input() modelProp: Prop<ModelState>;
 
     vm$: Observable<{isOnline: boolean, isFetching: boolean}> = combineLatest([
-        this.store.selectProperty$<Record<Prop<ModelState>, boolean>>('isFetching'),
+        this.store.selectProperty$('isFetching'),
         this.deviceInfoService.isOnline$
     ]).pipe(
         map(([isFetching, isOnline]) => { return { 

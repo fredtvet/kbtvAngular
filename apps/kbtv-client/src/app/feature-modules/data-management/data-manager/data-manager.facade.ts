@@ -17,7 +17,7 @@ export class DataManagerFacade  {
     properties: Prop<ModelState>[] = 
         ["missions", "employers", "missionTypes", "inboundEmailPasswords"];
 
-    selectedProperty$ = this.componentStore.selectProperty$<Prop<ModelState>>("selectedProperty");
+    selectedProperty$ = this.componentStore.selectProperty$("selectedProperty");
 
     get selectedProperty() {
         return this.componentStore.state.selectedProperty;

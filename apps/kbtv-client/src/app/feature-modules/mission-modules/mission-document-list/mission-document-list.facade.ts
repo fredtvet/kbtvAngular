@@ -17,7 +17,7 @@ export class MissionDocumentListFacade  {
   constructor(private store: Store<StoreState>) { }
 
   getMissionDocuments$(missionId: Maybe<string>): Observable<ImmutableArray<MissionDocument>> {
-    return this.store.selectProperty$<MissionDocument[]>("missionDocuments").pipe(
+    return this.store.selectProperty$("missionDocuments").pipe(
       map(documents => _filter(documents, (x: MissionDocument) => x.missionId === missionId))
     )
   }

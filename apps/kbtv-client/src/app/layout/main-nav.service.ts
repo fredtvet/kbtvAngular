@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { User } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { StateCurrentUser } from '@core/state/global-state.interfaces';
 import { combineLatest, Observable, Subject } from 'rxjs';
@@ -15,13 +14,13 @@ export class MainNavService {
 
   toggleDrawer$: Observable<unknown> = this.toggleDrawerSubject.asObservable()
 
-  currentUser$: Observable<User> = this.store.selectProperty$<User>("currentUser");
+  currentUser$ = this.store.selectProperty$("currentUser");
 
   isXs$: Observable<boolean> = this.deviceInfoService.isXs$;
 
   sideNavHeaderConfig$: Observable<MainSideNavConfig> = combineLatest([
     this.currentUser$,
-    this.store.selectProperty$<number>("syncTimestamp"),
+    this.store.selectProperty$("syncTimestamp"),
     this.deviceInfoService.isOnline$, 
     ]).pipe(
       map(([user, syncTimestamp, isOnline]) => {

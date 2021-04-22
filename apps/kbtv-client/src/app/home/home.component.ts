@@ -30,7 +30,7 @@ export class HomeComponent {
   vm$: Observable<Immutable<StateCurrentUser & StateSyncTimestamp & StateMissions>> = 
       combineLatest([
         this.store.select$(["currentUser", "syncTimestamp"]),
-        this.store.selectProperty$<Mission[]>("missions").pipe(
+        this.store.selectProperty$("missions").pipe(
           map(x => _sortByDate(x, "lastVisited")?.slice(0,10))
         )
       ]).pipe(

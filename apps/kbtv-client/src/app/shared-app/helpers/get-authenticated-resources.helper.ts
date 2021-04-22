@@ -1,6 +1,7 @@
 import { User } from "@core/models";
+import { Immutable } from "global-types";
 
-export function _getAuthenticatedResources<T extends {allowedRoles?: string[]}>(resources: T[], user: User): T[] {
+export function _getAuthenticatedResources<T extends {allowedRoles?: string[]}>(resources: T[], user: Immutable<User>): T[] {
     if(!resources) return [];
     const authResources: T[] = [];
     for(const resource of resources){

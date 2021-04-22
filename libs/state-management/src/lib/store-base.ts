@@ -1,4 +1,4 @@
-import { Immutable, ImmutableArray, Prop } from 'global-types';
+import { Immutable, Prop, UnionTupleType } from 'global-types';
 import { Observable } from 'rxjs';
 import { ActionDispatcher } from './action-dispatcher';
 import { _applyInterceptors } from './helpers/apply-interceptors.helper';
@@ -50,7 +50,7 @@ export abstract class StoreBase<TState> {
      * @param props The state properties that should be returned
      * @returns An observable of the specified slice of state
      */
-    select$ = <TResult = Partial<TState>>(props: ImmutableArray<Prop<TState>>): Observable<Immutable<TResult>> =>
+    select$ = <TProps extends Prop<TState>[]>(props: TProps): Observable<Immutable<{[P in UnionTupleType<TProps>]: TState[P]}>> =>
        this.state$.pipe(select(props))
 
     /**
@@ -58,14 +58,14 @@ export abstract class StoreBase<TState> {
      * @param props The state property that should be returned
      * @returns An observable of the provided property value
      */
-    selectProperty$ = <TResult>(prop: Prop<Immutable<TState>>): Observable<Immutable<TResult>> =>
-       this.state$.pipe(selectProp<TState, TResult>(prop))
+    selectProperty$ = <TProp extends Prop<Immutable<TState>>>(prop: TProp): Observable<Immutable<TState>[TProp]> =>
+       this.state$.pipe(selectProp<TState, TProp>(prop))
    
     private reduceState(action: Immutable<StateAction>): void{
         const reducer = this.storeProviders.getReducer(action.type);
 
         if(!reducer) return;
-
+        
         const state = this.base.getStoreState();
         
         const newState = tryWithLogging(() => reducer.reducerFn(<{}> state, action));

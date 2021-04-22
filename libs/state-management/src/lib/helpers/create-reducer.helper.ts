@@ -5,7 +5,7 @@ import { Reducer, ReducerFn, StateAction } from '../interfaces'
  *  @param reducerFn The reducerFn that should be executed
  *  @returns A reducer with the specified parameters. */
 export const _createReducer = <TState, TAction extends StateAction>(
-    type: string, 
+    type: TAction['type'], 
     reducerFn: ReducerFn<TState, TAction>): Reducer<TState, TAction> => { 
     return {type, reducerFn} 
 }

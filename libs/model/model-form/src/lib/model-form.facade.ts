@@ -22,7 +22,7 @@ export class ModelFormFacade {
 
   getFormState$(modelProp: string): Observable<Immutable<OptionsFormState<UnknownModelState>>>{
     const modelCfg = _getModelConfig(modelProp);
-    return this.store.select$<UnknownModelState>([modelProp, ...(modelCfg.foreigns || [])]).pipe(
+    return this.store.select$([modelProp, ...(modelCfg.foreigns || [])]).pipe(
       map(state => { return {options: state || {}} })
     )
   }

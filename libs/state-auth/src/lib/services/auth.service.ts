@@ -19,11 +19,11 @@ export class AuthService {
   )
 
   /** An observable of the current user */
-  currentUser$: Observable<CurrentUser> = this.store.selectProperty$<CurrentUser>("currentUser");
+  currentUser$: Observable<CurrentUser> = this.store.selectProperty$("currentUser");
 
   /** An observable that emits access tokens when they are received. */
   newAccessToken$: Observable<string> = 
-    this.store.selectProperty$<string>("accessToken").pipe(skip(1));
+    this.store.selectProperty$("accessToken").pipe(skip(1));
 
   get hasAccessTokenExpired(): boolean{
     const expires = this.store.state.accessTokenExpiration

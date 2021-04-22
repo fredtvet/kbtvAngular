@@ -23,15 +23,15 @@ import { StoreState } from './store-state';
 @Injectable({providedIn: 'any'})
 export class TimesheetAdminFacade {
 
-    users$ = this.store.selectProperty$<User[]>("users").pipe(map(_noEmployersFilter));
+    users$ = this.store.selectProperty$("users").pipe(map(_noEmployersFilter));
 
     get selectedWeekNr(){ return this.store.state.timesheetAdminSelectedWeekNr; } 
-    selectedWeekNr$ = this.store.selectProperty$<number>("timesheetAdminSelectedWeekNr");
+    selectedWeekNr$ = this.store.selectProperty$("timesheetAdminSelectedWeekNr");
 
     get weekCriteria(){ return this.store.state.timesheetAdminWeekCriteria; } 
-    weekCriteria$ = this.store.selectProperty$<WeekCriteria>("timesheetAdminWeekCriteria");
+    weekCriteria$ = this.store.selectProperty$("timesheetAdminWeekCriteria");
 
-    timesheetCriteria$ = this.store.selectProperty$<TimesheetCriteria>("timesheetAdminTimesheetCriteria")
+    timesheetCriteria$ = this.store.selectProperty$("timesheetAdminTimesheetCriteria")
 
     weekCriteriaFormState$: Observable<WeekCriteriaFormState> = 
         this.users$.pipe(map(x => { return { options: {users: x} } }))

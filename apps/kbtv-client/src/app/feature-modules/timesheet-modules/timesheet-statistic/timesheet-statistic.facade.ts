@@ -26,20 +26,20 @@ type ValidRecord = Timesheet | TimesheetSummary;
 @Injectable({providedIn: "any"})
 export class TimesheetStatisticFacade extends WithUnsubscribe() {
 
-    criteria$ = this.store.selectProperty$<TimesheetCriteria>("timesheetStatisticTimesheetCriteria");
+    criteria$ = this.store.selectProperty$("timesheetStatisticTimesheetCriteria");
     get criteria() { return this.store.state.timesheetStatisticTimesheetCriteria }
 
     criteriaFormState$: Observable<TimesheetCriteriaFormState> = 
-        this.store.select$<StateMissions & StateUsers>(["missions", "users"]).pipe(
+        this.store.select$(["missions", "users"]).pipe(
             map(state => { return { 
                 options: {...state, users: _noEmployersFilter(state.users) }
             }})
         )
 
-    groupBy$ = this.store.selectProperty$<GroupByPeriod>("timesheetStatisticGroupBy");
+    groupBy$ = this.store.selectProperty$("timesheetStatisticGroupBy");
 
     isFetching$: Observable<boolean> = 
-        this.store.selectProperty$<Record<Prop<ModelState>, boolean>>('isFetching').pipe(
+        this.store.selectProperty$('isFetching').pipe(
             map(x => x && x.timesheets), distinctUntilChanged())
 
     private filteredTimesheets$ = this.store.select$(['timesheets', 'timesheetStatisticTimesheetCriteria']).pipe(
@@ -56,7 +56,7 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
 
     tableConfig$: Observable<AgGridConfig<ValidRecord>> = combineLatest([
         this.groupedTimesheets$, 
-        this.store.selectProperty$<User[]>("users")
+        this.store.selectProperty$("users")
     ]).pipe(
         map(x =>  { return { data: _setFullNameOnUserForeigns<ValidRecord>(x[0], x[1]) }}
     ));

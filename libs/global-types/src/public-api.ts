@@ -25,3 +25,5 @@ export type DateInput = Date | string | number;
 export type Prop<T> = Extract<keyof T, string>;
 
 export type KeyVal<T> = { [key: string]: Immutable<T> }
+
+export type UnionTupleType<A extends any[]> = A extends { [n: number]: infer T } ? T : never;

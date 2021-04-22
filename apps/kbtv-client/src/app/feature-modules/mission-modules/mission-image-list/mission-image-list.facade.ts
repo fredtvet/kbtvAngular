@@ -18,7 +18,7 @@ export class MissionImageListFacade {
   constructor(private store: Store<StoreState>) { }
 
   getMissionImages$(missionId: Maybe<string>): Observable<ImmutableArray<MissionImage>> {
-    return this.store.selectProperty$<MissionImage[]>("missionImages").pipe(
+    return this.store.selectProperty$("missionImages").pipe(
       map(images => _filter(images, (x: MissionImage) => x.missionId === missionId))
     )
   }

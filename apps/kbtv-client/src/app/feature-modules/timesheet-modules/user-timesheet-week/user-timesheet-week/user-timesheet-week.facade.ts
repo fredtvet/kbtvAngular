@@ -24,16 +24,16 @@ export class UserTimesheetWeekFacade {
     private currWeekYear: WeekYear = _getWeekYear();
 
     get weekCriteria(){ return this.componentStore.state.weekCriteria; } 
-    weekCriteria$ = this.componentStore.selectProperty$<WeekCriteria>("weekCriteria");
+    weekCriteria$ = this.componentStore.selectProperty$("weekCriteria");
 
     private filteredTimesheets$: Observable<Maybe<Immutable<Timesheet>[]>> = combineLatest([
-        this.store.selectProperty$<Timesheet[]>("userTimesheets"),
-        this.componentStore.selectProperty$<TimesheetCriteria>("timesheetCriteria")
+        this.store.selectProperty$("userTimesheets"),
+        this.componentStore.selectProperty$("timesheetCriteria")
     ]).pipe(filterRecords(TimesheetFilter), map(x => x.records));
 
     weekDaySummaries$: Observable<Maybe<{ [key: number]: Immutable<TimesheetSummary> }>> = combineLatest([
         this.filteredTimesheets$, 
-        this.store.selectProperty$<Mission[]>("missions")
+        this.store.selectProperty$("missions")
     ]).pipe(
         map(([userTimesheets, missions]) =>  {
             if(!userTimesheets?.length) return;

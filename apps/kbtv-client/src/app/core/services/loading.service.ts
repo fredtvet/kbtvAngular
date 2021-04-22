@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { QueuedCommand, StateRequestQueue } from 'optimistic-http';
-import { Observable } from 'rxjs';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { StateRequestQueue } from 'optimistic-http';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { Store } from 'state-management';
 
@@ -14,7 +13,7 @@ export class LoadingService {
 
   httpLoading$ = this.httpLoadingSubject.asObservable().pipe(distinctUntilChanged());
 
-  private optimisticCount$ = this.store.selectProperty$<QueuedCommand[]>("requestQueue").pipe(
+  private optimisticCount$ = this.store.selectProperty$("requestQueue").pipe(
     map(x => x?.length),
     distinctUntilChanged()
   )

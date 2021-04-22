@@ -33,7 +33,7 @@ export class BottomActionBarComponent {
     private userActions$ = combineLatest([
         this.mainNavService.currentUser$,
         this.actionsSubject.asObservable()
-    ]).pipe(map(([currentUser, actions]) => _getAuthenticatedResources(actions, currentUser)))
+    ]).pipe(map(([currentUser, actions]) => currentUser ? _getAuthenticatedResources(actions, currentUser) : []))
     
     vm$: Observable<{isXs: boolean}> = combineLatest([
         this.deviceInfoService.isXs$,

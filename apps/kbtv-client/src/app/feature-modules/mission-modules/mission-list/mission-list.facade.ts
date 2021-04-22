@@ -19,10 +19,10 @@ import { SetMissionCriteriaAction } from './set-mission-criteria.reducer';
 export class MissionListFacade {
 
   missions$ = 
-    this.store.selectProperty$<Mission[]>("missions");
+    this.store.selectProperty$("missions");
 
   criteria$ = 
-    this.componentStore.selectProperty$<MissionCriteria>("missionCriteria");
+    this.componentStore.selectProperty$("missionCriteria");
 
   get criteria() {
     return this.componentStore.state.missionCriteria;
@@ -30,7 +30,7 @@ export class MissionListFacade {
 
   criteriaFormState$: Observable<MissionCriteriaFormState> = 
     this.store.select$(["missionTypes", "employers", "missions"]).pipe(
-      map(options => { return <MissionCriteriaFormState> {options}})
+      map(options => { return { options } })
     )
   
   get currentUser() { return this.store.state.currentUser }
