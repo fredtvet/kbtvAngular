@@ -30,11 +30,11 @@ export class ProfileFacade {
     this.store.dispatch(<UpdatePasswordAction>{ type: UpdatePasswordAction, oldPassword, newPassword });
   
   updateSyncConfig = (syncConfig: Immutable<SyncConfig>) => 
-    this.store.dispatch(<UpdateSyncConfigAction>{ type: UpdateSyncConfigAction, syncConfig, propagate: true });
+    this.store.dispatch(<UpdateSyncConfigAction>{ type: UpdateSyncConfigAction, syncConfig });
   
-  syncAll = () => this.store.dispatch(<SyncStateAction>{ type: SyncStateAction, propagate: true });
+  syncAll = () => this.store.dispatch(<SyncStateAction>{ type: SyncStateAction });
 
-  reloadData = () => this.store.dispatch(<ReloadSyncStateAction>{ type: ReloadSyncStateAction, propagate: true });
+  reloadData = () => this.store.dispatch(<ReloadSyncStateAction>{ type: ReloadSyncStateAction });
 
   logout = () => this.authService.logout(); 
 

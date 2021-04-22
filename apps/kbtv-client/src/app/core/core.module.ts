@@ -4,7 +4,7 @@ import { translations } from '@shared-app/translations';
 import { _registerModelStateConfig } from 'model/core';
 import { MODEL_FORM_PROP_TRANSLATIONS } from 'model/form';
 import { MODEL_FETCHER_BASE_URL } from 'model/state-fetcher';
-import { BASE_API_URL, OptimisticHttpModule, ROOT_OPTIMISTIC_STATE_PROPS } from 'optimistic-http';
+import { BASE_API_URL, OptimisticHttpModule } from 'optimistic-http';
 import { environment } from 'src/environments/environment';
 import { HttpAuthTokensInterceptor, StateAuthModule } from 'state-auth';
 import { StateDbModule, STATE_DB_CONFIG } from 'state-db';
@@ -49,7 +49,7 @@ _registerModelStateConfig(AppModelConfigs);
     }),
     StateAuthModule.forRoot(AppAuthCommandApiMap, AppAuthRedirects),
     StateDbModule,  
-    OptimisticHttpModule.forRoot()
+    OptimisticHttpModule.forRoot(null, AppOptimisticStateProps)
   ],
   providers: [   
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
@@ -65,8 +65,6 @@ _registerModelStateConfig(AppModelConfigs);
     { provide: MODEL_FETCHER_BASE_URL, useValue: environment.apiUrl},
 
     { provide: MODEL_FORM_PROP_TRANSLATIONS, useValue: translations },
-
-    { provide: ROOT_OPTIMISTIC_STATE_PROPS, useValue: AppOptimisticStateProps},
 
     { provide: STATE_DB_CONFIG, useValue: AppStateDbConfig},  
   ]

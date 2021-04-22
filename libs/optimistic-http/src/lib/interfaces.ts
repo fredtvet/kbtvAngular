@@ -55,7 +55,9 @@ export interface OptimisticHttpRequest<TBody extends {} | FormData[] | null = {}
 /** A map of actions that should dispatch an optimistic http request. 
  *  Provided with token {@link ACTION_REQUEST_MAP} or with the forRoot & forFeature functions on {@link OptimisticHttpModule} */
 export type ActionRequestMap<TActionTypes extends string> = 
-  { [P in TActionTypes]: (a: Immutable<ActionWithType<P>>) => Omit<OptimisticHttpRequest<any>, "callerAction"> }
+  { [P in TActionTypes]: ActionRequestConverterFn<ActionWithType<P>> }
+
+export type ActionRequestConverterFn<TAction> = (a: Immutable<TAction>) => Omit<OptimisticHttpRequest<any>, "callerAction">
 
 /** Represents a type that can be serialized. No functions are allowed. */
 export type AsJson<T> = 

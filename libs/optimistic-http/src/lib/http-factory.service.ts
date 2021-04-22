@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from "@angular/core";
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
-import { CommandIdHeader } from './command-id-header.const';
-import { BASE_API_URL } from './injection-tokens.const';
+import { CommandIdHeader } from './constants/command-id-header.const';
+import { BASE_API_URL } from './constants/injection-tokens.const';
 import { FormDataEntry, OptimisticHttpRequest } from './interfaces';
 
 @Injectable({providedIn: "root"})

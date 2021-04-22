@@ -1,7 +1,9 @@
-import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
+import { ModuleWithProviders, NgModule, Optional, Provider, Self } from '@angular/core';
+import { Maybe, Prop } from 'global-types';
 import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
-import { ACTION_REQUEST_MAP } from './injection-tokens.const';
+import { ACTION_REQUEST_MAP, OPTIMISTIC_STATE_PROPS } from './constants/injection-tokens.const';
 import { ActionRequestMap } from './interfaces';
+import { OptimisticFeatureProvidersService } from './optimistic-feature-providers.service';
 import { DispatchHttpEffect } from './state/dispatch-http/dispatch-http.effect';
 import { DispatchHttpReducer } from './state/dispatch-http/dispatch-http.reducer';
 import { HttpErrorEffect } from './state/http-error/http-error.effect';
@@ -18,8 +20,12 @@ import { AppendRequestLogReducer } from './state/request-log/append-request-log.
  *  Use forRoot & forFeature functions to configure providers. */
 @NgModule({})
 export class OptimisticHttpModule { 
-  static forRoot(rootActionRequestMap?: ActionRequestMap<string>): ModuleWithProviders<OptimisticHttpModule> {
+
+  constructor(@Optional() @Self() featureProviders: OptimisticFeatureProvidersService){}
+
+  static forRoot<TState>(actionRequestMap: Maybe<ActionRequestMap<string>>, optimisticStateProps?: Prop<TState>[]): ModuleWithProviders<OptimisticHttpModule> {
     let providers: Provider[] = [
+      { provide: STORE_EFFECTS, useClass: OptimisticRequestQueuerEffect, multi: true },  
       { provide: STORE_EFFECTS, useClass: DispatchHttpEffect, multi: true },
       { provide: STORE_EFFECTS, useClass: HttpQueuePushEffect, multi: true },
       { provide: STORE_EFFECTS, useClass: HttpSuccessEffect, multi: true },  
@@ -33,24 +39,24 @@ export class OptimisticHttpModule {
       { provide: STORE_REDUCERS, useValue: HttpQueueShiftReducer, multi: true },
     ];
 
-    if(rootActionRequestMap) providers = providers.concat([
-      { provide: ACTION_REQUEST_MAP, useValue: rootActionRequestMap },   
-      { provide: STORE_EFFECTS, useClass: OptimisticRequestQueuerEffect, multi: true },
-    ])
+    if(optimisticStateProps)
+      providers.push({ provide: OPTIMISTIC_STATE_PROPS, useValue: optimisticStateProps})
 
-    return {
-      ngModule: OptimisticHttpModule,
-      providers
-    }
+    if(actionRequestMap) 
+      providers.push({ provide: ACTION_REQUEST_MAP, useValue: actionRequestMap })
+
+    return { ngModule: OptimisticHttpModule, providers }
   }
 
-  static forFeature(featureActionRequestMap: ActionRequestMap<string>): ModuleWithProviders<OptimisticHttpModule> {
-    return {
-      ngModule: OptimisticHttpModule,
-      providers: [
-        { provide: ACTION_REQUEST_MAP, useValue: featureActionRequestMap },     
-        { provide: STORE_EFFECTS, useClass: OptimisticRequestQueuerEffect, multi: true },  
-      ]
-    }
+  static forFeature<TState>(actionRequestMap?: ActionRequestMap<string>, optimisticStateProps?: Prop<TState>[]): ModuleWithProviders<OptimisticHttpModule> {
+    let providers: Provider[] = [OptimisticFeatureProvidersService];
+    
+    if(optimisticStateProps)
+      providers.push({ provide: OPTIMISTIC_STATE_PROPS, useValue: optimisticStateProps})
+
+    if(actionRequestMap) 
+      providers.push({ provide: ACTION_REQUEST_MAP, useValue: actionRequestMap })
+
+    return { ngModule: OptimisticHttpModule, providers }
   }
 }

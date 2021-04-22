@@ -47,6 +47,6 @@ export class HomeComponent {
 
   toggleDrawer = () => this.mainNavService.toggleDrawer();
 
-  refresh = () => this.store.dispatch(<SyncStateAction>{ type: SyncStateAction, propagate: true });
+  refresh = () => this.store.dispatch(<SyncStateAction>{ type: SyncStateAction });
 
 }
