@@ -6,7 +6,7 @@ import { StateAction, _createReducer } from 'state-management';
 import { ComponentStoreState } from '../store-state.interface';
 
 export const SetTimesheetCriteriaAction = "SET_TIMESHEET_CRITERIA_ACTION";
-export interface SetTimesheetCriteriaAction extends StateAction {
+export interface SetTimesheetCriteriaAction extends StateAction<typeof SetTimesheetCriteriaAction> {
     weekCriteria: WeekCriteria 
 }
 
@@ -21,7 +21,7 @@ export const SetTimesheetCriteriaReducer = _createReducer(
 ) 
 
 export const NextWeekAction = "NEXT_WEEK_ACTION";
-export interface NextWeekAction extends StateAction {
+export interface NextWeekAction extends StateAction<typeof NextWeekAction> {
     currYear: number, 
     currWeekNr: number
 }
@@ -51,7 +51,7 @@ export const NextWeekReducer = _createReducer(
 )  
 
 export const PreviousWeekAction = "PREVIOUS_WEEK_ACTION";
-export interface PreviousWeekAction extends StateAction { }
+export interface PreviousWeekAction extends StateAction<typeof PreviousWeekAction> { }
 
 export const PreviousWeekReducer = _createReducer(
     PreviousWeekAction,

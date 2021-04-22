@@ -75,7 +75,6 @@ export class ModelFormService {
     formConfig: Immutable<ModelFormConfig<TState, TForm, FormState<TState>>>, 
     deleteUrl: Maybe<string>, 
     ref: MatBottomSheetRef<unknown, unknown>) => { 
-      console.log(ref)
     const translatedProp = this.translateStateProp(formConfig.stateProp);
     const modelCfg = _getModelConfig(formConfig.stateProp);
     const idWord = this.translations[(<string> modelCfg.idProp).toLowerCase()] || modelCfg.idProp

@@ -3,8 +3,7 @@ import { _groupBy } from "array-helpers";
 import { Immutable, ImmutableArray, Maybe } from "global-types";
 import { _applyMetaReducers } from "./helpers/apply-meta-reducers.helper";
 import { _mergeReducers } from "./helpers/merge-reducers.helper";
-import { ActionInterceptor, MetaReducer, Reducer } from "./interfaces";
-import { StateAction } from "./state.action";
+import { ActionInterceptor, MetaReducer, Reducer, StateAction } from "./interfaces";
 
 type ReducerMap = {[key: string]: Immutable<Reducer<unknown, StateAction>>}
 

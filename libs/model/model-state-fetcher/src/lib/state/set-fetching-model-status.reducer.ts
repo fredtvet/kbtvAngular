@@ -4,7 +4,7 @@ import { Reducer, StateAction, _createReducer } from 'state-management';
 import { StateIsFetching } from '../interfaces';
 
 export const SetFetchingModelStatusAction = "SET_FETCHING_MODEL_STATUS_ACTION";
-export interface SetFetchingModelStatusAction<TState = UnknownModelState> extends StateAction {
+export interface SetFetchingModelStatusAction<TState = UnknownModelState> extends StateAction<typeof SetFetchingModelStatusAction<TState = UnknownModelState>> {
     isFetching: Record<Prop<TState>, boolean>
 }
 

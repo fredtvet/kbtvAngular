@@ -1,6 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { Reducer, Effect, MetaReducer, StoreSettings, ActionInterceptor } from '../interfaces';
-import { StateAction } from '../state.action';
+import { Reducer, Effect, MetaReducer, StoreSettings, ActionInterceptor, StateAction } from '../interfaces';
 
 export const STORE_REDUCERS = new InjectionToken<Reducer<unknown, StateAction>[]>('StoreReducers');
 export const STORE_META_REDUCERS = new InjectionToken<MetaReducer<unknown, StateAction>[]>("MetaReducers");

@@ -1,8 +1,7 @@
 import { _convertArrayToObject } from 'array-helpers';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { DispatchedAction } from '../interfaces';
-import { StateAction } from '../state.action';
+import { DispatchedAction, StateAction } from '../interfaces';
 
 /** An rxjs operator used to filter the types of actions provided from an action observer.
  * @param types The types of actions that should emit

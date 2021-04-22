@@ -1,5 +1,4 @@
-import { StateAction } from '../state.action';
-import { Reducer, MetaReducer } from '../interfaces';
+import { Reducer, MetaReducer, StateAction } from '../interfaces';
 import { ImmutableArray } from 'global-types';
 
 export function _applyMetaReducers(

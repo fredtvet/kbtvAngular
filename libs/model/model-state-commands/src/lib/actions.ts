@@ -14,7 +14,6 @@ export interface SaveModelAction<TModel, TState> extends ModelStateAction<TState
     saveAction: SaveAction
 }
 
-export interface ModelStateAction<TState, TType extends string> extends StateAction{
+export interface ModelStateAction<TState, TType extends string> extends StateAction<TType>{
     stateProp: Prop<TState>;
-    type: TType;
 }

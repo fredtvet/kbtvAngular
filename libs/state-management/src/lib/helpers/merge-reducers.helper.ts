@@ -1,6 +1,5 @@
 import { Immutable, ImmutableArray } from 'global-types';
-import { Reducer } from '../interfaces';
-import { StateAction } from '../state.action';
+import { Reducer, StateAction } from '../interfaces';
 
 export function _mergeReducers(reducers: ImmutableArray<Reducer<{}, StateAction>>, type: string): Reducer<{}, StateAction> {
     return <Reducer<{}, StateAction>>{type,

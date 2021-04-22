@@ -4,7 +4,7 @@ import { StateAction, _createReducer } from 'state-management';
 import { ComponentStoreState } from './interfaces/store-state';
 
 export const SetMissionCriteriaAction = "SET_MISSION_CRITERIA_ACTION";
-export interface SetMissionCriteriaAction extends StateAction {
+export interface SetMissionCriteriaAction extends StateAction<typeof SetMissionCriteriaAction> {
     missionCriteria: MissionCriteria
 }
 

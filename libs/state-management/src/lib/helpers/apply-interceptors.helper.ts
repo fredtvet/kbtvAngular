@@ -1,6 +1,5 @@
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
-import { ActionInterceptor } from '../interfaces';
-import { StateAction } from '../state.action';
+import { ActionInterceptor, StateAction } from '../interfaces';
 
 export function _applyInterceptors(
     action: Immutable<StateAction>, 

@@ -1,5 +1,4 @@
-import { Reducer, ReducerFn } from '../interfaces'
-import { StateAction } from '../state.action'
+import { Reducer, ReducerFn, StateAction } from '../interfaces'
 
 /** Helper function that creates a reducer
  *  @param type The action type that triggers the reducer

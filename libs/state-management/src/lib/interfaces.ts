@@ -1,7 +1,11 @@
 import { Type } from '@angular/core'
 import { Immutable, Maybe } from 'global-types'
 import { Observable } from 'rxjs'
-import { StateAction } from './state.action'
+
+export interface StateAction<TActionType extends string = string> {
+    /** A string value uniquely identifying the action */
+    type: TActionType;
+}
 
 /** Represents an action that has been dispatched by a {@link Store} */
 export interface DispatchedAction<TAction extends StateAction, TState = {}> { 
@@ -35,7 +39,8 @@ export interface Effect<TAction extends StateAction> {
  * @param action The action that triggers the {@link Reducer}
  * @returns The modified state
  */
-export type ReducerFn<TState, TAction> = (state: Immutable<TState>, action: Immutable<TAction>) => Maybe<Immutable<Partial<TState>>>
+export type ReducerFn<TState, TAction extends StateAction> = 
+    (state: Immutable<TState>, action: Immutable<TAction>) => Maybe<Immutable<Partial<TState>>>
 
 /** Represents an object used to modify state on a specified action. 
  *  Provided with token {@link STORE_REDUCERS}

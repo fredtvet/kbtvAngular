@@ -15,4 +15,4 @@ export interface SaveModelFileAction<TModel extends ModelFile = ModelFile> exten
 }
 
 export const WipeStateAction = "WIPE_STATE_ACTION";
-export interface WipeStateAction extends StateAction { defaultState: {} }
+export interface WipeStateAction extends StateAction<typeof WipeStateAction> { defaultState: {} }

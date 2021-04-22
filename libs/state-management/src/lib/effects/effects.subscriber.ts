@@ -2,8 +2,7 @@ import { Inject, Injectable, Optional, Self } from '@angular/core';
 import { Immutable, ImmutableArray } from 'global-types';
 import { ActionDispatcher } from '../action-dispatcher';
 import { STORE_EFFECTS } from '../constants/injection-tokens.const';
-import { Effect } from '../interfaces';
-import { StateAction } from '../state.action';
+import { Effect, StateAction } from '../interfaces';
 import { Store } from '../store';
 import { EffectsSubscriberBase } from './effects.subscriber.base';
 

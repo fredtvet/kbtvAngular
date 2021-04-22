@@ -1,14 +1,13 @@
-import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
+import { Immutable, ImmutableArray, Prop } from 'global-types';
 import { Observable } from 'rxjs';
 import { ActionDispatcher } from './action-dispatcher';
 import { _applyInterceptors } from './helpers/apply-interceptors.helper';
 import { _deepFreeze } from './helpers/object-freezer.helper';
 import { tryWithLogging } from './helpers/try-log-error.helper';
-import { StoreSettings } from './interfaces';
+import { StateAction, StoreSettings } from './interfaces';
 import { selectProp } from './operators/select-prop.operator';
 import { select } from './operators/select.operator';
 import { StateBase } from './state-base';
-import { StateAction } from './state.action';
 import { StoreProvidersService } from './store-providers.service';
 
 export abstract class StoreBase<TState> {

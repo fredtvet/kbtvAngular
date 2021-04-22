@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Immutable } from 'global-types';
 import { Observable, Subject } from 'rxjs';
-import { DispatchedAction } from './interfaces';
-import { StateAction } from './state.action';
+import { DispatchedAction, StateAction } from './interfaces';
 
 /** Responsible for providing an action observer of dispatched actions. 
  *  Primarily used by {@link EffectsSubscriber} to handle effects. */

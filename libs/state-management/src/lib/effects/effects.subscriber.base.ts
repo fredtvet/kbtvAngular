@@ -3,8 +3,7 @@ import { Immutable, ImmutableArray } from 'global-types';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError, first, takeUntil, tap } from 'rxjs/operators';
 import { ActionDispatcher } from '../action-dispatcher';
-import { Effect } from '../interfaces';
-import { StateAction } from '../state.action';
+import { Effect, StateAction } from '../interfaces';
 import { StoreBase } from '../store-base';
 
 /** Responsible for injecting effects (see {@link Effect}) for a given component

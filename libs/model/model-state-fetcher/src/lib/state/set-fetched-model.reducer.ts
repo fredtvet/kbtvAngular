@@ -4,7 +4,7 @@ import { Reducer, StateAction, _createReducer } from 'state-management';
 import { StateIsFetching } from '../interfaces';
 
 export const SetFetchedModelAction = "SET_FETCHED_STATE_ACTION";
-export interface SetFetchedModelAction extends StateAction {
+export interface SetFetchedModelAction extends StateAction<typeof SetFetchedModelAction> {
     stateProp: string;
     payload: unknown[];
 }

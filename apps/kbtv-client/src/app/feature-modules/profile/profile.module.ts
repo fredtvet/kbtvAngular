@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { OptimisticHttpModule } from 'optimistic-http';
-import { StateManagementModule, STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
+import { StateManagementModule } from 'state-management';
 import { ProfileActionRequestMap } from './profile-action-request-map.const';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileActionItemComponent } from './profile/profile-action-item.component';
