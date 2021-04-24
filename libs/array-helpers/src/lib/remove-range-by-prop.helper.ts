@@ -1,5 +1,4 @@
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
-import { _convertArrayToObject } from './convert-array-to-object.helper';
 
 /**
  * Remove a range  of objects from an array of objects based on a common property value
@@ -24,10 +23,10 @@ export function _removeRangeByProp<T>(
             } 
         } 
     else {
-        const valueMap  = _convertArrayToObject(<unknown[]> value)
+        const valueMap = new Set(value)
         for(let i = 0; i < originals.length; i++) 	{
             const item = copy[i];	
-            if(item && valueMap[<string> item[prop]]){              
+            if(item && valueMap.has(item[prop])){              
                 copy.splice(i - delCount, 1);
                 delCount = delCount + 1;
             }

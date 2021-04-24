@@ -1,5 +1,4 @@
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
-import { _convertArrayToObject } from './convert-array-to-object.helper';
 
 /**
  * Remove a range  of objects from an array of objects
@@ -14,7 +13,7 @@ export function _removeRangeById<T>(
     if(!deletedIds?.length) return originals?.slice() || []; //If no deleted ids, just return originals
     if(!originals?.length) return []; //If initial array empty, just return empty array
     
-    const idMap = _convertArrayToObject(deletedIds);
+    const idMap = new Set(deletedIds);
     const copy = originals.slice();
 
     let delCount = deletedIds.length;
@@ -22,7 +21,7 @@ export function _removeRangeById<T>(
     for(let i = 0; i < originals.length; i++){  	
       let entity = originals[i]; 
            
-      if(idMap[<string>entity[idProp]]){
+      if(idMap.has(entity[idProp])){
         copy.splice(i + delCount - deletedIds.length, 1);
         delCount = delCount - 1;
       }

@@ -1,6 +1,7 @@
 import { Immutable, ImmutableArray, Maybe, Prop} from 'global-types';
 
-type Response<T> = { [key: string]: Maybe<Immutable<T>> }
+
+type Response<T> = { [key: string]: Immutable<T> }
 /**
  * Convert an array to a key/value object
  * @param array 
@@ -9,7 +10,7 @@ type Response<T> = { [key: string]: Maybe<Immutable<T>> }
  */
 export function _convertArrayToObject<T>(
   array: Maybe<ImmutableArray<T>>, 
-  key?: Prop<Immutable<T>> | ((t: Immutable<T>) => string)  
+  key: Prop<Immutable<T>> | ((t: Immutable<T>) => string)  
 ): Response<T> {
     if(!array?.length) return {};
     
@@ -25,8 +26,7 @@ export function _convertArrayToObject<T>(
         setter = (entity: Immutable<T>, result: Response<T>) => result[key(entity)] = entity
         break;
       default:
-        setter = (entity: Immutable<T>, result: Response<T>) => result[entity as unknown as string] = entity;
-        break;
+        throw new Error("Key must be of type string or function")
     }
 
     for(var i = 0; i < array.length; i++) setter(array[i], result);
