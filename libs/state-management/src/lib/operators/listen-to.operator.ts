@@ -7,9 +7,9 @@ import { DispatchedAction, StateAction } from '../interfaces';
  * @param types The types of actions that should emit
  */
 export const listenTo = <TAction extends StateAction, TState>(types: string[]) => {
-    const typeLookup = new Set(types);
+    const typeLookup = _convertArrayToObject(types);
     return (source: Observable<DispatchedAction<TAction, TState>> ): Observable<DispatchedAction<TAction, TState>> => 
         source.pipe(
-            filter(dispatched => typeLookup.has(dispatched.action.type)),  
+            filter(dispatched => typeLookup[dispatched.action.type] !== undefined),  
         )
 }

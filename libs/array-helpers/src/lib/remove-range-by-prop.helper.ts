@@ -23,10 +23,9 @@ export function _removeRangeByProp<T>(
             } 
         } 
     else {
-        const valueMap = new Set(value)
         for(let i = 0; i < originals.length; i++) 	{
             const item = copy[i];	
-            if(item && valueMap.has(item[prop])){              
+            if(item && value.indexOf(item[prop]) !== -1){              
                 copy.splice(i - delCount, 1);
                 delCount = delCount + 1;
             }

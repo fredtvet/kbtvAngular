@@ -12,8 +12,7 @@ export function _removeRangeById<T>(
   idProp: Prop<Immutable<T>>  ): Immutable<T>[] {       
     if(!deletedIds?.length) return originals?.slice() || []; //If no deleted ids, just return originals
     if(!originals?.length) return []; //If initial array empty, just return empty array
-    
-    const idMap = new Set(deletedIds);
+
     const copy = originals.slice();
 
     let delCount = deletedIds.length;
@@ -21,7 +20,7 @@ export function _removeRangeById<T>(
     for(let i = 0; i < originals.length; i++){  	
       let entity = originals[i]; 
            
-      if(idMap.has(entity[idProp])){
+      if(deletedIds.indexOf(entity[idProp]) !== -1){
         copy.splice(i + delCount - deletedIds.length, 1);
         delCount = delCount - 1;
       }
