@@ -1,21 +1,10 @@
 import { UpdateLastVisitedAction } from '@actions/mission-actions';
 import { StateMissions } from '@core/state/global-state.interfaces';
-import { Immutable } from 'global-types';
+import { _update } from 'array-helpers';
 import { _createReducer } from 'state-management';
 
-export const UpdateLastVisitedReducer = _createReducer(
+export const UpdateLastVisitedReducer = _createReducer<StateMissions, UpdateLastVisitedAction>(
     UpdateLastVisitedAction,
-    (state: Immutable<StateMissions>, action: Immutable<UpdateLastVisitedAction>) => {
-        if(!state.missions) return;
-
-        const index = state.missions.findIndex(x => x.id === action.id);
-        if(index === -1) return;
-
-        const missions = [...state.missions];
-        const mission = missions[index];
-        if(!mission) return;
-
-        missions[index] = {...mission, lastVisited: new Date().getTime()};
-        return {missions};
-    }
+    (state, {id}) => !state.missions ? undefined :
+        { missions: _update(state.missions, { id, lastVisited: new Date().getTime() }, "id") }   
 )
