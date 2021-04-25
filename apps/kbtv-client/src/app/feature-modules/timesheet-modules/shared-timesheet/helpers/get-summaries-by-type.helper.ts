@@ -6,8 +6,11 @@ import { _getDailySummaries } from "./get-daily-summaries.helper";
 import { _getMonthlySummaries } from "./get-monthly-summaries.helper";
 import { _getWeeklySummaries } from "./get-weekly-summaries.helper";
 import { _getYearlySummaries } from "./get-yearly-summaries.helper";
+import { _weakMemoizer } from "array-helpers";
 
-export function _getSummariesByType(type: Maybe<GroupByPeriod>, t: Maybe<ImmutableArray<Timesheet>>): Maybe<Immutable<TimesheetSummary>[]> {
+const getSummariesByType = (
+  type: Maybe<GroupByPeriod>, 
+  t: Maybe<ImmutableArray<Timesheet>>): Maybe<Immutable<TimesheetSummary>[]> => {
     switch (type) {
       case GroupByPeriod.Day:
         return _getDailySummaries(t);
@@ -19,4 +22,6 @@ export function _getSummariesByType(type: Maybe<GroupByPeriod>, t: Maybe<Immutab
         return _getYearlySummaries(t);
       default: return null;
     }
-  }
+}
+
+export const _getSummariesByType = _weakMemoizer(getSummariesByType);
