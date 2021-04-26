@@ -1,29 +1,24 @@
+import { SaveModelFileAction } from '@actions/global-actions';
 import { Model, ModelFile } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { FormToSaveModelConverter, ModelFormToSaveModelInput } from 'model/form';
-import { _flattenExistingForeigns } from '@shared-app/helpers/flatten-existing-foreigns.helper';
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
 import { ModelFileWrapper } from '@shared/model-file.wrapper';
-import { SaveModelFileAction } from '@actions/global-actions';
 import { ModelConfig, _getModelConfig } from 'model/core';
+import { Converter, ModelFormResult } from 'model/form';
 
 export type ModelFileForm = ModelFile & {file: File};
-export const _formToSaveModelFileConverter: FormToSaveModelConverter<ModelFileForm, ModelState, SaveModelFileAction<ModelFile>> =
-    <TForm extends ModelFileForm>(input: ModelFormToSaveModelInput<TForm, ModelState>): SaveModelFileAction<ModelFile> => {
+type FormResult = ModelFormResult<ModelFileForm, ModelState>
 
-    const clone = {...input.formValue, file: undefined};
-    var entity = _flattenExistingForeigns<ModelFile>(input.stateProp, clone, input.options);
+export const _formToSaveModelFileConverter: Converter<FormResult, SaveModelFileAction<ModelFile>> = (input) => {
+    let {file, ...entity} = input.formValue;
     entity = _modelIdGenerator(input.stateProp, entity); 
-
     const modelCfg = _getModelConfig<ModelConfig<ModelFile,ModelState>>(input.stateProp);
-    const fileWrapper = 
-        new ModelFileWrapper(input.formValue.file, entity[modelCfg.idProp]);
 
     return <SaveModelFileAction<Model>>{
         type: SaveModelFileAction,
         stateProp: input.stateProp, 
         entity, 
-        fileWrapper, 
+        fileWrapper: new ModelFileWrapper(file, entity[modelCfg.idProp]), 
         saveAction: input.saveAction
     }
 }

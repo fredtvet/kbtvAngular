@@ -27,7 +27,7 @@ export class DataManagerFacade  {
         private store: Store<ModelState>,
         private componentStore: ComponentStore<ComponentState>,     
         private confirmService: ConfirmDialogService,
-        private formService: ModelFormService
+        private modelFormService: ModelFormService
     ) { }
 
     updateSelectedProperty = (prop: Prop<ModelState>) => 
@@ -35,10 +35,8 @@ export class DataManagerFacade  {
     
     createItem = (): void => {
         this.selectedProperty ? 
-        this.formService.open<ModelState, Model>({formConfig: {
-          stateProp: this.selectedProperty,    
-          dynamicForm: PropertyFormMap[this.selectedProperty]
-        }}) : undefined
+            this.modelFormService.open(PropertyFormMap[this.selectedProperty]) : 
+            undefined
     }
 
     deleteItems = (ids?: string[]): void =>{ 

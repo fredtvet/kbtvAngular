@@ -2,25 +2,24 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceInfoService } from '@core/services/device-info.service';
-import { ModelState } from "@core/state/model-state.interface";
-import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
+import { WeekCriteria } from '@shared-timesheet/interfaces';
+import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { WeekCriteriaForm } from '@shared/constants/forms/week-criteria-controls.const';
-import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
+import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
 import { _getDateOfWeek, _getWeekRange } from 'date-time-helpers';
-import { DynamicForm, _disableControlsWithNoValue } from 'dynamic-forms';
-import { FormService, OptionsFormState } from 'form-sheet';
-import { Immutable, Maybe } from "global-types";
+import { _disableControlsWithNoValue } from 'dynamic-forms';
+import { FormService } from 'form-sheet';
+import { Maybe } from "global-types";
 import { ModelFormService } from 'model/form';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
-import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { UserTimesheetListCriteriaQueryParam } from "../../user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const";
 import { UserTimesheetWeekProviders } from './user-timesheet-week-providers.const';
 import { UserTimesheetWeekFacade } from './user-timesheet-week.facade';
 import { ViewModel } from './view-model.interface';
-import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 
 @Component({
   selector: "app-user-timesheet-week",
@@ -65,16 +64,15 @@ export class UserTimesheetWeekComponent {
   previousWeek = (): void => this.facade.previousWeek()
 
   openTimesheetForm = (entityId?: Maybe<string>, form?: TimesheetForm): void => {
-    let dynamicForm: Immutable<DynamicForm<TimesheetForm,  OptionsFormState<Partial<ModelState>>>>;
-    if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _disableControlsWithNoValue(form)}
-    else dynamicForm = EditUserTimesheetForm
-
-    this.modelFormService.open<ModelState, TimesheetForm>({
-      formConfig: {
-        dynamicForm: {...dynamicForm, initialValue: form}, entityId,
-        stateProp: "userTimesheets",    
-      }, 
-    })
+    this.modelFormService.open(
+      entityId ? EditUserTimesheetModelForm : 
+        {...CreateUserTimesheetModelForm, 
+          dynamicForm: {...CreateUserTimesheetModelForm.dynamicForm, 
+            disabledControls: _disableControlsWithNoValue(form), initialValue: form
+          }
+        },
+      entityId
+    )
   };
 
   openTimesheetCard = (timesheetId: string) =>

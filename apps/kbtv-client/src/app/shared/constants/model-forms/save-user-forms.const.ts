@@ -11,6 +11,10 @@ import { SelectQuestion, SelectQuestionComponent } from '../../scam/dynamic-form
 import { EmailControl, EmployerSelectControl, FirstNameControl, LastNameControl, PhoneNumberControl, UserNameControl } from '../common-controls.const';
 import { Roles } from '@core/roles.enum';
 import { Immutable } from 'global-types';
+import { ModelState } from '@core/state/model-state.interface';
+import { ModelFormConfig } from 'model/form';
+import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
+import { _userFormToSaveUserConverter } from 'src/app/feature-modules/users/save-user/user-form-to-save-user.converter';
 
 export interface UserForm extends User { password?: string; }
 
@@ -48,30 +52,37 @@ const EmployerControl = <Immutable<DynamicControl<{employer: Employer}, OptionsF
         hideOnValueChange: {controlName: "role", callback: (role: string) => role !== Roles.Oppdragsgiver}}]
 }
 
-export const CreateUserForm: Immutable<DynamicForm<UserForm, FormState>> = {
-    submitText: "Legg til",
-    controls: [
-        UniqueUserNameControl,
-        PasswordControl,
-        {...FirstNameControl, required: true},
-        {...LastNameControl, required: true},
-        RoleControl,
-        EmployerControl,
-        PhoneNumberControl,
-        EmailControl, 
-    ],
+export const CreateUserModelForm: Immutable<ModelFormConfig<ModelState, UserForm, FormState>> = {
+    includes: {prop: "users", foreigns: "all"},
+    actionConverter: _userFormToSaveUserConverter,
+    dynamicForm: {
+        submitText: "Legg til",
+        controls: [
+            UniqueUserNameControl,
+            PasswordControl,
+            {...FirstNameControl, required: true},
+            {...LastNameControl, required: true},
+            RoleControl,
+            EmployerControl,
+            PhoneNumberControl,
+            EmailControl, 
+        ],
+    }
 }
 
-export const EditUserForm: Immutable<DynamicForm<UserForm, FormState>> = {
-    submitText: "Oppdater", getRawValue: true, disabledControls: {userName:true},
-    controls: [ 
-        UniqueUserNameControl,
-        {...FirstNameControl, required: true},
-        {...LastNameControl, required: true},
-        RoleControl,
-        EmployerControl,
-        PhoneNumberControl,
-        EmailControl, 
-    ],
+export const EditUserModelForm: Immutable<ModelFormConfig<ModelState, UserForm, FormState>> = {
+    includes: {prop: "users", foreigns: "all"},
+    actionConverter: _userFormToSaveUserConverter,
+    dynamicForm: {
+        submitText: "Oppdater", getRawValue: true, disabledControls: {userName:true},
+        controls: [
+            UniqueUserNameControl,
+            {...FirstNameControl, required: true},
+            {...LastNameControl, required: true},
+            RoleControl,
+            EmployerControl,
+            PhoneNumberControl,
+            EmailControl, 
+        ],
+    }
 }
-

@@ -1,8 +1,6 @@
 import { SetGroupByAction, SetTimesheetCriteriaAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
-import { Timesheet, User } from '@core/models';
-import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
-import { ModelState } from '@core/state/model-state.interface';
+import { Timesheet } from '@core/models';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
@@ -11,11 +9,11 @@ import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interf
 import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
-import { Immutable, ImmutableArray, Prop } from 'global-types';
+import { Immutable, ImmutableArray } from 'global-types';
+import { FetchModelsAction } from 'model/state-fetcher';
 import { combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { Store } from 'state-management';
-import { FetchModelsAction } from 'model/state-fetcher';
 import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';

@@ -14,7 +14,7 @@ import { _getRelationProps } from './get-relation-props.helper';
  */
 export function _getRangeWithRelations<TModel extends {}, TState>(
     state: Immutable<Partial<TState>>,
-    cfg: RelationInclude<TState>,
+    cfg: Immutable<RelationInclude<TState>>,
     filter?: (value: Immutable<TModel>, index?: number, Array?: unknown[]) => boolean, 
 ): Immutable<TModel>[] {
     const modelCfg = _getModelConfig(cfg.prop); 

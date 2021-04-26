@@ -3,15 +3,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
-import { ModelState } from '@core/state/model-state.interface';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { ImageViewerDialogWrapperConfig } from '@shared-mission/components/image-viewer/image-viewer-dialog-wrapper-config.const';
 import { ImageViewerDialogWrapperComponent } from '@shared-mission/components/image-viewer/image-viewer-dialog-wrapper.component';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { EditMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
+import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
+import { EditMissionModelForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { FileFolder } from '@shared/enums/file-folder.enum';
 import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
@@ -20,7 +20,6 @@ import { map, switchMap } from 'rxjs/operators';
 import { UserTimesheetListCriteriaQueryParam } from 'src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const';
 import { SelectedMissionIdParam } from '../mission-list-route-params.const';
 import { MissionListFacade } from '../mission-list.facade';
-import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 
 interface ViewModel { mission: Maybe<Immutable<Mission>>, bottomActions: AppButton[], navConfig: MainTopNavConfig }
 
@@ -90,14 +89,11 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
   private openImageInput = (ref: ElementRef<HTMLElement>): void => ref?.nativeElement?.click();
 
   private openMissionForm = (entityId: Maybe<string>) => 
-    this.modelFormService.open<ModelState, Mission>({ 
-      onDeleteUri: "/oppdrag",
-      formConfig: {
-        dynamicForm: EditMissionForm,
-        stateProp: "missions",
-        entityId
-      }, 
-    })
+    this.modelFormService.open( 
+      EditMissionModelForm,
+      entityId,
+      {onDeleteUri: "/oppdrag"}
+    )
 
   private goToTimesheets = (mission: Maybe<Immutable<Mission>>) => 
     this.router.navigate(['timer', {

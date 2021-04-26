@@ -14,11 +14,11 @@ const SaveModelActionDescription = (action: SaveModelAction<Model, ModelState>) 
     const modelConfig = _getModelConfig<ModelConfig<Model, ModelState>>(action.stateProp);
     const saveWord = action.saveAction === ModelCommand.Update ? "Oppdatering" : "Oppretting";
     const entityWord = translations[<string> modelConfig.foreignProp?.toLowerCase()]?.toLowerCase();
-    const displayPropWord = translations[<string> modelConfig.displayProp?.toLowerCase()]?.toLowerCase();
-    const displayPropValue = action.entity[<Prop<Immutable<Model>>> modelConfig.displayProp];
+
+    const displayValue = modelConfig.displayFn?.(action.entity);
     
-    if(displayPropWord && displayPropValue)
-        return `${saveWord} av ${entityWord} med ${displayPropWord} '${displayPropValue}'`
+    if(displayValue)
+        return `${saveWord} av ${entityWord} '${displayValue}'`
 
     const idPropValue = action.entity[<Prop<Immutable<Model>>> modelConfig.idProp];
     const idWord = translations[modelConfig.idProp.toLowerCase()] || modelConfig.idProp

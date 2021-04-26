@@ -3,15 +3,15 @@ import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet } from '@core/models';
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
-import { ModelState } from '@core/state/model-state.interface';
-import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
+import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { TimesheetCriteriaForm, TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
-import { CreateUserTimesheetForm, EditUserTimesheetForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
-import { DynamicForm, _disableControlsWithNoValue } from 'dynamic-forms';
-import { FormService, OptionsFormState } from 'form-sheet';
+import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
+import { TimesheetCriteriaForm } from '@shared/constants/forms/timesheet-criteria-form.const';
+import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
+import { _disableControlsWithNoValue } from 'dynamic-forms';
+import { FormService } from 'form-sheet';
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { ModelFormService } from 'model/form';
 import { Observable } from "rxjs";
@@ -20,12 +20,13 @@ import { TimesheetCriteriaChipOptions } from '../../shared-timesheet/timesheet-f
 import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { UserTimesheetListFacade } from './user-timesheet-list.facade';
 import { UserTimesheetListProviders } from './user-timesheet-list.state';
-import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 
 interface ViewModel { 
   timesheets: ImmutableArray<Timesheet>;
   criteriaChips: AppChip[], 
 }
+
+type T<R extends object> = Prop<R>
 
 @Component({
   selector: "app-user-timesheet-list",
@@ -68,22 +69,22 @@ export class UserTimesheetListComponent {
     ]
     this.navConfig = { title:  "Timeliste", backFn: this.onBack }
   }
+
   
   openTimesheetForm = (entityId?: string, initialValue?: TimesheetForm): void => {
-    let dynamicForm: Immutable<DynamicForm<TimesheetForm, OptionsFormState<Partial<ModelState>>>>;
-    if(!entityId) dynamicForm = {...CreateUserTimesheetForm, disabledControls: _disableControlsWithNoValue(initialValue)}
-    else dynamicForm = EditUserTimesheetForm
-
-    this.modelFormService.open<ModelState, TimesheetForm>({
-      formConfig:{
-        dynamicForm: {...dynamicForm, initialValue}, entityId,
-        stateProp: "userTimesheets",  
-      }
-    })
+    this.modelFormService.open(
+      entityId ? EditUserTimesheetModelForm :
+        {...CreateUserTimesheetModelForm, 
+          dynamicForm: {...CreateUserTimesheetModelForm.dynamicForm, 
+            disabledControls: _disableControlsWithNoValue(initialValue)
+          }
+        },
+      entityId,
+    )
   };
 
   openTimesheetFilter = (): void => {
-    this.formService.open<TimesheetCriteria, TimesheetCriteriaFormState>({
+    this.formService.open({
       formConfig: { ...TimesheetCriteriaForm, 
         disabledControls: {user: true},
         initialValue: this.facade.criteria}, 

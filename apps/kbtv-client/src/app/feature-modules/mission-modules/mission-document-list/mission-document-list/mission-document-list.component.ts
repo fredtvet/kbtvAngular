@@ -4,13 +4,12 @@ import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { MissionDocument } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
-import { ModelState } from '@core/state/model-state.interface';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { BaseSelectableContainerComponent } from '@shared-mission/components/base-selectable-container.component';
+import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EmailForm } from '@shared/constants/forms/email-form.const';
-import { CreateMissionDocumentForm, MissionDocumentForm } from '@shared/constants/model-forms/create-mission-document-form.const';
+import { CreateMissionDocumentModelForm } from '@shared/constants/model-forms/create-mission-document-form.const';
 import { FileFolder } from '@shared/enums/file-folder.enum';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { FormService } from 'form-sheet';
@@ -110,12 +109,13 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
   }
 
   private openDocumentForm = (): void => {
-    this.modelFormService.open<ModelState, MissionDocumentForm>({
-      formConfig: {
-        dynamicForm: {...CreateMissionDocumentForm, initialValue: {missionId: this.missionId || undefined}},
-        stateProp: "missionDocuments",
-      }
-    });
+    this.modelFormService.open({
+        ...CreateMissionDocumentModelForm, 
+        dynamicForm: {
+          ...CreateMissionDocumentModelForm.dynamicForm, 
+          initialValue: {missionId: this.missionId || undefined}
+        },
+      });
   }
 
   private onBack = () => this.router.navigate(['../'], {relativeTo: this.route.parent});

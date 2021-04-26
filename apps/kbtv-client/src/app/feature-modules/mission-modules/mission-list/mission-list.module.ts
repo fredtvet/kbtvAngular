@@ -5,7 +5,6 @@ import { SaveModelFileReducer } from '@core/state/save-model-file/save-model-fil
 import { SaveModelFileValidatorInterceptor } from '@core/state/save-model-file/save-model-file.validator';
 import { CreateMissionImagesEffect } from '@shared-mission/create-mission-images.effect';
 import { SharedMissionModule } from '@shared-mission/shared-mission.module';
-import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
 import { ModelFormModule } from 'model/form';
 import { DeleteModelAction, DeleteModelReducer, SaveModelAction, SaveModelReducer } from 'model/state-commands';
 import { OptimisticHttpModule } from 'optimistic-http';
@@ -36,7 +35,7 @@ import { UpdateLastVisitedReducer } from './update-last-visited.reducer';
       effects: [CreateMissionImagesEffect], 
       actionInterceptors: [SaveModelFileValidatorInterceptor]
     }), 
-    ModelFormModule.forFeature(_formToSaveModelConverter),     
+    ModelFormModule,     
     OptimisticHttpModule.forFeature({
       [SaveModelAction]: GenericActionRequestMap[SaveModelAction],  
       [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction],   

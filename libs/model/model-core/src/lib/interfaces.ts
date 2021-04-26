@@ -10,7 +10,7 @@ export interface ModelConfig<TModel, TState> {
   /** Property used as foreign key in other models */
   foreignKey?: string;
   /** Property used to get a unique value used in model views. */
-  displayProp?: Prop<TModel>;
+  displayFn?: (t: Immutable<TModel>) => string;
   children?: ChildRelation<TState>[];
   foreigns?: Prop<TState>[];
 }
@@ -31,11 +31,11 @@ export interface ChildRelation<TState> {
 /** Information on which relationships should be included together with model */
 export interface RelationInclude<TState> {
   /** The model property */
-  prop: Immutable<Prop<TState>>;
+  prop: Prop<TState>;
   /** Foreign properties that should be included. Set to 'all' to get all relationships */
-  foreigns?: ImmutableArray<Prop<TState>> | 'all';
+  foreigns?: Prop<TState>[] | 'all';
   /** Child properties that should be included. Set to 'all' to get all relationships */
-  children?: ImmutableArray<Prop<TState>> | 'all';
+  children?: Prop<TState>[] | 'all';
 }
 
 /** A state slice of unknown model state */

@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Employer, Mission, MissionType } from "@core/models";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
-import { ModelState } from "@core/state/model-state.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { SearchBarConfig } from "@shared-mission/components/search-bar/search-bar-config.interface";
@@ -11,16 +10,16 @@ import { BottomBarIconButton } from "@shared/components/bottom-action-bar/bottom
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
-import { CreateMissionForm } from '@shared/constants/model-forms/save-mission-forms.const';
+import { CreateMissionModelForm } from '@shared/constants/model-forms/save-mission-forms.const';
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
 import { MissionFilter } from "@shared/mission-filter.model";
 import { _filter } from "array-helpers";
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe, Prop } from "global-types";
+import { _getModelDisplayValue } from 'model/core';
 import { ModelFormService } from 'model/form';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
-import { _getModelDisplayValue } from 'model/core';
 import { MissionListFacade } from '../mission-list.facade';
 import { MissionListProviders } from './mission-list-providers.const';
 
@@ -98,10 +97,7 @@ export class MissionListComponent extends WithUnsubscribe(){
   toggleSearchBar = () => this.searchBarHidden = !this.searchBarHidden;
 
   private openMissionForm = () => 
-    this.modelFormService.open<ModelState, Mission>({formConfig: {
-      dynamicForm: CreateMissionForm,
-      stateProp: "missions",
-    }})
+    this.modelFormService.open(CreateMissionModelForm)
 
   private openMissionFilter = () => 
     this.formService.open<MissionCriteria, MissionCriteriaFormState>({

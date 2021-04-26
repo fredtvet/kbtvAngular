@@ -14,7 +14,7 @@ import { _getRelationProps } from './get-relation-props.helper';
  */
 export function _getWithRelations<TModel extends {}, TState extends {}>( 
     state: Maybe<Immutable<Partial<TState>>>,
-    cfg: RelationInclude<TState>,
+    cfg: Immutable<RelationInclude<TState>>,
     id: unknown, 
 ): Maybe<Immutable<TModel>> {
     const modelCfg = _getModelConfig<ModelConfig<TModel, TState>>(cfg.prop); 

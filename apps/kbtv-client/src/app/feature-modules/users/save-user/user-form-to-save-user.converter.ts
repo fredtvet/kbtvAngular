@@ -1,27 +1,21 @@
-import { User } from '@core/models';
+import { SaveUserAction } from '@actions/user-actions';
+import { Roles } from '@core/roles.enum';
 import { ModelState } from '@core/state/model-state.interface';
-import { FormToSaveModelConverter, ModelFormToSaveModelInput } from 'model/form';
-import { _flattenExistingForeigns } from '@shared-app/helpers/flatten-existing-foreigns.helper';
 import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
 import { UserForm } from '@shared/constants/model-forms/save-user-forms.const';
-import { Roles } from '@core/roles.enum';
-import { SaveUserAction } from '@actions/user-actions';
+import { Converter, ModelFormResult } from 'model/form';
 
-export const _userFormToSaveUserConverter: FormToSaveModelConverter<UserForm, ModelState, SaveUserAction> =
-    (input: ModelFormToSaveModelInput<UserForm, ModelState>): SaveUserAction => {
-        
-    const clone = {...input.formValue, password: undefined}
-    var entity = _flattenExistingForeigns<User>(input.stateProp, clone, input.options);
-    
-    if(entity.role !== Roles.Oppdragsgiver) entity = {...entity, employerId: undefined};
-    
+export const _userFormToSaveUserConverter: Converter<ModelFormResult<UserForm, ModelState>, SaveUserAction> = (input) => {
+
+    let {password, employer, ...entity} = input.formValue;
+    entity.employerId = (entity.role !== Roles.Oppdragsgiver) ? undefined : employer?.id;
+
     entity = _modelIdGenerator(input.stateProp, entity); 
 
     return <SaveUserAction>{ 
         type: SaveUserAction, 
-        entity, 
-        password: input.formValue.password, 
-        saveAction: input.saveAction,  
-        stateProp:"users" 
+        stateProp:"users", 
+        saveAction: input.saveAction,
+        entity, password,     
     }
 }

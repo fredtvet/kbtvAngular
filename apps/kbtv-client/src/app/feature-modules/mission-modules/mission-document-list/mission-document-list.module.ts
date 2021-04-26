@@ -5,7 +5,6 @@ import { MailModelsHttpEffect } from '@core/state/mail-models/mail-models.http.e
 import { SaveModelFileReducer } from '@core/state/save-model-file/save-model-file.reducer';
 import { SaveModelFileValidatorInterceptor } from '@core/state/save-model-file/save-model-file.validator';
 import { SharedMissionModule } from '@shared-mission/shared-mission.module';
-import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { ModelFormModule } from 'model/form';
 import { DeleteModelAction, DeleteModelReducer } from 'model/state-commands';
 import { OptimisticHttpModule } from 'optimistic-http';
@@ -28,7 +27,7 @@ import { FileExtensionPipe } from './pipes/file-extension.pipe';
       effects: [MailModelsHttpEffect], 
       actionInterceptors: [SaveModelFileValidatorInterceptor]
     }),
-    ModelFormModule.forFeature(_formToSaveModelFileConverter),
+    ModelFormModule,
     OptimisticHttpModule.forFeature({
       [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction],   
       [SaveModelFileAction]: GenericActionRequestMap[SaveModelFileAction], 

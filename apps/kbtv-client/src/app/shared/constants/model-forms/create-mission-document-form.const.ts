@@ -1,8 +1,11 @@
 import { MissionDocument } from '@core/models';
+import { ModelState } from '@core/state/model-state.interface';
+import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
 import { fileExtensionValidator } from '@shared/validators/file-extension.validator';
 import { fileSizeValidator } from '@shared/validators/file-size.validator';
-import { DynamicControl, DynamicForm } from 'dynamic-forms';
+import { DynamicControl } from 'dynamic-forms';
 import { Immutable } from 'global-types';
+import { ModelFormConfig } from 'model/form';
 import { FileQuestionComponent } from '../../scam/dynamic-form-questions/file-question.component';
 import { HiddenMissionIdControl, NameControl } from '../common-controls.const';
 import { ValidationRules } from '../validation-rules.const';
@@ -23,7 +26,11 @@ const FileControl = <Immutable<DynamicControl<MissionDocumentForm, {}>>>{ name: 
     ]
 }
 
-export const CreateMissionDocumentForm: Immutable<DynamicForm<MissionDocumentForm, {}>> = {
-    submitText: "Legg til",
-    controls: [{...NameControl, required: true}, FileControl, HiddenMissionIdControl],
+export const CreateMissionDocumentModelForm: Immutable<ModelFormConfig<ModelState, MissionDocumentForm>> = {
+    includes: {prop: "missionDocuments"},
+    actionConverter: _formToSaveModelFileConverter,
+    dynamicForm: {
+        submitText: "Legg til",
+        controls: [{...NameControl, required: true}, FileControl, HiddenMissionIdControl],
+    }
 }

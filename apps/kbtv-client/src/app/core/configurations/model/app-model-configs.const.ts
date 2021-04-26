@@ -10,7 +10,7 @@ export const AppModelConfigs = [
     <AppModelConfig<Mission>>{
         stateProp: "missions",
         idProp: ModelIdProps.missions, 
-        displayProp: "address",
+        displayFn: (m: Mission) => m.address,
         foreignProp: "mission",
         foreignKey: "missionId",
         children: [
@@ -25,8 +25,8 @@ export const AppModelConfigs = [
     },
     <AppModelConfig<MissionType>>{
         stateProp: "missionTypes", 
-        idProp: ModelIdProps.missionTypes, 
-        displayProp: "name",   
+        idProp: ModelIdProps.missionTypes,
+        displayFn: (m: MissionType) => m.name,
         foreignProp: "missionType",
         foreignKey: "missionTypeId",
         modelApiUrl: ApiUrl.MissionType,
@@ -34,7 +34,7 @@ export const AppModelConfigs = [
     <AppModelConfig<Employer>>{
         stateProp: "employers",
         idProp: ModelIdProps.employers,  
-        displayProp: "name",    
+        displayFn: (m: Employer) => m.name,    
         foreignProp: "employer",
         foreignKey: "employerId",
         modelApiUrl: ApiUrl.Employer, 
@@ -42,7 +42,7 @@ export const AppModelConfigs = [
     <AppModelConfig<MissionImage>>{
         stateProp: "missionImages",
         idProp: ModelIdProps.missionImages,  
-        displayProp: "fileName",    
+        displayFn: (m: MissionImage) => m.fileName,
         foreignProp: "missionImage",
         foreignKey: "missionImageId",
         modelApiUrl: ApiUrl.MissionImage, 
@@ -50,15 +50,15 @@ export const AppModelConfigs = [
     <AppModelConfig<MissionDocument>>{
         stateProp: "missionDocuments",
         idProp: ModelIdProps.missionDocuments, 
-        displayProp: "name",   
+        displayFn: (m: MissionDocument) => m.name,
         foreignProp: "missionDocument",
         foreignKey: "missionDocumentId",
         modelApiUrl: ApiUrl.MissionDocument, 
     },    
     <AppModelConfig<MissionNote>>{
         stateProp: "missionNotes",
-        idProp: ModelIdProps.missionNotes,    
-        displayProp: "id",  
+        idProp: ModelIdProps.missionNotes,
+        displayFn: (m: MissionNote) => `(${m.id}) ${m.title || 'Uten tittel'}`, 
         foreignProp: "missionNote",
         foreignKey: "missionNoteId",   
         modelApiUrl: ApiUrl.MissionNote,
@@ -66,7 +66,7 @@ export const AppModelConfigs = [
     <AppModelConfig<User>>{
         stateProp: "users",
         idProp: ModelIdProps.users, 
-        displayProp: "userName",  
+        displayFn: (m: User) => m.userName,
         foreignProp: "user",
         foreignKey: "userName",     
         foreigns: ["employers"],      
@@ -77,7 +77,7 @@ export const AppModelConfigs = [
         stateProp: "inboundEmailPasswords",
         modelApiUrl: ApiUrl.InboundEmailPassword, 
         idProp: ModelIdProps.inboundEmailPasswords, 
-        displayProp: "password",      
+        displayFn: (m: InboundEmailPassword) => m.password,  
         foreignProp: "inboundEmailPassword",   
         foreignKey: "inboundEmailPasswordId",      
         fetchUrl: ApiUrl.InboundEmailPassword,    
@@ -85,7 +85,7 @@ export const AppModelConfigs = [
     <AppModelConfig<Timesheet>>{
         stateProp: "userTimesheets",
         idProp: ModelIdProps.timesheets,
-        displayProp: "id",  
+        displayFn: (m: Timesheet) => m.id,
         foreignProp: "userTimesheet",
         foreignKey: "userTimesheetId",
         foreigns: ["missions"],          
@@ -94,7 +94,7 @@ export const AppModelConfigs = [
     <AppModelConfig<Timesheet>>{
         stateProp: "timesheets",
         idProp: ModelIdProps.userTimesheets, 
-        displayProp: "id",  
+        displayFn: (m: Timesheet) => m.id,
         foreignProp: "timesheet",
         foreignKey: "timesheetId",
         foreigns: ["missions", "users"],     

@@ -8,6 +8,10 @@ import { HiddenIdControl, MissionAutoCompleteControl } from '../common-controls.
 import { StateMissions } from '@core/state/global-state.interfaces';
 import { OptionsFormState } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
+import { ModelFormConfig } from 'model/form';
+import { ModelState } from '@core/state/model-state.interface';
+import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
+import { _timesheetFormToSaveUserTimesheetConverter } from '@shared-timesheet/state/save-user-timesheet/timesheet-form-to-save-user-timesheet.converter';
 
 type FormState = OptionsFormState<StateMissions> & {defaultStartTime: string, defaultEndTime: string};
 
@@ -83,18 +87,27 @@ const CommentControl: Immutable<DynamicControl<TimesheetForm, FormState>> = { na
     validators: [Validators.maxLength(400)], 
 }
 
-export const CreateUserTimesheetForm: Immutable<DynamicForm<TimesheetForm, FormState>> = {
-    submitText: "Legg til", getRawValue: true,
-    controls: [
-        {...MissionAutoCompleteControl, required: true},
-        DateTimeControlGroup,
-        CommentControl,
-    ]
+export const CreateUserTimesheetModelForm: Immutable<ModelFormConfig<ModelState, TimesheetForm, FormState>> = {
+    includes: {prop: "userTimesheets", foreigns: "all"},
+    actionConverter: _timesheetFormToSaveUserTimesheetConverter,
+    dynamicForm: {
+        submitText: "Legg til", getRawValue: true,
+        controls: [
+            {...MissionAutoCompleteControl, required: true},
+            DateTimeControlGroup,
+            CommentControl,
+        ]
+    }
 }
-export const EditUserTimesheetForm: Immutable<DynamicForm<TimesheetForm, FormState>> = {
-    submitText: "Oppdater", getRawValue: true,
-    controls: [
-        ...CreateUserTimesheetForm.controls,
-        HiddenIdControl,
-    ],
+
+export const EditUserTimesheetModelForm: Immutable<ModelFormConfig<ModelState, TimesheetForm, FormState>> = {
+    includes: {prop: "userTimesheets", foreigns: "all"},
+    actionConverter: _timesheetFormToSaveUserTimesheetConverter,
+    dynamicForm: {
+        submitText: "Oppdater", getRawValue: true,
+        controls: [
+            ...CreateUserTimesheetModelForm.dynamicForm.controls,
+            HiddenIdControl,
+        ],
+    }
 }

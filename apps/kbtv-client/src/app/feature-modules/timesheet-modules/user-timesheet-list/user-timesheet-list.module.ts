@@ -2,7 +2,6 @@ import { SaveUserTimesheetAction } from '@actions/timesheet-actions';
 import { NgModule } from '@angular/core';
 import { GenericActionRequestMap } from '@core/configurations/optimistic/generic-action-request-map.const';
 import { SaveUserTimesheetReducer } from '@shared-timesheet/state/save-user-timesheet/save-user-timesheet.reducer';
-import { _timesheetFormToSaveUserTimesheetConverter } from '@shared-timesheet/state/save-user-timesheet/timesheet-form-to-save-user-timesheet.converter';
 import { ModelFormModule } from 'model/form';
 import { DeleteModelAction, DeleteModelReducer, SaveModelAction } from 'model/state-commands';
 import { OptimisticHttpModule } from 'optimistic-http';
@@ -20,7 +19,7 @@ import { UserTimesheetListComponent } from './user-timesheet-list/user-timesheet
   imports: [
     SharedTimesheetModule,    
     StateManagementModule.forFeature({reducers: [SaveUserTimesheetReducer, DeleteModelReducer]}), 
-    ModelFormModule.forFeature(_timesheetFormToSaveUserTimesheetConverter),
+    ModelFormModule,
     OptimisticHttpModule.forFeature({
       [SaveUserTimesheetAction]: GenericActionRequestMap[SaveModelAction],
       [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction]

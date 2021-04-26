@@ -6,7 +6,7 @@ import { _idGenerator } from './id-generator.helper';
 
 export function _modelIdGenerator<TModel extends Model>(stateProp: Prop<ModelState>, entity: Immutable<TModel>): Immutable<TModel>{
     const modelCfg = _getModelConfig<ModelConfig<TModel, ModelState>>(stateProp);
-  
+        console.log(entity);
     const clone = <UnknownState>{...entity}
     const id = clone[modelCfg.idProp as Prop<TModel>];
     
@@ -15,10 +15,15 @@ export function _modelIdGenerator<TModel extends Model>(stateProp: Prop<ModelSta
     for(var fkProp of modelCfg.foreigns || []){ //Run through fks, check if exist in object, create id if no id.
         const fkPropConfig = _getModelConfig(fkProp); 
         const foreignEntity = <UnknownState> clone[<string> fkPropConfig.foreignProp];
+
         if(!foreignEntity || foreignEntity[fkPropConfig.idProp]) continue; //If no fk entity, or entity has ID already, continue
-        const foreignClone = {...foreignEntity};
-        foreignClone[fkPropConfig.idProp] = _idGenerator();    
-        clone[<string> fkPropConfig.foreignProp] = foreignClone;       
+
+        if(Object.keys(foreignEntity).length === 0){ //If foreign is empty, clean  up and continue         
+            clone[<string> fkPropConfig.foreignProp] = undefined;
+            continue;
+        }
+
+        clone[<string> fkPropConfig.foreignProp] = { ...foreignEntity, [fkPropConfig.idProp]: _idGenerator() };       
     }
 
     return <Immutable<TModel>> clone;

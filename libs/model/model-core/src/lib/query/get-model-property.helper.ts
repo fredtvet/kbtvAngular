@@ -11,5 +11,5 @@ export function _getModelDisplayValue<TState, TModel = {}>(
     prop: Immutable<Prop<TState>>, 
     value: Immutable<TModel>): unknown {
     const fkPropModelMap = _getModelConfig<ModelConfig<TModel, TState>>(prop);
-    return fkPropModelMap ? value[ <Prop<Immutable<TModel>>> fkPropModelMap.displayProp] : null;
+    return fkPropModelMap?.displayFn ? fkPropModelMap.displayFn(value) : null;
 } 

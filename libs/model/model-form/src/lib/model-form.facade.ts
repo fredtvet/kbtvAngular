@@ -1,39 +1,75 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { Router } from '@angular/router';
+import { ConfirmDialogService } from 'confirm-dialog';
 import { OptionsFormState } from 'form-sheet';
-import { Immutable, Maybe, UnknownState } from 'global-types';
-import { RelationInclude, UnknownModelState, _getModelConfig, _getWithRelations } from 'model/core';
+import { Immutable, KeyVal, Maybe, UnknownState } from 'global-types';
+import { RelationInclude, UnknownModelState, _flattenRelationIncludes, _getModelConfig } from 'model/core';
+import { DeleteModelAction, ModelCommand } from 'model/state-commands';
 import { FetchModelsAction } from 'model/state-fetcher';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StateAction, Store } from 'state-management';
+import { MODEL_FORM_PROP_TRANSLATIONS } from './injection-tokens.const';
+import { ModelFormConfig } from './interfaces';
 
-@Injectable()
+@Injectable({providedIn: "root"})
 export class ModelFormFacade {
 
-  constructor(private store: Store<UnknownModelState>) {}
+  constructor(
+    private store: Store<UnknownModelState>,   
+    private confirmService: ConfirmDialogService,  
+    private router: Router,
+    @Inject(MODEL_FORM_PROP_TRANSLATIONS) private translations: KeyVal<string>,
+  ) {}
 
-  loadModels(modelProp: string): void{
-    const modelCfg = _getModelConfig(modelProp);
+  loadModels(includes: Immutable<RelationInclude<UnknownState>>): void{
     this.store.dispatch(<FetchModelsAction<UnknownState>>{
       type: FetchModelsAction, 
-      props: [modelProp, ...(modelCfg.foreigns || [])]
+      props: _flattenRelationIncludes(includes)
     })
   }
 
-  getFormState$(modelProp: string): Observable<Immutable<OptionsFormState<UnknownModelState>>>{
-    const modelCfg = _getModelConfig(modelProp);
-    return this.store.select$([modelProp, ...(modelCfg.foreigns || [])]).pipe(
-      map(state => { return {options: state || {}} })
+  getFormState$(includes: Immutable<RelationInclude<UnknownState>>): Observable<Immutable<OptionsFormState<UnknownModelState>>>{
+    return this.store.select$(_flattenRelationIncludes(includes)).pipe(
+      map(state => { console.log(state); return {options: state || {}} })
     )
-  }
-
-  getModelWithForeigns(id: string, modelProp: string, state: Immutable<UnknownModelState>): Maybe<Immutable<{}>> {
-    const cfg: RelationInclude<UnknownModelState> = {prop: modelProp, foreigns: "all"}; 
-    return _getWithRelations<UnknownState, UnknownModelState>(state, cfg, id);
   }
 
   save(action: StateAction): void {
     this.store.dispatch(action);
   }
-    
+
+  translateStateProp = (prop: string): string => 
+    this.translations[<string> _getModelConfig(prop).foreignProp?.toLowerCase()]?.toLowerCase();
+
+  confirmDelete = (
+    formConfig: Immutable<ModelFormConfig<object, object>>, 
+    entityId: unknown,
+    deleteUrl: Maybe<string>, 
+    ref: MatBottomSheetRef<unknown, unknown>) => { 
+    const translatedProp = this.translateStateProp(formConfig.includes.prop);
+    const modelCfg = _getModelConfig(formConfig.includes.prop);
+    const idWord = this.translations[(<string> modelCfg.idProp).toLowerCase()] || modelCfg.idProp
+    this.confirmService.open({
+        title: `Slett ${translatedProp}?`, 
+        message: `Bekreft at du ønsker å slette ${translatedProp} med ${idWord.toLowerCase()} "${entityId}"`, 
+        confirmText: 'Slett',
+        confirmCallback: () => this.deleteEntity(formConfig, entityId, deleteUrl, ref)
+    });
+  }
+
+  private deleteEntity = (
+    formConfig: Immutable<ModelFormConfig<object, object>>, 
+    entityId: unknown,
+    deleteUrl: Maybe<string>, 
+    ref: MatBottomSheetRef<unknown, unknown>) => {
+      if(deleteUrl) this.router.navigate([deleteUrl]);
+      ref.dismiss(ModelCommand.Delete);
+      this.store.dispatch({ 
+        type: DeleteModelAction,  
+        stateProp: formConfig.includes.prop, 
+        payload: { id: entityId } 
+      });
+  };
 }

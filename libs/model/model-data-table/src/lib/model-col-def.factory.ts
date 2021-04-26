@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@angular/core";
 import { ColDef } from "ag-grid-community";
 import { _convertArrayToObject } from "array-helpers";
-import { Immutable, KeyVal, Maybe, UnknownState } from "global-types";
+import { Immutable, ImmutableArray, KeyVal, Maybe, UnknownState } from "global-types";
 import { UnknownModelState, _getModelConfig, _getModelConfigBy } from "model/core";
 import { ModelCommand, SaveModelAction } from "model/state-commands";
 import { Store } from "state-management";
@@ -13,9 +13,9 @@ export class ModelColDefFactory {
 
     private checkBox = {colId: 'checkbox', checkboxSelection: true, width: 42, pinned: 'left', lockPosition: true};
     
-    private fkModelIdMap: {[foreignKey: string]: {[id: string]: Maybe<Immutable<UnknownState>>}} = {}
+    // private fkModelIdMap: {[foreignKey: string]: {[id: string]: Maybe<Immutable<UnknownState>>}} = {}
 
-    private fkModelDisplayPropMap: {[foreignKey: string]: {[displayProp: string]: Maybe<Immutable<UnknownState>>}} = {}
+    // private fkModelDisplayPropMap: {[foreignKey: string]: {[displayProp: string]: Maybe<Immutable<UnknownState>>}} = {}
 
     constructor(
         @Inject(MODEL_DATA_TABLES_CONFIG) private tableConfigs: ModelDataTablesConfig<UnknownModelState>,
@@ -26,7 +26,7 @@ export class ModelColDefFactory {
     createColDefs(stateProp: string): ColDef[]{
         const table = this.tableConfigs.tables[stateProp];
         if(!table) return [];
-        this.createLookupMaps(stateProp);
+        // this.createLookupMaps(stateProp);
 
         const colDefs: ColDef[] = [];
 
@@ -75,50 +75,34 @@ export class ModelColDefFactory {
         if(fkModelCfg){
             const fkIdProp = modelProp;
 
-            if(this.fkModelIdMap[fkIdProp]){
-                def['cellEditor'] = 'agSelectCellEditor';
-                def['cellEditorParams'] = { 
-                    values: Object.keys(this.fkModelDisplayPropMap[fkIdProp] || {}), 
-                }
-    
-                
-                def['valueGetter'] = (params) => { //Get name of foreign obj and display
-                    const fkId = params.data[fkIdProp];
-                    if(fkId){
-                        const fkEntity = this.fkModelIdMap[fkIdProp][fkId];
-                        return fkEntity ? fkEntity[fkModelCfg.displayProp || fkModelCfg.idProp] : null;
-                    }
-                    else return ''
-                };
-    
-                def['valueSetter'] = (params) => {
-                    const hit = this.fkModelDisplayPropMap[fkIdProp][params.newValue];
-                    if(!hit) return false;
-                    const updatedModel = {...params.data, [fkIdProp]: hit[fkModelCfg.idProp]};
-                    this.dispatchUpdateAction(updatedModel, stateProp, table)
-                    return true;
-                }
+            def['cellEditor'] = 'agSelectCellEditor';
+            def['cellEditorParams'] = { 
+                values: !fkModelCfg.displayFn ? [] : 
+                    Object.keys(_convertArrayToObject(this.store.state[fkModelCfg.stateProp], fkModelCfg.displayFn))
             }
-            else def['editable'] = false;      
+    
+            def['valueGetter'] = (params) => { //Get name of foreign obj and display
+                const fkId = params.data[fkIdProp];
+                if(fkId){
+                    const fkEntity = _convertArrayToObject(this.store.state[fkModelCfg.stateProp], fkModelCfg.idProp)[fkId];
+                    return fkEntity ? (fkModelCfg.displayFn?.(fkEntity) || fkEntity[fkModelCfg.idProp]) : null;
+                }
+                else return ''
+            };
+
+            def['valueSetter'] = (params) => {
+                const hit = !fkModelCfg.displayFn ? undefined : 
+                    _convertArrayToObject(this.store.state[fkModelCfg.stateProp], fkModelCfg.displayFn)?.[params.newValue]
+        
+                if(!hit) return false;
+                const updatedModel = {...params.data, [fkIdProp]: hit[fkModelCfg.idProp]};
+                this.dispatchUpdateAction(updatedModel, stateProp, table)
+                return true;
+            }
+  
         }
 
         return def;
-    }
-
-    private createLookupMaps(property: string){
-        const modelCfg = _getModelConfig(property);
-        if(modelCfg?.foreigns){
-          for(const fkStateKey of modelCfg.foreigns){
-            const fkCfg = _getModelConfig(fkStateKey);
-            const entities = this.store.state[fkStateKey];
-            if(entities){
-              this.fkModelIdMap[<string> fkCfg.foreignKey] = 
-                _convertArrayToObject(entities, fkCfg.idProp);
-              this.fkModelDisplayPropMap[<string> fkCfg.foreignKey] = 
-                _convertArrayToObject(entities, fkCfg.displayProp);
-            }
-          };
-        }
     }
 
     private dispatchUpdateAction(entity: UnknownState, stateProp: string, table: ModelDataTable<UnknownState>): void{
@@ -129,4 +113,5 @@ export class ModelColDefFactory {
                 type: SaveModelAction, entity, stateProp, saveAction: ModelCommand.Update
             })
     }
+    
 }

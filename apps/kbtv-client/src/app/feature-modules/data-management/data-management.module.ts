@@ -6,13 +6,12 @@ import { GenericActionRequestMap } from '@core/configurations/optimistic/generic
 import { CssLoaderService } from '@core/services/css-loader.service';
 import { LazyStyles } from '@shared-app/enums/lazy-styles.enum';
 import { translations } from '@shared-app/translations';
-import { _formToSaveModelConverter } from '@shared/acton-converters/form-to-save-model.converter';
 import { SharedModule } from '@shared/shared.module';
 import { ModelDataTableModule, MODEL_DATA_TABLES_CONFIG, MODEL_DATA_TABLE_PROP_TRANSLATIONS } from 'model/data-table';
 import { ModelFormModule } from 'model/form';
 import { DeleteModelAction, DeleteModelReducer, SaveModelAction, SaveModelReducer } from 'model/state-commands';
 import { OptimisticHttpModule } from 'optimistic-http';
-import { StateManagementModule, STORE_REDUCERS } from 'state-management';
+import { StateManagementModule } from 'state-management';
 import { DataManagementRoutingModule } from './data-management-routing.module';
 import { DataManagerComponent } from './data-manager/data-manager.component';
 import { DataPropertyPickerComponent } from './data-manager/data-property-picker/data-property-picker.component';
@@ -27,7 +26,7 @@ import { ModelDataTables } from './model-data-tables.const';
     SharedModule,
     FormsModule,    
     StateManagementModule.forFeature({reducers: [SaveModelReducer, DeleteModelReducer]}),
-    ModelFormModule.forFeature(_formToSaveModelConverter),
+    ModelFormModule,
     OptimisticHttpModule.forFeature({
       [SaveModelAction]: GenericActionRequestMap[SaveModelAction],  
       [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction]
