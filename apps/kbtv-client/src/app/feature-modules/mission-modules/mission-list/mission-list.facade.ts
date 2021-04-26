@@ -3,7 +3,7 @@ import { CreateMissionImagesAction, UpdateLastVisitedAction } from "@actions/mis
 import { Injectable } from "@angular/core";
 import { ApiUrl } from '@core/api-url.enum';
 import { Mission } from "@core/models";
-import { _formToSaveModelFileConverter } from '@shared/acton-converters/form-to-save-model-file.converter';
+import { _formToSaveModelFileConverter } from '@shared/action-converters/form-to-save-model-file.converter';
 import { MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { MissionCriteria } from '@shared/interfaces';
 import { Immutable, Maybe, Prop } from 'global-types';
