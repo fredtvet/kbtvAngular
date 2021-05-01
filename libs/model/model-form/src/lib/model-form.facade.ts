@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { ConfirmDialogService } from 'confirm-dialog';
-import { OptionsFormState } from 'form-sheet';
 import { Immutable, KeyVal, Maybe, UnknownState } from 'global-types';
 import { RelationInclude, UnknownModelState, _flattenRelationIncludes, _getModelConfig } from 'model/core';
 import { DeleteModelAction, ModelCommand } from 'model/state-commands';
@@ -11,7 +10,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StateAction, Store } from 'state-management';
 import { MODEL_FORM_PROP_TRANSLATIONS } from './injection-tokens.const';
-import { ModelFormConfig } from './interfaces';
+import { ModelFormConfig, ModelFormState } from './interfaces';
 
 @Injectable({providedIn: "root"})
 export class ModelFormFacade {
@@ -30,9 +29,9 @@ export class ModelFormFacade {
     })
   }
 
-  getFormState$(includes: Immutable<RelationInclude<UnknownState>>): Observable<Immutable<OptionsFormState<UnknownModelState>>>{
+  getFormState$(includes: Immutable<RelationInclude<UnknownState>>): Observable<Immutable<ModelFormState<UnknownModelState>>>{
     return this.store.select$(_flattenRelationIncludes(includes)).pipe(
-      map(state => { console.log(state); return {options: state || {}} })
+      map(state => { return {options: state || {}} })
     )
   }
 
@@ -44,7 +43,7 @@ export class ModelFormFacade {
     this.translations[<string> _getModelConfig(prop).foreignProp?.toLowerCase()]?.toLowerCase();
 
   confirmDelete = (
-    formConfig: Immutable<ModelFormConfig<object, object>>, 
+    formConfig: Immutable<ModelFormConfig<any, any, any, any>>, 
     entityId: unknown,
     deleteUrl: Maybe<string>, 
     ref: MatBottomSheetRef<unknown, unknown>) => { 

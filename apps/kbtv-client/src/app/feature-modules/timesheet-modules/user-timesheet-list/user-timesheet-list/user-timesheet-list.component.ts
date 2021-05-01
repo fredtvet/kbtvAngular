@@ -5,12 +5,11 @@ import { Timesheet } from '@core/models';
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
+import { _timesheetCriteriaFormSheetFactory } from "@shared-timesheet/timesheet-criteria-form-factory.helper";
 import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
-import { TimesheetCriteriaForm } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
-import { _disableControlsWithNoValue } from 'dynamic-forms';
 import { FormService } from 'form-sheet';
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { ModelFormService } from 'model/form';
@@ -76,22 +75,19 @@ export class UserTimesheetListComponent {
       entityId ? EditUserTimesheetModelForm :
         {...CreateUserTimesheetModelForm, 
           dynamicForm: {...CreateUserTimesheetModelForm.dynamicForm, 
-            disabledControls: _disableControlsWithNoValue(initialValue)
-          }
+            initialValue, disableControlsWithValue: true }
         },
       entityId,
     )
   };
 
   openTimesheetFilter = (): void => {
-    this.formService.open({
-      formConfig: { ...TimesheetCriteriaForm, 
-        disabledControls: {user: true},
-        initialValue: this.facade.criteria}, 
-      formState: this.facade.timesheetCriteriaFormState$,
-      navConfig: {title: "Velg filtre"},
-      submitCallback: (val: TimesheetCriteria) => this.facade.updateCriteria(val)
-    });
+    this.formService.open(_timesheetCriteriaFormSheetFactory({
+      onSubmit: (val) => this.facade.updateCriteria(val),
+      initialValue: this.facade.criteria,
+      formState$: this.facade.timesheetCriteriaFormState$,
+      customForm: {disabledControls: {user: true}}
+    }));
   }
 
   openTimesheetCard = (timesheetId: string) =>

@@ -1,17 +1,16 @@
 import { SaveModelFileAction } from "@actions/global-actions";
 import { CreateMissionImagesAction, UpdateLastVisitedAction } from "@actions/mission-actions";
 import { Injectable } from "@angular/core";
-import { ApiUrl } from '@core/api-url.enum';
 import { Mission } from "@core/models";
-import { _formToSaveModelFileConverter } from '@shared/action-converters/form-to-save-model-file.converter';
+import { ModelFileForm, _formToSaveModelFileConverter } from '@shared/action-converters/form-to-save-model-file.converter';
 import { MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { MissionCriteria } from '@shared/interfaces';
 import { Immutable, Maybe, Prop } from 'global-types';
+import { _getWithRelations } from 'model/core';
+import { ModelCommand } from 'model/state-commands';
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { ComponentStore, Store } from 'state-management';
-import { ModelCommand } from 'model/state-commands';
-import { _getWithRelations } from 'model/core';
 import { ComponentStoreState, StoreState } from './interfaces/store-state';
 import { SetMissionCriteriaAction } from './set-mission-criteria.reducer';
 
@@ -28,7 +27,7 @@ export class MissionListFacade {
     return this.componentStore.state.missionCriteria;
   }
 
-  criteriaFormState$: Observable<MissionCriteriaFormState> = 
+  criteriaFormState$: Observable<Immutable<MissionCriteriaFormState>> = 
     this.store.select$(["missionTypes", "employers", "missions"]).pipe(
       map(options => { return { options } })
     )
@@ -55,8 +54,8 @@ export class MissionListFacade {
     this.componentStore.dispatch(<SetMissionCriteriaAction>{ type: SetMissionCriteriaAction, missionCriteria });
     
   updateHeaderImage(id: string, file: File): void {
-    let action: SaveModelFileAction<Mission> = _formToSaveModelFileConverter({
-      formValue: {id, file},
+    let action: Immutable<SaveModelFileAction<Mission>> = _formToSaveModelFileConverter({
+      formValue: <ModelFileForm> {id, file},
       stateProp: "missions",
       saveAction: ModelCommand.Update
     });

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import { Immutable } from 'global-types';
 import { DynamicHostDirective } from '../dynamic-host.directive';
-import { ControlGroupComponent, DynamicControlGroup, DynamicForm } from '../interfaces';
+import { ControlGroupComponent, DynamicControlGroup } from '../interfaces';
 import { ControlComponentLoaderComponent } from './control-component-loader.component';
 
 @Component({
@@ -27,8 +28,7 @@ import { ControlComponentLoaderComponent } from './control-component-loader.comp
 export class DynamicControlGroupComponent extends ControlComponentLoaderComponent implements ControlGroupComponent{
     @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
     
-    controlGroup: DynamicControlGroup<{}>;
-    formConfig: DynamicForm<{}, {}>;
+    controlGroup: Immutable<DynamicControlGroup<any, any, any>>;
     nestedNames: string[] = [];
 
     constructor(componentFactoryResolver: ComponentFactoryResolver, cdRef: ChangeDetectorRef) {
@@ -36,6 +36,8 @@ export class DynamicControlGroupComponent extends ControlComponentLoaderComponen
     }
 
     loadGroupComponents(){
-      this.loadComponents(this.controlGroup.controls, this.formConfig, this.nestedNames);
+      this.loadComponents(this.controlGroup, this.nestedNames);
     }
+
+    protected onConfigSet() { }
 }

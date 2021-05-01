@@ -1,12 +1,10 @@
 import { Model } from './base-entity.interface';
 import { EmployerForeign } from './relationships/employer-foreign.interface';
 import { IContactable } from './sub-interfaces/icontactable.interface';
+import { IFullName } from './sub-interfaces/ifullname.interface';
 
-export interface User extends Model, EmployerForeign, IContactable {
+export interface User extends Model, EmployerForeign, IContactable, IFullName {
   userName: string;
-  firstName: string;
-  lastName: string;
-  email: string;
   role: string;
   lastCommandStatus: boolean;
   lastCommandId: string;

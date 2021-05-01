@@ -32,8 +32,7 @@ export interface TextAreaQuestion extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextAreaQuestionComponent extends BaseQuestionComponent<TextAreaQuestion> 
-  implements QuestionComponent {
+export class TextAreaQuestionComponent extends BaseQuestionComponent<TextAreaQuestion>  {
 
   constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
     super(validationErrorMessages) 

@@ -3,7 +3,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { _shouldEagerOptions } from '@shared-app/helpers/should-eager-options.helper';
 import { SharedModule } from '@shared/shared.module';
-import { BaseQuestionComponent, DynamicFormStore, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { BaseQuestionComponent, DynamicFormStore, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { Immutable, ImmutableArray, UnknownState } from 'global-types';
 import { Observable, of } from 'rxjs';
 import { ActiveStringFilterConfig } from '../../../interfaces';
@@ -14,8 +14,7 @@ import { AutoCompleteQuestion } from './auto-complete-question.interface';
   templateUrl: 'auto-complete-question.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AutoCompleteQuestionComponent extends BaseQuestionComponent<AutoCompleteQuestion<UnknownState>> 
-    implements QuestionComponent {
+export class AutoCompleteQuestionComponent extends BaseQuestionComponent<AutoCompleteQuestion<UnknownState, UnknownState>> {
 
     options$: Observable<ImmutableArray<unknown>>;
 

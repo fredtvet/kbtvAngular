@@ -1,15 +1,12 @@
 import {
-    ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-  } from '@angular/core';
-  import { BehaviorSubject, fromEvent } from 'rxjs';
-  import { merge } from 'rxjs';
-  import { of } from 'rxjs';
-  import { Observable } from 'rxjs';
-  import { map, switchMap } from 'rxjs/operators';
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
+import { fromEvent, merge, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
   
   @Component({
     selector: 'lib-form-actions',

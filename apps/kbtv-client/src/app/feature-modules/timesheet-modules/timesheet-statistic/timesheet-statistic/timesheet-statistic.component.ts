@@ -4,13 +4,13 @@ import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
+import { _timesheetCriteriaFormSheetFactory } from '@shared-timesheet/timesheet-criteria-form-factory.helper';
 import { TimesheetCriteriaChipOptions } from '@shared-timesheet/timesheet-filter/timesheet-criteria-chip-options.const';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
 import { BottomBarIconButton } from '@shared/components/bottom-action-bar/bottom-bar-icon-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
-import { TimesheetCriteriaForm, TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from '@shared/enums';
 import { FormService } from 'form-sheet';
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
@@ -72,15 +72,15 @@ export class TimesheetStatisticComponent {
   ) { 
     this.staticBottomActions =  [{...BottomIconButtons.Filter, callback: this.openTimesheetFilter}]
   }
-
+  
   private openTimesheetFilter = (): void => {
-    this.formService.open<TimesheetCriteria, TimesheetCriteriaFormState>({
-      formConfig: { ...TimesheetCriteriaForm, initialValue: this.facade.criteria, onlineRequired: true}, 
-      formState: this.facade.criteriaFormState$,
-      navConfig: {title: "Velg filtre"},
-      submitCallback: (val: TimesheetCriteria) => this.facade.updateCriteria(val)
-    })
-  }
+    this.formService.open(_timesheetCriteriaFormSheetFactory({
+      onSubmit: (val) => this.facade.updateCriteria(val), 
+      initialValue: this.facade.criteria, 
+      formState$: this.facade.criteriaFormState$, 
+      customForm: {onlineRequired: true}
+  }))}
+
 
   private resetCriteriaProp(prop: Prop<Immutable<TimesheetCriteria>>, criteria: Maybe<Immutable<TimesheetCriteria>>){
     const clone = {...criteria || {}};

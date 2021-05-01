@@ -3,93 +3,91 @@ import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { DateRange, _getISO, _getMonthRange } from 'date-time-helpers';
 import { DynamicControl, DynamicControlGroup, DynamicForm } from 'dynamic-forms';
-import { OptionsFormState } from 'form-sheet';
-import { Immutable } from 'global-types';
+import { Immutable, Maybe } from 'global-types';
 import { translations } from '../../../shared-app/translations';
+import { TimesheetStatus } from '../../enums';
 import { IonDateQuestion, IonDateQuestionComponent } from '../../scam/dynamic-form-questions/ion-date-time-question.component';
 import { RadioGroupQuestion, RadioGroupQuestionComponent } from '../../scam/dynamic-form-questions/radio-group-question.component';
-import { TimesheetStatus } from '../../enums';
 import { MissionAutoCompleteControl, UserSelectControl } from '../common-controls.const';
 
-export interface TimesheetCriteriaFormState extends OptionsFormState<StateUsers & StateMissions>{}
+export interface TimesheetCriteriaFormState { options: StateUsers & StateMissions }
+
+export interface TimesheetCriteriaForm extends Pick<TimesheetCriteria, "dateRange" | "dateRangePreset" | "status" | "user" | "mission"> {
+    customMonthISO: Maybe<string>;
+};
 
 type FormState = TimesheetCriteriaFormState;  
 
-const DateRangePresetControl: Immutable<DynamicControl<TimesheetCriteria, FormState>> = { name: "dateRangePreset", required: true,
-    valueGetter: (s: TimesheetCriteria) => s.dateRangePreset, 
-    type: "control", questions: [{
-        component:  RadioGroupQuestionComponent,
-        question: <RadioGroupQuestion<DateRangePresets>>{   
-            label: "Velg tidsrom *",
-            optionsGetter: Object.keys(DateRangePresets).filter(k => !isNaN(Number(k))).map(x =>  parseInt(x)),
-            valueFormatter: (val: DateRangePresets) => translations[DateRangePresets[val].toLowerCase()] 
-        }, 
-    }], 
+const DateRangePresetControl: Immutable<DynamicControl<TimesheetCriteriaForm, "dateRangePreset">> = { 
+    type: "control", name: "dateRangePreset", required: true,
+    questionComponent: RadioGroupQuestionComponent,
+    question: <RadioGroupQuestion<DateRangePresets, null>>{   
+        label: "Velg tidsrom *",
+        optionsGetter: Object.keys(DateRangePresets).filter(k => !isNaN(Number(k))).map(x =>  parseInt(x)),
+        valueFormatter: (val: DateRangePresets) => translations[DateRangePresets[val].toLowerCase()] 
+    }, 
 }
-const DateRangeControlGroup: Immutable<DynamicControlGroup<TimesheetCriteria, FormState, DateRange>> = { name: "dateRange", 
-    panelClass: "date-range-question-group",
-    type: "group", controls: [
-        { name: "start",
-            valueGetter: (s: TimesheetCriteria) => s.dateRange?.start ? _getISO(s.dateRange.start) : null,
-            type: "control", questions: [
-                {component:  IonDateQuestionComponent,       
-                    hideOnValueChange: {controlName: "dateRangePreset", callback: (val) => val !== DateRangePresets.Custom},
-                    question: <IonDateQuestion>{
-                        placeholder: "Startdato", 
-                        width: "45%",
-                        ionFormat:"YYYY-MMMM-DD",
-                        datePipeFormat: "MMM d, y",
-                        max: {controlName: ["dateRange", "end"], callback: (val: unknown) => val},
-                    }, 
-                },
-                {component:  IonDateQuestionComponent,        
-                    hideOnValueChange: {controlName: "dateRangePreset", callback: (val) => val !== DateRangePresets.CustomMonth},
-                    question:<IonDateQuestion>{
-                        placeholder: "Måned", 
-                        width: "50%",
-                        ionFormat:"YYYY-MMMM",
-                        datePipeFormat: "MMMM, y",                    
-                        valueSetter: (val: string) => val ? _getMonthRange(val, true) : {start: null, end: null},
-                        overrideValueSetterControl: "dateRange"
-                    }, 
-                }
-            ], 
+const CustomDateRangeControlGroup: Immutable<DynamicControlGroup<TimesheetCriteriaForm, "dateRange">> = { 
+    type: "group", name: "dateRange", panelClass: "date-range-question-group",
+    controls: {
+        start: { type: "control", name: "start",
+            valueFormatter: (val) => val ? _getISO(val) : null,
+            questionComponent: IonDateQuestionComponent,
+            question: <IonDateQuestion<DateRange>>{
+                placeholder: "Startdato", 
+                width: "45%",
+                ionFormat:"YYYY-MMMM-DD",
+                datePipeFormat: "MMM d, y",
+                max: {controlName: ["dateRange", "end"], callback: (val: unknown) => val},
+            },  
         },
-        { name: "end",
-            valueGetter: (s: TimesheetCriteria) => s.dateRange?.end ? _getISO(s.dateRange.end) : null,
-            type: "control", questions: [
-                {component:  IonDateQuestionComponent,              
-                hideOnValueChange: {controlName: "dateRangePreset", callback: (val) => val !== DateRangePresets.Custom},
-                question: <IonDateQuestion>{
-                    placeholder: "Sluttdato", 
-                    width: "45%",
-                    ionFormat:"YYYY-MMMM-DD",      
-                    datePipeFormat: "MMM d, y", 
-                    min: {controlName: ["dateRange", "start"], callback: (val: unknown) => val},
-                }, 
-            }], 
+        end: { type: "control", name: "end",
+            valueFormatter: (val) => val ? _getISO(val) : null,
+            questionComponent: IonDateQuestionComponent,
+            question: <IonDateQuestion<DateRange>>{
+                placeholder: "Sluttdato", 
+                width: "45%",
+                ionFormat:"YYYY-MMMM-DD",      
+                datePipeFormat: "MMM d, y", 
+                min: {controlName: ["dateRange", "start"], callback: (val: unknown) => val},
+            },  
         },
-    ]
+    }
 }
-const StatusControl: Immutable<DynamicControl<TimesheetCriteria, FormState>> = { name: "status",
-    valueGetter: (s: TimesheetCriteria) => s.status, 
-    type: "control", questions: [{
-        component:  RadioGroupQuestionComponent,
-        question: <RadioGroupQuestion<TimesheetStatus>>{   
-            label: "Velg status", defaultOption: "Begge",
-            optionsGetter: [TimesheetStatus.Open, TimesheetStatus.Confirmed],
-            valueFormatter: (val) => translations[TimesheetStatus[val]?.toLowerCase()]
-        }, 
-    }], 
+const CustomMonthControl: Immutable<DynamicControl<TimesheetCriteriaForm, "customMonthISO">> = { 
+    type: "control", name: "customMonthISO", panelClass: "mt-0",
+    questionComponent:  IonDateQuestionComponent,        
+    question:<IonDateQuestion<TimesheetCriteriaForm>>{
+        valueGetter: (val: string) => val ? _getISO(val) : null,
+        placeholder: "Måned", 
+        width: "50%",
+        ionFormat:"YYYY-MMMM",
+        datePipeFormat: "MMMM, y",                     
+    }, 
+}
+const StatusControl: Immutable<DynamicControl<TimesheetCriteriaForm, "status">> = { 
+    type: "control", name: "status",
+    questionComponent:  RadioGroupQuestionComponent,
+    question: <RadioGroupQuestion<TimesheetStatus, null>>{   
+        label: "Velg status", defaultOption: "Begge",
+        optionsGetter: [TimesheetStatus.Open, TimesheetStatus.Confirmed],
+        valueFormatter: (val) => translations[TimesheetStatus[val]?.toLowerCase()]
+    }, 
 }
 
-export const TimesheetCriteriaForm: Immutable<DynamicForm<TimesheetCriteria, FormState>> = {
-    submitText: "Bruk", noRenderDisabledControls: true, resettable: true,
-    controls: [
-        UserSelectControl,
-        {...MissionAutoCompleteControl, required: false},
-        DateRangePresetControl,
-        DateRangeControlGroup,
-        StatusControl
-    ],
+export const TimesheetCriteriaForm: Immutable<DynamicForm<TimesheetCriteriaForm, FormState>> = {
+    submitText: "Bruk", noRenderDisabledControls: true, 
+    resettable: true,
+    controls: {
+        user: UserSelectControl,
+        mission: {...MissionAutoCompleteControl, required: false},
+        dateRangePreset: DateRangePresetControl,
+        dateRange: CustomDateRangeControlGroup,
+        customMonthISO: CustomMonthControl,
+        status: StatusControl,
+    },
+    hideOnValueChangeMap: {
+        customMonthISO: (val) => val.dateRangePreset !== DateRangePresets.CustomMonth,
+        dateRange: (val) => val.dateRangePreset !== DateRangePresets.Custom,
+    }
 }

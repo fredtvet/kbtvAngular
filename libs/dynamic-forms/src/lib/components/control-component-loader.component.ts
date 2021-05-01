@@ -1,15 +1,10 @@
-import { ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, Type } from '@angular/core';
+import { ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, Input, Type } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { Immutable, ImmutableArray, UnknownState } from 'global-types';
+import { Immutable, UnknownState } from 'global-types';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { DynamicHostDirective } from '../dynamic-host.directive';
-import { _getControlObserver$ } from '../helpers/get-control-observer.helper';
-import { ControlGroupComponent, ControlHook, DynamicControl, DynamicControlGroup, DynamicForm, QuestionComponent, QuestionWrapper } from '../interfaces';
-
-type Control = DynamicControl<UnknownState>;
-type ControlGroup = DynamicControlGroup<UnknownState>
-export type ValidControl = Control | ControlGroup;
+import { ControlGroupComponent, DynamicAbstractGroup, DynamicControl, DynamicControlGroup, DynamicForm, QuestionComponent } from '../interfaces';
 
 @Directive()
 export abstract class ControlComponentLoaderComponent {
@@ -18,6 +13,15 @@ export abstract class ControlComponentLoaderComponent {
     unsubscribe : Subject<void> = new Subject();
 
     form: FormGroup;
+
+    protected _config: Immutable<DynamicForm<any, any>>;
+    @Input('config') 
+    set config(value: Immutable<DynamicForm<any, any>>) {
+        this._config = value;
+        this.onConfigSet();
+    }  
+
+    get config(): Immutable<DynamicForm<any, any>> { return this._config }
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,  
@@ -30,61 +34,69 @@ export abstract class ControlComponentLoaderComponent {
         this.unsubscribe.complete();
     }
 
+    protected abstract onConfigSet(): void
+
     protected loadComponents(
-        controls: ImmutableArray<ValidControl>, 
-        form: Immutable<DynamicForm<{},{}>>, 
+        group: Immutable<DynamicAbstractGroup<any, any>>, 
         nestedNames: string[] = []): void{
-        for(const control of controls){
+        for(const prop in group.controls){
+            const control = group.controls[prop];
             if(control.type === "group")
-                this.loadQuestionGroupComponent(control, form, nestedNames)       
-            else if(control.questions)
-                for(const question of control.questions){
-                    const nestedControl = this.form.get([...nestedNames, control.name])
-                    if(nestedControl) this.loadQuestionComponent(question, control, nestedControl, form);
-                }
+                this.loadQuestionGroupComponent(control, nestedNames, group.hideOnValueChangeMap?.[control.name])       
+            else{
+                const nestedControl = this.form.get([...nestedNames, control.name])
+                if(nestedControl) this.loadQuestionComponent(control, nestedControl, group.hideOnValueChangeMap?.[control.name]);
+            }
         }
     }
 
-    protected onQuestionComponentInit(componentRef: ComponentRef<QuestionComponent>, control: Immutable<Control>): void {}
+    protected onQuestionComponentInit(
+        componentRef: ComponentRef<QuestionComponent>, 
+        control: Immutable<DynamicControl<UnknownState, keyof UnknownState>>
+        ): void {}
 
     private loadQuestionComponent(
-        questionWrapper: Immutable<QuestionWrapper>, 
-        control: Immutable<Control>, 
-        formControl: AbstractControl, 
-        formConfig: Immutable<DynamicForm<unknown,unknown>>) {
-        if(formConfig.noRenderDisabledControls && formControl.disabled) return;
+        control: Immutable<DynamicControl<UnknownState, keyof UnknownState>>, 
+        formControl: AbstractControl,
+        hideOnValueChanges?: (val: any) => boolean) {
+        if((this.config.noRenderDisabledControls && formControl.disabled) || !control.questionComponent) return;
         
-        const componentRef = this.loadComponent(questionWrapper.component);
+        const componentRef = this.loadComponent(control.questionComponent!);
         componentRef.instance.control = formControl;
         componentRef.instance.form = this.form;
-        componentRef.instance.question = questionWrapper.question;  
+        componentRef.instance.question = control.question || {};  
         componentRef.instance.required = control.required;  
         componentRef.location.nativeElement.style.marginTop = "3vh";
-
+        if(control.panelClass)
+            componentRef.location.nativeElement.classList.add(control.panelClass)   
+            
         this.onQuestionComponentInit(componentRef, control);
 
-        if(questionWrapper.hideOnValueChange)
-            this.initHideObserver(questionWrapper.hideOnValueChange, componentRef.location.nativeElement);
+        if(hideOnValueChanges)
+            this.initHideObserver(hideOnValueChanges, componentRef.location.nativeElement);
     }
 
     private loadQuestionGroupComponent(
-        controlGroup: Immutable<ControlGroup>, 
-        formConfig: Immutable<DynamicForm<{},{}>>, 
-        nestedNames: string[] = []) {
+        controlGroup: Immutable<DynamicControlGroup<any, any, any>>, 
+        nestedNames: string[] = [],
+        hideOnValueChanges?: (val: any) => boolean) {
         const componentRef = this.loadComponent(controlGroup.controlGroupComponent || this.defaultControlGroupComponent);
         componentRef.instance.controlGroup = controlGroup;
-        componentRef.instance.formConfig = formConfig;
+        componentRef.instance.config = this.config;
         componentRef.instance.form = this.form;
         
         if(controlGroup.panelClass) 
             componentRef.location.nativeElement.classList.add(controlGroup.panelClass)
 
         componentRef.instance.nestedNames = 
-            controlGroup.name ? 
-            [...nestedNames, controlGroup.name] : 
-            nestedNames;   
+            controlGroup.type === "group" ? 
+                [...nestedNames, controlGroup.name] : 
+                nestedNames;   
 
-        componentRef.instance.loadGroupComponents();        
+        componentRef.instance.loadGroupComponents(); 
+
+        if(hideOnValueChanges)
+            this.initHideObserver(hideOnValueChanges, componentRef.location.nativeElement);       
     }
 
     private loadComponent<TComponent>(component: Type<TComponent>): ComponentRef<TComponent>{
@@ -95,13 +107,15 @@ export abstract class ControlComponentLoaderComponent {
         return viewContainerRef.createComponent<TComponent>(componentFactory);
     }
 
-    private initHideObserver(hook: Immutable<ControlHook<boolean>>, htmlElement: HTMLElement): void{   
+    private initHideObserver(hideOnValueChanges: (val: any) => boolean, htmlElement: HTMLElement): void{   
         const currentDisplayVal = htmlElement.style.display;
 
-        if(hook.callback(this.form.get(<string | string[]> hook.controlName)?.value)) 
-            htmlElement.style.display = "none";
-
-        _getControlObserver$(hook, this.form, true).pipe(takeUntil(this.unsubscribe)).subscribe(x => {
+        if(hideOnValueChanges(this.form.value)) htmlElement.style.display = "none";
+        
+        this.form.valueChanges.pipe(
+            map(hideOnValueChanges), 
+            takeUntil(this.unsubscribe)
+        ).subscribe(x => {
             htmlElement.style.display = (x ? "none" : currentDisplayVal);
             this.cdRef.detectChanges();
         })

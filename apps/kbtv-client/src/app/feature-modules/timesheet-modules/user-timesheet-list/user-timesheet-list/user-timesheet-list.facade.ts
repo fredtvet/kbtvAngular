@@ -40,7 +40,7 @@ export class UserTimesheetListFacade {
           })
       );
 
-      timesheetCriteriaFormState$: Observable<TimesheetCriteriaFormState> = 
+      timesheetCriteriaFormState$: Observable<Immutable<TimesheetCriteriaFormState>> = 
         this.store.selectProperty$("missions").pipe(
           map(x => { return {options: {missions: x || [], users: null} }})
         )

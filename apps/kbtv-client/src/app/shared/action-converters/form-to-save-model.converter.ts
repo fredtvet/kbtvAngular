@@ -4,7 +4,7 @@ import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.hel
 import { Converter, ModelFormResult } from 'model/form';
 import { SaveModelAction } from 'model/state-commands';
 
-export const _formToSaveModelConverter: Converter<ModelFormResult<Model, ModelState>, SaveModelAction<Model, ModelState>> =
+export const _formToSaveModelConverter: Converter<ModelFormResult<object, ModelState>, SaveModelAction<Model, ModelState>> =
     (input) => { return {
         type: SaveModelAction,
         stateProp: input.stateProp, 

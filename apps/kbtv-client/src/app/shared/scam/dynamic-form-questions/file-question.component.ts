@@ -29,8 +29,7 @@ export interface FileQuestion extends Question { multiple?: boolean; }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FileQuestionComponent extends BaseQuestionComponent<FileQuestion> 
-  implements QuestionComponent {
+export class FileQuestionComponent extends BaseQuestionComponent<FileQuestion> {
 
   constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
     super(validationErrorMessages) 

@@ -12,17 +12,18 @@ import { Observable } from "rxjs";
 import { mergeMap } from "rxjs/operators";
 import { DispatchedAction, Effect, listenTo } from "state-management";
 import { ModelCommand } from 'model/state-commands';
+import { Immutable } from "global-types";
 
 @Injectable()
 export class CreateMissionImagesEffect implements Effect<CreateMissionImagesAction> {
 
     constructor(private notificationService: NotificationService){}
 
-    handle$(actions$: Observable<DispatchedAction<CreateMissionImagesAction, {}>>): Observable<SaveModelFileAction> {
+    handle$(actions$: Observable<DispatchedAction<CreateMissionImagesAction, {}>>) {
         return actions$.pipe(
             listenTo([CreateMissionImagesAction]),
             mergeMap(x => { 
-                const actions: SaveModelFileAction[] = [];
+                const actions: Immutable<SaveModelFileAction>[] = [];
    
                 for(const key in x.action.files){
                     const file = x.action.files[key];
@@ -34,7 +35,7 @@ export class CreateMissionImagesEffect implements Effect<CreateMissionImagesActi
 
                     actions.push(_formToSaveModelFileConverter({
                         stateProp: "missionImages", 
-                        formValue: <ModelFileForm & Partial<MissionImage>> {missionId: x.action.missionId, file}, 
+                        formValue: <ModelFileForm> { missionId: x.action.missionId, file}, 
                         saveAction: ModelCommand.Create
                     }))
                 }

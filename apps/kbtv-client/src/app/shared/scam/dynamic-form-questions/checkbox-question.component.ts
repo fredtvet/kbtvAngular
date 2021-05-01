@@ -29,8 +29,7 @@ export interface CheckboxQuestion extends Question {
   styles: [` :host { overflow: hidden } `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CheckboxQuestionComponent extends BaseQuestionComponent<CheckboxQuestion> 
-    implements QuestionComponent {
+export class CheckboxQuestionComponent extends BaseQuestionComponent<CheckboxQuestion> {
 
   constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
     super(validationErrorMessages) 

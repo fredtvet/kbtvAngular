@@ -27,3 +27,10 @@ export type Prop<T> = Extract<keyof T, string>;
 export type KeyVal<T> = { [key: string]: Immutable<T> }
 
 export type UnionTupleType<A extends any[]> = A extends { [n: number]: infer T } ? T : never;
+
+export type NotNull<T> = Exclude<T, null| undefined>
+
+/** Creates a lookup type with properties of T with values that extends U */
+export type PickByValueType<T, U> = {
+    [K in keyof T as T[K] extends U ? K : never]: T[K]
+}

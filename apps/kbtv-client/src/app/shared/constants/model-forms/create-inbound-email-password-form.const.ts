@@ -2,24 +2,23 @@ import { Validators } from '@angular/forms';
 import { InboundEmailPassword } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { _formToSaveModelConverter } from '@shared/action-converters/form-to-save-model.converter';
-import { DynamicControl, DynamicForm } from 'dynamic-forms';
-import { Immutable, UnknownState } from 'global-types';
+import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
-import { InputQuestionComponent, InputQuestion } from '../../scam/dynamic-form-questions/input-question.component';
+import { InputQuestion, InputQuestionComponent } from '../../scam/dynamic-form-questions/input-question.component';
 
-const PasswordControl = <Immutable<DynamicControl<InboundEmailPassword>>>{ name: "password", required: true,
-    type: "control", questions: [{
-        component:  InputQuestionComponent,
-        question: <InputQuestion>{placeholder: "Epostpassord"}, 
-    }], 
-    validators: [Validators.maxLength(250)] 
-}
+export interface CreateInboundEmailPasswordForm extends Pick<InboundEmailPassword, "password"> {}
 
-export const CreateInboundEmailPasswordModelForm: Immutable<ModelFormConfig<ModelState, InboundEmailPassword>> = {
+export const CreateInboundEmailPasswordModelForm: Immutable<ModelFormConfig<ModelState, CreateInboundEmailPasswordForm, InboundEmailPassword>> = {
     includes: {prop: "inboundEmailPasswords"},
     actionConverter: _formToSaveModelConverter,
     dynamicForm: {
         submitText: "Legg til",
-        controls: [PasswordControl],
+        controls: { 
+            password: { type: "control", name: "password", required: true,
+                questionComponent: InputQuestionComponent,    
+                question: <InputQuestion> { placeholder: "Epostpassord" },
+                validators: [Validators.maxLength(250)] 
+            } 
+        },
     }
 }

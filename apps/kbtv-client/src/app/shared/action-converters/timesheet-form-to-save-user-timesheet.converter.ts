@@ -9,14 +9,12 @@ import { Converter, ModelFormResult } from 'model/form';
 
 export const _timesheetFormToSaveUserTimesheetConverter: Converter<ModelFormResult<TimesheetForm, ModelState>, SaveUserTimesheetAction> =
     (input) => {      
-        const value = input.formValue;
+        const {id, mission, comment, dateTime} = input.formValue;
 
         var entity: Immutable<Timesheet> = {
-            id: value.id,
-            missionId: value.mission?.id,
-            comment: value.comment,
-            startTime: value.startTime ? _mergeDateAndTime(value.date, value.startTime).getTime() : undefined,
-            endTime:  value.endTime ? _mergeDateAndTime(value.date, value.endTime).getTime() : undefined,
+            id, comment, missionId: mission?.id,         
+            startTime: dateTime!.startTime ? _mergeDateAndTime(dateTime!.date, dateTime!.startTime).getTime() : undefined,
+            endTime:  dateTime!.endTime ? _mergeDateAndTime(dateTime!.date, dateTime!.endTime).getTime() : undefined,
         }; 
 
         entity = _modelIdGenerator<Timesheet>(input.stateProp, entity); 

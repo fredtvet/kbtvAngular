@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { DynamicForm, FormComponent } from 'dynamic-forms';
-import { OptionsFormState } from 'form-sheet';
-import { Immutable, Maybe, UnknownState } from 'global-types';
-import { UnknownModelState, _getWithRelations } from 'model/core';
+import { Immutable, Maybe } from 'global-types';
+import { _getWithRelations } from 'model/core';
 import { ModelCommand, SaveAction } from 'model/state-commands';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, shareReplay, take } from 'rxjs/operators';
 import { _formToSaveModelConverter } from './form-to-save-model-converter.helper';
-import { ModelFormConfig } from './interfaces';
+import { ModelFormConfig, ModelFormState } from './interfaces';
 import { ModelFormFacade } from './model-form.facade';
 
 @Component({
@@ -22,20 +21,20 @@ import { ModelFormFacade } from './model-form.facade';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModelFormComponent
-  implements FormComponent<ModelFormConfig<object, object> & {entityId?: unknown}, OptionsFormState<object>, SaveAction>{
+  implements FormComponent<ModelFormConfig<object, object> & {entityId?: unknown}, object, SaveAction>{
     @Output() formSubmitted = new EventEmitter<Maybe<SaveAction>>()
 
     @Input() config: Maybe<Immutable<ModelFormConfig<object, object> & {entityId?: unknown}>>;
 
     @Input('formState')
-    set formState(value: Maybe<Immutable<OptionsFormState<object>>>) {
+    set formState(value: Maybe<Immutable<object>>) {
       if(value) this.formStateSubject.next(value)
     }
   
-    private formStateSubject = new BehaviorSubject<OptionsFormState<object>>({options: null})
+    private formStateSubject = new BehaviorSubject<object>({})
 
-    formState$: Observable<OptionsFormState<{}>>;
-    formConfig$: Observable<Immutable<DynamicForm<object, OptionsFormState<object>>>>;
+    formState$: Observable<Immutable<ModelFormState<object>>>;
+    formConfig$: Observable<Immutable<DynamicForm<object, object>>>;
 
     private isCreateForm: boolean = false;
   
@@ -51,8 +50,8 @@ export class ModelFormComponent
         this.formStateSubject.asObservable(),
         this.facade.getFormState$(this.config.includes)
       ]).pipe(map(([inputFormState, modelFormState]) => {
-        return {...inputFormState, options: inputFormState.options ? 
-            {...modelFormState.options, ...inputFormState.options} : 
+        return {...inputFormState, options: (<ModelFormState<object>>inputFormState).options ? 
+            {...modelFormState.options, ...(<ModelFormState<object>>inputFormState).options} : 
             modelFormState.options
         }
       }), shareReplay(1));
@@ -89,7 +88,7 @@ export class ModelFormComponent
 
       if(this.config!.entityId){
         const model = _getWithRelations<object,object>(state, this.config!.includes, this.config!.entityId);
-        initialValue = this.config!.modelConverter ? this.config!.modelConverter(model) : model;
+        if(model) initialValue = this.config!.modelConverter! ? this.config!.modelConverter(model) : model;
       }
       
       if(!initialValue) return this.config!.dynamicForm;

@@ -16,7 +16,7 @@ export class FormService {
    * @param config
    * @returns A reference to the bottom sheet with the form.
    */
-  open<TForm, TFormState = unknown>(config: Immutable<FormServiceConfig<TForm, TFormState>>)
+  open<TForm, TFormState extends object | null = null>(config: Immutable<FormServiceConfig<TForm, TFormState>>)
   : MatBottomSheetRef<FormSheetWrapperComponent, TForm> {      
     return this.matBottomSheet.open(FormSheetWrapperComponent, { 
       panelClass: "form-sheet-wrapper",

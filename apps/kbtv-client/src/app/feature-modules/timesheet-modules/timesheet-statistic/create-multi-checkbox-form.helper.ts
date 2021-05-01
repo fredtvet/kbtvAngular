@@ -1,39 +1,40 @@
 import { CheckboxQuestion, CheckboxQuestionComponent } from '@shared/scam/dynamic-form-questions/checkbox-question.component';
-import { DynamicControlGroup, DynamicForm } from 'dynamic-forms';
+import { DynamicControl, DynamicControlGroup, DynamicForm } from 'dynamic-forms';
 import { Immutable, Prop, UnknownState } from 'global-types';
+
+interface MultiCheckboxForm<TState> { selections: Record<Prop<TState>, boolean> }
 
 export interface KeyOptions<TState = UnknownState> { key: Prop<TState>, text: string }
 
-export function _createMultiCheckboxForm<TState = UnknownState>(
+export function _createMultiCheckboxForm<TState extends object = object>(
     keys: KeyOptions<TState>[], 
-    baseForm?: Partial<DynamicForm<Record<Prop<TState>, boolean>, {}>>,
-    selectAll?: boolean): Immutable<DynamicForm<Record<Prop<TState>, boolean>, {}>> {
+    baseForm?: Partial<Omit<DynamicForm<MultiCheckboxForm<TState>, null>, "controls">>,
+    selectAll?: boolean): Immutable<DynamicForm<MultiCheckboxForm<TState>, null>> {
 
-    const form: DynamicForm<Record<Prop<TState>, boolean>, {}> = {
-        submitText: "Lagre", controls: [], ...(baseForm || {})
-    };
-
-    const formGroup: DynamicControlGroup<Record<Prop<TState>, boolean>, {}> = {
-        type: "group",
-        controls: [],
-        label: "Velg kolonner",
-        panelClass: "multi-checkbox-group"
-    }
+    let controls: DynamicControl<Record<Prop<TState>, boolean>, Prop<TState>>[] = []
 
     for(const keyOptions of keys){
-        formGroup.controls.push({
+        controls.push({
             name: keyOptions.key, type: "control", 
-            valueGetter: form.initialValue ? (<Record<Prop<TState>, boolean>> form.initialValue)[keyOptions.key] : selectAll, 
-            questions: [{
-                component:  CheckboxQuestionComponent,
-                question: <CheckboxQuestion>{   
-                    width: "45%",
-                    text: keyOptions.text || keyOptions.key, 
-                }, 
-            }], 
+            valueFormatter: (val) => selectAll || val,
+            questionComponent:  CheckboxQuestionComponent,
+            question: <CheckboxQuestion>{   
+                width: "45%",
+                text: keyOptions.text || keyOptions.key, 
+            }, 
         })
     }
-    form.controls = [formGroup];
 
-    return <Immutable<DynamicForm<Record<Prop<TState>, boolean>, {}>>> form;
+    return <Immutable<DynamicForm<MultiCheckboxForm<TState>, null>>> {
+        submitText: "Lagre", 
+        controls: {
+            selections: <DynamicControlGroup<MultiCheckboxForm<object>, "selections" >> {
+                type: "group", name: "selections", 
+                controls,
+                label: "Velg kolonner",
+                panelClass: "multi-checkbox-group"
+            }
+        },    
+        ...(baseForm || {}),
+    };
 }

@@ -1,87 +1,86 @@
 import { Validators } from '@angular/forms';
-import { Employer, User } from '@core/models';
+import { User } from '@core/models';
+import { IContactable } from '@core/models/sub-interfaces/icontactable.interface';
+import { IFullName } from '@core/models/sub-interfaces/ifullname.interface';
 import { Roles } from '@core/roles.enum';
 import { StateEmployers, StateUsers } from '@core/state/global-state.interfaces';
-import { ModelState } from '@core/state/model-state.interface';
-import { _userFormToSaveUserConverter } from '../../action-converters/user-form-to-save-user.converter';
-import { isUniqueAsyncValidator } from '../../validators/is-unique.async.validator';
 import { DynamicControl } from 'dynamic-forms';
-import { OptionsFormState } from 'form-sheet';
 import { Immutable } from 'global-types';
-import { ModelFormConfig } from 'model/form';
-import { Observable } from 'rxjs';
+import { ModelFormConfig, ModelFormState } from 'model/form';
 import { map } from 'rxjs/operators';
+import { _userFormToSaveUserConverter } from '../../action-converters/user-form-to-save-user.converter';
 import { InputQuestion, InputQuestionComponent } from '../../scam/dynamic-form-questions/input-question.component';
 import { SelectQuestion, SelectQuestionComponent } from '../../scam/dynamic-form-questions/select-question.component';
-import { EmailControl, EmployerSelectControl, FirstNameControl, LastNameControl, PhoneNumberControl, UserNameControl } from '../common-controls.const';
+import { isUniqueAsyncValidator } from '../../validators/is-unique.async.validator';
+import { EmailControl, EmployerSelectControl, FirstNameControl, LastNameControl, NameControl, PhoneNumberControl, UserNameControl } from '../common-controls.const';
 
-export interface UserForm extends User { password?: string; }
+export interface SaveUserForm extends Pick<User, "userName" | "role" | "employer">, IContactable, IFullName {
+    password?: string;
+}
 
-type FormState = OptionsFormState<StateUsers & StateEmployers>;
+type State = StateUsers & StateEmployers;
+type FormState = ModelFormState<State>;
 
 const AvailableRoles = Object.keys(Roles).filter(x => x !== Roles.Leder).map(key => Roles[key as keyof typeof Roles]);
 
-const UniqueUserNameControl = <Immutable<DynamicControl<UserForm, StateUsers>>>{...UserNameControl, required: true,     
+const UniqueUserNameControl = <Immutable<DynamicControl<{ userName: string; }, "userName", FormState>>>{
+    ...UserNameControl, 
+    required: true,     
     asyncStateValidators: [
-    (s$: Observable<FormState>) => 
-        isUniqueAsyncValidator<User>(s$.pipe(map(s => s?.options?.users)), (x, y) => x.userName.toLowerCase() === y.toLowerCase())
+        (s$) => isUniqueAsyncValidator(s$.pipe(map(s => s?.options?.users)), (x, y) => x.userName.toLowerCase() === y.toLowerCase())
     ],
 }
-const RoleControl = <Immutable<DynamicControl<UserForm, StateUsers>>>{ name: "role", required: true,
-    type: "control", valueGetter: (s: UserForm) => s?.role, questions: [{
-        component:  SelectQuestionComponent,
-        question: <SelectQuestion<string>>{
-            placeholder: "Rolle",
-            lazyOptions: "all",
-            optionsGetter: () => AvailableRoles
-        }, 
-    }], 
+const RoleControl = <Immutable<DynamicControl<{ role: string }, "role">>>{ 
+    type: "control", name: "role", required: true,
+    questionComponent: SelectQuestionComponent,
+    question: <SelectQuestion<string, null>>{
+        placeholder: "Rolle",
+        lazyOptions: "all",
+        optionsGetter: () => AvailableRoles
+    },  
     validators: [ Validators.maxLength(100)] 
 }
-const PasswordControl = <Immutable<DynamicControl<UserForm, FormState>>>{ name: "password", required: true,
-    type: "control", questions: [{
-        component:  InputQuestionComponent,
-        question: <InputQuestion>{placeholder: "Passord", hideable: true, defaultHidden: true}, 
-    }], 
+const PasswordControl = <Immutable<DynamicControl<{ password?: string; }, "password">>>{ 
+    type: "control", name: "password", required: true, 
+    uestionComponent: InputQuestionComponent, 
+    question: <InputQuestion>{placeholder: "Passord", hideable: true, defaultHidden: true},
     validators: [Validators.minLength(7), Validators.maxLength(100)] 
 }
-const EmployerControl = <Immutable<DynamicControl<{employer: Employer}, OptionsFormState<FormState>>>>{
-    ...EmployerSelectControl, 
-    questions: [{...(EmployerSelectControl.questions ? EmployerSelectControl.questions[0] : null), 
-        hideOnValueChange: {controlName: "role", callback: (role: string) => role !== Roles.Oppdragsgiver}}]
-}
 
-export const CreateUserModelForm: Immutable<ModelFormConfig<ModelState, UserForm, FormState>> = {
-    includes: {prop: "users", foreigns: "all"},
+export const CreateUserModelForm: Immutable<ModelFormConfig<State, SaveUserForm, User, FormState>> = {
+    includes: {prop: "users", foreigns: "all"}, 
     actionConverter: _userFormToSaveUserConverter,
     dynamicForm: {
         submitText: "Legg til",
-        controls: [
-            UniqueUserNameControl,
-            PasswordControl,
-            {...FirstNameControl, required: true},
-            {...LastNameControl, required: true},
-            RoleControl,
-            EmployerControl,
-            PhoneNumberControl,
-            EmailControl, 
-        ],
+        hideOnValueChangeMap: { employer: (f) => f.role !== Roles.Oppdragsgiver },
+        controls: {
+            userName: UniqueUserNameControl,
+            password: PasswordControl,
+            firstName: {...FirstNameControl, required: true},
+            lastName: {...LastNameControl, required: true},
+            role: RoleControl,
+            employer: EmployerSelectControl,
+            phoneNumber: PhoneNumberControl,
+            email: EmailControl, 
+        },
     }
 }
 
-export const EditUserModelForm: Immutable<ModelFormConfig<ModelState, UserForm, FormState>> = {
+export const EditUserModelForm: Immutable<ModelFormConfig<State, SaveUserForm, User>> = {
     includes: {prop: "users", foreigns: "all"},
     actionConverter: _userFormToSaveUserConverter,
     dynamicForm: {
-        submitText: "Oppdater", getRawValue: true, disabledControls: {userName:true},
-        controls: [
-            UniqueUserNameControl,
-            {...FirstNameControl, required: true},
-            {...LastNameControl, required: true},
-            RoleControl,
-            EmployerControl,
-            PhoneNumberControl,
-            EmailControl, 
-        ],
+        submitText: "Oppdater", getRawValue: true, 
+        disabledControls: { userName:true },
+        hideOnValueChangeMap: { employer: (f) => f.role !== Roles.Oppdragsgiver },
+        controls: {
+            userName: UniqueUserNameControl,
+            firstName: {...FirstNameControl, required: true},
+            lastName: {...LastNameControl, required: true},
+            role: RoleControl,
+            employer: EmployerSelectControl,
+            phoneNumber: PhoneNumberControl,
+            email: EmailControl, 
+        },
     }
 }

@@ -38,8 +38,7 @@ export interface GooglePlacesAutoCompleteQuestion extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GooglePlacesAutoCompleteQuestionComponent extends BaseQuestionComponent<GooglePlacesAutoCompleteQuestion> 
-    implements QuestionComponent {
+export class GooglePlacesAutoCompleteQuestionComponent extends BaseQuestionComponent<GooglePlacesAutoCompleteQuestion>  {
     
     googleOptions: Immutable<Partial<Options>> = {
         types: ['geocode'],

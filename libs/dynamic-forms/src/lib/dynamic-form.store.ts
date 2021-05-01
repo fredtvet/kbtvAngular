@@ -26,10 +26,10 @@ export class DynamicFormStore<TFormState extends {}> {
     /** Get options stored in formState with the provided getter.
      * @param getter
      * @returns An observer of the options returned by the getter. */
-    getOptions$<T>(getter: Immutable<OptionsGetter<T>>): Observable<ImmutableArray<T>> {
+    getOptions$<T>(getter: Immutable<OptionsGetter<T, Partial<TFormState>>>): Observable<ImmutableArray<T>> {
         if(getter && getter instanceof Function)
             return this.formState$.pipe(
-                map(x => x ? getter(x) : []), 
+                map(x => x ? (getter(x) || []) : []), 
                 distinctUntilChanged())
 
         return of(getter || []);

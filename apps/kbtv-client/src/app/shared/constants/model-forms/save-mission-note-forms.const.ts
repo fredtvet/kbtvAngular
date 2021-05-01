@@ -10,42 +10,44 @@ import { TextAreaQuestion, TextAreaQuestionComponent } from '../../scam/dynamic-
 import { HiddenIdControl, HiddenMissionIdControl } from '../common-controls.const';
 import { ValidationRules } from '../validation-rules.const';
 
-const TitleControl = <Immutable<DynamicControl<MissionNote>>>{ name: "title", 
-    type: "control", valueGetter: (s: MissionNote) => s?.title, questions: [{
-        component:  InputQuestionComponent,
-        question: <InputQuestion>{placeholder: "Tittel"}, 
-    }], 
+export type SaveMissionNoteForm = Pick<MissionNote, "title" | "content" | "missionId" | "id">;
+
+const TitleControl = <Immutable<DynamicControl<SaveMissionNoteForm, "title">>>{ 
+    type: "control", name: "title", 
+    questionComponent: InputQuestionComponent,
+    question: <InputQuestion>{placeholder: "Tittel"}, 
     validators: [Validators.maxLength(ValidationRules.MissionNoteTitleMaxLength)] 
 }
-const ContentControl = <Immutable<DynamicControl<MissionNote>>>{ name: "content", required: true,
-    type: "control", valueGetter: (s: MissionNote) => s?.content, questions: [{
-        component:  TextAreaQuestionComponent,
-        question: <TextAreaQuestion>{placeholder: "Beskrivelse", rows: 4}, 
-    }], 
+const ContentControl = <Immutable<DynamicControl<SaveMissionNoteForm, "content">>>{ 
+    type: "control", name: "content", required: true,     
+    questionComponent: TextAreaQuestionComponent,
+    question: <TextAreaQuestion>{placeholder: "Beskrivelse", rows: 4},  
     validators: [Validators.maxLength(ValidationRules.MissionNoteContentMaxLength)] 
 }
 
-export const CreateMissionNoteModelForm: Immutable<ModelFormConfig<ModelState, MissionNote>> = {
+export const CreateMissionNoteModelForm: Immutable<ModelFormConfig<ModelState, SaveMissionNoteForm, MissionNote>> = {
     includes: {prop: "missionNotes"},
-    actionConverter: _formToSaveModelConverter,
+    actionConverter: _formToSaveModelConverter,  
     dynamicForm: {
         submitText: "Legg til",
-        controls: [
-            TitleControl, 
-            ContentControl, 
-            HiddenMissionIdControl
-        ],
+        controls: {
+            title: TitleControl, 
+            content: ContentControl, 
+            missionId: HiddenMissionIdControl
+        },
     }
 }
 
-export const EditMissionNoteModelForm: Immutable<ModelFormConfig<ModelState, MissionNote>> = {
+export const EditMissionNoteModelForm: Immutable<ModelFormConfig<ModelState, SaveMissionNoteForm, MissionNote>> = {
     includes: {prop: "missionNotes"},
     actionConverter: _formToSaveModelConverter,
     dynamicForm: {
         submitText: "Oppdater",
-        controls: [
-            ...CreateMissionNoteModelForm.dynamicForm.controls,
-            HiddenIdControl
-        ],
+        controls: {
+            title: TitleControl, 
+            content: ContentControl, 
+            missionId: HiddenMissionIdControl,
+            id: HiddenIdControl,
+        },
     }
 }

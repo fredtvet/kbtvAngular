@@ -19,13 +19,8 @@ export interface FormSheetWrapperConfig<TFormConfig, TFormState, TResult>{
     formComponent: Type<FormComponent<TFormConfig, TFormState, TResult>>;
 }
 
-/** Represents state that contains options for use in selections */
-export interface OptionsFormState<TOptions extends {}>{ 
-    options: Maybe<Immutable<TOptions>>
-}
-
 /** Represents configuration for opening a form with {@link FormService} */
-export interface FormServiceConfig<TForm, TFormState>{
+export interface FormServiceConfig<TForm, TFormState extends object| null = null>{
     /** The form config passed to the provided form component */
     formConfig: DynamicForm<TForm, TFormState>, 
     /** Configuration for the top navigation bar on bottom sheet */

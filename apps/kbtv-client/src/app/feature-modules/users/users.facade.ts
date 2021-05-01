@@ -4,7 +4,7 @@ import { User } from "@core/models";
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { Store } from 'state-management'
 import { map } from "rxjs/operators";
-import { StoreState } from './state/store-state';
+import { StoreState } from './store-state';
 import { FetchModelsAction } from 'model/state-fetcher';
 import { Roles } from "@core/roles.enum";
 import { UpdateUserPasswordAction } from "@actions/user-actions";

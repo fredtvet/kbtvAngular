@@ -7,10 +7,9 @@ import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
-import { WeekCriteriaForm } from '@shared/constants/forms/week-criteria-controls.const';
+import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
 import { _getDateOfWeek, _getWeekRange } from 'date-time-helpers';
-import { _disableControlsWithNoValue } from 'dynamic-forms';
 import { FormService } from 'form-sheet';
 import { Maybe } from "global-types";
 import { ModelFormService } from 'model/form';
@@ -63,12 +62,12 @@ export class UserTimesheetWeekComponent {
 
   previousWeek = (): void => this.facade.previousWeek()
 
-  openTimesheetForm = (entityId?: Maybe<string>, form?: TimesheetForm): void => {
+  openTimesheetForm = (entityId?: Maybe<string>, initialValue?: TimesheetForm): void => {
     this.modelFormService.open(
       entityId ? EditUserTimesheetModelForm : 
         {...CreateUserTimesheetModelForm, 
           dynamicForm: {...CreateUserTimesheetModelForm.dynamicForm, 
-            disabledControls: _disableControlsWithNoValue(form), initialValue: form
+            disableControlsWithValue: true, initialValue
           }
         },
       entityId
@@ -89,13 +88,14 @@ export class UserTimesheetWeekComponent {
   };
 
   private openWeekFilter = (): void => { 
-    this.formService.open<WeekCriteria>({
+    this.formService.open<WeekCriteriaForm, WeekCriteriaFormState>({
       formConfig: {...WeekCriteriaForm, 
+        noRenderDisabledControls: true,
         disabledControls: {user: true}, 
-        noRenderDisabledControls: true,  
-        initialValue: this.facade.weekCriteria}, 
+        initialValue: this.facade.weekCriteria 
+      }, 
       navConfig: {title: "Velg filtre"},
-      submitCallback: (val: WeekCriteria) => this.facade.updateCriteria(val)
+      submitCallback: (val) => this.facade.updateCriteria(val)
     });
   }
 

@@ -67,9 +67,10 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
   
   private openWeekFilter = (): void => {
     this.formService.open<WeekCriteria, WeekCriteriaFormState>({
-      formConfig: {...WeekCriteriaForm, onlineRequired: true,
-        disabledControls: {weekNr: true}, 
+      formConfig: {...WeekCriteriaForm, 
+        onlineRequired: true, 
         noRenderDisabledControls: true,
+        disabledControls: {weekNr: true}, 
         initialValue: this.facade.weekCriteria}, 
       formState: this.facade.weekCriteriaFormState$,
       navConfig: {title: "Velg filtre"},

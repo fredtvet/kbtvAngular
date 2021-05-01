@@ -8,6 +8,8 @@ import { SyncConfig } from 'state-sync';
 import { ProfileFacade } from '../profile.facade';
 import { ProfileAction } from './profile-action.interface';
 import { Router } from '@angular/router';
+import { _getFirstDayOfMonth } from 'date-time-helpers';
+import { _syncFormToConfigConverter } from './sync-form-to-config.converter';
 
 @Component({
   selector: 'app-sync-profile',
@@ -39,11 +41,11 @@ export class SyncProfileComponent {
 
   private updateSyncConfig = (): void => {
     const config = this.facade.syncConfig;
-    this.formService.open<SyncConfig, unknown>({
+    this.formService.open({
       formConfig: {...SyncConfigForm, initialValue: config ? {...config, refreshTime: config.refreshTime / 60 } : null}, 
       navConfig: {title: "Konfigurasjoner"},
-      submitCallback: (val: SyncConfig) => 
-        this.facade.updateSyncConfig({...val, refreshTime: val.refreshTime * 60})
+      submitCallback: (val) => 
+        this.facade.updateSyncConfig(_syncFormToConfigConverter(val))
     })
   }
 

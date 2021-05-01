@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
-import { Immutable, Maybe } from 'global-types';
+import { Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 import { debounceTime, map, startWith } from 'rxjs/operators';
 import { DynamicFormFactory } from '../dynamic-form.factory';
@@ -23,7 +23,7 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
             display: flex;
         }
     </style>
-    <form [formGroup]="form">
+    <form [formGroup]="form" [ngClass]="config.panelClass">
         <ng-container *dynamicHost>
 
         </ng-container>
@@ -49,18 +49,9 @@ import { DynamicControlGroupComponent } from './dynamic-control-group.component'
   providers: [DynamicFormStore, DynamicFormFactory],
 })
 export class DynamicFormComponent extends ControlComponentLoaderComponent 
-    implements FormComponent<DynamicForm<{}, {}>, {}, unknown> {
+    implements FormComponent<DynamicForm<any, any>, any, unknown> {
         
     @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
-    
-    private _config: Immutable<DynamicForm<{}, {}>>;
-    @Input('config') 
-    set config(value: Immutable<DynamicForm<{}, {}>>) {
-        this._config = value;
-        this.initalizeForm();
-    }  
-
-    get config(): Immutable<DynamicForm<{}, {}>> { return this._config }
 
     @Input('formState') 
     set formState(value: {}) {
@@ -75,11 +66,10 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         componentFactoryResolver: ComponentFactoryResolver,
         cdRef: ChangeDetectorRef,
         @Inject(VALIDATION_ERROR_MESSAGES) private validationErrorMessages: ValidationErrorMap,
-        private formStore: DynamicFormStore<Object>,
+        private formStore: DynamicFormStore<any>,
         private formFactory: DynamicFormFactory,
     ) { 
         super(componentFactoryResolver, cdRef, DynamicControlGroupComponent);     
-
     }
 
     onSubmit(){
@@ -104,10 +94,9 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
         return _getValidationErrorMessage(this.form.errors, this.validationErrorMessages)
     }
 
-    private initalizeForm() {
+    protected onConfigSet(){ 
         this.dynamicHost.viewContainerRef.clear();
-
-        this.form = this.formFactory.create(this.config)
+        this.form = this.formFactory.create(this._config)
 
         if(this._config.resettable)
             this.resetEnabled$ = this.form.valueChanges.pipe(
@@ -116,7 +105,7 @@ export class DynamicFormComponent extends ControlComponentLoaderComponent
                 map(x => !_hasSameState(this.form.value, this._config.resetState)),
             )
 
-        this.loadComponents(this._config.controls, this._config);
+        this.loadComponents(this._config);
     }
 
 }

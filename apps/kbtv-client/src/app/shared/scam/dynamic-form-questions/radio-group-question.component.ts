@@ -6,8 +6,8 @@ import { BaseQuestionComponent, DynamicFormStore, OptionsGetter, Question, Quest
 import { ImmutableArray } from 'global-types';
 import { Observable } from 'rxjs';
 
-export interface RadioGroupQuestion<T> extends Question {
-    optionsGetter: OptionsGetter<T>;
+export interface RadioGroupQuestion<T, TFormState extends object | null> extends Question<TFormState> {
+    optionsGetter: OptionsGetter<T, TFormState>;
     defaultOption?: string;
     valueFormatter?: (val: T) => unknown;
     valueSetter?: (val: T) => unknown;
@@ -39,8 +39,7 @@ export interface RadioGroupQuestion<T> extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RadioGroupQuestionComponent extends BaseQuestionComponent<RadioGroupQuestion<unknown>> 
-  implements QuestionComponent {
+export class RadioGroupQuestionComponent extends BaseQuestionComponent<RadioGroupQuestion<unknown, any>> {
 
   hideField: boolean;
 

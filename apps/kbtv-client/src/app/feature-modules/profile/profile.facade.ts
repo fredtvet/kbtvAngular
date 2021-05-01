@@ -1,6 +1,7 @@
 import { UpdateCurrentUserAction, UpdatePasswordAction, ClearAndLogoutAction } from "@actions/profile-actions";
 import { Injectable } from "@angular/core";
 import { User } from "@core/models";
+import { ProfileForm } from "@shared/constants/forms/profile-form.const";
 import { Immutable } from "global-types";
 import { AuthService } from "state-auth";
 import { Store } from 'state-management';
@@ -23,7 +24,7 @@ export class ProfileFacade {
     private authService: AuthService
   ) {}
   
-  updateCurrentUser = (user: Immutable<User>): void => 
+  updateCurrentUser = (user: Immutable<ProfileForm>): void => 
     this.store.dispatch(<UpdateCurrentUserAction>{ type: UpdateCurrentUserAction, user });
   
   updatePassword = (oldPassword: string, newPassword: string) => 

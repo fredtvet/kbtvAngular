@@ -5,11 +5,13 @@ import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
 import { NameControl } from '../common-controls.const';
 
-export const CreateMissionTypeModelForm: Immutable<ModelFormConfig<ModelState, MissionType>> = {
-    includes: {prop: "missionTypes"},
+export interface CreateMissionTypeForm extends Pick<MissionType, "name"> {}
+
+export const CreateMissionTypeModelForm: Immutable<ModelFormConfig<ModelState, CreateMissionTypeForm, MissionType>> = {
+    includes: {prop: "missionTypes"}, 
     actionConverter: _formToSaveModelConverter,
     dynamicForm: {
-        submitText: "Legg til", 
-        controls: [ {...NameControl, required: true} ],
+        submitText: "Legg til",
+        controls: { name: {...NameControl, required: true} } 
     }
 }

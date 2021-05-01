@@ -49,8 +49,7 @@ export interface SliderQuestion extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SliderQuestionComponent extends BaseQuestionComponent<SliderQuestion> 
-    implements QuestionComponent {
+export class SliderQuestionComponent extends BaseQuestionComponent<SliderQuestion> {
 
     value$: Observable<unknown>;
 

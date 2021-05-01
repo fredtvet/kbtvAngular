@@ -43,8 +43,7 @@ export interface InputQuestion extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputQuestionComponent extends BaseQuestionComponent<InputQuestion> 
-  implements QuestionComponent {
+export class InputQuestionComponent extends BaseQuestionComponent<InputQuestion> implements QuestionComponent<InputQuestion> {
 
   hideField: Maybe<boolean>;
 

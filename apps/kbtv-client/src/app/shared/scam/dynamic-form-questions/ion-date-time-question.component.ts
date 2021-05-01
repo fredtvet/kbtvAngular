@@ -1,21 +1,26 @@
-import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, Inject, NgModule } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, Inject, NgModule } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, ControlHook, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES, _getControlObserver$ } from 'dynamic-forms';
+import { Immutable, Maybe } from 'global-types';
 import { Observable, of, throwError } from 'rxjs';
 import { filter, startWith } from 'rxjs/operators';
 
-export interface IonDateQuestion extends Question {
+export interface IonDateQuestion<TForm> extends Question {
     ionFormat: string;
     datePipeFormat?: string;
     minuteValues?: number[];
-    defaultValueGetter?: ((form: unknown) => string) | string;
+    defaultValueGetter?: ((form: Maybe<Immutable<TForm>>) => string) | string;
     min?: string | ControlHook<string>;
     max?: string | ControlHook<string>;
     valueSetter?: (value: unknown) => unknown;
-    overrideValueSetterControl?: string;
 }
+
+const _dayNames = ["Søndag", "Mandag", "Tirsdag", "Onsdag","Torsdag", "Fredag", "Lørdag"]
+const _dayShortNames = ["Søn", "Man", "Tir", "Ons","Tor", "Fre", "Lør"]
+const _monthNames = ["Januar", "Februar", "Mars", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Desember"];
+const _monthShortNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des"]
 
 @Component({
   selector: 'app-ion-date-question',
@@ -53,36 +58,33 @@ export interface IonDateQuestion extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuestion> {
+export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuestion<unknown>> {
 
-  dayNames = ["Søndag", "Mandag", "Tirsdag", "Onsdag","Torsdag", "Fredag", "Lørdag"]
-  dayShortNames = ["Søn", "Man", "Tir", "Ons","Tor", "Fre", "Lør"]
-  monthNames = ["Januar", "Februar", "Mars", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Desember"];
-  monthShortNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des"]
+  dayNames = _dayNames;
+  dayShortNames = _dayShortNames;
+  monthNames = _monthNames;
+  monthShortNames = _monthShortNames;
 
   min$: Observable<string>;
   max$: Observable<string>;
 
   value$: Observable<string>;
 
-  constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
+  constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap, private cdRef: ChangeDetectorRef) { 
     super(validationErrorMessages) 
   }
 
   onChange(val: unknown){
-    let control = this.control;
-    if(this.question.overrideValueSetterControl) 
-      control = this.form.get(this.question.overrideValueSetterControl)
-
-    if(!control) return;
+    if(!this.control) return;
 
     const value = this.question.valueSetter ? this.question.valueSetter(val) : val;
 
-    control.setValue(value);  
-    control.markAsDirty();
+    this.control.setValue(value);  
+    this.control.markAsDirty();
+    this.cdRef.markForCheck();
   }
 
-  protected onQuestionChanges(question: IonDateQuestion): void { 
+  protected onQuestionChanges(question: IonDateQuestion<unknown>): void { 
     super.onQuestionChanges(question);
     if(this.control)
       this.value$ = this.control.valueChanges.pipe(startWith(this.control.value));
@@ -90,7 +92,7 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
     this.max$ = this.setMinMax(question, "max");
   }
 
-  private setMinMax(question: IonDateQuestion, type: "min" | "max"): Observable<string>{
+  private setMinMax(question: IonDateQuestion<unknown>, type: "min" | "max"): Observable<string>{
     if(!question) return throwError("No question provided");
   
     let observer = of(question[type] as string);

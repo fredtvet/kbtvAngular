@@ -4,14 +4,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { LazySelectOption, _shouldEagerOptions } from '@shared-app/helpers/should-eager-options.helper';
 import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, DynamicFormStore, OptionsGetter, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
-import { ImmutableArray, Maybe, Prop, UnknownState } from 'global-types';
+import { Immutable, ImmutableArray, Maybe, Prop, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 
-export interface SelectQuestion<T> extends Question {
-  optionsGetter: OptionsGetter<T>;
+export interface SelectQuestion<T, TFormState extends object | null> extends Question<TFormState> {
+  optionsGetter: OptionsGetter<T, TFormState>;
   lazyOptions?: LazySelectOption;
   valueProp?: Prop<T>;
-  valueFormatter?: (val: T) => unknown;
+  valueFormatter?: (val: Immutable<T>) => unknown;
   compareWith?: (o1: unknown, o2: unknown) => boolean;
 }
 
@@ -52,7 +52,7 @@ export interface SelectQuestion<T> extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectQuestionComponent extends BaseQuestionComponent<SelectQuestion<UnknownState>> implements QuestionComponent {
+export class SelectQuestionComponent extends BaseQuestionComponent<SelectQuestion<UnknownState, UnknownState>> {
 
   defaultCompareWith = (o1: unknown, o2: unknown) => o1 === o2;
 
@@ -90,3 +90,5 @@ export class SelectQuestionComponent extends BaseQuestionComponent<SelectQuestio
   ]
 })
 class SelectQuestionModule {}
+
+

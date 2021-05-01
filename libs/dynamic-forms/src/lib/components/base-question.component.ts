@@ -6,8 +6,8 @@ import { _getValidationErrorMessage } from '../helpers/get-validation-error-mess
 import { Question, QuestionComponent, ValidationErrorMap } from '../interfaces';
 
 @Directive()
-export abstract class BaseQuestionComponent<TQuestion extends Question>
-    implements QuestionComponent {
+export abstract class BaseQuestionComponent<TQuestion extends Question<any>>
+    implements QuestionComponent<TQuestion> {
 
   @HostBinding('style.width') width: string;
 

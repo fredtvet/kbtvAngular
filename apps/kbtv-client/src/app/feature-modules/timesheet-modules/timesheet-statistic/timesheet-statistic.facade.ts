@@ -27,7 +27,7 @@ export class TimesheetStatisticFacade extends WithUnsubscribe() {
     criteria$ = this.store.selectProperty$("timesheetStatisticTimesheetCriteria");
     get criteria() { return this.store.state.timesheetStatisticTimesheetCriteria }
 
-    criteriaFormState$: Observable<TimesheetCriteriaFormState> = 
+    criteriaFormState$: Observable<Immutable<TimesheetCriteriaFormState>> = 
         this.store.select$(["missions", "users"]).pipe(
             map(state => { return { 
                 options: {...state, users: _noEmployersFilter(state.users) }

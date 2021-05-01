@@ -5,7 +5,6 @@ import { IId } from '@core/models/sub-interfaces/iid.interface';
 import { IName } from '@core/models/sub-interfaces/iname.interface';
 import { StateMissions, StateEmployers, StateUsers } from '@core/state/global-state.interfaces';
 import { DynamicControl } from 'dynamic-forms';
-import { OptionsFormState } from 'form-sheet';
 import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
 import { isObjectValidator } from '@shared/validators/is-object.validator';
 import { AutoCompleteQuestionComponent } from '../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
@@ -15,111 +14,95 @@ import { InputQuestionComponent, InputQuestion } from '../scam/dynamic-form-ques
 import { SelectQuestionComponent, SelectQuestion } from '../scam/dynamic-form-questions/select-question.component';
 import { ValidationRules } from './validation-rules.const';
 import { Immutable } from 'global-types';
+import { ModelFormState } from 'model/form';
 
-export const HiddenIdControl: Immutable<DynamicControl<IId>> = { name: "id", required: true,
-    type: "control", valueGetter: (s: IId) => s.id,         
+export const HiddenIdControl: Immutable<DynamicControl<IId, "id">> = { 
+    type: "control", name: "id", required: true,         
 }
-export const HiddenMissionIdControl: Immutable<DynamicControl<MissionChild>> = { name: "missionId", required: true,
-    type: "control", valueGetter: (s: MissionChild) => s.missionId,         
+export const HiddenMissionIdControl: Immutable<DynamicControl<MissionChild, "missionId">> = { 
+    type: "control", name: "missionId", required: true,         
 }
-export const PhoneNumberControl: Immutable<DynamicControl<{phoneNumber: string}>> = { name: "phoneNumber", 
-    type: "control", valueGetter: (s: {phoneNumber: string}) => s?.phoneNumber, 
-    questions: [{
-        component:  InputQuestionComponent,
-        question: <InputQuestion>{placeholder: "Kontaktnummer"}, 
-    }], 
+export const PhoneNumberControl: Immutable<DynamicControl<{phoneNumber: string}, "phoneNumber">> = { 
+    type: "control", name: "phoneNumber",
+    questionComponent: InputQuestionComponent,
+    question: <InputQuestion>{ placeholder: "Kontaktnummer" }, 
     validators: [
         Validators.minLength(ValidationRules.PhoneNumberMinLength), 
         Validators.maxLength(ValidationRules.PhoneNumberMaxLength)
     ] 
 }
-export const EmailControl: Immutable<DynamicControl<{email: string}>> = { name: "email", 
-    type: "control", valueGetter: (s: {email: string}) => s?.email, 
-    questions: [{
-        component:  InputQuestionComponent,
-        question: <InputQuestion>{placeholder: "Epost"}, 
-    }], 
+export const EmailControl: Immutable<DynamicControl<{email: string}, "email">> = { 
+    type: "control", name: "email",
+    questionComponent: InputQuestionComponent,
+    question: <InputQuestion>{ placeholder: "Epost" },  
     validators: [Validators.email] 
 }
-export const GoogleAddressControl: Immutable<DynamicControl<IAddress>> = { name: "address",
-    type: "control", valueGetter: (s: IAddress) => s?.address, questions: [{
-        component:  GooglePlacesAutoCompleteQuestionComponent,
-        question: <GooglePlacesAutoCompleteQuestion>{
-            placeholder: "Adresse", 
-            hint: "F.eks. Furuberget 17, 1940 Bjørkelangen",
-            resetable: true
-        }, 
-    }], 
+export const GoogleAddressControl: Immutable<DynamicControl<IAddress, "address">> = {
+    type: "control",  name: "address",
+    questionComponent: GooglePlacesAutoCompleteQuestionComponent,
+    question: <GooglePlacesAutoCompleteQuestion>{
+        placeholder: "Adresse", 
+        hint: "F.eks. Furuberget 17, 1940 Bjørkelangen",
+        resetable: true
+    },  
     validators: [Validators.maxLength(ValidationRules.AddressMaxLength)] 
 }
-export const NameControl: Immutable<DynamicControl<IName>> = { name: "name",
-    type: "control", valueGetter: (s: IName) => s?.name, questions: [{
-        component:  InputQuestionComponent,
-        question: <InputQuestion>{placeholder: "Navn"}, 
-    }], 
+export const NameControl: Immutable<DynamicControl<IName, "name">> = {
+    type: "control", name: "name",
+    questionComponent: InputQuestionComponent,
+    question: <InputQuestion>{ placeholder: "Navn"},  
     validators: [Validators.maxLength(ValidationRules.NameMaxLength)] 
 }
-export const FirstNameControl: Immutable<DynamicControl<{firstName: string}>> = { name: "firstName",
-    type: "control", valueGetter: (s: {firstName: string}) => s?.firstName, 
-    questions: [{
-        component:  InputQuestionComponent,
-        question: <InputQuestion>{placeholder: "Fornavn"}, 
-    }], 
+export const FirstNameControl: Immutable<DynamicControl<{firstName: string}, "firstName">> = {
+    type: "control", name: "firstName",
+    questionComponent: InputQuestionComponent,
+    question: <InputQuestion>{ placeholder: "Fornavn" }, 
 }
-export const LastNameControl: Immutable<DynamicControl<{lastName: string}>> = { name: "lastName",
-    type: "control", valueGetter: (s: {lastName: string}) => s?.lastName, 
-    questions: [{
-        component:  InputQuestionComponent,
-        question: <InputQuestion>{placeholder: "Etternavn"}, 
-    }], 
+export const LastNameControl: Immutable<DynamicControl<{lastName: string}, "lastName">> = { 
+    type: "control", name: "lastName", 
+    questionComponent: InputQuestionComponent,
+    question: <InputQuestion>{ placeholder: "Etternavn" }
 }
-export const MissionAutoCompleteControl: Immutable<DynamicControl<{mission: Mission}>> = { name: "mission", 
-    valueGetter: (s: {mission: Mission}) => s.mission,
-    type: "control", questions: [{
-        component:  AutoCompleteQuestionComponent,
-        question: <AutoCompleteQuestion<Mission>>{
-            optionsGetter: (state: OptionsFormState<StateMissions>) => state.options?.missions,
-            placeholder: "Oppdrag",
-            lazyOptions: "all",
-            valueFormatter: (val: Mission) => val.address,
-            displayWith: (mission: Mission) => mission ? mission.address : null,
-            resetable: true,
-            activeFilter: { stringProps: ["address"], maxChecks: 50 }
-        }, 
-    }],
+export const MissionAutoCompleteControl: Immutable<DynamicControl<{mission: Mission}, "mission", ModelFormState<StateMissions>>> = {  
+    type: "control", name: "mission",
+    questionComponent: AutoCompleteQuestionComponent,
+    question: <AutoCompleteQuestion<Mission, ModelFormState<StateMissions>>>{
+        optionsGetter: (state) => state.options.missions,
+        placeholder: "Oppdrag",
+        lazyOptions: "all",
+        valueFormatter: (val) => val.address,
+        displayWith: (mission) => mission ? mission.address : null,
+        resetable: true,
+        activeFilter: { stringProps: ["address"], maxChecks: 50 }
+    }, 
     validators: [isObjectValidator()], 
 }
-export const EmployerSelectControl: Immutable<DynamicControl<{employer: Employer}, OptionsFormState<StateEmployers>>> = { 
-    name: "employer",
-    valueGetter: (s: {employer: Employer}) => s.employer,
-    type: "control", questions: [{
-        component:  SelectQuestionComponent,
-        question: <SelectQuestion<Employer>>{
-            optionsGetter: (s: OptionsFormState<StateEmployers>) => s.options?.employers,
-            valueFormatter: (val: Employer) => val.name,
-            compareWith: _compareProp<Employer>("id"),
-            lazyOptions: "all",
-            placeholder: "Velg oppdragsgiver",
-        }, 
-    }], 
+export const EmployerSelectControl: Immutable<DynamicControl<{employer: Employer}, "employer", ModelFormState<StateEmployers>>> = { 
+    type: "control",name: "employer",
+    questionComponent: SelectQuestionComponent,
+    question: <SelectQuestion<Employer, ModelFormState<StateEmployers>>>{
+        optionsGetter: (s) => s.options.employers,
+        valueFormatter: (val) => val.name,
+        compareWith: _compareProp<Employer>("id"),
+        lazyOptions: "all",
+        placeholder: "Velg oppdragsgiver",
+    },  
 }
-export const UserSelectControl: Immutable<DynamicControl<{user: User}>> = { name: "user",
-    type: "control", valueGetter: (s: {user: User}) => s.user, questions: [{
-        component:  SelectQuestionComponent,
-        question: <SelectQuestion<User>>{
-            optionsGetter: (state: OptionsFormState<StateUsers>) => state.options?.users,
-            valueFormatter: (val: User) => val.firstName + ' ' + val.lastName,
-            compareWith: _compareProp<User>("userName"),
-            lazyOptions: "all",
-            placeholder: "Velg ansatt",
-        }, 
-    }], 
+export const UserSelectControl: Immutable<DynamicControl<{user: User}, "user", ModelFormState<StateUsers>>> = { 
+    type: "control", name: "user", 
+    questionComponent: SelectQuestionComponent,
+    question: <SelectQuestion<User, ModelFormState<StateUsers>>>{
+        optionsGetter: (state) => state.options.users,
+        valueFormatter: (val) => val.firstName + ' ' + val.lastName,
+        compareWith: _compareProp<User>("userName"),
+        lazyOptions: "all",
+        placeholder: "Velg ansatt",
+    }, 
 } 
-export const UserNameControl: Immutable<DynamicControl<{userName: string}>> = { name: "userName", 
-    type: "control", valueGetter: (s: {userName: string}) => s?.userName, questions: [{
-        component:  InputQuestionComponent,
-        question: <InputQuestion>{placeholder: "Brukernavn"}, 
-    }], 
+export const UserNameControl: Immutable<DynamicControl<{userName: string}, "userName">> = { 
+    type: "control", name: "userName",
+    question: {placeholder: "Brukernavn"}, 
+    questionComponent: InputQuestionComponent,
     validators: [
         Validators.pattern('^[a-zA-Z0-9_.-]*$'),
         Validators.minLength(4),
