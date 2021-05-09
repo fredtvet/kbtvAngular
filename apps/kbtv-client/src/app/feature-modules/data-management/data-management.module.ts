@@ -9,7 +9,8 @@ import { translations } from '@shared-app/translations';
 import { SharedModule } from '@shared/shared.module';
 import { ModelDataTableModule, MODEL_DATA_TABLES_CONFIG, MODEL_DATA_TABLE_PROP_TRANSLATIONS } from 'model/data-table';
 import { ModelFormModule } from 'model/form';
-import { DeleteModelAction, DeleteModelReducer, SaveModelAction, SaveModelReducer } from 'model/state-commands';
+import { DeleteModelAction, DeleteModelReducer, ModelStateCommandsModule, SaveModelAction, SaveModelReducer, SetSaveModelStateAction } from 'model/state-commands';
+import { ModelStateFetcherModule } from 'model/state-fetcher';
 import { OptimisticHttpModule } from 'optimistic-http';
 import { StateManagementModule } from 'state-management';
 import { DataManagementRoutingModule } from './data-management-routing.module';
@@ -24,19 +25,23 @@ import { ModelDataTables } from './model-data-tables.const';
   ],
   imports: [
     SharedModule,
-    FormsModule,    
-    StateManagementModule.forFeature({reducers: [SaveModelReducer, DeleteModelReducer]}),
-    ModelFormModule,
-    OptimisticHttpModule.forFeature({
-      [SaveModelAction]: GenericActionRequestMap[SaveModelAction],  
-      [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction]
-    }),
-    
-    DataManagementRoutingModule,
-    ModelDataTableModule,
-    
+    FormsModule,   
+    DataManagementRoutingModule, 
+
     MatFormFieldModule, 
-    MatSelectModule
+    MatSelectModule,
+
+    StateManagementModule.forFeature({}),
+    ModelStateCommandsModule,
+    ModelStateFetcherModule,
+    ModelFormModule,
+    ModelDataTableModule,
+
+    OptimisticHttpModule.forFeature({
+      [SetSaveModelStateAction]: GenericActionRequestMap[SetSaveModelStateAction],  
+      [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction]
+    }), 
+    
   ],
   providers: [
     {provide: MODEL_DATA_TABLE_PROP_TRANSLATIONS, useValue: translations},

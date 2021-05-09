@@ -3,25 +3,26 @@ import { MatBottomSheet, MatBottomSheetRef } from "@angular/material/bottom-shee
 import { Router } from '@angular/router';
 import { FormSheetWrapperComponent, FormSheetWrapperConfig } from 'form-sheet';
 import { Immutable } from "global-types";
+import { StateModels } from "model/core";
 import { ModelCommand, SaveAction } from "model/state-commands";
 import { Observable, of } from 'rxjs';
 import { ModelFormConfig, ModelFormServiceOptions } from './interfaces';
 import { ModelFormComponent } from './model-form.component';
 import { ModelFormFacade } from "./model-form.facade";
 
-type WrapperConfig<TState extends object, TForm extends object, TModel extends object, TFormState extends object> = 
-  FormSheetWrapperConfig<Immutable<ModelFormConfig<TState, TForm, TModel, TFormState>> & {entityId?: unknown}, TState, SaveAction>;
+type WrapperConfig<TState extends object, TModel extends StateModels<TState>, TForm = TModel, TFormState extends object = object> = 
+  FormSheetWrapperConfig<Immutable<ModelFormConfig<TState, TModel, TForm, TFormState>> & {entityId?: unknown}, TState, SaveAction>;
 
 type BottomSheetRef = MatBottomSheetRef<FormSheetWrapperComponent, ModelCommand>;
 
 /** Responsible for showing a form sheet with the specified model form */
 @Injectable()
-export class ModelFormService {
+export class ModelFormService<TState extends object> {
 
   constructor(
     private matBottomSheet: MatBottomSheet,
     private router: Router,
-    private facade: ModelFormFacade
+    private facade: ModelFormFacade<TState, StateModels<TState>>
   ) {}
 
   /** Opens the specified model form as a form sheet
@@ -29,15 +30,15 @@ export class ModelFormService {
    * @param entityId If set, the form will be in edit mode for the model with corresponding id.
    * @returns A reference to the bottom sheet with the model form.
    */
-  open<TState extends object, TForm extends object, TModel extends object = TForm, TFormState extends object = object>(
-    config: Immutable<ModelFormConfig<TState, TForm, TModel, TFormState>>,
+  open<TModel extends StateModels<TState>, TForm = TModel, TFormState extends object = object>(
+    config: Immutable<ModelFormConfig<TState, TModel, TForm, TFormState>>,
     entityId?: unknown,
     options?: Immutable<ModelFormServiceOptions<TState>>
   ): BottomSheetRef {
     var ref: MatBottomSheetRef<FormSheetWrapperComponent, ModelCommand> = 
       this.matBottomSheet.open(FormSheetWrapperComponent, { 
         panelClass: "form-sheet-wrapper",
-        data: <WrapperConfig<TState, TForm, TModel, TFormState>> {      
+        data: <WrapperConfig<TState, TModel, TForm, TFormState>> {      
           formConfig: entityId ? {...config, entityId} : config, 
           formComponent:  ModelFormComponent,
           submitCallback: options?.submitCallback,
@@ -45,12 +46,12 @@ export class ModelFormService {
           navConfig: {
             title: options?.customTitle || 
               `${entityId ? "Oppdater" : "Registrer"} 
-              ${this.facade.translateStateProp(config.includes.prop)}`,   
+              ${this.facade.translateStateProp(<any> config.includes.prop)}`,   
             buttons: (options?.deleteDisabled || !(entityId)) ? 
                 null : 
                 [{ icon: 'delete_forever', color: "warn", 
                    callback: (ref: BottomSheetRef) => 
-                    this.facade.confirmDelete(config, entityId, options?.onDeleteUri, ref) 
+                    this.facade.confirmDelete(<any> config, entityId, options?.onDeleteUri, ref) 
                 }]    
           },
         } 

@@ -1,18 +1,18 @@
 import { SetTimesheetCriteriaAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Mission, Timesheet } from '@core/models';
-import { StateMissions, StateUserTimesheets } from '@core/state/global-state.interfaces';
+import { Timesheet } from '@core/models';
+import { StateMissions, StateUserTimesheets, UserTimesheet } from '@core/state/global-state.interfaces';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '@shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { Immutable, Maybe } from 'global-types';
+import { RelationInclude, _getModels } from 'model/core';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';
-import { RelationInclude, _getRangeWithRelations } from 'model/core';
 import { UserTimesheetListCriteriaQueryParam } from './user-timesheet-list-route-params.const';
 import { UserTimesheetListState } from './user-timesheet-list.state';
 
@@ -35,8 +35,8 @@ export class UserTimesheetListFacade {
       ]).pipe(
           map(([userTimesheets, missions]) =>  {
             if(!userTimesheets) return;
-            const cfg: RelationInclude<State> = {prop: "userTimesheets", foreigns: ["missions"]};     
-            return _getRangeWithRelations<Timesheet, State>({userTimesheets, missions: missions || []}, cfg);
+            const cfg: RelationInclude<State, UserTimesheet> = {prop: "userTimesheets", foreigns: ["mission"]};     
+            return _getModels<State, UserTimesheet>({userTimesheets, missions: missions || []}, cfg);
           })
       );
 

@@ -18,7 +18,7 @@ export class ModelDataTableFacade  {
 
     get modelIdentifier(): Maybe<string> { 
         return this.modelPropertySubject.value ? 
-        _getModelConfig(this.modelPropertySubject.value)?.idProp : null
+        _getModelConfig<any,any>(this.modelPropertySubject.value)?.idProp : null
     }
 
     vm$: Observable<ViewModel> = this.modelPropertySubject.asObservable().pipe(

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
+import { ModelState } from '@core/state/model-state.interface';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
@@ -66,7 +67,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private modelFormService: ModelFormService
+    private modelFormService: ModelFormService<ModelState>
   ) { super() }
 
   updateHeaderImage = (files: FileList): void => 

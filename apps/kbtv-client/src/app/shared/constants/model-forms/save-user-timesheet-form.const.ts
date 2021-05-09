@@ -1,14 +1,12 @@
-import { SaveUserTimesheetAction } from '@actions/timesheet-actions';
 import { Validators } from '@angular/forms';
 import { Mission, Timesheet } from '@core/models';
-import { StateMissions } from '@core/state/global-state.interfaces';
+import { StateMissions, UserTimesheet } from '@core/state/global-state.interfaces';
 import { ModelState } from '@core/state/model-state.interface';
-import { _modelIdGenerator } from '@shared-app/helpers/id/model-id-generator.helper';
-import { _timesheetFormToSaveUserTimesheetConverter } from '@shared/action-converters/timesheet-form-to-save-user-timesheet.converter';
-import { _getISO, _mergeDateAndTime } from 'date-time-helpers';
+import { _timesheetFormToSaveModelConverter } from '@shared/action-converters/timesheet-form-to-save-model.converter';
+import { _getISO } from 'date-time-helpers';
 import { DynamicControl, DynamicControlGroup } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
-import { Converter, ModelFormConfig, ModelFormResult, ModelFormState } from 'model/form';
+import { Converter, ModelFormConfig, ModelFormState } from 'model/form';
 import { IonDateQuestion, IonDateQuestionComponent } from '../../scam/dynamic-form-questions/ion-date-time-question.component';
 import { TextAreaQuestion, TextAreaQuestionComponent } from '../../scam/dynamic-form-questions/text-area-question.component';
 import { HiddenIdControl, MissionAutoCompleteControl } from '../common-controls.const';
@@ -90,9 +88,9 @@ const CommentControl: Immutable<DynamicControl<{comment?: string}, "comment">> =
     validators: [Validators.maxLength(400)], 
 }
 
-export const CreateUserTimesheetModelForm: Immutable<ModelFormConfig<ModelState, TimesheetForm, Timesheet, FormState>> = {
+export const CreateUserTimesheetModelForm: Immutable<ModelFormConfig<ModelState, UserTimesheet, TimesheetForm, FormState>> = {
     includes: {prop: "userTimesheets", foreigns: "all"}, 
-    actionConverter: _timesheetFormToSaveUserTimesheetConverter,
+    actionConverter: _timesheetFormToSaveModelConverter,
     dynamicForm: {
         submitText: "Legg til", getRawValue: true,   
         controls: {
@@ -103,9 +101,9 @@ export const CreateUserTimesheetModelForm: Immutable<ModelFormConfig<ModelState,
     }
 }
 
-export const EditUserTimesheetModelForm: Immutable<ModelFormConfig<ModelState, TimesheetForm, Timesheet, FormState>> = {
+export const EditUserTimesheetModelForm: Immutable<ModelFormConfig<ModelState, UserTimesheet, TimesheetForm, FormState>> = {
     includes: {prop: "userTimesheets", foreigns: "all"},
-    actionConverter: _timesheetFormToSaveUserTimesheetConverter,
+    actionConverter: _timesheetFormToSaveModelConverter,
     modelConverter: _modelToForm,
     dynamicForm: {
         submitText: "Oppdater", getRawValue: true,

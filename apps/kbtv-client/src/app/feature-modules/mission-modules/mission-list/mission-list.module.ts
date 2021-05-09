@@ -1,12 +1,13 @@
-import { SaveModelFileAction } from '@actions/global-actions';
+import { SaveModelFileAction, SetSaveModelFileStateAction } from '@actions/global-actions';
 import { NgModule } from '@angular/core';
 import { GenericActionRequestMap } from '@core/configurations/optimistic/generic-action-request-map.const';
+import { SaveModelFileEffect } from '@core/state/save-model-file/save-model-file.effect';
 import { SaveModelFileReducer } from '@core/state/save-model-file/save-model-file.reducer';
 import { SaveModelFileValidatorInterceptor } from '@core/state/save-model-file/save-model-file.validator';
 import { CreateMissionImagesEffect } from '@shared-mission/create-mission-images.effect';
 import { SharedMissionModule } from '@shared-mission/shared-mission.module';
 import { ModelFormModule } from 'model/form';
-import { DeleteModelAction, DeleteModelReducer, SaveModelAction, SaveModelReducer } from 'model/state-commands';
+import { DeleteModelAction, DeleteModelReducer, ModelStateCommandsModule, SaveModelAction, SaveModelReducer, SetSaveModelStateAction } from 'model/state-commands';
 import { OptimisticHttpModule } from 'optimistic-http';
 import { StateManagementModule } from 'state-management';
 import { HeaderLayoutSkeletonComponent } from './header-layout-skeleton/header-layout-skeleton.component';
@@ -31,15 +32,16 @@ import { UpdateLastVisitedReducer } from './update-last-visited.reducer';
     SharedMissionModule,
     MissionListRoutingModule,    
     StateManagementModule.forFeature({
-      reducers: [SaveModelReducer, SaveModelFileReducer, DeleteModelReducer, UpdateLastVisitedReducer], 
-      effects: [CreateMissionImagesEffect], 
+      reducers: [SaveModelFileReducer, UpdateLastVisitedReducer], 
+      effects: [CreateMissionImagesEffect, SaveModelFileEffect], 
       actionInterceptors: [SaveModelFileValidatorInterceptor]
     }), 
+    ModelStateCommandsModule,
     ModelFormModule,     
     OptimisticHttpModule.forFeature({
-      [SaveModelAction]: GenericActionRequestMap[SaveModelAction],  
+      [SetSaveModelStateAction]: GenericActionRequestMap[SetSaveModelStateAction],  
       [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction],   
-      [SaveModelFileAction]: GenericActionRequestMap[SaveModelFileAction], 
+      [SetSaveModelFileStateAction]: GenericActionRequestMap[SetSaveModelFileStateAction], 
     }),   
   ],
   providers: []

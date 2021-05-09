@@ -1,7 +1,6 @@
 import { Validators } from '@angular/forms';
 import { MissionNote } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { _formToSaveModelConverter } from '@shared/action-converters/form-to-save-model.converter';
 import { DynamicControl } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
@@ -25,9 +24,8 @@ const ContentControl = <Immutable<DynamicControl<SaveMissionNoteForm, "content">
     validators: [Validators.maxLength(ValidationRules.MissionNoteContentMaxLength)] 
 }
 
-export const CreateMissionNoteModelForm: Immutable<ModelFormConfig<ModelState, SaveMissionNoteForm, MissionNote>> = {
-    includes: {prop: "missionNotes"},
-    actionConverter: _formToSaveModelConverter,  
+export const CreateMissionNoteModelForm: Immutable<ModelFormConfig<ModelState, MissionNote, SaveMissionNoteForm>> = {
+    includes: {prop: "missionNotes"}, 
     dynamicForm: {
         submitText: "Legg til",
         controls: {
@@ -38,9 +36,8 @@ export const CreateMissionNoteModelForm: Immutable<ModelFormConfig<ModelState, S
     }
 }
 
-export const EditMissionNoteModelForm: Immutable<ModelFormConfig<ModelState, SaveMissionNoteForm, MissionNote>> = {
+export const EditMissionNoteModelForm: Immutable<ModelFormConfig<ModelState, MissionNote, SaveMissionNoteForm>> = {
     includes: {prop: "missionNotes"},
-    actionConverter: _formToSaveModelConverter,
     dynamicForm: {
         submitText: "Oppdater",
         controls: {

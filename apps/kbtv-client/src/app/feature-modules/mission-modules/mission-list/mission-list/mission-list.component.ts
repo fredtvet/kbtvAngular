@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Employer, Mission, MissionType } from "@core/models";
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
+import { ModelState } from "@core/state/model-state.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { SearchBarConfig } from "@shared-mission/components/search-bar/search-bar-config.interface";
@@ -66,7 +67,7 @@ export class MissionListComponent extends WithUnsubscribe(){
   constructor(
     private formService: FormService,
     private chipsFactory: ChipsFactoryService,
-    private modelFormService: ModelFormService,
+    private modelFormService: ModelFormService<ModelState>,
     private facade: MissionListFacade,
   ) {
     super();
@@ -112,8 +113,8 @@ export class MissionListComponent extends WithUnsubscribe(){
       (prop) => criteria ? this.resetCriteriaProp(prop, criteria) : null,      
       {
         finished: {valueFormatter: (val: boolean) => val ? "Ferdig" : null},
-        employer: {valueFormatter: (val: Immutable<Employer>) => <string> _getModelDisplayValue("employers", val)},
-        missionType: {valueFormatter: (val: Immutable<MissionType>) => <string> _getModelDisplayValue("missionTypes", val)}
+        employer: {valueFormatter: (val: Immutable<Employer>) => <string> _getModelDisplayValue<ModelState, Employer>("employers", val)},
+        missionType: {valueFormatter: (val: Immutable<MissionType>) => <string> _getModelDisplayValue<ModelState, MissionType>("missionTypes", val)}
       },
     )
   }

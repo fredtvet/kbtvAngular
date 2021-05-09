@@ -1,22 +1,10 @@
-import { ModelFile } from '@core/models';
-import { SaveModelAction, SaveModelReducer } from 'model/state-commands';
-import { _createReducer } from 'state-management'
-import { Immutable } from 'global-types';
+import { SetSaveModelFileStateAction } from '@actions/global-actions';
+import { _createReducer } from 'state-management';
 import { ModelState } from '../model-state.interface';
-import { SaveModelFileAction } from '@actions/global-actions';
 
-export const SaveModelFileReducer = _createReducer(
-    SaveModelFileAction, 
-    (state: Immutable<ModelState>, action: Immutable<SaveModelFileAction<Immutable<ModelFile>>>) => {  
-        
-        const entity: Immutable<ModelFile> = {
-            ...action.entity, 
-            fileName: action.fileWrapper?.modifiedFile?.name,
-            localFileUrl: action.fileWrapper ? URL.createObjectURL(action.fileWrapper.modifiedFile) : undefined
-        }
-        
-        return SaveModelReducer.reducerFn(state, <SaveModelAction<Immutable<ModelFile>, ModelState>>{...action, entity});       
-    }
+export const SaveModelFileReducer = _createReducer<ModelState, SetSaveModelFileStateAction>(
+    SetSaveModelFileStateAction, 
+    (state, action) => action.saveModelResult.modifiedState
 );
 
 

@@ -1,11 +1,9 @@
 import { Timesheet } from "@core/models";
-import { StateUserTimesheets } from "@core/state/global-state.interfaces";
 import { WeekCriteria } from "@shared-timesheet/interfaces";
 import { TimesheetCriteria } from "@shared-timesheet/timesheet-filter/timesheet-criteria.interface";
 import { GroupByPeriod, TimesheetStatus } from "@shared/enums";
 import { Immutable, Prop, UnknownState } from "global-types";
 import { StateAction } from "state-management";
-import { SaveModelAction } from 'model/state-commands';
 
 export const FetchTimesheetsAction = "FETCH_TIMESHEETS_ACTION";
 export interface FetchTimesheetsAction extends StateAction<typeof FetchTimesheetsAction> {
@@ -46,9 +44,4 @@ export const SetTimesheetCriteriaAction = "SET_TIMESHEET_CRITERIA_ACTION";
 export interface SetTimesheetCriteriaAction<TState = UnknownState> extends StateAction<typeof SetTimesheetCriteriaAction> {
     timesheetCriteria: Immutable<TimesheetCriteria>,
     criteriaProp: Prop<TState>
-}
-
-export const SaveUserTimesheetAction = "SAVE_USER_TIMESHEET_ACTION";
-export interface SaveUserTimesheetAction extends Omit<SaveModelAction<Timesheet, StateUserTimesheets>, "type">{
-    type: typeof SaveUserTimesheetAction;
 }

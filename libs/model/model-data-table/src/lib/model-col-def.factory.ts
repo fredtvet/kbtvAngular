@@ -1,8 +1,8 @@
 import { Inject, Injectable } from "@angular/core";
 import { ColDef } from "ag-grid-community";
 import { _convertArrayToObject } from "array-helpers";
-import { Immutable, ImmutableArray, KeyVal, Maybe, UnknownState } from "global-types";
-import { UnknownModelState, _getModelConfig, _getModelConfigBy } from "model/core";
+import { KeyVal, UnknownState } from "global-types";
+import { ForeignRelation, UnknownModelState, _getModelConfig } from "model/core";
 import { ModelCommand, SaveModelAction } from "model/state-commands";
 import { Store } from "state-management";
 import { MODEL_DATA_TABLES_CONFIG, MODEL_DATA_TABLE_PROP_TRANSLATIONS } from "./injection-tokens.const";
@@ -12,10 +12,6 @@ import { ModelDataTable, ModelDataTablesConfig } from "./interfaces";
 export class ModelColDefFactory {
 
     private checkBox = {colId: 'checkbox', checkboxSelection: true, width: 42, pinned: 'left', lockPosition: true};
-    
-    // private fkModelIdMap: {[foreignKey: string]: {[id: string]: Maybe<Immutable<UnknownState>>}} = {}
-
-    // private fkModelDisplayPropMap: {[foreignKey: string]: {[displayProp: string]: Maybe<Immutable<UnknownState>>}} = {}
 
     constructor(
         @Inject(MODEL_DATA_TABLES_CONFIG) private tableConfigs: ModelDataTablesConfig<UnknownModelState>,
@@ -26,19 +22,32 @@ export class ModelColDefFactory {
     createColDefs(stateProp: string): ColDef[]{
         const table = this.tableConfigs.tables[stateProp];
         if(!table) return [];
-        // this.createLookupMaps(stateProp);
 
         const colDefs: ColDef[] = [];
 
         if(table.selectable) colDefs.push(this.checkBox)
+        
+        const modelCfg = _getModelConfig<any,any>(stateProp);
+
+        const fkIdLookup: {[key: string]: ForeignRelation<any,any,any>} = {}
+        for(const foreign in modelCfg.foreigns){
+            const fkRel = modelCfg.foreigns[foreign];
+            fkIdLookup[fkRel.foreignKey] = fkRel;
+        }
 
         for(const prop in table.propertyColDefs)   
-            colDefs.push(this.getColDef(prop, stateProp, table, this.tableConfigs.baseColDef))
+            colDefs.push(this.getColDef(prop, stateProp, table, this.tableConfigs.baseColDef, fkIdLookup))
         
         return colDefs;
     }
 
-    private getColDef( modelProp: string, stateProp: string, table: ModelDataTable<UnknownState>, baseColDef: ColDef): ColDef {
+    private getColDef( 
+        modelProp: string, 
+        stateProp: string, 
+        table: ModelDataTable<UnknownState>, 
+        baseColDef: ColDef,
+        fkIdLookup: {[key: string]: ForeignRelation<any,any,any>} ): ColDef {
+
         const propDef = table.propertyColDefs[modelProp]
 
         let def: ColDef = {
@@ -69,11 +78,11 @@ export class ModelColDefFactory {
         }
 
         if(propDef.editable) def['editable'] = propDef.editable;
-
-        const fkModelCfg = _getModelConfigBy(modelProp, "foreignKey");
-
-        if(fkModelCfg){
+        
+        const fkRel = fkIdLookup[modelProp];
+        if(fkRel){
             const fkIdProp = modelProp;
+            const fkModelCfg = _getModelConfig<any,any>(fkRel.stateProp);
 
             def['cellEditor'] = 'agSelectCellEditor';
             def['cellEditorParams'] = { 

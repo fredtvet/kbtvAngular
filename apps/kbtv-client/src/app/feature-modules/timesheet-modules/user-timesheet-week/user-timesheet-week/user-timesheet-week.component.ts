@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceInfoService } from '@core/services/device-info.service';
+import { ModelState } from "@core/state/model-state.interface";
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { AppButton } from "@shared/components/app-button/app-button.interface";
@@ -49,7 +50,7 @@ export class UserTimesheetWeekComponent {
     private dialog: MatDialog,
     private deviceInfoService: DeviceInfoService,
     private facade: UserTimesheetWeekFacade,
-    private modelFormService: ModelFormService,
+    private modelFormService: ModelFormService<ModelState>,
     private formService: FormService,
   ) {
     this.bottomActions = [  

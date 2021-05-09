@@ -6,7 +6,8 @@
     "umdModuleIds": { 
       "array-helpers": "array-helpers",
       "state-management": "state-management",
-      "global-types": "global-types"
+      "global-types": "global-types",
+      "model/core": "model/core"
     }
   }
 }

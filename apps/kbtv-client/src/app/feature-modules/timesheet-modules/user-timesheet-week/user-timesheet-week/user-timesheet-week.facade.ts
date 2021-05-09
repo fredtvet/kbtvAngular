@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Mission, Timesheet } from '@core/models';
+import { Timesheet } from '@core/models';
+import { UserTimesheet } from '@core/state/global-state.interfaces';
 import { ModelState } from '@core/state/model-state.interface';
 import { _mapObjectsToWeekdays } from '@shared-app/helpers/object/map-objects-to-weekdays.helper';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { WeekCriteria } from '@shared-timesheet/interfaces/week-criteria.interface';
-import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '@shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { GroupByPeriod } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { WeekYear, _getWeekYear } from 'date-time-helpers';
 import { Immutable, Maybe } from 'global-types';
+import { RelationInclude, _getModels } from 'model/core';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';
-import { RelationInclude, _getRangeWithRelations } from 'model/core';
 import { TimesheetSummary } from '../../shared-timesheet/interfaces';
 import { ComponentStoreState, StoreState } from '../store-state.interface';
 import { NextWeekAction, PreviousWeekAction, SetTimesheetCriteriaAction } from './component.reducers';
@@ -37,17 +37,17 @@ export class UserTimesheetWeekFacade {
     ]).pipe(
         map(([userTimesheets, missions]) =>  {
             if(!userTimesheets?.length) return;
-            const cfg: RelationInclude<ModelState> = {prop: "userTimesheets", foreigns: ["missions"]}; 
-            const timesheets = _getRangeWithRelations<Timesheet, ModelState>({userTimesheets, missions: missions || []}, cfg);
+            const cfg: RelationInclude<ModelState, UserTimesheet> = {prop: "userTimesheets", foreigns: ["mission"]}; 
+            const timesheets = _getModels<ModelState, UserTimesheet>({userTimesheets, missions: missions || []}, cfg);
             const summaries = _getSummariesByType(GroupByPeriod.Day, timesheets);
             return _mapObjectsToWeekdays<TimesheetSummary>(summaries, "date")
-        })
+        }),
     );
     
     constructor(
         private store: Store<StoreState>,
         private componentStore: ComponentStore<ComponentStoreState>,  
-    ){}
+    ){ }
      
     previousWeek = (): void =>  
         this.componentStore.dispatch(<PreviousWeekAction>{ type: PreviousWeekAction })

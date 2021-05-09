@@ -16,7 +16,7 @@ import { AppStateDbConfig } from './configurations/app-state-db-config.const';
 import { AppStoreSettings } from './configurations/app-store-settings.const';
 import { AppSyncStateConfig } from './configurations/app-sync-state.config';
 import { DefaultState } from './configurations/default-state.const';
-import { AppModelConfigs } from './configurations/model/app-model-configs.const';
+import { ModelConfigMap } from './configurations/model/app-model-configs.const';
 import { AppOptimisticStateProps } from './configurations/optimistic/app-optimistic-state.const';
 import { HttpRetryInterceptor } from './interceptors/http-retry.interceptor';
 import { HttpErrorInterceptor } from './interceptors/http.error.interceptor';
@@ -32,7 +32,7 @@ import { SetSyncModelsFetchedReducer, SetSyncModelsFetchingReducer } from './sta
 import { SyncUserOnLoginEffect } from './state/sync-user-on-login.effect';
 import { WipeStateReducer } from './state/wipe-state.reducer';
 
-_registerModelStateConfig(AppModelConfigs);
+_registerModelStateConfig(ModelConfigMap);
 
 @NgModule({
   declarations: [],

@@ -1,6 +1,6 @@
 import { DynamicForm } from 'dynamic-forms';
 import { Immutable, Maybe, Prop } from 'global-types';
-import { RelationInclude } from 'model/core';
+import { RelationInclude, StateModels, StatePropByModel } from 'model/core';
 import { ModelCommand, SaveAction } from 'model/state-commands';
 import { Observable } from 'rxjs';
 import { StateAction } from 'state-management';
@@ -9,13 +9,17 @@ import { StateAction } from 'state-management';
 export type Converter<TInput, TOutput> = (input: Immutable<TInput>) => Immutable<TOutput>;
 
 /** The input value passed to converters by the model form when form is submitted.  */
-export interface ModelFormResult<TForm extends {}, TState extends {}> {
+export interface ModelFormResult<
+    TState extends object, 
+    TModel extends StateModels<TState>,
+    TForm = TModel,
+> {
     /** The actual value of the form */
     formValue: TForm,
     /** Any options used in the form */
     options?: Maybe<Partial<TState>>,
     /** The state property corresponding with the model */
-    stateProp: Prop<TState>,
+    stateProp: StatePropByModel<TState, TModel>,
     /** The type of action being handled */
     saveAction: SaveAction,
 }
@@ -23,8 +27,8 @@ export interface ModelFormResult<TForm extends {}, TState extends {}> {
 /** Represents a configuration object for a model form */
 export interface ModelFormConfig<
     TState extends object, 
-    TForm extends object, 
-    TModel extends object = TForm, 
+    TModel extends StateModels<TState>,
+    TForm = TModel, 
     TFormState extends object | null = null>
 {    
     /** The form being used */
@@ -33,10 +37,10 @@ export interface ModelFormConfig<
         DynamicForm<TForm, TFormState & ModelFormState<Partial<TState>>>;
 
     /** Configure what relational state that will be mapped to entity and included in form state. */
-    includes: RelationInclude<TState>
+    includes: RelationInclude<TState, TModel>
     /** A custom converter used to convert form to a state action on submit. 
      *  Defaults to {@link _formToSaveModelConverter} with form value as entity.  */
-    actionConverter?: Converter<ModelFormResult<TForm, TState>, StateAction>
+    actionConverter?: Converter<ModelFormResult<TState, TModel, TForm>, StateAction>
     /** A custom converter used to convert the model data to form. Only required on edit. If null, form value is treated as model */
     modelConverter?: Maybe<Converter<TModel, TForm>>
 }

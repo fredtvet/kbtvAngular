@@ -1,7 +1,8 @@
-import { SaveModelFileAction } from '@actions/global-actions';
+import { SaveModelFileAction, SetSaveModelFileStateAction } from '@actions/global-actions';
 import { NgModule } from '@angular/core';
 import { GenericActionRequestMap } from '@core/configurations/optimistic/generic-action-request-map.const';
 import { MailModelsHttpEffect } from '@core/state/mail-models/mail-models.http.effect';
+import { SaveModelFileEffect } from '@core/state/save-model-file/save-model-file.effect';
 import { SaveModelFileReducer } from '@core/state/save-model-file/save-model-file.reducer';
 import { SaveModelFileValidatorInterceptor } from '@core/state/save-model-file/save-model-file.validator';
 import { CreateMissionImagesEffect } from '@shared-mission/create-mission-images.effect';
@@ -19,12 +20,12 @@ import { MissionImageListComponent } from './mission-image-list/mission-image-li
     MissionImageListRoutingModule,      
     StateManagementModule.forFeature({
       reducers: [SaveModelFileReducer, DeleteModelReducer], 
-      effects: [MailModelsHttpEffect, CreateMissionImagesEffect], 
+      effects: [MailModelsHttpEffect, CreateMissionImagesEffect, SaveModelFileEffect], 
       actionInterceptors: [SaveModelFileValidatorInterceptor]
     }),      
     OptimisticHttpModule.forFeature({
       [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction],   
-      [SaveModelFileAction]: GenericActionRequestMap[SaveModelFileAction], 
+      [SetSaveModelFileStateAction]: GenericActionRequestMap[SetSaveModelFileStateAction], 
     }),  
   ],
   providers:[]

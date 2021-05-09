@@ -1,6 +1,6 @@
-import { SaveModelFileAction } from "@actions/global-actions"
+import { SaveModelFileAction, SetSaveModelFileStateAction } from "@actions/global-actions"
 import { ModelState } from "../../state/model-state.interface";
-import { DeleteModelAction, ModelCommand, SaveModelAction } from "model/state-commands"
+import { DeleteModelAction, ModelCommand, SaveModelAction, SetSaveModelStateAction } from "model/state-commands"
 import { ActionRequestMap, FormDataEntry, OptimisticHttpRequest } from "optimistic-http";
 import { ModelBaseUrls } from "../model/model-base-urls.const";
 import { Model, ModelFile } from "../../models";
@@ -11,34 +11,39 @@ import { ApiUrl } from "@core/api-url.enum";
 export type GenericOptimisticActionTypes = typeof SaveModelAction | typeof SaveModelFileAction | typeof DeleteModelAction;
 
 export const GenericActionRequestMap: ActionRequestMap<GenericOptimisticActionTypes> = {
-    [SaveModelAction]: (a: Immutable<SaveModelAction<Model, ModelState>>): OptimisticHttpRequest<Model> => { 
+    [SetSaveModelStateAction]: (a: Immutable<SetSaveModelStateAction<ModelState, Model>>): OptimisticHttpRequest<Model> => { 
         return a.saveAction === ModelCommand.Create ? 
             { 
                 method: "POST", 
-                body: a.entity,
+                body: a.saveModelResult.fullModel,
                 apiUrl: ModelBaseUrls[a.stateProp]
             } : 
             { 
                 method: "PUT", 
-                body: a.entity, 
-                apiUrl: `${ModelBaseUrls[a.stateProp]}/${a.entity[<keyof Model> ModelIdProps[a.stateProp]]}`
+                body: a.saveModelResult.fullModel, 
+                apiUrl: `${ModelBaseUrls[a.stateProp]}/${a.saveModelResult.fullModel[<keyof Model> ModelIdProps[a.stateProp]]}`
             }
     },
-    [SaveModelFileAction]: (a: Immutable<SaveModelFileAction>) => { 
+    [SetSaveModelFileStateAction]: (a: Immutable<SetSaveModelFileStateAction>) => { 
         const isCreate = a.saveAction === ModelCommand.Create;
         const file = a.fileWrapper?.modifiedFile;
         const body: FormDataEntry[] = [{name: "file", value: file}];
     
-        for(const name in a.entity) 
-            body.push({name, value: <string> a.entity[<Prop<ModelFile>> name]});
+        const {localFileUrl, ...entity} = a.saveModelResult.fullModel;
+
+        for(const name in entity) {
+            const value = entity[<Prop<typeof entity>> name]
+            if(value !== null && typeof value === "object") continue; //Ignore nestd properties
+            body.push({name, value: <string> entity[<Prop<typeof entity>> name]});
+        }
             
         const apiUrl = a.stateProp === "missions" ? 
-            `${ApiUrl.Mission}/${a.entity.id}/UpdateHeaderImage` :
-            ModelBaseUrls[a.stateProp] + (isCreate ? '' : `/${a.entity[<keyof Model> ModelIdProps[a.stateProp]]}`);
+            `${ApiUrl.Mission}/${entity.id}/UpdateHeaderImage` :
+            ModelBaseUrls[a.stateProp] + (isCreate ? '' : `/${entity[<keyof Model> ModelIdProps[a.stateProp]]}`);
             
         return { method: isCreate ? "POST" : "PUT", apiUrl, body }
     },   
-    [DeleteModelAction]: (a: Immutable<DeleteModelAction<ModelState>>) => { 
+    [DeleteModelAction]: (a: Immutable<DeleteModelAction<ModelState, Model>>) => { 
         return a.payload.id ? 
             { 
                 method: "DELETE", 

@@ -35,7 +35,7 @@ export class FetchModelsHttpEffect implements Effect<FetchModelsAction<{}>> {
                 for(const prop of action.props){
                     if(stateSnapshot[prop] || (stateSnapshot.isFetching && stateSnapshot.isFetching[prop])) continue;
 
-                    const modelCfg = _getModelConfig<ModelFetcherConfig>(prop);
+                    const modelCfg = _getModelConfig<any,any, ModelFetcherConfig>(prop);
                     if(!this.isFetchable(modelCfg)) continue;
 
                     setFetchingStatusAction.isFetching[prop] = true;

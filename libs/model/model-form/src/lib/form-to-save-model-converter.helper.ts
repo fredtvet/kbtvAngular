@@ -1,11 +1,11 @@
-import { UnknownState } from "global-types";
+import { Immutable } from "global-types";
+import { StateModels } from "model/core";
 import { SaveModelAction } from "model/state-commands";
 import { ModelFormResult } from "./interfaces";
 
-type Action<T> = SaveModelAction<T,T>
-export function _formToSaveModelConverter(
-    input: ModelFormResult<UnknownState, UnknownState>
-): Action<UnknownState> {
+export function _formToSaveModelConverter<TState extends object, TModel extends StateModels<TState>>(
+    input: Immutable<ModelFormResult<TState, TModel>>
+): Immutable<SaveModelAction<TState, TModel>> {
     return {
         type: SaveModelAction,
         saveAction: input.saveAction,

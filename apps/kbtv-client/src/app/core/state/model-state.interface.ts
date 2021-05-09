@@ -4,4 +4,3 @@ export interface ModelState extends
     StateMissions, StateEmployers, StateMissionTypes, StateMissionImages, StateMissionDocuments, StateMissionNotes,
     StateUserTimesheets, StateUsers, StateInboundEmailPassword, StateTimesheets {
 }
-

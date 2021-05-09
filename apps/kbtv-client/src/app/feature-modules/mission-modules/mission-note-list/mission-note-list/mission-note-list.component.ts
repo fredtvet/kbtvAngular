@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
+import { ModelState } from '@core/state/model-state.interface';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
@@ -31,7 +32,7 @@ export class MissionNoteListComponent {
     private facade: MissionNoteListFacade,
     private route: ActivatedRoute,
     private router: Router,
-    private modelFormService: ModelFormService
+    private modelFormService: ModelFormService<ModelState>
     ) {  
     this.navConfig = {title:  "Notater", backFn: this.onBack};
 

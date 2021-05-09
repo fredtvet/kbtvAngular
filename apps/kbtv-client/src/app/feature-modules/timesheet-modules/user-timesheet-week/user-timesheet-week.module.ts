@@ -1,9 +1,7 @@
-import { SaveUserTimesheetAction } from '@actions/timesheet-actions';
 import { NgModule } from '@angular/core';
 import { GenericActionRequestMap } from '@core/configurations/optimistic/generic-action-request-map.const';
-import { SaveUserTimesheetReducer } from '@shared-timesheet/state/save-user-timesheet.reducer';
 import { ModelFormModule } from 'model/form';
-import { DeleteModelAction, DeleteModelReducer, SaveModelAction } from 'model/state-commands';
+import { DeleteModelAction, ModelStateCommandsModule, SaveModelAction, SetSaveModelStateAction } from 'model/state-commands';
 import { OptimisticHttpModule } from 'optimistic-http';
 import { StateManagementModule } from 'state-management';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
@@ -22,10 +20,11 @@ import { UserTimesheetWeekComponent } from './user-timesheet-week/user-timesheet
   ],
   imports: [
     SharedTimesheetModule,
-    StateManagementModule.forFeature({reducers: [SaveUserTimesheetReducer, DeleteModelReducer]}), 
+    StateManagementModule.forFeature({}), 
+    ModelStateCommandsModule,
     ModelFormModule,
     OptimisticHttpModule.forFeature({
-      [SaveUserTimesheetAction]: GenericActionRequestMap[SaveModelAction],
+      [SetSaveModelStateAction]: GenericActionRequestMap[SetSaveModelStateAction],
       [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction]
     }),
     UserTimesheetWeekRoutingModule

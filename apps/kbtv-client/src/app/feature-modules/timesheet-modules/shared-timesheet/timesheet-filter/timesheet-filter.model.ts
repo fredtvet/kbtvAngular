@@ -2,13 +2,18 @@ import { Model, Timesheet } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { DataFilter } from '@shared/data.filter';
 import { DateRange } from 'date-time-helpers';
-import { DateInput, Immutable, Maybe, Prop } from 'global-types';
-import { ModelConfig, _getModelConfigBy } from 'model/core';
+import { DateInput, Immutable, Maybe, Prop, UnknownState } from 'global-types';
+import { ForeignRelation, ModelConfig, _getModel, _getModelConfig } from 'model/core';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
 
 export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
 
-    constructor(criteria: Immutable<TimesheetCriteria>, maxChecks?: number){ super(criteria, maxChecks);}
+    private modelConfig: ModelConfig<ModelState, Timesheet>;
+
+    constructor(criteria: Immutable<TimesheetCriteria>, maxChecks?: number){ 
+        super(criteria, maxChecks);
+        this.modelConfig = _getModelConfig<ModelState, Timesheet>("timesheets")
+    }
 
     protected addChecks(record: Immutable<Timesheet>): boolean {
         let exp = true;
@@ -39,9 +44,9 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         if(!this.isDateRangeContainedIn(baseCriteria.dateRange)) return false;
         for(const prop in baseCriteria){
             if(prop === "dateRange" || prop === "dateRangePreset") continue;
-            const baseValue = baseCriteria[<Prop<Immutable<TimesheetCriteria>>> prop];
+            const baseValue = <UnknownState> baseCriteria[<Prop<Immutable<TimesheetCriteria>>> prop];
             if(!baseValue) continue; 
-            const value =  this.criteria[<Prop<Immutable<TimesheetCriteria>>> prop];
+            const value =  <UnknownState> this.criteria[<Prop<Immutable<TimesheetCriteria>>> prop];
             if(value && typeof value === "object") {
                 if(!this.isObjectContainedIn(baseValue, <Prop<Immutable<TimesheetCriteria>>> prop)) 
                     return false;
@@ -51,11 +56,12 @@ export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
         return true;
     }
     
-    private isObjectContainedIn(baseValue: Immutable<{}>, prop: Prop<TimesheetCriteria>): boolean{
-        const modelCfg = _getModelConfigBy<ModelConfig<{}, ModelState>>(prop, "foreignProp");
-        const value = <{}> this.criteria[prop];
+    private isObjectContainedIn(baseValue: Immutable<UnknownState>, prop: Prop<TimesheetCriteria>): boolean{
+        const fkRel = <ForeignRelation<ModelState, Timesheet, "user" | "mission">> (<UnknownState>this.modelConfig.foreigns)[prop];
+        const modelCfg = _getModelConfig<ModelState, Model>(fkRel.stateProp);
+        const value = <UnknownState> this.criteria[prop];
 
-        if(modelCfg && value[modelCfg.idProp] !== baseValue[modelCfg.idProp]) 
+        if(modelCfg && value[<string> modelCfg.idProp] !== baseValue[<string> modelCfg.idProp]) 
             return false
 
         if(!modelCfg && value !== baseValue) return false;

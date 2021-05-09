@@ -1,4 +1,3 @@
-import { SaveModelFileAction } from "@actions/global-actions";
 import { CreateMissionImagesAction, UpdateLastVisitedAction } from "@actions/mission-actions";
 import { Injectable } from "@angular/core";
 import { Mission } from "@core/models";
@@ -6,7 +5,7 @@ import { ModelFileForm, _formToSaveModelFileConverter } from '@shared/action-con
 import { MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
 import { MissionCriteria } from '@shared/interfaces';
 import { Immutable, Maybe, Prop } from 'global-types';
-import { _getWithRelations } from 'model/core';
+import { _getModel } from "model/core";
 import { ModelCommand } from 'model/state-commands';
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
@@ -46,7 +45,8 @@ export class MissionListFacade {
     const children: Prop<StoreState>[] = ["missionNotes", "missionDocuments", "missionImages"];
 
     return this.store.select$(["missions", "employers", ...children]).pipe(
-      map(state => _getWithRelations<Mission, StoreState>(state, {prop: "missions", children, foreigns: ['employers']}, id))
+      map(state => _getModel<StoreState, Mission>(state, id, 
+        {prop: "missions", children: ["missionNotes", "missionDocuments", "missionImages"], foreigns: ['employer']}))
     )
   }
 
@@ -54,13 +54,11 @@ export class MissionListFacade {
     this.componentStore.dispatch(<SetMissionCriteriaAction>{ type: SetMissionCriteriaAction, missionCriteria });
     
   updateHeaderImage(id: string, file: File): void {
-    let action: Immutable<SaveModelFileAction<Mission>> = _formToSaveModelFileConverter({
+    this.store.dispatch(_formToSaveModelFileConverter({
       formValue: <ModelFileForm> {id, file},
       stateProp: "missions",
       saveAction: ModelCommand.Update
-    });
-
-    this.store.dispatch(action);
+    }));
   }
 
   addMissionImages = (missionId: string, files: FileList): void =>

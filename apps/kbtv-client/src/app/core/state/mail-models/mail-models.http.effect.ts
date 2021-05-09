@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ModelBaseUrls } from '@core/configurations/model/model-base-urls.const';
+import { Model } from '@core/models';
 import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -9,11 +10,11 @@ import { MailModelsHttpRequest } from './mail-models-http-request.interface';
 import { MailModelsAction } from './mail-models.action';
 
 @Injectable()
-export class MailModelsHttpEffect implements Effect<MailModelsAction<unknown>>{
+export class MailModelsHttpEffect implements Effect<MailModelsAction<Model>>{
 
     constructor(private httpClient: HttpClient) {}
     
-    handle$(actions$: Observable<DispatchedAction<MailModelsAction<unknown>>>): Observable<void> {
+    handle$(actions$: Observable<DispatchedAction<MailModelsAction<Model>>>): Observable<void> {
         return actions$.pipe(
             listenTo([MailModelsAction]),
             mergeMap(({action}) => 

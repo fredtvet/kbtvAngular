@@ -23,14 +23,14 @@ type FormState = ModelFormState<State>;
 
 const AvailableRoles = Object.keys(Roles).filter(x => x !== Roles.Leder).map(key => Roles[key as keyof typeof Roles]);
 
-const UniqueUserNameControl = <Immutable<DynamicControl<{ userName: string; }, "userName", FormState>>>{
+const UniqueUserNameControl: Immutable<DynamicControl<{ userName: string; }, "userName", FormState>> = {
     ...UserNameControl, 
     required: true,     
     asyncStateValidators: [
         (s$) => isUniqueAsyncValidator(s$.pipe(map(s => s?.options?.users)), (x, y) => x.userName.toLowerCase() === y.toLowerCase())
     ],
 }
-const RoleControl = <Immutable<DynamicControl<{ role: string }, "role">>>{ 
+const RoleControl: Immutable<DynamicControl<{ role: string }, "role">> = { 
     type: "control", name: "role", required: true,
     questionComponent: SelectQuestionComponent,
     question: <SelectQuestion<string, null>>{
@@ -40,14 +40,14 @@ const RoleControl = <Immutable<DynamicControl<{ role: string }, "role">>>{
     },  
     validators: [ Validators.maxLength(100)] 
 }
-const PasswordControl = <Immutable<DynamicControl<{ password?: string; }, "password">>>{ 
+const PasswordControl: Immutable<DynamicControl<{ password?: string; }, "password">> = { 
     type: "control", name: "password", required: true, 
-    uestionComponent: InputQuestionComponent, 
+    questionComponent: InputQuestionComponent, 
     question: <InputQuestion>{placeholder: "Passord", hideable: true, defaultHidden: true},
     validators: [Validators.minLength(7), Validators.maxLength(100)] 
 }
 
-export const CreateUserModelForm: Immutable<ModelFormConfig<State, SaveUserForm, User, FormState>> = {
+export const CreateUserModelForm: Immutable<ModelFormConfig<State, User,  SaveUserForm, FormState>> = {
     includes: {prop: "users", foreigns: "all"}, 
     actionConverter: _userFormToSaveUserConverter,
     dynamicForm: {
@@ -66,7 +66,7 @@ export const CreateUserModelForm: Immutable<ModelFormConfig<State, SaveUserForm,
     }
 }
 
-export const EditUserModelForm: Immutable<ModelFormConfig<State, SaveUserForm, User>> = {
+export const EditUserModelForm: Immutable<ModelFormConfig<State, User, SaveUserForm>> = {
     includes: {prop: "users", foreigns: "all"},
     actionConverter: _userFormToSaveUserConverter,
     dynamicForm: {

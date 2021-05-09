@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SetTimesheetCriteriaReducer } from '@shared-timesheet/state/set-timesheet-criteria.reducer';
 import { DynamicFormsModule } from 'dynamic-forms';
-import { FetchModelProviders } from 'model/state-fetcher';
+import { ModelStateFetcherModule } from 'model/state-fetcher';
 import { OptimisticHttpModule } from 'optimistic-http';
 import { AppAgGridModule } from 'src/app/app-ag-grid/app-ag-grid.module';
 import { StateManagementModule } from 'state-management';
@@ -25,7 +25,6 @@ const OptimisticFeatureProps = ["timesheetStatisticTimesheetCriteria", "timeshee
   providers:[
     DatePipe,
     ...FetchTimesheetProviders,
-    ...FetchModelProviders,
   ],
   imports: [
     SharedTimesheetModule,
@@ -37,6 +36,7 @@ const OptimisticFeatureProps = ["timesheetStatisticTimesheetCriteria", "timeshee
       effects: [FetchTimesheetsEffect],
       defaultState: DefaultState
     }), 
+    ModelStateFetcherModule,
     OptimisticHttpModule.forFeature(undefined, OptimisticFeatureProps),
   ],
 })

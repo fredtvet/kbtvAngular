@@ -1,8 +1,10 @@
 import { Prop, UnknownState } from "global-types";
-import { ModelConfig } from "model/core";
+import { ModelConfig, StateModels } from "model/core";
 
 /** Represents an extended model configuration for a given model for fetchable models */
-export interface ModelFetcherConfig<TModel = any, TState = UnknownState> extends ModelConfig<TModel, TState>{
+export interface ModelFetcherConfig<
+TState = UnknownState, 
+TModel extends StateModels<TState> = StateModels<TState>> extends ModelConfig<TState, TModel>{
   /** Url endpoint that serves the model data when fetched. If not set, fetching will be disabled for given model.*/
   fetchUrl?: string;
 }

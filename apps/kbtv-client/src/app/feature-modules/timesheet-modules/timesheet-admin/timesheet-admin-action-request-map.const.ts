@@ -2,10 +2,10 @@ import { UpdateTimesheetStatusesAction } from "@actions/timesheet-actions";
 import { ApiUrl } from "@core/api-url.enum";
 import { GenericActionRequestMap } from "@core/configurations/optimistic/generic-action-request-map.const";
 import { Immutable } from "global-types";
-import { SaveModelAction } from "model/state-commands";
+import { SetSaveModelStateAction } from "model/state-commands";
 import { ActionRequestMap } from "optimistic-http";
 
-export const TimesheetAdminActionRequestMap: ActionRequestMap<typeof UpdateTimesheetStatusesAction | typeof SaveModelAction> = {
+export const TimesheetAdminActionRequestMap: ActionRequestMap<typeof UpdateTimesheetStatusesAction | typeof SetSaveModelStateAction> = {
     [UpdateTimesheetStatusesAction]: (command: Immutable<UpdateTimesheetStatusesAction>) => {
         return {
             method: "PUT", 
@@ -13,5 +13,5 @@ export const TimesheetAdminActionRequestMap: ActionRequestMap<typeof UpdateTimes
             apiUrl: `${ApiUrl.Timesheet}/Status`
         }
     },
-    [SaveModelAction]: GenericActionRequestMap[SaveModelAction], 
+    [SetSaveModelStateAction]: GenericActionRequestMap[SetSaveModelStateAction], 
 }

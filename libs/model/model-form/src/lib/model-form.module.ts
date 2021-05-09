@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { ConfirmDialogModule } from 'confirm-dialog';
 import { DynamicFormsModule } from 'dynamic-forms';
 import { FormSheetModule } from 'form-sheet';
-import { FetchModelProviders } from 'model/state-fetcher';
 import { ModelFormComponent } from './model-form.component';
 import { ModelFormService } from './model-form.service';
 
@@ -19,7 +18,6 @@ import { ModelFormService } from './model-form.service';
     ],
     providers: [
         ModelFormService,
-        ...FetchModelProviders
     ],
 })
 export class ModelFormModule { }

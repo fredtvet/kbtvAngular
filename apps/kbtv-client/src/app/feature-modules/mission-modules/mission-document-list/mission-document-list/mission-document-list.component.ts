@@ -4,6 +4,7 @@ import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { MissionDocument } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
+import { ModelState } from '@core/state/model-state.interface';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { BaseSelectableContainerComponent } from '@shared-mission/components/base-selectable-container.component';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
@@ -59,7 +60,7 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmDialogService,
-    private modelFormService: ModelFormService) {
+    private modelFormService: ModelFormService<ModelState>) {
       super();
 
       const can = RolePermissions.MissionDocumentList;

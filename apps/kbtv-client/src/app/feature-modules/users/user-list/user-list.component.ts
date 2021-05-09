@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { User } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
+import { ModelState } from '@core/state/model-state.interface';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
@@ -28,7 +29,7 @@ export class UserListComponent {
 
   constructor(
     private facade: UsersFacade,
-    private modelFormService: ModelFormService,
+    private modelFormService: ModelFormService<ModelState>,
     private deviceInfoService: DeviceInfoService,
     private formService: FormService) {    
       this.facade.fetchUsers();

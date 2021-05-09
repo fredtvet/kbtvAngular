@@ -13,7 +13,7 @@ export interface CreateMissionDocumentForm extends Pick<MissionDocument, "name" 
     file: File;
 }
 
-export const CreateMissionDocumentModelForm: Immutable<ModelFormConfig<ModelState, CreateMissionDocumentForm, MissionDocument>> = {
+export const CreateMissionDocumentModelForm: Immutable<ModelFormConfig<ModelState, MissionDocument, CreateMissionDocumentForm>> = {
     includes: {prop: "missionDocuments"}, 
     actionConverter: _formToSaveModelFileConverter,
     dynamicForm: {

@@ -2,35 +2,36 @@ import { Inject, Injectable } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { ConfirmDialogService } from 'confirm-dialog';
-import { Immutable, KeyVal, Maybe, UnknownState } from 'global-types';
-import { RelationInclude, UnknownModelState, _flattenRelationIncludes, _getModelConfig } from 'model/core';
+import { Immutable, KeyVal, Maybe, Prop, UnknownState } from 'global-types';
+import { RelationInclude, StateModels, StatePropByModel, _getModelConfig, _getRelationIncludeStateProps } from 'model/core';
 import { DeleteModelAction, ModelCommand } from 'model/state-commands';
 import { FetchModelsAction } from 'model/state-fetcher';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StateAction, Store } from 'state-management';
 import { MODEL_FORM_PROP_TRANSLATIONS } from './injection-tokens.const';
-import { ModelFormConfig, ModelFormState } from './interfaces';
+import { ModelFormConfig } from './interfaces';
 
 @Injectable({providedIn: "root"})
-export class ModelFormFacade {
+export class ModelFormFacade<TState extends object, TModel extends StateModels<TState>> {
 
   constructor(
-    private store: Store<UnknownModelState>,   
+    private store: Store<TState>,   
     private confirmService: ConfirmDialogService,  
     private router: Router,
     @Inject(MODEL_FORM_PROP_TRANSLATIONS) private translations: KeyVal<string>,
   ) {}
 
-  loadModels(includes: Immutable<RelationInclude<UnknownState>>): void{
+  loadModels(
+    includes: Immutable<RelationInclude<TState, TModel>>): void{
     this.store.dispatch(<FetchModelsAction<UnknownState>>{
       type: FetchModelsAction, 
-      props: _flattenRelationIncludes(includes)
+      props: _getRelationIncludeStateProps(includes)
     })
   }
 
-  getFormState$(includes: Immutable<RelationInclude<UnknownState>>): Observable<Immutable<ModelFormState<UnknownModelState>>>{
-    return this.store.select$(_flattenRelationIncludes(includes)).pipe(
+  getFormState$(
+    includes: Immutable<RelationInclude<TState, TModel>>) {
+    return this.store.select$(_getRelationIncludeStateProps(includes)).pipe(
       map(state => { return {options: state || {}} })
     )
   }
@@ -39,11 +40,11 @@ export class ModelFormFacade {
     this.store.dispatch(action);
   }
 
-  translateStateProp = (prop: string): string => 
-    this.translations[<string> _getModelConfig(prop).foreignProp?.toLowerCase()]?.toLowerCase();
+  translateStateProp = (prop: Immutable<StatePropByModel<TState, TModel>>): string => 
+    this.translations[<string> (<string> prop).toLowerCase()]?.toLowerCase();
 
   confirmDelete = (
-    formConfig: Immutable<ModelFormConfig<any, any, any, any>>, 
+    formConfig: Immutable<ModelFormConfig<TState, TModel, any>>, 
     entityId: unknown,
     deleteUrl: Maybe<string>, 
     ref: MatBottomSheetRef<unknown, unknown>) => { 
@@ -59,7 +60,7 @@ export class ModelFormFacade {
   }
 
   private deleteEntity = (
-    formConfig: Immutable<ModelFormConfig<object, object>>, 
+    formConfig: Immutable<ModelFormConfig<TState, TModel>>, 
     entityId: unknown,
     deleteUrl: Maybe<string>, 
     ref: MatBottomSheetRef<unknown, unknown>) => {
@@ -67,7 +68,7 @@ export class ModelFormFacade {
       ref.dismiss(ModelCommand.Delete);
       this.store.dispatch({ 
         type: DeleteModelAction,  
-        stateProp: formConfig.includes.prop, 
+        stateProp: <any> formConfig.includes.prop, 
         payload: { id: entityId } 
       });
   };

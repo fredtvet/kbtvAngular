@@ -1,11 +1,9 @@
-import { SaveUserTimesheetAction } from '@actions/timesheet-actions';
 import { NgModule } from '@angular/core';
 import { GenericActionRequestMap } from '@core/configurations/optimistic/generic-action-request-map.const';
-import { SaveUserTimesheetReducer } from '@shared-timesheet/state/save-user-timesheet.reducer';
 import { ModelFormModule } from 'model/form';
-import { DeleteModelAction, DeleteModelReducer, SaveModelAction } from 'model/state-commands';
+import { DeleteModelAction, ModelStateCommandsModule, SaveModelAction, SetSaveModelStateAction } from 'model/state-commands';
 import { OptimisticHttpModule } from 'optimistic-http';
-import { StateManagementModule, STORE_REDUCERS } from 'state-management';
+import { StateManagementModule } from 'state-management';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { UserTimesheetListRoutingModule } from './user-timesheet-list-routing.module';
 import { UserTimesheetListViewComponent } from './user-timesheet-list/user-timesheet-list-view/user-timesheet-list-view.component';
@@ -18,18 +16,16 @@ import { UserTimesheetListComponent } from './user-timesheet-list/user-timesheet
   ],
   imports: [
     SharedTimesheetModule,    
-    StateManagementModule.forFeature({reducers: [SaveUserTimesheetReducer, DeleteModelReducer]}), 
+    StateManagementModule.forFeature({}), 
+    ModelStateCommandsModule,
     ModelFormModule,
     OptimisticHttpModule.forFeature({
-      [SaveUserTimesheetAction]: GenericActionRequestMap[SaveModelAction],
+      [SetSaveModelStateAction]: GenericActionRequestMap[SetSaveModelStateAction],
       [DeleteModelAction]: GenericActionRequestMap[DeleteModelAction]
     }),
     UserTimesheetListRoutingModule,
   ],
-  providers:[
-    {provide: STORE_REDUCERS, useValue: SaveUserTimesheetReducer, multi: true},
-    {provide: STORE_REDUCERS, useValue: DeleteModelReducer, multi: true},
-  ],
+  providers:[ ],
 })
 export class UserTimesheetListModule {
   constructor(){}

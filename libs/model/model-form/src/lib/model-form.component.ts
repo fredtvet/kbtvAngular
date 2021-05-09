@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { DynamicForm, FormComponent } from 'dynamic-forms';
-import { Immutable, Maybe } from 'global-types';
-import { _getWithRelations } from 'model/core';
+import { Immutable, Maybe, UnknownState } from 'global-types';
+import { UnknownModelState, _getModel} from 'model/core';
 import { ModelCommand, SaveAction } from 'model/state-commands';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, shareReplay, take } from 'rxjs/operators';
@@ -38,7 +38,7 @@ export class ModelFormComponent
 
     private isCreateForm: boolean = false;
   
-    constructor(private facade: ModelFormFacade) {}
+    constructor(private facade: ModelFormFacade<UnknownModelState, UnknownState>) {}
   
     ngOnInit(): void { 
       if(!this.config) return
@@ -87,7 +87,7 @@ export class ModelFormComponent
       let initialValue = null;
 
       if(this.config!.entityId){
-        const model = _getWithRelations<object,object>(state, this.config!.includes, this.config!.entityId);
+        const model = state ? _getModel<object,object>(state, this.config!.entityId, this.config!.includes) : null;
         if(model) initialValue = this.config!.modelConverter! ? this.config!.modelConverter(model) : model;
       }
       

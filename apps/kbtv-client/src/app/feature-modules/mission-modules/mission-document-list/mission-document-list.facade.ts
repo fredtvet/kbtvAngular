@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
 import { DeleteModelAction } from 'model/state-commands';
-import { RelationInclude, _getWithRelations } from 'model/core';
+import { RelationInclude, _getModel } from 'model/core';
 import { StoreState } from './store-state';
 import { MailModelsAction } from "@core/state/mail-models/mail-models.action";
 
@@ -23,17 +23,17 @@ export class MissionDocumentListFacade  {
   }
 
   getMissionEmployerEmail(missionId: Maybe<string>): string{  
-    const cfg: RelationInclude<ModelState> = {prop: "missions", foreigns: ["employers"]}
-    const mission = _getWithRelations<Mission, ModelState>(this.store.state, cfg, missionId);
+    const cfg: RelationInclude<ModelState, Mission> = {prop: "missions", foreigns: ["employer"]}
+    const mission = _getModel<ModelState, Mission>(this.store.state, missionId, cfg);
     const email = mission?.employer?.email;
     return email || "";
   }
 
   delete = (payload: {ids?: string[], id?: string}): void => 
-    this.store.dispatch(<DeleteModelAction<ModelState>>{type: DeleteModelAction, stateProp: "missionDocuments", payload})
+    this.store.dispatch(<DeleteModelAction<ModelState, MissionDocument>>{type: DeleteModelAction, stateProp: "missionDocuments", payload})
 
   mailDocuments = (toEmail: string, ids: string[]): void => 
-    this.store.dispatch(<MailModelsAction<ModelState>>{type: MailModelsAction, stateProp: "missionDocuments", ids, toEmail})
+    this.store.dispatch(<MailModelsAction<MissionDocument>>{type: MailModelsAction, stateProp: "missionDocuments", ids, toEmail})
     
 }
 

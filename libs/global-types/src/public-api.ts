@@ -30,7 +30,9 @@ export type UnionTupleType<A extends any[]> = A extends { [n: number]: infer T }
 
 export type NotNull<T> = Exclude<T, null| undefined>
 
+export type ValueOf<T> = T[keyof T];
 /** Creates a lookup type with properties of T with values that extends U */
 export type PickByValueType<T, U> = {
     [K in keyof T as T[K] extends U ? K : never]: T[K]
 }
+

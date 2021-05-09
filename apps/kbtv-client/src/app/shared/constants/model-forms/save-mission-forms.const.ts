@@ -68,7 +68,7 @@ const _missionToMissionFormConverter: Converter<Mission, CreateMissionForm> = ({
     return {...rest, employerName: employer?.name, missionTypeName: missionType?.name }
 }
 
-export const CreateMissionModelForm: Immutable<ModelFormConfig<ModelState, CreateMissionForm, Mission, FormState>> = {
+export const CreateMissionModelForm: Immutable<ModelFormConfig<ModelState, Mission, CreateMissionForm, FormState>> = {
     includes: {prop: "missions", foreigns: "all"},
     actionConverter: _missionFormActionConverter,
     modelConverter: _missionToMissionFormConverter,
@@ -85,7 +85,7 @@ export const CreateMissionModelForm: Immutable<ModelFormConfig<ModelState, Creat
     }
 }
 
-export const EditMissionModelForm: Immutable<ModelFormConfig<ModelState, UpdateMissionForm, Mission, FormState>> = {
+export const EditMissionModelForm: Immutable<ModelFormConfig<ModelState, Mission, UpdateMissionForm, FormState>> = {
     includes: {prop: "missions", foreigns: "all"},
     actionConverter: _missionFormActionConverter,
     modelConverter: _missionToMissionFormConverter,

@@ -19,7 +19,7 @@ export class SaveModelFileValidatorInterceptor implements ActionInterceptor {
     }
 
     private hasMaxContentLength(action: Immutable<SaveModelFileAction>): boolean {
-        const size = action.fileWrapper?.modifiedFile.size;
+        const size = action.file?.size;
         if(!size || size < ValidationRules.ContentMaxByteLength) return false;
         this.notificationService.notify(AppNotifications.maxContentLength(size))
         return true;

@@ -1,26 +1,27 @@
-import { SaveModelFileAction } from "@actions/global-actions";
+import { SetSaveModelFileStateAction } from "@actions/global-actions";
 import { UpdateCurrentUserAction } from "@actions/profile-actions";
-import { SaveUserTimesheetAction, UpdateTimesheetStatusesAction } from "@actions/timesheet-actions";
-import { SaveUserAction } from "@actions/user-actions";
+import { UpdateTimesheetStatusesAction } from "@actions/timesheet-actions";
+import { SetSaveUserStateAction } from "@actions/user-actions";
 import { Model } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
 import { translations } from "@shared-app/translations";
 import { Immutable, Prop } from "global-types";
-import { ModelConfig, _getModelConfig } from "model/core";
-import { DeleteModelAction, ModelCommand, SaveModelAction } from 'model/state-commands';
+import { _getModelConfig } from "model/core";
+import { DeleteModelAction, ModelCommand, SetSaveModelStateAction } from 'model/state-commands';
 import { ActionDescriptionMap } from "./interfaces/action-description-map.interface";
 
-const SaveModelActionDescription = (action: SaveModelAction<Model, ModelState>) => {
-    const modelConfig = _getModelConfig<ModelConfig<Model, ModelState>>(action.stateProp);
+const SaveModelActionDescription = (action: SetSaveModelStateAction<ModelState, Model>) => {
+    const modelConfig = _getModelConfig<ModelState, Model>(action.stateProp);
     const saveWord = action.saveAction === ModelCommand.Update ? "Oppdatering" : "Oppretting";
-    const entityWord = translations[<string> modelConfig.foreignProp?.toLowerCase()]?.toLowerCase();
+    const entityWord = translations[<string> action.stateProp.toLowerCase()]?.toLowerCase();
+    const entity = action.saveModelResult.fullModel;
 
-    const displayValue = modelConfig.displayFn?.(action.entity);
+    const displayValue = modelConfig.displayFn?.(entity);
     
     if(displayValue)
         return `${saveWord} av ${entityWord} '${displayValue}'`
 
-    const idPropValue = action.entity[<Prop<Immutable<Model>>> modelConfig.idProp];
+    const idPropValue = entity[<Prop<Immutable<Model>>> modelConfig.idProp];
     const idWord = translations[modelConfig.idProp.toLowerCase()] || modelConfig.idProp
 
     return `${saveWord} av ${entityWord} med ${idWord.toLowerCase()} '${idPropValue}'`
@@ -33,19 +34,16 @@ export const ActionDescriptions: ActionDescriptionMap = {
     [UpdateTimesheetStatusesAction]: (action: UpdateTimesheetStatusesAction) => 
         `Oppdatering status for ${action.ids.length} timeregistreringer`,
 
-    [SaveModelAction]: SaveModelActionDescription,
+    [SetSaveModelStateAction]: SaveModelActionDescription,
 
-    [SaveModelFileAction]: SaveModelActionDescription,
-    
-    [SaveUserTimesheetAction]: SaveModelActionDescription,
+    [SetSaveModelFileStateAction]: SaveModelActionDescription,
 
-    [SaveUserAction]: SaveModelActionDescription,
+    [SetSaveUserStateAction]: SaveModelActionDescription,
 
-    [DeleteModelAction]: (action: DeleteModelAction<ModelState>) => {
-        const modelConfig = _getModelConfig<ModelConfig<Model, ModelState>>(action.stateProp);
+    [DeleteModelAction]: (action: DeleteModelAction<ModelState, Model>) => {
+        const modelConfig = _getModelConfig<ModelState, Model>(action.stateProp);
         const payload = action.payload;
-        const multi = payload.ids && payload.ids.length > 1;
-        const entityWord = translations[<string> (multi ? action.stateProp : modelConfig.foreignProp)?.toLowerCase()];           
+        const entityWord = translations[action.stateProp.toLowerCase()];           
         const idWord = translations[modelConfig.idProp.toLowerCase()] || modelConfig.idProp
 
         return `Sletting av ${payload.ids?.length || ''} ${entityWord?.toLowerCase() || 'ukjent'} 

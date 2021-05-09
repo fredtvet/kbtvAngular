@@ -1,6 +1,6 @@
 import { SetSelectedWeekAction, SetTimesheetCriteriaWithWeekCriteriaAction, UpdateTimesheetStatusesAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
-import { Timesheet, User } from '@core/models';
+import { Timesheet } from '@core/models';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper';
@@ -9,7 +9,7 @@ import { GroupByPeriod, TimesheetStatus } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { _find } from 'array-helpers';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
-import { _getRangeWithRelations } from 'model/core';
+import { _getModels } from 'model/core';
 import { FetchModelsAction } from 'model/state-fetcher';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -52,9 +52,9 @@ export class TimesheetAdminFacade {
     ]).pipe(map(([summaries, state]) => {
         const summary = _find<TimesheetSummary>(summaries, state.timesheetAdminSelectedWeekNr, "weekNr");
         if(!summary?.timesheets?.length) return;
-        let timesheets = _getRangeWithRelations<Timesheet, StoreState>(
+        let timesheets = _getModels<StoreState, Timesheet>(
             {...state, timesheets: summary.timesheets}, 
-            {prop: "timesheets", foreigns: ["missions"]}
+            {prop: "timesheets", foreigns: ["mission"]}
         )
         return timesheets?.slice().map(x => { return <Timesheet> {...x, fullName: summary.fullName}});
     }))

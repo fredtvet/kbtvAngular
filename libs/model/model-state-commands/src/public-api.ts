@@ -6,8 +6,10 @@
  * @packageDocumentation
  */
 
+export * from './lib/model-state-commands.module';
 export * from './lib/interfaces';
 export * from './lib/actions';
 export * from './lib/model-command.enum';
-export * from './lib/reducers/delete-model.reducer';
-export * from './lib/reducers/save-model.reducer';
+export * from './lib/state/delete-model.reducer';
+export * from './lib/state/save-model.reducer';
+export * from './lib/state/save-model.effect';

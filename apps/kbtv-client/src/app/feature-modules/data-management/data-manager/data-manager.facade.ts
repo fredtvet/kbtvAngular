@@ -27,7 +27,7 @@ export class DataManagerFacade  {
         private store: Store<ModelState>,
         private componentStore: ComponentStore<ComponentState>,     
         private confirmService: ConfirmDialogService,
-        private modelFormService: ModelFormService
+        private modelFormService: ModelFormService<ModelState>
     ) { }
 
     updateSelectedProperty = (prop: Prop<ModelState>) => 
@@ -51,7 +51,7 @@ export class DataManagerFacade  {
     }
 
     private _deleteItems(ids: string[]): void{
-        this.store.dispatch(<DeleteModelAction<ModelState>>{ 
+        this.store.dispatch(<DeleteModelAction<ModelState, Model>>{ 
             type: DeleteModelAction, 
             stateProp: this.selectedProperty, 
             payload: {ids} 

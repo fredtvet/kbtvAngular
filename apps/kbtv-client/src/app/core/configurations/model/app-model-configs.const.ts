@@ -1,103 +1,120 @@
 import { ModelState } from '@core/state/model-state.interface';
+import { _idGenerator } from '@shared-app/helpers/id/id-generator.helper';
+import { Immutable } from 'global-types';
+import { StateModels, ValidStateModelArray } from 'model/core';
 import { ModelFetcherConfig } from 'model/state-fetcher';
 import { ApiUrl } from '../../api-url.enum';
-import { Employer, InboundEmailPassword, Mission, MissionDocument, MissionImage, MissionNote, MissionType, Timesheet, User } from '../../models';
+import { User } from '../../models';
 import { ModelIdProps } from './model-id-props.const';
 
-export interface AppModelConfig<TModel> extends ModelFetcherConfig<TModel, ModelState> {}
+export type AppModelConfigMap = { 
+    [P in keyof ModelState]: ModelState[P] extends ValidStateModelArray<(infer M)> ? 
+    M extends StateModels<ModelState> ? 
+    Immutable<AppModelConfig<M>> : 
+    never : never
+  };
 
-export const AppModelConfigs = [
-    <AppModelConfig<Mission>>{
+export interface AppModelConfig<TModel extends StateModels<ModelState>> extends ModelFetcherConfig<ModelState, TModel> {}
+
+export const ModelConfigMap: AppModelConfigMap = {
+    missions: {
         stateProp: "missions",
         idProp: ModelIdProps.missions, 
-        displayFn: (m: Mission) => m.address,
-        foreignProp: "mission",
-        foreignKey: "missionId",
-        children: [
-            {prop: "missionImages", cascadeDelete: true}, 
-            {prop: "missionDocuments", cascadeDelete: true},
-            {prop: "missionNotes", cascadeDelete: true}, 
-            {prop: "timesheets"},
-            {prop: "userTimesheets"},
-        ], 
-        foreigns: ["missionTypes","employers"],  
-        modelApiUrl: ApiUrl.Mission,      
+        displayFn: (m) => m.address!,
+        idGenerator: _idGenerator,
+        children: {
+            missionImages: {stateProp: "missionImages", childKey: "missionId", cascadeDelete: true}, 
+            missionDocuments: {stateProp: "missionDocuments", childKey: "missionId", cascadeDelete: true},
+            missionNotes: {stateProp: "missionNotes", childKey: "missionId", cascadeDelete: true}, 
+            timesheets: {stateProp: "timesheets", childKey: "missionId"},
+            userTimesheets: {stateProp: "userTimesheets", childKey: "missionId"},
+        }, 
+        foreigns: {
+            missionType: {stateProp: "missionTypes", foreignKey: "missionTypeId"},
+            employer: {stateProp: "employers", foreignKey: "employerId"}
+        },       
     },
-    <AppModelConfig<MissionType>>{
+    missionTypes: {
         stateProp: "missionTypes", 
         idProp: ModelIdProps.missionTypes,
-        displayFn: (m: MissionType) => m.name,
-        foreignProp: "missionType",
-        foreignKey: "missionTypeId",
-        modelApiUrl: ApiUrl.MissionType,
+        displayFn: (m) => m.name,
+        idGenerator: _idGenerator,
+        foreigns: {}, children: {}
     },
-    <AppModelConfig<Employer>>{
+    employers: {
         stateProp: "employers",
         idProp: ModelIdProps.employers,  
-        displayFn: (m: Employer) => m.name,    
-        foreignProp: "employer",
-        foreignKey: "employerId",
-        modelApiUrl: ApiUrl.Employer, 
+        displayFn: (m) => m.name!,   
+        idGenerator: _idGenerator, 
+        foreigns: {}, children: {}
     }, 
-    <AppModelConfig<MissionImage>>{
+    missionImages: {
         stateProp: "missionImages",
         idProp: ModelIdProps.missionImages,  
-        displayFn: (m: MissionImage) => m.fileName,
-        foreignProp: "missionImage",
-        foreignKey: "missionImageId",
-        modelApiUrl: ApiUrl.MissionImage, 
+        displayFn: (m) => m.fileName!,
+        idGenerator: _idGenerator,
+        children: {},
+        foreigns: { 
+            mission: { stateProp: "missions", foreignKey: "missionId" }
+        }, 
     },    
-    <AppModelConfig<MissionDocument>>{
+    missionDocuments: {
         stateProp: "missionDocuments",
         idProp: ModelIdProps.missionDocuments, 
-        displayFn: (m: MissionDocument) => m.name,
-        foreignProp: "missionDocument",
-        foreignKey: "missionDocumentId",
-        modelApiUrl: ApiUrl.MissionDocument, 
+        displayFn: (m) => m.name,
+        idGenerator: _idGenerator,
+        children: {},
+        foreigns: { 
+            mission: { stateProp: "missions", foreignKey: "missionId" }
+        }, 
     },    
-    <AppModelConfig<MissionNote>>{
+    missionNotes: {
         stateProp: "missionNotes",
         idProp: ModelIdProps.missionNotes,
-        displayFn: (m: MissionNote) => `(${m.id}) ${m.title || 'Uten tittel'}`, 
-        foreignProp: "missionNote",
-        foreignKey: "missionNoteId",   
-        modelApiUrl: ApiUrl.MissionNote,
+        displayFn: (m) => `(${m.id}) ${m.title || 'Uten tittel'}`, 
+        idGenerator: _idGenerator,
+        children: {},
+        foreigns: { 
+            mission: { stateProp: "missions", foreignKey: "missionId" }
+        }, 
     },
-    <AppModelConfig<User>>{
+    users: {
         stateProp: "users",
         idProp: ModelIdProps.users, 
-        displayFn: (m: User) => m.userName,
-        foreignProp: "user",
-        foreignKey: "userName",     
-        foreigns: ["employers"],      
-        modelApiUrl: ApiUrl.Users, 
+        displayFn: (m: User) => m.userName,    
+        children: {},
+        foreigns: {
+            employer: { stateProp: "employers", foreignKey: "employerId" }
+        },      
         fetchUrl: ApiUrl.Users,
     },      
-    <AppModelConfig<InboundEmailPassword>>{
+    inboundEmailPasswords: {
         stateProp: "inboundEmailPasswords",
-        modelApiUrl: ApiUrl.InboundEmailPassword, 
         idProp: ModelIdProps.inboundEmailPasswords, 
-        displayFn: (m: InboundEmailPassword) => m.password,  
-        foreignProp: "inboundEmailPassword",   
-        foreignKey: "inboundEmailPasswordId",      
-        fetchUrl: ApiUrl.InboundEmailPassword,    
+        displayFn: (m) => m.password!, 
+        children: {}, foreigns: {},
+        fetchUrl: ApiUrl.InboundEmailPassword, 
+        idGenerator: _idGenerator,   
     }, 
-    <AppModelConfig<Timesheet>>{
+    userTimesheets: {
         stateProp: "userTimesheets",
-        idProp: ModelIdProps.timesheets,
-        displayFn: (m: Timesheet) => m.id,
-        foreignProp: "userTimesheet",
-        foreignKey: "userTimesheetId",
-        foreigns: ["missions"],          
-        modelApiUrl: ApiUrl.UserTimesheet, 
+        idProp: ModelIdProps.userTimesheets,
+        displayFn: (m) => m.id!,
+        idGenerator: _idGenerator,
+        children: {},
+        foreigns: { 
+            mission: { stateProp: "missions", foreignKey: "missionId" }
+        },            
     },    
-    <AppModelConfig<Timesheet>>{
+    timesheets: {
         stateProp: "timesheets",
-        idProp: ModelIdProps.userTimesheets, 
-        displayFn: (m: Timesheet) => m.id,
-        foreignProp: "timesheet",
-        foreignKey: "timesheetId",
-        foreigns: ["missions", "users"],     
-        modelApiUrl: ApiUrl.Timesheet,  
+        idProp: ModelIdProps.timesheets, 
+        displayFn: (m) => m.id!,
+        idGenerator: _idGenerator,
+        children: {},
+        foreigns: { 
+            mission: { stateProp: "missions", foreignKey: "missionId" },
+            user: { stateProp: "users", foreignKey: "userName" }
+        },     
     }, 
-]
+}

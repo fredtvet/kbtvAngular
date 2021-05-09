@@ -3,6 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet } from '@core/models';
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
+import { ModelState } from "@core/state/model-state.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
 import { _timesheetCriteriaFormSheetFactory } from "@shared-timesheet/timesheet-criteria-form-factory.helper";
@@ -60,7 +61,7 @@ export class UserTimesheetListComponent {
     private formService: FormService,
     private dialog: MatDialog,
     private chipsFactory: ChipsFactoryService,
-    private modelFormService: ModelFormService
+    private modelFormService: ModelFormService<ModelState>
   ) {
     this.bottomActions = [
       { ...BottomIconButtons.Filter,
