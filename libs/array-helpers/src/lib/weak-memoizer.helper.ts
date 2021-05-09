@@ -38,8 +38,15 @@ function _getCachedValue(args: (unknown|object)[], cache: InnerCache, argLength:
 
 function _setCacheValue(args: (unknown|object)[], cache: InnerCache, argLength: number, result: unknown, index: number = 0) {
   const arg = <object> args[index];
+  const argIsNull = arg === undefined || arg === null;
 
-  if(cache === undefined) cache = _getMap(arg);
+  if(cache === undefined){
+    if(argIsNull) return undefined;
+    cache = _getMap(arg);
+  }
+
+  if(cache instanceof WeakMap && argIsNull) return cache;
+
   if(argLength === (index + 1)) 
     return cache.set(arg, result);
  
