@@ -23,7 +23,7 @@ export const WeekCriteriaForm: Immutable<DynamicForm<WeekCriteriaForm, FormState
             question: <IonDateQuestion<WeekCriteria>>{ 
                 placeholder: "Velg år", 
                 ionFormat: "YYYY", 
-                valueSetter: (val: string) => new Date(val).getFullYear() 
+                valueSetter: (val) => new Date(val).getFullYear() 
             },
         },
         weekNr: { required: true,

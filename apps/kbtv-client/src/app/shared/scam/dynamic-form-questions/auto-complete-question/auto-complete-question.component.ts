@@ -14,7 +14,8 @@ import { AutoCompleteQuestion, AutoCompleteQuestionBindings } from './auto-compl
   templateUrl: 'auto-complete-question.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AutoCompleteQuestionComponent extends BaseQuestionComponent<AutoCompleteQuestionBindings<unknown>, AutoCompleteQuestion<UnknownState, object | null>> {
+export class AutoCompleteQuestionComponent<T> 
+    extends BaseQuestionComponent<AutoCompleteQuestionBindings<T>, AutoCompleteQuestion<T, object | null>> {
 
     options$: Observable<ImmutableArray<unknown>>;
 

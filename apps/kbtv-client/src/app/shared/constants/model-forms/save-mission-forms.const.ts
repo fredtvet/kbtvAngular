@@ -23,15 +23,15 @@ export interface UpdateMissionForm extends CreateMissionForm, Pick<Mission, "id"
 
 type FormState = StateEmployers & StateMissionTypes;
 
-const DescriptionControl: Immutable<DynamicControl<string, FormState>> = { 
+const DescriptionControl: Immutable<DynamicControl<string, FormState, TextAreaQuestion>> = { 
     questionComponent: TextAreaQuestionComponent,
-    question: <TextAreaQuestion>{placeholder: "Beskrivelse"}, 
+    question: { placeholder: "Beskrivelse", rows: 1 }, 
     validators: [Validators.maxLength(ValidationRules.MissionDescriptionMaxLength)] 
 }
 
-const EmployerControl: Immutable<DynamicControl<string, FormState>> = { 
+const EmployerControl: Immutable<DynamicControl<string, FormState, AutoCompleteQuestion<Employer, FormState>>> = { 
     questionComponent: AutoCompleteQuestionComponent,
-    question: <AutoCompleteQuestion<Employer, FormState>>{
+    question: {
         placeholder: "Oppdragsgiver",
         valueProp: "name",
         lazyOptions: "all",
@@ -42,9 +42,9 @@ const EmployerControl: Immutable<DynamicControl<string, FormState>> = {
     },  
 }
 
-const MissionTypeControl: Immutable<DynamicControl<string, FormState>> = { 
+const MissionTypeControl: Immutable<DynamicControl<string, FormState, AutoCompleteQuestion<MissionType, FormState>>> = { 
     questionComponent: AutoCompleteQuestionComponent,
-    question: <AutoCompleteQuestion<MissionType, FormState>>{
+    question: {
         placeholder: "Oppdragstype",
         valueProp: "name",
         lazyOptions: "all",
@@ -55,9 +55,9 @@ const MissionTypeControl: Immutable<DynamicControl<string, FormState>> = {
     } 
 }
 
-const FinishedControl: Immutable<DynamicControl<boolean, FormState>> = { 
+const FinishedControl: Immutable<DynamicControl<boolean, FormState, CheckboxQuestion>> = { 
     questionComponent: CheckboxQuestionComponent,
-    question: <CheckboxQuestion>{ text: "Er oppdraget ferdig?" }, 
+    question: { text: "Er oppdraget ferdig?" }, 
 }
 
 const _missionToMissionFormConverter: Converter<Mission, CreateMissionForm> = ({missionType, employer, ...rest}) => { 

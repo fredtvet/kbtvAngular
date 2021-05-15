@@ -6,7 +6,7 @@ import { BaseQuestionComponent, DynamicFormStore, Question, QuestionComponent, V
 import { Maybe } from 'global-types';
 
 export interface InputQuestion extends Question {
-  type: "tel" | "text" | "number" | "email" | "file" | "password";
+  type?: "tel" | "text" | "number" | "email" | "file" | "password";
   hideable?: boolean;
   defaultHidden?: boolean;
   resetable?: boolean;
@@ -43,7 +43,7 @@ export interface InputQuestion extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputQuestionComponent extends BaseQuestionComponent<null, InputQuestion> implements QuestionComponent<null, InputQuestion> {
+export class InputQuestionComponent extends BaseQuestionComponent<null, InputQuestion> implements QuestionComponent<null, null, InputQuestion> {
 
   hideField: Maybe<boolean>;
 

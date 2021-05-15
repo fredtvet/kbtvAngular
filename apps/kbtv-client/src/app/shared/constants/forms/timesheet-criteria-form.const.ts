@@ -18,9 +18,9 @@ export interface TimesheetCriteriaForm extends NotNull<Pick<TimesheetCriteria, "
 
 type FormState = TimesheetCriteriaFormState;  
 
-const DateRangePresetControl: Immutable<DynamicControl<DateRangePresets>> = { 
+const DateRangePresetControl: Immutable<DynamicControl<DateRangePresets, null, RadioGroupQuestion<DateRangePresets, null>>> = { 
     required: true, questionComponent: RadioGroupQuestionComponent,
-    question: <RadioGroupQuestion<DateRangePresets, null>>{   
+    question: {   
         label: "Velg tidsrom *",
         valueFormatter: (val: DateRangePresets) => translations[DateRangePresets[val].toLowerCase()],
         stateBindings:{ 
@@ -61,20 +61,19 @@ const CustomDateRangeControlGroup: Immutable<DynamicControlGroup<DateRange, Form
         },
     }
 }
-const CustomMonthControl: Immutable<DynamicControl<Maybe<string>>> = { 
+const CustomMonthControl: Immutable<DynamicControl<Maybe<string>, null, IonDateQuestion<TimesheetCriteriaForm>>> = { 
     panelClass: "mt-0",
     questionComponent:  IonDateQuestionComponent,        
-    question:<IonDateQuestion<TimesheetCriteriaForm>>{
-        valueGetter: (val: string) => val ? _getISO(val) : null,
+    question: {
         placeholder: "Måned", 
         width: "50%",
         ionFormat:"YYYY-MMMM",
         datePipeFormat: "MMMM, y",                     
     }, 
 }
-const StatusControl: Immutable<DynamicControl<TimesheetStatus>> = { 
+const StatusControl: Immutable<DynamicControl<TimesheetStatus, null, RadioGroupQuestion<TimesheetStatus, null>>> = { 
     questionComponent:  RadioGroupQuestionComponent,
-    question: <RadioGroupQuestion<TimesheetStatus, null>>{   
+    question: {   
         label: "Velg status", defaultOption: "Begge",
         valueFormatter: (val) => translations[TimesheetStatus[val]?.toLowerCase()],
         stateBindings: {

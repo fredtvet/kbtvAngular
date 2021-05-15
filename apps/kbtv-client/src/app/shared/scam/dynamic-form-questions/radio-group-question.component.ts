@@ -39,9 +39,7 @@ export interface RadioGroupQuestion<T, TFormState extends object | null> extends
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RadioGroupQuestionComponent extends BaseQuestionComponent<RadioGroupQuestionBindings<unknown>, RadioGroupQuestion<unknown, object | null>> {
-
-  hideField: boolean;
+export class RadioGroupQuestionComponent<T> extends BaseQuestionComponent<RadioGroupQuestionBindings<T>, RadioGroupQuestion<T, object | null>> {
 
   constructor(
     @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,

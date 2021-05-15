@@ -16,9 +16,9 @@ export interface MissionCriteriaForm extends Pick<MissionCriteria, "searchString
 
 type FormState = MissionCriteriaFormState;
 
-const SearchStringControl: Immutable<DynamicControl<string, FormState>> = { 
+const SearchStringControl: Immutable<DynamicControl<string, FormState, AutoCompleteQuestion<Mission, FormState>>> = { 
     questionComponent:  AutoCompleteQuestionComponent,
-    question: <AutoCompleteQuestion<Mission, FormState>>{
+    question: {
         valueFormatter: (val) => val.address,
         valueProp: "address",
         lazyOptions: "all",
@@ -30,9 +30,9 @@ const SearchStringControl: Immutable<DynamicControl<string, FormState>> = {
         }
     }, 
 }
-const MissionTypeControl: Immutable<DynamicControl<MissionType, FormState>> = { 
+const MissionTypeControl: Immutable<DynamicControl<MissionType, FormState, SelectQuestion<MissionType, FormState>>> = { 
     questionComponent:  SelectQuestionComponent,
-    question: <SelectQuestion<MissionType, FormState>>{
+    question: {
         valueFormatter: (val) => val.name,
         compareWith: _compareProp<MissionType>("id"),
         lazyOptions: "all",
@@ -42,9 +42,9 @@ const MissionTypeControl: Immutable<DynamicControl<MissionType, FormState>> = {
         }
     }, 
 }
-const FinishedControl: Immutable<DynamicControl<boolean, FormState>> = { 
+const FinishedControl: Immutable<DynamicControl<boolean, FormState, RadioGroupQuestion<boolean, null>>> = { 
     questionComponent:  RadioGroupQuestionComponent,
-    question: <RadioGroupQuestion<boolean, null>>{   
+    question: {   
         label: "Velg status",
         valueFormatter: (finished: boolean) => finished ? "Ferdig" : "Aktiv",
         stateBindings: { options: [false, true] }

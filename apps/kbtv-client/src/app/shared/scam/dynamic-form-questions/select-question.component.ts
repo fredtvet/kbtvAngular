@@ -53,7 +53,8 @@ export interface SelectQuestion<T, TFormState extends object | null> extends Que
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectQuestionComponent extends BaseQuestionComponent<SelectQuestionBindings<object>, SelectQuestion<UnknownState, object | null>> {
+export class SelectQuestionComponent<TEntity> 
+  extends BaseQuestionComponent<SelectQuestionBindings<TEntity>, SelectQuestion<TEntity, object | null> > {
 
   defaultCompareWith = (o1: unknown, o2: unknown) => o1 === o2;
 

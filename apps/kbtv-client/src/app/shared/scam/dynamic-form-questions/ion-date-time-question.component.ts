@@ -3,8 +3,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
-import { Observable, of } from 'rxjs';
-import { filter, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 
 export interface IonDateQuestionBindings { min: string, max: string, defaultValue: string}
 
@@ -12,7 +12,7 @@ export interface IonDateQuestion<TFormState extends object | null = null> extend
     ionFormat: string;
     datePipeFormat?: string;
     minuteValues?: number[];
-    valueSetter?: (value: unknown) => unknown;
+    valueSetter?: (value: string) => unknown;
 }
 
 const _dayNames = ["Søndag", "Mandag", "Tirsdag", "Onsdag","Torsdag", "Fredag", "Lørdag"]
@@ -73,7 +73,7 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
     super(validationErrorMessages,formStore);
   }
 
-  onChange(val: unknown){
+  onChange(val: string){
     if(!this.control) return;
 
     const value = this.question.valueSetter ? this.question.valueSetter(val) : val;

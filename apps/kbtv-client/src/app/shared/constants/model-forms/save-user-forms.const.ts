@@ -22,25 +22,26 @@ type FormState = StateUsers & StateEmployers;
 
 const AvailableRoles = Object.keys(Roles).filter(x => x !== Roles.Leder).map(key => Roles[key as keyof typeof Roles]);
 
-const UniqueUserNameControl: Immutable<DynamicControl<string, FormState>> = {
+const UniqueUserNameControl: Immutable<DynamicControl<string, FormState, InputQuestion>> = {
     ...UserNameControl, 
     required: true,     
     asyncStateValidators: [
         (s$) => isUniqueAsyncValidator(s$.pipe(map(s => s?.users)), (x, y) => x.userName.toLowerCase() === y.toLowerCase())
     ],
 }
-const RoleControl: Immutable<DynamicControl<string>> = { 
+
+const RoleControl: Immutable<DynamicControl<string, null, SelectQuestion<string, null>>> = { 
     required: true, questionComponent: SelectQuestionComponent,
-    question: <SelectQuestion<string, null>>{
+    question: {
         placeholder: "Rolle",
         lazyOptions: "all",
         stateBindings: { options: AvailableRoles }
     },  
     validators: [ Validators.maxLength(100)] 
 }
-const PasswordControl: Immutable<DynamicControl<string>> = { 
+const PasswordControl: Immutable<DynamicControl<string, null, InputQuestion>> = { 
     required: true, questionComponent: InputQuestionComponent, 
-    question: <InputQuestion>{placeholder: "Passord", hideable: true, defaultHidden: true},
+    question: {placeholder: "Passord", hideable: true, defaultHidden: true},
     validators: [Validators.minLength(7), Validators.maxLength(100)] 
 }
 

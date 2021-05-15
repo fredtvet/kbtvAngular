@@ -75,9 +75,9 @@ const DateTimeControlGroup: Immutable<DynamicControlGroup<TimesheetDateTime, For
     }
 }
 
-const CommentControl: Immutable<DynamicControl<string>> = { 
+const CommentControl: Immutable<DynamicControl<string, null, TextAreaQuestion>> = { 
     required: true, questionComponent: TextAreaQuestionComponent,
-    question: <TextAreaQuestion>{ placeholder: "Kommentar", rows: 3 },
+    question: { placeholder: "Kommentar", rows: 3 },
     validators: [Validators.maxLength(400)], 
 }
 

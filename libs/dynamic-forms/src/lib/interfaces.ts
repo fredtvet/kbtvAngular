@@ -116,11 +116,14 @@ export interface DynamicAbstractGroup<TForm, TFormState extends object | null = 
 }
 
 /** Describes the rendering, value and validation of an form control */
-export interface DynamicControl<TValueType, TFormState extends object | null = null> { 
+export interface DynamicControl<
+    TValueType, 
+    TFormState extends object | null = null, 
+    TQuestion extends Question<object | null, Partial<TFormState>> = Question<object | null, Partial<TFormState>>> { 
     /** The question component that should be rendered */
-    questionComponent: Type<QuestionComponent<object | null>> | null;
+    questionComponent: Type<QuestionComponent<object | null, Partial<TFormState>, TQuestion>> | null;
     /** The question component view configuration */
-    question?: Question<object | null, Partial<TFormState> | null>;
+    question?: TQuestion;
     /** Set to true to require a value before the form can be submitted */
     required?: boolean, 
     /** A custom function for formatting the initial value before setting control. */      
@@ -156,7 +159,8 @@ export type StateBindingsMap<TBindings> = { [P in keyof Partial<TBindings>]: Obs
 /** Represents a question component used to display a field to set a form control value. */
 export interface QuestionComponent<
     TBindings extends object | null = null, 
-    TQuestion extends Question<TBindings, object | null> = Question<TBindings, object | null> > {
+    TFormState extends object | null = null,
+    TQuestion extends Question<TBindings, TFormState> = Question<TBindings, TFormState> > {
     /** The question component view configuration */
     question: Immutable<TQuestion>;
     /** Set to true to indicate the question is required. */

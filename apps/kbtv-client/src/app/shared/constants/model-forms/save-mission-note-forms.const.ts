@@ -10,14 +10,14 @@ import { ValidationRules } from '../validation-rules.const';
 
 export type SaveMissionNoteForm = Pick<MissionNote, "title" | "content" | "missionId" | "id">;
 
-const TitleControl = <Immutable<DynamicControl<string>>>{ 
+const TitleControl = <Immutable<DynamicControl<string, null, InputQuestion>>>{ 
     questionComponent: InputQuestionComponent,
-    question: <InputQuestion>{placeholder: "Tittel"}, 
+    question: {placeholder: "Tittel"}, 
     validators: [Validators.maxLength(ValidationRules.MissionNoteTitleMaxLength)] 
 }
-const ContentControl = <Immutable<DynamicControl<string>>>{ 
+const ContentControl = <Immutable<DynamicControl<string, null, TextAreaQuestion>>>{ 
     required: true, questionComponent: TextAreaQuestionComponent,
-    question: <TextAreaQuestion>{placeholder: "Beskrivelse", rows: 4},  
+    question: {placeholder: "Beskrivelse", rows: 4},  
     validators: [Validators.maxLength(ValidationRules.MissionNoteContentMaxLength)] 
 }
 

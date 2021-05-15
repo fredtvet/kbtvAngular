@@ -5,13 +5,13 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DynamicFormStore } from '../dynamic-form.store';
 import { _getValidationErrorMessage } from '../helpers/get-validation-error-message.helper';
-import { FormStateBinding, Question, QuestionComponent, StateBindingsMap, ValidationErrorMap } from '../interfaces';
+import { Question, QuestionComponent, StateBindingsMap, ValidationErrorMap } from '../interfaces';
 import { selectState } from '../select-state.operator';
 import { _isFormStateBinding } from '../type.helpers';
 
 @Directive()
 export abstract class BaseQuestionComponent<TBindings extends object | null, TQuestion extends Question<TBindings, object | null>>
-    implements QuestionComponent<TBindings, TQuestion> {
+    implements QuestionComponent<TBindings, object | null> {
 
   @HostBinding('style.width') width: string;
 

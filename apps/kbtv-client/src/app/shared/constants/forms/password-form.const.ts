@@ -11,16 +11,16 @@ export interface CurrentUserPasswordForm extends PasswordForm { oldPassword: str
 
 export interface UserPasswordForm extends PasswordForm { userName: string }
 
-const NewPasswordControl: Immutable<DynamicControl<string>> = { 
+const NewPasswordControl: Immutable<DynamicControl<string, null, InputQuestion>> = { 
     required: true, questionComponent:  InputQuestionComponent,
-    question: <InputQuestion>{ 
+    question: { 
         placeholder: "Nytt passord", type: "password", hideable: true, defaultHidden: true,
     },
     validators: [Validators.minLength(7)] 
 }
-const ConfirmPasswordControl: Immutable<DynamicControl<string>> = { 
+const ConfirmPasswordControl: Immutable<DynamicControl<string, null, InputQuestion>> = { 
     required: true, questionComponent:  InputQuestionComponent,
-    question: <InputQuestion>{ 
+    question: { 
         placeholder: "Gjenta nytt passord", type: "password", hideable: true, defaultHidden: true,
     }, 
 }
