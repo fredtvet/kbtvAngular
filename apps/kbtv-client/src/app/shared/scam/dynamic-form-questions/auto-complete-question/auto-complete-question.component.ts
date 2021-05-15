@@ -7,27 +7,27 @@ import { BaseQuestionComponent, DynamicFormStore, ValidationErrorMap, VALIDATION
 import { Immutable, ImmutableArray, UnknownState } from 'global-types';
 import { Observable, of } from 'rxjs';
 import { ActiveStringFilterConfig } from '../../../interfaces';
-import { AutoCompleteQuestion } from './auto-complete-question.interface';
+import { AutoCompleteQuestion, AutoCompleteQuestionBindings } from './auto-complete-question.interface';
 
 @Component({
   selector: 'app-autocomplete-question',
   templateUrl: 'auto-complete-question.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AutoCompleteQuestionComponent extends BaseQuestionComponent<AutoCompleteQuestion<UnknownState, UnknownState>> {
+export class AutoCompleteQuestionComponent extends BaseQuestionComponent<AutoCompleteQuestionBindings<unknown>, AutoCompleteQuestion<UnknownState, object | null>> {
 
     options$: Observable<ImmutableArray<unknown>>;
 
     activeFilter: Immutable<ActiveStringFilterConfig<UnknownState>>;
 
     private get _options$(): Observable<ImmutableArray<unknown>> {
-        return this.formStore.getOptions$(this.question.optionsGetter);
+        return this.stateBindings.options || of([])
     }
 
     constructor(
         @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
-        private formStore: DynamicFormStore<UnknownState>) { 
-            super(validationErrorMessages); 
+        formStore: DynamicFormStore<object>) { 
+            super(validationErrorMessages,formStore); 
         }
 
     ngOnInit(): void {

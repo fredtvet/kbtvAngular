@@ -29,9 +29,9 @@ const _timesheetCriteriaToForm : Converter<TimesheetCriteria, TimesheetCriteriaF
 export function _timesheetCriteriaFormSheetFactory(cfg: {
     onSubmit: (t: Immutable<TimesheetCriteria>) => void,
     initialValue?: Immutable<TimesheetCriteria>, 
-    formState$?: Observable<Immutable<TimesheetCriteriaFormState>>,
+    formState$?: Observable<Immutable<Partial<TimesheetCriteriaFormState>>>,
     customForm?: Omit<DynamicForm<TimesheetCriteriaForm, TimesheetCriteriaFormState>, "controls" | "initialValue">,
-}): Immutable<FormServiceConfig<TimesheetCriteriaForm, TimesheetCriteriaFormState>> {
+}): Immutable<FormServiceConfig<TimesheetCriteriaForm, Partial<TimesheetCriteriaFormState>>> {
     return {
         formConfig: { ...TimesheetCriteriaForm, ...(cfg.customForm || {}),
             initialValue: cfg.initialValue ? _timesheetCriteriaToForm(cfg.initialValue) : null }, 

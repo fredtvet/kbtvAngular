@@ -3,13 +3,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { SyncConfigForm } from '@shared/constants/forms/sync-config.form.const';
-import { FormService } from 'form-sheet';
-import { SyncConfig } from 'state-sync';
 import { ProfileFacade } from '../profile.facade';
 import { ProfileAction } from './profile-action.interface';
 import { Router } from '@angular/router';
-import { _getFirstDayOfMonth } from 'date-time-helpers';
+import { _getFirstDayOfMonth, _getISO } from 'date-time-helpers';
 import { _syncFormToConfigConverter } from './sync-form-to-config.converter';
+import { FormService } from 'form-sheet';
 
 @Component({
   selector: 'app-sync-profile',
@@ -42,7 +41,8 @@ export class SyncProfileComponent {
   private updateSyncConfig = (): void => {
     const config = this.facade.syncConfig;
     this.formService.open({
-      formConfig: {...SyncConfigForm, initialValue: config ? {...config, refreshTime: config.refreshTime / 60 } : null}, 
+      formConfig: {...SyncConfigForm, initialValue: config ? 
+        {initialMonthISO: _getISO(config.initialTimestamp), refreshTime: config.refreshTime / 60 } : null}, 
       navConfig: {title: "Konfigurasjoner"},
       submitCallback: (val) => 
         this.facade.updateSyncConfig(_syncFormToConfigConverter(val))

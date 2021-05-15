@@ -12,7 +12,7 @@ export const CreateInboundEmailPasswordModelForm: Immutable<ModelFormConfig<Mode
     dynamicForm: {
         submitText: "Legg til",
         controls: { 
-            password: { type: "control", name: "password", required: true,
+            password: { required: true,
                 questionComponent: InputQuestionComponent,    
                 question: <InputQuestion> { placeholder: "Epostpassord" },
                 validators: [Validators.maxLength(250)] 

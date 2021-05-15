@@ -6,7 +6,7 @@ import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
-import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
+import { WeekCriteriaForm } from '@shared/constants/forms/week-criteria-controls.const';
 import { TimesheetStatus } from '@shared/enums';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
@@ -66,10 +66,9 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
     this.router.navigate(['timer', {[TimesheetAdminListWeekNrQueryParam]: weekNr}], {relativeTo: this.route})
   
   private openWeekFilter = (): void => {
-    this.formService.open<WeekCriteria, WeekCriteriaFormState>({
+    this.formService.open({
       formConfig: {...WeekCriteriaForm, 
-        onlineRequired: true, 
-        noRenderDisabledControls: true,
+        options: { onlineRequired: true, noRenderDisabledControls: true },   
         disabledControls: {weekNr: true}, 
         initialValue: this.facade.weekCriteria}, 
       formState: this.facade.weekCriteriaFormState$,

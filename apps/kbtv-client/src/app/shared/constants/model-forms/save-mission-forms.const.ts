@@ -4,14 +4,14 @@ import { StateEmployers, StateMissionTypes } from '@core/state/global-state.inte
 import { ModelState } from '@core/state/model-state.interface';
 import { _googleAddressFormatter } from '@shared-app/helpers/google-address-formatter.helper';
 import { _missionFormActionConverter } from '@shared/action-converters/mission-form-to-save-model.converter';
-import { DynamicControl } from 'dynamic-forms';
+import { DynamicControl, _formStateBinding } from 'dynamic-forms';
 import { Immutable } from 'global-types';
-import { Converter, ModelFormConfig, ModelFormState } from 'model/form';
+import { Converter, ModelFormConfig } from 'model/form';
 import { AutoCompleteQuestionComponent } from '../../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { CheckboxQuestion, CheckboxQuestionComponent } from '../../scam/dynamic-form-questions/checkbox-question.component';
 import { TextAreaQuestion, TextAreaQuestionComponent } from '../../scam/dynamic-form-questions/text-area-question.component';
-import { GoogleAddressControl, HiddenIdControl, PhoneNumberControl } from '../common-controls.const';
+import { GoogleAddressControl, PhoneNumberControl } from '../common-controls.const';
 import { ValidationRules } from '../validation-rules.const';
 
 export interface CreateMissionForm extends Pick<Mission, "address" | "phoneNumber" | "description"> {
@@ -21,45 +21,41 @@ export interface CreateMissionForm extends Pick<Mission, "address" | "phoneNumbe
 
 export interface UpdateMissionForm extends CreateMissionForm, Pick<Mission, "id" | "finished"> {}
 
-type FormState = ModelFormState<StateEmployers & StateMissionTypes>;
+type FormState = StateEmployers & StateMissionTypes;
 
-const DescriptionControl: Immutable<DynamicControl<CreateMissionForm, "description", FormState>> = { 
-    type: "control", name: "description", 
+const DescriptionControl: Immutable<DynamicControl<string, FormState>> = { 
     questionComponent: TextAreaQuestionComponent,
     question: <TextAreaQuestion>{placeholder: "Beskrivelse"}, 
     validators: [Validators.maxLength(ValidationRules.MissionDescriptionMaxLength)] 
 }
 
-const EmployerControl: Immutable<DynamicControl<CreateMissionForm, "employerName", FormState>> = { 
-    type: "control", name: "employerName",
+const EmployerControl: Immutable<DynamicControl<string, FormState>> = { 
     questionComponent: AutoCompleteQuestionComponent,
     question: <AutoCompleteQuestion<Employer, FormState>>{
-        optionsGetter: (state) => state.options.employers,
         placeholder: "Oppdragsgiver",
         valueProp: "name",
         lazyOptions: "all",
         valueFormatter: (val) => val.name, 
         resetable: true,
-        activeFilter: { stringProps: ["name"] }
+        activeFilter: { stringProps: ["name"] },
+        stateBindings:{ options: _formStateBinding<FormState, Employer[]>()(["employers"], s => s.employers || []) }
     },  
 }
 
-const MissionTypeControl: Immutable<DynamicControl<CreateMissionForm, "missionTypeName", FormState>> = { 
-    type: "control", name: "missionTypeName",
+const MissionTypeControl: Immutable<DynamicControl<string, FormState>> = { 
     questionComponent: AutoCompleteQuestionComponent,
     question: <AutoCompleteQuestion<MissionType, FormState>>{
-        optionsGetter: (state) => state.options.missionTypes,
         placeholder: "Oppdragstype",
         valueProp: "name",
         lazyOptions: "all",
         valueFormatter: (val) => val.name, 
         resetable: true,
-        activeFilter: { stringProps: ["name"] }
+        activeFilter: { stringProps: ["name"] },
+        stateBindings:{ options: _formStateBinding<FormState, MissionType[]>()(["missionTypes"], s => s.missionTypes || []) }
     } 
 }
 
-const FinishedControl: Immutable<DynamicControl<UpdateMissionForm, "finished", FormState>> = { 
-    type: "control", name: "finished",
+const FinishedControl: Immutable<DynamicControl<boolean, FormState>> = { 
     questionComponent: CheckboxQuestionComponent,
     question: <CheckboxQuestion>{ text: "Er oppdraget ferdig?" }, 
 }
@@ -98,7 +94,7 @@ export const EditMissionModelForm: Immutable<ModelFormConfig<ModelState, Mission
             employerName: EmployerControl,
             missionTypeName: MissionTypeControl,   
             finished: FinishedControl,
-            id: HiddenIdControl, 
+            id: { required: true, questionComponent: null }, 
         },
         onSubmitFormatter: _googleAddressFormatter
     }

@@ -5,6 +5,6 @@ import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timeshee
 export interface StoreState extends StateUserTimesheets, StateMissions {}
 
 export interface ComponentStoreState { 
-    timesheetCriteria: TimesheetCriteria,
-    weekCriteria: WeekCriteria,
+    timesheetCriteria: Partial<TimesheetCriteria>,
+    weekCriteria: Partial<WeekCriteria>,
 }

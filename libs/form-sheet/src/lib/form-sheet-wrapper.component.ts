@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, ViewContainerRef } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { _tryWithLogging } from 'array-helpers';
+import { UnknownState } from 'global-types';
 import { Subscription } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { FormSheetNavBarComponent } from './form-sheet-nav-bar/form-sheet-nav-bar.component';
@@ -21,16 +23,14 @@ export class FormSheetWrapperComponent  {
         private componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,
         private _bottomSheetRef: MatBottomSheetRef<FormSheetWrapperComponent, unknown>, 
-        @Inject(MAT_BOTTOM_SHEET_DATA) private config: FormSheetWrapperConfig<{}, {}, unknown>) { }
+        @Inject(MAT_BOTTOM_SHEET_DATA) private config: FormSheetWrapperConfig<object, UnknownState, unknown>) { }
     
     ngOnInit() {
         this.loadNav();
         this.loadLoader();
 
-        setTimeout(() => {
-            this.removeLoader();
-            this.loadForm()
-        })
+        this.removeLoader();
+            this.loadForm();
     }
         
     ngOnDestroy(){
@@ -53,7 +53,7 @@ export class FormSheetWrapperComponent  {
 
         if(this.config.formState$)
             this.formStateSub = 
-                this.config.formState$.subscribe(x => formRef.instance.formState = x)
+                this.config.formState$.subscribe(x => formRef.instance.inputState = x)
 
         formRef.instance.formSubmitted.pipe(first(),
             tap(x => (x && this.config.submitCallback) ? this.config.submitCallback(x) : null),

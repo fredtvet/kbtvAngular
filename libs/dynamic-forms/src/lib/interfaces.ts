@@ -1,7 +1,8 @@
 import { EventEmitter, Type } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
-import { Immutable, ImmutableArray, Maybe, NotNull } from 'global-types';
+import { AbstractControl, AsyncValidatorFn, ValidatorFn } from '@angular/forms';
+import { DeepProp, DeepPropsObject, DeepPropType, Immutable, Maybe, NotNull, Prop } from 'global-types';
 import { Observable } from 'rxjs';
+import { DynamicAbstractGroupComponent } from './components/dynamic-abstract-group.component';
 
 type ObjProps<T> = { [K in keyof T as T[K] extends Maybe<object> ? K : never]: NotNull<T[K]>; };
 
@@ -24,71 +25,88 @@ export type HideOnValueChanges<TForm> = {[P in keyof NotNull<TForm>]: (val: TFor
 /** Represents an async validator that reacts to an observer of state T */
 export type AsyncStateValidator<T> = ((state$: Observable<T>) => AsyncValidatorFn);
 
-/** Represents a getter function that returns an array of options from provided state
- *  Can also can the options directly. */
- export type OptionsGetter<T, TFormState extends object | null = null> = 
- T[] | ((state: Immutable<TFormState>) => Maybe<ImmutableArray<T>>);
-
 /** Represents a valid control for a given form */
 export type ValidControl<TForm, TProp extends keyof TForm = keyof TForm, TFormState extends object | null = null> = 
-        DynamicControl<TForm, TProp, TFormState> | 
-        DynamicControlGroup<TForm, TProp extends keyof ObjProps<TForm> ? TProp : never, TFormState>
+        DynamicControl<TForm[TProp], Partial<TFormState> | null> | 
+        DynamicControlGroup<NotNull<TForm[TProp]> extends object ? NotNull<TForm[TProp]> : never, Partial<TFormState> | null>
 
-/** Represents a object for hooking onto a controls value changes. */
-export interface ControlHook<TResponse>{
-    /** The name of the control(s) */
-    controlName: string | string[], 
-    /** The function being called when the control(s) value changes. */
-    callback: (val: unknown) => TResponse
+type NotFound = "$$PROP_NOT_FOUND";
+
+export type ValidFormSlice<TForm, TSlice extends string> = keyof { 
+    [ P in TSlice as DeepPropType<TForm, P, NotFound> extends NotFound ? NotFound  : never ]: true 
+} extends never ? TSlice : never;  
+
+export type ValidStateSlice<TState, TSlice extends string> = keyof { 
+    [ P in TSlice as P extends keyof TState ? P : never]: true 
+} 
+
+export type FormStateSetterFn<TForm, TFormState, TInputState, TFormSlice extends string, TStateSlice extends string> = (
+    form: DeepPropsObject<TForm, TFormSlice>,
+    state: DeepPropsObject<TInputState, TStateSlice>, 
+ ) => Partial<TFormState>
+
+/** Represents a setter for a property on TFormState from TInputState & TForm */
+export interface FormStateSetter<
+    TForm extends object, 
+    TFormState extends object | null, 
+    TInputState extends object | null,
+    TFormSlice extends string, 
+    TStateSlice extends string> {
+    formSlice: TFormSlice[],
+    stateSlice: TStateSlice[],
+    setter: FormStateSetterFn<TForm, TFormState, TInputState, TFormSlice, TStateSlice>,
+    keepActive?: boolean
+} 
+
+export type GenericFormStateSetter = FormStateSetter<object, object | null, object | null, string, string> | object
+
+export type FormStateBindingSetter<TState, TSlice extends string, TOutput> = (s: DeepPropsObject<TState, TSlice>) => TOutput 
+
+export type GenericFormStateBinding = FormStateBinding<object, string, unknown> | unknown
+
+export type FormStateBinding<TState, TSlice extends string, TOutput> = { 
+    props: TSlice[], 
+    setter: FormStateBindingSetter<TState, TSlice, TOutput>
 }
-
+ 
 /** Describes a form that can render dynamically with the {@link DynamicFormComponent}
  *  Creates a reactive form with visible fields to change the values of the form. 
  *  @see {@link https://angular.io/guide/reactive-forms} */
-export interface DynamicForm<TForm, TFormState extends object | null> extends DynamicAbstractGroup<TForm, TFormState> {
+export interface DynamicForm<
+    TForm extends object, 
+    TFormState extends object | null, 
+> extends DynamicAbstractGroup<TForm, TFormState> {
     /** The initial form value */
     initialValue?: Maybe<Partial<TForm>>;
-    /** A function that modifies the form value when submitted */
-    onSubmitFormatter?: (f: TForm, s: Immutable<TFormState>) => Immutable<TForm>;
-    /** Validators for the form on submit */
-    validators?: ValidatorFn[];
+    /** A function that modifies the form value when submitted. Use helper function {@link _formStateSetter} for dynamic state, or provide statically.*/
+    onSubmitFormatter?: (f: TForm, s: Immutable<Partial<TFormState>>) => Immutable<TForm>;
+    /** A map of state setters for TFormState. */
+    formStateSetters?: (object | Partial<TFormState>)[]  
     /** Set to true if the form should have a reset option */
     resettable?: boolean;
     /** The form value that will be set on reset */
     resetState?: Partial<TForm>;
     /** Should the form require the user to be online before submitting? */
-    onlineRequired?: boolean;
-    /** Can the form submit in pristine state? */
-    allowPristine?: boolean;    
-    /** Set to true to get the raw form value on submit. 
-     * This includes the values of disabled controls. */
-    getRawValue?: boolean;
-    /** Set to true if disabled controls shouldn't be rendered. */
-    noRenderDisabledControls?: boolean;    
-    /** A custom text on the submit button */
     submitText?: string;
-    /** If true, all controls with an initial value are disabled */
-    disableControlsWithValue?: boolean
+    /** Customization options */
+    options?: DynamicFormOptions
 }   
 
 /** Describes a group of controls that make up an object in the form model */
 export interface DynamicControlGroup<
-    TForm, 
-    TProp extends keyof ObjProps<TForm>, 
-    TFormState extends object | null = null> extends DynamicAbstractGroup<ObjProps<TForm>[TProp], Partial<TFormState> | null>{
-    /** The type of control */
-    type: "group",
-    /** The name of the control group. If name is set, the controls are nested within a form group with given name. */
-    name: TProp,  
+    TValueType extends object, 
+    TFormState extends object | null = null> extends DynamicAbstractGroup<TValueType, TFormState>{
     /** A custom control group component for displaying the group */
-    controlGroupComponent?: Type<ControlGroupComponent>,
+    controlGroupComponent?: Type<DynamicAbstractGroupComponent<DynamicControlGroup<TValueType, TFormState>>>,
     /** A visual label displayed above the group on the rendered form */
     label?: string,
 }
 
-export interface DynamicAbstractGroup<TForm, TFormState extends object | null> {
+export interface DynamicAbstractGroup<TForm, TFormState extends object | null = null> {
     /** The form controls that make up the group */
-    controls: ValidControlObject<TForm, Partial<TFormState> | null >
+    controls: ValidControlObject<TForm, TFormState>
+    /** Validators for the form group */
+    validators?: ValidatorFn[];
     /** A map of controls with a function that runs on form value changes that decides if control should be hidden. */
     hideOnValueChangeMap?: HideOnValueChanges<Partial<TForm>>;
     /** A map of controls that should be disabled by default */
@@ -98,19 +116,15 @@ export interface DynamicAbstractGroup<TForm, TFormState extends object | null> {
 }
 
 /** Describes the rendering, value and validation of an form control */
-export interface DynamicControl<TForm, TProp extends keyof TForm, TFormState extends object | null = null> { 
-    /** The type of control */
-    type: "control"
-    /** The name of the control */
-    name: TProp,     
+export interface DynamicControl<TValueType, TFormState extends object | null = null> { 
     /** The question component that should be rendered */
-    questionComponent?: Type<QuestionComponent>;
+    questionComponent: Type<QuestionComponent<object | null>> | null;
     /** The question component view configuration */
-    question?: Question<Partial<TFormState> | null>;
+    question?: Question<object | null, Partial<TFormState> | null>;
     /** Set to true to require a value before the form can be submitted */
     required?: boolean, 
     /** A custom function for formatting the initial value before setting control. */      
-    valueFormatter?: ((value: Maybe<Immutable<TForm[TProp]>>) => Maybe<TForm[TProp]>),
+    valueFormatter?: ((value: Maybe<Immutable<TValueType>>) => Maybe<TValueType>),
     /** Validators for the control value */
     validators?: ValidatorFn[],
     /** Async state validators for the control value  */
@@ -120,7 +134,7 @@ export interface DynamicControl<TForm, TProp extends keyof TForm, TFormState ext
 }
 
  /** Describes the data required to display a question in the form */
-export interface Question<TFormState extends object | null = null> {
+export interface Question<TBindings extends object | null = null, TFormState extends object | null = null> {
     /** A placeholder value for the field */
     placeholder?: string;
     /** A label describing the field */
@@ -132,37 +146,27 @@ export interface Question<TFormState extends object | null = null> {
     color?: "primary" | "accent";
     /** The width of the field. Use css syntax. */
     width?: string;
-    /** Used to retrieve a set of options for select questions. Can be a static value or selected from form state */
-    optionsGetter?: OptionsGetter<unknown, TFormState>;
+    /** Bindings to form state */
+    stateBindings?: {[P in keyof Partial<TBindings>]: FormStateBinding<TFormState, Prop<TFormState>, TBindings[P]> | TBindings[P] }
 }
 
+/** Represents a map of bound state */
+export type StateBindingsMap<TBindings> = { [P in keyof Partial<TBindings>]: Observable<TBindings[P]>; } 
+
 /** Represents a question component used to display a field to set a form control value. */
-export interface QuestionComponent<TQuestion extends Question<object | null> = Question<object | null>> {
+export interface QuestionComponent<
+    TBindings extends object | null = null, 
+    TQuestion extends Question<TBindings, object | null> = Question<TBindings, object | null> > {
     /** The question component view configuration */
     question: Immutable<TQuestion>;
-    /** A form group with all the controls of the form */
-    form: FormGroup;
     /** Set to true to indicate the question is required. */
     required?: boolean;
     /** The control accociated with the question */
     control: Maybe<AbstractControl>;
     /** An observable emitting true if the question field should be hidden */
     hideField$: Observable<boolean>;
-}
-
-//Represents a component rendering multiple questions in a group. 
-export interface ControlGroupComponent {
-    /** A form group with all the controls of the form */
-    form: FormGroup;
-    /** The dynamic control group associated with the component */ 
-    controlGroup: Immutable<DynamicControlGroup<any, any, any>>;
-    /** The names of parent groups.
-     *  Used to keep track of where in the form model tree the group is located. */
-    nestedNames: string[];
-    /** A set of configurable options */
-    config: Immutable<DynamicForm<any, any>>
-
-    loadGroupComponents: Function;
+    /** Bindings to form state */
+    stateBindings: StateBindingsMap<TBindings>
 }
 
 /** Represents a form component. Implemented by {@link DynamicForm} */
@@ -170,7 +174,22 @@ export interface FormComponent<TConfig, TFormState, TResult> {
     /** The form configuration object */
     config: Immutable<Maybe<TConfig>>;
     /** The form state shared by the controls of the form */
-    formState: Maybe<Immutable<TFormState>>;
+    inputState: Maybe<Immutable<TFormState>>;
     /** An event emitter that emits the form value when the user submits the form*/
     formSubmitted: EventEmitter<Maybe<TResult>>;
+}
+
+/** Represents different options for customizing form behaviour */
+export interface DynamicFormOptions {
+    /** Should the form require the user to be online before submitting? */
+    onlineRequired?: boolean;
+    /** Can the form submit in pristine state? */
+    allowPristine?: boolean;    
+    /** Set to true to get the raw form value on submit. 
+     * This includes the values of disabled controls. */
+    getRawValue?: boolean;
+    /** Set to true if disabled controls shouldn't be rendered. */
+    noRenderDisabledControls?: boolean;    
+    /** If true, all controls with an initial value are disabled */
+    disableControlsWithValue?: boolean
 }

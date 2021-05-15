@@ -3,12 +3,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { LazySelectOption, _shouldEagerOptions } from '@shared-app/helpers/should-eager-options.helper';
 import { SharedModule } from '@shared/shared.module';
-import { BaseQuestionComponent, DynamicFormStore, OptionsGetter, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
-import { Immutable, ImmutableArray, Maybe, Prop, UnknownState } from 'global-types';
-import { Observable } from 'rxjs';
+import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { Immutable, ImmutableArray, Prop, UnknownState } from 'global-types';
+import { Observable, of } from 'rxjs';
 
-export interface SelectQuestion<T, TFormState extends object | null> extends Question<TFormState> {
-  optionsGetter: OptionsGetter<T, TFormState>;
+export interface SelectQuestionBindings<T> { options: Immutable<T[]> }
+
+export interface SelectQuestion<T, TFormState extends object | null> extends Question<SelectQuestionBindings<T>, TFormState> {
   lazyOptions?: LazySelectOption;
   valueProp?: Prop<T>;
   valueFormatter?: (val: Immutable<T>) => unknown;
@@ -52,22 +53,20 @@ export interface SelectQuestion<T, TFormState extends object | null> extends Que
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectQuestionComponent extends BaseQuestionComponent<SelectQuestion<UnknownState, UnknownState>> {
+export class SelectQuestionComponent extends BaseQuestionComponent<SelectQuestionBindings<object>, SelectQuestion<UnknownState, object | null>> {
 
   defaultCompareWith = (o1: unknown, o2: unknown) => o1 === o2;
-
-  state: Maybe<UnknownState> = this.formStore.formState;
 
   options$: Observable<ImmutableArray<unknown>>;
 
   private get _options$(): Observable<ImmutableArray<unknown>> {
-    return this.formStore.getOptions$(this.question.optionsGetter);
+    return this.stateBindings.options || of([]);
   }
 
   constructor(
     @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
-    private formStore: DynamicFormStore<UnknownState>) { 
-    super(validationErrorMessages) 
+    formStore: DynamicFormStore<UnknownState>) { 
+    super(validationErrorMessages,formStore) 
   }
 
   ngOnInit(): void { 

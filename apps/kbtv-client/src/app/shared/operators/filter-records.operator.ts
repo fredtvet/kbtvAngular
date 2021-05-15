@@ -8,7 +8,7 @@ import { Immutable, ImmutableArray, Maybe } from 'global-types';
 type Response<TRecord, TCriteria> = FilteredResponse<Immutable<TCriteria>, Immutable<TRecord>>;
 
 export const filterRecords = <TRecord, TCriteria>(filterType: DataFilterConstructor<TCriteria>, ...filterArgs: unknown[]) => 
-    (source: Observable<[Maybe<ImmutableArray<TRecord>>, Maybe<Immutable<TCriteria>>]> ): Observable<Response<TRecord, TCriteria>> => 
+    (source: Observable<[Maybe<ImmutableArray<TRecord>>, Maybe<Immutable<Partial<TCriteria>>>]> ): Observable<Response<TRecord, TCriteria>> => 
         source.pipe(
             map(([timesheets, criteria]) => {
                 if(!criteria) return {criteria: null, records: null};

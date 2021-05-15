@@ -19,7 +19,7 @@ export class ExportCsvFormService {
         })
 
         this.formService.open({
-          formConfig: _createMultiCheckboxForm(keyOptions, {submitText: "Eksporter", allowPristine: true}, true),
+          formConfig: _createMultiCheckboxForm(keyOptions, {submitText: "Eksporter", options: {allowPristine: true}}, true),
           navConfig: {title: "Eksporter til CSV format"},
           submitCallback: (val) => this.onSubmit(val.selections, grid)
         })

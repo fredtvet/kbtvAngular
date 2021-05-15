@@ -16,11 +16,13 @@ export class FormService {
    * @param config
    * @returns A reference to the bottom sheet with the form.
    */
-  open<TForm, TFormState extends object | null = null>(config: Immutable<FormServiceConfig<TForm, TFormState>>)
-  : MatBottomSheetRef<FormSheetWrapperComponent, TForm> {      
+  open<TForm extends object, TInputState extends object | null = null>(
+      config: Immutable<FormServiceConfig<TForm, TInputState>>
+    ): MatBottomSheetRef<FormSheetWrapperComponent, TForm> {    
+
     return this.matBottomSheet.open(FormSheetWrapperComponent, { 
       panelClass: "form-sheet-wrapper",
-      data: <Immutable<FormSheetWrapperConfig<DynamicForm<TForm, TFormState>, unknown, TForm>>>{
+      data: < Immutable<FormSheetWrapperConfig<object, TInputState, TForm>>> {
         formConfig: config.formConfig, 
         navConfig: config.navConfig, 
         submitCallback: config.submitCallback,
@@ -28,6 +30,7 @@ export class FormService {
         formState$: config.formState instanceof Observable ? config.formState : of(config.formState)
       } 
     });
+
   }
 
 }

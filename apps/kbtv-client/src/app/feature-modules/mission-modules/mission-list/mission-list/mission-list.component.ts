@@ -15,7 +15,7 @@ import { CreateMissionModelForm } from '@shared/constants/model-forms/save-missi
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
 import { MissionFilter } from "@shared/mission-filter.model";
 import { _filter } from "array-helpers";
-import { FormService } from 'form-sheet';
+import { FormService } from "form-sheet";
 import { Immutable, Maybe, Prop } from "global-types";
 import { _getModelDisplayValue } from 'model/core';
 import { ModelFormService } from 'model/form';
@@ -105,7 +105,7 @@ export class MissionListComponent extends WithUnsubscribe(){
         formConfig: {...MissionCriteriaForm, initialValue: this.facade.criteria}, 
         formState: this.facade.criteriaFormState$,
         navConfig: {title: "Velg filtre"},
-        submitCallback: (val: MissionCriteria) => this.facade.addCriteria(val),
+        submitCallback: (val) => this.facade.addCriteria(val),
       });   
 
   private getCriteriaChips(criteria: Maybe<Immutable<MissionCriteria>>){

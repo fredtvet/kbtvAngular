@@ -6,27 +6,27 @@ import { Observable } from 'rxjs';
 import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
 
 /** Represents the configuration for {@link FormSheetWrapperComponent} */
-export interface FormSheetWrapperConfig<TFormConfig, TFormState, TResult>{
+export interface FormSheetWrapperConfig<TFormConfig, TInputState extends object| null, TResult>{
     /** The form config passed to the provided form component */
     formConfig?: Maybe<TFormConfig>;
     /** Form state required by the form */
-    formState$?: Observable<Maybe<Immutable<TFormState>>>;
+    formState$?: Observable<Maybe<Immutable<TInputState>>>;
     /** Configuration for the top navigation bar on bottom sheet */
     navConfig?: Maybe<FormSheetNavConfig>;
     /** Function that executes when form is submitted. */
     submitCallback?: Maybe<(val: TResult) => void>;
     /** The form component that should be rendered. */
-    formComponent: Type<FormComponent<TFormConfig, TFormState, TResult>>;
+    formComponent: Type<FormComponent<TFormConfig, TInputState, TResult>>;
 }
 
 /** Represents configuration for opening a form with {@link FormService} */
-export interface FormServiceConfig<TForm, TFormState extends object| null = null>{
+export interface FormServiceConfig<TForm extends object, TFormState extends object| null = null>{
     /** The form config passed to the provided form component */
     formConfig: DynamicForm<TForm, TFormState>, 
     /** Configuration for the top navigation bar on bottom sheet */
     navConfig: FormSheetNavConfig,
     /** Form state required by the form */
-    formState?: Immutable<TFormState> | Observable<Immutable<TFormState>>,
+    formState?: Immutable<Partial<TFormState>> | Observable<Immutable<Partial<TFormState>>>,
     /** Function that executes when form is submitted. */
     submitCallback?: (val: Immutable<TForm>) => void
 }

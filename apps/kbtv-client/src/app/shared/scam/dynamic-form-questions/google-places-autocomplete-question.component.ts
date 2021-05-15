@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/c
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '@shared/shared.module';
-import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { Address, GooglePlacesAutocompleteModule, Options } from 'google-places-autocomplete';
 
@@ -38,7 +38,7 @@ export interface GooglePlacesAutoCompleteQuestion extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GooglePlacesAutoCompleteQuestionComponent extends BaseQuestionComponent<GooglePlacesAutoCompleteQuestion>  {
+export class GooglePlacesAutoCompleteQuestionComponent extends BaseQuestionComponent<null, GooglePlacesAutoCompleteQuestion>  {
     
     googleOptions: Immutable<Partial<Options>> = {
         types: ['geocode'],
@@ -47,8 +47,11 @@ export class GooglePlacesAutoCompleteQuestionComponent extends BaseQuestionCompo
 
     addressFormatter = (address: Address) => address.formatted_address
 
-    constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
-        super(validationErrorMessages);   
+    constructor(
+        @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
+        formStore: DynamicFormStore
+    ) { 
+        super(validationErrorMessages,formStore);   
     }
 
     onAddressChange(address: Address){

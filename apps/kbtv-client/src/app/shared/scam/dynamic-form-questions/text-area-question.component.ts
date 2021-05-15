@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AngularMaterialModule } from '@shared/angular-material.module';
 import { SharedModule } from '@shared/shared.module';
-import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 
 export interface TextAreaQuestion extends Question {
   rows: number;
@@ -32,10 +30,13 @@ export interface TextAreaQuestion extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextAreaQuestionComponent extends BaseQuestionComponent<TextAreaQuestion>  {
+export class TextAreaQuestionComponent extends BaseQuestionComponent<null, TextAreaQuestion>  {
 
-  constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
-    super(validationErrorMessages) 
+  constructor(
+    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
+    formStore: DynamicFormStore
+  ) { 
+    super(validationErrorMessages, formStore);
   }
 
 }

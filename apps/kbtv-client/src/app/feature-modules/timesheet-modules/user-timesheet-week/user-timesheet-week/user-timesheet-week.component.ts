@@ -8,10 +8,10 @@ import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
-import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
+import { WeekCriteriaForm } from '@shared/constants/forms/week-criteria-controls.const';
 import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
 import { _getDateOfWeek, _getWeekRange } from 'date-time-helpers';
-import { FormService } from 'form-sheet';
+import { FormService } from "form-sheet";
 import { Maybe } from "global-types";
 import { ModelFormService } from 'model/form';
 import { combineLatest, Observable } from 'rxjs';
@@ -63,13 +63,11 @@ export class UserTimesheetWeekComponent {
 
   previousWeek = (): void => this.facade.previousWeek()
 
-  openTimesheetForm = (entityId?: Maybe<string>, initialValue?: TimesheetForm): void => {
+  openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Partial<TimesheetForm>): void => {
     this.modelFormService.open(
       entityId ? EditUserTimesheetModelForm : 
         {...CreateUserTimesheetModelForm, 
-          dynamicForm: {...CreateUserTimesheetModelForm.dynamicForm, 
-            disableControlsWithValue: true, initialValue
-          }
+          dynamicForm: {...CreateUserTimesheetModelForm.dynamicForm, initialValue}
         },
       entityId
     )
@@ -89,9 +87,9 @@ export class UserTimesheetWeekComponent {
   };
 
   private openWeekFilter = (): void => { 
-    this.formService.open<WeekCriteriaForm, WeekCriteriaFormState>({
+    this.formService.open({
       formConfig: {...WeekCriteriaForm, 
-        noRenderDisabledControls: true,
+        options: { noRenderDisabledControls: true } ,
         disabledControls: {user: true}, 
         initialValue: this.facade.weekCriteria 
       }, 
@@ -100,7 +98,7 @@ export class UserTimesheetWeekComponent {
     });
   }
 
-  private getNavConfig(weekCriteria: Maybe<WeekCriteria>): MainTopNavConfig{
+  private getNavConfig(weekCriteria: Maybe<Partial<WeekCriteria>>): MainTopNavConfig{
     return { 
       title:  "Uke " + weekCriteria?.weekNr || "",
       subTitle: weekCriteria?.year?.toString() || "",

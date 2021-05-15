@@ -6,7 +6,7 @@ import { CreateMissionModelForm } from '@shared/constants/model-forms/save-missi
 import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
 
-export const PropertyFormMap: {[key: string]: Immutable<ModelFormConfig<ModelState, object>> } = {
+export const PropertyFormMap: {[key: string]: Immutable<ModelFormConfig<ModelState, object, object, object | null>> } = {
     "employers": CreateEmployerModelForm,
     "missionTypes": CreateMissionTypeModelForm,
     "inboundEmailPasswords": CreateInboundEmailPasswordModelForm,

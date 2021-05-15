@@ -17,4 +17,5 @@ export * from './lib/sort-by-bool.helper'
 export * from './lib/sort-by-date.helper'
 export * from './lib/update.helper'
 export * from './lib/remove-range-by-prop.helper'
-export * from './lib/weak-memoizer.helper';
+export * from './lib/util/weak-memoizer.helper';
+export * from './lib/util/try-with-logging.helper';

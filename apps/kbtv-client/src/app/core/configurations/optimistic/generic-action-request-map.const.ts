@@ -1,12 +1,12 @@
-import { SaveModelFileAction, SetSaveModelFileStateAction } from "@actions/global-actions"
-import { ModelState } from "../../state/model-state.interface";
-import { DeleteModelAction, ModelCommand, SaveModelAction, SetSaveModelStateAction } from "model/state-commands"
-import { ActionRequestMap, FormDataEntry, OptimisticHttpRequest } from "optimistic-http";
-import { ModelBaseUrls } from "../model/model-base-urls.const";
-import { Model, ModelFile } from "../../models";
-import { Immutable, Prop } from "global-types";
-import { ModelIdProps } from "../model/model-id-props.const";
+import { SaveModelFileAction, SetSaveModelFileStateAction } from "@actions/global-actions";
 import { ApiUrl } from "@core/api-url.enum";
+import { Immutable, Prop } from "global-types";
+import { DeleteModelAction, ModelCommand, SaveModelAction, SetSaveModelStateAction } from "model/state-commands";
+import { ActionRequestMap, FormDataEntry, OptimisticHttpRequest } from "optimistic-http";
+import { Model } from "../../models";
+import { ModelState } from "../../state/model-state.interface";
+import { ModelBaseUrls } from "../model/model-base-urls.const";
+import { ModelIdProps } from "../model/model-id-props.const";
 
 export type GenericOptimisticActionTypes = typeof SaveModelAction | typeof SaveModelFileAction | typeof DeleteModelAction;
 

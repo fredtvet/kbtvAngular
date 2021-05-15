@@ -62,8 +62,8 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
   trackById = _trackByModel("timesheets");
   
   private openWeekFilter = () => 
-    this.formService.open<WeekCriteria, WeekCriteriaFormState>({
-      formConfig: {...WeekCriteriaForm, onlineRequired: true,
+    this.formService.open({
+      formConfig: {...WeekCriteriaForm, options: { onlineRequired: true },
         initialValue: {...this.facade.weekCriteria, weekNr: <number>this.facade.selectedWeekNr} }, 
       formState: this.facade.weekCriteriaFormState$,
       navConfig: {title: "Velg filtre"},

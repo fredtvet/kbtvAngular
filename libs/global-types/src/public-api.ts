@@ -36,3 +36,17 @@ export type PickByValueType<T, U> = {
     [K in keyof T as T[K] extends U ? K : never]: T[K]
 }
 
+/** Get a union of all properties on TObject, including properties of nested objects. Format 'prop1 | prop2 | prop2.sub1' */
+export type DeepProp<TObject> = ValueOf<{
+    [P in Prop<TObject>]: TObject[P] extends object ?   
+        ( P | `${P}.${DeepProp<TObject[P]>}` ) : P
+}>
+
+/** Get the value type of a deep property {@link DeepProp} TPath on TObject.  */
+export type DeepPropType<TObject, TPath extends string, TElse> =
+    TPath extends keyof TObject ? TObject[TPath] :
+    TPath extends `${infer LeftSide}.${infer RightSide}` ? LeftSide extends keyof TObject ? DeepPropType<TObject[LeftSide], RightSide, TElse> : 
+    TElse : TElse;
+
+/** Constructs an object with deep propeties TPath with value types from TObject  */
+export type DeepPropsObject<TObject, Path extends string> = { [P in Path]: DeepPropType<TObject, P, never> }

@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
-import { Immutable } from 'global-types';
+import { UnknownState } from 'global-types';
+import { DynamicFormFactory } from '../dynamic-form.factory';
 import { DynamicHostDirective } from '../dynamic-host.directive';
-import { ControlGroupComponent, DynamicControlGroup } from '../interfaces';
-import { ControlComponentLoaderComponent } from './control-component-loader.component';
+import { DynamicControlGroup } from '../interfaces';
+import { DynamicAbstractGroupComponent } from './dynamic-abstract-group.component';
 
 @Component({
   selector: 'lib-dynamic-control-group',
@@ -16,7 +17,7 @@ import { ControlComponentLoaderComponent } from './control-component-loader.comp
       align-items: center;
     }
   </style>
-  <mat-label *ngIf="controlGroup.label">{{ controlGroup.label }}</mat-label>
+  <mat-label *ngIf="config.label">{{ config.label }}</mat-label>
   <div class="question-container">   
     <ng-container *dynamicHost>
 
@@ -25,19 +26,10 @@ import { ControlComponentLoaderComponent } from './control-component-loader.comp
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DynamicControlGroupComponent extends ControlComponentLoaderComponent implements ControlGroupComponent{
+export class DynamicControlGroupComponent extends DynamicAbstractGroupComponent<DynamicControlGroup<UnknownState, UnknownState>> {
     @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
-    
-    controlGroup: Immutable<DynamicControlGroup<any, any, any>>;
-    nestedNames: string[] = [];
 
-    constructor(componentFactoryResolver: ComponentFactoryResolver, cdRef: ChangeDetectorRef) {
-        super(componentFactoryResolver, cdRef, DynamicControlGroupComponent)
+    constructor(componentFactoryResolver: ComponentFactoryResolver, cdRef: ChangeDetectorRef, formFactory: DynamicFormFactory) {
+        super(componentFactoryResolver, cdRef, DynamicControlGroupComponent, formFactory)
     }
-
-    loadGroupComponents(){
-      this.loadComponents(this.controlGroup, this.nestedNames);
-    }
-
-    protected onConfigSet() { }
 }

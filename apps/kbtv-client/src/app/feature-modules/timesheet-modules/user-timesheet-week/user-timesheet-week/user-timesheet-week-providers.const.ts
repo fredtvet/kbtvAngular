@@ -7,7 +7,7 @@ import { ComponentStoreState } from '../store-state.interface';
 import { NextWeekReducer, PreviousWeekReducer, SetTimesheetCriteriaReducer } from './component.reducers';
 import { UserTimesheetWeekFacade } from './user-timesheet-week.facade';
 
-const DefaultWeekCriteria: WeekCriteria = {..._getWeekYear()}
+const DefaultWeekCriteria: Partial<WeekCriteria> = {..._getWeekYear()}
 
 const DefaultComponentState: Partial<ComponentStoreState> = {
     weekCriteria: DefaultWeekCriteria,

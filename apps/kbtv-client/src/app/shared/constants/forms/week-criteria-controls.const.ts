@@ -7,16 +7,18 @@ import { isWeekInRange } from '@shared/validators/is-week-in-range.validator';
 import { Immutable } from 'global-types';
 import { DynamicForm } from 'dynamic-forms';
 
-export interface WeekCriteriaFormState { options: StateUsers }
+export type WeekCriteriaFormState = StateUsers;
 export interface WeekCriteriaForm extends Pick<WeekCriteria, "user" | "year" | "weekNr"> {}
 
 type FormState = WeekCriteriaFormState;
 
 export const WeekCriteriaForm: Immutable<DynamicForm<WeekCriteriaForm, FormState>> = {
     submitText: "Bruk", 
+    hideOnValueChangeMap: { weekNr: (s) => s.weekNr == null },
+    validators: [isWeekInRange("weekNr", "year")],
     controls: {
         user: {...UserSelectControl, required: true},
-        year: { type: "control", name: "year", required: true,
+        year: { required: true,
             questionComponent: IonDateQuestionComponent,     
             question: <IonDateQuestion<WeekCriteria>>{ 
                 placeholder: "Velg år", 
@@ -24,11 +26,9 @@ export const WeekCriteriaForm: Immutable<DynamicForm<WeekCriteriaForm, FormState
                 valueSetter: (val: string) => new Date(val).getFullYear() 
             },
         },
-        weekNr: { type: "control", name: "weekNr", required: true,
+        weekNr: { required: true,
             questionComponent: InputQuestionComponent,
             question: <InputQuestion>{ placeholder: "Velg uke", type: "tel" }, 
         },
     },
-    hideOnValueChangeMap: { weekNr: (s) => s.weekNr == null },
-    validators: [isWeekInRange("weekNr", "year")]
 }

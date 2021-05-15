@@ -40,9 +40,9 @@ export class UserTimesheetListFacade {
           })
       );
 
-      timesheetCriteriaFormState$: Observable<Immutable<TimesheetCriteriaFormState>> = 
+      timesheetCriteriaFormState$: Observable<Immutable<Partial<TimesheetCriteriaFormState>>> = 
         this.store.selectProperty$("missions").pipe(
-          map(x => { return {options: {missions: x || [], users: null} }})
+          map(x => { return { missions: x || [], users: null }})
         )
 
       constructor(
@@ -53,7 +53,7 @@ export class UserTimesheetListFacade {
         this.setInitialCriteria(); 
       }
       
-      updateCriteria = (timesheetCriteria: Immutable<TimesheetCriteria>) => 
+      updateCriteria = (timesheetCriteria: Immutable<Partial<TimesheetCriteria>>) => 
           this.componentStore.dispatch(<SetTimesheetCriteriaAction<UserTimesheetListState>>{ 
             type: SetTimesheetCriteriaAction, timesheetCriteria, criteriaProp: "timesheetCriteria" 
           });

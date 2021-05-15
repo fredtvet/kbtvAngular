@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { _tryWithLogging } from '@shared-app/helpers/try-with-logging.helper';
+import { _tryWithLogging } from 'array-helpers';
 import { ProfileAction } from './profile-action.interface';
 
 @Component({

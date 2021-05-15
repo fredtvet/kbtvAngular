@@ -1,6 +1,6 @@
 import { Mission, MissionType } from '@core/models';
 import { StateMissions, StateEmployers, StateMissionTypes } from '@core/state/global-state.interfaces';
-import { DynamicControl, DynamicForm } from 'dynamic-forms';
+import { DynamicControl, DynamicForm, _formStateBinding } from 'dynamic-forms';
 import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
 import { AutoCompleteQuestionComponent } from '../../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
@@ -10,42 +10,44 @@ import { MissionCriteria } from '../../interfaces';
 import { EmployerSelectControl } from '../common-controls.const';
 import { Immutable } from 'global-types';
 
-export interface MissionCriteriaFormState { options: StateMissions & StateEmployers & StateMissionTypes } {}
+export type MissionCriteriaFormState = StateMissions & StateEmployers & StateMissionTypes
 
 export interface MissionCriteriaForm extends Pick<MissionCriteria, "searchString" | "missionType" | "employer" | "finished"> {}
 
 type FormState = MissionCriteriaFormState;
 
-const SearchStringControl: Immutable<DynamicControl<MissionCriteria, "searchString", FormState>> = { 
-    type: "control", name: "searchString", 
+const SearchStringControl: Immutable<DynamicControl<string, FormState>> = { 
     questionComponent:  AutoCompleteQuestionComponent,
     question: <AutoCompleteQuestion<Mission, FormState>>{
-        optionsGetter: (s) => s.options?.missions,
         valueFormatter: (val) => val.address,
         valueProp: "address",
         lazyOptions: "all",
         placeholder: "Søk med adresse",
         resetable: true,
-        activeFilter: { stringProps: ["address"], maxChecks: 50 }
+        activeFilter: { stringProps: ["address"], maxChecks: 50 },
+        stateBindings: {
+            options: _formStateBinding<FormState, Mission[]>()(["missions"], (s) => s.missions || [])
+        }
     }, 
 }
-const MissionTypeControl: Immutable<DynamicControl<MissionCriteria, "missionType", FormState>> = { 
-    type: "control", name: "missionType",
+const MissionTypeControl: Immutable<DynamicControl<MissionType, FormState>> = { 
     questionComponent:  SelectQuestionComponent,
     question: <SelectQuestion<MissionType, FormState>>{
-        optionsGetter: (s) => s.options?.missionTypes, 
         valueFormatter: (val) => val.name,
         compareWith: _compareProp<MissionType>("id"),
         lazyOptions: "all",
         placeholder: "Velg oppdragstype",
+        stateBindings: {
+            options: _formStateBinding<FormState, MissionType[]>()(["missionTypes"], (s) => s.missionTypes || [])
+        }
     }, 
 }
-const FinishedControl: Immutable<DynamicControl<MissionCriteria, "finished", FormState>> = { 
-    type: "control", name: "finished",
+const FinishedControl: Immutable<DynamicControl<boolean, FormState>> = { 
     questionComponent:  RadioGroupQuestionComponent,
     question: <RadioGroupQuestion<boolean, null>>{   
-        label: "Velg status", optionsGetter: [false, true],
-        valueFormatter: (finished: boolean) => finished ? "Ferdig" : "Aktiv"
+        label: "Velg status",
+        valueFormatter: (finished: boolean) => finished ? "Ferdig" : "Aktiv",
+        stateBindings: { options: [false, true] }
     }, 
 }
 

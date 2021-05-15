@@ -15,12 +15,12 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { EmailForm } from '@shared/constants/forms/email-form.const';
 import { FileFolder } from "@shared/enums/file-folder.enum";
 import { ConfirmDialogService } from "confirm-dialog";
-import { FormService } from 'form-sheet';
-import { ImmutableArray, Maybe } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map, tap } from "rxjs/operators";
 import { SelectedMissionIdParam } from "../../mission-list/mission-list-route-params.const";
 import { MissionImageListFacade } from '../mission-image-list.facade';
+import { FormService } from "form-sheet";
 
 interface ViewModel { 
   images: Maybe<ImmutableArray<MissionImage>>, 
@@ -130,9 +130,9 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
   private openMailImageSheet = (ids: string[]) => {
     const email = this.facade.getMissionEmployerEmail(this.missionId)
     this.formService.open({
-      formConfig: {...EmailForm, initialValue: { email }, allowPristine: email != null }, 
+      formConfig: {...EmailForm }, 
       navConfig: {title: "Send bilder"},
-      submitCallback: (val: EmailForm) => { 
+      submitCallback: (val) => { 
         this.facade.mailImages(val.email, ids);
         this.selectableContainer.resetSelections();
       },

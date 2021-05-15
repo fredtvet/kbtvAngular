@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/c
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { SharedModule } from '@shared/shared.module';
-import { BaseQuestionComponent, DynamicFormStore, OptionsGetter, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
-import { ImmutableArray } from 'global-types';
-import { Observable } from 'rxjs';
+import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { Immutable } from 'global-types';
 
-export interface RadioGroupQuestion<T, TFormState extends object | null> extends Question<TFormState> {
-    optionsGetter: OptionsGetter<T, TFormState>;
+export interface RadioGroupQuestionBindings<T> { options: Immutable<T[]> }
+
+export interface RadioGroupQuestion<T, TFormState extends object | null> extends Question<RadioGroupQuestionBindings<T>, TFormState> {
     defaultOption?: string;
     valueFormatter?: (val: T) => unknown;
     valueSetter?: (val: T) => unknown;
@@ -25,7 +25,7 @@ export interface RadioGroupQuestion<T, TFormState extends object | null> extends
               [checked]="control?.value == null">
             {{ question.defaultOption }}
             </mat-radio-button>
-            <mat-radio-button *ngFor="let option of options$ | async" 
+            <mat-radio-button *ngFor="let option of stateBindings.options | async" 
                 [value]="(question.valueSetter | func : option) || option">
                 {{ (question.valueFormatter | func : option) || option }}
             </mat-radio-button>
@@ -39,20 +39,14 @@ export interface RadioGroupQuestion<T, TFormState extends object | null> extends
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RadioGroupQuestionComponent extends BaseQuestionComponent<RadioGroupQuestion<unknown, any>> {
+export class RadioGroupQuestionComponent extends BaseQuestionComponent<RadioGroupQuestionBindings<unknown>, RadioGroupQuestion<unknown, object | null>> {
 
   hideField: boolean;
 
-  options$: Observable<ImmutableArray<unknown>>;;
-  
   constructor(
     @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
-    private formStore: DynamicFormStore<Object>) { 
-    super(validationErrorMessages) 
-  }
-
-  ngOnInit(): void {
-    this.options$ = this.formStore.getOptions$(this.question.optionsGetter);
+    formStore: DynamicFormStore<object>) { 
+    super(validationErrorMessages, formStore) 
   }
 
 }

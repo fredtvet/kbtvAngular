@@ -6,7 +6,7 @@ import { fileSizeValidator } from '@shared/validators/file-size.validator';
 import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
 import { FileQuestionComponent } from '../../scam/dynamic-form-questions/file-question.component';
-import { HiddenMissionIdControl, NameControl } from '../common-controls.const';
+import { NameControl } from '../common-controls.const';
 import { ValidationRules } from '../validation-rules.const';
 
 export interface CreateMissionDocumentForm extends Pick<MissionDocument, "name" | "missionId">{
@@ -19,9 +19,9 @@ export const CreateMissionDocumentModelForm: Immutable<ModelFormConfig<ModelStat
     dynamicForm: {
         submitText: "Legg til",
         controls: { 
-            missionId:  HiddenMissionIdControl,
+            missionId:  { required: true, questionComponent: null },
             name: {...NameControl, required: true}, 
-            file: { type: "control", name: "file", required: true,
+            file: { required: true,
                 questionComponent: FileQuestionComponent, 
                 validators: [
                     fileExtensionValidator(ValidationRules.MissionDocumentFileExtensions),

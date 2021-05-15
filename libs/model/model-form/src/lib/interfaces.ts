@@ -1,5 +1,5 @@
 import { DynamicForm } from 'dynamic-forms';
-import { Immutable, Maybe, Prop } from 'global-types';
+import { Immutable, Maybe } from 'global-types';
 import { RelationInclude, StateModels, StatePropByModel } from 'model/core';
 import { ModelCommand, SaveAction } from 'model/state-commands';
 import { Observable } from 'rxjs';
@@ -28,13 +28,11 @@ export interface ModelFormResult<
 export interface ModelFormConfig<
     TState extends object, 
     TModel extends StateModels<TState>,
-    TForm = TModel, 
+    TForm extends object = TModel extends object ? TModel : object, 
     TFormState extends object | null = null>
 {    
     /** The form being used */
-    dynamicForm: TFormState extends null ? 
-        DynamicForm<TForm, ModelFormState<Partial<TState>>> :
-        DynamicForm<TForm, TFormState & ModelFormState<Partial<TState>>>;
+    dynamicForm: DynamicForm<TForm, TFormState>;
 
     /** Configure what relational state that will be mapped to entity and included in form state. */
     includes: RelationInclude<TState, TModel>
@@ -42,13 +40,13 @@ export interface ModelFormConfig<
      *  Defaults to {@link _formToSaveModelConverter} with form value as entity.  */
     actionConverter?: Converter<ModelFormResult<TState, TModel, TForm>, StateAction>
     /** A custom converter used to convert the model data to form. Only required on edit. If null, form value is treated as model */
-    modelConverter?: Maybe<Converter<TModel, TForm>>
+    modelConverter?: Maybe<Converter<TModel, Partial<TForm>>>
 }
 
 /** Represents a configuration object for the model form service. */
-export interface ModelFormServiceOptions<TFormState = object> {
+export interface ModelFormServiceOptions<TInputState = object> {
     /** Additional form state that should be merged with model state */ 
-    formState?: Immutable<TFormState> | Observable<Immutable<TFormState>>,
+    formState?: Immutable<TInputState> | Observable<Immutable<TInputState>>,
     /** If set, user will be redirected when saving the model. */
     onSaveUri?: string, 
     /** If set, user will be redirected when deleting the model. */
@@ -59,9 +57,4 @@ export interface ModelFormServiceOptions<TFormState = object> {
     customTitle?: string, 
     /** A callback that gets executed when form is submitted. */
     submitCallback?: (val: ModelCommand.Create | ModelCommand.Update) => void
-  }
-
-  /** Represents state that contains options for use in selections */
-  export interface ModelFormState<TOptions extends object>{ 
-      options: TOptions
   }

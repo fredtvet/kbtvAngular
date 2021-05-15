@@ -6,20 +6,17 @@ import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
 import { InputQuestion, InputQuestionComponent } from '../../scam/dynamic-form-questions/input-question.component';
 import { TextAreaQuestion, TextAreaQuestionComponent } from '../../scam/dynamic-form-questions/text-area-question.component';
-import { HiddenIdControl, HiddenMissionIdControl } from '../common-controls.const';
 import { ValidationRules } from '../validation-rules.const';
 
 export type SaveMissionNoteForm = Pick<MissionNote, "title" | "content" | "missionId" | "id">;
 
-const TitleControl = <Immutable<DynamicControl<SaveMissionNoteForm, "title">>>{ 
-    type: "control", name: "title", 
+const TitleControl = <Immutable<DynamicControl<string>>>{ 
     questionComponent: InputQuestionComponent,
     question: <InputQuestion>{placeholder: "Tittel"}, 
     validators: [Validators.maxLength(ValidationRules.MissionNoteTitleMaxLength)] 
 }
-const ContentControl = <Immutable<DynamicControl<SaveMissionNoteForm, "content">>>{ 
-    type: "control", name: "content", required: true,     
-    questionComponent: TextAreaQuestionComponent,
+const ContentControl = <Immutable<DynamicControl<string>>>{ 
+    required: true, questionComponent: TextAreaQuestionComponent,
     question: <TextAreaQuestion>{placeholder: "Beskrivelse", rows: 4},  
     validators: [Validators.maxLength(ValidationRules.MissionNoteContentMaxLength)] 
 }
@@ -31,7 +28,7 @@ export const CreateMissionNoteModelForm: Immutable<ModelFormConfig<ModelState, M
         controls: {
             title: TitleControl, 
             content: ContentControl, 
-            missionId: HiddenMissionIdControl
+            missionId: { required: true, questionComponent: null }
         },
     }
 }
@@ -43,8 +40,8 @@ export const EditMissionNoteModelForm: Immutable<ModelFormConfig<ModelState, Mis
         controls: {
             title: TitleControl, 
             content: ContentControl, 
-            missionId: HiddenMissionIdControl,
-            id: HiddenIdControl,
+            missionId: { required: true, questionComponent: null },
+            id: { required: true, questionComponent: null }
         },
     }
 }

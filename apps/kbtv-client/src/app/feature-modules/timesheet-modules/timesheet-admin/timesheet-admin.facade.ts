@@ -34,7 +34,7 @@ export class TimesheetAdminFacade {
     timesheetCriteria$ = this.store.selectProperty$("timesheetAdminTimesheetCriteria")
 
     weekCriteriaFormState$: Observable<WeekCriteriaFormState> = 
-        this.users$.pipe(map(x => { return { options: {users: x} } }))
+        this.users$.pipe(map(x => { return { users: x } } ))
 
     private _weeklySummaries$ = this.store.select$(['timesheets', 'timesheetAdminTimesheetCriteria']).pipe(
         map(x => <[ImmutableArray<Timesheet>, Immutable<TimesheetCriteria>]> [x.timesheets, x.timesheetAdminTimesheetCriteria]),

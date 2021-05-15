@@ -2,11 +2,11 @@ import { Inject, Injectable } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { ConfirmDialogService } from 'confirm-dialog';
-import { Immutable, KeyVal, Maybe, Prop, UnknownState } from 'global-types';
-import { RelationInclude, StateModels, StatePropByModel, _getModelConfig, _getRelationIncludeStateProps } from 'model/core';
+import { Immutable, KeyVal, Maybe, UnknownState } from 'global-types';
+import { RelationInclude, StateModels, StatePropByModel, UnknownModelState, _getModelConfig, _getRelationIncludeStateProps } from 'model/core';
 import { DeleteModelAction, ModelCommand } from 'model/state-commands';
 import { FetchModelsAction } from 'model/state-fetcher';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { StateAction, Store } from 'state-management';
 import { MODEL_FORM_PROP_TRANSLATIONS } from './injection-tokens.const';
 import { ModelFormConfig } from './interfaces';
@@ -29,11 +29,8 @@ export class ModelFormFacade<TState extends object, TModel extends StateModels<T
     })
   }
 
-  getFormState$(
-    includes: Immutable<RelationInclude<TState, TModel>>) {
-    return this.store.select$(_getRelationIncludeStateProps(includes)).pipe(
-      map(state => { return {options: state || {}} })
-    )
+  getModelState$(includes: Immutable<RelationInclude<TState, TModel>>): Observable<UnknownModelState> {
+    return this.store.select$<any>(_getRelationIncludeStateProps(includes)) as Observable<UnknownModelState>
   }
 
   save(action: StateAction): void {
@@ -60,7 +57,7 @@ export class ModelFormFacade<TState extends object, TModel extends StateModels<T
   }
 
   private deleteEntity = (
-    formConfig: Immutable<ModelFormConfig<TState, TModel>>, 
+    formConfig: Immutable<ModelFormConfig<TState, TModel, any>>, 
     entityId: unknown,
     deleteUrl: Maybe<string>, 
     ref: MatBottomSheetRef<unknown, unknown>) => {

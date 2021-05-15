@@ -11,28 +11,26 @@ export interface CurrentUserPasswordForm extends PasswordForm { oldPassword: str
 
 export interface UserPasswordForm extends PasswordForm { userName: string }
 
-const NewPasswordControl: Immutable<DynamicControl<PasswordForm, "newPassword">> = { 
-    type: "control", name: "newPassword", required: true,
-    questionComponent:  InputQuestionComponent,
+const NewPasswordControl: Immutable<DynamicControl<string>> = { 
+    required: true, questionComponent:  InputQuestionComponent,
     question: <InputQuestion>{ 
         placeholder: "Nytt passord", type: "password", hideable: true, defaultHidden: true,
     },
     validators: [Validators.minLength(7)] 
 }
-const ConfirmPasswordControl: Immutable<DynamicControl<PasswordForm, "confirmPassword">> = { 
-    type: "control", name: "confirmPassword", required: true,
-    questionComponent:  InputQuestionComponent,
+const ConfirmPasswordControl: Immutable<DynamicControl<string>> = { 
+    required: true, questionComponent:  InputQuestionComponent,
     question: <InputQuestion>{ 
         placeholder: "Gjenta nytt passord", type: "password", hideable: true, defaultHidden: true,
     }, 
 }
 
 export const CurrentUserPasswordForm: Immutable<DynamicForm<CurrentUserPasswordForm, null>> = {
-    submitText: "Oppdater", onlineRequired: true,    
+    submitText: "Oppdater", options: { onlineRequired: true },    
     validators: [isSamePasswordsValidator("newPassword", "confirmPassword")],
     controls: {
         oldPassword: { 
-            type: "control", name: "oldPassword", required: true,
+            required: true,
             questionComponent:  InputQuestionComponent,
             question: <InputQuestion>{ 
                 placeholder: "Nåværende passord", type: "password", hideable: true, defaultHidden: true,
@@ -45,7 +43,7 @@ export const CurrentUserPasswordForm: Immutable<DynamicForm<CurrentUserPasswordF
 }
 
 export const UserPasswordForm: Immutable<DynamicForm<UserPasswordForm, null>> = {
-    submitText: "Oppdater", onlineRequired: true, getRawValue: true, 
+    submitText: "Oppdater", options: {  onlineRequired: true, getRawValue: true,  },
     disabledControls: { userName: true }, 
     controls: {
         userName: UserNameControl,

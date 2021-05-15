@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DynamicControlGroupComponent } from './components/dynamic-control-group.component';
-import { DynamicFormComponent } from './components/dynamic-form.component';
+import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { FormActionsComponent } from './components/form-actions/form-actions.component';
 import { DynamicHostDirective } from './dynamic-host.directive';
 

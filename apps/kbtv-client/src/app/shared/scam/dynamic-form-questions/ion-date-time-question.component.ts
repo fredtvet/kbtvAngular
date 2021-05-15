@@ -2,18 +2,16 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, CUSTOM_ELEMENTS_
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '@shared/shared.module';
-import { BaseQuestionComponent, ControlHook, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES, _getControlObserver$ } from 'dynamic-forms';
-import { Immutable, Maybe } from 'global-types';
-import { Observable, of, throwError } from 'rxjs';
+import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { Observable, of } from 'rxjs';
 import { filter, startWith } from 'rxjs/operators';
 
-export interface IonDateQuestion<TForm> extends Question {
+export interface IonDateQuestionBindings { min: string, max: string, defaultValue: string}
+
+export interface IonDateQuestion<TFormState extends object | null = null> extends Question<IonDateQuestionBindings, TFormState> {
     ionFormat: string;
     datePipeFormat?: string;
     minuteValues?: number[];
-    defaultValueGetter?: ((form: Maybe<Immutable<TForm>>) => string) | string;
-    min?: string | ControlHook<string>;
-    max?: string | ControlHook<string>;
     valueSetter?: (value: unknown) => unknown;
 }
 
@@ -43,35 +41,36 @@ const _monthShortNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug"
 
       <ion-datetime #dateTime appHide 
         cancel-text="Avbryt" done-text="Ferdig"
-        [attr.max]="max$ | async"
-        [attr.min]="min$ | async"
+        [attr.max]="stateBindings.max | async"
+        [attr.min]="stateBindings.min | async"
         [attr.day-names]="dayNames"
         [attr.day-short-names]="dayShortNames"
         [attr.month-names]="monthNames"
         [attr.month-short-names]="monthShortNames"
         [attr.display-format]="question.ionFormat"
         [attr.minute-values]="question.minuteValues"
-        [value]="control?.value || (question.defaultValueGetter | func : form.value) || question.defaultValueGetter"
+        [value]="control?.value || (stateBindings.defaultValue | async)"
         (ionChange)="onChange($event.detail.value);">
       </ion-datetime>
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuestion<unknown>> {
+export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuestionBindings, IonDateQuestion<object | null>> {
 
   dayNames = _dayNames;
   dayShortNames = _dayShortNames;
   monthNames = _monthNames;
   monthShortNames = _monthShortNames;
 
-  min$: Observable<string>;
-  max$: Observable<string>;
-
   value$: Observable<string>;
 
-  constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap, private cdRef: ChangeDetectorRef) { 
-    super(validationErrorMessages) 
+  constructor(
+    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap, 
+    private cdRef: ChangeDetectorRef,
+    formStore: DynamicFormStore<object>
+  ) { 
+    super(validationErrorMessages,formStore);
   }
 
   onChange(val: unknown){
@@ -84,22 +83,11 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
     this.cdRef.markForCheck();
   }
 
-  protected onQuestionChanges(question: IonDateQuestion<unknown>): void { 
+  protected onQuestionChanges(question: IonDateQuestion<object | null>): void { 
     super.onQuestionChanges(question);
+    this.stateBindings.max?.subscribe(x => console.log(x))
     if(this.control)
       this.value$ = this.control.valueChanges.pipe(startWith(this.control.value));
-    this.min$ = this.setMinMax(question, "min");
-    this.max$ = this.setMinMax(question, "max");
-  }
-
-  private setMinMax(question: IonDateQuestion<unknown>, type: "min" | "max"): Observable<string>{
-    if(!question) return throwError("No question provided");
-  
-    let observer = of(question[type] as string);
-    if(typeof question[type] === "object") 
-      observer = _getControlObserver$(question[type] as ControlHook<string>, this.form);   
-
-    return observer.pipe(filter(x => x != null));   
   }
 
 }

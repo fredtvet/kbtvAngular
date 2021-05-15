@@ -10,8 +10,8 @@ import { ModelFormConfig, ModelFormServiceOptions } from './interfaces';
 import { ModelFormComponent } from './model-form.component';
 import { ModelFormFacade } from "./model-form.facade";
 
-type WrapperConfig<TState extends object, TModel extends StateModels<TState>, TForm = TModel, TFormState extends object = object> = 
-  FormSheetWrapperConfig<Immutable<ModelFormConfig<TState, TModel, TForm, TFormState>> & {entityId?: unknown}, TState, SaveAction>;
+type WrapperConfig<TState extends object, TModel extends StateModels<TState>, TForm extends object, TInputState extends object> = 
+  FormSheetWrapperConfig<Immutable<ModelFormConfig<TState, TModel, TForm, TInputState>> & {entityId?: unknown}, TState, SaveAction>;
 
 type BottomSheetRef = MatBottomSheetRef<FormSheetWrapperComponent, ModelCommand>;
 
@@ -30,15 +30,15 @@ export class ModelFormService<TState extends object> {
    * @param entityId If set, the form will be in edit mode for the model with corresponding id.
    * @returns A reference to the bottom sheet with the model form.
    */
-  open<TModel extends StateModels<TState>, TForm = TModel, TFormState extends object = object>(
-    config: Immutable<ModelFormConfig<TState, TModel, TForm, TFormState>>,
+  open<TModel extends StateModels<TState>, TForm extends object = TModel extends object ? TModel : never, TInputState extends object | null = null>(
+    config: Immutable<ModelFormConfig<TState, TModel, TForm, TInputState>>,
     entityId?: unknown,
     options?: Immutable<ModelFormServiceOptions<TState>>
   ): BottomSheetRef {
     var ref: MatBottomSheetRef<FormSheetWrapperComponent, ModelCommand> = 
       this.matBottomSheet.open(FormSheetWrapperComponent, { 
         panelClass: "form-sheet-wrapper",
-        data: <WrapperConfig<TState, TModel, TForm, TFormState>> {      
+        data: {      
           formConfig: entityId ? {...config, entityId} : config, 
           formComponent:  ModelFormComponent,
           submitCallback: options?.submitCallback,

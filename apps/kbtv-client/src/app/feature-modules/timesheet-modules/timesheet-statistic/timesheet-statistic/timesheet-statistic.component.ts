@@ -13,7 +13,7 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { GroupByPeriod } from '@shared/enums';
 import { FormService } from 'form-sheet';
-import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
+import { Immutable, ImmutableArray, Maybe, Prop, UnknownState } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ExportCsvFormService } from '../export-csv-form.service';
@@ -78,14 +78,14 @@ export class TimesheetStatisticComponent {
       onSubmit: (val) => this.facade.updateCriteria(val), 
       initialValue: this.facade.criteria, 
       formState$: this.facade.criteriaFormState$, 
-      customForm: {onlineRequired: true}
+      customForm: { options: { onlineRequired: true } }
   }))}
 
 
   private resetCriteriaProp(prop: Prop<Immutable<TimesheetCriteria>>, criteria: Maybe<Immutable<TimesheetCriteria>>){
-    const clone = {...criteria || {}};
+    const clone = <UnknownState> {...criteria || {}};
     clone[prop] = undefined;
-    this.facade.updateCriteria(clone);
+    this.facade.updateCriteria(<Immutable<TimesheetCriteria>> clone);
   }
 
   private exportAsCsv = () => 

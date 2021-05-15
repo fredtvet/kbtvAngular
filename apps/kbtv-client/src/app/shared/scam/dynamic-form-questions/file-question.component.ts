@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from '@shared/shared.module';
-import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 
 export interface FileQuestion extends Question { multiple?: boolean; }
 
@@ -29,10 +29,13 @@ export interface FileQuestion extends Question { multiple?: boolean; }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FileQuestionComponent extends BaseQuestionComponent<FileQuestion> {
+export class FileQuestionComponent extends BaseQuestionComponent<null, FileQuestion> {
 
-  constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
-    super(validationErrorMessages) 
+  constructor(
+    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
+    formStore: DynamicFormStore,
+  ) { 
+    super(validationErrorMessages,formStore) 
   }
 
   onFileChange(e: Event): void {  

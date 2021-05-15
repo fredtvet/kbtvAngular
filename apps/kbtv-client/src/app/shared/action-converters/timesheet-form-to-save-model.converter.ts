@@ -1,5 +1,5 @@
 import { Timesheet } from '@core/models';
-import { UserTimesheet } from '@core/state/global-state.interfaces';
+import { StateMissions, StateUserTimesheets, UserTimesheet } from '@core/state/global-state.interfaces';
 import { ModelState } from '@core/state/model-state.interface';
 import { TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
 import { TimesheetStatus } from '@shared/enums';
@@ -9,8 +9,8 @@ import { Converter, ModelFormResult } from 'model/form';
 import { SaveModelAction } from 'model/state-commands';
 
 export const _timesheetFormToSaveModelConverter: Converter<
-    ModelFormResult<ModelState, Timesheet, TimesheetForm>, 
-    SaveModelAction<ModelState, UserTimesheet>
+    ModelFormResult<StateUserTimesheets & StateMissions, Timesheet, TimesheetForm>, 
+    SaveModelAction<StateUserTimesheets & StateMissions, UserTimesheet>
 > = (input) => {      
     const {id, mission, comment, dateTime} = input.formValue;
 

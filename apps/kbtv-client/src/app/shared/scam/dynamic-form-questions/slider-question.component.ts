@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/c
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSliderModule } from '@angular/material/slider';
 import { SharedModule } from '@shared/shared.module';
-import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { Observable } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 
@@ -49,12 +49,15 @@ export interface SliderQuestion extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SliderQuestionComponent extends BaseQuestionComponent<SliderQuestion> {
+export class SliderQuestionComponent extends BaseQuestionComponent<null, SliderQuestion> {
 
     value$: Observable<unknown>;
 
-    constructor(@Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
-        super(validationErrorMessages) 
+    constructor(
+      @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap, 
+      formStore: DynamicFormStore
+    ) { 
+        super(validationErrorMessages, formStore) 
     }
 
     updateValue(val: number){

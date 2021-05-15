@@ -59,6 +59,6 @@ export class UserTimesheetWeekFacade {
             currWeekNr: this.currWeekYear.weekNr
         })
 
-    updateCriteria = (weekCriteria: WeekCriteria) => 
+    updateCriteria = (weekCriteria: Partial<WeekCriteria>) => 
         this.componentStore.dispatch(<SetTimesheetCriteriaAction>{ type: SetTimesheetCriteriaAction, weekCriteria })
 }

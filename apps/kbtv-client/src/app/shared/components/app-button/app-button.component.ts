@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
-import { _tryWithLogging } from '@shared-app/helpers/try-with-logging.helper';
+import { _tryWithLogging } from 'array-helpers';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 
 @Component({

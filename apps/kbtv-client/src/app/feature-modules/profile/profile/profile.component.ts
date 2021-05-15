@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '@core/models';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { CurrentUserPasswordForm } from '@shared/constants/forms/password-form.const';
@@ -44,7 +43,7 @@ export class ProfileComponent {
   }
 
   private updateProfile = (): void => {
-    this.formService.open({
+    this.formService.open<ProfileForm, null>({
       formConfig: {...ProfileForm, initialValue: this.facade.currentUser}, 
       navConfig: {title: "Oppdater profil"},
       submitCallback: (val) => this.facade.updateCurrentUser(val)

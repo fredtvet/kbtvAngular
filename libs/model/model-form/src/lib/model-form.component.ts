@@ -6,7 +6,7 @@ import { ModelCommand, SaveAction } from 'model/state-commands';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, shareReplay, take } from 'rxjs/operators';
 import { _formToSaveModelConverter } from './form-to-save-model-converter.helper';
-import { ModelFormConfig, ModelFormState } from './interfaces';
+import { ModelFormConfig } from './interfaces';
 import { ModelFormFacade } from './model-form.facade';
 
 @Component({
@@ -14,7 +14,7 @@ import { ModelFormFacade } from './model-form.facade';
     template: `
       <lib-dynamic-form 
         [config]="formConfig$ | async" 
-        [formState]="formState$ | async" 
+        [inputState]="inputState$ | async" 
         (formSubmitted)="$event ? onSubmit($event) : onCancel()">
       </lib-dynamic-form>
     `,
@@ -26,14 +26,14 @@ export class ModelFormComponent
 
     @Input() config: Maybe<Immutable<ModelFormConfig<object, object> & {entityId?: unknown}>>;
 
-    @Input('formState')
-    set formState(value: Maybe<Immutable<object>>) {
-      if(value) this.formStateSubject.next(value)
+    @Input('inputState')
+    set inputState(value: Maybe<Immutable<object>>) {
+      if(value) this.inputStateSubject.next(value)
     }
   
-    private formStateSubject = new BehaviorSubject<object>({})
+    private inputStateSubject = new BehaviorSubject<object>({})
 
-    formState$: Observable<Immutable<ModelFormState<object>>>;
+    inputState$: Observable<Immutable<object>>;
     formConfig$: Observable<Immutable<DynamicForm<object, object>>>;
 
     private isCreateForm: boolean = false;
@@ -46,19 +46,17 @@ export class ModelFormComponent
 
       if(!this.config.entityId) this.isCreateForm = true;
     
-      this.formState$ = combineLatest([
-        this.formStateSubject.asObservable(),
-        this.facade.getFormState$(this.config.includes)
-      ]).pipe(map(([inputFormState, modelFormState]) => {
-        return {...inputFormState, options: (<ModelFormState<object>>inputFormState).options ? 
-            {...modelFormState.options, ...(<ModelFormState<object>>inputFormState).options} : 
-            modelFormState.options
-        }
-      }), shareReplay(1));
+      this.inputState$ = combineLatest([
+        this.inputStateSubject.asObservable(),
+        this.facade.getModelState$(this.config.includes)
+      ]).pipe(
+        map(([inputState, modelState]) => { return {...inputState, ...modelState} }), 
+        shareReplay(1)
+      );
 
-      this.formConfig$ = this.facade.getFormState$(this.config.includes).pipe(
+      this.formConfig$ = this.facade.getModelState$(this.config.includes).pipe(
         filter(x => x != null),take(1), 
-        map(state => this.getFormConfig(state.options))
+        map(state => this.getFormConfig(state))
       )
     }
 
@@ -69,10 +67,10 @@ export class ModelFormComponent
       setTimeout(() => {
         const converter = this.config!.actionConverter || _formToSaveModelConverter
 
-        this.formState$.pipe(take(1)).subscribe(state =>
+        this.inputState$.pipe(take(1)).subscribe(state =>
           this.facade.save(converter({
             formValue: result, 
-            options: state.options,
+            options: state,
             stateProp: this.config!.includes.prop, 
             saveAction, 
           }))
@@ -91,8 +89,8 @@ export class ModelFormComponent
         if(model) initialValue = this.config!.modelConverter! ? this.config!.modelConverter(model) : model;
       }
       
-      if(!initialValue) return this.config!.dynamicForm;
-      return {
+      if(!initialValue) return <any> this.config!.dynamicForm;
+      return <any>{
         ...dynamicForm, 
         initialValue: dynamicForm.initialValue ? 
           {...initialValue, ...dynamicForm.initialValue} : 

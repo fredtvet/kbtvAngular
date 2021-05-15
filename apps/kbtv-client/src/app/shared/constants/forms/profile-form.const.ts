@@ -8,7 +8,7 @@ import { EmailControl, FirstNameControl, LastNameControl, PhoneNumberControl, Us
 export interface ProfileForm extends Pick<User, "userName">, IContactable, IFullName {}
 
 export const ProfileForm: Immutable<DynamicForm<ProfileForm, null>> = {
-    submitText: "Oppdater", getRawValue: true, onlineRequired: true,
+    submitText: "Oppdater", options: { getRawValue: true, onlineRequired: true, },
     disabledControls: {userName: true, firstName: true, lastName: true},
     controls: {
         userName: {...UserNameControl, required: true},

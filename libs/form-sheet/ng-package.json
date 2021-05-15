@@ -4,7 +4,8 @@
   "lib": {
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
-      "dynamic-forms": "dynamic-forms"
+      "dynamic-forms": "dynamic-forms",
+      "array-helpers":"array-helpers"
     }
   }
 }

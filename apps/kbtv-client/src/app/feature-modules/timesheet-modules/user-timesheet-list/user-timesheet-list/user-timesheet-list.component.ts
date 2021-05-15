@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from '@angular/router';
-import { Timesheet } from '@core/models';
 import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
+import { UserTimesheet } from "@core/state/global-state.interfaces";
 import { ModelState } from "@core/state/model-state.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
@@ -10,9 +10,9 @@ import { _timesheetCriteriaFormSheetFactory } from "@shared-timesheet/timesheet-
 import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
-import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
-import { FormService } from 'form-sheet';
-import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
+import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm, TimesheetFormState } from '@shared/constants/model-forms/save-user-timesheet-form.const';
+import { FormService } from "form-sheet";
+import { Immutable, Maybe, Prop, UnknownState } from 'global-types';
 import { ModelFormService } from 'model/form';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
@@ -20,13 +20,6 @@ import { TimesheetCriteriaChipOptions } from '../../shared-timesheet/timesheet-f
 import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { UserTimesheetListFacade } from './user-timesheet-list.facade';
 import { UserTimesheetListProviders } from './user-timesheet-list.state';
-
-interface ViewModel { 
-  timesheets: ImmutableArray<Timesheet>;
-  criteriaChips: AppChip[], 
-}
-
-type T<R extends object> = Prop<R>
 
 @Component({
   selector: "app-user-timesheet-list",
@@ -51,7 +44,7 @@ export class UserTimesheetListComponent {
 
   actionFab: AppButton = { 
     icon: "add", aria: 'Legg til', 
-    callback: () => this.openTimesheetForm(undefined, <TimesheetForm> this.facade.criteria) 
+    callback: () => this.openTimesheetForm(undefined, <Immutable<Partial<TimesheetForm>>> this.facade.criteria) 
   }
 
   constructor(
@@ -71,12 +64,11 @@ export class UserTimesheetListComponent {
   }
 
   
-  openTimesheetForm = (entityId?: string, initialValue?: TimesheetForm): void => {
-    this.modelFormService.open(
+  openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Immutable<Partial<TimesheetForm>>): void => {
+    this.modelFormService.open<UserTimesheet, TimesheetForm, TimesheetFormState>(
       entityId ? EditUserTimesheetModelForm :
         {...CreateUserTimesheetModelForm, 
-          dynamicForm: {...CreateUserTimesheetModelForm.dynamicForm, 
-            initialValue, disableControlsWithValue: true }
+          dynamicForm: {...CreateUserTimesheetModelForm.dynamicForm, initialValue }
         },
       entityId,
     )
@@ -99,9 +91,9 @@ export class UserTimesheetListComponent {
     this.router.navigate(['../'], { relativeTo: this.route.parent })
   }
 
-  private resetCriteriaProp(prop: Prop<Immutable<TimesheetCriteria>>, criteria: Maybe<Immutable<TimesheetCriteria>>){
-    const clone = {...criteria || {}};
+  private resetCriteriaProp(prop: Prop<Immutable<Partial<TimesheetCriteria>>>, criteria: Maybe<Immutable<TimesheetCriteria>>){
+    const clone = <UnknownState>{...criteria || {}};
     clone[prop] = undefined;
-    this.facade.updateCriteria(clone);
+    this.facade.updateCriteria(<Immutable<TimesheetCriteria>> clone);
   }
 }

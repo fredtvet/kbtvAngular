@@ -19,7 +19,7 @@ export class MailModelsHttpEffect implements Effect<MailModelsAction<Model>>{
             listenTo([MailModelsAction]),
             mergeMap(({action}) => 
                 this.httpClient.post<void>(
-                    environment.baseUrl + ModelBaseUrls[action.stateProp] + "/Mail", 
+                    environment.apiUrl + ModelBaseUrls[action.stateProp] + "/Mail", 
                     <MailModelsHttpRequest> {ids: action.ids, toEmail: action.toEmail}
                 )),
         )

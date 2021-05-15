@@ -1,7 +1,7 @@
 import { Immutable } from 'global-types';
 
 export type DataFilterConstructor<TCriteria>  = 
-    new (criteria: Immutable<TCriteria>, ...args: unknown[]) => DataFilter<Immutable<unknown>, Immutable<TCriteria>>;
+    new (criteria: Immutable<Partial<TCriteria>>, ...args: unknown[]) => DataFilter<Immutable<unknown>, Immutable<TCriteria>>;
 
 export abstract class DataFilter<TRecord, TCriteria>{
 

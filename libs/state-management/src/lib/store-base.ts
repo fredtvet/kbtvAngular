@@ -1,9 +1,9 @@
 import { Immutable, Prop, UnionTupleType } from 'global-types';
+import { _tryWithLogging } from 'array-helpers';
 import { Observable } from 'rxjs';
 import { ActionDispatcher } from './action-dispatcher';
 import { _applyInterceptors } from './helpers/apply-interceptors.helper';
 import { _deepFreeze } from './helpers/object-freezer.helper';
-import { tryWithLogging } from './helpers/try-log-error.helper';
 import { StateAction, StoreSettings } from './interfaces';
 import { selectProp } from './operators/select-prop.operator';
 import { select } from './operators/select.operator';
@@ -68,7 +68,7 @@ export abstract class StoreBase<TState> {
         
         const state = this.base.getStoreState();
         
-        const newState = tryWithLogging(() => reducer.reducerFn(<{}> state, action));
+        const newState = _tryWithLogging(() => reducer.reducerFn(<{}> state, action));
         
         this.base.setStoreState(newState);
 

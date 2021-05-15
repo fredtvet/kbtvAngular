@@ -27,9 +27,7 @@ export class MissionListFacade {
   }
 
   criteriaFormState$: Observable<Immutable<MissionCriteriaFormState>> = 
-    this.store.select$(["missionTypes", "employers", "missions"]).pipe(
-      map(options => { return { options } })
-    )
+    this.store.select$(["missionTypes", "employers", "missions"]);
   
   get currentUser() { return this.store.state.currentUser }
 

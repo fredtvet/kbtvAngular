@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/c
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '@shared/shared.module';
-import { BaseQuestionComponent, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { BaseQuestionComponent, DynamicFormStore, Question, QuestionComponent, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { Maybe } from 'global-types';
 
 export interface InputQuestion extends Question {
@@ -18,7 +18,7 @@ export interface InputQuestion extends Question {
     <mat-form-field [color]="question.color || 'accent'" class="w-100">
       <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
 
-      <input matInput 
+      <input matInput
         [type]="hideField ? 'password' : (question.type === 'password' ? 'text' : question.type)" 
         [placeholder]="question.placeholder" 
         [formControl]="control" 
@@ -43,13 +43,14 @@ export interface InputQuestion extends Question {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputQuestionComponent extends BaseQuestionComponent<InputQuestion> implements QuestionComponent<InputQuestion> {
+export class InputQuestionComponent extends BaseQuestionComponent<null, InputQuestion> implements QuestionComponent<null, InputQuestion> {
 
   hideField: Maybe<boolean>;
 
   constructor(
-    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap) { 
-    super(validationErrorMessages) 
+    @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap,
+    formStore: DynamicFormStore) { 
+    super(validationErrorMessages, formStore) 
   }
 
   protected onQuestionChanges(question: InputQuestion): void { 
