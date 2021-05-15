@@ -57,8 +57,8 @@ function _createGroupedChildLookups(
     const lookups = {} as {[key: string]: {[key: string]: unknown[]}}
     
     for(const prop of props) {
-        const fkKey = modelCfg.children[prop].childKey;
-        lookups[prop] = _groupBy(<[]>(<UnknownState> state)[prop], fkKey);
+        const chRel = modelCfg.children[prop];
+        lookups[prop] = _groupBy(<[]>(<UnknownState> state)[chRel.stateProp], chRel.childKey);
     }
         
     return lookups;
@@ -74,7 +74,7 @@ function _createForeignModelIdLookups(
     for(const prop of props){ //Convert foreign state props to lookup tables
         const fkRel = modelCfg.foreigns[prop];
         const cfg = _getModelConfig<any, any>(fkRel.stateProp); 
-        lookups[prop] = _convertArrayToObject(<[]> (<UnknownState> state)[prop], cfg.idProp);
+        lookups[prop] = _convertArrayToObject(<[]> (<UnknownState> state)[fkRel.stateProp], cfg.idProp);
     }
     return lookups;
 }
