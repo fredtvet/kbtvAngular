@@ -1,8 +1,8 @@
 import { Directive, HostBinding, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { Immutable, Maybe, Prop, UnknownState } from 'global-types';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { DynamicFormStore } from '../dynamic-form.store';
 import { _getValidationErrorMessage } from '../helpers/get-validation-error-message.helper';
 import { Question, QuestionComponent, StateBindingsMap, ValidationErrorMap } from '../interfaces';
@@ -50,8 +50,9 @@ export abstract class BaseQuestionComponent<TBindings extends object | null, TQu
     for(const prop in question.stateBindings){
       const binding = question.stateBindings[prop];
       this.stateBindings[<Prop<StateBindingsMap<TBindings>>> prop] = _isFormStateBinding(binding) ?
-        <any> this.formStore.formState$.pipe(selectState<UnknownState>(binding.props), map(binding.setter)) :
-        of(binding)
+        <any> this.formStore.formState$.pipe(selectState<UnknownState>(binding.props), map(binding.setter), 
+          catchError(x => { console.error(x); return throwError(x)})) :
+        of(binding);
     }
   }
 

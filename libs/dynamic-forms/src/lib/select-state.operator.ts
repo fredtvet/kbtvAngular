@@ -20,6 +20,7 @@ type StateSlice<TState, TProps extends Prop<TState>[]> = {
              return exp;
          }),
          map(state => {
+            if(!state) return <Immutable<StateSlice<TState, TProps>>> {};
             const returnState: Partial<UnknownState> = {}
             for(const prop of props) returnState[prop] = state[<Prop<Immutable<TState>>> prop];
             return <Immutable<StateSlice<TState, TProps>>> returnState;

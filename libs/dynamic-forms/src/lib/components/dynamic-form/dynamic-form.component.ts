@@ -28,7 +28,7 @@ export class DynamicFormComponent<TForm extends object, TFormState extends objec
 
     @Input('inputState') 
     set inputState(value: Maybe<Immutable<Partial<TFormState>>>) {
-      this.formStore.setInputState(value)
+        if(value) this.formStore.setInputState(value)
     }
 
     get config(): Immutable<DynamicForm<TForm, TFormState>> { return this._config }

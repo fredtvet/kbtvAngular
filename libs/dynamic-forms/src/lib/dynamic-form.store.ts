@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DeepPropsObject, Immutable, Maybe, UnknownState } from 'global-types';
-import { BehaviorSubject, combineLatest, merge, Observable, of, Subscription } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, merge, Observable, of, Subscription, throwError } from 'rxjs';
+import { catchError, map, take } from 'rxjs/operators';
 import { _formControlsChanges$ } from './helpers/select-form-controls.helper';
 import { GenericFormStateSetter } from './interfaces';
 import { selectState } from './select-state.operator';
@@ -13,8 +13,6 @@ import { _isFormStateSetter } from './type.helpers';
 @Injectable()
 export class DynamicFormStore<TFormState extends object | null = null> {
     
-    private inputStateSubject = new BehaviorSubject<Immutable<Maybe<Partial<TFormState>>>>(null);
-
     private formStateSubject = new BehaviorSubject<Immutable<Partial<TFormState>>>(<Immutable<TFormState>> {})
 
     /** An observable of the formState */
@@ -27,9 +25,11 @@ export class DynamicFormStore<TFormState extends object | null = null> {
 
     private formStateSub: Subscription;
 
+    constructor(){ }
+
     /** Set the input state causing the formState observer to emit */
-    setInputState(inputState: Immutable<Maybe<Partial<TFormState>>>): void{ 
-        this.inputStateSubject.next(inputState);      
+    setInputState(inputState: Immutable<Partial<TFormState>>): void{ 
+        this.formStateSubject.next(inputState);      
     }
 
     /** Set the form state setters causing the formState observer to emit */
@@ -43,29 +43,42 @@ export class DynamicFormStore<TFormState extends object | null = null> {
     }
 
     private getFormStateObserver$(form: FormGroup, formStateSetters: Maybe<Immutable<GenericFormStateSetter[]>>): Observable<Immutable<Partial<TFormState>>> {
-        const observers: Observable<Immutable<Partial<TFormState>>>[] = 
-            [<Observable<Immutable<Partial<TFormState>>>> this.inputStateSubject.asObservable()];
+        const observers: Observable<Immutable<Partial<TFormState>>>[] = [];
 
         if(formStateSetters)
             for(const setter of formStateSetters){
-                if(_isFormStateSetter(setter)){
-                    const observer =  combineLatest([
-                        !setter.formSlice ? of(undefined) : 
-                            _formControlsChanges$(form, setter.formSlice),
-                        !setter.stateSlice ? of(undefined) : 
-                            this.inputStateSubject.asObservable().pipe(<any>selectState<UnknownState>(setter.stateSlice)),
-                    ]).pipe(map(x => <Immutable<Partial<TFormState>>> 
-                        setter.setter(<DeepPropsObject<object | null, string>> x[0], <DeepPropsObject<object | null, string>> x[1]))
-                    );
-                    if(setter.keepActive === false) observers.push(observer.pipe(take(1)));
-                    else observers.push(observer);    
-                } 
-                else observers.push(of(<Immutable<Partial<TFormState>>> setter))
+                observers.push(this.createSetterObserver$(form, setter))
             }
-        
-        return merge(...observers).pipe(map(setState => { 
+       
+        return merge(...observers).pipe(
+            catchError(x => { console.error(x); return throwError(x)}),
+            map(setState => { 
             return {...this.formStateSubject.value, ...setState}
-        }));
+            })
+        );
+    }
+
+    private createSetterObserver$(
+        form: FormGroup, 
+        setter: Immutable<GenericFormStateSetter>): Observable<Immutable<Partial<TFormState>>> {
+        if(_isFormStateSetter(setter)){
+            
+            const formObserver = setter.formSlice.length === 0 ? of(undefined) :  
+                _formControlsChanges$(form, setter.formSlice);
+
+            const stateObserver = setter.stateSlice.length === 0 ? of(undefined) : 
+                this.formState$.pipe(<any>selectState<UnknownState>(setter.stateSlice));
+
+            const observer =  combineLatest([formObserver, stateObserver]).pipe(
+                map(x => <Immutable<Partial<TFormState>>> 
+                    setter.setter(<DeepPropsObject<object | null, string>> x[0], <DeepPropsObject<object | null, string>> x[1])
+                )
+            );
+
+            if(setter.keepActive === false) return observer.pipe(take(1));
+            else return observer;    
+        } 
+        else return of(<Immutable<Partial<TFormState>>> setter)
     }
 
 }
