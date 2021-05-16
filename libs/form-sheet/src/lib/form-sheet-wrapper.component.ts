@@ -29,8 +29,10 @@ export class FormSheetWrapperComponent  {
         this.loadNav();
         this.loadLoader();
 
-        this.removeLoader();
+        setTimeout(() => {
+            this.removeLoader();
             this.loadForm();
+        })
     }
         
     ngOnDestroy(){
