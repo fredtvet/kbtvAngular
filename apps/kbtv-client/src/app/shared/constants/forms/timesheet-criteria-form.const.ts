@@ -4,6 +4,7 @@ import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-
 import { DateRange, _getISO } from 'date-time-helpers';
 import { DynamicControl, DynamicControlGroup, DynamicForm, _formStateBinding, _formStateSetter } from 'dynamic-forms';
 import { Immutable, Maybe, NotNull } from 'global-types';
+import { StateSyncConfig } from 'state-sync';
 import { translations } from '../../../shared-app/translations';
 import { TimesheetStatus } from '../../enums';
 import { IonDateQuestion, IonDateQuestionComponent } from '../../scam/dynamic-form-questions/ion-date-time-question.component';
@@ -12,9 +13,13 @@ import { MissionAutoCompleteControl, UserSelectControl } from '../common-control
 
 export type TimesheetCriteriaFormState = StateUsers & StateMissions & { startMax: string, startMin: string, endMax: string, endMin: string }
 
-export interface TimesheetCriteriaForm extends NotNull<Pick<TimesheetCriteria, "dateRange" | "dateRangePreset" | "status" | "user" | "mission">> {
+export interface TimesheetCriteriaForm extends UserTimesheetCriteriaForm, NotNull<Pick<TimesheetCriteria, "user">> {};
+
+export interface UserTimesheetCriteriaForm extends NotNull<Pick<TimesheetCriteria, "dateRange" | "dateRangePreset" | "status" | "mission">> {
     customMonthISO: Maybe<string>;
 };
+
+export type UserTimesheetCriteriaFormState = TimesheetCriteriaFormState & StateSyncConfig;
 
 type FormState = TimesheetCriteriaFormState;  
 
@@ -82,9 +87,38 @@ const StatusControl: Immutable<DynamicControl<TimesheetStatus, null, RadioGroupQ
     }, 
 }
 
-export const TimesheetCriteriaForm: Immutable<DynamicForm<TimesheetCriteriaForm, FormState>> = {
-    submitText: "Bruk", options: { noRenderDisabledControls: true },
-    resettable: true,
+const BaseForm: Immutable<Partial<DynamicForm<TimesheetCriteriaForm, FormState>>> = {
+    submitText: "Bruk", resettable: true,
+    hideOnValueChangeMap: {
+        customMonthISO: (val) => val.dateRangePreset !== DateRangePresets.CustomMonth,
+        dateRange: (val) => val.dateRangePreset !== DateRangePresets.Custom,
+    },
+}
+
+export const UserTimesheetCriteriaForm: Immutable<DynamicForm<UserTimesheetCriteriaForm, UserTimesheetCriteriaFormState>> = {
+    ...BaseForm,
+    controls: {
+        mission: {...MissionAutoCompleteControl, required: false},
+        dateRangePreset: DateRangePresetControl,
+        dateRange: CustomDateRangeControlGroup,
+        customMonthISO: CustomMonthControl,
+        status: StatusControl,
+    },
+    formStateSetters: [
+        _formStateSetter<TimesheetCriteriaForm, UserTimesheetCriteriaFormState>()(["dateRange.start"], ["syncConfig"], (f,s) => { 
+            return { endMin: <string> f['dateRange.start'] || (s.syncConfig?.initialTimestamp ? _getISO(s.syncConfig.initialTimestamp) : undefined) } 
+        }), 
+        _formStateSetter<TimesheetCriteriaForm, UserTimesheetCriteriaFormState>()([], ["syncConfig"], (f,s) => { 
+            return { startMin: s.syncConfig?.initialTimestamp ? _getISO(s.syncConfig.initialTimestamp) : undefined } 
+        }),
+        _formStateSetter<TimesheetCriteriaForm, UserTimesheetCriteriaFormState>()(["dateRange.end"], [], (f) => { 
+            return { startMax: <string> f['dateRange.end'] } 
+        }),
+    ]
+}
+
+export const TimesheetCriteriaForm: Immutable<DynamicForm<TimesheetCriteriaForm, TimesheetCriteriaFormState>> = {
+    ...BaseForm, options: { onlineRequired: true },
     controls: {
         user: UserSelectControl,
         mission: {...MissionAutoCompleteControl, required: false},
@@ -92,10 +126,6 @@ export const TimesheetCriteriaForm: Immutable<DynamicForm<TimesheetCriteriaForm,
         dateRange: CustomDateRangeControlGroup,
         customMonthISO: CustomMonthControl,
         status: StatusControl,
-    },
-    hideOnValueChangeMap: {
-        customMonthISO: (val) => val.dateRangePreset !== DateRangePresets.CustomMonth,
-        dateRange: (val) => val.dateRangePreset !== DateRangePresets.Custom,
     },
     formStateSetters: [
         _formStateSetter<TimesheetCriteriaForm, FormState>()(["dateRange.start"], [], (f) => { return { endMin: <string> f['dateRange.start'] } }),

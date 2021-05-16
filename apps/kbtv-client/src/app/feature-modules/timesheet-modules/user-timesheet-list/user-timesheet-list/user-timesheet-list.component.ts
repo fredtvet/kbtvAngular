@@ -6,12 +6,11 @@ import { UserTimesheet } from "@core/state/global-state.interfaces";
 import { ModelState } from "@core/state/model-state.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
-import { _timesheetCriteriaFormSheetFactory } from "@shared-timesheet/timesheet-criteria-form-factory.helper";
+import { UserTimesheetCriteriaFormSheet } from "@shared-timesheet/timesheet-criteria-form-service";
 import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm, TimesheetFormState } from '@shared/constants/model-forms/save-user-timesheet-form.const';
-import { FormService } from "form-sheet";
 import { Immutable, Maybe, Prop, UnknownState } from 'global-types';
 import { ModelFormService } from 'model/form';
 import { Observable } from "rxjs";
@@ -51,7 +50,7 @@ export class UserTimesheetListComponent {
     private facade: UserTimesheetListFacade,
     private route: ActivatedRoute,
     private router: Router,
-    private formService: FormService,
+    private criteriaFormService: UserTimesheetCriteriaFormSheet,
     private dialog: MatDialog,
     private chipsFactory: ChipsFactoryService,
     private modelFormService: ModelFormService<ModelState>
@@ -75,12 +74,7 @@ export class UserTimesheetListComponent {
   };
 
   openTimesheetFilter = (): void => {
-    this.formService.open(_timesheetCriteriaFormSheetFactory({
-      onSubmit: (val) => this.facade.updateCriteria(val),
-      initialValue: this.facade.criteria,
-      formState$: this.facade.timesheetCriteriaFormState$,
-      customForm: {disabledControls: {user: true}}
-    }));
+    this.criteriaFormService.open((val) => this.facade.updateCriteria(val))
   }
 
   openTimesheetCard = (timesheetId: string) =>

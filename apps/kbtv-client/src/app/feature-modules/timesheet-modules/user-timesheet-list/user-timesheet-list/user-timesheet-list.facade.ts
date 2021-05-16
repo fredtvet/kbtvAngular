@@ -40,11 +40,6 @@ export class UserTimesheetListFacade {
           })
       );
 
-      timesheetCriteriaFormState$: Observable<Immutable<Partial<TimesheetCriteriaFormState>>> = 
-        this.store.selectProperty$("missions").pipe(
-          map(x => { return { missions: x || [], users: null }})
-        )
-
       constructor(
           private store: Store<State>,
           private componentStore: ComponentStore<UserTimesheetListState>,  

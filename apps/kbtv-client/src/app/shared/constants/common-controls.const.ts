@@ -85,7 +85,7 @@ export const UserSelectControl: Immutable<DynamicControl<User, StateUsers, Selec
     }, 
 } 
 export const UserNameControl: Immutable<DynamicControl<string, null, InputQuestion>> = { 
-    question: {placeholder: "Brukernavn"}, 
+    question: {placeholder: "Brukernavn", autoComplete: false}, 
     questionComponent: InputQuestionComponent,
     validators: [
         Validators.pattern('^[a-zA-Z0-9_.-]*$'),

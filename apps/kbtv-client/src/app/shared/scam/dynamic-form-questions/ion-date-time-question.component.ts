@@ -85,7 +85,6 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
 
   protected onQuestionChanges(question: IonDateQuestion<object | null>): void { 
     super.onQuestionChanges(question);
-    this.stateBindings.max?.subscribe(x => console.log(x))
     if(this.control)
       this.value$ = this.control.valueChanges.pipe(startWith(this.control.value));
   }

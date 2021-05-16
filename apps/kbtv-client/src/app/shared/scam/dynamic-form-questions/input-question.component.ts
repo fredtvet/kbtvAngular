@@ -10,6 +10,7 @@ export interface InputQuestion extends Question {
   hideable?: boolean;
   defaultHidden?: boolean;
   resetable?: boolean;
+  autoComplete?: boolean
 }
 
 @Component({
@@ -18,7 +19,7 @@ export interface InputQuestion extends Question {
     <mat-form-field [color]="question.color || 'accent'" class="w-100">
       <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
 
-      <input matInput
+      <input matInput [attr.autocomplete]="question.autoComplete === false ? 'off' : 'on'"
         [type]="hideField ? 'password' : (question.type === 'password' ? 'text' : question.type)" 
         [placeholder]="question.placeholder" 
         [formControl]="control" 

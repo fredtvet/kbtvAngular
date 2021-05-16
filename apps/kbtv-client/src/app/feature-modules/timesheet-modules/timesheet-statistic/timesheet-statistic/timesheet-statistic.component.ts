@@ -4,7 +4,7 @@ import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
-import { _timesheetCriteriaFormSheetFactory } from '@shared-timesheet/timesheet-criteria-form-factory.helper';
+import { TimesheetCriteriaFormService } from '@shared-timesheet/timesheet-criteria-form-service';
 import { TimesheetCriteriaChipOptions } from '@shared-timesheet/timesheet-filter/timesheet-criteria-chip-options.const';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
@@ -12,7 +12,6 @@ import { BottomBarIconButton } from '@shared/components/bottom-action-bar/bottom
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { GroupByPeriod } from '@shared/enums';
-import { FormService } from 'form-sheet';
 import { Immutable, ImmutableArray, Maybe, Prop, UnknownState } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -66,7 +65,7 @@ export class TimesheetStatisticComponent {
   
   constructor( 
     private facade: TimesheetStatisticFacade,
-    private formService: FormService,
+    private criteriaFormService: TimesheetCriteriaFormService,
     private chipsFactory: ChipsFactoryService,
     private exportCsvFormService: ExportCsvFormService
   ) { 
@@ -74,13 +73,8 @@ export class TimesheetStatisticComponent {
   }
   
   private openTimesheetFilter = (): void => {
-    this.formService.open(_timesheetCriteriaFormSheetFactory({
-      onSubmit: (val) => this.facade.updateCriteria(val), 
-      initialValue: this.facade.criteria, 
-      formState$: this.facade.criteriaFormState$, 
-      customForm: { options: { onlineRequired: true } }
-  }))}
-
+    this.criteriaFormService.open((val) => this.facade.updateCriteria(val))
+  }
 
   private resetCriteriaProp(prop: Prop<Immutable<TimesheetCriteria>>, criteria: Maybe<Immutable<TimesheetCriteria>>){
     const clone = <UnknownState> {...criteria || {}};
