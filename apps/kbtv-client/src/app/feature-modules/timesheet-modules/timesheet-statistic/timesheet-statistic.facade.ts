@@ -6,7 +6,7 @@ import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
-import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
+import { TimesheetCriteriaFormState } from '@shared-timesheet/forms/timesheet-criteria-form.const';
 import { GroupByPeriod } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { Immutable, ImmutableArray } from 'global-types';

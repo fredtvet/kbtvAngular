@@ -1,36 +1,14 @@
-import { SetTimesheetCriteriaAction } from "@actions/timesheet-actions";
 import { Injectable } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { StateMissions, StateUsers } from "@core/state/global-state.interfaces";
-import { DateRangePresets } from "@shared-app/enums/date-range-presets.enum";
-import { TimesheetCriteriaForm, UserTimesheetCriteriaForm } from "@shared/constants/forms/timesheet-criteria-form.const";
-import { _getISO, _getMonthRange } from "date-time-helpers";
+import { TimesheetCriteriaForm, UserTimesheetCriteriaForm, _criteriaFormToTimesheetCriteria, _timesheetCriteriaToForm } from "@shared-timesheet/forms/timesheet-criteria-form.const";
 import { FormService } from "form-sheet";
-import { Immutable, Prop } from "global-types";
-import { Converter } from "model/form";
+import { Immutable } from "global-types";
 import { map } from "rxjs/operators";
 import { Store } from "state-management";
 import { StateSyncConfig } from "state-sync";
 import { _noEmployersFilter } from "./no-employers-filter.helper";
 import { TimesheetCriteria } from "./timesheet-filter/timesheet-criteria.interface";
-
-const _criteriaFormToTimesheetCriteria : Converter<UserTimesheetCriteriaForm, TimesheetCriteria> =
-    ({customMonthISO, ...rest}) => {
-        if(customMonthISO && rest.dateRangePreset === DateRangePresets.CustomMonth)
-            rest.dateRange = _getMonthRange(customMonthISO, true);
-            
-        return <TimesheetCriteria> rest
-    } 
-
-const _timesheetCriteriaToForm : Converter<TimesheetCriteria, UserTimesheetCriteriaForm> =
-    ({dateRange, ...rest}) => {        
-        return {
-            ...rest,
-            dateRange,
-            customMonthISO: (dateRange && rest.dateRangePreset === DateRangePresets.CustomMonth) ? 
-                _getISO(dateRange.start) : null
-        }
-    }
 
 @Injectable({providedIn: "any"})
 export class TimesheetCriteriaFormService { 

@@ -4,15 +4,15 @@ import { IContactable } from '@core/models/sub-interfaces/icontactable.interface
 import { IFullName } from '@core/models/sub-interfaces/ifullname.interface';
 import { Roles } from '@core/roles.enum';
 import { StateEmployers, StateUsers } from '@core/state/global-state.interfaces';
+import { UserNameControl, FirstNameControl, LastNameControl, EmployerSelectControl, PhoneNumberControl, EmailControl } from '@shared/constants/common-controls.const';
+import { InputQuestion, InputQuestionComponent } from '@shared/scam/dynamic-form-questions/input-question.component';
+import { SelectQuestion, SelectQuestionComponent } from '@shared/scam/dynamic-form-questions/select-question.component';
+import { isUniqueAsyncValidator } from '@shared/validators/is-unique.async.validator';
 import { DynamicControl } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
 import { map } from 'rxjs/operators';
-import { _userFormToSaveUserConverter } from '../../action-converters/user-form-to-save-user.converter';
-import { InputQuestion, InputQuestionComponent } from '../../scam/dynamic-form-questions/input-question.component';
-import { SelectQuestion, SelectQuestionComponent } from '../../scam/dynamic-form-questions/select-question.component';
-import { isUniqueAsyncValidator } from '../../validators/is-unique.async.validator';
-import { EmailControl, EmployerSelectControl, FirstNameControl, LastNameControl, PhoneNumberControl, UserNameControl } from '../common-controls.const';
+import { _userFormToSaveUserConverter } from './user-form-to-save-user.converter';
 
 export interface SaveUserForm extends Pick<User, "userName" | "role" | "employer">, IContactable, IFullName {
     password?: string;

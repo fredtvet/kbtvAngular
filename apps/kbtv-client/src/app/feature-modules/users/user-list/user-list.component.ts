@@ -5,12 +5,12 @@ import { ModelState } from '@core/state/model-state.interface';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
-import { UserPasswordForm } from '@shared/constants/forms/password-form.const';
-import { CreateUserModelForm, EditUserModelForm } from '@shared/constants/model-forms/save-user-forms.const';
 import { FormService } from 'form-sheet';
 import { Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
 import { Observable } from 'rxjs';
+import { EditUserModelForm, CreateUserModelForm } from '../forms/save-user-model-form.const';
+import { UserPasswordForm } from '../forms/user-password-form.const';
 import { UsersFacade } from '../users.facade';
 
 @Component({

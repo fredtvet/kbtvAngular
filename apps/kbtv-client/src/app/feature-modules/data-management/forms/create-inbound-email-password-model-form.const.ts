@@ -1,9 +1,9 @@
 import { Validators } from '@angular/forms';
 import { InboundEmailPassword } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
+import { InputQuestionComponent, InputQuestion } from '@shared/scam/dynamic-form-questions/input-question.component';
 import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
-import { InputQuestion, InputQuestionComponent } from '../../scam/dynamic-form-questions/input-question.component';
 
 export interface CreateInboundEmailPasswordForm extends Pick<InboundEmailPassword, "password"> {}
 

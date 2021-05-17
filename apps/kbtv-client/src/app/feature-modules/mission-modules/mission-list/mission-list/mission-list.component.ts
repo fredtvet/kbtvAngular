@@ -10,8 +10,7 @@ import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { BottomBarIconButton } from "@shared/components/bottom-action-bar/bottom-bar-icon-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
-import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
-import { CreateMissionModelForm } from '@shared/constants/model-forms/save-mission-forms.const';
+import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared-mission/forms/mission-criteria-form.const';
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
 import { MissionFilter } from "@shared/mission-filter.model";
 import { _filter } from "array-helpers";
@@ -23,6 +22,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { MissionListFacade } from '../mission-list.facade';
 import { MissionListProviders } from './mission-list-providers.const';
+import { CreateMissionModelForm } from "@shared-mission/forms/save-mission-model-form.const";
 
 interface ViewModel{ 
   criteriaChips?: AppChip[], 

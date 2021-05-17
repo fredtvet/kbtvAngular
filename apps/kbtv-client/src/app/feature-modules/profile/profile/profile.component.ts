@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { CurrentUserPasswordForm } from '@shared/constants/forms/password-form.const';
-import { ProfileForm } from '@shared/constants/forms/profile-form.const';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { FormService } from 'form-sheet';
+import { CurrentUserPasswordForm } from '../forms/current-user-password-form.const';
+import { ProfileForm } from '../forms/profile-form.const';
 import { ProfileFacade } from '../profile.facade';
 import { ProfileAction } from './profile-action.interface';
 

@@ -2,12 +2,12 @@ import { Mission, MissionType } from '@core/models';
 import { StateMissions, StateEmployers, StateMissionTypes } from '@core/state/global-state.interfaces';
 import { DynamicControl, DynamicForm, _formStateBinding } from 'dynamic-forms';
 import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
-import { AutoCompleteQuestionComponent } from '../../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
-import { AutoCompleteQuestion } from '../../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
-import { RadioGroupQuestionComponent, RadioGroupQuestion } from '../../scam/dynamic-form-questions/radio-group-question.component';
-import { SelectQuestionComponent, SelectQuestion } from '../../scam/dynamic-form-questions/select-question.component';
-import { MissionCriteria } from '../../interfaces';
-import { EmployerSelectControl } from '../common-controls.const';
+import { AutoCompleteQuestionComponent } from '@shared/scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
+import { AutoCompleteQuestion } from '@shared/scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
+import { RadioGroupQuestionComponent, RadioGroupQuestion } from '@shared/scam/dynamic-form-questions/radio-group-question.component';
+import { SelectQuestionComponent, SelectQuestion } from '@shared/scam/dynamic-form-questions/select-question.component';
+import { MissionCriteria } from '@shared/interfaces';
+import { EmployerSelectControl } from '@shared/constants/common-controls.const';
 import { Immutable } from 'global-types';
 
 export type MissionCriteriaFormState = StateMissions & StateEmployers & StateMissionTypes
