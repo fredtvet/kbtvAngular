@@ -1,11 +1,10 @@
 import { SetGroupByAction } from '@actions/timesheet-actions';
-import { Immutable } from 'global-types';
 import { _createReducer } from 'state-management';
 import { StoreState } from './store-state';
 
-export const SetGroupByReducer = _createReducer(
+export const SetGroupByReducer = _createReducer<StoreState, SetGroupByAction>(
     SetGroupByAction,
-    (state: StoreState, action: Immutable<SetGroupByAction>) => {
+    (state, action) => {
         return { timesheetStatisticGroupBy: action.groupBy }
     }  
 )

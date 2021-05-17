@@ -1,4 +1,3 @@
-import { SetTimesheetCriteriaAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Timesheet } from '@core/models';
@@ -6,17 +5,18 @@ import { StateMissions, StateUserTimesheets, UserTimesheet } from '@core/state/g
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '@shared-timesheet/timesheet-filter/timesheet-filter.model';
-import { TimesheetCriteriaFormState } from '@shared/constants/forms/timesheet-criteria-form.const';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { Immutable, Maybe } from 'global-types';
 import { RelationInclude, _getModels } from 'model/core';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ComponentStore, Store } from 'state-management';
+import { StateSyncConfig } from 'state-sync';
+import { SetUserTimesheetCriteriaAction } from './state/set-user-timesheet-criteria.reducer';
+import { UserTimesheetListState } from './state/user-timesheet-list.state';
 import { UserTimesheetListCriteriaQueryParam } from './user-timesheet-list-route-params.const';
-import { UserTimesheetListState } from './user-timesheet-list.state';
 
-type State = StateMissions & StateUserTimesheets;
+type State = StateMissions & StateUserTimesheets & StateSyncConfig;
 
 @Injectable()
 export class UserTimesheetListFacade {
@@ -49,8 +49,9 @@ export class UserTimesheetListFacade {
       }
       
       updateCriteria = (timesheetCriteria: Immutable<Partial<TimesheetCriteria>>) => 
-          this.componentStore.dispatch(<SetTimesheetCriteriaAction<UserTimesheetListState>>{ 
-            type: SetTimesheetCriteriaAction, timesheetCriteria, criteriaProp: "timesheetCriteria" 
+          this.componentStore.dispatch<SetUserTimesheetCriteriaAction>({ 
+            type: SetUserTimesheetCriteriaAction, timesheetCriteria, 
+            lowerBound: this.store.state.syncConfig.initialTimestamp
           });
 
       private setInitialCriteria(){

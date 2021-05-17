@@ -17,8 +17,8 @@ import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 import { TimesheetCriteriaChipOptions } from '../../shared-timesheet/timesheet-filter/timesheet-criteria-chip-options.const';
 import { TimesheetCriteria } from '../../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
+import { UserTimesheetListProviders } from "./state/user-timesheet-list.providers";
 import { UserTimesheetListFacade } from './user-timesheet-list.facade';
-import { UserTimesheetListProviders } from './user-timesheet-list.state';
 
 @Component({
   selector: "app-user-timesheet-list",
