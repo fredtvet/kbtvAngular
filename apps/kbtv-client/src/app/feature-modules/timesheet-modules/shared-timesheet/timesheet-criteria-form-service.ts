@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { StateMissions, StateUsers } from "@core/state/global-state.interfaces";
 import { DateRangePresets } from "@shared-app/enums/date-range-presets.enum";
-import { TimesheetCriteriaForm, UserTimesheetCriteriaForm } from "@shared/constants/forms/timesheet-criteria-form.const";
+import { TimesheetCriteriaForm, UserTimesheetCriteriaForm } from "@shared-timesheet/forms/timesheet-criteria-form.const";
 import { _getISO, _getMonthRange } from "date-time-helpers";
 import { FormService } from "form-sheet";
 import { Immutable, Prop } from "global-types";

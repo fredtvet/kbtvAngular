@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 import { MissionImage } from "@core/models";
 import { AppNotifications } from "@shared-app/app-notifications.const";
 import { _validateFileExtension } from "@shared-app/helpers/validate-file-extension.helper";
-import { ModelFileForm, _formToSaveModelFileConverter } from "@shared/action-converters/form-to-save-model-file.converter";
+import { ModelFileForm, _formToSaveModelFileConverter } from "@shared/constants/form-to-save-model-file.converter";
 import { ValidationRules } from "@shared/constants/validation-rules.const";
 import { NotificationService } from "notification";
 import { of } from "rxjs";

@@ -1,10 +1,10 @@
 import { ModelState } from '@core/state/model-state.interface';
-import { CreateEmployerModelForm } from '@shared/constants/model-forms/create-employer-form.const';
-import { CreateInboundEmailPasswordModelForm } from '@shared/constants/model-forms/create-inbound-email-password-form.const';
-import { CreateMissionTypeModelForm } from '@shared/constants/model-forms/create-mission-type-form.const';
-import { CreateMissionModelForm } from '@shared/constants/model-forms/save-mission-forms.const';
+import { CreateMissionModelForm } from '@shared-mission/forms/save-mission-model-form.const';
 import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
+import { CreateEmployerModelForm } from '../forms/create-employer-model-form.const';
+import { CreateInboundEmailPasswordModelForm } from '../forms/create-inbound-email-password-model-form.const';
+import { CreateMissionTypeModelForm } from '../forms/create-mission-type-model-form.const';
 
 export const PropertyFormMap: {[key: string]: Immutable<ModelFormConfig<ModelState, object, object, object | null>> } = {
     "employers": CreateEmployerModelForm,

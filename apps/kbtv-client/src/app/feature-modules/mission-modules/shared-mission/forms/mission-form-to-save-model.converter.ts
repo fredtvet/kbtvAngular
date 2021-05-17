@@ -1,11 +1,11 @@
 import { Mission } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
-import { CreateMissionForm } from "@shared/constants/model-forms/save-mission-forms.const";
 import { _find } from "array-helpers";
 import { Converter, ModelFormResult, _formToSaveModelConverter } from "model/form";
 import { SaveModelAction } from "model/state-commands";
+import { CreateMissionForm } from "./save-mission-model-form.const";
 
-export const _missionFormActionConverter: Converter<
+export const _missionFormToSaveModelConverter: Converter<
     ModelFormResult<ModelState, Mission, CreateMissionForm>, 
     SaveModelAction<ModelState, Mission>
 > = (input) => {      

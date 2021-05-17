@@ -8,8 +8,7 @@ import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
-import { WeekCriteriaForm } from '@shared/constants/forms/week-criteria-controls.const';
-import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm } from '@shared/constants/model-forms/save-user-timesheet-form.const';
+import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm } from '@shared-timesheet/forms/save-user-timesheet-model-form.const';
 import { _getDateOfWeek, _getWeekRange } from 'date-time-helpers';
 import { FormService } from "form-sheet";
 import { Maybe } from "global-types";
@@ -20,6 +19,7 @@ import { UserTimesheetListCriteriaQueryParam } from "../../user-timesheet-list/u
 import { UserTimesheetWeekProviders } from './user-timesheet-week-providers.const';
 import { UserTimesheetWeekFacade } from './user-timesheet-week.facade';
 import { ViewModel } from './view-model.interface';
+import { WeekCriteriaForm } from "@shared-timesheet/forms/week-criteria-controls.const";
 
 @Component({
   selector: "app-user-timesheet-week",

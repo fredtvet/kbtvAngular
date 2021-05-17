@@ -2,9 +2,9 @@ import { SetSelectedWeekAction, SetTimesheetCriteriaWithWeekCriteriaAction, Upda
 import { Injectable } from '@angular/core';
 import { Timesheet } from '@core/models';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
+import { WeekCriteriaFormState } from '@shared-timesheet/forms/week-criteria-controls.const';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper';
-import { WeekCriteriaFormState } from '@shared/constants/forms/week-criteria-controls.const';
 import { GroupByPeriod, TimesheetStatus } from '@shared/enums';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { _find } from 'array-helpers';

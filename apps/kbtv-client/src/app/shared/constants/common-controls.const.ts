@@ -93,3 +93,19 @@ export const UserNameControl: Immutable<DynamicControl<string, null, InputQuesti
         Validators.maxLength(ValidationRules.NameMaxLength)
     ] 
 }
+export const NewPasswordControl: Immutable<DynamicControl<string, null, InputQuestion>> = { 
+    required: true, questionComponent:  InputQuestionComponent,
+    question: { 
+        placeholder: "Nytt passord", type: "password", hideable: true, defaultHidden: true,
+    },
+    validators: [
+        Validators.minLength(ValidationRules.UserPasswordMinLength),
+        Validators.maxLength(ValidationRules.UserPasswordMaxLength)
+    ] 
+}
+export const ConfirmPasswordControl: Immutable<DynamicControl<string, null, InputQuestion>> = { 
+    required: true, questionComponent:  InputQuestionComponent,
+    question: { 
+        placeholder: "Gjenta nytt passord", type: "password", hideable: true, defaultHidden: true,
+    }, 
+}

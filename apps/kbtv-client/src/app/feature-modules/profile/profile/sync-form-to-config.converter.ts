@@ -1,4 +1,4 @@
-import { SyncConfigForm } from "@shared/constants/forms/sync-config.form.const";
+import { SyncConfigForm } from "src/app/feature-modules/profile/forms/sync-config.form.const";
 import { _getFirstDayOfMonth } from "date-time-helpers";
 import { Converter } from "model/form";
 import { SyncConfig } from "state-sync";

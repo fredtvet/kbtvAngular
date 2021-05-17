@@ -1,8 +1,8 @@
 import { CreateMissionImagesAction, UpdateLastVisitedAction } from "@actions/mission-actions";
 import { Injectable } from "@angular/core";
 import { Mission } from "@core/models";
-import { ModelFileForm, _formToSaveModelFileConverter } from '@shared/action-converters/form-to-save-model-file.converter';
-import { MissionCriteriaFormState } from '@shared/constants/forms/mission-criteria-form.const';
+import { ModelFileForm, _formToSaveModelFileConverter } from '@shared/constants/form-to-save-model-file.converter';
+import { MissionCriteriaFormState } from '@shared-mission/forms/mission-criteria-form.const';
 import { MissionCriteria } from '@shared/interfaces';
 import { Immutable, Maybe, Prop } from 'global-types';
 import { _getModel } from "model/core";

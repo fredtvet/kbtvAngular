@@ -1,6 +1,6 @@
 import { DynamicForm } from 'dynamic-forms';
 import { Immutable } from 'global-types';
-import { EmailControl } from '../common-controls.const';
+import { EmailControl } from '@shared/constants/common-controls.const';
 
 export interface EmailForm { email: string };
 

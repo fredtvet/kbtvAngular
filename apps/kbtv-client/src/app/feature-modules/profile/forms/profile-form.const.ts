@@ -1,9 +1,9 @@
 import { User } from '@core/models';
 import { IContactable } from '@core/models/sub-interfaces/icontactable.interface';
 import { IFullName } from '@core/models/sub-interfaces/ifullname.interface';
+import { UserNameControl, FirstNameControl, LastNameControl, PhoneNumberControl, EmailControl } from '@shared/constants/common-controls.const';
 import { DynamicForm } from 'dynamic-forms';
 import { Immutable } from 'global-types';
-import { EmailControl, FirstNameControl, LastNameControl, PhoneNumberControl, UserNameControl } from '../common-controls.const';
 
 export interface ProfileForm extends Pick<User, "userName">, IContactable, IFullName {}
 

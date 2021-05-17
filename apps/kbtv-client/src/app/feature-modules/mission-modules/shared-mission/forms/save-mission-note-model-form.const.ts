@@ -1,12 +1,12 @@
 import { Validators } from '@angular/forms';
 import { MissionNote } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
+import { ValidationRules } from '@shared/constants/validation-rules.const';
+import { InputQuestion, InputQuestionComponent } from '@shared/scam/dynamic-form-questions/input-question.component';
+import { TextAreaQuestion, TextAreaQuestionComponent } from '@shared/scam/dynamic-form-questions/text-area-question.component';
 import { DynamicControl } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
-import { InputQuestion, InputQuestionComponent } from '../../scam/dynamic-form-questions/input-question.component';
-import { TextAreaQuestion, TextAreaQuestionComponent } from '../../scam/dynamic-form-questions/text-area-question.component';
-import { ValidationRules } from '../validation-rules.const';
 
 export type SaveMissionNoteForm = Pick<MissionNote, "title" | "content" | "missionId" | "id">;
 

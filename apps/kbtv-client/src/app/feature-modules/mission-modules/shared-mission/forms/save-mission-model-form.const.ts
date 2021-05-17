@@ -3,16 +3,16 @@ import { Employer, Mission, MissionType } from '@core/models';
 import { StateEmployers, StateMissionTypes } from '@core/state/global-state.interfaces';
 import { ModelState } from '@core/state/model-state.interface';
 import { _googleAddressFormatter } from '@shared-app/helpers/google-address-formatter.helper';
-import { _missionFormActionConverter } from '@shared/action-converters/mission-form-to-save-model.converter';
+import { _missionFormToSaveModelConverter } from '@shared-mission/forms/mission-form-to-save-model.converter';
+import { GoogleAddressControl, PhoneNumberControl } from '@shared/constants/common-controls.const';
+import { ValidationRules } from '@shared/constants/validation-rules.const';
+import { AutoCompleteQuestionComponent } from '@shared/scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
+import { AutoCompleteQuestion } from '@shared/scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
+import { CheckboxQuestion, CheckboxQuestionComponent } from '@shared/scam/dynamic-form-questions/checkbox-question.component';
+import { TextAreaQuestion, TextAreaQuestionComponent } from '@shared/scam/dynamic-form-questions/text-area-question.component';
 import { DynamicControl, _formStateBinding } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { Converter, ModelFormConfig } from 'model/form';
-import { AutoCompleteQuestionComponent } from '../../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
-import { AutoCompleteQuestion } from '../../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
-import { CheckboxQuestion, CheckboxQuestionComponent } from '../../scam/dynamic-form-questions/checkbox-question.component';
-import { TextAreaQuestion, TextAreaQuestionComponent } from '../../scam/dynamic-form-questions/text-area-question.component';
-import { GoogleAddressControl, PhoneNumberControl } from '../common-controls.const';
-import { ValidationRules } from '../validation-rules.const';
 
 export interface CreateMissionForm extends Pick<Mission, "address" | "phoneNumber" | "description"> {
     employerName?: string,
@@ -66,7 +66,7 @@ const _missionToMissionFormConverter: Converter<Mission, CreateMissionForm> = ({
 
 export const CreateMissionModelForm: Immutable<ModelFormConfig<ModelState, Mission, CreateMissionForm, FormState>> = {
     includes: {prop: "missions", foreigns: "all"},
-    actionConverter: _missionFormActionConverter,
+    actionConverter: _missionFormToSaveModelConverter,
     modelConverter: _missionToMissionFormConverter,
     dynamicForm: {
         submitText: "Legg til",
@@ -83,7 +83,7 @@ export const CreateMissionModelForm: Immutable<ModelFormConfig<ModelState, Missi
 
 export const EditMissionModelForm: Immutable<ModelFormConfig<ModelState, Mission, UpdateMissionForm, FormState>> = {
     includes: {prop: "missions", foreigns: "all"},
-    actionConverter: _missionFormActionConverter,
+    actionConverter: _missionFormToSaveModelConverter,
     modelConverter: _missionToMissionFormConverter,
     dynamicForm: {
         submitText: "Oppdater",

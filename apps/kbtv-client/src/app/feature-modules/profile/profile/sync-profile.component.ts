@@ -2,7 +2,7 @@ import { ConfirmDialogService } from 'confirm-dialog';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { SyncConfigForm } from '@shared/constants/forms/sync-config.form.const';
+import { SyncConfigForm } from 'src/app/feature-modules/profile/forms/sync-config.form.const';
 import { ProfileFacade } from '../profile.facade';
 import { ProfileAction } from './profile-action.interface';
 import { Router } from '@angular/router';

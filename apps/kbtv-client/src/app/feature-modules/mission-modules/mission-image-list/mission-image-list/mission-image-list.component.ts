@@ -12,7 +12,7 @@ import { BaseSelectableContainerComponent } from "@shared-mission/components/bas
 import { ImageViewerDialogWrapperConfig } from "@shared-mission/components/image-viewer/image-viewer-dialog-wrapper-config.const";
 import { ImageViewerDialogWrapperComponent } from "@shared-mission/components/image-viewer/image-viewer-dialog-wrapper.component";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { EmailForm } from '@shared/constants/forms/email-form.const';
+import { EmailForm } from '@shared-mission/forms/email-form.const';
 import { FileFolder } from "@shared/enums/file-folder.enum";
 import { ConfirmDialogService } from "confirm-dialog";
 import { Immutable, ImmutableArray, Maybe } from 'global-types';

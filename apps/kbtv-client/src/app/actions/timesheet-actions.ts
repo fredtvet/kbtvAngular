@@ -18,14 +18,14 @@ export interface SetFetchedTimesheetsAction extends StateAction<typeof SetFetche
     timesheets: Timesheet[]
 }
 
-export const SetSelectedWeekAction = "SET_SELECTED_WEEK_ACTION";
-export interface SetSelectedWeekAction extends StateAction<typeof SetSelectedWeekAction> {
-    weekNr: number
-}
-
 export const SetTimesheetCriteriaWithWeekCriteriaAction = "SET_TIMESHEET_CRITERIA_WITH_WEEK_CRITERIA_ACTION";
 export interface SetTimesheetCriteriaWithWeekCriteriaAction extends StateAction<typeof SetTimesheetCriteriaWithWeekCriteriaAction> {
     weekCriteria: WeekCriteria
+}
+
+export const SetSelectedWeekAction = "SET_SELECTED_WEEK_ACTION";
+export interface SetSelectedWeekAction extends StateAction<typeof SetSelectedWeekAction> {
+    weekNr: number
 }
 
 export const UpdateTimesheetStatusesAction = "UPDATE_TIMESHEET_STATUSES_ACTION";
