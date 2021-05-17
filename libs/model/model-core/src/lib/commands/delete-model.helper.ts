@@ -14,7 +14,7 @@ import { _getModelConfig } from '../model-state-config-helpers';
 export function _deleteModel<TState, TModel extends StateModels<TState>>(
   state: Immutable<TState>, 
   stateProp: Immutable<StatePropByModel<TState,TModel>>, 
-  cfg: Immutable<{id?: Prop<TModel>, ids?: Prop<TModel>[]}>
+  cfg: {id?: string | number, ids?: Immutable<string[] | number[]>}
 ): Immutable<Partial<TState>> {
 
   if(!cfg.id && !cfg.ids) console.error("deleteEntityChildren requires either id or ids property set.")       
@@ -28,7 +28,7 @@ export function _deleteModel<TState, TModel extends StateModels<TState>>(
   const newState: UnknownState = {};
 
   if(filtered?.length < slice?.length) newState[<string> stateProp] = filtered;
-  const lookup = cfg.ids ? _convertArrayToObject(cfg.ids) : {[cfg.id!]: true};
+  const lookup = cfg.ids ? _convertArrayToObject<string | number>(cfg.ids) : {[cfg.id!]: true};
   for(var childModelProp in children){
     const childRel = <ChildRelation<any, any, any>> children[childModelProp];
     if(!childRel.cascadeDelete) continue;

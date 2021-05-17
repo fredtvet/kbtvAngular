@@ -7,7 +7,7 @@ export const DeleteModelAction = "DELETE_MODEL_ACTION";
 export interface DeleteModelAction<TState, TModel extends StateModels<TState>> 
     extends ModelStateAction<TState, TModel, typeof DeleteModelAction>{
 
-    payload: {id?: Prop<TModel>, ids?: Prop<TModel>[]}
+    payload: {id?: string | number, ids?: string[] | number[]}
 }
 
 export const SaveModelAction = "SAVE_MODEL_ACTION";

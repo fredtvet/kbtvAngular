@@ -30,10 +30,10 @@ export class MissionDocumentListFacade  {
   }
 
   delete = (payload: {ids?: string[], id?: string}): void => 
-    this.store.dispatch(<DeleteModelAction<ModelState, MissionDocument>>{type: DeleteModelAction, stateProp: "missionDocuments", payload})
+    this.store.dispatch<DeleteModelAction<ModelState, MissionDocument>>({type: DeleteModelAction, stateProp: "missionDocuments", payload})
 
   mailDocuments = (toEmail: string, ids: string[]): void => 
-    this.store.dispatch(<MailModelsAction<MissionDocument>>{type: MailModelsAction, stateProp: "missionDocuments", ids, toEmail})
+    this.store.dispatch<MailModelsAction<MissionDocument>>({type: MailModelsAction, stateProp: "missionDocuments", ids, toEmail})
     
 }
 

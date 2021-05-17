@@ -51,7 +51,7 @@ export class DataManagerFacade  {
     }
 
     private _deleteItems(ids: string[]): void{
-        this.store.dispatch(<DeleteModelAction<ModelState, Model>>{ 
+        this.store.dispatch<DeleteModelAction<ModelState, Model>>({ 
             type: DeleteModelAction, 
             stateProp: this.selectedProperty, 
             payload: {ids} 
