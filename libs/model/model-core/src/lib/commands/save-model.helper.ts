@@ -104,10 +104,10 @@ function _addChildrenRelations(
         flatModel[<string> rel.childKey] = foreignKey; //Set model id as foreignkey on child models
         fullChildren.push(fullModel);
 
-        if(existingChildModelId && preGenIds[existingChildModelId] !== true) 
-            childSlice.withExistingId.push(flatModel);    
-        else 
+        if(!existingChildModelId || preGenIds[existingChildModelId] === true) 
             childSlice.withGeneratedId.push(flatModel); 
+        else 
+            childSlice.withExistingId.push(flatModel);     
     } 
 
     newState[rel.stateProp] = childSlice;
@@ -129,11 +129,12 @@ function _addForeignRelation(
 
     const fkSlice = newState[rel.stateProp] || {withGeneratedId: [], withExistingId: []};    
     const preGenIds = preGeneratedIds[rel.stateProp];
-    if(existingFkModelId && preGenIds !== undefined && preGenIds[existingFkModelId] !== true) 
-        fkSlice.withExistingId.push(flatModel);    
-    else 
-        fkSlice.withGeneratedId.push(flatModel);
     
+    if(!existingFkModelId || (preGenIds !== undefined && preGenIds[existingFkModelId] === true)) 
+        fkSlice.withGeneratedId.push(flatModel);
+    else     
+        fkSlice.withExistingId.push(flatModel);  
+
     newState[rel.stateProp] = fkSlice;
 
     model[rel.foreignKey] = flatModel[fkModelCfg.idProp]; //Set foreign key on entity
