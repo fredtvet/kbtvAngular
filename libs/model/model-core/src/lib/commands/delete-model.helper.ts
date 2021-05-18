@@ -17,7 +17,7 @@ export function _deleteModel<TState, TModel extends StateModels<TState>>(
   cfg: {id?: string | number, ids?: Immutable<string[] | number[]>}
 ): Immutable<Partial<TState>> {
 
-  if(!cfg.id && !cfg.ids) console.error("deleteEntityChildren requires either id or ids property set.")       
+  if(!cfg.id && !cfg.ids) return  <Immutable<Partial<TState>>> {}     
 
   const {idProp, children} = _getModelConfig<TState, TModel>(stateProp);
   const slice = <Immutable<UnknownState[]>> (<any> state)[stateProp];

@@ -8,7 +8,7 @@ export function _registerModelStateConfig<
     TState, 
     TConfigMap extends ModelConfigMap<TState> = ModelConfigMap<TState>
 >(configMap: Immutable<TConfigMap>): void{
-    if (!_modelConfigs) _modelConfigs = configMap; 
+    _modelConfigs = {..._modelConfigs, ...configMap}; 
 }
 
 /** Get model config for given state property */
