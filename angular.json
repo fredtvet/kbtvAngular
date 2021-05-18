@@ -85,24 +85,24 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "apps/kbtv-client/src/test.ts",
-            "polyfills": "apps/kbtv-client/src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": [
-              "apps/kbtv-client/src/favicon.ico",
-              "apps/kbtv-client/src/assets",
-              "apps/kbtv-client/src/manifest.json"
-            ],
-            "styles": [
-              "apps/kbtv-client/src/styles/styles.scss"
-            ],
-            "scripts": []
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "apps/kbtv-client/src/test.ts",
+        //     "polyfills": "apps/kbtv-client/src/polyfills.ts",
+        //     "tsConfig": "tsconfig.spec.json",
+        //     "karmaConfig": "karma.conf.js",
+        //     "assets": [
+        //       "apps/kbtv-client/src/favicon.ico",
+        //       "apps/kbtv-client/src/assets",
+        //       "apps/kbtv-client/src/manifest.json"
+        //     ],
+        //     "styles": [
+        //       "apps/kbtv-client/src/styles/styles.scss"
+        //     ],
+        //     "scripts": []
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -130,6 +130,125 @@
         }
       }
     },
+    "test-proj": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/test-proj",
+      "sourceRoot": "apps/test-proj/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/test-proj",
+            "index": "apps/test-proj/src/index.html",
+            "main": "apps/test-proj/src/main.ts",
+            "polyfills": "apps/test-proj/src/polyfills.ts",
+            "tsConfig": "apps/test-proj/tsconfig.json",
+            "aot": true,
+            "assets": [
+              "apps/test-proj/src/favicon.ico",
+              "apps/test-proj/src/assets",
+              "apps/test-proj/src/manifest.json"
+            ],
+            "extractCss": true,
+            "styles": [
+              "apps/test-proj/src/styles/styles.scss",     
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/test-proj/src/environments/environment.ts",
+                  "with": "apps/test-proj/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                // {
+                //   "type": "initial",
+                //   "maximumWarning": "1mb",
+                //   "maximumError": "2mb"
+                // },
+                // {
+                //   "type": "anyComponentStyle",
+                //   "maximumWarning": "2kb",
+                //   "maximumError": "4kb"
+                // }
+              ],
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "test-proj:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "test-proj:build:production"
+            }
+          }
+        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "apps/test-proj/src/test.ts",
+        //     "polyfills": "apps/test-proj/src/polyfills.ts",
+        //     "tsConfig": "tsconfig.spec.json",
+        //     "karmaConfig": "karma.conf.js",
+        //     "assets": [
+        //       "apps/test-proj/src/favicon.ico",
+        //       "apps/test-proj/src/assets",
+        //       "apps/test-proj/src/manifest.json"
+        //     ],
+        //     "styles": [
+        //       "apps/test-proj/src/styles/styles.scss"
+        //     ],
+        //     "scripts": []
+        //   }
+        // },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/test-proj/tsconfig.app.json",
+              "apps/test-proj/tsconfig.spec.json",
+              "apps/test-proj/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/test-proj/e2e/protractor.conf.js",
+            "devServerTarget": "test-proj:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "test-proj:serve:production"
+            }
+          }
+        }
+      }
+    },
     "global-types": {
       "projectType": "library",
       "root": "libs/global-types",
@@ -148,14 +267,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/global-types/src/test.ts",
-            "tsConfig": "libs/global-types/tsconfig.spec.json",
-            "karmaConfig": "libs/global-types/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/global-types/src/test.ts",
+        //     "tsConfig": "libs/global-types/tsconfig.spec.json",
+        //     "karmaConfig": "libs/global-types/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -188,14 +307,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/state-management/src/test.ts",
-            "tsConfig": "libs/state-management/tsconfig.spec.json",
-            "karmaConfig": "libs/state-management/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/state-management/src/test.ts",
+        //     "tsConfig": "libs/state-management/tsconfig.spec.json",
+        //     "karmaConfig": "libs/state-management/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -228,14 +347,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/array-helpers/src/test.ts",
-            "tsConfig": "libs/array-helpers/tsconfig.spec.json",
-            "karmaConfig": "libs/array-helpers/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/array-helpers/src/test.ts",
+        //     "tsConfig": "libs/array-helpers/tsconfig.spec.json",
+        //     "karmaConfig": "libs/array-helpers/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -268,14 +387,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/date-time-helpers/src/test.ts",
-            "tsConfig": "libs/date-time-helpers/tsconfig.spec.json",
-            "karmaConfig": "libs/date-time-helpers/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/date-time-helpers/src/test.ts",
+        //     "tsConfig": "libs/date-time-helpers/tsconfig.spec.json",
+        //     "karmaConfig": "libs/date-time-helpers/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -308,14 +427,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/notification/src/test.ts",
-            "tsConfig": "libs/notification/tsconfig.spec.json",
-            "karmaConfig": "libs/notification/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/notification/src/test.ts",
+        //     "tsConfig": "libs/notification/tsconfig.spec.json",
+        //     "karmaConfig": "libs/notification/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -348,14 +467,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/state-db/src/test.ts",
-            "tsConfig": "libs/state-db/tsconfig.spec.json",
-            "karmaConfig": "libs/state-db/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/state-db/src/test.ts",
+        //     "tsConfig": "libs/state-db/tsconfig.spec.json",
+        //     "karmaConfig": "libs/state-db/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -388,14 +507,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/optimistic-http/src/test.ts",
-            "tsConfig": "libs/optimistic-http/tsconfig.spec.json",
-            "karmaConfig": "libs/optimistic-http/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/optimistic-http/src/test.ts",
+        //     "tsConfig": "libs/optimistic-http/tsconfig.spec.json",
+        //     "karmaConfig": "libs/optimistic-http/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -428,14 +547,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/state-sync/src/test.ts",
-            "tsConfig": "libs/state-sync/tsconfig.spec.json",
-            "karmaConfig": "libs/state-sync/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/state-sync/src/test.ts",
+        //     "tsConfig": "libs/state-sync/tsconfig.spec.json",
+        //     "karmaConfig": "libs/state-sync/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -468,14 +587,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/confirm-dialog/src/test.ts",
-            "tsConfig": "libs/confirm-dialog/tsconfig.spec.json",
-            "karmaConfig": "libs/confirm-dialog/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/confirm-dialog/src/test.ts",
+        //     "tsConfig": "libs/confirm-dialog/tsconfig.spec.json",
+        //     "karmaConfig": "libs/confirm-dialog/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -508,14 +627,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/dynamic-forms/src/test.ts",
-            "tsConfig": "libs/dynamic-forms/tsconfig.spec.json",
-            "karmaConfig": "libs/dynamic-forms/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/dynamic-forms/src/test.ts",
+        //     "tsConfig": "libs/dynamic-forms/tsconfig.spec.json",
+        //     "karmaConfig": "libs/dynamic-forms/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -548,14 +667,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/form-sheet/src/test.ts",
-            "tsConfig": "libs/form-sheet/tsconfig.spec.json",
-            "karmaConfig": "libs/form-sheet/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/form-sheet/src/test.ts",
+        //     "tsConfig": "libs/form-sheet/tsconfig.spec.json",
+        //     "karmaConfig": "libs/form-sheet/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -588,14 +707,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/model/model-form/src/test.ts",
-            "tsConfig": "libs/model/model-form/tsconfig.spec.json",
-            "karmaConfig": "libs/model/model-form/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/model/model-form/src/test.ts",
+        //     "tsConfig": "libs/model/model-form/tsconfig.spec.json",
+        //     "karmaConfig": "libs/model/model-form/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -628,14 +747,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/state-auth/src/test.ts",
-            "tsConfig": "libs/state-auth/tsconfig.spec.json",
-            "karmaConfig": "libs/state-auth/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/state-auth/src/test.ts",
+        //     "tsConfig": "libs/state-auth/tsconfig.spec.json",
+        //     "karmaConfig": "libs/state-auth/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -668,14 +787,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/cdk-selectable/src/test.ts",
-            "tsConfig": "libs/cdk-selectable/tsconfig.spec.json",
-            "karmaConfig": "libs/cdk-selectable/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/cdk-selectable/src/test.ts",
+        //     "tsConfig": "libs/cdk-selectable/tsconfig.spec.json",
+        //     "karmaConfig": "libs/cdk-selectable/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -708,14 +827,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/model/model-data-table/src/test.ts",
-            "tsConfig": "libs/model/model-data-table/tsconfig.spec.json",
-            "karmaConfig": "libs/model/model-data-table/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/model/model-data-table/src/test.ts",
+        //     "tsConfig": "libs/model/model-data-table/tsconfig.spec.json",
+        //     "karmaConfig": "libs/model/model-data-table/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -748,14 +867,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/google-places-autocomplete/src/test.ts",
-            "tsConfig": "libs/google-places-autocomplete/tsconfig.spec.json",
-            "karmaConfig": "libs/google-places-autocomplete/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/google-places-autocomplete/src/test.ts",
+        //     "tsConfig": "libs/google-places-autocomplete/tsconfig.spec.json",
+        //     "karmaConfig": "libs/google-places-autocomplete/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -788,14 +907,14 @@
             }
           }
         },
-        // "test": {
-        //   "builder": "@angular-devkit/build-angular:karma",
-        //   "options": {
-        //     "main": "libs/model/model-core/src/test.ts",
-        //     "tsConfig": "libs/model/model-core/tsconfig.spec.json",
-        //     "karmaConfig": "libs/model/model-core/karma.conf.js"
-        //   }
-        // },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/model/model-core/src/test.ts",
+            "tsConfig": "libs/model/model-core/tsconfig.spec.json",
+            "karmaConfig": "libs/model/model-core/karma.conf.js"
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -828,14 +947,14 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "libs/model/model-state-fetcher/src/test.ts",
-            "tsConfig": "libs/model/model-state-fetcher/tsconfig.spec.json",
-            "karmaConfig": "libs/model/model-state-fetcher/karma.conf.js"
-          }
-        },
+        // "test": {
+        //   "builder": "@angular-devkit/build-angular:karma",
+        //   "options": {
+        //     "main": "libs/model/model-state-fetcher/src/test.ts",
+        //     "tsConfig": "libs/model/model-state-fetcher/tsconfig.spec.json",
+        //     "karmaConfig": "libs/model/model-state-fetcher/karma.conf.js"
+        //   }
+        // },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
