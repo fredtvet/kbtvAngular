@@ -1,7 +1,9 @@
 import { SetSelectedWeekAction, SetTimesheetCriteriaWithWeekCriteriaAction, UpdateTimesheetStatusesAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
 import { Timesheet } from '@core/models';
+import { ModelState } from '@core/state/model-state.interface';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
+import { TimesheetForm, TimesheetFormState, EditTimesheetModelForm, CreateTimesheetModelForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { WeekCriteriaFormState } from '@shared-timesheet/forms/week-criteria-controls.const';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper';
@@ -10,6 +12,7 @@ import { filterRecords } from '@shared/operators/filter-records.operator';
 import { _find } from 'array-helpers';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { _getModels } from 'model/core';
+import { ModelFormService } from 'model/form';
 import { FetchModelsAction } from 'model/state-fetcher';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -59,10 +62,22 @@ export class TimesheetAdminFacade {
         return timesheets?.slice().map(x => { return <Timesheet> {...x, fullName: summary.fullName}});
     }))
     
-    constructor(private store: Store<StoreState>){
+    constructor(
+        private store: Store<StoreState>, 
+        private modelFormService: ModelFormService<ModelState>){
         this.store.dispatch({type: FetchModelsAction, props: ["users"]})
     }
     
+    openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Immutable<Partial<TimesheetForm>>): void => {
+        this.modelFormService.open<Timesheet, TimesheetForm, TimesheetFormState>(
+        entityId ? EditTimesheetModelForm :
+            {...CreateTimesheetModelForm, 
+            dynamicForm: {...CreateTimesheetModelForm.dynamicForm, initialValue }
+            },
+        entityId,
+        )
+    };
+
     updateCriteria = (weekCriteria: WeekCriteria): void =>       
         this.store.dispatch(<SetTimesheetCriteriaWithWeekCriteriaAction>{ 
             type: SetTimesheetCriteriaWithWeekCriteriaAction, weekCriteria 

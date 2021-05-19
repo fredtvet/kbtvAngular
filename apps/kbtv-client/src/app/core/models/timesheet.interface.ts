@@ -17,3 +17,5 @@ export interface Timesheet extends MissionChild, UserForeign, IId {
     endTime?: number;
     totalHours?: number;
 }
+
+export interface UserTimesheet extends Omit<Timesheet, "user" | "userName" | "fullName"> {  }

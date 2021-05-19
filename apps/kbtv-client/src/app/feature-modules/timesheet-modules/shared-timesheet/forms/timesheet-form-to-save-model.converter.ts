@@ -1,7 +1,7 @@
-import { Timesheet } from '@core/models';
-import { StateMissions, StateUserTimesheets, UserTimesheet } from '@core/state/global-state.interfaces';
+import { Timesheet, UserTimesheet } from '@core/models';
+import { StateMissions, StateTimesheets, StateUserTimesheets } from '@core/state/global-state.interfaces';
 import { ModelState } from '@core/state/model-state.interface';
-import { TimesheetForm } from '@shared-timesheet/forms/save-user-timesheet-model-form.const';
+import { TimesheetForm, UserTimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { TimesheetStatus } from '@shared/enums';
 import { _getTotalHours, _mergeDateAndTime } from 'date-time-helpers';
 import { Immutable } from 'global-types';
@@ -9,8 +9,17 @@ import { Converter, ModelFormResult } from 'model/form';
 import { SaveModelAction } from 'model/state-commands';
 
 export const _timesheetFormToSaveModelConverter: Converter<
-    ModelFormResult<StateUserTimesheets & StateMissions, Timesheet, TimesheetForm>, 
-    SaveModelAction<StateUserTimesheets & StateMissions, UserTimesheet>
+    ModelFormResult<StateUserTimesheets & StateTimesheets & StateMissions, Timesheet, TimesheetForm>, 
+    SaveModelAction<StateUserTimesheets & StateTimesheets & StateMissions, Timesheet>
+> = (input) => {      
+    const user = input.formValue.user;
+    let action = _userTimesheetFormToSaveModelConverter(input);
+    return {...action, stateProp: input.stateProp, entity: {...action.entity, userName: user.userName}};
+}
+
+export const _userTimesheetFormToSaveModelConverter: Converter<
+    ModelFormResult<StateUserTimesheets & StateTimesheets & StateMissions, UserTimesheet, UserTimesheetForm>, 
+    SaveModelAction<StateUserTimesheets & StateTimesheets & StateMissions, UserTimesheet>
 > = (input) => {      
     const {id, mission, comment, dateTime} = input.formValue;
 
@@ -23,10 +32,10 @@ export const _timesheetFormToSaveModelConverter: Converter<
     
     entity.totalHours = _getTotalHours(entity.startTime || 0, entity.endTime || 0)
 
-    return <Immutable<SaveModelAction<ModelState, UserTimesheet>>>{ 
+    return <Immutable<SaveModelAction<ModelState, Timesheet>>>{ 
         type: SaveModelAction,
         entity, 
-        stateProp: "userTimesheets",
+        stateProp: input.stateProp,
         saveAction: input.saveAction
     }
 }

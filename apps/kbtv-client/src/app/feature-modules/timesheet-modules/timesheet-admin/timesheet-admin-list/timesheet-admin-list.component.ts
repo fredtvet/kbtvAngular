@@ -2,8 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet, User } from '@core/models';
+import { ModelState } from '@core/state/model-state.interface';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
+import { TimesheetForm, TimesheetFormState, EditTimesheetModelForm, CreateTimesheetModelForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { WeekCriteriaForm } from '@shared-timesheet/forms/week-criteria-controls.const';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
@@ -13,6 +15,7 @@ import { TimesheetStatus } from '@shared/enums';
 import { _getWeekYear } from 'date-time-helpers';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
+import { ModelFormService } from 'model/form';
 import { combineLatest, Observable } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { AdminTimesheetCardDialogWrapperComponent } from '../components/admin-timesheet-card-dialog-wrapper.component';
@@ -34,7 +37,12 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
   ]).pipe(map(([weekNr, weekCriteria]) => this.getNavConfig(weekCriteria?.user, weekCriteria?.year, weekNr)))
 
   bottomActions: AppButton[];
-  
+
+  actionFab: AppButton = { 
+    icon: "add", aria: 'Legg til', 
+    callback: () => this.openTimesheetForm(undefined, {user: this.facade.weekCriteria.user}) 
+  }
+
   constructor(
     private facade: TimesheetAdminFacade,
     private router: Router,
@@ -55,6 +63,9 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
       timesheet.status === TimesheetStatus.Confirmed ? TimesheetStatus.Open : TimesheetStatus.Confirmed
     );
 
+  openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Immutable<Partial<TimesheetForm>>): void => 
+    this.facade.openTimesheetForm(entityId, initialValue);
+  
   openTimesheetCard = (timesheet: Immutable<Timesheet>) =>
     this.dialog.open(AdminTimesheetCardDialogWrapperComponent, {
       data: timesheet, panelClass: 'extended-dialog'});

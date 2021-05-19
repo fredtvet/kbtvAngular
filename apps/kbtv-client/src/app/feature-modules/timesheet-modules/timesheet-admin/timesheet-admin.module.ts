@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { SaveModelEffect, SaveModelReducer } from 'model/state-commands';
+import { ModelFormModule } from 'model/form';
+import { DeleteModelReducer, SaveModelEffect, SaveModelReducer } from 'model/state-commands';
 import { ModelStateFetcherModule } from 'model/state-fetcher';
 import { OptimisticHttpModule } from 'optimistic-http';
 import { StateManagementModule } from 'state-management';
@@ -38,10 +39,11 @@ const OptimisticFeatureProps = ["timesheetAdminTimesheetCriteria","timesheetAdmi
     SharedTimesheetModule,
     TimesheetAdminRoutingModule,    
     StateManagementModule.forFeature({
-      reducers: [SaveModelReducer, UpdateTimesheetStatusesReducer, SetTimesheetCriteriaReducer, SetSelectedWeekReducer], 
+      reducers: [SaveModelReducer, UpdateTimesheetStatusesReducer, SetTimesheetCriteriaReducer, SetSelectedWeekReducer, DeleteModelReducer], 
       effects: [FetchTimesheetsEffect, SaveModelEffect],
     }), 
-    ModelStateFetcherModule,
+    ModelStateFetcherModule, 
+    ModelFormModule,
     OptimisticHttpModule.forFeature(TimesheetAdminActionRequestMap, OptimisticFeatureProps)
   ]
 })

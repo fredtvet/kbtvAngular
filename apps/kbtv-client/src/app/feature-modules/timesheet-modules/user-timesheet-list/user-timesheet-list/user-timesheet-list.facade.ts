@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Timesheet } from '@core/models';
-import { StateMissions, StateUserTimesheets, UserTimesheet } from '@core/state/global-state.interfaces';
+import { Timesheet, UserTimesheet } from '@core/models';
+import { StateMissions, StateUserTimesheets } from '@core/state/global-state.interfaces';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '@shared-timesheet/timesheet-filter/timesheet-filter.model';

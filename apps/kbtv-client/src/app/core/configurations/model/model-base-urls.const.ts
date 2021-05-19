@@ -9,7 +9,7 @@ export const ModelBaseUrls: Record<keyof ModelState, string> = {
     employers: ApiUrl.Employer,
     missionTypes: ApiUrl.MissionType,
     timesheets: ApiUrl.Timesheet,
-    userTimesheets: ApiUrl.UserTimesheet,
+    userTimesheets: ApiUrl.Timesheet,
     users: ApiUrl.Users,
     inboundEmailPasswords: ApiUrl.InboundEmailPassword
 }

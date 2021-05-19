@@ -19,7 +19,7 @@ export class TimesheetAdminUserListComponent {
 
   constructor(
     private facade: TimesheetAdminFacade,
-    private router: Router,
+    private router: Router
   ) {}
 
   goToWeekList(user: User){

@@ -7,11 +7,11 @@
         <app-timesheet-admin-list-view *ngIf="timesheets.length else loading"
             [timesheets]="timesheets"
             (statusToggled)="toggleTimesheetStatus($event)"
-            (timesheetClicked)="openTimesheetCard($event)">
+            (timesheetClicked)="$event?.status === 2 ? openTimesheetCard($event) : openTimesheetForm($event?.id)">
         </app-timesheet-admin-list-view>
     </ng-container>
     
-    <app-bottom-action-bar bottombar
+    <app-bottom-action-bar bottombar [fab]="actionFab"
         [actions]="bottomActions">
     </app-bottom-action-bar>
 

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet, User } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
+import { TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { WeekCriteriaForm } from '@shared-timesheet/forms/week-criteria-controls.const';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
@@ -33,6 +34,11 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
 
   bottomActions: AppButton[];
   
+  actionFab: AppButton = { 
+    icon: "add", aria: 'Legg til', 
+    callback: () => this.openTimesheetForm(undefined, {user: this.facade.weekCriteria.user}) 
+  }
+
   constructor(
     private facade: TimesheetAdminFacade,
     private formService: FormService,
@@ -48,6 +54,9 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
       ).subscribe();
     }
 
+  openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Immutable<Partial<TimesheetForm>>): void => 
+    this.facade.openTimesheetForm(entityId, initialValue);
+    
   confirmTimesheets = (timesheets: Timesheet[]): void => {
     if(!timesheets) return;
     
