@@ -101,6 +101,10 @@
         "dist/model/model-data-table/model-data-table",
         "dist/model/model-data-table"
       ],
+      "testoretine": [
+        "dist/testoretine/testoretine",
+        "dist/testoretine"
+      ],
     }
   },
   "angularCompilerOptions": {
