@@ -1,4 +1,5 @@
 import { Timesheet } from "@core/models";
+import { LeaderSettings } from "@core/models/leader-settings.interface";
 import { WeekCriteria } from "@shared-timesheet/interfaces";
 import { TimesheetCriteria } from "@shared-timesheet/timesheet-filter/timesheet-criteria.interface";
 import { GroupByPeriod, TimesheetStatus } from "@shared/enums";
@@ -44,4 +45,14 @@ export const SetTimesheetCriteriaAction = "SET_TIMESHEET_CRITERIA_ACTION";
 export interface SetTimesheetCriteriaAction<TState = UnknownState> extends StateAction<typeof SetTimesheetCriteriaAction> {
     timesheetCriteria: Immutable<TimesheetCriteria>,
     criteriaProp: Prop<TState>
+}
+
+export const UpdateLeaderSettingsAction = "UPDATE_LEADER_SETTINGS_ACTION";
+export interface UpdateLeaderSettingsAction extends StateAction<typeof UpdateLeaderSettingsAction> {
+    settings: LeaderSettings;
+}
+
+export const UpdateLeaderSettingsSuccessAction = "UPDATE_LEADER_SETTINGS_SUCCESS_ACTION";
+export interface UpdateLeaderSettingsSuccessAction extends StateAction<typeof UpdateLeaderSettingsSuccessAction> {
+    settings: LeaderSettings;
 }

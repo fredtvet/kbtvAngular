@@ -1,4 +1,5 @@
 import { Mission, Employer, MissionType, MissionImage, MissionDocument, MissionNote, Timesheet, User, InboundEmailPassword, UserTimesheet } from '@core/models';
+import { LeaderSettings } from '@core/models/leader-settings.interface';
 import { Maybe } from 'global-types';
 import { CurrentUser } from 'state-auth';
 
@@ -13,3 +14,4 @@ export interface StateCurrentUser { currentUser: Maybe<User & CurrentUser> }
 export interface StateUsers { users: Maybe<User[]> }
 export interface StateInboundEmailPassword { inboundEmailPasswords: Maybe<InboundEmailPassword[]> }
 export interface StateTimesheets { timesheets: Maybe<Timesheet[]> }
+export interface StateLeaderSettings { leaderSettings: Maybe<LeaderSettings> }

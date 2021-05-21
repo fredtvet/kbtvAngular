@@ -1,9 +1,9 @@
-import { StateCurrentUser } from '../state/global-state.interfaces';
+import { StateCurrentUser, StateLeaderSettings } from '../state/global-state.interfaces';
 import { ModelState } from '../state/model-state.interface';
 import { SyncStatePropConfig } from 'state-sync';
 import { ModelIdProps } from './model/model-id-props.const';
 
-export type SyncModelState = Partial<ModelState> & StateCurrentUser;
+export type SyncModelState = Partial<ModelState> & StateCurrentUser & StateLeaderSettings;
 
 export const AppSyncStateConfig: {[key in keyof SyncModelState]: SyncStatePropConfig} = 
 {
@@ -14,7 +14,8 @@ export const AppSyncStateConfig: {[key in keyof SyncModelState]: SyncStatePropCo
     missionDocuments: {idProp: ModelIdProps.missionDocuments, type: "array"},
     employers: {idProp: ModelIdProps.employers, type: "array"},  
     userTimesheets: {idProp: ModelIdProps.userTimesheets, type: "array"}, 
-    currentUser: {idProp: ModelIdProps.users, type: "value", wipeable: false}, 
+    currentUser: {idProp: ModelIdProps.users, type: "value", wipeable: false},  
+    leaderSettings: {idProp: "", type: "value", wipeable: false}, 
 };
 
 

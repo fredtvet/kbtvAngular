@@ -1,9 +1,10 @@
-import { SetSelectedWeekAction, SetTimesheetCriteriaWithWeekCriteriaAction, UpdateTimesheetStatusesAction } from '@actions/timesheet-actions';
+import { SetSelectedWeekAction, SetTimesheetCriteriaWithWeekCriteriaAction, UpdateLeaderSettingsAction, UpdateTimesheetStatusesAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
 import { Timesheet } from '@core/models';
+import { LeaderSettings } from '@core/models/leader-settings.interface';
 import { ModelState } from '@core/state/model-state.interface';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
-import { TimesheetForm, TimesheetFormState, EditTimesheetModelForm, CreateTimesheetModelForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
+import { CreateTimesheetModelForm, EditTimesheetModelForm, TimesheetForm, TimesheetFormState } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { WeekCriteriaFormState } from '@shared-timesheet/forms/week-criteria-controls.const';
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { _noEmployersFilter } from '@shared-timesheet/no-employers-filter.helper';
@@ -33,6 +34,8 @@ export class TimesheetAdminFacade {
 
     get weekCriteria(){ return this.store.state.timesheetAdminWeekCriteria; } 
     weekCriteria$ = this.store.selectProperty$("timesheetAdminWeekCriteria");
+
+    get leaderSettings(){ return this.store.state.leaderSettings; } 
 
     timesheetCriteria$ = this.store.selectProperty$("timesheetAdminTimesheetCriteria")
 
@@ -91,5 +94,10 @@ export class TimesheetAdminFacade {
     updateStatuses(ids: string[], status: TimesheetStatus): void{
         if(ids.length == 0) return;
         this.store.dispatch(<UpdateTimesheetStatusesAction>{ type: UpdateTimesheetStatusesAction, ids, status });      
+    }
+
+    updateLeaderSettings(settings: LeaderSettings): void {
+        if(settings == null) return;
+        this.store.dispatch(<UpdateLeaderSettingsAction>{ type: UpdateLeaderSettingsAction, settings })
     }
 }

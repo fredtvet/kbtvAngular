@@ -11,6 +11,8 @@ import { SwipeCardComponent } from './components/swipe-card/swipe-card.component
 import { FetchTimesheetsEffect } from './state/fetch-timesheets.effect';
 import { SetSelectedWeekReducer } from './state/set-selected-week.reducer';
 import { SetTimesheetCriteriaReducer } from './state/set-timesheet-criteria.reducer';
+import { UpdateLeaderSettingsHttpEffect } from './state/update-leader-settings.http.effect';
+import { UpdateLeaderSettingsSuccessReducer } from './state/update-leader-settings.reducer';
 import { UpdateTimesheetStatusesReducer } from './state/update-timesheet-statuses.reducer';
 import { TimesheetAdminActionRequestMap } from './timesheet-admin-action-request-map.const';
 import { TimesheetAdminListViewComponent } from './timesheet-admin-list/timesheet-admin-list-view/timesheet-admin-list-view.component';
@@ -39,8 +41,11 @@ const OptimisticFeatureProps = ["timesheetAdminTimesheetCriteria","timesheetAdmi
     SharedTimesheetModule,
     TimesheetAdminRoutingModule,    
     StateManagementModule.forFeature({
-      reducers: [SaveModelReducer, UpdateTimesheetStatusesReducer, SetTimesheetCriteriaReducer, SetSelectedWeekReducer, DeleteModelReducer], 
-      effects: [FetchTimesheetsEffect, SaveModelEffect],
+      reducers: [
+        SaveModelReducer, UpdateTimesheetStatusesReducer, SetTimesheetCriteriaReducer, 
+        SetSelectedWeekReducer, DeleteModelReducer, UpdateLeaderSettingsSuccessReducer
+      ], 
+      effects: [FetchTimesheetsEffect, SaveModelEffect, UpdateLeaderSettingsHttpEffect],
     }), 
     ModelStateFetcherModule, 
     ModelFormModule,

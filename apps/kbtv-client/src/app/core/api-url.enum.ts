@@ -9,5 +9,6 @@ export const enum ApiUrl {
     Employer = "/Employers",
     Users  = "/Users",
     InboundEmailPassword = "/InboundEmailPassword",
-    Auth = "/Auth"
+    Auth = "/Auth",
+    LeaderSettings = "/LeaderSettings"
 }

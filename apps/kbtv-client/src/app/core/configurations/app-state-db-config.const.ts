@@ -14,6 +14,7 @@ export const AppStateDbConfig: StateDbConfig<unknown> = {
     employers: {},
     userTimesheets: {},
     requestQueue: {},
+    leaderSettings: {},
     accessToken: {critical: true},
     accessTokenExpiration: {critical: true},
     refreshToken: {critical: true},
