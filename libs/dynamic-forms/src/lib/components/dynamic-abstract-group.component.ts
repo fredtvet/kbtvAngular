@@ -18,8 +18,6 @@ export abstract class DynamicAbstractGroupComponent<
 
     formGroup: FormGroup;
 
-    initialValue: TGroupConfig extends DynamicAbstractGroup<(infer T)> ? Immutable<Partial<T>> : never;
-    
     formOptions: Immutable<DynamicFormOptions>;
 
     get config(): Immutable<TGroupConfig> { return this._config }
@@ -29,7 +27,7 @@ export abstract class DynamicAbstractGroupComponent<
     }
 
     protected _config: Immutable<TGroupConfig>;
-
+    
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,  
         protected cdRef: ChangeDetectorRef,      
@@ -69,7 +67,6 @@ export abstract class DynamicAbstractGroupComponent<
 
         const control = this.dynamicFormFactory.createControl(
             controlCfg, 
-            (<UnknownState>this.initialValue)[<string>controlName],
             disabledControls ? <boolean>(<UnknownState>disabledControls)[<string>controlName] : false)
             
         this.formGroup.addControl(controlName, control)
@@ -99,7 +96,6 @@ export abstract class DynamicAbstractGroupComponent<
         componentRef.instance.config = groupCfg;
         componentRef.instance.formGroup = formGroup;
         componentRef.instance.formOptions = this.formOptions;
-        componentRef.instance.initialValue = <object> (<UnknownState>this.initialValue)[<string>controlName] || {};
 
         if(groupCfg.panelClass) 
             componentRef.location.nativeElement.classList.add(groupCfg.panelClass)

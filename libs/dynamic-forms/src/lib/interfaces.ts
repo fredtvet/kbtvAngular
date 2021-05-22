@@ -2,6 +2,7 @@ import { EventEmitter, Type } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidatorFn } from '@angular/forms';
 import { DeepProp, DeepPropsObject, DeepPropType, Immutable, Maybe, NotNull, Prop } from 'global-types';
 import { Observable } from 'rxjs';
+import { DeepPartial } from 'ts-essentials';
 import { DynamicAbstractGroupComponent } from './components/dynamic-abstract-group.component';
 
 type ObjProps<T> = { [K in keyof T as T[K] extends Maybe<object> ? K : never]: NotNull<T[K]>; };
@@ -76,8 +77,6 @@ export interface DynamicForm<
     TForm extends object, 
     TFormState extends object | null, 
 > extends DynamicAbstractGroup<TForm, TFormState> {
-    /** The initial form value */
-    initialValue?: Maybe<Partial<TForm>>;
     /** A function that modifies the form value when submitted. Use helper function {@link _formStateSetter} for dynamic state, or provide statically.*/
     onSubmitFormatter?: (f: TForm, s: Immutable<Partial<TFormState>>) => Immutable<TForm>;
     /** A map of state setters for TFormState. */
@@ -174,9 +173,11 @@ export interface QuestionComponent<
 }
 
 /** Represents a form component. Implemented by {@link DynamicForm} */
-export interface FormComponent<TConfig, TFormState, TResult> {
+export interface FormComponent<TConfig, TForm, TFormState, TResult> {
     /** The form configuration object */
     config: Immutable<Maybe<TConfig>>;
+    /** The initial value of the form */
+    initialValue: Immutable<DeepPartial<TForm>>
     /** The form state shared by the controls of the form */
     inputState: Maybe<Immutable<TFormState>>;
     /** An event emitter that emits the form value when the user submits the form*/

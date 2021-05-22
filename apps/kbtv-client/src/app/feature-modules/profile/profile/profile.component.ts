@@ -44,10 +44,10 @@ export class ProfileComponent {
 
   private updateProfile = (): void => {
     this.formService.open<ProfileForm, null>({
-      formConfig: {...ProfileForm, initialValue: this.facade.currentUser}, 
+      formConfig: ProfileForm, 
       navConfig: {title: "Oppdater profil"},
       submitCallback: (val) => this.facade.updateCurrentUser(val)
-    });
+    }, this.facade.currentUser);
   }
 
   private updatePassword = (): void => {

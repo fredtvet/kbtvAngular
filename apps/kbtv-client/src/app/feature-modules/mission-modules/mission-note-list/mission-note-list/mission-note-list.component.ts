@@ -42,22 +42,13 @@ export class MissionNoteListComponent {
     }  
   }
  
-  openEditNoteForm = (entityId: number) => 
-    this.modelFormService.open(
-      EditMissionNoteModelForm,
-      entityId
-    );
+  openEditNoteForm = (id: string) => 
+    this.modelFormService.open(EditMissionNoteModelForm, {id});
 
   trackByNote = _trackByModel("missionNotes")
   
   private openCreateNoteForm = () => 
-    this.modelFormService.open({
-        ...CreateMissionNoteModelForm, 
-        dynamicForm: {
-          ...CreateMissionNoteModelForm.dynamicForm, 
-          initialValue: {missionId: <string> this.missionId}
-        }
-    });
+    this.modelFormService.open(CreateMissionNoteModelForm, {missionId: <string> this.missionId});
 
   private onBack = () => this.router.navigate(['../'], {relativeTo: this.route.parent});
 }

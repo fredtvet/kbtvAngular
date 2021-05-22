@@ -90,11 +90,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
   private openImageInput = (ref: ElementRef<HTMLElement>): void => ref?.nativeElement?.click();
 
   private openMissionForm = (entityId: Maybe<string>) => 
-    this.modelFormService.open( 
-      EditMissionModelForm,
-      entityId,
-      {onDeleteUri: "/oppdrag"}
-    )
+    this.modelFormService.open(EditMissionModelForm, {id: <string> entityId}, {onDeleteUri: "/oppdrag"})
 
   private goToTimesheets = (mission: Maybe<Immutable<Mission>>) => 
     this.router.navigate(['timer', {

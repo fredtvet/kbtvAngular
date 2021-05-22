@@ -23,7 +23,7 @@ export class FormSheetWrapperComponent  {
         private componentFactoryResolver: ComponentFactoryResolver,
         private viewContainerRef: ViewContainerRef,
         private _bottomSheetRef: MatBottomSheetRef<FormSheetWrapperComponent, unknown>, 
-        @Inject(MAT_BOTTOM_SHEET_DATA) private config: FormSheetWrapperConfig<object, UnknownState, unknown>) { }
+        @Inject(MAT_BOTTOM_SHEET_DATA) private config: FormSheetWrapperConfig<object, object, UnknownState, unknown>) { }
     
     ngOnInit() {
         this.loadNav();
@@ -51,7 +51,8 @@ export class FormSheetWrapperComponent  {
     private loadForm(){
         const factory = this.componentFactoryResolver.resolveComponentFactory(this.config.formComponent);
         let formRef = this.viewContainerRef.createComponent(factory);
-        formRef.instance.config = this.config.formConfig;    
+        formRef.instance.config = this.config.formConfig;  
+        formRef.instance.initialValue = this.config.initialValue || {};  
 
         if(this.config.formState$)
             this.formStateSub = 

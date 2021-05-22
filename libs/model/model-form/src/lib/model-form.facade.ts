@@ -7,6 +7,7 @@ import { RelationInclude, StateModels, StatePropByModel, UnknownModelState, _get
 import { DeleteModelAction, ModelCommand } from 'model/state-commands';
 import { FetchModelsAction } from 'model/state-fetcher';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { StateAction, Store } from 'state-management';
 import { MODEL_FORM_PROP_TRANSLATIONS } from './injection-tokens.const';
 import { ModelFormConfig } from './interfaces';
@@ -29,8 +30,8 @@ export class ModelFormFacade<TState extends object, TModel extends StateModels<T
     })
   }
 
-  getModelState$(includes: Immutable<RelationInclude<TState, TModel>>): Observable<UnknownModelState> {
-    return this.store.select$<any>(_getRelationIncludeStateProps(includes)) as Observable<UnknownModelState>
+  getModelState$(includes: Immutable<RelationInclude<TState, TModel>>): Observable<Immutable<Partial<TState>>> {
+    return this.store.select$<any>(_getRelationIncludeStateProps(includes)) as Observable<Immutable<Partial<TState>>>
   }
 
   save(action: StateAction): void {

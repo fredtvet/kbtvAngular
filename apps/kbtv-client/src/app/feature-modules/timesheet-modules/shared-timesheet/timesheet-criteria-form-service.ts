@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { StateMissions, StateUsers } from "@core/state/global-state.interfaces";
-import { TimesheetCriteriaForm, UserTimesheetCriteriaForm, _criteriaFormToTimesheetCriteria, _timesheetCriteriaToForm } from "@shared-timesheet/forms/timesheet-criteria-form.const";
+import { TimesheetCriteriaForm, TimesheetCriteriaFormState, UserTimesheetCriteriaForm, UserTimesheetCriteriaFormState, _criteriaFormToTimesheetCriteria, _timesheetCriteriaToForm } from "@shared-timesheet/forms/timesheet-criteria-form.const";
 import { FormService } from "form-sheet";
 import { Immutable } from "global-types";
 import { map } from "rxjs/operators";
@@ -19,14 +19,16 @@ export class TimesheetCriteriaFormService {
     ){}
 
     open(onSubmit: (t: Immutable<TimesheetCriteria>) => void, initialValue?: Immutable<TimesheetCriteria>): MatBottomSheetRef {
-        return this.formService.open({
-            formConfig: { ...TimesheetCriteriaForm,
-                initialValue: initialValue ? _timesheetCriteriaToForm(initialValue) : null }, 
-            formState: this.store.select$(["missions", "users"]).pipe(
-                map(state => { return { ...state, users: _noEmployersFilter(state.users) }})),
-            navConfig: {title: "Velg filtre"},
-            submitCallback: (val) => onSubmit(_criteriaFormToTimesheetCriteria(val))
-        })
+        return this.formService.open<TimesheetCriteriaForm, TimesheetCriteriaFormState>(
+            {
+                formConfig: TimesheetCriteriaForm, 
+                formState: this.store.select$(["missions", "users"]).pipe(
+                    map(state => { return { ...state, users: _noEmployersFilter(state.users) }})),
+                navConfig: {title: "Velg filtre"},
+                submitCallback: (val) => onSubmit(_criteriaFormToTimesheetCriteria(val))
+            },
+            initialValue ? _timesheetCriteriaToForm(initialValue) : null 
+        )
     }
 }
 
@@ -38,12 +40,14 @@ export class UserTimesheetCriteriaFormSheet {
     ){}
 
     open(onSubmit: (t: Immutable<TimesheetCriteria>) => void, initialValue?: Immutable<TimesheetCriteria>): MatBottomSheetRef {
-        return this.formService.open({
-            formConfig: { ...UserTimesheetCriteriaForm, 
-                initialValue: initialValue ? _timesheetCriteriaToForm(initialValue) : null }, 
-            formState: this.store.select$(["missions", "syncConfig"]),
-            navConfig: {title: "Velg filtre"},
-            submitCallback: (val) => onSubmit(_criteriaFormToTimesheetCriteria(val))
-        })
+        return this.formService.open<UserTimesheetCriteriaForm, UserTimesheetCriteriaFormState>(
+            {
+                formConfig: UserTimesheetCriteriaForm, 
+                formState: this.store.select$(["missions", "syncConfig"]),
+                navConfig: {title: "Velg filtre"},
+                submitCallback: (val) => onSubmit(_criteriaFormToTimesheetCriteria(val))
+            },
+            initialValue ? _timesheetCriteriaToForm(initialValue) : null
+        )
     }
 }

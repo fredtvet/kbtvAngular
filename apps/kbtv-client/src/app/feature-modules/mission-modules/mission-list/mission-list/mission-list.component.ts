@@ -102,11 +102,11 @@ export class MissionListComponent extends WithUnsubscribe(){
 
   private openMissionFilter = () => 
     this.formService.open<MissionCriteria, MissionCriteriaFormState>({
-        formConfig: {...MissionCriteriaForm, initialValue: this.facade.criteria}, 
+        formConfig: MissionCriteriaForm, 
         formState: this.facade.criteriaFormState$,
         navConfig: {title: "Velg filtre"},
         submitCallback: (val) => this.facade.addCriteria(val),
-      });   
+      }, this.facade.criteria);   
 
   private getCriteriaChips(criteria: Maybe<Immutable<MissionCriteria>>){
     return this.chipsFactory.createCriteriaChips(criteria, 

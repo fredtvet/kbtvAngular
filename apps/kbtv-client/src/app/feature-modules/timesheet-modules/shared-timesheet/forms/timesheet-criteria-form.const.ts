@@ -11,6 +11,7 @@ import { DynamicControl, DynamicControlGroup, DynamicForm, _formStateBinding, _f
 import { Immutable, Maybe, NotNull } from 'global-types';
 import { Converter } from 'model/form';
 import { StateSyncConfig } from 'state-sync';
+import { DeepPartial } from 'ts-essentials';
 
 export const _criteriaFormToTimesheetCriteria : Converter<UserTimesheetCriteriaForm, TimesheetCriteria> =
     ({customMonthISO, ...rest}) => {
@@ -20,11 +21,14 @@ export const _criteriaFormToTimesheetCriteria : Converter<UserTimesheetCriteriaF
         return <TimesheetCriteria> rest
     } 
 
-export const _timesheetCriteriaToForm : Converter<TimesheetCriteria, UserTimesheetCriteriaForm> =
+export const _timesheetCriteriaToForm : Converter<TimesheetCriteria, DeepPartial<UserTimesheetCriteriaForm>> =
     ({dateRange, ...rest}) => {        
         return {
             ...rest,
-            dateRange,
+            dateRange: !dateRange ? undefined : {
+                start: dateRange.start ? _getISO(dateRange.start) : undefined, 
+                end: dateRange.end ? _getISO(dateRange.end) : undefined, 
+            },
             customMonthISO: (dateRange && rest.dateRangePreset === DateRangePresets.CustomMonth) ? 
                 _getISO(dateRange.start) : null
         }
@@ -56,7 +60,6 @@ const CustomDateRangeControlGroup: Immutable<DynamicControlGroup<DateRange, Form
     panelClass: "date-range-question-group",
     controls: {
         start: {
-            valueFormatter: (val) => val ? _getISO(val) : null,
             questionComponent: IonDateQuestionComponent,
             question: <IonDateQuestion<TimesheetCriteriaFormState>>{
                 placeholder: "Startdato", 
@@ -70,7 +73,6 @@ const CustomDateRangeControlGroup: Immutable<DynamicControlGroup<DateRange, Form
             },  
         },
         end: {
-            valueFormatter: (val) => val ? _getISO(val) : null,
             questionComponent: IonDateQuestionComponent,
             question: <IonDateQuestion<TimesheetCriteriaFormState>>{
                 placeholder: "Sluttdato", 

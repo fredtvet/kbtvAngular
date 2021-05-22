@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '@core/models';
+import { LeaderSettings } from '@core/models/leader-settings.interface';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { LeaderSettingsForm } from '@shared-timesheet/forms/leader-settings-form.const';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
@@ -43,11 +44,12 @@ export class TimesheetAdminUserListComponent {
   }
 
   openLeaderSettingsForm = () =>
-    this.formService.open({
-      formConfig: { ...LeaderSettingsForm, initialValue: this.facade.leaderSettings },
-      navConfig:{ title: "Innstillinger" },
-      submitCallback: (val) => this.facade.updateLeaderSettings(val)
-    })
+    this.formService.open<LeaderSettings>({
+      formConfig: LeaderSettingsForm,
+      navConfig: { title: "Innstillinger" },
+      submitCallback: (val) => this.facade.updateLeaderSettings(val),
+      fullScreen: false
+    }, this.facade.leaderSettings)
   
   trackByUser = _trackByModel("users");
 }

@@ -15,13 +15,10 @@ export class DynamicFormFactory {
     ){}
 
     createControl(
-        control: Immutable<DynamicControl<unknown, object>>, 
-        initialValue: unknown,   
+        control: Immutable<DynamicControl<unknown, object>>,  
         disabled: boolean,
-        disableControlsWithValue?: boolean
     ): AbstractControl {
-        const value = control.valueFormatter ? control.valueFormatter(initialValue) : initialValue;
-            
+
         const validators: ValidatorFn[] = control.validators?.slice() || [];
         if(control.required) validators.push(Validators.required)       
         const asyncValidators: AsyncValidatorFn[] = [];
@@ -30,9 +27,7 @@ export class DynamicFormFactory {
             for(const customValidator of control.asyncStateValidators) 
                 asyncValidators.push(customValidator(this.formStore.formState$.pipe(take(1)))) 
 
-        if(value && disableControlsWithValue) disabled = true;
-
-        return this.formBuilder.control({value, disabled}, validators, asyncValidators);
+        return this.formBuilder.control({value: null, disabled}, validators, asyncValidators);
     }
 
 }

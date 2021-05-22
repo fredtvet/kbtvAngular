@@ -65,11 +65,8 @@ export class UserTimesheetListComponent {
   
   openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Immutable<Partial<TimesheetForm>>): void => {
     this.modelFormService.open<UserTimesheet, UserTimesheetForm, TimesheetFormState>(
-      entityId ? EditUserTimesheetModelForm :
-        {...CreateUserTimesheetModelForm, 
-          dynamicForm: {...CreateUserTimesheetModelForm.dynamicForm, initialValue }
-        },
-      entityId,
+      entityId ? EditUserTimesheetModelForm : CreateUserTimesheetModelForm,
+      initialValue || {id: <string> entityId},
     )
   };
 

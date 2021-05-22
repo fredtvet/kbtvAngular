@@ -6,29 +6,40 @@ import { Observable } from 'rxjs';
 import { FormSheetWrapperComponent } from './form-sheet-wrapper.component';
 
 /** Represents the configuration for {@link FormSheetWrapperComponent} */
-export interface FormSheetWrapperConfig<TFormConfig, TInputState extends object| null, TResult>{
+export interface FormSheetWrapperConfig<TFormConfig, TForm extends object, TInputState extends object| null, TResult>{
     /** The form config passed to the provided form component */
     formConfig?: Maybe<TFormConfig>;
     /** Form state required by the form */
     formState$?: Observable<Maybe<Immutable<TInputState>>>;
+    /** the initial value of the form */
+    initialValue?: Immutable<Partial<TForm>>;
     /** Configuration for the top navigation bar on bottom sheet */
     navConfig?: Maybe<FormSheetNavConfig>;
     /** Function that executes when form is submitted. */
     submitCallback?: Maybe<(val: TResult) => void>;
     /** The form component that should be rendered. */
-    formComponent: Type<FormComponent<TFormConfig, TInputState, TResult>>;
+    formComponent: Type<FormComponent<TFormConfig, TForm, TInputState, TResult>>;
 }
 
 /** Represents configuration for opening a form with {@link FormService} */
-export interface FormServiceConfig<TForm extends object, TFormState extends object| null = null>{
+export interface FormServiceConfig<
+    TForm extends object, 
+    TFormState extends object| null = null, 
+    TFormConfig = DynamicForm<TForm, TFormState>,
+    TResult = Immutable<TForm>
+>{
     /** The form config passed to the provided form component */
-    formConfig: DynamicForm<TForm, TFormState>, 
+    formConfig: TFormConfig, 
     /** Configuration for the top navigation bar on bottom sheet */
     navConfig: FormSheetNavConfig,
     /** Form state required by the form */
     formState?: Immutable<Partial<TFormState>> | Observable<Immutable<Partial<TFormState>>>,
     /** Function that executes when form is submitted. */
-    submitCallback?: (val: Immutable<TForm>) => void
+    submitCallback?: (val: TResult) => void
+    /** Set to true to enable full screen forms on mobile. Defaults to true */
+    fullScreen?: boolean;
+    /** The form component that should be rendered. */
+    customFormComponent?: Type<FormComponent<TFormConfig, TForm, TFormState, TResult>>;
 }
 
 /**  Represents a configuration object for the top navigation bar on the form sheet */

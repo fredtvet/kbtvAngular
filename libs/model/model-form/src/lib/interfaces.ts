@@ -55,6 +55,8 @@ export interface ModelFormServiceOptions<TInputState = object> {
     deleteDisabled?: boolean, 
     /** A custom title for the form sheet. */
     customTitle?: string, 
+    /** Set to true for full screen form. Default is true. */
+    fullScreen?: boolean,
     /** A callback that gets executed when form is submitted. */
-    submitCallback?: (val: ModelCommand.Create | ModelCommand.Update) => void
+    submitCallback?: (val: SaveAction) => void
   }

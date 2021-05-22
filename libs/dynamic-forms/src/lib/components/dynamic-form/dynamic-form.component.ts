@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Immutable, Maybe } from 'global-types';
-import { Observable } from 'rxjs';
-import { debounceTime, map, startWith } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { debounceTime, filter, first, map, startWith, tap } from 'rxjs/operators';
+import { DeepPartial } from 'ts-essentials';
 import { DynamicFormFactory } from '../../dynamic-form.factory';
 import { DynamicFormStore } from '../../dynamic-form.store';
 import { DynamicHostDirective } from '../../dynamic-host.directive';
@@ -22,13 +23,21 @@ import { DynamicControlGroupComponent } from '../dynamic-control-group.component
 })
 export class DynamicFormComponent<TForm extends object, TFormState extends object | null>
     extends DynamicAbstractGroupComponent<DynamicForm<TForm, TFormState>> 
-    implements FormComponent<DynamicForm<TForm, TFormState>, Partial<TFormState>, Immutable<TForm>> {
+    implements FormComponent<DynamicForm<TForm, TFormState>, TForm, Partial<TFormState>, Immutable<TForm>> {
         
     @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
+
+    private initialValueSubject = new BehaviorSubject<Immutable<Partial<TForm>> | null>(null);
+    initialValue$ = <Observable<Immutable<Partial<TForm>>>> this.initialValueSubject.asObservable().pipe(filter(x => x !== null), first())
 
     @Input('inputState') 
     set inputState(value: Maybe<Immutable<Partial<TFormState>>>) {
         if(value) this.formStore.setInputState(value)
+    }
+
+    @Input('initialValue') 
+    set initialValue(value: Immutable<DeepPartial<TForm>>) {
+        if(value) this.initialValueSubject.next(value)
     }
 
     get config(): Immutable<DynamicForm<TForm, TFormState>> { return this._config }
@@ -36,7 +45,6 @@ export class DynamicFormComponent<TForm extends object, TFormState extends objec
     set config(value: Immutable<DynamicForm<TForm, TFormState>>) {
         this._config = value;
         this.formOptions = value.options || {};
-        this.initialValue = <Immutable<Partial<TForm>>> value.initialValue || {};
         this.initalizeForm();
     }
 
@@ -88,6 +96,11 @@ export class DynamicFormComponent<TForm extends object, TFormState extends objec
 
         this.initalize(); 
         this.cdRef.markForCheck();
+
+        this.initialValue$.pipe(tap(x => {
+            this.formGroup.patchValue(x);
+        })).subscribe();
+
         this.formStore.initalizeFormState(this.formGroup, <any> this.config.formStateSetters) 
     }
 }

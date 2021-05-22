@@ -1,24 +1,32 @@
 ::ng-deep .form-sheet-wrapper{
-    max-height: 100vh!important;
-    padding:0 16px;
+    padding:0 16px 8px 16px;
     .loading{
       width:100%;
       text-align:center;
       margin-top:24px
   }
 }
+
+::ng-deep .form-sheet-wrapper-fullscreen {
+  max-height: 100vh!important;
+}
   
 @media (max-width: 959px) {
     ::ng-deep .form-sheet-wrapper{
-      height: 100vh!important; 
       form{ padding-left: 16px; }
     }
 }
+    
+@media (max-width: 959px) {
+  ::ng-deep .form-sheet-wrapper-fullscreen {
+    height: 100vh!important; 
+    form{ padding-left: 16px; }
+  }
+}
 
 @media (min-width: 960px) {
-    ::ng-deep .form-sheet-wrapper{
-      width: 652px!important;
-      min-height: 400px;
-    }
+  ::ng-deep .form-sheet-wrapper-fullscreen {
+    width: 652px!important;
+    min-height: 400px;
+  }
 }
-  

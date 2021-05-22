@@ -6,7 +6,7 @@ import { ModelState } from '@core/state/model-state.interface';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { TimesheetForm, TimesheetFormState, EditTimesheetModelForm, CreateTimesheetModelForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
-import { WeekCriteriaForm } from '@shared-timesheet/forms/week-criteria-controls.const';
+import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared-timesheet/forms/week-criteria-controls.const';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
@@ -73,16 +73,15 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
   trackById = _trackByModel("timesheets");
   
   private openWeekFilter = () => 
-    this.formService.open({
-      formConfig: {...WeekCriteriaForm, options: { onlineRequired: true },
-        initialValue: {...this.facade.weekCriteria, weekNr: <number>this.facade.selectedWeekNr} }, 
+    this.formService.open<WeekCriteriaForm, WeekCriteriaFormState>({
+      formConfig: {...WeekCriteriaForm, options: { onlineRequired: true } }, 
       formState: this.facade.weekCriteriaFormState$,
       navConfig: {title: "Velg filtre"},
       submitCallback: (val: WeekCriteria): void => {
         if(val.weekNr) this.facade.updateWeekNr(val.weekNr)
         this.facade.updateCriteria(val)
       }
-    });
+    }, {...this.facade.weekCriteria, weekNr: <number>this.facade.selectedWeekNr});
   
   private getNavConfig(user: Maybe<Immutable<User>>, year: Maybe<number>, weekNr: Maybe<number>): MainTopNavConfig {
     const fullName = user ? (user.firstName + ' ' + user.lastName) : '';

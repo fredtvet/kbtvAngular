@@ -34,7 +34,7 @@ export interface SliderQuestion extends Question {
     
     <div class="slider-container">
         <span class="mat-body">{{ (control?.value || '') + " " + (question?.valueSuffix || '') }}</span>
-        <mat-slider [color]="question.color || 'accent'" [value]="value$ | async" 
+        <mat-slider [color]="question.color || 'accent'" [value]="control?.value" 
             (input)="updateValue($event.value)"
             [thumbLabel]="question.thumbLabel"
             [tickInterval]="question.tickInterval || 1"
@@ -51,8 +51,6 @@ export interface SliderQuestion extends Question {
 })
 export class SliderQuestionComponent extends BaseQuestionComponent<null, SliderQuestion> {
 
-    value$: Observable<unknown>;
-
     constructor(
       @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap, 
       formStore: DynamicFormStore
@@ -64,12 +62,6 @@ export class SliderQuestionComponent extends BaseQuestionComponent<null, SliderQ
         if(!this.control) return;
         this.control.setValue(val);
         this.control.markAsDirty();
-    }
-
-    protected onQuestionChanges(question: SliderQuestion): void { 
-        super.onQuestionChanges(question);
-        if(this.control)
-          this.value$ = this.control.valueChanges.pipe(startWith(this.control.value));
     }
 
 }

@@ -7,10 +7,10 @@ import { DownloaderService } from '@core/services/downloader.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { BaseSelectableContainerComponent } from '@shared-mission/components/base-selectable-container.component';
+import { CreateMissionDocumentModelForm } from '@shared-mission/forms/create-mission-document-model-form.const';
+import { EmailForm } from '@shared-mission/forms/email-form.const';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { EmailForm } from '@shared-mission/forms/email-form.const';
-import { CreateMissionDocumentModelForm } from '@shared-mission/forms/create-mission-document-model-form.const';
 import { FileFolder } from '@shared/enums/file-folder.enum';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { FormService } from 'form-sheet';
@@ -98,26 +98,19 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
   
   private openMailDocumentSheet = () => {
     const email = this.facade.getMissionEmployerEmail(this.missionId)
-    this.formService.open<EmailForm, null>({
-      formConfig: {...EmailForm, options: { allowPristine: email != null }, initialValue: { email }}, 
+    this.formService.open<EmailForm>({
+      formConfig: {...EmailForm, options: { allowPristine: email != null } }, 
       navConfig: {title: "Send Dokumenter"},
       submitCallback: (val) => { 
         this.facade.mailDocuments(val.email, this.currentSelections);
         this.selectableContainer.resetSelections();
       },
-    })
+    }, { email })
   }
 
-  private openDocumentForm = (): void => {
-    this.modelFormService.open({
-        ...CreateMissionDocumentModelForm, 
-        dynamicForm: {
-          ...CreateMissionDocumentModelForm.dynamicForm, 
-          initialValue: {missionId: this.missionId || undefined}
-        },
-      });
-  }
-
+  private openDocumentForm = () => 
+    this.modelFormService.open(CreateMissionDocumentModelForm, {missionId: this.missionId || undefined});
+  
   private onBack = () => this.router.navigate(['../'], {relativeTo: this.route.parent});
 
 }

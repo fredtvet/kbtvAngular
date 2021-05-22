@@ -4,7 +4,7 @@ import { AgGridAngular } from "ag-grid-angular";
 import { ColDef, ValueFormatterParams } from "ag-grid-community";
 import { FormService } from "form-sheet";
 import { Immutable } from "global-types";
-import { KeyOptions, _createMultiCheckboxForm } from "./create-multi-checkbox-form.helper";
+import { KeyOptions, MultiCheckboxForm, _createMultiCheckboxForm } from "./create-multi-checkbox-form.helper";
 
 @Injectable({providedIn: "any"})
 export class ExportCsvFormService {
@@ -18,8 +18,8 @@ export class ExportCsvFormService {
           return { key: x.colId || x.field || "Ukjent", text: x.headerName || "Ukjent"} 
         })
 
-        this.formService.open({
-          formConfig: _createMultiCheckboxForm(keyOptions, {submitText: "Eksporter", options: {allowPristine: true}}, true),
+        this.formService.open<MultiCheckboxForm<object>>({
+          formConfig: _createMultiCheckboxForm(keyOptions, {submitText: "Eksporter", options: {allowPristine: true}}),
           navConfig: {title: "Eksporter til CSV format"},
           submitCallback: (val) => this.onSubmit(val.selections, grid)
         })

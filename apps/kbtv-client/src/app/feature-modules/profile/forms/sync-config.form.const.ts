@@ -27,7 +27,6 @@ export const SyncConfigForm: Immutable<DynamicForm<SyncConfigForm, null>> = {
             validators: [Validators.min(1)] 
         },
         initialMonthISO: { required: true, 
-            valueFormatter: (val) => val ? _getISO(val) : null,
             questionComponent:  IonDateQuestionComponent,
             question: <IonDateQuestion<SyncConfig>>{
                  placeholder: "Synkroniseringsdato", 

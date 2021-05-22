@@ -72,12 +72,9 @@ export class TimesheetAdminFacade {
     }
     
     openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Immutable<Partial<TimesheetForm>>): void => {
-        this.modelFormService.open<Timesheet, TimesheetForm, TimesheetFormState>(
-        entityId ? EditTimesheetModelForm :
-            {...CreateTimesheetModelForm, 
-            dynamicForm: {...CreateTimesheetModelForm.dynamicForm, initialValue }
-            },
-        entityId,
+        this.modelFormService.open(
+            entityId ? EditTimesheetModelForm : CreateTimesheetModelForm,
+            initialValue || {id: <string> entityId}
         )
     };
 

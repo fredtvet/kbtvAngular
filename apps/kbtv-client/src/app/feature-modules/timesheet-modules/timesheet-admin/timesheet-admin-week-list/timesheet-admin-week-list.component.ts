@@ -4,7 +4,7 @@ import { Timesheet, User } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
-import { WeekCriteriaForm } from '@shared-timesheet/forms/week-criteria-controls.const';
+import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared-timesheet/forms/week-criteria-controls.const';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
@@ -75,15 +75,14 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
     this.router.navigate(['timer', {[TimesheetAdminListWeekNrQueryParam]: weekNr}], {relativeTo: this.route})
   
   private openWeekFilter = (): void => {
-    this.formService.open({
+    this.formService.open<WeekCriteriaForm, WeekCriteriaFormState>({
       formConfig: {...WeekCriteriaForm, 
         options: { onlineRequired: true, noRenderDisabledControls: true },   
-        disabledControls: {weekNr: true}, 
-        initialValue: this.facade.weekCriteria}, 
+        disabledControls: {weekNr: true}}, 
       formState: this.facade.weekCriteriaFormState$,
       navConfig: {title: "Velg filtre"},
       submitCallback: (val: WeekCriteria) => this.facade.updateCriteria(val)
-    })
+    }, this.facade.weekCriteria)
   } 
     
   private onBack = () => { 

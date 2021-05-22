@@ -7,20 +7,20 @@ import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { _trackByModel } from "@shared-app/helpers/trackby/track-by-model.helper";
-import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { BaseSelectableContainerComponent } from "@shared-mission/components/base-selectable-container.component";
 import { ImageViewerDialogWrapperConfig } from "@shared-mission/components/image-viewer/image-viewer-dialog-wrapper-config.const";
 import { ImageViewerDialogWrapperComponent } from "@shared-mission/components/image-viewer/image-viewer-dialog-wrapper.component";
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { EmailForm } from '@shared-mission/forms/email-form.const';
+import { AppButton } from "@shared/components/app-button/app-button.interface";
+import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { FileFolder } from "@shared/enums/file-folder.enum";
 import { ConfirmDialogService } from "confirm-dialog";
-import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { FormService } from "form-sheet";
+import { ImmutableArray, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map, tap } from "rxjs/operators";
 import { SelectedMissionIdParam } from "../../mission-list/mission-list-route-params.const";
 import { MissionImageListFacade } from '../mission-image-list.facade';
-import { FormService } from "form-sheet";
 
 interface ViewModel { 
   images: Maybe<ImmutableArray<MissionImage>>, 
@@ -127,16 +127,16 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
     })
   }
   
-  private openMailImageSheet = (ids: string[]) => {
+  private openMailImageSheet = (ids: string[]) => {    
     const email = this.facade.getMissionEmployerEmail(this.missionId)
-    this.formService.open({
-      formConfig: {...EmailForm }, 
+    this.formService.open<EmailForm>({
+      formConfig: {...EmailForm, options: { allowPristine: email != null } }, 
       navConfig: {title: "Send bilder"},
       submitCallback: (val) => { 
         this.facade.mailImages(val.email, ids);
         this.selectableContainer.resetSelections();
       },
-    })
+    }, { email })
   }
 
   private downloadImages = (imgs: ImmutableArray<MissionImage>) => 

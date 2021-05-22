@@ -46,7 +46,7 @@ const FinishedControl: Immutable<DynamicControl<boolean, FormState, RadioGroupQu
     questionComponent:  RadioGroupQuestionComponent,
     question: {   
         label: "Velg status",
-        valueFormatter: (finished: boolean) => finished ? "Ferdig" : "Aktiv",
+        valueFormatter: (finished) => finished ? "Ferdig" : "Aktiv",
         stateBindings: { options: [false, true] }
     }, 
 }

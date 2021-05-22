@@ -63,16 +63,16 @@ export class UserListComponent {
   private openUserForm = (userName?: string): void => {
     this.modelFormService.open(
       userName ? EditUserModelForm : CreateUserModelForm,
-      userName
+      {userName}
     );
   }
   
   private openNewPasswordForm = (userName?: string): void => {
     this.formService.open<UserPasswordForm>({
-      formConfig: {...UserPasswordForm, initialValue: {userName}}, 
+      formConfig: UserPasswordForm, 
       navConfig: {title: "Oppdater passord"},  
-      submitCallback: (val: UserPasswordForm) => this.facade.updatePassword(val.userName, val.newPassword)
-    });
+      submitCallback: (val) => this.facade.updatePassword(val.userName, val.newPassword)
+    }, {userName});
   }
 
 }

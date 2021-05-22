@@ -40,13 +40,16 @@ export class SyncProfileComponent {
 
   private updateSyncConfig = (): void => {
     const config = this.facade.syncConfig;
-    this.formService.open({
-      formConfig: {...SyncConfigForm, initialValue: config ? 
-        {initialMonthISO: _getISO(config.initialTimestamp), refreshTime: config.refreshTime / 60 } : null}, 
-      navConfig: {title: "Konfigurasjoner"},
-      submitCallback: (val) => 
-        this.facade.updateSyncConfig(_syncFormToConfigConverter(val))
-    })
+    this.formService.open<SyncConfigForm>(
+      {
+        formConfig: SyncConfigForm, 
+        navConfig: {title: "Konfigurasjoner"},
+        fullScreen: false,
+        submitCallback: (val) => 
+          this.facade.updateSyncConfig(_syncFormToConfigConverter(val))
+      }, 
+      config ? { initialMonthISO: _getISO(config.initialTimestamp), refreshTime: config.refreshTime / 60 } : null
+    )
   }
 
   private confirmPurge = () => {

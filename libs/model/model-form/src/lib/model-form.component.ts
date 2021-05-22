@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { DynamicForm, FormComponent } from 'dynamic-forms';
-import { Immutable, Maybe, UnknownState } from 'global-types';
-import { UnknownModelState, _getModel} from 'model/core';
+import { Immutable, Maybe } from 'global-types';
+import { StateModels, _getModel, _getModelConfig } from 'model/core';
 import { ModelCommand, SaveAction } from 'model/state-commands';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { filter, map, shareReplay, take } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
+import { DeepPartial } from 'ts-essentials';
 import { _formToSaveModelConverter } from './form-to-save-model-converter.helper';
 import { ModelFormConfig } from './interfaces';
 import { ModelFormFacade } from './model-form.facade';
@@ -13,65 +14,78 @@ import { ModelFormFacade } from './model-form.facade';
     selector: 'app-model-form',
     template: `
       <lib-dynamic-form 
-        [config]="formConfig$ | async" 
+        [config]="config.dynamicForm" 
+        [initialValue]="initialValueMerged$ | async"
         [inputState]="inputState$ | async" 
         (formSubmitted)="$event ? onSubmit($event) : onCancel()">
       </lib-dynamic-form>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModelFormComponent
-  implements FormComponent<ModelFormConfig<object, object> & {entityId?: unknown}, object, SaveAction>{
+export class ModelFormComponent<
+  TState extends object, 
+  TModel extends StateModels<TState>,
+  TForm extends object, 
+  TFormState extends object | null
+>
+  implements FormComponent<ModelFormConfig<TState, TModel, TForm, TFormState>, TForm, TFormState, SaveAction>{
     @Output() formSubmitted = new EventEmitter<Maybe<SaveAction>>()
 
-    @Input() config: Maybe<Immutable<ModelFormConfig<object, object> & {entityId?: unknown}>>;
+    @Input() config: Immutable<ModelFormConfig<TState, TModel, TForm, TFormState>>;
+
+    @Input() initialValue: Immutable<DeepPartial<TForm>>;
 
     @Input('inputState')
-    set inputState(value: Maybe<Immutable<object>>) {
+    set inputState(value: Maybe<Immutable<TFormState>>) {
       if(value) this.inputStateSubject.next(value)
     }
-  
-    private inputStateSubject = new BehaviorSubject<object>({})
 
-    inputState$: Observable<Immutable<object>>;
-    formConfig$: Observable<Immutable<DynamicForm<object, object>>>;
+    private inputStateSubject = new BehaviorSubject(<Immutable<TFormState>> {})
+
+    inputState$: Observable<Immutable<TFormState>>;
+
+    formConfig$: Observable<Immutable<DynamicForm<TForm, TFormState>>>;
+
+    initialValueMerged$: Observable<Immutable<Partial<TForm>>>;
+
+    entityId: unknown;
 
     private isCreateForm: boolean = false;
   
-    constructor(private facade: ModelFormFacade<UnknownModelState, UnknownState>) {}
+    constructor(private facade: ModelFormFacade<TState, TModel>) {}
   
     ngOnInit(): void { 
       if(!this.config) return
+
+      this.entityId = (<any> this.initialValue)?.[_getModelConfig(this.config.includes.prop).idProp];
+
       this.facade.loadModels(this.config.includes); 
 
-      if(!this.config.entityId) this.isCreateForm = true;
-    
+      if(!this.entityId) this.isCreateForm = true;
+      
       this.inputState$ = combineLatest([
         this.inputStateSubject.asObservable(),
         this.facade.getModelState$(this.config.includes)
       ]).pipe(
         map(([inputState, modelState]) => { return {...inputState, ...modelState} }), 
-        shareReplay(1)
       );
 
-      this.formConfig$ = this.facade.getModelState$(this.config.includes).pipe(
-        filter(x => x != null),take(1), 
-        map(state => this.getFormConfig(state))
-      )
+      this.initialValueMerged$ = 
+        this.facade.getModelState$(this.config.includes).pipe(first(), map(x => this.getInitialValueMerged(x)))
     }
 
-    onSubmit(result: Immutable<{}>): void{   
+    onSubmit(result: Immutable<TForm>): void{   
       const saveAction = this.isCreateForm ? ModelCommand.Create : ModelCommand.Update;
       this.formSubmitted.emit(saveAction);
 
       setTimeout(() => {
         const converter = this.config!.actionConverter || _formToSaveModelConverter
 
-        this.inputState$.pipe(take(1)).subscribe(state =>
+        this.inputState$.pipe(first()).subscribe(state =>
           this.facade.save(converter({
             formValue: result, 
-            options: state,
-            stateProp: this.config!.includes.prop, 
+            options: <any> state,
+            stateProp: <never> this.config!.includes.prop, 
             saveAction, 
           }))
         ) 
@@ -80,22 +94,16 @@ export class ModelFormComponent
 
     onCancel = (): void => this.formSubmitted.emit(null); 
 
-    private getFormConfig(state: Maybe<Immutable<object>>): Immutable<DynamicForm<object, object>>{
-      const dynamicForm = this.config!.dynamicForm;
-      let initialValue = null;
+    private getInitialValueMerged(state: Maybe<Immutable<Partial<TState>>>): Immutable<Partial<TForm>> {
+      let modelValue: Maybe<Immutable<Partial<TForm>>> = null;
 
-      if(this.config!.entityId){
-        const model = state ? _getModel<object,object>(state, this.config!.entityId, this.config!.includes) : null;
-        if(model) initialValue = this.config!.modelConverter! ? this.config!.modelConverter(model) : model;
+      if(this.entityId && state){
+        const model = state ? _getModel(state, this.entityId, this.config!.includes) : null;
+        if(model) modelValue = this.config!.modelConverter! ? this.config!.modelConverter(model) : <Immutable<TForm>> model;
       }
-      
-      if(!initialValue) return <any> this.config!.dynamicForm;
-      return <any>{
-        ...dynamicForm, 
-        initialValue: dynamicForm.initialValue ? 
-          {...initialValue, ...dynamicForm.initialValue} : 
-          initialValue
-      }
+
+      return !modelValue ? 
+        (this.initialValue || {}) : {...this.initialValue, ...modelValue}
     }
 }
   

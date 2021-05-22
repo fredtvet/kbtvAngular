@@ -2,20 +2,19 @@ import { CheckboxQuestion, CheckboxQuestionComponent } from '@shared/scam/dynami
 import { DynamicForm } from 'dynamic-forms';
 import { Immutable, Prop, UnknownState } from 'global-types';
 
-interface MultiCheckboxForm<TState> { selections: Record<Prop<TState>, boolean> }
+export interface MultiCheckboxForm<TState> { selections: Record<Prop<TState>, boolean> }
 
 export interface KeyOptions<TState = UnknownState> { key: Prop<TState>, text: string }
 
 export function _createMultiCheckboxForm<TState extends object = object>(
     keys: KeyOptions<TState>[], 
-    baseForm?: Partial<Omit<DynamicForm<MultiCheckboxForm<TState>, null>, "controls">>,
-    selectAll?: boolean): Immutable<DynamicForm<MultiCheckboxForm<TState>, null>> {
+    baseForm?: Partial<Omit<DynamicForm<MultiCheckboxForm<TState>, null>, "controls">>
+): Immutable<DynamicForm<MultiCheckboxForm<TState>, null>> {
 
     let controls: Partial<Record<Prop<TState>, object>> = { }
 
     for(const keyOptions of keys){
         controls[keyOptions.key] = {
-            valueFormatter: (val: boolean) => selectAll || val,
             questionComponent:  CheckboxQuestionComponent,
             question: <CheckboxQuestion>{   
                 width: "45%",

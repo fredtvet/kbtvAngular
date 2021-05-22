@@ -4,7 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { Observable } from 'rxjs';
-import { startWith } from 'rxjs/operators';
+import { filter, startWith, tap } from 'rxjs/operators';
 
 export interface IonDateQuestionBindings { min: string, max: string, defaultValue: string}
 
@@ -29,7 +29,7 @@ const _monthShortNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug"
         <mat-label *ngIf="question.label">{{ question.label }}</mat-label>
         <input matInput required 
           [disabled]="control?.disabled" 
-          [value]="question.datePipeFormat ? ((value$ | async) | date : question.datePipeFormat) : (value$ | async)" 
+          [value]="question.datePipeFormat ? (control?.value | date : question.datePipeFormat) : control?.value" 
           [placeholder]="question.placeholder" 
           [attr.aria-label]="question.ariaLabel">  
             <mat-hint *ngIf="question.hint">{{ question.hint }}</mat-hint>
@@ -63,8 +63,6 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
   monthNames = _monthNames;
   monthShortNames = _monthShortNames;
 
-  value$: Observable<string>;
-
   constructor(
     @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap, 
     private cdRef: ChangeDetectorRef,
@@ -82,13 +80,7 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
     this.control.markAsDirty();
     this.cdRef.markForCheck();
   }
-
-  protected onQuestionChanges(question: IonDateQuestion<object | null>): void { 
-    super.onQuestionChanges(question);
-    if(this.control)
-      this.value$ = this.control.valueChanges.pipe(startWith(this.control.value));
-  }
-
+  
 }
 
 @NgModule({
