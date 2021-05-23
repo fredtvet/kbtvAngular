@@ -62,7 +62,6 @@ export class UserTimesheetListComponent {
     this.navConfig = { title:  "Timeliste", backFn: this.onBack }
   }
 
-  
   openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Immutable<Partial<TimesheetForm>>): void => {
     this.modelFormService.open<UserTimesheet, UserTimesheetForm, TimesheetFormState>(
       entityId ? EditUserTimesheetModelForm : CreateUserTimesheetModelForm,
@@ -71,7 +70,7 @@ export class UserTimesheetListComponent {
   };
 
   openTimesheetFilter = (): void => {
-    this.criteriaFormService.open((val) => this.facade.updateCriteria(val))
+    this.criteriaFormService.open((val) => this.facade.updateCriteria(val), this.facade.criteria)
   }
 
   openTimesheetCard = (timesheetId: string) =>

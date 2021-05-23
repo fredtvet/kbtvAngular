@@ -73,7 +73,7 @@ export class TimesheetStatisticComponent {
   }
   
   private openTimesheetFilter = (): void => {
-    this.criteriaFormService.open((val) => this.facade.updateCriteria(val))
+    this.criteriaFormService.open((val) => this.facade.updateCriteria(val), this.facade.criteria)
   }
 
   private resetCriteriaProp(prop: Prop<Immutable<TimesheetCriteria>>, criteria: Maybe<Immutable<TimesheetCriteria>>){
