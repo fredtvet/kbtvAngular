@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
 import { AgGridAngular } from "ag-grid-angular";
-import { ColDef, ValueFormatterParams } from "ag-grid-community";
+import { ValueFormatterParams } from "ag-grid-community";
 import { FormService } from "form-sheet";
 import { Immutable } from "global-types";
 import { KeyOptions, MultiCheckboxForm, _createMultiCheckboxForm } from "./create-multi-checkbox-form.helper";
@@ -14,24 +14,29 @@ export class ExportCsvFormService {
     open(grid: AgGridAngular): void{
         if(!grid.columnDefs?.length) return;
         
-        const keyOptions: KeyOptions[] = (<ColDef[]> grid.columnDefs).map(x => { 
-          return { key: x.colId || x.field || "Ukjent", text: x.headerName || "Ukjent"} 
-        })
+        const keyOptions: KeyOptions[] = [];
+        const selections: Record<string, boolean> = {};
 
-        this.formService.open<MultiCheckboxForm<object>, null>(
+        for(const def of grid.columnDefs){
+          keyOptions.push( { key: def.colId || def.field || "Ukjent", text: def.headerName || "Ukjent"} )
+          selections[def.colId] = true;
+        }
+
+        this.formService.open<MultiCheckboxForm<Record<string, boolean>>, null>(
           {
-          formConfig: _createMultiCheckboxForm(keyOptions, {submitText: "Eksporter", options: {allowPristine: true}}),
-          navConfig: {title: "Eksporter til CSV format"},
-          },{},
-          (val) => this.onSubmit(val.selections, grid)
+            formConfig: _createMultiCheckboxForm(keyOptions, {submitText: "Eksporter", options: {allowPristine: true}}),
+            navConfig: {title: "Eksporter til CSV format"},
+          },
+          { initialValue: { selections } },
+          (val) => this.onSubmit(val, grid)
         )
     }
 
-    private onSubmit = (formVal: Immutable<Record<string, boolean>>, grid: AgGridAngular): void => {
+    private onSubmit = (formVal: Immutable<MultiCheckboxForm<Record<string, boolean>>>, grid: AgGridAngular): void => {
         const colKeys = [];
 
         for(const key in formVal)
-            if(formVal[key]) colKeys.push(key);
+            if(formVal.selections[key]) colKeys.push(key);
    
         this.exportAsCsv(colKeys, grid)   
     }   
