@@ -35,6 +35,7 @@ const EmployerControl: Immutable<DynamicControl<string, FormState, AutoCompleteQ
         placeholder: "Oppdragsgiver",
         valueProp: "name",
         lazyOptions: "all",
+        hint: "Lag ny eller velg eksisterende oppdragsgiver",
         valueFormatter: (val) => val.name, 
         resetable: true,
         activeFilter: { stringProps: ["name"] },
@@ -48,10 +49,11 @@ const MissionTypeControl: Immutable<DynamicControl<string, FormState, AutoComple
         placeholder: "Oppdragstype",
         valueProp: "name",
         lazyOptions: "all",
+        hint: "Lag ny eller velg eksisterende oppdragstype",
         valueFormatter: (val) => val.name, 
         resetable: true,
         activeFilter: { stringProps: ["name"] },
-        stateBindings:{ options: _formStateBinding<FormState, MissionType[]>()(["missionTypes"], s => s.missionTypes || []) }
+        stateBindings: { options: _formStateBinding<FormState, MissionType[]>()(["missionTypes"], s => s.missionTypes || []) }
     } 
 }
 
