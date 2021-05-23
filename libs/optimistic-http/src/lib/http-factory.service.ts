@@ -3,7 +3,7 @@ import { Inject, Injectable } from "@angular/core";
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
 import { CommandIdHeader } from './constants/command-id-header.const';
-import { BASE_API_URL } from './constants/injection-tokens.const';
+import { OPTIMISTIC_BASE_API_URL } from './constants/injection-tokens.const';
 import { FormDataEntry, OptimisticHttpRequest } from './interfaces';
 
 @Injectable({providedIn: "root"})
@@ -11,7 +11,7 @@ export class HttpFactoryService {
   
     constructor(
       private httpClient: HttpClient,
-      @Inject(BASE_API_URL) private baseUrl: string
+      @Inject(OPTIMISTIC_BASE_API_URL) private baseUrl: string
     ) {}
 
     getObserver$(request: Immutable<OptimisticHttpRequest>, commandId: string): Observable<unknown> {

@@ -3,5 +3,5 @@ import { Prop } from 'global-types';
 import { ActionRequestMap } from '../interfaces';
 
 export const OPTIMISTIC_STATE_PROPS = new InjectionToken<Prop<unknown>[]>('RootOptimisticStateProps');
-export const BASE_API_URL = new InjectionToken<string>('BaseApiUrl');
+export const OPTIMISTIC_BASE_API_URL = new InjectionToken<string>('OptimisticBaseApiUrl');
 export const ACTION_REQUEST_MAP = new InjectionToken<ActionRequestMap<string>>('ModelCommandApiMap');

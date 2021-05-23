@@ -42,7 +42,7 @@ export interface FormDataEntry {
 /** Describes an object used to make optimistic http requests. */
 export interface OptimisticHttpRequest<TBody extends {} | FormData[] | null = {} | FormData[] | null> { 
     /** The url suffix of the api endpoint. 
-     * Gets appended to base url provided with {@link BASE_API_URL} */
+     * Gets appended to base url provided with {@link OPTIMISTIC_BASE_API_URL} */
     apiUrl: string; 
     /** The http method of the request */
     method: "POST" | "PUT" | "DELETE"; 

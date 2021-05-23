@@ -4,7 +4,7 @@ import { translations } from '@shared-app/translations';
 import { _registerModelStateConfig } from 'model/core';
 import { MODEL_FORM_PROP_TRANSLATIONS } from 'model/form';
 import { MODEL_FETCHER_BASE_URL } from 'model/state-fetcher';
-import { BASE_API_URL, OptimisticHttpModule } from 'optimistic-http';
+import { OPTIMISTIC_BASE_API_URL, OptimisticHttpModule } from 'optimistic-http';
 import { environment } from 'src/environments/environment';
 import { HttpAuthTokensInterceptor, StateAuthModule } from 'state-auth';
 import { StateDbModule, STATE_DB_CONFIG } from 'state-db';
@@ -61,7 +61,7 @@ _registerModelStateConfig(ModelConfigMap);
 
     { provide: STORE_SETTINGS, useValue: AppStoreSettings},
     
-    { provide: BASE_API_URL, useValue: environment.apiUrl},
+    { provide: OPTIMISTIC_BASE_API_URL, useValue: environment.apiUrl},
     { provide: MODEL_FETCHER_BASE_URL, useValue: environment.apiUrl},
 
     { provide: MODEL_FORM_PROP_TRANSLATIONS, useValue: translations },
