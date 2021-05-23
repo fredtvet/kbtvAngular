@@ -1,4 +1,4 @@
-<style> mat-spinner { margin: 16px auto; } </style>
+<style> ion-spinner { transform: scale(2); } </style>
 <ng-container *ngIf="vm$ | async; let vm">
     <app-no-content *ngIf="!vm.isFetching else fetching">
         Finner ingen {{ modelProp | translate : true }}
@@ -6,9 +6,9 @@
     </app-no-content>
 
     <ng-template #fetching>
-        <app-no-content *ngIf="vm.isOnline else notOnline">
-            <mat-spinner color="accent"></mat-spinner>
-            <p>Laster inn {{ modelProp | translate : true }}...</p>
+        <app-no-content *ngIf="vm.isOnline else notOnline">       
+            <ion-spinner name="dots"></ion-spinner>
+            <p>Laster inn {{ modelProp | translate : true }}</p>
         </app-no-content>
     </ng-template>
     
@@ -16,4 +16,3 @@
         <app-no-content icon="cloud_off">Mangler internett-tilkobling</app-no-content>
     </ng-template>
 </ng-container>
-

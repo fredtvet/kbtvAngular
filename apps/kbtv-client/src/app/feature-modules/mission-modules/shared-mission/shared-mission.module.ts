@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { ImageViewerDialogWrapperComponent } from './components/image-viewer/image-viewer-dialog-wrapper.component';
 import { ImageViewerComponent } from './components/image-viewer/image-viewer.component';
@@ -31,5 +31,6 @@ import { InputListenerDirective } from './directives/input-listener.directive';
     ImageErrorPlaceholderDirective,
     InputListenerDirective,
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class SharedMissionModule {}

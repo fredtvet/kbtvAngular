@@ -21,8 +21,10 @@ img{
     margin-bottom: 20px;
 }
 
-mat-spinner{
+ion-spinner{
     position: absolute;
-    top: calc(50vh - 50px);
-    left: calc(50vw - 50px)
+    top: calc(50vh - 14px);
+    left: calc(50vw - 14px);
+    transform: scale(3);
+    color:white;
 }

@@ -3,12 +3,13 @@
     <ng-container *ngIf="vm.loading">
 
         <ng-container *ngIf="vm.isOnline else offlineContent">
+            
             <span class="loading-count mat-body" *ngIf="vm.optimisticCount && vm.optimisticCount > 1">
                 {{ vm.optimisticCount }}
             </span>
 
-            <mat-spinner diameter="24" [color]="spinnerColor">
-            </mat-spinner>
+            <ion-spinner name="circles"></ion-spinner>
+
         </ng-container>
         
 

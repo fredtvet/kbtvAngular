@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
@@ -53,7 +52,6 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
     MatDialogModule,
 
     MatIconModule,
-    MatProgressSpinnerModule,
   ],
   exports: [
     RouterModule,
@@ -65,7 +63,6 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
     MatRippleModule,
     MatDividerModule,
     MatIconModule,
-    MatProgressSpinnerModule,  
     MatDialogModule,
 
     StateAuthModule,
@@ -84,6 +81,7 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
     AsyncDetectPipe,
     AddToHomeScreenDirective, 
     RenderTimeoutDirective,
-  ]
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class SharedAppModule {}

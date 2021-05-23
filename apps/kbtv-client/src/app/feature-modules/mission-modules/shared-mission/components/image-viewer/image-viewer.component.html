@@ -9,7 +9,7 @@
     (swipeleft)="nextImage()" 
     (load)="onCurrentImageLoaded()"/>
 
-  <mat-spinner [appHide]="!loadingImage.loading" color="accent"></mat-spinner>
+  <ion-spinner [appHide]="!loadingImage.loading" name="dots"></ion-spinner>
 </ng-container>
 
 <div *ngIf="images?.length" class="page-counter-container" [appHide]="toolbarHidden">

@@ -1,4 +1,4 @@
-<mat-toolbar #navBar *ngIf="config" [ngClass]="overlayMode ? 'overlay-nav' : ''">
+<mat-toolbar #navBar *ngIf="config" [ngClass]="overlayMode ? 'main-top-nav-overlay' : ''">
 
     <app-button class="primary-button" [config]="getPrimaryBtn(config)">
     </app-button>
@@ -11,7 +11,7 @@
 
     </span>
 
-    <app-optimistic-loading-spinner spinnerColor="accent"></app-optimistic-loading-spinner>
+    <app-optimistic-loading-spinner></app-optimistic-loading-spinner>
     
     <span class="custom-buttons">
         <ng-container *ngIf="config.buttons">

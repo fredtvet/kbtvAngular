@@ -13,8 +13,6 @@ import { map } from 'rxjs/operators';
 })
 export class OptimisticLoadingSpinnerComponent {
 
-    @Input() spinnerColor: "accent" | "primary" | "warn" | undefined;
-
     vm$: Observable<LoadingResponse & {isOnline: boolean}> = combineLatest([
         this.deviceInfoService.isOnline$,
         this.loadingService.loading$
