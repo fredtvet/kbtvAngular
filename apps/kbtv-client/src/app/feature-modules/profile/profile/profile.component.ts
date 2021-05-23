@@ -4,8 +4,8 @@ import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { FormService } from 'form-sheet';
-import { CurrentUserPasswordForm } from '../forms/current-user-password-form.const';
-import { ProfileForm } from '../forms/profile-form.const';
+import { CurrentUserPasswordForm, CurrentUserPasswordFormSheet } from '../forms/current-user-password-form.const';
+import { ProfileFormSheet } from '../forms/profile-form.const';
 import { ProfileFacade } from '../profile.facade';
 import { ProfileAction } from './profile-action.interface';
 
@@ -43,19 +43,18 @@ export class ProfileComponent {
   }
 
   private updateProfile = (): void => {
-    this.formService.open<ProfileForm, null>({
-      formConfig: ProfileForm, 
-      navConfig: {title: "Oppdater profil"},
-      submitCallback: (val) => this.facade.updateCurrentUser(val)
-    }, this.facade.currentUser);
+    this.formService.open(
+      ProfileFormSheet, 
+      { initialValue: this.facade.currentUser },
+      (val) => this.facade.updateCurrentUser(val)
+    );
   }
 
   private updatePassword = (): void => {
-    this.formService.open<CurrentUserPasswordForm>({
-      formConfig: CurrentUserPasswordForm, 
-      navConfig: {title: "Oppdater passord"},
-      submitCallback: (val: CurrentUserPasswordForm) => this.facade.updatePassword(val.oldPassword, val.newPassword)
-    })
+    this.formService.open(
+      CurrentUserPasswordFormSheet, {},
+      (val: CurrentUserPasswordForm) => this.facade.updatePassword(val.oldPassword, val.newPassword)
+    )
   }
 
   private confirmClear = (): void => {

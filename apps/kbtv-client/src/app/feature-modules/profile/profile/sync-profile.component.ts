@@ -1,14 +1,14 @@
-import { ConfirmDialogService } from 'confirm-dialog';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { SyncConfigForm } from 'src/app/feature-modules/profile/forms/sync-config.form.const';
+import { ConfirmDialogService } from 'confirm-dialog';
+import { _getISO } from 'date-time-helpers';
+import { FormService } from 'form-sheet';
+import { SyncConfigFormSheet } from 'src/app/feature-modules/profile/forms/sync-config.form.const';
 import { ProfileFacade } from '../profile.facade';
 import { ProfileAction } from './profile-action.interface';
-import { Router } from '@angular/router';
-import { _getFirstDayOfMonth, _getISO } from 'date-time-helpers';
 import { _syncFormToConfigConverter } from './sync-form-to-config.converter';
-import { FormService } from 'form-sheet';
 
 @Component({
   selector: 'app-sync-profile',
@@ -40,16 +40,11 @@ export class SyncProfileComponent {
 
   private updateSyncConfig = (): void => {
     const config = this.facade.syncConfig;
-    this.formService.open<SyncConfigForm>(
-      {
-        formConfig: SyncConfigForm, 
-        navConfig: {title: "Konfigurasjoner"},
-        fullScreen: false,
-        submitCallback: (val) => 
-          this.facade.updateSyncConfig(_syncFormToConfigConverter(val))
-      }, 
-      config ? { initialMonthISO: _getISO(config.initialTimestamp), refreshTime: config.refreshTime / 60 } : null
-    )
+    this.formService.open(
+      SyncConfigFormSheet, 
+      { initialValue: config ? { initialMonthISO: _getISO(config.initialTimestamp), refreshTime: config.refreshTime / 60 } : null },
+      (val) => this.facade.updateSyncConfig(_syncFormToConfigConverter(val))
+    );
   }
 
   private confirmPurge = () => {

@@ -4,6 +4,7 @@ import { IonDateQuestion, IonDateQuestionComponent } from '@shared/scam/dynamic-
 import { SliderQuestion, SliderQuestionComponent } from '@shared/scam/dynamic-form-questions/slider-question.component';
 import { _getDateYearsAgo, _getFirstDayOfMonth, _getISO } from 'date-time-helpers';
 import { DynamicForm } from 'dynamic-forms';
+import { FormSheetViewConfig } from 'form-sheet';
 import { Immutable } from 'global-types';
 import { SyncConfig } from 'state-sync';
 
@@ -39,3 +40,9 @@ export const SyncConfigForm: Immutable<DynamicForm<SyncConfigForm, null>> = {
         } ,
     },
 }
+
+export const SyncConfigFormSheet: Immutable<FormSheetViewConfig<SyncConfigForm>> = {
+    formConfig: SyncConfigForm, 
+    navConfig: {title: "Konfigurasjoner"},
+    fullScreen: false,
+  }

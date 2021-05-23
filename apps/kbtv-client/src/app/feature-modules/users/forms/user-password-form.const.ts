@@ -1,6 +1,7 @@
 import { UserNameControl, NewPasswordControl, ConfirmPasswordControl } from "@shared/constants/common-controls.const";
 import { isSamePasswordsValidator } from "@shared/validators/is-same-passwords.validator";
 import { DynamicForm } from "dynamic-forms";
+import { FormSheetViewConfig } from "form-sheet";
 import { Immutable } from "global-types";
 
 export interface UserPasswordForm { userName: string, newPassword: string, confirmPassword: string }
@@ -14,4 +15,9 @@ export const UserPasswordForm: Immutable<DynamicForm<UserPasswordForm, null>> = 
         confirmPassword: ConfirmPasswordControl,
     },
     validators: [isSamePasswordsValidator<UserPasswordForm>("newPassword", "confirmPassword")],
+}
+
+export const UserPasswordFormSheet: Immutable<FormSheetViewConfig<UserPasswordForm>> = {
+    formConfig: UserPasswordForm, 
+    navConfig: {title: "Oppdater passord"},  
 }

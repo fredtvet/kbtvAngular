@@ -129,14 +129,15 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
   
   private openMailImageSheet = (ids: string[]) => {    
     const email = this.facade.getMissionEmployerEmail(this.missionId)
-    this.formService.open<EmailForm>({
+    this.formService.open<EmailForm, null>({
       formConfig: {...EmailForm, options: { allowPristine: email != null } }, 
       navConfig: {title: "Send bilder"},
-      submitCallback: (val) => { 
-        this.facade.mailImages(val.email, ids);
-        this.selectableContainer.resetSelections();
-      },
-    }, { email })
+    }, 
+    { initialValue: { email } },
+    (val) => { 
+      this.facade.mailImages(val.email, ids);
+      this.selectableContainer.resetSelections();
+    })
   }
 
   private downloadImages = (imgs: ImmutableArray<MissionImage>) => 

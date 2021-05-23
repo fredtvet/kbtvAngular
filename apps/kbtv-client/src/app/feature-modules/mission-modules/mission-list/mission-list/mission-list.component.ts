@@ -6,11 +6,12 @@ import { ModelState } from "@core/state/model-state.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { SearchBarConfig } from "@shared-mission/components/search-bar/search-bar-config.interface";
+import { MissionCriteriaFormSheet } from '@shared-mission/forms/mission-criteria-form.const';
+import { CreateMissionModelForm } from "@shared-mission/forms/save-mission-model-form.const";
 import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { BottomBarIconButton } from "@shared/components/bottom-action-bar/bottom-bar-icon-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
-import { MissionCriteriaForm, MissionCriteriaFormState } from '@shared-mission/forms/mission-criteria-form.const';
 import { MissionCriteria } from "@shared/interfaces/mission-criteria.interface";
 import { MissionFilter } from "@shared/mission-filter.model";
 import { _filter } from "array-helpers";
@@ -22,7 +23,6 @@ import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { MissionListFacade } from '../mission-list.facade';
 import { MissionListProviders } from './mission-list-providers.const';
-import { CreateMissionModelForm } from "@shared-mission/forms/save-mission-model-form.const";
 
 interface ViewModel{ 
   criteriaChips?: AppChip[], 
@@ -101,12 +101,11 @@ export class MissionListComponent extends WithUnsubscribe(){
     this.modelFormService.open(CreateMissionModelForm)
 
   private openMissionFilter = () => 
-    this.formService.open<MissionCriteria, MissionCriteriaFormState>({
-        formConfig: MissionCriteriaForm, 
-        formState: this.facade.criteriaFormState$,
-        navConfig: {title: "Velg filtre"},
-        submitCallback: (val) => this.facade.addCriteria(val),
-      }, this.facade.criteria);   
+    this.formService.open(
+      MissionCriteriaFormSheet, 
+      { initialValue: this.facade.criteria, formState: this.facade.criteriaFormState$ },
+      (val) => this.facade.addCriteria(val)
+    );   
 
   private getCriteriaChips(criteria: Maybe<Immutable<MissionCriteria>>){
     return this.chipsFactory.createCriteriaChips(criteria, 

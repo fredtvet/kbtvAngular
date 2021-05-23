@@ -2,12 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet, User } from '@core/models';
-import { ModelState } from '@core/state/model-state.interface';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
-import { TimesheetForm, TimesheetFormState, EditTimesheetModelForm, CreateTimesheetModelForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
-import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared-timesheet/forms/week-criteria-controls.const';
-import { WeekCriteria } from '@shared-timesheet/interfaces';
+import { TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
@@ -15,12 +12,12 @@ import { TimesheetStatus } from '@shared/enums';
 import { _getWeekYear } from 'date-time-helpers';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
-import { ModelFormService } from 'model/form';
 import { combineLatest, Observable } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { AdminTimesheetCardDialogWrapperComponent } from '../components/admin-timesheet-card-dialog-wrapper.component';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
 import { TimesheetAdminListWeekNrQueryParam } from './timesheet-admin-list-route-params.const';
+import { TimesheetAdminListWeekCriteriaFormSheet } from './timesheet-admin-list-week-criteria-form-sheet.const';
 
 @Component({
   selector: 'app-timesheet-admin-list',
@@ -73,15 +70,16 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
   trackById = _trackByModel("timesheets");
   
   private openWeekFilter = () => 
-    this.formService.open<WeekCriteriaForm, WeekCriteriaFormState>({
-      formConfig: {...WeekCriteriaForm, options: { onlineRequired: true } }, 
-      formState: this.facade.weekCriteriaFormState$,
-      navConfig: {title: "Velg filtre"},
-      submitCallback: (val: WeekCriteria): void => {
-        if(val.weekNr) this.facade.updateWeekNr(val.weekNr)
-        this.facade.updateCriteria(val)
-      }
-    }, {...this.facade.weekCriteria, weekNr: <number>this.facade.selectedWeekNr});
+    this.formService.open(TimesheetAdminListWeekCriteriaFormSheet, 
+    { 
+      initialValue: {...this.facade.weekCriteria, weekNr: <number>this.facade.selectedWeekNr},
+      formState: this.facade.weekCriteriaFormState$
+    },
+    (val) => {
+      if(val.weekNr) this.facade.updateWeekNr(val.weekNr)
+      this.facade.updateCriteria(val)
+    }
+  );
   
   private getNavConfig(user: Maybe<Immutable<User>>, year: Maybe<number>, weekNr: Maybe<number>): MainTopNavConfig {
     const fullName = user ? (user.firstName + ' ' + user.lastName) : '';

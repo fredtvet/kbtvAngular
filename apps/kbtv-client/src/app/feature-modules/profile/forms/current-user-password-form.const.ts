@@ -4,6 +4,7 @@ import { ValidationRules } from '@shared/constants/validation-rules.const';
 import { InputQuestion, InputQuestionComponent } from '@shared/scam/dynamic-form-questions/input-question.component';
 import { isSamePasswordsValidator } from '@shared/validators/is-same-passwords.validator';
 import { DynamicForm } from 'dynamic-forms';
+import { FormSheetViewConfig } from 'form-sheet';
 import { Immutable } from 'global-types';
 
 export interface CurrentUserPasswordForm { oldPassword: string, newPassword: string, confirmPassword: string }
@@ -27,3 +28,8 @@ export const CurrentUserPasswordForm: Immutable<DynamicForm<CurrentUserPasswordF
         confirmPassword: ConfirmPasswordControl
     }, 
 }
+
+export const CurrentUserPasswordFormSheet: Immutable<FormSheetViewConfig<CurrentUserPasswordForm>> = {
+    formConfig: CurrentUserPasswordForm, 
+    navConfig: {title: "Oppdater passord"},
+  }

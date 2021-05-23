@@ -98,14 +98,17 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
   
   private openMailDocumentSheet = () => {
     const email = this.facade.getMissionEmployerEmail(this.missionId)
-    this.formService.open<EmailForm>({
-      formConfig: {...EmailForm, options: { allowPristine: email != null } }, 
-      navConfig: {title: "Send Dokumenter"},
-      submitCallback: (val) => { 
+    this.formService.open<EmailForm, null>(
+      {
+        formConfig: {...EmailForm, options: { allowPristine: email != null } }, 
+        navConfig: {title: "Send Dokumenter"},
+      }, 
+      { initialValue: { email } },
+      (val) => { 
         this.facade.mailDocuments(val.email, this.currentSelections);
         this.selectableContainer.resetSelections();
-      },
-    }, { email })
+      }
+    )
   }
 
   private openDocumentForm = () => 

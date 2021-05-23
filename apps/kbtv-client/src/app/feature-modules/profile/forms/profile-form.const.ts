@@ -3,6 +3,7 @@ import { IContactable } from '@core/models/sub-interfaces/icontactable.interface
 import { IFullName } from '@core/models/sub-interfaces/ifullname.interface';
 import { UserNameControl, FirstNameControl, LastNameControl, PhoneNumberControl, EmailControl } from '@shared/constants/common-controls.const';
 import { DynamicForm } from 'dynamic-forms';
+import { FormSheetViewConfig } from 'form-sheet';
 import { Immutable } from 'global-types';
 
 export interface ProfileForm extends Pick<User, "userName">, IContactable, IFullName {}
@@ -18,3 +19,8 @@ export const ProfileForm: Immutable<DynamicForm<ProfileForm, null>> = {
         email: EmailControl,
     },
 }
+
+export const ProfileFormSheet: Immutable<FormSheetViewConfig<ProfileForm>> = {
+    formConfig: ProfileForm, 
+    navConfig: { title: "Oppdater profil" },
+  }

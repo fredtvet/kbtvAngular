@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 import { Router } from '@angular/router';
-import { FormService, FormServiceConfig, FormSheetWrapperComponent } from 'form-sheet';
+import { FormService, FormServiceConfig, FormSheetState, FormSheetViewConfig, FormSheetWrapperComponent } from 'form-sheet';
 import { Immutable, Maybe } from "global-types";
 import { StateModels, _getModelConfig } from "model/core";
 import { ModelCommand, SaveAction } from "model/state-commands";
@@ -33,14 +33,15 @@ export class ModelFormService<TState extends object> {
     TInputState extends object | null = null
   >(
     config: Immutable<ModelFormConfig<TState, TModel, TForm, TInputState>>,
-    initialValue?: Maybe<Immutable<DeepPartial<TForm>>>,
+    initialValue?: Immutable<Maybe<DeepPartial<TForm>>>,
     options?: Immutable<ModelFormServiceOptions<TState>>,
   ): BottomSheetRef {
 
     var ref: MatBottomSheetRef<FormSheetWrapperComponent, SaveAction> = 
       this.formService.open(
-        this.getFormServiceConfig(config, initialValue || {}, options || {}),
-        initialValue
+        this.getFormSheetViewConfig(config, initialValue || {}, options || {}),
+        { formState: options?.formState, initialValue },
+        options?.submitCallback
       )
 
     if(options?.onSaveUri)
@@ -49,7 +50,7 @@ export class ModelFormService<TState extends object> {
     return ref;
   }
 
-  private getFormServiceConfig<
+  private getFormSheetViewConfig<
     TModel extends StateModels<TState>, 
     TForm extends object = TModel extends object ? TModel : never, 
     TInputState extends object | null = null
@@ -57,14 +58,12 @@ export class ModelFormService<TState extends object> {
     config: Immutable<ModelFormConfig<TState, TModel, TForm, TInputState>>,
     initialValue: any,
     options: Immutable<ModelFormServiceOptions<TState>>,
-  ): Immutable<FormServiceConfig<TForm, TInputState, ModelFormConfig<TState, TModel, TForm, TInputState>, SaveAction>> {
+  ): Immutable<FormSheetViewConfig<TForm, TInputState, ModelFormConfig<TState, TModel, TForm, TInputState>, SaveAction>> {
     const entityId = initialValue[_getModelConfig(config.includes.prop).idProp];
     return {
       formConfig: config,
       fullScreen: options.fullScreen,      
-      submitCallback: options.submitCallback,
       customFormComponent: ModelFormComponent,
-      formState: options?.formState,
       navConfig: {
         title: options?.customTitle || 
           `${entityId ? "Oppdater" : "Registrer"} 

@@ -9,6 +9,7 @@ import { SelectQuestionComponent, SelectQuestion } from '@shared/scam/dynamic-fo
 import { MissionCriteria } from '@shared/interfaces';
 import { EmployerSelectControl } from '@shared/constants/common-controls.const';
 import { Immutable } from 'global-types';
+import { FormSheetViewConfig } from 'form-sheet';
 
 export type MissionCriteriaFormState = StateMissions & StateEmployers & StateMissionTypes
 
@@ -60,4 +61,9 @@ export const MissionCriteriaForm: Immutable<DynamicForm<MissionCriteria, FormSta
         missionType: MissionTypeControl,
         finished: FinishedControl
     },
+}
+
+export const MissionCriteriaFormSheet: Immutable<FormSheetViewConfig<MissionCriteriaForm, MissionCriteriaFormState>> = {
+    formConfig: MissionCriteriaForm, 
+    navConfig: {title: "Velg filtre"},
 }

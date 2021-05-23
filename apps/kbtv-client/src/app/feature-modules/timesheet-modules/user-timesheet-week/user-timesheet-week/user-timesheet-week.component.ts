@@ -5,7 +5,6 @@ import { DeviceInfoService } from '@core/services/device-info.service';
 import { ModelState } from "@core/state/model-state.interface";
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
 import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
-import { WeekCriteriaForm } from "@shared-timesheet/forms/week-criteria-controls.const";
 import { WeekCriteria } from '@shared-timesheet/interfaces';
 import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
@@ -17,6 +16,7 @@ import { ModelFormService } from 'model/form';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { UserTimesheetListCriteriaQueryParam } from "../../user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const";
+import { UserTimesheetWeekCriteriaFormSheet } from "./user-timesheet-week-criteria-form-sheet.const";
 import { UserTimesheetWeekProviders } from './user-timesheet-week-providers.const';
 import { UserTimesheetWeekFacade } from './user-timesheet-week.facade';
 import { ViewModel } from './view-model.interface';
@@ -84,16 +84,11 @@ export class UserTimesheetWeekComponent {
   };
 
   private openWeekFilter = (): void => { 
-    this.formService.open({
-      formConfig: {...WeekCriteriaForm, 
-        options: { noRenderDisabledControls: true } ,
-        disabledControls: {user: true}, 
-        initialValue: this.facade.weekCriteria 
-      }, 
-      fullScreen: false,
-      navConfig: {title: "Velg filtre"},
-      submitCallback: (val) => this.facade.updateCriteria(val)
-    });
+    this.formService.open(
+      UserTimesheetWeekCriteriaFormSheet,
+      { initialValue: this.facade.weekCriteria },
+      (val) => this.facade.updateCriteria(val) 
+    );
   }
 
   private getNavConfig(weekCriteria: Maybe<Partial<WeekCriteria>>): MainTopNavConfig{

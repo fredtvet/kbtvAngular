@@ -12,9 +12,9 @@ import { TimesheetStatus } from '@shared/enums';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
 import { map, takeUntil, tap } from 'rxjs/operators';
-import { WeekCriteria } from '../../shared-timesheet/interfaces';
 import { TimesheetAdminListWeekNrQueryParam } from '../timesheet-admin-list/timesheet-admin-list-route-params.const';
 import { TimesheetAdminFacade } from '../timesheet-admin.facade';
+import { TimesheetAdminWeekCriteriaFormSheet } from './timesheet-admin-week-criteria-form-sheet.const';
 import { TimesheetAdminWeekListCriteriaQueryParam } from './timesheet-admin-week-list-route-params.const';
 
 @Component({
@@ -75,14 +75,11 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
     this.router.navigate(['timer', {[TimesheetAdminListWeekNrQueryParam]: weekNr}], {relativeTo: this.route})
   
   private openWeekFilter = (): void => {
-    this.formService.open<WeekCriteriaForm, WeekCriteriaFormState>({
-      formConfig: {...WeekCriteriaForm, 
-        options: { onlineRequired: true, noRenderDisabledControls: true },   
-        disabledControls: {weekNr: true}}, 
-      formState: this.facade.weekCriteriaFormState$,
-      navConfig: {title: "Velg filtre"},
-      submitCallback: (val: WeekCriteria) => this.facade.updateCriteria(val)
-    }, this.facade.weekCriteria)
+    this.formService.open<WeekCriteriaForm, WeekCriteriaFormState>(
+      TimesheetAdminWeekCriteriaFormSheet, 
+      { initialValue: this.facade.weekCriteria, formState: this.facade.weekCriteriaFormState$ },
+      (val) => this.facade.updateCriteria(val)
+    )
   } 
     
   private onBack = () => { 

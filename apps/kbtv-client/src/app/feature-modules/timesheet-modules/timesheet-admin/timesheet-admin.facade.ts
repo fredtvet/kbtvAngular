@@ -78,7 +78,7 @@ export class TimesheetAdminFacade {
         )
     };
 
-    updateCriteria = (weekCriteria: WeekCriteria): void =>       
+    updateCriteria = (weekCriteria: Immutable<Partial<WeekCriteria>>): void =>       
         this.store.dispatch(<SetTimesheetCriteriaWithWeekCriteriaAction>{ 
             type: SetTimesheetCriteriaWithWeekCriteriaAction, weekCriteria 
         })

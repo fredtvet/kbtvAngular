@@ -9,8 +9,8 @@ import { FormService } from 'form-sheet';
 import { Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
 import { Observable } from 'rxjs';
-import { EditUserModelForm, CreateUserModelForm } from '../forms/save-user-model-form.const';
-import { UserPasswordForm } from '../forms/user-password-form.const';
+import { CreateUserModelForm, EditUserModelForm } from '../forms/save-user-model-form.const';
+import { UserPasswordFormSheet } from '../forms/user-password-form.const';
 import { UsersFacade } from '../users.facade';
 
 @Component({
@@ -68,11 +68,11 @@ export class UserListComponent {
   }
   
   private openNewPasswordForm = (userName?: string): void => {
-    this.formService.open<UserPasswordForm>({
-      formConfig: UserPasswordForm, 
-      navConfig: {title: "Oppdater passord"},  
-      submitCallback: (val) => this.facade.updatePassword(val.userName, val.newPassword)
-    }, {userName});
+    this.formService.open(
+      UserPasswordFormSheet, 
+      { initialValue: { userName } },
+      (val) => this.facade.updatePassword(val.userName, val.newPassword)
+    );
   }
 
 }

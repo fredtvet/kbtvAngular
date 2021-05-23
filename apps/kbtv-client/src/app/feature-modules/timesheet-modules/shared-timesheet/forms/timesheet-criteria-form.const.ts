@@ -8,6 +8,7 @@ import { IonDateQuestionComponent, IonDateQuestion } from '@shared/scam/dynamic-
 import { RadioGroupQuestion, RadioGroupQuestionComponent } from '@shared/scam/dynamic-form-questions/radio-group-question.component';
 import { DateRange, _getISO, _getMonthRange } from 'date-time-helpers';
 import { DynamicControl, DynamicControlGroup, DynamicForm, _formStateBinding, _formStateSetter } from 'dynamic-forms';
+import { FormSheetViewConfig } from 'form-sheet';
 import { Immutable, Maybe, NotNull } from 'global-types';
 import { Converter } from 'model/form';
 import { StateSyncConfig } from 'state-sync';
@@ -138,6 +139,11 @@ export const UserTimesheetCriteriaForm: Immutable<DynamicForm<UserTimesheetCrite
     ]
 }
 
+export const UserTimesheetCriteriaFormSheet: Immutable<FormSheetViewConfig<UserTimesheetCriteriaForm, UserTimesheetCriteriaFormState>> = {
+    formConfig: UserTimesheetCriteriaForm, 
+    navConfig: {title: "Velg filtre"},
+}
+
 export const TimesheetCriteriaForm: Immutable<DynamicForm<TimesheetCriteriaForm, TimesheetCriteriaFormState>> = {
     ...BaseForm, options: { onlineRequired: true },
     controls: {
@@ -152,4 +158,9 @@ export const TimesheetCriteriaForm: Immutable<DynamicForm<TimesheetCriteriaForm,
         _formStateSetter<TimesheetCriteriaForm, FormState>()(["dateRange.start"], [], (f) => { return { endMin: <string> f['dateRange.start'] } }),
         _formStateSetter<TimesheetCriteriaForm, FormState>()(["dateRange.end"], [], (f) => { return { startMax: <string> f['dateRange.end'] } })
     ]
+}
+
+export const TimesheetCriteriaFormSheet: Immutable<FormSheetViewConfig<TimesheetCriteriaForm, TimesheetCriteriaFormState>> = {
+    formConfig: TimesheetCriteriaForm, 
+    navConfig: {title: "Velg filtre"},
 }
