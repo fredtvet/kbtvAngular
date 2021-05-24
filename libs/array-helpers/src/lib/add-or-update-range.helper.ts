@@ -25,11 +25,5 @@ export function _addOrUpdateRange<T>(
       else newEntities.push(newObj);    
     } 
 
-    // let keys = Object.keys(originalsObj);
-    
-    // for(let i = 0; i < keys.length;i++){
-    //   newEntities.push(<Immutable<T>> originalsObj[keys[i]]);
-    // }
-
     return [...newEntities, ...Object.values<Immutable<T>>(originalsObj)];
 }

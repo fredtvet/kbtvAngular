@@ -1,23 +1,27 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { HttpFactoryService } from '../../http-factory.service';
+import { StateRequestQueue } from '../../interfaces';
 import { HttpErrorAction } from '../http-error/http-error.action';
 import { HttpSuccessAction } from '../http-success/http-success.action';
-import { DispatchHttpAction } from './dispatch-http.action';
+import { DispatchNextHttpAction } from './dispatch-http.action';
 
 @Injectable()
-export class DispatchHttpEffect implements Effect<DispatchHttpAction> {
+export class DispatchHttpEffect implements Effect<DispatchNextHttpAction> {
 
     constructor(private httpFactory: HttpFactoryService) {}
 
-    handle$(actions$: Observable<DispatchedAction<DispatchHttpAction>>): Observable<StateAction> {
+    handle$(actions$: Observable<DispatchedAction<DispatchNextHttpAction, StateRequestQueue>>): Observable<StateAction | void> {
         return actions$.pipe(
-            listenTo([DispatchHttpAction]),
-            mergeMap(x => this.httpFactory.getObserver$(x.action.request, x.action.commandId)),
-            map(x => <HttpSuccessAction>{ type: HttpSuccessAction })
+            listenTo([DispatchNextHttpAction]),
+            mergeMap(x => {
+                const command = x.stateSnapshot.requestQueue[0];
+                return this.httpFactory.getObserver$(command.request, command.commandId)
+            }),
+            map(x => x?.isDuplicate ? undefined : <HttpSuccessAction>{ type: HttpSuccessAction })
         )
     }
 

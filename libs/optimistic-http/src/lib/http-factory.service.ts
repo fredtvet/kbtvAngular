@@ -14,7 +14,7 @@ export class HttpFactoryService {
       @Inject(OPTIMISTIC_BASE_API_URL) private baseUrl: string
     ) {}
 
-    getObserver$(request: Immutable<OptimisticHttpRequest>, commandId: string): Observable<unknown> {
+    getObserver$(request: Immutable<OptimisticHttpRequest>, commandId: string): Observable<{isDuplicate?: boolean} | undefined> {
       const options: {headers: HttpHeaders} = { headers: new HttpHeaders({[CommandIdHeader]: commandId}) }
         switch (request.method) {
           case "POST": return this.httpClient.post(this.baseUrl + request.apiUrl, this.constructBody(request.body), options);

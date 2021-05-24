@@ -5,7 +5,7 @@ export interface QueuedCommand {
     request: Immutable<OptimisticHttpRequest>, 
     stateSnapshot: Maybe<Immutable<UnknownState>>, 
     dispatched?: boolean,
-    commandId?: string
+    commandId: string
 };
 
 /** Represents a completed command with a status indicating if the command succeeded. */

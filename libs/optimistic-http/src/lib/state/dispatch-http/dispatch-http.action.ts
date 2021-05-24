@@ -1,8 +1,4 @@
-import { StateAction } from 'state-management'
-import { OptimisticHttpRequest } from '../../interfaces';
+import { StateAction } from 'state-management';
 
-export const DispatchHttpAction = "DISPATCH_HTTP_ACTION";
-export interface DispatchHttpAction extends StateAction<typeof DispatchHttpAction> {
-    request: OptimisticHttpRequest,
-    commandId: string
-}
+export const DispatchNextHttpAction = "DISPATCH_NEXT_HTTP_ACTION";
+export interface DispatchNextHttpAction extends StateAction<typeof DispatchNextHttpAction> { }

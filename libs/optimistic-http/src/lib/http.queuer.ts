@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Immutable } from 'global-types';
 import { BehaviorSubject, fromEvent, merge, of } from 'rxjs';
 import { filter, first, map, switchMap, tap } from 'rxjs/operators';
 import { Store } from 'state-management';
-import { _commandIdGenerator } from './command-id-generator.helper';
-import { LastCommand, OptimisticHttpRequest, StateRequestQueue } from './interfaces';
-import { DispatchHttpAction } from './state/dispatch-http/dispatch-http.action';
-import { HttpQueueShiftAction } from './state/http-queue-shift.action';
+import { StateRequestQueue } from './interfaces';
+import { DispatchNextHttpAction } from './state/dispatch-http/dispatch-http.action';
 
 /** Class responsible for queuing and dispatching http requests ({@link OptimisticHttpRequest}) 
  * Requires initalization by consumer. */
@@ -24,7 +21,7 @@ export class HttpQueuer {
         of(navigator.onLine)
       ).pipe(
         first(x => x === true), //Wait for online
-        tap(x => queue ? this.dispatchRequest(queue[0].request) : null)
+        tap(x => queue ? this.dispatchNextRequest() : null)
       )
     )
   );
@@ -34,8 +31,7 @@ export class HttpQueuer {
   /** Initalizes the queue 
    *  @param lastCommand Key information used to guard for interrupted requests from previous session.
   */
-  initalize(lastCommand?: LastCommand): void {
-    if(lastCommand) this.checkForUnhandledRequests(lastCommand); 
+  initalize(): void {
     this.nextInQueue$.subscribe();
   }
 
@@ -44,26 +40,8 @@ export class HttpQueuer {
     this.nextInQueueSubject.next(true)
   }
 
-  //Checks if there are unhandled requests persisted when initalizing. 
-  //i.e. if app is closed before receiving request response
-  //Waits for sync call to provide last command status for user, to check if it was successful or not. 
-  private checkForUnhandledRequests(lastCommand: LastCommand): void {
-      const requestQueue = this.store.state.requestQueue;
-
-      if(!requestQueue) return;
-      const firstRequest = requestQueue[0];
-      
-      //If dispatched & status is true, remove request from queue.
-      if(firstRequest?.dispatched && lastCommand.lastCommandId === firstRequest.commandId && lastCommand.lastCommandStatus)  
-          this.store.dispatch(<HttpQueueShiftAction>{ type: HttpQueueShiftAction })  
-  }
-
-  private dispatchRequest(request: Immutable<OptimisticHttpRequest>): void{
-    this.store.dispatch(<DispatchHttpAction>{ 
-      type: DispatchHttpAction, 
-      request: request,
-      commandId: _commandIdGenerator()
-    })
+  private dispatchNextRequest(): void{
+    this.store.dispatch(<DispatchNextHttpAction>{ type: DispatchNextHttpAction })
   }
 
 }

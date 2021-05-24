@@ -3,6 +3,7 @@ import { Immutable, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, StateAction } from 'state-management';
+import { _commandIdGenerator } from '../command-id-generator.helper';
 import { ActionRequestConverterFn, OptimisticHttpRequest } from '../interfaces';
 import { OptimisticProvidersService } from '../optimistic-providers.service';
 import { HttpQueuePushAction } from './http-queue-push/http-queue-push.action';
@@ -29,6 +30,7 @@ export class OptimisticRequestQueuerEffect implements Effect<StateAction> {
         return {
             type: HttpQueuePushAction,
             command: {
+                commandId: _commandIdGenerator(),
                 request: dispatched.action.request, 
                 stateSnapshot: this.getOptimisticState(dispatched.action.stateSnapshot),
             }    
@@ -41,7 +43,8 @@ export class OptimisticRequestQueuerEffect implements Effect<StateAction> {
         return { type: HttpQueuePushAction,
             command: {
                 request: <OptimisticHttpRequest> { ...request, callerAction: dispatched.action },
-                stateSnapshot: this.getOptimisticState(dispatched.stateSnapshot)
+                stateSnapshot: this.getOptimisticState(dispatched.stateSnapshot),
+                commandId: _commandIdGenerator(),
             }
         }
     }
