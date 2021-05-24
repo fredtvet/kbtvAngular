@@ -28,9 +28,7 @@ export class HttpQueuer {
 
   constructor(private store: Store<StateRequestQueue>) {}
 
-  /** Initalizes the queue 
-   *  @param lastCommand Key information used to guard for interrupted requests from previous session.
-  */
+  /** Initalizes the queue */
   initalize(): void {
     this.nextInQueue$.subscribe();
   }

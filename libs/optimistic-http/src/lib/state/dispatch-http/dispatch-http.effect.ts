@@ -6,6 +6,7 @@ import { DispatchedAction, Effect, listenTo, StateAction } from 'state-managemen
 import { HttpFactoryService } from '../../http-factory.service';
 import { StateRequestQueue } from '../../interfaces';
 import { HttpErrorAction } from '../http-error/http-error.action';
+import { HttpQueueShiftAction } from '../http-queue-shift.action';
 import { HttpSuccessAction } from '../http-success/http-success.action';
 import { DispatchNextHttpAction } from './dispatch-http.action';
 
@@ -21,7 +22,10 @@ export class DispatchHttpEffect implements Effect<DispatchNextHttpAction> {
                 const command = x.stateSnapshot.requestQueue[0];
                 return this.httpFactory.getObserver$(command.request, command.commandId)
             }),
-            map(x => x?.isDuplicate ? undefined : <HttpSuccessAction>{ type: HttpSuccessAction })
+            map(x => x?.isDuplicate ? 
+                <HttpQueueShiftAction>{ type: HttpQueueShiftAction } : 
+                <HttpSuccessAction>{ type: HttpSuccessAction }
+            )
         )
     }
 

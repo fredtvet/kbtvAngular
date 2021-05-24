@@ -6,6 +6,4 @@ import { IFullName } from './sub-interfaces/ifullname.interface';
 export interface User extends Model, EmployerForeign, IContactable, IFullName {
   userName: string;
   role: string;
-  lastCommandStatus: boolean;
-  lastCommandId: string;
 };

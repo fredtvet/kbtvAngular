@@ -25,12 +25,6 @@ export interface StateRequestLog {
     requestLog: CompletedCommand[]; 
 };
 
-/** Represents information neccesary to track the last command from the previous session. */
-export interface LastCommand{
-    lastCommandId: string;
-    lastCommandStatus: boolean;
-}
-
 /** Describes an object thats used to represent an entry in a form data class. */
 export interface FormDataEntry { 
     /** The key of the entry */

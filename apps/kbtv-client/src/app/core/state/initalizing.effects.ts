@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpQueuer, StateRequestQueue } from 'optimistic-http';
+import { HttpQueuer } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { SetPersistedStateAction } from 'state-db';
-import { DispatchedAction, Effect, listenTo, Store } from 'state-management';
+import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { ContinousSyncService, SyncStateSuccessAction } from 'state-sync';
-import { StateCurrentUser } from './global-state.interfaces';
 
 @Injectable()
 export class InitalizeSyncEffect implements Effect<SetPersistedStateAction> {
@@ -24,20 +23,13 @@ export class InitalizeSyncEffect implements Effect<SetPersistedStateAction> {
 @Injectable()
 export class InitalizeHttpQueueEffect implements Effect<SyncStateSuccessAction> {
 
-    constructor(
-        private httpQueuer: HttpQueuer,
-        private store: Store<StateRequestQueue & StateCurrentUser>
-    ) {}
+    constructor(private httpQueuer: HttpQueuer) {}
 
     handle$(actions$: Observable<DispatchedAction<SyncStateSuccessAction>>): Observable<void> {
         return actions$.pipe(
             listenTo([SyncStateSuccessAction]),
             first(),
-            map(x => {
-                if(!this.store.state.currentUser) return;
-                const {lastCommandId, lastCommandStatus} = this.store.state.currentUser;
-                this.httpQueuer.initalize({lastCommandId, lastCommandStatus})
-            }),
+            map(x => this.httpQueuer.initalize()),
         ) 
     }
 }
