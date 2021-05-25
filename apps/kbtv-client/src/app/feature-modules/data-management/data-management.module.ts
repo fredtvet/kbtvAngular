@@ -9,7 +9,7 @@ import { translations } from '@shared-app/translations';
 import { SharedModule } from '@shared/shared.module';
 import { ModelDataTableModule, MODEL_DATA_TABLES_CONFIG, MODEL_DATA_TABLE_PROP_TRANSLATIONS } from 'model/data-table';
 import { ModelFormModule } from 'model/form';
-import { DeleteModelAction, DeleteModelReducer, ModelStateCommandsModule, SaveModelAction, SaveModelReducer, SetSaveModelStateAction } from 'model/state-commands';
+import { DeleteModelAction, ModelStateCommandsModule, SetSaveModelStateAction } from 'model/state-commands';
 import { ModelStateFetcherModule } from 'model/state-fetcher';
 import { OptimisticHttpModule } from 'optimistic-http';
 import { StateManagementModule } from 'state-management';

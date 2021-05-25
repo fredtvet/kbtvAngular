@@ -10,7 +10,7 @@ export interface SaveModelFileAction<TModel extends ModelFile = ModelFile> exten
         type: typeof SaveModelFileAction
 }
 
-export const SetSaveModelFileStateAction = SetSaveModelStateAction+"_FILE";
+export const SetSaveModelFileStateAction = "SET_SAVE_MODEL_FILE_STATE_ACTION";
 export interface SetSaveModelFileStateAction<TModel extends ModelFile = ModelFile> extends Omit<SetSaveModelStateAction<ModelState, TModel>, "type">{
         fileWrapper: ModelFileWrapper,
         type: typeof SetSaveModelFileStateAction

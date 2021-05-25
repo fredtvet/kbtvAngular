@@ -1,17 +1,17 @@
-import { SaveModelFileAction, SetSaveModelFileStateAction } from "@actions/global-actions";
+import { SetSaveModelFileStateAction } from "@actions/global-actions";
 import { ApiUrl } from "@core/api-url.enum";
-import { Immutable, Prop } from "global-types";
-import { DeleteModelAction, ModelCommand, SaveModelAction, SetSaveModelStateAction } from "model/state-commands";
-import { ActionRequestMap, FormDataEntry, OptimisticHttpRequest } from "optimistic-http";
+import { Prop } from "global-types";
+import { DeleteModelAction, ModelCommand, SetSaveModelStateAction } from "model/state-commands";
+import { ActionRequestMap, FormDataEntry } from "optimistic-http";
 import { Model } from "../../models";
 import { ModelState } from "../../state/model-state.interface";
 import { ModelBaseUrls } from "../model/model-base-urls.const";
 import { ModelIdProps } from "../model/model-id-props.const";
 
-export type GenericOptimisticActionTypes = typeof SaveModelAction | typeof SaveModelFileAction | typeof DeleteModelAction;
+export type GenericOptimisticActions = SetSaveModelStateAction<ModelState, Model> | SetSaveModelFileStateAction | DeleteModelAction<ModelState, Model>;
 
-export const GenericActionRequestMap: ActionRequestMap<GenericOptimisticActionTypes> = {
-    [SetSaveModelStateAction]: (a: Immutable<SetSaveModelStateAction<ModelState, Model>>): OptimisticHttpRequest<Model> => { 
+export const GenericActionRequestMap: ActionRequestMap<GenericOptimisticActions> = {
+    [SetSaveModelStateAction]: (a) => { 
         return a.saveAction === ModelCommand.Create ? 
             { 
                 method: "POST", 
@@ -24,7 +24,7 @@ export const GenericActionRequestMap: ActionRequestMap<GenericOptimisticActionTy
                 apiUrl: `${ModelBaseUrls[a.stateProp]}/${a.saveModelResult.fullModel[<keyof Model> ModelIdProps[a.stateProp]]}`
             }
     },
-    [SetSaveModelFileStateAction]: (a: Immutable<SetSaveModelFileStateAction>) => { 
+    [SetSaveModelFileStateAction]: (a) => { 
         const isCreate = a.saveAction === ModelCommand.Create;
         const file = a.fileWrapper?.modifiedFile;
         const body: FormDataEntry[] = [{name: "file", value: file}];
@@ -43,7 +43,7 @@ export const GenericActionRequestMap: ActionRequestMap<GenericOptimisticActionTy
             
         return { method: isCreate ? "POST" : "PUT", apiUrl, body }
     },   
-    [DeleteModelAction]: (a: Immutable<DeleteModelAction<ModelState, Model>>) => { 
+    [DeleteModelAction]: (a) => { 
         return a.payload.id ? 
             { 
                 method: "DELETE", 

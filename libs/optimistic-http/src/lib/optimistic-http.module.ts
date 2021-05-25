@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, Provider, Self } from '@angular/core';
 import { Maybe, Prop } from 'global-types';
-import { STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
+import { StateAction, STORE_EFFECTS, STORE_REDUCERS } from 'state-management';
 import { ACTION_REQUEST_MAP, OPTIMISTIC_STATE_PROPS } from './constants/injection-tokens.const';
 import { ActionRequestMap } from './interfaces';
 import { OptimisticFeatureProvidersService } from './optimistic-feature-providers.service';
@@ -23,7 +23,7 @@ export class OptimisticHttpModule {
 
   constructor(@Optional() @Self() featureProviders: OptimisticFeatureProvidersService){}
 
-  static forRoot<TState>(actionRequestMap: Maybe<ActionRequestMap<string>>, optimisticStateProps?: Prop<TState>[]): ModuleWithProviders<OptimisticHttpModule> {
+  static forRoot<TState>(actionRequestMap: Maybe<ActionRequestMap<StateAction>>, optimisticStateProps?: Prop<TState>[]): ModuleWithProviders<OptimisticHttpModule> {
     let providers: Provider[] = [
       { provide: STORE_EFFECTS, useClass: OptimisticRequestQueuerEffect, multi: true },  
       { provide: STORE_EFFECTS, useClass: DispatchHttpEffect, multi: true },
@@ -48,7 +48,7 @@ export class OptimisticHttpModule {
     return { ngModule: OptimisticHttpModule, providers }
   }
 
-  static forFeature<TState>(actionRequestMap?: ActionRequestMap<string>, optimisticStateProps?: Prop<TState>[]): ModuleWithProviders<OptimisticHttpModule> {
+  static forFeature<TState>(actionRequestMap?: ActionRequestMap<StateAction>, optimisticStateProps?: Prop<TState>[]): ModuleWithProviders<OptimisticHttpModule> {
     let providers: Provider[] = [OptimisticFeatureProvidersService];
     
     if(optimisticStateProps)
