@@ -1,5 +1,5 @@
-import { _convertArrayToObject } from 'array-helpers';
-import { Immutable, ImmutableArray, UnknownState } from 'global-types';
+import { _addOrUpdate, _addOrUpdateRange, _convertArrayToObject } from 'array-helpers';
+import { Immutable, ImmutableArray, Maybe, Prop, UnknownState } from 'global-types';
 import { ChildRelation, ExtractedModelState, ForeignRelation, ModelConfig, SaveModelResult, StateModels, StatePropByModel } from '../interfaces';
 import { _getModelConfig } from '../model-state-config-helpers';
 
@@ -162,6 +162,11 @@ function _mergeWithNewStateCache(
         if(withExistingId.length === 0){
             modifiedState[stateProp] = withGeneratedId.concat(originalModelSlice);
             continue;    
+        }
+
+        if(withExistingId.length === 1) {
+            modifiedState[stateProp] = withGeneratedId.concat(_addOrUpdate<any>(originalModelSlice, withExistingId[0], idProp));
+            continue;
         }
         
         const lookup = <{[key: string]: object}> _convertArrayToObject(originalModelSlice, <any> idProp)
