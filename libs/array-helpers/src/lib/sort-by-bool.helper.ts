@@ -1,4 +1,5 @@
 import { Immutable, ImmutableArray, Maybe, UnknownState, Prop } from 'global-types'; 
+import { _weakMemoizer } from './util/weak-memoizer.helper';
 
 /**
  * Sort an array of objects by a boolean property.
@@ -6,7 +7,9 @@ import { Immutable, ImmutableArray, Maybe, UnknownState, Prop } from 'global-typ
  * @param prop The boolean property to sort by
  * @param trueFirst Set to true if false values should come last
  */
-export function _sortByBool<T extends {}>(
+export const _sortByBool = _weakMemoizer(sortByBool);
+
+function sortByBool<T extends {}>(
     collection: Maybe<ImmutableArray<T>>, 
     prop: Prop<Immutable<T>>, 
     trueFirst?: boolean): Immutable<T>[]{

@@ -1,5 +1,6 @@
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 import { _convertArrayToObject } from './convert-array-to-object.helper';
+import { _weakMemoizer } from './util/weak-memoizer.helper';
 
 /**
  * Get a range of objects
@@ -7,7 +8,9 @@ import { _convertArrayToObject } from './convert-array-to-object.helper';
  * @param ids An array of unique values that identify the objects
  * @param idProp A property on the object that contains a unique value
  */
-export function _getRangeById<T>(
+export const _getRangeById = _weakMemoizer(getRangeById)
+
+function getRangeById<T>(
   originals: Maybe<ImmutableArray<T>>, 
   ids: ImmutableArray<unknown>, 
   idProp: Prop<Immutable<T>>): Immutable<T>[]{       

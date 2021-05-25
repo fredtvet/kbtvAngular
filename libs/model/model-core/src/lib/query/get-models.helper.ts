@@ -1,4 +1,4 @@
-import { _convertArrayToObject, _filter, _groupBy } from 'array-helpers';
+import { _convertArrayToObject, _filter, _groupBy, _weakMemoizer } from 'array-helpers';
 import { Immutable, ImmutableArray, UnknownState } from 'global-types';
 import { ModelConfig, RelationInclude, StateModels } from '../interfaces';
 import { _getModelConfig } from '../model-state-config-helpers';
@@ -11,7 +11,9 @@ import { _getModelConfig } from '../model-state-config-helpers';
  * @param filter A filter to select a range of models. 
  * @returns An array of models with relationships applied. 
  */
-export function _getModels<TState, TModel extends StateModels<TState>>(
+export const _getModels = _weakMemoizer(getModels);
+
+function getModels<TState, TModel extends StateModels<TState>>(
     state: Immutable<Partial<TState>>,
     include: Immutable<RelationInclude<TState, TModel>>,
     filter?: (value: Immutable<TModel>, index?: number, Array?: unknown[]) => boolean, 

@@ -3,14 +3,14 @@ import { _weakMemoizer } from './util/weak-memoizer.helper';
 
 type Response<T> = { [key: string]: Immutable<T> }
 
-export const _convertArrayToObject = _weakMemoizer(convertArrayToObject)
-
 /**
  * Convert an array to a key/value object
  * @param array 
  * @param key An item property or function used as key in the object. If null, the value is used as key.
  * @returns An object containing keys with accociated values
  */
+export const _convertArrayToObject = _weakMemoizer(convertArrayToObject)
+
 function convertArrayToObject<T>(
   array: Maybe<ImmutableArray<T>>, 
   key?: Prop<Immutable<T>> | ((t: Immutable<T>) => string) | null

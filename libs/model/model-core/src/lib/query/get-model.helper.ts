@@ -1,4 +1,4 @@
-import { _filter, _find } from 'array-helpers';
+import { _filter, _find, _weakMemoizer } from 'array-helpers';
 import { Immutable, Maybe, UnknownState } from 'global-types';
 import { ChildRelation, ForeignRelation, RelationInclude, StateModels, UnknownModelState } from '../interfaces';
 import { _getModelConfig } from '../model-state-config-helpers';
@@ -23,7 +23,9 @@ function setChildModels(state: Immutable<UnknownModelState>, model: UnknownState
  * @param id A unique property value of the model that is requested.
  * @returns The requested model with relationships applied if found. 
  */
-export function _getModel<TState, TModel extends StateModels<TState>>( 
+export const _getModel = _weakMemoizer(getModel)
+
+function getModel<TState, TModel extends StateModels<TState>>( 
     state: Immutable<Partial<TState>>,
     id: unknown,   
     include: Immutable<RelationInclude<TState, TModel>>,

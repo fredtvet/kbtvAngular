@@ -1,4 +1,5 @@
 import { ImmutableArray, Immutable, Maybe, Prop } from 'global-types';
+import { _weakMemoizer } from './util/weak-memoizer.helper';
 
 /**
  * Group an array of objects by a specified key
@@ -6,7 +7,9 @@ import { ImmutableArray, Immutable, Maybe, Prop } from 'global-types';
  * @param key A key on the object to group by
  * @returns An object with keys accociated with an array of objects matching the key value
  */
-export function _groupBy<T>(
+export const _groupBy = _weakMemoizer(groupBy);
+
+function groupBy<T>(
   array: Maybe<ImmutableArray<T>>, 
   key: Prop<Immutable<T>>
 ): {[key: string] : Immutable<T>[]}{

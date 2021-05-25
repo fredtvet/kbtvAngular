@@ -1,4 +1,5 @@
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
+import { _weakMemoizer } from './util/weak-memoizer.helper';
 
 /**
  * Filter an array of items, only returning the ones who pass the specified expression
@@ -6,7 +7,9 @@ import { Immutable, ImmutableArray, Maybe } from 'global-types';
  * @param expression An expression for filtering the items
  * @returns An array of items that passed the expression
  */
-export function _filter<T>(
+export const _filter = _weakMemoizer(filter);
+
+function filter<T>(
   originals: Maybe<ImmutableArray<T>>, 
   expression: (value: Immutable<T>, index?: number, Array?: unknown[]) => boolean): Immutable<T>[] {
     if(!originals?.length) return [];

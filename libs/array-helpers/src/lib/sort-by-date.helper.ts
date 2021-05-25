@@ -1,4 +1,5 @@
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
+import { _weakMemoizer } from './util/weak-memoizer.helper';
 
 /**
  * Sort an array of objects by a date property
@@ -6,7 +7,9 @@ import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
  * @param prop A date property on the object
  * @param direction A sorting direction. Default is 'desc'
  */
-export function _sortByDate<T extends {}>(
+export const _sortByDate = _weakMemoizer(sortByDate);
+
+function sortByDate<T extends {}>(
     collection: Maybe<ImmutableArray<T>>, 
     prop: Prop<Immutable<T>>, 
     direction: "asc" | "desc" = "desc"): Maybe<Immutable<T>[]> {

@@ -1,4 +1,5 @@
 import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
+import { _weakMemoizer } from './util/weak-memoizer.helper';
 
 /**
  * Find an object in an array of objects
@@ -6,7 +7,9 @@ import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
  * @param value A unique value used to find the object
  * @param idProp A property on the object that contains a unique value
  */
-export function _find<T>(
+export const _find = _weakMemoizer(find);
+
+function find<T>(
   array: Maybe<ImmutableArray<T>>, 
   value: unknown, 
   idProp: Prop<Immutable<T>>): Maybe<Immutable<T>> {
