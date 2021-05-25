@@ -1,24 +1,19 @@
 <button mat-icon-button *ngIf="vm$ |  async; let vm" routerLink="/aktivitetslogg" 
     [style.pointerEvents]="(vm.optimisticCount || !vm.isOnline) ? 'all' : 'none'">
-    <ng-container *ngIf="vm.loading">
-
-        <ng-container *ngIf="vm.isOnline else offlineContent">
+    <ng-container *ngIf="vm.loading && vm.isOnline; else offlineContent">
+         
+        <span class="loading-count mat-body" *ngIf="vm.optimisticCount && vm.optimisticCount > 1">
+            {{ vm.optimisticCount }}
+        </span>
             
-            <span class="loading-count mat-body" *ngIf="vm.optimisticCount && vm.optimisticCount > 1">
-                {{ vm.optimisticCount }}
-            </span>
-            
-            <ion-spinner name="circles"></ion-spinner>
+        <ion-spinner name="circles"></ion-spinner>
 
-        </ng-container>
-        
+    </ng-container> 
 
-        <ng-template #offlineContent>
-            <mat-icon *ngIf="vm.optimisticCount">
-                portable_wifi_off
-            </mat-icon>
-        </ng-template>
-
-    </ng-container>
+    <ng-template #offlineContent>
+        <mat-icon *ngIf="vm.optimisticCount">
+            portable_wifi_off
+        </mat-icon>
+    </ng-template>
 </button>
 
