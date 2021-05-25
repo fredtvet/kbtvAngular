@@ -4,6 +4,7 @@
  */
 
 export * from './lib/add-or-update-range.helper'
+export * from './lib/add-or-update.helper'
 export * from './lib/add.helper'
 export * from './lib/convert-array-to-object.helper'
 export * from './lib/filter.helper'
