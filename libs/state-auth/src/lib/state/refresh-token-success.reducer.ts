@@ -10,7 +10,8 @@ export const RefreshTokenSuccessReducer: Reducer<unknown, RefreshTokenSuccessAct
             const accessToken = action.response.accessToken;  
             return {
                 accessToken: accessToken.token,
-                accessTokenExpiration: _getUnixTimeSeconds() + accessToken.expiresIn
+                accessTokenExpiration: _getUnixTimeSeconds() + accessToken.expiresIn,
+                refreshToken: action.response.refreshToken
             }
         }
     )
