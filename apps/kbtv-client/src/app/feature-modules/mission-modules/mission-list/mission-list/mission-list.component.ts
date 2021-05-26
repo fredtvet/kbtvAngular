@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Employer, Mission, MissionType } from "@core/models";
-import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
 import { ModelState } from "@core/state/model-state.interface";
+import { _criteriaChipsFactory } from "@shared-app/helpers/chips/criteria-chips-factory.helper";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { SearchBarConfig } from "@shared-mission/components/search-bar/search-bar-config.interface";
 import { MissionCriteriaFormSheet } from '@shared-mission/forms/mission-criteria-form.const';
 import { CreateMissionModelForm } from "@shared-mission/forms/save-mission-model-form.const";
+import { _missionCriteriaChipsFactory } from "@shared-mission/mission-criteria-chips-factory.helper";
 import { AppButton } from "@shared/components/app-button/app-button.interface";
 import { BottomBarIconButton } from "@shared/components/bottom-action-bar/bottom-bar-icon-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
@@ -39,7 +40,7 @@ export class MissionListComponent extends WithUnsubscribe(){
 
   private partialVm$ = this.facade.criteria$.pipe(map(criteria => { return {
     criteria,
-    criteriaChips: this.getCriteriaChips(criteria)
+    criteriaChips: _missionCriteriaChipsFactory(criteria, (x) => this.facade.addCriteria(x))
   }}));
 
   topNavConfig: MainTopNavConfig = {title: "Oppdrag" };
@@ -66,7 +67,6 @@ export class MissionListComponent extends WithUnsubscribe(){
 
   constructor(
     private formService: FormService,
-    private chipsFactory: ChipsFactoryService,
     private modelFormService: ModelFormService<ModelState>,
     private facade: MissionListFacade,
   ) {
@@ -106,22 +106,5 @@ export class MissionListComponent extends WithUnsubscribe(){
       { initialValue: this.facade.criteria, formState: this.facade.criteriaFormState$ },
       (val) => this.facade.addCriteria(val)
     );   
-
-  private getCriteriaChips(criteria: Maybe<Immutable<MissionCriteria>>){
-    return this.chipsFactory.createCriteriaChips(criteria, 
-      (prop) => criteria ? this.resetCriteriaProp(prop, criteria) : null,      
-      {
-        finished: {valueFormatter: (val: boolean) => val ? "Ferdig" : null},
-        employer: {valueFormatter: (val: Immutable<Employer>) => <string> _getModelDisplayValue<ModelState, Employer>("employers", val)},
-        missionType: {valueFormatter: (val: Immutable<MissionType>) => <string> _getModelDisplayValue<ModelState, MissionType>("missionTypes", val)}
-      },
-    )
-  }
-
-  private resetCriteriaProp(prop: Prop<Immutable<MissionCriteria>>, criteria: Immutable<MissionCriteria>){
-    const clone = {...criteria};
-    clone[prop] = undefined;
-    this.facade.addCriteria(clone);
-  }
 
 }

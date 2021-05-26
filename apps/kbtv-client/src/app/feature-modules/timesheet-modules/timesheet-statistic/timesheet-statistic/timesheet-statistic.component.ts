@@ -1,18 +1,18 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Timesheet } from '@core/models';
-import { ChipsFactoryService } from '@core/services/ui/chips-factory.service';
+import { _enumSelectionChipsFactory } from '@shared-app/helpers/chips/enum-selection-chips-factory.helper';
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
+import { _timesheetCriteriaChipsFactory } from '@shared-timesheet/helpers/timesheet-criteria-chips-factory.helper';
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
 import { TimesheetCriteriaFormService } from '@shared-timesheet/timesheet-criteria-form-service';
-import { TimesheetCriteriaChipOptions } from '@shared-timesheet/timesheet-filter/timesheet-criteria-chip-options.const';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
 import { BottomBarIconButton } from '@shared/components/bottom-action-bar/bottom-bar-icon-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { GroupByPeriod } from '@shared/enums';
-import { Immutable, ImmutableArray, Maybe, Prop, UnknownState } from 'global-types';
+import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ExportCsvFormService } from '../export-csv-form.service';
@@ -66,7 +66,6 @@ export class TimesheetStatisticComponent {
   constructor( 
     private facade: TimesheetStatisticFacade,
     private criteriaFormService: TimesheetCriteriaFormService,
-    private chipsFactory: ChipsFactoryService,
     private exportCsvFormService: ExportCsvFormService
   ) { 
     this.staticBottomActions =  [{...BottomIconButtons.Filter, callback: this.openTimesheetFilter}]
@@ -76,29 +75,20 @@ export class TimesheetStatisticComponent {
     this.criteriaFormService.open((val) => this.facade.updateCriteria(val), this.facade.criteria)
   }
 
-  private resetCriteriaProp(prop: Prop<Immutable<TimesheetCriteria>>, criteria: Maybe<Immutable<TimesheetCriteria>>){
-    const clone = <UnknownState> {...criteria || {}};
-    clone[prop] = undefined;
-    this.facade.updateCriteria(<Immutable<TimesheetCriteria>> clone);
-  }
-
   private exportAsCsv = () => 
     this.exportCsvFormService.open(this.statTable.dataGrid);
 
   private addGroupBy = (groupBy: GroupByPeriod) => this.facade.updateGroupBy(groupBy);
 
   private getGroupByChips(groupBy: Maybe<GroupByPeriod>):  AppChip[] {
-    return this.chipsFactory.createEnumSelectionChips(GroupByPeriod, groupBy, this.addGroupBy);
+    return _enumSelectionChipsFactory(GroupByPeriod, groupBy, this.addGroupBy);
   }
 
   private getCriteriaChips(criteria: Immutable<TimesheetCriteria>, activeCriteriaCount: number): AppChip[] {
     if(activeCriteriaCount === 0) 
       return [{text: "Åpne filter", color: "accent", onClick: this.openTimesheetFilter}]
   
-    return this.chipsFactory.createCriteriaChips(criteria, 
-        (prop) => this.resetCriteriaProp(prop, criteria), 
-        TimesheetCriteriaChipOptions
-      )
+    return _timesheetCriteriaChipsFactory(criteria, (x) => this.facade.updateCriteria(x))
   }
 
   private getNoRowsText(isFetching: boolean): string {
