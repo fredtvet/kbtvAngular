@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ɵChangeDetectorStatus, ɵdetectChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AppButton } from '@shared/components/app-button/app-button.interface';
 import { MainNavService } from '../main-nav.service';
 import { SideNavNavigations } from '../side-nav-navigations';
@@ -16,14 +16,7 @@ export class MainSideNavListComponent {
 
   navigations: AppButton[] = SideNavNavigations;
   
-  constructor(
-      private mainNavService: MainNavService, 
-      private cdRef: ChangeDetectorRef
-    ) { }
-
-  ngAfterViewInit(): void {
-      this.cdRef.detach();
-  }
+  constructor(private mainNavService: MainNavService) { }
 
   onNavClick = () => this.mainNavService.isXs ? this.mainNavService.toggleDrawer() : null;
 }

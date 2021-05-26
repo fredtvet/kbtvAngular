@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { combineLatest, Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { MainSideNavConfig } from '../interfaces/main-side-nav-config.interface';
 import { MainNavService } from '../main-nav.service';
 
@@ -18,7 +19,7 @@ import { MainNavService } from '../main-nav.service';
         }
     </style>
 
-    <mat-toolbar class="mb-4 mt-4" *ngIf="config$ | asyncDetect; let config">
+    <mat-toolbar class="mb-4 mt-4" *ngIf="config$ | async; let config">
 
         <ng-container *ngIf="config.isOnline else offlineHeader">
         <span class="mat-small color-accent ellipsis"> Tilkoblet internett</span>
@@ -41,15 +42,14 @@ import { MainNavService } from '../main-nav.service';
 })
 export class MainSideNavHeaderComponent {
 
-  config$: Observable<MainSideNavConfig> = this.mainNavService.sideNavHeaderConfig$
+  config$: Observable<MainSideNavConfig> = combineLatest([
+    this.mainNavService.sideNavHeaderConfig$,
+    this.mainNavService.drawerOpenChanged$
+  ]).pipe(
+    filter(x => x[1] === true),
+    map(x => x[0])
+  )
   
-  constructor(
-      private mainNavService: MainNavService, 
-      private cdRef: ChangeDetectorRef
-    ) { }
-
-    ngAfterViewInit(): void {
-      this.cdRef.detach(); 
-    }
+  constructor(private mainNavService: MainNavService) { }
 
 }

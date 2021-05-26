@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { StateCurrentUser } from '@core/state/global-state.interfaces';
-import { combineLatest, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from 'state-management';
 import { StateSyncTimestamp } from 'state-sync';
@@ -11,8 +11,10 @@ import { MainSideNavConfig } from './interfaces/main-side-nav-config.interface';
 export class MainNavService {
 
   private toggleDrawerSubject = new Subject();
+  toggleDrawer$: Observable<unknown> = this.toggleDrawerSubject.asObservable();
 
-  toggleDrawer$: Observable<unknown> = this.toggleDrawerSubject.asObservable()
+  private drawerOpenChangedSubject = new BehaviorSubject(false);
+  drawerOpenChanged$: Observable<unknown> = this.drawerOpenChangedSubject.asObservable();
 
   currentUser$ = this.store.selectProperty$("currentUser");
 
@@ -32,10 +34,16 @@ export class MainNavService {
 
   constructor(
     private store: Store<StateCurrentUser & StateSyncTimestamp>,
-    private deviceInfoService: DeviceInfoService) {}
+    private deviceInfoService: DeviceInfoService) {
+      this.drawerOpenChanged$.subscribe(x => console.log(x))
+    }
 
   toggleDrawer(): void {
     this.toggleDrawerSubject.next()
+  }
+
+  setDrawerOpenState(opened: boolean): void {
+    this.drawerOpenChangedSubject.next(opened)
   }
 
 }

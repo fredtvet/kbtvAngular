@@ -16,7 +16,6 @@ import { NoContentComponent } from './components/no-content.component';
 import { OptimisticLoadingSpinnerComponent } from './components/optimistic-loading-spinner/optimistic-loading-spinner.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
 import { ActionDescriptionPipe } from './pipes/action-description.pipe';
-import { AsyncDetectPipe } from './pipes/async-detect.pipe';
 import { IfRolePipe } from './pipes/if-role.pipe';
 import { ReverseArrayPipe } from './pipes/reverse-array';
 import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
@@ -31,7 +30,6 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
     TransformButtonsPipe,
     IfRolePipe,
     TranslatePipe,
-    AsyncDetectPipe,
     AddToHomeScreenDirective,
     RenderTimeoutDirective,
     OptimisticLoadingSpinnerComponent,
@@ -78,7 +76,6 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
     TransformButtonsPipe,  
     ActionDescriptionPipe ,
     TranslatePipe,
-    AsyncDetectPipe,
     AddToHomeScreenDirective, 
     RenderTimeoutDirective,
   ],
