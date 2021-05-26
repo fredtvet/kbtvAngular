@@ -9,7 +9,7 @@ import { _getModelConfig } from '../model-state-config-helpers';
  */
 export function _getModelDisplayValue<TState, TModel extends StateModels<TState> = StateModels<TState>>(
     prop: Immutable<StatePropByModel<TState, TModel>>, 
-    value: Immutable<TModel>): unknown {
+    value: Immutable<TModel>): string | undefined {
     const fkPropModelMap = _getModelConfig<TState, TModel>(prop);
-    return fkPropModelMap?.displayFn ? fkPropModelMap.displayFn(value) : null;
+    return fkPropModelMap?.displayFn ? fkPropModelMap.displayFn(value) : undefined;
 } 
