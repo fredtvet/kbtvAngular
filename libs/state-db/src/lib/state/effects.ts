@@ -1,39 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { first, map, switchMap } from 'rxjs/operators';
+import { merge, Observable } from 'rxjs';
+import { first, map, skip, switchMap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { StatePersisterService } from '../state-persister.service';
 import { StateReaderService } from '../state-reader.service';
-import { LoadPersistedStateAction, SetPersistedCriticalStateAction, SetPersistedStateAction } from './actions.const';
+import { LoadPersistedStateAction,  SetPersistedStateAction } from './actions.const';
 
 @Injectable()
-export class LoadCriticalStateEffect implements Effect<StateAction> {
+export class LoadStateEffect implements Effect<LoadPersistedStateAction> {
 
     constructor(private stateReader: StateReaderService) {}
 
-    handle$(actions$: Observable<DispatchedAction<StateAction>>): Observable<SetPersistedCriticalStateAction> {
+    handle$(actions$: Observable<DispatchedAction<LoadPersistedStateAction>>): Observable<SetPersistedStateAction> {
         return actions$.pipe(
             listenTo([LoadPersistedStateAction]),
-            first(),
-            map(x => <SetPersistedCriticalStateAction>{ 
-                type: SetPersistedCriticalStateAction, 
-                state: this.stateReader.getCriticalState() 
-            })
-        )
-    }
-}
-
-@Injectable()
-export class LoadStateEffect implements Effect<SetPersistedCriticalStateAction> {
-
-    constructor(private stateReader: StateReaderService) {}
-
-    handle$(actions$: Observable<DispatchedAction<SetPersistedCriticalStateAction>>): Observable<SetPersistedStateAction> {
-        return actions$.pipe(
-            listenTo([SetPersistedCriticalStateAction]),
             first(), 
-            switchMap(x => this.stateReader.getState$()),
-            map(state => <SetPersistedStateAction>{ type: SetPersistedStateAction, state })
+            switchMap(x => merge(
+                this.stateReader.get$("idb-keyval").pipe(map(state => {
+                    return <SetPersistedStateAction>{ type: SetPersistedStateAction, storageType: "idb-keyval", state }
+                })),
+                this.stateReader.get$("localStorage").pipe(map(state => {
+                    return <SetPersistedStateAction>{ type: SetPersistedStateAction, storageType: "localStorage", state }
+                })),
+            )),
         )
     }
 }
@@ -46,7 +35,7 @@ export class InitalizeStatePersisterEffect implements Effect<StateAction> {
     handle$(actions$: Observable<DispatchedAction<SetPersistedStateAction>>): Observable<void> {
         return actions$.pipe(
             listenTo([SetPersistedStateAction]),
-            first(),
+            skip(1), first(),
             map(x => this.statePersister.initalize())
         )
     }

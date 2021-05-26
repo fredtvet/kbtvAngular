@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpQueuer } from 'optimistic-http';
 import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { first, map, skip } from 'rxjs/operators';
 import { SetPersistedStateAction } from 'state-db';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
 import { ContinousSyncService, SyncStateSuccessAction } from 'state-sync';
@@ -14,7 +14,7 @@ export class InitalizeSyncEffect implements Effect<SetPersistedStateAction> {
     handle$(actions$: Observable<DispatchedAction<SetPersistedStateAction>>): Observable<void> {
         return actions$.pipe(
             listenTo([SetPersistedStateAction]),
-            first(),
+            skip(1), first(),
             map(x => this.continousSyncService.initalize()),
         ) 
     }

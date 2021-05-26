@@ -5,11 +5,13 @@ export type StateDbConfig<TState> = { [key in keyof TState]: StatePropConfig }
 
 export type MapFn<T, U = Partial<T>> = (value: Immutable<T>) => U
 
+/** Supported storage types for persisting data */
+export type StorageType = "localStorage" | "idb-keyval";
+
 /** Represents a object with configurations for a state property that should be persisted by the db. */
 export interface StatePropConfig {
-    /** If set to true, the state will be stored in localStorage to ensure fast loading time.
-     *  This causes read/writes to be synchronous and should therefore be used with consideration. */
-    critical?: boolean;
+    /** Choose which storage type that should be used to persist the given state property */
+    storageType: StorageType;
     /** A mapping function that runs before value changes are persisted to the db.  */
     onPersistMapping?: MapFn<any, any>
 }

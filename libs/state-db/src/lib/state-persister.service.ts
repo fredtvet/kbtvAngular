@@ -32,7 +32,7 @@ export class StatePersisterService {
       
         if(propCfg.onPersistMapping) payload = propCfg.onPersistMapping(payload);
          
-        if(!propCfg.critical) 
+        if(propCfg.storageType === "idb-keyval") 
             this.stateDbService.set(prop, payload)
         else
              window.localStorage.setItem(prop, JSON.stringify(payload))
