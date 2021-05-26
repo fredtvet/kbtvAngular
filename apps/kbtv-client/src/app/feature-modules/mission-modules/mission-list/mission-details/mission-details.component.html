@@ -4,7 +4,7 @@
 
         <img header appImageErrorPlaceholder *ngIf="vm.mission?.fileName; else addHeaderImage" 
             style="max-width:100%" alt="Forsidebilde" 
-            [src]="vm.mission | appFileUrl: FileFolder.MissionHeader"     
+            [src]="vm.mission.fileName | appFileUrl: FileFolder.MissionHeader"     
             (tap)="openImageViewer(vm.mission)"/>
 
         <app-mission-details-view content [mission]="vm.mission">

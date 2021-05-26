@@ -1,7 +1,6 @@
 import { SaveModelFileAction, SetSaveModelFileStateAction } from "@actions/global-actions";
 import { ModelFile } from "@core/models";
-import { ModelFileWrapper } from "@shared/model-file.wrapper";
-import { Immutable, Prop } from "global-types";
+import { Immutable } from "global-types";
 import { _getModelConfig, _saveModel } from "model/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
@@ -26,9 +25,7 @@ export class SaveModelFileEffect implements Effect<SaveModelFileAction> {
                     preGenIds[<string> newId] = true;
                 }
 
-                const fileWrapper =  new ModelFileWrapper(action.file, entity[modelCfg.idProp])
-                entity.fileName = fileWrapper.modifiedFile?.name,
-                entity.localFileUrl = URL.createObjectURL(fileWrapper.modifiedFile);
+                entity.fileName = URL.createObjectURL(action.file);
 
                 const saveModelResult = _saveModel<ModelState, ModelFile>(
                     stateSnapshot, 
@@ -38,10 +35,10 @@ export class SaveModelFileEffect implements Effect<SaveModelFileAction> {
                 );
 
                 return <SetSaveModelFileStateAction>{
-                    type: SetSaveModelFileStateAction,
+                    type: SetSaveModelFileStateAction, saveModelResult, 
                     stateProp: action.stateProp,
                     saveAction: action.saveAction,
-                    fileWrapper, saveModelResult,
+                    file: action.file
                 }
             })
         )

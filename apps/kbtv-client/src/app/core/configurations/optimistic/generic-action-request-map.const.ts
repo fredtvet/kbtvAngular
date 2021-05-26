@@ -26,10 +26,10 @@ export const GenericActionRequestMap: ActionRequestMap<GenericOptimisticActions>
     },
     [SetSaveModelFileStateAction]: (a) => { 
         const isCreate = a.saveAction === ModelCommand.Create;
-        const file = a.fileWrapper?.modifiedFile;
-        const body: FormDataEntry[] = [{name: "file", value: file}];
+        
+        const body: FormDataEntry[] = [{name: "file", value: a.file}];
     
-        const {localFileUrl, ...entity} = a.saveModelResult.fullModel;
+        const {fileName, ...entity} = a.saveModelResult.fullModel;
 
         for(const name in entity) {
             const value = entity[<Prop<typeof entity>> name]

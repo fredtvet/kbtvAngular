@@ -8,7 +8,7 @@
 
         <app-selectable-card *ngFor="let img of vm.images;trackBy: trackByImg"
             class="image" [id]="img.id" selectedText="Bilde valgt">
-            <img appImageErrorPlaceholder [src]="img | appFileUrl: FileFolder.MissionImageThumbnail" alt="oppdragsbilde"
+            <img appImageErrorPlaceholder [src]="img.fileName | appFileUrl : FileFolder.MissionImageThumbnail" alt="oppdragsbilde"
                 (tap)="openImageViewer(img, vm.images)" /> 
         </app-selectable-card>  
 

@@ -16,6 +16,7 @@ export class DownloaderService {
 
   downloadUrl = (url: string): void => {
     this.link.href = url;
+    this.link.download = url.substring(url.lastIndexOf('/') + 1) || 'download';
     this.link.click();
   };
  

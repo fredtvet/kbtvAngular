@@ -1,6 +1,5 @@
 import { ModelFile } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
-import { ModelFileWrapper } from "@shared/model-file.wrapper";
 import { SaveModelAction, SetSaveModelStateAction } from "model/state-commands";
 import { StateAction } from "state-management";
 
@@ -12,7 +11,7 @@ export interface SaveModelFileAction<TModel extends ModelFile = ModelFile> exten
 
 export const SetSaveModelFileStateAction = "SET_SAVE_MODEL_FILE_STATE_ACTION";
 export interface SetSaveModelFileStateAction<TModel extends ModelFile = ModelFile> extends Omit<SetSaveModelStateAction<ModelState, TModel>, "type">{
-        fileWrapper: ModelFileWrapper,
+        file: File, 
         type: typeof SetSaveModelFileStateAction
 }
 

@@ -3,7 +3,7 @@
 
 <ng-container *ngIf="loadingImage$ | async; let loadingImage">
   <img appImageErrorPlaceholder [appHide]="loadingImage.loading" alt="oppdragsbilde"
-    [src]="currentImage | appFileUrl: this.folder" layout-fill
+    [src]="currentImage.fileName | appFileUrl: this.folder" layout-fill
     (tap)="toolbarHidden = !toolbarHidden" 
     (swiperight)="previousImage()" 
     (swipeleft)="nextImage()" 

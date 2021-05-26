@@ -6,17 +6,14 @@ import { StateRequestQueue } from "optimistic-http";
 import { StoreState } from "state-auth";
 import { StateSyncConfig, StateSyncTimestamp } from "state-sync";
 
-const modelFileArrayMapper: MapFn<ModelFile[]> = 
-    (x: Immutable<ModelFile[]>) => x?.map(({localFileUrl, ...rest} ) => rest);
-
 type PersistedState = StateMissions & StateMissionDocuments & StateMissionImages & StateMissionNotes & 
     StateMissionTypes & StateEmployers & StateUserTimesheets  & StateLeaderSettings & StateRequestQueue &
     StoreState & StateCurrentUser & StateSyncConfig & StateSyncTimestamp
 
 export const AppStateDbConfig: StateDbConfig<PersistedState> = {
-    missions: { storageType: "idb-keyval", onPersistMapping: modelFileArrayMapper },
-    missionDocuments: { storageType: "idb-keyval", onPersistMapping: modelFileArrayMapper },
-    missionImages: { storageType: "idb-keyval", onPersistMapping: modelFileArrayMapper },
+    missions: { storageType: "idb-keyval" },
+    missionDocuments: { storageType: "idb-keyval" },
+    missionImages: { storageType: "idb-keyval" },
     missionNotes: { storageType: "idb-keyval" },
     missionTypes: { storageType: "idb-keyval" },
     employers: { storageType: "idb-keyval" },
