@@ -1,22 +1,23 @@
 import { UnknownState } from "global-types"
+import { DeepRequired } from "ts-essentials"
 import { DynamicControlGroup, FormStateBinding, FormStateBindingSetter, FormStateSetter, FormStateSetterFn, ValidControl, ValidFormSlice, ValidStateSlice } from "./interfaces"
 
 export function _formStateSetter<TForm extends object, TFormState extends object | null, TInputState extends object | null = TFormState>(): 
 <TFormSlice extends string, TStateSlice extends string>(
-    formSlice: ValidFormSlice<TForm, TFormSlice>[],      
+    formSlice: ValidFormSlice<DeepRequired<TForm>, TFormSlice>[],      
     stateSlice: ValidStateSlice<TInputState, TStateSlice>[],
     setter: FormStateSetterFn<TForm, TFormState, TInputState, TFormSlice, TStateSlice>,
     keepActive?: boolean
  ) => FormStateSetter<TForm, TFormState, TInputState, TFormSlice, TStateSlice> {
 
     return <TFormSlice extends string, TStateSlice extends string>(
-        formSlice: ValidFormSlice<TForm, TFormSlice>[],      
+        formSlice: ValidFormSlice<DeepRequired<TForm>, TFormSlice>[],      
         stateSlice: ValidStateSlice<TInputState, TStateSlice>[],
         setter: FormStateSetterFn<TForm, TFormState, TInputState, TFormSlice, TStateSlice>,
         keepActive: boolean = true
     ): FormStateSetter<TForm, TFormState, TInputState, TFormSlice, TStateSlice> => {
         return { formSlice, stateSlice, setter, keepActive }
-    }
+    } 
  
 }
 
