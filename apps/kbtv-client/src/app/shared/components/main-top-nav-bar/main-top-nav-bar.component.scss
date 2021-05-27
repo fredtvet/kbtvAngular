@@ -4,6 +4,8 @@ mat-toolbar{
     background:transparent;
 }
 
+.custom-buttons{ margin-left: 8px; }
+
 .custom-buttons, .primary-button, ion-spinner {
     transition: 
         background-color 100ms linear, 
@@ -16,13 +18,14 @@ mat-toolbar{
     position:absolute;
     top:0;
     z-index:1;
-    .primary-button, ion-spinner {
+    button {
         background: rgba(0,0,0,0.5);
         border-radius: 100%;
     }
     .custom-buttons{
         background: rgba(0,0,0,0.5);
         border-radius: 10px; 
+        button { background: transparent; border-radius: 0; }
     }
 }
 
