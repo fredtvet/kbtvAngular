@@ -17,7 +17,6 @@ export class AppFileUrlPipe implements PipeTransform {
       return <string> this.domSanitizer.bypassSecurityTrustResourceUrl(fileName); 
 
     return _appFileUrl(fileName, folder, disableCache);
-
   }
 
 }

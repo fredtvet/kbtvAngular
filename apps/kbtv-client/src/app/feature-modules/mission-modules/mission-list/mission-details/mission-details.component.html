@@ -2,8 +2,9 @@
     
     <app-header-layout-skeleton [navConfig]="vm.navConfig" [navOverlayDisabled]="!vm.mission?.fileName">
 
-        <img header appImageErrorPlaceholder *ngIf="vm.mission?.fileName; else addHeaderImage" 
-            style="max-width:100%" alt="Forsidebilde" 
+        <img header appImageErrorPlaceholder style="max-width:100%; width:100%;" alt="Forsidebilde"  
+            *ngIf="vm.mission?.fileName; else addHeaderImage" 
+            [appImageRatioResizer]="vm.mission?.fileName | appImageUrlRatio"    
             [src]="vm.mission.fileName | appFileUrl: FileFolder.MissionHeader"     
             (tap)="openImageViewer(vm.mission)"/>
 

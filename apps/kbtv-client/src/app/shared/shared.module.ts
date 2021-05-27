@@ -18,7 +18,9 @@ import { MainTopNavBarComponent } from './components/main-top-nav-bar/main-top-n
 import { LoadingOverlayDirective } from './directives';
 import { ActiveStringFilterDirective } from './directives/active-filter.directive';
 import { HideDirective } from './directives/hide.directive';
+import { ImageRatioResizerDirective } from './directives/image-ratio-resizer.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe } from './pipes';
+import { AppImageUrlRatioPipe } from './pipes/app-image-url-ratio.pipe';
 
 @NgModule({
   declarations: [
@@ -37,11 +39,14 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     ArrayFromNumberPipe,
     AppFileUrlPipe,
     ObjectToArrayPipe,
+    AppImageUrlRatioPipe,
     FuncPipe,
     MergeObjPipe,
     ScrollNavElevationTogglerDirective,   
     ActiveStringFilterDirective,
     LoadingOverlayDirective,  
+    ImageRatioResizerDirective,
+    
     HideDirective
   ],
   imports: [
@@ -69,11 +74,13 @@ import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPip
     ArrayFromNumberPipe,
     AppFileUrlPipe,
     ObjectToArrayPipe,
+    AppImageUrlRatioPipe,
     MergeObjPipe,
     FuncPipe,
     ScrollNavElevationTogglerDirective,
     ActiveStringFilterDirective,
     LoadingOverlayDirective,  
+    ImageRatioResizerDirective,
     HideDirective  
   ],
   providers:[
