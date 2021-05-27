@@ -12,7 +12,6 @@ import { HttpQueueNextEffect } from './state/http-queue-next.effect';
 import { HttpQueuePushEffect } from './state/http-queue-push/http-queue-push.effect';
 import { HttpQueuePushReducer } from './state/http-queue-push/http-queue-push.reducer';
 import { HttpQueueShiftReducer } from './state/http-queue-shift.reducer';
-import { HttpSuccessEffect } from './state/http-success/http-success.effect';
 import { OptimisticRequestQueuerEffect } from './state/optimistic-request-queuer.effect';
 import { AppendRequestLogReducer } from './state/request-log/append-request-log.reducer';
 
@@ -28,7 +27,6 @@ export class OptimisticHttpModule {
       { provide: STORE_EFFECTS, useClass: OptimisticRequestQueuerEffect, multi: true },  
       { provide: STORE_EFFECTS, useClass: DispatchHttpEffect, multi: true },
       { provide: STORE_EFFECTS, useClass: HttpQueuePushEffect, multi: true },
-      { provide: STORE_EFFECTS, useClass: HttpSuccessEffect, multi: true },  
       { provide: STORE_EFFECTS, useClass: HttpErrorEffect, multi: true },
       { provide: STORE_EFFECTS, useClass: HttpQueueNextEffect, multi: true },
       
