@@ -14,8 +14,6 @@
     <app-optimistic-loading-spinner></app-optimistic-loading-spinner>
     
     <span class="custom-buttons">
-        <app-button [config]="getPrimaryBtn(config)">
-        </app-button>
         <ng-container *ngIf="config.buttons">
             <app-button *ngFor="let button of config.buttons | transformButtons: baseActionBtn; trackBy: TrackByButton"
                 [config]="button">

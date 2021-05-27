@@ -51,7 +51,6 @@ export const ModelConfigMap: AppModelConfigMap = {
     missionImages: {
         stateProp: "missionImages",
         idProp: ModelIdProps.missionImages,  
-        displayFn: (m) => m.fileName!,
         idGenerator: _idGenerator,
         children: {},
         foreigns: { 
