@@ -1,30 +1,35 @@
-import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 import { Maybe } from 'global-types';
+import { from } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class DownloaderService {
 
-  private link: HTMLAnchorElement;
+  constructor(@Inject(DOCUMENT) private document: Document) { }
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
-    const body = this.document.getElementsByTagName('body')[0];
-    this.link = this.document.createElement('a'); 
-    this.link.style.display = 'none';
-    body.appendChild(this.link);
-  }
-
-  downloadUrl = (url: string): void => {
-    this.link.href = url;
-    this.link.download = url.substring(url.lastIndexOf('/') + 1) || 'download';
-    this.link.click();
-  };
- 
-  downloadUrls = (urls: Maybe<string>[]): void => {
-    let delay = 0;
-    urls.forEach(url => {
-      setTimeout(() => url ? this.downloadUrl(url) : null, delay);
-      delay = delay + 1000;
+  downloadUrl(url:string, filename?:string) {
+    if (!filename) filename = url.split('\\').pop()?.split('/').pop();
+    from(fetch(url)).pipe(switchMap(x => from((<Response>x).blob()))).subscribe(blob => {
+      let blobUrl = URL.createObjectURL(blob);
+      this._downloadLink(blobUrl, filename)
+      URL.revokeObjectURL(blobUrl);
     })
   }
+  
+  downloadUrls = (urls: Maybe<string>[]): void => 
+    urls.forEach(url => url ? this.downloadUrl(url) : null)
+  
+  private _downloadLink = (url: string, filename?: string): void => {
+    const body = this.document.getElementsByTagName('body')[0];
+    const link = this.document.createElement('a'); 
+    link.style.display = 'none';
+    link.href = url;
+    link.download = filename || url.substring(url.lastIndexOf('/') + 1) || 'download'; 
+    body.appendChild(link);
+    link.click();
+    link.remove();
+  };
+
 }
