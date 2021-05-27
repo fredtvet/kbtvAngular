@@ -1,16 +1,14 @@
-import { Immutable, ImmutableObject } from 'global-types';
+import { ImmutableObject } from 'global-types';
 import { Reducer, _createReducer } from 'state-management';
 import { QueuedCommand, StateRequestQueue } from '../interfaces';
 import { HttpQueueShiftAction } from './http-queue-shift.action';
 
-export const HttpQueueShiftReducer: Reducer<Immutable<StateRequestQueue>,HttpQueueShiftAction> = _createReducer(
+export const HttpQueueShiftReducer: Reducer<StateRequestQueue, HttpQueueShiftAction> = _createReducer(
     HttpQueueShiftAction,
-    _requestQueueShift
+    (state) => {
+        if(!state.requestQueue) return;
+        const requestQueue: ImmutableObject<QueuedCommand>[] = [...state.requestQueue];
+        requestQueue.shift();
+        return {requestQueue};
+    }
 )
-
-export function _requestQueueShift(state: Immutable<StateRequestQueue>){
-    if(!state.requestQueue) return;
-    const requestQueue: ImmutableObject<QueuedCommand>[] = [...state.requestQueue];
-    requestQueue.shift();
-    return {requestQueue};
-}

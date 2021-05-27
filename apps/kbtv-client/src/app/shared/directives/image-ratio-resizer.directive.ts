@@ -23,7 +23,6 @@ export class ImageRatioResizerDirective {
 
   private setHeight(){
     const el = <HTMLElement> this.elementRef.nativeElement;
-    console.log(el.offsetWidth, this._imageRatio, el.style.height)
 
     if(!this._imageRatio || el.offsetWidth === 0) return;
     

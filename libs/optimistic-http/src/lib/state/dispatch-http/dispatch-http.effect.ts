@@ -22,10 +22,11 @@ export class DispatchHttpEffect implements Effect<DispatchNextHttpAction> {
                 const command = x.stateSnapshot.requestQueue[0];
                 return this.httpFactory.getObserver$(command.request, command.commandId)
             }),
-            map(x => x?.isDuplicate ? 
-                <HttpQueueShiftAction>{ type: HttpQueueShiftAction } : 
-                <HttpSuccessAction>{ type: HttpSuccessAction }
-            )
+            mergeMap(x =>{ 
+                const actions: StateAction[] = [<HttpQueueShiftAction>{ type: HttpQueueShiftAction }];
+                if(!x?.isDuplicate) actions.push(<HttpSuccessAction>{ type: HttpSuccessAction });
+                return of(...actions);
+            })
         )
     }
 

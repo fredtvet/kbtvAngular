@@ -34,9 +34,7 @@ export class MainNavService {
 
   constructor(
     private store: Store<StateCurrentUser & StateSyncTimestamp>,
-    private deviceInfoService: DeviceInfoService) {
-      this.drawerOpenChanged$.subscribe(x => console.log(x))
-    }
+    private deviceInfoService: DeviceInfoService) {}
 
   toggleDrawer(): void {
     this.toggleDrawerSubject.next()
