@@ -1,13 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Maybe } from 'global-types';
 
-@Pipe({
-  name: 'fileExtension'
-})
+@Pipe({name: 'fileExtension'})
 export class FileExtensionPipe implements PipeTransform {
 
   transform(value: Maybe<string>): string {
-    return value?.split('.').pop() || "";
+    if(!value) return "";
+    if(value.substr(0, 4) === "blob") return "";
+    return value.split('.').pop() || "";
   }
 
 }
