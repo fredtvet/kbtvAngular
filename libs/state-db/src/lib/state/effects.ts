@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { merge, Observable } from 'rxjs';
-import { first, map, skip, switchMap } from 'rxjs/operators';
+import { first, map, skip, switchMap, take } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { StatePersisterService } from '../state-persister.service';
 import { StateReaderService } from '../state-reader.service';
@@ -35,8 +35,8 @@ export class InitalizeStatePersisterEffect implements Effect<StateAction> {
     handle$(actions$: Observable<DispatchedAction<SetPersistedStateAction>>): Observable<void> {
         return actions$.pipe(
             listenTo([SetPersistedStateAction]),
-            skip(1), first(),
-            map(x => this.statePersister.initalize())
+            take(2),
+            map(x => this.statePersister.initalize(x.action.storageType))
         )
     }
 }
