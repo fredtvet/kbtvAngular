@@ -1,18 +1,20 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, throwError } from 'rxjs';
 import { exhaustMap, finalize, map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { RefreshTokenResponse, Tokens } from '../interfaces';
 import { AuthHttpFactoryService } from '../services/auth-http-factory.service';
+import { AuthService } from '../services/auth.service';
 import { LogoutAction, RefreshTokenAction, RefreshTokenSuccessAction } from './actions.const';
 
 @Injectable()
 export class RefreshTokenHttpEffect implements Effect<RefreshTokenAction>{
 
-    private isRefreshingToken: boolean = false;
-
-    constructor(private httpFactory: AuthHttpFactoryService){ }
+    constructor(
+        private httpFactory: AuthHttpFactoryService,
+        private authService: AuthService
+    ){ }
 
     handle$(actions$: Observable<DispatchedAction<RefreshTokenAction>>): Observable<StateAction> {
         return actions$.pipe(
@@ -28,12 +30,12 @@ export class RefreshTokenHttpEffect implements Effect<RefreshTokenAction>{
     onErrorAction = (err: HttpErrorResponse) => <LogoutAction>{ type: LogoutAction };
 
     private refreshToken$(tokens: Tokens): Observable<RefreshTokenResponse> {
-        if(this.isRefreshingToken || !navigator.onLine) return EMPTY;
+        if(!tokens.refreshToken) throwError('Refresh token missing')
         
-        this.isRefreshingToken = true;
+        this.authService.isRefreshingToken = true;
 
         return this.httpFactory.getObserver$<RefreshTokenResponse>(RefreshTokenAction, tokens).pipe(
-            finalize(() => this.isRefreshingToken = false)
+            finalize(() => this.authService.isRefreshingToken = false)
         );
     }
     

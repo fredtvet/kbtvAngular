@@ -11,6 +11,8 @@ import { LoginAction, LogoutAction, RefreshTokenAction } from '../state/actions.
 /** The class responsible for exposing authorization state & commands */
 @Injectable({providedIn: 'root'})
 export class AuthService {
+  /** Is set to true if there is an active refresh request */
+  isRefreshingToken: boolean = false;
 
   /** An observable of the authorization status of current user */
   isAuthorized$: Observable<boolean> = this.store.state$.pipe(
@@ -59,14 +61,16 @@ export class AuthService {
     this.store.dispatch(<LogoutAction>{ type: LogoutAction, refreshToken: this.getRefreshToken(), returnUrl })
   
   /** Attempts to request a new access token from the external api */
-  refreshToken = (): void => 
+  refreshToken = (): void => {
+    if(this.isRefreshingToken || !navigator.onLine) return;
     this.store.dispatch(<RefreshTokenAction>{ type: RefreshTokenAction,
       tokens: {
         accessToken: this.getAccessToken(), 
         refreshToken: this.getRefreshToken()
       }
     })
-
+  }
+  
   private getRefreshToken = (): Maybe<string> => 
     this.store.state.refreshToken 
 }

@@ -10,6 +10,7 @@ import { LogoutHttpEffect } from './state/logout/logout.http.effect';
 import { WipeTokensReducer } from './state/logout/wipe-tokens.reducer';
 import { RefreshTokenSuccessReducer } from './state/refresh-token-success.reducer';
 import { RefreshTokenHttpEffect } from './state/refresh-token.http.effect';
+import { RemoveRefreshTokenReducer } from './state/remove-refresh-token.reducer';
 
 /** Responsible for exporting diretives. 
  *  Use forRoot function to inject core providers*/
@@ -34,6 +35,7 @@ export class StateAuthModule {
                 { provide: STORE_REDUCERS, useValue: RefreshTokenSuccessReducer, multi: true },
                 { provide: STORE_REDUCERS, useValue: WipeTokensReducer, multi: true },
                 { provide: STORE_REDUCERS, useValue: SetCredentialsReducer, multi: true},
+                { provide: STORE_REDUCERS, useValue: RemoveRefreshTokenReducer, multi: true},
                 
                 { provide: AUTH_COMMAND_API_MAP, useValue: commandApiMap },
                 { provide: AUTH_DEFAULT_REDIRECTS, useValue: defaultRedirects },
