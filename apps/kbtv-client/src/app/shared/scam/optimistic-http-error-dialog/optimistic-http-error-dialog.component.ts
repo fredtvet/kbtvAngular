@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActionDescriptions } from '@shared-app/action-descriptions.const';
+import { ActionDescriptions } from '@shared-app/constants/action-descriptions.const';
 import { FormattedHttpError, _httpErrorResponseFormatter } from '@shared-app/helpers/http-error-response-formatter.helper';
 import { SharedAppModule } from '@shared-app/shared-app.module';
 import { OptimisticHttpErrorAction } from 'optimistic-http';

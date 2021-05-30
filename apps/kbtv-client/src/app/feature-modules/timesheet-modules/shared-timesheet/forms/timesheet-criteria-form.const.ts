@@ -1,9 +1,9 @@
 import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
-import { translations } from '@shared-app/translations';
+import { translations } from '@shared-app/constants/translations.const';
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { MissionAutoCompleteControl, UserSelectControl } from '@shared/constants/common-controls.const';
-import { TimesheetStatus } from '@shared/enums';
+import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
 import { IonDateQuestionComponent, IonDateQuestion } from '@shared/scam/dynamic-form-questions/ion-date-time-question.component';
 import { RadioGroupQuestion, RadioGroupQuestionComponent } from '@shared/scam/dynamic-form-questions/radio-group-question.component';
 import { DateRange, _getISO, _getMonthRange } from 'date-time-helpers';

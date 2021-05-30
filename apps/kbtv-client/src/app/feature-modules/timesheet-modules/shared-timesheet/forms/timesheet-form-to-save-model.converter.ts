@@ -2,7 +2,7 @@ import { Timesheet, UserTimesheet } from '@core/models';
 import { StateMissions, StateTimesheets, StateUserTimesheets } from '@core/state/global-state.interfaces';
 import { ModelState } from '@core/state/model-state.interface';
 import { TimesheetForm, UserTimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
-import { TimesheetStatus } from '@shared/enums';
+import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
 import { _getTotalHours, _mergeDateAndTime } from 'date-time-helpers';
 import { Immutable } from 'global-types';
 import { Converter, ModelFormResult } from 'model/form';

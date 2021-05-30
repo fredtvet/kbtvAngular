@@ -5,7 +5,7 @@ import { ModelState } from '@core/state/model-state.interface';
 import { _googleAddressFormatter } from '@shared-app/helpers/google-address-formatter.helper';
 import { _missionFormToSaveModelConverter } from '@shared-mission/forms/mission-form-to-save-model.converter';
 import { GoogleAddressControl, PhoneNumberControl } from '@shared/constants/common-controls.const';
-import { ValidationRules } from '@shared/constants/validation-rules.const';
+import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { AutoCompleteQuestionComponent } from '@shared/scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '@shared/scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
 import { CheckboxQuestion, CheckboxQuestionComponent } from '@shared/scam/dynamic-form-questions/checkbox-question.component';

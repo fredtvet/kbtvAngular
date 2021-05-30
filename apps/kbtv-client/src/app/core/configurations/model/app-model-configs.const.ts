@@ -1,4 +1,4 @@
-import { ModelState } from '@core/state/model-state.interface';
+import { ModelState } from '../../state/model-state.interface';
 import { _idGenerator } from '@shared-app/helpers/id/id-generator.helper';
 import { Immutable } from 'global-types';
 import { StateModels, ValidStateModelArray } from 'model/core';

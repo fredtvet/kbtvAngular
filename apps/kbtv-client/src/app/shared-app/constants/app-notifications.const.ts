@@ -1,6 +1,6 @@
-import { ValidationRules } from '@shared/constants/validation-rules.const';
+import { ValidationRules } from './validation-rules.const';
 import { AppNotification, NotificationType } from 'notification';
-import { _formatMb } from './helpers/format-mb.helper';
+import { _formatMb } from '../helpers/format-mb.helper';
 
 export const AppNotifications = {
     error: (input: {title?: string, details?: string[], duration?: number}): AppNotification => { 

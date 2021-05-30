@@ -1,5 +1,5 @@
 import { SetSaveModelFileStateAction } from "@actions/global-actions";
-import { ApiUrl } from "@core/api-url.enum";
+import { ApiUrl } from "../../api-url.enum";
 import { Prop } from "global-types";
 import { DeleteModelAction, ModelCommand, SetSaveModelStateAction } from "model/state-commands";
 import { ActionRequestMap, FormDataEntry } from "optimistic-http";

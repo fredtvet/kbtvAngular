@@ -1,6 +1,6 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { translations } from '@shared-app/translations';
+import { translations } from '@shared-app/constants/translations.const';
 import { _registerModelStateConfig } from 'model/core';
 import { MODEL_FORM_PROP_TRANSLATIONS } from 'model/form';
 import { MODEL_FETCHER_BASE_URL } from 'model/state-fetcher';

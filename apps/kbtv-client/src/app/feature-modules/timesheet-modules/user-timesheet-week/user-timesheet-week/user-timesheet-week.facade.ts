@@ -5,7 +5,7 @@ import { _mapObjectsToWeekdays } from '@shared-app/helpers/object/map-objects-to
 import { _getSummariesByType } from '@shared-timesheet/helpers/get-summaries-by-type.helper';
 import { WeekCriteria } from '@shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetFilter } from '@shared-timesheet/timesheet-filter/timesheet-filter.model';
-import { GroupByPeriod } from '@shared/enums';
+import { GroupByPeriod } from '@shared-app/enums/group-by-period.enum';
 import { filterRecords } from '@shared/operators/filter-records.operator';
 import { WeekYear, _getWeekYear } from 'date-time-helpers';
 import { Immutable, Maybe } from 'global-types';

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { BottomSheetMenuService } from '@shared/bottom-sheet-menu/bottom-sheet-menu.service';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MainNavService } from 'src/app/layout/main-nav.service';

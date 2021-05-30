@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ModelBaseUrls } from '@core/configurations/model/model-base-urls.const';
-import { Model } from '@core/models';
-import { ApiService } from '@core/services/api.service';
+import { ModelBaseUrls } from '../../configurations/model/model-base-urls.const';
+import { Model } from '../../models';
+import { ApiService } from '../../services/api.service';
 import { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';

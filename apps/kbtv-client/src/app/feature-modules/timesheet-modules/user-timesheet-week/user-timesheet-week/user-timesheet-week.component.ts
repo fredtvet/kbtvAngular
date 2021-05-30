@@ -6,7 +6,7 @@ import { ModelState } from "@core/state/model-state.interface";
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
 import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
-import { AppButton } from "@shared/components/app-button/app-button.interface";
+import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { _getDateOfWeek, _getWeekRange } from 'date-time-helpers';

@@ -4,7 +4,7 @@ import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { ModelState } from '@core/state/model-state.interface';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { EditMissionNoteModelForm, CreateMissionNoteModelForm } from '@shared-mission/forms/save-mission-note-model-form.const';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';

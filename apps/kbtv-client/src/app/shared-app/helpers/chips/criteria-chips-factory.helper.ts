@@ -1,4 +1,4 @@
-import { AppChip } from "@shared-app/interfaces/app-chip.interface";
+import { AppChip } from "../../interfaces/app-chip.interface";
 import { Immutable, Maybe, Prop } from "global-types";
 
 export interface CriteriaChipOptions<T> {

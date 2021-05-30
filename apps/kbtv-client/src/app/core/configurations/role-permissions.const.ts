@@ -1,4 +1,4 @@
-import { Roles } from "@core/roles.enum";
+import { Roles } from "../roles.enum";
 
 export const RolePermissions = {
     DataManagement: {access: [Roles.Leder]},

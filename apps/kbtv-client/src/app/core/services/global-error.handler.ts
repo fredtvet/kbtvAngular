@@ -1,5 +1,5 @@
 import { ErrorHandler, Injectable } from '@angular/core';
-import { AppNotifications } from '@shared-app/app-notifications.const';
+import { AppNotifications } from '@shared-app/constants/app-notifications.const';
 import { AppNotification, NotificationService } from 'notification';
 
 @Injectable()

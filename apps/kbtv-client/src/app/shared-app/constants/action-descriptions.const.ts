@@ -4,11 +4,11 @@ import { UpdateTimesheetStatusesAction } from "@actions/timesheet-actions";
 import { SetSaveUserStateAction } from "@actions/user-actions";
 import { Model } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
-import { translations } from "@shared-app/translations";
+import { translations } from "./translations.const";
+import { ActionDescriptionMap } from "../interfaces/action-description-map.interface";
 import { Immutable, Prop } from "global-types";
 import { _getModelConfig } from "model/core";
 import { DeleteModelAction, ModelCommand, SetSaveModelStateAction } from 'model/state-commands';
-import { ActionDescriptionMap } from "./interfaces/action-description-map.interface";
 
 const SaveModelActionDescription = (action: SetSaveModelStateAction<ModelState, Model>) => {
     const modelConfig = _getModelConfig<ModelState, Model>(action.stateProp);

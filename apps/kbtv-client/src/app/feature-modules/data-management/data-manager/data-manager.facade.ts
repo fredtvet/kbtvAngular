@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Model } from "@core/models";
 import { ModelState } from '@core/state/model-state.interface';
-import { translations } from "@shared-app/translations";
+import { translations } from "@shared-app/constants/translations.const";
 import { ConfirmDialogService } from "confirm-dialog";
 import { Prop } from "global-types";
 import { ModelFormService } from 'model/form';

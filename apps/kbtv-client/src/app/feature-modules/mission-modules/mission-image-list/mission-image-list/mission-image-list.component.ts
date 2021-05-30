@@ -11,9 +11,9 @@ import { BaseSelectableContainerComponent } from "@shared-mission/components/bas
 import { ImageViewerDialogWrapperConfig } from "@shared-mission/components/image-viewer/image-viewer-dialog-wrapper-config.const";
 import { ImageViewerDialogWrapperComponent } from "@shared-mission/components/image-viewer/image-viewer-dialog-wrapper.component";
 import { EmailForm } from '@shared-mission/forms/email-form.const';
-import { AppButton } from "@shared/components/app-button/app-button.interface";
+import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { FileFolder } from "@shared/enums/file-folder.enum";
+import { FileFolder } from "@shared-app/enums/file-folder.enum";
 import { ConfirmDialogService } from "confirm-dialog";
 import { FormService } from "form-sheet";
 import { ImmutableArray, Maybe } from 'global-types';

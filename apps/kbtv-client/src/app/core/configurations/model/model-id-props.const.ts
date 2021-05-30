@@ -1,5 +1,5 @@
-import { ModelState } from "@core/state/model-state.interface";
-import { ValidModelIdKey, ValidStateModelArray } from "../../../../../../../libs/model/model-core/src/lib/interfaces";
+import { ValidModelIdKey, ValidStateModelArray } from "model/core";
+import { ModelState } from "../../state/model-state.interface";
 
 export const ModelIdProps: {[key in keyof ModelState]: ModelState[key] extends ValidStateModelArray<(infer M)> ? ValidModelIdKey<M> : never } = {
     missions: "id",

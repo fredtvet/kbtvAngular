@@ -7,7 +7,7 @@ import { Immutable } from 'global-types';
 import { ModelFormConfig } from 'model/form';
 import { FileQuestionComponent } from '@shared/scam/dynamic-form-questions/file-question.component';
 import { NameControl } from '@shared/constants/common-controls.const';
-import { ValidationRules } from '@shared/constants/validation-rules.const';
+import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 
 export interface CreateMissionDocumentForm extends Pick<MissionDocument, "name" | "missionId">{
     file: File;

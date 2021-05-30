@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { MainNavService } from '../main-nav.service';
 import { SideNavNavigations } from '../side-nav-navigations';
 

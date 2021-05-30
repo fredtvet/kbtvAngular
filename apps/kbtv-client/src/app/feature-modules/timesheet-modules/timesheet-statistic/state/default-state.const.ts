@@ -1,4 +1,4 @@
-import { GroupByPeriod } from '@shared/enums';
+import { GroupByPeriod } from '@shared-app/enums/group-by-period.enum';
 import { StoreState } from './store-state';
 
 export const DefaultState: Partial<StoreState> = {

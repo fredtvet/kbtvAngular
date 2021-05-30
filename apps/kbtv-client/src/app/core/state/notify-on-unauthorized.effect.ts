@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppNotifications } from '@shared-app/app-notifications.const';
+import { AppNotifications } from '@shared-app/constants/app-notifications.const';
 import { NotificationService } from 'notification';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { _trackByAppButton } from '@shared-app/track-by-app-button';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { MainTopNavConfig } from './main-top-nav.config';
 
 @Component({

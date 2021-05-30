@@ -10,7 +10,7 @@ import { AutoCompleteQuestion } from '../scam/dynamic-form-questions/auto-comple
 import { GooglePlacesAutoCompleteQuestion, GooglePlacesAutoCompleteQuestionComponent } from '../scam/dynamic-form-questions/google-places-autocomplete-question.component';
 import { InputQuestion, InputQuestionComponent } from '../scam/dynamic-form-questions/input-question.component';
 import { SelectQuestion, SelectQuestionComponent } from '../scam/dynamic-form-questions/select-question.component';
-import { ValidationRules } from './validation-rules.const';
+import { ValidationRules } from '../../shared-app/constants/validation-rules.const';
 
 export const PhoneNumberControl: Immutable<DynamicControl<string, null, InputQuestion>> = { 
     questionComponent: InputQuestionComponent,

@@ -8,7 +8,7 @@ import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/compo
 import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm, TimesheetFormState, UserTimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { _timesheetCriteriaChipsFactory } from "@shared-timesheet/helpers/timesheet-criteria-chips-factory.helper";
 import { UserTimesheetCriteriaFormService } from "@shared-timesheet/timesheet-criteria-form-service";
-import { AppButton } from "@shared/components/app-button/app-button.interface";
+import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { Immutable, Maybe } from 'global-types';

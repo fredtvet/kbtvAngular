@@ -4,7 +4,7 @@ import { DeviceInfoService } from '@core/services/device-info.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { FormService } from 'form-sheet';
 import { Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';

@@ -1,5 +1,5 @@
 import { Mission, User } from '@core/models';
-import { TimesheetStatus } from '@shared/enums/timesheet-status.enum';
+import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { DateRange } from 'date-time-helpers';
 

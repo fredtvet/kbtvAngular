@@ -2,7 +2,8 @@ import { Timesheet } from "@core/models";
 import { LeaderSettings } from "@core/models/leader-settings.interface";
 import { WeekCriteria } from "@shared-timesheet/interfaces";
 import { TimesheetCriteria } from "@shared-timesheet/timesheet-filter/timesheet-criteria.interface";
-import { GroupByPeriod, TimesheetStatus } from "@shared/enums";
+import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
+import { GroupByPeriod } from "@shared-app/enums/group-by-period.enum";
 import { Immutable, Prop, UnknownState } from "global-types";
 import { StateAction } from "state-management";
 

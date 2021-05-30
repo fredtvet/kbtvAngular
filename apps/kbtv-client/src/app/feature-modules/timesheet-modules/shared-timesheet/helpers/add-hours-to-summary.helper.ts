@@ -1,6 +1,6 @@
 import { Timesheet } from "@core/models";
 import { TimesheetSummary } from "../interfaces";
-import { TimesheetStatus } from "@shared/enums";
+import { TimesheetStatus } from "@shared-app/enums/timesheet-status.enum";
 import { Immutable } from "global-types";
 
 export function _addHoursToSummary(summary: TimesheetSummary, timesheet: Immutable<Timesheet>): void{

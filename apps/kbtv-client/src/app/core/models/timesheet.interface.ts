@@ -1,8 +1,8 @@
 import { MissionChild } from './relationships/mission-child.interface';
-import { TimesheetStatus } from '@shared/enums';
 import { UserForeign } from './relationships/user-foreign.interface';
 import { User } from './user.interface';
 import { IId } from './sub-interfaces/iid.interface';
+import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
 
 
 export interface Timesheet extends MissionChild, UserForeign, IId {

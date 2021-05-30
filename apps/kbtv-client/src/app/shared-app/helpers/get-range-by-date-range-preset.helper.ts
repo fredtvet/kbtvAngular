@@ -1,4 +1,4 @@
-import { DateRangePresets } from "@shared-app/enums/date-range-presets.enum";
+import { DateRangePresets } from "../enums/date-range-presets.enum";
 import { DateRange, _getLastDayOfYear, _getMonthRange, _getWeekRange, _getYearRange } from 'date-time-helpers';
 import { DateInput, Immutable, Maybe } from 'global-types';
 

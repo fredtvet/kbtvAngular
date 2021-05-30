@@ -1,4 +1,4 @@
-import { FileFolder } from "@shared/enums/file-folder.enum";
+import { FileFolder } from "../enums/file-folder.enum";
 import { environment } from 'src/environments/environment';
 import { _isBlobUrl } from "./is-blob-url.helper";
 

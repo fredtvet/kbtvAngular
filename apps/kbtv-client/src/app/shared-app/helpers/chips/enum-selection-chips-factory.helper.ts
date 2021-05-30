@@ -1,5 +1,5 @@
-import { AppChip } from "@shared-app/interfaces/app-chip.interface";
-import { translations } from "@shared-app/translations";
+import { AppChip } from "../../interfaces/app-chip.interface";
+import { translations } from "../../constants/translations.const";
 import { Immutable } from "global-types";
 
 export function _enumSelectionChipsFactory<TEnum extends { [s: number]: string }>(

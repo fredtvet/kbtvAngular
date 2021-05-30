@@ -1,5 +1,5 @@
-import { Mission, Employer, MissionType, MissionImage, MissionDocument, MissionNote, Timesheet, User, InboundEmailPassword, UserTimesheet } from '@core/models';
-import { LeaderSettings } from '@core/models/leader-settings.interface';
+import { Mission, Employer, MissionType, MissionImage, MissionDocument, MissionNote, Timesheet, User, InboundEmailPassword, UserTimesheet } from '../models';
+import { LeaderSettings } from '../models/leader-settings.interface';
 import { Maybe } from 'global-types';
 import { CurrentUser } from 'state-auth';
 

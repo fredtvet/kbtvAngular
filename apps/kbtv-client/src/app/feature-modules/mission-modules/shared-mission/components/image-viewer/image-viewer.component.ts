@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ModelFile } from '@core/models';
-import { FileFolder } from "@shared/enums/file-folder.enum";
+import { FileFolder } from "@shared-app/enums/file-folder.enum";
 import { Maybe } from 'global-types';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilKeyChanged } from 'rxjs/operators';

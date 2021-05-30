@@ -1,9 +1,7 @@
-import { ModelFile } from "../models/base-entity-file.interface";
-import { Immutable } from "global-types";
-import { MapFn, StateDbConfig } from 'state-db';
-import { StateMissions, StateMissionDocuments, StateMissionImages, StateMissionNotes, StateMissionTypes, StateEmployers, StateUserTimesheets, StateLeaderSettings, StateCurrentUser } from "@core/state/global-state.interfaces";
+import { StateCurrentUser, StateEmployers, StateLeaderSettings, StateMissionDocuments, StateMissionImages, StateMissionNotes, StateMissions, StateMissionTypes, StateUserTimesheets } from "../state/global-state.interfaces";
 import { StateRequestQueue } from "optimistic-http";
 import { StoreState } from "state-auth";
+import { StateDbConfig } from 'state-db';
 import { StateSyncConfig, StateSyncTimestamp } from "state-sync";
 
 type PersistedState = StateMissions & StateMissionDocuments & StateMissionImages & StateMissionNotes & 

@@ -3,7 +3,7 @@ import {
   HttpInterceptor, HttpRequest
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AppNotifications } from '@shared-app/app-notifications.const';
+import { AppNotifications } from '@shared-app/constants/app-notifications.const';
 import { _httpErrorResponseFormatter } from '@shared-app/helpers/http-error-response-formatter.helper';
 import { Maybe } from 'global-types';
 import { AppNotification, NotificationService } from 'notification';

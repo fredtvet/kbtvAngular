@@ -1,6 +1,6 @@
 import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { httpRetryStrategy } from "@core/http-retry.strategy";
+import { httpRetryStrategy } from "../http-retry.strategy";
 import { retryWhen } from "rxjs/operators";
 
 @Injectable()

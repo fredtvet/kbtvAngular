@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { Timesheet } from '@core/models';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 
 @Component({
   selector: 'app-user-timesheet-list-view',

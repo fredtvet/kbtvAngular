@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ActionDescriptionMap } from '@shared-app/interfaces/action-description-map.interface';
+import { ActionDescriptionMap } from '../interfaces/action-description-map.interface';
 import { Immutable, Maybe } from 'global-types';
 import { StateAction } from 'state-management';
 

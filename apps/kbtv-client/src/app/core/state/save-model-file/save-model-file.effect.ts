@@ -1,5 +1,5 @@
 import { SaveModelFileAction, SetSaveModelFileStateAction } from "@actions/global-actions";
-import { ModelFile } from "@core/models";
+import { ModelFile } from "../../models";
 import { Immutable } from "global-types";
 import { _getModelConfig, _saveModel } from "model/core";
 import { Observable } from "rxjs";

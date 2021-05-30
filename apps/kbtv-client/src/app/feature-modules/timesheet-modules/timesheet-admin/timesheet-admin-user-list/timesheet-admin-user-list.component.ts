@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { User } from '@core/models';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { LeaderSettingsFormSheet } from '@shared-timesheet/forms/leader-settings-form.const';
-import { AppButton } from '@shared/components/app-button/app-button.interface';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { FormService } from 'form-sheet';

@@ -1,5 +1,5 @@
 import { ModelFile } from "@core/models";
-import { FileFolder } from "@shared/enums/file-folder.enum";
+import { FileFolder } from "@shared-app/enums/file-folder.enum";
 
 export interface ImageViewerDialogWrapperConfig {
     images?: ModelFile[], 

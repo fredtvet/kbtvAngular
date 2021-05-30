@@ -1,7 +1,7 @@
 import { Validators } from '@angular/forms';
 import { MissionNote } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
-import { ValidationRules } from '@shared/constants/validation-rules.const';
+import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { InputQuestion, InputQuestionComponent } from '@shared/scam/dynamic-form-questions/input-question.component';
 import { TextAreaQuestion, TextAreaQuestionComponent } from '@shared/scam/dynamic-form-questions/text-area-question.component';
 import { DynamicControl } from 'dynamic-forms';

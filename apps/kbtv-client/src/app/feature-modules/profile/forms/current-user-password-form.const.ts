@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms';
 import { ConfirmPasswordControl, NewPasswordControl } from '@shared/constants/common-controls.const';
-import { ValidationRules } from '@shared/constants/validation-rules.const';
+import { ValidationRules } from '@shared-app/constants/validation-rules.const';
 import { InputQuestion, InputQuestionComponent } from '@shared/scam/dynamic-form-questions/input-question.component';
 import { isSamePasswordsValidator } from '@shared/validators/is-same-passwords.validator';
 import { DynamicForm } from 'dynamic-forms';
