@@ -1,10 +1,9 @@
-import 'hammerjs';
-import { enableProdMode, ApplicationRef } from '@angular/core';
+import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
+import 'hammerjs';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-import { enableDebugTools } from '@angular/platform-browser';
+
 
 export function getBaseUrl() {
   return document.getElementsByTagName('base')[0].href;

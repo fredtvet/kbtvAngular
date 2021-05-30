@@ -25,8 +25,8 @@ export abstract class AgGridTableComponent<TRecord, TConfig extends AgGridConfig
   constructor() { }
 
   autoSizeGrid(){
-    let cols = this.dataGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
-    this.dataGrid.columnApi.autoSizeColumns(cols);
+    let cols = this.dataGrid.columnApi.getAllColumns()?.filter(x => x.getColId() != 'checkbox')
+    if(cols) this.dataGrid.columnApi.autoSizeColumns(cols);
   }
 
   protected abstract addColDefs(object: Object): ColDef[];

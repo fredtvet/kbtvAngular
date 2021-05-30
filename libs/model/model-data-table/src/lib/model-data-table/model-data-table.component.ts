@@ -27,8 +27,8 @@ export class ModelDataTableComponent {
     constructor(private facade: ModelDataTableFacade) {}
 
     autoSizeGrid(){
-        let cols = this.agGrid.columnApi.getAllColumns().filter(x => x.getColId() != 'checkbox')
-        this.agGrid.columnApi.autoSizeColumns(cols);
+        let cols = this.agGrid.columnApi.getAllColumns()?.filter(x => x.getColId() != 'checkbox')
+        if(cols) this.agGrid.columnApi.autoSizeColumns(cols);
     }
 
     getRowNodeId = (t: UnknownState) => 
