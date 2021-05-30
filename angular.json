@@ -22,7 +22,6 @@
             "main": "apps/kbtv-client/src/main.ts",
             "polyfills": "apps/kbtv-client/src/polyfills.ts",
             "tsConfig": "apps/kbtv-client/tsconfig.json",
-            "aot": true,
             "assets": [
               "apps/kbtv-client/src/favicon.ico",
               "apps/kbtv-client/src/assets",
@@ -38,7 +37,13 @@
                 "inject": false
               }        
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -50,10 +55,8 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": true,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -149,7 +152,6 @@
             "main": "apps/test-proj/src/main.ts",
             "polyfills": "apps/test-proj/src/polyfills.ts",
             "tsConfig": "apps/test-proj/tsconfig.json",
-            "aot": true,
             "assets": [
               "apps/test-proj/src/favicon.ico",
               "apps/test-proj/src/assets",
@@ -159,7 +161,13 @@
             "styles": [
               "apps/test-proj/src/styles/styles.scss",     
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -171,10 +179,8 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": true,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
