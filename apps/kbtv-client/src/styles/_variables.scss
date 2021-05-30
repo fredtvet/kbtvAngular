@@ -1,26 +1,27 @@
+@use '~@angular/material' as mat;
 @import '~@angular/material/theming';
 
-$app-primary: mat-palette($mat-grey, 50);
-$app-accent:  mat-palette($mat-cyan, 900);
-$app-warn:    mat-palette($mat-red, A700);
-$primary: mat-color($app-primary);
-$primary-light: mat-color($app-primary, lighter);
-$primary-dark: mat-color($app-primary, darker);
+$app-primary: mat.define-palette(mat.$grey-palette, 50);
+$app-accent:  mat.define-palette(mat.$cyan-palette, 900);
+$app-warn:    mat.define-palette(mat.$red-palette, A700);
+$primary: mat.get-color-from-palette($app-primary);
+$primary-light: mat.get-color-from-palette($app-primary, lighter);
+$primary-dark: mat.get-color-from-palette($app-primary, darker);
 
-$app-warning: mat-palette($mat-yellow, A400);
-$app-success: mat-palette($mat-green, A400);
+$app-warning: mat.define-palette(mat.$yellow-palette, A400);
+$app-success: mat.define-palette(mat.$green-palette, A400);
 
-$warning: mat-color($app-warning);
-$success: mat-color($app-success);
+$warning: mat.get-color-from-palette($app-warning);
+$success: mat.get-color-from-palette($app-success);
 
-$accent: mat-color($app-accent);
-$accent-light: mat-color($app-accent, lighter);
-$accent-dark: mat-color($app-accent, darker);
+$accent: mat.get-color-from-palette($app-accent);
+$accent-light: mat.get-color-from-palette($app-accent, lighter);
+$accent-dark: mat.get-color-from-palette($app-accent, darker);
 
-$warn: mat-color($app-warn);
-$warn-light: mat-color($app-warn, lighter);
+$warn: mat.get-color-from-palette($app-warn);
+$warn-light: mat.get-color-from-palette($app-warn, lighter);
 
-$kbtv-client-theme: mat-light-theme((
+$kbtv-client-theme: mat.define-light-theme((
     color: (
         primary: $app-primary,
         accent: $app-accent,

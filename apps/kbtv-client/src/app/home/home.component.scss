@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import '../../styles/variables';
 
 .main-container, .content-container, app-home-mission-card{
@@ -12,7 +13,7 @@ app-home-mission-card{
 }
 
 .main-container{
-    background: mat-color($background, disabled-button-toggle); 
+    background: mat.get-color-from-palette($background, disabled-button-toggle); 
     height:100%;
     width:100%;  
     overflow:hidden;

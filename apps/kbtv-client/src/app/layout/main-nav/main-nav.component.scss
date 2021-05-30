@@ -1,13 +1,14 @@
+@use '~@angular/material' as mat;
 @import '../../../styles/variables';
 
 mat-sidenav-container{
-    background: mat-color($background, status-bar);
+    background: mat.get-color-from-palette($background, status-bar);
     position: unset!important
 }
 
 mat-sidenav {
     width:230px;
-    background: mat-color($background, app-bar);
+    background: mat.get-color-from-palette($background, app-bar);
 }
 
 mat-sidenav-content{

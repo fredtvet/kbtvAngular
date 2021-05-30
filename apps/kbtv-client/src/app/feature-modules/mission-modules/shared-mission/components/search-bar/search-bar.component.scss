@@ -1,8 +1,9 @@
+@use '~@angular/material' as mat;
 @import '../../../../../../styles/variables';
 
 .search-bar {
     border:none;
-    background:mat-color($background, card);
+    background:mat.get-color-from-palette($background, card);
     
     div{
         border-bottom: 1px solid black;

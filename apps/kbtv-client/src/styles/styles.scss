@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@use '~@angular/material' as mat;
 @import './variables';
 @import './app-animations.scss';
 @import './spacing.scss';
@@ -20,21 +21,21 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 
 .primary{
   background-color:$primary;
-  color: mat-color($app-primary, default-contrast);
+  color: mat.get-color-from-palette($app-primary, default-contrast);
 }
 
 .primary-light{
   background-color:$primary-light;
-  color: mat-color($app-primary, lighter-contrast);
+  color: mat.get-color-from-palette($app-primary, lighter-contrast);
 }
 
 .bg-card{
-  background: mat-color($background, card);
+  background: mat.get-color-from-palette($background, card);
 }
 
 .accent{
   background-color:$accent;
-  color: mat-color($app-accent, default-contrast);
+  color: mat.get-color-from-palette($app-accent, default-contrast);
 }
 
 .color-accent{
@@ -43,7 +44,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 
 .warn{
   background-color:$warn;
-  color: mat-color($app-warn, default-contrast);
+  color: mat.get-color-from-palette($app-warn, default-contrast);
 }
 
 .color-warn{
@@ -51,7 +52,7 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 }
 
 .foreground-card{
-  background-color:mat-color($background, card);
+  background-color:mat.get-color-from-palette($background, card);
 }
 
 .bottom-bar-padding{ padding-bottom: var(--bottom-nav-height)!important; }
