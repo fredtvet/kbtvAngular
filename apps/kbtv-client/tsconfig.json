@@ -82,23 +82,15 @@
       "model/form": [
         "../../dist/model/model-form/model-form",
         "../../dist/model/model-form"
+      ],     
+      "model/common": [
+        "../../dist/model/model-common/model-common",
+        "../../dist/model/model-common"
       ],
       "model/data-table": [
         "../../dist/model/model-data-table/model-data-table",
         "../../dist/model/model-data-table"
       ],
-      // "model/state": [
-      //   "../../dist/model/model-state/model-state",
-      //   "../../dist/model/model-state"
-      // ],
-      // "model/form": [
-      //   "../../dist/model/model-form/model-form",
-      //   "../../dist/model/model-form"
-      // ],
-      // "model/data-table": [
-      //   "../../dist/model/model-data-table/model-data-table",
-      //   "../../dist/model/model-data-table"
-      // ],
     },
   },
   "files": [

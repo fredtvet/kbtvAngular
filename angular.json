@@ -734,7 +734,39 @@
           }
         }
       }
-    },
+    },    
+    "model-common": {
+      "projectType": "library",
+      "root": "libs/model/model-common",
+      "sourceRoot": "libs/model/model-common/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "libs/model/model-common/tsconfig.lib.json",
+            "project": "libs/model/model-common/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/model/model-common/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/model/model-common/tsconfig.lib.json",
+              "libs/model/model-common/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },   
     "state-auth": {
       "projectType": "library",
       "root": "libs/state-auth",

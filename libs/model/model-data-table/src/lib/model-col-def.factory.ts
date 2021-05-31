@@ -5,7 +5,8 @@ import { KeyVal, UnknownState } from "global-types";
 import { ForeignRelation, UnknownModelState, _getModelConfig } from "model/core";
 import { ModelCommand, SaveModelAction } from "model/state-commands";
 import { Store } from "state-management";
-import { MODEL_DATA_TABLES_CONFIG, MODEL_DATA_TABLE_PROP_TRANSLATIONS } from "./injection-tokens.const";
+import { MODEL_DATA_TABLES_CONFIG } from "./injection-tokens.const";
+import { MODEL_PROP_TRANSLATIONS } from "model/common";
 import { ModelDataTable, ModelDataTablesConfig } from "./interfaces";
 
 @Injectable({providedIn: 'any'})
@@ -15,7 +16,7 @@ export class ModelColDefFactory {
 
     constructor(
         @Inject(MODEL_DATA_TABLES_CONFIG) private tableConfigs: ModelDataTablesConfig<UnknownModelState>,
-        @Inject(MODEL_DATA_TABLE_PROP_TRANSLATIONS) private translations: KeyVal<string>,
+        @Inject(MODEL_PROP_TRANSLATIONS) private translations: KeyVal<string>,
         private store: Store<UnknownModelState>
     ){}
 

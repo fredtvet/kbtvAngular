@@ -1,7 +1,7 @@
 import { DynamicForm } from 'dynamic-forms';
 import { Immutable, Maybe } from 'global-types';
 import { RelationInclude, StateModels, StatePropByModel } from 'model/core';
-import { ModelCommand, SaveAction } from 'model/state-commands';
+import { SaveAction } from 'model/state-commands';
 import { Observable } from 'rxjs';
 import { StateAction } from 'state-management';
 

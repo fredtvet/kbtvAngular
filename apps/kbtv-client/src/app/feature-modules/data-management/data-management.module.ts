@@ -5,9 +5,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { GenericActionRequestMap } from '@core/configurations/optimistic/generic-action-request-map.const';
 import { CssLoaderService } from '@core/services/css-loader.service';
 import { LazyStyles } from '@shared-app/enums/lazy-styles.enum';
-import { translations } from '@shared-app/constants/translations.const';
 import { SharedModule } from '@shared/shared.module';
-import { ModelDataTableModule, MODEL_DATA_TABLES_CONFIG, MODEL_DATA_TABLE_PROP_TRANSLATIONS } from 'model/data-table';
+import { ModelDataTableModule, MODEL_DATA_TABLES_CONFIG } from 'model/data-table';
 import { ModelFormModule } from 'model/form';
 import { DeleteModelAction, ModelStateCommandsModule, SetSaveModelStateAction } from 'model/state-commands';
 import { ModelStateFetcherModule } from 'model/state-fetcher';
@@ -44,7 +43,6 @@ import { ModelDataTables } from './model-data-tables.const';
     
   ],
   providers: [
-    {provide: MODEL_DATA_TABLE_PROP_TRANSLATIONS, useValue: translations},
     {provide: MODEL_DATA_TABLES_CONFIG, useValue: ModelDataTables},
   ]
 })

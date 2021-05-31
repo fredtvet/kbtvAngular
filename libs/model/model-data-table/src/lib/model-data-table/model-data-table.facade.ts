@@ -6,7 +6,7 @@ import { FetchModelsAction, StateIsFetching } from "model/state-fetcher";
 import { BehaviorSubject, combineLatest, Observable, of } from "rxjs";
 import { distinctUntilChanged, map, switchMap } from "rxjs/operators";
 import { Store } from 'state-management';
-import { MODEL_DATA_TABLE_PROP_TRANSLATIONS } from "../injection-tokens.const";
+import { MODEL_PROP_TRANSLATIONS } from "model/common";
 import { ModelColDefFactory } from "../model-col-def.factory";
 
 export interface ViewModel { colDefs: Maybe<ColDef[]>, rowData: ImmutableArray<unknown>, noRowsText: string }
@@ -39,7 +39,7 @@ export class ModelDataTableFacade  {
     constructor(
         private store: Store<UnknownModelState & StateIsFetching<UnknownState>>,
         private colDefFactory: ModelColDefFactory,    
-        @Inject(MODEL_DATA_TABLE_PROP_TRANSLATIONS) private translations: KeyVal<string>
+        @Inject(MODEL_PROP_TRANSLATIONS) private translations: KeyVal<string>
     ) { }
 
     updateSelectedProperty = (prop: string): void => {

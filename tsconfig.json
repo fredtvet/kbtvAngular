@@ -97,13 +97,13 @@
         "dist/model/model-form/model-form",
         "dist/model/model-form"
       ],
+      "model/common": [
+        "dist/model/model-common/model-common",
+        "dist/model/model-common"
+      ],
       "model/data-table": [
         "dist/model/model-data-table/model-data-table",
         "dist/model/model-data-table"
-      ],
-      "testoretine": [
-        "dist/testoretine/testoretine",
-        "dist/testoretine"
       ],
     }
   },

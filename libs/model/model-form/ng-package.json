@@ -8,6 +8,7 @@
       "form-sheet": "form-sheet",
       "confirm-dialog": "confirm-dialog",
       "model/core": "model/core",
+      "model/common": "model/common",
       "model/state-commands": "model/state-commands",
       "model/state-fetcher": "model/state-fetcher",
       "state-management": "state-management"

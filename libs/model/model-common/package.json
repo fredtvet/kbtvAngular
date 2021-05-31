@@ -1,0 +1,11 @@
+{
+  "name": "model-common",
+  "version": "0.0.1",
+  "sideEffects": false,
+  "peerDependencies": {
+    "@angular/core": "^12.0.2",
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

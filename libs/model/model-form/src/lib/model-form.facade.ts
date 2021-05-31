@@ -3,13 +3,12 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { Immutable, KeyVal, Maybe, UnknownState } from 'global-types';
-import { RelationInclude, StateModels, StatePropByModel, UnknownModelState, _getModelConfig, _getRelationIncludeStateProps } from 'model/core';
+import { RelationInclude, StateModels, StatePropByModel, _getModelConfig, _getRelationIncludeStateProps } from 'model/core';
+import { MODEL_PROP_TRANSLATIONS } from "model/common";
 import { DeleteModelAction, ModelCommand } from 'model/state-commands';
 import { FetchModelsAction } from 'model/state-fetcher';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { StateAction, Store } from 'state-management';
-import { MODEL_FORM_PROP_TRANSLATIONS } from './injection-tokens.const';
 import { ModelFormConfig } from './interfaces';
 
 @Injectable({providedIn: "root"})
@@ -19,7 +18,7 @@ export class ModelFormFacade<TState extends object, TModel extends StateModels<T
     private store: Store<TState>,   
     private confirmService: ConfirmDialogService,  
     private router: Router,
-    @Inject(MODEL_FORM_PROP_TRANSLATIONS) private translations: KeyVal<string>,
+    @Inject(MODEL_PROP_TRANSLATIONS) private translations: KeyVal<string>,
   ) {}
 
   loadModels(
