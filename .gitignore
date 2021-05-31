@@ -2,6 +2,8 @@
 
 #ignored projects
 /apps/test-proj
+/temp
+
 # compiled output
 /dist
 /tmp
