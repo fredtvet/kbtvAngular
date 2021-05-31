@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
-import { Mission } from '@core/models';
 import { Roles } from '@core/roles.enum';
 import { StateMissions } from '@core/state/global-state.interfaces';
 import { _sortByDate } from 'array-helpers';

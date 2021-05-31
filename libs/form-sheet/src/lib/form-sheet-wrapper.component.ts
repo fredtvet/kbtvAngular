@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, ComponentFactoryResolver, Inject, ViewContainerRef } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { _tryWithLogging } from 'array-helpers';
 import { UnknownState } from 'global-types';
 import { Subscription } from 'rxjs';
 import { first, tap } from 'rxjs/operators';

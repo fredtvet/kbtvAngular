@@ -1,6 +1,6 @@
 import { ApplicationRef, Injectable } from "@angular/core";
 import { Store } from 'state-management'
-import { filter, first, map, tap } from 'rxjs/operators';
+import { filter, first, tap } from 'rxjs/operators';
 import { SyncStateAction } from './state/actions';
 import { StoreState } from "./store-state.interface";
 import { concat, fromEvent, interval, merge, of } from "rxjs";

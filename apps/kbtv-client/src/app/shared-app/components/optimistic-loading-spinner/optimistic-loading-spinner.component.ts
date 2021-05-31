@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { LoadingResponse, LoadingService } from '@core/services/loading.service';

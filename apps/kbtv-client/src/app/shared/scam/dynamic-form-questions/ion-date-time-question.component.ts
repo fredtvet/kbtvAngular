@@ -3,8 +3,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
-import { Observable } from 'rxjs';
-import { filter, startWith, tap } from 'rxjs/operators';
 
 export interface IonDateQuestionBindings { min: string, max: string, defaultValue: string}
 

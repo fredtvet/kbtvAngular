@@ -1,4 +1,4 @@
-import { Prop } from "global-types";
+
 import { SaveModelResult, StateModels, StatePropByModel } from "model/core";
 import { StateAction } from "state-management";
 import { SaveAction } from "./interfaces";

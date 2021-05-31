@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { exhaustMap, finalize, map } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
 import { RefreshTokenResponse, Tokens } from '../interfaces';

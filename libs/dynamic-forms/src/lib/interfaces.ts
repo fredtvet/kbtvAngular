@@ -1,6 +1,6 @@
 import { EventEmitter, Type } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidatorFn } from '@angular/forms';
-import { DeepProp, DeepPropsObject, DeepPropType, Immutable, Maybe, NotNull, Prop } from 'global-types';
+import { DeepPropsObject, DeepPropType, Immutable, Maybe, NotNull, Prop } from 'global-types';
 import { Observable } from 'rxjs';
 import { DeepPartial } from 'ts-essentials';
 import { DynamicAbstractGroupComponent } from './components/dynamic-abstract-group.component';

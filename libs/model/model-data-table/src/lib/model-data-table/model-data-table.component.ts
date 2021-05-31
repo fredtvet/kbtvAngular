@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { Maybe, UnknownState } from 'global-types';
+import { UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 import { ModelDataTableFacade, ViewModel } from './model-data-table.facade';
 

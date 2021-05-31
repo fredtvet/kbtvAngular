@@ -1,7 +1,6 @@
 import { SaveModelFileAction } from "@actions/global-actions";
 import { CreateMissionImagesAction } from "@actions/mission-actions";
 import { Injectable } from "@angular/core";
-import { MissionImage } from "@core/models";
 import { AppNotifications } from "@shared-app/constants/app-notifications.const";
 import { _validateFileExtension } from "@shared-app/helpers/validate-file-extension.helper";
 import { ModelFileForm, _formToSaveModelFileConverter } from "@shared/constants/form-to-save-model-file.converter";

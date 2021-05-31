@@ -1,6 +1,5 @@
 import { ValidatorFn, AbstractControl } from '@angular/forms';
 import { UnknownState } from 'global-types';
-import { _validateFileExtension } from '@shared-app/helpers/validate-file-extension.helper';
 
 export function fileSizeValidator(maxSize: number): ValidatorFn{ 
     return (control: AbstractControl): UnknownState | null => {

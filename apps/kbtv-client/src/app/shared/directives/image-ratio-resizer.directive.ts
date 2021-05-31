@@ -1,5 +1,4 @@
 import { Directive, ElementRef, Input } from '@angular/core';
-import { _isNullOrEmpty } from '@shared-app/helpers/is-null-or-empty.helper';
 
 @Directive({selector: '[appImageRatioResizer]'})
 export class ImageRatioResizerDirective {

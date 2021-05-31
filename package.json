@@ -13,6 +13,7 @@
     "analyze:wba": "webpack-bundle-analyzer dist/kbtv-client/stats.json",
     "analyze:sme": "source-map-explorer dist/kbtv-client/**/*.js",
     "analyze:sme2": "source-map-explorer dist/test-proj/**/*.js",
+    "cleanupImports": "tslint --config tslint-imports.json --fix --project .",
     "compodoc": "npx compodoc -p tsconfig.json",
     "buildAll": "node scripts/build-all.js",
     "buildLibs": "node scripts/build-libs.js",

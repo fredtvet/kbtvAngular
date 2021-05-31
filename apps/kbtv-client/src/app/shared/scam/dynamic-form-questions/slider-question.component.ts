@@ -3,8 +3,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSliderModule } from '@angular/material/slider';
 import { SharedModule } from '@shared/shared.module';
 import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
-import { Observable } from 'rxjs';
-import { startWith } from 'rxjs/operators';
 
 export interface SliderQuestion extends Question {
   tickInterval?: number;

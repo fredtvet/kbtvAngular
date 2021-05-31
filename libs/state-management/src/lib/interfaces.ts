@@ -1,7 +1,6 @@
 import { Type } from '@angular/core'
 import { Immutable, Maybe, Prop, UnionTupleType } from 'global-types'
 import { Observable } from 'rxjs'
-import { _createReducer } from './helpers/create-reducer.helper'
 
 export interface StateAction<TActionType extends string = string> {
     /** A string value uniquely identifying the action */

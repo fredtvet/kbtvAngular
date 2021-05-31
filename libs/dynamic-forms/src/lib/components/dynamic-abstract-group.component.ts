@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { DynamicFormFactory } from '../dynamic-form.factory';
 import { DynamicHostDirective } from '../dynamic-host.directive';
-import { DynamicAbstractGroup, DynamicControl, DynamicControlGroup, DynamicFormOptions, HideOnValueChanges, QuestionComponent, ValidControl } from '../interfaces';
+import { DynamicAbstractGroup, DynamicControl, DynamicControlGroup, DynamicFormOptions, QuestionComponent, ValidControl } from '../interfaces';
 import { _isControlGroup } from '../type.helpers';
 
 @Directive()

@@ -1,7 +1,6 @@
 import { SaveModelFileAction } from "@actions/global-actions";
 import { Injectable } from "@angular/core";
 import { AppNotifications } from "@shared-app/constants/app-notifications.const";
-import { _validateFileExtension } from "@shared-app/helpers/validate-file-extension.helper";
 import { ValidationRules } from "@shared-app/constants/validation-rules.const";
 import { Immutable, Maybe } from "global-types";
 import { NotificationService } from "notification";

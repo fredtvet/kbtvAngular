@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { Observable } from 'rxjs';
-import { filter, map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { MainNavService } from '../main-nav.service';
 
 @Component({

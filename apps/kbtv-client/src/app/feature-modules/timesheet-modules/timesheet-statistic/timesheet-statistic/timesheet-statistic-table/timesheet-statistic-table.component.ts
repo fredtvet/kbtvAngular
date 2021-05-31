@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ColDef } from 'ag-grid-community';
 import { Timesheet } from '@core/models';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
 import { AgGridTableComponent } from '@shared/components/abstracts/ag-grid-table.component';
 import { TimesheetSummary } from '@shared-timesheet/interfaces';
 import { ColDefsFactoryService } from './col-defs-factory.service';
-import { _getTotalHours } from 'date-time-helpers';
 import { Immutable } from 'global-types';
 
 @Component({

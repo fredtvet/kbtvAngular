@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { MainSkeletonRouteData } from './main-skeleton-route-data.interface';

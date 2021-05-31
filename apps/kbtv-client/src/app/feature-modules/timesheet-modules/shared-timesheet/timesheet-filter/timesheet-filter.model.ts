@@ -3,7 +3,7 @@ import { ModelState } from '@core/state/model-state.interface';
 import { DataFilter } from '@shared/data.filter';
 import { DateRange } from 'date-time-helpers';
 import { DateInput, Immutable, Maybe, Prop, UnknownState } from 'global-types';
-import { ForeignRelation, ModelConfig, _getModel, _getModelConfig } from 'model/core';
+import { ForeignRelation, ModelConfig, _getModelConfig } from 'model/core';
 import { TimesheetCriteria } from './timesheet-criteria.interface';
 
 export class TimesheetFilter extends DataFilter<Timesheet, TimesheetCriteria>{
