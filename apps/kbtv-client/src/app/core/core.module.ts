@@ -2,7 +2,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { translations } from '@shared-app/constants/translations.const';
 import { _registerModelStateConfig } from 'model/core';
-import { MODEL_PROP_TRANSLATIONS } from 'model/common';
+import { MODEL_PROP_TRANSLATIONS } from 'model/shared';
 import { MODEL_FETCHER_BASE_URL } from 'model/state-fetcher';
 import { OPTIMISTIC_BASE_API_URL, OptimisticHttpModule } from 'optimistic-http';
 import { environment } from 'src/environments/environment';

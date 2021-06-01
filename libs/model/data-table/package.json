@@ -1,0 +1,22 @@
+{
+  "peerDependencies": {
+    "@angular/core": "^12.0.2",
+    "@angular/common": "^12.0.2",
+    "rxjs": "~6.5.5",
+    "ag-grid-angular": "^25.3.0",
+    "ag-grid-community": "^25.3.0"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "public-api.ts",
+      "umdModuleIds": {
+        "state-management": "state-management",
+        "model/core": "model/core",
+        "model/shared": "model/shared",
+        "model/state-commands": "model/state-commands",
+        "model/state-fetcher": "model/state-fetcher",
+        "global-types": "global-types"
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "peerDependencies": {
+    "@angular/common": "^11.2.7",
+    "@angular/core": "^11.2.7",
+    "rxjs": "~6.5.5"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "public-api.ts",
+      "umdModuleIds": { 
+        "array-helpers": "array-helpers",
+        "state-management": "state-management",
+        "global-types": "global-types",
+        "model/core": "model/core"
+      }
+    }
+  }
+}

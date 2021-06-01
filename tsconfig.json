@@ -72,7 +72,6 @@
         "dist/form-sheet/form-sheet",
         "dist/form-sheet"
       ],
-   
       "state-auth": [
         "dist/state-auth/state-auth",
         "dist/state-auth"
@@ -81,30 +80,7 @@
         "dist/cdk-selectable/cdk-selectable",
         "dist/cdk-selectable"
       ],   
-      "model/core": [
-        "dist/model/model-core/model-core",
-        "dist/model/model-core"
-      ],
-      "model/state-commands": [
-        "dist/model/model-state-commands/model-state-commands",
-        "dist/model/model-state-commands"
-      ],  
-      "model/state-fetcher": [
-        "dist/model/model-state-fetcher/model-state-fetcher",
-        "dist/model/model-state-fetcher"
-      ],
-      "model/form": [
-        "dist/model/model-form/model-form",
-        "dist/model/model-form"
-      ],
-      "model/common": [
-        "dist/model/model-common/model-common",
-        "dist/model/model-common"
-      ],
-      "model/data-table": [
-        "dist/model/model-data-table/model-data-table",
-        "dist/model/model-data-table"
-      ],
+      "model/*": ["dist/model/*"],
     }
   },
   "angularCompilerOptions": {

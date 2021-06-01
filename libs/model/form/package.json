@@ -1,0 +1,24 @@
+{
+  "peerDependencies": {
+    "@angular/common": "^12.0.2",
+    "@angular/core": "^12.0.2",
+    "@angular/router": "^12.0.2",
+    "@angular/material": "^12.0.2",
+    "rxjs": "~6.5.5"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "public-api.ts",
+      "umdModuleIds": {
+        "dynamic-forms": "dynamic-forms",
+        "form-sheet": "form-sheet",
+        "confirm-dialog": "confirm-dialog",
+        "model/core": "model/core",
+        "model/shared": "model/shared",
+        "model/state-commands": "model/state-commands",
+        "model/state-fetcher": "model/state-fetcher",
+        "state-management": "state-management"
+      }
+    }
+  }
+}

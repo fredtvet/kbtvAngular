@@ -1,0 +1,13 @@
+{
+  "peerDependencies": {},
+  "ngPackage": {
+    "lib": {
+      "entryFile": "public-api.ts",
+      "umdModuleIds": {
+        "state-management": "state-management",
+        "global-types": "global-types",
+        "model/core": "model/core"
+      }
+    }
+  }
+}
