@@ -7,7 +7,7 @@ import { map } from "rxjs/operators";
 import { StoreState } from './store-state';
 import { FetchModelsAction } from 'model/state-fetcher';
 import { Roles } from "@core/roles.enum";
-import { UpdateUserPasswordAction } from "@actions/user-actions";
+import { UpdateUserPasswordAction } from "./state/actions.const";
 
 @Injectable({providedIn: 'any'})
 export class UsersFacade {

@@ -1,4 +1,4 @@
-import { WipeStateAction } from '@actions/global-actions';
+import { WipeStateAction } from '@core/global-actions';
 import { Immutable, UnknownState } from 'global-types';
 import { _createReducer } from 'state-management';
 

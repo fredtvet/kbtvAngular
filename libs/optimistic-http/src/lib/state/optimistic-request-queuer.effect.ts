@@ -14,11 +14,11 @@ export class OptimisticRequestQueuerEffect implements Effect<StateAction> {
 
     constructor(private optimisticProvidersService: OptimisticProvidersService) { }
 
-    handle$(actions$: Observable<DispatchedAction<StateAction>>): Observable<HttpQueuePushAction | void> {
+    handle$(actions$: Observable<DispatchedAction<StateAction>>): Observable<Immutable<HttpQueuePushAction> | void> {
         return actions$.pipe(map(x => this.createQueuePushAction(x)))
     }
 
-    private createQueuePushAction(dispatched: DispatchedAction<StateAction>): HttpQueuePushAction | void {
+    private createQueuePushAction(dispatched: DispatchedAction<StateAction>): Immutable<HttpQueuePushAction> | void {
         if(dispatched.action.type === OptimisticHttpAction) 
             return this.onOptimisticHttpAction(<DispatchedAction<OptimisticHttpAction>> dispatched)
 
@@ -26,11 +26,10 @@ export class OptimisticRequestQueuerEffect implements Effect<StateAction> {
         if(converter !== undefined) return this.onRequestMapAction(dispatched, converter)
     }
     
-    private onOptimisticHttpAction(dispatched: DispatchedAction<OptimisticHttpAction>): HttpQueuePushAction{
+    private onOptimisticHttpAction(dispatched: DispatchedAction<OptimisticHttpAction>): Immutable<HttpQueuePushAction> {
         return {
             type: HttpQueuePushAction,
             command: {
-                commandId: _commandIdGenerator(),
                 request: dispatched.action.request, 
                 stateSnapshot: this.getOptimisticState(dispatched.action.stateSnapshot),
             }    
@@ -42,9 +41,8 @@ export class OptimisticRequestQueuerEffect implements Effect<StateAction> {
         if(!request) return;
         return { type: HttpQueuePushAction,
             command: {
-                request: <OptimisticHttpRequest> { ...request, callerAction: dispatched.action },
+                request: <OptimisticHttpRequest> { ...request },
                 stateSnapshot: this.getOptimisticState(dispatched.stateSnapshot),
-                commandId: _commandIdGenerator(),
             }
         }
     }

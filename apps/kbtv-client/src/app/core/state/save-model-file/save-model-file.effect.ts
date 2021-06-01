@@ -1,4 +1,4 @@
-import { SaveModelFileAction, SetSaveModelFileStateAction } from "@actions/global-actions";
+import { SaveModelFileAction, SetSaveModelFileStateAction } from "@core/global-actions";
 import { ModelFile } from "../../models";
 import { Immutable } from "global-types";
 import { _getModelConfig, _saveModel } from "model/core";

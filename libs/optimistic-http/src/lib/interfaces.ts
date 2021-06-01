@@ -2,17 +2,15 @@ import { Immutable, Maybe, UnknownState } from 'global-types';
 import { StateAction } from 'state-management';
 
 export interface QueuedCommand { 
-    request: Immutable<OptimisticHttpRequest>, 
-    stateSnapshot: Maybe<Immutable<UnknownState>>, 
+    request: OptimisticHttpRequest, 
+    stateSnapshot: Maybe<UnknownState>, 
     dispatched?: boolean,
-    commandId: string
 };
 
 /** Represents a completed command with a status indicating if the command succeeded. */
 export interface CompletedCommand { 
     request: Immutable<OptimisticHttpRequest>, 
     succeeded: boolean;
-    commandId?: string;
 };
 
 /** Represents a slice of state containing the request queue */
@@ -33,17 +31,19 @@ export interface FormDataEntry {
     value: string | Blob 
 }
 
+export type OptimisticHttpHeaders = {[key: string]: string | string[]};
+
 /** Describes an object used to make optimistic http requests. */
-export interface OptimisticHttpRequest<TBody extends {} | FormData[] | null = {} | FormData[] | null> { 
+export interface OptimisticHttpRequest { 
     /** The url suffix of the api endpoint. 
      * Gets appended to base url provided with {@link OPTIMISTIC_BASE_API_URL} */
     apiUrl: string; 
     /** The http method of the request */
     method: "POST" | "PUT" | "DELETE"; 
     /** The body of the http request */
-    body?: TBody;   
-    /** The action that initiated the request.  */
-    callerAction?: StateAction;
+    body?: {} | FormData[] | null;   
+    /** The headers of the http request */
+    headers?: OptimisticHttpHeaders;
 };
 
 /** A map of actions that should dispatch an optimistic http request. 
@@ -52,7 +52,7 @@ export interface OptimisticHttpRequest<TBody extends {} | FormData[] | null = {}
     [P in TActions as P['type']]: ActionRequestConverterFn<P>;
 };
 
-export type ActionRequestConverterFn<TAction> = (a: Immutable<TAction>) => Omit<OptimisticHttpRequest<any>, "callerAction">
+export type ActionRequestConverterFn<TAction> = (a: Immutable<TAction>) => OptimisticHttpRequest
 
 /** Represents a type that can be serialized. No functions are allowed. */
 export type AsJson<T> = 

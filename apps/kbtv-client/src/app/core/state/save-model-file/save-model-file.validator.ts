@@ -1,4 +1,4 @@
-import { SaveModelFileAction } from "@actions/global-actions";
+import { SaveModelFileAction } from "@core/global-actions";
 import { Injectable } from "@angular/core";
 import { AppNotifications } from "@shared-app/constants/app-notifications.const";
 import { ValidationRules } from "@shared-app/constants/validation-rules.const";

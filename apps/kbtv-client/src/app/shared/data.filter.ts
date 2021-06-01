@@ -1,7 +1,7 @@
 import { Immutable } from 'global-types';
 
 export type DataFilterConstructor<TCriteria>  = 
-    new (criteria: Immutable<Partial<TCriteria>>, ...args: unknown[]) => DataFilter<Immutable<unknown>, Immutable<TCriteria>>;
+    new (criteria: Immutable<Partial<TCriteria>>, ...args: unknown[]) => DataFilter<unknown, TCriteria>;
 
 export abstract class DataFilter<TRecord, TCriteria>{
 
@@ -20,6 +20,10 @@ export abstract class DataFilter<TRecord, TCriteria>{
     }
 
     check: (record: Immutable<TRecord>) => boolean; 
+
+    containedIn(criteria: Immutable<TCriteria>): boolean {
+        return false;
+    }; 
 
     protected abstract addChecks(record: Immutable<TRecord>): boolean;
 

@@ -20,7 +20,7 @@ export class DispatchHttpEffect implements Effect<DispatchNextHttpAction> {
             listenTo([DispatchNextHttpAction]),
             mergeMap(x => {
                 const command = x.stateSnapshot.requestQueue[0];
-                return this.httpFactory.getObserver$(command.request, command.commandId).pipe(map(result => { return {result, command} } ))
+                return this.httpFactory.getObserver$(command.request).pipe(map(result => { return {result, command} } ))
             }),
             mergeMap(x =>{ 
                 const actions: StateAction[] = [<HttpQueueShiftAction>{ type: HttpQueueShiftAction }];
@@ -28,8 +28,7 @@ export class DispatchHttpEffect implements Effect<DispatchNextHttpAction> {
                     actions.push(<AppendRequestLogAction> {
                         type: AppendRequestLogAction,
                         completedCommands: [{
-                            request: x.command.request, 
-                            commandId: x.command.commandId, 
+                            request: x.command.request,  
                             succeeded: true
                         }]
                     });

@@ -1,4 +1,4 @@
-import { SetSaveModelFileStateAction } from '@actions/global-actions';
+import { SetSaveModelFileStateAction } from '@core/global-actions';
 import { NgModule } from '@angular/core';
 import { GenericActionRequestMap } from '@core/configurations/optimistic/generic-action-request-map.const';
 import { MailModelsHttpEffect } from '@core/state/mail-models/mail-models.http.effect';

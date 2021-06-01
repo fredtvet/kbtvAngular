@@ -1,10 +1,10 @@
-import { UpdateCurrentUserAction, UpdatePasswordAction, ClearAndLogoutAction } from "@actions/profile-actions";
 import { Injectable } from "@angular/core";
 import { Immutable } from "global-types";
 import { AuthService } from "state-auth";
 import { Store } from 'state-management';
 import { ReloadSyncStateAction, SyncConfig, SyncStateAction, UpdateSyncConfigAction } from 'state-sync';
 import { ProfileForm } from "./forms/profile-form.const";
+import { UpdateCurrentUserAction, UpdatePasswordAction, ClearAndLogoutAction } from "./state/actions.const";
 import { StoreState } from './store-state';
 
 @Injectable({providedIn: 'any'})

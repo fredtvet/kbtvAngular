@@ -1,4 +1,4 @@
-import { SetSaveModelFileStateAction } from '@actions/global-actions';
+import { SetSaveModelFileStateAction } from '@core/global-actions';
 import { _createReducer } from 'state-management';
 import { ModelState } from '../model-state.interface';
 

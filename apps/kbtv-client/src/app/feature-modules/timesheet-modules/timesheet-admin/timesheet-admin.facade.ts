@@ -1,4 +1,3 @@
-import { SetSelectedWeekAction, SetTimesheetCriteriaWithWeekCriteriaAction, UpdateLeaderSettingsAction, UpdateTimesheetStatusesAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
 import { Timesheet } from '@core/models';
 import { LeaderSettings } from '@core/models/leader-settings.interface';
@@ -23,6 +22,7 @@ import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { WeekCriteria } from '../shared-timesheet/interfaces/week-criteria.interface';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
+import { SetTimesheetCriteriaWithWeekCriteriaAction, SetSelectedWeekAction, UpdateTimesheetStatusesAction, UpdateLeaderSettingsAction } from './state/actions.const';
 import { StoreState } from './store-state';
 
 @Injectable({providedIn: 'any'})

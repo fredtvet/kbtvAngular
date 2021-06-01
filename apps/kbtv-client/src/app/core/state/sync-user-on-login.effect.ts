@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo, StateAction, Store } from 'state-management';
 import { LoginSuccessAction } from 'state-auth';
-import { WipeStateAction } from '@actions/global-actions';
+import { WipeStateAction } from '@core/global-actions';
 
 @Injectable()
 export class SyncUserOnLoginEffect implements Effect<LoginSuccessAction> {

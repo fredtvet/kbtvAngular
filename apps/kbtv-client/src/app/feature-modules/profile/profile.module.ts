@@ -7,9 +7,8 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileActionItemComponent } from './profile/profile-action-item.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SyncProfileComponent } from './profile/sync-profile.component';
-import { ClearAndLogoutEffect } from './state/clear-and-logout.effect';
-import { UpdateCurrentUserReducer } from './state/update-current-user.reducer';
-import { UpdatePasswordHttpEffect } from './state/update-password.http.effect';
+import { UpdatePasswordHttpEffect, ClearAndLogoutEffect } from './state/effects';
+import { UpdateCurrentUserReducer } from './state/reducers.const';
 
 @NgModule({
   declarations: [

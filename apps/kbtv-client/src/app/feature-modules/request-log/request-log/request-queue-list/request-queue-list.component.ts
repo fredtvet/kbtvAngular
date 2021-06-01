@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, Input } from '@angular/core';
+import { AppOptimisticHttpRequest } from '@core/configurations/model/model-requests.interface';
 import { ActionDescriptions } from '@shared-app/constants/action-descriptions.const';
 import { QueuedCommand } from 'optimistic-http';
 
@@ -16,5 +17,6 @@ export class RequestQueueListComponent {
 
   constructor() { }
 
-  trackByReq = (index:number, cmd: QueuedCommand) => cmd.commandId;
+  trackByReq = (index:number, cmd: QueuedCommand) => 
+    (<AppOptimisticHttpRequest> cmd.request).headers.commandId;
 }

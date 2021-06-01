@@ -1,11 +1,13 @@
-import { SaveUserAction, SetSaveUserStateAction } from '@actions/user-actions';
 import { Injectable } from '@angular/core';
+import { ApiUrl } from '@core/api-url.enum';
 import { User } from '@core/models';
+import { ApiService } from '@core/services/api.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { _saveModel } from 'model/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { DispatchedAction, Effect, listenTo } from 'state-management';
+import { SaveUserAction, SetSaveUserStateAction, UpdateUserPasswordAction } from './actions.const';
 
 @Injectable()
 export class SaveUserEffect implements Effect<SaveUserAction> {
@@ -26,6 +28,20 @@ export class SaveUserEffect implements Effect<SaveUserAction> {
                     password: x.action.password
                 }
             })
+        )
+    }
+}
+
+@Injectable()
+export class UpdateUserPasswordHttpEffect implements Effect<UpdateUserPasswordAction> {
+
+    constructor(private apiService: ApiService){}
+
+    handle$(actions$: Observable<DispatchedAction<UpdateUserPasswordAction>>): Observable<void> {
+        return actions$.pipe(
+            listenTo([UpdateUserPasswordAction]),
+            mergeMap(({action}) => 
+                this.apiService.put<void>(`${ApiUrl.Users}/${action.userName}/NewPassword`, action)),
         )
     }
 }

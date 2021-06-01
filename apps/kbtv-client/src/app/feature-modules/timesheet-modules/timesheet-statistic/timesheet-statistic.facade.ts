@@ -1,4 +1,3 @@
-import { SetGroupByAction, SetTimesheetCriteriaAction } from '@actions/timesheet-actions';
 import { Injectable } from '@angular/core';
 import { Timesheet } from '@core/models';
 import { _setFullNameOnUserForeigns } from '@shared-app/helpers/add-full-name-to-user-foreign.helper';
@@ -18,6 +17,8 @@ import { TimesheetSummary } from '../shared-timesheet/interfaces';
 import { TimesheetCriteria } from '../shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { TimesheetFilter } from '../shared-timesheet/timesheet-filter/timesheet-filter.model';
 import { StoreState } from './state/store-state';
+import { SetGroupByAction } from './state/actions.const';
+import { SetTimesheetCriteriaAction } from '@shared-timesheet/state/actions.const';
 
 type ValidRecord = Timesheet | TimesheetSummary;
 

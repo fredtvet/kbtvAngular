@@ -1,4 +1,3 @@
-import { CreateMissionImagesAction } from "@actions/mission-actions";
 import { Injectable } from "@angular/core";
 import { Mission, MissionImage } from "@core/models";
 import { ModelState } from '@core/state/model-state.interface';
@@ -11,6 +10,7 @@ import { DeleteModelAction } from 'model/state-commands';
 import { RelationInclude, _getModel } from 'model/core';
 import { StoreState } from './store-state';
 import { MailModelsAction } from "@core/state/mail-models/mail-models.action";
+import { CreateMissionImagesAction } from "@shared-mission/actions.const";
 
 @Injectable({providedIn: 'any'})
 export class MissionImageListFacade {

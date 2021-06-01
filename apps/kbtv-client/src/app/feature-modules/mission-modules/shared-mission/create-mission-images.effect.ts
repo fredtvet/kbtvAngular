@@ -1,5 +1,4 @@
-import { SaveModelFileAction } from "@actions/global-actions";
-import { CreateMissionImagesAction } from "@actions/mission-actions";
+import { SaveModelFileAction } from "@core/global-actions";
 import { Injectable } from "@angular/core";
 import { AppNotifications } from "@shared-app/constants/app-notifications.const";
 import { _validateFileExtension } from "@shared-app/helpers/validate-file-extension.helper";
@@ -12,6 +11,7 @@ import { mergeMap } from "rxjs/operators";
 import { DispatchedAction, Effect, listenTo } from "state-management";
 import { ModelCommand } from 'model/state-commands';
 import { Immutable } from "global-types";
+import { CreateMissionImagesAction } from "./actions.const";
 
 @Injectable()
 export class CreateMissionImagesEffect implements Effect<CreateMissionImagesAction> {

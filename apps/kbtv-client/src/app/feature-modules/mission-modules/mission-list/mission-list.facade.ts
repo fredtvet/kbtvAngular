@@ -1,4 +1,3 @@
-import { CreateMissionImagesAction, UpdateLastVisitedAction } from "@actions/mission-actions";
 import { Injectable } from "@angular/core";
 import { Mission } from "@core/models";
 import { ModelFileForm, _formToSaveModelFileConverter } from '@shared/constants/form-to-save-model-file.converter';
@@ -11,7 +10,8 @@ import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { ComponentStore, Store } from 'state-management';
 import { ComponentStoreState, StoreState } from './interfaces/store-state';
-import { SetMissionCriteriaAction } from './set-mission-criteria.reducer';
+import { CreateMissionImagesAction } from "@shared-mission/actions.const";
+import { SetMissionCriteriaAction, UpdateLastVisitedAction } from "./state/actions.const";
 
 @Injectable()
 export class MissionListFacade {

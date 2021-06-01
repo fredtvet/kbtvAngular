@@ -1,4 +1,4 @@
-import { SaveModelFileAction } from '@actions/global-actions';
+import { SaveModelFileAction } from '@core/global-actions';
 import { ModelFile } from '@core/models';
 import { ModelState } from '@core/state/model-state.interface';
 import { Converter, ModelFormResult } from 'model/form';

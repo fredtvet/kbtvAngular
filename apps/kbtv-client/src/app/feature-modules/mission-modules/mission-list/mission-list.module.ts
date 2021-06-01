@@ -1,4 +1,4 @@
-import { SetSaveModelFileStateAction } from '@actions/global-actions';
+import { SetSaveModelFileStateAction } from '@core/global-actions';
 import { NgModule } from '@angular/core';
 import { GenericActionRequestMap } from '@core/configurations/optimistic/generic-action-request-map.const';
 import { SaveModelFileEffect } from '@core/state/save-model-file/save-model-file.effect';
@@ -17,7 +17,7 @@ import { MissionDetailsComponent } from './mission-details/mission-details.compo
 import { MissionListRoutingModule } from './mission-list-routing.module';
 import { MissionListViewComponent } from './mission-list/mission-list-view/mission-list-view.component';
 import { MissionListComponent } from './mission-list/mission-list.component';
-import { UpdateLastVisitedReducer } from './update-last-visited.reducer';
+import { UpdateLastVisitedReducer } from './state/reducers.const';
 
 @NgModule({
   declarations: [

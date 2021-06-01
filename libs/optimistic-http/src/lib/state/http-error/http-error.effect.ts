@@ -18,7 +18,7 @@ export class HttpErrorEffect implements Effect<StateAction> {
             listenTo([HttpErrorAction]),
             mergeMap(x => {
                 const completedCommands = x.stateSnapshot.requestQueue.map(
-                    ({commandId, request, ...rest}) => { return <CompletedCommand> { commandId, request, succeeded: false } }
+                    ({request}) => { return <CompletedCommand> { request, succeeded: false } }
                 )
                 const appendAction: Immutable<AppendRequestLogAction> = {
                     type: AppendRequestLogAction,

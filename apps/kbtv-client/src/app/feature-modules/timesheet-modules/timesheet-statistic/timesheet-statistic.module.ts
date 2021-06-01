@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SetTimesheetCriteriaReducer } from '@shared-timesheet/state/set-timesheet-criteria.reducer';
+import { SetTimesheetCriteriaReducer } from '@shared-timesheet/state/reducers.const';
 import { DynamicFormsModule } from 'dynamic-forms';
 import { ModelStateFetcherModule } from 'model/state-fetcher';
 import { OptimisticHttpModule } from 'optimistic-http';
@@ -9,8 +9,8 @@ import { StateManagementModule } from 'state-management';
 import { SharedTimesheetModule } from '../shared-timesheet/shared-timesheet.module';
 import { FetchTimesheetProviders } from '../shared-timesheet/state/providers.const';
 import { DefaultState } from './state/default-state.const';
-import { FetchTimesheetsEffect } from './state/fetch-timesheets.effect';
-import { SetGroupByReducer } from './state/set-group-by.reducer';
+import { FetchTimesheetsEffect } from './state/effects';
+import { SetGroupByReducer } from './state/reducers.const';
 import { TimesheetStatisticRoutingModule } from './timesheet-statistic-routing.module';
 import { TimesheetStatisticTableComponent } from './timesheet-statistic/timesheet-statistic-table/timesheet-statistic-table.component';
 import { TimesheetStatisticComponent } from './timesheet-statistic/timesheet-statistic.component';
