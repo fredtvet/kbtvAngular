@@ -44,7 +44,7 @@ export abstract class EffectsSubscriberBase {
         }
       
         this.handleEffect(effect); //Resubscribe on error
- 
+        console.error(err);
         return throwError(err)
     }
   
