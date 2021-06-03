@@ -1,4 +1,5 @@
 {
+  "sideEffects": false,
   "peerDependencies": {
     "ts-essentials": "^7.0.1"
   },

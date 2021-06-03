@@ -1,4 +1,5 @@
 {
+  "sideEffects": false,
   "peerDependencies": {
     "@angular/core": "^12.0.2",
     "@angular/common": "^12.0.2",
