@@ -5,7 +5,6 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { NotificationModule } from 'notification';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,7 +34,7 @@ registerLocaleData(norwayLocale, 'nb-NO');
     AppRoutingModule, 
     AppLayoutModule,
     SharedAppModule,
-    NotificationModule
+    
   ],
   providers:[ 
     { provide: LOCALE_ID, useValue: "nb-NO" }, 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { AppNotificationService } from '@core/services/app-notification.service';
 import { AppNotifications } from '@shared-app/constants/app-notifications.const';
-import { NotificationService } from 'notification';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UnauthorizedAction } from 'state-auth';
@@ -9,7 +9,7 @@ import { DispatchedAction, Effect, listenTo, StateAction } from 'state-managemen
 @Injectable()
 export class NotifyOnUnauthorizedEffect implements Effect<StateAction> {
 
-    constructor(private notificationService: NotificationService){}
+    constructor(private notificationService: AppNotificationService){}
 
     handle$(actions$: Observable<DispatchedAction<StateAction>>): Observable<void> {
         return actions$.pipe(

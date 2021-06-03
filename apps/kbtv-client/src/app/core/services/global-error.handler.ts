@@ -1,11 +1,12 @@
 import { ErrorHandler, Injectable } from '@angular/core';
 import { AppNotifications } from '@shared-app/constants/app-notifications.const';
-import { AppNotification, NotificationService } from 'notification';
+import { AppNotification  } from 'notification';
+import { AppNotificationService } from './app-notification.service';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
 
-    constructor(private notificationService: NotificationService){}
+    constructor(private notificationService: AppNotificationService){}
   
     private chunkFailedExp: RegExp = /ChunkLoadError/;
     private chunkFailedNotification: AppNotification = AppNotifications.error({

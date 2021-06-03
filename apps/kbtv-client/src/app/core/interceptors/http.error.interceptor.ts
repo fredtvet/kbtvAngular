@@ -3,19 +3,20 @@ import {
   HttpInterceptor, HttpRequest
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AppNotificationService } from '@core/services/app-notification.service';
 import { AppNotifications } from '@shared-app/constants/app-notifications.const';
 import { _httpErrorResponseFormatter } from '@shared-app/helpers/http-error-response-formatter.helper';
 import { Maybe } from 'global-types';
-import { AppNotification, NotificationService } from 'notification';
+import { AppNotification } from 'notification';
+import { CommandIdHeader } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { CommandIdHeader } from 'optimistic-http';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(
-    private notificationService: NotificationService,
+    private notificationService: AppNotificationService,
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {

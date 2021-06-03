@@ -6,7 +6,7 @@ import { NotificationType } from './notification-type.enum';
 import { NotificationComponent } from './notification.component';
 
 /** Responsible for queueing and displaying notifications provided by user as a snack bar */
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'any' })
 export class NotificationService {
 
   private queue: AppNotification[] = [];
@@ -52,3 +52,4 @@ export class NotificationService {
   }
 
 }
+ 
