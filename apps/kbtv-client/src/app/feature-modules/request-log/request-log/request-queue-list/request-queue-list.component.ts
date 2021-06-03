@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy } from '@angular/core';
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AppOptimisticHttpRequest } from '@core/configurations/model/model-requests.interface';
-import { ActionDescriptions } from '@shared-app/constants/action-descriptions.const';
+import { AppRequestDescriberMap } from '@shared-app/constants/app-request-describer-map.const';
 import { QueuedCommand } from 'optimistic-http';
 
 @Component({
@@ -10,7 +9,7 @@ import { QueuedCommand } from 'optimistic-http';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RequestQueueListComponent {
-  ActionDescriptions = ActionDescriptions;
+  AppRequestDescriberMap = AppRequestDescriberMap;
   
   @Input() requests: QueuedCommand[];
   @Input() isOnline: boolean;

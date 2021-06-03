@@ -23,27 +23,26 @@ export interface StateRequestLog {
     requestLog: CompletedCommand[]; 
 };
 
-/** Describes an object thats used to represent an entry in a form data class. */
-export interface FormDataEntry { 
-    /** The key of the entry */
-    name: string, 
-    /** The value of the entry */
-    value: string | Blob 
-}
-
 export type OptimisticHttpHeaders = {[key: string]: string | string[]};
 
+export type SupportedContentTypes = "json" | "formData";
+
 /** Describes an object used to make optimistic http requests. */
-export interface OptimisticHttpRequest { 
+export interface OptimisticHttpRequest<TContentType extends SupportedContentTypes = "json"> { 
     /** The url suffix of the api endpoint. 
      * Gets appended to base url provided with {@link OPTIMISTIC_BASE_API_URL} */
     apiUrl: string; 
     /** The http method of the request */
     method: "POST" | "PUT" | "DELETE"; 
-    /** The body of the http request */
-    body?: {} | FormData[] | null;   
+    /** The body of the http request. 
+     *  If contentType is set to 'formData', this body will represent key/value pairs and any nested objects are serialized.*/
+    body?: {} | null;   
     /** The headers of the http request */
     headers?: OptimisticHttpHeaders;
+    /** The type of content in body. Default is 'json'. */
+    contentType?: TContentType;
+    /** An optional string that identifies the type of request */
+    type?: string;
 };
 
 /** A map of actions that should dispatch an optimistic http request. 
@@ -52,7 +51,7 @@ export interface OptimisticHttpRequest {
     [P in TActions as P['type']]: ActionRequestConverterFn<P>;
 };
 
-export type ActionRequestConverterFn<TAction> = (a: Immutable<TAction>) => OptimisticHttpRequest
+export type ActionRequestConverterFn<TAction> = (a: Immutable<TAction>) => OptimisticHttpRequest<SupportedContentTypes>
 
 /** Represents a type that can be serialized. No functions are allowed. */
 export type AsJson<T> = 

@@ -12,7 +12,7 @@ export class SaveModelFileEffect implements Effect<SaveModelFileAction> {
     handle$(actions$: Observable<DispatchedAction<SaveModelFileAction, ModelState>>): Observable<void | Immutable<StateAction<string>>> {
         return actions$.pipe(
             listenTo([SaveModelFileAction]),
-            map(({stateSnapshot, action}) => {
+            map(({stateSnapshot, action}): Immutable<SetSaveModelFileStateAction> => {
 
                 const modelCfg = _getModelConfig<ModelState, ModelFile>(action.stateProp);
                 const preGenIds: Record<string, boolean> = {}
@@ -34,7 +34,7 @@ export class SaveModelFileEffect implements Effect<SaveModelFileAction> {
                     {[action.stateProp]: preGenIds}
                 );
 
-                return <SetSaveModelFileStateAction>{
+                return {
                     type: SetSaveModelFileStateAction, saveModelResult, 
                     stateProp: action.stateProp,
                     saveAction: action.saveAction,

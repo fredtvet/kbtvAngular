@@ -15,7 +15,7 @@ import { ListItemComponent } from './components/list-item/list-item.component';
 import { NoContentComponent } from './components/no-content.component';
 import { OptimisticLoadingSpinnerComponent } from './components/optimistic-loading-spinner/optimistic-loading-spinner.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
-import { ActionDescriptionPipe } from './pipes/action-description.pipe';
+import { RequestDescriptionPipe } from './pipes/request-description.pipe';
 import { IfRolePipe } from './pipes/if-role.pipe';
 import { ReverseArrayPipe } from './pipes/reverse-array';
 import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
@@ -35,7 +35,7 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
     OptimisticLoadingSpinnerComponent,
     NoContentComponent,
     FetchingModelContentComponent,
-    ActionDescriptionPipe
+    RequestDescriptionPipe
   ],
   imports: [
     RouterModule,
@@ -74,7 +74,7 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
     IfRolePipe,
     ReverseArrayPipe,
     TransformButtonsPipe,  
-    ActionDescriptionPipe ,
+    RequestDescriptionPipe,
     TranslatePipe,
     AddToHomeScreenDirective, 
     RenderTimeoutDirective,

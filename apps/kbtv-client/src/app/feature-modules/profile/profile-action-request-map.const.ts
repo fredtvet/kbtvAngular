@@ -5,9 +5,13 @@ import { ActionRequestMap } from "optimistic-http";
 import { UpdateCurrentUserAction } from "./state/actions.const";
 
 export const ProfileActionRequestMap: ActionRequestMap<UpdateCurrentUserAction> = {
-    [UpdateCurrentUserAction]: (a) => {
-        return <UpdateCurrentUserRequest> { 
-            method: "PUT", body: a.user, apiUrl: ApiUrl.Auth, headers: { commandId: _idGenerator(4) }
+    [UpdateCurrentUserAction]: (a): UpdateCurrentUserRequest => {
+        return { 
+            method: "PUT", 
+            body: a.user, 
+            apiUrl: ApiUrl.Auth, 
+            headers: { commandId: _idGenerator(4) },
+            type: UpdateCurrentUserRequest
         }
     }
 }

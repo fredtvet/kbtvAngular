@@ -1,67 +1,69 @@
-import { ApiUrl } from "../../api-url.enum";
-import { Prop } from "global-types";
+import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
 import { DeleteModelAction, ModelCommand, SetSaveModelStateAction } from "model/state-commands";
-import { ActionRequestMap, FormDataEntry } from "optimistic-http";
-import { Model } from "../../models";
+import { ActionRequestMap } from "optimistic-http";
+import { ApiUrl } from "../../api-url.enum";
+import { SetSaveModelFileStateAction } from "../../global-actions";
+import { Model, ModelFile } from "../../models";
 import { ModelState } from "../../state/model-state.interface";
 import { ModelBaseUrls } from "../model/model-base-urls.const";
 import { ModelIdProps } from "../model/model-id-props.const";
-import { SetSaveModelFileStateAction } from "../../global-actions";
-import { CreateModelRequest, UpdateModelRequest, CreateModelFileRequest, UpdateModelFileRequest, DeleteModelRequest, DeleteModelRangeRequest } from "../model/model-requests.interface";
-import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
+import { DeleteModelRangeRequest, DeleteModelRequest, SaveModelFileRequest, SaveModelRequest } from "../model/model-requests.interface";
 
 export type GenericOptimisticActions = SetSaveModelStateAction<ModelState, Model> | SetSaveModelFileStateAction | DeleteModelAction<ModelState, Model>;
 
 export const GenericActionRequestMap: ActionRequestMap<GenericOptimisticActions> = {
-    [SetSaveModelStateAction]: (a) => { 
+    [SetSaveModelStateAction]: (a): SaveModelRequest<Model> => { 
         return a.saveAction === ModelCommand.Create ? 
-            <CreateModelRequest<Model>>{ 
-                method: "POST", 
+            { 
+                method: "POST", stateProp: a.stateProp, 
                 body: a.saveModelResult.fullModel,
                 apiUrl: ModelBaseUrls[a.stateProp],
-                headers: { commandId: _idGenerator(4) }
+                headers: { commandId: _idGenerator(4) },
+                type: SaveModelRequest
             } : 
-            <UpdateModelRequest<Model>>{ 
-                method: "PUT", 
+            { 
+                method: "PUT", stateProp: a.stateProp, 
                 body: a.saveModelResult.fullModel, 
                 apiUrl: `${ModelBaseUrls[a.stateProp]}/${a.saveModelResult.fullModel[<keyof Model> ModelIdProps[a.stateProp]]}`,
-                headers: { commandId: _idGenerator(4) }
+                headers: { commandId: _idGenerator(4) },
+                type: SaveModelRequest
             }
     },
-    [SetSaveModelFileStateAction]: (a) => { 
+    [SetSaveModelFileStateAction]: (a): SaveModelFileRequest<ModelFile> => { 
         const isCreate = a.saveAction === ModelCommand.Create;
-        
-        const body: FormDataEntry[] = [{name: "file", value: a.file}];
-    
-        const {fileName, ...entity} = a.saveModelResult.fullModel;
 
-        for(const name in entity) {
-            const value = entity[<Prop<typeof entity>> name]
-            if(value !== null && typeof value === "object") continue; //Ignore nestd properties
-            body.push({name, value: <string> entity[<Prop<typeof entity>> name]});
-        }
-            
+        const {fileName, ...entity} = a.saveModelResult.fullModel;
+        
         const apiUrl = a.stateProp === "missions" ? 
             `${ApiUrl.Mission}/${entity.id}/UpdateHeaderImage` :
             ModelBaseUrls[a.stateProp] + (isCreate ? '' : `/${entity[<keyof Model> ModelIdProps[a.stateProp]]}`);
-            
-        return <CreateModelFileRequest | UpdateModelFileRequest>{
-             method: isCreate ? "POST" : "PUT", apiUrl, body,
-             headers: { commandId: _idGenerator(4) }
+
+        const headers =  { commandId: _idGenerator(4) };
+
+        return {
+            method: isCreate ? "POST" : "PUT", 
+            contentType: "formData",
+            body: { ...entity, file: a.file },
+            stateProp: <never> a.stateProp, 
+            apiUrl,
+            headers,
+            type: SaveModelFileRequest
         }
     },   
-    [DeleteModelAction]: (a) => { 
+    [DeleteModelAction]: (a): DeleteModelRequest<Model> | DeleteModelRangeRequest<Model> => { 
         return a.payload.id ? 
-            <DeleteModelRequest>{ 
-                method: "DELETE", 
+            { 
+                method: "DELETE", stateProp: a.stateProp,
                 apiUrl: `${ModelBaseUrls[a.stateProp]}/${a.payload.id}`,
-                headers: { commandId: _idGenerator(4) }
+                headers: { commandId: _idGenerator(4) },
+                type: DeleteModelRequest
             } :
-            <DeleteModelRangeRequest>{ 
-                method: "POST", 
+            { 
+                method: "POST", stateProp: a.stateProp,
                 apiUrl: `${ModelBaseUrls[a.stateProp]}/DeleteRange`, 
-                body: {ids: a.payload.ids},
-                headers: { commandId: _idGenerator(4) }
+                body: {ids: a.payload.ids || []},
+                headers: { commandId: _idGenerator(4) },
+                type: DeleteModelRangeRequest
             }  
     }
 }

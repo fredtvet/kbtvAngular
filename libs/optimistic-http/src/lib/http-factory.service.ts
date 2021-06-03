@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from "@angular/core";
-import { Immutable, Maybe } from 'global-types';
+import { Immutable, Maybe, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 import { OPTIMISTIC_BASE_API_URL } from './constants/injection-tokens.const';
-import { FormDataEntry, OptimisticHttpHeaders, OptimisticHttpRequest } from './interfaces';
+import { OptimisticHttpHeaders, OptimisticHttpRequest, SupportedContentTypes } from './interfaces';
 
 @Injectable({providedIn: "root"})
 export class HttpFactoryService {
@@ -14,23 +14,38 @@ export class HttpFactoryService {
     ) {}
 
     getObserver$(request: Immutable<OptimisticHttpRequest>): Observable<{isDuplicate?: boolean} | undefined> {
-      const options: {headers: HttpHeaders} = { headers: new HttpHeaders(<OptimisticHttpHeaders> request.headers) }
-      switch (request.method) {
-        case "POST": return this.httpClient.post(this.baseUrl + request.apiUrl, this.createHttpBody(request.body), options);
-        case "PUT": return this.httpClient.put(this.baseUrl +request.apiUrl, this.createHttpBody(request.body), options);
-        case "DELETE": return this.httpClient.delete(this.baseUrl + request.apiUrl, options);
+      const {method, headers, body, contentType, apiUrl} = request;
+      const options: {headers: HttpHeaders} = { headers: new HttpHeaders(<OptimisticHttpHeaders> headers) }
+      switch (method) {
+        case "POST": return this.httpClient.post(this.baseUrl + apiUrl, this.createHttpBody(body, contentType), options);
+        case "PUT": return this.httpClient.put(this.baseUrl + apiUrl, this.createHttpBody(body, contentType), options);
+        case "DELETE": return this.httpClient.delete(this.baseUrl + apiUrl, options);
       }
     }
 
-    private createHttpBody(body: Maybe<{}> | FormDataEntry[]) : Maybe<{}> | FormData {
-      if(!Array.isArray(body)) return body; //Assume all arrays are FormDataEntry
-      const formData = new FormData(); //Hydrate form data object
+    private createHttpBody(body: Maybe<{}>, contentType?: SupportedContentTypes) : Maybe<{}> | FormData {
+      if(body == null) return null;
+      
+      if(contentType !== "formData") return body; 
+    
+      const formData = new FormData();
 
-      for(const entry of body) {
-        if(entry.value instanceof File) formData.append(entry.name, entry.value, entry.value.name);
-        else formData.append(entry.name, entry.value);
+      for(const key in body) {
+        const value = (<UnknownState> body)[key];
+        if(value instanceof File) formData.append(key, value, value.name);
+        else formData.append(key, this.getValueAsString(value))
       }
 
       return formData;   
+    }
+
+    private getValueAsString(value: unknown): string{
+      if(value === null) return "";
+      switch(typeof value){
+          case "object": return JSON.stringify(value);
+          case "string": return value;
+          case "number": case "boolean": return value.toString();
+          default: return ""
+      }
     }
 }

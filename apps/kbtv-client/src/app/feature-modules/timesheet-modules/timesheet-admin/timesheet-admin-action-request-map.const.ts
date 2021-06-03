@@ -1,21 +1,20 @@
-import { ApiUrl } from "@core/api-url.enum";
-import { GenericActionRequestMap } from "@core/configurations/optimistic/generic-action-request-map.const";
 import { UpdateTimesheetStatusesRequest } from "@core/configurations/model/model-requests.interface";
+import { GenericActionRequestMap } from "@core/configurations/optimistic/generic-action-request-map.const";
 import { Model } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
-import { Immutable } from "global-types";
+import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
 import { DeleteModelAction, SetSaveModelStateAction } from "model/state-commands";
 import { ActionRequestMap } from "optimistic-http";
 import { UpdateTimesheetStatusesAction } from "./state/actions.const";
-import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
 
 export const TimesheetAdminActionRequestMap: ActionRequestMap<UpdateTimesheetStatusesAction | SetSaveModelStateAction<ModelState, Model> | DeleteModelAction<ModelState, Model>> = {
-    [UpdateTimesheetStatusesAction]: (command: Immutable<UpdateTimesheetStatusesAction>) => {
-        return <UpdateTimesheetStatusesRequest> {
+    [UpdateTimesheetStatusesAction]: (action): UpdateTimesheetStatusesRequest=> {
+        return {
             method: "PUT", 
-            body: {ids: command.ids, status: command.status}, 
-            apiUrl: `${ApiUrl.Timesheet}/Status`,
-            headers: { commandId: _idGenerator(4) }
+            body: {ids: action.ids, status: action.status}, 
+            apiUrl: `/Timesheets/Status`,
+            headers: { commandId: _idGenerator(4) },
+            type: UpdateTimesheetStatusesRequest
         }
     },
     [SetSaveModelStateAction]: GenericActionRequestMap[SetSaveModelStateAction],  

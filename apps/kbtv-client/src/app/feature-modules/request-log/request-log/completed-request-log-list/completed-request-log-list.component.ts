@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AppOptimisticHttpRequest } from '@core/configurations/model/model-requests.interface';
-import { ActionDescriptions } from '@shared-app/constants/action-descriptions.const';
+import { AppRequestDescriberMap } from '@shared-app/constants/app-request-describer-map.const';
 import { CompletedCommand } from 'optimistic-http';
 
 @Component({
@@ -9,7 +9,7 @@ import { CompletedCommand } from 'optimistic-http';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompletedRequestLogListComponent {
-  ActionDescriptions = ActionDescriptions;
+  AppRequestDescriberMap = AppRequestDescriberMap;
   
   @Input() requests: CompletedCommand[];
 
