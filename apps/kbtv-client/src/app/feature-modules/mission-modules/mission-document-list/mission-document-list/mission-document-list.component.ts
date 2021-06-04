@@ -2,17 +2,17 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { MissionDocument } from '@core/models';
+import { AppConfirmDialogService } from '@core/services/app-confirm-dialog.service';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { ModelState } from '@core/state/model-state.interface';
+import { FileFolder } from '@shared-app/enums/file-folder.enum';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { BaseSelectableContainerComponent } from '@shared-mission/components/base-selectable-container.component';
 import { CreateMissionDocumentModelForm } from '@shared-mission/forms/create-mission-document-model-form.const';
 import { EmailForm } from '@shared-mission/forms/email-form.const';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { FileFolder } from '@shared-app/enums/file-folder.enum';
-import { ConfirmDialogService } from 'confirm-dialog';
 import { FormService } from 'form-sheet';
 import { ImmutableArray, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
@@ -59,7 +59,7 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
     private facade: MissionDocumentListFacade,
     private route: ActivatedRoute,
     private router: Router,
-    private confirmService: ConfirmDialogService,
+    private confirmService: AppConfirmDialogService,
     private modelFormService: ModelFormService<ModelState>) {
       super();
 
@@ -89,11 +89,11 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
   }
 
   private openConfirmDeleteDialog = () => {   
-    this.confirmService.open({
+    this.confirmService.dialog$.subscribe(x => x.open({
       title: 'Slett utvalgte dokumenter?', 
       confirmText: 'Slett',
       confirmCallback: this.deleteSelectedDocuments
-    })
+    }));
   }
   
   private openMailDocumentSheet = () => {

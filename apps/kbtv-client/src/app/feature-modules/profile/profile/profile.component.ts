@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppConfirmDialogService } from '@core/services/app-confirm-dialog.service';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { ConfirmDialogService } from 'confirm-dialog';
 import { FormService } from 'form-sheet';
 import { CurrentUserPasswordForm, CurrentUserPasswordFormSheet } from '../forms/current-user-password-form.const';
 import { ProfileFormSheet } from '../forms/profile-form.const';
@@ -25,7 +25,7 @@ export class ProfileComponent {
   constructor(
     private formService: FormService,
     private facade: ProfileFacade,
-    private confirmService: ConfirmDialogService,
+    private confirmService: AppConfirmDialogService,
     private router: Router,
     private route: ActivatedRoute,
   ){
@@ -58,12 +58,12 @@ export class ProfileComponent {
   }
 
   private confirmClear = (): void => {
-    this.confirmService.open({
+    this.confirmService.dialog$.subscribe(x => x.open({
       title: 'Slett lokal data?',
       message: 'Lokale innstillinger vil bli borte og all data må lastes ned på nytt. Vær varsom ved bruk av mobildata.', 
       confirmText: 'Slett',
       confirmCallback: () => this.facade.clearAndLogout()
-    });
+    }));
   }
 
   private goToRequestLog = () => this.router.navigate(['aktivitetslogg']);

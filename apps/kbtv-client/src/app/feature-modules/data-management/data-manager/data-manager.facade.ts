@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Model } from "@core/models";
+import { AppConfirmDialogService } from "@core/services/app-confirm-dialog.service";
 import { ModelState } from '@core/state/model-state.interface';
 import { translations } from "@shared-app/constants/translations.const";
-import { ConfirmDialogService } from "confirm-dialog";
 import { Prop } from "global-types";
 import { ModelFormService } from 'model/form';
-import { ComponentStore, Store } from 'state-management';
 import { DeleteModelAction } from 'model/state-commands';
+import { ComponentStore, Store } from 'state-management';
 import { ComponentState } from '../interfaces/component-state.interface';
 import { PropertyFormMap } from "./property-form.map";
 import { UpdateSelectedPropertyAction } from './state/update-selected-property.reducer';
@@ -26,7 +26,7 @@ export class DataManagerFacade  {
     constructor(
         private store: Store<ModelState>,
         private componentStore: ComponentStore<ComponentState>,     
-        private confirmService: ConfirmDialogService,
+        private confirmService: AppConfirmDialogService,
         private modelFormService: ModelFormService<ModelState>
     ) { }
 
@@ -42,12 +42,12 @@ export class DataManagerFacade  {
     deleteItems = (ids?: string[]): void =>{ 
         if(!ids?.length) return;
         const translatedProp = translations[<string> this.selectedProperty?.toLowerCase()]?.toLowerCase();
-        this.confirmService.open({
+        this.confirmService.dialog$.subscribe(x => x.open({
           title: `Slett ${ids.length > 1 ? 'ressurser' : 'ressurs'}?`,
           message: `Bekreft at du ønsker å slette ${ids.length} ${translatedProp}`,  
           confirmText: 'Slett',
           confirmCallback: () => this._deleteItems(ids)
-        })
+        }));
     }
 
     private _deleteItems(ids: string[]): void{

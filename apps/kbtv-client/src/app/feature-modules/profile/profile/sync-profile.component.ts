@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppConfirmDialogService } from '@core/services/app-confirm-dialog.service';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { ConfirmDialogService } from 'confirm-dialog';
 import { _getISO } from 'date-time-helpers';
 import { FormService } from 'form-sheet';
 import { SyncConfigFormSheet } from 'src/app/feature-modules/profile/forms/sync-config.form.const';
@@ -24,7 +24,7 @@ export class SyncProfileComponent {
   constructor(
     private formService: FormService,
     private facade: ProfileFacade,
-    private confirmService: ConfirmDialogService,
+    private confirmService: AppConfirmDialogService,
     private router: Router,
   ){
     this.navConfig = {title: "Synkronisering", backFn: this.goToProfile };
@@ -48,12 +48,12 @@ export class SyncProfileComponent {
   }
 
   private confirmPurge = () => {
-    this.confirmService.open({
+    this.confirmService.dialog$.subscribe(x => x.open({
       title: 'Slett synkronisert data?',
       message: 'All data må lastes ned på nytt. Vær varsom ved bruk av mobildata.', 
       confirmText: 'Slett',
       confirmCallback: this.facade.reloadData
-    });
+    }));
   }
 
   private syncAll = () => this.facade.syncAll();

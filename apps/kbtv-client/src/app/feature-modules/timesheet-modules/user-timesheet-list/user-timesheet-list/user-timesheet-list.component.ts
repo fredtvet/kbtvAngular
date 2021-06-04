@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserTimesheet } from "@core/models";
+import { AppDialogService } from "@core/services/app-dialog.service";
 import { ModelState } from "@core/state/model-state.interface";
+import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
 import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm, TimesheetFormState, UserTimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { _timesheetCriteriaChipsFactory } from "@shared-timesheet/helpers/timesheet-criteria-chips-factory.helper";
 import { UserTimesheetCriteriaFormService } from "@shared-timesheet/timesheet-criteria-form-service";
-import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { Immutable, Maybe } from 'global-types';
@@ -46,7 +46,7 @@ export class UserTimesheetListComponent {
     private route: ActivatedRoute,
     private router: Router,
     private criteriaFormService: UserTimesheetCriteriaFormService,
-    private dialog: MatDialog,
+    private dialogService: AppDialogService,
     private modelFormService: ModelFormService<ModelState>
   ) {
     this.bottomActions = [
@@ -68,8 +68,8 @@ export class UserTimesheetListComponent {
   }
 
   openTimesheetCard = (timesheetId: string) =>
-    this.dialog.open(UserTimesheetCardDialogWrapperComponent, {
-      data: timesheetId, panelClass: 'extended-dialog'});
+    this.dialogService.dialog$.subscribe(x => x.open(UserTimesheetCardDialogWrapperComponent, {
+      data: timesheetId, panelClass: 'extended-dialog'}));
 
   private onBack = (): void => {
     this.router.navigate(['../'], { relativeTo: this.route.parent })

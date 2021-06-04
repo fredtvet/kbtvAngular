@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { StateAction, Store } from 'state-management';
 import { ModelFormConfig } from './interfaces';
 
-@Injectable({providedIn: "root"})
+@Injectable({providedIn: "any"})
 export class ModelFormFacade<TState extends object, TModel extends StateModels<TState>> {
 
   constructor(

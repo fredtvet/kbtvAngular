@@ -13,7 +13,7 @@ import { ModelFormFacade } from "./model-form.facade";
 type BottomSheetRef = MatBottomSheetRef<FormSheetWrapperComponent, ModelCommand>;
 
 /** Responsible for showing a form sheet with the specified model form */
-@Injectable()
+@Injectable({providedIn: "any"})
 export class ModelFormService<TState extends object> {
 
   constructor(

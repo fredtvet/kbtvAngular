@@ -1,28 +1,35 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { AppDialogService } from '@core/services/app-dialog.service';
+import { Immutable } from 'global-types';
 import { OptimisticHttpErrorAction } from 'optimistic-http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { DispatchedAction, Effect, listenTo, StateAction } from 'state-management';
+import { forkJoin, from, Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { DispatchedAction, Effect, listenTo } from 'state-management';
 
 @Injectable()
-export class OpenDialogOnOptimisticError implements Effect<StateAction> {
+export class OpenDialogOnOptimisticError implements Effect<OptimisticHttpErrorAction> {
 
-    constructor(private dialog: MatDialog){}
+    constructor(private dialogService: AppDialogService){}
 
-    handle$(actions$: Observable<DispatchedAction<StateAction>>): Observable<void> {
+    handle$(actions$: Observable<DispatchedAction<OptimisticHttpErrorAction>>): Observable<void> {
         return actions$.pipe(
             listenTo([OptimisticHttpErrorAction]),
-            map(x => { 
-                import('@shared/scam/optimistic-http-error-dialog/optimistic-http-error-dialog.component')
-                    .then(({ OptimisticHttpErrorDialogComponent }) => {
-                        this.dialog.open(
-                            OptimisticHttpErrorDialogComponent, 
-                            { data: x.action, panelClass: 'extended-dialog' }
-                        )
-                    });             
-            }),
+            mergeMap(x => this.openDialog$(x.action)),
         ) 
+    }
+
+    private openDialog$(data: Immutable<OptimisticHttpErrorAction>): Observable<void> {
+        return forkJoin([
+            from(import('@shared/scam/optimistic-http-error-dialog/optimistic-http-error-dialog.component')),
+            this.dialogService.dialog$                 
+        ]).pipe(
+            map(([{OptimisticHttpErrorDialogComponent}, dialog]) => {
+                dialog.open(
+                    OptimisticHttpErrorDialogComponent, 
+                    { data, panelClass: 'extended-dialog' }
+                )
+            })
+        )
     }
 
 }

@@ -19,6 +19,7 @@ export class StartupService {
     
     effectsSubscriber.onEffectsInit$.subscribe(x => store.dispatch(<LoadPersistedStateAction> { type: LoadPersistedStateAction }))
     iconService.registerIcons();
+
   }
   
 }

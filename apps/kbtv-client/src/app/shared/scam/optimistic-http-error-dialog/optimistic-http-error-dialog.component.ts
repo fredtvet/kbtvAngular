@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormattedHttpError, _httpErrorResponseFormatter } from '@shared-app/helpers/http-error-response-formatter.helper';
 import { SharedAppModule } from '@shared-app/shared-app.module';
 import { OptimisticHttpErrorAction } from 'optimistic-http';
@@ -27,7 +27,8 @@ export class OptimisticHttpErrorDialogComponent {
     FailedCommandListComponent
   ],
   imports:[
-    SharedAppModule,  
+    SharedAppModule,
+    MatDialogModule,  
   ]
 })
 class OptimisticHttpErrorDialogModule {}

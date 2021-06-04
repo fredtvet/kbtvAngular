@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModelFile } from '@core/models';
+import { AppConfirmDialogService } from '@core/services/app-confirm-dialog.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
-import { ConfirmDialogService } from 'confirm-dialog';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { ImageViewerDialogWrapperConfig } from './image-viewer-dialog-wrapper-config.const';
 
@@ -29,7 +29,7 @@ export class ImageViewerDialogWrapperComponent {
   currentImage: ModelFile;
 
   constructor( 
-    private confirmService: ConfirmDialogService,
+    private confirmService: AppConfirmDialogService,
     private downloaderService: DownloaderService,
     private dialogRef: MatDialogRef<ImageViewerDialogWrapperComponent>,
     @Inject(MAT_DIALOG_DATA) public cfg: ImageViewerDialogWrapperConfig
@@ -61,11 +61,11 @@ export class ImageViewerDialogWrapperComponent {
       ) : null
     
     private openConfirmDeleteDialog = () => {  
-      this.confirmService.open({
+      this.confirmService.dialog$.subscribe(x => x.open({
         title: 'Slett bilde?', 
         confirmText: 'Slett',
         confirmCallback: () => this.deleteCurrentImage()
-      });
+      }));
     }
   
 }

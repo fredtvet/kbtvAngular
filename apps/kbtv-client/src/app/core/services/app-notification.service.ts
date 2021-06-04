@@ -4,14 +4,16 @@ import { AppNotification, NotificationService } from 'notification';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 
-/** Responsible for queueing and displaying notifications provided by user as a snack bar */
 @Injectable({ providedIn: 'root' })
 export class AppNotificationService {
 
   private serviceSubject = new BehaviorSubject<NotificationService | null>(null);
 
-  private service$ = <Observable<NotificationService>> 
-    this.serviceSubject.asObservable().pipe(filter(x => x !== null), first());
+  private service$: Observable<NotificationService> =  
+    this.serviceSubject.asObservable().pipe(
+      filter(x => x !== null), 
+      first<NotificationService>()
+    );
   
   private hasInitalizedLoading: boolean = false; 
 

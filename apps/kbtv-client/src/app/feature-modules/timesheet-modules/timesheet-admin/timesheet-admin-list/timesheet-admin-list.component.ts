@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet, User } from '@core/models';
+import { AppDialogService } from '@core/services/app-dialog.service';
+import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
-import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
 import { _getWeekYear } from 'date-time-helpers';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
@@ -43,7 +43,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
   constructor(
     private facade: TimesheetAdminFacade,
     private router: Router,
-    private dialog: MatDialog,
+    private dialogService: AppDialogService,
     private route: ActivatedRoute,
     private formService: FormService) {
       super();
@@ -64,8 +64,8 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
     this.facade.openTimesheetForm(entityId, initialValue);
   
   openTimesheetCard = (timesheet: Immutable<Timesheet>) =>
-    this.dialog.open(AdminTimesheetCardDialogWrapperComponent, {
-      data: timesheet, panelClass: 'extended-dialog'});
+    this.dialogService.dialog$.subscribe(x => x.open(AdminTimesheetCardDialogWrapperComponent, {
+      data: timesheet, panelClass: 'extended-dialog'}));
 
   trackById = _trackByModel("timesheets");
   

@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
+import { AppDialogService } from "@core/services/app-dialog.service";
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { ModelState } from "@core/state/model-state.interface";
+import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
 import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
-import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { _getDateOfWeek, _getWeekRange } from 'date-time-helpers';
@@ -47,7 +47,7 @@ export class UserTimesheetWeekComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private dialog: MatDialog,
+    private dialogService: AppDialogService,
     private deviceInfoService: DeviceInfoService,
     private facade: UserTimesheetWeekFacade,
     private modelFormService: ModelFormService<ModelState>,
@@ -71,8 +71,8 @@ export class UserTimesheetWeekComponent {
   };
 
   openTimesheetCard = (timesheetId: string) =>
-    this.dialog.open(UserTimesheetCardDialogWrapperComponent, {
-      data: timesheetId, panelClass: 'extended-dialog'});
+    this.dialogService.dialog$.subscribe(x => x.open(UserTimesheetCardDialogWrapperComponent, {
+      data: timesheetId, panelClass: 'extended-dialog'}));
 
   private goToTimesheetList = () => {
       const {weekNr, year} = this.facade.weekCriteria || {};

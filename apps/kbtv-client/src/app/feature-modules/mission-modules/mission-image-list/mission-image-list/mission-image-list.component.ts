@@ -1,20 +1,20 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from "@angular/core";
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { MissionImage, ModelFile } from '@core/models';
+import { AppConfirmDialogService } from "@core/services/app-confirm-dialog.service";
+import { AppDialogService } from "@core/services/app-dialog.service";
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
+import { FileFolder } from "@shared-app/enums/file-folder.enum";
 import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { _trackByModel } from "@shared-app/helpers/trackby/track-by-model.helper";
+import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { BaseSelectableContainerComponent } from "@shared-mission/components/base-selectable-container.component";
 import { ImageViewerDialogWrapperConfig } from "@shared-mission/components/image-viewer/image-viewer-dialog-wrapper-config.const";
 import { ImageViewerDialogWrapperComponent } from "@shared-mission/components/image-viewer/image-viewer-dialog-wrapper.component";
 import { EmailForm } from '@shared-mission/forms/email-form.const';
-import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
-import { FileFolder } from "@shared-app/enums/file-folder.enum";
-import { ConfirmDialogService } from "confirm-dialog";
 import { FormService } from "form-sheet";
 import { ImmutableArray, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
@@ -66,8 +66,8 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
     private downloaderService: DownloaderService,
     private deviceInfoService: DeviceInfoService,
     private formService: FormService,
-    private confirmService: ConfirmDialogService,
-    private dialog: MatDialog,
+    private confirmService: AppConfirmDialogService,
+    private dialogService: AppDialogService,
     private facade: MissionImageListFacade,
     private route: ActivatedRoute,
     private router: Router) {
@@ -90,7 +90,7 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
     }
 
   openImageViewer(currentImage: ModelFile, images: ModelFile[]) {
-    this.dialog.open(ImageViewerDialogWrapperComponent, {
+    this.dialogService.dialog$.subscribe(x => x.open(ImageViewerDialogWrapperComponent, {
       width: "100%",
       height: "100%",
       panelClass: "image_viewer_dialog",
@@ -101,7 +101,7 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
           allowedRoles: RolePermissions.MissionImageList.delete
         }
       },
-    });
+    }));
   }
 
   uploadImages = (files: FileList): void => 
@@ -120,11 +120,11 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
     this.facade.delete(payload);
 
   private  openConfirmDeleteDialog = () => {   
-    this.confirmService.open({
+    this.confirmService.dialog$.subscribe(x => x.open({
       title: "Slett utvalgte bilder?",
       confirmText: 'Slett',
       confirmCallback: this.deleteSelectedImages
-    })
+    }))
   }
   
   private openMailImageSheet = (ids: string[]) => {    
