@@ -13,7 +13,6 @@ import { CoreModule } from './core/core.module';
 import { HomeMissionCardComponent } from './home/home-mission-card/home-mission-card.component';
 import { HomeNavTileGridComponent } from './home/home-nav-tile-grid/home-nav-tile-grid.component';
 import { HomeComponent } from './home/home.component';
-import { AppLayoutModule } from './layout/app-layout.module';
 import { SharedAppModule } from './shared-app/shared-app.module';
 
 registerLocaleData(norwayLocale, 'nb-NO');
@@ -32,7 +31,6 @@ registerLocaleData(norwayLocale, 'nb-NO');
     HammerModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AppRoutingModule, 
-    AppLayoutModule,
     SharedAppModule,
     
   ],

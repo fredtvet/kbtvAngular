@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { StateAuthModule } from 'state-auth';
@@ -14,6 +13,7 @@ import { ListItemComponent } from './components/list-item/list-item.component';
 import { NoContentComponent } from './components/no-content.component';
 import { OptimisticLoadingSpinnerComponent } from './components/optimistic-loading-spinner/optimistic-loading-spinner.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
+import { DynamicHostDirective } from './dynamic-host.directive';
 import { IfRolePipe } from './pipes/if-role.pipe';
 import { RequestDescriptionPipe } from './pipes/request-description.pipe';
 import { ReverseArrayPipe } from './pipes/reverse-array';
@@ -31,6 +31,8 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
     TranslatePipe,
     AddToHomeScreenDirective,
     RenderTimeoutDirective,
+    DynamicHostDirective,
+    
     OptimisticLoadingSpinnerComponent,
     NoContentComponent,
     FetchingModelContentComponent,
@@ -53,7 +55,6 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
     CommonModule, 
     
     MatToolbarModule,
-    MatSidenavModule,
     MatButtonModule,
     MatRippleModule,
     MatDividerModule,
@@ -74,6 +75,7 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
     TranslatePipe,
     AddToHomeScreenDirective, 
     RenderTimeoutDirective,
+    DynamicHostDirective
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

@@ -29,6 +29,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
   color: mat.get-color-from-palette($app-primary, lighter-contrast);
 }
 
+.bg-app{ background: mat.get-color-from-palette($background, status-bar) }
+
 .bg-card{
   background: mat.get-color-from-palette($background, card);
 }
