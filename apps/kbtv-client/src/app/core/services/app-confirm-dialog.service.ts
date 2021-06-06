@@ -1,18 +1,22 @@
 import { Compiler, Injectable, Injector } from '@angular/core';
 import { _tryWithLogging } from 'array-helpers';
 import { ConfirmDialogService } from 'confirm-dialog';
-import { from, Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { from, Observable, of } from 'rxjs';
+import { map, shareReplay, switchMap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'any' })
 export class AppConfirmDialogService {
   
   dialog$: Observable<ConfirmDialogService> =
-    from(import('confirm-dialog').then(({ConfirmDialogModule, ConfirmDialogService}) => {
-      const moduleFactory = this.compiler.compileModuleSync(ConfirmDialogModule);   
-      const moduleInstance = moduleFactory.create(this.injector);
-      return moduleInstance.injector.get(ConfirmDialogService);
-    })).pipe(shareReplay())
+    of(null).pipe(
+      switchMap(x => from(import('confirm-dialog'))),
+      map(({ConfirmDialogModule, ConfirmDialogService}) => {
+        const moduleFactory = this.compiler.compileModuleSync(ConfirmDialogModule);   
+        const moduleInstance = moduleFactory.create(this.injector);
+        return moduleInstance.injector.get(ConfirmDialogService);
+      }),
+      shareReplay()
+    )
 
   constructor(
     private compiler: Compiler,
