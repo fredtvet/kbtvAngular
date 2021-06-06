@@ -2,7 +2,9 @@ import { ChangeDetectionStrategy, Component, NgModule, ViewChild } from '@angula
 import { MatDrawer } from '@angular/material/sidenav';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { SharedAppModule } from '@shared-app/shared-app.module';
-import { takeUntil } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
+import { MainSideNavConfig } from '../interfaces/main-side-nav-config.interface';
 import { MainNavService } from '../main-nav.service';
 import { SharedLayoutModule } from './shared-layout.module';
 
@@ -14,7 +16,7 @@ import { SharedLayoutModule } from './shared-layout.module';
         <mat-sidenav fixedInViewport #drawer class="mat-elevation-z1" 
             role="dialog" mode="over" opened="false">
     
-        <app-main-side-nav-header></app-main-side-nav-header>
+        <app-main-side-nav-header [config]="config$ | async"></app-main-side-nav-header>
     
         <mat-divider></mat-divider>
         
@@ -31,6 +33,14 @@ import { SharedLayoutModule } from './shared-layout.module';
 export class MainSideNavMobileComponent extends WithUnsubscribe() {
     @ViewChild('drawer') drawer: MatDrawer;
   
+    config$: Observable<MainSideNavConfig> = combineLatest([
+        this.mainNavService.sideNavHeaderConfig$,
+        this.mainNavService.drawerOpenChanged$
+      ]).pipe(
+        filter(x => x[1] === true),
+        map(x => x[0])
+      )
+
     constructor(private mainNavService: MainNavService) {
       super();
   

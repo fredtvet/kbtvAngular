@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, NgModule } from '@angular/core';
 import { SharedAppModule } from '@shared-app/shared-app.module';
+import { MainNavService } from '../main-nav.service';
 import { SharedLayoutModule } from './shared-layout.module';
 
 @Component({
@@ -10,7 +11,7 @@ import { SharedLayoutModule } from './shared-layout.module';
         <mat-sidenav fixedInViewport class="mat-elevation-z1" 
             role="navigation" mode="side" opened="true">
     
-        <app-main-side-nav-header></app-main-side-nav-header>
+        <app-main-side-nav-header [config]="config$ | async"></app-main-side-nav-header>
     
         <mat-divider></mat-divider>
         
@@ -32,6 +33,10 @@ import { SharedLayoutModule } from './shared-layout.module';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainNavDesktopComponent  { 
+
+    config$ = this.mainNavService.sideNavHeaderConfig$;
+
+    constructor(private mainNavService: MainNavService){}
 
 }
 @NgModule({

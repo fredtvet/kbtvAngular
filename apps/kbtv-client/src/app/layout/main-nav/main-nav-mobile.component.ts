@@ -33,7 +33,7 @@ export class MainNavMobileComponent {
     @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
 
     constructor(
-        mainNavService: MainNavService,
+        private mainNavService: MainNavService,
         private cfr: ComponentFactoryResolver,
         private cdRef: ChangeDetectorRef,
     ){
