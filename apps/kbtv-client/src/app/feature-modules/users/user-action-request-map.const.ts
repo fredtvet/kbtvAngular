@@ -7,6 +7,7 @@ import { ActionRequestMap } from "optimistic-http";
 import { CurrentUser } from "state-auth";
 import { SetSaveUserStateAction } from "./state/actions.const";
 import { _idGenerator } from "@shared-app/helpers/id/id-generator.helper";
+import { CommandIdHeader } from "@core/configurations/command-id-header.const";
 
 export const UserActionRequestMap : ActionRequestMap<SetSaveUserStateAction | DeleteModelAction<ModelState, Model>> = {
     [SetSaveUserStateAction] : (action): CreateUserRequest | UpdateModelRequest<User & CurrentUser> => {
@@ -22,7 +23,7 @@ export const UserActionRequestMap : ActionRequestMap<SetSaveUserStateAction | De
         }
         else request.type = SaveModelRequest;
 
-        request.headers = { commandId: _idGenerator(4) }
+        request.headers = { [CommandIdHeader]: _idGenerator(4) }
         
         return request;
     },

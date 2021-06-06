@@ -5,6 +5,7 @@ import { ApiUrl } from "../../api-url.enum";
 import { SetSaveModelFileStateAction } from "../../global-actions";
 import { Model, ModelFile } from "../../models";
 import { ModelState } from "../../state/model-state.interface";
+import { CommandIdHeader } from "../command-id-header.const";
 import { ModelBaseUrls } from "../model/model-base-urls.const";
 import { ModelIdProps } from "../model/model-id-props.const";
 import { DeleteModelRangeRequest, DeleteModelRequest, SaveModelFileRequest, SaveModelRequest } from "../model/model-requests.interface";
@@ -18,14 +19,14 @@ export const GenericActionRequestMap: ActionRequestMap<GenericOptimisticActions>
                 method: "POST", stateProp: a.stateProp, 
                 body: a.saveModelResult.fullModel,
                 apiUrl: ModelBaseUrls[a.stateProp],
-                headers: { commandId: _idGenerator(4) },
+                headers: { [CommandIdHeader]: _idGenerator(4) },
                 type: SaveModelRequest
             } : 
             { 
                 method: "PUT", stateProp: a.stateProp, 
                 body: a.saveModelResult.fullModel, 
                 apiUrl: `${ModelBaseUrls[a.stateProp]}/${a.saveModelResult.fullModel[<keyof Model> ModelIdProps[a.stateProp]]}`,
-                headers: { commandId: _idGenerator(4) },
+                headers: { [CommandIdHeader]: _idGenerator(4) },
                 type: SaveModelRequest
             }
     },
@@ -38,7 +39,7 @@ export const GenericActionRequestMap: ActionRequestMap<GenericOptimisticActions>
             `${ApiUrl.Mission}/${entity.id}/UpdateHeaderImage` :
             ModelBaseUrls[a.stateProp] + (isCreate ? '' : `/${entity[<keyof Model> ModelIdProps[a.stateProp]]}`);
 
-        const headers =  { commandId: _idGenerator(4) };
+        const headers =  { [CommandIdHeader]: _idGenerator(4) };
 
         return {
             method: isCreate ? "POST" : "PUT", 
@@ -55,14 +56,14 @@ export const GenericActionRequestMap: ActionRequestMap<GenericOptimisticActions>
             { 
                 method: "DELETE", stateProp: a.stateProp,
                 apiUrl: `${ModelBaseUrls[a.stateProp]}/${a.payload.id}`,
-                headers: { commandId: _idGenerator(4) },
+                headers: { [CommandIdHeader]: _idGenerator(4) },
                 type: DeleteModelRequest
             } :
             { 
                 method: "POST", stateProp: a.stateProp,
                 apiUrl: `${ModelBaseUrls[a.stateProp]}/DeleteRange`, 
                 body: {ids: a.payload.ids || []},
-                headers: { commandId: _idGenerator(4) },
+                headers: { [CommandIdHeader]: _idGenerator(4) },
                 type: DeleteModelRangeRequest
             }  
     }

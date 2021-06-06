@@ -1,3 +1,4 @@
+import { CommandIdHeader } from "@core/configurations/command-id-header.const";
 import { UpdateTimesheetStatusesRequest } from "@core/configurations/model/model-requests.interface";
 import { GenericActionRequestMap } from "@core/configurations/optimistic/generic-action-request-map.const";
 import { Model } from "@core/models";
@@ -13,7 +14,7 @@ export const TimesheetAdminActionRequestMap: ActionRequestMap<UpdateTimesheetSta
             method: "PUT", 
             body: {ids: action.ids, status: action.status}, 
             apiUrl: `/Timesheets/Status`,
-            headers: { commandId: _idGenerator(4) },
+            headers: { [CommandIdHeader]: _idGenerator(4) },
             type: UpdateTimesheetStatusesRequest
         }
     },

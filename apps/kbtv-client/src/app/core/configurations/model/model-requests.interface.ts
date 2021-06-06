@@ -5,9 +5,10 @@ import { StatePropByModel } from "model/core";
 import { OptimisticHttpRequest, SupportedContentTypes } from "optimistic-http";
 import { ApiUrl } from "../../api-url.enum";
 import { ModelFile, User } from "../../models";
+import { CommandIdHeader } from "../command-id-header.const";
 
 export interface AppOptimisticHttpRequest<TContentType extends SupportedContentTypes = "json"> extends OptimisticHttpRequest<TContentType> {
-    headers: {commandId: string};
+    headers: {[CommandIdHeader]: string};
 }
 
 export const SaveModelRequest = "SaveModelRequest";

@@ -3,12 +3,12 @@ import {
   HttpInterceptor, HttpRequest
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CommandIdHeader } from '../configurations/command-id-header.const';
 import { AppNotificationService } from '@core/services/app-notification.service';
 import { AppNotifications } from '@shared-app/constants/app-notifications.const';
 import { _httpErrorResponseFormatter } from '@shared-app/helpers/http-error-response-formatter.helper';
 import { Maybe } from 'global-types';
 import { AppNotification } from 'notification';
-import { CommandIdHeader } from 'optimistic-http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
