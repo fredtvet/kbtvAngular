@@ -9,7 +9,6 @@ export * from './lib/http.queuer';
 export * from './lib/interfaces';
 export * from './lib/optimistic-http.module';
 
-export * from './lib/constants/command-id-header.const';
 export * from './lib/constants/injection-tokens.const';
 
 export * from './lib/state/optimistic-http-error.action';

@@ -3,7 +3,6 @@ import { Immutable, UnknownState } from 'global-types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DispatchedAction, Effect, StateAction } from 'state-management';
-import { _commandIdGenerator } from '../command-id-generator.helper';
 import { ActionRequestConverterFn, OptimisticHttpRequest } from '../interfaces';
 import { OptimisticProvidersService } from '../optimistic-providers.service';
 import { HttpQueuePushAction } from './http-queue-push/http-queue-push.action';
