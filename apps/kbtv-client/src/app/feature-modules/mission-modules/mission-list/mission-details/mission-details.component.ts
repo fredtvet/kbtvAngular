@@ -2,15 +2,13 @@ import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angu
 import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
-import { AppDialogService } from '@core/services/app-dialog.service';
 import { ModelState } from '@core/state/model-state.interface';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { FileFolder } from '@shared-app/enums/file-folder.enum';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
-import { ImageViewerDialogWrapperConfig } from '@shared-mission/components/image-viewer/image-viewer-dialog-wrapper-config.const';
-import { ImageViewerDialogWrapperComponent } from '@shared-mission/components/image-viewer/image-viewer-dialog-wrapper.component';
+import { ImageViewerDialogService } from '@shared-mission/components/image-viewer/image-viewer-dialog.service';
 import { EditMissionModelForm } from '@shared-mission/forms/save-mission-model-form.const';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
@@ -66,7 +64,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     private facade: MissionListFacade,
     private route: ActivatedRoute,
     private router: Router,
-    private dialogService: AppDialogService,
+    private imageViewer: ImageViewerDialogService,
     private modelFormService: ModelFormService<ModelState>
   ) { super() }
 
@@ -77,14 +75,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     (files?.length && this.missionId) ? this.facade.addMissionImages(this.missionId, files) : undefined;
 
   openImageViewer(mission: Mission) {
-      this.dialogService.dialog$.subscribe(x => x.open(ImageViewerDialogWrapperComponent, {
-        width: "100%",
-        height: "100%",
-        panelClass: "image_viewer_dialog",
-        data: <ImageViewerDialogWrapperConfig>{
-          currentImage: mission, fileFolder: FileFolder.MissionHeader
-        },
-      }));
+    this.imageViewer.open({currentImage: mission, fileFolder: FileFolder.MissionHeader})
   }
  
   private openImageInput = (ref: ElementRef<HTMLElement>): void => ref?.nativeElement?.click();

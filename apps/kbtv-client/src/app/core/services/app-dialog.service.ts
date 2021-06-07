@@ -10,9 +10,9 @@ export class AppDialogService {
         of(null).pipe(
             switchMap(x => from(import('@angular/material/dialog'))),
             map(({MatDialogModule, MatDialog}) => {
-            const moduleFactory = this.compiler.compileModuleSync(MatDialogModule);   
-            const moduleInstance = moduleFactory.create(this.injector);
-            return moduleInstance.injector.get(MatDialog);
+                const moduleFactory = this.compiler.compileModuleSync(MatDialogModule);   
+                const moduleInstance = moduleFactory.create(this.injector);
+                return moduleInstance.injector.get(MatDialog);
             }),
             shareReplay()
         )

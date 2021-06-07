@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { MissionImage, ModelFile } from '@core/models';
 import { AppConfirmDialogService } from "@core/services/app-confirm-dialog.service";
-import { AppDialogService } from "@core/services/app-dialog.service";
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { DownloaderService } from '@core/services/downloader.service';
 import { FileFolder } from "@shared-app/enums/file-folder.enum";
@@ -11,8 +10,7 @@ import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { _trackByModel } from "@shared-app/helpers/trackby/track-by-model.helper";
 import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { BaseSelectableContainerComponent } from "@shared-mission/components/base-selectable-container.component";
-import { ImageViewerDialogWrapperConfig } from "@shared-mission/components/image-viewer/image-viewer-dialog-wrapper-config.const";
-import { ImageViewerDialogWrapperComponent } from "@shared-mission/components/image-viewer/image-viewer-dialog-wrapper.component";
+import { ImageViewerDialogService } from "@shared-mission/components/image-viewer/image-viewer-dialog.service";
 import { EmailForm } from '@shared-mission/forms/email-form.const';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { FormService } from "form-sheet";
@@ -67,7 +65,7 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
     private deviceInfoService: DeviceInfoService,
     private formService: FormService,
     private confirmService: AppConfirmDialogService,
-    private dialogService: AppDialogService,
+    private imageViewer: ImageViewerDialogService,
     private facade: MissionImageListFacade,
     private route: ActivatedRoute,
     private router: Router) {
@@ -90,18 +88,13 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
     }
 
   openImageViewer(currentImage: ModelFile, images: ModelFile[]) {
-    this.dialogService.dialog$.subscribe(x => x.open(ImageViewerDialogWrapperComponent, {
-      width: "100%",
-      height: "100%",
-      panelClass: "image_viewer_dialog",
-      data: <ImageViewerDialogWrapperConfig>{
-        currentImage, images, fileFolder: FileFolder.MissionImage, downloadFolder: FileFolder.MissionImageOriginal,
-        deleteAction: { 
-          callback: (id: string) => this.deleteImages({id}),
-          allowedRoles: RolePermissions.MissionImageList.delete
-        }
-      },
-    }));
+    this.imageViewer.open({
+      currentImage, images, fileFolder: FileFolder.MissionImage, downloadFolder: FileFolder.MissionImageOriginal,
+      deleteAction: { 
+        callback: (id: string) => this.deleteImages({id}),
+        allowedRoles: RolePermissions.MissionImageList.delete
+      }
+    })
   }
 
   uploadImages = (files: FileList): void => 
