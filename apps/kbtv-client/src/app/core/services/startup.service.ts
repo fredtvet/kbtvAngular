@@ -4,6 +4,7 @@ import { LoadPersistedStateAction } from 'state-db';
 import { EffectsSubscriber, Store } from 'state-management';
 import { DeviceInfoService } from './device-info.service';
 import { IconService } from './icon.service';
+import { SingleWindowGuardService } from './single-window-guard.service';
 
 @Injectable({providedIn: "root"})
 export class StartupService {
@@ -13,6 +14,7 @@ export class StartupService {
     effectsSubscriber: EffectsSubscriber,
     iconService: IconService,
     deviceInfoService: DeviceInfoService,
+    singleWindowGuardService: SingleWindowGuardService,
     @Inject(DOCUMENT) document: Document
   ) { 
     if(deviceInfoService.isIphone) document.documentElement.style.setProperty('--bottom-nav-padding', '16px');
