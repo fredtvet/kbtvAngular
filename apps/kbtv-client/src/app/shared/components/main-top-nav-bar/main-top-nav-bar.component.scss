@@ -18,9 +18,11 @@ mat-toolbar{
     position:absolute;
     top:0;
     z-index:1;
+    pointer-events: none;
     button {
         background: rgba(0,0,0,0.5);
         border-radius: 100%;
+        pointer-events: auto;
     }
     .custom-buttons{
         background: rgba(0,0,0,0.5);
