@@ -3,7 +3,7 @@ import { Store } from 'state-management'
 import { filter, first, tap } from 'rxjs/operators';
 import { SyncStateAction } from './state/actions';
 import { StoreState } from "./store-state.interface";
-import { concat, fromEvent, interval, merge, of } from "rxjs";
+import { concat, fromEvent, interval, merge, of, Subscription } from "rxjs";
 
 /** Root service responsible for keeping system synchronized */
 @Injectable({providedIn: "root"})
@@ -11,21 +11,26 @@ export class ContinousSyncService {
 
     private get syncTimestamp() { return this.store.state.syncTimestamp }
 
+    private continousSyncSub: Subscription | undefined;
+
     constructor(
         private appRef: ApplicationRef,
         private store: Store<StoreState>,
     ) { }
   
-    /** Initalizes the synchronization clock. */
-    initalize(): void {
+    /** Starts the synchronization clock. */
+    start(): void {
       merge(
         fromEvent(window, 'online'),
         of(navigator.onLine).pipe(filter(x => x === true))
       ).pipe(
         first()
       ).subscribe(x => this.syncAll())
-      this.continousSync$.subscribe();
+      this.continousSyncSub = this.continousSync$.subscribe();
     }
+
+    /** Stops the synchronization clock. */
+    stop(): void { this.continousSyncSub?.unsubscribe(); }
       
     private get continousSync$(){
         const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));

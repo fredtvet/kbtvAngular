@@ -15,7 +15,7 @@ export class InitalizeSyncEffect implements Effect<SetPersistedStateAction> {
         return actions$.pipe(
             listenTo([SetPersistedStateAction]),
             skip(1), first(),
-            map(x => this.continousSyncService.initalize()),
+            map(x => this.continousSyncService.start()),
         ) 
     }
 }
