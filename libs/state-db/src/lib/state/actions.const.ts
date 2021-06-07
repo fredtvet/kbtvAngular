@@ -1,8 +1,7 @@
 import { StateAction } from 'state-management'
 import { StorageType } from '../interfaces';
 
-/** Action responsible for loading state. 
-    This also initalizes the db and should be called when the app initalizes. */
+/** Action responsible for loading all persisted state. */
 export const LoadPersistedStateAction = "LOAD_PERSISTED_STATE_ACTION";
 export interface LoadPersistedStateAction extends StateAction<typeof LoadPersistedStateAction> {}
 

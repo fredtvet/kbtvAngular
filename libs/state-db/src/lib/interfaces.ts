@@ -1,4 +1,5 @@
 import { Immutable } from "global-types";
+import { StateAction } from "state-management";
 
 /** Represents a key/value object with configurations of the db properties. */
 export type StateDbConfig<TState> = { [key in keyof TState]: StatePropConfig }
@@ -15,3 +16,6 @@ export interface StatePropConfig {
     /** A mapping function that runs before value changes are persisted to the db.  */
     onPersistMapping?: MapFn<any, any>
 }
+
+/** Represents an action filter used to prevent certain state changes from being persisted. */
+export type DbActionFilter = (action: StateAction) => boolean
