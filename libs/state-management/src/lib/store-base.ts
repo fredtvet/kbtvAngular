@@ -1,10 +1,10 @@
 import { Immutable, Prop, UnionTupleType } from 'global-types';
 import { _tryWithLogging } from 'array-helpers';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ActionDispatcher } from './action-dispatcher';
 import { _applyInterceptors } from './helpers/apply-interceptors.helper';
 import { _deepFreeze } from './helpers/object-freezer.helper';
-import { StateAction, StoreSettings } from './interfaces';
+import { StateAction, StateChanges, StoreSettings } from './interfaces';
 import { selectProp } from './operators/select-prop.operator';
 import { select } from './operators/select.operator';
 import { StateBase } from './state-base';
@@ -15,13 +15,17 @@ export abstract class StoreBase<TState> {
     private _settings: StoreSettings;
 
     /** @readonly The store state */
-    get state(): Immutable<TState> { return this.base.getStoreState() }
+    get state(): Immutable<TState> { return this.base.storeState }
 
     /**An observable of the store state */
-    state$: Observable<Immutable<TState>>  = this.base.getStoreState$();
+    state$: Observable<Immutable<TState>>  = this.base.storeState$;
     
+    private storeStateChangesSubject: Subject<Immutable<StateChanges<TState>>> = new Subject();
+    /**An observable of the store state changes with responsible action type */
+    stateChanges$: Observable<Immutable<StateChanges<TState>>> = this.storeStateChangesSubject.asObservable();
+
     constructor(
-        protected base: StateBase,
+        protected base: StateBase<TState>,
         private actionDispatcher: ActionDispatcher,
         private storeProviders: StoreProvidersService,
         settings?: StoreSettings,
@@ -40,7 +44,7 @@ export abstract class StoreBase<TState> {
         if(this._settings.strictImmutability) _deepFreeze(action);
         const modifiedAction = _applyInterceptors(action, this.storeProviders.actionInterceptors);
         if(!modifiedAction) return;
-        const stateSnapshot = this.base.getStoreState();
+        const stateSnapshot = this.base.storeState;
         this.reduceState(action);
         this.actionDispatcher.dispatch(action, stateSnapshot);
     }
@@ -65,12 +69,12 @@ export abstract class StoreBase<TState> {
         const reducer = this.storeProviders.getReducer(action.type);
 
         if(!reducer) return;
-        
-        const state = this.base.getStoreState();
-        
-        const newState = _tryWithLogging(() => reducer.reducerFn(<{}> state, action));
+           
+        const newState = <Immutable<TState>> _tryWithLogging(() => reducer.reducerFn(this.base.storeState, action));
         
         this.base.setStoreState(newState);
+        
+        this.storeStateChangesSubject.next({state: newState, action})
 
         if (this._settings.logStateChanges) 
             console.log('%cSTATE CHANGED', 'font-weight: bold', '\r\nAction: ', action.type, '\r\nChanges: ', newState); 

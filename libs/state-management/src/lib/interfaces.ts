@@ -77,6 +77,14 @@ export interface StoreSettings {
     strictImmutability?: boolean; 
 }
 
+/** Represents a state change containing changed state and responsible action */
+export interface StateChanges<TState> {
+    /** The state that changed */
+    state: Partial<TState>;
+    /** The action that caused the state changes */
+    action: StateAction;
+}
+
 export interface StateManagementProviders {
     defaultState?: Object;
     effects?: Type<Effect<StateAction>>[];

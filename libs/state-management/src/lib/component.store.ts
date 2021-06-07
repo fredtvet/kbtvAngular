@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional, Self } from '@angular/core';
-import { UnknownState } from 'global-types';
+import { Immutable, UnknownState } from 'global-types';
 import { ActionDispatcher } from './action-dispatcher';
 import { STORE_DEFAULT_STATE, STORE_SETTINGS } from './constants/injection-tokens.const';
 import { StoreSettings } from './interfaces';
@@ -15,9 +15,9 @@ export class ComponentStore<TState> extends StoreBase<TState> {
         @Self() dispatcher: ActionDispatcher,
         @Self() storeProviders: StoreProvidersService,
         @Optional() @Inject(STORE_SETTINGS) storeSettings: StoreSettings,      
-        @Self() @Optional() @Inject(STORE_DEFAULT_STATE) defaultState: UnknownState,
+        @Self() @Optional() @Inject(STORE_DEFAULT_STATE) defaultState: Immutable<Partial<TState>>,
     ) { 
-        super(new StateBase(defaultState), dispatcher, storeProviders, storeSettings);    
+        super(new StateBase<TState>(defaultState), dispatcher, storeProviders, storeSettings);    
     }
 
 }

@@ -2,31 +2,26 @@ import { Immutable, Maybe } from 'global-types';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { _deepFreeze } from './helpers/object-freezer.helper';
 
-export class StateBase {  
+export class StateBase<TState> {  
     
     strictImmutability: Maybe<boolean>;
 
-    private storeStateSubject: BehaviorSubject<{}>;
-    private storeState$: Observable<Immutable<{}>>;
+    private storeStateSubject: BehaviorSubject<Immutable<TState>>;
+    storeState$: Observable<Immutable<TState>>;
 
-    constructor(defaultState?: Object){ 
-        this.storeStateSubject = new BehaviorSubject<{}>({...(defaultState || {})});
+    get storeState(): Immutable<TState> { return this.storeStateSubject.value }
+
+    constructor(defaultState?: Immutable<Partial<TState>>){ 
+        this.storeStateSubject = new BehaviorSubject({...<Immutable<TState>> (defaultState ||  {})});
         this.storeState$ = this.storeStateSubject.asObservable();
     }
 
-    getStoreState = <T extends {}>(): Immutable<T> => 
-        <Immutable<T>> this.storeStateSubject.value;
-
-    getStoreState$ = <T extends {}>(): Observable<Immutable<T>> => 
-        <Observable<Immutable<T>>> this.storeState$;
-
-    setStoreState(stateChanges: Maybe<{}>): void {
+    setStoreState(stateChanges: Maybe<Immutable<Partial<TState>>>): void {
         if(!stateChanges) return;
 
-        const newState = {...this.storeStateSubject.value, ...stateChanges};
+        const newState: Immutable<TState> = {...this.storeStateSubject.value, ...stateChanges};
 
         if(this.strictImmutability) _deepFreeze(newState);
-
         this.storeStateSubject.next(newState);
     }
 

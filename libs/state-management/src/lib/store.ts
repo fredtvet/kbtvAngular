@@ -11,28 +11,28 @@ import { StoreProvidersService } from './store-providers.service';
 @Injectable()
 export class Store<TState> extends StoreBase<TState> {
 
-    defaultState: Immutable<UnknownState>;
+    defaultState: Immutable<Partial<TState>>;
 
     constructor(
         actionDispatcher: ActionDispatcher,     
         storeProviders: StoreProvidersService,
-        @Optional() @Inject(STORE_DEFAULT_STATE) defaultState: UnknownState,
+        @Optional() @Inject(STORE_DEFAULT_STATE) defaultState: Immutable<Partial<TState>>,
         @Optional() @Inject(STORE_SETTINGS) storeSettings: StoreSettings,
     ) { 
-        super(new StateBase(defaultState), actionDispatcher, storeProviders, storeSettings);
+        super(new StateBase<TState>(defaultState), actionDispatcher, storeProviders, storeSettings);
         this.defaultState = defaultState; 
     }
     
     /** Default global state */
     addDefaultState(defaultState: Object): void {
         this.defaultState = {...this.defaultState, ...defaultState}; //accumulate default state from feature modules to keep track
-        const currState = <UnknownState> this.base.getStoreState();
+        const currState = <UnknownState> this.base.storeState;
         const newState: UnknownState = {};
         for(const prop in defaultState)
             if(currState[prop] === undefined) 
                 newState[prop] = (<UnknownState>defaultState)[prop];
 
-        this.base.setStoreState(newState)
+        this.base.setStoreState(<Immutable<Partial<TState>>> newState)
     }
 
 }
