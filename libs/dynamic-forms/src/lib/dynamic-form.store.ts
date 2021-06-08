@@ -29,7 +29,7 @@ export class DynamicFormStore<TFormState extends object | null = null> {
 
     /** Set the input state causing the formState observer to emit */
     setInputState(inputState: Immutable<Partial<TFormState>>): void{ 
-        this.formStateSubject.next(inputState);      
+        this.formStateSubject.next({...(this.formStateSubject.value || {}), ...inputState});      
     }
 
     /** Set the form state setters causing the formState observer to emit */
@@ -53,7 +53,7 @@ export class DynamicFormStore<TFormState extends object | null = null> {
         return merge(...observers).pipe(
             catchError(x => { console.error(x); return throwError(x)}),
             map(setState => { 
-            return {...this.formStateSubject.value, ...setState}
+                return {...this.formStateSubject.value, ...setState}
             })
         );
     }
