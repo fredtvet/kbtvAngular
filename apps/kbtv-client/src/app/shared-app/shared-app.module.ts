@@ -16,21 +16,15 @@ import { PageNotFoundComponent } from './components/page-not-found.component';
 import { DynamicHostDirective } from './dynamic-host.directive';
 import { IfRolePipe } from './pipes/if-role.pipe';
 import { RequestDescriptionPipe } from './pipes/request-description.pipe';
-import { ReverseArrayPipe } from './pipes/reverse-array';
-import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
 import { TranslatePipe } from './pipes/translate.pipe';
-import { RenderTimeoutDirective } from './render-timeout.directive';
 
 @NgModule({
   declarations: [
     PageNotFoundComponent,  
     ListItemComponent,
-    ReverseArrayPipe,
-    TransformButtonsPipe,
     IfRolePipe,
     TranslatePipe,
     AddToHomeScreenDirective,
-    RenderTimeoutDirective,
     DynamicHostDirective,
     
     OptimisticLoadingSpinnerComponent,
@@ -68,13 +62,10 @@ import { RenderTimeoutDirective } from './render-timeout.directive';
     FetchingModelContentComponent,
     OptimisticLoadingSpinnerComponent,
     
-    IfRolePipe,
-    ReverseArrayPipe,
-    TransformButtonsPipe,  
+    IfRolePipe, 
     RequestDescriptionPipe,
     TranslatePipe,
     AddToHomeScreenDirective, 
-    RenderTimeoutDirective,
     DynamicHostDirective
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

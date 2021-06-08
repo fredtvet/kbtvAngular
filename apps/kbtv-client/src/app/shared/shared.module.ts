@@ -21,6 +21,7 @@ import { HideDirective } from './directives/hide.directive';
 import { ImageRatioResizerDirective } from './directives/image-ratio-resizer.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe } from './pipes';
 import { AppImageUrlRatioPipe } from './pipes/app-image-url-ratio.pipe';
+import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { AppImageUrlRatioPipe } from './pipes/app-image-url-ratio.pipe';
     ScrollNavElevationTogglerDirective,   
     ActiveStringFilterDirective,
     LoadingOverlayDirective,  
-    ImageRatioResizerDirective,
+    ImageRatioResizerDirective, 
+    TransformButtonsPipe, 
     
     HideDirective
   ],
@@ -77,6 +79,8 @@ import { AppImageUrlRatioPipe } from './pipes/app-image-url-ratio.pipe';
     AppImageUrlRatioPipe,
     MergeObjPipe,
     FuncPipe,
+    TransformButtonsPipe,
+
     ScrollNavElevationTogglerDirective,
     ActiveStringFilterDirective,
     LoadingOverlayDirective,  
