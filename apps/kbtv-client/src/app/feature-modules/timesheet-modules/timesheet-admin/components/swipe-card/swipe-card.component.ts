@@ -1,21 +1,22 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { Maybe } from 'global-types';
 
 @Component({
   selector: 'app-swipe-card',
   animations: [
-    trigger('openCloseConfirm', [
+    trigger('openClosedConfirm', [
       state('open', style({
         transform: 'translateX({{open_width}})'
       }), {params: {open_width: '0'}}),
-      state('close', style({
+      state('closed', style({
         transform: 'translateX({{closed_width}})'
       }), {params: {closed_width: '0'}}),
-      transition('open => close', [
+      transition('open => closed', [
         animate('.1s ease-out')
       ]),
-      transition('close => open', [
+      transition('closed => open', [
         animate('.1s ease-in',)
       ]),
       transition('void => *', animate(0)),
@@ -28,18 +29,20 @@ import { AppButton } from '@shared-app/interfaces/app-button.interface';
 
 export class SwipeCardComponent {
 
-  @Input() swipeButton: AppButton;
-  @Input() lockPosition: "open" | "close" | false | null;
+  @Input() swipeButton: AppButton; 
+  @Input() isLocked: boolean;
   @Input() openWidth: number;
   @Input() closedWidth: number;
 
-  isClosed: boolean = true;
+  _position: "open" | "closed";
+  get position(): "open" | "closed" {
+      return this._position;
+  }
 
-  constructor() { }
-
-  toggleSwipeContent(isClosed: boolean): void{
-    if(this.lockPosition) return;
-    this.isClosed = isClosed;
+  @Input() set position(value: "open" | "closed") {
+    console.log(value);
+    if(this.isLocked) return;
+    this._position = value || 'closed';
   }
 
 }

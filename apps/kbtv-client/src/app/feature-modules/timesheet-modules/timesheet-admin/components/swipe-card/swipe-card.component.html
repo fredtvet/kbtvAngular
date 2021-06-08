@@ -7,15 +7,15 @@
   </div>
 
   <div class="main-content" matRipple
-    [@openCloseConfirm]="{
-      value: lockPosition || (isClosed ? 'close' : 'open'), 
+    [@openClosedConfirm]="{
+      value: position, 
       params: {
         open_width: openWidth,
         closed_width: closedWidth
       }
     }"
-    (swiperight)="toggleSwipeContent(false)" 
-    (swipeleft)="toggleSwipeContent(true)">
+    (swiperight)="position = 'open'" 
+    (swipeleft)="position = 'closed'">
     <ng-content>
       
     </ng-content>
