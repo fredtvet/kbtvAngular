@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, NgModule, ViewChild } from '@angular/core';
-import { DynamicHostDirective } from '@shared-app/dynamic-host.directive';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, NgModule, ViewContainerRef } from '@angular/core';
 import { SharedAppModule } from '@shared-app/shared-app.module';
 import { from } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -20,9 +19,6 @@ import { MainNavService } from '../main-nav.service';
             .outlet-container{ margin-left: 230px!important }
         }
     </style>
-    <ng-container *dynamicHost> 
-
-    </ng-container>
     <div class="outlet-container">
         <router-outlet></router-outlet>
     </div>
@@ -30,12 +26,12 @@ import { MainNavService } from '../main-nav.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainNavMobileComponent {
-    @ViewChild(DynamicHostDirective, {static: true}) dynamicHost: DynamicHostDirective;
 
     constructor(
-        private mainNavService: MainNavService,
+        mainNavService: MainNavService,
         private cfr: ComponentFactoryResolver,
         private cdRef: ChangeDetectorRef,
+        private vcRef: ViewContainerRef
     ){
         mainNavService.toggleDrawer$.pipe(first()).subscribe(x => this.loadSideNav())
     }
@@ -43,7 +39,7 @@ export class MainNavMobileComponent {
     private loadSideNav(): void {
         from(import('./main-side-nav-mobile.component')).subscribe(({MainSideNavMobileComponent}) => {
             const fac = this.cfr.resolveComponentFactory(MainSideNavMobileComponent);
-            this.dynamicHost.viewContainerRef.createComponent(fac);
+            this.vcRef.createComponent(fac)
             this.cdRef.markForCheck();
         })  
     }

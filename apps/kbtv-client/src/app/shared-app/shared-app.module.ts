@@ -13,7 +13,6 @@ import { ListItemComponent } from './components/list-item/list-item.component';
 import { NoContentComponent } from './components/no-content.component';
 import { OptimisticLoadingSpinnerComponent } from './components/optimistic-loading-spinner/optimistic-loading-spinner.component';
 import { PageNotFoundComponent } from './components/page-not-found.component';
-import { DynamicHostDirective } from './dynamic-host.directive';
 import { IfRolePipe } from './pipes/if-role.pipe';
 import { RequestDescriptionPipe } from './pipes/request-description.pipe';
 import { TranslateModelPropPipe } from './pipes/translate-model-prop.pipe';
@@ -25,7 +24,6 @@ import { TranslateModelPropPipe } from './pipes/translate-model-prop.pipe';
     IfRolePipe,
     TranslateModelPropPipe,
     AddToHomeScreenDirective,
-    DynamicHostDirective,
     
     OptimisticLoadingSpinnerComponent,
     NoContentComponent,
@@ -66,7 +64,6 @@ import { TranslateModelPropPipe } from './pipes/translate-model-prop.pipe';
     RequestDescriptionPipe,
     TranslateModelPropPipe,
     AddToHomeScreenDirective, 
-    DynamicHostDirective
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
