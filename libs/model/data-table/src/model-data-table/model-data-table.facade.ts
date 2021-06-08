@@ -6,7 +6,7 @@ import { FetchModelsAction, StateIsFetching } from "model/state-fetcher";
 import { BehaviorSubject, combineLatest, Observable, of } from "rxjs";
 import { distinctUntilChanged, map, switchMap } from "rxjs/operators";
 import { Store } from 'state-management';
-import { MODEL_PROP_TRANSLATIONS } from "model/shared";
+import { MODEL_STATE_PROP_TRANSLATIONS, ModelStatePropTranslations  } from "model/shared";
 import { ModelColDefFactory } from "../model-col-def.factory";
 
 export interface ViewModel { colDefs: Maybe<ColDef[]>, rowData: ImmutableArray<unknown>, noRowsText: string }
@@ -39,7 +39,7 @@ export class ModelDataTableFacade  {
     constructor(
         private store: Store<UnknownModelState & StateIsFetching<UnknownState>>,
         private colDefFactory: ModelColDefFactory,    
-        @Inject(MODEL_PROP_TRANSLATIONS) private translations: KeyVal<string>
+        @Inject(MODEL_STATE_PROP_TRANSLATIONS) private translations: ModelStatePropTranslations
     ) { }
 
     updateSelectedProperty = (prop: string): void => {
@@ -53,7 +53,7 @@ export class ModelDataTableFacade  {
             if(!prop) return 'Ingen data model valgt';
             if(!navigator.onLine) return "Mangler internett-tilkobling";
             
-            const translatedProp = this.translations[prop.toLowerCase()]?.toLowerCase() || 'data';
+            const translatedProp = this.translations[prop.toLowerCase()]?.plural.toLowerCase() || 'data';
             if(isFetching) return `Laster inn ${translatedProp}...`;
             return `Finner ingen ${translatedProp}`;
         }), distinctUntilChanged())

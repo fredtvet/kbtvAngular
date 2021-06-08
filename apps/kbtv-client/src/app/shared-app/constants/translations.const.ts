@@ -33,43 +33,33 @@ export const translations: { [key: string]: string } = {
   comment: "Kommentar",
 
   user: "Bruker",
-  users: "Brukere",
 
   timesheet: "Time",
   timesheetid: "Time",
-  timesheets: "Timer",
 
   usertimesheet: "Time",
   usertimesheetid: "Time",
-  usertimesheets: "Timer",
 
   mission: "Oppdrag",   
   missionid: "Oppdrag",
-  missions: "Oppdrag",
 
   employer: "Oppdragsgiver",
   employerid: "Oppdragsgiver",
-  employers: "Oppdragsgivere",
   
   missiondocument: "Dokument",
   missiondocumentid: "Dokument",
-  missiondocuments: "Dokumenter",
 
   missionimage: "Bilde",
   missionimageid: "Bilde",
-  missionimages: "Bilder",
 
   missionnote: "Notat",
   missionnoteId: "Notat",
-  missionnotes: "Notater",
 
   missiontype: "Oppdragstype",
   missiontypeid: "Oppdragstype",
-  missiontypes: "Oppdragstyper",
 
   inboundemailpassword: "Epostpassord",
   inboundemailpasswordid: "Epostpassord",
-  inboundemailpasswords: "Epostpassord",
 
   showall: "Vis alt",
   currentweek: "Denne uken",

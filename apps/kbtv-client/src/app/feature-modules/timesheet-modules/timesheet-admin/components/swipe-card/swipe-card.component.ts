@@ -40,7 +40,6 @@ export class SwipeCardComponent {
   }
 
   @Input() set position(value: "open" | "closed") {
-    console.log(value);
     if(this.isLocked) return;
     this._position = value || 'closed';
   }

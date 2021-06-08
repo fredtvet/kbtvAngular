@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ConfirmDialogService } from 'confirm-dialog';
 import { Immutable, KeyVal, Maybe, UnknownState } from 'global-types';
 import { RelationInclude, StateModels, StatePropByModel, _getModelConfig, _getRelationIncludeStateProps } from 'model/core';
-import { MODEL_PROP_TRANSLATIONS } from "model/shared";
+import { MODEL_PROP_TRANSLATIONS, MODEL_STATE_PROP_TRANSLATIONS, ModelStatePropTranslations } from "model/shared";
 import { DeleteModelAction, ModelCommand } from 'model/state-commands';
 import { FetchModelsAction } from 'model/state-fetcher';
 import { Observable } from 'rxjs';
@@ -19,6 +19,7 @@ export class ModelFormFacade<TState extends object, TModel extends StateModels<T
     private confirmService: ConfirmDialogService,  
     private router: Router,
     @Inject(MODEL_PROP_TRANSLATIONS) private translations: KeyVal<string>,
+    @Inject(MODEL_STATE_PROP_TRANSLATIONS) private statePropTranslations: ModelStatePropTranslations
   ) {}
 
   loadModels(
@@ -38,7 +39,7 @@ export class ModelFormFacade<TState extends object, TModel extends StateModels<T
   }
 
   translateStateProp = (prop: Immutable<StatePropByModel<TState, TModel>>): string => 
-    this.translations[<string> (<string> prop).toLowerCase()]?.toLowerCase();
+    this.statePropTranslations[<string> (<string> prop).toLowerCase()]?.singular.toLowerCase();
 
   confirmDelete = (
     formConfig: Immutable<ModelFormConfig<TState, TModel, any>>, 

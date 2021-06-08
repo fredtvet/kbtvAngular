@@ -1,14 +1,14 @@
 <style> ion-spinner { transform: scale(2); } </style>
 <ng-container *ngIf="vm$ | async; let vm">
     <app-no-content *ngIf="!vm.isFetching else fetching">
-        Finner ingen {{ modelProp | translate : true }}
+        Finner ingen {{ modelProp | translateModelProp : false : true }}
         <ng-content></ng-content>
     </app-no-content>
 
     <ng-template #fetching>
         <app-no-content *ngIf="vm.isOnline else notOnline">       
             <ion-spinner name="dots"></ion-spinner>
-            <p>Laster inn {{ modelProp | translate : true }}</p>
+            <p>Laster inn {{ modelProp | translateModelProp : false : true }}</p>
         </app-no-content>
     </ng-template>
     

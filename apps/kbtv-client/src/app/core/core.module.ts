@@ -1,8 +1,9 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { AppModelStatePropTranslations } from '@shared-app/constants/model-state-prop-translations.const';
 import { translations } from '@shared-app/constants/translations.const';
 import { _registerModelStateConfig } from 'model/core';
-import { MODEL_PROP_TRANSLATIONS } from 'model/shared';
+import { MODEL_PROP_TRANSLATIONS, MODEL_STATE_PROP_TRANSLATIONS } from 'model/shared';
 import { MODEL_FETCHER_BASE_URL } from 'model/state-fetcher';
 import { OPTIMISTIC_BASE_API_URL, OptimisticHttpModule } from 'optimistic-http';
 import { environment } from 'src/environments/environment';
@@ -63,8 +64,9 @@ _registerModelStateConfig(ModelConfigMap);
     
     { provide: OPTIMISTIC_BASE_API_URL, useValue: environment.apiUrl},
     { provide: MODEL_FETCHER_BASE_URL, useValue: environment.apiUrl},
-
+    
     { provide: MODEL_PROP_TRANSLATIONS, useValue: translations },
+    { provide: MODEL_STATE_PROP_TRANSLATIONS, useValue: AppModelStatePropTranslations },
 
     { provide: STATE_DB_CONFIG, useValue: AppStateDbConfig},  
   ]

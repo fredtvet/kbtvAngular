@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Model } from "@core/models";
 import { AppConfirmDialogService } from "@core/services/app-confirm-dialog.service";
 import { ModelState } from '@core/state/model-state.interface';
-import { translations } from "@shared-app/constants/translations.const";
+import { AppModelStatePropTranslations } from "@shared-app/constants/model-state-prop-translations.const";
 import { Prop } from "global-types";
 import { ModelFormService } from 'model/form';
 import { DeleteModelAction } from 'model/state-commands';
@@ -41,10 +41,11 @@ export class DataManagerFacade  {
 
     deleteItems = (ids?: string[]): void =>{ 
         if(!ids?.length) return;
-        const translatedProp = translations[<string> this.selectedProperty?.toLowerCase()]?.toLowerCase();
+        const translation = AppModelStatePropTranslations[this.selectedProperty?.toLowerCase()];
+        const word = ids.length > 1 ? translation?.plural : translation?.singular;
         this.confirmService.dialog$.subscribe(x => x.open({
-          title: `Slett ${ids.length > 1 ? 'ressurser' : 'ressurs'}?`,
-          message: `Bekreft at du ønsker å slette ${ids.length} ${translatedProp}`,  
+          title: `Slett ${word}?`,
+          message: `Bekreft at du ønsker å slette ${ids.length} ${word}`,  
           confirmText: 'Slett',
           confirmCallback: () => this._deleteItems(ids)
         }));

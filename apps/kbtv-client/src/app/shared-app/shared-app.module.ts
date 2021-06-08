@@ -16,14 +16,14 @@ import { PageNotFoundComponent } from './components/page-not-found.component';
 import { DynamicHostDirective } from './dynamic-host.directive';
 import { IfRolePipe } from './pipes/if-role.pipe';
 import { RequestDescriptionPipe } from './pipes/request-description.pipe';
-import { TranslatePipe } from './pipes/translate.pipe';
+import { TranslateModelPropPipe } from './pipes/translate-model-prop.pipe';
 
 @NgModule({
   declarations: [
     PageNotFoundComponent,  
     ListItemComponent,
     IfRolePipe,
-    TranslatePipe,
+    TranslateModelPropPipe,
     AddToHomeScreenDirective,
     DynamicHostDirective,
     
@@ -64,7 +64,7 @@ import { TranslatePipe } from './pipes/translate.pipe';
     
     IfRolePipe, 
     RequestDescriptionPipe,
-    TranslatePipe,
+    TranslateModelPropPipe,
     AddToHomeScreenDirective, 
     DynamicHostDirective
   ],

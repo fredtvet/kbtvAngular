@@ -4,12 +4,13 @@ import { ModelState } from "@core/state/model-state.interface";
 import { translations } from "../../constants/translations.const";
 import { Prop, Immutable } from "global-types";
 import { _getModelConfig } from "model/core";
+import { AppModelStatePropTranslations } from "@shared-app/constants/model-state-prop-translations.const";
 
 export function _saveModelRequestDescriber(request: Immutable<Omit<SaveModelRequest<Model>, "type" | "contentType">>): string {
 
     const modelConfig = _getModelConfig<ModelState, Model>(request.stateProp);
     const saveWord = request.method === "PUT" ? "Oppdatering" : "Oppretting";
-    const entityWord = translations[<string> request.stateProp.toLowerCase()]?.toLowerCase();
+    const entityWord = AppModelStatePropTranslations[<string> request.stateProp.toLowerCase()]?.singular.toLowerCase();
 
     const displayValue = modelConfig.displayFn?.(request.body);
     
