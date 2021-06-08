@@ -12,7 +12,7 @@ export const SetSelectedWeekReducer = _createReducer<StoreState,SetSelectedWeekA
     }   
 )
 
-export const SetTimesheetCriteriaReducer = _createReducer<StoreState,SetTimesheetCriteriaWithWeekCriteriaAction>(
+export const SetTimesheetCriteriaWithWeekCriteriaReducer = _createReducer<StoreState, SetTimesheetCriteriaWithWeekCriteriaAction>(
     SetTimesheetCriteriaWithWeekCriteriaAction, (state, action) => {
         const weekCriteria = {...action.weekCriteria, weekNr: undefined}
         return {
