@@ -10,7 +10,7 @@ import { ConfirmDialogConfig } from './confirm-dialog-config.interface';
     {{ config.message || 'Vennligst bekreft operasjonen.' }}
   </div>
   <div mat-dialog-actions align="end">
-    <button mat-button (tap)="onNoClick()">{{ config.discardText || 'Avbryt'}}</button>
+    <button mat-button (click)="onNoClick()">{{ config.discardText || 'Avbryt'}}</button>
     <button mat-button  [mat-dialog-close]="true" cdkFocusInitial>{{ config.confirmText }}</button>
   </div>
   `,

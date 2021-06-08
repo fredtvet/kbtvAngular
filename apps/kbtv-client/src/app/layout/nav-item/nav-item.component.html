@@ -9,13 +9,13 @@
 </style>
 <ng-container *ifRole="navButton.allowedRoles">
     <a matRipple *ngIf="navButton.routerLink else categoryButton" 
-        (tap)="alertNavigation()" [routerLink]="navButton.routerLink" [routerLinkActive]="['color-accent']">
+        (click)="alertNavigation()" [routerLink]="navButton.routerLink" [routerLinkActive]="['color-accent']">
         <mat-icon>{{navButton.icon}}</mat-icon>
         <span class="ml-6 mr-2 mat-body-2">{{navButton.text}}</span>
     </a>
 
     <ng-template #categoryButton>
-        <a matRipple (tap)="toggleChildren()">
+        <a matRipple (click)="toggleChildren()">
             <mat-icon>{{navButton.icon}}</mat-icon>
             <span class="ml-6 mr-2 mat-body-2">{{navButton.text}}</span>
             <mat-icon *ngIf="navButton.children && navButton.children.length > 0" 

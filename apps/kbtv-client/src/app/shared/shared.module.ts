@@ -5,6 +5,7 @@ import { CdkSelectableModule } from 'cdk-selectable';
 import { ConfirmDialogModule } from 'confirm-dialog';
 import { VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
 import { FormSheetModule } from 'form-sheet';
+import 'hammerjs';
 import { SharedAppModule } from '../shared-app/shared-app.module';
 import { AngularMaterialModule } from './angular-material.module';
 import { BottomSheetMenuComponent } from './bottom-sheet-menu/bottom-sheet-menu.component';
@@ -22,6 +23,7 @@ import { ImageRatioResizerDirective } from './directives/image-ratio-resizer.dir
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe } from './pipes';
 import { AppImageUrlRatioPipe } from './pipes/app-image-url-ratio.pipe';
 import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
+
 
 @NgModule({
   declarations: [
@@ -48,7 +50,7 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     LoadingOverlayDirective,  
     ImageRatioResizerDirective, 
     TransformButtonsPipe, 
-    
+
     HideDirective
   ],
   imports: [
@@ -57,7 +59,8 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     SharedAppModule,    
     CdkSelectableModule, 
     ConfirmDialogModule,
-    FormSheetModule
+    FormSheetModule, 
+    
   ],
   exports: [
     ReactiveFormsModule,

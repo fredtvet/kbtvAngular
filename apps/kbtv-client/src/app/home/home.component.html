@@ -11,7 +11,7 @@
         <mat-icon>person</mat-icon> Profil
       </button>
   
-      <button mat-stroked-button (tap)="refresh()">
+      <button mat-stroked-button (click)="refresh()">
         <mat-icon>update</mat-icon> Synkroniser
       </button>
     </div>
@@ -32,7 +32,7 @@
 
   <mat-toolbar class="bottom-bar">
 
-    <button class="menu-btn" mat-icon-button aria-label="Toggle sidenav" (tap)="toggleDrawer()" class="menu-btn">
+    <button class="menu-btn" mat-icon-button aria-label="Toggle sidenav" (click)="toggleDrawer()" class="menu-btn">
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
   
@@ -47,7 +47,7 @@
       <span class="mat-caption">Profil</span>
     </button>
 
-    <button mat-button (tap)="refresh()" class="action-btn">
+    <button mat-button (click)="refresh()" class="action-btn">
       <mat-icon>update</mat-icon> 
       <span class="mat-caption">Synkroniser</span>
     </button>
