@@ -9,11 +9,13 @@ type RequestWithType = Omit<OptimisticHttpRequest<SupportedContentTypes>, "type"
 export class RequestDescriptionPipe implements PipeTransform {
 
   transform(
-    request: Immutable<RequestWithType>, 
+    request: Immutable<OptimisticHttpRequest<SupportedContentTypes>>, 
     descriptions: RequestDescriberMap<RequestWithType>
   ): string {
-    const describer = descriptions[request.type];
-    if(describer) return describer(request);
+    if(request.type){
+      const describer = descriptions[request.type];
+      if(describer) return describer(<Immutable<RequestWithType>> request);
+    }
     return "Mangler beskrivelse"
   }
 }

@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AppRequestDescriberMap } from '@shared-app/constants/app-request-describer-map.const';
 import { FormattedHttpError, _httpErrorResponseFormatter } from '@shared-app/helpers/http-error-response-formatter.helper';
 import { SharedAppModule } from '@shared-app/shared-app.module';
-import { OptimisticHttpErrorAction } from 'optimistic-http';
+import { Immutable } from 'global-types';
+import { CompletedCommand, OptimisticHttpErrorAction, OptimisticHttpRequest } from 'optimistic-http';
 import { FailedCommandListComponent } from './failed-command-list/failed-command-list.component';
 
 @Component({
@@ -12,11 +14,16 @@ import { FailedCommandListComponent } from './failed-command-list/failed-command
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OptimisticHttpErrorDialogComponent {
-
-  httpError: FormattedHttpError;
+  AppRequestDescriberMap = AppRequestDescriberMap;
   
-  constructor(@Inject(MAT_DIALOG_DATA) public data: OptimisticHttpErrorAction) { 
+  httpError: FormattedHttpError;
+  errorRequest: Immutable<OptimisticHttpRequest>;
+  canceledCommands: Immutable<CompletedCommand[]>
+  
+  constructor(@Inject(MAT_DIALOG_DATA) data: OptimisticHttpErrorAction) { 
         this.httpError = _httpErrorResponseFormatter(data.httpError);
+        this.errorRequest = data.errorCommand.request;
+        this.canceledCommands = data.canceledCommands;
     }
   
 }
