@@ -1,22 +1,33 @@
 import { Inject, Injectable } from '@angular/core';
 import { UnknownState } from 'global-types';
-import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { forkJoin, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { Store } from 'state-management';
 import { STATE_DB_CONFIG } from './injection-tokens.const';
 import { StateDbConfig, StorageType } from './interfaces';
 import { StateDbService } from './state-db.service';
+import { SetPersistedStateAction } from './state/actions.const';
 
 @Injectable({providedIn: "root"})
 export class StateReaderService {
 
     constructor(
         @Inject(STATE_DB_CONFIG) private dbConfig: StateDbConfig<UnknownState>,
-        private stateDbService: StateDbService, 
+        private stateDbService: StateDbService,
+        private store: Store<unknown> 
     ) { }
 
-    get$<TState extends object>(type: StorageType): Observable<TState> {
-        if(type === "localStorage") return of(this.getLocalStorageState());
-        else return this.getIDbKeyValState$();
+    initalizeState(storageType: StorageType){
+        if(storageType === "localStorage")
+            this.dispatchState(this.getLocalStorageState(), storageType);
+        else
+            this.getIDbKeyValState$().subscribe(state => this.dispatchState(state, storageType))    
+    }
+
+    private dispatchState<T>(state: T, storageType: StorageType): void{
+        this.store.dispatch<SetPersistedStateAction>({
+            type: SetPersistedStateAction, state: state, storageType
+        })
     }
 
     private getLocalStorageState<T extends object>(): T {

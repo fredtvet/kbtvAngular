@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { LoadPersistedStateAction } from 'state-db';
-import { EffectsSubscriber, Store } from 'state-management';
+import { StateReaderService } from 'state-db';
+import { EffectsSubscriber } from 'state-management';
 import { DeviceInfoService } from './device-info.service';
 import { IconService } from './icon.service';
 import { SingleWindowGuardService } from './single-window-guard.service';
@@ -10,16 +10,18 @@ import { SingleWindowGuardService } from './single-window-guard.service';
 export class StartupService {
 
   constructor(
-    store: Store<unknown>,
     effectsSubscriber: EffectsSubscriber,
     iconService: IconService,
     deviceInfoService: DeviceInfoService,
+    stateReader: StateReaderService,
     singleWindowGuardService: SingleWindowGuardService,
     @Inject(DOCUMENT) document: Document
   ) { 
-    if(deviceInfoService.isIphone) document.documentElement.style.setProperty('--bottom-nav-padding', '16px');
+    stateReader.initalizeState('localStorage');
+    effectsSubscriber.onEffectsInit$.subscribe(x => stateReader.initalizeState("idb-keyval"));
     
-    effectsSubscriber.onEffectsInit$.subscribe(x => store.dispatch(<LoadPersistedStateAction> { type: LoadPersistedStateAction }))
+    if(deviceInfoService.isIphone) document.documentElement.style.setProperty('--bottom-nav-padding', '16px');
+
     iconService.registerIcons();
 
   }
