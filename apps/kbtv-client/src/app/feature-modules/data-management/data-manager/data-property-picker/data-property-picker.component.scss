@@ -6,7 +6,7 @@
 }
 
 ::ng-deep.data-picker{
-    margin:0px $gap-size * 6px;
+    margin:0px $gap-size * 6px $gap-size * 2px $gap-size * 6px;
     padding-bottom: $gap-size * 2px;
     flex: 1 1 0%;
     box-sizing: border-box;
