@@ -25,7 +25,7 @@
             "assets": [
               "apps/kbtv-client/src/favicon.ico",
               "apps/kbtv-client/src/assets",
-              "apps/kbtv-client/src/manifest.json"
+              "apps/kbtv-client/src/manifest.webmanifest"
             ],
             "extractCss": true,
             "styles": [
