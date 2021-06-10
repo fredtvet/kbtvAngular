@@ -3,9 +3,9 @@ import { _weakMemoizer } from './util/weak-memoizer.helper';
 
 /**
  * Sort an array of objects by a boolean property.
- * @param collection An array of objects
- * @param prop The boolean property to sort by
- * @param trueFirst Set to true if false values should come last
+ * @param collection - An array of objects
+ * @param prop - The boolean property to sort by
+ * @param trueFirst - Set to true if false values should come last
  */
 export const _sortByBool = _weakMemoizer(sortByBool);
 

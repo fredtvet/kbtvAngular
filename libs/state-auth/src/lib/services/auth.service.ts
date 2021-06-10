@@ -50,8 +50,8 @@ export class AuthService {
     this.store.state.currentUser 
   
   /** Attempts to authorize user with external api. 
-   * @param credentials The authorization data
-   * @param returnUrl A router url used to navigate the user if login succeeds. 
+   * @param credentials - The authorization data
+   * @param returnUrl - A router url used to navigate the user if login succeeds. 
    */
   login = (credentials: Credentials, returnUrl?: string): void => 
     this.store.dispatch(<LoginAction>{ type: LoginAction, credentials, returnUrl })

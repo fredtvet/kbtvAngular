@@ -13,7 +13,7 @@ export class FormService {
   constructor(private matBottomSheet: MatBottomSheet) {}
 
   /** Opens the specified form as a form sheet
-   * @param config
+   * @param config -
    * @returns A reference to the bottom sheet with the form.
    */
   // open<TForm extends object, TInputState extends object | null = null, TFormConfig = DynamicForm<TForm, TInputState>, TResult = Immutable<TForm>>(

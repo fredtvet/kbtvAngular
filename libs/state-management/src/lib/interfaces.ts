@@ -22,7 +22,7 @@ export interface Effect<TAction extends StateAction> {
     /**
      * A handler function that listens to the action observer.
      * 
-     * @param actions$ An action observer 
+     * @param actions$ - An action observer 
      * @returns A new action to be dispatched
      */
     handle$(actions$: Observable<DispatchedAction<TAction>>): Observable<Immutable<StateAction> | void>
@@ -35,8 +35,8 @@ export interface Effect<TAction extends StateAction> {
 
 /**
  * Represents a pure function that modifies state
- * @param state
- * @param action The action that triggers the {@link Reducer}
+ * @param state -
+ * @param action - The action that triggers the {@link Reducer}
  * @returns The modified state
  */
 export type ReducerFn<TState, TAction extends StateAction> = 
@@ -61,7 +61,7 @@ export interface ActionInterceptor {
 
 /** Represents a function for intercepting reducers before they are processed.
  *  Provided with token {@link STORE_META_REDUCERS} 
- *  @param reducer A merged reducer consisting of the reducers associated with the triggering action */
+ *  @param reducer - A merged reducer consisting of the reducers associated with the triggering action */
 export type MetaReducer<TState, TAction extends StateAction> = 
     (reducer: Immutable<Reducer<TState, TAction>>) => Reducer<TState, TAction>
 

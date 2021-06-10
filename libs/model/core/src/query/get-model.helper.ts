@@ -18,9 +18,9 @@ function setChildModels(state: Immutable<UnknownModelState>, model: UnknownState
 /**
  * Get model with specified relationships set on model
  * according to model property config {@link ModelConfig}
- * @param state State containing model and relationship data
- * @param cfg Configuration of which relationships to include
- * @param id A unique property value of the model that is requested.
+ * @param state - State containing model and relationship data
+ * @param cfg - Configuration of which relationships to include
+ * @param id - A unique property value of the model that is requested.
  * @returns The requested model with relationships applied if found. 
  */
 export const _getModel = _weakMemoizer(getModel)

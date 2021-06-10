@@ -3,7 +3,7 @@ import { WeekYear } from './interfaces';
 
 /**
  * Get the week and year of a specified date
- * @param date 
+ * @param date - 
  */
 export function _getWeekYear(date: Immutable<DateInput> = new Date()): WeekYear {
     var d = new Date(date as Date);

@@ -4,8 +4,8 @@ import { _getModelConfig } from '../model-state-config-helpers';
 
 /**
  * Get display value for model
- * @param prop Model state property
- * @param value Model value
+ * @param prop - Model state property
+ * @param value - Model value
  */
 export function _getModelDisplayValue<TState, TModel extends StateModels<TState> = StateModels<TState>>(
     prop: Immutable<StatePropByModel<TState, TModel>>, 

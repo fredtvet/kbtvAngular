@@ -8,10 +8,10 @@ type ModelState = {[key: string]: object[]};
 /**
  * Add or update a model and any foreign relationships set on the provided model value 
  * according to {@link ModelConfig}
- * @param state State containing model and foregin data
- * @param stateProp Model state property of the model
- * @param entity The model value with optional foreign props
- * @param preGenIds A map of pre generated ids for each state. Can be used to optimize if ids need to be generated before calling function. 
+ * @param state - State containing model and foregin data
+ * @param stateProp - Model state property of the model
+ * @param entity - The model value with optional foreign props
+ * @param preGenIds - A map of pre generated ids for each state. Can be used to optimize if ids need to be generated before calling function. 
  * @returns State with model and foreigns added or updated. 
  */
 export function _saveModel<TState, TModel extends StateModels<TState>>(

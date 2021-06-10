@@ -6,9 +6,9 @@ import { _getModelConfig } from '../model-state-config-helpers';
 /**
  * Get all or given range of models with specified relationships set on model
  * according to model property config {@link ModelConfig}
- * @param state State containing model and relationship data
- * @param cfg Configuration of which relationships to include
- * @param filter A filter to select a range of models. 
+ * @param state - State containing model and relationship data
+ * @param cfg - Configuration of which relationships to include
+ * @param filter - A filter to select a range of models. 
  * @returns An array of models with relationships applied. 
  */
 export const _getModels = _weakMemoizer(getModels);

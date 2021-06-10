@@ -3,8 +3,8 @@ import { _weakMemoizer } from './util/weak-memoizer.helper';
 
 /**
  * Filter an array of items, only returning the ones who pass the specified expression
- * @param originals An array of items to be filtered
- * @param expression An expression for filtering the items
+ * @param originals - An array of items to be filtered
+ * @param expression - An expression for filtering the items
  * @returns An array of items that passed the expression
  */
 export const _filter = _weakMemoizer(filter);

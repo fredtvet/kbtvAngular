@@ -2,7 +2,7 @@ import { Maybe } from "global-types";
 
 /**
  * Get the number of weeks for a specified year
- * @param year 
+ * @param year - 
  */
 export function _getWeeksInYear(year: Maybe<number>): number{
   if(!year) year = new Date().getFullYear();

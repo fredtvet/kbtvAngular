@@ -67,7 +67,7 @@ export interface SyncArrayResponse{
 export interface SyncHttpFetcher<TState> {
     /** 
      * Fetches data from external api and returns a data observer with correct format. 
-     * @param timestamp UNIX milliseconds timestamp since last sync 
+     * @param timestamp - UNIX milliseconds timestamp since last sync 
      */
     fetch$(config: Maybe<SyncConfig>, timestamp: Maybe<number>): Observable<SyncResponse<TState>>
 }

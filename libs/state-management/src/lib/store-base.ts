@@ -38,7 +38,7 @@ export abstract class StoreBase<TState> {
     /**
      * Responsible for dispatching the action to the relevant parts of the state layer. 
      * @remarks Applies interceptors and reducers before dispatching to {@link ActionDispatcher}.  
-     * @param action 
+     * @param action - 
      */
     dispatch<TAction extends StateAction>(action: Immutable<TAction>): void {
         if(this._settings.strictImmutability) _deepFreeze(action);
@@ -51,7 +51,7 @@ export abstract class StoreBase<TState> {
 
     /**
      * Responsible for providing the specified slice of state reactivly from state
-     * @param props The state properties that should be returned
+     * @param props - The state properties that should be returned
      * @returns An observable of the specified slice of state
      */
     select$ = <TProps extends Prop<TState>[]>(props: TProps): Observable<Immutable<{[P in UnionTupleType<TProps>]: TState[P]}>> =>
@@ -59,7 +59,7 @@ export abstract class StoreBase<TState> {
 
     /**
      * Responsible for providing the specified value reactivly from state
-     * @param props The state property that should be returned
+     * @param props - The state property that should be returned
      * @returns An observable of the provided property value
      */
     selectProperty$ = <TProp extends Prop<Immutable<TState>>>(prop: TProp): Observable<Immutable<TState>[TProp]> =>

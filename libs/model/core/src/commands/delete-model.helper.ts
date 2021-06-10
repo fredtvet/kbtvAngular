@@ -6,9 +6,9 @@ import { _getModelConfig } from '../model-state-config-helpers';
 /**  
  * Responsible for deleting model with given id(s) 
  * and children with cascadeDelete set to true. 
- * @param state The state containing model & child state.
- * @param stateProp The state property of the model thats being deleted.
- * @param cfg The id or ids of the model(s) to be deleted.
+ * @param state - The state containing model & child state.
+ * @param stateProp - The state property of the model thats being deleted.
+ * @param cfg - The id or ids of the model(s) to be deleted.
  * @returns Updated state with deletion applied. 
 */
 export function _deleteModel<TState, TModel extends StateModels<TState>>(

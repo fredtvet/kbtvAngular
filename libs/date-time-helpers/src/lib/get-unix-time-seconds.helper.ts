@@ -2,7 +2,7 @@ import { DateInput, Immutable } from 'global-types';
 
 /**
  * Get a UNIX timestamp for a specified date in seconds. 
- * @param date 
+ * @param date - 
  */
 export function _getUnixTimeSeconds(date: Immutable<DateInput> = new Date()){
     return Math.floor(new Date(date as Date).getTime() / 1000)

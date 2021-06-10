@@ -2,9 +2,9 @@ import { Maybe, ImmutableArray, Immutable, Prop } from "global-types";
 
 /**
  * Add or update a object in given array
- * @param array The array to add or update object 
- * @param updatedObj The new or updated object
- * @param idProp A unique identifier for the object
+ * @param array - The array to add or update object 
+ * @param updatedObj - The new or updated object
+ * @param idProp - A unique identifier for the object
  * @returns 
  */
 export function _addOrUpdate<T extends {}>(

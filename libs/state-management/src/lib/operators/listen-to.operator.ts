@@ -4,7 +4,7 @@ import { filter } from 'rxjs/operators';
 import { DispatchedAction, StateAction } from '../interfaces';
 
 /** An rxjs operator used to filter the types of actions provided from an action observer.
- * @param types The types of actions that should emit
+ * @param types - The types of actions that should emit
  */
 export const listenTo = <TAction extends StateAction, TState>(types: string[]) => {
     const typeLookup = _convertArrayToObject(types);

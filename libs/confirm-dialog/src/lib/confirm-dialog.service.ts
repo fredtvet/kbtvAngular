@@ -11,7 +11,7 @@ export class ConfirmDialogService {
 
   /**
    * Opens a confirmation dialog, forcing the user to take action before proceeding.
-   * @param config
+   * @param config -
    * @returns A reference to an opened dialog. @see {@link https://material.angular.io/components/dialog/api}
    */
   open(config: ConfirmDialogConfig): MatDialogRef<ConfirmDialogComponent, boolean> {

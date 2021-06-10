@@ -16,7 +16,7 @@ export class NotificationService {
   constructor(private snackBar: MatSnackBar, private zone: NgZone) { }
 
   /** Displays the provided notification when the snack bar is available
-   * @param notification */
+   * @param notification - */
   notify = (notification: AppNotification) => { 
     if(!this.currentNotification && this.currentNotification !== null)
       this.zone.run(x => this.setNotification(notification));      

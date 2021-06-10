@@ -3,9 +3,9 @@ import { _convertArrayToObject } from './convert-array-to-object.helper';
 
 /**
  * Merge two arrays of objects, updating any objects that overlap
- * @param originals The original array of objects that may be overriden
- * @param values The new array of objects that should be added 
- * @param idProp A property on the object that uniquely identifies it
+ * @param originals - The original array of objects that may be overriden
+ * @param values - The new array of objects that should be added 
+ * @param idProp - A property on the object that uniquely identifies it
  */
 export function _addOrUpdateRange<T>(
     originals: Maybe<ImmutableArray<T>>, 

@@ -22,7 +22,7 @@ export class CdkSelectablePresenter {
 
     /** Get an observable emitting the selected status 
      *  when the selected status changes for a specified id.
-     *  @param id The id of the item you desire to observe */
+     *  @param id - The id of the item you desire to observe */
     isSelected$ = (id: string | number): Observable<IdSelectPair> =>
         this.selectedMap$.pipe(
             map(x => x[id]), 
@@ -32,15 +32,15 @@ export class CdkSelectablePresenter {
 
     /**
      * Update the selected status of a specified id
-     * @param id The id of the item that should be updated
-     * @param selected A new selected status for the item
+     * @param id - The id of the item that should be updated
+     * @param selected - A new selected status for the item
      */
     updateEntry = (id: string | number, selected: boolean) => this.addEntry(id, selected)
     
     /**
      * Add an item to keep track of its selected status. 
-     * @param id The id of the item that should be added
-     * @param selected An initial selected status for the item
+     * @param id - The id of the item that should be added
+     * @param selected - An initial selected status for the item
      */
     addEntry = (id: string | number, selected: boolean = false) => {
         this.selectedMapSubject.next({
@@ -51,7 +51,7 @@ export class CdkSelectablePresenter {
 
     /**
      * Remove the specified item from the map
-     * @param id The id of the item that should be removed
+     * @param id - The id of the item that should be removed
      */
     removeEntry = (id: string | number) => {
         if(!id) return;

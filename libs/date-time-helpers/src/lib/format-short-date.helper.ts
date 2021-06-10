@@ -2,7 +2,7 @@ import { DateInput, Immutable } from 'global-types';
 
 /**
  * Formats a date to a short string. Format dd.m.yy.
- * @param d The date to format
+ * @param d - The date to format
  * @returns a date string with format dd.m.yy
  */
 export function _formatShortDate(d: Immutable<DateInput>): string{

@@ -2,9 +2,9 @@ import { Immutable, ImmutableArray, Maybe, Prop } from 'global-types';
 
 /**
  * Remove a range  of objects from an array of objects
- * @param originals An array of objects
- * @param deletedIds An array of unique values used to find the objects to delete
- * @param idProp A property on the object that contains a unique value
+ * @param originals - An array of objects
+ * @param deletedIds - An array of unique values used to find the objects to delete
+ * @param idProp - A property on the object that contains a unique value
  */
 export function _removeRangeById<T>(
   originals: Maybe<ImmutableArray<T>>, 

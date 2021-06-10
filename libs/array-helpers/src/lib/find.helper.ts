@@ -3,9 +3,9 @@ import { _weakMemoizer } from './util/weak-memoizer.helper';
 
 /**
  * Find an object in an array of objects
- * @param array An array of objects
- * @param value A unique value used to find the object
- * @param idProp A property on the object that contains a unique value
+ * @param array - An array of objects
+ * @param value - A unique value used to find the object
+ * @param idProp - A property on the object that contains a unique value
  */
 export const _find = _weakMemoizer(find);
 

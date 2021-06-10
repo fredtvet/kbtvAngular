@@ -3,9 +3,9 @@ import { _convertArrayToObject } from './convert-array-to-object.helper';
 
 /**
  * Remove a range  of objects from an array of objects based on a common property value
- * @param originals An array of objects
- * @param value The value or array of values to compare against the object property
- * @param idProp A property on the object that contains the value
+ * @param originals - An array of objects
+ * @param value - The value or array of values to compare against the object property
+ * @param idProp - A property on the object that contains the value
  */
 export function _removeRangeByProp<T>(
   originals: Maybe<ImmutableArray<T>>, 

@@ -3,9 +3,9 @@ import { _weakMemoizer } from './util/weak-memoizer.helper';
 
 /**
  * Sort an array of objects by a date property
- * @param collection An array of objects
- * @param prop A date property on the object
- * @param direction A sorting direction. Default is 'desc'
+ * @param collection - An array of objects
+ * @param prop - A date property on the object
+ * @param direction - A sorting direction. Default is 'desc'
  */
 export const _sortByDate = _weakMemoizer(sortByDate);
 

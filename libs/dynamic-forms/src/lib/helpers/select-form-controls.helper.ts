@@ -4,8 +4,8 @@ import { combineLatest, Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 
  /** An rxjs operator used to listen to value changes on form controls from a form group
-  * @param form The form group containing the controls
- * @param paths The paths to the controls that should be selected. Supports nested controls with syntax "group1.control2"
+  * @param form - The form group containing the controls
+ * @param paths - The paths to the controls that should be selected. Supports nested controls with syntax "group1.control2"
  * @returns The slice of state with paths as keys with corresponding values
  */
   export function _formControlsChanges$<TForm, TFormSlice extends string>(

@@ -4,9 +4,9 @@ import { _weakMemoizer } from './util/weak-memoizer.helper';
 
 /**
  * Get a range of objects
- * @param originals An array of objects 
- * @param ids An array of unique values that identify the objects
- * @param idProp A property on the object that contains a unique value
+ * @param originals - An array of objects 
+ * @param ids - An array of unique values that identify the objects
+ * @param idProp - A property on the object that contains a unique value
  */
 export const _getRangeById = _weakMemoizer(getRangeById)
 

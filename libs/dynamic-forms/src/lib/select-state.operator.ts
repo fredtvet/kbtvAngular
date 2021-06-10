@@ -8,7 +8,7 @@ type StateSlice<TState, TProps extends Prop<TState>[]> = {
 
 /** An rxjs operator used to select a specified slice from state 
  *  and only emit when its value changes.
- * @param props The properties on state that should be selected.
+ * @param props - The properties on state that should be selected.
  * @returns The slice of state that corresponds with the specified properties
  */
  export const selectState = <TState, TProps extends Prop<TState>[] = Prop<TState>[]>(props: ImmutableArray<Prop<TState>>) => 

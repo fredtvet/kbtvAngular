@@ -3,8 +3,8 @@ import { _weakMemoizer } from './util/weak-memoizer.helper';
 
 /**
  * Group an array of objects by a specified key
- * @param array An array of objects
- * @param key A key on the object to group by
+ * @param array - An array of objects
+ * @param key - A key on the object to group by
  * @returns An object with keys accociated with an array of objects matching the key value
  */
 export const _groupBy = _weakMemoizer(groupBy);

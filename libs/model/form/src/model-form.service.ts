@@ -23,8 +23,8 @@ export class ModelFormService<TState extends object> {
   ) {}
 
   /** Opens the specified model form as a form sheet
-   * @param config
-   * @param entityId If set, the form will be in edit mode for the model with corresponding id.
+   * @param config -
+   * @param entityId - If set, the form will be in edit mode for the model with corresponding id.
    * @returns A reference to the bottom sheet with the model form.
    */
   open<
