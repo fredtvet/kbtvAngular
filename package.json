@@ -17,6 +17,7 @@
     "compodoc": "npx compodoc -p tsconfig.json",
     "buildAll": "node scripts/build-all.js",
     "buildLibs": "node scripts/build-libs.js",
+    "generateApiDocs": "node scripts/generate-api-docs.js",
     "buildDebug": "env NG_BUILD_MANGLE=false NG_BUILD_MINIFY=false NG_BUILD_BEAUTIFY=true ng build --project kbtv-client --prod --stats-json"
   },
   "private": true,
