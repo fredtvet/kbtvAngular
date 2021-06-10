@@ -10,7 +10,7 @@
 
         <div class="mat-caption">Behandling mislykket</div>
 
-        {{ req.request | requestDescription : AppRequestDescriberMap }}
+        {{ req.request | requestDescription : state : AppRequestDescriberMap }}
 
     </app-list-item>
 

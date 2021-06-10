@@ -3,17 +3,17 @@
     <app-main-top-nav-bar navbar [config]="navConfig">
     </app-main-top-nav-bar>
 
-    <app-request-queue-list [requests]="vm.requestQueue" [isOnline]="vm.isOnline">
+    <app-request-queue-list [requests]="vm.requestQueue" [state]="state" [isOnline]="vm.isOnline">
     </app-request-queue-list>
     
     <mat-divider></mat-divider>
 
-    <app-failed-request-log-list [requests]="vm.failedRequests">   
+    <app-failed-request-log-list [requests]="vm.failedRequests" [state]="state">   
     </app-failed-request-log-list>
 
     <mat-divider></mat-divider>
 
-    <app-completed-request-log-list [requests]="vm.completedRequests">   
+    <app-completed-request-log-list [requests]="vm.completedRequests" [state]="state">   
     </app-completed-request-log-list>
 
     <app-bottom-action-bar bottombar>

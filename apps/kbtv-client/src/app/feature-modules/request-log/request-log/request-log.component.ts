@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DeviceInfoService } from '@core/services/device-info.service';
+import { StateMissions } from '@core/state/global-state.interfaces';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { _groupBy } from 'array-helpers';
-import { ImmutableArray } from 'global-types';
+import { Immutable, ImmutableArray } from 'global-types';
 import { CompletedCommand, QueuedCommand, StateRequestLog, StateRequestQueue } from 'optimistic-http';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -37,12 +38,16 @@ export class RequestLogComponent {
     this.store.selectProperty$("requestQueue"),
     this.sortedRequestLog$,
     this.deviceInfoService.isOnline$
-  ]).pipe(map(([requestQueue, sortedLog, isOnline]) => { return {requestQueue, isOnline, ...sortedLog}}))
+  ]).pipe(map(([requestQueue, sortedLog, isOnline]) => { return {requestQueue, isOnline, ...sortedLog}}));
+
+  state: Immutable<StateMissions>;
 
   constructor(
-    private store: Store<StateRequestLog & StateRequestQueue>,
+    private store: Store<StateRequestLog & StateRequestQueue & StateMissions>,
     private location: Location,
     private deviceInfoService: DeviceInfoService
-  ) {}
+  ) {
+    this.state = {missions: this.store.state.missions};
+  }
 
 }

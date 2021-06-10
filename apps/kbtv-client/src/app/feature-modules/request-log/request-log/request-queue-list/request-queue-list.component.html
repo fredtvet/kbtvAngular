@@ -12,7 +12,7 @@
 
         <div class="mat-caption">{{ !isOnline ? 'Venter på internett' : (queued.dispatched ? 'Under behandling' : 'Venter') }}...</div>
 
-        {{ queued.request | requestDescription : AppRequestDescriberMap}}
+        {{ queued.request | requestDescription : state : AppRequestDescriberMap}}
 
         <ng-template #dispatchedSpinner>
                 <ion-spinner left-side class="pl-2 pr-2" name="circles"></ion-spinner>      
