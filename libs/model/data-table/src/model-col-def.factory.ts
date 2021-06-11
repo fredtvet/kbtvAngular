@@ -61,6 +61,9 @@ export class ModelColDefFactory {
                 return true
             }
         };
+        
+        if(propDef.valueGetter)
+            def.valueGetter = (params) => propDef.valueGetter!(<UnknownState> params.data);
 
         if(propDef.boolean){
             def['cellEditor'] = 'agSelectCellEditor';
