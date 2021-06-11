@@ -7,6 +7,7 @@ export const environment = {
   apiUrl: 'https://localhost:44379/api',
   baseUrl: '',
   fileServerUrl: 'https://bjbygg-assets.azureedge.net',
+  inboundEmailDomain: 'rapporter.bjbygg.no'
 };
 
 /*

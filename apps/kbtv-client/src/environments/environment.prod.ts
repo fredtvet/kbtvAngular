@@ -3,4 +3,5 @@ export const environment = {
   apiUrl: 'https://bjbyggwebapiv1.azurewebsites.net/api',
   baseUrl: '',
   fileServerUrl: 'https://bjbygg-assets.azureedge.net',
+  inboundEmailDomain: 'rapporter.bjbygg.no'
 };
