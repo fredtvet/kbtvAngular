@@ -20,10 +20,12 @@ export class SingleWindowGuardService {
       private continousSyncService: ContinousSyncService,
       private dialogService: AppDialogService
     ) {
-    const bc = new BroadcastChannel('single-window-guard');
-    bc.postMessage(WindowCloseEvent);
-    bc.onmessage = (ev) =>
-      ev.data === WindowCloseEvent ? this.closeWindow() : null;
+    if("BroadcastChannel" in self){
+      const bc = new BroadcastChannel('single-window-guard');
+      bc.postMessage(WindowCloseEvent);
+      bc.onmessage = (ev) =>
+        ev.data === WindowCloseEvent ? this.closeWindow() : null;
+    }
   }
 
   private closeWindow(): void {
