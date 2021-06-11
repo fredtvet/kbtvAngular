@@ -14,4 +14,5 @@ shell.exec("cd libs/confirm-dialog && api-extractor run");
 shell.exec("cd libs/cdk-selectable && api-extractor run");
 shell.exec("cd libs/notification && api-extractor run");
 shell.exec("cd libs/google-places-autocomplete && api-extractor run");
+shell.exec("cd libs/google-places-autocomplete && api-extractor run");
 shell.exec("api-documenter markdown --input-folder temp --output-folder docs")
