@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Timesheet, User } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
+import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
+import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { WeekCriteriaForm, WeekCriteriaFormState } from '@shared-timesheet/forms/week-criteria-controls.const';
-import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
-import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
 import { FormService } from 'form-sheet';
 import { Immutable, Maybe } from 'global-types';
 import { map, takeUntil, tap } from 'rxjs/operators';
@@ -81,17 +81,12 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
       (val) => this.facade.updateCriteria(val)
     )
   } 
-    
-  private onBack = () => { 
-    this.router.navigate(["../"], {relativeTo: this.route})
-  }
 
   private getNavConfig(user: Maybe<Immutable<User>>, year: Maybe<number>): MainTopNavConfig {
     const fullName = user ? (user.firstName + ' ' + user.lastName) : '';
     return {
       title:  "Uker",
       subTitle: (year || '') + ' - ' + (fullName || ''),
-      backFn: this.onBack
     }
   }
   

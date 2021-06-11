@@ -1,8 +1,9 @@
+import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
-import { _trackByAppButton } from '@shared-app/track-by-app-button';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { _trackByAppButton } from '@shared-app/track-by-app-button';
 import { MainTopNavConfig } from './main-top-nav.config';
 
 @Component({
@@ -16,22 +17,28 @@ export class MainTopNavBarComponent {
   @Input() config: MainTopNavConfig;
   @Input() overlayMode: boolean;
   
-  baseActionBtn: Partial<AppButton> = {type: ButtonTypes.Icon}
+  baseActionBtn: Partial<AppButton> = {type: ButtonTypes.Icon};
 
-  constructor(private router: Router) {}
+  get primaryBtn(): AppButton {
+    return {
+      callback: this.config.customCancelFn || this.onBack, 
+      type: ButtonTypes.Icon,
+      aria: 'Tilbake', 
+      icon: 'close'
+    }
+  };
+
+  constructor(
+    private router: Router,
+    private location: Location
+  ) {}
 
   TrackByButton = _trackByAppButton
 
-  getPrimaryBtn(config: MainTopNavConfig): AppButton{
-    return {
-      callback: config.backFn || this.onBack, 
-      params: config.backFnParams,
-      type: ButtonTypes.Icon,
-      aria: 'Tilbake',
-      icon: 'close'
-    }
+  private onBack = () => {
+    const state = <{navigationId: number}> this.location.getState();
+    if(state.navigationId !== 1) this.location.back(); 
+    else this.router.navigate(['/'])
   }
-
-  private onBack = () => this.router.navigate(['hjem'])
 
 }

@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { ModelState } from '@core/state/model-state.interface';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
-import { EditMissionNoteModelForm, CreateMissionNoteModelForm } from '@shared-mission/forms/save-mission-note-model-form.const';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
+import { CreateMissionNoteModelForm, EditMissionNoteModelForm } from '@shared-mission/forms/save-mission-note-model-form.const';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
@@ -31,10 +31,9 @@ export class MissionNoteListComponent {
   constructor( 
     private facade: MissionNoteListFacade,
     private route: ActivatedRoute,
-    private router: Router,
     private modelFormService: ModelFormService<ModelState>
-    ) {  
-    this.navConfig = {title:  "Notater", backFn: this.onBack};
+  ) {  
+    this.navConfig = {title:  "Notater"};
 
     this.actionFab = {
       icon: "add", aria: 'Legg til', color: "accent", 
@@ -50,5 +49,4 @@ export class MissionNoteListComponent {
   private openCreateNoteForm = () => 
     this.modelFormService.open(CreateMissionNoteModelForm, {missionId: <string> this.missionId});
 
-  private onBack = () => this.router.navigate(['../'], {relativeTo: this.route.parent});
 }

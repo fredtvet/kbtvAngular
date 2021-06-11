@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { AppConfirmDialogService } from '@core/services/app-confirm-dialog.service';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
@@ -25,9 +24,8 @@ export class SyncProfileComponent {
     private formService: FormService,
     private facade: ProfileFacade,
     private confirmService: AppConfirmDialogService,
-    private router: Router,
   ){
-    this.navConfig = {title: "Synkronisering", backFn: this.goToProfile };
+    this.navConfig = {title: "Synkronisering"};
     this.actions = [
       {text: 'Konfigurasjoner', icon: 'settings', callback: this.updateSyncConfig,
         hint: "Konfigurer synkronisering av data med skyen"},  
@@ -57,7 +55,5 @@ export class SyncProfileComponent {
   }
 
   private syncAll = () => this.facade.syncAll();
-
-  private goToProfile = () => this.router.navigate(['profil']);
   
 }

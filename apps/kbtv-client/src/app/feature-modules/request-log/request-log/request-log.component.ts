@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { StateMissions } from '@core/state/global-state.interfaces';
@@ -25,7 +24,7 @@ interface ViewModel {
 })
 export class RequestLogComponent {
 
-  navConfig: MainTopNavConfig = { title: "Aktivitetslogg", backFn: () => this.location.back() };
+  navConfig: MainTopNavConfig = { title: "Aktivitetslogg" };
 
   private sortedRequestLog$: Observable<Partial<ViewModel>> = this.store.selectProperty$("requestLog").pipe(
     map(x => {
@@ -44,7 +43,6 @@ export class RequestLogComponent {
 
   constructor(
     private store: Store<StateRequestLog & StateRequestQueue & StateMissions>,
-    private location: Location,
     private deviceInfoService: DeviceInfoService
   ) {
     this.state = {missions: this.store.state.missions};

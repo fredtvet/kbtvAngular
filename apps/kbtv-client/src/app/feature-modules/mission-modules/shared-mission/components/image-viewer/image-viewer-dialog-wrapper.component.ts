@@ -38,7 +38,7 @@ export class ImageViewerDialogWrapperComponent {
     ) {
       this.navConfig = {
         buttons: [{text: "Last ned bilde", icon: "cloud_download", callback: this.downloadImage}],
-        backFn: this.close
+        customCancelFn: this.close
       }
 
       if(cfg.deleteAction) 

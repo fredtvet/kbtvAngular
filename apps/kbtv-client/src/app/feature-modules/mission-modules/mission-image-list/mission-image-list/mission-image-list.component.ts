@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from "@angular/core";
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { MissionImage, ModelFile } from '@core/models';
 import { AppConfirmDialogService } from "@core/services/app-confirm-dialog.service";
@@ -67,11 +67,10 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
     private confirmService: AppConfirmDialogService,
     private imageViewer: ImageViewerDialogService,
     private facade: MissionImageListFacade,
-    private route: ActivatedRoute,
-    private router: Router) {
+    private route: ActivatedRoute) {
       super();
 
-      this.navConfig = {title:  "Bilder", backFn: this.onBack}
+      this.navConfig = {title:  "Bilder"}
 
       this.actionFab = 
         {icon: "camera_enhance", aria: 'Ta bilde', callback: this.openImageInput, allowedRoles: this.can.create};
@@ -135,7 +134,5 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
 
   private downloadImages = (imgs: ImmutableArray<MissionImage>) => 
     this.downloaderService.downloadUrls(imgs.map(x => x.fileName ? _appFileUrl(x.fileName, FileFolder.MissionImageOriginal) : null));
-
-  private onBack = () => this.router.navigate(['../'], {relativeTo: this.route.parent});
   
 }

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Timesheet, User } from '@core/models';
 import { AppDialogService } from '@core/services/app-dialog.service';
 import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
@@ -42,7 +42,6 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
 
   constructor(
     private facade: TimesheetAdminFacade,
-    private router: Router,
     private dialogService: AppDialogService,
     private route: ActivatedRoute,
     private formService: FormService) {
@@ -86,11 +85,7 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
     return {
       title:  "Uke " + (weekNr || ""),
       subTitle: (year || "") + ' - ' + (fullName || ""),
-      backFn: this.onBack
     }
   }
 
-  private onBack = () => 
-    this.router.navigate(['../'], {relativeTo: this.route})
-  
 }

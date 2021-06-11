@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { ActivatedRoute, Router } from '@angular/router';
 import { UserTimesheet } from "@core/models";
 import { AppDialogService } from "@core/services/app-dialog.service";
 import { ModelState } from "@core/state/model-state.interface";
@@ -43,8 +42,6 @@ export class UserTimesheetListComponent {
 
   constructor(
     private facade: UserTimesheetListFacade,
-    private route: ActivatedRoute,
-    private router: Router,
     private criteriaFormService: UserTimesheetCriteriaFormService,
     private dialogService: AppDialogService,
     private modelFormService: ModelFormService<ModelState>
@@ -53,7 +50,7 @@ export class UserTimesheetListComponent {
       { ...BottomIconButtons.Filter,
         callback: this.openTimesheetFilter }
     ]
-    this.navConfig = { title:  "Timeliste", backFn: this.onBack }
+    this.navConfig = { title:  "Timeliste" }
   }
 
   openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Immutable<Partial<TimesheetForm>>): void => {
@@ -70,9 +67,5 @@ export class UserTimesheetListComponent {
   openTimesheetCard = (timesheetId: string) =>
     this.dialogService.dialog$.subscribe(x => x.open(UserTimesheetCardDialogWrapperComponent, {
       data: timesheetId, panelClass: 'extended-dialog'}));
-
-  private onBack = (): void => {
-    this.router.navigate(['../'], { relativeTo: this.route.parent })
-  }
 
 }

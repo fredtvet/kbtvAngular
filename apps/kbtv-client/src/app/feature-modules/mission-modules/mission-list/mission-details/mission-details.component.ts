@@ -43,7 +43,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     switchMap(x =>  this.facade.getMissionDetails$(x.get(SelectedMissionIdParam))),
     map(mission => { return { 
       bottomActions: this.getBottomActions(mission), 
-      navConfig: { title: mission?.address, backFn: this.onBack },
+      navConfig: { title: mission?.address },
       mission
     }})
   );
@@ -97,7 +97,5 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
       {...this.addHeaderImgBtn, text: 'Nytt forsidebilde'}
     ]
   }
-
-  private onBack = () => this.router.navigate(['../../'], {relativeTo: this.route})
 
 }

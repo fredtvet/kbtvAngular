@@ -4,8 +4,7 @@ export interface MainTopNavConfig  {
     title?: string;
     subTitle?:string;
 
-    backFn?: Function;
-    backFnParams?: unknown[];
+    customCancelFn?: Function;
 
     buttons?: AppButton[];
 }

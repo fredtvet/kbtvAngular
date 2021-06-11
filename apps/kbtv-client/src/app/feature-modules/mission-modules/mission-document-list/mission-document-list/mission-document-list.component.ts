@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { MissionDocument } from '@core/models';
 import { AppConfirmDialogService } from '@core/services/app-confirm-dialog.service';
@@ -58,14 +58,13 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
     private downloaderService: DownloaderService,
     private facade: MissionDocumentListFacade,
     private route: ActivatedRoute,
-    private router: Router,
     private confirmService: AppConfirmDialogService,
     private modelFormService: ModelFormService<ModelState>) {
       super();
 
       const can = RolePermissions.MissionDocumentList;
 
-      this.navConfig = {title:  "Dokumenter", backFn: this.onBack}
+      this.navConfig = {title:  "Dokumenter"}
 
       this.actionFab = {
         icon: "note_add", aria: 'Legg til', callback: this.openDocumentForm, allowedRoles: can.create
@@ -113,7 +112,5 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
 
   private openDocumentForm = () => 
     this.modelFormService.open(CreateMissionDocumentModelForm, {missionId: this.missionId || undefined});
-  
-  private onBack = () => this.router.navigate(['../'], {relativeTo: this.route.parent});
 
 }

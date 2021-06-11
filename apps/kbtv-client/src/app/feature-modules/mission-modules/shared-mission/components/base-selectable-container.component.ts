@@ -28,7 +28,7 @@ export abstract class BaseSelectableContainerComponent  {
         let selectionBarConfig: Maybe<MainTopNavConfig> = null;
         if(selections.length > 0) selectionBarConfig = {
             title: `${selections.length} element${selections.length === 1 ? '' : 'er'} valgt`,
-            backFn: this.resetSelections,
+            customCancelFn: this.resetSelections,
             buttons: this.selectedItemsActions
         }
         
