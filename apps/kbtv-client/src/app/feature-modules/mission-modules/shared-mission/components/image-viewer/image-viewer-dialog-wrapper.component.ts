@@ -7,6 +7,8 @@ import { _appFileUrl } from '@shared-app/helpers/app-file-url.helper';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { ImageViewerDialogWrapperConfig } from './image-viewer-dialog-wrapper-config.const';
 
+export const DialogClosedByUserEvent = "DIALOG_CLOSED_BY_USER";
+
 @Component({
   selector: 'app-image-viewer-dialog-wrapper',
   template: `
@@ -47,7 +49,7 @@ export class ImageViewerDialogWrapperComponent {
         })
     }
 
-    close = () => this.dialogRef.close();
+    close = () => this.dialogRef.close(DialogClosedByUserEvent);
     
     private deleteCurrentImage(): void{
       this.dialogRef.close();

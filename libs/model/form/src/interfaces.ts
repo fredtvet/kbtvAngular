@@ -56,7 +56,10 @@ export interface ModelFormServiceOptions<TInputState = object> {
     /** A custom title for the form sheet. */
     customTitle?: string, 
     /** Set to true for full screen form. Default is true. */
-    fullScreen?: boolean,
+    fullScreen?: boolean,  
+    /** Enable to append a query param to the route when opened, making the form a part of the browser history. 
+     *  Default is true */
+    useRouting?: boolean
     /** A callback that gets executed when form is submitted. */
     submitCallback?: (val: SaveAction) => void
   }

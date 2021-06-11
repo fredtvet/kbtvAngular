@@ -1,0 +1,1 @@
+export const SheetClosedByUserEvent = "SHEET_CLOSED_BY_USER_EVENT";

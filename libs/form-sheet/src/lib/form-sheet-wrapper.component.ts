@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { FormSheetNavBarComponent } from './form-sheet-nav-bar/form-sheet-nav-bar.component';
 import { FormSheetWrapperConfig } from './interfaces';
+import { SheetClosedByUserEvent } from './sheet-closed-by-user-event.const';
 
 /** Component responsible for rendering a form component in a material bottom sheet.
  *  Also renders the top navigation bar */
@@ -44,7 +45,7 @@ export class FormSheetWrapperComponent  {
         const factory = this.componentFactoryResolver.resolveComponentFactory(FormSheetNavBarComponent);
         let navRef = this.viewContainerRef.createComponent(factory);
         navRef.instance.config = this.config.navConfig;
-        navRef.instance.closed.pipe(first()).subscribe(x => this.close(null));
+        navRef.instance.closed.pipe(first()).subscribe(x => this.close(SheetClosedByUserEvent));
     }
     
     private loadForm(){
@@ -59,7 +60,7 @@ export class FormSheetWrapperComponent  {
 
         formRef.instance.formSubmitted.pipe(first(),
             tap(x => (x && this.config.submitCallback) ? this.config.submitCallback(x) : null),
-        ).subscribe(x => this.close(x))
+        ).subscribe(x => this.close(x || SheetClosedByUserEvent))
     }
 
     private loadLoader(): void{

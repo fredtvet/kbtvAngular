@@ -64,6 +64,9 @@ export interface FormSheetViewConfig<
     navConfig: FormSheetNavConfig,
     /** Set to true to enable full screen forms on mobile. Defaults to true */
     fullScreen?: boolean;
+    /** Enable to append a query param to the route when opened, making the form a part of the browser history. 
+     *  Default is true */
+    useRouting?: boolean
     /** The form component that should be rendered. */
     customFormComponent?: Type<FormComponent<TFormConfig, TForm, TFormState, TResult>>;
 }

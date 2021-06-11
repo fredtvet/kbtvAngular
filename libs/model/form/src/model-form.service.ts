@@ -62,7 +62,8 @@ export class ModelFormService<TState extends object> {
     const entityId = initialValue[_getModelConfig(config.includes.prop).idProp];
     return {
       formConfig: config,
-      fullScreen: options.fullScreen,      
+      fullScreen: options.fullScreen,  
+      useRouting: options.useRouting,    
       customFormComponent: ModelFormComponent,
       navConfig: {
         title: options?.customTitle || 
