@@ -4,5 +4,5 @@
 {
   "extends": "../../api-extractor.base.json",
   "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
-  "mainEntryPointFilePath": "../../dist/global-types/public-api.d.ts"
+  "mainEntryPointFilePath": "../../dist/google-places-autocomplete/public-api.d.ts"
 }
