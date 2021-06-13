@@ -1,8 +1,6 @@
-@import '../../../../styles/variables';
-
 .image-container{
     background-image: url("/assets/login.jpg?");
-    background-color: $accent;
+    background-color: var(--accent-color);
     height:100%;  
     background-size: cover;
     background-repeat: no-repeat; 

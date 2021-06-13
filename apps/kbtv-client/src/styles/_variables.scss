@@ -3,22 +3,9 @@
 $app-primary: mat.define-palette(mat.$grey-palette, 50);
 $app-accent:  mat.define-palette(mat.$cyan-palette, 900);
 $app-warn:    mat.define-palette(mat.$red-palette, A700);
-$primary: mat.get-color-from-palette($app-primary);
-$primary-light: mat.get-color-from-palette($app-primary, lighter);
-$primary-dark: mat.get-color-from-palette($app-primary, darker);
 
 $app-warning: mat.define-palette(mat.$yellow-palette, A400);
 $app-success: mat.define-palette(mat.$green-palette, A400);
-
-$warning: mat.get-color-from-palette($app-warning);
-$success: mat.get-color-from-palette($app-success);
-
-$accent: mat.get-color-from-palette($app-accent);
-$accent-light: mat.get-color-from-palette($app-accent, lighter);
-$accent-dark: mat.get-color-from-palette($app-accent, darker);
-
-$warn: mat.get-color-from-palette($app-warn);
-$warn-light: mat.get-color-from-palette($app-warn, lighter);
 
 $kbtv-client-theme: mat.define-light-theme((
     color: (

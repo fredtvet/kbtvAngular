@@ -1,7 +1,8 @@
+@use '~@angular/material' as mat;
 @import '../../../../styles/variables';
 
 .error-container{
-    background: $warn-light;
+    background: mat.get-color-from-palette($app-warn, lighter);
     border-radius: 6px;
     margin: 0px 12px;
     padding: 12px;

@@ -39,7 +39,6 @@ import { TranslateModelPropPipe } from './pipes/translate-model-prop.pipe';
     MatButtonModule,
     MatDividerModule,
     MatRippleModule,
-
     MatIconModule,
   ],
   exports: [

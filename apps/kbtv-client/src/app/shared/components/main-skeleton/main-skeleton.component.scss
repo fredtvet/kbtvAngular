@@ -50,7 +50,7 @@
 }
 
 ::ng-deep.main-skeleton-card{
-    margin: $gap-size * 5px;
+    margin: calc(var(--gap-size) * 5);
 }
 
 .bottom-bar{

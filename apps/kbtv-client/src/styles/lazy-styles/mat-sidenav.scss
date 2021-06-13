@@ -1,0 +1,7 @@
+@use '~@angular/material' as mat;
+@import '../variables';
+
+@include mat.sidenav-theme($kbtv-client-theme);
+
+// //Fix for bug on iOs
+.mat-drawer-container {position: unset!important;}

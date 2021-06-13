@@ -20,10 +20,10 @@ app-home-mission-card{
 }
 
 .content-container{
-    color:$accent;
+    color: var(--accent-color);
     flex: 1 1 0;
     overflow:hidden;
-    background: linear-gradient(to top, $accent, transparent)!important;  
+    background: linear-gradient(to top, var(--accent-color), transparent)!important;  
 }
 
 mat-toolbar{
@@ -35,7 +35,7 @@ mat-toolbar{
     padding:8px;
     height:var(--bottom-nav-height)!important;
     padding-bottom:var(--bottom-nav-padding)!important;
-    background: $accent;
+    background: var(--accent-color);
     .action-btn{
         line-height:1;
         min-width:40px;

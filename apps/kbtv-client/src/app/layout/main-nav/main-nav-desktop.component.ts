@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, NgModule } from '@angular/core';
+import { CssLoaderService } from '@core/services/css-loader.service';
+import { LazyStyles } from '@shared-app/enums/lazy-styles.enum';
 import { SharedAppModule } from '@shared-app/shared-app.module';
 import { MainNavService } from '../main-nav.service';
 import { SharedLayoutModule } from './shared-layout.module';
@@ -36,7 +38,12 @@ export class MainNavDesktopComponent  {
 
     config$ = this.mainNavService.sideNavHeaderConfig$;
 
-    constructor(private mainNavService: MainNavService){}
+    constructor(
+        private mainNavService: MainNavService,
+        cssLoaderService: CssLoaderService
+    ){ 
+        cssLoaderService.load(LazyStyles.MatSidenav)
+    }
 
 }
 @NgModule({

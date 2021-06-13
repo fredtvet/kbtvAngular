@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
+import { CssLoaderService } from '@core/services/css-loader.service';
+import { LazyStyles } from '@shared-app/enums/lazy-styles.enum';
 
 @NgModule({
    imports: [
@@ -37,5 +39,8 @@ import { MatSliderModule } from '@angular/material/slider';
       MatSliderModule,
    ],
 })
-
-export class AngularMaterialModule {}
+export class AngularMaterialModule {
+   constructor(cssLoaderService: CssLoaderService){
+      cssLoaderService.load(LazyStyles.MatShared)
+   }
+}

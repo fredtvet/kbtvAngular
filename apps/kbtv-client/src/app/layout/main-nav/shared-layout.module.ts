@@ -22,4 +22,4 @@ import { MainSideNavListComponent } from './main-side-nav-list.component';
     MatSidenavModule
   ]
 })
-export class SharedLayoutModule { }
+export class SharedLayoutModule {}

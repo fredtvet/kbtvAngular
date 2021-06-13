@@ -3,30 +3,30 @@
 @import './variables';
 @import './app-animations.scss';
 @import './spacing.scss';
-//Dev only imports (remove for prod, lazily loaded)
-// @import './lazy-styles/ag-grid.scss';
-// @import './lazy-styles/mat-styles.scss';
 
 @include gap-units($gap-size);
+
+
+
 
 html:root{
   --ion-color-primary: black;
   --bottom-nav-inner-height: 48px;
   --bottom-nav-padding: 8px;
-  --bottom-nav-height: calc(var(--bottom-nav-inner-height) +  var(--bottom-nav-padding))
+  --bottom-nav-height: calc(var(--bottom-nav-inner-height) +  var(--bottom-nav-padding));
+  --gap-size: #{$gap-size * 1px};
+  --primary-color: #{mat.get-color-from-palette($app-primary)};
+  --primary-contrast: #{mat.get-color-from-palette($app-primary, default-contrast)};
+  --accent-color: #{mat.get-color-from-palette($app-accent)};
+  --accent-contrast: #{mat.get-color-from-palette($app-accent, default-contrast)};
 }
 
 html, body { height: 100%; overflow:hidden;padding:0;margin:0; overflow-x:hidden}
 body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 
 .primary{
-  background-color:$primary;
-  color: mat.get-color-from-palette($app-primary, default-contrast);
-}
-
-.primary-light{
-  background-color:$primary-light;
-  color: mat.get-color-from-palette($app-primary, lighter-contrast);
+  background-color: var(--primary);
+  color: var(--primary-contrast);
 }
 
 .bg-app{ background: mat.get-color-from-palette($background, status-bar) }
@@ -36,21 +36,21 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 }
 
 .accent{
-  background-color:$accent;
+  background-color:var(--accent-color);
   color: mat.get-color-from-palette($app-accent, default-contrast);
 }
 
 .color-accent{
-  color: $accent;
+  color: var(--accent-color);
 }
 
 .warn{
-  background-color:$warn;
+  background-color: mat.get-color-from-palette($app-warn);
   color: mat.get-color-from-palette($app-warn, default-contrast);
 }
 
 .color-warn{
-  color: $warn;
+  color: mat.get-color-from-palette($app-warn);
 }
 
 .foreground-card{
@@ -77,15 +77,6 @@ a {
   text-decoration: inherit; 
 }
 
-.image_viewer_dialog{
-  max-width:none!important;
-  .mat-dialog-container{
-    background-color:black!important;
-    padding:0!important;
-    border-radius: 0px;
-  }
-}
-
 .notification-error{
   margin-bottom:110px!important;
   @extend .warn;
@@ -93,13 +84,13 @@ a {
 
 .notification-success{
   margin-bottom:110px!important;
-  background:$success;
+  background: mat.get-color-from-palette($app-success);
   color:black;
 }
 
 .notification-warning{
   margin-bottom:110px!important;
-  background:$warning;
+  background: mat.get-color-from-palette($app-warning);
   color:black;
 }
 
