@@ -14,8 +14,8 @@
         closed_width: closedWidth
       }
     }"
-    (swiperight)="position = 'open'" 
-    (swipeleft)="position = 'closed'">
+    (swiperight)="changePosition('open')" 
+    (swipeleft)="changePosition('closed')">
     <ng-content>
       
     </ng-content>

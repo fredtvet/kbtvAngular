@@ -28,7 +28,7 @@
             
             <app-swipe-card openWidth="82px" closedWidth="5px"
                 [position]="summary.openHours === 0 ? null : isXs ? 'closed' : 'open'"
-                [isLocked]="!isXs || summary.openHours === 0">
+                [isLocked]="summary.openHours === 0">
                 
                 <div swipeContent matRipple class="hidden-swipe-content h-100"
                     [ngClass]="summary.openHours > 0 ? 'warn' : 'accent'" 
