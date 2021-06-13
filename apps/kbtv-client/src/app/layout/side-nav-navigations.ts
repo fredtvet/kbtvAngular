@@ -22,7 +22,7 @@ export const SideNavNavigations: NavItem[] = [
   {
     icon: "dns",
     text: "Administrering",
-    allowedRoles: [Roles.Leder],
+    allowedRoles: [Roles.Leder, Roles.Admin],
     children: [
       {
         icon: "dns",

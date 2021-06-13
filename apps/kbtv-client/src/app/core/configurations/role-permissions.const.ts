@@ -1,41 +1,41 @@
 import { Roles } from "../roles.enum";
 
 export const RolePermissions = {
-    DataManagement: {access: [Roles.Leder]},
+    DataManagement: {access: [Roles.Admin, Roles.Leder]},
     MissionDocumentList: {
-        access: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt],
-        create: [Roles.Leder], delete: [Roles.Leder],
-        sendEmail: [Roles.Leder],
+        access: [Roles.Admin, Roles.Leder, Roles.Mellomleder, Roles.Ansatt],
+        create: [Roles.Admin, Roles.Leder], delete: [Roles.Leder],
+        sendEmail: [Roles.Admin, Roles.Leder],
     },
     MissionImageList: {
-        create: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt],
-        delete: [Roles.Leder],
-        sendEmail: [Roles.Leder],
+        create: [Roles.Admin, Roles.Leder, Roles.Mellomleder, Roles.Ansatt],
+        delete: [Roles.Admin, Roles.Leder],
+        sendEmail: [Roles.Admin, Roles.Leder],
     },
     MissionList: {
-        create: [Roles.Leder, Roles.Mellomleder],
-        update: [Roles.Leder],
-        delete: [Roles.Leder],
+        create: [Roles.Admin, Roles.Leder, Roles.Mellomleder],
+        update: [Roles.Admin, Roles.Leder],
+        delete: [Roles.Admin, Roles.Leder],
     },
     MissionNoteList: {
-        access: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt],
-        create: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt],
-        update: [Roles.Leder],
-        delete: [Roles.Leder],
+        access: [Roles.Admin, Roles.Leder, Roles.Mellomleder, Roles.Ansatt],
+        create: [Roles.Admin, Roles.Leder, Roles.Mellomleder, Roles.Ansatt],
+        update: [Roles.Admin, Roles.Leder],
+        delete: [Roles.Admin, Roles.Leder],
     },
     TimesheetAdmin: {
-        access: [Roles.Leder]
+        access: [Roles.Admin, Roles.Leder]
     },
     TimesheetStatistic: {
-        access: [Roles.Leder]
+        access: [Roles.Admin, Roles.Leder]
     },
     Users: {
-        access: [Roles.Leder]
+        access: [Roles.Admin, Roles.Leder]
     },
     UserTimesheetList: {
-        access: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]
+        access: [Roles.Admin, Roles.Leder, Roles.Mellomleder, Roles.Ansatt]
     },
     UserTimesheetWeek: {
-        access: [Roles.Leder, Roles.Mellomleder, Roles.Ansatt]
+        access: [Roles.Admin, Roles.Leder, Roles.Mellomleder, Roles.Ansatt]
     }
 }

@@ -47,7 +47,7 @@
   </ng-container>
 
   <ng-container *ngIf="mission.employer">
-    <ng-container *ifRole="[roles.Ansatt, roles.Leder, roles.Mellomleder]">
+    <ng-container *ifRole="[roles.Ansatt, roles.Leder, roles.Mellomleder, roles.Admin]">
       <div class="mat-body-2 ml-5 mt-3">Oppdragsgiver</div>
       <app-employer-list-item [employer]="mission.employer">
       </app-employer-list-item>   

@@ -24,7 +24,7 @@
     </app-home-mission-card>
 
     <app-home-nav-tile-grid  
-      [columnCount]="([roles.Leder] | ifRole) ? 3 : 2"
+      [columnCount]="([roles.Leder, roles.Admin] | ifRole) ? 3 : 2"
       [navigations]="navigations">
     </app-home-nav-tile-grid>
 
