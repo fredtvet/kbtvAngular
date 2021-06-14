@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angu
 import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
+import { Roles } from '@core/roles.enum';
 import { ModelState } from '@core/state/model-state.interface';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
@@ -32,7 +33,8 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
   @ViewChild('missionImageInput') missionImageInput: ElementRef<HTMLElement>;
 
   FileFolder = FileFolder;
-
+  Roles = Roles;
+  
   baseHeaderImgButton: Partial<AppButton> = {type: ButtonTypes.Stroked}
 
   private can = RolePermissions.MissionList;
@@ -57,7 +59,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
 
   actionFab: AppButton = {
     icon: "camera_enhance", 
-    callback: () => this.openImageInput(this.missionImageInput)
+    callback: () => this.openImageInput(this.missionImageInput),
   }
 
   constructor(

@@ -14,7 +14,7 @@
     </app-header-layout-skeleton>
 
     <app-bottom-action-bar bottombar
-        [fab]="actionFab" 
+        [fab]="([Roles.Oppdragsgiver] | ifRole) ? null : actionFab" 
         [actions]="vm.bottomActions">
     </app-bottom-action-bar>
 
