@@ -1,6 +1,7 @@
 <app-main-skeleton>
 
-    <app-main-top-nav-bar navbar [config]="navConfig" >
+    <app-main-top-nav-bar navbar>
+        Notater
     </app-main-top-nav-bar>
 
     <ng-container *ngIf="notes$ | async; else loading; let notes">

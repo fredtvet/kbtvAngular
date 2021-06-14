@@ -11,11 +11,10 @@ import { MainTopNavConfig } from "@shared/components/main-top-nav-bar/main-top-n
     @ViewChild('contentHeader', {read: ElementRef}) contentHeader: ElementRef<HTMLElement>;
 
     @Input() navConfig: MainTopNavConfig;
+    @Input() title: string;
     @Input() navOverlayDisabled: MainTopNavConfig;
 
     contentScrolledToTop?: boolean = false;
-
-    noTitleNav: Partial<MainTopNavConfig> = {title: undefined}
   
     constructor(private cdRef: ChangeDetectorRef) {  }
   

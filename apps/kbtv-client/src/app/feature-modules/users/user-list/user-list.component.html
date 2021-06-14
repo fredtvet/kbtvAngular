@@ -1,6 +1,7 @@
 <app-main-skeleton>
 
-  <app-main-top-nav-bar navbar [config]="{title: 'Brukere'}">
+  <app-main-top-nav-bar navbar>
+    Brukere
   </app-main-top-nav-bar>
 
   <ng-container *ngIf="(users$ | async) else loading; let users;">

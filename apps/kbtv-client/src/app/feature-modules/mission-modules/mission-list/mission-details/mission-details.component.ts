@@ -11,7 +11,6 @@ import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { ImageViewerDialogService } from '@shared-mission/components/image-viewer/image-viewer-dialog.service';
 import { EditMissionModelForm } from '@shared-mission/forms/save-mission-model-form.const';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
@@ -21,7 +20,7 @@ import { UserTimesheetListCriteriaQueryParam } from 'src/app/feature-modules/tim
 import { SelectedMissionIdParam } from '../mission-list-route-params.const';
 import { MissionListFacade } from '../mission-list.facade';
 
-interface ViewModel { mission: Maybe<Immutable<Mission>>, bottomActions: AppButton[], navConfig: MainTopNavConfig }
+interface ViewModel { mission: Maybe<Immutable<Mission>>, bottomActions: AppButton[] }
 
 @Component({
   selector: 'app-mission-details',
@@ -45,7 +44,6 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     switchMap(x =>  this.facade.getMissionDetails$(x.get(SelectedMissionIdParam))),
     map(mission => { return { 
       bottomActions: this.getBottomActions(mission), 
-      navConfig: { title: mission?.address },
       mission
     }})
   );

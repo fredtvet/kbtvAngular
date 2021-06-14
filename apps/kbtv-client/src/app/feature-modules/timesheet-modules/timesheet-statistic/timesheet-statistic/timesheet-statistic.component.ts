@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { Timesheet } from '@core/models';
+import { GroupByPeriod } from '@shared-app/enums/group-by-period.enum';
 import { _enumSelectionChipsFactory } from '@shared-app/helpers/chips/enum-selection-chips-factory.helper';
 import { _getSetPropCount } from '@shared-app/helpers/object/get-set-prop-count.helper';
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
@@ -9,9 +10,7 @@ import { TimesheetCriteriaFormService } from '@shared-timesheet/timesheet-criter
 import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
 import { AgGridConfig } from '@shared/components/abstracts/ag-grid-config.interface';
 import { BottomBarIconButton } from '@shared/components/bottom-action-bar/bottom-bar-icon-button.interface';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
-import { GroupByPeriod } from '@shared-app/enums/group-by-period.enum';
 import { Immutable, ImmutableArray, Maybe } from 'global-types';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -60,8 +59,6 @@ export class TimesheetStatisticComponent {
   ]).pipe(map(([groupByChips, criteriaChips, {tableConfig, bottomActions}, isFetching]) => { 
     return {groupByChips, criteriaChips, tableConfig, bottomActions, noRowsText: this.getNoRowsText(isFetching)} 
   }))
-
-  navConfig: MainTopNavConfig = {title:  'Timestatistikk'};
   
   constructor( 
     private facade: TimesheetStatisticFacade,

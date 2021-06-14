@@ -1,20 +1,18 @@
-<mat-toolbar #navBar *ngIf="config" [ngClass]="overlayMode ? 'main-top-nav-overlay' : ''">
+<mat-toolbar #navBar [ngClass]="overlayMode ? 'main-top-nav-overlay' : ''">
 
     <app-button class="primary-button" [config]="primaryBtn">
     </app-button>
 
-    <span class="mr-auto ellipsis">
+    <span class="mr-auto ellipsis pl-2">
 
-        <span class="ml-2" *ngIf="config.title">{{ config.title }}</span>
-
-        <span *ngIf="config.subTitle" class="mat-caption ml-1">{{ config.subTitle }}</span>
+        <ng-content></ng-content>
 
     </span>
 
     <app-optimistic-loading-spinner></app-optimistic-loading-spinner>
     
     <span class="custom-buttons">
-        <ng-container *ngIf="config.buttons">
+        <ng-container *ngIf="config && config.buttons">
             <app-button *ngFor="let button of config.buttons | transformButtons: baseActionBtn; trackBy: TrackByButton"
                 [config]="button">
             </app-button>

@@ -2,7 +2,7 @@
 
   <mat-toolbar class="top-bar">
 
-    <h2>{{ vm.currentUser.firstName + ' ' + vm.currentUser.lastName }}</h2>
+    <h2>{{ vm.currentUser.firstName || "" + ' ' + vm.currentUser.lastName || ""}}</h2>
     <span class="mat-caption">Sist synkronisert {{ vm.syncTimestamp | date : 	'd.MMM  kl. H:mm'}}</span> 
     <div class="top-action-bar">
       <button mat-stroked-button appAddToHomeScreen>Legg til app</button>

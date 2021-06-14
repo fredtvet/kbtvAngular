@@ -1,6 +1,8 @@
 <app-main-skeleton navTogglerDisabled=true contentWrapperClass="p-0">
 
-    <app-main-top-nav-bar navbar [config]="navConfig$ | async">
+    <app-main-top-nav-bar navbar>
+        <span>Uker</span>
+        <span class="mat-caption ml-1">{{ subTitle$ | async }}</span>
     </app-main-top-nav-bar>
 
     <ng-container *ngIf="(summaries$ | async) else loading; let summaries">

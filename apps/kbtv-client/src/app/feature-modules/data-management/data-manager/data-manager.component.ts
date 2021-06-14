@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { ModelState } from '@core/state/model-state.interface';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { Prop } from 'global-types';
 import { ModelDataTableComponent } from 'model/data-table';
@@ -33,7 +32,6 @@ export class DataManagerComponent {
   )
 
   properties = this.facade.properties;
-  navConfig: MainTopNavConfig = {title: "Databehandling"}
 
   private selectedItemsActions: AppButton[];
 

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AppConfirmDialogService } from '@core/services/app-confirm-dialog.service';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { _getISO } from 'date-time-helpers';
 import { FormService } from 'form-sheet';
 import { SyncConfigFormSheet } from 'src/app/feature-modules/profile/forms/sync-config.form.const';
@@ -16,7 +15,6 @@ import { _syncFormToConfigConverter } from './sync-form-to-config.converter';
 })
 export class SyncProfileComponent {
 
-  navConfig: MainTopNavConfig;
   bottomActions: AppButton[];
   actions: ProfileAction[];
   
@@ -25,7 +23,6 @@ export class SyncProfileComponent {
     private facade: ProfileFacade,
     private confirmService: AppConfirmDialogService,
   ){
-    this.navConfig = {title: "Synkronisering"};
     this.actions = [
       {text: 'Konfigurasjoner', icon: 'settings', callback: this.updateSyncConfig,
         hint: "Konfigurer synkronisering av data med skyen"},  

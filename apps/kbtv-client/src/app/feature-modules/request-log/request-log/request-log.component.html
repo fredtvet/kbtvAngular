@@ -1,6 +1,7 @@
 <app-main-skeleton class="request-log-container" *ngIf="vm$ | async; let vm">
 
-    <app-main-top-nav-bar navbar [config]="navConfig">
+    <app-main-top-nav-bar navbar>
+      Aktivitetslogg
     </app-main-top-nav-bar>
 
     <app-request-queue-list [requests]="vm.requestQueue" [state]="state" [isOnline]="vm.isOnline">

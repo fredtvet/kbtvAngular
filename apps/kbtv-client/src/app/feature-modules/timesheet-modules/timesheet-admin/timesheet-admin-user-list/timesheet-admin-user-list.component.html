@@ -1,6 +1,7 @@
 <app-main-skeleton>
 
-    <app-main-top-nav-bar navbar [config]="navConfig">
+    <app-main-top-nav-bar navbar>
+        Administrer timer
     </app-main-top-nav-bar>
 
     <ng-container *ngIf="(users$ | async) else loading; let users;">

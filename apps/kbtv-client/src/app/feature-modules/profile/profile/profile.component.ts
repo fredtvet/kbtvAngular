@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppConfirmDialogService } from '@core/services/app-confirm-dialog.service';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { FormService } from 'form-sheet';
 import { CurrentUserPasswordForm, CurrentUserPasswordFormSheet } from '../forms/current-user-password-form.const';
 import { ProfileFormSheet } from '../forms/profile-form.const';
@@ -16,8 +15,6 @@ import { ProfileAction } from './profile-action.interface';
 })
 export class ProfileComponent {
   
-  navConfig: MainTopNavConfig = {title: "Profil"};
-
   bottomActions: AppButton[];
 
   actions: ProfileAction[];

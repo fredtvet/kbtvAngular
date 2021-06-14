@@ -1,6 +1,6 @@
 <app-main-skeleton *ngIf="vm$ | async; let vm" contentWrapperClass="p-0">
     
-    <app-header-layout-skeleton [navConfig]="vm.navConfig" [navOverlayDisabled]="!vm.mission?.fileName">
+    <app-header-layout-skeleton [title]="vm.mission?.address" [navOverlayDisabled]="!vm.mission?.fileName">
 
         <img header appImageErrorPlaceholder style="max-width:100%; width:100%;" alt="Forsidebilde"  
             *ngIf="vm.mission?.fileName; else addHeaderImage" 

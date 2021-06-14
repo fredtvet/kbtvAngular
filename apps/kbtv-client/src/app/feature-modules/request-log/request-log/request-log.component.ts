@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DeviceInfoService } from '@core/services/device-info.service';
 import { StateMissions } from '@core/state/global-state.interfaces';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { _groupBy } from 'array-helpers';
 import { Immutable, ImmutableArray } from 'global-types';
 import { CompletedCommand, QueuedCommand, StateRequestLog, StateRequestQueue } from 'optimistic-http';
@@ -23,8 +22,6 @@ interface ViewModel {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RequestLogComponent {
-
-  navConfig: MainTopNavConfig = { title: "Aktivitetslogg" };
 
   private sortedRequestLog$: Observable<Partial<ViewModel>> = this.store.selectProperty$("requestLog").pipe(
     map(x => {

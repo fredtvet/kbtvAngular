@@ -23,7 +23,7 @@ import { MissionImageListFacade } from '../mission-image-list.facade';
 interface ViewModel { 
   images: Maybe<ImmutableArray<MissionImage>>, 
   columns: 2 | 4,  
-  selectionBarConfig: MainTopNavConfig
+  selectionsTitle: string
 }
 
 @Component({
@@ -44,11 +44,14 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
   vm$: Observable<ViewModel> = combineLatest([
     this.facade.getMissionImages$(this.missionId),
     this.deviceInfoService.isXs$,
-    this.selectionBarConfig$
+    this.currentSelections$
   ]).pipe(
     tap(x => this.images = x[0] || []),
-    map(([images, isXs, selectionBarConfig]) => { return <ViewModel> { 
-      images, selectionBarConfig, columns: isXs ? 2 : 4
+    map(([images, isXs, selections]) => { return <ViewModel> { 
+      images, 
+      selectionsTitle: selections.length === 0 ? null :
+        `${selections.length} bilde${selections.length === 1 ? '' : 'r'} valgt`,
+      columns: isXs ? 2 : 4
     }})
   )
 
@@ -56,7 +59,7 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
 
   bottomActions: AppButton[];
 
-  navConfig: MainTopNavConfig;
+  selectionBarConfig: MainTopNavConfig;
 
   private images: ImmutableArray<MissionImage>;
 
@@ -70,15 +73,16 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
     private route: ActivatedRoute) {
       super();
 
-      this.navConfig = {title:  "Bilder"}
-
       this.actionFab = 
         {icon: "camera_enhance", aria: 'Ta bilde', callback: this.openImageInput, allowedRoles: this.can.create};
 
-      this.selectedItemsActions = [
-        {icon: "send", aria: 'Send', callback: () => this.openMailImageSheet(this.currentSelections), allowedRoles: this.can.sendEmail}, 
-        {icon: "delete_forever", aria: 'Slett', color: 'warn', callback: this.openConfirmDeleteDialog, allowedRoles: this.can.delete}
-      ]
+      this.selectionBarConfig = {
+        customCancelFn: () => this.resetSelections(),
+        buttons: [
+          {icon: "send", aria: 'Send', callback: () => this.openMailImageSheet(this.currentSelections), allowedRoles: this.can.sendEmail}, 
+          {icon: "delete_forever", aria: 'Slett', color: 'warn', callback: this.openConfirmDeleteDialog, allowedRoles: this.can.delete}
+        ]
+      }
 
       this.bottomActions = [
         {icon: 'send', text: 'Send', callback: () => this.openMailImageSheet(<string[]> this.images?.map(x => x.id)), allowedRoles: this.can.sendEmail},
@@ -105,7 +109,7 @@ export class MissionImageListComponent extends BaseSelectableContainerComponent{
 
   private deleteSelectedImages = () => {
     this.deleteImages({ids: this.currentSelections});     
-    this.selectableContainer.resetSelections();
+    this.resetSelections();
   }
 
   private deleteImages = (payload: {ids?: string[], id?: string}) => 

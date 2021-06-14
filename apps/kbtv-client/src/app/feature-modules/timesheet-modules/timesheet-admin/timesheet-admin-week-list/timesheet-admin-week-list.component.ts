@@ -30,7 +30,9 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
   
   isXs$ = this.deviceInfoService.isXs$;
 
-  navConfig$ =  this.facade.weekCriteria$.pipe(map(x => this.getNavConfig(x?.user, x?.year)));
+  subTitle$ =  this.facade.weekCriteria$.pipe(map(({year, user}) => 
+    (year || '') + ' - ' + (user ? (user.firstName + ' ' + user.lastName) : '')
+  ));
 
   bottomActions: AppButton[];
   
@@ -81,13 +83,5 @@ export class TimesheetAdminWeekListComponent extends WithUnsubscribe() {
       (val) => this.facade.updateCriteria(val)
     )
   } 
-
-  private getNavConfig(user: Maybe<Immutable<User>>, year: Maybe<number>): MainTopNavConfig {
-    const fullName = user ? (user.firstName + ' ' + user.lastName) : '';
-    return {
-      title:  "Uker",
-      subTitle: (year || '') + ' - ' + (fullName || ''),
-    }
-  }
   
 }

@@ -8,7 +8,6 @@ import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/compo
 import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm, TimesheetFormState, UserTimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { _timesheetCriteriaChipsFactory } from "@shared-timesheet/helpers/timesheet-criteria-chips-factory.helper";
 import { UserTimesheetCriteriaFormService } from "@shared-timesheet/timesheet-criteria-form-service";
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
@@ -33,8 +32,6 @@ export class UserTimesheetListComponent {
 
   bottomActions: AppButton[];
 
-  navConfig: MainTopNavConfig;
-
   actionFab: AppButton = { 
     icon: "add", aria: 'Legg til', 
     callback: () => this.openTimesheetForm(undefined, <Immutable<Partial<TimesheetForm>>> this.facade.criteria) 
@@ -50,7 +47,6 @@ export class UserTimesheetListComponent {
       { ...BottomIconButtons.Filter,
         callback: this.openTimesheetFilter }
     ]
-    this.navConfig = { title:  "Timeliste" }
   }
 
   openTimesheetForm = (entityId?: Maybe<string>, initialValue?: Immutable<Partial<TimesheetForm>>): void => {

@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Timesheet, User } from '@core/models';
+import { Timesheet } from '@core/models';
 import { AppDialogService } from '@core/services/app-dialog.service';
 import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { _getWeekYear } from 'date-time-helpers';
 import { FormService } from 'form-sheet';
@@ -28,10 +27,14 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
 
   timesheets$ = this.facade.selectedWeekTimesheets$;
 
-  navConfig$: Observable<MainTopNavConfig> = combineLatest([
-    this.facade.selectedWeekNr$,
-    this.facade.weekCriteria$
-  ]).pipe(map(([weekNr, weekCriteria]) => this.getNavConfig(weekCriteria?.user, weekCriteria?.year, weekNr)))
+  titles$: Observable<{title: string, subTitle: string}> = combineLatest([
+    this.facade.selectedWeekNr$.pipe(map(weekNr => "Uke " + (weekNr || ""))),
+    this.facade.weekCriteria$.pipe(
+      map(({year, user}) => (year || "") + ' - ' + (user ? (user.firstName + ' ' + user.lastName) : ''))
+    )
+  ]).pipe(
+    map(([title, subTitle]) => { return { title, subTitle } })
+  )
 
   bottomActions: AppButton[];
 
@@ -79,13 +82,5 @@ export class TimesheetAdminListComponent extends WithUnsubscribe() {
       this.facade.updateCriteria(val)
     }
   );
-  
-  private getNavConfig(user: Maybe<Immutable<User>>, year: Maybe<number>, weekNr: Maybe<number>): MainTopNavConfig {
-    const fullName = user ? (user.firstName + ' ' + user.lastName) : '';
-    return {
-      title:  "Uke " + (weekNr || ""),
-      subTitle: (year || "") + ' - ' + (fullName || ""),
-    }
-  }
 
 }

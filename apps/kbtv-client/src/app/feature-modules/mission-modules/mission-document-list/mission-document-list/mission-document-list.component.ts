@@ -24,7 +24,7 @@ import { MissionDocumentListFacade } from '../mission-document-list.facade';
 interface ViewModel { 
   documents: Maybe<ImmutableArray<MissionDocument>>, 
   isXs: boolean,  
-  selectionBarConfig: MainTopNavConfig
+  selectionsTitle: string
 }
 
 @Component({
@@ -37,10 +37,12 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
   vm$: Observable<ViewModel> = combineLatest([
     this.facade.getMissionDocuments$(this.missionId),
     this.deviceInfoService.isXs$,
-    this.selectionBarConfig$
+    this.currentSelections$
   ]).pipe(
-    map(([documents, isXs, selectionBarConfig]) => { return <ViewModel>{ 
-      documents, isXs, selectionBarConfig
+    map(([documents, isXs, selections]) => { return <ViewModel>{ 
+      documents, isXs, 
+      selectionsTitle: selections.length === 0 ? null :
+        `${selections.length} dokument${selections.length === 1 ? '' : 'er'} valgt`,
     }})
   )
 
@@ -48,7 +50,7 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
     return this.route.parent?.parent?.snapshot.paramMap.get(SelectedMissionIdParam) 
   }
 
-  navConfig: MainTopNavConfig;
+  selectionBarConfig: MainTopNavConfig;
 
   actionFab: AppButton;
 
@@ -64,16 +66,17 @@ export class MissionDocumentListComponent extends BaseSelectableContainerCompone
 
       const can = RolePermissions.MissionDocumentList;
 
-      this.navConfig = {title:  "Dokumenter"}
-
       this.actionFab = {
         icon: "note_add", aria: 'Legg til', callback: this.openDocumentForm, allowedRoles: can.create
       };
 
-      this.selectedItemsActions = [
-        {icon: "send", aria: 'Send', callback: this.openMailDocumentSheet, allowedRoles: can.sendEmail}, 
-        {icon: "delete_forever", aria: 'Slett', color: 'warn', callback: this.openConfirmDeleteDialog, allowedRoles: can.delete}
-      ]
+      this.selectionBarConfig = {
+        customCancelFn: () => super.resetSelections,
+        buttons: [
+          {icon: "send", aria: 'Send', callback: this.openMailDocumentSheet, allowedRoles: can.sendEmail}, 
+          {icon: "delete_forever", aria: 'Slett', color: 'warn', callback: this.openConfirmDeleteDialog, allowedRoles: can.delete}
+        ]
+      }
     }
 
   downloadDocument = (document: MissionDocument) => 

@@ -1,12 +1,13 @@
 <app-main-top-nav-bar class="nav-bar"
     [ngClass]="contentScrolledToTop ? 'solid mat-elevation-z1' : ''" 
-    [config]="contentScrolledToTop ? navConfig : (navConfig | mergeObj : noTitleNav)"
+    [config]="navConfig"
     [overlayMode]="(
         navOverlayDisabled || 
         !header.childNodes.length || 
         header.childNodes[0].nodeName === '#comment' || 
         contentScrolledToTop) 
         ? false : true">
+    {{ contentScrolledToTop ? title : "" }}
 </app-main-top-nav-bar>
 
 <div class="content-container">
@@ -20,7 +21,7 @@
 
         <mat-icon class="drag-handle">drag_handle</mat-icon>
 
-        <div class="content-header-title">{{ navConfig.title }}</div>
+        <div class="content-header-title">{{ title }}</div>
 
     </div>
     

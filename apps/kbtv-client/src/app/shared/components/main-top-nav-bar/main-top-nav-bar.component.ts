@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { _trackByAppButton } from '@shared-app/track-by-app-button';
+import { Maybe } from 'global-types';
 import { MainTopNavConfig } from './main-top-nav.config';
 
 @Component({
@@ -14,14 +15,14 @@ import { MainTopNavConfig } from './main-top-nav.config';
 })
 export class MainTopNavBarComponent {
 
-  @Input() config: MainTopNavConfig;
+  @Input() config: Maybe<MainTopNavConfig>;
   @Input() overlayMode: boolean;
   
   baseActionBtn: Partial<AppButton> = {type: ButtonTypes.Icon};
 
   get primaryBtn(): AppButton {
     return {
-      callback: this.config.customCancelFn || this.onBack, 
+      callback: this.config?.customCancelFn || this.onBack, 
       type: ButtonTypes.Icon,
       aria: 'Tilbake', 
       icon: 'close'

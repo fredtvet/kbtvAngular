@@ -7,7 +7,6 @@ import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { UserTimesheetCardDialogWrapperComponent } from "@shared-timesheet/components/user-timesheet-card-dialog-wrapper.component";
 import { CreateUserTimesheetModelForm, EditUserTimesheetModelForm, TimesheetForm } from '@shared-timesheet/forms/save-timesheet-model-forms.const';
 import { WeekCriteria } from '@shared-timesheet/interfaces';
-import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { _getDateOfWeek, _getWeekRange } from 'date-time-helpers';
 import { FormService } from "form-sheet";
@@ -29,8 +28,7 @@ import { ViewModel } from './view-model.interface';
 })
 export class UserTimesheetWeekComponent {
 
-  navConfig$: Observable<MainTopNavConfig> = 
-    this.facade.weekCriteria$.pipe(map(x => this.getNavConfig(x)));
+  titles$ = this.facade.weekCriteria$.pipe(map(x => this.getTitles(x)));
 
   vm$: Observable<ViewModel> = combineLatest([
     this.facade.weekDaySummaries$,
@@ -91,7 +89,7 @@ export class UserTimesheetWeekComponent {
     );
   }
 
-  private getNavConfig(weekCriteria: Maybe<Partial<WeekCriteria>>): MainTopNavConfig{
+  private getTitles(weekCriteria: Maybe<Partial<WeekCriteria>>): {title: string, subTitle: string} {
     return { 
       title:  "Uke " + weekCriteria?.weekNr || "",
       subTitle: weekCriteria?.year?.toString() || "",
