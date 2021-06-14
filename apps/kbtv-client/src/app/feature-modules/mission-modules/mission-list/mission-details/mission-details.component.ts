@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
@@ -15,7 +16,7 @@ import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { UserTimesheetListCriteriaQueryParam } from 'src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const';
 import { SelectedMissionIdParam } from '../mission-list-route-params.const';
 import { MissionListFacade } from '../mission-list.facade';
@@ -42,6 +43,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
 
   vm$: Observable<ViewModel> =  this.route.paramMap.pipe(
     switchMap(x =>  this.facade.getMissionDetails$(x.get(SelectedMissionIdParam))),
+    tap(x => x == null ? this.router.navigate(['oppdrag']) : null),
     map(mission => { return { 
       bottomActions: this.getBottomActions(mission), 
       mission
@@ -64,6 +66,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     private facade: MissionListFacade,
     private route: ActivatedRoute,
     private router: Router,
+    private location: Location,
     private imageViewer: ImageViewerDialogService,
     private modelFormService: ModelFormService<ModelState>
   ) { super() }
@@ -80,8 +83,8 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
  
   private openImageInput = (ref: ElementRef<HTMLElement>): void => ref?.nativeElement?.click();
 
-  private openMissionForm = (entityId: Maybe<string>) => 
-    this.modelFormService.open(EditMissionModelForm, {id: <string> entityId}, {onDeleteUri: "/oppdrag"})
+  private openMissionForm = (id: string | undefined) => 
+    this.modelFormService.open(EditMissionModelForm, {id})
 
   private goToTimesheets = (mission: Maybe<Immutable<Mission>>) => 
     this.router.navigate(['timer', {
