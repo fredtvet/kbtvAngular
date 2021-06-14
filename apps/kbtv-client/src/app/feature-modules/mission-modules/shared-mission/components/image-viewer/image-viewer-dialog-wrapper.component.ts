@@ -36,6 +36,7 @@ export class ImageViewerDialogWrapperComponent {
     private dialogRef: MatDialogRef<ImageViewerDialogWrapperComponent>,
     @Inject(MAT_DIALOG_DATA) public cfg: ImageViewerDialogWrapperConfig
     ) {
+      this.currentImage = cfg.currentImage;
       this.navConfig = {
         buttons: [{text: "Last ned bilde", icon: "cloud_download", callback: this.downloadImage}],
         customCancelFn: this.close
@@ -53,13 +54,13 @@ export class ImageViewerDialogWrapperComponent {
     
     private deleteCurrentImage(): void{
       this.dialogRef.close();
-      this.cfg.deleteAction?.callback(<string> this.cfg.currentImage.id)
+      this.cfg.deleteAction?.callback(<string> this.currentImage.id)
     }
     
     private downloadImage = () => 
-      this.cfg.currentImage?.fileName ? 
+      this.currentImage?.fileName ? 
       this.downloaderService.downloadUrl(
-        _appFileUrl(this.cfg.currentImage.fileName, this.cfg.downloadFolder || this.cfg.fileFolder)
+        _appFileUrl(this.currentImage.fileName, this.cfg.downloadFolder || this.cfg.fileFolder)
       ) : null
     
     private openConfirmDeleteDialog = () => {  
