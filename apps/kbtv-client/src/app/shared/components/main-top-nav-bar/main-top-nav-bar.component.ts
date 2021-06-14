@@ -1,10 +1,12 @@
 import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DeviceInfoService } from '@core/services/device-info.service';
 import { ButtonTypes } from '@shared-app/enums/button-types.enum';
 import { AppButton } from '@shared-app/interfaces/app-button.interface';
 import { _trackByAppButton } from '@shared-app/track-by-app-button';
 import { Maybe } from 'global-types';
+import { MainSkeletonRouteData } from '../main-skeleton/main-skeleton-route-data.interface';
 import { MainTopNavConfig } from './main-top-nav.config';
 
 @Component({
@@ -17,10 +19,10 @@ export class MainTopNavBarComponent {
 
   @Input() config: Maybe<MainTopNavConfig>;
   @Input() overlayMode: boolean;
-  
+
   baseActionBtn: Partial<AppButton> = {type: ButtonTypes.Icon};
 
-  get primaryBtn(): AppButton {
+  get cancelButton(): AppButton {
     return {
       callback: this.config?.customCancelFn || this.onBack, 
       type: ButtonTypes.Icon,
@@ -29,8 +31,15 @@ export class MainTopNavBarComponent {
     }
   };
 
+  get showCancelButton(): boolean {
+    return this.deviceInfoService.isS || 
+      (<MainSkeletonRouteData> this.route.snapshot.data).viewType === "overlay";
+  } 
+
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
+    private deviceInfoService: DeviceInfoService,
     private location: Location
   ) {}
 

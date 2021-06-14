@@ -41,7 +41,9 @@ export class DeviceInfoService {
     )
 
   get isXs(): boolean { return this.breakpointObserver.isMatched(Breakpoints.XSmall) }
-  
+
+  get isS(): boolean { return this.breakpointObserver.isMatched([Breakpoints.XSmall, Breakpoints.Small]) }
+
   deviceInfo$ = combineLatest([this.isOnline$, this.isXs$]).pipe(
     map(([isOnline, isXs])=> { return {isOnline, isXs} })
   )

@@ -1,6 +1,6 @@
 <mat-toolbar #navBar [ngClass]="overlayMode ? 'main-top-nav-overlay' : ''">
 
-    <app-button class="primary-button" [config]="primaryBtn">
+    <app-button *ngIf="showCancelButton" class="cancel-button" [config]="cancelButton">
     </app-button>
 
     <span class="mr-auto ellipsis pl-2">
