@@ -5,7 +5,7 @@ img{
     transform: translatex(calc(50vw - 50%)) translatey(calc(50vh - 50%));
 }
 
-.page-counter{
+.page-counter {
   background:rgba(0,0,0,0.5);
   border-radius: 10px;
   padding: 12px;
@@ -18,7 +18,13 @@ img{
     z-index:2;
     text-align: center;
     width: 100%;  
-    margin-bottom: 20px;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 959px) { 
+    .page-counter > button { display: none } 
 }
 
 ion-spinner{
