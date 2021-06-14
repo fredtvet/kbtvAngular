@@ -19,6 +19,7 @@ export class MainTopNavBarComponent {
 
   @Input() config: Maybe<MainTopNavConfig>;
   @Input() overlayMode: boolean;
+  @Input() alwaysShowCancelButton: boolean;
 
   baseActionBtn: Partial<AppButton> = {type: ButtonTypes.Icon};
 
@@ -32,7 +33,7 @@ export class MainTopNavBarComponent {
   };
 
   get showCancelButton(): boolean {
-    return this.deviceInfoService.isS || 
+    return this.alwaysShowCancelButton || this.deviceInfoService.isS || 
       (<MainSkeletonRouteData> this.route.snapshot.data).viewType === "overlay";
   } 
 

@@ -11,6 +11,13 @@ mat-toolbar{
         color 100ms linear;
 }
 
+.title-container{
+    margin-right:auto;
+    padding-left: 8px; 
+    display: flex;
+    align-items: center;   
+}
+
 ::ng-deep.main-top-nav-overlay{
     color:white;
     position:absolute;
