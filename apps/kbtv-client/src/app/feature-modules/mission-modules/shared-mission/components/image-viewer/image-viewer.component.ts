@@ -13,7 +13,6 @@ import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-n
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImageViewerComponent {
-  toolbarHidden = false;
 
   @Input() images: Maybe<ModelFile[]>;
   @Input() currentImage: ModelFile;

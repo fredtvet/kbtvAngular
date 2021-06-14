@@ -1,10 +1,9 @@
-<app-main-top-nav-bar [config]="navConfig" overlayMode=true [appHide]="toolbarHidden">
+<app-main-top-nav-bar [config]="navConfig" overlayMode=true>
 </app-main-top-nav-bar>
 
 <ng-container *ngIf="loadingImage$ | async; let loadingImage">
   <img appImageErrorPlaceholder [appHide]="loadingImage.loading" alt="oppdragsbilde"
     [src]="currentImage.fileName | appFileUrl: this.folder" layout-fill
-    (tap)="toolbarHidden = !toolbarHidden" 
     (swiperight)="previousImage()" 
     (swipeleft)="nextImage()" 
     (load)="onCurrentImageLoaded()"/>
@@ -12,7 +11,7 @@
   <ion-spinner [appHide]="!loadingImage.loading" name="dots"></ion-spinner>
 </ng-container>
 
-<div *ngIf="images?.length" class="page-counter-container" [appHide]="toolbarHidden">
+<div *ngIf="images?.length" class="page-counter-container">
   <span class="page-counter">{{ index + 1 }} / {{ images?.length }}</span>
 </div>
 
