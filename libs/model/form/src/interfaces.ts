@@ -47,10 +47,6 @@ export interface ModelFormConfig<
 export interface ModelFormServiceOptions<TInputState = object> {
     /** Additional form state that should be merged with model state */ 
     formState?: Immutable<TInputState> | Observable<Immutable<TInputState>>,
-    /** If set, user will be redirected when saving the model. */
-    onSaveUri?: string, 
-    /** If set, user will be redirected when deleting the model. */
-    onDeleteUri?: string, 
     /** If set to false, the delete option will not be displayed. */
     deleteDisabled?: boolean, 
     /** A custom title for the form sheet. */

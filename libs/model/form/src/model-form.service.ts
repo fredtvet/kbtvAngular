@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
-import { Router } from '@angular/router';
 import { FormService, FormSheetViewConfig, FormSheetWrapperComponent } from 'form-sheet';
 import { Immutable, Maybe } from "global-types";
 import { StateModels, _getModelConfig } from "model/core";
@@ -18,7 +17,6 @@ export class ModelFormService<TState extends object> {
 
   constructor(
     private formService: FormService,
-    private router: Router,
     private facade: ModelFormFacade<TState, StateModels<TState>>
   ) {}
 
@@ -43,9 +41,6 @@ export class ModelFormService<TState extends object> {
         { formState: options?.formState, initialValue },
         options?.submitCallback
       )
-
-    if(options?.onSaveUri)
-      ref.afterDismissed().subscribe(x => this.router.navigate([options.onSaveUri]))
 
     return ref;
   }
@@ -73,7 +68,7 @@ export class ModelFormService<TState extends object> {
             undefined : 
             [{ icon: 'delete_forever', color: "warn", 
                callback: (ref: BottomSheetRef) => 
-                this.facade.confirmDelete(<any> config, entityId, options?.onDeleteUri, ref) 
+                this.facade.confirmDelete(<any> config, entityId, ref) 
             }]    
       },
     }
