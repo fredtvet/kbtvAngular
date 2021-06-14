@@ -35,7 +35,17 @@
                 "input": "apps/kbtv-client/src/styles/lazy-styles/ag-grid.scss",
                 "bundleName": "ag-grid",
                 "inject": false
-              }        
+              },
+              {
+                "input": "apps/kbtv-client/src/styles/lazy-styles/mat-shared.scss",
+                "bundleName": "mat-shared",
+                "inject": false
+              },
+              {
+                "input": "apps/kbtv-client/src/styles/lazy-styles/mat-sidenav.scss",
+                "bundleName": "mat-sidenav",
+                "inject": false
+              }      
             ],
             "scripts": [],
             "vendorChunk": true,
@@ -53,6 +63,7 @@
                   "with": "apps/kbtv-client/src/environments/environment.prod.ts"
                 }
               ],
+              "sourceMap": false,
               "optimization": true,
               "outputHashing": "all",
               "extractCss": true,

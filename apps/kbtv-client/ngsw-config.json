@@ -4,12 +4,12 @@
   "assetGroups": [
     {
       "name": "app",
-      "installMode": "lazy",   
+      "installMode": "prefetch",   
       "resources": {
         "files": [
           "/favicon.ico",
           "/index.html",
-          "/manifest.json",
+          "/manifest.webmanifest",
           "/*.css",
           "/*.js"
         ]
