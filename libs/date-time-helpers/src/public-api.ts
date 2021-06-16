@@ -22,4 +22,6 @@ export * from './lib/get-week-year.helper'
 export * from './lib/get-year-range.helper'
 export * from './lib/merge-date-and-time.helper'
 export * from './lib/get-date-years-ago.helper'
+export * from './lib/get-start-of-day.helper'
+export * from './lib/is-date-in-date-range.helper';
 export * from './lib/interfaces'

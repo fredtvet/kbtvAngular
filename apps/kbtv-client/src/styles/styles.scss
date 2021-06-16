@@ -6,9 +6,6 @@
 
 @include gap-units($gap-size);
 
-
-
-
 html:root{
   --ion-color-primary: black;
   --bottom-nav-inner-height: 48px;
@@ -58,6 +55,8 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 }
 
 .bottom-bar-padding{ padding-bottom: var(--bottom-nav-height)!important; }
+
+.main-skeleton-fullscreen { padding-bottom: 0px!important; margin-bottom: 0px!important; }
 
 .line-height-100{line-height:100%}
 
@@ -122,10 +121,14 @@ a {
   }
 }
 
-.date-range-question-group{
+.mission-date-range-question-group{
+  .question-container > * { margin: 16px 16px 0px 0px!important; }
+}
+
+.timesheet-date-range-question-group{
   .question-container > * { margin: 0px 16px 24px 0px!important; }
 }
 
-.date-time-question-group{
+.timesheet-date-time-question-group{
   .question-container > * { margin: 24px 16px 0px 0px!important; }
 }

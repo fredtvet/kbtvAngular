@@ -4,6 +4,7 @@ import { _criteriaChipsFactory } from "@shared-app/helpers/chips/criteria-chips-
 import { AppChip } from "@shared-app/interfaces/app-chip.interface";
 import { MissionCriteria } from "@shared/interfaces";
 import { _weakMemoizer } from "array-helpers";
+import { _formatDateRange, _formatShortDate } from "date-time-helpers";
 import { Maybe, Immutable } from "global-types";
 import { _getModelDisplayValue } from "model/core";
 
@@ -24,7 +25,8 @@ function missionCriteriaChipsFactory(
       {
         finished: { valueFormatter: (val) => val ? "Ferdig" : undefined },
         employer: { valueFormatter: (val) => val ? _getModelDisplayValue<ModelState, Employer>("employers", val) : undefined },
-        missionType: { valueFormatter: (val) => val ? _getModelDisplayValue<ModelState, MissionType>("missionTypes", val) : undefined }
+        missionType: { valueFormatter: (val) => val ? _getModelDisplayValue<ModelState, MissionType>("missionTypes", val) : undefined },
+        dateRange: { valueFormatter: (val) => val ? _formatDateRange(val, _formatShortDate) : undefined }, 
       },
     )
 }

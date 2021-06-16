@@ -1,19 +1,22 @@
 import { Mission, MissionType } from '@core/models';
-import { StateMissions, StateEmployers, StateMissionTypes } from '@core/state/global-state.interfaces';
-import { DynamicControl, DynamicForm, _formStateBinding } from 'dynamic-forms';
+import { StateEmployers, StateMissions, StateMissionTypes } from '@core/state/global-state.interfaces';
 import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
+import { DateRangeControlGroup, DateRangeControlGroupState, EmployerSelectControl } from '@shared/constants/common-controls.const';
+import { SyncModelDateRangeFormStateSetters } from '@shared/constants/common-form-state-setters.const';
+import { MissionCriteria } from '@shared/interfaces';
 import { AutoCompleteQuestionComponent } from '@shared/scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '@shared/scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
-import { RadioGroupQuestionComponent, RadioGroupQuestion } from '@shared/scam/dynamic-form-questions/radio-group-question.component';
-import { SelectQuestionComponent, SelectQuestion } from '@shared/scam/dynamic-form-questions/select-question.component';
-import { MissionCriteria } from '@shared/interfaces';
-import { EmployerSelectControl } from '@shared/constants/common-controls.const';
-import { Immutable } from 'global-types';
+import { RadioGroupQuestion, RadioGroupQuestionComponent } from '@shared/scam/dynamic-form-questions/radio-group-question.component';
+import { SelectQuestion, SelectQuestionComponent } from '@shared/scam/dynamic-form-questions/select-question.component';
+import { DynamicControl, DynamicForm, _formStateBinding } from 'dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
+import { Immutable, NotNull } from 'global-types';
+import { StateSyncConfig } from 'state-sync';
 
-export type MissionCriteriaFormState = StateMissions & StateEmployers & StateMissionTypes
+export type MissionCriteriaFormState = StateMissions & StateEmployers & 
+    StateMissionTypes & StateSyncConfig & DateRangeControlGroupState
 
-export interface MissionCriteriaForm extends Pick<MissionCriteria, "searchString" | "missionType" | "employer" | "finished"> {}
+export interface MissionCriteriaForm extends NotNull<MissionCriteria> {}
 
 type FormState = MissionCriteriaFormState;
 
@@ -52,18 +55,20 @@ const FinishedControl: Immutable<DynamicControl<boolean, FormState, RadioGroupQu
     }, 
 }
 
-export const MissionCriteriaForm: Immutable<DynamicForm<MissionCriteria, FormState>> = {
+export const MissionCriteriaForm: Immutable<DynamicForm<MissionCriteriaForm, FormState>> = {
     submitText: "Bruk", 
     resettable: true, resetState: {finished: false},
     controls: {
         searchString: SearchStringControl,
         employer: EmployerSelectControl,
         missionType: MissionTypeControl,
-        finished: FinishedControl
+        dateRange: {...DateRangeControlGroup, panelClass: "mission-date-range-question-group"},
+        finished: FinishedControl,
     },
+    formStateSetters: SyncModelDateRangeFormStateSetters
 }
 
-export const MissionCriteriaFormSheet: Immutable<FormSheetViewConfig<MissionCriteriaForm, MissionCriteriaFormState>> = {
+export const MissionCriteriaFormSheet: Immutable<FormSheetViewConfig<MissionCriteriaForm, FormState>> = {
     formConfig: MissionCriteriaForm, 
     navConfig: {title: "Velg filtre"},
 }

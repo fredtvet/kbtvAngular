@@ -26,8 +26,8 @@ export class MissionListFacade {
     return this.componentStore.state.missionCriteria;
   }
 
-  criteriaFormState$: Observable<Immutable<MissionCriteriaFormState>> = 
-    this.store.select$(["missionTypes", "employers", "missions"]);
+  criteriaFormState$: Observable<Immutable<Partial<MissionCriteriaFormState>>> = 
+    this.store.select$(["missionTypes", "employers", "missions", "syncConfig"]);
   
   get currentUser() { return this.store.state.currentUser }
 
@@ -48,7 +48,7 @@ export class MissionListFacade {
     )
   }
 
-  addCriteria = (missionCriteria: MissionCriteria): void => 
+  addCriteria = (missionCriteria: Immutable<MissionCriteria>): void => 
     this.componentStore.dispatch(<SetMissionCriteriaAction>{ type: SetMissionCriteriaAction, missionCriteria });
     
   updateHeaderImage(id: string, file: File): void {

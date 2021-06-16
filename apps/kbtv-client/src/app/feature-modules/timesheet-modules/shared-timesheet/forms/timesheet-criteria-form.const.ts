@@ -1,13 +1,15 @@
 import { StateMissions, StateUsers } from '@core/state/global-state.interfaces';
-import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { translations } from '@shared-app/constants/translations.const';
-import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
-import { MissionAutoCompleteControl, UserSelectControl } from '@shared/constants/common-controls.const';
+import { DateRangePresets } from '@shared-app/enums/date-range-presets.enum';
 import { TimesheetStatus } from '@shared-app/enums/timesheet-status.enum';
-import { IonDateQuestionComponent, IonDateQuestion } from '@shared/scam/dynamic-form-questions/ion-date-time-question.component';
+import { _getISODateRange } from '@shared-app/helpers/get-iso-date-range.helper';
+import { TimesheetCriteria } from '@shared-timesheet/timesheet-filter/timesheet-criteria.interface';
+import { DateRangeControlGroup, DateRangeControlGroupState, MissionAutoCompleteControl, UserSelectControl } from '@shared/constants/common-controls.const';
+import { SyncModelDateRangeFormStateSetters } from '@shared/constants/common-form-state-setters.const';
+import { IonDateQuestion, IonDateQuestionComponent } from '@shared/scam/dynamic-form-questions/ion-date-time-question.component';
 import { RadioGroupQuestion, RadioGroupQuestionComponent } from '@shared/scam/dynamic-form-questions/radio-group-question.component';
-import { DateRange, _getISO, _getMonthRange } from 'date-time-helpers';
-import { DynamicControl, DynamicControlGroup, DynamicForm, _formStateBinding, _formStateSetter } from 'dynamic-forms';
+import { _getISO, _getMonthRange } from 'date-time-helpers';
+import { DynamicControl, DynamicForm, _formStateSetter } from 'dynamic-forms';
 import { FormSheetViewConfig } from 'form-sheet';
 import { Immutable, Maybe, NotNull } from 'global-types';
 import { Converter } from 'model/form';
@@ -26,16 +28,13 @@ export const _timesheetCriteriaToForm : Converter<TimesheetCriteria, DeepPartial
     ({dateRange, ...rest}) => {        
         return {
             ...rest,
-            dateRange: !dateRange ? undefined : {
-                start: dateRange.start ? _getISO(dateRange.start) : undefined, 
-                end: dateRange.end ? _getISO(dateRange.end) : undefined, 
-            },
+            dateRange: !dateRange ? undefined : _getISODateRange(dateRange),
             customMonthISO: (dateRange && rest.dateRangePreset === DateRangePresets.CustomMonth) ? 
                 _getISO(dateRange.start) : null
         }
     }
 
-export type TimesheetCriteriaFormState = StateUsers & StateMissions & { startMax: string, startMin: string, endMax: string, endMin: string }
+export type TimesheetCriteriaFormState = StateUsers & StateMissions & DateRangeControlGroupState;
 
 export interface TimesheetCriteriaForm extends UserTimesheetCriteriaForm, NotNull<Pick<TimesheetCriteria, "user">> {};
 
@@ -57,37 +56,7 @@ const DateRangePresetControl: Immutable<DynamicControl<DateRangePresets, null, R
         }
     }, 
 }
-const CustomDateRangeControlGroup: Immutable<DynamicControlGroup<DateRange, FormState>> = { 
-    panelClass: "date-range-question-group",
-    controls: {
-        start: {
-            questionComponent: IonDateQuestionComponent,
-            question: <IonDateQuestion<TimesheetCriteriaFormState>>{
-                placeholder: "Startdato", 
-                width: "45%",
-                ionFormat:"YYYY-MMMM-DD",
-                datePipeFormat: "MMM d, y",
-                stateBindings: {
-                    min: _formStateBinding<FormState, string>()(["startMin"], (s) => s.startMin ),         
-                    max: _formStateBinding<FormState, string>()(["startMax"], (s) => s.startMax )
-                }              
-            },  
-        },
-        end: {
-            questionComponent: IonDateQuestionComponent,
-            question: <IonDateQuestion<TimesheetCriteriaFormState>>{
-                placeholder: "Sluttdato", 
-                width: "45%",
-                ionFormat:"YYYY-MMMM-DD",      
-                datePipeFormat: "MMM d, y", 
-                stateBindings: {
-                    min: _formStateBinding<FormState, string>()(["endMin"], (s) => s.endMin ),         
-                    max: _formStateBinding<FormState, string>()(["endMax"], (s) => s.endMax )
-                }  
-            },  
-        },
-    }
-}
+
 const CustomMonthControl: Immutable<DynamicControl<Maybe<string>, null, IonDateQuestion<TimesheetCriteriaForm>>> = { 
     panelClass: "mt-0",
     questionComponent:  IonDateQuestionComponent,        
@@ -122,21 +91,11 @@ export const UserTimesheetCriteriaForm: Immutable<DynamicForm<UserTimesheetCrite
     controls: {
         mission: {...MissionAutoCompleteControl, required: false},
         dateRangePreset: DateRangePresetControl,
-        dateRange: CustomDateRangeControlGroup,
+        dateRange: {...DateRangeControlGroup, panelClass: "timesheet-date-range-question-group",},
         customMonthISO: CustomMonthControl,
         status: StatusControl,
     },
-    formStateSetters: [
-        _formStateSetter<TimesheetCriteriaForm, UserTimesheetCriteriaFormState>()(["dateRange.start"], ["syncConfig"], (f,s) => { 
-            return { endMin: <string> f['dateRange.start'] || (s.syncConfig?.initialTimestamp ? _getISO(s.syncConfig.initialTimestamp) : undefined) } 
-        }), 
-        _formStateSetter<TimesheetCriteriaForm, UserTimesheetCriteriaFormState>()([], ["syncConfig"], (f,s) => { 
-            return { startMin: s.syncConfig?.initialTimestamp ? _getISO(s.syncConfig.initialTimestamp) : undefined } 
-        }),
-        _formStateSetter<TimesheetCriteriaForm, UserTimesheetCriteriaFormState>()(["dateRange.end"], [], (f) => { 
-            return { startMax: <string> f['dateRange.end'] } 
-        }),
-    ]
+    formStateSetters: SyncModelDateRangeFormStateSetters
 }
 
 export const UserTimesheetCriteriaFormSheet: Immutable<FormSheetViewConfig<UserTimesheetCriteriaForm, UserTimesheetCriteriaFormState>> = {
@@ -150,7 +109,7 @@ export const TimesheetCriteriaForm: Immutable<DynamicForm<TimesheetCriteriaForm,
         user: UserSelectControl,
         mission: {...MissionAutoCompleteControl, required: false},
         dateRangePreset: DateRangePresetControl,
-        dateRange: CustomDateRangeControlGroup,
+        dateRange: DateRangeControlGroup,
         customMonthISO: CustomMonthControl,
         status: StatusControl,
     },

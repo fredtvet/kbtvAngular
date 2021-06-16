@@ -39,7 +39,7 @@ const _modelToForm: Converter<Timesheet, Partial<TimesheetForm>> =
     }}};
     
 const DateTimeControlGroup: Immutable<DynamicControlGroup<TimesheetDateTime, FormState>> = { 
-    panelClass: "date-time-question-group",
+    panelClass: "timesheet-date-time-question-group",
     controls: {
         date: { required: true, questionComponent: IonDateQuestionComponent, 
             question: <IonDateQuestion<{dateTime?: TimesheetDateTime}>>{

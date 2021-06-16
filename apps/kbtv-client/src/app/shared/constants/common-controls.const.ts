@@ -3,7 +3,7 @@ import { Employer, Mission, User } from '@core/models';
 import { StateEmployers, StateMissions, StateUsers } from '@core/state/global-state.interfaces';
 import { _compareProp } from '@shared-app/helpers/compare-with-prop.helper';
 import { isObjectValidator } from '@shared/validators/is-object.validator';
-import { DynamicControl, _formStateBinding } from 'dynamic-forms';
+import { DynamicControl, DynamicControlGroup, _formStateBinding } from 'dynamic-forms';
 import { Immutable } from 'global-types';
 import { AutoCompleteQuestionComponent } from '../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.component';
 import { AutoCompleteQuestion } from '../scam/dynamic-form-questions/auto-complete-question/auto-complete-question.interface';
@@ -11,6 +11,8 @@ import { GooglePlacesAutoCompleteQuestion, GooglePlacesAutoCompleteQuestionCompo
 import { InputQuestion, InputQuestionComponent } from '../scam/dynamic-form-questions/input-question.component';
 import { SelectQuestion, SelectQuestionComponent } from '../scam/dynamic-form-questions/select-question.component';
 import { ValidationRules } from '../../shared-app/constants/validation-rules.const';
+import { DateRange } from 'date-time-helpers';
+import { IonDateQuestion, IonDateQuestionComponent } from '@shared/scam/dynamic-form-questions/ion-date-time-question.component';
 
 export const PhoneNumberControl: Immutable<DynamicControl<string, null, InputQuestion>> = { 
     questionComponent: InputQuestionComponent,
@@ -108,4 +110,36 @@ export const ConfirmPasswordControl: Immutable<DynamicControl<string, null, Inpu
     question: { 
         placeholder: "Gjenta nytt passord", type: "password", hideable: true, defaultHidden: true,
     }, 
+}
+
+export interface DateRangeControlGroupState { startMax: string, startMin: string, endMax: string, endMin: string }
+export const DateRangeControlGroup: Immutable<DynamicControlGroup<DateRange, DateRangeControlGroupState>> = { 
+    controls: {
+        start: {
+            questionComponent: IonDateQuestionComponent,
+            question: <IonDateQuestion<DateRangeControlGroupState>>{
+                placeholder: "Startdato", 
+                width: "45%",
+                ionFormat:"YYYY-MMMM-DD",
+                datePipeFormat: "MMM d, y",
+                stateBindings: {
+                    min: _formStateBinding<DateRangeControlGroupState, string>()(["startMin"], (s) => s.startMin ),         
+                    max: _formStateBinding<DateRangeControlGroupState, string>()(["startMax"], (s) => s.startMax )
+                }              
+            },  
+        },
+        end: {
+            questionComponent: IonDateQuestionComponent,
+            question: <IonDateQuestion<DateRangeControlGroupState>>{
+                placeholder: "Sluttdato", 
+                width: "45%",
+                ionFormat:"YYYY-MMMM-DD",      
+                datePipeFormat: "MMM d, y", 
+                stateBindings: {
+                    min: _formStateBinding<DateRangeControlGroupState, string>()(["endMin"], (s) => s.endMin ),         
+                    max: _formStateBinding<DateRangeControlGroupState, string>()(["endMax"], (s) => s.endMax )
+                }  
+            },  
+        },
+    }
 }

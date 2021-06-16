@@ -6,7 +6,7 @@ import { AppButton } from "@shared-app/interfaces/app-button.interface";
 import { AppChip } from '@shared-app/interfaces/app-chip.interface';
 import { WithUnsubscribe } from "@shared-app/mixins/with-unsubscribe.mixin";
 import { SearchBarConfig } from "@shared-mission/components/search-bar/search-bar-config.interface";
-import { MissionCriteriaFormSheet } from '@shared-mission/forms/mission-criteria-form.const';
+import { MissionCriteriaForm, MissionCriteriaFormSheet, MissionCriteriaFormState } from '@shared-mission/forms/mission-criteria-form.const';
 import { CreateMissionModelForm } from "@shared-mission/forms/save-mission-model-form.const";
 import { _missionCriteriaChipsFactory } from "@shared-mission/mission-criteria-chips-factory.helper";
 import { BottomBarIconButton } from "@shared/components/bottom-action-bar/bottom-bar-icon-button.interface";
@@ -95,7 +95,7 @@ export class MissionListComponent extends WithUnsubscribe(){
     this.modelFormService.open(CreateMissionModelForm)
 
   private openMissionFilter = () => 
-    this.formService.open(
+    this.formService.open<MissionCriteriaForm, MissionCriteriaFormState>(
       MissionCriteriaFormSheet, 
       { initialValue: this.facade.criteria, formState: this.facade.criteriaFormState$ },
       (val) => this.facade.addCriteria(val)

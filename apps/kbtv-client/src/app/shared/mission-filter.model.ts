@@ -2,6 +2,7 @@ import { Mission } from '../core/models';
 import { MissionCriteria } from './interfaces';
 import { DataFilter } from './data.filter';
 import { Immutable, Maybe } from 'global-types';
+import { _getStartOfDayTime, _isDateInDateRange } from 'date-time-helpers';
 
 export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
 
@@ -21,18 +22,30 @@ export class MissionFilter extends DataFilter<Mission, MissionCriteria>{
 
     protected addChecks(mission: Immutable<Mission>): boolean{
         let exp = true;
-
-        if(this.criteria.finished != null)
+  
+        if(this.criteria.finished != null){
             exp = exp && ((mission.finished === this.criteria.finished) || (!mission.finished && this.criteria.finished === false));
+            if(exp === false) return exp;
+        }
 
-        if(this.criteria.searchString)
+        if(this.criteria.searchString){
             exp = exp && this.filterSearchString(mission);
+            if(exp === false) return exp;
+        }
 
-        if(this.criteria.employer?.id)
+        if(this.criteria.employer?.id){
             exp = exp && mission.employerId === this.criteria.employer.id;
+            if(exp === false) return exp;
+        }
 
-        if(this.criteria.missionType?.id)
+        if(this.criteria.missionType?.id){
             exp = exp && mission.missionTypeId === this.criteria.missionType.id;
+            if(exp === false) return exp;
+        }
+
+        if(this.criteria.dateRange) {
+            exp = exp && _isDateInDateRange(mission.createdAt, this.criteria.dateRange);
+        }
 
         return exp;
     }
