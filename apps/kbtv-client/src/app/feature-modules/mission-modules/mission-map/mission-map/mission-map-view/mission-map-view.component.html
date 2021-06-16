@@ -1,0 +1,12 @@
+<google-map class="mission-map" height="auto" width="100%" [center]="center" [zoom]="8">
+    <ng-container *ngIf="missions">
+        <ng-container *ngFor="let mission of missions; trackBy: trackByFn">
+            <map-marker #markerEl="mapMarker" *ngIf="mission.position" 
+                [position]="mission.position | appConvertToGooglePosition"
+                [options]="mission.finished | appMissionMarkerOptions : mission.position.isExact"
+                (mapClick)="openInfoWindow(markerEl, mission)">
+            </map-marker>
+        </ng-container>
+    </ng-container>
+    <map-info-window></map-info-window>
+</google-map>

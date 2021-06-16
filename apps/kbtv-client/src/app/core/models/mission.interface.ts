@@ -7,6 +7,7 @@ import { ModelFile } from './base-entity-file.interface';
 import { Timesheet, UserTimesheet } from './timesheet.interface';
 import { IContactable } from './sub-interfaces/icontactable.interface';
 import { IAddress } from './sub-interfaces/iaddress.interface';
+import { IPosition } from './sub-interfaces/iposition.interface';
 
 export interface Mission extends ModelFile, EmployerForeign, MissionTypeForeign, IContactable, IAddress {
     description?: string;
@@ -19,4 +20,6 @@ export interface Mission extends ModelFile, EmployerForeign, MissionTypeForeign,
     missionNotes?: MissionNote[];
     timesheets?: Timesheet[];
     userTimesheets?: UserTimesheet[];
+
+    position?: IPosition;
 };

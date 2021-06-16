@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { Router } from "@angular/router";
 import { RolePermissions } from "@core/configurations/role-permissions.const";
 import { Mission } from "@core/models";
 import { ModelState } from "@core/state/model-state.interface";
@@ -10,6 +11,7 @@ import { MissionCriteriaForm, MissionCriteriaFormSheet, MissionCriteriaFormState
 import { CreateMissionModelForm } from "@shared-mission/forms/save-mission-model-form.const";
 import { _missionCriteriaChipsFactory } from "@shared-mission/mission-criteria-chips-factory.helper";
 import { BottomBarIconButton } from "@shared/components/bottom-action-bar/bottom-bar-icon-button.interface";
+import { MainTopNavConfig } from "@shared/components/main-top-nav-bar/main-top-nav.config";
 import { BottomIconButtons } from "@shared/constants/bottom-icon-buttons.const";
 import { MissionFilter } from "@shared/mission-filter.model";
 import { _filter } from "array-helpers";
@@ -59,10 +61,15 @@ export class MissionListComponent extends WithUnsubscribe(){
 
   searchBarHidden: boolean = true;
 
+  navConfig: MainTopNavConfig = { buttons: [
+    { icon: "public", aria: "Åpne kart", callback: () => this.router.navigate(['oppdrag', 'kart']) }
+  ]};
+
   constructor(
     private formService: FormService,
     private modelFormService: ModelFormService<ModelState>,
     private facade: MissionListFacade,
+    private router: Router
   ) {
     super();
 

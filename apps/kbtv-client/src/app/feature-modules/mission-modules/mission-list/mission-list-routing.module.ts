@@ -44,6 +44,11 @@ const routes: MissionListRoute[] = [
           },
         ]
       },
+      {
+        path: 'kart',
+        data: {preload: false, viewType: "overlay"},
+        loadChildren: () => import('src/app/feature-modules/mission-modules/mission-map/mission-map.module').then(m => m.MissionMapModule),
+      },
     ]
   },
 
