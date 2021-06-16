@@ -13,7 +13,8 @@
     target="_blank">
     <app-list-item>
       <mat-icon left-side class="pl-2 pr-2">directions_car</mat-icon>
-      Veibeskrivelse
+      Veibeskrivelse 
+      <div class="mat-caption color-warn" *ngIf="mission.position && !mission.position.isExact">Posisjonen kan være upresis</div>
       <span right-side class="color-accent">Åpne kart</span>
     </app-list-item>
     <mat-divider inset=true></mat-divider>
