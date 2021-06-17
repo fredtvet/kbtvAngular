@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/c
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Mission } from '@core/models';
 import { DeviceInfoService } from '@core/services/device-info.service';
+import { GoogleMapsLoader } from '@core/services/google-maps.loader';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { Immutable, Maybe } from 'global-types';
 import { Observable } from 'rxjs';
@@ -22,8 +23,13 @@ export class MissionMapViewComponent{
         this.deviceInfoService.userLocation$.pipe(map(pos => { return {
             lng: pos.coords.longitude, lat: pos.coords.latitude
         }}));
+    
+    mapsLoaded$: Observable<boolean> = this.googleMapsLoader.load$;
 
-    constructor(private deviceInfoService: DeviceInfoService) { }
+    constructor(
+        private deviceInfoService: DeviceInfoService,
+        private googleMapsLoader: GoogleMapsLoader
+    ) { }
 
     openInfoWindow(marker: MapMarker, mission: Mission) {
         this.infoWindow.infoWindow?.setContent(mission.address!);

@@ -3,13 +3,14 @@ import { GoogleMapsModule, MapGeocoder } from '@angular/google-maps';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { Mission } from '@core/models';
 import { IPosition } from '@core/models/sub-interfaces/iposition.interface';
+import { GoogleMapsLoader } from '@core/services/google-maps.loader';
 import { StateMissions } from '@core/state/global-state.interfaces';
 import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
 import { SharedModule } from '@shared/shared.module';
 import { _find } from 'array-helpers';
 import { Immutable, Maybe } from 'global-types';
 import { ModelCommand, SaveModelAction } from 'model/state-commands';
-import { Observable, of } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Store } from 'state-management';
 import { MissionPositionSheetPickerData } from './mission-position-picker-sheet-data.interface';
@@ -37,9 +38,11 @@ import { MissionPositionPickerComponent } from './mission-position-picker.compon
 })
 export class MissionPositionPickerSheetWrapperComponent {
 
-    mission$: Observable<Maybe<Immutable<Mission>>> = this.store.selectProperty$("missions").pipe(
-        map(missions => _find(missions, this.data.missionId, "id")),
-        switchMap(mission => {
+    mission$: Observable<Maybe<Immutable<Mission>>> = combineLatest([
+        this.googleMapsLoader.load$,
+        this.store.selectProperty$("missions").pipe(map(x => _find(x, this.data.missionId, "id"))),
+    ]).pipe(
+        switchMap(([loaded, mission]) => {
             if(mission?.position) return of(mission);
             else return this.geocoder.geocode({ address: mission?.address, region: "no"}).pipe(map(x => {
                 const position = x.results?.[0]?.geometry.location.toJSON();
@@ -54,6 +57,7 @@ export class MissionPositionPickerSheetWrapperComponent {
         private store: Store<StateMissions>,
         private geocoder: MapGeocoder,
         private sheetRef: MatBottomSheetRef,
+        private googleMapsLoader: GoogleMapsLoader,
         @Inject(MAT_BOTTOM_SHEET_DATA) private data: MissionPositionSheetPickerData
     ) { }
 

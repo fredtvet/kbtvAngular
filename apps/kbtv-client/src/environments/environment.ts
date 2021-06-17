@@ -7,9 +7,9 @@ export const environment = {
   apiUrl: 'https://localhost:44379/api',
   baseUrl: '',
   fileServerUrl: 'https://bjbygg-assets.azureedge.net',
+  googleMapsKey: 'AIzaSyBUWZmwjGN92B3PoNS6x6qpOmc3xrP55d8', 
   inboundEmailDomain: 'rapporter.bjbygg.no'
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

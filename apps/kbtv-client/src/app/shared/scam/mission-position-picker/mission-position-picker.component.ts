@@ -18,8 +18,7 @@ export class MissionPositionPickerComponent {
     @Input() mission: Immutable<Mission> | undefined;
     @Output() positionSelected = new EventEmitter<IPosition>()
 
-    userPosition$: Observable<GeolocationPosition> = 
-        this.deviceInfoService.userLocation$;
+    userPosition$: Observable<GeolocationPosition> = this.deviceInfoService.userLocation$;
 
     selectedPosition: google.maps.LatLngLiteral | null;
 
