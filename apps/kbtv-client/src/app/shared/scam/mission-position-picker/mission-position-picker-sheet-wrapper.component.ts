@@ -16,6 +16,8 @@ import { Store } from 'state-management';
 import { MissionPositionSheetPickerData } from './mission-position-picker-sheet-data.interface';
 import { MissionPositionPickerComponent } from './mission-position-picker.component';
 
+export const SheetClosedByUserEvent = "CLOSED_BY_USER";
+
 @Component({
  selector: "app-mission-position-picker-sheet-wrapper",
   template: `
@@ -51,7 +53,7 @@ export class MissionPositionPickerSheetWrapperComponent {
         })
     );
   
-    navConfig: MainTopNavConfig = { customCancelFn: () => this.sheetRef.dismiss() }
+    navConfig: MainTopNavConfig = { customCancelFn: () => this.sheetRef.dismiss(SheetClosedByUserEvent) }
 
     constructor(
         private store: Store<StateMissions>,

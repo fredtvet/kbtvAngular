@@ -1,6 +1,5 @@
 import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
@@ -14,7 +13,7 @@ import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { ImageViewerDialogService } from '@shared-mission/components/image-viewer/image-viewer-dialog.service';
 import { EditMissionModelForm } from '@shared-mission/forms/save-mission-model-form.const';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
-import { MissionPositionPickerSheetWrapperComponent } from '@shared/scam/mission-position-picker/mission-position-picker-sheet-wrapper.component';
+import { MissionPositionPickerSheetService } from '@shared/scam/mission-position-picker/mission-position-picker-sheet.service';
 import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
 import { ModelCommand } from 'model/state-commands/public-api';
@@ -69,7 +68,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private matSheet: MatBottomSheet,
+    private positionPickerService: MissionPositionPickerSheetService,
     private imageViewer: ImageViewerDialogService,
     private modelFormService: ModelFormService<ModelState>
   ) { super() }
@@ -85,10 +84,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
   }
 
   private openMissionPositionPicker = () => 
-    this.matSheet.open(MissionPositionPickerSheetWrapperComponent, { 
-      panelClass: "mission-position-picker-sheet", 
-      data: { missionId: this.missionId }
-    })
+    this.positionPickerService.open(this.missionId!);
  
   private openImageInput = (ref: ElementRef<HTMLElement>): void => ref?.nativeElement?.click();
 
