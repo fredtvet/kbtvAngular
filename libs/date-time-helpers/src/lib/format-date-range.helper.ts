@@ -8,5 +8,9 @@ import { DateRange } from './interfaces';
  * @returns A string representation of the date range. 
  */
 export function _formatDateRange(range: Immutable<DateRange>, formatFn: (d: unknown) => string): string {
+    if(range.start == null && range.end != null)
+        return "< " + formatFn(range.end);
+    if(range.start != null && range.end == null)
+        return "> " + formatFn(range.start);
     return formatFn(range.start) + " ~ " + formatFn(range.end)
 }
