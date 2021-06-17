@@ -1,4 +1,5 @@
-<google-map class="mission-map" height="auto" width="100%" [center]="center$ | async" [zoom]="8">
+<google-map *ngIf="mapsLoaded$ | async" class="mission-map" height="auto" width="100%" 
+    [center]="center$ | async" [zoom]="8">
     <ng-container *ngIf="missions">
         <ng-container *ngFor="let mission of missions; trackBy: trackByFn">
             <map-marker #markerEl="mapMarker" *ngIf="mission.position" 

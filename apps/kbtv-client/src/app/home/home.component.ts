@@ -2,12 +2,14 @@ import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Roles } from '@core/roles.enum';
+import { DeviceInfoService } from '@core/services/device-info.service';
+import { GoogleMapsLoader } from '@core/services/google-maps.loader';
 import { StateMissions } from '@core/state/global-state.interfaces';
 import { _getClosestMission } from '@shared-app/helpers/get-closest-mission.helper';
-import { _sortByDate, _tryWithLogging } from 'array-helpers';
+import { _sortByDate } from 'array-helpers';
 import { Immutable } from 'global-types';
-import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { combineLatest, forkJoin, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { StateCurrentUser } from 'state-auth';
 import { Store } from 'state-management';
 import { StateSyncTimestamp, SyncStateAction } from 'state-sync';
@@ -43,16 +45,21 @@ export class HomeComponent {
   constructor(
     private store: Store<StateCurrentUser & StateSyncTimestamp & StateMissions>,
     private mainNavService: MainNavService,
-    private router: Router
+    private router: Router,
+    private deviceInfoService: DeviceInfoService,
+    private googleMapsLoader: GoogleMapsLoader
   ){} 
 
   goToClosestMission(): void {
-    navigator.geolocation.getCurrentPosition((pos) => {
+    forkJoin([
+      this.deviceInfoService.userLocation$,
+      this.googleMapsLoader.load$
+    ]).pipe(tap(([pos]) => {
       var missions = this.store.state.missions || [];
       var closest = _getClosestMission(pos.coords, missions);
       if(closest?.mission)
         this.router.navigate(['oppdrag', closest.mission.id, 'detaljer'])
-    })
+    })).subscribe();
   }
 
   toggleDrawer = () => this.mainNavService.toggleDrawer();

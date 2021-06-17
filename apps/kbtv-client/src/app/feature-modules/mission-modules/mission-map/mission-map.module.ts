@@ -1,4 +1,3 @@
-import { HttpClientJsonpModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { SharedMissionModule } from '@shared-mission/shared-mission.module';
@@ -17,7 +16,6 @@ import { MissionMarkerOptionsPipe } from './pipes/mission-marker-options.pipe';
     SharedMissionModule,
     MissionMapRoutingModule,   
     GoogleMapsModule,
-    HttpClientJsonpModule 
   ],
   providers: []
 })
