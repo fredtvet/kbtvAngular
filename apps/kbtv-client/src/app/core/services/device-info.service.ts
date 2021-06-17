@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { fromEvent, Observable, merge, combineLatest, of } from 'rxjs';
+import { fromEvent, Observable, merge, combineLatest, of, bindCallback } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { environment } from 'src/environments/environment';
@@ -47,4 +47,12 @@ export class DeviceInfoService {
   deviceInfo$ = combineLatest([this.isOnline$, this.isXs$]).pipe(
     map(([isOnline, isXs])=> { return {isOnline, isXs} })
   )
+
+  userLocation$: Observable<GeolocationPosition> = 
+    new Observable((obs) => 
+      navigator.geolocation.getCurrentPosition(
+        (pos) => { obs.next(pos); obs.complete() },
+        (err) => obs.error(err),
+      )
+    )
 }

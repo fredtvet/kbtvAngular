@@ -1,8 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { Mission } from '@core/models';
+import { DeviceInfoService } from '@core/services/device-info.service';
 import { _trackByModel } from '@shared-app/helpers/trackby/track-by-model.helper';
 import { Immutable, Maybe } from 'global-types';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mission-map-view',
@@ -15,11 +18,12 @@ export class MissionMapViewComponent{
     
     @Input() missions: Immutable<Maybe<Mission[]>>;
 
-    center: google.maps.LatLngLiteral;
+    center$: Observable<google.maps.LatLngLiteral> = 
+        this.deviceInfoService.userLocation$.pipe(map(pos => { return {
+            lng: pos.coords.longitude, lat: pos.coords.latitude
+        }}));
 
-    constructor(private cdRef: ChangeDetectorRef) {  
-        this.setCenter();
-    }
+    constructor(private deviceInfoService: DeviceInfoService) { }
 
     openInfoWindow(marker: MapMarker, mission: Mission) {
         this.infoWindow.infoWindow?.setContent(mission.address!);
@@ -27,13 +31,5 @@ export class MissionMapViewComponent{
     }
 
     trackByFn = _trackByModel("missions");
-
-    private setCenter(){
-        navigator.geolocation.getCurrentPosition((pos) => {
-            if(!pos.coords) return; 
-            this.center = { lng: pos.coords.longitude, lat: pos.coords.latitude };
-            this.cdRef.markForCheck();       
-        })
-    }
 
 }

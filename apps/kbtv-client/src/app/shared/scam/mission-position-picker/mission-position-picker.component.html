@@ -1,0 +1,53 @@
+<style>
+    :host {
+        height:100%;
+        display:flex;
+        flex-direction: column;
+    }
+    google-map{
+        display: flex;
+        flex: 1 1 0;
+    }
+    button { height: 50px; }
+</style>
+<ng-container *ngIf="userPosition$ | async; let userPosition">
+
+    <google-map height="auto" width="100%" [zoom]="8" 
+    [center]="userPosition.coords | appConvertToGooglePosition" 
+    (mapClick)="updateSelectedMarker($event)">
+
+        <map-marker #userMarker="mapMarker"
+            [position]="userPosition.coords | appConvertToGooglePosition"
+            [options]="userPositionMarkerOptions"
+            (mapClick)="openInfoWindow(userMarker, 'Min posisjon')">
+        </map-marker>
+        
+        <map-marker *ngIf="mission?.position" #missionMarker="mapMarker"
+            [position]="mission!.position! | appConvertToGooglePosition"
+            [options]="missionMarkerOptions"
+            (mapClick)="openInfoWindow(missionMarker, 'Oppdragets nåværende posisjon')">
+        </map-marker>
+
+        <map-marker *ngIf="selectedPosition" #selectedMarker="mapMarker"
+            [position]="selectedPosition"
+            [options]="selectedPositionMarkerOptions"
+            (mapClick)="openInfoWindow(selectedMarker, 'Markert posisjon')">
+        </map-marker>
+
+        <map-info-window></map-info-window>
+
+    </google-map>
+
+    <button mat-button 
+        (click)="submitPosition(userPosition.coords.latitude, userPosition.coords.longitude)">
+        Bruk min posisjon
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <button mat-button [disabled]="!selectedPosition" 
+        (click)="submitPosition(selectedPosition?.lat, selectedPosition?.lng)">
+        Bruk markert posisjon
+    </button>
+
+</ng-container>

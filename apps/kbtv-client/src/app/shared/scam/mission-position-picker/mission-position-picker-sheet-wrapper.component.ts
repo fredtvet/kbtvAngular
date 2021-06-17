@@ -1,0 +1,80 @@
+import { ChangeDetectionStrategy, Component, Inject, NgModule } from '@angular/core';
+import { GoogleMapsModule, MapGeocoder } from '@angular/google-maps';
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { Mission } from '@core/models';
+import { IPosition } from '@core/models/sub-interfaces/iposition.interface';
+import { StateMissions } from '@core/state/global-state.interfaces';
+import { MainTopNavConfig } from '@shared/components/main-top-nav-bar/main-top-nav.config';
+import { SharedModule } from '@shared/shared.module';
+import { _find } from 'array-helpers';
+import { Immutable, Maybe } from 'global-types';
+import { ModelCommand, SaveModelAction } from 'model/state-commands';
+import { Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { Store } from 'state-management';
+import { MissionPositionSheetPickerData } from './mission-position-picker-sheet-data.interface';
+import { MissionPositionPickerComponent } from './mission-position-picker.component';
+
+@Component({
+ selector: "app-mission-position-picker-sheet-wrapper",
+  template: `
+    <style>
+        :host {
+            height:100%;
+            display:flex;
+            flex-direction: column;
+        }
+    </style>
+    <ng-container *ngIf="mission$ | async; let mission">
+        <app-main-top-nav-bar [config]="navConfig">Velg posisjon på kart</app-main-top-nav-bar>
+        <span class="mb-3 ml-6 mr-6 ellipsis mat-body-2">Oppdrag: {{ mission?.address }}</span>
+        <app-mission-position-picker [mission]="mission" 
+            (positionSelected)="updateSelectedPosition($event)">
+        </app-mission-position-picker>
+    </ng-container>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class MissionPositionPickerSheetWrapperComponent {
+
+    mission$: Observable<Maybe<Immutable<Mission>>> = this.store.selectProperty$("missions").pipe(
+        map(missions => _find(missions, this.data.missionId, "id")),
+        switchMap(mission => {
+            if(mission?.position) return of(mission);
+            else return this.geocoder.geocode({ address: mission?.address, region: "no"}).pipe(map(x => {
+                const position = x.results?.[0]?.geometry.location.toJSON();
+                return {...mission, position: { latitude: position.lat, longitude: position.lng }}
+            }))
+        })
+    );
+  
+    navConfig: MainTopNavConfig = { customCancelFn: () => this.sheetRef.dismiss() }
+
+    constructor(
+        private store: Store<StateMissions>,
+        private geocoder: MapGeocoder,
+        private sheetRef: MatBottomSheetRef,
+        @Inject(MAT_BOTTOM_SHEET_DATA) private data: MissionPositionSheetPickerData
+    ) { }
+
+    updateSelectedPosition(position: IPosition): void {
+        this.store.dispatch<SaveModelAction<StateMissions, Mission>>({ 
+            type: SaveModelAction, 
+            stateProp: "missions", 
+            saveAction: ModelCommand.Update,
+            entity: { id: this.data.missionId, position }
+        });
+    }
+
+}
+@NgModule({
+    declarations: [
+        MissionPositionPickerSheetWrapperComponent,
+        MissionPositionPickerComponent
+    ],
+    imports:[
+      SharedModule,
+      GoogleMapsModule
+    ]
+})
+class MissionPositionPickerSheetWrapperModule {}

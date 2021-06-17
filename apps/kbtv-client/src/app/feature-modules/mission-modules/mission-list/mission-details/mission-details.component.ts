@@ -1,5 +1,5 @@
-import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RolePermissions } from '@core/configurations/role-permissions.const';
 import { Mission } from '@core/models';
@@ -13,6 +13,7 @@ import { WithUnsubscribe } from '@shared-app/mixins/with-unsubscribe.mixin';
 import { ImageViewerDialogService } from '@shared-mission/components/image-viewer/image-viewer-dialog.service';
 import { EditMissionModelForm } from '@shared-mission/forms/save-mission-model-form.const';
 import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
+import { MissionPositionPickerSheetWrapperComponent } from '@shared/scam/mission-position-picker/mission-position-picker-sheet-wrapper.component';
 import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
 import { Observable } from 'rxjs';
@@ -66,7 +67,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     private facade: MissionListFacade,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location,
+    private matSheet: MatBottomSheet,
     private imageViewer: ImageViewerDialogService,
     private modelFormService: ModelFormService<ModelState>
   ) { super() }
@@ -80,6 +81,12 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
   openImageViewer(mission: Mission) {
     this.imageViewer.open({currentImage: mission, fileFolder: FileFolder.MissionHeader})
   }
+
+  private openMissionPositionPicker = () => 
+    this.matSheet.open(MissionPositionPickerSheetWrapperComponent, { 
+      panelClass: "mission-position-picker-sheet", 
+      data: { missionId: this.missionId }
+    })
  
   private openImageInput = (ref: ElementRef<HTMLElement>): void => ref?.nativeElement?.click();
 
@@ -97,7 +104,8 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
       {icon: "timer", text: "Timer", callback: () => this.goToTimesheets(mission), allowedRoles: RolePermissions.UserTimesheetList.access},
       // {icon: "more_vert", callback: this.openBottomSheetMenu, params: [mission], allowedRoles: this.can.update},
       {...BottomIconButtons.Edit, callback: () => this.openMissionForm(mission?.id), allowedRoles: this.can.update},
-      {...this.addHeaderImgBtn, text: 'Nytt forsidebilde'}
+      {...this.addHeaderImgBtn, text: 'Nytt forsidebilde'}, 
+      { icon: "pin_drop", text: "Merk posisjon manuelt", callback: this.openMissionPositionPicker, allowedRoles: this.can.update },
     ]
   }
 

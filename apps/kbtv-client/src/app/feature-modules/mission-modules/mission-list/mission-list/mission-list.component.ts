@@ -62,7 +62,7 @@ export class MissionListComponent extends WithUnsubscribe(){
   searchBarHidden: boolean = true;
 
   navConfig: MainTopNavConfig = { buttons: [
-    { icon: "public", aria: "Åpne kart", callback: () => this.router.navigate(['oppdrag', 'kart']) }
+    { icon: "travel_explore", aria: "Åpne kart", callback: () => this.router.navigate(['oppdrag', 'kart']) }
   ]};
 
   constructor(

@@ -22,6 +22,7 @@ import { HideDirective } from './directives/hide.directive';
 import { ImageRatioResizerDirective } from './directives/image-ratio-resizer.directive';
 import { AppFileUrlPipe, ArrayFromNumberPipe, FuncPipe, IsTodayPipe, MergeObjPipe, ObjectToArrayPipe, SortByDatePipe, TransformButtonPipe } from './pipes';
 import { AppImageUrlRatioPipe } from './pipes/app-image-url-ratio.pipe';
+import { ConvertToGooglePositionPipe } from './pipes/convert-to-google-position.pipe';
 import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
 
 
@@ -43,6 +44,7 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     AppFileUrlPipe,
     ObjectToArrayPipe,
     AppImageUrlRatioPipe,
+    ConvertToGooglePositionPipe,
     FuncPipe,
     MergeObjPipe,
     ScrollNavElevationTogglerDirective,   
@@ -83,6 +85,7 @@ import { TransformButtonsPipe } from './pipes/transform-buttons.pipe';
     MergeObjPipe,
     FuncPipe,
     TransformButtonsPipe,
+    ConvertToGooglePositionPipe,
 
     ScrollNavElevationTogglerDirective,
     ActiveStringFilterDirective,

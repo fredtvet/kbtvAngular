@@ -57,6 +57,18 @@ body {font-family: Roboto, "Helvetica Neue", sans-serif;overflow-x:hidden;}
 .bottom-bar-padding{ padding-bottom: var(--bottom-nav-height)!important; }
 
 .main-skeleton-fullscreen { padding-bottom: 0px!important; margin-bottom: 0px!important; }
+  
+@media (max-width: 599px) {
+  .mission-position-picker-sheet { 
+    max-height: 100vh!important; 
+    max-width: 100vw!important;
+  }
+}
+.mission-position-picker-sheet { 
+  height: 100vh!important; 
+  padding: 0!important; 
+  width: 100vw!important;
+}
 
 .line-height-100{line-height:100%}
 
