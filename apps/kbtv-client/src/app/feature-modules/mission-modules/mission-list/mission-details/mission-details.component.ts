@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,8 +17,9 @@ import { BottomIconButtons } from '@shared/constants/bottom-icon-buttons.const';
 import { MissionPositionPickerSheetWrapperComponent } from '@shared/scam/mission-position-picker/mission-position-picker-sheet-wrapper.component';
 import { Immutable, Maybe } from 'global-types';
 import { ModelFormService } from 'model/form';
+import { ModelCommand } from 'model/state-commands/public-api';
 import { Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { UserTimesheetListCriteriaQueryParam } from 'src/app/feature-modules/timesheet-modules/user-timesheet-list/user-timesheet-list/user-timesheet-list-route-params.const';
 import { SelectedMissionIdParam } from '../mission-list-route-params.const';
 import { MissionListFacade } from '../mission-list.facade';
@@ -44,7 +46,6 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
 
   vm$: Observable<ViewModel> =  this.route.paramMap.pipe(
     switchMap(x =>  this.facade.getMissionDetails$(x.get(SelectedMissionIdParam))),
-    tap(x => x == null ? this.router.navigate(['oppdrag']) : null),
     map(mission => { return { 
       bottomActions: this.getBottomActions(mission), 
       mission
@@ -67,6 +68,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
     private facade: MissionListFacade,
     private route: ActivatedRoute,
     private router: Router,
+    private location: Location,
     private matSheet: MatBottomSheet,
     private imageViewer: ImageViewerDialogService,
     private modelFormService: ModelFormService<ModelState>
@@ -92,6 +94,7 @@ export class MissionDetailsComponent extends WithUnsubscribe() {
 
   private openMissionForm = (id: string | undefined) => 
     this.modelFormService.open(EditMissionModelForm, {id})
+      .afterDismissed().subscribe(x => x === ModelCommand.Delete ? this.location.back() : null)
 
   private goToTimesheets = (mission: Maybe<Immutable<Mission>>) => 
     this.router.navigate(['timer', {
