@@ -24,6 +24,11 @@ app-home-mission-card{
     flex: 1 1 0;
     overflow:hidden;
     background: linear-gradient(to top, var(--accent-color), transparent)!important;  
+    padding: 0 calc(var(--gap-size) * 2);
+}
+
+::ng-deep.closest-mission-item {
+    .list-item { border-radius: 4px; }
 }
 
 mat-toolbar{
@@ -54,7 +59,7 @@ mat-toolbar{
     display: flex;
     place-content: center;
     align-items: center;
-    height: 16%!important; 
+    height: 14%!important; 
 }
 
 .top-action-bar{

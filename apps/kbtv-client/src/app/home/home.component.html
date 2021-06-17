@@ -20,10 +20,16 @@
 
   <div class="content-container">
 
-    <app-home-mission-card [missions]="vm.missions">
+    <app-home-mission-card [missions]="vm.missions" class="mb-2">
     </app-home-mission-card>
 
-    <app-home-nav-tile-grid  
+    <app-list-item class="closest-mission-item mb-2 mat-elevation-z2" (click)="goToClosestMission()">
+      <mat-icon left-side>public</mat-icon>
+      Gå til nærmeste oppdrag
+      <mat-icon right-side>chevron_right</mat-icon>
+    </app-list-item>
+
+    <app-home-nav-tile-grid class="mb-2"
       [columnCount]="([roles.Leder, roles.Admin] | ifRole) ? 3 : 2"
       [navigations]="navigations">
     </app-home-nav-tile-grid>
