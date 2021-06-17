@@ -6,6 +6,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { SelectableCardComponent } from './components/selectable-card/selectable-card.component';
 import { ImageErrorPlaceholderDirective } from './directives/image-error-placeholder.directive';
 import { InputListenerDirective } from './directives/input-listener.directive';
+import { MissionDirectionsUrlPipe } from './mission-directions-url.pipe';
 
 @NgModule({
   declarations: [  
@@ -13,6 +14,7 @@ import { InputListenerDirective } from './directives/input-listener.directive';
     ImageViewerComponent,
     SearchBarComponent,
     SelectableCardComponent,
+    MissionDirectionsUrlPipe,
     
     ImageErrorPlaceholderDirective,
     InputListenerDirective,
@@ -27,7 +29,8 @@ import { InputListenerDirective } from './directives/input-listener.directive';
     ImageViewerComponent,
     SearchBarComponent,
     SelectableCardComponent,
-
+    MissionDirectionsUrlPipe,
+    
     ImageErrorPlaceholderDirective,
     InputListenerDirective,
   ],
