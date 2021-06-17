@@ -2,7 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, CUSTOM_ELEMENTS_
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SharedModule } from '@shared/shared.module';
+import { _tryWithLogging } from 'array-helpers';
 import { BaseQuestionComponent, DynamicFormStore, Question, ValidationErrorMap, VALIDATION_ERROR_MESSAGES } from 'dynamic-forms';
+import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 export interface IonDateQuestionBindings { min: string, max: string, defaultValue: string}
 
@@ -39,8 +42,8 @@ const _monthShortNames = ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug"
 
       <ion-datetime #dateTime appHide 
         cancel-text="Avbryt" done-text="Ferdig"
-        [attr.max]="stateBindings.max | async"
-        [attr.min]="stateBindings.min | async"
+        [attr.max]="max$ | async"
+        [attr.min]="min$ | async"
         [attr.day-names]="dayNames"
         [attr.day-short-names]="dayShortNames"
         [attr.month-names]="monthNames"
@@ -61,6 +64,9 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
   monthNames = _monthNames;
   monthShortNames = _monthShortNames;
 
+  min$?: Observable<string>;
+  max$?: Observable<string>;
+
   constructor(
     @Inject(VALIDATION_ERROR_MESSAGES) validationErrorMessages: ValidationErrorMap, 
     private cdRef: ChangeDetectorRef,
@@ -77,6 +83,14 @@ export class IonDateQuestionComponent extends BaseQuestionComponent<IonDateQuest
     this.control.setValue(value);  
     this.control.markAsDirty();
     this.cdRef.markForCheck();
+  }
+
+
+  protected onQuestionChanges(question: IonDateQuestion<object | null>){
+    super.onQuestionChanges(question);
+    this.min$ = this.stateBindings.min?.pipe(filter(x => x != null));
+    this.max$ = this.stateBindings.max?.pipe(filter(x => x != null));
+
   }
   
 }

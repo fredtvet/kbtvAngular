@@ -138,7 +138,7 @@ a {
 }
 
 .timesheet-date-range-question-group{
-  .question-container > * { margin: 0px 16px 24px 0px!important; }
+  app-ion-date-question { margin: 0 16px 0 0!important; }
 }
 
 .timesheet-date-time-question-group{
